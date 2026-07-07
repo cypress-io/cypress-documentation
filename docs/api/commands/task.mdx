@@ -1,5 +1,5 @@
 ---
-title: 'task | Cypress Documentation'
+title: 'cy.task()'
 description: Execute code in Node.js via the task plugin event in Cypress.
 sidebar_label: task
 ---
@@ -210,6 +210,33 @@ import db from '../../server/src/db'
 on('task', {
   'defaults:db': () => {
     return db.seed('defaults')
+  },
+})
+```
+
+:::
+
+### Run Node code before each test
+
+There is no `setupNodeEvents` event for each test. To run Node code before every
+test, call `cy.task()` from a global `beforeEach` in your
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file).
+
+```javascript
+// cypress/support/e2e.js
+beforeEach(function () {
+  cy.task('logTestStart', this.currentTest.fullTitle())
+})
+```
+
+:::cypress-config-plugin-example
+
+```ts
+on('task', {
+  logTestStart(title) {
+    console.log(`Starting: ${title}`)
+
+    return null
   },
 })
 ```

@@ -1,5 +1,5 @@
 ---
-title: 'TypeScript Support in Cypress'
+title: 'TypeScript support in Cypress'
 description: 'Learn how to set up TypeScript in Cypress, configure TypeScript for custom commands, assertions, and plugins and more'
 sidebar_label: 'TypeScript'
 ---
@@ -10,7 +10,7 @@ sidebar_label: 'TypeScript'
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to set up TypeScript in Cypress
 - How to configure TypeScript for custom commands, custom queries, assertions, and plugins
@@ -115,7 +115,7 @@ bun add --dev typescript
 We recommend creating a
 [`tsconfig.json`](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 inside your
-[`cypress` folder](/app/core-concepts/writing-and-organizing-tests#Folder-structure)
+[`cypress` folder](/app/core-concepts/writing-and-organizing-tests#Project-structure)
 with the following configuration:
 
 ```json title="tsconfig.json"
@@ -134,7 +134,7 @@ The `"types"` will tell the TypeScript compiler to only include type definitions
 from Cypress. This will address instances where the project also uses
 `@types/chai` or `@types/jquery`. Since
 [Chai](/app/references/bundled-libraries#Chai) and
-[jQuery](/app/references/bundled-libraries#Other-Library-Utilities) are
+[jQuery](/app/references/bundled-libraries#Utility-libraries) are
 namespaces (globals), incompatible versions will cause the package manager
 (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 

@@ -1,5 +1,5 @@
 ---
-title: 'setCookie | Cypress Documentation'
+title: 'cy.setCookie()'
 description: Set a browser cookie in Cypress.
 sidebar_label: setCookie
 ---
@@ -39,17 +39,17 @@ The value of the cookie to set.
 
 Pass in an options object to change the default behavior of `cy.setCookie()`.
 
-| Option     | Default                                                     | Description                                                                                                                                                                                                           |
-| ---------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                   |
-| `domain`   | Hostname of the current URL                                 | The domain the cookie is visible to                                                                                                                                                                                   |
-| `expiry`   | 20 years into the future                                    | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                            |
-| `hostOnly` | `false`                                                     | Whether the cookie is a host-only cookie, (i.e. the request's host must exactly match the domain of the cookie)                                                                                                       |
-| `httpOnly` | `false`                                                     | Whether the cookie is an HTTP only cookie                                                                                                                                                                             |
-| `path`     | `/`                                                         | The cookie path                                                                                                                                                                                                       |
-| `secure`   | `false`                                                     | Whether the cookie is a secure cookie                                                                                                                                                                                 |
-| `timeout`  | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                           |
-| `sameSite` | `undefined`                                                 | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`. |
+| Option     | Default                                                     | Description                                                                                                                                                                                                                                                                              |
+| ---------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                                                      |
+| `domain`   | Hostname of the current URL                                 | The domain the cookie is visible to. By default the resulting cookie is **not** host-only; it is matched for this host _and all of its subdomains_. To restrict the cookie to a single exact host, pass `hostOnly: true`. See [Cookie scope](#Cookie-scope-host-only-vs-domain-cookies). |
+| `expiry`   | 20 years into the future                                    | When the cookie expires, specified in seconds since [Unix Epoch](https://en.wikipedia.org/wiki/Unix_time).                                                                                                                                                                               |
+| `hostOnly` | `false`                                                     | Whether the cookie is a host-only cookie. When `true`, the cookie is scoped to one exact host (the request's host must exactly match the cookie's domain) and is not attached to requests for sibling or parent hosts. See [Cookie scope](#Cookie-scope-host-only-vs-domain-cookies).    |
+| `httpOnly` | `false`                                                     | Whether the cookie is an HTTP only cookie                                                                                                                                                                                                                                                |
+| `path`     | `/`                                                         | The cookie path                                                                                                                                                                                                                                                                          |
+| `secure`   | `false`                                                     | Whether the cookie is a secure cookie                                                                                                                                                                                                                                                    |
+| `timeout`  | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.setCookie()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                                              |
+| `sameSite` | `undefined`                                                 | Cookie's SameSite value. If set, should be one of `lax`, `strict`, or `no_restriction`. Pass `undefined` to use the browser's default. Note: `no_restriction` can only be used if the `secure` flag is set to `true`.                                                                    |
 
 <HeaderYields />
 
@@ -80,6 +80,37 @@ cy.getCookie('session_id').should(
   '189jd09sufh33aaiidhf99d09'
 )
 ```
+
+### Cookie scope (host-only vs. domain cookies)
+
+When you call `cy.setCookie()` without `hostOnly`, the `domain` defaults to the
+hostname of the current URL, but the cookie is stored as a **domain cookie**,
+not a host-only cookie. Internally Cypress rewrites the domain to its
+leading-dot form (e.g. `.app.example.com`), mirroring how real browsers store a
+cookie that omits the `Domain` attribute's host-only flag. As a result the
+cookie matches that host **and all of its subdomains**.
+
+This matters for [`cy.request()`](/api/commands/request#Cookies), which pulls
+matching cookies from the cookie jar by domain match before sending a request.
+Because the default cookie is a domain cookie, it can be attached to a
+`cy.request()` aimed at a _different_ host that domain-matches it, for example
+a sibling host on the same registrable domain. This is working as designed, but
+can be surprising when you set a convenience cookie for your app and see it
+appear on an unrelated request.
+
+```javascript
+cy.visit('https://app.example.com')
+
+// Default: domain cookie, matches app.example.com AND its subdomains
+cy.setCookie('cookieconsent_status', 'dismiss')
+
+// Host-only: matches ONLY the exact host it was set on
+cy.setCookie('cookieconsent_status', 'dismiss', { hostOnly: true })
+```
+
+If a cookie is unexpectedly attached to a `cy.request()` for another host on the
+same registrable domain, set `hostOnly: true` to keep it scoped to a single
+exact host.
 
 ### Preserving a cookie across tests
 

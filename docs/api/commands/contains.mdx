@@ -1,5 +1,5 @@
 ---
-title: 'contains | Cypress Documentation'
+title: 'cy.contains()'
 description: Get the DOM element containing the text in Cypress.
 sidebar_label: contains
 slug: /api/commands/contains
@@ -224,6 +224,10 @@ cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 ```
 
 ## Notes
+
+### Inverting `cy.contains()`
+
+<InvertedContainsSelection />
 
 ### Scopes
 
@@ -508,6 +512,8 @@ outputs the following:
 ## See also
 
 - [`cy.get()`](/api/commands/get)
+- [`.filter()`](/api/commands/filter)
 - [`.invoke()`](/api/commands/invoke)
+- [`.not()`](/api/commands/not)
 - [`.within()`](/api/commands/within)
 - [Retry-ability](/app/core-concepts/retry-ability)

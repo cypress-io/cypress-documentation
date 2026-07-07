@@ -38,7 +38,11 @@ eventually address.
 
 - [Workarounds for the lack of a `cy.hover()` command.](/api/commands/hover)
 - [There is not any native or mobile events support.](https://github.com/cypress-io/cypress/issues/311#issuecomment-339824191)
-- [iframe support is somewhat limited, but does work.](https://github.com/cypress-io/cypress/issues/136)
+- iframe support is somewhat limited, but does work. Same-origin iframes can be
+  queried natively (see
+  [How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)),
+  while a "switch into an iframe" command is still an
+  [open proposal](https://github.com/cypress-io/cypress/issues/136).
 
 ## Permanent trade-offs
 

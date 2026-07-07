@@ -36,6 +36,9 @@ function makeTsCompilerOptions(
     newLine: ts.NewLineKind.LineFeed,
     removeComments: false,
     esModuleInterop: false,
+    // TypeScript 6 emits a 'use strict' prologue by default, which would
+    // show up in the transformed JS code samples
+    alwaysStrict: false,
     pretty: true,
     ...overrideOptions,
     module: ts.ModuleKind.ESNext,

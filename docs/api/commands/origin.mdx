@@ -1,5 +1,5 @@
 ---
-title: 'origin | Cypress Documentation'
+title: 'cy.origin()'
 description: Visit multiple domains of different origin in a single test in Cypress.
 sidebar_label: origin
 e2eSpecific: true
@@ -634,6 +634,116 @@ it('also uses cy.origin() + custom command', () => {
     // different origin
   })
 })
+```
+
+#### Page objects
+
+A common question is how to use Page Object class methods inside `cy.origin()`.
+You cannot pass a class instance into the callback: the callback is not a
+closure, so it has no access to variables defined or imported outside it (see
+[Serialization](#Serialization)), and a class passed through the `args` option
+arrives without its methods.
+
+Instead, import the page object _inside_ the callback with `Cypress.require()`
+and instantiate it there. As with any use of `Cypress.require()` in a callback,
+this requires enabling the
+[`experimentalOriginDependencies`](/app/references/experiments) option in your
+Cypress configuration (see [Dependencies / Sharing Code](#Dependencies--Sharing-Code)).
+
+<Tabs>
+<TabItem value="cypress/support/LoginPage.js">
+
+```js
+export class LoginPage {
+  fillUsername(username) {
+    cy.get('[data-test-id="username"]').type(username)
+  }
+
+  fillPassword(password) {
+    cy.get('[data-test-id="password"]').type(password)
+  }
+}
+```
+
+</TabItem>
+<TabItem value="cypress/support/LoginPage.ts">
+
+```ts
+export class LoginPage {
+  fillUsername(username: string) {
+    cy.get('[data-test-id="username"]').type(username)
+  }
+
+  fillPassword(password: string) {
+    cy.get('[data-test-id="password"]').type(password)
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="cypress/e2e/spec.cy.js">
+
+```js
+it('logs in on a secondary origin', () => {
+  cy.origin(
+    'cypress.io',
+    { args: { username, password } },
+    ({ username, password }) => {
+      const { LoginPage } = Cypress.require('../support/LoginPage')
+      const loginPage = new LoginPage()
+
+      cy.visit('/login')
+      loginPage.fillUsername(username)
+      loginPage.fillPassword(password)
+    }
+  )
+})
+```
+
+</TabItem>
+<TabItem value="cypress/e2e/spec.cy.ts">
+
+```ts
+it('logs in on a secondary origin', () => {
+  cy.origin(
+    'cypress.io',
+    { args: { username, password } },
+    ({ username, password }) => {
+      const { LoginPage } = Cypress.require('../support/LoginPage')
+      const loginPage = new LoginPage()
+
+      cy.visit('/login')
+      loginPage.fillUsername(username)
+      loginPage.fillPassword(password)
+    }
+  )
+})
+```
+
+</TabItem>
+</Tabs>
+
+Any data the methods need, such as the credentials above, is still passed in
+through the `args` option as serializable values.
+
+If you would rather not import the class, pass only the serializable data the
+page object holds, such as a map of selectors, through `args` and call the
+Cypress commands directly inside the callback:
+
+```js
+import selectors from '../support/selectors.json'
+
+cy.origin(
+  'cypress.io',
+  { args: { selectors, username } },
+  ({ selectors, username }) => {
+    cy.visit('/login')
+    cy.get(selectors.username).type(username)
+  }
+)
 ```
 
 ### Callback restrictions

@@ -1,5 +1,5 @@
 ---
-title: 'Run Cypress tests in Bitbucket Pipelines: Step-by-Step Guide'
+title: 'Run Cypress tests in Bitbucket Pipelines: step-by-step guide'
 description: Run Cypress tests in Bitbucket Pipelines with Docker images, caching, parallelization, and Cypress Cloud.
 sidebar_label: Bitbucket Pipelines
 ---
@@ -10,7 +10,7 @@ sidebar_label: Bitbucket Pipelines
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to set up Bitbucket Pipelines to run Cypress tests
 - How to cache dependencies and build artifacts
@@ -208,13 +208,13 @@ pipelines:
         script:
           - npm ci
     - parallel:
-      # run N steps in parallel
-      - step:
-          <<: *e2e
-      - step:
-          <<: *e2e
-      - step:
-          <<: *e2e
+        # run N steps in parallel
+        - step:
+            <<: *e2e
+        - step:
+            <<: *e2e
+        - step:
+            <<: *e2e
 definitions:
   caches:
     npm: $HOME/.npm

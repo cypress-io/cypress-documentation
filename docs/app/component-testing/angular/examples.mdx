@@ -1,8 +1,8 @@
 ---
-title: Angular Examples
+title: 'Angular examples'
 description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular.
-sidebar_position: 30
 sidebar_label: Examples
+sidebar_position: 30
 ---
 
 <ProductHeading product="app" />
@@ -11,7 +11,7 @@ sidebar_label: Examples
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to mount an Angular component
 - How to pass data to an Angular component
@@ -359,6 +359,59 @@ cy.mount(TestComponent, {
 cy.get('[data-cy="test-component-count-incr"]').click()
 
 cy.get('@countChange').should('have.been.called')
+```
+
+## Testing Error States
+
+<ComponentTestingErrorStates />
+
+```ts
+import { UserProfileComponent } from './user-profile.component'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(UserProfileComponent)
+})
+```
+
+### Testing with a custom `ErrorHandler`
+
+The recommended way to observe render errors in Angular is a custom
+[`ErrorHandler`](https://angular.dev/api/core/ErrorHandler) provider. Angular
+routes errors thrown during change detection to the `ErrorHandler`, so you can
+provide one backed by a [`cy.stub()`](/api/commands/stub) and assert it was
+called:
+
+```ts
+import { ErrorHandler } from '@angular/core'
+import { ChildWithErrorComponent } from './child-with-error.component'
+
+it('routes render errors to the ErrorHandler', () => {
+  const handleError = cy.stub().as('handleError')
+
+  // A custom ErrorHandler observes the error, but it does NOT stop the error
+  // from propagating to Cypress as an uncaught exception. Cypress fails on
+  // uncaught exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include('I crashed!')
+
+    return false
+  })
+
+  cy.mount(ChildWithErrorComponent, {
+    providers: [{ provide: ErrorHandler, useValue: { handleError } }],
+  })
+
+  cy.get('@handleError').should('have.been.called')
+})
 ```
 
 ## Custom Mount Commands

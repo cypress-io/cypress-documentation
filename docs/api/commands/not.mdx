@@ -1,5 +1,5 @@
 ---
-title: 'not | Cypress Documentation'
+title: 'cy.not()'
 description: Filter DOM element(s) from a set of DOM elements in Cypress.
 sidebar_label: not
 slug: /api/commands/not
@@ -86,6 +86,12 @@ Pass in an options object to change the default behavior of `.not()`.
 cy.get('ul>li').not('.active').should('have.length', 4) // true
 ```
 
+### Contains
+
+#### Yield the elements that do not contain some text
+
+<InvertedContainsSelection />
+
 ## Rules
 
 <HeaderRequirements />
@@ -131,4 +137,5 @@ following:
 
 ## See also
 
+- [`cy.contains()`](/api/commands/contains)
 - [`.filter()`](/api/commands/filter)

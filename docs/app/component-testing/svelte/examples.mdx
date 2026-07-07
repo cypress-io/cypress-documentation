@@ -1,8 +1,8 @@
 ---
-title: Svelte Examples
+title: 'Svelte examples'
 description: Learn how to test Svelte components with Cypress Component Testing.
-sidebar_position: 30
 sidebar_label: Examples
+sidebar_position: 30
 ---
 
 <ProductHeading product="app" />
@@ -11,7 +11,7 @@ sidebar_label: Examples
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to mount a Svelte component
 - How to pass props to a Svelte component
@@ -72,4 +72,71 @@ the subject that was yielded from the `cy.mount()` command.
 cy.mount(Stepper).then(({ component }) => {
   //component is the rendered instance of Stepper
 })
+```
+
+## Testing Error States
+
+<ComponentTestingErrorStates />
+
+```js
+import UserProfile from './UserProfile.svelte'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(UserProfile)
+})
+```
+
+### Testing with `<svelte:boundary>`
+
+The recommended way to render fallback UI in Svelte 5 is
+[`<svelte:boundary>`](https://svelte.dev/docs/svelte/svelte-boundary) with a
+`failed` snippet. Rather than nesting components through `cy.mount()`, the
+cleanest approach is a dedicated fixture component that imports the failing
+component directly, then mount that fixture and assert the fallback is shown:
+
+```js
+// ErrorBoundary.cy.js
+import ErrorBoundary from './ErrorBoundary.svelte'
+
+it('displays the fallback UI on error', () => {
+  // <svelte:boundary> renders fallback UI, but it does NOT stop the error from
+  // propagating to Cypress as an uncaught exception. Cypress fails on uncaught
+  // exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include('I crashed!')
+
+    return false
+  })
+
+  cy.mount(ErrorBoundary)
+
+  cy.get('[data-cy=fallback]').should('contain', 'Something went wrong.')
+})
+```
+
+Where the `ErrorBoundary` fixture wraps the failing component in a
+`<svelte:boundary>` with a `failed` snippet:
+
+```html
+<!-- ErrorBoundary.svelte -->
+<script>
+  import ChildWithError from './ChildWithError.svelte'
+</script>
+
+<svelte:boundary>
+  <ChildWithError />
+
+  {#snippet failed(error)}
+  <div data-cy="fallback">Something went wrong.</div>
+  {/snippet}
+</svelte:boundary>
 ```

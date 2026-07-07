@@ -1,8 +1,8 @@
 ---
-title: Vue Examples
+title: 'Vue examples'
 description: Examples for testing Vue components with Cypress.
-sidebar_position: 30
 sidebar_label: Examples
+sidebar_position: 30
 ---
 
 <ProductHeading product="app" />
@@ -11,7 +11,7 @@ sidebar_label: Examples
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to mount Vue components in Cypress
 - How to pass props and events to components
@@ -77,6 +77,81 @@ it('clicking + fires a change event with the incremented value', () => {
   cy.get('[data-cy=increment]').click()
   cy.get('@onChangeSpy').should('have.been.calledWith', 101)
 })
+```
+
+## Testing Error States
+
+<ComponentTestingErrorStates />
+
+```js
+import UserProfile from './UserProfile.vue'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(UserProfile)
+})
+```
+
+### Testing with `onErrorCaptured`
+
+The recommended way to render fallback UI in Vue is a wrapper component that uses
+the [`onErrorCaptured`](https://vuejs.org/api/composition-api-lifecycle#onerrorcaptured)
+lifecycle hook to catch errors from its descendants. You can mount a component
+inside such a wrapper and assert that the fallback UI is displayed:
+
+```js
+// ErrorBoundary.cy.js
+import { h } from 'vue'
+import ErrorBoundary from './ErrorBoundary.vue'
+import ChildWithError from './ChildWithError.vue'
+
+it('displays the fallback UI on error', () => {
+  // onErrorCaptured renders fallback UI, but it does NOT stop the error from
+  // propagating to Cypress as an uncaught exception. Cypress fails on uncaught
+  // exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include('I crashed!')
+
+    return false
+  })
+
+  cy.mount(() => h(ErrorBoundary, () => h(ChildWithError)))
+
+  cy.get('[data-cy=fallback]').should('contain', 'Something went wrong.')
+})
+```
+
+Where `ErrorBoundary` captures the error with `onErrorCaptured` and renders
+fallback UI:
+
+```html
+<!-- ErrorBoundary.vue -->
+<template>
+  <div v-if="error" data-cy="fallback">Something went wrong.</div>
+  <slot v-else />
+</template>
+
+<script setup>
+  import { ref, onErrorCaptured } from 'vue'
+
+  const error = ref(null)
+
+  onErrorCaptured((err) => {
+    error.value = err
+
+    // Returning false stops the error from propagating further up the Vue tree,
+    // but it still reaches Cypress as an uncaught exception.
+    return false
+  })
+</script>
 ```
 
 ## Using Slots

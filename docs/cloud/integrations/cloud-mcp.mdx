@@ -1,8 +1,8 @@
 ---
-title: 'Cloud MCP | Cypress Documentation'
+title: 'Cypress Cloud MCP: Agentic debugging'
 description: 'Give AI coding assistants real-time access to your Cypress test results.'
-sidebar_position: 60
 sidebar_label: Cloud MCP
+sidebar_position: 60
 sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 ---
 
@@ -20,7 +20,7 @@ Cloud MCP reached general availability on May 20, 2026. It is included on every 
 
 :::
 
-## How it Works
+## <Icon name="hexagon-nodes-bolt" /> How it Works
 
 The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open standard that enables AI models to safely access external data and tools.
 
@@ -93,7 +93,7 @@ Configure your agent or AI client to connect to Cloud MCP. Cloud MCP is a remote
 
 The remote URL is: `https://mcp.cypress.io/mcp`. Clients that support OAuth will handle authentication automatically via a browser sign-in. For clients that do not support OAuth, set the authorization header with `Bearer YOUR_MCP_TOKEN` using your personal access token.
 
-<AccordionBlock title="Antigravity">
+<AccordionBlock title="Antigravity" icon={<Icon name="hexagon-nodes" />}>
 
 **OAuth (Recommended)**
 
@@ -135,7 +135,7 @@ See [Antigravity's documentation](https://antigravity.google/docs/mcp) for more 
 
 </AccordionBlock>
 
-<AccordionBlock title="Claude Desktop">
+<AccordionBlock title="Claude Desktop" icon={<Icon name="claude" />}>
 
 **OAuth (Recommended)**
 
@@ -180,7 +180,7 @@ Note: `mcp-remote` requires Node.js v22+ in the path to run successfully.
 
 </AccordionBlock>
 
-<AccordionBlock title="Claude Code (CLI)">
+<AccordionBlock title="Claude Code (CLI)" icon={<Icon name="claude" />}>
 
 **OAuth (Recommended)**
 
@@ -219,7 +219,7 @@ See [Claude Code's documentation](https://code.claude.com/docs/en/mcp) for more 
 
 </AccordionBlock>
 
-<AccordionBlock title="Cursor">
+<AccordionBlock title="Cursor" icon={<Icon name="hexagon-nodes" />}>
 
 **OAuth (Recommended)**
 
@@ -262,7 +262,7 @@ See [Cursor's documentation](https://cursor.com/docs/mcp) for more details.
 
 </AccordionBlock>
 
-<AccordionBlock title="GitHub Copilot in VS Code">
+<AccordionBlock title="GitHub Copilot in VS Code" icon={<Icon name="github" />}>
 
 You can install the Cloud MCP server in your user profile or a specific workspace. See [VS Code's MCP installation options](https://code.visualstudio.com/docs/copilot/customization/mcp-servers).
 
@@ -311,7 +311,7 @@ See [VS Code's documentation](https://code.visualstudio.com/docs/copilot/customi
 
 </AccordionBlock>
 
-<AccordionBlock title="GitHub Copilot CLI">
+<AccordionBlock title="GitHub Copilot CLI" icon={<Icon name="github" />}>
 
 GitHub Copilot CLI uses a personal access token for Cloud MCP authentication.
 
@@ -338,7 +338,7 @@ See [GitHub Copilot's documentation](https://docs.github.com/en/copilot/how-tos/
 
 </AccordionBlock>
 
-<AccordionBlock title="OpenAI Codex CLI">
+<AccordionBlock title="OpenAI Codex CLI" icon={<Icon name="openai" />}>
 
 Codex stores MCP configuration in `~/.codex/config.toml`, which is shared between the CLI and Codex IDE extension.
 

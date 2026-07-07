@@ -1,5 +1,5 @@
 ---
-title: 'Measuring Code Coverage in Cypress'
+title: 'Measuring code coverage in Cypress'
 description: 'Learn how to measure code coverage in Cypress and the difference between UI Coverage and Code Coverage.'
 sidebar_label: 'Code Coverage'
 ---
@@ -10,7 +10,7 @@ sidebar_label: 'Code Coverage'
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - Why code coverage helps you ship higher quality software with less risk
 - How code coverage compares to other quality tools
@@ -215,9 +215,7 @@ You can instrument the code as a build step through one of two ways:
 To instrument the application code located in your `src` folder and save it in
 an `instrumented` folder use the following command:
 
-```shell
-npx nyc instrument --compact=false src instrumented
-```
+<PackageManagerTabs run="nyc instrument --compact=false src instrumented" />
 
 We are passing the `--compact=false` flag to generate human-friendly output.
 
@@ -365,9 +363,7 @@ app scaffolded with `npm create vite`), use
 instrument your code as part of the Vite build pipeline instead of
 `babel-plugin-istanbul`.
 
-```shell
-npm install vite-plugin-istanbul --save-dev
-```
+<PackageManagerTabs install="vite-plugin-istanbul" dev />
 
 Add the plugin to your Vite configuration. The example below shows a Vue 3 +
 TypeScript project, but the same approach works for any Vite-based framework:
@@ -427,9 +423,7 @@ documentation for up-to-date installation instructions.
 
 :::
 
-```shell
-npm install @cypress/code-coverage --save-dev
-```
+<PackageManagerTabs install="@cypress/code-coverage" dev />
 
 Then add the code below to the
 [supportFile](/app/references/configuration#e2e) and

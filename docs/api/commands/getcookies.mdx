@@ -1,5 +1,5 @@
 ---
-title: 'getCookies | Cypress Documentation'
+title: 'cy.getCookies()'
 description: Get browser cookies for the current domain or the specified domain in Cypress.
 sidebar_label: getCookies
 ---
@@ -93,6 +93,34 @@ cy.getCookies()
   .then((cookies) => {
     expect(cookies[0]).to.have.property('name', 'session_id')
   })
+```
+
+#### Forward the session to another destination
+
+[`cy.request()`](/api/commands/request) already sends the browser's cookies for
+the request URL automatically, so you don't need to build a `Cookie` header to
+call your own logged-in API. Reach for this pattern only when you need to
+forward the current session somewhere Cypress won't attach cookies on its own,
+such as:
+
+- a **different domain** (`cy.request()` only sends cookies that match the
+  request URL)
+- something **outside the browser**, like a [`cy.task()`](/api/commands/task),
+  [`cy.exec()`](/api/commands/exec), or an external HTTP client
+
+In those cases, combine the cookies into a single `Cookie` header string:
+
+```javascript
+cy.getCookies().then((cookies) => {
+  const cookieHeader = cookies.map((c) => `${c.name}=${c.value}`).join('; ')
+
+  cy.request({
+    url: 'https://api.other-service.com/protected',
+    headers: {
+      Cookie: cookieHeader,
+    },
+  })
+})
 ```
 
 ## Rules

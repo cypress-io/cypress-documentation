@@ -5,22 +5,25 @@
  *
  * Pipeline:
  * 1. Walk `docs/` for `.md`/`.mdx`, filter by configured sections.
- * 2. Search for corresponding generated HTML file, extract content & remove unwanted elements, translate to markdown, and write flat markdown under `dist/llm/markdown/`.
+ * 2. Search for corresponding generated HTML file, extract content & remove unwanted elements, translate to markdown, and write flat markdown under `dist/llm/markdown/`. Each page's `##` sections are also written individually to `dist/llm/markdown/<doc-id>/<h2-slug>.md`.
  * 3. Optionally emit JSON under `dist/llm/json/`: chunked per-doc files + chunk index in `json/chunked/`, and full-document structured JSON in `json/full/`.
  * 4. Write `dist/llms.txt` (site manifest) and per-directory `index.md` listings under the markdown export root.
  */
 
+import fs from 'fs'
 import path from 'path'
 import {
   JsonExporter,
 } from './JsonExporter'
 import { ManifestWriter } from './ManifestWriter'
 import { MarkdownExporter } from './MarkdownExporter'
+import { SectionMarkdownExporter } from './SectionMarkdownExporter'
 import { LlmExportRunOptions } from './types'
 import {
   DEFAULT_LLM_EXPORT_CONFIG,
   countMarkdownAndJsonFiles,
   getGitSha,
+  stripMarkdownExtension,
   toPosixPath,
   walkDocs,
 } from './utils'
@@ -42,7 +45,9 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   const gitSha = getGitSha(siteDir)
   
   const mdExporter = new MarkdownExporter(distRoot, exportRoot)
+  const sectionExporter = new SectionMarkdownExporter(exportRoot)
   const jsonExporter = new JsonExporter(distRoot, exportRoot)
+  let sectionCount = 0
 
   const emitJson = Boolean(config.emit?.json)
   if (emitJson) {
@@ -69,12 +74,26 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
       gitSha,
     })
 
+    // A page whose doc id names a real docs directory gets no section export:
+    // its fragment files would share that directory with nested page exports
+    // and could silently overwrite them.
+    if (!fs.existsSync(path.join(docsRoot, stripMarkdownExtension(relFromDocs)))) {
+      sectionCount += sectionExporter.exportFile({
+        relFromDocs,
+        metadata,
+        bodyWithHeading,
+      }).sectionCount
+    }
+
     if (emitJson) {
       jsonExporter.exportFile({ relFromDocs, metadata, mdOutPath, bodyWithHeading, config })
     }
   }
 
-  mdExporter.buildMarkdownDirectoryIndexes()
+  // Fragment dirs stay out of the directory indexes and the LLM sitemap.
+  const fragmentDirs = sectionExporter.getFragmentDirs()
+
+  mdExporter.buildMarkdownDirectoryIndexes(fragmentDirs)
   if (config.emit?.json) {
     jsonExporter.exportIndex({ gitSha, generatedAt })
   }
@@ -82,7 +101,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   const manifestWriter = new ManifestWriter(distRoot)
   manifestWriter.write(config)
 
-  writeSitemap(config.url, distRoot)
+  writeSitemap(config.url, distRoot, fragmentDirs)
 
   writeApiCatalog(config.url, distRoot)
 
@@ -97,6 +116,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
       'LLM Export complete.',
       `Time: ${elapsedMs}ms`,
       `Source docs scanned: ${files.length}`,
+      `Section markdown files: ${sectionCount}`,
       `Chunks indexed: ${chunkCount}`,
       `Output files under ${toPosixPath(path.relative(siteDir, exportRoot))}/: ${outTotal} total`,
       `  — ${outMarkdown} markdown (.md)`,

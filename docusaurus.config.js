@@ -109,6 +109,7 @@ const config = {
     require.resolve('docusaurus-plugin-image-zoom'),
     require.resolve('./plugins/llm'),
     require.resolve('./plugins/faq-structured-data'),
+    require.resolve('./plugins/og-image-cards'),
     // ....
     function docusaurusTailwindcssPlugin(context, options) {
       return {
@@ -125,7 +126,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
-      image: 'img/logo/cypress-logo-circle-dark.png',
+      image: 'img/social-card.png',
+      metadata: [
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'Cypress Documentation' },
+        { property: 'og:image:width', content: '2400' },
+        { property: 'og:image:height', content: '1260' },
+        { property: 'og:image:alt', content: 'Cypress Documentation' },
+      ],
       navbar: {
         style: 'dark',
         logo: {

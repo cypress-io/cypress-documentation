@@ -4,16 +4,19 @@ import { join } from 'path'
 
 export default defineConfig({
   projectId: 'imown1',
+  allowCypressEnv: false,
   fixturesFolder: false,
   viewportHeight: 800,
   viewportWidth: 1200,
   experimentalMemoryManagement: true,
+  experimentalFastVisibility: true,
+  video: false,
   retries: {
     runMode: 2,
     openMode: 0,
   },
   e2e: {
-    supportFile: false,
+    supportFile: "cypress/support/e2e.ts",
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on, config) {
       const path = 'docs';
@@ -48,7 +51,10 @@ export default defineConfig({
 
       const URLs = walk(path).filter((file) => file !== undefined).map((file) => file.slice(5))
 
-      config.env.URLs = URLs
+      config.expose = config.expose || {}
+      config.expose.URLs = URLs
+
+      config.expose.limitPerSection = Number(config.env.limitPerSection) || 0
 
       return config
     },
