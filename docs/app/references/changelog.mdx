@@ -106,7 +106,7 @@ _Released Jun 9, 2026_
 - Fixed an issue where tests in Chrome and Electron could fail when the application made cross-origin requests to local or private network addresses (for example, a login or OAuth flow that redirects between local development hosts). Chrome 141 began enforcing Local Network Access checks that gate such requests behind a permission prompt the automated browser cannot answer. Cypress now opts out of these checks so these requests succeed as they did in Chrome 140. Fixes [#32708](https://github.com/cypress-io/cypress/issues/32708).
 - Fixed an issue where, after a same-origin `fetch` or XHR request updated a cookie, a subsequent page navigation or reload could send the previous (stale) cookie value to the server instead of the updated one. Fixes [#25841](https://github.com/cypress-io/cypress/issues/25841).
 - Fixed an issue where a cross-origin navigation back to a previously-visited origin (for example, completing a login that redirects from an identity provider back to your application) could intermittently load the Cypress app interface instead of your application, causing flaky tests. Fixed in [#33991](https://github.com/cypress-io/cypress/pull/33991).
-- Fixed an issue where a [`cy.origin()`](https://on.cypress.io/origin) test could intermittently fail with `The command was expected to run against origin <x> but the application is at origin <y>` when a navigation (such as a login redirect) ran on the primary origin shortly after the runner switched super-domains. A stale internal `__cypress.unload` cookie could cause the proxy to redirect the navigation back to the Cypress runner instead of serving it; the cookie is now cleared whenever the application document is (re)served. Fixed in [#34020](https://github.com/cypress-io/cypress/pull/34020).
+- Fixed an issue where a [`cy.origin()`](/api/commands/origin) test could intermittently fail with `The command was expected to run against origin <x> but the application is at origin <y>` when a navigation (such as a login redirect) ran on the primary origin shortly after the runner switched super-domains. A stale internal `__cypress.unload` cookie could cause the proxy to redirect the navigation back to the Cypress runner instead of serving it; the cookie is now cleared whenever the application document is (re)served. Fixed in [#34020](https://github.com/cypress-io/cypress/pull/34020).
 - Fixed an issue where setting a request or response header to an empty string in a [`cy.intercept()`](/api/commands/intercept) handler (for example `req.headers['x-foo'] = ''`) would report the header as set on the intercepted request while silently dropping it from the request sent over the network. Empty-string header values are now preserved; headers are only removed when deleted or set to `undefined`. Fixes [#25767](https://github.com/cypress-io/cypress/issues/25767).
 - Fixed an issue where runs recorded to Cypress Cloud from Jenkins could show the branch name with the remote prefix included (for example `origin/main` instead of `main`), or report the wrong branch in multibranch pipelines. Cypress now reports the actual branch name. Fixes [#20833](https://github.com/cypress-io/cypress/issues/20833).
 - Fixed an issue where invalid `CYPRESS_env` or `CYPRESS_expose` environment variables (for example, a plain string instead of a JSON object) were silently ignored with no warning. Cypress now emits a warning explaining that a JSON object is required and points to the `--env` or `--expose` CLI flags for setting individual values. Fixes [#29682](https://github.com/cypress-io/cypress/issues/29682) and [#19508](https://github.com/cypress-io/cypress/issues/19508). Fixed in [#33945](https://github.com/cypress-io/cypress/pull/33945).
@@ -331,7 +331,7 @@ _Released Feb 03, 2026_
 
 **Deprecations:**
 
-[`Cypress.env()`](/api/cypress-api/env) is now deprecated and will be removed in a future major release of Cypress. To understand why, and how to migrate, please read our [Migration Guide](https://on.cypress.io/cypress-env-migration). Addressed in [#33181](https://github.com/cypress-io/cypress/pull/33181).
+[`Cypress.env()`](/api/cypress-api/env) is now deprecated and will be removed in a future major release of Cypress. To understand why, and how to migrate, please read our [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cypressenv). Addressed in [#33181](https://github.com/cypress-io/cypress/pull/33181).
 
 **Features:**
 
@@ -543,7 +543,7 @@ _Released Sep 23, 2025_
 
 **Features:**
 
-- Added Escape key support to [`cy.press()`](http://on.cypress.io/api/press). Addresses [#32429](https://github.com/cypress-io/cypress/issues/32429). Addressed in [#32545](https://github.com/cypress-io/cypress/pull/32545).
+- Added Escape key support to [`cy.press()`](/api/commands/press). Addresses [#32429](https://github.com/cypress-io/cypress/issues/32429). Addressed in [#32545](https://github.com/cypress-io/cypress/pull/32545).
 
 **Bugfixes:**
 
@@ -882,7 +882,7 @@ _Released Mar 12, 2025_
 
 **Features:**
 
-- [`Cypress.stop()`](https://on.cypress.io/cypress-stop) is now available to stop the Cypress App on the current machine while tests are running. This can be useful for stopping test execution upon failures or other predefined conditions. Addresses [#518](https://github.com/cypress-io/cypress/issues/518). Addressed in [#31225](https://github.com/cypress-io/cypress/pull/31225).
+- [`Cypress.stop()`](/api/cypress-api/stop) is now available to stop the Cypress App on the current machine while tests are running. This can be useful for stopping test execution upon failures or other predefined conditions. Addresses [#518](https://github.com/cypress-io/cypress/issues/518). Addressed in [#31225](https://github.com/cypress-io/cypress/pull/31225).
 
 **Misc:**
 
