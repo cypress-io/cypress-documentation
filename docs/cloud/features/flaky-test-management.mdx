@@ -57,7 +57,7 @@ Any test can show flake due to do a range of causes, including legitmate bugs.
 - **Real bugs**: In a stable test environment with well-written tests, flake
 in a certain test often represents **hidden race conditions** in the application you are
 testing. These might not show up on developer machines but become material on
-lower-powered CI machines, as well as real user devices. This is the signal to watch for.
+lower-powered CI machines, as well as real user devices.
 - **Test design**: Some tests are written to move quickly without verifying the
 ready-state before making an assertion. This can lead to inconsistent results because
 of assumptions the tests rely on about the order of events - for example, which part 
