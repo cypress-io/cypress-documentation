@@ -53,9 +53,8 @@ Jump to the [cheat sheet](#Cheat-sheet) for a quick reference.
 
 Here's a side-by-side comparison showing how a Selenium test translates to
 Cypress. The Selenium example uses the JavaScript bindings
-([`selenium-webdriver`](https://www.npmjs.com/package/selenium-webdriver)) with
-Mocha, but the same structure applies to the Java, Python, C#, and Ruby
-bindings.
+(`selenium-webdriver`) with Mocha, but the same structure applies to the Java,
+Python, C#, and Ruby bindings.
 
 <Badge type="danger">Before: Selenium (JavaScript)</Badge>
 
@@ -117,18 +116,18 @@ browser for you and retries commands and assertions automatically.
 
 ## Key differences at a glance
 
-| Concern             | Selenium                                                                 | Cypress                                                                    |
-| ------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| Language            | Java, Python, C#, JavaScript, Ruby                                       | JavaScript / TypeScript only                                               |
-| Where tests run     | Out of process, driving the browser over the WebDriver protocol          | Inside the browser, in the same run loop as your app                       |
-| Browser lifecycle   | You create and quit the `driver`                                         | Managed by Cypress                                                         |
-| Drivers             | ChromeDriver/GeckoDriver etc. (via Selenium Manager or WebDriverManager) | None (uses installed browsers directly)                                    |
-| Waiting             | Implicit + explicit waits (`WebDriverWait`, `ExpectedConditions`)        | Built-in [retry-ability](/app/core-concepts/retry-ability)                 |
-| Test runner         | JUnit / TestNG / pytest / NUnit / Mocha                                  | [Mocha](/app/core-concepts/writing-and-organizing-tests) (`describe`/`it`) |
-| Assertions          | Provided by the test runner or a matcher library                         | Built-in [Chai](/app/references/assertions) `.should()` / `expect()`       |
-| Network control     | Not built in (requires a proxy like BrowserMob)                          | [`cy.intercept()`](/api/commands/intercept) built in                       |
-| Cross-machine scale | Selenium Grid                                                            | [Cypress Cloud](/cloud/get-started/introduction) parallelization           |
-| Debugging CI runs   | Logs, screenshots                                                        | [Test Replay](/cloud/features/test-replay), time-travel, videos            |
+| Concern             | Selenium                                                                 | Cypress                                                                      |
+| ------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Language            | Java, Python, C#, JavaScript, Ruby                                       | JavaScript / TypeScript                                                      |
+| Where tests run     | Out of process, driving the browser over the WebDriver protocol          | Inside the browser, in the same run loop as your app                         |
+| Browser lifecycle   | You create and quit the `driver`                                         | Managed by Cypress                                                           |
+| Drivers             | ChromeDriver/GeckoDriver etc. (via Selenium Manager or WebDriverManager) | None                                                                         |
+| Waiting             | Implicit + explicit waits (`WebDriverWait`, `ExpectedConditions`)        | Built-in [retry-ability](/app/core-concepts/retry-ability)                   |
+| Test runner         | JUnit / TestNG / pytest / NUnit / Mocha                                  | [Mocha](/app/core-concepts/writing-and-organizing-tests) (`describe`/`it`)   |
+| Assertions          | Provided by the test runner or a matcher library                         | Built-in [Chai](/app/references/assertions) `.should()` / `expect()`         |
+| Network control     | Not built in (requires a proxy like BrowserMob)                          | [`cy.intercept()`](/api/commands/intercept) built in                         |
+| Cross-machine scale | Selenium Grid                                                            | [Cypress Cloud](/cloud/get-started/introduction) parallelization             |
+| Debugging CI runs   | Logs, screenshots                                                        | [Test Replay](/cloud/features/test-replay), time-travel, screenshots, videos |
 
 ## Confirm your target language
 
