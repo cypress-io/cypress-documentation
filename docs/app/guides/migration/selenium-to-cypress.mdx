@@ -52,48 +52,42 @@ Jump to the [cheat sheet](#Cheat-sheet) for a quick reference.
 ## Quick conversion example
 
 Here's a side-by-side comparison showing how a Selenium test translates to
-Cypress. The Selenium example is written in Java, but the same structure
-applies to Python, C#, and Ruby suites.
+Cypress. The Selenium example uses the JavaScript bindings
+([`selenium-webdriver`](https://www.npmjs.com/package/selenium-webdriver)) with
+Mocha, but the same structure applies to the Java, Python, C#, and Ruby
+bindings.
 
-<Badge type="danger">Before: Selenium (Java + JUnit)</Badge>
+<Badge type="danger">Before: Selenium (JavaScript)</Badge>
 
-```java title="AuthorizationTest.java"
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.*;
-import java.time.Duration;
-import static org.junit.jupiter.api.Assertions.*;
+```js title="authorization.test.js"
+const { Builder, By, until } = require('selenium-webdriver')
+const assert = require('assert')
 
-class AuthorizationTest {
-  WebDriver driver;
-  WebDriverWait wait;
+describe('Authorization', function () {
+  let driver
 
-  @BeforeEach
-  void setUp() {
-    driver = new ChromeDriver();
-    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-  }
+  beforeEach(async function () {
+    driver = await new Builder().forBrowser('chrome').build()
+  })
 
-  @AfterEach
-  void tearDown() {
-    driver.quit();
-  }
+  afterEach(async function () {
+    await driver.quit()
+  })
 
-  @Test
-  void signsUp() {
-    driver.get("http://localhost:3000/signup");
+  it('signs up', async function () {
+    await driver.get('http://localhost:3000/signup')
 
-    driver.findElement(By.id("email")).sendKeys("user@email.com");
-    driver.findElement(By.id("confirm-email")).sendKeys("user@email.com");
-    driver.findElement(By.id("password")).sendKeys("testPassword1234");
+    await driver.findElement(By.id('email')).sendKeys('user@email.com')
+    await driver.findElement(By.id('confirm-email')).sendKeys('user@email.com')
+    await driver.findElement(By.id('password')).sendKeys('testPassword1234')
 
-    driver.findElement(By.cssSelector("button[type=submit]")).click();
+    await driver.findElement(By.css('button[type=submit]')).click()
 
-    wait.until(ExpectedConditions.urlContains("/signup/success"));
-    assertTrue(driver.getCurrentUrl().contains("/signup/success"));
-  }
-}
+    await driver.wait(until.urlContains('/signup/success'), 10000)
+    const url = await driver.getCurrentUrl()
+    assert(url.includes('/signup/success'))
+  })
+})
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -116,10 +110,10 @@ describe('Authorization', () => {
 })
 ```
 
-Notice what disappeared: the `WebDriver` and `WebDriverWait` fields, the
-`@BeforeEach`/`@AfterEach` lifecycle, the `driver.quit()`, and the explicit
-`wait.until(...)`. Cypress opens and closes the browser for you and retries
-commands and assertions automatically.
+Notice what disappeared: the `Builder` and `driver` setup, the
+`beforeEach`/`afterEach` lifecycle, the `driver.quit()`, the `await` on every
+call, and the explicit `driver.wait(until...)`. Cypress opens and closes the
+browser for you and retries commands and assertions automatically.
 
 ## Key differences at a glance
 
