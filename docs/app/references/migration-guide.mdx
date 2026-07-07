@@ -76,6 +76,21 @@ If you need a temporary escape hatch while you update those tests, opt back into
 
 :::
 
+### `experimentalSourceRewriting` config option removed
+
+The `experimentalSourceRewriting` configuration option has been removed. The experimental AST-based source rewriting it enabled has been removed in favor of the default regex-based source rewriting, so default behavior is unchanged. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it — no behavior change, just remove the key.
+
+:::cypress-config-example
+
+```ts
+{
+  // Remove this line
+  experimentalSourceRewriting: true,
+}
+```
+
+:::
+
 ### `cy.getCookie()` and `cy.getCookies()` are now queries
 
 [`cy.getCookie()`](/api/commands/getcookie) and
