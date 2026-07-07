@@ -63,14 +63,14 @@ ready-state before making an assertion. This can lead to inconsistent results be
 of assumptions the tests rely on about the order of events - for example, which part 
 of the page loads first.
 - **Unstable test environment**: End-to-end tests often execute against live
-production enivorments or staging/QA servers that integrate many systems, which
+production environments or staging/QA servers that integrate many systems, which
 can indpendently have downtime.
 - **Third-party dependencies**: If your test requires passing through a service
 that's outside of your control (such as a payment provider), it may appear flaky
 due to issues in the third party.
 
 Understanding flake helps you find and control what might be unstable, improving
-your pipeline success rate, and boosting confifedence in the results. It also helps you
+your pipeline success rate, and boosting confidence in the results. It also helps you
 avoid real bugs that can have financial impact to your organization. A persistent,
 unexplained flaky test should be addressed, even if it not something you want to block
 the pipeline itself.
@@ -121,7 +121,7 @@ developers to remember and report intermittent failures.
 Test retries are the _fundamental mechanism_ that enables Cypress Cloud to
 detect flaky tests. Enabling test retries is required to take advantage of any 
 Flaky Test Management feature. Retries can be confirgured globally for your project
-or invidually for specifc tests or test suites.
+or individually for specific tests or test suites.
 
 Read more about [test retries](/app/guides/test-retries) in the Cypress App guide.
 
