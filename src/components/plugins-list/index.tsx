@@ -19,10 +19,10 @@ function createMarkup(html) {
 
 const GENERATED = (generatedJSON && generatedJSON.plugins) || {}
 
-const BADGE_ORDER = ['official', 'verified', 'community', 'deprecated']
+const BADGE_ORDER = ['official', 'community', 'deprecated']
 const BADGE_RANK = Object.fromEntries(BADGE_ORDER.map((b, i) => [b, i]))
 
-/** Sort by badge tier (official → verified → community → deprecated), then by
+/** Sort by badge tier (official → community → deprecated), then by
  *  most recently published first. Entries without a publish date sort last,
  *  with a stable alphabetical fallback. */
 function comparePlugins(a, b) {
@@ -41,7 +41,6 @@ function comparePlugins(a, b) {
 
 const BADGE_INFO = {
   official: 'Built and maintained by the Cypress team.',
-  verified: 'Community-owned and reviewed by the Cypress team.',
   community:
     'Community-owned and not reviewed by Cypress. Evaluate before use.',
   deprecated:

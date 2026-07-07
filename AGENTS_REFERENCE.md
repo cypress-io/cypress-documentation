@@ -122,8 +122,8 @@ Images go in `static/img/...` and are referenced via `/img/...`.
 
 To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 (name, description, repo link, keywords). Entries are grouped in this order:
-`official` (Cypress-owned) → `verified` (community, verified by Cypress) →
-`community` (unverified) → `deprecated` (unmaintained / incompatible with v10+).
+`official` (Cypress-owned) → `community` (community-owned) → `deprecated`
+(unmaintained / incompatible with v10+).
 
 ## Writing style
 
