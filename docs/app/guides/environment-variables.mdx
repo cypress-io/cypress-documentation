@@ -1,5 +1,5 @@
 ---
-title: 'Environment Variables & Secrets'
+title: 'Environment variables and secrets in Cypress'
 description: 'Learn how to manage environment variables and secrets in Cypress. Understand when to use cy.env(), when to use Cypress.expose(), and how to safely pass values across environments.'
 sidebar_label: 'Environment Variables & Secrets'
 ---
@@ -122,6 +122,19 @@ Cypress automatically removes the leading `CYPRESS_` or `cypress_` prefix and no
 :::danger
 
 The environment variable `CYPRESS_INTERNAL_ENV` is reserved and should not be set.
+
+:::
+
+:::note
+
+Some `CYPRESS_`-prefixed variables are consumed by the Cypress CLI and Cypress
+Cloud rather than being treated as test environment variables. Most notably,
+[`CYPRESS_RECORD_KEY`](/app/references/command-line#cypress-run-record-key-lt-record-key-gt)
+and [`CYPRESS_PROJECT_ID`](/cloud/account-management/projects#Identification) are
+read directly from your operating system environment when recording to Cypress
+Cloud. They must be set as OS-level environment variables (as shown above) and
+**cannot** be supplied through `cypress.env.json` or the `env` block of your
+Cypress configuration.
 
 :::
 

@@ -12,7 +12,7 @@ interface BtnProps {
     variant?: keyof typeof VariantClassesTable
     block?: boolean;
     disabled?: boolean;
-    target?: string;
+    target?: '_blank' | '_top' | '_parent' | '_self';
     className?: string;
     href?: string;
     label?: string;
@@ -34,7 +34,7 @@ const Btn: React.FC<BtnProps> = ({
     <Button
         variant={variant}
         href={href}
-        size={size}
+        size={`${size}`}
         className={className}
         target={target}
         disabled={disabled}

@@ -26,6 +26,20 @@ npm run test:plugins  # vitest unit tests for plugins/
 3. `npm run test:plugins` — only when you touched `plugins/`.
 4. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
 
+## Pull requests
+
+When opening a PR, fill out **[`.github/pull_request_template.md`](./.github/pull_request_template.md)**
+(GitHub loads it into the PR body automatically). It is the historical record of
+the change: complete every section, explaining _why_ the change was made, not
+just _what_ changed.
+
+For a **release PR** (opened from a `releases/*` branch to document a specific
+product release), use the release template instead:
+**[`.github/PULL_REQUEST_TEMPLATE/release.md`](./.github/PULL_REQUEST_TEMPLATE/release.md)**.
+Select it by appending `?template=release.md` to the compare URL. Name the
+target release, list every included change, and make sure a new changelog entry
+is one of them.
+
 ## Rules
 
 Each rule is a hard convention. See the linked section for the how and why.
@@ -82,9 +96,12 @@ Each rule is a hard convention. See the linked section for the how and why.
   `:::cypress-config-plugin-example`). Never hand-write `defineConfig` + tabs.
 - TS/JS examples → one `ts` block tagged `copyTsToJs`; never maintain a JS copy.
 - E2E-vs-component snippets → `:::visit-mount-example`.
+- Package-manager commands → `<PackageManagerTabs>` (with `install`, `run`, or
+  `exec`) or `<CypressCommandTabs>` for `cypress` subcommands. Never hand-write
+  npm/Yarn/pnpm/Bun tab sets.
 - Tabs sync via a shared `groupId`. Fixed orders: package managers
-  **npm → Yarn → pnpm**; frameworks **React → Angular → Vue → Svelte**; JS before
-  TS.
+  **npm → Yarn → pnpm → Bun**; frameworks **React → Angular → Vue → Svelte**; JS
+  before TS.
 
 **Admonitions** — [details](./AGENTS_REFERENCE.md#admonition-blocks)
 
@@ -100,3 +117,10 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Links to `www.cypress.io` / `on.cypress.io` / `learn.cypress.io` need UTM
   params (`utm_source=docs.cypress.io` + a placement `utm_medium`). Do not add
   them to internal links or `cloud.cypress.io`.
+
+**Plugins** — [details](./AGENTS_REFERENCE.md#project-layout)
+
+- The sub-packages in `plugins/` are never installed on their own; all of their
+  dependencies resolve from the repository root's `node_modules`. Declare new
+  dependencies in the **root** `package.json`, never in a plugin's own
+  `package.json` (pins there are never installed and just drift stale).

@@ -1,53 +1,56 @@
 ---
-title: 'Enterprise SSO | Cypress Cloud'
-description: 'Configure SSO with Okta, SAML, Azure AD, or OneLogin in Cypress for your Cloud organization.'
-sidebar_label: Enterprise SSO
+title: 'Single sign-on (SSO) in Cypress Cloud'
+description: 'Configure SSO with an enterprise identity provider such as Okta, SAML, Azure AD, or OneLogin for your Cypress Cloud organization.'
+sidebar_label: Single Sign-On (SSO)
 sidebar_position: 40
 ---
 
 <ProductHeading product="cloud" plan="business" />
 
-# Enterprise SSO
+# Single Sign-On (SSO)
+
+Single sign-on (SSO) lets your team sign in to Cypress Cloud through your
+organization's identity provider instead of separate Cypress credentials,
+keeping your quality hub secure and removing daily login friction.
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
-- How to enable Enterprise SSO for your organization
-- How to configure SSO with Okta, SAML, Azure AD, or OneLogin
+- How to enable SSO for your organization
+- How to connect your enterprise identity provider (Okta, SAML, Azure AD, or OneLogin)
 
 :::
 
-Cypress Cloud is your team's quality hub — the place where test results are
-reviewed, flaky tests are tracked, and CI pipelines are monitored. Connecting it
-to your organization's identity provider via SSO keeps that hub secure and
-removes friction from every developer's daily workflow:
+Connecting Cypress Cloud to your identity provider pays off across the developer
+lifecycle:
 
-- **Faster onboarding** — new engineers are provisioned through your IdP and
+- **Faster onboarding:** new engineers are provisioned through your IdP and
   can immediately run and review tests without waiting for manual Cypress Cloud
   invitations, keeping quality checks part of the workflow from day one.
-- **Automatic offboarding** — revoking a user in your IdP immediately removes
+- **Automatic offboarding:** revoking a user in your IdP immediately removes
   their access to test results, run history, and project configuration, closing
   the gap that standalone credentials leave open when team members depart.
-- **Enforce your security baseline** — MFA, conditional access, and session
+- **Enforce your security baseline:** MFA, conditional access, and session
   policies defined in your IdP apply automatically to Cypress Cloud, so your
   quality data is protected by the same controls as the rest of your toolchain
   without any extra configuration.
-- **Less credential sprawl** — developers sign in with their existing corporate
+- **Less credential sprawl:** developers sign in with their existing corporate
   identity, eliminating a separate username and password to manage, rotate, and
-  potentially lose — and removing one more reason for login friction that slows
+  potentially lose, and removing one more reason for login friction that slows
   down test review and incident response.
 
 ## Getting Started
 
 **You need two things to get started:**
 
-- A Cypress Cloud account with a [Business or Enterprise paid pricing plans](https://www.cypress.io/pricing)
+- A Cypress Cloud account on the **Business** or **Enterprise** plan. See
+  [pricing](https://www.cypress.io/pricing).
 - You must be an **owner** of your Cypress Cloud organization.
 
 ## Enable SSO
 
-1. Log in to [Cypress Cloud](https://cloud.cypess.io) and navigate to the **Integrations** page for your
+1. Log in to [Cypress Cloud](https://cloud.cypress.io) and navigate to the **Integrations** page for your
    organization.
 2. Scroll down to the **Enterprise SSO** section. Select your SSO provider and
    take note of the information provided and required. Keep this window open and

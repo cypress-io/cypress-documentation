@@ -66,7 +66,10 @@ describe('Basic tests', () => {
 
   describe('404', () => {
     it('displays 404 page', () => {
-      cy.visit('/foo/bar/baz')
+      // The static production build returns a real 404 status for unknown
+      // routes (the dev server returned 200 and rendered the 404 client-side),
+      // so allow the non-2xx status and assert the 404 page renders.
+      cy.visit('/foo/bar/baz', { failOnStatusCode: false })
       cy.get('h1')
         .should('be.visible')
         .and('have.text', 'Page Not Found')

@@ -18,35 +18,117 @@
  * This script's purpose is to ALERT us when this does happen.
  */
 import util from 'util'
+import path from 'path'
 import { exec as execOriginal } from 'child_process'
-const exec = util.promisify(execOriginal)
+import { fileURLToPath } from 'url'
 import { AlgoliaClient } from './algolia-client.mjs'
 import config from './config.json' with { type: 'json' }
 
-// Required environment variables
-const API_KEY = process.env.ALGOLIA_API_KEY
-const APPLICATION_ID = process.env.ALGOLIA_APPLICATION_ID
-const ACCEPTABLE_DELTA = parseInt(process.env.ALGOLIA_ACCEPTABLE_DELTA) || 1000
-const ACCEPTABLE_DELTA_RATIO =
-  parseFloat(process.env.ALGOLIA_ACCEPTABLE_DELTA_RATIO) || 0.05
+const exec = util.promisify(execOriginal)
+
 const ALGOLIA_INDEX = config.index_name
 
-const algoliaClient = new AlgoliaClient(ALGOLIA_INDEX, API_KEY, APPLICATION_ID)
-
 /**
+ * Parses the "Nb hits: N" line the docsearch scraper prints when it finishes.
+ *
  * @param {string} stdout
- * @returns {number | null}
+ * @returns {number | null} the parsed hit count, or null when absent
  */
-const parseScraperHits = (stdout) => {
-  const match = stdout.match(/Nb hits:\s*(\d+)/i)
+export const parseScraperHits = (stdout) => {
+  const match = String(stdout ?? '').match(/Nb hits:\s*(\d+)/i)
   return match ? parseInt(match[1], 10) : null
 }
 
 /**
+ * Pure validation of a scrape's outcome. Given the index counts before/after
+ * the scrape and the scraper's own reported hit count, decides whether the run
+ * is healthy, and if not, why. Contains no I/O so it can be unit tested.
+ *
+ * @param {object} params
+ * @param {number} params.countBefore - index entry count before the scrape
+ * @param {number} params.countAfter - index entry count after the scrape
+ * @param {number | null} params.scraperHits - hits the scraper reported, or
+ *   null when it could not be parsed (upload check is then skipped)
+ * @param {number} params.acceptableDelta - absolute tolerance for the
+ *   upload/index checks (e.g. 1000)
+ * @param {number} params.acceptableDeltaRatio - fractional tolerance applied to
+ *   the post-scrape count (e.g. 0.05)
+ * @returns {{
+ *   ok: boolean,
+ *   exitCode: 0 | 1,
+ *   reason: 'ok' | 'large-increase' | 'upload-mismatch' | 'index-drop',
+ *   uploadDelta: number | null,
+ *   indexDelta: number,
+ *   acceptableIndexDelta: number,
+ *   message: string,
+ * }}
+ */
+export const evaluateScrape = ({
+  countBefore,
+  countAfter,
+  scraperHits,
+  acceptableDelta,
+  acceptableDeltaRatio,
+}) => {
+  const uploadDelta =
+    scraperHits === null ? null : Math.abs(countAfter - scraperHits)
+  const indexDelta = countAfter - countBefore
+  const acceptableIndexDelta = Math.max(
+    acceptableDelta,
+    Math.floor(countAfter * acceptableDeltaRatio)
+  )
+
+  const base = { uploadDelta, indexDelta, acceptableIndexDelta }
+
+  // 1. Upload completeness: the index count should match what the scraper says
+  //    it uploaded. Uses the raw absolute tolerance, not the ratio-scaled one.
+  if (uploadDelta !== null && uploadDelta > acceptableDelta) {
+    return {
+      ...base,
+      ok: false,
+      exitCode: 1,
+      reason: 'upload-mismatch',
+      message: `Algolia index count (${countAfter}) does not match scraper hits (${scraperHits}). Upload delta: ${uploadDelta}`,
+    }
+  }
+
+  // 2. Unexpected drop: the index shrank by more than we tolerate.
+  if (indexDelta < -acceptableIndexDelta) {
+    return {
+      ...base,
+      ok: false,
+      exitCode: 1,
+      reason: 'index-drop',
+      message: `Index entry count dropped by ${Math.abs(indexDelta)}, which exceeds the acceptable delta of ${acceptableIndexDelta}.`,
+    }
+  }
+
+  // 3. Large increase: allowed (may be legit new docs / recovery), but warned.
+  if (indexDelta > acceptableIndexDelta) {
+    return {
+      ...base,
+      ok: true,
+      exitCode: 0,
+      reason: 'large-increase',
+      message: `Large index increase detected (${countBefore} -> ${countAfter}). This may be expected after significant doc additions or recovering from a previously under-indexed state.`,
+    }
+  }
+
+  return {
+    ...base,
+    ok: true,
+    exitCode: 0,
+    reason: 'ok',
+    message: `Scrape validation passed. Index entries: ${countAfter}${scraperHits !== null ? ` (scraper hits: ${scraperHits})` : ''}.`,
+  }
+}
+
+/**
  * Executes the run-scraper.sh script and waits for it to finish
+ * @param {{ apiKey: string, applicationId: string }} credentials
  * @returns {Promise<string>} scraper stdout
  */
-const scrape = async () => {
+const scrape = async ({ apiKey, applicationId }) => {
   let stdout = ''
   try {
     console.log('About to start scraping...')
@@ -55,7 +137,7 @@ const scrape = async () => {
     )
     console.time('scraper')
     const result = await exec(
-      `API_KEY=${API_KEY} APPLICATION_ID=${APPLICATION_ID} sh ./scripts/search/run-scraper.sh`
+      `API_KEY=${apiKey} APPLICATION_ID=${applicationId} sh ./scripts/search/run-scraper.sh`
     )
     stdout = result.stdout ?? ''
     if (stdout) {
@@ -75,15 +157,29 @@ const scrape = async () => {
 }
 
 const main = async () => {
+  const API_KEY = process.env.ALGOLIA_API_KEY
+  const APPLICATION_ID = process.env.ALGOLIA_APPLICATION_ID
+  const ACCEPTABLE_DELTA =
+    parseInt(process.env.ALGOLIA_ACCEPTABLE_DELTA) || 1000
+  const ACCEPTABLE_DELTA_RATIO =
+    parseFloat(process.env.ALGOLIA_ACCEPTABLE_DELTA_RATIO) || 0.05
+
+  const algoliaClient = new AlgoliaClient(
+    ALGOLIA_INDEX,
+    API_KEY,
+    APPLICATION_ID
+  )
+
   console.log(`Comparing entries for index: ${ALGOLIA_INDEX}`)
-  const countBeforeScraper = await algoliaClient.getEntriesForIndex(
-    ALGOLIA_INDEX
-  )
+  const countBeforeScraper =
+    await algoliaClient.getEntriesForIndex(ALGOLIA_INDEX)
   console.log(`Entries count before scraper: ${countBeforeScraper}`)
-  const scraperStdout = await scrape()
-  const countAfterScraper = await algoliaClient.getEntriesForIndex(
-    ALGOLIA_INDEX
-  )
+  const scraperStdout = await scrape({
+    apiKey: API_KEY,
+    applicationId: APPLICATION_ID,
+  })
+  const countAfterScraper =
+    await algoliaClient.getEntriesForIndex(ALGOLIA_INDEX)
   console.log(`Entries count after scraper: ${countAfterScraper}`)
 
   const scraperHits = parseScraperHits(scraperStdout)
@@ -95,52 +191,44 @@ const main = async () => {
     )
   }
 
-  const uploadDelta =
-    scraperHits === null
-      ? null
-      : Math.abs(countAfterScraper - scraperHits)
-  const indexDelta = countAfterScraper - countBeforeScraper
-  const acceptableIndexDelta = Math.max(
-    ACCEPTABLE_DELTA,
-    Math.floor(countAfterScraper * ACCEPTABLE_DELTA_RATIO)
-  )
+  const result = evaluateScrape({
+    countBefore: countBeforeScraper,
+    countAfter: countAfterScraper,
+    scraperHits,
+    acceptableDelta: ACCEPTABLE_DELTA,
+    acceptableDeltaRatio: ACCEPTABLE_DELTA_RATIO,
+  })
 
-  console.log(`Index delta after scrape: ${indexDelta}`)
-  console.log(`Acceptable index delta: ${acceptableIndexDelta}`)
-  if (uploadDelta !== null) {
-    console.log(`Upload delta (index vs scraper hits): ${uploadDelta}`)
+  console.log(`Index delta after scrape: ${result.indexDelta}`)
+  console.log(`Acceptable index delta: ${result.acceptableIndexDelta}`)
+  if (result.uploadDelta !== null) {
+    console.log(`Upload delta (index vs scraper hits): ${result.uploadDelta}`)
   }
 
-  if (uploadDelta !== null && uploadDelta > ACCEPTABLE_DELTA) {
-    console.error(
-      `Algolia index count (${countAfterScraper}) does not match scraper hits (${scraperHits}). Upload delta: ${uploadDelta}`
-    )
+  if (!result.ok) {
+    console.error(result.message)
     console.error(
       'Check the config.json file for any changes and check the scraper logs for any errors.'
     )
-    process.exit(1)
+    process.exit(result.exitCode)
   }
 
-  if (indexDelta < -acceptableIndexDelta) {
-    console.error(
-      `Index entry count dropped by ${Math.abs(indexDelta)}, which exceeds the acceptable delta of ${acceptableIndexDelta}.`
-    )
-    console.error(
-      'Check the config.json file for any changes and check the scraper logs for any errors.'
-    )
-    process.exit(1)
+  if (result.reason === 'large-increase') {
+    console.warn(result.message)
+  } else {
+    console.log(result.message)
   }
 
-  if (indexDelta > acceptableIndexDelta) {
-    console.warn(
-      `Large index increase detected (${countBeforeScraper} -> ${countAfterScraper}). This may be expected after significant doc additions or recovering from a previously under-indexed state.`
-    )
-  }
-
-  console.log(
-    `Scrape validation passed. Index entries: ${countAfterScraper}${scraperHits !== null ? ` (scraper hits: ${scraperHits})` : ''}.`
-  )
   process.exit(0)
 }
 
-main()
+// Only run the scraper when invoked directly (e.g. from CI), not when this
+// module is imported by tests. Both sides are resolved to an absolute path so
+// the check holds regardless of how node was invoked (e.g. CI runs it with a
+// relative path: `node ./scripts/search/scrape-and-compare-algolia-index.mjs`).
+const invokedDirectly =
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+if (invokedDirectly) {
+  main()
+}

@@ -1,7 +1,5 @@
 import React from 'react'
-import Tabs from '@theme/Tabs'
-import TabItem from '@theme/TabItem'
-import CodeBlock from '@theme/CodeBlock'
+import PackageManagerTabs from '@site/src/components/package-manager-tabs'
 
 interface CypressCommandTabsProps {
   /**
@@ -17,39 +15,24 @@ interface CypressCommandTabsProps {
   env?: string
 }
 
-const runners = [
-  { value: 'npm', label: 'npm', runner: 'npx cypress' },
-  { value: 'yarn', label: 'Yarn', runner: 'yarn cypress' },
-  { value: 'pnpm', label: 'pnpm', runner: 'pnpm cypress' },
-  { value: 'bun', label: 'Bun', runner: 'bunx cypress' },
-]
-
 /**
  * Renders a Cypress command across the supported package managers (npm, Yarn,
  * pnpm, and Bun) as a synced tab group, so a single source command stays DRY.
+ * Shorthand for `<PackageManagerTabs run="cypress …" />`.
  */
 const CypressCommandTabs: React.FC<CypressCommandTabsProps> = ({
   command,
   env,
 }) => {
-  const lines = command
+  const run = command
     .trim()
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean)
-  const envPrefix = env ? `${env} ` : ''
+    .map((line) => `cypress ${line}`)
+    .join('\n')
 
-  return (
-    <Tabs groupId="package-manager">
-      {runners.map(({ value, label, runner }) => (
-        <TabItem key={value} value={value} label={label}>
-          <CodeBlock language="shell">
-            {lines.map((line) => `${envPrefix}${runner} ${line}`).join('\n')}
-          </CodeBlock>
-        </TabItem>
-      ))}
-    </Tabs>
-  )
+  return <PackageManagerTabs run={run} env={env} />
 }
 
 export default CypressCommandTabs

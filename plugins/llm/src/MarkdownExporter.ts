@@ -106,9 +106,9 @@ export class MarkdownExporter {
   }
 
   /** Recursively writes `index.md` in each directory under `rootDir`, listing sibling `.md` files and subfolders. */
-  buildMarkdownDirectoryIndexes(): void {
+  buildMarkdownDirectoryIndexes(fragmentDirs: ReadonlySet<string> = new Set()): void {
     ensureDir(this.markdownRoot)
-    this.processDir(this.markdownRoot)
+    this.processDir(this.markdownRoot, fragmentDirs)
   }
 
   private extractTitleFromContent(content: string): string | null {
@@ -133,7 +133,7 @@ export class MarkdownExporter {
     return `# ${title}\n\n${content}`
   }
 
-  private processDir(dir: string): void {
+  private processDir(dir: string, fragmentDirs: ReadonlySet<string>): void {
     const entries = fs.readdirSync(dir, { withFileTypes: true })
     const subdirs: string[] = []
     const files: string[] = []
@@ -141,7 +141,10 @@ export class MarkdownExporter {
     let alreadyHasIndex = false
     for (const entry of entries) {
       if (entry.isDirectory()) {
-        subdirs.push(entry.name)
+        const relSub = toPosixPath(path.relative(this.markdownRoot, path.join(dir, entry.name)))
+        if (!fragmentDirs.has(relSub)) {
+          subdirs.push(entry.name)
+        }
       } else if (entry.isFile() && /\.md$/i.test(entry.name)) {
         if (entry.name.toLowerCase() === 'index.md') {
           alreadyHasIndex = true
@@ -151,7 +154,7 @@ export class MarkdownExporter {
     }
 
     for (const sub of subdirs) {
-      this.processDir(path.join(dir, sub))
+      this.processDir(path.join(dir, sub), fragmentDirs)
     }
 
     // if the directory already has an index.md, don't overwrite it

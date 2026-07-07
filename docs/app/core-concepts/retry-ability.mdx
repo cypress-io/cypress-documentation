@@ -1,6 +1,7 @@
 ---
-title: Retry-ability
+title: 'Retry-ability in Cypress'
 description: Understand how Cypress retries commands, queries, and assertions to help you write faster tests with fewer run-time surprises.
+sidebar_label: Retry-ability
 sidebar_position: 50
 ---
 
@@ -10,7 +11,7 @@ sidebar_position: 50
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - The difference between commands, queries, and assertions in Cypress
 - How Cypress retries multiple assertions
@@ -201,7 +202,7 @@ attached to the DOM, and Cypress cannot requery the page after commands
 such as cy.children().
 ```
 
-#### <Icon name="exclamation-triangle" color="red" /> Mid-chain assertion with risk of a stale subject
+### <Icon name="exclamation-triangle" color="red" /> Mid-chain assertion with risk of a stale subject
 
 ```javascript
 cy.get('.list')
@@ -218,7 +219,7 @@ If the page re-renders between the two assertions, the `li` matched by
 from `.children('.child')`, it uses the original—now-detached—`li` as the
 subject and fails.
 
-#### <Icon name="check-circle" color="green" /> Split the chain at assertion boundaries
+### <Icon name="check-circle" color="green" /> Split the chain at assertion boundaries
 
 Break the chain into separate statements so each re-query starts fresh from the
 top:

@@ -10,7 +10,7 @@ sidebar_label: Configuration
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to configure Cypress to change the default behavior of Cypress
 - How Cypress loads config files as ESM or CommonJS
@@ -228,6 +228,7 @@ For more options regarding screenshots, view the
 | `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                      |
 | `hosts`                 | `null`  | An Object of hostname patterns to IP addresses. Acts like a Cypress-specific `/etc/hosts` file, letting Cypress resolve custom hostnames within tests. [Please read the notes for examples on using this.](#hosts)                                                                                                                                                   |
 | `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                     |
+| `removeSRIAttributes`   | `false` | Whether Cypress will remove [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) `integrity` attributes from `<script>` and `<link>` elements so that proxy-rewritten first-party resources are not blocked. [Please read the notes for more information on this setting.](#removeSRIAttributes)               |
 | `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.                |
 
 :::caution
@@ -836,6 +837,51 @@ case, please disable this option.
 Details for `experimentalModifyObstructiveThirdPartyCode` can be found
 [here](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code).
 
+Because rewriting these scripts changes their bytes, any pinned
+[Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+hash on the resource will no longer match and the browser will block it. If your
+application uses SRI, enable [`removeSRIAttributes`](#removeSRIAttributes) so the
+rewritten resources are not blocked.
+
+### removeSRIAttributes
+
+When this option is enabled, Cypress removes
+[Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+`integrity` attributes from `<script>` and `<link>` elements as they are served
+to the browser.
+
+Cypress's proxy rewrites obstructive JS and HTML (see
+[`modifyObstructiveCode`](#modifyObstructiveCode)) before it reaches the browser.
+Rewriting changes the resource's bytes, which invalidates any pinned SRI hash, so
+the browser refuses to execute or apply the resource and reports an error such
+as:
+
+```
+Failed to find a valid digest in the 'integrity' attribute for resource '…' …
+The resource has been blocked.
+```
+
+Enabling `removeSRIAttributes` strips the `integrity` attribute so these
+resources load normally under test. It applies to **first-party** resources, and
+covers `integrity` defined in any of the following ways:
+
+- a static HTML attribute (for example,
+  `<script src="app.js" integrity="sha384-…">`)
+- a JavaScript string literal assigned to the attribute
+- a runtime DOM property assignment (for example,
+  [`webpack-subresource-integrity`](https://www.npmjs.com/package/webpack-subresource-integrity)'s
+  `script.integrity = sriHashes[chunkId]`)
+
+`removeSRIAttributes` is the first-party counterpart to
+[`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code),
+which removes SRI only for third-party resources. Enable both options to strip
+SRI across first- and third-party resources.
+
+This option defaults to `false`, so existing behavior is unchanged. Enable it
+only if your application uses SRI and you see first-party resources blocked under
+test. Because removing SRI disables a check that protects against tampered
+resources, enable it only for applications under test.
+
 ### setupNodeEvents
 
 The `setupNodeEvents` function allows you to tap into, modify, or extend the
@@ -929,6 +975,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [16.0.0](/app/references/changelog#16-0-0)   | Removed `allowCypressEnv` option.                                                                                                                                               |
 | [16.0.0](/app/references/changelog#16-0-0)   | `keystrokeDelay` resolved fallback changed from `10` to `0` when unset in configuration and [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api).                     |
+| [15.18.0](/app/references/changelog#15-18-0) | Added `removeSRIAttributes` option.                                                                                                                                             |
 | [15.17.0](/app/references/changelog#15-17-0) | Cypress config and plugin files now load as ESM or CommonJS using Node.js module semantics (file extension and nearest `package.json` `"type"`), with no cross-format fallback. |
 | [15.17.0](/app/references/changelog#15-17-0) | Added support for overriding [`Cypress.expose()`](/api/cypress-api/expose) values via test configuration.                                                                       |
 | [15.10.0](/app/references/changelog#15-10-0) | Added `allowCypressEnv` option.                                                                                                                                                 |

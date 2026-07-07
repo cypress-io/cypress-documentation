@@ -35,3 +35,6 @@ themes
 .eslintcache
 db.json
 .claude/settings.local.json
+
+# OG card preview output
+.og-preview

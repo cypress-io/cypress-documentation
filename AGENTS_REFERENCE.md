@@ -14,6 +14,15 @@ This is the **Cypress Documentation** site, built with
 - The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
   content into stripped-down markdown and chunked JSON published under `/llm`,
   with `/llms.txt` as the index (both are build output, not committed files).
+- The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
+  **never installed on their own**: they have no lockfiles and are not npm
+  workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
+  run their scripts. Everything they use (typescript, prettier, vitest, the
+  remark/unist ecosystem, etc.) resolves from the repository root's
+  `node_modules`, so their `package.json` files intentionally declare **no**
+  `dependencies`/`devDependencies`. Declare any new plugin dependency in the
+  **root** `package.json` — pins added to a plugin's own `package.json` are
+  never installed and just drift stale.
 - Reusable React/MDX components live in `src/components` and are registered in
   `src/theme/MDXComponents.js`.
 
@@ -113,8 +122,8 @@ Images go in `static/img/...` and are referenced via `/img/...`.
 
 To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 (name, description, repo link, keywords). Entries are grouped in this order:
-`official` (Cypress-owned) → `verified` (community, verified by Cypress) →
-`community` (unverified) → `deprecated` (unmaintained / incompatible with v10+).
+`official` (Cypress-owned) → `community` (community-owned) → `deprecated`
+(unmaintained / incompatible with v10+).
 
 ## Writing style
 
@@ -173,41 +182,47 @@ syncing and the initial selection.
 
 ### Package-manager commands
 
-Install / CLI commands: one tab per manager with `groupId="package-manager"` and
-`defaultValue="npm"`. Order is always **npm → Yarn → pnpm** (labels `npm`,
-`Yarn`, `pnpm`). Reach for the shared
-`docs/partials/_cypress-install-commands.mdx` partial when showing the basic
-install rather than re-authoring it.
+**Never hand-write npm/Yarn/pnpm/Bun tab sets.** Generate them with
+`<PackageManagerTabs>` (globally available, no import), which renders the
+command for every supported package manager in the canonical order
+(**npm → Yarn → pnpm → Bun**) with the shared `groupId="package-manager"` so
+the reader's choice syncs site-wide. Give it exactly one of three props,
+matching how the command is executed:
 
-````mdx
-<Tabs groupId="package-manager" defaultValue="npm" values={[
-  {label: 'npm', value: 'npm'},
-  {label: 'Yarn', value: 'yarn'},
-  {label: 'pnpm', value: 'pnpm'},
-]}>
-  <TabItem value="npm">
+```mdx
+<!-- Add a dependency: npm install / yarn add / pnpm add / bun add -->
 
-```shell
-npm install cypress --save-dev
+<PackageManagerTabs install="cypress" dev />
+
+<!-- Run an installed dependency's binary: npx / yarn / pnpm / bunx -->
+
+<PackageManagerTabs run="cypress open" />
+
+<!-- Download and run a one-off command: npx / yarn dlx / pnpm dlx / bunx -->
+
+<PackageManagerTabs exec="skills add cypress-io/ai-toolkit" />
 ```
 
-  </TabItem>
-  <TabItem value="yarn">
+- `dev` (with `install`) saves as a dev dependency (`--save-dev` / `--dev`).
+- `env="CYPRESS_RECORD_KEY=abc123"` prepends environment variable
+  assignment(s) to each generated command.
+- `run` / `exec` accept multiple commands on separate lines (pass a template
+  literal: `run={`cypress run\ncypress open`}`).
 
-```shell
-yarn add cypress --dev
-```
+For `cypress` subcommands there is the earlier `<CypressCommandTabs>`
+shorthand, which prepends `cypress` for you:
+`<CypressCommandTabs command="run --browser chrome" />` is equivalent to
+`<PackageManagerTabs run="cypress run --browser chrome" />`. Either is fine.
 
-  </TabItem>
-  <TabItem value="pnpm">
+The most common commands already exist as shared partials; reach for them
+rather than re-authoring: `<CypressInstallCommands />`, `<CypressOpenCommands />`,
+`<CypressRunCommands />`, `<CypressCacheClearCommands />`, and
+`<CypressInstallBinaryCommands />`.
 
-```shell
-pnpm add --save-dev cypress
-```
-
-  </TabItem>
-</Tabs>
-````
+Only fall back to explicit `<Tabs groupId="package-manager">` + `<TabItem>`s
+when the per-manager commands differ irregularly and can't be generated (e.g.
+`npm ci --foreground-scripts` vs `yarn install --frozen-lockfile`). Keep the
+canonical tab order and labels (`npm`, `Yarn`, `pnpm`, `Bun`) when you do.
 
 ### TypeScript / JavaScript examples
 
@@ -372,6 +387,9 @@ Rules for building the hash:
   anchors above. Only fall back to an explicit `{#CustomId}` at the end of a
   heading in the rare cases where the regular casing-based reference does not
   work (see the `docs/partials/_header-*.mdx` files, e.g. `{#Yields}`).
+  Preserving inbound links to a renamed heading is **not** one of those cases:
+  keep the original heading text (including its casing) instead of attaching a
+  custom ID to new wording.
 - `npm run write-heading-ids` generates explicit IDs for headings if you want
   them materialized.
 

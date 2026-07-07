@@ -1,5 +1,5 @@
 ---
-title: 'Install using npm, Yarn, pnpm, or Bun | Cypress Documentation'
+title: 'Install using npm, Yarn, pnpm, or Bun'
 description: 'The fastest way to get Cypress running. Check requirements, install it in your project, and start testing today.'
 sidebar_label: Install Cypress
 sidebar_position: 30
@@ -11,7 +11,7 @@ sidebar_position: 30
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to install Cypress using npm, Yarn, pnpm, or Bun
 - What you need before installing
@@ -91,7 +91,9 @@ Or add `cypress` to `allowScripts` in `package.json` manually:
 
 ```json title="package.json"
 {
-  "allowScripts": ["cypress"]
+  "allowScripts": {
+    "cypress": true
+  }
 }
 ```
 
