@@ -78,9 +78,11 @@ If you need a temporary escape hatch while you update those tests, opt back into
 
 ### `experimentalSourceRewriting` config option removed
 
-The `experimentalSourceRewriting` configuration option has been removed in favor of the default regex-based source rewriting. The regex-based source rewriter handles all of the known cases handled by the AST-based source rewriter and more. In practice, the AST-based source rewriter also led to possible performance issues. If your `cypress.config` still includes the option, Cypress will print a warning telling you to remove it — no behavior change, just remove the key.
+The `experimentalSourceRewriting` configuration option has been removed. It enabled an experimental AST-based source rewriter as an alternative to Cypress's default regex-based rewriter, which has now been removed. The default rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce, so removing the option does not change how your tests behave.
 
-If you were using `experimentalSourceRewriting` to remove subresource integrity (SRI) from rewritten resources, use the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead.
+If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
+
+If you enabled `experimentalSourceRewriting` to strip Subresource Integrity (SRI) attributes from rewritten resources, use the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead.
 
 :::cypress-config-example
 
