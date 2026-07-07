@@ -78,7 +78,7 @@ If you need a temporary escape hatch while you update those tests, opt back into
 
 ### `experimentalSourceRewriting` config option removed
 
-The `experimentalSourceRewriting` configuration option has been removed. It enabled an experimental AST-based source rewriter as an alternative to Cypress's default regex-based rewriter, which has now been removed. The default rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce, so removing the option does not change how your tests behave.
+The `experimentalSourceRewriting` configuration option has been removed. The default regex-based rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce, so removing the option does not change how your tests behave.
 
 If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
 
