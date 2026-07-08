@@ -82,7 +82,7 @@ The `experimentalSourceRewriting` configuration option has been removed. The def
 
 If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
 
-If you enabled `experimentalSourceRewriting` to strip Subresource Integrity (SRI) attributes from rewritten resources, use the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead.
+You only need a replacement option if your application pins resources with Subresource Integrity (SRI) `integrity` attributes on `<script>` or `<link>` elements. Because Cypress rewrites those resources, the pinned hash no longer matches and the browser blocks them, reporting an error such as `Failed to find a valid digest in the 'integrity' attribute for resource '…'`. If you were relying on `experimentalSourceRewriting` to avoid this, enable the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead, which strips the `integrity` attribute so the rewritten resources load. If your application does not use SRI, no replacement is required.
 
 :::cypress-config-example
 
