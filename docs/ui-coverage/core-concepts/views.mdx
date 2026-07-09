@@ -1,6 +1,6 @@
 ---
-title: 'Views: URLs and mounted components in UI Coverage'
-description: 'UI Coverage is organized into views, which are the unique URLs across all snapshots from end-to-end tests and the unique mounted components from component tests.'
+title: 'Views: pages and components in UI Coverage'
+description: 'UI Coverage organizes your coverage report into Views: URL patterns generated from the pages visited in end-to-end tests and the spec files in component tests.'
 sidebar_label: Views
 sidebar_position: 100
 ---
@@ -9,41 +9,61 @@ sidebar_position: 100
 
 # Views
 
-UI Coverage organizes unique URLs from snapshots in end-to-end tests and mounted components in component tests into Views. Each View represents a distinct page or state in your application, allowing you to track coverage across different parts of your application.
+Views are how UI Coverage organizes your coverage report. Every page visited in your end-to-end tests, and every spec file in your component tests, is grouped into a View with its own coverage score. Instead of a flat list of thousands of elements, you get a page-by-page breakdown of your application that shows you:
 
-## How views are created
+- **Where coverage is strong**: Views with high scores confirm which areas of your application are well tested.
+- **Where the gaps are**: Views with low scores, and untested Views discovered from links, show exactly which pages need attention.
+- **How to prioritize**: Per-View scores let you focus testing effort on the most critical areas of your application first.
 
-By default, UI Coverage applies a set of rules to generate a single View for dynamic URLs representing the same page. These rules ensure clarity by grouping similar URLs and reducing noise:
+## What makes a View
 
-- **Search Parameters**: All query parameters are removed (e.g., `/dashboard?tab=overview` becomes `/dashboard`).
-- **Hash Parameters**: Fragment identifiers are removed unless they represent a subpath (e.g., `#/admin`).
-- **Dynamic Segments**: URL segments that differ only by integers or UUIDs are replaced with a wildcard (`*`).
+A View represents a distinct page or state in your application. Views come from two sources, depending on testing type:
 
-### Examples of views
+- **End-to-end tests**: The unique URLs across all snapshots are consolidated into URL patterns. Each pattern becomes a View.
+- **Component tests**: Each spec file becomes a single View, named by the spec's file path. All components mounted within a spec are grouped into that View.
 
-- `/users/123/profile` and `/users/456/profile` become `/users/*/profile`
-- `/dashboard?tab=overview` and `/dashboard?tab=settings` become `/dashboard`
-- `/app#settings` and `/app#profile` become `/app`
-- `/app#/admin` and `/app#/settings` remain separate Views
+## How Views are created
 
-These rules help consolidate similar pages into manageable Views while maintaining specificity where needed.
+For end-to-end tests, UI Coverage applies a set of rules to consolidate the dynamic URLs that represent the same page into a single View. These rules reduce noise so that your report reflects the structure of your application, not the number of records in your test data:
 
-## Using Views
+- **Dynamic segments**: Any path segment that is a number or an ID is replaced with a wildcard (`*`). A segment counts as an ID when it is a UUID, a UUID-shaped hexadecimal value (even if not a strictly valid UUID), or a string of 20 or more hexadecimal characters. This applies even when only one URL matches the pattern, so `/orders/123` becomes `/orders/*` on its own.
+- **Query parameters**: Query strings are ignored when grouping, so URLs that differ only by query parameters become a single View, and View names do not include a query string. This also applies to query strings inside a hash (e.g., `#/search?term=abc`).
+- **Hash routing**: If a URL's hash begins with `#/`, UI Coverage treats your application as using hash-based routing. Each hash route becomes its own View, and the dynamic segment rules also apply within the hash. Hashes that do not begin with `#/` (e.g., `#section-2`) are ignored.
+- **Trailing slashes**: URLs that differ only by a trailing slash are the same View.
+- **Common origins**: When all Views share the same protocol, host, and port, View names omit them for readability.
 
-In the UI Coverage interface, Views are listed along with their coverage scores, providing insights into:
+### Examples
 
-- **Tested Areas**: Identify which parts of your application have sufficient test coverage.
-- **Untested Areas**: Spot pages or components that lack testing and prioritize them.
-- **Coverage Trends**: Track how coverage evolves across Views over time.
-- **Critical Flows**: Focus testing efforts on key user journeys and ensure their completeness.
+| Visited URLs                                                     | Resulting View                                      |
+| ---------------------------------------------------------------- | --------------------------------------------------- |
+| `/users/123/profile`, `/users/456/profile`                       | `/users/*/profile`                                  |
+| `/orders/f14005b2-6e14-4ac2-b41c-4dcd48ee9dbc`                   | `/orders/*`                                         |
+| `/dashboard?tab=overview`, `/dashboard#section-2`, `/dashboard/` | `/dashboard`                                        |
+| `/app#/users/1`, `/app#/users/2`                                 | `/app#/users/*`                                     |
+| `/app#/admin`, `/app#/settings`                                  | `/app#/admin` and `/app#/settings` (separate Views) |
+| `/users/alice`, `/users/bob`                                     | `/users/alice` and `/users/bob` (separate Views)    |
 
-## Customizing views
+Note the last example: segments that are dynamic but are not numbers or IDs, like usernames, are **not** grouped automatically. Use the [`views`](/ui-coverage/configuration/views) configuration to group these yourself.
 
-You can tailor how URLs are grouped into Views using configuration options:
+## Views in your coverage report
 
-### View grouping
+The UI Coverage report lists every View along with:
 
-Define rules for grouping URLs into Views to align with your application's structure:
+- **Snapshots**: The number of snapshots captured for the View, which you can browse to see the states your tests produced.
+- **Tested elements**: How many of the View's interactive elements were tested, out of the total found.
+- **Coverage score**: The percentage of the View's interactive elements that were tested.
+
+Selecting a View drills into its [elements](/ui-coverage/core-concepts/element-identification) so you can see exactly which ones your tests missed.
+
+The report also surfaces **untested Views**: pages that were never visited during your run, discovered from [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) found in the pages you did test. These highlight areas of your application with no coverage at all, along with the Views that link to them.
+
+## Customizing Views
+
+Two configuration properties control how URLs become Views. Note that both properties also affect Cypress Accessibility reports.
+
+### Grouping URLs into Views
+
+The [`views`](/ui-coverage/configuration/views) configuration defines your own URL patterns for grouping, using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. URLs are matched against your patterns first, in order, and any URLs that don't match fall back to the automatic rules described above:
 
 ```json
 {
@@ -55,11 +75,11 @@ Define rules for grouping URLs into Views to align with your application's struc
 }
 ```
 
-To learn more about the configuration options, refer to the [Views](/ui-coverage/configuration/views) documentation.
+Patterns with named parameters can also use `groupBy` to split one pattern into multiple Views based on a parameter's values, such as one View per document type at `/documents/:type/:id`. See the [views configuration](/ui-coverage/configuration/views) documentation for the full syntax and examples.
 
-### Ignoring views
+### Ignoring Views
 
-Exclude irrelevant or low-priority URLs from being tracked as Views:
+The [`viewFilters`](/ui-coverage/configuration/viewfilters) configuration excludes URLs you don't want tracked, such as third-party authentication pages:
 
 ```json
 {
@@ -71,5 +91,3 @@ Exclude irrelevant or low-priority URLs from being tracked as Views:
   ]
 }
 ```
-
-To learn more about the configuration options, refer to the [View Filters](/ui-coverage/configuration/viewfilters) documentation.
