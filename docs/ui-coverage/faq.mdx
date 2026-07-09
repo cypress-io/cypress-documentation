@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, element grouping, iframes and shadow DOM, and configuration.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element grouping, iframes and shadow DOM, and configuration.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -22,6 +22,24 @@ No. UI Coverage requires no code changes or instrumentation. Reports are generat
 ### <Icon name="angle-right" /> How is the UI Coverage score calculated?
 
 The score compares the number of tested interactive elements to the total number of interactive elements in your application. [Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit: the group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
+
+## Views and URLs
+
+### <Icon name="angle-right" /> Why do similar URLs show up as separate views?
+
+Automatic grouping only replaces path segments that are numbers or IDs (UUIDs and UUID-like values) with a wildcard. Segments like usernames or slugs are not recognized as dynamic, so `/users/alice` and `/users/bob` remain separate views. Add a [`views`](/ui-coverage/configuration/views) pattern to group them yourself. See [how views are created](/ui-coverage/core-concepts/views#How-views-are-created) for the full set of automatic rules.
+
+### <Icon name="angle-right" /> Do query parameters create separate views?
+
+No. Query strings are ignored when grouping, so `/dashboard?tab=overview` and `/dashboard?tab=settings` become a single `/dashboard` view. If a query parameter meaningfully changes the page, use a [`views`](/ui-coverage/configuration/views) pattern with `groupBy` on that parameter to split it into separate views.
+
+### <Icon name="angle-right" /> How do I exclude URLs from UI Coverage?
+
+Add a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule with `include: false` for a URL pattern. Excluding a URL removes its snapshots from the report and stops links pointing to it from counting against your coverage score. The [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) guide walks through common cases.
+
+### <Icon name="angle-right" /> Why is a page missing from my report?
+
+Views are created from URLs your tests actually visit, so a page that no test navigates to has no view. Check [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) in the report — pages that are linked to but never visited appear there. Also confirm that a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule isn't excluding the page unintentionally.
 
 ## Element grouping and identification
 
