@@ -178,9 +178,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cloud-mcp-april-2026',
+        id: 'leadership-webinar-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🌟 Close the context gap. Bring real-time test data to your AI assistant with Cloud MCP &mdash; <a href="/cloud/integrations/cloud-mcp?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=cloud-mcp">Learn more</a>`,
+        content: `🌟 Join our Leadership Webinar &mdash; <a href="#">Learn more</a>`,
         isCloseable: true,
       },
       footer: {
