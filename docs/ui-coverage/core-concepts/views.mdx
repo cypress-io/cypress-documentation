@@ -27,7 +27,7 @@ A View represents a distinct page or state in your application. Views come from 
 For end-to-end tests, UI Coverage applies a set of rules to consolidate the dynamic URLs that represent the same page into a single View. These rules reduce noise so that your report reflects the structure of your application, not the number of records in your test data:
 
 - **Dynamic segments**: Any path segment that is a number or an ID is replaced with a wildcard (`*`). A segment counts as an ID when it is a UUID, a UUID-shaped hexadecimal value (even if not a strictly valid UUID), or a string of 20 or more hexadecimal characters. This applies even when only one URL matches the pattern, so `/orders/123` becomes `/orders/*` on its own.
-- **Query parameters**: Query strings are ignored when grouping, so URLs that differ only by query parameters become a single View, and View names do not include a query string. This also applies to query strings inside a hash (e.g., `#/search?term=abc`).
+- **Query parameters**: Query strings are ignored when grouping, so URLs that differ only by query parameters become a single View, and View names do not include a query string.
 - **Hash routing**: If a URL's hash begins with `#/`, UI Coverage treats your application as using hash-based routing. Each hash route becomes its own View, and the dynamic segment rules also apply within the hash. Hashes that do not begin with `#/` (e.g., `#section-2`) are ignored.
 - **Trailing slashes**: URLs that differ only by a trailing slash are the same View.
 - **Common origins**: When all Views share the same protocol, host, and port, View names omit them for readability.
@@ -65,7 +65,7 @@ Two configuration properties control how URLs become Views. Note that both prope
 
 The [`views`](/ui-coverage/configuration/views) configuration defines your own URL patterns for grouping, using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. URLs are matched against your patterns first, in order, and any URLs that don't match fall back to the automatic rules described above:
 
-```json
+```json title="App Quality Config"
 {
   "views": [
     {
@@ -81,7 +81,7 @@ Patterns with named parameters can also use `groupBy` to split one pattern into 
 
 The [`viewFilters`](/ui-coverage/configuration/viewfilters) configuration excludes URLs you don't want tracked, such as third-party authentication pages:
 
-```json
+```json title="App Quality Config"
 {
   "viewFilters": [
     {
