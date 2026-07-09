@@ -1,6 +1,6 @@
 ---
-title: 'elementGroups: group elements with custom logic'
-description: 'The `elementGroups` configuration groups related elements into a single unit in UI Coverage, so testing one element counts as testing them all.'
+title: 'elementGroups: group related elements in UI Coverage'
+description: 'The elementGroups configuration in Cypress UI Coverage groups related elements into a single unit, so testing one element counts as testing them all.'
 sidebar_label: elementGroups
 sidebar_position: 80
 ---
@@ -17,6 +17,8 @@ Without meaningful groups, a report can fill up with elements listed under machi
   src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-expanded.png"
   alt="The UI Coverage report listing thousands of untested elements, several of which appear under machine-generated names derived from their DOM structure"
 />
+
+## Why use elementGroups?
 
 UI Coverage already [groups elements automatically](/ui-coverage/core-concepts/element-grouping) based on their structure in the DOM. Use `elementGroups` when the automatic grouping doesn't match how your application actually behaves:
 
@@ -62,7 +64,7 @@ To add or edit `elementGroups`, open the **App Quality** tab in your project set
 | `documentScope` | Optional |            | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to group only elements inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are. |
 | `comment`       | Optional |            | A note about why this rule exists, for your team's benefit. Comments have no effect on how elements are grouped.                                                                                                                                                                               |
 
-### How rules are applied
+### How are elementGroups rules applied?
 
 Rules are evaluated in order, and each element joins the group of the **first** rule whose `selector` matches it. Elements that match no rules fall back to the automatic [element grouping rules](/ui-coverage/core-concepts/element-grouping).
 
@@ -391,3 +393,4 @@ After saving configuration changes, regenerate a recent run to preview your grou
 - [`elementFilters`](/ui-coverage/configuration/elementfilters) removes elements from reports entirely instead of grouping them.
 - [Configuration overview](/ui-coverage/configuration/overview) covers where configuration lives and how to regenerate reports after changing it.
 - [Guide: Reduce noise in UI Coverage reports](/ui-coverage/guides/reduce-noise) walks through combining these options to clean up a report.
+- [UI Coverage FAQ](/ui-coverage/faq) answers common questions about grouping, scores, and configuration.
