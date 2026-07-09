@@ -254,7 +254,7 @@ Selenium suites typically read credentials from `System.getenv(...)`,
 `os.environ`, or a `.properties`/`.env` file. In Cypress, use
 [`cy.env()`](/api/commands/env) for sensitive values (credentials, tokens)
 and [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive config
-(feature flags, public URLs). Both require Cypress 15.10.0 or newer.
+(feature flags, public URLs).
 
 ```ts title="cypress.config.ts"
 export default defineConfig({
@@ -504,9 +504,7 @@ Most XPath locators fall into one of two buckets:
   [`.parent()`](/api/commands/parent)/[`.children()`](/api/commands/children)
   for traversal.
 
-While a community `cypress-xpath` plugin exists, it is archived and
-unmaintained, so do not adopt it for new work. Treat an XPath-heavy suite as
-an opportunity to move to more robust selectors.
+Treat an XPath-heavy suite as an opportunity to move to more robust selectors.
 
 For the most resilient long-term strategy, follow Cypress
 [Best Practices](/app/core-concepts/best-practices#Selecting-Elements) and add
@@ -588,9 +586,7 @@ cy.get('#subscribe').check()
 ### Hover, right-click, double-click, and keyboard
 
 Selenium performs these through the `Actions` builder. Cypress has direct
-commands for most, and uses [`.trigger()`](/api/commands/trigger) for hover
-(a genuine CSS `:hover` cannot be synthesized, so dispatch the event the UI
-listens for).
+commands for most, and uses [`.trigger()`](/api/commands/trigger) for hover.
 
 | Selenium `Actions`                              | Cypress                                                                                              |
 | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -820,9 +816,7 @@ cy.get('#payment-frame')
 ```
 
 The `.should('not.be.empty')` step makes Cypress wait for the frame document
-to load. This works for **same-origin** iframes; a **cross-origin** iframe
-requires setting [`chromeWebSecurity`](/app/references/configuration#Browser)
-to `false` in Chromium-family browsers. See
+to load. See
 [How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
 
 ## Multiple tabs and windows
