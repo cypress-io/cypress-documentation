@@ -15,7 +15,7 @@ UI Coverage already [groups elements automatically](/ui-coverage/core-concepts/e
 
 - **Consolidate repeated elements**: Collapse dynamic or repeated elements, such as items in a list, carousel, or data table, into one logical group.
 - **Correct the automatic grouping**: Split apart elements that were grouped together incorrectly, or unite elements that the automatic rules kept separate.
-- **Make reports readable**: Replace machine-generated selectors with meaningful names like "Add Button" or "Shipping Method Option", so anyone reading the report understands what needs testing.
+- **Make reports readable**: Replace machine-generated selectors with meaningful names like "Remove Item Button" or "Shipping Method Option", so anyone reading the report understands what needs testing.
 - **Group across markup differences**: Combine elements that share behavior but not structure, such as form controls and their labels.
 
 To add or edit `elementGroups`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
@@ -75,7 +75,7 @@ Cypress Cloud rejects a configuration when:
 
 ### Consolidate repeated elements
 
-Elements generated from data, like product listings, often have dynamic attribute values. One rule with an attribute prefix selector collapses all of them into a single group. Without a `name`, the group is displayed under its selector.
+Elements generated from data often have dynamic attribute values, like an add to cart button rendered for each product in a listing. One rule with an attribute prefix selector collapses all of them into a single group. Without a `name`, the group is displayed under its selector.
 
 #### Config
 
@@ -84,7 +84,7 @@ Elements generated from data, like product listings, often have dynamic attribut
   "uiCoverage": {
     "elementGroups": [
       {
-        "selector": "[data-cy^='item-']"
+        "selector": "[data-cy^='add-to-cart-']"
       }
     ]
   }
@@ -95,23 +95,23 @@ Elements generated from data, like product listings, often have dynamic attribut
 
 ```xml
 <body>
-  <button data-cy="item-1"></button>
-  <button data-cy="item-2"></button>
-  <button data-cy="item-3"></button>
+  <button data-cy="add-to-cart-101">Add to Cart</button>
+  <button data-cy="add-to-cart-102">Add to Cart</button>
+  <button data-cy="add-to-cart-103">Add to Cart</button>
 </body>
 ```
 
 #### Elements shown in UI
 
 ```
-[data-cy^='item-'] (3 instances)
+[data-cy^='add-to-cart-'] (3 instances)
 ```
 
 ---
 
 ### Give a group a readable name
 
-Add a `name` so the report describes the interface instead of your selectors. Here, buttons with IDs starting with `listbox-button-` appear as a single "Add Button" group.
+Add a `name` so the report describes the interface instead of your selectors. Here, the remove buttons in a shopping cart appear as a single "Remove Item Button" group, no matter which products the cart contains.
 
 #### Config
 
@@ -120,8 +120,8 @@ Add a `name` so the report describes the interface instead of your selectors. He
   "uiCoverage": {
     "elementGroups": [
       {
-        "selector": "[id^='listbox-button-']",
-        "name": "Add Button"
+        "selector": "[id^='remove-item-']",
+        "name": "Remove Item Button"
       }
     ]
   }
@@ -132,24 +132,24 @@ Add a `name` so the report describes the interface instead of your selectors. He
 
 ```xml
 <body>
-  <button id="listbox-button-1">+</button>
-  <button id="listbox-button-2">+</button>
-  <button id="listbox-button-3">+</button>
-  <button id="listbox-button-4">+</button>
+  <button id="remove-item-101">Remove</button>
+  <button id="remove-item-102">Remove</button>
+  <button id="remove-item-103">Remove</button>
+  <button id="remove-item-104">Remove</button>
 </body>
 ```
 
 #### Elements shown in UI
 
 ```
-Add Button (4 instances)
+Remove Item Button (4 instances)
 ```
 
 ---
 
 ### Group all elements in a container
 
-Use a descendant combinator to group every interactive element inside a container. This example collapses a date picker's day buttons, which would otherwise appear as dozens of separate elements, into one group. The selector must match the interactive elements themselves, not just the container.
+Use a descendant combinator to group every interactive element inside a container. This example collapses a delivery date picker's day buttons, which would otherwise appear as dozens of separate elements, into one group. The selector must match the interactive elements themselves, not just the container.
 
 #### Config
 
@@ -230,7 +230,7 @@ Shipping Method Option (4 instances)
 
 ### Group elements inside a shadow DOM
 
-Use `documentScope` to apply a rule only to elements inside a specific shadow DOM host. Here, only buttons inside the `custom-component` shadow root are grouped; the identical button in the main document is unaffected.
+Third-party widgets and design system components often render inside a shadow DOM. Use `documentScope` to apply a rule only to elements inside a specific shadow DOM host. Here, only the buttons inside the `<support-chat>` component's shadow root are grouped; the button in the main document also matches the `button` selector, but stays separate because it's outside the scope.
 
 #### Config
 
@@ -240,8 +240,8 @@ Use `documentScope` to apply a rule only to elements inside a specific shadow DO
     "elementGroups": [
       {
         "selector": "button",
-        "name": "Shadow DOM Buttons",
-        "documentScope": ["custom-component"]
+        "name": "Support Chat Actions",
+        "documentScope": ["support-chat"]
       }
     ]
   }
@@ -252,27 +252,27 @@ Use `documentScope` to apply a rule only to elements inside a specific shadow DO
 
 ```xml
 <body>
-  <button id="root-button">Root Button</button>
-  <custom-component>
+  <button id="open-support-chat">Chat with us</button>
+  <support-chat>
     #shadow-dom
-      <button id="shadow-button-1">Shadow Button 1</button>
-      <button id="shadow-button-2">Shadow Button 2</button>
-  </custom-component>
+      <button id="send-message">Send</button>
+      <button id="attach-file">Attach</button>
+  </support-chat>
 </body>
 ```
 
 #### Elements shown in UI
 
 ```
-#root-button
-Shadow DOM Buttons (2 instances)
+#open-support-chat
+Support Chat Actions (2 instances)
 ```
 
 ---
 
 ### Group elements inside an iframe
 
-`documentScope` works the same way for iframes. The selector for the scope matches the `iframe` element itself in its parent document. Here, only the buttons inside the `#embedded-widget` iframe are grouped, while the save button in the main document remains a separate element.
+`documentScope` works the same way for embedded services that render inside an iframe, such as a payment provider on a checkout page. The scope selector matches the `iframe` element itself in its parent document. Here, only the buttons inside the `#payment-provider` iframe are grouped, while the coupon button in the main document remains a separate element.
 
 #### Config
 
@@ -282,8 +282,8 @@ Shadow DOM Buttons (2 instances)
     "elementGroups": [
       {
         "selector": "[data-action]",
-        "name": "Embedded Actions",
-        "documentScope": ["#embedded-widget"]
+        "name": "Payment Widget Actions",
+        "documentScope": ["#payment-provider"]
       }
     ]
   }
@@ -294,12 +294,12 @@ Shadow DOM Buttons (2 instances)
 
 ```xml
 <body>
-  <button data-action="save">Save (Root)</button>
-  <iframe id="embedded-widget" src="https://widget.example.com">
+  <button data-action="apply-coupon">Apply Coupon</button>
+  <iframe id="payment-provider" src="https://payments.example.com">
     <html>
       <body>
-        <button data-action="save">Save (Embedded)</button>
-        <button data-action="cancel">Cancel (Embedded)</button>
+        <button data-action="submit-payment">Pay Now</button>
+        <button data-action="change-method">Change Payment Method</button>
       </body>
     </html>
   </iframe>
@@ -309,11 +309,11 @@ Shadow DOM Buttons (2 instances)
 #### Elements shown in UI
 
 ```
-[data-action="save"]
-Embedded Actions (2 instances)
+[data-action="apply-coupon"]
+Payment Widget Actions (2 instances)
 ```
 
-For nested documents, list one selector per host from outermost to innermost, for example `"documentScope": ["#outer-iframe", "custom-component"]`.
+For nested documents, list one selector per host from outermost to innermost, for example `"documentScope": ["#payment-provider", "secure-card-input"]`.
 
 ## See also
 
