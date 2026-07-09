@@ -70,7 +70,17 @@ Your run's overall coverage score uses the same calculation across all included 
 
 Selecting a view drills into its [elements](/ui-coverage/core-concepts/element-identification) so you can see exactly which ones your tests missed.
 
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-view-drilldown.png"
+  alt="Cypress Cloud screenshot cropping a single view within the cypress-documentation project showing the view's URL, the list of tested and untested elements and a DOM snapshot of the view"
+/>
+
 The report also surfaces **untested views**: pages that were never visited during your run, discovered from [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) found in the pages you did test. These highlight areas of your application with no coverage at all, along with the views that link to them.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-links.png"
+  alt="Cypress Cloud screenshot cropping the untested links section with a list of links that were not interacted with during the test run"
+/>
 
 ## Customizing views
 
@@ -96,7 +106,20 @@ The [`views`](/ui-coverage/configuration/views) configuration defines your own U
 }
 ```
 
-Patterns with named parameters can also use `groupBy` to split one pattern into multiple views based on a parameter's values, such as one view per document type at `/documents/:type/:id`. See the [views configuration](/ui-coverage/configuration/views) documentation for the full syntax and examples.
+Patterns with named parameters can also use `groupBy` to split one pattern into multiple views based on a parameter's values. For example, this configuration creates one view per document type:
+
+```json title="App Quality Config"
+{
+  "views": [
+    {
+      "pattern": "https://cypress.io/documents/:type/:id",
+      "groupBy": ["type"]
+    }
+  ]
+}
+```
+
+Visits to `/documents/invoice/123` and `/documents/report/456` produce the views `/documents/invoice/:id` and `/documents/report/:id`. See the [views configuration](/ui-coverage/configuration/views) documentation for the full syntax and more examples.
 
 ### Ignoring views
 
