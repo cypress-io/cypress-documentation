@@ -52,11 +52,11 @@ Jump to the [cheat sheet](#Cheat-sheet) for a quick reference.
 ## Quick conversion example
 
 Here's a side-by-side comparison showing how a Selenium test translates to
-Cypress. The Selenium example uses the JavaScript bindings
-(`selenium-webdriver`) with Mocha, but the same structure applies to the Java,
-Python, C#, and Ruby bindings.
+Cypress. The Selenium examples throughout this guide use the JavaScript
+bindings (`selenium-webdriver`) with Mocha, but the same patterns apply to the
+Java, Python, C#, and Ruby bindings.
 
-<Badge type="danger">Before: Selenium (JavaScript)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
 ```js title="authorization.test.js"
 const { Builder, By, until } = require('selenium-webdriver')
@@ -122,7 +122,7 @@ browser for you and retries commands and assertions automatically.
 | Where tests run     | Out of process, driving the browser over the WebDriver protocol          | Inside the browser, in the same run loop as your app                         |
 | Browser lifecycle   | You create and quit the `driver`                                         | Managed by Cypress                                                           |
 | Drivers             | ChromeDriver/GeckoDriver etc. (via Selenium Manager or WebDriverManager) | None                                                                         |
-| Waiting             | Implicit + explicit waits (`WebDriverWait`, `ExpectedConditions`)        | Built-in [retry-ability](/app/core-concepts/retry-ability)                   |
+| Waiting             | Implicit + explicit waits (`driver.wait()`, `until`)                     | Built-in [retry-ability](/app/core-concepts/retry-ability)                   |
 | Test runner         | JUnit / TestNG / pytest / NUnit / Mocha                                  | [Mocha](/app/core-concepts/writing-and-organizing-tests) (`describe`/`it`)   |
 | Assertions          | Provided by the test runner or a matcher library                         | Built-in [Chai](/app/references/assertions) `.should()` / `expect()`         |
 | Network control     | Not built in (requires a proxy like BrowserMob)                          | [`cy.intercept()`](/api/commands/intercept) built in                         |
@@ -221,23 +221,23 @@ equivalent of concatenating a base URL onto every `driver.get(...)` call.
 
 The official [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
 catches Cypress anti-patterns that a linter can flag in-editor: hard-coded
-`cy.wait(<number>)` calls (the Cypress equivalent of a `Thread.sleep`),
+`cy.wait(<number>)` calls (the Cypress equivalent of a `driver.sleep()`),
 assigning command return values, and unsafe chaining. Install it early so
 mistranslated Selenium patterns surface as you migrate. See the
 [full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
 
 ## Command line migration
 
-Selenium tests run through your language's test runner (`mvn test`,
-`gradle test`, `pytest`, `dotnet test`). Cypress ships its own binary.
+Selenium tests run through a test runner. With the JavaScript bindings that is
+typically Mocha or Jest, launched with `npm test`. Cypress ships its own binary.
 
-| Task                     | Selenium (varies by runner)           | Cypress                                   |
-| ------------------------ | ------------------------------------- | ----------------------------------------- |
-| Run all tests (headless) | `mvn test` / `pytest` / `dotnet test` | `cypress run`                             |
-| Open interactive mode    | (none)                                | `cypress open`                            |
-| Run a single spec        | runner-specific filter                | `cypress run --spec "path/to/file.cy.ts"` |
-| Choose a browser         | driver selection in code              | `cypress run --browser chrome`            |
-| Run headed               | default (or `--headless` option)      | `cypress run --headed`                    |
+| Task                     | Selenium (Mocha/Jest)          | Cypress                                   |
+| ------------------------ | ------------------------------ | ----------------------------------------- |
+| Run all tests (headless) | `npm test`                     | `cypress run`                             |
+| Open interactive mode    | (none)                         | `cypress open`                            |
+| Run a single spec        | `mocha --grep` / runner filter | `cypress run --spec "path/to/file.cy.ts"` |
+| Choose a browser         | `forBrowser('chrome')` in code | `cypress run --browser chrome`            |
+| Run headed               | default (headless via options) | `cypress run --headed`                    |
 
 Executing `cypress run` initiates a headless run (by default against the
 bundled Electron browser). Upon completion, a table details the tests per
@@ -250,8 +250,8 @@ See [Command Line](/app/references/command-line) for the full flag reference.
 
 ### Passing environment variables and secrets
 
-Selenium suites typically read credentials from `System.getenv(...)`,
-`os.environ`, or a `.properties`/`.env` file. In Cypress, use
+Selenium suites typically read credentials from `process.env` or a `.env`
+file. In Cypress, use
 [`cy.env()`](/api/commands/env) for sensitive values (credentials, tokens)
 and [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive config
 (feature flags, public URLs).
@@ -299,12 +299,18 @@ Selenium `ChromeOptions`/`FirefoxOptions` (arguments, preferences,
 extensions) map to the [`before:browser:launch`](/api/node-events/browser-launch-api)
 event configured in `setupNodeEvents`.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-ChromeOptions options = new ChromeOptions();
-options.addArguments("--disable-gpu");
-WebDriver driver = new ChromeDriver(options);
+```js
+const chrome = require('selenium-webdriver/chrome')
+
+const options = new chrome.Options()
+options.addArguments('--disable-gpu')
+
+const driver = await new Builder()
+  .forBrowser('chrome')
+  .setChromeOptions(options)
+  .build()
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -405,13 +411,12 @@ describe('General information', () => {
 Every Selenium test creates and disposes of a `driver`. In Cypress this code
 is **obsolete**. Remove it entirely rather than translating it.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-WebDriver driver = new ChromeDriver();
-WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-// ... test body ...
-driver.quit();
+```js
+const driver = await new Builder().forBrowser('chrome').build()
+// ... test body, with driver.wait(...) for explicit waits ...
+await driver.quit()
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -430,37 +435,36 @@ against a hub) is likewise removed. Cypress scales across machines through
 Selenium waits are the single biggest source of flakiness and boilerplate,
 and they are almost entirely unnecessary in Cypress.
 
-- **Implicit waits** (`implicitlyWait`) → replaced by
+- **Implicit waits** (`setTimeouts({ implicit })`) → replaced by
   [`defaultCommandTimeout`](/app/references/configuration#Timeouts), which
   applies to every command.
-- **Explicit waits** (`WebDriverWait` + `ExpectedConditions`) → replaced by
+- **Explicit waits** (`driver.wait()` + `until`) → replaced by
   automatic [retry-ability](/app/core-concepts/retry-ability): `cy.get()`
   retries until the element exists, and `.should()` retries until the
   assertion passes.
-- **`Thread.sleep` / `time.sleep`** → **delete it.** Do not translate a sleep
+- **`driver.sleep()`** → **delete it.** Do not translate a sleep
   into `cy.wait(<number>)`. Assert on the condition you were waiting for
   instead.
 
-| Selenium                                                               | Cypress                                  |
-| ---------------------------------------------------------------------- | ---------------------------------------- |
-| `wait.until(ExpectedConditions.visibilityOfElementLocated(by))`        | `cy.get(sel).should('be.visible')`       |
-| `wait.until(ExpectedConditions.elementToBeClickable(by)).click()`      | `cy.get(sel).click()`                    |
-| `wait.until(ExpectedConditions.presenceOfElementLocated(by))`          | `cy.get(sel)` (retries until present)    |
-| `wait.until(ExpectedConditions.textToBePresentInElement(el, "Saved"))` | `cy.get(sel).should('contain', 'Saved')` |
-| `wait.until(ExpectedConditions.urlContains("/home"))`                  | `cy.url().should('include', '/home')`    |
-| `Thread.sleep(3000)`                                                   | remove; assert on the resulting state    |
+| Selenium                                              | Cypress                                  |
+| ----------------------------------------------------- | ---------------------------------------- |
+| `driver.wait(until.elementIsVisible(el))`             | `cy.get(sel).should('be.visible')`       |
+| `driver.wait(until.elementIsEnabled(el))`             | `cy.get(sel).click()`                    |
+| `driver.wait(until.elementLocated(by))`               | `cy.get(sel)` (retries until present)    |
+| `driver.wait(until.elementTextContains(el, 'Saved'))` | `cy.get(sel).should('contain', 'Saved')` |
+| `driver.wait(until.urlContains('/home'))`             | `cy.url().should('include', '/home')`    |
+| `driver.sleep(3000)`                                  | remove; assert on the resulting state    |
 
-<Badge type="danger">Before: Selenium (Python)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```python
-button = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.ID, "myButton"))
-)
-button.click()
-WebDriverWait(driver, 10).until(
-    EC.visibility_of_element_located((By.CSS_SELECTOR, ".toast"))
-)
-assert driver.find_element(By.CSS_SELECTOR, ".toast").text == "Saved!"
+```js
+const button = driver.findElement(By.id('myButton'))
+await driver.wait(until.elementIsEnabled(button), 10000)
+await button.click()
+
+const toast = driver.findElement(By.css('.toast'))
+await driver.wait(until.elementIsVisible(toast), 10000)
+assert.strictEqual(await toast.getText(), 'Saved!')
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -477,19 +481,19 @@ request rather than an arbitrary timeout. See [Network stubbing](#Network-spying
 ## Choosing a selector strategy
 
 Selenium locates elements with `By` strategies: `By.id`, `By.name`,
-`By.className`, `By.cssSelector`, `By.linkText`, and `By.xpath`. Decide how
+`By.className`, `By.css`, `By.linkText`, and `By.xpath`. Decide how
 these map to Cypress before translating tests, because the choice affects
 nearly every line.
 
 | Selenium `By`                       | Cypress                                            |
 | ----------------------------------- | -------------------------------------------------- |
-| `By.id("email")`                    | `cy.get('#email')`                                 |
-| `By.name("email")`                  | `cy.get('[name="email"]')`                         |
-| `By.className("btn")`               | `cy.get('.btn')`                                   |
-| `By.cssSelector("...")`             | `cy.get('...')`                                    |
-| `By.linkText("Sign in")`            | `cy.contains('a', 'Sign in')`                      |
-| `By.partialLinkText("Sign")`        | `cy.contains('a', 'Sign')`                         |
-| `By.tagName("button")`              | `cy.get('button')`                                 |
+| `By.id('email')`                    | `cy.get('#email')`                                 |
+| `By.name('email')`                  | `cy.get('[name="email"]')`                         |
+| `By.className('btn')`               | `cy.get('.btn')`                                   |
+| `By.css('...')`                     | `cy.get('...')`                                    |
+| `By.linkText('Sign in')`            | `cy.contains('a', 'Sign in')`                      |
+| `By.partialLinkText('Sign')`        | `cy.contains('a', 'Sign')`                         |
+| `By.css('button')` (by tag)         | `cy.get('button')`                                 |
 | `By.xpath("//button[text()='OK']")` | `cy.contains('button', 'OK')` (rewrite, see below) |
 
 **XPath needs special attention.** Cypress has no first-class XPath support.
@@ -524,11 +528,11 @@ already yields all matching elements; use
 [`.first()`](/api/commands/first), and [`.last()`](/api/commands/last) to work
 with them.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-List<WebElement> rows = driver.findElements(By.cssSelector("table tr"));
-assertEquals(5, rows.size());
+```js
+const rows = await driver.findElements(By.css('table tr'))
+assert.strictEqual(rows.length, 5)
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -545,12 +549,12 @@ Selenium's `sendKeys` appends text; to replace a value you must `clear()`
 first. `.type()` behaves the same way, so clear before typing when a field
 may already contain text.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-driver.findElement(By.id("username")).sendKeys("jane");
-driver.findElement(By.id("password")).sendKeys("secret");
-driver.findElement(By.cssSelector("button[type=submit]")).click();
+```js
+await driver.findElement(By.id('username')).sendKeys('jane')
+await driver.findElement(By.id('password')).sendKeys('secret')
+await driver.findElement(By.css('button[type=submit]')).click()
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -569,11 +573,15 @@ Selenium wraps `<select>` elements in a `Select` helper. Cypress has a
 dedicated [`.select()`](/api/commands/select) command, plus
 [`.check()`](/api/commands/check) and [`.uncheck()`](/api/commands/uncheck).
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-new Select(driver.findElement(By.id("country"))).selectByVisibleText("United States");
-driver.findElement(By.id("subscribe")).click(); // checkbox
+```js
+const { Select } = require('selenium-webdriver/lib/select')
+
+await new Select(driver.findElement(By.id('country'))).selectByVisibleText(
+  'United States'
+)
+await driver.findElement(By.id('subscribe')).click() // checkbox
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -588,35 +596,35 @@ cy.get('#subscribe').check()
 Selenium performs these through the `Actions` builder. Cypress has direct
 commands for most, and uses [`.trigger()`](/api/commands/trigger) for hover.
 
-| Selenium `Actions`                              | Cypress                                                                                              |
-| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `actions.moveToElement(el).perform()` (hover)   | `cy.get(sel).trigger('mouseover')`                                                                   |
-| `actions.contextClick(el).perform()`            | `cy.get(sel).rightclick()`                                                                           |
-| `actions.doubleClick(el).perform()`             | `cy.get(sel).dblclick()`                                                                             |
-| `el.sendKeys(Keys.ENTER)`                       | `cy.get(sel).type('{enter}')`                                                                        |
-| `actions.keyDown(Keys.SHIFT).click(el)...`      | `cy.get(sel).click({ shiftKey: true })`                                                              |
-| `actions.sendKeys(Keys.TAB).perform()`          | `cy.press(Cypress.Keyboard.Keys.TAB)`                                                                |
-| `actions.dragAndDrop(source, target).perform()` | `.trigger('mousedown')` → `.trigger('mousemove')` → `.trigger('mouseup')`, or a drag-and-drop plugin |
+| Selenium `Actions`                                        | Cypress                                                                                              |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `driver.actions().move({ origin: el }).perform()` (hover) | `cy.get(sel).trigger('mouseover')`                                                                   |
+| `driver.actions().contextClick(el).perform()`             | `cy.get(sel).rightclick()`                                                                           |
+| `driver.actions().doubleClick(el).perform()`              | `cy.get(sel).dblclick()`                                                                             |
+| `el.sendKeys(Key.ENTER)`                                  | `cy.get(sel).type('{enter}')`                                                                        |
+| `driver.actions().keyDown(Key.SHIFT).click(el)...`        | `cy.get(sel).click({ shiftKey: true })`                                                              |
+| `driver.actions().sendKeys(Key.TAB).perform()`            | `cy.press(Cypress.Keyboard.Keys.TAB)`                                                                |
+| `driver.actions().dragAndDrop(source, target).perform()`  | `.trigger('mousedown')` → `.trigger('mousemove')` → `.trigger('mouseup')`, or a drag-and-drop plugin |
 
 See [`.type()`](/api/commands/type) for the full list of special-character
 sequences (`{enter}`, `{esc}`, `{selectall}`, etc.).
 
 ### Scrolling and viewport
 
-Selenium often scrolls via `JavascriptExecutor`. Cypress automatically
+Selenium often scrolls via `driver.executeScript()`. Cypress automatically
 scrolls elements into view before acting on them, and offers
 [`.scrollIntoView()`](/api/commands/scrollintoview) and
 [`cy.scrollTo()`](/api/commands/scrollto) when you need explicit control.
 Resize the window with [`cy.viewport()`](/api/commands/viewport).
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-((JavascriptExecutor) driver).executeScript(
-  "arguments[0].scrollIntoView(true);",
-  driver.findElement(By.id("footer"))
-);
-driver.manage().window().setSize(new Dimension(375, 812));
+```js
+await driver.executeScript(
+  'arguments[0].scrollIntoView(true);',
+  driver.findElement(By.id('footer'))
+)
+await driver.manage().window().setRect({ width: 375, height: 812 })
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -628,35 +636,35 @@ cy.viewport(375, 812)
 
 ## Assertions
 
-Selenium has no assertions of its own. You use JUnit's `assertEquals`,
-TestNG's `Assert`, pytest's bare `assert`, or NUnit's `Assert.That`. Cypress
+Selenium has no assertions of its own. With the JavaScript bindings you use
+Node's built-in `assert` module (or a library like Chai). Cypress
 bundles [Chai](/app/references/assertions), exposed through the retrying
 [`.should()`](/api/commands/should) command and the one-off `expect()`.
 
 Because `.should()` retries, you rarely need an explicit wait before an
 assertion; the wait and the assertion are the same call.
 
-| Selenium (JUnit / TestNG)                           | Cypress                                         |
-| --------------------------------------------------- | ----------------------------------------------- |
-| `assertTrue(el.isDisplayed())`                      | `cy.get(sel).should('be.visible')`              |
-| `assertFalse(el.isDisplayed())`                     | `cy.get(sel).should('not.be.visible')`          |
-| `assertEquals("Saved!", el.getText())`              | `cy.get(sel).should('have.text', 'Saved!')`     |
-| `assertTrue(el.getText().contains("Saved"))`        | `cy.get(sel).should('contain', 'Saved')`        |
-| `assertEquals("v", el.getAttribute("value"))`       | `cy.get(sel).should('have.value', 'v')`         |
-| `assertEquals("/x", el.getAttribute("href"))`       | `cy.get(sel).should('have.attr', 'href', '/x')` |
-| `assertTrue(el.isEnabled())`                        | `cy.get(sel).should('be.enabled')`              |
-| `assertFalse(el.isEnabled())`                       | `cy.get(sel).should('be.disabled')`             |
-| `assertTrue(el.isSelected())`                       | `cy.get(sel).should('be.checked')`              |
-| `assertEquals(5, els.size())`                       | `cy.get(sel).should('have.length', 5)`          |
-| `assertTrue(driver.getCurrentUrl().contains("/x"))` | `cy.url().should('include', '/x')`              |
-| `assertEquals("Title", driver.getTitle())`          | `cy.title().should('eq', 'Title')`              |
+| Selenium (Node `assert`)                                  | Cypress                                         |
+| --------------------------------------------------------- | ----------------------------------------------- |
+| `assert(await el.isDisplayed())`                          | `cy.get(sel).should('be.visible')`              |
+| `assert(!(await el.isDisplayed()))`                       | `cy.get(sel).should('not.be.visible')`          |
+| `assert.strictEqual(await el.getText(), 'Saved!')`        | `cy.get(sel).should('have.text', 'Saved!')`     |
+| `assert((await el.getText()).includes('Saved'))`          | `cy.get(sel).should('contain', 'Saved')`        |
+| `assert.strictEqual(await el.getAttribute('value'), 'v')` | `cy.get(sel).should('have.value', 'v')`         |
+| `assert.strictEqual(await el.getAttribute('href'), '/x')` | `cy.get(sel).should('have.attr', 'href', '/x')` |
+| `assert(await el.isEnabled())`                            | `cy.get(sel).should('be.enabled')`              |
+| `assert(!(await el.isEnabled()))`                         | `cy.get(sel).should('be.disabled')`             |
+| `assert(await el.isSelected())`                           | `cy.get(sel).should('be.checked')`              |
+| `assert.strictEqual(els.length, 5)`                       | `cy.get(sel).should('have.length', 5)`          |
+| `assert((await driver.getCurrentUrl()).includes('/x'))`   | `cy.url().should('include', '/x')`              |
+| `assert.strictEqual(await driver.getTitle(), 'Title')`    | `cy.title().should('eq', 'Title')`              |
 
-<Badge type="danger">Before: Selenium (Python)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```python
-toast = driver.find_element(By.CSS_SELECTOR, ".toast")
-assert toast.is_displayed()
-assert toast.text == "Saved!"
+```js
+const toast = driver.findElement(By.css('.toast'))
+assert(await toast.isDisplayed())
+assert.strictEqual(await toast.getText(), 'Saved!')
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -677,13 +685,12 @@ removes an entire class of flaky, timing-based Selenium code.
 Instead of an explicit wait hoping the response arrived, wait on the request
 itself.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-driver.findElement(By.id("load-users")).click();
+```js
+await driver.findElement(By.id('load-users')).click()
 // Hope the request finished within 10s
-new WebDriverWait(driver, Duration.ofSeconds(10))
-  .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".user-row")));
+await driver.wait(until.elementLocated(By.css('.user-row')), 10000)
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -712,22 +719,21 @@ See [Network Requests](/app/guides/network-requests) and
 
 ## Authentication
 
-Selenium suites usually re-run the full login UI in a `@BeforeEach`, or
+Selenium suites usually re-run the full login UI in a `beforeEach`, or
 manually persist cookies. In Cypress, wrap login in
 [`cy.session()`](/api/commands/session), which caches cookies, `localStorage`,
 and `sessionStorage` and restores them across tests, so you log in once instead
 of on every test.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-@BeforeEach
-void login() {
-  driver.get("http://localhost:3000/login");
-  driver.findElement(By.id("username")).sendKeys("jane");
-  driver.findElement(By.id("password")).sendKeys("secret");
-  driver.findElement(By.cssSelector("button[type=submit]")).click();
-}
+```js
+beforeEach(async function () {
+  await driver.get('http://localhost:3000/login')
+  await driver.findElement(By.id('username')).sendKeys('jane')
+  await driver.findElement(By.id('password')).sendKeys('secret')
+  await driver.findElement(By.css('button[type=submit]')).click()
+})
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -759,13 +765,13 @@ events. By default Cypress **auto-accepts** `alert()` and `confirm()`.
 | `driver.switchTo().alert().getText()`               | assert on the message inside the event handler          |
 | `driver.switchTo().alert().sendKeys(text)` (prompt) | stub `window.prompt` in `cy.visit`'s `onBeforeLoad`     |
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-driver.findElement(By.id("delete")).click();
-Alert alert = driver.switchTo().alert();
-assertEquals("Are you sure?", alert.getText());
-alert.accept();
+```js
+await driver.findElement(By.id('delete')).click()
+const alert = await driver.switchTo().alert()
+assert.strictEqual(await alert.getText(), 'Are you sure?')
+await alert.accept()
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -795,12 +801,12 @@ Selenium switches context with `driver.switchTo().frame(...)` and
 get the iframe's body and scope commands to it with
 [`.within()`](/api/commands/within).
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-driver.switchTo().frame("payment-frame");
-driver.findElement(By.id("card-number")).sendKeys("4242424242424242");
-driver.switchTo().defaultContent();
+```js
+await driver.switchTo().frame(driver.findElement(By.id('payment-frame')))
+await driver.findElement(By.id('card-number')).sendKeys('4242424242424242')
+await driver.switchTo().defaultContent()
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -821,7 +827,7 @@ to load. See
 
 ## Multiple tabs and windows
 
-Selenium manages tabs with `driver.getWindowHandles()` and
+Selenium manages tabs with `driver.getAllWindowHandles()` and
 `driver.switchTo().window(handle)`. Cypress runs in a single browser tab by
 design. There are two common approaches:
 
@@ -832,13 +838,14 @@ design. There are two common approaches:
   [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer)
   plugin, which gives Cypress access to the underlying browser via Puppeteer.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-String original = driver.getWindowHandle();
-driver.findElement(By.linkText("Open report")).click();
-for (String handle : driver.getWindowHandles()) {
-  if (!handle.equals(original)) driver.switchTo().window(handle);
+```js
+const original = await driver.getWindowHandle()
+await driver.findElement(By.linkText('Open report')).click()
+const handles = await driver.getAllWindowHandles()
+for (const handle of handles) {
+  if (handle !== original) await driver.switchTo().window(handle)
 }
 ```
 
@@ -858,11 +865,12 @@ Selenium uploads by sending the file path to the `<input type="file">`.
 Cypress has a dedicated [`.selectFile()`](/api/commands/selectfile) command
 that also supports multiple files and drag-and-drop.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-driver.findElement(By.cssSelector("input[type=file]"))
-      .sendKeys("/path/to/avatar.png");
+```js
+await driver
+  .findElement(By.css('input[type=file]'))
+  .sendKeys('/path/to/avatar.png')
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -883,15 +891,18 @@ cy.readFile('cypress/downloads/export.csv')
 
 ## Screenshots
 
-Selenium's `getScreenshotAs(OutputType.FILE)` maps to
+Selenium's `driver.takeScreenshot()` maps to
 [`cy.screenshot()`](/api/commands/screenshot), which can capture the full
 page or a single element. Cypress also captures a screenshot automatically on
 test failure during `cypress run`.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+```js
+const fs = require('fs')
+
+const image = await driver.takeScreenshot()
+fs.writeFileSync('screenshot.png', image, 'base64')
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -905,7 +916,7 @@ See [Screenshots and Videos](/app/guides/screenshots-and-videos).
 
 ## API testing
 
-Selenium suites often add a separate HTTP client (RestAssured, `requests`) for
+Selenium suites often add a separate HTTP client (`axios`, `node-fetch`) for
 API setup or assertions. Cypress has [`cy.request()`](/api/commands/request)
 built in for making real HTTP calls (no `cy.intercept` stubbing involved).
 
@@ -929,17 +940,20 @@ WebDriver calls to Cypress commands. Because Cypress commands are globally
 available on `cy`, page objects no longer need a `driver` passed into their
 constructor.
 
-<Badge type="danger">Before: Selenium (Java)</Badge>
+<Badge type="danger">Before: Selenium</Badge>
 
-```java
-public class LoginPage {
-  private final WebDriver driver;
-  public LoginPage(WebDriver driver) { this.driver = driver; }
+```js
+const { By } = require('selenium-webdriver')
 
-  public void login(String user, String pass) {
-    driver.findElement(By.id("username")).sendKeys(user);
-    driver.findElement(By.id("password")).sendKeys(pass);
-    driver.findElement(By.cssSelector("button[type=submit]")).click();
+class LoginPage {
+  constructor(driver) {
+    this.driver = driver
+  }
+
+  async login(username, password) {
+    await this.driver.findElement(By.id('username')).sendKeys(username)
+    await this.driver.findElement(By.id('password')).sendKeys(password)
+    await this.driver.findElement(By.css('button[type=submit]')).click()
   }
 }
 ```
@@ -962,9 +976,10 @@ methods.
 
 ### Data-driven tests
 
-Selenium's data-driven tests use TestNG `@DataProvider`, JUnit
-`@ParameterizedTest`, or pytest `@pytest.mark.parametrize`. In Cypress, iterate
-a plain array with `.forEach()` and generate one `it` per entry.
+Selenium data-driven tests typically loop over an array to generate cases (or
+use a runner feature such as Mocha's dynamic tests). In Cypress the pattern is
+the same: iterate a plain array with `.forEach()` and generate one `it` per
+entry.
 
 <Badge type="success">Cypress</Badge>
 
@@ -1120,53 +1135,53 @@ mid-migration.
 
 ## Cheat sheet
 
-Selenium calls below are shown in Java/`WebElement` form for brevity; the
-Python, C#, and Ruby equivalents map the same way.
+Selenium calls below use the JavaScript bindings, with `await` omitted for
+brevity. The Java, Python, C#, and Ruby bindings map the same way.
 
-| Selenium                                                 | Cypress                                                                                       |
-| -------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `new ChromeDriver()` / `driver.quit()`                   | _(removed; managed by Cypress)_                                                               |
-| `driver.get('/path')`                                    | `cy.visit('/path')`                                                                           |
-| `driver.navigate().to(url)`                              | `cy.visit(url)`                                                                               |
-| `driver.navigate().back()`                               | `cy.go('back')`                                                                               |
-| `driver.navigate().forward()`                            | `cy.go('forward')`                                                                            |
-| `driver.navigate().refresh()`                            | `cy.reload()`                                                                                 |
-| `driver.getCurrentUrl()`                                 | `cy.url()`                                                                                    |
-| `driver.getTitle()`                                      | `cy.title()`                                                                                  |
-| `driver.findElement(By.id('x'))`                         | `cy.get('#x')`                                                                                |
-| `driver.findElement(By.cssSelector('.x'))`               | `cy.get('.x')`                                                                                |
-| `driver.findElement(By.linkText('Next'))`                | `cy.contains('a', 'Next')`                                                                    |
-| `driver.findElement(By.xpath("//b[text()='X']"))`        | `cy.contains('b', 'X')`                                                                       |
-| `driver.findElements(By.css('.x'))`                      | `cy.get('.x')` (yields all)                                                                   |
-| `el.click()`                                             | `cy.get(sel).click()`                                                                         |
-| `el.sendKeys('text')`                                    | `cy.get(sel).type('text')`                                                                    |
-| `el.clear()`                                             | `cy.get(sel).clear()`                                                                         |
-| `el.getText()`                                           | `cy.get(sel).invoke('text')`                                                                  |
-| `el.getAttribute('href')`                                | `cy.get(sel).invoke('attr', 'href')`                                                          |
-| `el.isDisplayed()`                                       | `cy.get(sel).should('be.visible')`                                                            |
-| `el.isEnabled()`                                         | `cy.get(sel).should('be.enabled')`                                                            |
-| `el.isSelected()`                                        | `cy.get(sel).should('be.checked')`                                                            |
-| `new Select(el).selectByVisibleText('US')`               | `cy.get(sel).select('US')`                                                                    |
-| `actions.moveToElement(el)` (hover)                      | `cy.get(sel).trigger('mouseover')`                                                            |
-| `actions.contextClick(el)`                               | `cy.get(sel).rightclick()`                                                                    |
-| `actions.doubleClick(el)`                                | `cy.get(sel).dblclick()`                                                                      |
-| `el.sendKeys(Keys.ENTER)`                                | `cy.get(sel).type('{enter}')`                                                                 |
-| `WebDriverWait(...).until(EC.visibilityOf(...))`         | `cy.get(sel).should('be.visible')`                                                            |
-| `WebDriverWait(...).until(EC.elementToBeClickable(...))` | `cy.get(sel).click()`                                                                         |
-| `Thread.sleep(ms)`                                       | _(remove; assert on the resulting state)_                                                     |
-| `implicitlyWait(...)`                                    | `defaultCommandTimeout` in config                                                             |
-| `input.sendKeys('/path/file.png')` (upload)              | `cy.get(sel).selectFile('path/file.png')`                                                     |
-| `driver.switchTo().frame('f')`                           | `cy.get('#f').its('0.contentDocument.body')...`                                               |
-| `driver.switchTo().alert().accept()`                     | auto-accepted; `cy.on('window:alert', ...)`                                                   |
-| `driver.switchTo().alert().dismiss()` (confirm)          | `cy.on('window:confirm', () => false)`                                                        |
-| `driver.switchTo().window(handle)`                       | [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer) or assert the `href` |
-| `driver.manage().getCookies()`                           | `cy.getCookies()`                                                                             |
-| `driver.manage().addCookie(cookie)`                      | `cy.setCookie(name, value)`                                                                   |
-| `driver.manage().deleteAllCookies()`                     | `cy.clearCookies()`                                                                           |
-| `getScreenshotAs(OutputType.FILE)`                       | `cy.screenshot()`                                                                             |
-| `((JavascriptExecutor) driver).executeScript(js)`        | `cy.window().then(win => ...)` / `cy.invoke(...)`                                             |
-| RestAssured / `requests.get(url)`                        | `cy.request(url)`                                                                             |
-| Selenium Grid / `RemoteWebDriver`                        | `cypress run --record --parallel` (Cypress Cloud)                                             |
+| Selenium                                                       | Cypress                                                                                       |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `new Builder().forBrowser('chrome').build()` / `driver.quit()` | _(removed; managed by Cypress)_                                                               |
+| `driver.get('/path')`                                          | `cy.visit('/path')`                                                                           |
+| `driver.navigate().to(url)`                                    | `cy.visit(url)`                                                                               |
+| `driver.navigate().back()`                                     | `cy.go('back')`                                                                               |
+| `driver.navigate().forward()`                                  | `cy.go('forward')`                                                                            |
+| `driver.navigate().refresh()`                                  | `cy.reload()`                                                                                 |
+| `driver.getCurrentUrl()`                                       | `cy.url()`                                                                                    |
+| `driver.getTitle()`                                            | `cy.title()`                                                                                  |
+| `driver.findElement(By.id('x'))`                               | `cy.get('#x')`                                                                                |
+| `driver.findElement(By.css('.x'))`                             | `cy.get('.x')`                                                                                |
+| `driver.findElement(By.linkText('Next'))`                      | `cy.contains('a', 'Next')`                                                                    |
+| `driver.findElement(By.xpath("//b[text()='X']"))`              | `cy.contains('b', 'X')`                                                                       |
+| `driver.findElements(By.css('.x'))`                            | `cy.get('.x')` (yields all)                                                                   |
+| `el.click()`                                                   | `cy.get(sel).click()`                                                                         |
+| `el.sendKeys('text')`                                          | `cy.get(sel).type('text')`                                                                    |
+| `el.clear()`                                                   | `cy.get(sel).clear()`                                                                         |
+| `el.getText()`                                                 | `cy.get(sel).invoke('text')`                                                                  |
+| `el.getAttribute('href')`                                      | `cy.get(sel).invoke('attr', 'href')`                                                          |
+| `el.isDisplayed()`                                             | `cy.get(sel).should('be.visible')`                                                            |
+| `el.isEnabled()`                                               | `cy.get(sel).should('be.enabled')`                                                            |
+| `el.isSelected()`                                              | `cy.get(sel).should('be.checked')`                                                            |
+| `new Select(el).selectByVisibleText('US')`                     | `cy.get(sel).select('US')`                                                                    |
+| `driver.actions().move({ origin: el })` (hover)                | `cy.get(sel).trigger('mouseover')`                                                            |
+| `driver.actions().contextClick(el)`                            | `cy.get(sel).rightclick()`                                                                    |
+| `driver.actions().doubleClick(el)`                             | `cy.get(sel).dblclick()`                                                                      |
+| `el.sendKeys(Key.ENTER)`                                       | `cy.get(sel).type('{enter}')`                                                                 |
+| `driver.wait(until.elementIsVisible(el))`                      | `cy.get(sel).should('be.visible')`                                                            |
+| `driver.wait(until.elementIsEnabled(el))`                      | `cy.get(sel).click()`                                                                         |
+| `driver.sleep(ms)`                                             | _(remove; assert on the resulting state)_                                                     |
+| `manage().setTimeouts({ implicit: ms })`                       | `defaultCommandTimeout` in config                                                             |
+| `el.sendKeys('/path/file.png')` (upload)                       | `cy.get(sel).selectFile('path/file.png')`                                                     |
+| `driver.switchTo().frame(el)`                                  | `cy.get('#f').its('0.contentDocument.body')...`                                               |
+| `driver.switchTo().alert().accept()`                           | auto-accepted; `cy.on('window:alert', ...)`                                                   |
+| `driver.switchTo().alert().dismiss()` (confirm)                | `cy.on('window:confirm', () => false)`                                                        |
+| `driver.switchTo().window(handle)`                             | [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer) or assert the `href` |
+| `driver.manage().getCookies()`                                 | `cy.getCookies()`                                                                             |
+| `driver.manage().addCookie(cookie)`                            | `cy.setCookie(name, value)`                                                                   |
+| `driver.manage().deleteAllCookies()`                           | `cy.clearCookies()`                                                                           |
+| `driver.takeScreenshot()`                                      | `cy.screenshot()`                                                                             |
+| `driver.executeScript(js)`                                     | `cy.window().then(win => ...)` / `cy.invoke(...)`                                             |
+| `fetch(url)` / an HTTP client                                  | `cy.request(url)`                                                                             |
+| Selenium Grid / `RemoteWebDriver`                              | `cypress run --record --parallel` (Cypress Cloud)                                             |
 
 ## Conclusion
 
