@@ -25,16 +25,7 @@ UI Coverage already [groups elements automatically](/ui-coverage/core-concepts/e
 - **Make reports readable**: Replace machine-generated selectors with meaningful names like "Remove Item Button" or "Shipping Method Option", so anyone reading the report understands what needs testing.
 - **Group across markup differences**: Combine elements that share behavior but not structure, such as form controls and their labels.
 
-## Which option do I need?
-
-UI Coverage has several options that change how elements appear in reports. Check that `elementGroups` matches your goal before you start:
-
-| Your goal                                                           | Use                                                                                                         |
-| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Combine repeated or related elements so they count as one           | `elementGroups` (this page)                                                                                 |
-| Rename or stabilize the identity of a single element                | [`elements`](/ui-coverage/configuration/elements)                                                           |
-| Remove elements from reports and scores entirely                    | [`elementFilters`](/ui-coverage/configuration/elementfilters)                                               |
-| Define groups in your application's markup instead of configuration | [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) |
+If your goal is different, such as renaming a single element or removing elements from reports entirely, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
 
 ## Setting elementGroups
 

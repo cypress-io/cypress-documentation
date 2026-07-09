@@ -48,6 +48,19 @@ For a quick overview of the practical application of the most common UI Coverage
 
 :::
 
+### Which option do I need?
+
+Several options change what appears in reports and how it's organized. Pick the one that matches your goal:
+
+| Your goal                                                           | Use                                                                                                         |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Combine repeated or related elements so they count as one           | [`elementGroups`](/ui-coverage/configuration/elementgroups)                                                 |
+| Rename or stabilize the identity of a single element                | [`elements`](/ui-coverage/configuration/elements)                                                           |
+| Remove elements from reports and scores entirely                    | [`elementFilters`](/ui-coverage/configuration/elementfilters)                                               |
+| Define groups in your application's markup instead of configuration | [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) |
+| Control how URLs are grouped into views                             | [`views`](/ui-coverage/configuration/views)                                                                 |
+| Remove entire views from reports                                    | [`viewFilters`](/ui-coverage/configuration/viewfilters)                                                     |
+
 ### Comments
 
 All configuration objects support an optional `comment` property that you can use to provide context and explanations for why certain values are set. This helps make your configuration easier to understand and maintain, especially when working in teams or revisiting configuration after some time.
