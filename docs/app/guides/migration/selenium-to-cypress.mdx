@@ -1118,21 +1118,6 @@ instrumentation, unlike bolting axe-core onto a Selenium run. Every distinct
 DOM state your tests reach is scanned server-side using the same protocol as
 Test Replay.
 
-## Features without a direct equivalent
-
-A few Selenium capabilities have no built-in Cypress counterpart. Identify
-these up front so you can plan alternatives rather than discovering them
-mid-migration.
-
-| Selenium capability                                  | Cypress approach                                                                                                                            |
-| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Driving multiple tabs/windows                        | Test the behavior instead, or use [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer)                                  |
-| Non-JavaScript languages (Java, Python, C#, Ruby)    | Tests and shared helper code must be rewritten in JavaScript/TypeScript                                                                     |
-| XPath locators                                       | Rewrite as CSS selectors or [`cy.contains()`](/api/commands/contains) text queries                                                          |
-| Native OS dialogs (file pickers, basic-auth prompts) | Use [`.selectFile()`](/api/commands/selectfile); pass basic-auth in [`cy.visit()`](/api/commands/visit) `auth` option                       |
-| Visual regression                                    | No built-in diffing; see [Visual Testing](/app/tooling/visual-testing) for plugins                                                          |
-| Third-party browsers (Safari, IE)                    | Cypress supports Chromium-family browsers, Firefox, and WebKit (experimental); see [Launching Browsers](/app/references/launching-browsers) |
-
 ## Cheat sheet
 
 Selenium calls below use the JavaScript bindings, with `await` omitted for
