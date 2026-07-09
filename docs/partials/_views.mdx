@@ -1,6 +1,6 @@
 Views are the distinct pages of your application that your reports are organized around. Instead of reporting on every unique URL your tests visit, Cypress groups related URLs into a single view, so that scores and results reflect the actual pages of your application.
 
-URLs that differ only by numeric IDs or UUIDs are grouped automatically. For example, `/users/123` and `/users/456` are grouped into a single `/users/*` view with no configuration. Other dynamic values are not recognized automatically — `/users/alice` and `/users/bob` appear as two separate views. The `views` configuration lets you define your own URL patterns to control exactly how URLs are grouped, producing reports that are easier to read and scores that reflect how your application is actually structured.
+URLs that differ only by numeric IDs or UUIDs are grouped automatically. For example, `/users/123` and `/users/456` are grouped into a single `/users/*` view with no configuration. Other dynamic values are not recognized automatically, so `/users/alice` and `/users/bob` appear as two separate views. The `views` configuration lets you define your own URL patterns to control exactly how URLs are grouped, producing reports that are easier to read and scores that reflect how your application is actually structured.
 
 ## Why use views?
 
