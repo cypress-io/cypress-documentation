@@ -9,7 +9,7 @@ sidebar_position: 80
 
 # elementGroups
 
-The `elementGroups` configuration combines related elements into a single unit in your UI Coverage report. A group counts once toward your coverage score, and an interaction with any element in the group marks the whole group as tested. This means a list of 50 untested product cards no longer appears as 50 untested elements dragging down your score — it appears as one clearly named group that a single test can cover.
+The `elementGroups` configuration combines related elements into a single unit in your UI Coverage report. A group counts once toward your coverage score, and an interaction with any element in the group marks the whole group as tested. This means a list of 50 untested product cards no longer appears as 50 untested elements dragging down your score. Instead, it appears as one clearly named group that a single test can cover.
 
 UI Coverage already [groups elements automatically](/ui-coverage/core-concepts/element-grouping) based on their structure in the DOM. Use `elementGroups` when the automatic grouping doesn't match how your application actually behaves:
 
