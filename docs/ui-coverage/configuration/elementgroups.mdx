@@ -15,10 +15,15 @@ UI Coverage already [groups elements automatically](/ui-coverage/core-concepts/e
 
 - **Consolidate repeated elements**: Collapse dynamic or repeated elements, such as items in a list, carousel, or data table, into one logical group.
 - **Correct the automatic grouping**: Split apart elements that were grouped together incorrectly, or unite elements that the automatic rules kept separate.
-- **Make reports readable**: Replace machine-generated selectors with meaningful names like "Add Button" or "Animal Option", so anyone reading the report understands what needs testing.
+- **Make reports readable**: Replace machine-generated selectors with meaningful names like "Add Button" or "Shipping Method Option", so anyone reading the report understands what needs testing.
 - **Group across markup differences**: Combine elements that share behavior but not structure, such as form controls and their labels.
 
 To add or edit `elementGroups`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+
+<DocsImage
+  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
 
 ## Syntax
 
@@ -74,7 +79,7 @@ Elements generated from data, like product listings, often have dynamic attribut
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elementGroups": [
@@ -110,7 +115,7 @@ Add a `name` so the report describes the interface instead of your selectors. He
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elementGroups": [
@@ -144,16 +149,17 @@ Add Button (4 instances)
 
 ### Group all elements in a container
 
-Standard CSS combinators work in selectors, so you can group every matching element inside a container. Remember that the selector must match the interactive elements themselves, not just the container.
+Use a descendant combinator to group every interactive element inside a container. This example collapses a date picker's day buttons, which would otherwise appear as dozens of separate elements, into one group. The selector must match the interactive elements themselves, not just the container.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elementGroups": [
       {
-        "selector": "#calendar button"
+        "selector": "#datepicker button",
+        "name": "Datepicker Day"
       }
     ]
   }
@@ -164,10 +170,10 @@ Standard CSS combinators work in selectors, so you can group every matching elem
 
 ```xml
 <body>
-  <div id="calendar">
-    <button id="jan"></button>
-    <button id="feb"></button>
-    <button id="mar"></button>
+  <div id="datepicker">
+    <button id="day-1">1</button>
+    <button id="day-2">2</button>
+    <button id="day-3">3</button>
   </div>
 </body>
 ```
@@ -175,24 +181,24 @@ Standard CSS combinators work in selectors, so you can group every matching elem
 #### Elements shown in UI
 
 ```
-#calendar button (3 instances)
+Datepicker Day (3 instances)
 ```
 
 ---
 
 ### Group form controls with their labels
 
-A comma-separated selector list can unite elements with different markup. This example groups a set of radio inputs together with their clickable labels, using `:has()` to match the labels.
+A comma-separated selector list can unite elements with different markup. This example groups a checkout page's shipping method radio inputs together with their clickable labels, using `:has()` to match the labels.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elementGroups": [
       {
-        "selector": "input[name='animal'], label:has(input[name='animal'])",
-        "name": "Animal Option"
+        "selector": "input[name='shipping'], label:has(input[name='shipping'])",
+        "name": "Shipping Method Option"
       }
     ]
   }
@@ -204,10 +210,12 @@ A comma-separated selector list can unite elements with different markup. This e
 ```xml
 <body>
   <label>
-    <input id="bear" name="animal" />
+    <input type="radio" id="standard" name="shipping" />
+    Standard
   </label>
   <label>
-    <input id="lion" name="animal" />
+    <input type="radio" id="express" name="shipping" />
+    Express
   </label>
 </body>
 ```
@@ -215,7 +223,7 @@ A comma-separated selector list can unite elements with different markup. This e
 #### Elements shown in UI
 
 ```
-Animal Option (4 instances)
+Shipping Method Option (4 instances)
 ```
 
 ---
@@ -226,7 +234,7 @@ Use `documentScope` to apply a rule only to elements inside a specific shadow DO
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elementGroups": [
@@ -268,7 +276,7 @@ Shadow DOM Buttons (2 instances)
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elementGroups": [
