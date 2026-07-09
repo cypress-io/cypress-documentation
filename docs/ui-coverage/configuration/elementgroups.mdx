@@ -11,12 +11,32 @@ sidebar_position: 80
 
 The `elementGroups` configuration combines related elements into a single unit in your UI Coverage report. A group counts once toward your coverage score, and an interaction with any element in the group marks the whole group as tested. This means a list of 50 untested product cards no longer appears as 50 untested elements dragging down your score. Instead, it appears as one clearly named group that a single test can cover.
 
+Without meaningful groups, a report can fill up with elements listed under machine-generated names that are hard to act on:
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-expanded.png"
+  alt="The UI Coverage report listing thousands of untested elements, several of which appear under machine-generated names derived from their DOM structure"
+/>
+
 UI Coverage already [groups elements automatically](/ui-coverage/core-concepts/element-grouping) based on their structure in the DOM. Use `elementGroups` when the automatic grouping doesn't match how your application actually behaves:
 
 - **Consolidate repeated elements**: Collapse dynamic or repeated elements, such as items in a list, carousel, or data table, into one logical group.
 - **Correct the automatic grouping**: Split apart elements that were grouped together incorrectly, or unite elements that the automatic rules kept separate.
 - **Make reports readable**: Replace machine-generated selectors with meaningful names like "Remove Item Button" or "Shipping Method Option", so anyone reading the report understands what needs testing.
 - **Group across markup differences**: Combine elements that share behavior but not structure, such as form controls and their labels.
+
+## Which option do I need?
+
+UI Coverage has several options that change how elements appear in reports. Check that `elementGroups` matches your goal before you start:
+
+| Your goal                                                           | Use                                                                                                         |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Combine repeated or related elements so they count as one           | `elementGroups` (this page)                                                                                 |
+| Rename or stabilize the identity of a single element                | [`elements`](/ui-coverage/configuration/elements)                                                           |
+| Remove elements from reports and scores entirely                    | [`elementFilters`](/ui-coverage/configuration/elementfilters)                                               |
+| Define groups in your application's markup instead of configuration | [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) |
+
+## Setting elementGroups
 
 To add or edit `elementGroups`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
 
@@ -60,7 +80,7 @@ A few behaviors are worth knowing:
 - **Custom groups override automatic grouping.** An element that matches an `elementGroups` rule is grouped by that rule alone. This includes links, which would otherwise be grouped by their `href` patterns.
 - **A group forms even with one match.** Unlike the automatic rules, which require at least two similar elements, an `elementGroups` rule that matches a single element still produces a named group in the report.
 - **Filtered elements are never grouped.** Elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters) are not considered for grouping.
-- **The `data-cy-ui-group` attribute wins.** Elements that declare a group directly in your markup with the `data-cy-ui-group` attribute keep that group, even if they also match an `elementGroups` rule.
+- **The `data-cy-ui-group` attribute wins.** Elements that declare a group directly in your markup with the [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) keep that group, even if they also match an `elementGroups` rule.
 
 ### Validation rules
 
@@ -103,6 +123,16 @@ Elements generated from data often have dynamic attribute values, like an add to
 
 #### Elements shown in UI
 
+Without the rule, the result depends on the automatic grouping heuristics. The buttons may appear individually or under a machine-generated name:
+
+```
+[data-cy="add-to-cart-101"]
+[data-cy="add-to-cart-102"]
+[data-cy="add-to-cart-103"]
+```
+
+With the rule, the buttons always appear as one group:
+
 ```
 [data-cy^='add-to-cart-'] (3 instances)
 ```
@@ -143,6 +173,48 @@ Add a `name` so the report describes the interface instead of your selectors. He
 
 ```
 Remove Item Button (4 instances)
+```
+
+---
+
+### Order specific rules before broad ones
+
+Each element joins the first rule that matches it, so list narrower rules first. Here, the featured product's button gets its own group because its rule comes before the catch-all rule. If the rules were reversed, the catch-all would capture all three buttons and the "Featured Buy Now Button" rule would never match anything.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "[data-cy='buy-now-featured']",
+        "name": "Featured Buy Now Button"
+      },
+      {
+        "selector": "[data-cy^='buy-now-']",
+        "name": "Buy Now Button"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-cy="buy-now-featured">Buy Now</button>
+  <button data-cy="buy-now-101">Buy Now</button>
+  <button data-cy="buy-now-102">Buy Now</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+Featured Buy Now Button (1 instance)
+Buy Now Button (2 instances)
 ```
 
 ---
@@ -315,9 +387,15 @@ Payment Widget Actions (2 instances)
 
 For nested documents, list one selector per host from outermost to innermost, for example `"documentScope": ["#payment-provider", "secure-card-input"]`.
 
+:::tip
+
+After saving configuration changes, regenerate a recent run to preview your groups without rerunning your tests. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for how to regenerate a report.
+
+:::
+
 ## See also
 
-- [Element Grouping](/ui-coverage/core-concepts/element-grouping) explains the automatic grouping rules that apply when no `elementGroups` rule matches.
+- [Element Grouping](/ui-coverage/core-concepts/element-grouping) explains the automatic grouping rules that apply when no `elementGroups` rule matches, and the `data-cy-ui-group` markup attribute.
 - [`elements`](/ui-coverage/configuration/elements) assigns a stable identity and name to a single element rather than a group.
 - [`elementFilters`](/ui-coverage/configuration/elementfilters) removes elements from reports entirely instead of grouping them.
 - [Configuration overview](/ui-coverage/configuration/overview) covers where configuration lives and how to regenerate reports after changing it.

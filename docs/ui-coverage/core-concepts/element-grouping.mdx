@@ -47,6 +47,25 @@ Consider a table where each row contains a delete button:
 
 In this case, UI Coverage groups the delete buttons together in accordance with our grouping rules. Interacting with one delete button is equivalent to testing all delete buttons in the table.
 
+## Grouping with markup attributes
+
+You can define groups directly in your application's markup with the `data-cy-ui-group` attribute, without any Cypress Cloud configuration. Elements that share the same attribute value are grouped together, and the group appears in reports under a selector formatted with that value, such as `[data-cy-ui-group="pagination"]`.
+
+```html
+<button data-cy-ui-group="pagination">1</button>
+<button data-cy-ui-group="pagination">2</button>
+<button data-cy-ui-group="pagination">3</button>
+```
+
+The attribute follows these rules:
+
+- Placing the attribute on an interactive element applies the group to that element only.
+- Placing the attribute on a wrapper or parent element applies the group to all interactive elements inside it.
+- When wrappers with the attribute are nested, each interactive element joins the group of its closest ancestor with the attribute.
+- Groups defined with this attribute take priority over every other grouping mechanism, including [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration rules.
+
+Use the attribute when the team that owns the markup also owns the grouping decisions, and use [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration when you want to manage grouping centrally in Cypress Cloud without changing application code.
+
 ## Customizing element grouping
 
 You can customize element grouping to suit your application's structure and behavior. Refer to the [Element Groups](/ui-coverage/configuration/elementgroups) configuration guide to learn how to define custom groups and group elements based on specific attributes or selectors.
