@@ -44,8 +44,7 @@ Jump to the [cheat sheet](#Cheat-sheet) for a quick reference.
 - Locators, interactions, waits, and assertions mapped side by side
 - Network stubbing, authentication, alerts, frames, tabs, and file handling
 - Page Objects, data-driven tests, custom commands, and Cucumber
-- Replacing Selenium Grid with Cypress Cloud parallelization, Test Replay,
-  and accessibility testing
+- Replacing Selenium Grid with Cypress Cloud parallelization and Test Replay
 
 ::::
 
@@ -1049,8 +1048,10 @@ that the step bodies now use `cy` instead of a `driver`.
 
 Selenium Grid distributes tests across machines by running a hub and nodes
 that you provision, configure, and maintain. Cypress replaces this with
-[Cypress Cloud](/cloud/get-started/introduction) parallelization, with no hub
-to operate.
+[Cypress Cloud](/cloud/get-started/introduction) parallelization: your CI runs
+Cypress on several machines in parallel and Cypress Cloud coordinates how specs
+are split across them, so there is no hub to operate. Like Selenium Grid, this
+runs in CI, not on your local machine.
 
 ```shell
 cypress run --record --parallel
@@ -1096,27 +1097,13 @@ cypress run --record --key <record_key>
 Cypress runs in any CI provider using its headless runner and returns a
 non-zero exit code (`1`) when tests fail, so the same gating that stopped your
 pipeline on a Selenium failure works unchanged. This simply replaces the
-Selenium step in your workflow. Official Docker images and a
+Selenium step in your workflow. Official Docker images, the
+[Cypress GitHub Action](https://github.com/cypress-io/github-action), and a
 [CircleCI orb](https://github.com/cypress-io/circleci-orb) handle browser
 installation and caching.
 
-For result reporting without Cypress Cloud, the
-[`cypress-mochawesome-reporter`](https://www.npmjs.com/package/cypress-mochawesome-reporter)
-plugin generates HTML reports. Cypress Cloud provides
-[built-in analytics and reporting](/cloud/features/analytics/overview) covering
-run duration, flaky tests, and slowest tests, with no extra dependency.
-
 Learn more about
 [running Cypress tests in Continuous Integration](/app/continuous-integration/overview).
-
-## Accessibility testing
-
-If you record runs to Cypress Cloud,
-[Cypress Accessibility](/accessibility/get-started/introduction) scans your
-whole suite automatically, with no `checkA11y()` calls or per-test
-instrumentation, unlike bolting axe-core onto a Selenium run. Every distinct
-DOM state your tests reach is scanned server-side using the same protocol as
-Test Replay.
 
 ## Cheat sheet
 
