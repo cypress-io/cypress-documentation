@@ -178,7 +178,7 @@ Apply these optimizations in order. The highest-impact changes are at the top.
 14. [Block third-party requests with blockHosts](#Block-third-party-requests-with-blockHosts) — analytics and monitoring services consume time in test environments; blocked requests resolve immediately
 15. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
 16. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
-17. [experimentalFastVisibility](#Enable-faster-visibility-checks) — high impact on complex DOMs; replaces the layout-thrashing legacy visibility algorithm
+17. [Modern visibility algorithm](#Use-the-modern-visibility-algorithm) — high impact on complex DOMs; Cypress 16 defaults to the faster `checkVisibility()`-based algorithm
 18. [experimentalMemoryManagement](#Manage-memory-accumulation) — targeted remedy for suites that slow down over time or crash; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
 19. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
 20. [UI Coverage to identify over-tested elements](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
@@ -690,39 +690,37 @@ Conversely, for operations with known latency (large file uploads, slow reports)
 cy.get('[data-cy="report-ready"]', { timeout: 30000 }).should('be.visible')
 ```
 
-### Enable faster visibility checks
+### Use the modern visibility algorithm
 
 Every time Cypress asserts or checks that an element is visible, it runs a visibility detection algorithm. In applications with complex, deeply nested DOM structures, this check can be expensive: the legacy visibility check walks up the ancestor tree and reads CSS properties at each level, repeatedly triggering layout recalculation.
 
-[`experimentalFastVisibility`](/app/references/experiments#Experimental-Fast-Visibility) replaces the legacy visibility check with a two-stage approach: it first calls the browser's built-in `checkVisibility()` method, then uses an adaptive point-sampling algorithm to confirm coverage.
+As of Cypress 16, the [modern visibility algorithm](/app/core-concepts/interacting-with-elements#Visibility-Strategy) is the default. It delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API, which is faster than the legacy DOM-walking approach and aligns Cypress's notion of "visible" with the browser's own definition.
 
-Enable it globally in your Cypress configuration:
+If you were previously enabling [`experimentalFastVisibility`](/app/references/migration-guide#experimentalFastVisibility-replaced-by-visibilityStrategy) on Cypress 15, remove it — the modern algorithm is now always on by default.
+
+If a test fails after upgrading because it depended on legacy-only visibility semantics (ancestor `overflow` clipping, transform-based hiding, or fixed/sticky coverage checks), prefer rewriting the assertion to verify the same user-visible behavior. As a temporary migration path, opt back into the legacy algorithm with [`visibilityStrategy`](/app/references/configuration#Actionability):
 
 :::cypress-config-example
 
 ```js
 {
-  experimentalFastVisibility: true // ✅ Faster approach: enable fast visibility
+  visibilityStrategy: 'legacy' // temporary migration path only
 }
 ```
 
 :::
 
-You can also enable or disable it at the suite or test level when migrating incrementally:
+You can also set `visibilityStrategy` per suite or per test while migrating incrementally:
 
 ```js
-describe('Dashboard', { experimentalFastVisibility: true }, () => {
-  it('loads correctly', () => {
-    // uses fast visibility
-  })
-
-  it('legacy edge case', { experimentalFastVisibility: false }, () => {
-    // uses legacy algorithm for this one test
+describe('Dashboard', { visibilityStrategy: 'legacy' }, () => {
+  it('legacy edge case', () => {
+    // uses legacy algorithm for this suite
   })
 })
 ```
 
-This flag is most impactful on suites with many visibility assertions or suites that run against applications with large, deeply nested component trees.
+The modern algorithm is most impactful on suites with many visibility assertions or suites that run against applications with large, deeply nested component trees.
 
 ### Manage memory accumulation
 
@@ -742,7 +740,7 @@ In a long-running Cypress test suite, the browser accumulates memory across test
 
 :::info
 
-`experimentalMemoryManagement` only applies to Chromium-based browsers (Chrome, Edge, Electron). It has no effect in Firefox or WebKit.
+`experimentalMemoryManagement` only applies to Chromium-based browsers (Chrome, Edge). It has no effect in Firefox or WebKit.
 
 :::
 

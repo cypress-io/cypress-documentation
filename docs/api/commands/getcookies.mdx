@@ -31,11 +31,11 @@ cy.getCookies() // Get cookies for the currrent domain
 
 Pass in an options object to change the default behavior of `cy.getCookies()`.
 
-| Option    | Default                                                     | Description                                                                         |
-| --------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `domain`  | Hostname of the current URL                                 | Retrieves the cookies from the specified domain                                     |
-| `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
-| `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)        |
+| Option    | Default                                                           | Description                                                                         |
+| --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `domain`  | Hostname of the current URL                                       | Retrieves the cookies from the specified domain                                     |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)        |
 
 <HeaderYields />
 
@@ -52,8 +52,29 @@ following properties:
 - `secure`: _(Boolean)_
 - `value`: _(String)_
 
-`cy.getCookies()` is not a query. It will not update the returned list if
-further cookies are added after it initially executes.
+`cy.getCookies()` is a query, and it is _safe_ to chain further commands. It will
+automatically [retry](/app/core-concepts/retry-ability) until all chained
+assertions have passed, or until it times out, re-querying the list of cookies
+on each retry so the yielded array stays up to date.
+
+:::caution
+
+Because `cy.getCookies()` is a query, the array it yields is re-queried on every
+retry. Avoid capturing the array inside a [`.then()`](/api/commands/then)
+callback and assuming it is a single, stable snapshot — the callback runs once
+the chain settles, but any values you save from it will not update on later
+retries. Prefer chaining [`.should()`](/api/commands/should) assertions so
+Cypress retries the entire chain (re-querying the cookies) until they pass.
+
+:::
+
+#### When no matching cookies are present:
+
+On each read, `cy.getCookies()` yields the current array of cookie objects, or an
+empty array if none exist yet. The yielded array is the subject your chained
+assertions run against. If an assertion fails, because the array is empty, or
+because its contents don't match yet, the query re-reads the cookies and re-runs
+the assertion, looping until it passes or the command times out.
 
 ## Examples
 
@@ -110,20 +131,12 @@ cy.getCookies().then((cookies) => {
 
 <HeaderAssertions />
 
-- `cy.getCookies()` will only run assertions you have chained once, and will not
-  [retry](/app/core-concepts/retry-ability).
+- `cy.getCookies()` will automatically [retry](/app/core-concepts/retry-ability)
+  until all chained assertions have passed.
 
 <HeaderTimeouts />
 
-- `cy.getCookies()` should never time out.
-
-:::caution
-
-Because `cy.getCookies()` is asynchronous it is technically possible for there
-to be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-:::
+- `cy.getCookies()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
 
@@ -159,10 +172,11 @@ following:
 
 ## History
 
-| Version                                  | Changes                                                                                                                                       |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [5.0.0](/app/references/changelog#5-0-0) | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                       |
-| [4.3.0](/app/references/changelog#4-3-0) | Added `sameSite` property when the [experimentalGetCookiesSameSite](/app/references/configuration#Experiments) configuration value is `true`. |
+| Version                                    | Changes                                                                                                                                       |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | `cy.getCookies()` is now a query and retries assertions until they pass or time out.                                                          |
+| [5.0.0](/app/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                       |
+| [4.3.0](/app/references/changelog#4-3-0)   | Added `sameSite` property when the [experimentalGetCookiesSameSite](/app/references/configuration#Experiments) configuration value is `true`. |
 
 ## See also
 

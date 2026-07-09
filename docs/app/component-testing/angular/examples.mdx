@@ -198,41 +198,6 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-### Using autoSpyOutputs (deprecated)
-
-:::caution
-
-The `autoSpyOutputs` flag is deprecated and not supported in `cypress/angular-zoneless` and will be removed in a future version.
-
-:::
-
-You might find yourself repeatedly creating a `cy.spy()` for each of your
-component outputs. Because of this, we created an easy mechanism to handle this
-for you. This feature can be turned on by passing the `autoSpyOutputs` flag into
-`MountConfig`. After the component has been mounted you can then access each of
-the generated spies using the `@Output()` property name + `Spy`. So our `change`
-property can be accessed via its alias of `cy.get('@changeSpy')`
-
-```ts
-it('clicking + fires a change event with the incremented value', () => {
-  cy.mount(StepperComponent, {
-    autoSpyOutputs: true,
-    componentProperties: {
-      count: 100,
-    },
-  })
-  cy.get(incrementSelector).click()
-  cy.get('@changeSpy').should('have.been.calledWith', 101)
-})
-```
-
-:::caution
-
-The `autoSpyOutput` flag only works when passing in a component to the mount
-function. It currently does not work with the template syntax.
-
-:::
-
 ### Signals
 
 :::info
@@ -396,8 +361,6 @@ cy.get('[data-cy="test-component-count-incr"]').click()
 cy.get('@countChange').should('have.been.called')
 ```
 
-These spies can automatically be created if `autoSpyOutputs: true` is configured. The suffix in this case will be `ChangeSpy`.
-
 ## Testing Error States
 
 <ComponentTestingErrorStates />
@@ -538,71 +501,3 @@ Cypress.Commands.add('mount', customMount)
 This custom mount command will allow you to skip manually passing in the
 `ButtonComponent` and `CardComponent` as declarations into each `cy.mount()`
 call.
-
-### autoSpyOutputs (deprecated)
-
-:::caution
-
-The `autoSpyOutputs` flag is deprecated and not supported in `cypress/angular-zoneless` and will be removed in a future version.
-
-:::
-
-Here is an example of defaulting `autoSpyOutputs` for every mounted component:
-
-<Tabs>
-<TabItem value="cypress/support/component.js">
-
-```js
-import { mount } from 'cypress/angular'
-
-Cypress.Commands.add('mount', (component, config) => {
-  return mount(component, {
-    ...config,
-    autoSpyOutputs: true,
-  })
-})
-```
-
-</TabItem>
-<TabItem value="cypress/support/component.ts">
-
-```ts
-import { Type } from '@angular/core'
-import { mount, MountConfig, MountResponse } from 'cypress/angular'
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      /**
-       * Helper mount function for Angular Components with autoSpyOutputs enabled
-       * @param component Angular Component or template string to mount
-       * @param config Options passed to Angular TestBed
-       */
-      mount<T>(
-        component: Type<T> | string,
-        config?: MountConfig<T>
-      ): Cypress.Chainable<MountResponse<T>>
-    }
-  }
-}
-
-Cypress.Commands.add(
-  'mount',
-  <T>(component: Type<T> | string, config?: MountConfig<T>) => {
-    return mount(component, {
-      ...config,
-      autoSpyOutputs: true,
-    })
-  }
-)
-```
-
-</TabItem>
-</Tabs>
-
-:::caution
-
-The `autoSpyOutput` flag only works when passing in a component to the mount
-function. It currently does not work with the template syntax.
-
-:::

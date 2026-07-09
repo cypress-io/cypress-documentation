@@ -93,8 +93,8 @@ for more information.
 
 The example below is a basic CI setup and job using the
 [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) to
-run Cypress tests within the Electron browser. This GitHub Action configuration
-is placed within `.github/workflows/main.yml`.
+run Cypress tests. This GitHub Action configuration is placed within
+`.github/workflows/main.yml`.
 
 ```yaml
 name: Cypress Tests
@@ -127,7 +127,9 @@ jobs:
   - Install npm dependencies
   - Build the project (`npm run build`)
   - Start the project web server (`npm start`)
-  - Run the Cypress tests within our GitHub repository within Electron.
+  - Run the Cypress tests within our GitHub repository. To run in a specific
+    browser such as Chrome, see
+    [Testing on GitHub with Installed Browsers](#Testing-on-GitHub-with-Installed-Browsers).
 
 ## Testing on GitHub with Installed Browsers
 
@@ -139,8 +141,7 @@ pre-installed. The `macos` runners additionally include Apple Safari. Refer to
 for current details.
 
 Use the action's `browser` parameter to select the desired browser. To change
-the above example to select Chrome instead of the default browser Electron, add
-`browser: chrome` as follows.
+the above example to select Chrome, add `browser: chrome` as follows.
 
 ```yaml
 - name: Cypress run
@@ -428,10 +429,8 @@ and the deployment is still in progress,
 the workflow "Set up job" phase randomly uses either an old or a new runner image version.
 Your test run might fail if Cypress Cloud detects differences in the browser versions between parallel jobs.
 
-To work around this issue,
-and if you specify a browser other than the default Electron browser in parallel mode,
-we recommend using a
-[cypress/browsers](#Testing-with-Cypress-Docker-Images) Docker image which then uses one consistent browser version.
+To work around this issue, we recommend using a
+[cypress/browsers](#Testing-with-Cypress-Docker-Images) Docker image, which uses one consistent browser version.
 This shields the workflow from browser version changes due to possible incomplete GitHub runner image deployments.
 
 As mentioned in [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images),

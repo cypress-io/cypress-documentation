@@ -1341,13 +1341,6 @@ It might be because of the 2 different windows in the Cypress App. For
 more information, please check
 [the note here](/api/commands/window#Cypress-uses-2-different-windows).
 
-### <Icon name="angle-right" /> How do I prevent application redirecting to another URL?
-
-Sometimes, your application might redirect the browser to another domain, losing
-the Cypress's control. If the application is using `window.location.replace`
-method to set a _relative_ URL, try using the `experimentalSourceRewriting`
-option described in our [Experiments](/app/references/experiments) page.
-
 ### <Icon name="angle-right" /> Why isn't my application's Content Security Policy (CSP) being enforced during tests? <E2EOnlyBadge />
 
 This is expected. By default Cypress strips both the `Content-Security-Policy`
@@ -1416,8 +1409,9 @@ for the full list and the reason each is removed.
 There are many reasons why tests may fail in CI but pass locally. Some of these
 include:
 
-- There is a problem isolated to the Electron browser (`cypress run` by default
-  runs in the Electron browser)
+- There is a problem isolated to the Electron browser (without a `--browser`
+  flag or a `defaultBrowser` set, `cypress run` falls back to the Electron
+  browser)
 - A test failure in CI could be highlighting a bug in your CI build process
 - Variability in timing when running your application in CI (For example,
   network requests that resolve within the timeout locally may take longer in

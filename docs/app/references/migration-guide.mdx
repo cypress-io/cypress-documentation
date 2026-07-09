@@ -8,6 +8,349 @@ sidebar_label: 'Migration Guide'
 
 # Migration Guide
 
+## Migrating to Cypress 16.0
+
+This guide details the code changes needed to migrate to Cypress
+version 16.0.
+[See the full changelog for version v16.0](/app/references/changelog#16-0-0).
+
+### Node.js 20 and 25 no longer supported
+
+Cypress 16 requires [Node.js](https://nodejs.org/en) **22.x**, **24.x**, or **26.x and above** to install the Cypress binary. Node.js 20 and Node.js 25 are no longer supported. See [system requirements](/app/get-started/install-cypress#Nodejs) and [Node's release schedule](https://github.com/nodejs/Release).
+
+### Default `keystrokeDelay` changed from `10` to `0`
+
+The default delay between keystrokes in [`cy.type()`](/api/commands/type) has been changed from `10` to `0` milliseconds to improve performance of typing-heavy test runs.
+
+If your tests relied on the implicit 10ms delay between keystrokes, you can restore the previous behavior using any of these approaches. The resolved `keystrokeDelay` is read from your Cypress [configuration](/app/references/configuration#Keyboard) first, then [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), and falls back to the built-in default of `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
+
+#### Set `keystrokeDelay` in your Cypress configuration
+
+:::cypress-config-example
+
+```ts
+{
+  keystrokeDelay: 10,
+}
+```
+
+:::
+
+#### Set `keystrokeDelay` via `Cypress.Keyboard.defaults()`
+
+```javascript
+Cypress.Keyboard.defaults({
+  keystrokeDelay: 10,
+})
+```
+
+#### Set `delay` per command
+
+```javascript
+cy.get('input').type('slow typing', { delay: 10 })
+```
+
+### `experimentalFastVisibility` replaced by `visibilityStrategy`
+
+The experimental `experimentalFastVisibility` boolean flag has been removed. Its successor is the new [`visibilityStrategy`](/app/references/configuration#Actionability) configuration option, which accepts `'legacy'` or `'modern'` and defaults to `'modern'`. The modern algorithm is now the default for **all** users, not just those who opted into the experiment.
+
+**If you were setting `experimentalFastVisibility: true`:** remove it. The modern algorithm is now the default.
+
+**If you were setting `experimentalFastVisibility: false` (or relying on the 15.x default) and a test now fails:** the modern algorithm intentionally drops some behaviors the legacy algorithm had (ancestor `overflow` clipping, transform-based hiding, and coverage detection for fixed/sticky elements). Prefer rewriting the affected assertions to verify the same user-visible behavior in an algorithm-agnostic way — see [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) for what each algorithm checks and recommended rewrite patterns.
+
+If you need a temporary escape hatch while you update those tests, opt back into the legacy algorithm:
+
+:::cypress-config-example
+
+```js
+{
+  visibilityStrategy: 'legacy'
+}
+```
+
+:::
+
+:::caution
+
+`visibilityStrategy` is deprecated. Both the `'legacy'` value and the option itself will be removed in a future major version of Cypress. Treat it as a temporary migration aid only.
+
+:::
+
+### `experimentalSourceRewriting` config option removed
+
+The `experimentalSourceRewriting` configuration option has been removed. The default regex-based rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce.
+
+If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
+
+You only need a replacement option if your application pins resources with Subresource Integrity (SRI) `integrity` attributes on `<script>` or `<link>` elements. Because Cypress rewrites those resources, the pinned hash no longer matches and the browser blocks them, reporting an error such as `Failed to find a valid digest in the 'integrity' attribute for resource '…'`. If you were relying on `experimentalSourceRewriting` to avoid this, enable the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead, which strips the `integrity` attribute so the rewritten resources load. If your application does not use SRI, no replacement is required.
+
+:::cypress-config-example
+
+```ts
+{
+  // Remove this line
+  experimentalSourceRewriting: true,
+}
+```
+
+:::
+
+### `cy.getCookie()` and `cy.getCookies()` are now queries
+
+[`cy.getCookie()`](/api/commands/getcookie) and
+[`cy.getCookies()`](/api/commands/getcookies) are now retry-able
+[query commands](/app/core-concepts/retry-ability), just like
+[`cy.get()`](/api/commands/get) and [`cy.contains()`](/api/commands/contains).
+
+Previously they were one-shot commands that resolved a single value and ran any
+chained assertions only once. As of Cypress 16 they retry their built-in and
+chained assertions until they pass or time out.
+
+#### Reads are now retried
+
+A read such as `cy.getCookie('session_id').should('exist')` no longer fails on the first
+missing read. The command re-reads the cookie and retries the assertion until it
+passes or the command times out, so you no longer need to manually wait for a
+cookie to be written before asserting on it.
+
+#### Timeouts now follow `defaultCommandTimeout`
+
+This changes which timeout governs them:
+
+- **Query commands** — `cy.getCookie()` and `cy.getCookies()` — are now governed
+  by [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
+  `4000` ms), the same timeout used by every other query.
+- **Cookie action commands** — [`cy.setCookie()`](/api/commands/setcookie),
+  [`cy.clearCookie()`](/api/commands/clearcookie),
+  [`cy.clearCookies()`](/api/commands/clearcookies),
+  [`cy.getAllCookies()`](/api/commands/getallcookies), and
+  [`cy.clearAllCookies()`](/api/commands/clearallcookies) — are unchanged. They
+  make a single automation round-trip, do not retry assertions, and remain
+  governed by [`responseTimeout`](/app/references/configuration#Timeouts)
+  (default `30000` ms).
+
+Because the yielded cookie (or array of cookies) is now re-queried on every
+retry, do not treat the value captured inside a
+[`.then()`](/api/commands/then) callback as a stable snapshot. If you relied on
+the previous one-shot behavior, chain [`.should()`](/api/commands/should)
+assertions instead so Cypress retries the entire chain until they pass:
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+// Retries until the cookie exists and its value matches or times out
+cy.getCookie('session_id').then((cookie) => {
+  expect(cookie).to.have.property('value', '189jd09su')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+// Retries until the cookie exists and its value matches or times out
+cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
+```
+
+If you specifically need the old non-retrying behavior — for example, to assert
+synchronously that a cookie does **not** yet exist — set the command `timeout`
+to `0`:
+
+```javascript
+cy.getCookie('session_id', { timeout: 0 }).should('not.exist')
+```
+
+#### `cy.getCookie()` and `cy.getCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.getCookie()` or `cy.getCookies()`, update your
+code to use
+`Cypress.Commands.overwriteQuery('getCookie', function () { ... })` rather than
+`Cypress.Commands.overwrite('getCookie', () => { ... })`. For more details on
+overwriting queries, see
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+Cypress.Commands.overwrite('getCookie', (name, options) => {
+  return cy.getCookie(name, options)
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+Cypress.Commands.overwriteQuery('getCookie', (name, options) => {
+  return cy.getCookie(name, options)
+})
+```
+
+See [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) for more details.
+
+### Angular `18`, `19`, and `20` are no longer supported for Component Testing
+
+Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/releases#actively-supported-versions), and Angular 20 reaches LTS end in November 2026. As a result, the minimum required Angular version for component testing is now `21.0.0`.
+
+This allows us to ship the zoneless testing harness as the new default `cypress/angular` test harness in Cypress 16.0.
+
+Additionally, the [`@cypress/angular-zoneless`](https://www.npmjs.com/package/@cypress/angular-zoneless) npm package is deprecated and no longer supported — it has been merged into [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular).
+
+#### To continue using Angular below 21.0.0
+
+If you haven't been able to migrate away from an older Angular version and still need that test harness, it can be installed independently via the [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular) `4.x.x` package from `npm`.
+
+Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v21.0.0+.
+
+```sh
+npm install --save-dev @cypress/angular@4
+```
+
+Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
+
+<Badge type="danger">Before</Badge>
+
+```ts
+import { mount } from 'cypress/angular'
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+import { mount } from '@cypress/angular'
+```
+
+#### If already using `cypress/angular-zoneless` and Angular 21.0.0
+
+If you are already using `cypress/angular-zoneless`, update your imports to use `cypress/angular` instead. The zoneless harness has been merged into the `cypress/angular` test harness in Cypress 16.0.
+
+<Badge type="danger">Before</Badge>
+
+```ts
+import { mount } from 'cypress/angular-zoneless'
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+import { mount } from 'cypress/angular'
+```
+
+### `@angular/platform-browser-dynamic` has been replaced with `@angular/platform-browser`
+
+As of Cypress `16.0.0`, the `@angular/platform-browser-dynamic` package has been replaced with the `@angular/platform-browser` package.
+
+This is because the `@angular/platform-browser-dynamic` package is deprecated and no longer the default.
+
+To migrate, nothing additional is required as Angular 21 uses `@angular/platform-browser` by default. You can likely uninstall the `@angular/platform-browser-dynamic` package from your project dependencies.
+
+### Vite `5`, `6`, and `7` are no longer supported for Component Testing
+
+As of Cypress `16.0.0`, [`@cypress/vite-dev-server`](https://www.npmjs.com/package/@cypress/vite-dev-server) requires **Vite `8.x`** or above for component testing. Vite `5`, `6`, and `7` are no longer supported when Cypress resolves the Vite version installed in your project.
+
+If an unsupported Vite version is detected, Cypress throws `ViteVersionNotSupportedError`:
+
+```text
+ViteVersionNotSupportedError: Vite 8 is the required version to use cypress/vite-dev-server. Found Vite version v<your-version>
+```
+
+The recommended path is to upgrade your project to Vite `8`.
+
+#### To continue using Vite `5` through `7`
+
+If you are upgrading to Cypress `16` but still need Vite `5`, `6`, or `7` for component testing, install `7.x` of `@cypress/vite-dev-server` from `npm` and configure it explicitly as the dev server:
+
+```sh
+npm install --save-dev @cypress/vite-dev-server@7
+```
+
+Then configure the `devServer` in your `cypress.config.js` or `cypress.config.ts` file:
+
+```js
+import { defineConfig } from 'cypress'
+import { devServer } from '@cypress/vite-dev-server'
+
+export default defineConfig({
+  component: {
+    devServer(devServerConfig) {
+      return devServer({
+        ...devServerConfig,
+        framework: '<YOUR_FRAMEWORK>',
+        bundler: 'vite',
+      })
+    },
+  },
+})
+```
+
+Change `<YOUR_FRAMEWORK>>` to `'react'`, `'vue'`, `'svelte'`, or another [supported framework](/app/component-testing/component-framework-configuration) to match your component testing setup.
+
+Note that `@cypress/vite-dev-server@7` is deprecated and no longer supported by Cypress. It is intended as a temporary workaround until you can migrate to Vite `8`. More information on configuring a custom dev server can be found in the [Cypress Vite Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/vite-dev-server-v7.2.1/npm/vite-dev-server/README.md).
+
+### Electron browser deprecated
+
+The bundled Electron browser is deprecated as a test browser in Cypress 16.0.0 and will be removed in a future major version. If your runs rely on the implicit Electron default, set a [`defaultBrowser`](/app/references/configuration#Browser) (for example, `'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run) to switch to an installed browser. See [Migrating away from the Electron browser](#Migrating-away-from-the-Electron-browser) for the full guide.
+
+### `Cypress.env()` removed
+
+`Cypress.env()` has been removed in Cypress 16.0. Use [`cy.env()`](/api/commands/env) for sensitive values (API keys, tokens, secrets) or [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive configuration that needs synchronous browser access.
+
+See [Migrating away from Cypress.env()](#Migrating-away-from-Cypressenv) below for detailed before/after examples.
+
+### `env` removed from test config overrides
+
+The `env` key is no longer valid in per-test or suite config overrides. Test config overrides run in the browser, so `env` values set there could never be applied server-side. If absolutely necessary, `expose` can be used instead.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+it(
+  'runs with feature flag',
+  {
+    env: {
+      FEATURE_FLAG: true,
+      API_VERSION: 'v2',
+    },
+  },
+  () => {
+    expect(Cypress.env('FEATURE_FLAG')).to.be.true
+    expect(Cypress.env('API_VERSION')).eq('v2')
+  }
+)
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+it(
+  'runs with feature flag',
+  {
+    expose: {
+      FEATURE_FLAG: true,
+      API_VERSION: 'v2',
+    },
+  },
+  () => {
+    expect(Cypress.expose('FEATURE_FLAG')).to.be.true
+    expect(Cypress.expose('API_VERSION')).eq('v2')
+  }
+)
+```
+
+### `allowCypressEnv` config option removed
+
+The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it — no behavior change, just remove the key.
+
+:::cypress-config-example
+
+```ts
+{
+  // Remove this line
+  allowCypressEnv: true,
+}
+```
+
+:::
+
 ## Migrating away from Cypress.env()
 
 <CopyPrompt
@@ -15,21 +358,21 @@ sidebar_label: 'Migration Guide'
   prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-away-from-cypress-env.md, then migrate this project off Cypress.env() by working through these steps:\n\n1. Check my Cypress version. cy.env() and Cypress.expose() require Cypress 15.10.0 or newer, so check my installed version first: if it's on an older 15.x release, detect my package manager and update the cypress dependency to the latest 15.x; if it's below Cypress 15, stop and tell me, since majors should be upgraded one at a time first.\n\n2. Classify each value. Find every Cypress.env() usage and classify each value as sensitive or public.\n\n3. Migrate the values. Migrate sensitive reads to cy.env() and public values to Cypress.expose() with a top-level expose block in my Cypress config. Check for --env CLI flags and plugins that rely on Cypress.env(), and show me the proposed changes before applying them.\n\n4. Lock it down and verify. Once every Cypress.env() call is gone, add allowCypressEnv: false to my config and run my Cypress tests to confirm nothing broke.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
-Starting with Cypress 15.10.0, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
+`Cypress.env()` was deprecated in Cypress 15.10.0 and removed in Cypress 16.0. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
 
-### Why Cypress.env() is deprecated
+### Why Cypress.env() was removed
 
-`Cypress.env()` makes it easy to accidentally expose more data than intended because Cypress hydrates all configured environment variables into the browser context. That includes values your test never reads.
+`Cypress.env()` made it easy to accidentally expose more data than intended because Cypress hydrated all configured environment variables into the browser context — including values your test never reads.
 
-This deprecation is a precaution to reduce the risk of unintentionally exposing secrets in the browser-accessible state when run within the Cypress browser. This is about ensuring safer defaults and preventing accidental exposure of sensitive data.
+Removing it reduces the risk of unintentionally exposing secrets in the browser-accessible state. This enforces safer defaults and prevents accidental exposure of sensitive data.
 
-#### What's the risk
+#### What was the risk
 
-When Cypress environment values are available in the browser, they can be inspected through normal browser tooling and may be accessible to code running in that context (for example, app code, third-party scripts, or extensions). The core issues are:
+With `Cypress.env()`, environment values available in the browser could be inspected through normal browser tooling and accessed by code running in that context (for example, app code, third-party scripts, or extensions). The core issues were:
 
-1. **All-or-nothing exposure**: All environment variables are serialized and sent to the browser where they can be accessed via `Cypress.env()` or inspected in the browser's developer tools.
-1. **Cross-origin risks**: When using [`cy.origin()`](/api/commands/origin) for cross-origin testing, all environment variables are automatically passed to the cross-origin context, potentially exposing sensitive data to untrusted origins.
-1. **Application code access**: Since environment variables are available in the browser context when tests run, your application code or third-party scripts could potentially access them if it checks for `window.Cypress` or similar patterns.
+1. **All-or-nothing exposure**: All environment variables were serialized and sent to the browser where they could be accessed via `Cypress.env()` or inspected in the browser's developer tools.
+1. **Cross-origin risks**: When using [`cy.origin()`](/api/commands/origin) for cross-origin testing, all environment variables were automatically passed to the cross-origin context, potentially exposing sensitive data to untrusted origins.
+1. **Application code access**: Since environment variables were available in the browser context when tests ran, application code or third-party scripts could potentially access them by checking for `window.Cypress` or similar patterns.
 
 ### Choose the right migration path
 
@@ -275,11 +618,11 @@ describe('API tests', () => {
 
 ### Migrate plugins that use Cypress.env()
 
-If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. When `allowCypressEnv: false` is set, plugins that still use `Cypress.env()` will throw errors.
+If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. Starting in Cypress 15.10.0, plugins using `Cypress.env()` would throw errors when `allowCypressEnv: false` was set. In Cypress 16.0, `allowCypressEnv` has been removed and `Cypress.env()` is no longer available — plugins that still call it will always throw errors.
 
 #### Check for plugin updates
 
-Before setting `allowCypressEnv: false`, review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`.
+Review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`.
 
 #### Plugins requiring migration
 
@@ -325,9 +668,15 @@ Many community plugins have already adopted the new API. Update to at least the 
 
 If a plugin you depend on isn't listed here, search its shipped code for `Cypress.env()` to check whether it has migrated.
 
-### Lock it down with `allowCypressEnv: false`
+### Lock it down with `allowCypressEnv: false` (Cypress ^15.10.0)
 
-Once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cypress.expose()`, you should set `allowCypressEnv: false` in your Cypress configuration.
+:::info
+
+`allowCypressEnv` was introduced in Cypress 15.10.0 as a migration gate and **removed in Cypress 16.0**. If you are already on Cypress 16.0, skip this step — `Cypress.env()` is gone and `allowCypressEnv` is no longer a valid config option.
+
+:::
+
+On Cypress ^15.10.0, once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cypress.expose()`, you can set `allowCypressEnv: false` to enforce the new APIs and catch any remaining usages.
 
 :::cypress-config-example
 
@@ -346,10 +695,10 @@ Once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cy
 
 :::
 
-When `allowCypressEnv` is set to `false`:
+When `allowCypressEnv` is set to `false` on Cypress ^15.10.0:
 
 1. `Cypress.env()` calls will throw an error
-2. Test configuration overrides are disabled
+2. `env` test configuration overrides are disabled
 
 #### Migration Checklist
 
@@ -357,8 +706,88 @@ When `allowCypressEnv` is set to `false`:
 1. ✅ Replace each `Cypress.env()` call with either `cy.env()` or `Cypress.expose()`
 1. ✅ Update code to handle the asynchronous nature of `cy.env()`
 1. ✅ Migrate plugins that use `Cypress.env()`
-1. ✅ Set `allowCypressEnv: false` in your Cypress configuration
-1. ✅ Verify that no errors are thrown
+1. ✅ **Cypress ^15.10.0 only**: Set `allowCypressEnv: false` in your Cypress configuration and verify no errors are thrown
+1. ✅ **Cypress 16.0+**: Remove `allowCypressEnv` from your configuration if present
+
+## Migrating away from the Electron browser
+
+Starting with Cypress 16.0.0, the bundled Electron browser is deprecated as a
+test browser and will be removed in a future major version. This guide helps you
+move your local and CI runs to an installed browser, such as Chrome, before the
+removal.
+
+### Why Electron is being removed
+
+The Electron browser ships inside Cypress as a version of Chromium bundled with
+[Electron](https://www.electronjs.org/). It was convenient because it required no
+separate install, but it no longer gives you a representative testing
+environment:
+
+- **It lags Chromium.** Electron's Chromium version is tied to the Electron
+  release Cypress bundles, so it trails the current stable Chrome by weeks or
+  months and misses recent web-platform features and fixes.
+- **Its behavior diverges from Chrome.** Because it is an embedded Chromium
+  rather than the browser your users run, test behavior in Electron can differ
+  from real Chrome — which undermines confidence in the results.
+
+Standardizing on installed browsers means your tests run in the same engines
+your users do, on a predictable, evergreen update cadence.
+
+### What happens after removal
+
+Until removal, targeting Electron continues to work but emits a deprecation
+warning in `cypress run` output and in the Cypress app. After Electron is
+removed, runs that target it — whether through `--browser electron`, a
+`defaultBrowser: 'electron'` setting, or an implicit fallback to Electron when no
+browser is specified — will fail with an error.
+
+### Migrate to an installed browser
+
+1. **Install a supported browser** in your local and CI environments (for
+   example, [Google Chrome](/app/references/launching-browsers#Chrome-Browsers)).
+   If you don't want to install one yourself, our
+   [Continuous Integration](/app/continuous-integration/overview) guides cover
+   browser options for CI, including the Cypress
+   [Docker images](/app/continuous-integration/overview#Cypress-Docker-Images),
+   the [GitHub Action](https://github.com/cypress-io/github-action), and the
+   [CircleCI Orb](https://github.com/cypress-io/circleci-orb).
+1. **Set a `defaultBrowser`** so Cypress no longer falls back to Electron when no
+   browser is specified:
+
+   ```js
+   import { defineConfig } from 'cypress'
+
+   export default defineConfig({
+     defaultBrowser: 'chrome',
+   })
+   ```
+
+1. **Or pass `--browser` explicitly** wherever you launch Cypress:
+
+   ```shell
+   cypress run --browser chrome
+   ```
+
+1. **Update your CI configuration.** If your pipeline relied on the implicit
+   Electron default, update any jobs that previously ran without a browser
+   argument to target an installed browser. See
+   [Continuous Integration](/app/continuous-integration/overview) for
+   provider-specific setup details.
+1. **Update your Docker image, if you use one.** If you use the `cypress/base`
+   [Docker image](/app/continuous-integration/overview#Cypress-Docker-variants)
+   and don't explicitly install a browser, you'll need to switch to
+   `cypress/browsers` or install a browser yourself.
+1. **Remove any explicit Electron usage** — `--browser electron`,
+   `defaultBrowser: 'electron'`, or `{ browser: 'electron' }` test/suite
+   overrides — and replace it with an installed browser.
+
+### Migration checklist
+
+1. ✅ Install a supported browser locally and in CI
+1. ✅ Set `defaultBrowser` (or pass `--browser`) so runs don't fall back to Electron
+1. ✅ Replace any `--browser electron` / `defaultBrowser: 'electron'` usage
+1. ✅ Update your CI config (GitHub Action, Docker) to target an installed browser
+1. ✅ Verify your runs no longer emit the Electron deprecation warning
 
 ## Migrating to Cypress 15.0
 

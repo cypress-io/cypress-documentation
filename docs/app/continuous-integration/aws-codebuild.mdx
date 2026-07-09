@@ -22,9 +22,8 @@ sidebar_label: AWS CodeBuild
 ## Basic Setup
 
 The example below is a basic CI setup and job using the
-[AWS CodeBuild](https://aws.amazon.com/codebuild/) to run Cypress tests within
-the Electron browser. This AWS CodeBuild configuration is placed within
-`buildspec.yml`.
+[AWS CodeBuild](https://aws.amazon.com/codebuild/) to run Cypress tests. This
+AWS CodeBuild configuration is placed within `buildspec.yml`.
 
 Detailed documentation is available in the
 [AWS CodeBuild Documentation](https://docs.aws.amazon.com/codebuild/).
@@ -68,7 +67,10 @@ phases:
 - Finally, our `buildspec.yml` configuration will:
   - Install npm dependencies
   - Start the project web server (`npm start:ci`)
-  - Run the Cypress tests within our GitHub repository within Electron.
+  - Run the Cypress tests within our GitHub repository. To run in an installed
+    browser such as Chrome or Firefox, use a Cypress Docker image that includes
+    browsers — see [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images)
+    below.
 
 :::tip
 
