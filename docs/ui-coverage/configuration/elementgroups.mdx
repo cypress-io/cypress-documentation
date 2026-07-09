@@ -1,6 +1,6 @@
 ---
 title: 'elementGroups: group elements with custom logic'
-description: 'The `elementGroups` configuration allows you to group elements in UI Coverage using custom logic.'
+description: 'The `elementGroups` configuration groups related elements into a single unit in UI Coverage, so testing one element counts as testing them all.'
 sidebar_label: elementGroups
 sidebar_position: 80
 ---
@@ -9,14 +9,16 @@ sidebar_position: 80
 
 # elementGroups
 
-UI Coverage provides logic to automatically [group](/ui-coverage/core-concepts/element-grouping) elements based on their structure in the DOM. However, there are scenarios where you may want to customize these groups to better align with your application's functionality or testing requirements. The `elementGroups` configuration allows you to define custom logic for grouping elements, improving coverage clarity and simplifying analysis.
+The `elementGroups` configuration combines related elements into a single unit in your UI Coverage report. A group counts once toward your coverage score, and an interaction with any element in the group marks the whole group as tested. This means a list of 50 untested product cards no longer appears as 50 untested elements dragging down your score — it appears as one clearly named group that a single test can cover.
 
-## Why use element groups?
+UI Coverage already [groups elements automatically](/ui-coverage/core-concepts/element-grouping) based on their structure in the DOM. Use `elementGroups` when the automatic grouping doesn't match how your application actually behaves:
 
-- **Improve Grouping Accuracy**: Ensure elements with shared attributes but different roles are correctly grouped, avoiding misclassification.
-- **Simplify Test Coverage Reports**: Grouping similar elements, like navigation buttons or list items, reduces clutter in reports and provides a more concise view of test coverage.
-- **Highlight Key Areas**: Use meaningful group names to draw attention to critical application areas, such as form controls.
-- **Streamline Dynamic Elements**: Consolidate dynamic or repeated elements, such as items in a carousel or list, into a single logical group.
+- **Consolidate repeated elements**: Collapse dynamic or repeated elements, such as items in a list, carousel, or data table, into one logical group.
+- **Correct the automatic grouping**: Split apart elements that were grouped together incorrectly, or unite elements that the automatic rules kept separate.
+- **Make reports readable**: Replace machine-generated selectors with meaningful names like "Add Button" or "Animal Option", so anyone reading the report understands what needs testing.
+- **Group across markup differences**: Combine elements that share behavior but not structure, such as form controls and their labels.
+
+To add or edit `elementGroups`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
 
 ## Syntax
 
@@ -37,18 +39,38 @@ UI Coverage provides logic to automatically [group](/ui-coverage/core-concepts/e
 
 ### Options
 
-For every element considered by UI Coverage, the first `elementGroup` rule for which the `selector` property matches the element is used to group the element. Elements that do not match any rules are grouped by the default UI Coverage [element grouping rules](/ui-coverage/core-concepts/element-grouping).
+| Option          | Required | Default    | Description                                                                                                                                                                                                                                                                                    |
+| --------------- | -------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |            | A CSS selector matched against each interactive element. Supports standard CSS selector syntax, including IDs, classes, attributes, combinators, and functional pseudo-classes like `:has()`.                                                                                                  |
+| `name`          | Optional | `selector` | A human-readable name for the group, displayed in UI Coverage reports. Each group's name must be unique.                                                                                                                                                                                       |
+| `documentScope` | Optional |            | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to group only elements inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are. |
+| `comment`       | Optional |            | A note about why this rule exists, for your team's benefit. Comments have no effect on how elements are grouped.                                                                                                                                                                               |
 
-| Option          | Required | Default    | Description                                                                                                                                                                                                                                 |
-| --------------- | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `selector`      | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                                            |
-| `name`          | Optional | `selector` | A human-readable name for the group, displayed in UI Coverage reports.                                                                                                                                                                      |
-| `documentScope` | Optional |            | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
-| `comment`       | Optional |            | A comment describing the purpose of this element group configuration.                                                                                                                                                                       |
+### How rules are applied
+
+Rules are evaluated in order, and each element joins the group of the **first** rule whose `selector` matches it. Elements that match no rules fall back to the automatic [element grouping rules](/ui-coverage/core-concepts/element-grouping).
+
+A few behaviors are worth knowing:
+
+- **Custom groups override automatic grouping.** An element that matches an `elementGroups` rule is grouped by that rule alone. This includes links, which would otherwise be grouped by their `href` patterns.
+- **A group forms even with one match.** Unlike the automatic rules, which require at least two similar elements, an `elementGroups` rule that matches a single element still produces a named group in the report.
+- **Filtered elements are never grouped.** Elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters) are not considered for grouping.
+- **The `data-cy-ui-group` attribute wins.** Elements that declare a group directly in your markup with the `data-cy-ui-group` attribute keep that group, even if they also match an `elementGroups` rule.
+
+### Validation rules
+
+Cypress Cloud rejects a configuration when:
+
+- Two rules have the same `selector` (with the same `documentScope`). Duplicates can never both apply, because the first matching rule wins.
+- Two rules have the same `name`, or one rule's `name` matches another rule's `selector`. Groups are identified by these values, so they must be unique.
+- A `selector` or `documentScope` entry isn't valid CSS selector syntax.
+- A rule contains a property other than the four listed above.
 
 ## Examples
 
-### Groups elements by selector
+### Consolidate repeated elements
+
+Elements generated from data, like product listings, often have dynamic attribute values. One rule with an attribute prefix selector collapses all of them into a single group. Without a `name`, the group is displayed under its selector.
 
 #### Config
 
@@ -68,9 +90,9 @@ For every element considered by UI Coverage, the first `elementGroup` rule for w
 
 ```xml
 <body>
-  <button data-cy="item-1"></button> <!-- Group: [data-cy^='item-'] -->
-  <button data-cy="item-2"></button> <!-- Group: [data-cy^='item-'] -->
-  <button data-cy="item-3"></button> <!-- Group: [data-cy^='item-'] -->
+  <button data-cy="item-1"></button>
+  <button data-cy="item-2"></button>
+  <button data-cy="item-3"></button>
 </body>
 ```
 
@@ -82,7 +104,47 @@ For every element considered by UI Coverage, the first `elementGroup` rule for w
 
 ---
 
-### Groups all elements in a container
+### Give a group a readable name
+
+Add a `name` so the report describes the interface instead of your selectors. Here, buttons with IDs starting with `listbox-button-` appear as a single "Add Button" group.
+
+#### Config
+
+```json
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "[id^='listbox-button-']",
+        "name": "Add Button"
+      }
+    ]
+  }
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="listbox-button-1">+</button>
+  <button id="listbox-button-2">+</button>
+  <button id="listbox-button-3">+</button>
+  <button id="listbox-button-4">+</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+Add Button (4 instances)
+```
+
+---
+
+### Group all elements in a container
+
+Standard CSS combinators work in selectors, so you can group every matching element inside a container. Remember that the selector must match the interactive elements themselves, not just the container.
 
 #### Config
 
@@ -118,7 +180,9 @@ For every element considered by UI Coverage, the first `elementGroup` rule for w
 
 ---
 
-### Groups form controls with labels
+### Group form controls with their labels
+
+A comma-separated selector list can unite elements with different markup. This example groups a set of radio inputs together with their clickable labels, using `:has()` to match the labels.
 
 #### Config
 
@@ -140,10 +204,10 @@ For every element considered by UI Coverage, the first `elementGroup` rule for w
 ```xml
 <body>
   <label>
-    <input id="bear" name="animal"></input>
+    <input id="bear" name="animal" />
   </label>
   <label>
-    <input id="lion" name="animal"></input>
+    <input id="lion" name="animal" />
   </label>
 </body>
 ```
@@ -154,79 +218,11 @@ For every element considered by UI Coverage, the first `elementGroup` rule for w
 Animal Option (4 instances)
 ```
 
-### Groups dynamic elements
-
-#### Config
-
-```json
-{
-  "uiCoverage": {
-    "elementGroups": [
-      {
-        "selector": "[id^='product']"
-      }
-    ]
-  }
-}
-```
-
-#### HTML
-
-```xml
-<body>
-  <button id="product125">Product 1</button>
-  <button id="product514">Product 2</button>
-  <button id="product256">Product 3</button>
-</body>
-```
-
-#### Elements shown in UI
-
-```
-[id^='product'] (3 instances)
-```
-
-### Giving groups custom names
-
-Sometimes you may want to group elements by a common attribute but give the group a more descriptive name. In the following example, we group buttons with IDs starting with `listbox-button-` and name the group `Add Button`.
-
-#### Config
-
-```json
-{
-  "uiCoverage": {
-    "elementGroups": [
-      {
-        "selector": "[id^='listbox-button-']",
-        "name": "Add Button"
-      }
-    ]
-  }
-}
-```
-
-#### HTML
-
-```xml
-<body>
-  <button id='listbox-button-1'>+</button>
-  <button id='listbox-button-2'>+</button>
-  <button id='listbox-button-3'>+</button>
-  <button id='listbox-button-4'>+</button>
-</body>
-```
-
-#### Elements shown in UI
-
-```
-Add Button (4 instances)
-```
-
 ---
 
-### Grouping elements within shadow DOM
+### Group elements inside a shadow DOM
 
-When you need to group elements within a specific shadow DOM host, use the `documentScope` property to scope your selector to that document context.
+Use `documentScope` to apply a rule only to elements inside a specific shadow DOM host. Here, only buttons inside the `custom-component` shadow root are grouped; the identical button in the main document is unaffected.
 
 #### Config
 
@@ -264,13 +260,11 @@ When you need to group elements within a specific shadow DOM host, use the `docu
 Shadow DOM Buttons (2 instances)
 ```
 
-Only the buttons inside the shadow DOM are grouped together, while the root button remains separate.
-
 ---
 
-### Grouping elements within iframes
+### Group elements inside an iframe
 
-You can also scope element grouping to elements within specific iframes using `documentScope`.
+`documentScope` works the same way for iframes. The selector for the scope matches the `iframe` element itself in its parent document. Here, only the buttons inside the `#embedded-widget` iframe are grouped, while the save button in the main document remains a separate element.
 
 #### Config
 
@@ -293,7 +287,7 @@ You can also scope element grouping to elements within specific iframes using `d
 ```xml
 <body>
   <button data-action="save">Save (Root)</button>
-  <iframe id="embedded-widget" src="http://www.foo.com">
+  <iframe id="embedded-widget" src="https://widget.example.com">
     <html>
       <body>
         <button data-action="save">Save (Embedded)</button>
@@ -307,8 +301,8 @@ You can also scope element grouping to elements within specific iframes using `d
 #### Elements shown in UI
 
 ```
-[data-action="save"] (from root document)
+[data-action="save"]
 Embedded Actions (2 instances)
 ```
 
-Only the buttons inside the iframe are grouped together.
+For nested documents, list one selector per host from outermost to innermost, for example `"documentScope": ["#outer-iframe", "custom-component"]`.
