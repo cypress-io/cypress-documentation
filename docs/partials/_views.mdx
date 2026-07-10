@@ -223,6 +223,8 @@ View names keep the query string portion of the pattern as you wrote it, with th
 
 ### Grouping URLs across subdomains
 
+Each unique value of `:path*` creates a view, and the same path visited on different subdomains is grouped into a single view. All of the views share the `*.my-app.com` hostname pattern, so it is omitted from the view names.
+
 #### Config
 
 ```json title="App Quality Config"
@@ -253,8 +255,6 @@ https://www.my-app.com/profile/edit
 /profile
 /profile/edit
 ```
-
-Each unique value of `:path*` creates a view, and the same path visited on different subdomains is grouped into a single view. All of the views share the `*.my-app.com` hostname pattern, so it is omitted from the view names.
 
 ## Troubleshooting
 
