@@ -1494,9 +1494,7 @@ Cypress on several machines in parallel and Cypress Cloud coordinates how specs
 are split across them, so there is no hub to operate. Like Selenium Grid, this
 runs in CI, not on your local machine.
 
-```shell
-cypress run --record --parallel
-```
+<PackageManagerTabs run="cypress run --record --parallel" />
 
 Cypress Cloud assigns each spec file to an available machine using a
 [balance strategy](/cloud/features/smart-orchestration/load-balancing#Balance-strategy)
