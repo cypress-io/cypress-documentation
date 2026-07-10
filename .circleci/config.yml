@@ -7,7 +7,7 @@ executors:
   node-executor:
     resource_class: medium+
     docker:
-      - image: cimg/node:22.15.1
+      - image: cimg/node:22.23.1
 
 commands:
   docs-build:
@@ -64,7 +64,7 @@ jobs:
   install-and-persist:
     executor:
       name: cypress/default
-      node-version: 22.15.1
+      node-version: 22.23.1
     resource_class: medium+
     steps:
       - checkout
@@ -100,7 +100,7 @@ jobs:
   run-tests-in-parallel:
     executor:
       name: cypress/default
-      node-version: 22.15.1
+      node-version: 22.23.1
     resource_class: large
     parallelism: 8
     steps:
