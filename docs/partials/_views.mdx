@@ -53,6 +53,8 @@ The first pattern that a given URL matches is used as its view. If a URL doesn't
 
 ## Examples
 
+In the examples below, the views shown in the UI do not include the protocol or hostname. When every view in a report shares the same protocol, host, and port, they are omitted from view names for readability.
+
 ### Grouping dynamic path parameters
 
 #### Config
@@ -79,8 +81,8 @@ https://www.my-app.com/users?assigned=true
 #### Views shown in UI
 
 ```
-www.my-app.com/users
-www.my-app.com/users/*
+/users/*
+/users
 ```
 
 ---
@@ -111,8 +113,8 @@ https://www.my-app.com/users?assigned=true
 #### Views shown in UI
 
 ```
-www.my-app.com/users
-www.my-app.com/users/:name
+/users/:name
+/users
 ```
 
 ---
@@ -144,8 +146,8 @@ https://www.my-app.com/analytics/usage/harper
 #### Views shown in UI
 
 ```
-www.my-app.com/analytics/performance/:id
-www.my-app.com/analytics/usage/:id
+/analytics/performance/:id
+/analytics/usage/:id
 ```
 
 ---
@@ -177,9 +179,11 @@ https://www.my-app.com/home?tag=trip&status=new#statusView
 #### Views shown in UI
 
 ```
-www.my-app.com/home?status=done
-www.my-app.com/home?status=new
+/home?*status=done{&*}?
+/home?*status=new{&*}?
 ```
+
+When grouping by a query parameter, the view name keeps the pattern's search syntax with the matched value substituted in, so it's clear which parameter created the grouping.
 
 ---
 
@@ -211,7 +215,9 @@ https://www.my-app.com/profile/edit
 #### Views shown in UI
 
 ```
-https://*.my-app.com/home
-https://*.my-app.com/profile
-https://*.my-app.com/profile/edit
+/home
+/profile
+/profile/edit
 ```
+
+All of the views share the `*.my-app.com` hostname pattern, so it is omitted from the view names, and URLs from every matching subdomain are grouped together.
