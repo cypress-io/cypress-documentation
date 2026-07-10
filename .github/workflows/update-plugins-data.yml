@@ -49,6 +49,7 @@ jobs:
           delete-branch: true
           commit-message: 'chore: update plugins data (nightly)'
           title: 'chore: update plugins data'
+          reviewers: jennifer-shehane
           body: |
             Nightly refresh of `src/data/plugins-generated.json` via `npm run enrich:plugins`.
 

@@ -237,15 +237,6 @@
       "lastPublished": "2024-07-16T14:01:26.695Z",
       "cypressVersion": "12.13.0"
     },
-    "@swimlane/cy-dom-diff": {
-      "npm": "@swimlane/cy-dom-diff",
-      "version": "2.0.0",
-      "lastPublished": "2021-02-02T18:40:01.242Z",
-      "cypressVersion": "^5.2.0",
-      "archived": true,
-      "deprecated": true,
-      "deprecatedReason": "Source repository is archived."
-    },
     "cy-spok": {
       "npm": "cy-spok",
       "version": "1.7.0",
