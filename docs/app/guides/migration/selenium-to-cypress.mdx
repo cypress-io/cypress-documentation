@@ -90,6 +90,30 @@ describe('Authorization', function () {
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="authorization.cy.js"
+describe('Authorization', () => {
+  it('signs up', () => {
+    // No driver setup or teardown. Cypress manages the browser
+    cy.visit('/signup')
+
+    cy.get('[data-testid="email"]').type('user@email.com')
+    cy.get('[data-testid="confirm-email"]').type('user@email.com')
+    cy.get('[data-testid="password"]').type('testPassword1234')
+
+    cy.get('button[type=submit]').click()
+
+    // No explicit wait needed; the assertion retries until it passes
+    cy.url().should('include', '/signup/success')
+  })
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts title="authorization.cy.ts"
 describe('Authorization', () => {
   it('signs up', () => {
@@ -107,6 +131,9 @@ describe('Authorization', () => {
   })
 })
 ```
+
+</TabItem>
+</Tabs>
 
 Notice what disappeared: the `Builder` and `driver` setup, the
 `beforeEach`/`afterEach` lifecycle, the `driver.quit()`, the `await` on every
@@ -197,6 +224,30 @@ settings, and build-tool files (`pom.xml`, `build.gradle`, `pytest.ini`,
 | Retry count (surefire/TestNG `retryAnalyzer`, pytest-rerunfailures) | `retries.runMode` / `retries.openMode` |
 | Global setup/teardown hooks                                         | `e2e.setupNodeEvents`                  |
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress.config.js"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  viewportWidth: 1280,
+  viewportHeight: 720,
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+    specPattern: 'cypress/e2e/**/*.cy.js',
+    defaultCommandTimeout: 10000,
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
+  },
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts title="cypress.config.ts"
 import { defineConfig } from 'cypress'
 
@@ -214,6 +265,9 @@ export default defineConfig({
   },
 })
 ```
+
+</TabItem>
+</Tabs>
 
 With `baseUrl` set, `cy.visit('/signup')` resolves against it, the
 equivalent of concatenating a base URL onto every `driver.get(...)` call.
@@ -255,6 +309,21 @@ file. In Cypress, use
 and [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive config
 (feature flags, public URLs).
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress.config.js"
+module.exports = defineConfig({
+  env: {
+    USER_NAME: process.env.USER_NAME,
+    PASSWORD: process.env.PASSWORD,
+  },
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts title="cypress.config.ts"
 export default defineConfig({
   env: {
@@ -263,6 +332,25 @@ export default defineConfig({
   },
 })
 ```
+
+</TabItem>
+</Tabs>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="login.cy.js"
+it('logs in', () => {
+  cy.env(['USER_NAME', 'PASSWORD']).then(({ USER_NAME, PASSWORD }) => {
+    cy.visit('/login')
+    cy.get('[data-testid="username"]').type(USER_NAME)
+    cy.get('[data-testid="password"]').type(PASSWORD, { log: false })
+  })
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
 ```ts title="login.cy.ts"
 it('logs in', () => {
@@ -273,6 +361,9 @@ it('logs in', () => {
   })
 })
 ```
+
+</TabItem>
+</Tabs>
 
 ## Browser and driver management
 
@@ -314,6 +405,29 @@ const driver = await new Builder()
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress.config.js"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          launchOptions.args.push('--disable-gpu')
+        }
+        return launchOptions
+      })
+    },
+  },
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts title="cypress.config.ts"
 export default defineConfig({
   e2e: {
@@ -328,6 +442,9 @@ export default defineConfig({
   },
 })
 ```
+
+</TabItem>
+</Tabs>
 
 ### Reproducible CI browser versions
 
@@ -389,6 +506,28 @@ fresh `driver`, Cypress starts each test with clean browser state
 automatically, so `beforeEach` is used for app-level setup (visiting a page,
 seeding data, logging in) rather than browser setup.
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="general-information.cy.js"
+describe('General information', () => {
+  beforeEach(() => {
+    cy.visit('/dashboard')
+  })
+
+  it('shows the header', () => {
+    cy.get('[data-testid="header"]').should('be.visible')
+  })
+
+  it('shows the footer', () => {
+    cy.get('[data-testid="footer"]').should('be.visible')
+  })
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts title="general-information.cy.ts"
 describe('General information', () => {
   beforeEach(() => {
@@ -405,6 +544,9 @@ describe('General information', () => {
 })
 ```
 
+</TabItem>
+</Tabs>
+
 ## Deleting the WebDriver lifecycle
 
 Every Selenium test creates and disposes of a `driver`. In Cypress this code
@@ -420,7 +562,7 @@ await driver.quit()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts
+```js
 // Nothing. Cypress creates and disposes of the browser for you.
 // Explicit waits become retry-ability (see below).
 ```
@@ -468,10 +610,24 @@ assert.strictEqual(await toast.getText(), 'Saved!')
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#myButton').click()
+cy.get('[data-testid="toast"]').should('have.text', 'Saved!')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.get('#myButton').click()
 cy.get('[data-testid="toast"]').should('have.text', 'Saved!')
 ```
+
+</TabItem>
+</Tabs>
 
 When you genuinely need to wait for a specific network call, alias it with
 `cy.intercept()` and `cy.wait('@alias')`, a deterministic wait on the
@@ -536,9 +692,22 @@ assert.strictEqual(rows.length, 5)
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('table tr').should('have.length', 5)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.get('table tr').should('have.length', 5)
 ```
+
+</TabItem>
+</Tabs>
 
 ## Interactions
 
@@ -558,6 +727,20 @@ await driver.findElement(By.css('button[type=submit]')).click()
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#username').clear()
+cy.get('#username').type('jane')
+cy.get('#password').clear()
+cy.get('#password').type('secret')
+cy.get('button[type=submit]').click()
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.get('#username').clear()
 cy.get('#username').type('jane')
@@ -565,6 +748,9 @@ cy.get('#password').clear()
 cy.get('#password').type('secret')
 cy.get('button[type=submit]').click()
 ```
+
+</TabItem>
+</Tabs>
 
 ### Dropdowns, checkboxes, and radios
 
@@ -585,10 +771,24 @@ await driver.findElement(By.id('subscribe')).click() // checkbox
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#country').select('United States')
+cy.get('#subscribe').check()
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.get('#country').select('United States')
 cy.get('#subscribe').check()
 ```
+
+</TabItem>
+</Tabs>
 
 ### Hover, right-click, double-click, and keyboard
 
@@ -628,10 +828,24 @@ await driver.manage().window().setRect({ width: 375, height: 812 })
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#footer').scrollIntoView()
+cy.viewport(375, 812)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.get('#footer').scrollIntoView()
 cy.viewport(375, 812)
 ```
+
+</TabItem>
+</Tabs>
 
 ## Assertions
 
@@ -668,9 +882,22 @@ assert.strictEqual(await toast.getText(), 'Saved!')
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('[data-testid="toast"]').should('be.visible').and('have.text', 'Saved!')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.get('[data-testid="toast"]').should('be.visible').and('have.text', 'Saved!')
 ```
+
+</TabItem>
+</Tabs>
 
 ## Network spying and stubbing
 
@@ -694,6 +921,19 @@ await driver.wait(until.elementLocated(By.css('.user-row')), 10000)
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.intercept('GET', '/api/users').as('users')
+cy.get('#load-users').click()
+cy.wait('@users').its('response.statusCode').should('eq', 200)
+cy.get('[data-testid="user-row"]').should('have.length.greaterThan', 0)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.intercept('GET', '/api/users').as('users')
 cy.get('#load-users').click()
@@ -701,10 +941,26 @@ cy.wait('@users').its('response.statusCode').should('eq', 200)
 cy.get('[data-testid="user-row"]').should('have.length.greaterThan', 0)
 ```
 
+</TabItem>
+</Tabs>
+
 ### Stub a response
 
 Return canned data without hitting the backend, which is impossible in plain
 Selenium.
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.intercept('GET', '/api/projects', {
+  statusCode: 200,
+  body: [{ id: '1' }, { id: '2' }],
+}).as('projects')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
 ```ts
 cy.intercept('GET', '/api/projects', {
@@ -712,6 +968,9 @@ cy.intercept('GET', '/api/projects', {
   body: [{ id: '1' }, { id: '2' }],
 }).as('projects')
 ```
+
+</TabItem>
+</Tabs>
 
 See [Network Requests](/app/guides/network-requests) and
 [`cy.intercept()`](/api/commands/intercept).
@@ -737,6 +996,26 @@ beforeEach(async function () {
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/e2e.js"
+const login = () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+  cy.get('#password').type('secret')
+  cy.get('button[type=submit]').click()
+  cy.url().should('include', '/dashboard')
+}
+
+beforeEach(() => {
+  cy.session('jane', login)
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts title="cypress/support/e2e.ts"
 const login = () => {
   cy.visit('/login')
@@ -750,6 +1029,9 @@ beforeEach(() => {
   cy.session('jane', login)
 })
 ```
+
+</TabItem>
+</Tabs>
 
 ## Alerts, confirms, and prompts
 
@@ -775,6 +1057,20 @@ await alert.accept()
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.on('window:confirm', (message) => {
+  expect(message).to.eq('Are you sure?')
+  // return nothing / true to accept, return false to dismiss
+})
+cy.get('#delete').click()
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.on('window:confirm', (message) => {
   expect(message).to.eq('Are you sure?')
@@ -783,7 +1079,24 @@ cy.on('window:confirm', (message) => {
 cy.get('#delete').click()
 ```
 
+</TabItem>
+</Tabs>
+
 For `prompt()`, stub the return value before the page loads:
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.visit('/', {
+  onBeforeLoad(win) {
+    cy.stub(win, 'prompt').returns('Ada Lovelace')
+  },
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
 ```ts
 cy.visit('/', {
@@ -792,6 +1105,9 @@ cy.visit('/', {
   },
 })
 ```
+
+</TabItem>
+</Tabs>
 
 ## Frames and iframes
 
@@ -810,6 +1126,22 @@ await driver.switchTo().defaultContent()
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#payment-frame')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .within(() => {
+    cy.get('#card-number').type('4242424242424242')
+  })
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.get('#payment-frame')
   .its('0.contentDocument.body')
@@ -819,6 +1151,9 @@ cy.get('#payment-frame')
     cy.get('#card-number').type('4242424242424242')
   })
 ```
+
+</TabItem>
+</Tabs>
 
 The `.should('not.be.empty')` step makes Cypress wait for the frame document
 to load. See
@@ -850,11 +1185,26 @@ for (const handle of handles) {
 
 <Badge type="success">After: Cypress (assert the href instead)</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.contains('a', 'Open report')
+  .should('have.attr', 'target', '_blank')
+  .and('have.attr', 'href', '/report')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.contains('a', 'Open report')
   .should('have.attr', 'target', '_blank')
   .and('have.attr', 'href', '/report')
 ```
+
+</TabItem>
+</Tabs>
 
 ## File uploads and downloads
 
@@ -874,19 +1224,46 @@ await driver
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('input[type=file]').selectFile('cypress/fixtures/avatar.png')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.get('input[type=file]').selectFile('cypress/fixtures/avatar.png')
 ```
+
+</TabItem>
+</Tabs>
 
 ### Download
 
 Trigger the download, then assert the file landed in the configured downloads
 folder with [`cy.readFile()`](/api/commands/readfile).
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.contains('button', 'Export CSV').click()
+cy.readFile('cypress/downloads/export.csv')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.contains('button', 'Export CSV').click()
 cy.readFile('cypress/downloads/export.csv')
 ```
+
+</TabItem>
+</Tabs>
 
 ## Screenshots
 
@@ -906,10 +1283,24 @@ fs.writeFileSync('screenshot.png', image, 'base64')
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.screenshot('after-signup')
+cy.get('[data-testid="toast"]').screenshot('toast')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.screenshot('after-signup')
 cy.get('[data-testid="toast"]').screenshot('toast')
 ```
+
+</TabItem>
+</Tabs>
 
 See [Screenshots and Videos](/app/guides/screenshots-and-videos).
 
@@ -919,12 +1310,28 @@ Selenium suites often add a separate HTTP client (`axios`, `node-fetch`) for
 API setup or assertions. Cypress has [`cy.request()`](/api/commands/request)
 built in for making real HTTP calls (no `cy.intercept` stubbing involved).
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.request('/api/health').its('status').should('eq', 200)
+
+// Seed state via the API before driving the UI
+cy.request('POST', '/api/users', { name: 'Jane' }).its('body.id').as('userId')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts
 cy.request('/api/health').its('status').should('eq', 200)
 
 // Seed state via the API before driving the UI
 cy.request('POST', '/api/users', { name: 'Jane' }).its('body.id').as('userId')
 ```
+
+</TabItem>
+</Tabs>
 
 See [`cy.request()`](/api/commands/request).
 
@@ -959,6 +1366,22 @@ class LoginPage {
 
 <Badge type="success">After: Cypress</Badge>
 
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="loginPage.js"
+export class LoginPage {
+  login(username, password) {
+    cy.get('[data-testid="username"]').type(username)
+    cy.get('[data-testid="password"]').type(password)
+    cy.contains('button', 'Login').click()
+  }
+}
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
 ```ts title="loginPage.ts"
 export class LoginPage {
   login(username: string, password: string) {
@@ -968,6 +1391,9 @@ export class LoginPage {
   }
 }
 ```
+
+</TabItem>
+</Tabs>
 
 As you migrate, consider whether frequently repeated flows (like login) are
 better expressed as
@@ -981,6 +1407,26 @@ the same: iterate a plain array with `.forEach()` and generate one `it` per
 entry.
 
 <Badge type="success">Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+const people = [
+  { name: 'Maya', expected: 'Hello, Maya!' },
+  { name: 'Theo', expected: 'Hello, Theo!' },
+]
+
+people.forEach(({ name, expected }) => {
+  it(`greets ${name}`, () => {
+    cy.visit(`/greet?name=${name}`)
+    cy.get('h1').should('have.text', expected)
+  })
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
 ```ts
 const people = [
@@ -996,6 +1442,9 @@ people.forEach(({ name, expected }) => {
 })
 ```
 
+</TabItem>
+</Tabs>
+
 ## Migrating a Cucumber suite
 
 If you drive Selenium through Cucumber (`.feature` files with step
@@ -1004,6 +1453,24 @@ definitions), the
 community plugin lets you keep your Gherkin and reuse most scenarios. Your `.feature` files
 stay largely as-is; only the step definitions change, with the WebDriver calls
 in each step becoming Cypress commands.
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+const { When, Then } = require('@badeball/cypress-cucumber-preprocessor')
+
+When('I visit the homepage', () => {
+  cy.visit('/')
+})
+
+Then('I should see a search bar', () => {
+  cy.get('input[type="search"]').should('be.visible')
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
 ```ts
 import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
@@ -1016,6 +1483,9 @@ Then('I should see a search bar', () => {
   cy.get('input[type="search"]').should('be.visible')
 })
 ```
+
+</TabItem>
+</Tabs>
 
 The scenario logic is unchanged. The difference is the framework wiring and
 that the step bodies now use `cy` instead of a `driver`.
