@@ -16,11 +16,6 @@ function selectUrls(urls: string[]): string[] {
   })
 }
 
-// The suffix is server-rendered into the static HTML (see src/sectionTitles.js
-// and src/theme/DocItem/Metadata), so instead of a full cy.visit per page —
-// which loads and hydrates the whole app — we cy.request each page and read
-// the <title> straight out of the response body. Pages are checked in
-// per-section batches, and every failing page in a batch is reported at once.
 const PAGES_PER_TEST = 50
 
 function titleFromHtml(html: string): string {
@@ -79,9 +74,6 @@ describe('Page titles have the correct appended suffix', () => {
   })
 })
 
-// The suffix is applied by a React component (src/theme/DocItem/Metadata), so
-// also spot-check the *hydrated* document.title with a real visit — one page
-// per distinct suffix — in case hydration ever diverges from the SSR HTML.
 describe('Page titles survive hydration (one page per suffix)', () => {
   const samples: Record<string, string> = {}
   URLs.forEach((url) => {
