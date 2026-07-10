@@ -11,6 +11,14 @@ sidebar_position: 20
 
 UI Coverage uniquely identifies elements across views and snapshots using a combination of HTML attributes, location, and other signals in the DOM. Stable and unique identifiers are crucial for accurately tracking and de-duplicating elements throughout the various snapshots captured in your tests.
 
+## Snapshots
+
+A snapshot is a capture of your application's DOM at one moment during a test. As your tests run, the same capture protocol that powers [Test Replay](/cloud/features/test-replay) records snapshots automatically as your application changes state, on page loads, interactions, and other DOM updates, with no extra code or configuration.
+
+UI Coverage analyzes the snapshots in a recorded run: it detects the [interactive elements](/ui-coverage/core-concepts/interactivity) in each one and computes an identity for each element using the rules on this page. Elements that produce the same identity in different snapshots count as one element, and [views](/ui-coverage/core-concepts/views) group snapshots by URL.
+
+This is why stable identities matter. The same button can appear in hundreds of snapshots across a run, and it should count as a single element, marked as tested when any snapshot captures an interaction with it. An identity that changes between snapshots, for example one built from a generated `id`, splits that one button into many untested elements.
+
 ## Significant attributes for identification
 
 Certain attributes are prioritized by UI Coverage for element identification and grouping. These include:
@@ -61,3 +69,22 @@ Define custom significant attributes to prioritize specific selectors that align
 ```
 
 Refer to the [Significant Attributes](/ui-coverage/configuration/significantattributes) guide for detailed instructions.
+
+### Elements
+
+Assign a stable identity and a readable name to a specific element whose attributes change between snapshots. An element matched by an `elements` rule is identified by the rule's selector alone, so it stays one element across snapshots. For example:
+
+```json
+{
+  "uiCoverage": {
+    "elements": [
+      {
+        "selector": "#my-form [id^='dropdown']",
+        "name": "Country Dropdown"
+      }
+    ]
+  }
+}
+```
+
+Refer to the [`elements`](/ui-coverage/configuration/elements) guide for how rules are matched.

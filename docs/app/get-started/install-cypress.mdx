@@ -77,17 +77,26 @@ Cypress is installed using one of the following supported package managers:
 
 #### npm configuration
 
-npm runs Cypress' `postinstall` script on install by default, which downloads the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+Cypress uses a `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+This method is affected by hardening changes introduced into npm.
 
-Starting in npm version 12, npm blocks dependency install scripts (`preinstall`, `install`, and `postinstall`) by default. When install scripts are blocked, npm skips Cypress' `postinstall` script and the Cypress binary is not downloaded. To allow Cypress to run its `postinstall` script, use one of the following approaches.
+Starting in npm 11.16.0, a warning is issued, then starting in npm 12.0.0, npm blocks `postinstall` lifecycle scripts by default.
+When install scripts are blocked, npm skips Cypress' `postinstall` script and the Cypress binary is not downloaded.
+To allow Cypress to run its `postinstall` script, use one of the following approaches.
 
-Allowlist `cypress` so npm runs its `postinstall` script on install. You can use the CLI:
+After installing Cypress, you can use the `npm install-scripts` CLI command to add `cypress` to the `allowScripts` list so npm runs the `postinstall` script on install.
+Use the `--no-allow-scripts-pin` option if you want to allow also future versions of Cypress, or omit if not.
+`npm rebuild` re-runs the installation to install the Cypress binary after its installation has been allowed.
 
 ```shell
-npm approve-scripts cypress
+npm install cypress --save-dev
+npm install-scripts approve cypress --no-allow-scripts-pin
+npm rebuild cypress
 ```
 
-Or add `cypress` to `allowScripts` in `package.json` manually:
+In npm v11 >=11.16.0 warnings are issued. Check the warning prompt for the recommended CLI command.
+
+For all npm versions >=11.16.0 you can add `cypress` to `allowScripts` in `package.json` manually instead of using a CLI command:
 
 ```json title="package.json"
 {
@@ -97,16 +106,35 @@ Or add `cypress` to `allowScripts` in `package.json` manually:
 }
 ```
 
-Alternatively, if you'd rather not modify your allowlist, install the Cypress binary explicitly after install completes:
+Alternatively, if you'd rather not modify your `allowScripts` list, install the Cypress binary explicitly after install completes:
 
 ```shell
 npx cypress install
 ```
 
-#### Yarn users
+#### Yarn configuration
 
 [Yarn (Modern)](https://yarnpkg.com/) configuration using [nodeLinker: "node-modules"](https://yarnpkg.com/configuration/yarnrc#nodeLinker)
 is preferred. Cypress [Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing) is not currently compatible with the default setting [nodeLinker: "pnp"](https://yarnpkg.com/configuration/yarnrc#nodeLinker) which uses [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp).
+
+Starting in Yarn Modern version 4.14.0, the [enableScripts](https://yarnpkg.com/configuration/yarnrc#enableScripts) configuration option is set to `false` by default, which blocks dependency lifecycle scripts. When scripts are blocked, Yarn skips Cypress' `postinstall` script and the Cypress binary is not downloaded into the [binary cache](/app/references/advanced-installation#Binary-cache).
+
+To allow Cypress to run its `postinstall` script, set `enableScripts` to `true` and add `cypress` to the [npmPreapprovedPackages](https://yarnpkg.com/configuration/yarnrc#npmPreapprovedPackages) list (available in Yarn Modern >=4.10.0) in your project's `.yarnrc.yml` file:
+
+```yaml title=".yarnrc.yml"
+enableScripts: true
+
+npmPreapprovedPackages:
+  - cypress
+```
+
+`enableScripts` can also be set using the CLI:
+
+```shell
+yarn config set enableScripts true
+```
+
+Setting the list of `npmPreapprovedPackages` is less convenient via the CLI and is easier done by editing `.yarnrc.yml` directly.
 
 #### pnpm configuration
 

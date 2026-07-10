@@ -1,6 +1,6 @@
 ---
-title: 'elements: identify elements with custom logic'
-description: 'The elements configuration allows you to uniquely identify elements in UI Coverage using custom logic.'
+title: 'elements: rename and stabilize element identity in UI Coverage'
+description: 'Rename elements and give them a stable identity in Cypress UI Coverage reports, so dynamic attributes do not create duplicate untested elements.'
 sidebar_label: elements
 sidebar_position: 70
 ---
@@ -9,19 +9,40 @@ sidebar_position: 70
 
 # elements
 
-UI Coverage provides automatic logic to [identify](/ui-coverage/core-concepts/element-identification) elements based on their DOM structure. However, in complex applications, elements may lack stable identifiers or have dynamic attributes that vary across snapshots, leading to incorrect identification. The `elements` configuration allows you to specify selectors to uniquely identify elements, ensuring consistency across snapshots and simplifying your coverage reports.
+The `elements` configuration assigns a stable identity and a display name to a single element in your UI Coverage report.
 
-The `elements` configuration is used as the element's identity if **only one element** per snapshot matches. If there are multiple matches in the same snapshot, this configuration is ignored and the default [identify](/ui-coverage/core-concepts/element-identification) strategy is used.
+As your tests run, UI Coverage captures [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) of your application's DOM, and the same element usually appears in many of them: on every page load, in every test that visits its page. To count that element once, UI Coverage must recognize it as the same element in every snapshot. When one of its attributes is different on each appearance, such as an `id` generated on every page load, that recognition fails, and each appearance is reported as a new element. One dropdown then shows up as several untested elements and drags down your score.
 
-## Why use elements configuration?
+An `elements` rule fixes this by identifying the element with a selector you choose that matches in every snapshot. The element counts once, and you can rename it to something readable like "Help Popover" instead of a machine-generated selector.
 
-- **Handle Dynamic Attributes**: Ensure elements are consistently identified across snapshots, even when attributes change.
-- **Ensure Unique Identification**: Use custom selectors to uniquely identify elements across snapshots that lack unique attributes or have dynamic values, avoiding misclassification.
-- **Simplify Debugging**: Assign human-readable names to elements to make reports more interpretable and debugging easier.
+Without stable identities and names, a report can list controls under machine-generated selectors that are hard to recognize and act on:
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-expanded.png"
+  alt="The UI Coverage report listing untested elements, several of which appear under machine-generated names derived from their DOM structure"
+/>
+
+## Why use elements?
+
+UI Coverage already [identifies elements automatically](/ui-coverage/core-concepts/element-identification) using significant attributes, location, and other DOM signals. Use `elements` when the automatic identity for a specific element isn't stable or isn't readable:
+
+- **Stabilize an element's identity**: Identify an element by a selector that stays the same across snapshots, even when its `id` or other attributes are regenerated on every render, so it isn't duplicated in reports.
+- **Rename elements in reports**: Display a human-readable name in place of a machine-generated selector, so anyone reading the report understands what needs testing.
+
+If your goal is different, such as combining repeated elements so they count as one, or removing elements from reports entirely, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
+
+## Setting elements
+
+To add or edit `elements`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+
+<DocsImage
+  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
 
 ## Syntax
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elements": [
@@ -38,24 +59,44 @@ The `elements` configuration is used as the element's identity if **only one ele
 
 ### Options
 
-For every element considered by UI Coverage, the first applicable rule, determined by a match with the `selector` property, is used for identification. Elements that do not match any rules are identified by the default UI Coverage [element identification rules](/ui-coverage/core-concepts/element-identification).
+| Option          | Required | Default    | Description                                                                                                                                                                                                                                                                                    |
+| --------------- | -------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |            | A CSS selector that identifies the element. Supports standard CSS selector syntax, including IDs, classes, attributes, combinators, and functional pseudo-classes like `:has()`. The rule applies only when exactly one interactive element matches.                                           |
+| `name`          | Optional | `selector` | A human-readable name for the element, displayed in UI Coverage reports in place of the selector. Each rule's name must be unique.                                                                                                                                                             |
+| `documentScope` | Optional |            | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to identify an element inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are. |
+| `comment`       | Optional |            | A note about why this rule exists, for your team's benefit. Comments have no effect on how elements are identified.                                                                                                                                                                            |
 
-If multiple elements within the same snapshot satisfy the same rule, the rule cannot uniquely identify these elements. In such cases, the rule is bypassed, and either subsequent rules or the default element identification logic are applied.
+### How are elements rules applied?
 
-| Option          | Required | Default    | Description                                                                                                                                                                                                                                 |
-| --------------- | -------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `selector`      | Required |            | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                                            |
-| `name`          | Optional | `selector` | A human-readable name for the element, displayed in UI Coverage reports.                                                                                                                                                                    |
-| `documentScope` | Optional |            | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
-| `comment`       | Optional |            | A comment describing the purpose of this element configuration.                                                                                                                                                                             |
+In each snapshot captured by your tests, every rule is evaluated independently:
+
+- **A rule applies only when it matches exactly one element.** A rule identifies a single element, so UI Coverage counts how many of the [interactive elements](/ui-coverage/core-concepts/interactivity) it tracks match the rule's `selector` in the snapshot. If exactly one matches, the rule applies to that element. If two or more match, the rule is skipped and the elements keep their default identity, because applying it would merge separate elements into one. To intentionally treat several elements as one unit, use [`elementGroups`](/ui-coverage/configuration/elementgroups) instead. Matches against parts of the page that UI Coverage doesn't track, such as wrapper containers or static text, don't count.
+- **Matching is evaluated per snapshot.** A rule can apply in one snapshot and be skipped in another where its selector matches several elements at once.
+- **A matched element is identified by the rule's `selector` alone.** Its identity no longer depends on its attributes, structure, or the default [element identification rules](/ui-coverage/core-concepts/element-identification), so it stays one element across snapshots even as dynamic attributes change. The report displays the rule's `name`, or its `selector` when no name is given. This includes links, which are otherwise displayed by their URL.
+- **Rules match in any document unless scoped.** A rule without `documentScope` can match elements in the main document, in iframes, and in shadow DOMs. Add `documentScope` to restrict a rule to one of those documents, for example when the same selector appears both inside and outside an iframe.
+- **Later rules take precedence.** When more than one rule matches the same element, the last matching rule in the list determines its identity and name.
+- **Filtered elements are never matched.** Elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters) are not considered, and don't count toward a rule's one-match limit.
+
+If a rule doesn't seem to take effect, see [Why isn't my elements rule applying?](/ui-coverage/faq#Why-isnt-my-elements-rule-applying) in the UI Coverage FAQ.
+
+### Validation rules
+
+Cypress Cloud rejects a configuration when:
+
+- Two rules have the same `selector` (with the same `documentScope`).
+- Two rules have the same `name`, or one rule's `name` matches another rule's `selector`. Elements are identified by these values, so they must be unique.
+- A `selector` or `documentScope` entry isn't valid CSS selector syntax.
+- A rule contains a property other than the four listed above.
 
 ## Examples
 
-### Identify elements by dynamic selector across snapshots
+### Stabilize an element with a dynamic ID
+
+This form's dropdown gets a newly generated `id` on every page load, so each snapshot produces what looks like a new element. A rule with an attribute prefix selector identifies it as one element across snapshots.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elements": [
@@ -73,31 +114,44 @@ If multiple elements within the same snapshot satisfy the same rule, the rule ca
 <!-- Snapshot 1 -->
 <body>
   <form id="my-form">
-    <input id="dropdown-142"></input>
+    <input id="dropdown-142" />
   </form>
 </body>
 
 <!-- Snapshot 2 -->
 <body>
   <form id="my-form">
-    <input id="dropdown-980"></input>
+    <input id="dropdown-980" />
   </form>
 </body>
 ```
 
-#### Elements shown in UI Coverage
+#### Elements shown in UI
+
+Without the rule, the dropdown can appear as two untested elements:
 
 ```
-#my-form [id^="dropdown"]
+#dropdown-142
+#dropdown-980
 ```
+
+With the rule, it appears once, displayed under the rule's selector because no `name` is given:
+
+```
+#my-form [id^='dropdown']
+```
+
+An `elements` rule is the right tool when one specific element needs a stable identity. If many elements share the same generated attribute, fix the attribute instead: an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule stops it from identifying any element.
 
 ---
 
-### Identify elements with human-readable names
+### Give an element a readable name
+
+Add a `name` so the report describes the interface instead of your selectors.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elements": [
@@ -118,7 +172,7 @@ If multiple elements within the same snapshot satisfy the same rule, the rule ca
 </body>
 ```
 
-#### Elements shown in UI Coverage
+#### Elements shown in UI
 
 ```
 Help Popover
@@ -126,13 +180,13 @@ Help Popover
 
 ---
 
-### Scoping element identification to shadow DOM
+### Identify an element inside a shadow DOM or iframe
 
-When you need to uniquely identify elements within a specific shadow DOM host, use the `documentScope` property to scope your selector to that document context.
+Use `documentScope` to identify an element inside a specific shadow DOM host or iframe. Here, the button inside the `<custom-component>` shadow root shares its `id` with a button in the main document. The scope restricts the rule to the shadow DOM, so the rule matches exactly one element and applies. Without `documentScope`, the rule would match both buttons and be skipped.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elements": [
@@ -158,24 +212,18 @@ When you need to uniquely identify elements within a specific shadow DOM host, u
 </body>
 ```
 
-#### Elements shown in UI Coverage
+#### Elements shown in UI
 
 ```
-#my-button (from root document)
-Custom Component Button (from shadow DOM)
+#my-button
+Custom Component Button
 ```
 
-Only the button inside the shadow DOM is identified using the custom name, while the button in the root document uses the default identification.
+The button inside the shadow DOM appears under its configured name, while the button in the main document keeps its default identity.
 
----
+`documentScope` works the same way for embedded content that renders inside an iframe. The scope selector matches the `iframe` element itself in its parent document:
 
-### Scoping element identification to iframes
-
-You can also scope element identification to elements within specific iframes using `documentScope`.
-
-#### Config
-
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elements": [
@@ -189,26 +237,19 @@ You can also scope element identification to elements within specific iframes us
 }
 ```
 
-#### HTML
+For nested documents, list one selector per host from outermost to innermost, for example `"documentScope": ["#embedded-form", "secure-card-input"]`.
 
-```xml
-<body>
-  <button id="submit">Submit (Root)</button>
-  <iframe id="embedded-form" src="http://www.foo.com">
-    <html>
-      <body>
-        <button id="submit">Submit (Embedded)</button>
-      </body>
-    </html>
-  </iframe>
-</body>
-```
+:::tip
 
-#### Elements shown in UI Coverage
+After saving configuration changes, regenerate a recent run to preview the effect of your rules without rerunning your tests. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for how to regenerate a report.
 
-```
-#submit (from root document)
-Embedded Form Submit (from iframe)
-```
+:::
 
-Only the button inside the iframe is identified using the custom name.
+## See also
+
+- [Element Identification](/ui-coverage/core-concepts/element-identification): how elements are identified automatically.
+- [`elementGroups`](/ui-coverage/configuration/elementgroups): combine related elements into one group.
+- [`attributeFilters`](/ui-coverage/configuration/attributefilters): stop dynamic attributes from identifying elements.
+- [`elementFilters`](/ui-coverage/configuration/elementfilters): remove elements from reports entirely.
+- [Configuration overview](/ui-coverage/configuration/overview): where to set configuration and regenerate reports.
+- [UI Coverage FAQ](/ui-coverage/faq): common questions and troubleshooting.
