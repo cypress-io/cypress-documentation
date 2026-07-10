@@ -1,3 +1,7 @@
+.root {
+  margin-top: 1rem;
+}
+
 section {
   margin-bottom: 3rem;
 }
@@ -43,6 +47,19 @@ body ul.pluginsList li {
   padding: 20px;
   padding-top: 12px;
   margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  /* The .card class styles these as clickable (pointer cursor + hover border
+     glow), but the cards aren't interactive, so neutralize that. */
+  cursor: default;
+  border-color: var(--ifm-color-emphasis-200);
+}
+
+body ul.pluginsList li:hover {
+  animation: none;
+  border-color: var(--ifm-color-emphasis-200);
+  box-shadow: var(--ifm-global-shadow-lw);
+  outline: none;
 }
 
 ul.pluginsList li p {
@@ -54,7 +71,7 @@ ul.pluginsList li p {
 }
 
 .pluginTitle {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200, #eee);
   margin-bottom: 0.6em;
 }
 
@@ -66,6 +83,8 @@ ul.pluginsList li p {
   padding-right: 0;
 }
 
+/* -------- Badges -------- */
+
 .badge {
   display: inline-block;
   color: #fff;
@@ -74,6 +93,7 @@ ul.pluginsList li p {
   font-weight: 700;
   padding: 0.25em 0.8em;
   line-height: 0.75rem;
+  text-transform: capitalize;
 }
 
 .badgePill {
@@ -85,10 +105,6 @@ ul.pluginsList li p {
   background-color: var(--ifm-color-teal-500);
 }
 
-.badgePill.badgeVerified {
-  background-color: var(--ifm-color-jade-500);
-}
-
 .badgePill.badgeCommunity {
   background-color: var(--ifm-color-indigo-500);
 }
@@ -97,11 +113,218 @@ ul.pluginsList li p {
   background-color: var(--ifm-color-red-600);
 }
 
+/* -------- Badge legend -------- */
+
+.legend {
+  /* One badge per row at every viewport width. The badge pills share a
+     max-content column so every description starts at the same x position. */
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: baseline;
+  gap: 0.6rem 0.75rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  background-color: var(--ifm-background-surface-color);
+}
+
+/* Promote each item's badge and description to cells of the legend grid so
+   the two columns stay aligned across rows. */
+.legendItem {
+  display: contents;
+}
+
+.legendItem > .badge {
+  justify-self: start;
+}
+
+.legendText {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.4;
+}
+
+/* -------- Controls -------- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.searchWrap {
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 220px;
+  display: flex;
+}
+
+.search {
+  flex: 1;
+  min-width: 0;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+/* Hide the browser's native clear button so we render a consistent one. */
+.search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.clearBtn {
+  position: absolute;
+  right: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ifm-color-emphasis-500);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.clearBtn:hover {
+  color: var(--ifm-color-emphasis-800);
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+.select {
+  padding: 0.5rem 2.4rem 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  /* Replace the native dropdown arrow (flush against the right border in most
+     browsers) with a chevron inset from the edge. */
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23606770' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6.25l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 0.85em;
+}
+
+html[data-theme='dark'] .select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23b8bfc9' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6.25l4 4 4-4'/%3E%3C/svg%3E");
+}
+
+.search:focus,
+.select:focus {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 1px;
+}
+
+.resultCount {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 1.5rem;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* -------- Signals -------- */
+
+.signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
+  margin: 0.25rem 0 0.6rem;
+}
+
+.signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-700);
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+  padding: 0.1rem 0.45rem;
+  white-space: nowrap;
+}
+
+/* The theme styles in-content links (div.markdown a) with a dotted
+   border-bottom and the link color, at a higher specificity than a plain
+   `a.signal`. Scope to div.markdown so we can override it: keep the npm link
+   blue like a link but drop the dotted underline. The light value is nudged
+   slightly darker than the default link color so it clears 4.5:1 on the chip;
+   dark mode uses the theme link color (bright enough on the dark chip). */
+:global(div.markdown) .signals a.signal,
+:global(div.markdown) .signals a.signal:hover {
+  color: #4453da;
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+html[data-theme='dark'] :global(div.markdown) .signals a.signal,
+html[data-theme='dark'] :global(div.markdown) .signals a.signal:hover {
+  color: var(--ifm-link-color);
+}
+
+.signalStale {
+  color: #6f5200;
+  background-color: #fff8e6;
+}
+
+html[data-theme='dark'] .signalStale {
+  color: #ffd97a;
+  background-color: #3a2f00;
+}
+
+.deprecatedNotice {
+  font-size: 0.8rem;
+  color: var(--ifm-color-danger-darker, #a01c1c);
+  background-color: var(--ifm-color-danger-contrast-background, #fdecea);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  margin: 0 0 0.5rem !important;
+}
+
+.noticeIcon {
+  margin-right: 0.4rem;
+}
+
+/* -------- Keywords -------- */
+
+.keywords {
+  margin-top: auto;
+  padding-top: 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.55rem;
+}
+
 .keyword {
   font-weight: 300;
-  color: var(--ifm-color-gray-800);
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+  text-decoration: none;
+  cursor: pointer;
+  border-bottom: 0;
+}
 
-  html[data-theme='dark'] & {
-    color: var(--ifm-color-gray-100);
-  }
+.keyword:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: underline;
+  border-bottom: 0;
 }

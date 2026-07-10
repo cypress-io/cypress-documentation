@@ -11,7 +11,7 @@ sidebar_position: 30
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to install Cypress using npm, Yarn, pnpm, or Bun
 - What you need before installing
@@ -77,25 +77,36 @@ Cypress is installed using one of the following supported package managers:
 
 #### npm configuration
 
-npm runs Cypress' `postinstall` script on install by default, which downloads the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+Cypress uses a `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+This method is affected by hardening changes introduced into npm.
 
-Starting in npm version 12, npm blocks dependency install scripts (`preinstall`, `install`, and `postinstall`) by default. When install scripts are blocked, npm skips Cypress' `postinstall` script and the Cypress binary is not downloaded. To allow Cypress to run its `postinstall` script, use one of the following approaches.
+Starting in npm 11.16.0, a warning is issued, then starting in npm 12.0.0, npm blocks `postinstall` lifecycle scripts by default.
+When install scripts are blocked, npm skips Cypress' `postinstall` script and the Cypress binary is not downloaded.
+To allow Cypress to run its `postinstall` script, use one of the following approaches.
 
-Allowlist `cypress` so npm runs its `postinstall` script on install. You can use the CLI:
+After installing Cypress, you can use the `npm install-scripts` CLI command to add `cypress` to the `allowScripts` list so npm runs the `postinstall` script on install.
+Use the `--no-allow-scripts-pin` option if you want to allow also future versions of Cypress, or omit if not.
+`npm rebuild` re-runs the installation to install the Cypress binary after its installation has been allowed.
 
 ```shell
-npm approve-scripts cypress
+npm install cypress --save-dev
+npm install-scripts approve cypress --no-allow-scripts-pin
+npm rebuild cypress
 ```
 
-Or add `cypress` to `allowScripts` in `package.json` manually:
+In npm v11 >=11.16.0 warnings are issued. Check the warning prompt for the recommended CLI command.
+
+For all npm versions >=11.16.0 you can add `cypress` to `allowScripts` in `package.json` manually instead of using a CLI command:
 
 ```json title="package.json"
 {
-  "allowScripts": ["cypress"]
+  "allowScripts": {
+    "cypress": true
+  }
 }
 ```
 
-Alternatively, if you'd rather not modify your allowlist, install the Cypress binary explicitly after install completes:
+Alternatively, if you'd rather not modify your `allowScripts` list, install the Cypress binary explicitly after install completes:
 
 ```shell
 npx cypress install

@@ -10,7 +10,7 @@ sidebar_label: Conditional Testing
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - Why conditional testing is difficult
 - How to overcome the problems with conditional testing
@@ -441,6 +441,80 @@ cy.get('body').then(($body) => {
       cy.get(...).should(...)
     }
   })
+```
+
+## Ending a test early
+
+A related question is how to **stop a test partway through** once some condition
+is met (for example, after iterating over a set of links) while keeping the
+steps that already ran visible in the Command Log.
+
+Cypress does not have an API to abort a single test midway and have it count as
+**passed** with partial results. A test's outcome is always one of Mocha's three
+states: **passed**, **failed**, or **pending** (skipped). There is no "passed,
+but stopped early" status.
+
+The reliable way to "stop here" is the same idea as everywhere else on this page.
+Rather than abort a queue that is already running, conditionally
+**avoid enqueuing** the remaining commands. Make the decision inside a
+[.then()](/api/commands/then) so it happens at the right point in the command
+queue:
+
+```js
+it('stops once it finds the Dashboard link', () => {
+  cy.get('a').then(($links) => {
+    cy.log('completed initial steps')
+
+    const hasDashboard = [...$links].some(
+      (el) => el.innerText.trim() === 'Dashboard'
+    )
+
+    if (hasDashboard) {
+      // nothing else is enqueued from this block, so the test
+      // ends here as passed with the prior steps still logged
+      return
+    }
+
+    cy.log('continuing remaining steps')
+    // cy.get(...).click() ...
+  })
+})
+```
+
+:::caution
+
+Returning out of a `.then()` callback only prevents commands inside that callback
+from being queued. It does **not** cancel commands that were already enqueued at
+the top level of the test. Structure the test so the steps you may want to skip
+are only added from within the conditional.
+
+:::
+
+If you instead want the early exit to be treated as a **failure** (a true abort),
+throw an error. The steps already in the Command Log remain visible, and Cypress
+skips the remaining commands, just like any other failed test:
+
+```js
+cy.get('a').then(($links) => {
+  if (someCondition) {
+    throw new Error('Stopping the test early on purpose')
+  }
+})
+```
+
+Finally, if you genuinely want the test marked **skipped** rather than passed or
+failed, call Mocha's [this.skip()](https://mochajs.org/#inclusive-tests) at
+runtime (use a `function () {}` callback, not an arrow function, so `this` is
+bound):
+
+```js
+it('skips itself when the feature is off', function () {
+  cy.getCookie('featureEnabled').then((cookie) => {
+    if (!cookie) {
+      this.skip()
+    }
+  })
+})
 ```
 
 ## Error Recovery

@@ -10,7 +10,7 @@ sidebar_label: Troubleshooting
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - Resources to help you troubleshoot Cypress App issues
 - Common steps to isolate and resolve problems
@@ -381,9 +381,7 @@ CYPRESS_NO_COMMAND_LOG=1 cypress run
 
 You can also hide the entire Cypress Runner UI in `cypress run` by passing the [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui) command line flag.
 
-```shell
-npx cypress run --no-runner-ui
-```
+<CypressCommandTabs command="run --no-runner-ui" />
 
 With this variable set, Cypress will skip rendering the Command Log entirely,
 and perform none of the usual DOM updates to display information about commands
@@ -651,18 +649,14 @@ re-run Cypress.
 Some historical `ECONNRESET` reports were caused bugs in older versions of Cypress. If you're on an older release,
 upgrade to the latest Cypress:
 
-```bash
-npm install --save-dev cypress@latest
-```
+<PackageManagerTabs install="cypress@latest" dev />
 
 #### Quick fastest-path check
 
 To confirm the problem is external and unblock yourself immediately, run with
 the bundled Electron browser, which doesn't go through the same proxied path:
 
-```bash
-npx cypress run --browser electron
-```
+<CypressCommandTabs command="run --browser electron" />
 
 If Electron works but Chrome/Edge/Firefox fail with `ECONNRESET`, the cause is
 almost certainly local security or packet-capture software (sections 1-2 above).

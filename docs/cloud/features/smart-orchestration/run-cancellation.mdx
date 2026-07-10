@@ -17,7 +17,7 @@ Business and Enterprise plans.
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - Why Auto Cancellation saves you time and money on every failed run
 - How to enable Auto Cancellation and tune the failure threshold for your team
@@ -155,15 +155,11 @@ falls back to the project default.
 To set a numeric threshold, pass the flag to `cypress run`. For example, to
 cancel the run after 5 test failures:
 
-```shell
-npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 5
-```
+<CypressCommandTabs command="run --record --key <<your_record_key>> --auto-cancel-after-failures 5" />
 
 To disable Auto Cancellation entirely for a run, pass `false`:
 
-```shell
-npx cypress run --record --key <<your_record_key>> --auto-cancel-after-failures false
-```
+<CypressCommandTabs command="run --record --key <<your_record_key>> --auto-cancel-after-failures false" />
 
 For more info on passing CLI flags, see our guide on the
 [Cypress Command Line](/app/references/command-line).

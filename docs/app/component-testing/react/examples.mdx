@@ -11,7 +11,7 @@ sidebar_position: 30
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to mount a React component
 - How to pass data to a React component
@@ -66,6 +66,98 @@ it('clicking + fires a change event with the incremented value', () => {
   cy.get('[data-cy=increment]').click()
   cy.get('@onChangeSpy').should('have.been.calledWith', 1)
 })
+```
+
+## Testing Error States
+
+<ComponentTestingErrorStates />
+
+```jsx
+import { UserProfile } from './UserProfile'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(<UserProfile />)
+})
+```
+
+### Testing Error Boundaries
+
+The recommended way to handle render errors in React is an
+[Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary),
+which renders fallback UI via `getDerivedStateFromError()`. You can mount a
+component wrapped in your Error Boundary and assert that the fallback UI is
+displayed:
+
+```jsx
+// ErrorBoundary.cy.jsx
+import { ErrorBoundary } from './ErrorBoundary'
+
+const errorMessage = 'I crashed!'
+const ChildWithError = () => {
+  throw new Error(errorMessage)
+}
+
+it('displays the fallback UI on error', () => {
+  // An Error Boundary renders fallback UI, but it does NOT stop the error
+  // from propagating to Cypress as an uncaught exception. Cypress fails on
+  // uncaught exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include(errorMessage)
+
+    return false
+  })
+
+  cy.mount(
+    <ErrorBoundary name="ChildWithError">
+      <ChildWithError />
+    </ErrorBoundary>
+  )
+
+  cy.get('header h1').should('contain', 'Something went wrong.')
+})
+```
+
+Where `ErrorBoundary` renders fallback UI from `getDerivedStateFromError()`:
+
+```jsx
+// ErrorBoundary.jsx
+import React from 'react'
+
+export class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { error: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error }
+  }
+
+  render() {
+    const { name } = this.props
+    const { error } = this.state
+
+    if (error) {
+      return (
+        <header>
+          <h1>Something went wrong.</h1>
+          <h2>{`${name} failed to load`}</h2>
+        </header>
+      )
+    }
+
+    return this.props.children
+  }
+}
 ```
 
 ## Custom Mount Commands

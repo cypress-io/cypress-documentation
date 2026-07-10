@@ -1,0 +1,85 @@
+---
+title: 'UI Coverage FAQ'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element grouping, iframes and shadow DOM, and configuration.'
+sidebar_label: FAQ
+sidebar_position: 160
+---
+
+<ProductHeading product="ui-coverage" />
+
+# UI Coverage FAQ
+
+## General
+
+### <Icon name="angle-right" /> What is UI Coverage?
+
+[UI Coverage](/ui-coverage/get-started/introduction) is a Cypress Cloud feature that shows you which interactive elements of your application your tests actually exercise. Every recorded run produces a visual report of tested and untested elements across all of your application's [views](/ui-coverage/core-concepts/views), along with a coverage score you can track over time.
+
+### <Icon name="angle-right" /> Do I need to install anything to use UI Coverage?
+
+No. UI Coverage requires no code changes or instrumentation. Reports are generated from [Test Replay](/cloud/features/test-replay) data, so any run recorded to Cypress Cloud with Test Replay on Cypress v13 or later is ready to use. See [setup](/ui-coverage/get-started/setup) for details.
+
+### <Icon name="angle-right" /> How is the UI Coverage score calculated?
+
+The score compares the number of tested interactive elements to the total number of interactive elements in your application. [Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit: the group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
+
+## Views and URLs
+
+### <Icon name="angle-right" /> Why do similar URLs show up as separate views?
+
+Automatic grouping only replaces path segments that are numbers or IDs (UUIDs and UUID-like values) with a wildcard. Segments like usernames or slugs are not recognized as dynamic, so `/users/alice` and `/users/bob` remain separate views. Add a [`views`](/ui-coverage/configuration/views) pattern to group them yourself. See [how views are created](/ui-coverage/core-concepts/views#How-views-are-created) for the full set of automatic rules.
+
+### <Icon name="angle-right" /> Do query parameters create separate views?
+
+No. Query strings are ignored when grouping, so `/dashboard?tab=overview` and `/dashboard?tab=settings` become a single `/dashboard` view. If a query parameter meaningfully changes the page, use a [`views`](/ui-coverage/configuration/views) pattern with `groupBy` on that parameter to split it into separate views.
+
+### <Icon name="angle-right" /> How do I exclude URLs from UI Coverage?
+
+Add a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule with `include: false` for a URL pattern. Excluding a URL removes its snapshots from the report and stops links pointing to it from counting against your coverage score. The [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) guide walks through common cases.
+
+### <Icon name="angle-right" /> Why is a page missing from my report?
+
+Views are created from URLs your tests actually visit, so a page that no test navigates to has no view. Check [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) in the report — pages that are linked to but never visited appear there. Also confirm that a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule isn't excluding the page unintentionally.
+
+## Element grouping and identification
+
+### <Icon name="angle-right" /> What happens if two elementGroups rules match the same element?
+
+The first matching rule in your [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration wins, so list specific rules before broad catch-all rules. A rule that appears after another rule matching the same elements never applies to them.
+
+### <Icon name="angle-right" /> Can I group or filter elements inside iframes or shadow DOM?
+
+Yes. The [`elementGroups`](/ui-coverage/configuration/elementgroups), [`elementFilters`](/ui-coverage/configuration/elementfilters), and [`elements`](/ui-coverage/configuration/elements) configuration options all accept a `documentScope` property that limits a rule to elements inside specific iframes or shadow DOM hosts. List one CSS selector per host, ordered from the outermost document to the innermost.
+
+### <Icon name="angle-right" /> Why isn't my element group showing up in the report?
+
+The most common causes are:
+
+- An earlier `elementGroups` rule matches the same elements, and the first matching rule wins.
+- The elements are excluded by [`elementFilters`](/ui-coverage/configuration/elementfilters), so they're never considered for grouping.
+- The elements declare a group in markup with the `data-cy-ui-group` attribute, which takes priority over configuration rules.
+- The selector matches a container rather than the interactive elements themselves.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+### <Icon name="angle-right" /> Why does one element appear as multiple elements in the report?
+
+This usually means the element's identifying attributes change between snapshots, for example auto-generated IDs or dynamic class names. Use [`attributeFilters`](/ui-coverage/configuration/attributefilters) to ignore the dynamic attributes, or [`elements`](/ui-coverage/configuration/elements) to define the element's identity explicitly. See [troubleshooting](/ui-coverage/troubleshooting) for more scenarios.
+
+## Configuration
+
+### <Icon name="angle-right" /> Where do I set UI Coverage configuration?
+
+In the **App Quality** tab of your project settings in Cypress Cloud. By default, only Admin users can edit configuration; your Cypress point-of-contact can change this on request. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration).
+
+### <Icon name="angle-right" /> Do I need to rerun my tests after changing configuration?
+
+No. You can regenerate any historical run from its **Properties** tab, and the report is reprocessed with the current configuration. This lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
+
+### <Icon name="angle-right" /> Can I use different configuration for different runs?
+
+Yes. The [`profiles`](/ui-coverage/configuration/profiles) property applies configuration overrides based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt), so a smoke-test run and a full regression run can each use their own settings.
+
+## See also
+
+- [Configuration overview](/ui-coverage/configuration/overview) lists every configuration option and what each one is for.
+- [Troubleshooting UI Coverage](/ui-coverage/troubleshooting) covers common report problems and their solutions.

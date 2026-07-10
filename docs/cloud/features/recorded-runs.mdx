@@ -11,7 +11,7 @@ sidebar_position: 30
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How recorded runs help your team catch failures and flake before they reach production
 - How to view and analyze recorded test runs in Cypress Cloud
@@ -86,6 +86,13 @@ status.
   src="/img/cloud/runs/run-details-header.png"
   alt="Run details header"
 />
+
+:::tip
+The run header surfaces the browsers, operating systems, and Cypress version
+used, but not every environment detail (for example, the Node.js version). To
+make those details visible and filterable in Cypress Cloud, add them as
+[run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt).
+:::
 
 ### Run in progress panel
 

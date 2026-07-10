@@ -11,7 +11,7 @@ sidebar_position: 20
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - Why you should test your component's styles
 - How to render components correctly with their CSS styles
@@ -274,6 +274,41 @@ import './main.css'
 You're usually providing public paths to these stylesheets. You can import the
 same paths within your `cypress/support/component-index.html` file.
 
+### Next.js: styles aren't applied or mounting throws
+
+Next.js injects CSS at runtime using `style-loader`, which expects a specific
+marker element to exist in the page. If that element is missing, importing a
+global stylesheet (such as a compiled Tailwind file) can leave your component
+unstyled or cause mounting to fail outright.
+
+Cypress adds this element for you when you scaffold component testing with the
+Next.js framework, so make sure your `cypress/support/component-index.html` still
+contains it inside the `<head>`:
+
+```html title="cypress/support/component-index.html"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Components App</title>
+    <!-- Used by Next.js to inject CSS. -->
+    <div id="__next_css__DO_NOT_USE__"></div>
+  </head>
+  <body>
+    <div data-cy-root></div>
+  </body>
+</html>
+```
+
+With the element in place, import your global stylesheet as usual from
+`cypress/support/component.js`:
+
+```js title="cypress/support/component.js"
+import '../../src/index.css'
+```
+
 ### CSS Reset or Normalize isn't applied
 
 Are you importing your normalize file within
@@ -322,6 +357,40 @@ Or via an `@import` statement
   font-style: normal;
 }
 ```
+
+When fonts are loaded from local files like this, the files must be served by
+your component testing dev server so the browser can fetch them. Where you place
+the files and how you reference them depends on your bundler:
+
+- **Vite**: Put the font files in your project's
+  [`public` directory](https://vite.dev/guide/assets#the-public-directory)
+  (`public/` by default) and reference them with root-relative paths, for
+  example `url('/fonts/fira/woff2/FiraSans-Regular.woff2')`. Cypress sets Vite's
+  `base` to match its
+  [`devServerPublicPathRoute`](/app/component-testing/component-framework-configuration#devServerPublicPathRoute),
+  and Vite rewrites these paths and serves the files accordingly.
+
+- **Webpack**: `webpack-dev-server` does not serve a static directory by
+  default. Either `import` the font from a module so the bundler emits it, or add
+  a [`static`](https://webpack.js.org/configuration/dev-server/#devserverstatic)
+  entry to the `devServer` section of your webpack config so the files are
+  served:
+
+  ```js
+  // webpack.config.js
+  const path = require('path')
+
+  module.exports = {
+    devServer: {
+      static: {
+        directory: path.join(__dirname, 'public'),
+      },
+    },
+  }
+  ```
+
+If your fonts are not loading, open the browser's network tab and confirm the
+request for the font file resolves rather than returning a 404.
 
 ### Icon Fonts: None of my icons are rendering
 

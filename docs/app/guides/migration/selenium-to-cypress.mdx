@@ -1,6 +1,6 @@
 ---
 title: 'Migrate from Selenium to Cypress: complete migration guide'
-description: Learn the advantages and limitations of Selenium and Cypress, strategies for migration, and how to integrate Cypress with your CI/CD pipeline.
+description: 'Step-by-step guide to migrate Selenium WebDriver tests to Cypress. Map locators, waits, WebDriver lifecycle, assertions, alerts, frames, network stubbing, Page Objects, Grid, and CI side by side.'
 sidebar_label: Migrating from Selenium
 ---
 
@@ -8,380 +8,1600 @@ sidebar_label: Migrating from Selenium
 
 # Migrating from Selenium to Cypress
 
-:::info
+<CopyPrompt
+  title="Migrate from Selenium to Cypress with your AI assistant"
+  prompt={`Migrate this project's tests from Selenium WebDriver to Cypress. First read https://docs.cypress.io/llm/markdown/app/guides/migration/selenium-to-cypress.md for the syntax mappings and patterns, then work through these steps:\n\n1. Take inventory. Detect my package manager and the language and test runner my Selenium suite uses (Java + JUnit/TestNG, Python + pytest/unittest, C# + NUnit/xUnit, JavaScript + Mocha, or Ruby). Find my WebDriver setup/teardown, and summarize the patterns I use: locator strategies (By.id/By.cssSelector/By.xpath), explicit and implicit waits, Page Objects, Selenium Grid / RemoteWebDriver config, and CI configuration.\n\n2. Confirm the target language. Cypress runs tests in JavaScript or TypeScript only, so tests from Java, Python, C#, or Ruby must be rewritten in JS/TS, not transpiled. Confirm TypeScript vs JavaScript with me, and flag any business logic living in the test framework (helpers, data builders, utilities) that must be reimplemented in JS/TS.\n\n3. Agree on a selector strategy. Selenium XPath locators have no first-class Cypress equivalent and must be rewritten as CSS selectors, cy.contains() text queries, or (with @testing-library/cypress) role/label queries. If my suite is XPath-heavy or leans on brittle CSS, recommend adding data-cy/data-testid attributes to my app, or installing @testing-library/cypress for role/label ergonomics, rather than porting fragile selectors as-is.\n\n4. Install Cypress alongside Selenium. Configure them to coexist, and do not modify or delete my Selenium tests until the Cypress equivalents pass. If my app is not already running during tests, set up start-server-and-test so Cypress has a running app at baseUrl.\n\n5. Migrate one test/class at a time. Delete all WebDriver lifecycle code (driver creation, driver.quit(), Grid/RemoteWebDriver plumbing). Convert every explicit wait (WebDriverWait/ExpectedConditions), implicit wait, and Thread.sleep to Cypress retry-ability instead of porting them (never assign a cy.* return value to a variable). Map By locators to cy.get()/cy.contains(), translate framework assertions (assertEquals/assertTrue/Assert.That) to Cypress .should() assertions, and convert driver.switchTo().alert()/.frame()/.window() patterns to their Cypress equivalents. Port Page Objects and add cy.intercept() where tests currently poll the UI for backend state.\n\n6. Flag gaps. Call out anything with no direct Cypress equivalent (multi-tab flows that need @cypress/puppeteer, cross-origin iframes, native OS dialogs, visual snapshots) instead of guessing.\n\n7. Verify. Show me the proposed changes before applying them, then install and run eslint-plugin-cypress and my migrated Cypress tests to confirm they pass.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+This guide helps you translate Selenium WebDriver tests to Cypress. It
+covers the core execution-model differences, the WebDriver lifecycle you can
+delete, locator and assertion mappings, and patterns for waits, network
+stubbing, alerts, frames, authentication, and CI.
 
-- The advantages and limitations of Selenium and Cypress
-- Strategies and considerations for migration
-- How to migrate test cases to Cypress
-- How to integrate Cypress with your CI/CD pipeline
+The biggest conceptual shift is not syntax. Cypress runs
+_inside_ the browser alongside your application, rather than driving it
+remotely over the WebDriver protocol. That single difference is what lets
+Cypress [wait automatically](/app/core-concepts/retry-ability), stub network
+traffic, and time-travel through your tests, and it is why most of the
+`wait`, `driver`, and `switchTo` machinery in a Selenium suite simply
+disappears.
 
-:::
+Most migrations are incremental. You do not need to migrate all tests at
+once. Cypress and Selenium can coexist in the same repository during a
+transition.
 
-While both Selenium and Cypress are popular tools for web automation,
-each framework possesses distinct strengths and weaknesses. For instance,
-Cypress stands out as one of the easiest automation frameworks to begin with,
-while Selenium boasts the status of being one of the oldest and most widely used frameworks.
+Jump to the [cheat sheet](#Cheat-sheet) for a quick reference.
 
-Taking a closer look at Selenium WebDriver reveals its longevity and extensive library of
-documentation and troubleshooting guides. Supported by an active community, Selenium benefits
-from robust documentation across multiple languages including Java, JavaScript, Python, C#, and
-Ruby. Its widespread adoption is further evidenced by its integration into various low-code
-tools, underscoring its versatility in browser interaction.
+::::info
 
-A key differentiator of Cypress, not only from Selenium but also from other test automation frameworks,
-is its [unique approach](/app/get-started/why-cypress#Architecture) of running tests
-inside an interactive browser rather than against one. This approach [minimizes flakiness](/app/get-started/why-cypress#Flake-resistant)
-and grants users greater control over both the framework and the application under test. Cypress's ability to wait for page loading without explicit
-declaration allows for a pause in execution until application is fully ready. Additionally, Cypress simplifies test recording
-without requiring complex configurations or setups, facilitating easy troubleshooting and bug
-reporting with access to screenshots, videos, and time travel debugging.
+<WhatYoullLearn />
 
-Furthermore, the addition of [Component Testing](/app/component-testing/get-started) to Cypress has fostered
-[collaboration](https://www.cypress.io/blog/2023/01/26/what-cypress-component-testing-means-for-qa-teams) between testing and development teams,
-enabling them to work with the same tools and language. This alignment streamlines the testing process and promotes
-consistency and efficiency across teams.
+- How Cypress differs from Selenium: in-browser execution, retry-ability,
+  and no WebDriver lifecycle
+- Why Selenium tests must be rewritten in JavaScript or TypeScript
+- Installing and configuring Cypress, the command line, browser management,
+  and starting your app
+- Mapping test structure and replacing explicit and implicit waits with
+  retry-ability
+- Choosing a selector strategy to replace `By` locators and XPath
+- Locators, interactions, and assertions mapped side by side
+- Network stubbing, authentication, alerts, frames, tabs, files, screenshots,
+  and API testing
+- Page Objects, data-driven tests, and Cucumber
+- Replacing Selenium Grid with Cypress Cloud parallelization, Test Replay,
+  and CI integration
 
-## Top 5 reasons to migrate
+::::
 
-While migration is often perceived as a hassle, investing in Cypress is undoubtedly worthwhile.
-In fact, migrating to Cypress may not even pose a significant challenge.
+## Quick conversion example
 
-### 1. Reduction of Flakiness
+Here's a side-by-side comparison showing how a Selenium test translates to
+Cypress. The Selenium examples throughout this guide use the JavaScript
+bindings (`selenium-webdriver`) with Mocha, but the same patterns apply to the
+Java, Python, C#, and Ruby bindings.
 
-One of the primary benefits of Cypress is its ability to reduce flakiness in tests. Occasional
-test failures can undermine trust in the testing framework. Cypress addresses this concern by
-offering features such as automatic retries and implicit waiting on the application, effectively
-minimizing flakiness and enhancing test reliability.
+<Badge type="danger">Before: Selenium</Badge>
 
-### 2. Ease of Setup
+```js title="authorization.test.js"
+const { Builder, By, until } = require('selenium-webdriver')
+const assert = require('assert')
 
-Unlike traditional test automation frameworks that require cumbersome setup processes, Cypress
-streamlines the setup with just two Node.js commands: ['npm install'](/app/get-started/install-cypress)
-and ['npx cypress open'](/app/get-started/open-the-app#cypress-open).
-Within seconds, users can have their first test up and running. Since Cypress utilizes
-locally installed browsers, there's no need for complex configurations or additional installations.
+describe('Authorization', function () {
+  let driver
 
-### 3. Infinitely Expandable
-
-Recognizing the diverse needs of web applications, Cypress offers extensibility through various
-[plugins](/app/plugins/plugins-list). These plugins, many of which are contributed by the
-community, allow users to tailor their testing framework to specific project requirements, ensuring flexibility and scalability.
-
-### 4. Strong Community Support
-
-Cypress boasts a vibrant community that contributes plugins and prioritizes documentation.
-With extensive documentation, support initiatives like the [Ambassador program](https://www.cypress.io/ambassadors), and a [Discord
-community](https://discord.com/invite/cypress) of over 10,000 testers and developers, Cypress users benefit from a wealth of resources and
-assistance, making it a highly supported testing framework.
-
-### 5. Ease of Use
-
-Compared to Selenium, Cypress offers a more intuitive and user-friendly experience. Features like
-[Cypress Studio](/app/guides/cypress-studio) simplify test writing and
-debugging, allowing users to focus on creating effective tests without the need for constant navigation between the test server and browser. This
-streamlined approach enhances productivity and accelerates the testing process.
-
-Cypress [Test Replay](/cloud/features/test-replay), which provides
-the ability to time travel and interactively debug tests that ran in your CI/CD pipeline, is not a capability that Selenium provides.
-
-With Cypress, testing becomes not only more reliable and efficient but also more enjoyable for developers and QA professionals alike.
-
-## Evaluating Suitability for Migration
-
-In order for a migration to proceed smoothly, it's important to conduct a thorough analysis of the existing test cases
-and framework functionality. This analysis serves as a cornerstone for determining the priority of test case migration since
-not all test cases need to be migrated at once. Depending on the organization's needs, emphasis may be placed on high-priority cases rather
-than quick wins. Additionally, it is essential to evaluate whether any business or organization-specific logic embedded within the framework
-can be rebuilt or migrated to JavaScript or TypeScript.
-
-If the current test automation framework employs the [Page Object Model](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/),
-it may be advantageous to start with simpler tasks before tackling more complex test cases. Beginning with low-hanging fruit allows for the migration
-of selectors and basic interactions, providing you with a gradual introduction to the framework.
-
-It's important to note that if the Selenium framework relies on XPath, migration will necessitate changing those selectors.
-While the 'cypress-xpath' plugin remains functional, it is deprecated and may not be the optimal solution in the long term.
-
-## Getting started with Cypress
-
-Installing and configuring Cypress is very easy and we have provided step-by-step guides to help you get started.
-
-- First [install Cypress](/app/get-started/install-cypress).
-- Then [open the Cypress app](/app/get-started/open-the-app).
-
-Check out our in-depth [E2E getting started guide](/app/end-to-end-testing/writing-your-first-end-to-end-test).
-
-And now you're all set to start the migration.
-
-## Strategy and Considerations
-
-:::info
-If the current automation framework supports Cucumber, jump to the section [Migrating test cases with Cucumber](#Migrating-test-cases-with-Cucumber).
-:::
-
-Before starting to write any code, take the time to assess the architecture of your framework. A well-structured
-framework will be a great deal easier to maintain and expand in the future.
-
-Some questions to discuss:
-
-- Will we use Page-objects?
-- Will we mock API calls?
-- How will we divide the tests?
-
-For example: While the utilization of the Page Object Model (POM) has been widely discussed and embraced as a best
-practice, there remains divergence in opinion regarding its implementation. Some advocate for a minimalist approach,
-wherein the POM solely comprises page selectors, while others advocate for a more comprehensive approach that includes
-both selectors and all possible page actions. It's crucial to engage in team discussions to align on POM structure,
-thereby avoiding surprises during the initial pull request.
-
-Another critical consideration is whether the team intends to leverage
-[`cy.intercept()`](/api/commands/intercept) to stub API calls.
-While this approach reduces the need for end-to-end tests, it significantly increases the number of smaller tests.
-For some teams, the heightened maintenance overhead may outweigh the benefits. However, stubbing API requests can diminish
-backend dependencies and enhance framework stability.
-
-In larger applications, locating specific tests within the framework can prove challenging. Therefore, establishing
-guidelines for [test organization](/app/core-concepts/writing-and-organizing-tests) is essential for creating a maintainable framework. Some teams prefer organizing tests
-based on application functionality, while others opt for organization by webpage. While performance and functionality
-remain unaffected, clear guidelines on test placement are imperative for framework maintainability.
-
-These considerations serve as a roadmap toward crafting a well-structured, easily maintainable, and enjoyable-to-use framework.
-Investing time in contemplation and extensive team discussions regarding these questions will yield significant dividends in the long run.
-
-## Migrating test cases
-
-With thorough preparation underway, it's time to initiate the actual migration process.
-
-One of the first things to migrate would be all page-objects or selectors, and depending on the frontend framework the
-developers are using, this could be a quick find and replace. For instance, in Vue.js the selector in Selenium would be
-`vl-checkbox` while in Cypress this would be `.vl-checkbox`. This will allow you to quickly have Cypress tests that can
-be used to test your application. This may also be an opportunity to review your tests to see how subject to change the
-selectors are today. Cypress documents many best practices about how to write robust tests and the section on
-[selecting elements](/app/core-concepts/best-practices#Selecting-Elements) is a great resource to review.
-
-One of the most significant changes between Selenium and Cypress is the actual testing syntax.
-While Selenium will run a class or different scenarios, Cypress will run every `it` in a `*.cy.js` file.
-So, the flow of a test should be transferred inside an `it`. To make matters more structured, it is possible to add
-several `it`s inside a `describe`. This allows you as the user to create a subdivision akin to test suites and test cases.
-
-```javascript
-describe('General information', () => {
-  beforeEach(() => {
-    cy.get('#loginButton').click()
+  beforeEach(async function () {
+    driver = await new Builder().forBrowser('chrome').build()
   })
 
-  it('Header is visible', () => {
-    cy.get('#header').should('be.visible')
+  afterEach(async function () {
+    await driver.quit()
   })
 
-  it('Footer is visible', () => {
-    cy.get('#footer').should('be.visible')
+  it('signs up', async function () {
+    await driver.get('http://localhost:3000/signup')
+
+    await driver.findElement(By.id('email')).sendKeys('user@email.com')
+    await driver.findElement(By.id('confirm-email')).sendKeys('user@email.com')
+    await driver.findElement(By.id('password')).sendKeys('testPassword1234')
+
+    await driver.findElement(By.css('button[type=submit]')).click()
+
+    await driver.wait(until.urlContains('/signup/success'), 10000)
+    const url = await driver.getCurrentUrl()
+    assert(url.includes('/signup/success'))
   })
 })
 ```
 
-<br />
-Another big change is that you no longer need any WebDriver definitions. Cypress
-takes care of opening and closing the browser without any explicit prompting,
-unlike Selenium. Any code that is used to define the WebDriver is now obsolete.
+<Badge type="success">After: Cypress</Badge>
 
-```java
- WebDriver driver = new ChromeDriver();
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
 
- WebDriverWait wait = new WebDriverWait(driver, 10);
+```js title="authorization.cy.js"
+describe('Authorization', () => {
+  it('signs up', () => {
+    // No driver setup or teardown. Cypress manages the browser
+    cy.visit('/signup')
 
- driver.quit();
-```
+    cy.get('[data-testid="email"]').type('user@email.com')
+    cy.get('[data-testid="confirm-email"]').type('user@email.com')
+    cy.get('[data-testid="password"]').type('testPassword1234')
 
-<br />
-Next would be to replace all the potential actions. The following code is fairly
-standard in Selenium frameworks.
+    cy.get('button[type=submit]').click()
 
-```python
-wait.until(EC.element_to_be_clickable((By.ID, "myButton"))).click()
-```
-
-<br />
-It is fairly easy to change this line of code to work inside a Cypress
-framework. It could even be done with a find and replace. In Cypress, the
-command would be the following:
-
-```Javascript
-cy.get('#myButton').click()
-```
-
-<br />
-Any wait until functionality that you have been using in Selenium is no longer
-required in Cypress. This functionality is [built
-in](/app/core-concepts/retry-ability).
-
-The next vital part to migrate would be the [assertions](/app/references/assertions). We can all agree assertions
-are moderately vital to a test automation framework. The next piece of code is a
-python Selenium assertion to validate if a button is visible. While it is possible
-to add third-party libraries, the built-in assertions of Cypress can tackle a wide
-range of situations.
-
-```python
-assert driver.find_element(By.ID, "myButton").is_displayed()
-```
-
-In Cypress, the same command would be:
-
-```javascript
-cy.get('#myButton').should('be.visible')
-```
-
-Considering the easy and clear syntax of Cypress, transferring all the selectors
-might take the longest. And while copying and pasting the selectors is definitely
-an option, rewriting the selectors might be required to conform to the best practices.
-
-### Multiple tabs
-
-When you have the need to interact with multiple browser tabs in Cypress, an official plugin has been provided to accomplish this
-goal. The [Puppeteer plugin](https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer) utilizes Puppeteer's browser API
-with one command within Cypress.
-
-### File upload
-
-Because Selenium cannot interact with the file upload dialog, it provides a way to upload files without opening the dialog. Cypress
-provides support uploading files through the built-in [`.selectFile()`](/api/commands/selectfile) command. There are
-[many options](https://www.cypress.io/blog/2022/01/19/uploading-files-with-selectfile) available to allow you to upload a single
-file, multiple files, and even drag and drop in Cypress.
-
-### GraphQL
-
-Given the increasing prominence of GraphQL, the community has responded accordingly. Validating the contents of GraphQL
-requests or responses is entirely feasible using Cypress's native intercept functionality. This plugin enhances both
-the stability and usability of the intercept feature: [Shopify/cypress-graphql](https://github.com/Shopify/cypress-graphql)
-
-## Migrating test cases with Cucumber
-
-If you're currently using a Cucumber framework, [this Cypress plugin](https://github.com/badeball/cypress-cucumber-preprocessor) can assist you
-in transitioning smoothly. Although it alters the conventional `describe` and `it` functionality, the adjustment process should
-be relatively straightforward.
-
-The main difference would be that instead of adding the whole flow into a single `it` section, you add the different steps into
-an `it` like section, where the `it` is replaced with the standard Gherkin syntax.
-
-The first snippet comprises plain Cypress code, whereas the second snippet demonstrates the Cucumber version.
-
-```javascript
-it("I should see a search bar", () => {
-  cy.visit("https://www.duckduckgo.com");
-  cy.get("input").should(
-    "have.attr",
-    "placeholder",
-    "Search the web without being tracked"
-  )
-```
-
-```javascript
-import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
-
-When('I visit duckduckgo.com', () => {
-  cy.visit('https://www.duckduckgo.com')
-})
-
-Then('I should see a search bar', () => {
-  cy.get('input').should(
-    'have.attr',
-    'placeholder',
-    'Search the web without being tracked'
-  )
+    // No explicit wait needed; the assertion retries until it passes
+    cy.url().should('include', '/signup/success')
+  })
 })
 ```
 
-<br />
-As evident, the actual code or logic remains unchanged. The difference lies in
-the structure of the spec file and the framework's architecture.
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
-## Integration with CI/CD Pipeline
+```ts title="authorization.cy.ts"
+describe('Authorization', () => {
+  it('signs up', () => {
+    // No driver setup or teardown. Cypress manages the browser
+    cy.visit('/signup')
 
-### Integration with the current Pipeline
+    cy.get('[data-testid="email"]').type('user@email.com')
+    cy.get('[data-testid="confirm-email"]').type('user@email.com')
+    cy.get('[data-testid="password"]').type('testPassword1234')
 
-Cypress can be integrated into any pipeline technology using its headless runner. This headless runner leverages
-the Electron browser, ensuring minimal adaptation of the current CI/CD. Given the widespread usage of Docker in
-most pipelines today, the Cypress pipeline is no exception. Integration becomes effortless by employing a Node.js
-docker image or one provided by Cypress via Docker Hub. These Docker images, not only furnished by Cypress,
-include various versions of Chrome, Firefox, and Edge.
+    cy.get('button[type=submit]').click()
 
-Executing the following command initiates a headless run against the Electron browser. Upon completion, a succinct
-table is generated, detailing the number of tests for each 'cy.js' file, in addition to the failed, skipped and passed
-tests with the run time of each specific 'cy.js' file. At the bottom of the table, a comprehensive summary displays the
-total number of tests run, the duration of the run, and the counts of failed, passed, and skipped tests.
+    // No explicit wait needed; the assertion retries until it passes
+    cy.url().should('include', '/signup/success')
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
+Notice what disappeared: the `Builder` and `driver` setup, the
+`beforeEach`/`afterEach` lifecycle, the `driver.quit()`, the `await` on every
+call, and the explicit `driver.wait(until...)`. Cypress opens and closes the
+browser for you and retries commands and assertions automatically.
+
+## Key differences at a glance
+
+| Concern             | Selenium                                                                 | Cypress                                                                      |
+| ------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Language            | Java, Python, C#, JavaScript, Ruby                                       | JavaScript / TypeScript                                                      |
+| Where tests run     | Out of process, driving the browser over the WebDriver protocol          | Inside the browser, in the same run loop as your app                         |
+| Browser lifecycle   | You create and quit the `driver`                                         | Managed by Cypress                                                           |
+| Drivers             | ChromeDriver/GeckoDriver etc. (via Selenium Manager or WebDriverManager) | None                                                                         |
+| Waiting             | Implicit + explicit waits (`driver.wait()`, `until`)                     | Built-in [retry-ability](/app/core-concepts/retry-ability)                   |
+| Test runner         | JUnit / TestNG / pytest / NUnit / Mocha                                  | [Mocha](/app/core-concepts/writing-and-organizing-tests) (`describe`/`it`)   |
+| Assertions          | Provided by the test runner or a matcher library                         | Built-in [Chai](/app/references/assertions) `.should()` / `expect()`         |
+| Network control     | Not built in (requires a proxy like BrowserMob)                          | [`cy.intercept()`](/api/commands/intercept) built in                         |
+| Cross-machine scale | Selenium Grid                                                            | [Cypress Cloud](/cloud/get-started/introduction) parallelization             |
+| Debugging CI runs   | Logs, screenshots                                                        | [Test Replay](/cloud/features/test-replay), time-travel, screenshots, videos |
+
+## Confirm your target language
+
+Selenium is a multi-language framework; Cypress tests are written in
+**JavaScript or TypeScript** and run in Node. This is the most important
+planning decision in a Selenium migration:
+
+- **From JavaScript/TypeScript Selenium (WebDriverJS):** the language stays
+  the same. You are translating one API to another.
+- **From Java, Python, C#, or Ruby:** the tests must be **rewritten**, not
+  transpiled. Any helper code, data builders, or business logic that lives
+  in your test framework (not your application) has to be reimplemented in
+  JavaScript/TypeScript. Identify this shared code early; it is often the
+  most time-consuming part of the migration, not the tests themselves.
+
+TypeScript is recommended for teams coming from a statically typed language
+like Java or C#, since it preserves type safety. See
+[TypeScript support](/app/tooling/typescript-support).
+
+## Installing Cypress
+
+Add Cypress to your project (or to a new `e2e/` project alongside your
+existing Selenium suite) as a dev dependency.
+
+<CypressInstallCommands />
+
+Unlike Selenium, Cypress does not download or manage separate browser
+_drivers_ (ChromeDriver, GeckoDriver). It uses browsers already installed on
+your machine, and bundles Electron so you can run tests immediately after
+installation with no additional setup.
+
+Once installed, open the Cypress app to complete initial configuration:
+
+<CypressOpenCommands />
+
+The Cypress App walks you through choosing a testing type (end-to-end or
+component) and generates a starter `cypress.config.js` (or `.ts`) file plus a
+`cypress/` directory in your project root.
+
+If you are writing tests in TypeScript, add a `tsconfig.json` inside the
+`cypress/` folder so Cypress globals (`cy`, `Cypress`) type-check:
+
+```json title="cypress/tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts"]
+}
+```
+
+## Configuration migration
+
+Selenium has no single configuration file. Its "configuration" is spread
+across driver-setup code, `Options`/`DesiredCapabilities`, implicit-wait
+settings, and build-tool files (`pom.xml`, `build.gradle`, `pytest.ini`,
+`testng.xml`). Cypress consolidates the equivalent settings into one
+[`cypress.config.js`/`.ts`](/app/references/configuration) file.
+
+| Selenium concept                                                    | Cypress configuration                  |
+| ------------------------------------------------------------------- | -------------------------------------- |
+| Base/application URL (usually hard-coded or in a properties file)   | `e2e.baseUrl`                          |
+| `driver.manage().timeouts().implicitlyWait(...)`                    | `defaultCommandTimeout`                |
+| `driver.manage().window().setSize(...)`                             | `viewportWidth` / `viewportHeight`     |
+| Page-load timeout (`pageLoadTimeout`)                               | `pageLoadTimeout`                      |
+| Test file locations (`testng.xml`, test source folders)             | `e2e.specPattern` (a glob)             |
+| Screenshot/video output directories                                 | `screenshotsFolder` / `videosFolder`   |
+| Retry count (surefire/TestNG `retryAnalyzer`, pytest-rerunfailures) | `retries.runMode` / `retries.openMode` |
+| Global setup/teardown hooks                                         | `e2e.setupNodeEvents`                  |
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress.config.js"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  viewportWidth: 1280,
+  viewportHeight: 720,
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+    specPattern: 'cypress/e2e/**/*.cy.js',
+    defaultCommandTimeout: 10000,
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
+  },
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress.config.ts"
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  viewportWidth: 1280,
+  viewportHeight: 720,
+  e2e: {
+    baseUrl: 'http://localhost:3000',
+    specPattern: 'cypress/e2e/**/*.cy.ts',
+    defaultCommandTimeout: 10000,
+    retries: {
+      runMode: 2,
+      openMode: 0,
+    },
+  },
+})
+```
+
+</TabItem>
+</Tabs>
+
+With `baseUrl` set, `cy.visit('/signup')` resolves against it, the
+equivalent of concatenating a base URL onto every `driver.get(...)` call.
+
+The official [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
+catches Cypress anti-patterns that a linter can flag in-editor: hard-coded
+`cy.wait(<number>)` calls (the Cypress equivalent of a `driver.sleep()`),
+assigning command return values, and unsafe chaining. Install it early so
+mistranslated Selenium patterns surface as you migrate. See the
+[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
+
+## Command line migration
+
+Selenium tests run through a test runner. With the JavaScript bindings that is
+typically Mocha or Jest, launched with `npm test`. Cypress ships its own binary.
+
+| Task                     | Selenium (Mocha/Jest)          | Cypress                                   |
+| ------------------------ | ------------------------------ | ----------------------------------------- |
+| Run all tests (headless) | `npm test`                     | `cypress run`                             |
+| Open interactive mode    | (none)                         | `cypress open`                            |
+| Run a single spec        | `mocha --grep` / runner filter | `cypress run --spec "path/to/file.cy.ts"` |
+| Choose a browser         | `forBrowser('chrome')` in code | `cypress run --browser chrome`            |
+| Run headed               | default (headless via options) | `cypress run --headed`                    |
+
+Executing `cypress run` initiates a headless run (by default against the
+bundled Electron browser). Upon completion, a table details the tests per
+spec file, the failed/skipped/passed counts, and run times, with a summary
+of the whole run.
 
 <CypressRunCommands />
 
-This would completely replace the Selenium step in your current CI/CD workflow.
+See [Command Line](/app/references/command-line) for the full flag reference.
 
-Learn more about [running Cypress tests in Continuous Integration](/app/continuous-integration/overview).
+### Passing environment variables and secrets
 
-### Cypress Cloud
+Selenium suites typically read credentials from `process.env` or a `.env`
+file. In Cypress, use
+[`cy.env()`](/api/commands/env) for sensitive values (credentials, tokens)
+and [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive config
+(feature flags, public URLs).
 
-The notable distinction in integration between Cypress and Selenium emerges when discussing
-[Cypress Cloud](/cloud/get-started/introduction), a service built on the rich result data coming from tests run in the
-open source application.
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
 
-Cypress.io offers its tailored pipeline structure, meticulously designed to execute tests efficiently.
-Accompanying this structure are several advanced features that warrant attention during
-migration to Cypress. While it's feasible to harness all the advantages of migration without Cypress Cloud,
-it would be remiss not to explore the potential benefits afforded by its features.
+```js title="cypress.config.js"
+module.exports = defineConfig({
+  env: {
+    USER_NAME: process.env.USER_NAME,
+    PASSWORD: process.env.PASSWORD,
+  },
+})
+```
 
-Some of the core features include:
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
-#### [Test Replay](/cloud/features/test-replay)
+```ts title="cypress.config.ts"
+export default defineConfig({
+  env: {
+    USER_NAME: process.env.USER_NAME,
+    PASSWORD: process.env.PASSWORD,
+  },
+})
+```
 
-One of the major difficulties in troubleshooting headless testing is having to reproduce the failure in your local
-environment in order to debug failures in CI. Cypress Cloud resolves this issue with Test Replay. Test Replay's
-interactive interface allows for faster debugging, enabling your team to time travel through your application under
-test to rapidly identify and resolve issues that surfaced in CI. This eliminates the need to reproduce CI issues
-locally so you can swiftly get back to shipping valuable software for your users. Gain visibility into the events
-leading up to crashes or failures by inspecting the DOM, network events, and console logs of your application under
-test exactly as they ran in CI.
+</TabItem>
+</Tabs>
 
-#### [Parallelization](/cloud/features/smart-orchestration/parallelization)
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
 
-To enhance testing efficiency further, Cypress Cloud offers a built-in solution for test parallelization. With a simple
-toggle, tests can run in parallel, eliminating the need for complex configurations to run tests concurrently.
+```js title="login.cy.js"
+it('logs in', () => {
+  cy.env(['USER_NAME', 'PASSWORD']).then(({ USER_NAME, PASSWORD }) => {
+    cy.visit('/login')
+    cy.get('[data-testid="username"]').type(USER_NAME)
+    cy.get('[data-testid="password"]').type(PASSWORD, { log: false })
+  })
+})
+```
 
-Cypress will assign each spec file to an available machine based on our
-[balance strategy](/cloud/features/smart-orchestration/load-balancing#Balance-strategy).
-Due to this balance strategy, the run order of the spec files is not guaranteed when parallelized.
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
-##### [Analytics and Reporting](/cloud/features/analytics/overview)
+```ts title="login.cy.ts"
+it('logs in', () => {
+  cy.env(['USER_NAME', 'PASSWORD']).then(({ USER_NAME, PASSWORD }) => {
+    cy.visit('/login')
+    cy.get('[data-testid="username"]').type(USER_NAME)
+    cy.get('[data-testid="password"]').type(PASSWORD, { log: false })
+  })
+})
+```
 
-The last step in pipeline integration is reporting the results. While most pipelines can report if there is a failure,
-precise numbers require a bit more configuration. One of the most popular plugins to show reports is
-mochawesome ([cypress-mochawesome-reporter](https://www.npmjs.com/package/cypress-mochawesome-reporter)). This
-plugin can easily be integrated into most pipeline infrastructure, with the correct CI/CD plugin.
+</TabItem>
+</Tabs>
 
-But even without the mochawesome package, any pipeline infrastructure can register the error code (error code 1) if
-there are test failures. And as soon as this error code is found, webhooks can trigger a notification in your medium of choice.
+## Browser and driver management
 
-Cypress Cloud can also serve as an automated pipeline integration, furnishing [built-in analytics and reporting capabilities](/cloud/features/analytics/overview). This feature grants you visibility into metrics such as run duration,
-flaky tests, and the slowest-performing tests, enabling comprehensive monitoring of test health at scale. Moreover, this
-negates the necessity of adding another package or dependency, as Cypress Cloud seamlessly interacts with the tests.
+This is one of the largest simplifications in the migration. Selenium needs a
+browser-specific _driver_ binary (ChromeDriver, GeckoDriver, EdgeDriver),
+resolved by Selenium Manager, WebDriverManager, or a manual download, and
+often paired with `Options`/`DesiredCapabilities`.
+
+**All of that goes away.** Cypress uses the browsers installed on the machine
+and needs no driver binaries. To see which browsers Cypress detects:
+
+<PackageManagerTabs run="cypress info" />
+
+Delete any driver-download dependency (`webdrivermanager`,
+`selenium-manager` config, `chromedriver` npm package) and the code that
+configured it.
+
+### Browser launch options
+
+Selenium `ChromeOptions`/`FirefoxOptions` (arguments, preferences,
+extensions) map to the [`before:browser:launch`](/api/node-events/browser-launch-api)
+event configured in `setupNodeEvents`.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const chrome = require('selenium-webdriver/chrome')
+
+const options = new chrome.Options()
+options.addArguments('--disable-gpu')
+
+const driver = await new Builder()
+  .forBrowser('chrome')
+  .setChromeOptions(options)
+  .build()
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress.config.js"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          launchOptions.args.push('--disable-gpu')
+        }
+        return launchOptions
+      })
+    },
+  },
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress.config.ts"
+export default defineConfig({
+  e2e: {
+    setupNodeEvents(on) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          launchOptions.args.push('--disable-gpu')
+        }
+        return launchOptions
+      })
+    },
+  },
+})
+```
+
+</TabItem>
+</Tabs>
+
+### Reproducible CI browser versions
+
+Because Cypress uses system browsers, Cypress publishes official Docker
+images with specific browser versions pre-installed, replacing the
+driver-vs-browser version-matching that Selenium CI requires.
+
+See [cypress-docker-images](https://github.com/cypress-io/cypress-docker-images)
+for all tags, and [Launching Browsers](/app/references/launching-browsers)
+for local browser selection.
+
+## Starting your application under test
+
+Selenium suites usually assume the application is already running (started by
+CI or a developer). Cypress makes the same assumption: it does not start your
+app, it visits the `baseUrl` you configured.
+
+If you need to boot the app as part of the test command, use
+[`start-server-and-test`](https://github.com/bahmutov/start-server-and-test),
+which starts your server, waits for the URL to respond, runs Cypress, then
+shuts the server down.
+
+```json title="package.json"
+{
+  "scripts": {
+    "cy:run": "start-server-and-test start http://localhost:3000 'cypress run'"
+  }
+}
+```
+
+## Test structure and runner migration
+
+Selenium relies on an external test runner for structure. Cypress uses
+[Mocha's](/app/core-concepts/writing-and-organizing-tests) BDD interface,
+which provides `describe()` and `it()` globally, so there is nothing to import.
+
+| Selenium (JUnit 5 / TestNG / pytest) | Cypress                     |
+| ------------------------------------ | --------------------------- |
+| Test class                           | `describe('...', () => {})` |
+| `@Test` method / `def test_...`      | `it('...', () => {})`       |
+| `@BeforeEach` / `setup()`            | `beforeEach(() => {})`      |
+| `@AfterEach` / `teardown()`          | `afterEach(() => {})`       |
+| `@BeforeAll` / `setup_class`         | `before(() => {})`          |
+| `@AfterAll` / `teardown_class`       | `after(() => {})`           |
+| `@Disabled` / `@pytest.mark.skip`    | `it.skip('...', () => {})`  |
+| Run one test in isolation            | `it.only('...', () => {})`  |
+
+A Selenium test class maps naturally to a `describe` block, and each `@Test`
+method becomes an `it`. Where Selenium relies on `@BeforeEach` to create a
+fresh `driver`, Cypress starts each test with clean browser state
+automatically, so `beforeEach` is used for app-level setup (visiting a page,
+seeding data, logging in) rather than browser setup.
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="general-information.cy.js"
+describe('General information', () => {
+  beforeEach(() => {
+    cy.visit('/dashboard')
+  })
+
+  it('shows the header', () => {
+    cy.get('[data-testid="header"]').should('be.visible')
+  })
+
+  it('shows the footer', () => {
+    cy.get('[data-testid="footer"]').should('be.visible')
+  })
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="general-information.cy.ts"
+describe('General information', () => {
+  beforeEach(() => {
+    cy.visit('/dashboard')
+  })
+
+  it('shows the header', () => {
+    cy.get('[data-testid="header"]').should('be.visible')
+  })
+
+  it('shows the footer', () => {
+    cy.get('[data-testid="footer"]').should('be.visible')
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
+## Deleting the WebDriver lifecycle
+
+Every Selenium test creates and disposes of a `driver`. In Cypress this code
+is **obsolete**. Remove it entirely rather than translating it.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const driver = await new Builder().forBrowser('chrome').build()
+// ... test body, with driver.wait(...) for explicit waits ...
+await driver.quit()
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+// Nothing. Cypress creates and disposes of the browser for you.
+// Explicit waits become retry-ability (see below).
+```
+
+`RemoteWebDriver` and Selenium Grid `Capabilities` plumbing (for running
+against a hub) is likewise removed. Cypress scales across machines through
+[Cypress Cloud](#Replacing-Selenium-Grid), not a Grid you operate.
+
+## Execution model, waits, and retry-ability
+
+Selenium waits are the single biggest source of flakiness and boilerplate,
+and they are almost entirely unnecessary in Cypress.
+
+- **Implicit waits** (`setTimeouts({ implicit })`) → replaced by
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts), which
+  applies to every command.
+- **Explicit waits** (`driver.wait()` + `until`) → replaced by
+  automatic [retry-ability](/app/core-concepts/retry-ability): `cy.get()`
+  retries until the element exists, and `.should()` retries until the
+  assertion passes.
+- **`driver.sleep()`** → **delete it.** Do not translate a sleep
+  into `cy.wait(<number>)`. Assert on the condition you were waiting for
+  instead.
+
+| Selenium                                              | Cypress                                  |
+| ----------------------------------------------------- | ---------------------------------------- |
+| `driver.wait(until.elementIsVisible(el))`             | `cy.get(sel).should('be.visible')`       |
+| `driver.wait(until.elementIsEnabled(el))`             | `cy.get(sel).click()`                    |
+| `driver.wait(until.elementLocated(by))`               | `cy.get(sel)` (retries until present)    |
+| `driver.wait(until.elementTextContains(el, 'Saved'))` | `cy.get(sel).should('contain', 'Saved')` |
+| `driver.wait(until.urlContains('/home'))`             | `cy.url().should('include', '/home')`    |
+| `driver.sleep(3000)`                                  | remove; assert on the resulting state    |
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const button = driver.findElement(By.id('myButton'))
+await driver.wait(until.elementIsEnabled(button), 10000)
+await button.click()
+
+const toast = driver.findElement(By.css('.toast'))
+await driver.wait(until.elementIsVisible(toast), 10000)
+assert.strictEqual(await toast.getText(), 'Saved!')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#myButton').click()
+cy.get('[data-testid="toast"]').should('have.text', 'Saved!')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.get('#myButton').click()
+cy.get('[data-testid="toast"]').should('have.text', 'Saved!')
+```
+
+</TabItem>
+</Tabs>
+
+When you genuinely need to wait for a specific network call, alias it with
+`cy.intercept()` and `cy.wait('@alias')`, a deterministic wait on the
+request rather than an arbitrary timeout. See [Network stubbing](#Network-spying-and-stubbing).
+
+## Choosing a selector strategy
+
+Selenium locates elements with `By` strategies: `By.id`, `By.name`,
+`By.className`, `By.css`, `By.linkText`, and `By.xpath`. Decide how
+these map to Cypress before translating tests, because the choice affects
+nearly every line.
+
+| Selenium `By`                       | Cypress                                            |
+| ----------------------------------- | -------------------------------------------------- |
+| `By.id('email')`                    | `cy.get('#email')`                                 |
+| `By.name('email')`                  | `cy.get('[name="email"]')`                         |
+| `By.className('btn')`               | `cy.get('.btn')`                                   |
+| `By.css('...')`                     | `cy.get('...')`                                    |
+| `By.linkText('Sign in')`            | `cy.contains('a', 'Sign in')`                      |
+| `By.partialLinkText('Sign')`        | `cy.contains('a', 'Sign')`                         |
+| `By.css('button')` (by tag)         | `cy.get('button')`                                 |
+| `By.xpath("//button[text()='OK']")` | `cy.contains('button', 'OK')` (rewrite, see below) |
+
+**XPath needs special attention.** Cypress has no first-class XPath support.
+Most XPath locators fall into one of two buckets:
+
+- **Text-based XPath** (`//button[text()='Submit']`, `//a[contains(., 'Next')]`)
+  → rewrite with [`cy.contains()`](/api/commands/contains), which is usually
+  clearer.
+- **Structural XPath** (`//div[@class='card']//span`) → rewrite as a CSS
+  selector (`.card span`), optionally using
+  [`.find()`](/api/commands/find), [`.within()`](/api/commands/within), or
+  [`.parent()`](/api/commands/parent)/[`.children()`](/api/commands/children)
+  for traversal.
+
+Treat an XPath-heavy suite as an opportunity to move to more robust selectors.
+
+For the most resilient long-term strategy, follow Cypress
+[Best Practices](/app/core-concepts/best-practices#Selecting-Elements) and add
+dedicated `data-cy` (or `data-testid`) attributes to your application, then
+select with `cy.get('[data-cy="submit"]')`. If you want role/label
+ergonomics without editing markup, install
+[`@testing-library/cypress`](https://github.com/testing-library/cypress-testing-library)
+and use `cy.findByRole('button', { name: 'Submit' })`.
+
+The examples in this guide use `data-testid` for brevity.
+
+### Finding multiple elements
+
+`driver.findElements(...)` returns a collection you iterate. `cy.get()`
+already yields all matching elements; use
+[`.each()`](/api/commands/each), [`.eq()`](/api/commands/eq),
+[`.first()`](/api/commands/first), and [`.last()`](/api/commands/last) to work
+with them.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const rows = await driver.findElements(By.css('table tr'))
+assert.strictEqual(rows.length, 5)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('table tr').should('have.length', 5)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.get('table tr').should('have.length', 5)
+```
+
+</TabItem>
+</Tabs>
+
+## Interactions
+
+### Click, type, and clear
+
+Selenium's `sendKeys` appends text; to replace a value you must `clear()`
+first. `.type()` behaves the same way, so clear before typing when a field
+may already contain text.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+await driver.findElement(By.id('username')).sendKeys('jane')
+await driver.findElement(By.id('password')).sendKeys('secret')
+await driver.findElement(By.css('button[type=submit]')).click()
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#username').clear()
+cy.get('#username').type('jane')
+cy.get('#password').clear()
+cy.get('#password').type('secret')
+cy.get('button[type=submit]').click()
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.get('#username').clear()
+cy.get('#username').type('jane')
+cy.get('#password').clear()
+cy.get('#password').type('secret')
+cy.get('button[type=submit]').click()
+```
+
+</TabItem>
+</Tabs>
+
+### Dropdowns, checkboxes, and radios
+
+Selenium wraps `<select>` elements in a `Select` helper. Cypress has a
+dedicated [`.select()`](/api/commands/select) command, plus
+[`.check()`](/api/commands/check) and [`.uncheck()`](/api/commands/uncheck).
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const { Select } = require('selenium-webdriver/lib/select')
+
+await new Select(driver.findElement(By.id('country'))).selectByVisibleText(
+  'United States'
+)
+await driver.findElement(By.id('subscribe')).click() // checkbox
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#country').select('United States')
+cy.get('#subscribe').check()
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.get('#country').select('United States')
+cy.get('#subscribe').check()
+```
+
+</TabItem>
+</Tabs>
+
+### Hover, right-click, double-click, and keyboard
+
+Selenium performs these through the `Actions` builder. Cypress has direct
+commands for most, and uses [`.trigger()`](/api/commands/trigger) for hover.
+
+| Selenium `Actions`                                        | Cypress                                                                                              |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `driver.actions().move({ origin: el }).perform()` (hover) | `cy.get(sel).trigger('mouseover')`                                                                   |
+| `driver.actions().contextClick(el).perform()`             | `cy.get(sel).rightclick()`                                                                           |
+| `driver.actions().doubleClick(el).perform()`              | `cy.get(sel).dblclick()`                                                                             |
+| `el.sendKeys(Key.ENTER)`                                  | `cy.get(sel).type('{enter}')`                                                                        |
+| `driver.actions().keyDown(Key.SHIFT).click(el)...`        | `cy.get(sel).click({ shiftKey: true })`                                                              |
+| `driver.actions().sendKeys(Key.TAB).perform()`            | `cy.press(Cypress.Keyboard.Keys.TAB)`                                                                |
+| `driver.actions().dragAndDrop(source, target).perform()`  | `.trigger('mousedown')` → `.trigger('mousemove')` → `.trigger('mouseup')`, or a drag-and-drop plugin |
+
+See [`.type()`](/api/commands/type) for the full list of special-character
+sequences (`{enter}`, `{esc}`, `{selectall}`, etc.).
+
+### Scrolling and viewport
+
+Selenium often scrolls via `driver.executeScript()`. Cypress automatically
+scrolls elements into view before acting on them, and offers
+[`.scrollIntoView()`](/api/commands/scrollintoview) and
+[`cy.scrollTo()`](/api/commands/scrollto) when you need explicit control.
+Resize the window with [`cy.viewport()`](/api/commands/viewport).
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+await driver.executeScript(
+  'arguments[0].scrollIntoView(true);',
+  driver.findElement(By.id('footer'))
+)
+await driver.manage().window().setRect({ width: 375, height: 812 })
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#footer').scrollIntoView()
+cy.viewport(375, 812)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.get('#footer').scrollIntoView()
+cy.viewport(375, 812)
+```
+
+</TabItem>
+</Tabs>
+
+## Assertions
+
+Selenium has no assertions of its own. With the JavaScript bindings you use
+Node's built-in `assert` module (or a library like Chai). Cypress
+bundles [Chai](/app/references/assertions), exposed through the retrying
+[`.should()`](/api/commands/should) command and the one-off `expect()`.
+
+Because `.should()` retries, you rarely need an explicit wait before an
+assertion; the wait and the assertion are the same call.
+
+| Selenium (Node `assert`)                                  | Cypress                                         |
+| --------------------------------------------------------- | ----------------------------------------------- |
+| `assert(await el.isDisplayed())`                          | `cy.get(sel).should('be.visible')`              |
+| `assert(!(await el.isDisplayed()))`                       | `cy.get(sel).should('not.be.visible')`          |
+| `assert.strictEqual(await el.getText(), 'Saved!')`        | `cy.get(sel).should('have.text', 'Saved!')`     |
+| `assert((await el.getText()).includes('Saved'))`          | `cy.get(sel).should('contain', 'Saved')`        |
+| `assert.strictEqual(await el.getAttribute('value'), 'v')` | `cy.get(sel).should('have.value', 'v')`         |
+| `assert.strictEqual(await el.getAttribute('href'), '/x')` | `cy.get(sel).should('have.attr', 'href', '/x')` |
+| `assert(await el.isEnabled())`                            | `cy.get(sel).should('be.enabled')`              |
+| `assert(!(await el.isEnabled()))`                         | `cy.get(sel).should('be.disabled')`             |
+| `assert(await el.isSelected())`                           | `cy.get(sel).should('be.checked')`              |
+| `assert.strictEqual(els.length, 5)`                       | `cy.get(sel).should('have.length', 5)`          |
+| `assert((await driver.getCurrentUrl()).includes('/x'))`   | `cy.url().should('include', '/x')`              |
+| `assert.strictEqual(await driver.getTitle(), 'Title')`    | `cy.title().should('eq', 'Title')`              |
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const toast = driver.findElement(By.css('.toast'))
+assert(await toast.isDisplayed())
+assert.strictEqual(await toast.getText(), 'Saved!')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('[data-testid="toast"]').should('be.visible').and('have.text', 'Saved!')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.get('[data-testid="toast"]').should('be.visible').and('have.text', 'Saved!')
+```
+
+</TabItem>
+</Tabs>
+
+## Network spying and stubbing
+
+Selenium has no built-in way to observe or stub network traffic, so teams
+reach for an external proxy (BrowserMob) or poll the UI until the backend
+catches up. Cypress has [`cy.intercept()`](/api/commands/intercept) built in, which
+removes an entire class of flaky, timing-based Selenium code.
+
+### Wait for a request deterministically
+
+Instead of an explicit wait hoping the response arrived, wait on the request
+itself.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+await driver.findElement(By.id('load-users')).click()
+// Hope the request finished within 10s
+await driver.wait(until.elementLocated(By.css('.user-row')), 10000)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.intercept('GET', '/api/users').as('users')
+cy.get('#load-users').click()
+cy.wait('@users').its('response.statusCode').should('eq', 200)
+cy.get('[data-testid="user-row"]').should('have.length.greaterThan', 0)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.intercept('GET', '/api/users').as('users')
+cy.get('#load-users').click()
+cy.wait('@users').its('response.statusCode').should('eq', 200)
+cy.get('[data-testid="user-row"]').should('have.length.greaterThan', 0)
+```
+
+</TabItem>
+</Tabs>
+
+### Stub a response
+
+Return canned data without hitting the backend, which is impossible in plain
+Selenium.
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.intercept('GET', '/api/projects', {
+  statusCode: 200,
+  body: [{ id: '1' }, { id: '2' }],
+}).as('projects')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.intercept('GET', '/api/projects', {
+  statusCode: 200,
+  body: [{ id: '1' }, { id: '2' }],
+}).as('projects')
+```
+
+</TabItem>
+</Tabs>
+
+See [Network Requests](/app/guides/network-requests) and
+[`cy.intercept()`](/api/commands/intercept).
+
+## Authentication
+
+Selenium suites usually re-run the full login UI in a `beforeEach`, or
+manually persist cookies. In Cypress, wrap login in
+[`cy.session()`](/api/commands/session), which caches cookies, `localStorage`,
+and `sessionStorage` and restores them across tests, so you log in once instead
+of on every test.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+beforeEach(async function () {
+  await driver.get('http://localhost:3000/login')
+  await driver.findElement(By.id('username')).sendKeys('jane')
+  await driver.findElement(By.id('password')).sendKeys('secret')
+  await driver.findElement(By.css('button[type=submit]')).click()
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/e2e.js"
+const login = () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+  cy.get('#password').type('secret')
+  cy.get('button[type=submit]').click()
+  cy.url().should('include', '/dashboard')
+}
+
+beforeEach(() => {
+  cy.session('jane', login)
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/e2e.ts"
+const login = () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+  cy.get('#password').type('secret')
+  cy.get('button[type=submit]').click()
+  cy.url().should('include', '/dashboard')
+}
+
+beforeEach(() => {
+  cy.session('jane', login)
+})
+```
+
+</TabItem>
+</Tabs>
+
+## Alerts, confirms, and prompts
+
+Selenium switches into a native dialog with `driver.switchTo().alert()`.
+Cypress runs inside the browser and handles JavaScript dialogs through
+events. By default Cypress **auto-accepts** `alert()` and `confirm()`.
+
+| Selenium                                            | Cypress                                                 |
+| --------------------------------------------------- | ------------------------------------------------------- |
+| `driver.switchTo().alert().accept()`                | auto-accepted; listen with `cy.on('window:alert', ...)` |
+| `driver.switchTo().alert().dismiss()` (confirm)     | `cy.on('window:confirm', () => false)`                  |
+| `driver.switchTo().alert().getText()`               | assert on the message inside the event handler          |
+| `driver.switchTo().alert().sendKeys(text)` (prompt) | stub `window.prompt` in `cy.visit`'s `onBeforeLoad`     |
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+await driver.findElement(By.id('delete')).click()
+const alert = await driver.switchTo().alert()
+assert.strictEqual(await alert.getText(), 'Are you sure?')
+await alert.accept()
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.on('window:confirm', (message) => {
+  expect(message).to.eq('Are you sure?')
+  // return nothing / true to accept, return false to dismiss
+})
+cy.get('#delete').click()
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.on('window:confirm', (message) => {
+  expect(message).to.eq('Are you sure?')
+  // return nothing / true to accept, return false to dismiss
+})
+cy.get('#delete').click()
+```
+
+</TabItem>
+</Tabs>
+
+For `prompt()`, stub the return value before the page loads:
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.visit('/', {
+  onBeforeLoad(win) {
+    cy.stub(win, 'prompt').returns('Ada Lovelace')
+  },
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.visit('/', {
+  onBeforeLoad(win) {
+    cy.stub(win, 'prompt').returns('Ada Lovelace')
+  },
+})
+```
+
+</TabItem>
+</Tabs>
+
+## Frames and iframes
+
+Selenium switches context with `driver.switchTo().frame(...)` and
+`switchTo().defaultContent()`. Cypress does not switch context; instead you
+get the iframe's body and scope commands to it with
+[`.within()`](/api/commands/within).
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+await driver.switchTo().frame(driver.findElement(By.id('payment-frame')))
+await driver.findElement(By.id('card-number')).sendKeys('4242424242424242')
+await driver.switchTo().defaultContent()
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('#payment-frame')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .within(() => {
+    cy.get('#card-number').type('4242424242424242')
+  })
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.get('#payment-frame')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .within(() => {
+    cy.get('#card-number').type('4242424242424242')
+  })
+```
+
+</TabItem>
+</Tabs>
+
+The `.should('not.be.empty')` step makes Cypress wait for the frame document
+to load. See
+[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
+
+## Multiple tabs and windows
+
+Selenium manages tabs with `driver.getAllWindowHandles()` and
+`driver.switchTo().window(handle)`. Cypress runs in a single browser tab by
+design. There are two common approaches:
+
+- **Prefer testing the behavior, not the tab.** If a link opens a new tab
+  via `target="_blank"`, assert it has the right `href` rather than following
+  it, or [`cy.request()`](/api/commands/request) the URL directly.
+- **When you must drive a second tab,** use the
+  [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer)
+  plugin, which gives Cypress access to the underlying browser via Puppeteer.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const original = await driver.getWindowHandle()
+await driver.findElement(By.linkText('Open report')).click()
+const handles = await driver.getAllWindowHandles()
+for (const handle of handles) {
+  if (handle !== original) await driver.switchTo().window(handle)
+}
+```
+
+<Badge type="success">After: Cypress (assert the href instead)</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.contains('a', 'Open report')
+  .should('have.attr', 'target', '_blank')
+  .and('have.attr', 'href', '/report')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.contains('a', 'Open report')
+  .should('have.attr', 'target', '_blank')
+  .and('have.attr', 'href', '/report')
+```
+
+</TabItem>
+</Tabs>
+
+## File uploads and downloads
+
+### Upload
+
+Selenium uploads by sending the file path to the `<input type="file">`.
+Cypress has a dedicated [`.selectFile()`](/api/commands/selectfile) command
+that also supports multiple files and drag-and-drop.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+await driver
+  .findElement(By.css('input[type=file]'))
+  .sendKeys('/path/to/avatar.png')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.get('input[type=file]').selectFile('cypress/fixtures/avatar.png')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.get('input[type=file]').selectFile('cypress/fixtures/avatar.png')
+```
+
+</TabItem>
+</Tabs>
+
+### Download
+
+Trigger the download, then assert the file landed in the configured downloads
+folder with [`cy.readFile()`](/api/commands/readfile).
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.contains('button', 'Export CSV').click()
+cy.readFile('cypress/downloads/export.csv')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.contains('button', 'Export CSV').click()
+cy.readFile('cypress/downloads/export.csv')
+```
+
+</TabItem>
+</Tabs>
+
+## Screenshots
+
+Selenium's `driver.takeScreenshot()` maps to
+[`cy.screenshot()`](/api/commands/screenshot), which can capture the full
+page or a single element. Cypress also captures a screenshot automatically on
+test failure during `cypress run`.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const fs = require('fs')
+
+const image = await driver.takeScreenshot()
+fs.writeFileSync('screenshot.png', image, 'base64')
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.screenshot('after-signup')
+cy.get('[data-testid="toast"]').screenshot('toast')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.screenshot('after-signup')
+cy.get('[data-testid="toast"]').screenshot('toast')
+```
+
+</TabItem>
+</Tabs>
+
+See [Screenshots and Videos](/app/guides/screenshots-and-videos).
+
+## API testing
+
+Selenium suites often add a separate HTTP client (`axios`, `node-fetch`) for
+API setup or assertions. Cypress has [`cy.request()`](/api/commands/request)
+built in for making real HTTP calls (no `cy.intercept` stubbing involved).
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+cy.request('/api/health').its('status').should('eq', 200)
+
+// Seed state via the API before driving the UI
+cy.request('POST', '/api/users', { name: 'Jane' }).its('body.id').as('userId')
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+cy.request('/api/health').its('status').should('eq', 200)
+
+// Seed state via the API before driving the UI
+cy.request('POST', '/api/users', { name: 'Jane' }).its('body.id').as('userId')
+```
+
+</TabItem>
+</Tabs>
+
+See [`cy.request()`](/api/commands/request).
+
+## Reusable code patterns
+
+### Page Object Model
+
+If your Selenium suite uses the
+[Page Object Model](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/),
+the pattern ports directly. The class stays; only the body changes from
+WebDriver calls to Cypress commands. Because Cypress commands are globally
+available on `cy`, page objects no longer need a `driver` passed into their
+constructor.
+
+<Badge type="danger">Before: Selenium</Badge>
+
+```js
+const { By } = require('selenium-webdriver')
+
+class LoginPage {
+  constructor(driver) {
+    this.driver = driver
+  }
+
+  async login(username, password) {
+    await this.driver.findElement(By.id('username')).sendKeys(username)
+    await this.driver.findElement(By.id('password')).sendKeys(password)
+    await this.driver.findElement(By.css('button[type=submit]')).click()
+  }
+}
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="loginPage.js"
+export class LoginPage {
+  login(username, password) {
+    cy.get('[data-testid="username"]').type(username)
+    cy.get('[data-testid="password"]').type(password)
+    cy.contains('button', 'Login').click()
+  }
+}
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="loginPage.ts"
+export class LoginPage {
+  login(username: string, password: string) {
+    cy.get('[data-testid="username"]').type(username)
+    cy.get('[data-testid="password"]').type(password)
+    cy.contains('button', 'Login').click()
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+As you migrate, consider whether frequently repeated flows (like login) are
+better expressed as
+[custom commands](/api/cypress-api/custom-commands) than page-object methods.
+
+### Data-driven tests
+
+Selenium data-driven tests typically loop over an array to generate cases (or
+use a runner feature such as Mocha's dynamic tests). In Cypress the pattern is
+the same: iterate a plain array with `.forEach()` and generate one `it` per
+entry.
+
+<Badge type="success">Cypress</Badge>
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+const people = [
+  { name: 'Maya', expected: 'Hello, Maya!' },
+  { name: 'Theo', expected: 'Hello, Theo!' },
+]
+
+people.forEach(({ name, expected }) => {
+  it(`greets ${name}`, () => {
+    cy.visit(`/greet?name=${name}`)
+    cy.get('h1').should('have.text', expected)
+  })
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+const people = [
+  { name: 'Maya', expected: 'Hello, Maya!' },
+  { name: 'Theo', expected: 'Hello, Theo!' },
+]
+
+people.forEach(({ name, expected }) => {
+  it(`greets ${name}`, () => {
+    cy.visit(`/greet?name=${name}`)
+    cy.get('h1').should('have.text', expected)
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
+## Migrating a Cucumber suite
+
+If you drive Selenium through Cucumber (`.feature` files with step
+definitions), the
+[`@badeball/cypress-cucumber-preprocessor`](https://github.com/badeball/cypress-cucumber-preprocessor)
+community plugin lets you keep your Gherkin and reuse most scenarios. Your `.feature` files
+stay largely as-is; only the step definitions change, with the WebDriver calls
+in each step becoming Cypress commands.
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js
+const { When, Then } = require('@badeball/cypress-cucumber-preprocessor')
+
+When('I visit the homepage', () => {
+  cy.visit('/')
+})
+
+Then('I should see a search bar', () => {
+  cy.get('input[type="search"]').should('be.visible')
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts
+import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
+
+When('I visit the homepage', () => {
+  cy.visit('/')
+})
+
+Then('I should see a search bar', () => {
+  cy.get('input[type="search"]').should('be.visible')
+})
+```
+
+</TabItem>
+</Tabs>
+
+The scenario logic is unchanged. The difference is the framework wiring and
+that the step bodies now use `cy` instead of a `driver`.
+
+## Replacing Selenium Grid
+
+Selenium Grid distributes tests across machines by running a hub and nodes
+that you provision, configure, and maintain. Cypress replaces this with
+[Cypress Cloud](/cloud/get-started/introduction) parallelization: your CI runs
+Cypress on several machines in parallel and Cypress Cloud coordinates how specs
+are split across them, so there is no hub to operate. Like Selenium Grid, this
+runs in CI, not on your local machine.
+
+<PackageManagerTabs run="cypress run --record --parallel" />
+
+Cypress Cloud assigns each spec file to an available machine using a
+[balance strategy](/cloud/features/smart-orchestration/load-balancing#Balance-strategy)
+based on historical run durations, so run time is minimized automatically and
+you never configure shards by hand.
+
+### Smart Orchestration
+
+Recording to Cypress Cloud unlocks
+[Smart Orchestration](/cloud/features/smart-orchestration/overview) beyond
+plain parallelization:
+
+- **[Load Balancing](/cloud/features/smart-orchestration/load-balancing)**:
+  distributes specs by previous run durations.
+- **[Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)**:
+  runs previously failed specs first for faster feedback.
+- **[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)**:
+  stops a run after a threshold of failures.
+
+### Debugging CI with Test Replay
+
+A major pain point with Grid runs is reproducing a CI failure locally.
+[Test Replay](/cloud/features/test-replay) records a full, interactive replay
+of every test run (DOM, network requests, and console logs exactly as they
+ran in CI) so you debug from the replay instead of re-running the suite.
+Test Replay is available on all Cypress Cloud plans at no additional cost.
+
+<DocsVideo
+  src="https://youtube.com/embed/vFLShoCM8pA"
+  title="Test Replay Product Demo"
+/>
+
+<PackageManagerTabs run="cypress run --record --key <record_key>" />
+
+## Integration with your CI/CD pipeline
+
+Learn more about
+[running Cypress tests in Continuous Integration](/app/continuous-integration/overview).
+
+## Cheat sheet
+
+Selenium calls below use the JavaScript bindings, with `await` omitted for
+brevity. The Java, Python, C#, and Ruby bindings map the same way.
+
+| Selenium                                                       | Cypress                                                                                       |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `new Builder().forBrowser('chrome').build()` / `driver.quit()` | _(removed; managed by Cypress)_                                                               |
+| `driver.get('/path')`                                          | `cy.visit('/path')`                                                                           |
+| `driver.navigate().to(url)`                                    | `cy.visit(url)`                                                                               |
+| `driver.navigate().back()`                                     | `cy.go('back')`                                                                               |
+| `driver.navigate().forward()`                                  | `cy.go('forward')`                                                                            |
+| `driver.navigate().refresh()`                                  | `cy.reload()`                                                                                 |
+| `driver.getCurrentUrl()`                                       | `cy.url()`                                                                                    |
+| `driver.getTitle()`                                            | `cy.title()`                                                                                  |
+| `driver.findElement(By.id('x'))`                               | `cy.get('#x')`                                                                                |
+| `driver.findElement(By.css('.x'))`                             | `cy.get('.x')`                                                                                |
+| `driver.findElement(By.linkText('Next'))`                      | `cy.contains('a', 'Next')`                                                                    |
+| `driver.findElement(By.xpath("//b[text()='X']"))`              | `cy.contains('b', 'X')`                                                                       |
+| `driver.findElements(By.css('.x'))`                            | `cy.get('.x')` (yields all)                                                                   |
+| `el.click()`                                                   | `cy.get(sel).click()`                                                                         |
+| `el.sendKeys('text')`                                          | `cy.get(sel).type('text')`                                                                    |
+| `el.clear()`                                                   | `cy.get(sel).clear()`                                                                         |
+| `el.getText()`                                                 | `cy.get(sel).invoke('text')`                                                                  |
+| `el.getAttribute('href')`                                      | `cy.get(sel).invoke('attr', 'href')`                                                          |
+| `el.isDisplayed()`                                             | `cy.get(sel).should('be.visible')`                                                            |
+| `el.isEnabled()`                                               | `cy.get(sel).should('be.enabled')`                                                            |
+| `el.isSelected()`                                              | `cy.get(sel).should('be.checked')`                                                            |
+| `new Select(el).selectByVisibleText('US')`                     | `cy.get(sel).select('US')`                                                                    |
+| `driver.actions().move({ origin: el })` (hover)                | `cy.get(sel).trigger('mouseover')`                                                            |
+| `driver.actions().contextClick(el)`                            | `cy.get(sel).rightclick()`                                                                    |
+| `driver.actions().doubleClick(el)`                             | `cy.get(sel).dblclick()`                                                                      |
+| `el.sendKeys(Key.ENTER)`                                       | `cy.get(sel).type('{enter}')`                                                                 |
+| `driver.wait(until.elementIsVisible(el))`                      | `cy.get(sel).should('be.visible')`                                                            |
+| `driver.wait(until.elementIsEnabled(el))`                      | `cy.get(sel).click()`                                                                         |
+| `driver.sleep(ms)`                                             | _(remove; assert on the resulting state)_                                                     |
+| `manage().setTimeouts({ implicit: ms })`                       | `defaultCommandTimeout` in config                                                             |
+| `el.sendKeys('/path/file.png')` (upload)                       | `cy.get(sel).selectFile('path/file.png')`                                                     |
+| `driver.switchTo().frame(el)`                                  | `cy.get('#f').its('0.contentDocument.body')...`                                               |
+| `driver.switchTo().alert().accept()`                           | auto-accepted; `cy.on('window:alert', ...)`                                                   |
+| `driver.switchTo().alert().dismiss()` (confirm)                | `cy.on('window:confirm', () => false)`                                                        |
+| `driver.switchTo().window(handle)`                             | [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer) or assert the `href` |
+| `driver.manage().getCookies()`                                 | `cy.getCookies()`                                                                             |
+| `driver.manage().addCookie(cookie)`                            | `cy.setCookie(name, value)`                                                                   |
+| `driver.manage().deleteAllCookies()`                           | `cy.clearCookies()`                                                                           |
+| `driver.takeScreenshot()`                                      | `cy.screenshot()`                                                                             |
+| `driver.executeScript(js)`                                     | `cy.window().then(win => ...)` / `cy.invoke(...)`                                             |
+| `fetch(url)` / an HTTP client                                  | `cy.request(url)`                                                                             |
+| Selenium Grid / `RemoteWebDriver`                              | `cypress run --record --parallel` (Cypress Cloud)                                             |
 
 ## Conclusion
 
-In this migration guide, we've delved into a diverse array of topics. Beginning with a brief overview of the advantages
-and limitations of both testing frameworks, we've advocated for the feasibility of migration and delved into key design
-considerations before initiating the transition.
+Migrating from Selenium to Cypress is less about translating syntax and more
+about removing machinery: the WebDriver lifecycle, explicit and implicit
+waits, and Grid infrastructure all give way to Cypress's in-browser execution
+and built-in retry-ability. The main planning work is choosing your target
+language (JavaScript or TypeScript), deciding a selector strategy to replace
+`By` and XPath locators, and reimplementing any shared framework code in JS/TS.
 
-Following this, we've discussed the initial steps of the migration process and prioritized which tests to migrate first.
-Recognizing the significance of the migration process itself, we've devoted attention to exploring various implementations
-and identifying plugins that could enrich the Cypress experience.
+Approach it incrementally: run Cypress and Selenium side by side, migrate one
+class or spec at a time, and lean on [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress)
+to keep the new tests idiomatic.
 
-Welcome to the world of smooth testing!
+## See also
 
-Cypress not only competes effectively with established frameworks like Selenium but also introduces a host of enhancements.
-These enhancements encompass easier setup and maintenance, along with
-[significant quality-of-life improvements](https://go.cypress.io/hubfs/Case-Study_Beamery.pdf). The
-[minimized flakiness](<https://go.cypress.io/hubfs/Case-Study_Perlego%20(1).pdf>)
-and [simplified programming experience](https://go.cypress.io/hubfs/Case-Study_vidyard.pdf) have positioned Cypress as a premier Test
-Automation framework, embraced by thousands of development and testing teams.
-
-Migrations have traditionally been perceived as costly and time-intensive endeavors. We trust that this guide has alleviated
-those concerns. The migration process is not only straightforward but also promises a more stable and efficient framework,
-delivering substantial benefits in the long run.
+- [Why Cypress?](/app/get-started/why-cypress)
+- [Retry-ability](/app/core-concepts/retry-ability)
+- [Best Practices](/app/core-concepts/best-practices)
+- [Writing and Organizing Tests](/app/core-concepts/writing-and-organizing-tests)
+- [Network Requests](/app/guides/network-requests)
+- [Command Line](/app/references/command-line)

@@ -10,7 +10,8 @@ var theme = {
   styles: [{
     types: ["namespace"],
     style: {
-      opacity: 0.7,
+      // full opacity so namespace tokens meet 4.5:1 contrast (0.7 dimmed them to ~3.2:1)
+      opacity: 1,
     }
   }, {
     types: ["atrule", "function", "boolean", "constant", "id", "symbol"],

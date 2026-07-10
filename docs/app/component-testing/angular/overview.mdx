@@ -11,7 +11,7 @@ sidebar_position: 10
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How to set up component tests in Angular
 - How to configure Cypress for Angular projects
@@ -138,6 +138,144 @@ export default {
 
 - [Angular 20 Standalone](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular-standalone)
 - [Angular 21 Zoneless](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/angular-zoneless)
+
+## Styling
+
+Cypress builds your component specs with the Angular build pipeline. When you do
+**not** provide an `options.projectConfig`, Cypress reads the build options
+(including `assets`, `styles`, and `stylePreprocessorOptions`) from the default
+application project in your `angular.json`. When you **do** provide your own
+[`projectConfig`](#Options-API), it _replaces_ the configuration Cypress detects
+from `angular.json`, so any build options your styles rely on must be repeated
+in your `buildOptions`. The two issues below are usually a result of this.
+
+### Sass `@use` / `@import` can't find a stylesheet
+
+If your Sass resolves imports through paths configured in `angular.json` under
+`stylePreprocessorOptions.includePaths`, you may see an error during component
+testing like:
+
+```
+❌ Can't find stylesheet to import.
+@use 'mixins'
+```
+
+This happens when a custom `projectConfig` omits those include paths. Add the
+same `stylePreprocessorOptions` to your `buildOptions` so the Sass compiler can
+resolve the imports:
+
+:::cypress-config-example
+
+```ts
+{
+  component: {
+    devServer: {
+      framework: 'angular',
+      bundler: 'webpack',
+      options: {
+        projectConfig: {
+          root: '',
+          sourceRoot: 'src',
+          buildOptions: {
+            styles: ['src/styles.scss'],
+            stylePreprocessorOptions: {
+              includePaths: ['src/styles'],
+            },
+          },
+        },
+      },
+    },
+    specPattern: '**/*.cy.ts',
+  },
+}
+```
+
+:::
+
+### Tailwind CSS v4 utility classes aren't applied
+
+With Tailwind CSS v4, you may find that your own styles load correctly but
+Tailwind utility classes such as `bg-red-500` have no effect. The class is
+present on the element in the DevTools inspector, but no rule is generated for
+it. This is because Tailwind v4 generates utilities through its own build
+plugin, which is not part of the Angular build pipeline Cypress uses to compile
+your `styles`.
+
+A reliable workaround is to precompile your Tailwind stylesheet into a plain CSS
+file with the [Tailwind CLI](https://tailwindcss.com/docs/installation/tailwind-cli)
+and load that compiled file through `buildOptions.styles`.
+
+Install the CLI:
+
+<Tabs>
+  <TabItem value="npm">
+
+```shell
+npm install -D @tailwindcss/cli
+```
+
+  </TabItem>
+
+  <TabItem value="yarn">
+
+```shell
+yarn add -D @tailwindcss/cli
+```
+
+  </TabItem>
+
+  <TabItem value="pnpm">
+
+```shell
+pnpm add -D @tailwindcss/cli
+```
+
+  </TabItem>
+
+  <TabItem value="bun">
+
+```shell
+bun add -d @tailwindcss/cli
+```
+
+  </TabItem>
+</Tabs>
+
+Compile your stylesheet before opening or running Cypress, then point
+`buildOptions.styles` at the compiled output:
+
+```json title=package.json
+{
+  "scripts": {
+    "build:ct-styles": "npx @tailwindcss/cli -i ./src/styles.scss -o ./cypress/support/compiled-styles.css",
+    "cypress:open": "npm run build:ct-styles && cypress open --component",
+    "cypress:run": "npm run build:ct-styles && cypress run --component"
+  }
+}
+```
+
+:::cypress-config-example
+
+```ts
+{
+  component: {
+    devServer: {
+      framework: 'angular',
+      bundler: 'webpack',
+      options: {
+        projectConfig: {
+          buildOptions: {
+            styles: ['cypress/support/compiled-styles.css'],
+          },
+        },
+      },
+    },
+    specPattern: '**/*.cy.ts',
+  },
+}
+```
+
+:::
 
 ## See also
 

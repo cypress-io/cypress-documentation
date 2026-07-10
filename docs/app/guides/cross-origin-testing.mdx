@@ -11,7 +11,7 @@ e2eSpecific: true
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - What strategies Cypress uses to work around same-origin policy
 - Limitations and workarounds with cross-origin content
@@ -217,6 +217,11 @@ If you'd like support for this
 (check our [open issue](https://github.com/cypress-io/cypress/issues/136)), or
 you can
 [disable web security](/app/guides/cross-origin-testing#Disabling-Web-Security).
+
+Note that **same-origin** iframes are not affected by this restriction and can be
+queried natively. See
+[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
+in the FAQ.
 
 ### Insecure Content
 

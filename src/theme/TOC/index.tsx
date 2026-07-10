@@ -20,7 +20,7 @@ export default function TOCWrapper(props) {
           }}
         />
       </div>
-      <h2 className="border-l border-gray-1000/[.07] dark:border-gray-900 my-0 pb-[12px] pl-[1.5rem] text-gray-700 font-medium uppercase text-[16px]">
+      <h2 className="border-l border-gray-1000/[.07] dark:border-gray-900 my-0 pb-[12px] pl-[1.5rem] text-gray-700 dark:text-gray-400 font-medium uppercase text-[16px]">
         Contents
       </h2>
       <TOC

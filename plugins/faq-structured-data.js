@@ -14,6 +14,7 @@ const path = require('path')
 const STRUCTURED_DATA_PAGES = [
   { route: '/app/faq', file: 'docs/app/faq.mdx' },
   { route: '/cloud/faq', file: 'docs/cloud/faq.mdx' },
+  { route: '/ui-coverage/faq', file: 'docs/ui-coverage/faq.mdx' },
   {
     route: '/app/references/error-messages',
     file: 'docs/app/references/error-messages.mdx',
@@ -41,7 +42,8 @@ function loadPartialMap(siteDir) {
   const componentsFile = path.join(siteDir, 'src/theme/MDXComponents.js')
   if (!fs.existsSync(componentsFile)) return map
   const source = fs.readFileSync(componentsFile, 'utf8')
-  const importRe = /import\s+(\w+)\s+from\s+["']@site\/docs\/partials\/(_[\w-]+\.mdx)["']/g
+  const importRe =
+    /import\s+(\w+)\s+from\s+["']@site\/docs\/partials\/(_[\w-]+\.mdx)["']/g
   let match
   while ((match = importRe.exec(source))) {
     map[match[1]] = path.join(siteDir, 'docs/partials', match[2])
@@ -63,11 +65,17 @@ function inlinePartials(content, partialMap, seen = new Set(), depth = 0) {
     if (!seen.has(name) && fs.existsSync(file)) {
       const nextSeen = new Set(seen).add(name)
       const body = stripFrontmatter(fs.readFileSync(file, 'utf8'))
-      replacement = '\n' + inlinePartials(body, partialMap, nextSeen, depth + 1) + '\n'
+      replacement =
+        '\n' + inlinePartials(body, partialMap, nextSeen, depth + 1) + '\n'
     }
-    const paired = new RegExp('<' + name + '(?:\\s[^>]*?)?>[\\s\\S]*?</' + name + '>', 'g')
+    const paired = new RegExp(
+      '<' + name + '(?:\\s[^>]*?)?>[\\s\\S]*?</' + name + '>',
+      'g'
+    )
     const selfClosing = new RegExp('<' + name + '(?:\\s[^>]*?)?/>', 'g')
-    result = result.replace(paired, () => replacement).replace(selfClosing, () => replacement)
+    result = result
+      .replace(paired, () => replacement)
+      .replace(selfClosing, () => replacement)
   }
   return result
 }
