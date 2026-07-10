@@ -22,8 +22,7 @@ Without stable identities and names, a report can list controls under machine-ge
 
 UI Coverage already [identifies elements automatically](/ui-coverage/core-concepts/element-identification) using significant attributes, location, and other DOM signals. Use `elements` when the automatic identity for a specific element isn't stable or isn't readable:
 
-- **Stabilize dynamic attributes**: Identify an element by a selector that stays the same across snapshots, even when its `id` or other attributes are regenerated on every render.
-- **Ensure unique identification**: Give an element that lacks stable, unique attributes an explicit identity so it isn't confused with other elements or duplicated in reports.
+- **Stabilize an element's identity**: Identify an element by a selector that stays the same across snapshots, even when its `id` or other attributes are regenerated on every render, so it isn't duplicated in reports.
 - **Rename elements in reports**: Display a human-readable name in place of a machine-generated selector, so anyone reading the report understands what needs testing.
 
 If your goal is different, such as combining repeated elements so they count as one, or removing elements from reports entirely, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
@@ -67,7 +66,7 @@ To add or edit `elements`, open the **App Quality** tab in your project settings
 
 In each snapshot captured by your tests, every rule is evaluated independently:
 
-- **A rule applies only when it matches exactly one element.** The `selector` can match any number of DOM nodes, but it must match exactly one of the [interactive elements](/ui-coverage/core-concepts/interactivity) that UI Coverage tracks in that snapshot. When it matches more than one, the rule is skipped and those elements keep their default identity. To give multiple elements a shared identity, use [`elementGroups`](/ui-coverage/configuration/elementgroups) instead.
+- **A rule applies only when it matches exactly one element.** A rule identifies a single element, so UI Coverage counts how many of the [interactive elements](/ui-coverage/core-concepts/interactivity) it tracks match the rule's `selector` in the snapshot. If exactly one matches, the rule applies to that element. If two or more match, the rule is skipped and the elements keep their default identity, because applying it would merge separate elements into one. To intentionally treat several elements as one unit, use [`elementGroups`](/ui-coverage/configuration/elementgroups) instead. Matches against parts of the page that UI Coverage doesn't track, such as wrapper containers or static text, don't count.
 - **Matching is evaluated per snapshot.** A rule can apply in one snapshot and be skipped in another where its selector matches several elements at once.
 - **A matched element is identified by the rule's `selector` alone.** Its identity no longer depends on its attributes, structure, or the default [element identification rules](/ui-coverage/core-concepts/element-identification), so it stays one element across snapshots even as dynamic attributes change. The report displays the rule's `name`, or its `selector` when no name is given. This includes links, which are otherwise displayed by their URL.
 - **Rules match in any document unless scoped.** A rule without `documentScope` can match elements in the main document, in iframes, and in shadow DOMs. Add `documentScope` to restrict a rule to one of those documents, for example when the same selector appears both inside and outside an iframe.
