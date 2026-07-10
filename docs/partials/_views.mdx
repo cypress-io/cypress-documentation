@@ -186,6 +186,8 @@ https://www.my-app.com/analytics/usage/harper
 
 ### Grouping by a query parameter
 
+The `?*status=:status{&*}?` syntax captures the `status` query parameter wherever it appears in the query string, regardless of what other parameters surround it, and `#*` allows any hash.
+
 #### Config
 
 ```json title="App Quality Config"
@@ -198,8 +200,6 @@ https://www.my-app.com/analytics/usage/harper
   ]
 }
 ```
-
-The `?*status=:status{&*}?` syntax captures the `status` query parameter wherever it appears in the query string, regardless of what other parameters surround it, and `#*` allows any hash.
 
 #### Visited URLs
 
