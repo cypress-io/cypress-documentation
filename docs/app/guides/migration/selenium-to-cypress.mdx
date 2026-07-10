@@ -380,9 +380,7 @@ often paired with `Options`/`DesiredCapabilities`.
 **All of that goes away.** Cypress uses the browsers installed on the machine
 and needs no driver binaries. To see which browsers Cypress detects:
 
-```shell
-cypress info
-```
+<PackageManagerTabs run="cypress info" />
 
 Delete any driver-download dependency (`webdrivermanager`,
 `selenium-manager` config, `chromedriver` npm package) and the code that
