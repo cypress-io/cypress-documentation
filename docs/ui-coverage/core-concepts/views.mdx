@@ -106,20 +106,7 @@ The [`views`](/ui-coverage/configuration/views) configuration defines your own U
 }
 ```
 
-Patterns with named parameters can also use `groupBy` to split one pattern into multiple views based on a parameter's values. For example, this configuration creates one view per document type:
-
-```json title="App Quality Config"
-{
-  "views": [
-    {
-      "pattern": "https://cypress.io/documents/:type/:id",
-      "groupBy": ["type"]
-    }
-  ]
-}
-```
-
-Visits to `/documents/invoice/123` and `/documents/report/456` produce the views `/documents/invoice/:id` and `/documents/report/:id`. See the [views configuration](/ui-coverage/configuration/views) documentation for the full syntax and more examples.
+Patterns with named parameters can also use `groupBy` to split one pattern into multiple views based on a parameter's values, such as one view per document type. See the [views configuration](/ui-coverage/configuration/views) documentation for the full syntax, matching rules, and worked examples.
 
 ### Ignoring views
 

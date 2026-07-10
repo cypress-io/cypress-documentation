@@ -1,21 +1,71 @@
-Cypress automatically groups certain URL patterns to create views. However, for URLs that are not automatically grouped (e.g., `/users/alice` and `/users/bob` are not automatically grouped into `/users/*`), the `views` property allows you to specify custom URL patterns to define views. This configuration enhances the clarity and organization of your coverage reports.
-
-The `groupBy` property allows you to create multiple views from a single URL pattern by specifying which parts of the URL should create distinct groupings.
+The `views` configuration groups the URLs your tests visit into views using URL patterns. Views are the distinct pages of your application that your reports are organized around. URLs that differ only by numeric IDs or UUIDs are grouped automatically (`/users/123` and `/users/456` become a single `/users/*` view), but other dynamic values are not: `/users/alice` and `/users/bob` appear as two separate views unless a `views` pattern groups them.
 
 ## Why use views?
 
+- **Group dynamic URLs**: Combine URLs with dynamic values that the automatic rules don't recognize, such as usernames or slugs, into a single view.
+- **Split views by query parameters**: By default, query strings are ignored when views are created, so `/home?status=done` and `/home?status=new` group into a single `/home` view. A pattern that captures a query parameter lets you report on them separately.
+- **Create distinct view groups**: Use `groupBy` to create a separate view for each value of a meaningful URL parameter, while still grouping the parts that are dynamic.
+- **Consolidate environments**: Patterns can span subdomains, or omit the protocol and hostname entirely, so the same page visited on different environments rolls up into one view.
+
+## Scope
+
 :::info
-**Note**: setting `views` impacts both Accessibility and UI Coverage reports.
-This cannot be nested.
+
+**Note:** setting `views` impacts both Accessibility and UI Coverage reports.
+It is defined at the root of your configuration and, unlike `viewFilters` and
+`elementFilters`, it cannot be nested under an `accessibility` or `uiCoverage`
+key to configure each product separately.
+
 :::
 
-- **Group Dynamic URLs**: Group URLs with dynamic path parameters (e.g., `/users/alice` and `/users/bob`) that are not ids or uuids into a single view.
-- **Organize by Query Parameters**: Create views based on query parameters to group URLs where query strings are important to the context of the page.
-- **Create Distinct View Groups**: Use `groupBy` to maintain separate views for meaningful URL parameters while still grouping dynamic content.
+The `views` configuration applies to URLs visited in end-to-end tests. Views for component tests are created from the path of the spec file, and are not affected by this configuration.
+
+## Syntax
+
+```json title="App Quality Config"
+{
+  "views": [
+    {
+      "pattern": string,
+      "groupBy": string | [string],
+      "comment": string
+    }
+  ]
+}
+```
+
+A view can also be defined as just a pattern string when no other options are needed:
+
+```json title="App Quality Config"
+{
+  "views": ["https://www.my-app.com/users/*"]
+}
+```
+
+### Options
+
+| Option    | Required | Default | Description                                                                                                                                                                                                                                          |
+| --------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pattern` | Required |         | A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax.                                                                                            |
+| `groupBy` | Optional |         | One or more named parameters from the pattern that should create separate views. Accepts a single string or an array of strings. Each name must appear in `pattern` as a named parameter (for example, `:type`), in the path, query string, or hash. |
+| `comment` | Optional |         | A description of the purpose of this view configuration. Has no effect on behavior.                                                                                                                                                                  |
+
+## How are URLs matched to views?
+
+- Patterns are evaluated in the order they are defined, and each URL is grouped into the view of the first pattern it matches. A URL only ever belongs to one view.
+- URLs that don't match any pattern are grouped by the [automatic view grouping rules](/ui-coverage/core-concepts/views#How-views-are-created), where possible.
+- A pattern that doesn't match any URLs in the run does not appear in the report.
+- URLs excluded by a `viewFilters` rule are excluded before `views` patterns are applied. A `views` pattern cannot bring an excluded URL back into the report.
+
+Pattern matching follows [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) semantics, with a few behaviors worth knowing:
+
+- A pattern that omits the query string and hash matches URLs with any query string or hash. For example, `https://www.my-app.com/users/*` matches `https://www.my-app.com/users/bob#settings`.
+- Trailing slashes are optional by default: `/users/bob` and `/users/bob/` both match a pattern ending in `/users/:name`. If your pattern ends with a `/`, only URLs with a trailing slash match it.
+- A pattern without a protocol and hostname, such as `/users/*`, matches that path on any protocol, hostname, and port.
 
 ## Using groupBy
 
-The `groupBy` property creates distinct views based on named parameters in your URL pattern. For example, if your pattern is `/analytics/:type/:id`, using `groupBy: ["type"]` would create separate views for each unique value of `type` (like `/analytics/performance/:id` and `/analytics/usage/:id`).
+The `groupBy` property creates distinct views based on named parameters in your URL pattern. For example, if your pattern is `/analytics/:type/:id`, using `groupBy: ["type"]` creates a separate view for each unique value of `type` (like `/analytics/performance/:id` and `/analytics/usage/:id`).
 
 This is particularly useful when:
 
@@ -23,43 +73,21 @@ This is particularly useful when:
 - You want to track coverage separately for different categories of content
 - URL parameters determine significant UI changes
 
-URLs with the same values for the specified parameters will be grouped together, while different values create distinct views.
+URLs with the same values for the specified parameters are grouped together, while different values create distinct views. Values can be captured from named parameters in the path, the query string, or the hash of the pattern.
 
-## Syntax
+## How views are named
 
-```json
-{
-  "views": [
-    {
-      "pattern": string,
-      "groupBy": [
-        string
-      ],
-      "comment": string
-    }
-  ]
-}
-```
+A view created from your configuration is named by the pattern you wrote. When `groupBy` is used, the grouped parameters are replaced with their matched values, and any remaining named parameters and wildcards stay in the name, as the examples below show.
 
-### Options
-
-The first pattern that a given URL matches is used as its view. If a URL doesn't match any of the patterns, it is grouped by the default view grouping rules, if possible.
-
-| Option    | Required | Default | Description                                                                                                                                               |
-| --------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pattern` | Required |         | A URL pattern to group matching URLs into a single view. Uses [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax. |
-| `groupBy` | Optional |         | An array of named parameters from your pattern that should create separate views.                                                                         |
-| `comment` | Optional |         | A comment describing the purpose of this view configuration.                                                                                              |
+When every view in a report shares the same protocol and hostname, view names are displayed without them. The examples below show the names as they appear in this most common case.
 
 ## Examples
-
-In the examples below, the views shown in the UI do not include the protocol or hostname. When every view in a report shares the same protocol, host, and port, they are omitted from view names for readability.
 
 ### Grouping dynamic path parameters
 
 #### Config
 
-```typescript
+```json title="App Quality Config"
 {
   "views": [
     {
@@ -85,13 +113,17 @@ https://www.my-app.com/users?assigned=true
 /users
 ```
 
+The first three URLs match the pattern and group into `/users/*`. The last URL doesn't match (its path is `/users`, not `/users/` followed by more), so the automatic grouping rules create a `/users` view for it, with its query string ignored.
+
 ---
 
-### Using named path parameters
+### Grouping with a named path parameter
+
+A named parameter like `:name` matches a single path segment, just like `*`, but keeps a readable placeholder in the view name and can be referenced by `groupBy`.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "views": [
     {
@@ -119,11 +151,11 @@ https://www.my-app.com/users?assigned=true
 
 ---
 
-### Group URLs by named parameters
+### Grouping by a path parameter
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "views": [
     {
@@ -152,11 +184,13 @@ https://www.my-app.com/analytics/usage/harper
 
 ---
 
-### Group URLs by named query parameters
+### Grouping by a query parameter
+
+The `?*status=:status{&*}?` syntax captures the `status` query parameter wherever it appears in the query string, regardless of what other parameters surround it, and `#*` allows any hash.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "views": [
     {
@@ -183,15 +217,17 @@ https://www.my-app.com/home?tag=trip&status=new#statusView
 /home?*status=new{&*}?
 ```
 
-When grouping by a query parameter, the view name keeps the pattern's search syntax with the matched value substituted in, so it's clear which parameter created the grouping.
+View names keep the query string portion of the pattern as you wrote it, with the grouped parameter replaced by its matched values.
 
 ---
 
 ### Grouping URLs across subdomains
 
+Each unique value of `:path*` creates a view, and the same path visited on different subdomains is grouped into a single view. All of the views share the `*.my-app.com` hostname pattern, so it is omitted from the view names.
+
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "views": [
     {
@@ -220,4 +256,16 @@ https://www.my-app.com/profile/edit
 /profile/edit
 ```
 
-All of the views share the `*.my-app.com` hostname pattern, so it is omitted from the view names, and URLs from every matching subdomain are grouped together.
+## Troubleshooting
+
+### A pattern you configured doesn't appear in the report
+
+A pattern that doesn't match any URLs in the run is dropped from the report. Confirm that the pattern matches the full URL, including the protocol and hostname, or omit them so the pattern matches any origin. Also check that a `viewFilters` rule isn't excluding the URLs before `views` patterns are applied.
+
+### Error: `Value "..." was not found in the pattern`
+
+Each name in `groupBy` must appear in `pattern` as a named parameter. For example, `groupBy: ["type"]` requires `:type` somewhere in the pattern's path, query string, or hash.
+
+### Error: `No duplicate values allowed`
+
+Each pattern in `views` must be unique. Named parameters are compared as wildcards, so `/users/:name` and `/users/*` count as the same pattern.
