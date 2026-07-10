@@ -72,8 +72,8 @@
     },
     "@cypress/vite-dev-server": {
       "npm": "@cypress/vite-dev-server",
-      "version": "7.3.3",
-      "lastPublished": "2026-05-20T01:25:49.937Z",
+      "version": "7.3.4",
+      "lastPublished": "2026-07-06T13:58:07.769Z",
       "cypressVersion": ">=15.0.0"
     },
     "@cypress/webpack-dev-server": {
@@ -236,12 +236,6 @@
       "version": "3.0.2",
       "lastPublished": "2024-07-16T14:01:26.695Z",
       "cypressVersion": "12.13.0"
-    },
-    "@swimlane/cy-dom-diff": {
-      "npm": "@swimlane/cy-dom-diff",
-      "version": "2.0.0",
-      "lastPublished": "2021-02-02T18:40:01.242Z",
-      "cypressVersion": "^5.2.0"
     },
     "cy-spok": {
       "npm": "cy-spok",
