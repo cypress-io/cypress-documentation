@@ -65,6 +65,16 @@ The most common causes are:
 
 This usually means the element's identifying attributes change between snapshots, for example auto-generated IDs or dynamic class names. Use [`attributeFilters`](/ui-coverage/configuration/attributefilters) to ignore the dynamic attributes, or [`elements`](/ui-coverage/configuration/elements) to define the element's identity explicitly. See [troubleshooting](/ui-coverage/troubleshooting) for more scenarios.
 
+### <Icon name="angle-right" /> Why isn't my elements rule applying?
+
+An [`elements`](/ui-coverage/configuration/elements) rule applies only when its selector matches exactly one interactive element in a snapshot. The most common causes are:
+
+- The selector matches more than one interactive element in the same snapshot, so the rule is skipped for that snapshot. Add [`documentScope`](/ui-coverage/configuration/elements#Options) or a more specific selector, or use [`elementGroups`](/ui-coverage/configuration/elementgroups) if several elements should share an identity.
+- The selector only matches non-interactive elements, such as a wrapper around the actual button or input.
+- The element is excluded by [`elementFilters`](/ui-coverage/configuration/elementfilters), so it's never considered.
+- A later `elements` rule matches the same element, and the last matching rule wins.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
 ## Configuration
 
 ### <Icon name="angle-right" /> Where do I set UI Coverage configuration?

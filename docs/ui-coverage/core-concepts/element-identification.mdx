@@ -61,3 +61,22 @@ Define custom significant attributes to prioritize specific selectors that align
 ```
 
 Refer to the [Significant Attributes](/ui-coverage/configuration/significantattributes) guide for detailed instructions.
+
+### Elements
+
+Assign a stable identity and a readable name to a specific element whose attributes change between snapshots. An element matched by an `elements` rule is identified by the rule's selector alone, so it stays one element across snapshots. For example:
+
+```json
+{
+  "uiCoverage": {
+    "elements": [
+      {
+        "selector": "#my-form [id^='dropdown']",
+        "name": "Country Dropdown"
+      }
+    ]
+  }
+}
+```
+
+Refer to the [`elements`](/ui-coverage/configuration/elements) guide for how rules are matched.

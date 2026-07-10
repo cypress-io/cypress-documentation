@@ -9,13 +9,13 @@ sidebar_position: 60
 
 # Reduce noise
 
-A clean and focused UI Coverage report enables you to make informed decisions about your testing strategy. Cypress UI Coverage provides tools to reduce noise in your reports by properly grouping elements, special attribute handling, and grouping views that share common URL patterns. This guide explains how and why to create a streamlined report.
+A clean and focused UI Coverage report enables you to make informed decisions about your testing strategy. Cypress UI Coverage provides tools to reduce noise in your reports by properly grouping elements, stabilizing element identities, special attribute handling, and grouping views that share common URL patterns. This guide explains how and why to create a streamlined report.
 
 ## Group views by URL patterns
 
-Cypress attempts to groups views with similar URL patterns (like when a URL contains a user ID) to provide a more consolidated view of coverage metrics.
+Cypress attempts to group views with similar URL patterns (like when a URL contains a user ID) to provide a more consolidated view of coverage metrics.
 
-Customozing views with similar URL patterns allows you to consolidate coverage metrics for pages you know are related. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **viewGroups** configuration.
+Customizing views with similar URL patterns allows you to consolidate coverage metrics for pages you know are related. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add a **views** configuration.
 
 ### Example: Grouping user profiles
 
@@ -75,6 +75,27 @@ nav [id^=nav-button] (3 instances)
 ```
 
 To learn more about the configuration options, refer to the [Element Groups](/ui-coverage/configuration/elementgroups) documentation.
+
+## Stabilize a single element's identity
+
+When one element appears as several untested elements because a generated attribute changes between snapshots, an `elements` rule identifies it by a selector you choose and can rename it in the report. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **elements** configuration under **uiCoverage**.
+
+```json
+{
+  "uiCoverage": {
+    "elements": [
+      {
+        "selector": "#search [id^='combobox']",
+        "name": "Search Combobox"
+      }
+    ]
+  }
+}
+```
+
+The rule applies only when its selector matches exactly one interactive element in a snapshot. If many elements share the same generated attribute, use [Attribute Filters](/ui-coverage/configuration/attributefilters) instead.
+
+To learn more about the configuration options, refer to the [Elements](/ui-coverage/configuration/elements) documentation.
 
 ## Configure attribute handling
 

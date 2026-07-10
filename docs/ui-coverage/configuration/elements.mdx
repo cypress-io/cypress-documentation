@@ -1,6 +1,6 @@
 ---
-title: 'elements: assign a stable identity and name to an element'
-description: 'The elements configuration in Cypress UI Coverage gives a single element a stable identity and a readable name, so reports stay accurate when attributes change between snapshots.'
+title: 'elements: rename and stabilize element identity in UI Coverage'
+description: 'Rename elements and give them a stable identity in Cypress UI Coverage reports, so dynamic attributes do not create duplicate untested elements.'
 sidebar_label: elements
 sidebar_position: 70
 ---
@@ -9,7 +9,14 @@ sidebar_position: 70
 
 # elements
 
-The `elements` configuration pins down the identity of a single element in your UI Coverage report. When an element's attributes change between snapshots, such as a generated `id` or a rotating class name, UI Coverage can see each variation as a different element, so one dropdown appears as several untested elements and drags down your score. An `elements` rule identifies that element by a selector you choose, so it counts once, and can display it under a readable name like "Help Popover" instead of a machine-generated selector.
+The `elements` configuration assigns a stable identity and a display name to a single element in your UI Coverage report. When an element's attributes change between snapshots, such as a generated `id` or a rotating class name, UI Coverage can see each variation as a different element. One dropdown then appears as several untested elements and drags down your score. An `elements` rule identifies that element by a selector you choose, so it counts once, and renames it to something readable like "Help Popover" instead of a machine-generated selector.
+
+Without stable identities and names, a report can list controls under machine-generated selectors that are hard to recognize and act on:
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-expanded.png"
+  alt="The UI Coverage report listing untested elements, several of which appear under machine-generated names derived from their DOM structure"
+/>
 
 ## Why use elements?
 
@@ -17,9 +24,9 @@ UI Coverage already [identifies elements automatically](/ui-coverage/core-concep
 
 - **Stabilize dynamic attributes**: Identify an element by a selector that stays the same across snapshots, even when its `id` or other attributes are regenerated on every render.
 - **Ensure unique identification**: Give an element that lacks stable, unique attributes an explicit identity so it isn't confused with other elements or duplicated in reports.
-- **Make reports readable**: Display a human-readable name in place of a machine-generated selector, so anyone reading the report understands what needs testing.
+- **Rename elements in reports**: Display a human-readable name in place of a machine-generated selector, so anyone reading the report understands what needs testing.
 
-Each `elements` rule targets exactly one element. If your goal is different, such as combining repeated elements so they count as one, or removing elements from reports entirely, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
+If your goal is different, such as combining repeated elements so they count as one, or removing elements from reports entirely, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
 
 ## Setting elements
 
@@ -66,6 +73,8 @@ In each snapshot captured by your tests, every rule is evaluated independently:
 - **Rules match in any document unless scoped.** A rule without `documentScope` can match elements in the main document, in iframes, and in shadow DOMs. Add `documentScope` to restrict a rule to one of those documents, for example when the same selector appears both inside and outside an iframe.
 - **Later rules take precedence.** When more than one rule matches the same element, the last matching rule in the list determines its identity and name.
 - **Filtered elements are never matched.** Elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters) are not considered, and don't count toward a rule's one-match limit.
+
+If a rule doesn't seem to take effect, see [Why isn't my elements rule applying?](/ui-coverage/faq#Why-isnt-my-elements-rule-applying) in the UI Coverage FAQ.
 
 ### Validation rules
 
@@ -129,6 +138,8 @@ With the rule, it appears once, displayed under the rule's selector because no `
 #my-form [id^='dropdown']
 ```
 
+An `elements` rule is the right tool when one specific element needs a stable identity. If many elements share the same generated attribute, fix the attribute instead: an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule stops it from identifying any element.
+
 ---
 
 ### Give an element a readable name
@@ -166,9 +177,9 @@ Help Popover
 
 ---
 
-### Identify an element inside a shadow DOM
+### Identify an element inside a shadow DOM or iframe
 
-Use `documentScope` to identify an element inside a specific shadow DOM host. Here, the button inside the `<custom-component>` shadow root shares its `id` with a button in the main document. The scope restricts the rule to the shadow DOM, so the rule matches exactly one element and applies. Without `documentScope`, the rule would match both buttons and be skipped.
+Use `documentScope` to identify an element inside a specific shadow DOM host or iframe. Here, the button inside the `<custom-component>` shadow root shares its `id` with a button in the main document. The scope restricts the rule to the shadow DOM, so the rule matches exactly one element and applies. Without `documentScope`, the rule would match both buttons and be skipped.
 
 #### Config
 
@@ -207,13 +218,7 @@ Custom Component Button
 
 The button inside the shadow DOM appears under its configured name, while the button in the main document keeps its default identity.
 
----
-
-### Identify an element inside an iframe
-
-`documentScope` works the same way for embedded content that renders inside an iframe. The scope selector matches the `iframe` element itself in its parent document. Here, only the submit button inside the `#embedded-form` iframe is identified by the rule.
-
-#### Config
+`documentScope` works the same way for embedded content that renders inside an iframe. The scope selector matches the `iframe` element itself in its parent document:
 
 ```json title="App Quality Config"
 {
@@ -229,29 +234,7 @@ The button inside the shadow DOM appears under its configured name, while the bu
 }
 ```
 
-#### HTML
-
-```xml
-<body>
-  <button id="submit">Submit (Root)</button>
-  <iframe id="embedded-form" src="https://forms.example.com">
-    <html>
-      <body>
-        <button id="submit">Submit (Embedded)</button>
-      </body>
-    </html>
-  </iframe>
-</body>
-```
-
-#### Elements shown in UI
-
-```
-#submit
-Embedded Form Submit
-```
-
-For nested documents, list one selector per host from outermost to innermost, for example `"documentScope": ["#embedded-form", "secure-input"]`.
+For nested documents, list one selector per host from outermost to innermost, for example `"documentScope": ["#embedded-form", "secure-card-input"]`.
 
 :::tip
 
