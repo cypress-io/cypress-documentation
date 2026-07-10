@@ -9,7 +9,11 @@ sidebar_position: 70
 
 # elements
 
-The `elements` configuration assigns a stable identity and a display name to a single element in your UI Coverage report. When an element's attributes change between snapshots, such as a generated `id` or a rotating class name, UI Coverage can see each variation as a different element. One dropdown then appears as several untested elements and drags down your score. An `elements` rule identifies that element by a selector you choose, so it counts once, and renames it to something readable like "Help Popover" instead of a machine-generated selector.
+The `elements` configuration assigns a stable identity and a display name to a single element in your UI Coverage report.
+
+As your tests run, UI Coverage captures snapshots of your application's DOM, and the same element usually appears in many of them: on every page load, in every test that visits its page. To count that element once, UI Coverage must recognize it as the same element in every snapshot. When one of its attributes is different on each appearance, such as an `id` generated on every page load, that recognition fails, and each appearance is reported as a new element. One dropdown then shows up as several untested elements and drags down your score.
+
+An `elements` rule fixes this by identifying the element with a selector you choose that matches in every snapshot. The element counts once, and you can rename it to something readable like "Help Popover" instead of a machine-generated selector.
 
 Without stable identities and names, a report can list controls under machine-generated selectors that are hard to recognize and act on:
 
