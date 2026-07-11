@@ -10,7 +10,11 @@ If your goal is to organize URLs rather than remove them, use [`views`](/ui-cove
 
 ## Scope
 
+:::info
+
 A root-level `viewFilters` property applies to both UI Coverage and Cypress Accessibility. To configure the products separately, nest `viewFilters` under a `uiCoverage` or `accessibility` key. A nested `viewFilters` completely replaces the root-level one for that product; the two lists are not merged.
+
+:::
 
 What exclusion affects differs by product:
 
