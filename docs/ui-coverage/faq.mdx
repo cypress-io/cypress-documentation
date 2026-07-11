@@ -37,6 +37,20 @@ No. Query strings are ignored when grouping, so `/dashboard?tab=overview` and `/
 
 Add a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule with `include: false` for a URL pattern. Excluding a URL removes its snapshots from the report and stops links pointing to it from counting against your coverage score. The [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) guide walks through common cases.
 
+### <Icon name="angle-right" /> Why is a URL still in my report after I excluded it with viewFilters?
+
+The most common causes are:
+
+- An earlier rule matches the URL first. Rules apply in order and the first match wins, so a broad `include: true` rule listed before your exclusion prevents it from ever applying.
+- The pattern doesn't match the full URL. Hostnames must match exactly (`https://my-app.com/*` doesn't match `www.my-app.com`), or you can use a path-only pattern like `/admin/*` to match any hostname.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+See [pattern matching behavior](/ui-coverage/configuration/viewfilters#How-are-viewFilters-rules-applied) for details.
+
+### <Icon name="angle-right" /> Can I include only specific URLs in UI Coverage?
+
+Yes. List `include: true` rules for the URLs you want, followed by a catch-all rule that excludes everything else: `{ "pattern": "*", "include": false }`. Because the first matching rule wins, the catch-all must come last. See [Include only your application's URLs](/ui-coverage/configuration/viewfilters#Include-only-your-applications-URLs) for a complete example.
+
 ### <Icon name="angle-right" /> Why is a page missing from my report?
 
 Views are created from URLs your tests actually visit, so a page that no test navigates to has no view. Check [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) in the report — pages that are linked to but never visited appear there. Also confirm that a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule isn't excluding the page unintentionally.
@@ -84,6 +98,10 @@ In the **App Quality** tab of your project settings in Cypress Cloud. By default
 ### <Icon name="angle-right" /> Do I need to rerun my tests after changing configuration?
 
 No. You can regenerate any historical run from its **Properties** tab, and the report is reprocessed with the current configuration. This lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
+
+### <Icon name="angle-right" /> Does my configuration apply to Cypress Accessibility too?
+
+Root-level properties like [`viewFilters`](/ui-coverage/configuration/viewfilters), [`elementFilters`](/ui-coverage/configuration/elementfilters), and [`views`](/ui-coverage/configuration/views) apply to both UI Coverage and Cypress Accessibility. To configure the products separately, nest `viewFilters`, `elementFilters`, `attributeFilters`, or `significantAttributes` under a `uiCoverage` or `accessibility` key; the nested list completely replaces the root-level one for that product. See [Configuration scope](/ui-coverage/configuration/overview#Configuration-scope).
 
 ### <Icon name="angle-right" /> Can I use different configuration for different runs?
 

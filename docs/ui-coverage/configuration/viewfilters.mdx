@@ -1,6 +1,6 @@
 ---
 title: 'viewFilters: exclude URLs from UI Coverage'
-description: 'The viewFilters property allows you to specify URL patterns for URLs that should be excluded from UI Coverage.'
+description: 'The viewFilters configuration excludes URLs from UI Coverage reports and scores, so third-party pages, error pages, and the links that point to them stop counting against your coverage.'
 sidebar_label: 'Exclude views'
 sidebar_position: 30
 ---
@@ -10,3 +10,12 @@ sidebar_position: 30
 # Exclude views (`viewFilters`)
 
 <ViewFilters />
+
+## See also
+
+- [Guide: Ignore views and links](/ui-coverage/guides/ignore-views-and-links) walks through finding and excluding irrelevant URLs in an existing report.
+- [`views`](/ui-coverage/configuration/views) groups and names URLs instead of removing them.
+- [`elementFilters`](/ui-coverage/configuration/elementfilters) removes individual elements from reports rather than whole pages.
+- [Views core concept](/ui-coverage/core-concepts/views) explains how included URLs become the views your report is organized around.
+- [Configuration overview](/ui-coverage/configuration/overview) covers where configuration lives and how to regenerate reports after changing it.
+- [UI Coverage FAQ](/ui-coverage/faq) answers common questions about excluding URLs and coverage scores.
