@@ -70,12 +70,12 @@ To apply rules to Cypress Accessibility only, nest the property under the `acces
 
 ### Options
 
-| Option          | Required | Default | Description                                                                                                                                                                                                                                                                                         |
-| --------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `selector`      | Required |         | A CSS selector that matches the elements to ignore. Supports standard CSS selector syntax, including IDs, classes, attributes, combinators, and functional pseudo-classes like `:has()`. The selector must match the element with the accessibility result itself, not just a container around it.  |
-| `include`       | Required |         | Whether elements matched by this rule appear as normal results in the report. Use `false` to ignore the matched elements. In Cypress Accessibility, `true` has no additional effect, because every element is included unless an exclude rule matches it.                                           |
-| `documentScope` | Optional |         | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to limit a rule to elements inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are. |
-| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on filtering and are not displayed in reports.                                                                                                                    |
+| Option          | Required | Default | Description                                                                                                                                                                                                                                                                                                           |
+| --------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |         | A CSS selector that matches the elements to ignore. Supports standard CSS selector syntax, including IDs, classes, attributes, combinators, and functional pseudo-classes like `:has()`. The selector must match the element with the accessibility result itself, not just a container around it.                    |
+| `include`       | Required |         | Whether elements matched by this rule appear as normal results in the report. Use `false` to ignore the matched elements. In Cypress Accessibility, `true` has no additional effect, because every element is included unless an exclude rule matches it. See [When to use include: true](#When-to-use-include-true). |
+| `documentScope` | Optional |         | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to limit a rule to elements inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are.                   |
+| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on filtering and are not displayed in reports.                                                                                                                                      |
 
 ### How are elementFilters rules applied?
 
@@ -246,6 +246,52 @@ Violations on the button in the main document are reported as failures. Violatio
 ```
 
 For nested documents, list one selector per host from outermost to innermost. For example, `"documentScope": ["#my-iframe", "custom-component"]` scopes a rule to a shadow DOM component rendered inside an iframe.
+
+---
+
+### When to use include: true
+
+For rules that only affect Cypress Accessibility, there's no reason to write `include: true`. Every element is included unless an exclude rule matches it, and an include rule can't override an exclusion.
+
+The value exists for `elementFilters` lists defined at the root of your configuration, which are shared with UI Coverage. In UI Coverage, the first matching rule wins, so an `include: true` rule placed before a broader exclude rule keeps its elements in UI Coverage reports. Cypress Accessibility reads the same list but treats the include rule as inert.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "nav a",
+      "include": true,
+      "comment": "Keep nav links in UI Coverage despite the vendor exclude below"
+    },
+    {
+      "selector": "[data-vendor] a",
+      "include": false,
+      "comment": "Ignore links rendered by the vendor toolbar"
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <nav data-vendor="toolbar">
+    <a href="/home">Home</a>
+  </nav>
+  <div data-vendor="promos">
+    <a href="https://vendor.example">Sponsored</a>
+  </div>
+</body>
+```
+
+#### Result
+
+The Home link matches both rules. In Cypress Accessibility, the exclude rule ignores it anyway, so results on both links appear under the **Ignored** status. In UI Coverage, the first matching rule wins, so the Home link stays in the report while the sponsored link is excluded.
+
+To get different outcomes per product, nest a separate `elementFilters` list under each product key instead of sharing one root-level list.
 
 :::tip
 
