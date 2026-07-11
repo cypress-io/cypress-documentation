@@ -1,5 +1,3 @@
-The `viewFilters` configuration excludes URLs from your reports. By default, every URL your tests visit is included. A `viewFilters` rule with `include: false` removes matching URLs before any analysis happens: their snapshots don't appear in your report, and in UI Coverage, links pointing to them stop counting against your coverage score. The result is a report and score that reflect the parts of your application you own and intend to test.
-
 ## Why use viewFilters?
 
 - **Exclude third-party pages**: Your tests may pass through pages you don't control, such as an OAuth provider's login page or a payment processor's checkout. Excluding them keeps external UI out of your results.
@@ -15,11 +13,6 @@ If your goal is to organize URLs rather than remove them, use [`views`](/ui-cove
 A root-level `viewFilters` property applies to both UI Coverage and Cypress Accessibility. To configure the products separately, nest `viewFilters` under a `uiCoverage` or `accessibility` key. A nested `viewFilters` completely replaces the root-level one for that product; the two lists are not merged.
 
 :::
-
-What exclusion affects differs by product:
-
-- **In UI Coverage**, snapshots from an excluded URL are not analyzed and don't appear in the report. Link elements are also filtered by their destination: any link whose resolved URL matches an excluded pattern is removed from the report and the coverage score, and excluded URLs never appear as [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links).
-- **In Cypress Accessibility**, snapshots from an excluded URL are not scanned and don't appear in the report. There are no other effects.
 
 ## Syntax
 
