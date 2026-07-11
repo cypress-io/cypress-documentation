@@ -425,6 +425,7 @@ describe('integration with repository FAQ pages', () => {
     'docs/app/faq.mdx',
     'docs/cloud/faq.mdx',
     'docs/ui-coverage/faq.mdx',
+    'docs/accessibility/faq.mdx',
   ].filter((file) => fs.existsSync(path.join(siteDir, file)))
 
   test.each(faqFiles)(

@@ -1,0 +1,60 @@
+---
+title: 'Cypress Accessibility FAQ'
+description: 'Get answers to common questions about Cypress Accessibility, including ignoring elements with elementFilters, the Ignored status, score impact, and configuration.'
+sidebar_label: FAQ
+sidebar_position: 160
+---
+
+<ProductHeading product="accessibility" />
+
+# Cypress Accessibility FAQ
+
+## Ignoring elements
+
+### <Icon name="angle-right" /> How do I exclude elements from Cypress Accessibility?
+
+Add an [`elementFilters`](/accessibility/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. Their failed and incomplete checks move to the **Ignored** status and stop counting against your views and your [accessibility score](/accessibility/core-concepts/accessibility-score). This is the standard way to handle third-party widgets whose violations you can't fix. To ignore only specific rules for an element, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) instead, and to ignore entire pages, use [`viewFilters`](/accessibility/configuration/viewfilters).
+
+### <Icon name="angle-right" /> Do ignored elements affect my accessibility score?
+
+No. An element ignored by [`elementFilters`](/accessibility/configuration/elementfilters) doesn't count as a failed or incomplete element, and its results don't affect the score. It stays visible in the report under the **Ignored** status so you can always audit what your configuration ignores.
+
+### <Icon name="angle-right" /> Why didn't my score improve after ignoring an element?
+
+The [accessibility score](/accessibility/core-concepts/accessibility-score) weighs each failed rule per snapshot, not each failing element. If a rule has several failing elements in a snapshot and you ignore only some of them, the rule still counts against that snapshot and the score doesn't change. The rule stops affecting the snapshot's score once all of its failing elements there are ignored.
+
+### <Icon name="angle-right" /> Why is an element still failing after I added an elementFilters rule?
+
+The most common causes are:
+
+- The selector matches a container instead of the element itself. Rules use standard CSS matching against the element with the result, so `footer` matches only the `<footer>` element. Match the container and its descendants, like `footer, footer *`, to ignore a whole region.
+- The rule has a `documentScope` that doesn't match the element's iframe or shadow DOM hosts.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+### <Icon name="angle-right" /> Why do ignored elements still appear in my report?
+
+This is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/core-concepts/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect your score.
+
+### <Icon name="angle-right" /> Can I ignore elements in Cypress Accessibility without affecting UI Coverage?
+
+Yes. An `elementFilters` list at the root of your configuration applies to both products, but nesting it under an `accessibility` or `uiCoverage` key applies it to that product only. A nested list completely replaces a root-level one for that product, and the two are not merged. See [Exclude elements](/accessibility/configuration/elementfilters#Scope).
+
+### <Icon name="angle-right" /> Does include: true do anything in Cypress Accessibility?
+
+Not on its own. Every element is included unless an exclude rule matches it, and an include rule can't protect an element from exclusion. The value matters in root-level `elementFilters` lists shared with UI Coverage, where include rules do protect their elements. See [When to use include: true](/accessibility/configuration/elementfilters#When-to-use-include-true).
+
+## Configuration
+
+### <Icon name="angle-right" /> Where do I set Cypress Accessibility configuration?
+
+In the **App Quality** tab of your project settings in Cypress Cloud. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
+
+### <Icon name="angle-right" /> Do I need to rerun my tests after changing configuration?
+
+No. You can regenerate any historical run from its **Properties** tab, and the report is reprocessed with the current configuration. This lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
+
+## See also
+
+- [Configuration overview](/accessibility/configuration/overview) lists every configuration option and what each one is for.
+- [`elementFilters`](/accessibility/configuration/elementfilters) is the full reference for ignoring elements.
+- [Run-level reports](/accessibility/core-concepts/run-level-reports) explains element statuses, including **Ignored**.
