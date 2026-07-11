@@ -73,7 +73,7 @@ To apply rules to UI Coverage only, nest the property under the `uiCoverage` key
 | Option          | Required | Default | Description                                                                                                                                                                                                                                                                                         |
 | --------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `selector`      | Required |         | A CSS selector that matches the elements to include or exclude. Supports standard CSS selector syntax, including IDs, classes, attributes, combinators, and functional pseudo-classes like `:has()`. The selector must match the interactive element itself, not just a container around it.        |
-| `include`       | Required |         | Whether elements matched by this rule appear in the report. Use `false` to exclude the matched elements. Use `true` to protect elements from broader exclude rules later in the list.                                                                                                               |
+| `include`       | Required |         | Whether elements matched by this rule appear in the report. Use `false` to exclude the matched elements. Use `true` to protect elements from broader exclude rules later in the list. See [When to use include: true](#When-to-use-include-true).                                                   |
 | `documentScope` | Optional |         | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to limit a rule to elements inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are. |
 | `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on filtering and are not displayed in reports.                                                                                                                    |
 
@@ -406,6 +406,56 @@ A wildcard selector combined with `documentScope` excludes all elements within a
 ```
 #important
 ```
+
+---
+
+### When to use include: true
+
+Because the first matching rule wins, an `include: true` rule placed before a broader exclude rule keeps its elements in the report. [Include only elements in a specific container](#Include-only-elements-in-a-specific-container) above uses this with a catch-all exclude rule, and the same protection works with narrower exclude rules.
+
+Note that this protection is specific to UI Coverage. When a root-level `elementFilters` list is shared with Cypress Accessibility, that product treats include rules as inert, so the same list can behave differently per product.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "nav a",
+      "include": true,
+      "comment": "Keep nav links in UI Coverage despite the vendor exclude below"
+    },
+    {
+      "selector": "[data-vendor] a",
+      "include": false,
+      "comment": "Ignore links rendered by the vendor toolbar"
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <nav data-vendor="toolbar">
+    <a href="/home">Home</a>
+  </nav>
+  <div data-vendor="promos">
+    <a href="https://vendor.example">Sponsored</a>
+  </div>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+/home
+```
+
+The Home link matches both rules, but the include rule matches first, so the link stays in the report while the sponsored link is excluded. In Cypress Accessibility, reading the same root-level list, the exclude rule ignores both links, because include rules have no effect there.
+
+To get different outcomes per product, nest a separate `elementFilters` list under each product key instead of sharing one root-level list.
 
 :::tip
 
