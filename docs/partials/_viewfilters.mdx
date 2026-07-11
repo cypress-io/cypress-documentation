@@ -5,7 +5,6 @@ The `viewFilters` configuration excludes URLs from your reports. By default, eve
 - **Exclude third-party pages**: Your tests may pass through pages you don't control, such as an OAuth provider's login page or a payment processor's checkout. Excluding them keeps external UI out of your results.
 - **Exclude pages you don't intend to test**: Remove sections that aren't relevant to your testing goals, such as admin-only tools or informational pages, so untested elements on them don't dilute your metrics.
 - **Reduce noise**: URLs that tests visit incidentally, such as error pages or intermediate redirect URLs, don't represent meaningful user flows. Excluding them keeps reports clean.
-- **Stop irrelevant links from lowering your UI Coverage score**: Every link to an excluded URL is also removed from UI Coverage reports and scores, so links to pages you never plan to test stop appearing as untested elements.
 
 If your goal is to organize URLs rather than remove them, use [`views`](/ui-coverage/configuration/views) instead. To remove individual elements rather than whole pages, use [`elementFilters`](/ui-coverage/configuration/elementfilters).
 
