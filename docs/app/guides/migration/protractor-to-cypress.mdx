@@ -200,6 +200,18 @@ This will install Cypress, add scripts for running Cypress in `run` and `open`
 mode, scaffold base Cypress files and directories, and (optional) prompt you to
 remove Protractor and reconfigure the default `ng e2e` command to use Cypress.
 
+:::caution
+
+If you are migrating an existing suite, decline the schematic's offer to
+remove Protractor until your migrated Cypress tests pass. The two
+[coexist in the same project](#Can-Protractor-and-Cypress-coexist-in-the-same-app)
+without conflict, and keeping Protractor running lets you migrate one spec at
+a time while the rest of the suite keeps guarding your app. You can re-run
+the removal later, or delete `protractor.conf.js`, the `e2e` directory, and
+the Protractor dependencies by hand once nothing depends on them.
+
+:::
+
 With our schematic installed and Protractor removed, you can run Cypress in
 `open` mode with the following command:
 
@@ -256,7 +268,20 @@ Cypress manually.
 Then, since Cypress can run in parallel with your application, let's install
 [concurrently](https://www.npmjs.com/package/concurrently) to simplify our npm
 script. This is optional; however, you will need another way to serve your
-Angular app for Cypress to run tests against your application.
+Angular app for Cypress to run tests against your application. For CI, or
+whenever you want the app server verified as ready before tests start,
+[start-server-and-test](https://github.com/bahmutov/start-server-and-test) is
+a more robust alternative: it starts `ng serve`, waits until the app responds
+at the given URL, runs Cypress, and shuts everything down when the run
+finishes.
+
+```json title="package.json"
+{
+  "scripts": {
+    "cy:run": "start-server-and-test 'ng serve' http://localhost:4200 'cypress run'"
+  }
+}
+```
 
 <Tabs>
   <TabItem value="npm" active>
@@ -340,6 +365,17 @@ It will start up Cypress and our Angular app at the same time.
 Again, we highly recommend using our
 [Angular Schematic](https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic)
 to install Cypress, and we plan on adding new capabilities to it over time.
+
+### Linting migrated tests
+
+Whichever install path you choose, also install the official
+[`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress).
+It flags Cypress anti-patterns in-editor, and the patterns it catches are
+exactly the ones that creep in when translating Protractor code: hard-coded
+`cy.wait(<number>)` calls (the Cypress equivalent of a `browser.sleep()`),
+assigning command return values to variables, and unsafe chaining. Install it
+early so mistranslated Protractor patterns surface as you migrate. See the
+[full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
 
 ## Working with the DOM
 
@@ -1204,6 +1240,37 @@ cy.get('button').click()
 // Send keys to the element (usually an input)
 cy.get('input').type('my text')
 ```
+
+One practical rule falls out of this difference: **never assign the return
+value of a Cypress command to a variable**. In Protractor,
+`const el = element(by.css('button'))` hands you an element you can `await`
+later. A Cypress command returns a chainable that only means something inside
+the command queue — assigning it does not capture an element, and `await`-ing
+it does not do what it appears to. Chain from the command, or use
+[`.then()`](/api/commands/then) when you need the yielded value, and use
+[aliases](/app/core-concepts/variables-and-aliases) to reference it later.
+
+<Badge type="danger">Don't: assign command return values</Badge>
+
+```js
+// This does NOT hold a button element
+const button = cy.get('button')
+button.click()
+```
+
+<Badge type="success">Do: chain, or alias for later</Badge>
+
+```js
+cy.get('button').click()
+
+// or, when you need to refer back to it
+cy.get('button').as('submit')
+cy.get('@submit').click()
+```
+
+See
+[Variables and Aliases](/app/core-concepts/variables-and-aliases) for the
+full picture of working with values across commands.
 
 ## Using Page Objects
 
