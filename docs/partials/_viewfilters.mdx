@@ -40,7 +40,7 @@ To add or edit `viewFilters`, open the **App Quality** tab in your project setti
 
 ### How are viewFilters rules applied?
 
-- Every URL visited during a run, and in UI Coverage every link destination found, is compared against your rules in order. The **first** rule whose `pattern` matches decides whether that URL is included or excluded, so place specific rules before broad ones.
+- Every URL visited during a run is compared against your rules in order. The **first** rule whose `pattern` matches decides whether that URL is included or excluded, so place specific rules before broad ones.
 - URLs that match no rule are **included** by default. To include only specific URLs, list `include: true` rules for them followed by a catch-all `{ "pattern": "*", "include": false }` rule.
 
 Pattern matching follows [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) semantics, with a few behaviors worth knowing:
