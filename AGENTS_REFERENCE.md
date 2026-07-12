@@ -437,32 +437,14 @@ that already embed the correct params rather than re-writing the URL.
 
 ## GitHub Actions workflows
 
-Repo automation lives in `.github/workflows/`. The recurring failure mode when
-writing a workflow from memory is pinning the action versions that were current
-in training data (`actions/checkout@v4`, `actions/setup-node@v4`,
-`peter-evans/create-pull-request@v7`). Those majors target Node.js 20, which
-GitHub deprecated on its runners in September 2025, so every run logs warnings
-like:
-
-> Node.js 20 is deprecated. The following actions target Node.js 20 but are
-> being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4
-> …
-
-This exact problem was reported in
-[#6698](https://github.com/cypress-io/cypress-documentation/issues/6698); don't
-reintroduce it. When adding or editing a workflow:
+Repo automation lives in `.github/workflows/`. When adding or editing a
+workflow:
 
 - **Look up the current major version of every action you use.** Check the
   action's own GitHub repository (its releases or tags page) at the time you
-  write the workflow. Never trust remembered version numbers, examples from
-  docs or blog posts, or versions copied from another workflow file — any of
-  them may already be stale.
-- Pin to the latest major tag (for example `uses: actions/checkout@v7`),
+  write the workflow, and use the latest major version published there.
+- Pin each action to its latest major tag (`uses: <owner>/<action>@v<major>`),
   matching this repo's existing style. Pinning to a commit SHA is not required
   here.
-- Known-good floors as of July 2026 — treat these as minimums to exceed, not as
-  answers to copy, and re-verify against each action's repo:
-  `actions/checkout@v7`, `actions/setup-node@v6`,
-  `peter-evans/create-pull-request@v8`.
 - After a new or changed workflow runs, read its logs and bump any action the
   runner flags with a deprecation warning.
