@@ -8,6 +8,11 @@ sidebar_label: Migrating from Protractor
 
 # Migrating from Protractor to Cypress
 
+<CopyPrompt
+  title="Migrate from Protractor to Cypress with your AI assistant"
+  prompt={`Migrate this project's tests from Protractor to Cypress. First read https://docs.cypress.io/llm/markdown/app/guides/migration/protractor-to-cypress.md for the syntax mappings and patterns, then work through these steps:\n\n1. Take inventory. Detect my package manager and whether this is an Angular CLI project or AngularJS. Find my protractor.conf.js and spec files, and summarize the patterns I use: locator strategies (by.css, by.id, $, $$, by.model, by.binding, by.repeater, by.buttonText, by.xpath), control flow vs async/await, waits (browser.sleep, browser.wait with ExpectedConditions, waitForAngular), Page Objects, suites defined in the Protractor config, and CI configuration.\n\n2. Choose an install path. For an Angular CLI project, install Cypress with ng add @cypress/schematic so it scaffolds config and wires up ng e2e; decline the schematic's offer to remove Protractor until the migrated tests pass. Otherwise install Cypress directly and set up start-server-and-test (or concurrently) so Cypress has a running app at baseUrl.\n\n3. Agree on a selector strategy. AngularJS-specific locators (by.model, by.binding, by.repeater, by.options) and by.xpath have no Cypress equivalent. Map them to attribute selectors like [ng-model="user.name"] where possible, but recommend adding data-cy attributes (or installing @testing-library/cypress) since ng-* attributes disappear as the app moves to modern Angular. Map by.buttonText, by.linkText, and by.cssContainingText to cy.contains().\n\n4. Keep Protractor running alongside Cypress. Do not modify or delete protractor.conf.js or my Protractor specs until the Cypress equivalents pass.\n\n5. Migrate one spec at a time. Delete Protractor-only plumbing instead of porting it: waitForAngular/waitForAngularEnabled, browser.sleep, browser.wait(ExpectedConditions...), and control-flow (SELENIUM_PROMISE_MANAGER) handling all disappear because Cypress commands retry automatically (never assign a cy.* return value to a variable). Map element()/element.all()/$/$$ to cy.get(), cy.contains(), .find(), and .eq(); browser.get/navigate/refresh to cy.visit(), cy.go(), and cy.reload(); sendKeys to .type() and protractor.Key.TAB to cy.press(); and Jasmine expect() matchers to .should() assertions. Port Page Objects or convert them to custom commands, replace log-in-through-the-UI beforeEach blocks with cy.session(), wrap flows that leave my app's origin (like SSO) in cy.origin(), and add cy.intercept() where tests wait on network state.\n\n6. Flag gaps. Call out anything with no direct Cypress equivalent (deep by.repeater row/column access, multi-tab flows, browser.restart) instead of guessing.\n\n7. Verify. Show me the proposed changes before applying them, then install and run eslint-plugin-cypress and my migrated Cypress tests to confirm they pass.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
+
 :::info
 
 <WhatYoullLearn />
@@ -15,7 +20,11 @@ sidebar_label: Migrating from Protractor
 - How to migrate from Protractor to Cypress
 - The benefits of using Cypress for end-to-end testing
 - How to work with the DOM and write assertions in Cypress
+- How to translate AngularJS-specific locators, waits, and Page Objects
 - Using the Angular schematic to configure Cypress
+- Newer Cypress features that replace common Protractor patterns, like
+  [`cy.press()`](/api/commands/press), [`cy.session()`](/api/commands/session),
+  and [`cy.origin()`](/api/commands/origin)
 
 :::
 
@@ -95,6 +104,12 @@ scenario.
 
 Cypress also helps you to write your tests by making it as easy as possible to
 find the right CSS selectors for the DOM elements in your application with [Cypress Studio](/app/guides/cypress-studio). With a [Cypress Cloud](/cloud/get-started/introduction) account, Studio includes **Studio AI**, AI-powered assertion recommendations as you record.
+
+You can also generate tests from natural language with
+[`cy.prompt()`](/api/commands/prompt), which turns plain-English steps into
+executable Cypress commands — a useful way to stand up coverage quickly while
+you port your Protractor suite. See the
+[AI test generation guide](/app/guides/ai-test-generation) to learn more.
 
 These tools help you cut down on time spent finding the right
 selectors so you can focus on what's important: writing tests that verify your
@@ -353,11 +368,17 @@ element(by.id('my-id'))
 // Get an element using an input name selector.
 element(by.name('field-name'))
 
+// Get an element using the $ shorthand for by.css
+$('.my-class')
+
 //Get an element by the text it contains within a certain CSS selector
 element(by.cssContainingText('.my-class', 'text'))
 
 //Get the first element containing a specific text (only for link elements)
 element(by.linkText('text'))
+
+// Get a button by its text
+element(by.buttonText('Save'))
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -375,11 +396,17 @@ cy.get('#my-id')
 // Get an element using an input name selector.
 cy.get('input[name="field-name"]')
 
+// Get an element using a CSS selector ($ has no shorthand in Cypress)
+cy.get('.my-class')
+
 //Get an element by the text it contains within a certain CSS selector
 cy.get('.my-class').contains('text')
 
 //Get the first element containing a specific text (available for any element)
 cy.contains('text')
+
+// Get a button by its text
+cy.contains('button', 'Save')
 ```
 
 You can also get elements by their text value. This can be accomplished using
@@ -423,6 +450,15 @@ element.all(by.css('.list-item'))
 
 // Find an element using an input name selector.
 element.all(by.name('field-name'))
+
+// Get all elements using the $$ shorthand for element.all(by.css())
+$$('.list-item')
+
+// Get the second element from a list of elements
+$$('.list-item').get(1)
+
+// Find all list items within a parent element
+element(by.css('.todo-list')).all(by.css('li'))
 ```
 
 <Badge type="success">After: Cypress</Badge>
@@ -436,6 +472,15 @@ cy.get('.list-item')
 
 // Find an element using an input name selector.
 cy.get('input[name="field-name"]')
+
+// Get all elements using a CSS selector ($$ has no shorthand in Cypress)
+cy.get('.list-item')
+
+// Get the second element from a list of elements
+cy.get('.list-item').eq(1)
+
+// Find all list items within a parent element
+cy.get('.todo-list').find('li')
 ```
 
 :::info
@@ -452,6 +497,91 @@ You can learn more about
 [how to get DOM elements in our official documentation](/api/commands/get#Syntax).
 
 :::
+
+#### AngularJS-specific locators
+
+Protractor ships locators that reach into AngularJS internals: `by.model`,
+`by.binding`, `by.repeater`, and `by.options`. Cypress is framework-agnostic
+and has no equivalent, but because AngularJS renders these as `ng-*`
+attributes in the DOM, you can usually translate them directly into attribute
+selectors.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+// Get an element by its ng-model
+element(by.model('user.name'))
+
+// Get all rows rendered by ng-repeat
+element.all(by.repeater('item in items'))
+
+// Get all options bound with ng-options
+element.all(by.options('c for c in colors'))
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+// Get an element by its ng-model attribute
+cy.get('[ng-model="user.name"]')
+
+// Get all rows rendered by ng-repeat
+cy.get('[ng-repeat="item in items"]')
+
+// Get all options bound with ng-options
+cy.get('[ng-options="c for c in colors"] option')
+```
+
+`by.binding` has no attribute to target, since a binding like
+`{{user.name}}` renders only text. Select the element with a CSS selector or
+[`cy.contains()`](/api/commands/contains) instead.
+
+:::caution
+
+These `ng-*` attributes disappear as your app migrates from AngularJS to
+modern Angular, so selectors built on them will break a second time. Since
+you are already touching every test, this is the right moment to add
+dedicated
+[`data-cy` attributes](/app/core-concepts/best-practices#Selecting-Elements)
+to the elements your tests use. They are framework-independent and survive
+both the test migration and the app migration.
+
+:::
+
+#### XPath selectors
+
+Cypress does not support XPath out of the box. If your suite uses
+`by.xpath`, rewrite those locators as CSS selectors or
+[`cy.contains()`](/api/commands/contains) text queries — most XPath
+expressions exist to match structure or text, and both translate cleanly.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+// Get a button by its text
+element(by.xpath('//button[text()="Save"]'))
+
+// Get the parent of an element
+element(by.xpath('//li[@class="active"]/..'))
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+// Get a button by its text
+cy.contains('button', 'Save')
+
+// Get the parent of an element
+cy.get('li.active').parent()
+```
+
+Cypress's [traversal commands](/api/commands/parent) (`.parent()`,
+`.closest()`, `.find()`, `.siblings()`, and more) cover the tree-walking
+that XPath is typically used for. For the rare expression that can't be
+rewritten, a community plugin such as
+[cypress-xpath](https://www.npmjs.com/package/cypress-xpath) adds a
+`cy.xpath()` command, but we recommend treating it as a stopgap rather than
+a destination.
 
 ### How to Interact with DOM Elements
 
@@ -520,6 +650,41 @@ You can learn more about
 [interacting with DOM elements in our official documentation](/app/core-concepts/interacting-with-elements).
 
 :::
+
+#### Keyboard interactions
+
+Protractor sends special keys with `protractor.Key`. In Cypress, keys typed
+into an element use [`.type()`](/api/commands/type) special-character
+sequences, and pressing a key against the page itself — like tabbing through
+focusable elements — uses [`cy.press()`](/api/commands/press), which
+dispatches a real native keyboard event rather than a simulated one. This
+makes it a direct replacement for Protractor's `Key.TAB` when testing focus
+management and keyboard navigation.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+// Press ENTER within an input
+element(by.css('input')).sendKeys(protractor.Key.ENTER)
+
+// Press TAB to move focus to the next element
+element(by.css('input')).sendKeys(protractor.Key.TAB)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+// Press ENTER within an input
+cy.get('input').type('{enter}')
+
+// Press TAB to move focus to the next element
+cy.get('input').focus()
+cy.press(Cypress.Keyboard.Keys.TAB)
+```
+
+See [`.type()`](/api/commands/type) for the full list of special-character
+sequences (`{enter}`, `{esc}`, `{selectall}`, etc.) and
+[`cy.press()`](/api/commands/press) for the supported native keys.
 
 ## Assertions
 
@@ -891,6 +1056,31 @@ For more information, check out our
 
 :::
 
+## Common Browser Method Mappings
+
+Most of Protractor's `browser` API maps one-to-one onto a Cypress command.
+This table covers the methods that come up most often in real suites:
+
+| Protractor                                             | Cypress                                                                   |
+| ------------------------------------------------------ | ------------------------------------------------------------------------- |
+| `browser.get(url)`                                     | [`cy.visit(url)`](/api/commands/visit)                                    |
+| `browser.getCurrentUrl()`                              | [`cy.url()`](/api/commands/url) or `cy.location('href')`                  |
+| `browser.getTitle()`                                   | [`cy.title()`](/api/commands/title)                                       |
+| `browser.refresh()`                                    | [`cy.reload()`](/api/commands/reload)                                     |
+| `browser.navigate().back()` / `.forward()`             | [`cy.go('back')` / `cy.go('forward')`](/api/commands/go)                  |
+| `browser.takeScreenshot()`                             | [`cy.screenshot()`](/api/commands/screenshot)                             |
+| `browser.executeScript(fn)`                            | [`cy.window().then((win) => ...)`](/api/commands/window)                  |
+| `browser.manage().window().setSize(w, h)`              | [`cy.viewport(w, h)`](/api/commands/viewport)                             |
+| `browser.manage().addCookie(...)`                      | [`cy.setCookie(...)`](/api/commands/setcookie)                            |
+| `browser.pause()`                                      | [`cy.pause()`](/api/commands/pause)                                       |
+| `browser.debugger()`                                   | [`cy.debug()`](/api/commands/debug)                                       |
+| `browser.actions().doubleClick(el)`                    | [`.dblclick()`](/api/commands/dblclick)                                   |
+| `browser.actions().mouseMove(el).perform()`            | [`.trigger('mouseover')`](/api/commands/trigger)                          |
+| `browser.wait(EC..., timeout)`                         | Delete it — [retry-ability](/app/core-concepts/retry-ability) replaces it |
+| `browser.sleep(ms)`                                    | Delete it — [retry-ability](/app/core-concepts/retry-ability) replaces it |
+| `browser.waitForAngular()` / `waitForAngularEnabled()` | Delete it — Cypress doesn't need it                                       |
+| `browser.restart()`                                    | No equivalent — Cypress runs each spec in a fresh browser context         |
+
 ## Automatic Retrying and Waiting
 
 Web applications are usually rarely synchronous. With Protractor, you may be
@@ -928,6 +1118,43 @@ cy.get('button').click()
 // Make assertion. No waiting necessary!
 cy.get('.list-item').contains('my text')
 ```
+
+The same applies to Protractor's other waiting mechanisms. Explicit waits
+built on `browser.wait()` with `ExpectedConditions`, and arbitrary pauses
+with `browser.sleep()`, should be deleted rather than translated — an
+assertion that retries expresses the same intent without the flake or the
+wasted time.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+// Wait up to 5 seconds for the element to be visible
+const EC = protractor.ExpectedConditions
+browser.wait(EC.visibilityOf(element(by.css('.welcome'))), 5000)
+
+// Wait up to 5 seconds for the loading spinner to go away
+browser.wait(EC.invisibilityOf(element(by.css('.spinner'))), 5000)
+
+// Sleep and hope the page has settled
+browser.sleep(3000)
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+// Retry until the element is visible
+cy.get('.welcome').should('be.visible')
+
+// Retry until the loading spinner goes away
+cy.get('.spinner').should('not.exist')
+
+// No equivalent needed - commands retry until their assertions pass
+```
+
+If a test is waiting on a network request rather than the DOM, wait on the
+request itself with [`cy.intercept()`](/api/commands/intercept) and
+[`cy.wait('@alias')`](/api/commands/wait) instead of sleeping — see
+[Network Handling](#Network-Handling) above.
 
 ## Cypress vs WebDriver Control Flow
 
@@ -1084,6 +1311,102 @@ it('should display the username of a logged in user', () => {
   cy.get('.username').contains('Matt')
 })
 ```
+
+## Authentication with cy.session
+
+Protractor suites commonly log in through the UI in a `beforeEach` or in
+`onPrepare`, paying the cost of that login on every test. Cypress's
+[`cy.session()`](/api/commands/session) caches the browser state (cookies,
+`localStorage`, and `sessionStorage`) produced by your login flow, so the
+login runs once and every subsequent test restores it instantly.
+
+<Badge type="danger">Before: Protractor</Badge>
+
+```js
+beforeEach(async () => {
+  // Runs the full UI login before every single test
+  await browser.get('/login')
+  await element(by.css('.username')).sendKeys('my username')
+  await element(by.css('.password')).sendKeys('my password')
+  await element(by.css('button')).click()
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```js
+beforeEach(() => {
+  // Runs the login once, then restores the cached session
+  cy.session('user', () => {
+    cy.visit('/login')
+    cy.get('.username').type('my username')
+    cy.get('.password').type('my password')
+    cy.get('button').click()
+    cy.url().should('include', '/dashboard')
+  })
+})
+```
+
+For more strategies — including logging in with API requests instead of the
+UI, and provider-specific recipes for
+[Auth0](/app/guides/authentication-testing/auth0-authentication),
+[Okta](/app/guides/authentication-testing/okta-authentication), and
+[Azure AD](/app/guides/authentication-testing/azure-active-directory-authentication) —
+see the [`cy.session()`](/api/commands/session) documentation.
+
+## Testing Across Origins with cy.origin
+
+Protractor could navigate freely between domains, which many suites rely on
+for single sign-on providers like Auth0, Okta, or Azure AD. Cypress runs your
+test alongside your app and limits each test to a single origin by default —
+commands that need to run on a different origin must be wrapped in
+[`cy.origin()`](/api/commands/origin).
+
+```js
+it('logs in through an external SSO provider', () => {
+  cy.visit('/login')
+  cy.get('button').contains('Log in with SSO').click()
+
+  cy.origin('https://auth.example.com', () => {
+    cy.get('input[name="email"]').type('user@email.com')
+    cy.get('input[name="password"]').type('testPassword1234')
+    cy.get('button[type="submit"]').click()
+  })
+
+  // Back on your app's origin
+  cy.url().should('include', '/dashboard')
+})
+```
+
+If a Protractor test hops to another domain and yours fails in Cypress with a
+cross-origin error, `cy.origin()` is the tool to reach for. Learn more in the
+[cross-origin testing guide](/app/guides/cross-origin-testing).
+
+## Angular Component Testing
+
+Migrating from Protractor is also a good time to look at
+[Cypress Component Testing](/app/component-testing/get-started), which didn't
+exist when most Protractor suites were written. Instead of visiting a page,
+you mount an Angular component by itself — in a real browser, with the same
+Cypress API — using the `cy.mount()` command from our first-class
+[Angular support](/app/component-testing/angular/overview).
+
+```ts
+import { ButtonComponent } from './button.component'
+
+it('emits clicked when pressed', () => {
+  cy.mount(ButtonComponent, {
+    componentProperties: { label: 'Save' },
+  })
+  cy.contains('button', 'Save').click()
+})
+```
+
+Protractor e2e tests that exercise a single widget's behavior — form
+validation messages, dropdown filtering, button states — often make more
+sense as component tests after the migration: they run faster, need no
+running server, and can replace Karma unit tests that were really testing
+the DOM.
 
 ## Continuous Integration
 
@@ -1305,3 +1628,12 @@ named `cypress`.
 In fact, as you work through migrating to Cypress, we believe that progressively
 enhancing your e2e tests with Cypress is the best path forward to ensure that
 feature development is not impacted.
+
+## See also
+
+- [Why Cypress?](/app/get-started/why-cypress)
+- [Retry-ability](/app/core-concepts/retry-ability)
+- [Best Practices](/app/core-concepts/best-practices)
+- [Angular Component Testing](/app/component-testing/angular/overview)
+- [Migrating from Selenium to Cypress](/app/guides/migration/selenium-to-cypress)
+- [Migrating from Playwright to Cypress](/app/guides/migration/playwright-to-cypress)
