@@ -132,10 +132,6 @@ Each rule is a hard convention. See the linked section for the how and why.
     (github.repository == 'cypress-io/cypress-documentation')
   ```
 
-- Add a comment near the guard noting that forks should manually disable
-  scheduled workflows in their Actions tab, since the guard only skips the job;
-  the schedule still triggers it.
-
 **Plugins** — [details](./AGENTS_REFERENCE.md#project-layout)
 
 - The sub-packages in `plugins/` are never installed on their own; all of their

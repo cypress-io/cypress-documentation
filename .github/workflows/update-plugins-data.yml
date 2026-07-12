@@ -16,12 +16,7 @@ concurrency:
 
 jobs:
   update-plugins-data:
-    # Only run on the main branch of the parent repository. In forks,
-    # GitHub Actions is not permitted to create pull requests, so the
-    # "Open pull request if changed" step would fail with a fatal error.
-    # Note for forks: scheduled workflows still start (and are skipped by
-    # this condition) until you manually disable this workflow under the
-    # repository's Actions tab.
+    # Skip in forks, where Actions cannot create pull requests
     if: (github.ref == 'refs/heads/main') &&
       (github.repository == 'cypress-io/cypress-documentation')
     runs-on: ubuntu-latest
