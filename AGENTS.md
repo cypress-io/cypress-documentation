@@ -118,6 +118,24 @@ Each rule is a hard convention. See the linked section for the how and why.
   params (`utm_source=docs.cypress.io` + a placement `utm_medium`). Do not add
   them to internal links or `cloud.cypress.io`.
 
+**GitHub Actions workflows**
+
+- This repository is frequently forked, and scheduled (`cron`) workflows are
+  copied into every fork, where they run with reduced permissions (for example,
+  GitHub Actions cannot create or approve pull requests in a fork by default).
+  Guard any job that pushes commits, creates pull requests, or uses repo
+  secrets with a job-level condition so it only runs in the parent repository
+  on the default branch:
+
+  ```yml
+  if: (github.ref == 'refs/heads/main') &&
+    (github.repository == 'cypress-io/cypress-documentation')
+  ```
+
+- Add a comment near the guard noting that forks should manually disable
+  scheduled workflows in their Actions tab, since the guard only skips the job;
+  the schedule still triggers it.
+
 **Plugins** — [details](./AGENTS_REFERENCE.md#project-layout)
 
 - The sub-packages in `plugins/` are never installed on their own; all of their
