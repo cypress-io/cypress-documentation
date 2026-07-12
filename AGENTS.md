@@ -124,3 +124,11 @@ Each rule is a hard convention. See the linked section for the how and why.
   dependencies resolve from the repository root's `node_modules`. Declare new
   dependencies in the **root** `package.json`, never in a plugin's own
   `package.json` (pins there are never installed and just drift stale).
+
+**GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
+
+- When adding or editing a workflow in `.github/workflows/`, never pin an
+  action version from memory or by copying an existing workflow — both go
+  stale. Look up each action's latest major release on its GitHub repo and pin
+  that (e.g. `actions/checkout@v7`, not `@v4`). Older majors target Node.js
+  runtimes GitHub has deprecated and log warnings on every run.
