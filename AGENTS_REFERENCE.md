@@ -448,3 +448,16 @@ workflow:
   here.
 - After a new or changed workflow runs, read its logs and bump any action the
   runner flags with a deprecation warning.
+- This repository is frequently forked, and workflows (including scheduled
+  `cron` jobs) are copied into every fork, where they run with reduced
+  permissions: GitHub Actions cannot create or approve pull requests in a fork
+  by default, so an unguarded job fails with a fatal error. Guard any job that
+  pushes commits, creates pull requests, or uses repo secrets with a job-level
+  condition so it only runs on the default branch of the parent repository:
+
+  ```yml
+  jobs:
+    my-job:
+      if: (github.ref == 'refs/heads/main') &&
+        (github.repository == 'cypress-io/cypress-documentation')
+  ```
