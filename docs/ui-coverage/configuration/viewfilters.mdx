@@ -11,7 +11,223 @@ sidebar_position: 30
 
 The `viewFilters` configuration excludes URLs from UI Coverage. By default, every URL your tests visit is included. A `viewFilters` rule with `include: false` removes matching URLs before any analysis happens: their snapshots don't appear in your report, and no view is created for them. Links are filtered too: any link whose destination URL matches an excluded pattern is removed from the report and the coverage score, and excluded URLs never appear as [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links). The result is a report and score that reflect the parts of your application you own and intend to test.
 
-<ViewFilters />
+## Why use viewFilters?
+
+- **Exclude third-party pages**: Your tests may pass through pages you don't control, such as an OAuth provider's login page or a payment processor's checkout. Excluding them keeps external UI out of your report and links to it out of your score.
+- **Exclude pages you don't intend to test**: Remove sections that aren't part of your coverage goals, such as admin-only tools or informational pages, so their untested elements stop diluting your score.
+- **Reduce noise**: URLs that tests visit incidentally, such as error pages or intermediate redirect URLs, don't represent meaningful user flows. Excluding them keeps reports clean.
+
+If your goal is different, such as organizing URLs into views rather than removing them, or removing individual elements rather than whole pages, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
+
+## Scope
+
+:::info
+
+A root-level `viewFilters` property applies to both UI Coverage and Cypress Accessibility. To configure UI Coverage separately, nest `viewFilters` under a `uiCoverage` key. A nested `viewFilters` completely replaces the root-level one for UI Coverage; the two lists are not merged.
+
+:::
+
+## Syntax
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": string,
+      "include": boolean,
+      "comment": string
+    }
+  ]
+}
+```
+
+To add or edit `viewFilters`, open the **App Quality** tab in your project settings in Cypress Cloud. After saving, regenerate a recent run to see the effect of your filters without rerunning your tests. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details.
+
+### Options
+
+| Option    | Required | Description                                                                                                                                |
+| --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pattern` | Required | A URL pattern in [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax, matched against the full URL. |
+| `include` | Required | Whether matching URLs are included (`true`) or excluded (`false`). There is no default; every rule must state it explicitly.               |
+| `comment` | Optional | A note about why this rule exists, for your team's benefit. Comments have no effect on filtering.                                          |
+
+### How are viewFilters rules applied?
+
+- Every URL visited during a run, and every link destination found, is compared against your rules in order. The **first** rule whose `pattern` matches decides whether that URL is included or excluded, so place specific rules before broad ones.
+- URLs that match no rule are **included** by default. To include only specific URLs, list `include: true` rules for them followed by a catch-all `{ "pattern": "*", "include": false }` rule.
+
+Pattern matching follows [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) semantics, with a few behaviors worth knowing:
+
+- A pattern that omits the query string and hash matches URLs with any query string or hash. For example, `https://www.my-app.com/admin` matches `https://www.my-app.com/admin?tab=users`.
+- Trailing slashes are optional by default: `https://www.my-app.com/admin` matches both `/admin` and `/admin/`. If your pattern ends with a `/`, only URLs with a trailing slash match it.
+- A pattern without a protocol and hostname, such as `/admin/*`, matches that path on any protocol, hostname, and port. This is useful when tests run against multiple environments.
+- A hostname must match exactly unless it contains a wildcard: `https://my-app.com/*` does not match `https://www.my-app.com/home`, but `https://*.my-app.com/*` does.
+- The pattern `*` on its own matches every URL.
+
+### Validation rules
+
+Cypress Cloud rejects a configuration when:
+
+- A rule is missing `pattern` or `include`.
+- A `pattern` isn't valid URL Pattern syntax.
+- Two rules have the same `pattern`. Duplicates can never both apply, because the first matching rule wins.
+- A rule contains a property other than the three listed above.
+
+## Examples
+
+### Exclude a third-party page
+
+Tests that sign in through an external identity provider capture snapshots of its pages, and your application's links to it count as untested elements. One rule removes both, while every other URL stays included by default.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "https://app.okta.com/*",
+      "include": false,
+      "comment": "Exclude the Okta login flow"
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://app.okta.com/login
+https://www.my-app.com/home
+https://www.my-app.com/about
+```
+
+#### Views shown in UI
+
+```
+https://www.my-app.com/home
+https://www.my-app.com/about
+```
+
+---
+
+### Include only your application's URLs
+
+An allowlist inverts the default. The first rule includes your application, and the catch-all `*` rule excludes everything else. Rules are applied in order, so the catch-all must come last.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "https://www.my-app.com/*",
+      "include": true
+    },
+    {
+      "pattern": "*",
+      "include": false,
+      "comment": "Exclude everything that isn't the app itself"
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://www.my-app.com/dashboards
+https://www.my-app.com/dashboards/1
+https://www.my-app.com/dashboards/2
+https://auth.example.com/login
+https://checkout.stripe.com/pay
+```
+
+#### Views shown in UI
+
+```
+/dashboards
+/dashboards/*
+```
+
+The two numbered dashboard URLs group into a single `/dashboards/*` view through the automatic [view creation rules](/ui-coverage/core-concepts/views#How-views-are-created), which apply to included URLs as usual.
+
+---
+
+### Exclude error pages in every environment
+
+Patterns without a protocol and hostname match on any environment your tests run against, whether that's `localhost`, a staging domain, or production.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "/404",
+      "include": false
+    },
+    {
+      "pattern": "/error/*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+http://localhost:3000/home
+http://localhost:3000/404
+https://staging.my-app.com/error/500
+```
+
+#### Views shown in UI
+
+```
+http://localhost:3000/home
+```
+
+---
+
+### Exclude URLs from UI Coverage only
+
+Nesting `viewFilters` under `uiCoverage` applies the rules to UI Coverage alone. Here, an embedded documentation site is excluded from coverage scores while Cypress Accessibility continues to scan it.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "viewFilters": [
+      {
+        "pattern": "https://docs.my-app.com/*",
+        "include": false,
+        "comment": "Don't count docs pages or links to them toward coverage"
+      }
+    ]
+  }
+}
+```
+
+A nested `viewFilters` replaces any root-level `viewFilters` for UI Coverage, so include every rule the product needs in the nested list.
+
+## Troubleshooting
+
+### A URL you excluded still appears in the report
+
+- Rules apply in order, and the first match wins. Check whether an earlier rule with `include: true` matches the URL.
+- A pattern that starts with a hostname, like `my-app.com/admin`, is interpreted as a path rather than a hostname and never matches the URLs you intend. Include the protocol, as in `https://my-app.com/admin/*`, or use the path-only form `/admin/*`.
+- Hostnames must match exactly. `https://my-app.com/*` doesn't match URLs on `www.my-app.com`; add a wildcard such as `https://*.my-app.com/*` to span subdomains.
+- Reports use the configuration saved at the time they were processed. Regenerate the run to apply your current configuration. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration).
+
+### Error: `Missing include boolean`
+
+Every rule must set `include` explicitly; there is no default value. Add `"include": false` to exclude matching URLs, or `"include": true` to include them.
+
+### Error: `No duplicate patterns allowed`
+
+Each `pattern` in `viewFilters` must be unique. Because the first matching rule wins, a second rule with the same pattern can never apply; remove it or merge the two rules.
 
 ## See also
 

@@ -46,7 +46,6 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 import ThenShouldAndDifference from '@site/docs/partials/_then-should-and-difference.mdx'
 import WarningSetupNodeEvents from '@site/docs/partials/_warning-setup-node-events.mdx'
-import ViewFilters from '@site/docs/partials/_viewfilters.mdx'
 import Views from '@site/docs/partials/_views.mdx'
 import LineBreak from '@site/src/components/line-break'
 import OsTabs from '@site/src/components/os-tabs'
@@ -239,7 +238,6 @@ export default {
   TestReplayInfo,
   ThenShouldAndDifference,
   WarningSetupNodeEvents,
-  ViewFilters,
   Views,
   Logo,
   LineBreak,
