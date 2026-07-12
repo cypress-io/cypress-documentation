@@ -434,3 +434,17 @@ that already embed the correct params rather than re-writing the URL.
 - **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
+
+## GitHub Actions workflows
+
+Repo automation lives in `.github/workflows/`. When adding or editing a
+workflow:
+
+- **Look up the current major version of every action you use.** Check the
+  action's own GitHub repository (its releases or tags page) at the time you
+  write the workflow, and use the latest major version published there.
+- Pin each action to its latest major tag (`uses: <owner>/<action>@v<major>`),
+  matching this repo's existing style. Pinning to a commit SHA is not required
+  here.
+- After a new or changed workflow runs, read its logs and bump any action the
+  runner flags with a deprecation warning.
