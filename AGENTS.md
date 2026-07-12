@@ -138,3 +138,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   dependencies resolve from the repository root's `node_modules`. Declare new
   dependencies in the **root** `package.json`, never in a plugin's own
   `package.json` (pins there are never installed and just drift stale).
+
+**GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
+
+- When adding or editing a workflow in `.github/workflows/`, look up each
+  action's latest major release on its GitHub repository at the time of
+  writing and pin that major tag.
