@@ -16,6 +16,9 @@ concurrency:
 
 jobs:
   update-plugins-data:
+    # Skip in forks, where Actions cannot create pull requests
+    if: (github.ref == 'refs/heads/main') &&
+      (github.repository == 'cypress-io/cypress-documentation')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
