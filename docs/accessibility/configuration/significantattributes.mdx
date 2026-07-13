@@ -116,6 +116,38 @@ The violation target selector displayed in the report:
 
 ---
 
+### List several attributes in priority order
+
+`significantAttributes` is a list, so you can prioritize more than one attribute. They're checked in the order you write them, and each element is identified by the first attribute it has. This helps when different parts of your application use different conventions.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "significantAttributes": ["data-qa", "data-component"]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-qa="save" data-component="SaveButton">Save</button>
+  <button data-component="CancelButton">Cancel</button>
+</body>
+```
+
+#### Result
+
+The Save button has both attributes, so `data-qa`, listed first, identifies it. The Cancel button has only `data-component`, so that identifies it instead:
+
+```
+[data-qa="save"]
+[data-component="CancelButton"]
+```
+
+---
+
 ### Review `aria-label` wording while you triage
 
 Significant attributes aren't limited to `data-*` attributes; any HTML attribute qualifies, including `aria-label`. Listing it identifies elements by their label text throughout the report.
