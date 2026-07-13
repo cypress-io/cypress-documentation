@@ -1097,25 +1097,44 @@ For more information, check out our
 Most of Protractor's `browser` API maps one-to-one onto a Cypress command.
 This table covers the methods that come up most often in real suites:
 
-| Protractor                                             | Cypress                                                                  |
-| ------------------------------------------------------ | ------------------------------------------------------------------------ |
-| `browser.get(url)`                                     | [`cy.visit(url)`](/api/commands/visit)                                   |
-| `browser.getCurrentUrl()`                              | [`cy.url()`](/api/commands/url) or `cy.location('href')`                 |
-| `browser.getTitle()`                                   | [`cy.title()`](/api/commands/title)                                      |
-| `browser.refresh()`                                    | [`cy.reload()`](/api/commands/reload)                                    |
-| `browser.navigate().back()` / `.forward()`             | [`cy.go('back')` / `cy.go('forward')`](/api/commands/go)                 |
-| `browser.takeScreenshot()`                             | [`cy.screenshot()`](/api/commands/screenshot)                            |
-| `browser.executeScript(fn)`                            | [`cy.window().then((win) => ...)`](/api/commands/window)                 |
-| `browser.manage().window().setSize(w, h)`              | [`cy.viewport(w, h)`](/api/commands/viewport)                            |
-| `browser.manage().addCookie(...)`                      | [`cy.setCookie(...)`](/api/commands/setcookie)                           |
-| `browser.pause()`                                      | [`cy.pause()`](/api/commands/pause)                                      |
-| `browser.debugger()`                                   | [`cy.debug()`](/api/commands/debug)                                      |
-| `browser.actions().doubleClick(el)`                    | [`.dblclick()`](/api/commands/dblclick)                                  |
-| `browser.actions().mouseMove(el).perform()`            | [`.trigger('mouseover')`](/api/commands/trigger)                         |
-| `browser.wait(EC..., timeout)`                         | Delete it; [retry-ability](/app/core-concepts/retry-ability) replaces it |
-| `browser.sleep(ms)`                                    | Delete it; [retry-ability](/app/core-concepts/retry-ability) replaces it |
-| `browser.waitForAngular()` / `waitForAngularEnabled()` | Delete it; Cypress doesn't need it                                       |
-| `browser.restart()`                                    | No equivalent; Cypress runs each spec in a fresh browser context         |
+| Protractor                                             | Cypress                                                                                                                  |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `browser.get(url)`                                     | [`cy.visit(url)`](/api/commands/visit)                                                                                   |
+| `browser.getCurrentUrl()`                              | [`cy.url()`](/api/commands/url) or `cy.location('href')`                                                                 |
+| `browser.getTitle()`                                   | [`cy.title()`](/api/commands/title)                                                                                      |
+| `browser.refresh()`                                    | [`cy.reload()`](/api/commands/reload)                                                                                    |
+| `browser.navigate().back()` / `.forward()`             | [`cy.go('back')` / `cy.go('forward')`](/api/commands/go)                                                                 |
+| `browser.takeScreenshot()`                             | [`cy.screenshot()`](/api/commands/screenshot)                                                                            |
+| `browser.executeScript(fn)`                            | [`cy.window().then((win) => ...)`](/api/commands/window)                                                                 |
+| `browser.manage().window().setSize(w, h)`              | [`cy.viewport(w, h)`](/api/commands/viewport)                                                                            |
+| `browser.manage().addCookie(...)`                      | [`cy.setCookie(...)`](/api/commands/setcookie)                                                                           |
+| `browser.pause()`                                      | [`cy.pause()`](/api/commands/pause)                                                                                      |
+| `browser.debugger()`                                   | [`cy.debug()`](/api/commands/debug)                                                                                      |
+| `browser.actions().doubleClick(el)`                    | [`.dblclick()`](/api/commands/dblclick)                                                                                  |
+| `browser.actions().mouseMove(el).perform()`            | [`.trigger('mouseover')`](/api/commands/trigger)                                                                         |
+| `browser.wait(EC..., timeout)`                         | A retrying [`.should()`](/api/commands/should) assertion, or [`cy.wait('@alias')`](/api/commands/wait) for network waits |
+| `browser.sleep(ms)`                                    | Delete it; [retry-ability](/app/core-concepts/retry-ability) replaces it                                                 |
+| `browser.waitForAngular()` / `waitForAngularEnabled()` | Delete it; Cypress doesn't need it                                                                                       |
+| `browser.restart()`                                    | No equivalent; Cypress runs each spec in a fresh browser context                                                         |
+
+A note on `browser.executeScript()`: Protractor specs run in Node, so
+`executeScript` exists to reach into the browser and run code there. Cypress
+tests already run in the browser, so that code needs no bridge. Use
+[`cy.window()`](/api/commands/window), [`cy.document()`](/api/commands/document),
+or [`.invoke()`](/api/commands/invoke) to work with the page directly. The
+reverse also applies: work your Protractor specs did in Node, like reading
+files or seeding a database, moves behind [`cy.task()`](/api/commands/task),
+and shell commands behind [`cy.exec()`](/api/commands/exec).
+
+`browser.wait()` deserves the same care. Its condition-based form
+(`browser.wait(EC.visibilityOf(el), 5000)`) should become a retrying
+assertion like `cy.get(el).should('be.visible')`, not a
+[`cy.wait(ms)`](/api/commands/wait) pause. Hard-coded `cy.wait(<number>)`
+calls are an
+[anti-pattern](/app/core-concepts/best-practices#Unnecessary-Waiting) that
+`eslint-plugin-cypress` flags. The one wait worth keeping is on the network:
+`cy.wait('@alias')` with [`cy.intercept()`](/api/commands/intercept), covered
+in [Network Handling](#Network-Handling).
 
 ## Automatic Retrying and Waiting
 
