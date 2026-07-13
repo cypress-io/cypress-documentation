@@ -21,7 +21,7 @@ This is why stable identities matter. The same button can appear in hundreds of 
 
 ## Significant attributes for identification
 
-Certain attributes are prioritized by UI Coverage for element identification and grouping. These include:
+UI Coverage checks a prioritized list of attributes on each element to find its identifier. The defaults, in priority order, are:
 
 - `data-cy`
 - `data-test`
@@ -29,10 +29,8 @@ Certain attributes are prioritized by UI Coverage for element identification and
 - `data-test-id`
 - `data-qa`
 - `row-id`
-- `id`
-- `name`
 
-By using these attributes consistently in your application, you can improve the accuracy of UI Coverage tracking.
+When an element has none of these, `id` and `name` are used as fallbacks. The first attribute found with a usable value identifies the element, so using these attributes consistently in your application improves the accuracy of UI Coverage tracking.
 
 ## Configuring element identification
 
@@ -40,7 +38,7 @@ By using these attributes consistently in your application, you can improve the 
 
 Exclude irrelevant or dynamically generated attributes to reduce noise in UI Coverage reports. For example:
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "attributeFilters": [
@@ -60,7 +58,7 @@ Learn more about attribute filtering in the [Attribute Filters](/ui-coverage/con
 
 Define custom significant attributes to prioritize specific selectors that align with your application’s structure. For example:
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "significantAttributes": ["data-custom-id"]
@@ -74,7 +72,7 @@ Refer to the [Significant Attributes](/ui-coverage/configuration/significantattr
 
 Assign a stable identity and a readable name to a specific element whose attributes change between snapshots. An element matched by an `elements` rule is identified by the rule's selector alone, so it stays one element across snapshots. For example:
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elements": [

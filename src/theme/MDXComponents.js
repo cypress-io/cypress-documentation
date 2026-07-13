@@ -38,7 +38,6 @@ import InvertedContainsSelection from '@site/docs/partials/_inverted-contains-se
 import ProductHeading from '@site/src/components/product-heading'
 import Profiles from '@site/docs/partials/_profiles.mdx'
 import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
-import SignificantAttributes from '@site/docs/partials/_significantattributes.mdx'
 import SourceMaps from '@site/docs/partials/_source-maps.mdx'
 import SupportFileConfiguration from '@site/docs/partials/_support-file-configuration.mdx'
 import Tabs from '@theme/Tabs'
@@ -229,7 +228,6 @@ export default {
   ProductHeading,
   Profiles,
   RecordKeyEnvVar,
-  SignificantAttributes,
   SourceMaps,
   SupportFileConfiguration,
   Tabs,
