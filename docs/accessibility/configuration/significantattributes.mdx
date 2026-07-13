@@ -57,7 +57,7 @@ To apply the list to Cypress Accessibility only, nest the property under the `ac
 }
 ```
 
-Each entry is the name of an HTML attribute, such as `"data-component-name"`. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values. Unlike most other configuration properties, entries are plain strings, so there is no per-entry `comment` field.
+Each entry is the name of an HTML attribute, such as `"data-component-name"`. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values.
 
 ### How are significant attributes applied?
 
@@ -69,7 +69,7 @@ For each element with accessibility results, Cypress Accessibility builds a sele
 
 The first attribute that uniquely identifies the element, with a value that isn't excluded by your [`attributeFilters`](/accessibility/configuration/attributefilters), becomes the element's selector. That selector is displayed as the violation target throughout your reports and drives how results are deduplicated across snapshots.
 
-A few consequences of this design are worth knowing:
+Keep these behaviors in mind when building your list:
 
 - **Your list is added to the defaults, not a replacement for them.** An element that has none of your attributes is still identified by `data-testid`, `id`, or whatever else it has, exactly as it would be without configuration. To stop an attribute from being used entirely, use [`attributeFilters`](/accessibility/configuration/attributefilters); listing other attributes in `significantAttributes` doesn't disable it.
 - **To reorder the defaults, list them.** Your entries outrank every default, so `"significantAttributes": ["data-qa"]` is all it takes to check `data-qa` before `data-cy`.
