@@ -25,7 +25,6 @@ import DocsVideo from '@site/src/components/docs-video'
 import DocumentDomainWorkaround from '@site/docs/partials/_document-domain-workaround.mdx'
 import E2EOnlyBadge from '@site/src/components/e2e-only-badge'
 import E2EOrCtTabs from '@site/src/components/e2e-or-ct-tabs'
-import ElementFilters from '@site/docs/partials/_elementfilters.mdx'
 import VueSyntaxTabs from '@site/src/components/vue-syntax-tabs'
 import HeaderAssertions from '@site/docs/partials/_header-assertions.mdx'
 import InterceptAliasIndex from '@site/docs/partials/_intercept-alias-index.mdx'
@@ -222,7 +221,6 @@ export default {
   DocumentDomainWorkaround,
   E2EOnlyBadge,
   E2EOrCtTabs,
-  ElementFilters,
   VueSyntaxTabs,
   HeaderAssertions,
   InterceptAliasIndex,

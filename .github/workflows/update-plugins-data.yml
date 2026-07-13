@@ -16,15 +16,18 @@ concurrency:
 
 jobs:
   update-plugins-data:
+    # Skip in forks, where Actions cannot create pull requests
+    if: (github.ref == 'refs/heads/main') &&
+      (github.repository == 'cypress-io/cypress-documentation')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.node-version'
           cache: npm
@@ -42,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Open pull request if changed
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           add-paths: src/data/plugins-generated.json
           branch: automation/update-plugins-data

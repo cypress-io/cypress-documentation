@@ -434,3 +434,30 @@ that already embed the correct params rather than re-writing the URL.
 - **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
+
+## GitHub Actions workflows
+
+Repo automation lives in `.github/workflows/`. When adding or editing a
+workflow:
+
+- **Look up the current major version of every action you use.** Check the
+  action's own GitHub repository (its releases or tags page) at the time you
+  write the workflow, and use the latest major version published there.
+- Pin each action to its latest major tag (`uses: <owner>/<action>@v<major>`),
+  matching this repo's existing style. Pinning to a commit SHA is not required
+  here.
+- After a new or changed workflow runs, read its logs and bump any action the
+  runner flags with a deprecation warning.
+- This repository is frequently forked, and workflows (including scheduled
+  `cron` jobs) are copied into every fork, where they run with reduced
+  permissions: GitHub Actions cannot create or approve pull requests in a fork
+  by default, so an unguarded job fails with a fatal error. Guard any job that
+  pushes commits, creates pull requests, or uses repo secrets with a job-level
+  condition so it only runs on the default branch of the parent repository:
+
+  ```yml
+  jobs:
+    my-job:
+      if: (github.ref == 'refs/heads/main') &&
+        (github.repository == 'cypress-io/cypress-documentation')
+  ```

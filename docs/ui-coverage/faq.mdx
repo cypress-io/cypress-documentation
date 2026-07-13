@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element grouping, iframes and shadow DOM, and configuration.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element grouping and filtering, iframes and shadow DOM, and configuration.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -74,6 +74,27 @@ The most common causes are:
 - The elements declare a group in markup with the `data-cy-ui-group` attribute, which takes priority over configuration rules.
 - The selector matches a container rather than the interactive elements themselves.
 - The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+### <Icon name="angle-right" /> How do I exclude elements from UI Coverage?
+
+Add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. Excluded elements are removed from the report and don't count toward your coverage score. This is the standard way to remove third-party widgets, such as chat launchers or cookie banners, from your reports. The [Ignore elements](/ui-coverage/guides/ignore-elements) guide walks through common cases.
+
+### <Icon name="angle-right" /> Do excluded elements count toward my UI Coverage score?
+
+No. An element excluded by [`elementFilters`](/ui-coverage/configuration/elementfilters) doesn't appear in the report and doesn't count toward the score, whether your tests interacted with it or not. It's also not considered by [`elementGroups`](/ui-coverage/configuration/elementgroups) or [`elements`](/ui-coverage/configuration/elements) rules.
+
+### <Icon name="angle-right" /> Why isn't my elementFilters rule excluding an element?
+
+The most common causes are:
+
+- The selector matches a container instead of the element itself. Filters use standard CSS matching against each tracked element, so `footer` matches only the `<footer>` element. Use a descendant selector like `footer *` to exclude everything inside a container.
+- An earlier `elementFilters` rule already matched the element, and the first matching rule wins. An `include: true` rule above your exclude rule protects the elements it matches.
+- The rule has a `documentScope` that doesn't match the element's iframe or shadow DOM hosts.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+### <Icon name="angle-right" /> Can I exclude elements from UI Coverage without affecting Cypress Accessibility?
+
+Yes. An `elementFilters` list at the root of your configuration applies to both products, but nesting it under a `uiCoverage` or `accessibility` key applies it to that product only. A nested list completely replaces a root-level one for that product; the two are not merged. See [Exclude elements](/ui-coverage/configuration/elementfilters#Scope).
 
 ### <Icon name="angle-right" /> Why does one element appear as multiple elements in the report?
 
