@@ -59,7 +59,18 @@ It is also possible to adjust the [allowed commands](/ui-coverage/configuration/
 
 ## Untested Links
 
-UI Coverage tracks `<a>` elements (links) that are not visited during testing. For each untested link, detailed information is available:
+UI Coverage tracks links (`<a>` elements) whose destination URLs are never visited during testing.
+
+### Which hrefs count as links
+
+The `href` value determines how UI Coverage treats each anchor:
+
+- **URLs**: An `href` that resolves to a URL is treated as a link to a destination. This includes relative paths like `/settings`, hash routes like `#/settings`, and absolute URLs, including links to entirely external websites. If the destination is never visited, the link appears as an untested link and counts against your score, unless a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule excludes the destination URL.
+- **Document fragments**: An `href` that points to a fragment on the current page, such as `#pricing`, makes the anchor an ordinary interactive element. It must be interacted with to count as tested, but it never appears as an untested link.
+- **`#` and `javascript:` values**: Anchors with `href="#"` or a `javascript:` value are also treated as ordinary interactive elements rather than links to a destination.
+- **`tel:`, `mailto:`, and `sms:` values**: Contact links are not considered interactive elements. They don't appear in reports and don't count toward your coverage score.
+
+For each untested link, detailed information is available:
 
 ### Referrers
 
