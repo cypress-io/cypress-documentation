@@ -57,6 +57,10 @@ Add the attribute name to [`significantAttributes`](/accessibility/configuration
 
 No. Your attributes are checked first, and the defaults still apply after them, so an element without any of your attributes is identified exactly as it would be without configuration. Listing a default attribute like `data-qa` promotes it above the other defaults. To stop an attribute from being used at all, use [`attributeFilters`](/accessibility/configuration/attributefilters) instead.
 
+### <Icon name="angle-right" /> Can I use aria-label as a significant attribute to review my labels?
+
+Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/accessibility/configuration/significantattributes) identifies elements by their label text, so the elements you triage are shown by their labels. This adds a manual check on top of the automated one: Cypress Accessibility confirms that a control has an accessible name, but not that the name is understandable, so `aria-label="button"` passes the same name-presence rules as `aria-label="Close dialog"`. Seeing the label as the identifier makes an unclear one easy to catch.
+
 ## Configuration
 
 ### <Icon name="angle-right" /> Where do I set Cypress Accessibility configuration?

@@ -1,6 +1,6 @@
 ---
 title: 'significantAttributes: identify elements by your attributes in UI Coverage'
-description: 'Make Cypress UI Coverage identify, name, and group elements using your own HTML attributes, such as data-component or data-analytics-id, by adding them to the priority list of significant attributes.'
+description: 'Make Cypress UI Coverage identify, name, and group elements using your own HTML attributes, such as data-component, data-analytics-id, or aria-label, by adding them to the priority list of significant attributes.'
 sidebar_label: 'Prioritize identifying attributes'
 sidebar_position: 70
 ---
@@ -56,7 +56,7 @@ To apply the list to UI Coverage only, nest the property under the `uiCoverage` 
 }
 ```
 
-Each entry is the name of an HTML attribute, such as `"data-component"`. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values.
+Each entry is the name of an HTML attribute, such as `"data-component"` or `"aria-label"`. Any valid HTML attribute qualifies, not only `data-*` attributes. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values.
 
 ### How are significant attributes applied?
 
@@ -116,6 +116,42 @@ Your configured attribute outranks the defaults, so the button is identified by 
 [data-component="SignupSubmit"]
 [data-testid="cancel"]
 ```
+
+---
+
+### Identify elements by their `aria-label`
+
+Significant attributes aren't limited to `data-*` attributes; any HTML attribute qualifies, including semantic ones like `aria-label`. Icon-only controls often carry no test attribute, so listing `aria-label` gives them a readable identity in reports instead of a generated selector.
+
+This does double duty. Automated accessibility tools confirm only that a control _has_ an accessible name, not that the name is clear, so `aria-label="button"` passes the same check as `aria-label="Close dialog"`. Because UI Coverage lists every interactive element, identifying elements by `aria-label` turns the report into an inventory of your label text, where a person can catch a vague label that passes automated checks but wouldn't help someone relying on it.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "significantAttributes": ["aria-label"]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button aria-label="Close dialog"><i class="icon-x"></i></button>
+  <button aria-label="button"><i class="icon-x"></i></button>
+</body>
+```
+
+#### Elements shown in UI
+
+Each button is listed by its label, where the vague second one stands out:
+
+```
+[aria-label="Close dialog"]
+[aria-label="button"]
+```
+
+Because the label text becomes the identifier, `aria-label` values that are localized or include dynamic content, such as an unread count, change between snapshots and split one element into several. Choose it when the labels you want to track are stable.
 
 ---
 

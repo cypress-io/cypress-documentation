@@ -98,6 +98,10 @@ Add the attribute name to [`significantAttributes`](/ui-coverage/configuration/s
 
 No. Your attributes are checked first, and the defaults still apply after them, so an element without any of your attributes is identified exactly as it would be without configuration. Listing a default attribute like `data-qa` promotes it above the other defaults. To stop an attribute from being used at all, use [`attributeFilters`](/ui-coverage/configuration/attributefilters) instead.
 
+### <Icon name="angle-right" /> Can I use a non-`data-` attribute like aria-label as a significant attribute?
+
+Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/ui-coverage/configuration/significantattributes) identifies elements by their label text, which gives icon-only controls a readable identity. Because UI Coverage lists every interactive element, it also surfaces every label for a person to read and judge for clarity, since automated accessibility tools confirm only that a label exists, not that it is well written.
+
 ### <Icon name="angle-right" /> Why isn't my elements rule applying?
 
 An [`elements`](/ui-coverage/configuration/elements) rule applies only when its selector matches exactly one interactive element in a snapshot. The most common causes are:
