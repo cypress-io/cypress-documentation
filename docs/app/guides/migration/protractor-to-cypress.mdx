@@ -107,8 +107,8 @@ find the right CSS selectors for the DOM elements in your application with [Cypr
 
 You can also generate tests from natural language with
 [`cy.prompt()`](/api/commands/prompt), which turns plain-English steps into
-executable Cypress commands — a useful way to stand up coverage quickly while
-you port your Protractor suite. See the
+executable Cypress commands. It's a useful way to stand up coverage quickly
+while you port your Protractor suite. See the
 [AI test generation guide](/app/guides/ai-test-generation) to learn more.
 
 These tools help you cut down on time spent finding the right
@@ -588,7 +588,7 @@ both the test migration and the app migration.
 
 Cypress does not support XPath out of the box. If your suite uses
 `by.xpath`, rewrite those locators as CSS selectors or
-[`cy.contains()`](/api/commands/contains) text queries — most XPath
+[`cy.contains()`](/api/commands/contains) text queries. Most XPath
 expressions exist to match structure or text, and both translate cleanly.
 
 <Badge type="danger">Before: Protractor</Badge>
@@ -691,8 +691,8 @@ You can learn more about
 
 Protractor sends special keys with `protractor.Key`. In Cypress, keys typed
 into an element use [`.type()`](/api/commands/type) special-character
-sequences, and pressing a key against the page itself — like tabbing through
-focusable elements — uses [`cy.press()`](/api/commands/press), which
+sequences, and pressing a key against the page itself, like tabbing through
+focusable elements, uses [`cy.press()`](/api/commands/press), which
 dispatches a real native keyboard event rather than a simulated one. This
 makes it a direct replacement for Protractor's `Key.TAB` when testing focus
 management and keyboard navigation.
@@ -1097,25 +1097,25 @@ For more information, check out our
 Most of Protractor's `browser` API maps one-to-one onto a Cypress command.
 This table covers the methods that come up most often in real suites:
 
-| Protractor                                             | Cypress                                                                   |
-| ------------------------------------------------------ | ------------------------------------------------------------------------- |
-| `browser.get(url)`                                     | [`cy.visit(url)`](/api/commands/visit)                                    |
-| `browser.getCurrentUrl()`                              | [`cy.url()`](/api/commands/url) or `cy.location('href')`                  |
-| `browser.getTitle()`                                   | [`cy.title()`](/api/commands/title)                                       |
-| `browser.refresh()`                                    | [`cy.reload()`](/api/commands/reload)                                     |
-| `browser.navigate().back()` / `.forward()`             | [`cy.go('back')` / `cy.go('forward')`](/api/commands/go)                  |
-| `browser.takeScreenshot()`                             | [`cy.screenshot()`](/api/commands/screenshot)                             |
-| `browser.executeScript(fn)`                            | [`cy.window().then((win) => ...)`](/api/commands/window)                  |
-| `browser.manage().window().setSize(w, h)`              | [`cy.viewport(w, h)`](/api/commands/viewport)                             |
-| `browser.manage().addCookie(...)`                      | [`cy.setCookie(...)`](/api/commands/setcookie)                            |
-| `browser.pause()`                                      | [`cy.pause()`](/api/commands/pause)                                       |
-| `browser.debugger()`                                   | [`cy.debug()`](/api/commands/debug)                                       |
-| `browser.actions().doubleClick(el)`                    | [`.dblclick()`](/api/commands/dblclick)                                   |
-| `browser.actions().mouseMove(el).perform()`            | [`.trigger('mouseover')`](/api/commands/trigger)                          |
-| `browser.wait(EC..., timeout)`                         | Delete it — [retry-ability](/app/core-concepts/retry-ability) replaces it |
-| `browser.sleep(ms)`                                    | Delete it — [retry-ability](/app/core-concepts/retry-ability) replaces it |
-| `browser.waitForAngular()` / `waitForAngularEnabled()` | Delete it — Cypress doesn't need it                                       |
-| `browser.restart()`                                    | No equivalent — Cypress runs each spec in a fresh browser context         |
+| Protractor                                             | Cypress                                                                  |
+| ------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `browser.get(url)`                                     | [`cy.visit(url)`](/api/commands/visit)                                   |
+| `browser.getCurrentUrl()`                              | [`cy.url()`](/api/commands/url) or `cy.location('href')`                 |
+| `browser.getTitle()`                                   | [`cy.title()`](/api/commands/title)                                      |
+| `browser.refresh()`                                    | [`cy.reload()`](/api/commands/reload)                                    |
+| `browser.navigate().back()` / `.forward()`             | [`cy.go('back')` / `cy.go('forward')`](/api/commands/go)                 |
+| `browser.takeScreenshot()`                             | [`cy.screenshot()`](/api/commands/screenshot)                            |
+| `browser.executeScript(fn)`                            | [`cy.window().then((win) => ...)`](/api/commands/window)                 |
+| `browser.manage().window().setSize(w, h)`              | [`cy.viewport(w, h)`](/api/commands/viewport)                            |
+| `browser.manage().addCookie(...)`                      | [`cy.setCookie(...)`](/api/commands/setcookie)                           |
+| `browser.pause()`                                      | [`cy.pause()`](/api/commands/pause)                                      |
+| `browser.debugger()`                                   | [`cy.debug()`](/api/commands/debug)                                      |
+| `browser.actions().doubleClick(el)`                    | [`.dblclick()`](/api/commands/dblclick)                                  |
+| `browser.actions().mouseMove(el).perform()`            | [`.trigger('mouseover')`](/api/commands/trigger)                         |
+| `browser.wait(EC..., timeout)`                         | Delete it; [retry-ability](/app/core-concepts/retry-ability) replaces it |
+| `browser.sleep(ms)`                                    | Delete it; [retry-ability](/app/core-concepts/retry-ability) replaces it |
+| `browser.waitForAngular()` / `waitForAngularEnabled()` | Delete it; Cypress doesn't need it                                       |
+| `browser.restart()`                                    | No equivalent; Cypress runs each spec in a fresh browser context         |
 
 ## Automatic Retrying and Waiting
 
@@ -1157,7 +1157,7 @@ cy.get('.list-item').contains('my text')
 
 The same applies to Protractor's other waiting mechanisms. Explicit waits
 built on `browser.wait()` with `ExpectedConditions`, and arbitrary pauses
-with `browser.sleep()`, should be deleted rather than translated — an
+with `browser.sleep()`, should be deleted rather than translated. An
 assertion that retries expresses the same intent without the flake or the
 wasted time.
 
@@ -1189,7 +1189,7 @@ cy.get('.spinner').should('not.exist')
 
 If a test is waiting on a network request rather than the DOM, wait on the
 request itself with [`cy.intercept()`](/api/commands/intercept) and
-[`cy.wait('@alias')`](/api/commands/wait) instead of sleeping — see
+[`cy.wait('@alias')`](/api/commands/wait) instead of sleeping. See
 [Network Handling](#Network-Handling) above.
 
 ## Cypress vs WebDriver Control Flow
@@ -1245,7 +1245,7 @@ One practical rule falls out of this difference: **never assign the return
 value of a Cypress command to a variable**. In Protractor,
 `const el = element(by.css('button'))` hands you an element you can `await`
 later. A Cypress command returns a chainable that only means something inside
-the command queue — assigning it does not capture an element, and `await`-ing
+the command queue. Assigning it does not capture an element, and `await`-ing
 it does not do what it appears to. Chain from the command, or use
 [`.then()`](/api/commands/then) when you need the yielded value, and use
 [aliases](/app/core-concepts/variables-and-aliases) to reference it later.
@@ -1414,19 +1414,19 @@ beforeEach(() => {
 })
 ```
 
-For more strategies — including logging in with API requests instead of the
-UI, and provider-specific recipes for
+For more strategies, including logging in with API requests instead of the
+UI and provider-specific recipes for
 [Auth0](/app/guides/authentication-testing/auth0-authentication),
 [Okta](/app/guides/authentication-testing/okta-authentication), and
-[Azure AD](/app/guides/authentication-testing/azure-active-directory-authentication) —
+[Azure AD](/app/guides/authentication-testing/azure-active-directory-authentication),
 see the [`cy.session()`](/api/commands/session) documentation.
 
 ## Testing Across Origins with cy.origin
 
 Protractor could navigate freely between domains, which many suites rely on
 for single sign-on providers like Auth0, Okta, or Azure AD. Cypress runs your
-test alongside your app and limits each test to a single origin by default —
-commands that need to run on a different origin must be wrapped in
+test alongside your app and limits each test to a single origin by default.
+Commands that need to run on a different origin must be wrapped in
 [`cy.origin()`](/api/commands/origin).
 
 ```js
@@ -1454,8 +1454,8 @@ cross-origin error, `cy.origin()` is the tool to reach for. Learn more in the
 Migrating from Protractor is also a good time to look at
 [Cypress Component Testing](/app/component-testing/get-started), which didn't
 exist when most Protractor suites were written. Instead of visiting a page,
-you mount an Angular component by itself — in a real browser, with the same
-Cypress API — using the `cy.mount()` command from our first-class
+you mount an Angular component by itself, in a real browser with the same
+Cypress API, using the `cy.mount()` command from our first-class
 [Angular support](/app/component-testing/angular/overview).
 
 ```ts
@@ -1469,8 +1469,8 @@ it('emits clicked when pressed', () => {
 })
 ```
 
-Protractor e2e tests that exercise a single widget's behavior — form
-validation messages, dropdown filtering, button states — often make more
+Protractor e2e tests that exercise a single widget's behavior (form
+validation messages, dropdown filtering, button states) often make more
 sense as component tests after the migration: they run faster, need no
 running server, and can replace Karma unit tests that were really testing
 the DOM.
