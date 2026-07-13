@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element grouping and filtering, iframes and shadow DOM, and configuration.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, and configuration.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -85,6 +85,18 @@ Yes. An `elementFilters` list at the root of your configuration applies to both 
 ### <Icon name="angle-right" /> Why does one element appear as multiple elements in the report?
 
 This usually means the element's identifying attributes change between [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots), for example auto-generated IDs or dynamic class names. Use [`attributeFilters`](/ui-coverage/configuration/attributefilters) to ignore the dynamic attributes, or [`elements`](/ui-coverage/configuration/elements) to define the element's identity explicitly. See [troubleshooting](/ui-coverage/troubleshooting) for more scenarios.
+
+### <Icon name="angle-right" /> Which attributes does UI Coverage use to identify elements?
+
+UI Coverage checks a prioritized list of attributes on each element: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, in that order, falling back to `id` and `name` when none of those are present. The first attribute found with a usable value identifies the element. See [Element Identification](/ui-coverage/core-concepts/element-identification) for how identification works across snapshots.
+
+### <Icon name="angle-right" /> How do I make UI Coverage use my own attribute to identify elements?
+
+Add the attribute name to [`significantAttributes`](/ui-coverage/configuration/significantattributes). Attributes you list are checked before the default list, in the order you list them, so an attribute your application already renders, such as `data-component-name`, can identify, name, and group elements in your reports.
+
+### <Icon name="angle-right" /> Does significantAttributes replace the default attribute list?
+
+No. Your attributes are checked first, and the defaults still apply after them, so an element without any of your attributes is identified exactly as it would be without configuration. Listing a default attribute like `data-qa` promotes it above the other defaults. To stop an attribute from being used at all, use [`attributeFilters`](/ui-coverage/configuration/attributefilters) instead.
 
 ### <Icon name="angle-right" /> Why isn't my elements rule applying?
 
