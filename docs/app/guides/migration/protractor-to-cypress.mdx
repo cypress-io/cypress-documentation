@@ -377,6 +377,125 @@ assigning command return values to variables, and unsafe chaining. Install it
 early so mistranslated Protractor patterns surface as you migrate. See the
 [full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules).
 
+## Angular Schematic Configuration
+
+The
+[Cypress Angular Schematic](https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic#readme)
+has many configurable options to fit the needs of your project.
+
+### Running the builder with a specific browser
+
+Before running Cypress in `open` mode, ensure that you have started your
+application server using `ng serve`.
+
+```json
+"cypress-open": {
+  "builder": "@cypress/schematic:cypress",
+  "options": {
+    "watch": true,
+    "headless": false,
+    "browser": "chrome"
+  },
+  "configurations": {
+    "production": {
+      "devServerTarget": "{project-name}:serve:production"
+    }
+  }
+}
+```
+
+:::info
+
+Read the docs on [launching browsers](http://on.cypress.io/launching-browsers)
+to learn more.
+
+:::
+
+### Recording test results to Cypress Cloud
+
+We recommend setting your
+[Cypress Cloud](/cloud/get-started/introduction) recording key
+as an environment variable and _NOT_ as a builder option when running it in CI.
+
+```json
+"cypress-run": {
+  "builder": "@cypress/schematic:cypress",
+  "options": {
+    "devServerTarget": "{project-name}:serve",
+    "record": true,
+    "key": "your-cypress-dashboard-recording-key"
+  },
+  "configurations": {
+    "production": {
+      "devServerTarget": "{project-name}:production"
+    }
+  }
+}
+```
+
+Read the docs on
+[recording test results](http://on.cypress.io/recording-project-runs) to
+[Cypress Cloud](/cloud/get-started/introduction) to learn more.
+
+### Specifying a custom Cypress configuration file
+
+It may be useful to have different Cypress configuration files per environment
+(ie. development, staging, production).
+
+```json
+"cypress-run": {
+  "builder": "@cypress/schematic:cypress",
+  "options": {
+    "devServerTarget": "{project-name}:serve",
+    "configFile": "cypress.production.config.js"
+  },
+  "configurations": {
+    "production": {
+      "devServerTarget": "{project-name}:production"
+    }
+  }
+}
+```
+
+:::info
+
+Read our docs to learn more about all the
+[configuration options](http://on.cypress.io/configuration) Cypress offers.
+
+:::
+
+### Running Cypress in parallel mode within CI
+
+```json
+"cypress-run": {
+  "builder": "@cypress/schematic:cypress",
+  "options": {
+    "devServerTarget": "{project-name}:serve",
+    "parallel": true,
+    "record": true,
+    "key": "your-cypress-dashboard-recording-key"
+  },
+  "configurations": {
+    "production": {
+      "devServerTarget": "{project-name}:production"
+    }
+  }
+}
+```
+
+:::info
+
+Read our docs to learn more about speeding up test execution in CI via
+[Cypress parallelization](http://on.cypress.io/parallelization)
+
+:::
+
+### Questions or Issues?
+
+Visit our
+[plugins discussion](https://github.com/cypress-io/cypress/discussions/categories/plugins)
+to ask questions or report issues related to our Cypress Angular Schematic.
+
 ## Working with the DOM
 
 ### How to Get DOM Elements
@@ -1539,132 +1658,13 @@ For more information, check out our
 
 <TestReplayInfo />
 
-## Angular Schematic Configuration
-
-The
-[Cypress Angular Schematic](https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic#readme)
-has many configurable options to fit the needs of your project.
-
-### Running the builder with a specific browser
-
-Before running Cypress in `open` mode, ensure that you have started your
-application server using `ng serve`.
-
-```json
-"cypress-open": {
-  "builder": "@cypress/schematic:cypress",
-  "options": {
-    "watch": true,
-    "headless": false,
-    "browser": "chrome"
-  },
-  "configurations": {
-    "production": {
-      "devServerTarget": "{project-name}:serve:production"
-    }
-  }
-}
-```
-
-:::info
-
-Read the docs on [launching browsers](http://on.cypress.io/launching-browsers)
-to learn more.
-
-:::
-
-### Recording test results to Cypress Cloud
-
-We recommend setting your
-[Cypress Cloud](/cloud/get-started/introduction) recording key
-as an environment variable and _NOT_ as a builder option when running it in CI.
-
-```json
-"cypress-run": {
-  "builder": "@cypress/schematic:cypress",
-  "options": {
-    "devServerTarget": "{project-name}:serve",
-    "record": true,
-    "key": "your-cypress-dashboard-recording-key"
-  },
-  "configurations": {
-    "production": {
-      "devServerTarget": "{project-name}:production"
-    }
-  }
-}
-```
-
-Read the docs on
-[recording test results](http://on.cypress.io/recording-project-runs) to
-[Cypress Cloud](/cloud/get-started/introduction) to learn more.
-
-### Specifying a custom Cypress configuration file
-
-It may be useful to have different Cypress configuration files per environment
-(ie. development, staging, production).
-
-```json
-"cypress-run": {
-  "builder": "@cypress/schematic:cypress",
-  "options": {
-    "devServerTarget": "{project-name}:serve",
-    "configFile": "cypress.production.config.js"
-  },
-  "configurations": {
-    "production": {
-      "devServerTarget": "{project-name}:production"
-    }
-  }
-}
-```
-
-:::info
-
-Read our docs to learn more about all the
-[configuration options](http://on.cypress.io/configuration) Cypress offers.
-
-:::
-
-### Running Cypress in parallel mode within CI
-
-```json
-"cypress-run": {
-  "builder": "@cypress/schematic:cypress",
-  "options": {
-    "devServerTarget": "{project-name}:serve",
-    "parallel": true,
-    "record": true,
-    "key": "your-cypress-dashboard-recording-key"
-  },
-  "configurations": {
-    "production": {
-      "devServerTarget": "{project-name}:production"
-    }
-  }
-}
-```
-
-:::info
-
-Read our docs to learn more about speeding up test execution in CI via
-[Cypress parallelization](http://on.cypress.io/parallelization)
-
-:::
-
-### Code Coverage
+## Code Coverage
 
 As you write more and more end-to-end tests, you will find yourself wondering -
 do I need to write more tests? Are there parts of the application still
 untested? Are there parts of the application that perhaps are tested too much?
 This [code coverage guide](/app/tooling/code-coverage) is an excellent
 resource to learn how to add code coverage.
-
-### Questions or Issues?
-
-Visit our
-[plugins discussion](https://github.com/cypress-io/cypress/discussions/categories/plugins)
-to ask questions or report issues related to our Cypress Angular Schematic.
 
 ## Next Steps
 
