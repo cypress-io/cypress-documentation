@@ -47,6 +47,10 @@ Views are created from URLs your tests actually visit, so a page that no test na
 
 The first matching rule in your [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration wins, so list specific rules before broad catch-all rules. A rule that appears after another rule matching the same elements never applies to them.
 
+### <Icon name="angle-right" /> Can I group elements in my application code instead of Cypress Cloud configuration?
+
+Yes. Add the [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) to your markup, and elements sharing the same attribute value are grouped together with no Cloud configuration needed. Placing the attribute on a wrapper element groups every interactive element inside it. Groups defined this way take priority over [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration rules.
+
 ### <Icon name="angle-right" /> Can I group or filter elements inside iframes or shadow DOM?
 
 Yes. The [`elementGroups`](/ui-coverage/configuration/elementgroups), [`elementFilters`](/ui-coverage/configuration/elementfilters), and [`elements`](/ui-coverage/configuration/elements) configuration options all accept a `documentScope` property that limits a rule to elements inside specific iframes or shadow DOM hosts. List one CSS selector per host, ordered from the outermost document to the innermost.
