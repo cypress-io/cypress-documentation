@@ -693,9 +693,9 @@ Protractor sends special keys with `protractor.Key`. In Cypress, keys typed
 into an element use [`.type()`](/api/commands/type) special-character
 sequences. Pressing a key against the page itself, like tabbing through
 focusable elements, uses [`cy.press()`](/api/commands/press), which
-dispatches a real native keyboard event rather than a simulated one. This
-makes it a direct replacement for Protractor's `Key.TAB` when testing focus
-management and keyboard navigation.
+dispatches a native keyboard event. This makes it a direct replacement for
+Protractor's `Key.TAB` when testing focus management and keyboard
+navigation.
 
 <Badge type="danger">Before: Protractor</Badge>
 
