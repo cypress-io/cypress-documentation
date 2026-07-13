@@ -1,6 +1,6 @@
 ---
 title: 'significantAttributes: identify elements by your attributes in Cypress Accessibility'
-description: 'Make Cypress Accessibility identify elements and build violation target selectors from your own HTML attributes, such as data-component-name, by adding them to the priority list of significant attributes.'
+description: 'Make Cypress Accessibility identify elements and build violation target selectors from your own HTML attributes, such as data-component or data-automation-id, by adding them to the priority list of significant attributes.'
 sidebar_label: 'Prioritize identifying attributes'
 sidebar_position: 70
 ---
@@ -11,12 +11,12 @@ sidebar_position: 70
 
 The `significantAttributes` configuration adds your own HTML attributes to the priority list Cypress Accessibility uses to identify elements. Attributes you list are checked before the default test attributes, in the order you list them.
 
-Cypress Accessibility [identifies each element](/accessibility/core-concepts/element-identification) with a stable selector, replacing the default Axe-Core® target, so that results for the same element can be deduplicated across the many snapshots captured in a run. That selector is built from a prioritized list of attributes: test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as `data-component-name` or a team-ownership attribute. Listing them in `significantAttributes` makes Cypress Accessibility prefer them, so violation targets read in your team's vocabulary when [reviewing violation details](/accessibility/core-concepts/inspecting-violation-details), creating Jira issues, or handing selectors to AI tools, and deduplication is driven by values that stay stable across snapshots.
+Cypress Accessibility [identifies each element](/accessibility/core-concepts/element-identification) with a stable selector, replacing the default Axe-Core® target, so that results for the same element can be deduplicated across the many snapshots captured in a run. That selector is built from a prioritized list of attributes: test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as a `data-component` attribute from your design system or a `data-automation-id` your team maintains. Listing them in `significantAttributes` makes Cypress Accessibility prefer them, so violation targets read in your team's vocabulary when [reviewing violation details](/accessibility/core-concepts/inspecting-violation-details), creating Jira issues, or handing selectors to AI tools, and deduplication is driven by values that stay stable across snapshots.
 
 ## Why use significantAttributes?
 
-- **Use attributes your application already has**: If your components render an attribute like `data-component-name`, Cypress Accessibility can identify elements by it. No new markup required.
-- **Make violation targets easier to locate and fix**: A selector like `[data-component-name="SearchInput"]` tells whoever picks up the issue exactly which component to open, where a generated selector doesn't.
+- **Use attributes your application already has**: If your components render an attribute like `data-component`, Cypress Accessibility can identify elements by it. No new markup required.
+- **Make violation targets easier to locate and fix**: A selector like `[data-component="SearchInput"]` tells whoever picks up the issue exactly which component to open, where a generated selector doesn't.
 - **Promote one of the default attributes**: The defaults are checked in a fixed order (`data-cy` before `data-qa`, for example). If your application standardizes on `data-qa`, listing it moves it to the front of the line.
 - **Improve deduplication**: When the highest-priority attribute an element has is dynamic, the same element can be counted more than once across snapshots. A stable attribute of yours, placed above the rest, keeps it one element.
 
@@ -57,7 +57,7 @@ To apply the list to Cypress Accessibility only, nest the property under the `ac
 }
 ```
 
-Each entry is the name of an HTML attribute, such as `"data-component-name"`. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values.
+Each entry is the name of an HTML attribute, such as `"data-component"`. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values.
 
 ### How are significant attributes applied?
 
@@ -86,15 +86,15 @@ Cypress Cloud rejects a configuration when:
 
 ## Examples
 
-### Identify violation targets by a component-name attribute
+### Identify violation targets by a component attribute
 
-Your configured attribute outranks the defaults, so the image with a missing `alt` attribute is reported under `data-component-name` even though `data-testid` is also present, and the issue reads as "the ProductImage component" instead of a test ID.
+Your configured attribute outranks the defaults, so the image with a missing `alt` attribute is reported under `data-component` even though `data-testid` is also present, and the issue reads as "the ProductImage component" instead of a test ID.
 
 #### Config
 
 ```json title="App Quality Config"
 {
-  "significantAttributes": ["data-component-name"]
+  "significantAttributes": ["data-component"]
 }
 ```
 
@@ -102,7 +102,7 @@ Your configured attribute outranks the defaults, so the image with a missing `al
 
 ```xml
 <body>
-  <img data-component-name="ProductImage" data-testid="product-42-img" src="product.png" />
+  <img data-component="ProductImage" data-testid="product-42-img" src="product.png" />
 </body>
 ```
 
@@ -111,7 +111,7 @@ Your configured attribute outranks the defaults, so the image with a missing `al
 The violation target selector displayed in the report:
 
 ```
-[data-component-name="ProductImage"]
+[data-component="ProductImage"]
 ```
 
 ---
@@ -148,13 +148,13 @@ The violation target selector displayed in the report:
 
 ### Deduplicate an element with a dynamic ID
 
-This button's `id` is regenerated on every page load, and it has no test attribute, so by default each snapshot produces a different selector and the same violation is counted against what looks like a new element. The tracking attribute is stable, and listing it makes every snapshot resolve to one element.
+This button's `id` is regenerated on every page load, and it has no test attribute, so by default each snapshot produces a different selector and the same violation is counted against what looks like a new element. The `data-automation-id` your team maintains is stable, and listing it makes every snapshot resolve to one element.
 
 #### Config
 
 ```json title="App Quality Config"
 {
-  "significantAttributes": ["data-tracking-id"]
+  "significantAttributes": ["data-automation-id"]
 }
 ```
 
@@ -162,10 +162,10 @@ This button's `id` is regenerated on every page load, and it has no test attribu
 
 ```xml
 <!-- Snapshot 1 -->
-<button id="btn-829142" data-tracking-id="checkout-submit"></button>
+<button id="btn-829142" data-automation-id="checkout-submit"></button>
 
 <!-- Snapshot 2 -->
-<button id="btn-107563" data-tracking-id="checkout-submit"></button>
+<button id="btn-107563" data-automation-id="checkout-submit"></button>
 ```
 
 #### Result
@@ -173,7 +173,7 @@ This button's `id` is regenerated on every page load, and it has no test attribu
 Without the configuration, the report can show the same empty button twice, as `#btn-829142` and `#btn-107563`. With it, one element is reported:
 
 ```
-[data-tracking-id="checkout-submit"]
+[data-automation-id="checkout-submit"]
 ```
 
 Since the dynamic `id` values still exist, also consider an [`attributeFilters`](/accessibility/configuration/attributefilters) rule that excludes them, so they can't identify any element, including elements without your attribute.

@@ -1,6 +1,6 @@
 ---
 title: 'significantAttributes: identify elements by your attributes in UI Coverage'
-description: 'Make Cypress UI Coverage identify, name, and group elements using your own HTML attributes, such as data-component-name, by adding them to the priority list of significant attributes.'
+description: 'Make Cypress UI Coverage identify, name, and group elements using your own HTML attributes, such as data-component or data-analytics-id, by adding them to the priority list of significant attributes.'
 sidebar_label: 'Prioritize identifying attributes'
 sidebar_position: 70
 ---
@@ -11,12 +11,12 @@ sidebar_position: 70
 
 The `significantAttributes` configuration adds your own HTML attributes to the priority list UI Coverage uses to identify elements. Attributes you list are checked before the default test attributes, in the order you list them.
 
-To count each element once across the many [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) captured in a run, UI Coverage identifies elements by a [prioritized list of attributes](/ui-coverage/core-concepts/element-identification): test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as `data-component-name` or a tracking attribute your team maintains. Listing them in `significantAttributes` makes UI Coverage prefer them, so elements are named by the attributes your team recognizes, deduplicated by values that stay stable across snapshots, and grouped by the structure your markup already expresses.
+To count each element once across the many [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) captured in a run, UI Coverage identifies elements by a [prioritized list of attributes](/ui-coverage/core-concepts/element-identification): test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as a `data-component` attribute from your design system or a `data-analytics-id` your team maintains for tracking. Listing them in `significantAttributes` makes UI Coverage prefer them, so elements are named by the attributes your team recognizes, deduplicated by values that stay stable across snapshots, and grouped by the structure your markup already expresses.
 
 ## Why use significantAttributes?
 
-- **Use attributes your application already has**: If your components render an attribute like `data-component-name`, UI Coverage can identify and name elements by it. No new markup required.
-- **Make reports read in your team's vocabulary**: Elements appear in reports under selectors built from their identifying attribute, so `[data-component-name="SearchInput"]` is easier to recognize and act on than a generated selector.
+- **Use attributes your application already has**: If your components render an attribute like `data-component`, UI Coverage can identify and name elements by it. No new markup required.
+- **Make reports read in your team's vocabulary**: Elements appear in reports under selectors built from their identifying attribute, so `[data-component="SearchInput"]` is easier to recognize and act on than a generated selector.
 - **Promote one of the default attributes**: The defaults are checked in a fixed order (`data-cy` before `data-qa`, for example). If your application uses `data-qa` but another tool populates `data-cy` with less useful values, listing `data-qa` moves it to the front of the line.
 
 `significantAttributes` changes which attributes are preferred. If your goal is different, such as stopping a dynamic attribute from being used at all, or fixing a single element's identity, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
@@ -56,7 +56,7 @@ To apply the list to UI Coverage only, nest the property under the `uiCoverage` 
 }
 ```
 
-Each entry is the name of an HTML attribute, such as `"data-component-name"`. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values.
+Each entry is the name of an HTML attribute, such as `"data-component"`. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values.
 
 ### How are significant attributes applied?
 
@@ -87,15 +87,15 @@ Cypress Cloud rejects a configuration when:
 
 ## Examples
 
-### Identify elements by a component-name attribute
+### Identify elements by a component attribute
 
-Your configured attribute outranks the defaults, so the button is identified by `data-component-name` even though `data-testid` is also present. The second button has no `data-component-name`, so it falls back to the default behavior and is identified by `data-testid`.
+Your configured attribute outranks the defaults, so the button is identified by `data-component` even though `data-testid` is also present. The second button has no `data-component`, so it falls back to the default behavior and is identified by `data-testid`.
 
 #### Config
 
 ```json title="App Quality Config"
 {
-  "significantAttributes": ["data-component-name"]
+  "significantAttributes": ["data-component"]
 }
 ```
 
@@ -103,7 +103,7 @@ Your configured attribute outranks the defaults, so the button is identified by 
 
 ```xml
 <body>
-  <button data-component-name="SignupSubmit" data-testid="submit">
+  <button data-component="SignupSubmit" data-testid="submit">
     Submit
   </button>
   <button data-testid="cancel">Cancel</button>
@@ -113,7 +113,7 @@ Your configured attribute outranks the defaults, so the button is identified by 
 #### Elements shown in UI
 
 ```
-[data-component-name="SignupSubmit"]
+[data-component="SignupSubmit"]
 [data-testid="cancel"]
 ```
 
@@ -149,13 +149,13 @@ Both defaults are present, and by default `data-cy` would win. Listing `data-qa`
 
 ### Deduplicate repeated elements by a shared attribute
 
-Elements that share the same identifying attribute and value are recognized as instances of the same control and [grouped together](/ui-coverage/core-concepts/element-grouping) in reports. Here, each card renders the same `data-component-name`, so the report shows one entry instead of three, and an interaction with any card's button counts the whole group as tested.
+Elements that share the same identifying attribute and value are recognized as instances of the same control and [grouped together](/ui-coverage/core-concepts/element-grouping) in reports. Here, every product card tags its button with the same `data-analytics-id`, so the report shows one entry instead of three, and an interaction with any card's button counts the whole group as tested.
 
 #### Config
 
 ```json title="App Quality Config"
 {
-  "significantAttributes": ["data-component-name"]
+  "significantAttributes": ["data-analytics-id"]
 }
 ```
 
@@ -163,16 +163,16 @@ Elements that share the same identifying attribute and value are recognized as i
 
 ```xml
 <body>
-  <button data-component-name="AddToCart" id="cart-btn-1">Add</button>
-  <button data-component-name="AddToCart" id="cart-btn-2">Add</button>
-  <button data-component-name="AddToCart" id="cart-btn-3">Add</button>
+  <button data-analytics-id="add-to-cart" id="cart-btn-1">Add</button>
+  <button data-analytics-id="add-to-cart" id="cart-btn-2">Add</button>
+  <button data-analytics-id="add-to-cart" id="cart-btn-3">Add</button>
 </body>
 ```
 
 #### Elements shown in UI
 
 ```
-[data-component-name="AddToCart"] (3 instances)
+[data-analytics-id="add-to-cart"] (3 instances)
 ```
 
 :::tip
