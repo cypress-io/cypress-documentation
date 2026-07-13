@@ -1,0 +1,77 @@
+### Include only your application's URLs
+
+An allowlist inverts the default. The first rule includes your application, and the catch-all `*` rule excludes everything else. Rules are applied in order, so the catch-all must come last.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "https://www.my-app.com/*",
+      "include": true
+    },
+    {
+      "pattern": "*",
+      "include": false,
+      "comment": "Exclude everything that isn't the app itself"
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://www.my-app.com/dashboards
+https://www.my-app.com/dashboards/1
+https://www.my-app.com/dashboards/2
+https://auth.example.com/login
+https://checkout.stripe.com/pay
+```
+
+#### Views shown in UI
+
+```
+/dashboards
+/dashboards/*
+```
+
+The two numbered dashboard URLs group into a single `/dashboards/*` view through the automatic [view creation rules](/ui-coverage/core-concepts/views#How-views-are-created), which apply to included URLs as usual.
+
+---
+
+### Exclude error pages in every environment
+
+Patterns without a protocol and hostname match on any environment your tests run against, whether that's `localhost`, a staging domain, or production.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "/404",
+      "include": false
+    },
+    {
+      "pattern": "/error/*",
+      "include": false
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+http://localhost:3000/home
+http://localhost:3000/404
+https://staging.my-app.com/error/500
+```
+
+#### Views shown in UI
+
+```
+http://localhost:3000/home
+```
