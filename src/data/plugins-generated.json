@@ -551,8 +551,8 @@
     },
     "Nx": {
       "npm": "@nx/cypress",
-      "version": "23.0.2",
-      "lastPublished": "2026-07-10T18:01:18.494Z",
+      "version": "23.1.0",
+      "lastPublished": "2026-07-13T20:33:34.292Z",
       "cypressVersion": ">= 13 < 16"
     },
     "Pact Cypress Adapter": {
