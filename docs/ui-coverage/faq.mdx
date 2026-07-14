@@ -114,6 +114,27 @@ An [`elements`](/ui-coverage/configuration/elements) rule applies only when its 
 - A later `elements` rule matches the same element, and the last matching rule wins.
 - The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
 
+### <Icon name="angle-right" /> How do I stop dynamic IDs or class names from splitting one element into many?
+
+Add an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule with `include: false` that matches the unstable attribute and value, for example an `id` like `:r11:` or a hashed `class`. Once the volatile attribute is ignored, Cypress identifies the element by a stable attribute instead, so the same control is recognized across [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) and counted once. When you filter a dynamic `id`, also filter the attributes that reference it (`for`, `aria-labelledby`, `aria-describedby`, and similar), or the element can still be identified by those related values.
+
+### <Icon name="angle-right" /> Do I need to configure attributeFilters for auto-generated IDs?
+
+Often not. Cypress already ignores the most common unstable identifiers, including values containing UUIDs or long hexadecimal hashes, digit-only `id`/`name`/`for`/`aria-*` values, and generated `class` patterns like `jss*` and `ng-tns-*`. Add an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule only when your application produces unstable attributes these built-in filters don't already cover.
+
+### <Icon name="angle-right" /> What's the difference between attributeFilters and significantAttributes?
+
+They pull in opposite directions. [`attributeFilters`](/ui-coverage/configuration/attributefilters) _removes_ attributes from consideration so Cypress won't identify elements by them, while [`significantAttributes`](/ui-coverage/configuration/significantattributes) _prioritizes_ attributes so Cypress prefers them when they're available. Use `attributeFilters` to hide noisy or dynamic attributes, and `significantAttributes` to promote a stable attribute such as `data-component-name`.
+
+### <Icon name="angle-right" /> Why isn't my attributeFilters rule working?
+
+The most common causes are:
+
+- The pattern doesn't match the full value. Patterns are anchored automatically (as if wrapped in `^(...)$`), so `value: "user"` matches only the exact string `user`. Use wildcards for partial matches, such as `value: "user-.*"`.
+- An earlier rule matches the same attribute first, and the first matching rule wins. List specific `include: true` exceptions before broad `include: false` rules.
+- The rule targets a tag name or sibling position. Only attributes and individual `class` tokens can be filtered, not an element's tag name or `nth-child` position.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
 ## Configuration
 
 ### <Icon name="angle-right" /> Where do I set UI Coverage configuration?
