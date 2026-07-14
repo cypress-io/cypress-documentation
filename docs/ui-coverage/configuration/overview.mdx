@@ -70,7 +70,9 @@ Several options change what appears in reports and how it's organized. Pick the 
 
 All configuration objects support an optional `comment` property that you can use to provide context and explanations for why certain values are set. This helps make your configuration easier to understand and maintain, especially when working in teams or revisiting configuration after some time.
 
-```json
+Comments have no effect on behavior. They belong inside each rule object; Cypress Cloud validates every rule and rejects properties it doesn't recognize, so `comment` is the supported place for notes.
+
+```json title="App Quality Config"
 {
   "elementFilters": [
     {
@@ -90,7 +92,7 @@ The `profiles` property allows you to use different configuration settings for d
 
 A complete configuration with all available options looks as follows:
 
-```json
+```json title="App Quality Config"
 {
   "elementFilters": [
     {

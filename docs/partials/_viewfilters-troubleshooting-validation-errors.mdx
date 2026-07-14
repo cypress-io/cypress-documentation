@@ -1,0 +1,7 @@
+### Error: `Missing include boolean`
+
+Every rule must set `include` explicitly; there is no default value. Add `"include": false` to exclude matching URLs, or `"include": true` to include them.
+
+### Error: `No duplicate patterns allowed`
+
+Each `pattern` in `viewFilters` must be unique. Because the first matching rule wins, a second rule with the same pattern can never apply; remove it or merge the two rules.

@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Get answers to common questions about Cypress Accessibility, including ignoring elements with elementFilters, the Ignored status, score impact, element identification, and configuration.'
+description: 'Get answers to common questions about Cypress Accessibility, including ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, and configuration.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -43,6 +43,26 @@ Yes. An `elementFilters` list at the root of your configuration applies to both 
 
 Not on its own. Every element is included unless an exclude rule matches it, and an include rule can't protect an element from exclusion. The value matters in root-level `elementFilters` lists shared with UI Coverage, where include rules do protect their elements. See [When to use include: true](/accessibility/configuration/elementfilters#When-to-use-include-true).
 
+## Ignoring views and URLs
+
+### <Icon name="angle-right" /> How do I exclude URLs from Cypress Accessibility?
+
+Add a [`viewFilters`](/accessibility/configuration/viewfilters) rule with `include: false` for a URL pattern. Snapshots from matching URLs are not scanned for accessibility violations and don't appear in your report. This is the standard way to keep third-party pages your tests pass through, such as an OAuth provider's login page, out of your results.
+
+### <Icon name="angle-right" /> Can I exclude URLs from Cypress Accessibility without affecting UI Coverage?
+
+Yes. A `viewFilters` list at the root of your configuration applies to both products, but nesting it under an `accessibility` or `uiCoverage` key applies it to that product only. A nested list completely replaces a root-level one for that product, and the two are not merged. See [Exclude views](/accessibility/configuration/viewfilters#Scope).
+
+### <Icon name="angle-right" /> Why is a URL still in my report after I excluded it with viewFilters?
+
+The most common causes are:
+
+- An earlier rule matches the URL first. Rules apply in order and the first match wins, so a broad `include: true` rule listed before your exclusion prevents it from ever applying.
+- The pattern doesn't match the full URL. Hostnames must match exactly (`https://my-app.com/*` doesn't match `www.my-app.com`), or you can use a path-only pattern like `/admin/*` to match any hostname.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+See [troubleshooting view filters](/accessibility/configuration/viewfilters#A-URL-you-excluded-still-appears-in-the-report) for details.
+
 ## Element identification
 
 ### <Icon name="angle-right" /> Which attributes does Cypress Accessibility use to identify elements?
@@ -51,7 +71,7 @@ Cypress Accessibility checks a prioritized list of attributes on each element: `
 
 ### <Icon name="angle-right" /> How do I make Cypress Accessibility use my own attribute in violation selectors?
 
-Add the attribute name to [`significantAttributes`](/accessibility/configuration/significantattributes). Attributes you list are checked before the default list, in the order you list them, so an attribute your application already renders, such as `data-component-name`, can identify elements and appear as the violation target selector in your reports.
+Add the attribute name to [`significantAttributes`](/accessibility/configuration/significantattributes). Attributes you list are checked before the default list, in the order you list them, so an attribute your application already renders, such as `data-component`, can identify elements and appear as the violation target selector in your reports.
 
 ### <Icon name="angle-right" /> Does significantAttributes replace the default attribute list?
 
@@ -75,4 +95,5 @@ No. You can regenerate any historical run from its **Properties** tab, and the r
 
 - [Configuration overview](/accessibility/configuration/overview) lists every configuration option and what each one is for.
 - [`elementFilters`](/accessibility/configuration/elementfilters) is the full reference for ignoring elements.
+- [`viewFilters`](/accessibility/configuration/viewfilters) is the full reference for excluding URLs.
 - [Run-level reports](/accessibility/core-concepts/run-level-reports) explains element statuses, including **Ignored**.

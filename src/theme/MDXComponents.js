@@ -45,7 +45,12 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 import ThenShouldAndDifference from '@site/docs/partials/_then-should-and-difference.mdx'
 import WarningSetupNodeEvents from '@site/docs/partials/_warning-setup-node-events.mdx'
-import ViewFilters from '@site/docs/partials/_viewfilters.mdx'
+import ViewFiltersSyntax from '@site/docs/partials/_viewfilters-syntax.mdx'
+import ViewFiltersOptions from '@site/docs/partials/_viewfilters-options.mdx'
+import ViewFiltersMatchingAndValidation from '@site/docs/partials/_viewfilters-matching-and-validation.mdx'
+import ViewFiltersExampleThirdParty from '@site/docs/partials/_viewfilters-example-third-party.mdx'
+import ViewFiltersSharedExamples from '@site/docs/partials/_viewfilters-shared-examples.mdx'
+import ViewFiltersTroubleshootingValidationErrors from '@site/docs/partials/_viewfilters-troubleshooting-validation-errors.mdx'
 import Views from '@site/docs/partials/_views.mdx'
 import LineBreak from '@site/src/components/line-break'
 import OsTabs from '@site/src/components/os-tabs'
@@ -237,7 +242,12 @@ export default {
   TestReplayInfo,
   ThenShouldAndDifference,
   WarningSetupNodeEvents,
-  ViewFilters,
+  ViewFiltersSyntax,
+  ViewFiltersOptions,
+  ViewFiltersMatchingAndValidation,
+  ViewFiltersExampleThirdParty,
+  ViewFiltersSharedExamples,
+  ViewFiltersTroubleshootingValidationErrors,
   Views,
   Logo,
   LineBreak,
