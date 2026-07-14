@@ -1,4 +1,4 @@
-To recognize the same element across [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) and group similar elements together, Cypress builds an identifier for each element from its attributes and its position in the DOM. When an element carries attributes that change from render to render — auto-generated IDs, hashed class names, state-based flags like `link--focused` — those unstable values leak into the identifier. The result is one real element reported as several, or distinct elements collapsed into the wrong group, which inflates your element counts and hides the coverage and accessibility findings you care about.
+To recognize the same element across [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) and group similar elements together, Cypress builds an identifier for each element from its attributes and its position in the DOM. When an element carries attributes that change from render to render, such as auto-generated IDs, hashed class names, or state-based flags like `link--focused`, those unstable values leak into the identifier. The result is one real element reported as several, or distinct elements collapsed into the wrong group, which inflates your element counts and hides the coverage and accessibility findings you care about.
 
 The `attributeFilters` configuration property tells Cypress which attributes and values it may **not** use for identification and grouping. Filter out the unstable attributes and Cypress falls back to the stable ones, so a single element stays a single element across snapshots and your reports deduplicate cleanly.
 
@@ -8,7 +8,7 @@ The `attributeFilters` configuration property tells Cypress which attributes and
 - **Improve grouping accuracy**: Removing attributes that differ between otherwise-identical elements (for example a per-row `data-cy="user-123"`) lets Cypress group them as one repeated component.
 - **Ignore library-specific attributes**: Attributes injected by frameworks (Angular's `ng-*`, Emotion/JSS hashed classes, and similar) rarely describe an element's purpose and often add noise.
 
-If instead you want Cypress to _prefer_ a particular attribute as an identifier when it is available, use [`significantAttributes`](/ui-coverage/configuration/significantattributes) — `attributeFilters` only ever removes attributes from consideration, it never promotes them.
+If instead you want Cypress to _prefer_ a particular attribute as an identifier when it is available, use [`significantAttributes`](/ui-coverage/configuration/significantattributes). `attributeFilters` only ever removes attributes from consideration; it never promotes them.
 
 ## Built-in filters
 
@@ -80,7 +80,7 @@ An attribute that matches no rule is available for use, so `include: true` is on
 
 Keep these matching details in mind when writing patterns:
 
-- **Patterns match the whole string.** Each `attribute` and `value` pattern is anchored automatically, as if wrapped in `^(...)$`, so it must match the entire name or value. Use wildcards for partial matches — `value: "user-.*"` matches `user-123`, whereas `value: "user"` matches only the exact string `user`. If your pattern already starts with `^` or ends with `$`, it is used as written.
+- **Patterns match the whole string.** Each `attribute` and `value` pattern is anchored automatically, as if wrapped in `^(...)$`, so it must match the entire name or value. Use wildcards for partial matches: `value: "user-.*"` matches `user-123`, whereas `value: "user"` matches only the exact string `user`. If your pattern already starts with `^` or ends with `$`, it is used as written.
 - **Attribute names are matched case-insensitively; values are matched case-sensitively.**
 - **Only attributes and individual `class` tokens can be filtered.** Rules never apply to an element's tag name or its position among siblings (`nth-child`), which Cypress may still fall back to when no attributes are usable.
 
