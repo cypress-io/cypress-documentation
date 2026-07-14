@@ -1419,7 +1419,7 @@ yourself writing the same test code across multiple test cases.
 
 ### Protractor without Page Objects
 
-```js
+```js title="login.e2e-spec.js"
 // Type into username field
 element(by.css('.username')).sendKeys('my username')
 // Type into password field
@@ -1430,7 +1430,7 @@ element(by.css('button')).click()
 
 ### Protractor with Page Objects
 
-```js
+```js title="login.e2e-spec.js"
 const page = {
   login: () => {
     element(by.css('.username')).sendKeys('my username')
@@ -1449,7 +1449,7 @@ You can use the same Page Object pattern within your Cypress tests:
 
 ### Cypress without Page Objects
 
-```js
+```js title="login.cy.js"
 cy.get('.username').type('my username')
 cy.get('.password').type('my password')
 cy.get('button').click()
@@ -1457,7 +1457,7 @@ cy.get('button').click()
 
 ### Cypress with Page Objects
 
-```js
+```js title="login.cy.js"
 const page = {
   login: () => {
     cy.get('.username').type('my username')
@@ -1527,7 +1527,7 @@ login runs once and every subsequent test restores it instantly.
 
 <Badge type="danger">Before: Protractor</Badge>
 
-```js
+```js title="login.e2e-spec.js"
 beforeEach(async () => {
   // Runs the full UI login before every single test
   await browser.get('/login')
@@ -1539,7 +1539,7 @@ beforeEach(async () => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```js
+```js title="login.cy.js"
 beforeEach(() => {
   // Runs the login once, then restores the cached session
   cy.session('user', () => {
@@ -1561,13 +1561,12 @@ see the [`cy.session()`](/api/commands/session) documentation.
 
 ## Testing Across Origins with cy.origin
 
-Protractor could navigate freely between domains, which many suites rely on
-for single sign-on providers like Auth0, Okta, or Azure AD. Cypress runs your
-test alongside your app and limits each test to a single origin by default.
-Commands that need to run on a different origin must be wrapped in
+Cypress runs your test alongside your app and limits each test to a single
+origin by default. Commands that need to run on a different origin, like a
+single sign-on provider, must be wrapped in
 [`cy.origin()`](/api/commands/origin).
 
-```js
+```js title="sso-login.cy.js"
 it('logs in through an external SSO provider', () => {
   cy.visit('/login')
   cy.get('button').contains('Log in with SSO').click()
@@ -1583,20 +1582,18 @@ it('logs in through an external SSO provider', () => {
 })
 ```
 
-If a Protractor test hops to another domain and yours fails in Cypress with a
-cross-origin error, `cy.origin()` is the tool to reach for. Learn more in the
+Learn more in the
 [cross-origin testing guide](/app/guides/cross-origin-testing).
 
 ## Angular Component Testing
 
 Migrating from Protractor is also a good time to look at
-[Cypress Component Testing](/app/component-testing/get-started), which didn't
-exist when most Protractor suites were written. Instead of visiting a page,
-you mount an Angular component by itself, in a real browser with the same
-Cypress API, using the `cy.mount()` command from our first-class
+[Cypress Component Testing](/app/component-testing/get-started). Instead of
+visiting a page, you mount an Angular component by itself, in a real browser
+with the same Cypress API, using the `cy.mount()` command from our first-class
 [Angular support](/app/component-testing/angular/overview).
 
-```ts
+```ts title="button.cy.ts"
 import { ButtonComponent } from './button.component'
 
 it('emits clicked when pressed', () => {
@@ -1617,13 +1614,6 @@ the DOM.
 
 Cypress makes it easy to
 [run your tests in all Continuous Integration environments](/app/continuous-integration/overview).
-
-Check out our in-depth guides to run your Cypress tests in
-[GitHub Actions](/app/continuous-integration/github-actions),
-[CircleCI](/app/continuous-integration/circleci),
-[GitLab CI](/app/continuous-integration/gitlab-ci),
-[Bitbucket Pipeline](/app/continuous-integration/bitbucket-pipelines), or
-[AWS CodeBuild](/app/continuous-integration/aws-codebuild).
 
 We also have code samples to get Cypress up and running in
 [many of the other popular CI environments](/app/continuous-integration/overview#CI-Examples).
