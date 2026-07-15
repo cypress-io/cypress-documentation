@@ -9,13 +9,13 @@ sidebar_position: 100
 
 # Limit tracked commands (`allowedInteractionCommands`)
 
-By default, UI Coverage marks an element as tested when it's targeted by one of a [default set of Cypress interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) — `click`, `type`, `select`, and others. That default is right for most elements, but not all: a chart is really tested by a hover, not the plain `click` that happens to count, and a status banner you only ever assert against is never "interacted with" at all, so it never counts.
+By default, UI Coverage marks an element as tested when it's targeted by one of a [default set of Cypress interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), such as `click`, `type`, and `select`. That default is right for most elements, but not all: a chart is really tested by a hover, not the plain `click` that happens to count, and a status banner you only ever assert against is never "interacted with" at all, so it never counts.
 
-The `allowedInteractionCommands` configuration lets you decide, per element, exactly which commands count as coverage. You provide a CSS selector and the list of commands that should count for the elements it matches. For those elements, **only the commands you list count** — every other command is ignored, even commands that normally count. This lets you both **narrow** coverage to a meaningful interaction (a data-visualization widget that must be hovered, not just clicked) and **expand** it to commands UI Coverage ignores by default (crediting an `assert` on a read-only element).
+The `allowedInteractionCommands` configuration lets you decide, per element, exactly which commands count as coverage. You provide a CSS selector and the list of commands that should count for the elements it matches. For those elements, **only the commands you list count**, and every other command is ignored, even commands that normally count. This lets you both **narrow** coverage to a meaningful interaction (a data-visualization widget that must be hovered, not just clicked) and **expand** it to commands UI Coverage ignores by default (crediting an `assert` on a read-only element).
 
 ## Why use allowedInteractionCommands?
 
-- **Require a meaningful interaction**: For components where a plain `click` doesn't prove the feature works — charts, drag-and-drop canvases, custom widgets — restrict coverage to the command that actually exercises it, so a superficial interaction no longer marks the element tested.
+- **Require a meaningful interaction**: For components where a plain `click` doesn't prove the feature works, such as charts, drag-and-drop canvases, and custom widgets, restrict coverage to the command that actually exercises it, so a superficial interaction no longer marks the element tested.
 - **Credit commands ignored by default**: Count interactions UI Coverage doesn't track out of the box, such as an `assert` on a read-only element, or a third-party command like `realClick`, as coverage for the elements where they're the interaction that matters.
 - **Reduce noise in reports**: Limit tracking to the interaction types that are relevant for a given element or component, so coverage reflects the interactions your team cares about.
 
@@ -65,8 +65,8 @@ Each `selector`/`documentScope` combination must be unique across the list; dupl
 Understanding the matching behavior is the key to using this option correctly:
 
 - **Elements that match no rule are unaffected.** They keep the full [default set of interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), plus anything you've added with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands).
-- **Matching a rule replaces the defaults for that element.** Once an element matches a rule, only the commands listed in that rule count as coverage for it. The default commands no longer apply — this is how the option both narrows coverage (a listed command like `click` still counts, an unlisted default like `type` no longer does) and expands it (a listed non-default command like `assert` now counts).
-- **Commands are combined across all matching rules.** If an element matches more than one rule, the commands from every matching rule are allowed for it. Because rules are additive this way, a later rule can never remove a command an earlier rule granted — favor a high degree of selector specificity so each element matches only the rule you intend.
+- **Matching a rule replaces the defaults for that element.** Once an element matches a rule, only the commands listed in that rule count as coverage for it. The default commands no longer apply. This is how the option both narrows coverage (a listed command like `click` still counts, an unlisted default like `type` no longer does) and expands it (a listed non-default command like `assert` now counts).
+- **Commands are combined across all matching rules.** If an element matches more than one rule, the commands from every matching rule are allowed for it. Because rules are additive this way, a later rule can never remove a command an earlier rule granted. Favor a high degree of selector specificity so each element matches only the rule you intend.
 - **Listed commands are recognized automatically.** A command named in `commands` is treated as an interaction even if it isn't a default command and isn't listed in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). You do not need to declare it in both places.
 
 ## Examples
@@ -96,7 +96,7 @@ Restrict coverage for a chart component to the command that meaningfully exercis
 ```javascript
 // Only `trigger` counts as coverage for the chart
 cy.get('[data-cy="revenue-chart"]').trigger('mouseover') // ✓ Tracked
-cy.get('[data-cy="revenue-chart"]').click() // ✗ Not tracked — a default command, now excluded
+cy.get('[data-cy="revenue-chart"]').click() // ✗ Not tracked (a default command, now excluded)
 ```
 
 ### Different rules for form elements
@@ -132,15 +132,15 @@ Apply distinct command sets to different kinds of form controls. Each control is
 // Text inputs: only `type` and `clear` count
 cy.get('[data-cy="username"]').type('john_doe') // ✓ Tracked
 cy.get('[data-cy="username"]').clear() // ✓ Tracked
-cy.get('[data-cy="username"]').focus() // ✗ Not tracked — a default command, now excluded
+cy.get('[data-cy="username"]').focus() // ✗ Not tracked (a default command, now excluded)
 
 // Select elements: only `select` counts
 cy.get('[data-cy="country"]').select('US') // ✓ Tracked
-cy.get('[data-cy="country"]').click() // ✗ Not tracked — a default command, now excluded
+cy.get('[data-cy="country"]').click() // ✗ Not tracked (a default command, now excluded)
 
 // Checkboxes/radios: only `check` and `uncheck` count
 cy.get('[data-cy="agree-terms"]').check() // ✓ Tracked
-cy.get('[data-cy="agree-terms"]').click() // ✗ Not tracked — a default command, now excluded
+cy.get('[data-cy="agree-terms"]').click() // ✗ Not tracked (a default command, now excluded)
 ```
 
 ### Counting third-party commands for specific elements
@@ -167,7 +167,7 @@ Commands from a plugin such as [`cypress-real-events`](https://github.com/dmtrKo
 ```javascript
 // `realHover` counts as coverage for the tooltip trigger
 cy.get('[data-cy="tooltip-trigger"]').realHover() // ✓ Tracked
-cy.get('[data-cy="tooltip-trigger"]').click() // ✗ Not tracked — a default command, now excluded
+cy.get('[data-cy="tooltip-trigger"]').click() // ✗ Not tracked (a default command, now excluded)
 ```
 
 :::info
@@ -178,7 +178,7 @@ Like custom commands added with [`additionalInteractionCommands`](/ui-coverage/c
 
 ### Counting assertions as coverage
 
-Some elements are only ever validated, never interacted with — a read-only status badge, a computed total. Assertions don't count as coverage by default, but you can list `assert` to credit them. Remember that once a rule matches, only the commands you list count, so include any other commands you also want to accept.
+Some elements are only ever validated, never interacted with, such as a read-only status badge or a computed total. Assertions don't count as coverage by default, but you can list `assert` to credit them. Remember that once a rule matches, only the commands you list count, so include any other commands you also want to accept.
 
 #### Config
 
@@ -201,7 +201,7 @@ Some elements are only ever validated, never interacted with — a read-only sta
 // Assertions against the element count as coverage
 cy.get('[data-cy="order-total"]').should('exist') // ✓ Tracked
 cy.get('[data-cy="order-total"]').should('be.visible') // ✓ Tracked
-cy.get('[data-cy="order-total"]').click() // ✗ Not tracked — `assert` is the only allowed command
+cy.get('[data-cy="order-total"]').click() // ✗ Not tracked (`assert` is the only allowed command)
 ```
 
 ### Scoping rules to shadow DOM
