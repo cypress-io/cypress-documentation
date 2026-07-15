@@ -46,20 +46,11 @@ To add or edit `additionalInteractionCommands`, open the **App Quality** tab in 
 }
 ```
 
-Each entry is the name of a Cypress command, such as `"realClick"` or `"selectDate"`, written exactly as it appears in your test code. Entries are command names only: not CSS selectors and not the `cy.` prefix.
-
-### Options
-
-| Option                          | Required | Default | Description                                                                                                        |
-| ------------------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------ |
-| `additionalInteractionCommands` | Optional | `[]`    | An array of command names (strings) recognized as interaction commands in addition to the [built-in set](/ui-coverage/core-concepts/interactivity#Interaction-Commands). |
+Each entry is the name of a Cypress command, such as `"realClick"` or `"selectDate"`, written exactly as it appears in your test code. Entries are command names only: not CSS selectors and not the `cy.` prefix. The property is optional and defaults to an empty list, so the [built-in interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) always apply on their own.
 
 ## How additional interaction commands are applied
 
-For each command your test runs, UI Coverage decides whether it counts as an interaction:
-
-1. **The command must reference the element it acts on.** UI Coverage attributes an interaction to an element only when the command logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that highlights the subject element. Built-in commands do this automatically. A custom command must do it explicitly (see [Requirements for a custom command](#Requirements-for-a-custom-command)). A command with no subject-referencing snapshot is ignored even when it's listed here.
-2. **The command name must match.** If the command is one of the [built-in interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), it counts automatically. Otherwise it counts only if its name appears in `additionalInteractionCommands` (or in [`allowedInteractionCommands`](#Relationship-to-allowedInteractionCommands)).
+A command you list here counts as an interaction only when it logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that highlights the element it acts on. UI Coverage reads that snapshot to know which element the interaction belongs to, so a command with no subject-referencing snapshot is ignored even when its name is listed. Built-in commands log this snapshot automatically; a custom command must do it explicitly (see [Requirements for a custom command](#Requirements-for-a-custom-command)).
 
 Keep these behaviors in mind:
 
@@ -69,7 +60,7 @@ Keep these behaviors in mind:
 
 ### Requirements for a custom command
 
-Listing a command name isn't enough on its own. For UI Coverage to attribute the interaction to an element, the custom command must give UI Coverage an element to attribute it to, by logging a snapshot that references the subject element. In practice that means the command should:
+Listing a command name isn't enough on its own. For UI Coverage to credit the interaction to an element, the custom command must give it an element to credit, by logging a snapshot that references the subject element. In practice that means the command should:
 
 1. Receive the element as its subject, by registering with [`prevSubject`](/api/cypress-api/custom-commands#Arguments).
 2. Log the interaction against that element with [`Cypress.log`](/api/cypress-api/cypress-log), passing the subject as `$el`.
@@ -93,7 +84,7 @@ Cypress.Commands.add(
 )
 ```
 
-Beyond letting UI Coverage attribute the interaction, logging a snapshot that references the subject is what renders element highlights for the command in Cypress open mode and [Test Replay](/cloud/features/test-replay). See [Custom Commands](/api/cypress-api/custom-commands) for the full API.
+Beyond letting UI Coverage credit the interaction, logging a snapshot that references the subject is what renders element highlights for the command in Cypress open mode and [Test Replay](/cloud/features/test-replay). See [Custom Commands](/api/cypress-api/custom-commands) for the full API.
 
 ### Relationship to allowedInteractionCommands
 
@@ -126,7 +117,7 @@ cy.get('[data-cy="tooltip-trigger"]').realHover()
 
 ### Track your own custom commands
 
-List the custom commands your team defines with `Cypress.Commands.add`. Make sure each one meets the [requirements for a custom command](#Requirements-for-a-custom-command) so UI Coverage can attribute the interaction to an element.
+List the custom commands your team defines with `Cypress.Commands.add`. Make sure each one meets the [requirements for a custom command](#Requirements-for-a-custom-command) so UI Coverage can credit the interaction to an element.
 
 #### Config
 
