@@ -68,6 +68,7 @@ Understanding the matching behavior is the key to using this option correctly:
 - **Matching a rule replaces the defaults for that element.** Once an element matches a rule, only the commands listed in that rule count as coverage for it. The default commands no longer apply. This is how the option both narrows coverage (a listed command like `click` still counts, an unlisted default like `type` no longer does) and expands it (a listed non-default command like `assert` now counts).
 - **Commands are combined across all matching rules.** If an element matches more than one rule, the commands from every matching rule are allowed for it. Because rules are additive this way, a later rule can never remove a command an earlier rule granted. Favor a high degree of selector specificity so each element matches only the rule you intend.
 - **A custom command listed here doesn't need to be registered anywhere else.** Normally a custom or plugin command (one that isn't a [default command](/ui-coverage/core-concepts/interactivity#Interaction-Commands)) only counts as an interaction if you add it to [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). Naming it in a rule's `commands` list registers it as well, so a command like `realHover` is recognized here without also appearing in `additionalInteractionCommands`.
+- **Command names are case-sensitive.** Each name in `commands` must match the command exactly as it appears in your test code, and only commands that actually target a DOM element produce coverage.
 
 ## Examples
 
@@ -199,7 +200,6 @@ Some elements are only ever validated, never interacted with, such as a read-onl
 
 ```javascript
 // Assertions against the element count as coverage
-cy.get('[data-cy="order-total"]').should('exist') // ✓ Tracked
 cy.get('[data-cy="order-total"]').should('be.visible') // ✓ Tracked
 cy.get('[data-cy="order-total"]').click() // ✗ Not tracked (`assert` is the only allowed command)
 ```
@@ -297,9 +297,10 @@ cy.get('#embedded-form').then(($iframe) => {
 })
 ```
 
-## Notes
+## See also
 
-- Elements that don't match any rule keep all default interaction commands (plus any `additionalInteractionCommands`).
-- Command names are case-sensitive and must match the command name exactly as it appears in your test code.
-- This configuration works independently of [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). A command declared here is recognized without also being listed there.
-- Only commands that actually interact with a DOM element (and log a snapshot referencing it) produce coverage. Listing a command that never targets an element has no effect.
+- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands): count a custom or plugin command as an interaction on every element, not just specific ones.
+- [Interactivity](/ui-coverage/core-concepts/interactivity#Interaction-Commands): the default set of commands UI Coverage tracks and how interactive elements are found.
+- [Custom commands](/api/cypress-api/custom-commands): writing commands that log a snapshot so UI Coverage can attribute them.
+- [Configuration overview](/ui-coverage/configuration/overview): where to set configuration and regenerate reports.
+- [UI Coverage FAQ](/ui-coverage/faq#Interaction-commands): common questions about interaction commands and troubleshooting.
