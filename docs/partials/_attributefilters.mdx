@@ -68,9 +68,9 @@ Keep these matching details in mind when writing patterns:
 
 ## Examples
 
-### Excluding auto-generated ID values
+### Excluding framework-generated IDs
 
-Some component libraries, such as React via `useId`, generate `id` values like `:r11:` that change on every render. Excluding them lets Cypress identify the elements by a stable attribute instead.
+React's `useId` hook (used by libraries like MUI and Radix) produces `id` values such as `:r0:` that change on every render. Excluding them lets Cypress identify each field by its stable `name` instead.
 
 ```json title="App Quality Config"
 {
@@ -78,7 +78,8 @@ Some component libraries, such as React via `useId`, generate `id` values like `
     {
       "attribute": "id",
       "value": ":r.*",
-      "include": false
+      "include": false,
+      "comment": "React useId() values are regenerated on every render"
     }
   ]
 }
@@ -87,36 +88,36 @@ Some component libraries, such as React via `useId`, generate `id` values like `
 #### HTML
 
 ```xml
-<body>
-  <button id=":r11:" name="my-button">Button 1</button>
-  <button id=":r12:" name="other-button">Button 2</button>
-</body>
+<form>
+  <input id=":r0:" name="email" type="email" />
+  <input id=":r1:" name="password" type="password" />
+</form>
 ```
 
 #### Element identifiers displayed
 
 ```
-[name="my-button"]
-[name="other-button"]
+[name="email"]
+[name="password"]
 ```
 
 ---
 
-### Filtering related dynamic attributes
+### Filtering an ID and the attributes that reference it
 
-When you filter a dynamic `id`, also filter the attributes that reference it, or elements will still be identified by those related dynamic values. Common relationships include:
+When you filter a dynamic `id`, also filter the attributes that point at it, or elements will still be identified by those related dynamic values. Here Angular Material generates `mat-*` IDs and wires them through `for` and `aria-describedby`. Common relationships to filter alongside an `id` include:
 
-- Form associations (`for` attributes on labels)
+- Form associations (`for` on labels)
 - ARIA relationships (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-details`)
-- Name attributes that may mirror IDs in certain frameworks
 
 ```json title="App Quality Config"
 {
   "attributeFilters": [
     {
-      "attribute": "id|for|name|aria-.*",
-      "value": "dynamic-.*",
-      "include": false
+      "attribute": "id|for|aria-describedby|aria-labelledby",
+      "value": "mat-.*",
+      "include": false,
+      "comment": "Angular Material regenerates mat-* ids per render"
     }
   ]
 }
@@ -126,9 +127,9 @@ When you filter a dynamic `id`, also filter the attributes that reference it, or
 
 ```xml
 <div>
-  <label for="dynamic-input-1">First Name</label>
-  <input id="dynamic-input-1" name="dynamic-input-1" aria-describedby="dynamic-help-1" />
-  <p id="dynamic-help-1">Enter your first name</p>
+  <label for="mat-input-0">Email</label>
+  <input id="mat-input-0" name="email" aria-describedby="mat-hint-2" />
+  <span id="mat-hint-2">We'll only use this to sign you in.</span>
 </div>
 ```
 
@@ -136,62 +137,28 @@ When you filter a dynamic `id`, also filter the attributes that reference it, or
 
 ```
 label
-input
-p
+[name="email"]
+span
 ```
 
 ---
 
-### Re-including an attribute with an exception
+### Keeping one attribute while excluding a whole family
 
-Because the first matching rule wins, you can allow a specific attribute while excluding a broader family. Here `ng-include-me` is kept even though every other `ng-*` and `_ng*` attribute is ignored.
-
-```json title="App Quality Config"
-{
-  "attributeFilters": [
-    {
-      "attribute": "ng-include-me",
-      "value": ".*",
-      "include": true
-    },
-    {
-      "attribute": "ng-.*|_ng.*",
-      "value": ".*",
-      "include": false
-    }
-  ]
-}
-```
-
-#### HTML
-
-```xml
-<body>
-  <button ng-include-me="my-button">Button 1</button>
-  <button ng-but-not-me="other-button">Button 2</button>
-</body>
-```
-
-#### Element identifiers displayed
-
-```
-[ng-include-me="my-button"]
-:nth-child(2)
-```
-
----
-
-### Ignoring dynamic attributes for accurate grouping
-
-Filtering a per-instance attribute lets Cypress group otherwise-identical elements into a single repeated component instead of tracking each one separately.
+Because the first matching rule wins, an `include: true` rule listed before a broad `include: false` rule protects the attributes it matches. Here Cypress keeps identifying elements by your `data-cy` test hook while ignoring the stateful `data-*` attributes that component libraries add and change as the UI updates.
 
 ```json title="App Quality Config"
 {
   "attributeFilters": [
     {
       "attribute": "data-cy",
-      "value": "user-\\d+",
-      "include": false
+      "include": true,
+      "comment": "Always identify elements by our test hook"
+    },
+    {
+      "attribute": "data-.*",
+      "include": false,
+      "comment": "Ignore library state attributes like data-state, data-headlessui-state"
     }
   ]
 }
@@ -200,12 +167,45 @@ Filtering a per-instance attribute lets Cypress group otherwise-identical elemen
 #### HTML
 
 ```xml
-<button data-cy="user-123" class="user">Harper</button>
-<button data-cy="user-456" class="user">Amara</button>
+<button data-cy="menu-toggle" data-headlessui-state="open" data-state="active">
+  Menu
+</button>
 ```
 
 #### Element identifiers displayed
 
 ```
-.user (2 instances)
+[data-cy="menu-toggle"]
+```
+
+---
+
+### Grouping repeated elements by ignoring per-row IDs
+
+Filtering a per-instance value lets Cypress group otherwise-identical elements into a single repeated component instead of tracking each row separately. Here each delete button carries the row's database ID, so removing that value collapses them into one group.
+
+```json title="App Quality Config"
+{
+  "attributeFilters": [
+    {
+      "attribute": "id",
+      "value": "delete-user-\\d+",
+      "include": false,
+      "comment": "Row action ids include the per-user database id"
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<button id="delete-user-4821" class="delete-btn">Delete</button>
+<button id="delete-user-9034" class="delete-btn">Delete</button>
+```
+
+#### Element identifiers displayed
+
+```
+.delete-btn (2 instances)
 ```
