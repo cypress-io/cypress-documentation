@@ -43,21 +43,7 @@ To add or edit `attributeFilters`, open the **App Quality** tab in your project 
 }
 ```
 
-To apply rules to UI Coverage only, nest the property under the `uiCoverage` key:
-
-```json title="App Quality Config"
-{
-  "uiCoverage": {
-    "attributeFilters": [
-      {
-        "attribute": string,
-        "value": string,
-        "include": boolean
-      }
-    ]
-  }
-}
-```
+To scope rules to a single product, nest the property under a `uiCoverage` or `accessibility` key, as described in [Scope](#Scope) above.
 
 ### Options
 
