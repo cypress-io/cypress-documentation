@@ -7,7 +7,7 @@ sidebar_position: 30
 
 <ProductHeading product="ui-coverage" />
 
-# Exclude views (`viewFilters`)
+# Exclude views - `viewFilters`
 
 The `viewFilters` configuration excludes URLs from UI Coverage. By default, every URL your tests visit is included. A `viewFilters` rule with `include: false` removes matching URLs before any analysis happens: their snapshots don't appear in your report, and no view is created for them. Links are filtered too: any link whose destination URL matches an excluded pattern is removed from the report and the coverage score, and excluded URLs never appear as [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links). The result is a report and score that reflect the parts of your application you own and intend to test.
 
