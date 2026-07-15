@@ -54,6 +54,8 @@ To scope rules to a single product, nest the property under a `uiCoverage` or `a
 | `include`   | Optional | `true`  | Whether the matched attribute may be used for identification (`true`) or is ignored (`false`).                                                                                        |
 | `comment`   | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on identification and are not displayed in reports. |
 
+Each rule accepts only these four properties. Cypress Cloud validates your configuration and rejects any unrecognized property, as well as two rules that are exactly identical.
+
 ## How rules are applied
 
 Whether Cypress may use an attribute to identify an element is decided by the **first** rule whose `attribute` and `value` both match. Because the first match wins, order your rules from most specific to least specific: put `include: true` exceptions first, then broader `include: false` catch-all rules. For example, you can exclude every `aria-label` from identification with a catch-all rule, while keeping a few known-stable values by listing `include: true` rules for them first.
@@ -63,6 +65,7 @@ An attribute that matches no rule is available for use, so `include: true` is on
 Keep these matching details in mind when writing patterns:
 
 - **Patterns match the whole string.** Each `attribute` and `value` pattern is anchored automatically, as if wrapped in `^(...)$`, so it must match the entire name or value. Use wildcards for partial matches: `value: "user-.*"` matches `user-123`, whereas `value: "user"` matches only the exact string `user`. If your pattern already starts with `^` or ends with `$`, it is used as written.
+- **Escape backslashes for JSON.** Because JSON uses the backslash as its own escape character, a regex token like `\d` must be written `\\d` in the configuration. A single backslash is dropped, turning `\d` into a literal `d` that matches nothing you intended.
 - **Attribute names are matched case-insensitively; values are matched case-sensitively.**
 - **Only attributes and individual `class` tokens can be filtered.** Rules never apply to an element's tag name or its position among siblings (`nth-child`), which Cypress may still fall back to when no attributes are usable.
 
@@ -209,3 +212,23 @@ Filtering a per-instance value lets Cypress group otherwise-identical elements i
 ```
 .delete-btn (2 instances)
 ```
+
+## Common framework patterns
+
+These rules are useful starting points for the tools that most often generate unstable identifiers. Adjust the patterns to match what your application actually renders.
+
+| Source                              | Generates                               | Rule                                                              |
+| ----------------------------------- | --------------------------------------- | ----------------------------------------------------------------- |
+| React `useId` (18+), MUI, Radix     | `id` values like `:r0:`                 | `{ "attribute": "id", "value": ":r.*", "include": false }`        |
+| Material UI (legacy)                | `id` / `for` values like `mui-4`        | `{ "attribute": "id\|for", "value": "mui-.*", "include": false }` |
+| Emotion, Chakra UI                  | hashed `class` tokens like `css-1q2w3e` | `{ "attribute": "class", "value": "css-.*", "include": false }`   |
+| Vue scoped styles                   | scope attributes like `data-v-7ba5bd90` | `{ "attribute": "data-v-.*", "include": false }`                  |
+| Angular emulated view encapsulation | attributes like `_ngcontent-abc-c12`    | `{ "attribute": "_ngcontent-.*\|_nghost-.*", "include": false }`  |
+
+Cypress already excludes UUIDs, long hashes, and common generated classes such as Angular's `ng-tns-*` out of the box (see [Built-in filters](#Built-in-filters)), so add a rule only for patterns those defaults don't already cover.
+
+## Confirming a filter worked
+
+You don't need to rerun your tests to check a rule. Regenerate a historical run from its **Properties** tab and the report is reprocessed with your current configuration. Confirm the change by checking that an element that previously appeared multiple times now appears once, or that a set of repeated elements collapsed into a single entry.
+
+If nothing changed, revisit [How rules are applied](#How-rules-are-applied). The most common causes are a pattern that doesn't fully match the value, an earlier rule taking precedence, or a report that was processed before the configuration was saved.
