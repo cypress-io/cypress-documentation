@@ -201,11 +201,11 @@ Yes. The [`profiles`](/ui-coverage/configuration/profiles) property applies conf
 
 Add a [`profiles`](/ui-coverage/configuration/profiles) array to your configuration, give each profile a `name`, and record the run with a matching [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt). When a run's tag matches a profile's `name`, that profile's `config` overrides your base configuration for that run, so a smoke run and a full regression run can each use their own settings without changing your test code. If no tag matches, the base configuration is used unchanged.
 
-### <Icon name="angle-right" /> Does a profile merge with my base configuration or replace it?
+### <Icon name="angle-right" /> Does a UI Coverage profile override my base configuration or merge with it?
 
 A profile overrides one property at a time with a shallow merge, not a deep merge. Any property the profile lists replaces the root value for that property entirely (arrays are replaced, not concatenated), so if a profile defines [`elementFilters`](/ui-coverage/configuration/elementfilters), repeat any root rules you still want to keep. Properties the profile doesn't mention are inherited from the root. The `uiCoverage` and `accessibility` objects merge one level deep, so a profile can override `uiCoverage.elementGroups` while still inheriting `uiCoverage.attributeFilters`. See [How a profile changes your configuration](/ui-coverage/configuration/profiles#How-a-profile-changes-your-configuration).
 
-### <Icon name="angle-right" /> Which profile wins when a run has multiple matching tags?
+### <Icon name="angle-right" /> If a run has multiple tags that match profiles, which UI Coverage profile is used?
 
 The first profile in the [`profiles`](/ui-coverage/configuration/profiles) array whose `name` matches one of the run's tags is used. The tie is broken by the order of the profiles array, not the order of the tags on the run, so reordering tags on the command line never changes which profile applies.
 
