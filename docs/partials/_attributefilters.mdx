@@ -213,20 +213,6 @@ Filtering a per-instance value lets Cypress group otherwise-identical elements i
 .delete-btn (2 instances)
 ```
 
-## Common framework patterns
-
-These rules are useful starting points for the tools that most often generate unstable identifiers. Adjust the patterns to match what your application actually renders.
-
-| Source                              | Generates                               | Rule                                                              |
-| ----------------------------------- | --------------------------------------- | ----------------------------------------------------------------- |
-| React `useId` (18+), MUI, Radix     | `id` values like `:r0:`                 | `{ "attribute": "id", "value": ":r.*", "include": false }`        |
-| Material UI (legacy)                | `id` / `for` values like `mui-4`        | `{ "attribute": "id\|for", "value": "mui-.*", "include": false }` |
-| Emotion, Chakra UI                  | hashed `class` tokens like `css-1q2w3e` | `{ "attribute": "class", "value": "css-.*", "include": false }`   |
-| Vue scoped styles                   | scope attributes like `data-v-7ba5bd90` | `{ "attribute": "data-v-.*", "include": false }`                  |
-| Angular emulated view encapsulation | attributes like `_ngcontent-abc-c12`    | `{ "attribute": "_ngcontent-.*\|_nghost-.*", "include": false }`  |
-
-Cypress already excludes UUIDs, long hashes, and common generated classes such as Angular's `ng-tns-*` out of the box (see [Built-in filters](#Built-in-filters)), so add a rule only for patterns those defaults don't already cover.
-
 ## Confirming a filter worked
 
 You don't need to rerun your tests to check a rule. Regenerate a historical run from its **Properties** tab and the report is reprocessed with your current configuration. Confirm the change by checking that an element that previously appeared multiple times now appears once, or that a set of repeated elements collapsed into a single entry.
