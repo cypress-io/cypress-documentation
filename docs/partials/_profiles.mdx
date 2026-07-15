@@ -1,28 +1,40 @@
-The `profiles` property allows you to create configuration overrides that are applied based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). This enables you to use different configuration settings for different types of runs in the same Cypress Cloud project, such as regression tests compared to smoke tests environments, or providing scoped results relevant to specific teams.
+The `profiles` property lets a single Cypress Cloud project serve many kinds of runs. Instead of maintaining separate projects—or living with one configuration that has to compromise between smoke tests, full regression suites, and per-team reporting—you keep one base configuration and layer targeted overrides on top of it. The right override is selected automatically from the [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt) you already pass to `cypress run`, so a regression run and a pull request run can each get exactly the App Quality configuration that makes their report actionable, with no changes to your test code.
 
 In many cases, the need for different profiles can be avoided completely by having distinct Cypress Cloud projects for different kinds of runs or different team ownership. This is the recommended first choice, because it usually simplifies reporting and tracking. But where distinct projects are not the right answer, profiles will help.
 
 ## Why use profiles?
 
-- **Team specific reporting**: If multiple teams use the same Cypress Cloud project, they may have completely different areas of concern for which pages or DOM elements are included in reports about accessibility or UI Coverage. Profiles allow each team to see and track against only the results that matter to them, and remove all other findings.
-- **Run-type customization**: Use different filters or settings for regression runs versus pull requests. It can be useful to have a narrow config for blocking a merge, optimized for the most critical areas of your app and high "solvability", while still running a wide config on a full regression suite to manage findings on a difference cadence.
-- **Skip runs when needed**: If you know that certain kinds of runs are not going to be valuable for App Quality reporting, you can ignore all view on these runs so that no report is created. In some situations this can improve clarity about when to look at a report and which reports are considered significant.
+- **Team-specific reporting**: If multiple teams use the same Cypress Cloud project, they may care about completely different pages or DOM elements in their accessibility or UI Coverage reports. Profiles let each team tag their runs to see and track only the results that matter to them, filtering out everything else.
+- **Run-type customization**: Use different filters or settings for regression runs versus pull requests. It can be useful to have a narrow config for blocking a merge, optimized for the most critical areas of your app and high "solvability", while still running a wide config on a full regression suite to manage findings on a different cadence.
+- **Scope a report down for specific runs**: When a full report isn't useful for a certain kind of run, point a profile at a deliberately narrow configuration—for example, `viewFilters` that keep only a handful of views, or exclude everything else—so the report stays focused on what matters for that run type. There is no dedicated "skip this run" switch; you scope reporting by supplying a narrower configuration through the profile.
 
 ## How profiles work
 
-Profiles are selected by matching run tags to profile names. When you run Cypress with the [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) flag, Cypress Cloud looks for a profile whose `name` matches one of the tags. If a match is found, properties defined in profile's `config` properties override the root configuration. Properties defined in the root that are not referenced in the profile will be inherited, meaning you do not need to repeat config values that you want to keep the same.
+### Selecting a profile
 
-If more than one tag provided to a run matches a profile in your App Quality profiles array, the first matching profile in the array will be used. The order in which the tags are passed to the run doesn't matter.
+Profiles are selected by matching run tags to profile names. When you record a run with the [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) flag, Cypress Cloud walks the `profiles` array in order and applies the **first profile whose `name` exactly matches one of the run's tags**. Matching is an exact, case-sensitive string comparison: the profile name `aq-config-regression` matches only the tag `aq-config-regression`—not `AQ-Config-Regression`, and not `aq-config-regression-nightly`.
+
+If a run carries several tags that each match a profile, the tie is broken by **the order of the `profiles` array, not the order of the tags** on the run. The first matching profile in the array always wins. If no tag matches any profile—or the run has no tags at all—the base (root) configuration is used unchanged.
+
+### How overrides are merged
+
+A matched profile's `config` is layered on top of the root configuration one property at a time. This is a shallow merge, not a deep merge, and understanding it prevents the most common surprises:
+
+- **Each property is replaced as a whole, never concatenated.** If a property such as `viewFilters` or `elementFilters` appears in a profile's `config`, its value completely replaces the root value for that run. Arrays are **not** merged, so a profile that defines `elementFilters` overrides the root `elementFilters` entirely—repeat any root rules you still want to keep.
+- **Properties you don't override are inherited.** Any root property the profile doesn't mention is used as-is, so a profile only needs to specify what changes.
+- **`uiCoverage` and `accessibility` merge one level deep.** Within these product-specific objects, each key (for example `elementGroups` or `attributeFilters`) is inherited from the root unless the profile provides its own value for that key, in which case that one key is replaced. This lets a profile override `uiCoverage.elementGroups` without disturbing `uiCoverage.attributeFilters`.
+
+Profiles are never nested. The `profiles` array exists only at the root of your configuration, and a profile's `config` accepts every other App Quality option except another `profiles` array.
 
 ## Best practices
 
 Use a naming convention like `aq-config-x` (e.g., `aq-config-regression`, `aq-config-staging`) to make it clear that a tag is used for configuration lookup purposes.
 
-While relying on existing tags works just fine, being explicit will help avoid unintentionally changing or removing a tag which is depended on for a profile.
+While relying on existing tags works just fine, being explicit will help avoid unintentionally changing or removing a tag which is depended on for a profile. Because names are matched exactly against run tags, keep them stable—renaming a profile or changing a tag silently falls back to the base configuration for those runs.
 
 ## Syntax
 
-```json
+```json title="App Quality Config"
 {
   "profiles": [
     {
@@ -38,11 +50,11 @@ While relying on existing tags works just fine, being explicit will help avoid u
 
 ### Options
 
-| Option    | Required | Description                                                                                               |
-| --------- | -------- | --------------------------------------------------------------------------------------------------------- |
-| `name`    | Required | The profile name that must match a run tag to activate this profile.                                      |
-| `config`  | Required | An object containing any App Quality configuration options. These values override the root configuration. |
-| `comment` | Optional | A comment describing the purpose of this profile.                                                         |
+| Option    | Required | Description                                                                                                                                 |
+| --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`    | Required | The profile name. A run activates this profile when one of its tags exactly matches this value (case-sensitive).                            |
+| `config`  | Required | An object containing any App Quality configuration options, except a nested `profiles` array. These values override the root configuration. |
+| `comment` | Optional | A comment describing the purpose of this profile.                                                                                           |
 
 ## Examples
 
@@ -50,7 +62,7 @@ While relying on existing tags works just fine, being explicit will help avoid u
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "elementFilters": [
     {
@@ -89,7 +101,7 @@ To use this profile, run Cypress with a matching tag:
 cypress run --record --tag "aq-config-regression"
 ```
 
-When this tag is used, the profile's `elementFilters` configuration will override the base `elementFilters`, excluding both temporary test elements and debug elements.
+When this tag is used, the profile's `elementFilters` replaces the base `elementFilters` entirely, so both rules are repeated to exclude temporary test elements and debug elements. Because arrays are replaced rather than merged, dropping the first rule here would stop excluding temporary test elements on regression runs.
 
 ---
 
@@ -99,7 +111,7 @@ You can define multiple profiles for different scenarios:
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "elementFilters": [
     {
@@ -156,11 +168,11 @@ cypress run --record --tag "aq-config-staging"
 
 ### Profile with nested configuration
 
-Profiles can override configuration at any level, including nested configuration specific to Cypress Accessibility or UI Coverage, if your project has both projects enabled. For example:
+Profiles can override configuration at any level, including nested configuration specific to Cypress Accessibility or UI Coverage, if your project has both products enabled. Because `uiCoverage` and `accessibility` merge one level deep, a profile can add or replace a single nested property while inheriting the rest from the root. For example:
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "elementFilters": [
     {
@@ -203,17 +215,17 @@ Profiles can override configuration at any level, including nested configuration
 cypress run --record --tag "aq-config-feature-branch"
 ```
 
-This profile adds element grouping for the new checkout flow while keeping the base configuration for element filters and attribute filters.
+This profile adds element grouping for the new checkout flow. The root `elementFilters` is inherited because the profile doesn't mention it, and inside `uiCoverage`, the profile supplies `elementGroups` while the root's `attributeFilters` is inherited—only the keys the profile names are replaced.
 
 ---
 
 ### Profile selection with multiple matching tags
 
-If you pass multiple tags and more than one matches a profile name, the first matching profile in the `profiles` array is used:
+If you pass multiple tags and more than one matches a profile name, the first matching profile in the `profiles` array is used—regardless of the order the tags appear on the run:
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "profiles": [
     {
@@ -245,7 +257,7 @@ If you pass multiple tags and more than one matches a profile name, the first ma
 #### Usage
 
 ```shell
-cypress run --record --tag "aq-config-regression,aq-config-staging"
+cypress run --record --tag "aq-config-staging,aq-config-regression"
 ```
 
-In this case, the `aq-config-regression` profile will be used because it appears first in the `profiles` array, even though both tags match profile names.
+In this case, the `aq-config-regression` profile is used because it appears first in the `profiles` array, even though `aq-config-staging` is listed first among the tags. Only profile-array order decides the winner.
