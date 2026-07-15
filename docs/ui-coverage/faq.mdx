@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, and configuration.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, and configuration.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -150,6 +150,32 @@ The most common causes are:
 - An earlier rule matches the same attribute first, and the first matching rule wins. List specific `include: true` exceptions before broad `include: false` rules.
 - The rule targets a tag name or sibling position. Only attributes and individual `class` tokens can be filtered, not an element's tag name or `nth-child` position.
 - The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+## Interaction commands
+
+### <Icon name="angle-right" /> Which commands count as coverage by default?
+
+UI Coverage marks an element as tested when it's targeted by one of a default set of Cypress interaction commands: `blur`, `check`, `clear`, `click`, `dblclick`, `focus`, `rightclick`, `scrollIntoView`, `scrollTo`, `select`, `selectFile`, `submit`, `trigger`, `type`, and `uncheck`. Commands outside this set — including plugin commands like `realClick` and `realHover`, and assertions — don't count until you add them with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) or [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands). See [Interaction Commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands).
+
+### <Icon name="angle-right" /> What's the difference between additionalInteractionCommands and allowedInteractionCommands?
+
+[`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) _extends_ the set of commands recognized as interactions everywhere, so a custom or plugin command counts as coverage on any element. [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works _per element_: for elements matching a selector, only the commands you list count, which lets you both restrict coverage to a meaningful interaction and accept commands that are otherwise ignored. Use `additionalInteractionCommands` to recognize a command globally, and `allowedInteractionCommands` to control which commands matter for specific elements.
+
+### <Icon name="angle-right" /> How do I require a specific interaction, like a hover, to mark an element tested?
+
+Add an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule whose `selector` matches the element and whose `commands` list contains only the interaction you require. Because matching a rule replaces the default commands for that element, interactions you didn't list — including a plain `click` — no longer mark it tested, so the element only counts once the meaningful interaction runs.
+
+### <Icon name="angle-right" /> Can I count assertions as UI Coverage?
+
+Yes. Assertions don't count by default, but an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule listing `assert` credits assertions against the matching elements. This is useful for read-only elements such as status badges or computed totals that your tests validate but never interact with. Remember that the rule replaces the defaults for those elements, so include any other commands you also want to accept alongside `assert`.
+
+### <Icon name="angle-right" /> Do commands in allowedInteractionCommands also need to be in additionalInteractionCommands?
+
+No. Listing a command in an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule automatically registers it as a recognized interaction, so a custom or plugin command works without also appearing in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). As with any custom command, it only produces coverage if it logs a snapshot that references the subject element.
+
+### <Icon name="angle-right" /> Why did an element stop counting as tested after I added an allowedInteractionCommands rule?
+
+Once an element matches an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule, only the commands listed in the matching rules count for it — the default commands no longer apply. If your tests exercise the element with a command you didn't list, it's now treated as untested. Add that command to the rule, or tighten the `selector` so the rule doesn't match elements you didn't intend to restrict.
 
 ## Configuration
 
