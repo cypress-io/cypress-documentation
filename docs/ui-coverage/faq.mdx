@@ -203,7 +203,7 @@ Add a [`profiles`](/ui-coverage/configuration/profiles) array to your configurat
 
 ### <Icon name="angle-right" /> Does a profile merge with my base configuration or replace it?
 
-A profile overrides one property at a time with a shallow merge, not a deep merge. Any property the profile lists replaces the root value for that property entirely (arrays are replaced, not concatenated), so if a profile defines [`elementFilters`](/ui-coverage/configuration/elementfilters), repeat any root rules you still want to keep. Properties the profile doesn't mention are inherited from the root. The `uiCoverage` and `accessibility` objects merge one level deep, so a profile can override `uiCoverage.elementGroups` while still inheriting `uiCoverage.attributeFilters`. See [How overrides are merged](/ui-coverage/configuration/profiles#How-overrides-are-merged).
+A profile overrides one property at a time with a shallow merge, not a deep merge. Any property the profile lists replaces the root value for that property entirely (arrays are replaced, not concatenated), so if a profile defines [`elementFilters`](/ui-coverage/configuration/elementfilters), repeat any root rules you still want to keep. Properties the profile doesn't mention are inherited from the root. The `uiCoverage` and `accessibility` objects merge one level deep, so a profile can override `uiCoverage.elementGroups` while still inheriting `uiCoverage.attributeFilters`. See [How a profile changes your configuration](/ui-coverage/configuration/profiles#How-a-profile-changes-your-configuration).
 
 ### <Icon name="angle-right" /> Which profile wins when a run has multiple matching tags?
 

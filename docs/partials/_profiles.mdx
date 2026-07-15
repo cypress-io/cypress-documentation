@@ -14,17 +14,15 @@ In many cases, the need for different profiles can be avoided completely by havi
 
 Profiles are selected by matching run tags to profile names. When you record a run with the [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) flag, Cypress Cloud walks the `profiles` array in order and applies the **first profile whose `name` exactly matches one of the run's tags**. Matching is an exact, case-sensitive string comparison: the profile name `aq-config-regression` matches only the tag `aq-config-regression`, not `AQ-Config-Regression`, and not `aq-config-regression-nightly`.
 
-If a run carries several tags that each match a profile, the tie is broken by **the order of the `profiles` array, not the order of the tags** on the run. The first matching profile in the array always wins. If no tag matches any profile, or the run has no tags at all, the base (root) configuration is used unchanged.
+### How a profile changes your configuration
 
-### How overrides are merged
+When a profile applies, its `config` is laid over your base configuration one setting at a time. Only the settings you include in the profile change; everything else stays exactly as it is in your base configuration. A few things are worth knowing so the result matches what you expect:
 
-A matched profile's `config` is layered on top of the root configuration one property at a time. This is a shallow merge, not a deep merge, and understanding it prevents the most common surprises:
+- **A setting in a profile fully replaces the base version of that setting.** Lists are not combined. If your base configuration has three `elementFilters` rules and a profile defines its own `elementFilters`, the profile's rules are used on their own, so copy over any base rules you still want to apply.
+- **Anything you leave out of a profile stays the same.** You only need to list what's different for that kind of run; the rest is inherited from your base configuration.
+- **`uiCoverage` and `accessibility` settings are handled one by one.** Overriding a single setting inside `uiCoverage` (say, `elementGroups`) leaves the other `uiCoverage` settings (like `attributeFilters`) untouched, so you can adjust one product-specific setting without restating the rest.
 
-- **Each property is replaced as a whole, never concatenated.** If a property such as `viewFilters` or `elementFilters` appears in a profile's `config`, its value completely replaces the root value for that run. Arrays are **not** merged, so a profile that defines `elementFilters` overrides the root `elementFilters` entirely, so repeat any root rules you still want to keep.
-- **Properties you don't override are inherited.** Any root property the profile doesn't mention is used as-is, so a profile only needs to specify what changes.
-- **`uiCoverage` and `accessibility` merge one level deep.** Within these product-specific objects, each key (for example `elementGroups` or `attributeFilters`) is inherited from the root unless the profile provides its own value for that key, in which case that one key is replaced. This lets a profile override `uiCoverage.elementGroups` without disturbing `uiCoverage.attributeFilters`.
-
-Profiles are never nested. The `profiles` array exists only at the root of your configuration, and a profile's `config` accepts every other App Quality option except another `profiles` array.
+You can't put a `profiles` list inside a profile. Profiles live only at the top level of your configuration; a profile's `config` can use any other App Quality setting.
 
 ## Best practices
 
@@ -50,11 +48,11 @@ While relying on existing tags works just fine, being explicit will help avoid u
 
 ### Options
 
-| Option    | Required | Description                                                                                                                                 |
-| --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`    | Required | The profile name. A run activates this profile when one of its tags exactly matches this value (case-sensitive).                            |
-| `config`  | Required | An object containing any App Quality configuration options, except a nested `profiles` array. These values override the root configuration. |
-| `comment` | Optional | A comment describing the purpose of this profile.                                                                                           |
+| Option    | Required | Description                                                                                                                                                                                                                    |
+| --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`    | Required | Identifies the profile so a run can select it. Its only purpose is matching: the profile applies when one of the run's tags is an exact, case-sensitive match for this value. It isn't shown in reports or used anywhere else. |
+| `config`  | Required | An object containing any App Quality configuration options, except a nested `profiles` array. These values override the root configuration.                                                                                    |
+| `comment` | Optional | A note about why this profile exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on behavior and are not displayed in reports.                                             |
 
 ## Examples
 
