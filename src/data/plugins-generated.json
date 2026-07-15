@@ -107,9 +107,9 @@
     },
     "eslint-plugin-cypress": {
       "npm": "eslint-plugin-cypress",
-      "version": "6.4.2",
-      "lastPublished": "2026-06-29T19:31:28.575Z",
-      "cypressVersion": "^15.18.0"
+      "version": "6.4.3",
+      "lastPublished": "2026-07-14T15:05:15.856Z",
+      "cypressVersion": "^15.18.1"
     },
     "cypress-codegen": {
       "npm": "cypress-codegen",
@@ -131,9 +131,9 @@
     },
     "cypress-watch-and-reload": {
       "npm": "cypress-watch-and-reload",
-      "version": "2.1.5",
-      "lastPublished": "2026-05-22T22:29:03.542Z",
-      "cypressVersion": "15.15.0"
+      "version": "2.1.6",
+      "lastPublished": "2026-07-14T23:39:27.926Z",
+      "cypressVersion": "15.18.1"
     },
     "cypress-html-validate": {
       "npm": "cypress-html-validate",
@@ -376,8 +376,8 @@
     },
     "cypress-accessibility-checker": {
       "npm": "cypress-accessibility-checker",
-      "version": "4.0.26",
-      "lastPublished": "2026-06-01T20:26:06.413Z",
+      "version": "4.0.29",
+      "lastPublished": "2026-07-14T19:03:42.407Z",
       "cypressVersion": "^13.2.0 || ^15"
     },
     "cypress-duration-metrics": {
