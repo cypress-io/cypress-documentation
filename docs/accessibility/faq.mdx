@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Get answers to common questions about Cypress Accessibility, including ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, and configuration.'
+description: 'Get answers to common questions about Cypress Accessibility, including ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, and configuration.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -62,6 +62,24 @@ The most common causes are:
 - The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
 
 See [troubleshooting view filters](/accessibility/configuration/viewfilters#A-URL-you-excluded-still-appears-in-the-report) for details.
+
+## Element identification
+
+### <Icon name="angle-right" /> Which attributes does Cypress Accessibility use to identify elements?
+
+Cypress Accessibility checks a prioritized list of attributes on each element: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, in that order, falling back to `id`, `name`, `class`, and other DOM signals when none of those uniquely identify the element. See [Element identification](/accessibility/core-concepts/element-identification) for how identification works across snapshots.
+
+### <Icon name="angle-right" /> How do I make Cypress Accessibility use my own attribute in violation selectors?
+
+Add the attribute name to [`significantAttributes`](/accessibility/configuration/significantattributes). Attributes you list are checked before the default list, in the order you list them, so an attribute your application already renders, such as `data-component`, can identify elements and appear as the violation target selector in your reports.
+
+### <Icon name="angle-right" /> Does significantAttributes replace the default attribute list?
+
+No. Your attributes are checked first, and the defaults still apply after them, so an element without any of your attributes is identified exactly as it would be without configuration. Listing a default attribute like `data-qa` promotes it above the other defaults. To stop an attribute from being used at all, use [`attributeFilters`](/accessibility/configuration/attributefilters) instead.
+
+### <Icon name="angle-right" /> Can I use aria-label as a significant attribute to review my labels?
+
+Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/accessibility/configuration/significantattributes) identifies elements by their label text, so the elements you triage are shown by their labels. This adds a manual check on top of the automated one: Cypress Accessibility confirms that a control has an accessible name, but not that the name is understandable, so `aria-label="button"` passes the same name-presence rules as `aria-label="Close dialog"`. Seeing the label as the identifier makes an unclear one easy to catch.
 
 ## Configuration
 

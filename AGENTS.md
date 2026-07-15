@@ -87,6 +87,12 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
   instructions. They undermine a reader who is struggling and add nothing; state
   the step plainly instead.
+- Describe configuration by what it does and accepts. Don't call out fields or
+  features a property lacks (e.g. "there is no `comment` field") unless the
+  absence is a documented point of confusion.
+- Frame behavior explanations positively and reader-first. Avoid phrasings that
+  sound like caveats about the product's design, such as "consequences of this
+  design"; prefer neutral lead-ins like "Keep these behaviors in mind".
 
 **Directives & tabs** — [tabs](./AGENTS_REFERENCE.md#tabs),
 [config](./AGENTS_REFERENCE.md#cypress-config-examples),
