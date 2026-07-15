@@ -920,11 +920,23 @@ cypress install
 ```
 
 This command normally runs automatically as a `postinstall` step when you add
-`cypress` with your package manager, so you rarely need to run it yourself. It is
-useful when the automatic install was skipped — for example when
-`CYPRESS_INSTALL_BINARY=0` was set — or when you want to
-[troubleshoot the installation](/app/references/advanced-installation#Troubleshoot-installation)
-with [debug logging](/app/references/troubleshooting#Print-DEBUG-logs) enabled.
+`cypress` with your package manager, so you rarely need to run it yourself.
+Running it explicitly is useful when the binary was not downloaded during
+`npm install`, including these scenarios:
+
+- Your package manager blocks lifecycle scripts (for example with
+  `--ignore-scripts`, or because a security policy disallows `postinstall`), so
+  you install the binary yourself at a later stage instead of granting Cypress
+  install-time script access.
+- You want to download and cache the binary on one machine (such as a CI
+  "install" stage), then skip the download on every subsequent machine that
+  reuses that [cache](/app/references/advanced-installation#Binary-cache).
+- The automatic install was skipped on purpose by setting
+  `CYPRESS_INSTALL_BINARY=0`.
+- You want to
+  [troubleshoot the installation](/app/references/advanced-installation#Troubleshoot-installation)
+  by running the download on its own with
+  [debug logging](/app/references/troubleshooting#Print-DEBUG-logs) enabled.
 
 ```shell
 CYPRESS_INSTALL_BINARY=0 npm install cypress --save-dev
