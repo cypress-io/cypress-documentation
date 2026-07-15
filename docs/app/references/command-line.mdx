@@ -915,9 +915,43 @@ detection.
 Installs the Cypress binary that matches the version of the `cypress` npm
 package into the [global cache](/app/references/advanced-installation#Binary-cache).
 
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
+  ]}>
+  <TabItem value="npm">
+
 ```shell
-cypress install
+npx cypress install
 ```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn cypress install
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm cypress install
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bunx cypress install
+```
+
+  </TabItem>
+</Tabs>
 
 This command normally runs automatically as a `postinstall` step when you add
 `cypress` with your package manager, so you rarely need to run it yourself.
@@ -938,10 +972,47 @@ Running it explicitly is useful when the binary was not downloaded during
   by running the download on its own with
   [debug logging](/app/references/troubleshooting#Print-DEBUG-logs) enabled.
 
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
+  ]}>
+  <TabItem value="npm">
+
 ```shell
 CYPRESS_INSTALL_BINARY=0 npm install cypress --save-dev
 DEBUG=cypress:cli* npx cypress install
 ```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 yarn add cypress --dev
+DEBUG=cypress:cli* yarn cypress install
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 pnpm add --save-dev cypress
+DEBUG=cypress:cli* pnpm cypress install
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+CYPRESS_INSTALL_BINARY=0 bun add --dev cypress
+DEBUG=cypress:cli* bunx cypress install
+```
+
+  </TabItem>
+</Tabs>
 
 If a matching binary is already present in the cache, `cypress install` does
 nothing. Pass `--force` to download and reinstall the binary anyway.
@@ -951,8 +1022,7 @@ cypress install --force
 ```
 
 The binary that gets installed, the cache location, and the download source can
-be customized through environment variables such as `CYPRESS_INSTALL_BINARY`,
-`CYPRESS_CACHE_FOLDER`, and `CYPRESS_DOWNLOAD_MIRROR`. See
+be customized through environment variables. See
 [Advanced Installation](/app/references/advanced-installation) for details.
 
 ### `cypress verify`
