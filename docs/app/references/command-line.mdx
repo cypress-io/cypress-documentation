@@ -910,6 +910,39 @@ System Memory: 17.2 GB free 670 MB
 to `cypress:launcher:*` when running `cypress info` to troubleshoot browser
 detection.
 
+### `cypress install`
+
+Installs the Cypress binary that matches the version of the `cypress` npm
+package into the [global cache](/app/references/advanced-installation#Binary-cache).
+
+```shell
+cypress install
+```
+
+This command normally runs automatically as a `postinstall` step when you add
+`cypress` with your package manager, so you rarely need to run it yourself. It is
+useful when the automatic install was skipped — for example when
+`CYPRESS_INSTALL_BINARY=0` was set — or when you want to
+[troubleshoot the installation](/app/references/advanced-installation#Troubleshoot-installation)
+with [debug logging](/app/references/troubleshooting#Print-DEBUG-logs) enabled.
+
+```shell
+CYPRESS_INSTALL_BINARY=0 npm install cypress --save-dev
+DEBUG=cypress:cli* npx cypress install
+```
+
+If a matching binary is already present in the cache, `cypress install` does
+nothing. Pass `--force` to download and reinstall the binary anyway.
+
+```shell
+cypress install --force
+```
+
+The binary that gets installed, the cache location, and the download source can
+be customized through environment variables such as `CYPRESS_INSTALL_BINARY`,
+`CYPRESS_CACHE_FOLDER`, and `CYPRESS_DOWNLOAD_MIRROR`. See
+[Advanced Installation](/app/references/advanced-installation) for details.
+
 ### `cypress verify`
 
 Verify that Cypress is installed correctly and is executable.
