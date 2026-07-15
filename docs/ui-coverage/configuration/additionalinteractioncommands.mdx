@@ -167,9 +167,10 @@ cy.get('[data-testid="due-date"]').selectDate('2026-01-01')
 cy.get('[data-testid="card"]').dragAndDrop('[data-testid="done-column"]')
 ```
 
-## Notes
+## See also
 
-- Command names are case-sensitive and must match exactly as they appear in your test code.
-- The additional commands are merged with the built-in interaction commands; the defaults are not replaced.
-- Only commands that actually interact with a DOM element should be listed here.
-- A listed command is still ignored unless it logs a snapshot that references the subject element. See [Requirements for a custom command](#Requirements-for-a-custom-command) and [Custom Commands](/api/cypress-api/custom-commands).
+- [Interactivity](/ui-coverage/core-concepts/interactivity): how UI Coverage detects interactive elements and which commands count as interactions.
+- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands): limit which interaction commands count for specific elements.
+- [Custom Commands](/api/cypress-api/custom-commands): create custom commands and overwrite built-in ones.
+- [Configuration overview](/ui-coverage/configuration/overview): where to set configuration and regenerate reports.
+- [UI Coverage FAQ](/ui-coverage/faq): common questions and troubleshooting.
