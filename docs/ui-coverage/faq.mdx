@@ -157,6 +157,14 @@ The most common causes are:
 
 UI Coverage marks an element as tested when it's targeted by one of a default set of Cypress interaction commands: `blur`, `check`, `clear`, `click`, `dblclick`, `focus`, `rightclick`, `scrollIntoView`, `scrollTo`, `select`, `selectFile`, `submit`, `trigger`, `type`, and `uncheck`. Commands outside this set, including plugin commands like `realClick` and `realHover` and assertions, don't count until you add them with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) or [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands). See [Interaction Commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands).
 
+### <Icon name="angle-right" /> How do I make UI Coverage count cypress-real-events commands like realClick and realType?
+
+[`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events) commands (`realClick`, `realType`, `realHover`) aren't built-in Cypress commands, so UI Coverage doesn't count them until you list them in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands), nested under the `uiCoverage` key. Once listed, the elements they target are marked as tested.
+
+### <Icon name="angle-right" /> Why isn't my custom command counted as an interaction in UI Coverage?
+
+Two conditions must both hold. First, the command name must be listed in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) (or [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)), matched case-sensitively and written exactly as you registered it. Second, the command must log a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that references the subject element, so UI Coverage knows which element to credit. In practice, register the command with [`prevSubject`](/api/cypress-api/custom-commands#Arguments), call [`Cypress.log`](/api/cypress-api/cypress-log) with the subject as `$el`, and capture a snapshot. If you added the command after a run was processed, regenerate the run to apply the change.
+
 ### <Icon name="angle-right" /> What's the difference between additionalInteractionCommands and allowedInteractionCommands?
 
 [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) _extends_ the set of commands recognized as interactions everywhere, so a custom or plugin command counts as coverage on any element. [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works _per element_: for elements matching a selector, only the commands you list count, which lets you both restrict coverage to a meaningful interaction and accept commands that are otherwise ignored. Use `additionalInteractionCommands` to recognize a command globally, and `allowedInteractionCommands` to control which commands matter for specific elements.
