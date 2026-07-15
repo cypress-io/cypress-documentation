@@ -16,7 +16,7 @@ The `allowedInteractionCommands` configuration lets you decide, per element, exa
 ## Why use allowedInteractionCommands?
 
 - **Require a meaningful interaction**: For components where a plain `click` doesn't prove the feature works, such as charts, drag-and-drop canvases, and custom widgets, restrict coverage to the command that actually exercises it, so a superficial interaction no longer marks the element tested.
-- **Credit commands ignored by default**: Count interactions UI Coverage doesn't track out of the box, such as an `assert` on a read-only element, or a third-party command like `realClick`, as coverage for the elements where they're the interaction that matters.
+- **Credit commands ignored by default**: Count interactions UI Coverage doesn't track out of the box, such as an `assert` on a read-only element, as coverage for the specific elements where that interaction is what matters.
 - **Reduce noise in reports**: Limit tracking to the interaction types that are relevant for a given element or component, so coverage reflects the interactions your team cares about.
 
 For custom or third-party commands that should count as coverage **everywhere** rather than for specific elements, use [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) instead. See [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
@@ -56,7 +56,7 @@ The `allowedInteractionCommands` property accepts an array of objects, where eac
 | `selector`      | Required |         | A CSS selector that identifies the elements the rule applies to. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                 |
 | `commands`      | Required |         | An array of command names (strings) that count as coverage for elements matching the selector. Any command not in this list is ignored for those elements, including commands that would otherwise count by default.                         |
 | `documentScope` | Optional |         | An ordered list of CSS selectors identifying the iframe or shadow DOM hosts that must contain the element, from the outermost document to the innermost. When set, the rule applies only to matching elements inside those nested documents. |
-| `comment`       | Optional |         | A note describing the purpose of the rule. It has no effect on processing.                                                                                                                                                                   |
+| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on processing and are not displayed in reports.                                                            |
 
 Each `selector`/`documentScope` combination must be unique across the list; duplicate rules are rejected by validation.
 
@@ -67,7 +67,7 @@ Understanding the matching behavior is the key to using this option correctly:
 - **Elements that match no rule are unaffected.** They keep the full [default set of interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), plus anything you've added with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands).
 - **Matching a rule replaces the defaults for that element.** Once an element matches a rule, only the commands listed in that rule count as coverage for it. The default commands no longer apply. This is how the option both narrows coverage (a listed command like `click` still counts, an unlisted default like `type` no longer does) and expands it (a listed non-default command like `assert` now counts).
 - **Commands are combined across all matching rules.** If an element matches more than one rule, the commands from every matching rule are allowed for it. Because rules are additive this way, a later rule can never remove a command an earlier rule granted. Favor a high degree of selector specificity so each element matches only the rule you intend.
-- **Listed commands are recognized automatically.** A command named in `commands` is treated as an interaction even if it isn't a default command and isn't listed in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). You do not need to declare it in both places.
+- **A custom command listed here doesn't need to be registered anywhere else.** Normally a custom or plugin command (one that isn't a [default command](/ui-coverage/core-concepts/interactivity#Interaction-Commands)) only counts as an interaction if you add it to [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). Naming it in a rule's `commands` list registers it as well, so a command like `realHover` is recognized here without also appearing in `additionalInteractionCommands`.
 
 ## Examples
 
@@ -145,7 +145,7 @@ cy.get('[data-cy="agree-terms"]').click() // ✗ Not tracked (a default command,
 
 ### Counting third-party commands for specific elements
 
-Commands from a plugin such as [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events) aren't tracked by default. Listing a command here both scopes it to the matching elements and registers it as a recognized interaction, so you don't also need to add it to [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands).
+Commands from a plugin such as [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events) aren't tracked by default. Listing a command here both scopes it to the matching elements and registers it as a recognized interaction, so you don't also need to add it to [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). Reach for `allowedInteractionCommands` when the command should only count for certain elements; if you want a plugin command counted on every element, add it to [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) instead.
 
 #### Config
 
