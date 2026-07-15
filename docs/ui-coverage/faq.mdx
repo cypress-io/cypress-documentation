@@ -209,12 +209,12 @@ A profile overrides one property at a time with a shallow merge, not a deep merg
 
 The first profile in the [`profiles`](/ui-coverage/configuration/profiles) array whose `name` matches one of the run's tags is used. The tie is broken by the order of the profiles array, not the order of the tags on the run, so reordering tags on the command line never changes which profile applies.
 
-### <Icon name="angle-right" /> Why isn't my profile being applied?
+### <Icon name="angle-right" /> Why isn't my UI Coverage profile applied even though I tagged the run?
 
 The most common causes are:
 
 - The run tag doesn't exactly match the profile `name`. Matching is case-sensitive and exact, so `aq-config-regression` matches only the tag `aq-config-regression`, not `AQ-Config-Regression` or `aq-config-regression-nightly`.
-- The run wasn't recorded with the tag. Profiles are selected from the tags passed to `cypress run --record --tag`, so a run without that tag falls back to the base configuration.
+- The tag never reached Cypress Cloud. Profiles are selected from the tags passed to `cypress run --record --tag`, so a run recorded without `--record`, or without that specific `--tag`, falls back to the base configuration.
 - An earlier profile in the array also matches one of the tags and is used instead, because the first match wins.
 - The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
 
