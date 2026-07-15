@@ -65,7 +65,6 @@
       ["vue", "vuejs"],
       ["svelte", "sveltejs"],
       ["angular", "ng"],
-      ["npm", "yarn", "pnpm"],
       ["alias", "aliases"],
       ["stub", "stubs"],
       ["spy", "spies"],
