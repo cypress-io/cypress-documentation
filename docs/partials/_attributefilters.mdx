@@ -12,11 +12,7 @@ If instead you want Cypress to _prefer_ a particular attribute as an identifier 
 
 ## Built-in filters
 
-Cypress already excludes the most common sources of unstable identifiers, so many applications need no `attributeFilters` configuration at all. Out of the box, Cypress ignores:
-
-- Any attribute whose value contains a UUID or a long hexadecimal hash (a run of 12+ hex characters mixing letters and digits).
-- `id`, `name`, `for`, and `aria-*` attributes whose value is only digits, or a generated `sizzle###` value.
-- `class` tokens matching common generated-CSS patterns such as `jss*` and `ng-tns-*`.
+Cypress already excludes the most common sources of unstable identifiers, such as auto-generated IDs and hashed CSS classes, so many applications need no `attributeFilters` configuration at all.
 
 Your configured rules run **before** these built-in filters, so a rule with `include: true` can re-enable an attribute that a built-in filter would otherwise drop. Add `attributeFilters` when your application produces unstable identifiers that these defaults don't already cover.
 
