@@ -7,7 +7,7 @@ sidebar_position: 100
 
 <ProductHeading product="ui-coverage" />
 
-# Limit tracked commands (`allowedInteractionCommands`)
+# Limit tracked commands - `allowedInteractionCommands`
 
 By default, UI Coverage marks an element as tested when it's targeted by one of a [default set of Cypress interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), such as `click`, `type`, and `select`. That default is right for most elements, but not all: a chart is really tested by a hover, not the plain `click` that happens to count, and a status banner you only ever assert against is never "interacted with" at all, so it never counts.
 
