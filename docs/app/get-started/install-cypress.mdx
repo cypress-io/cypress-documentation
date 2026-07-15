@@ -75,13 +75,15 @@ Cypress is installed using one of the following supported package managers:
 | [pnpm](https://pnpm.io/)                         | >=8.x     | [Install pnpm](https://pnpm.io/installation)                                     |
 | [Bun](https://bun.sh/)                           | >=1.2.22  | [Install Bun](https://bun.sh/docs/installation)                                  |
 
+Cypress uses a `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+As a security hardening measure, package managers increasingly block dependency lifecycle scripts such as `postinstall` by default.
+When the script is blocked, the Cypress binary is not downloaded and Cypress will not run.
+
+The sections below describe how to allow Cypress to run its `postinstall` script, or how to install the Cypress binary explicitly, for each supported package manager.
+
 #### npm configuration
 
-Cypress uses a `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
-This method is affected by hardening changes introduced into npm.
-
 Starting in npm 11.16.0, a warning is issued, then starting in npm 12.0.0, npm blocks `postinstall` lifecycle scripts by default.
-When install scripts are blocked, npm skips Cypress' `postinstall` script and the Cypress binary is not downloaded.
 To allow Cypress to run its `postinstall` script, use one of the following approaches.
 
 After installing Cypress, you can use the `npm install-scripts` CLI command to add `cypress` to the `allowScripts` list so npm runs the `postinstall` script on install.
@@ -117,7 +119,7 @@ npx cypress install
 [Yarn (Modern)](https://yarnpkg.com/) configuration using [nodeLinker: "node-modules"](https://yarnpkg.com/configuration/yarnrc#nodeLinker)
 is preferred. Cypress [Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing) is not currently compatible with the default setting [nodeLinker: "pnp"](https://yarnpkg.com/configuration/yarnrc#nodeLinker) which uses [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp).
 
-Starting in Yarn Modern version 4.14.0, the [enableScripts](https://yarnpkg.com/configuration/yarnrc#enableScripts) configuration option is set to `false` by default, which blocks dependency lifecycle scripts. When scripts are blocked, Yarn skips Cypress' `postinstall` script and the Cypress binary is not downloaded into the [binary cache](/app/references/advanced-installation#Binary-cache).
+Starting in Yarn Modern version 4.14.0, the [enableScripts](https://yarnpkg.com/configuration/yarnrc#enableScripts) configuration option is set to `false` by default, which blocks dependency lifecycle scripts.
 
 To allow Cypress to run its `postinstall` script, set `enableScripts` to `true` and add `cypress` to the [npmPreapprovedPackages](https://yarnpkg.com/configuration/yarnrc#npmPreapprovedPackages) list (available in Yarn Modern >=4.10.0) in your project's `.yarnrc.yml` file:
 
@@ -138,9 +140,6 @@ Setting the list of `npmPreapprovedPackages` is less convenient via the CLI and 
 
 #### pnpm configuration
 
-The following configuration options enable Cypress to execute its `postinstall` script so it can install the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
-If these configuration options are not set, then Cypress may skip the `postinstall` script execution and Cypress will not run.
-
 The pnpm [side effects cache](https://pnpm.io/settings#sideeffectscache) uses and caches the results of (pre/post)install hooks and is not compatible with Cypress' own caching.
 Disable the pnpm [side effects cache](https://pnpm.io/settings#sideeffectscache), for example using the following command, executed in the root of your Cypress project:
 
@@ -158,7 +157,7 @@ pnpm --allow-build=cypress add --save-dev cypress
 
 #### Bun configuration
 
-Cypress is detected automatically from a `bun.lock` (text, Bun >=1.2) or `bun.lockb` (binary) lockfile. When you install Cypress with `bun add`, Bun trusts the package and runs its `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
+Cypress is detected automatically from a `bun.lock` (text, Bun >=1.2) or `bun.lockb` (binary) lockfile. When you install Cypress with `bun add`, Bun trusts the package and runs its `postinstall` script.
 
 When restoring dependencies from an existing manifest with `bun install` (for example in CI), Bun does not run `postinstall` scripts for packages that aren't in its [trustedDependencies](https://bun.sh/docs/install/lifecycle) allowlist. To install the Cypress binary, use one of the following approaches:
 
