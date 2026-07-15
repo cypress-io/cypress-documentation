@@ -1,6 +1,6 @@
 ---
-title: 'allowedInteractionCommands'
-description: 'Use allowedInteractionCommands to limit the interaction commands that are tracked for specific elements in UI Coverage.'
+title: 'allowedInteractionCommands: choose which commands count as coverage'
+description: 'Use allowedInteractionCommands to control which Cypress interaction commands count as coverage for specific elements, so you can require a meaningful interaction or accept commands UI Coverage ignores by default.'
 sidebar_label: 'Limit tracked commands'
 sidebar_position: 100
 ---
@@ -9,18 +9,30 @@ sidebar_position: 100
 
 # Limit tracked commands (`allowedInteractionCommands`)
 
-UI Coverage tracks [all interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) by default for comprehensive coverage reporting. The `allowedInteractionCommands` configuration allows you to limit which interaction commands are tracked for specific elements by defining rules based on CSS selectors.
+By default, UI Coverage marks an element as tested when it's targeted by one of a [default set of Cypress interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), such as `click`, `type`, and `select`. That default is right for most elements, but not all: a chart is really tested by a hover, not the plain `click` that happens to count, and a status banner you only ever assert against is never "interacted with" at all, so it never counts.
 
-This is particularly useful for filtering out irrelevant interactions or focusing coverage tracking on specific interaction patterns for different types of elements.
+The `allowedInteractionCommands` configuration lets you decide, per element, exactly which commands count as coverage. You provide a CSS selector and the list of commands that should count for the elements it matches. For those elements, **only the commands you list count**, and every other command is ignored, even commands that normally count. This lets you both **narrow** coverage to a meaningful interaction (a data-visualization widget that must be hovered, not just clicked) and **expand** it to commands UI Coverage ignores by default (crediting an `assert` on a read-only element).
 
 ## Why use allowedInteractionCommands?
 
-- **Focused tracking**: Limit coverage tracking to relevant interaction types for specific elements or components to reduce noise in reports.
-- **Component-specific rules**: Apply different interaction tracking rules based on element types or component categories. For example, you may require specific kinds of interactions on complex data-visualization components that are not required in regular interactive elements.
+- **Require a meaningful interaction**: For components where a plain `click` doesn't prove the feature works, such as charts, drag-and-drop canvases, and custom widgets, restrict coverage to the command that actually exercises it, so a superficial interaction no longer marks the element tested.
+- **Credit commands ignored by default**: Count interactions UI Coverage doesn't track out of the box, such as an `assert` on a read-only element, as coverage for the specific elements where that interaction is what matters.
+- **Reduce noise in reports**: Limit tracking to the interaction types that are relevant for a given element or component, so coverage reflects the interactions your team cares about.
+
+For custom or third-party commands that should count as coverage **everywhere** rather than for specific elements, use [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) instead. See [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
+
+## Setting allowedInteractionCommands
+
+To add or edit `allowedInteractionCommands`, open the **App Quality** tab in your project settings in Cypress Cloud. `allowedInteractionCommands` is a UI Coverage–only option and is always nested under the `uiCoverage` key. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+
+<DocsImage
+  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
 
 ## Syntax
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "allowedInteractionCommands": [
@@ -37,28 +49,43 @@ This is particularly useful for filtering out irrelevant interactions or focusin
 
 ### Options
 
-The `allowedInteractionCommands` property accepts an array of objects, where each object defines a rule for limiting interaction commands for elements matching a specific selector.
+The `allowedInteractionCommands` property accepts an array of objects, where each object defines a rule that limits the interaction commands counted as coverage for elements matching a selector.
 
-| Option          | Required | Default | Description                                                                                                                                                                                                                                 |
-| --------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `selector`      | Required |         | A CSS selector to identify elements. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                                            |
-| `commands`      | Required |         | An array of command names (strings) that should be tracked as interactions for elements matching the selector. All other interaction commands will be ignored for these elements.                                                           |
-| `documentScope` | Optional |         | An array of CSS selectors that identify document hosts (iframes or shadow DOM hosts) that must be ancestors of the matched element. The selector will only match if all specified document hosts are found in the element's ancestor chain. |
-| `comment`       | Optional |         | A comment describing the purpose of this allowed interaction commands configuration.                                                                                                                                                        |
+| Option          | Required | Default | Description                                                                                                                                                                                                                                  |
+| --------------- | -------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |         | A CSS selector that identifies the elements the rule applies to. Supports standard CSS selector syntax, including IDs, classes, attributes, and combinators.                                                                                 |
+| `commands`      | Required |         | An array of command names (strings) that count as coverage for elements matching the selector. Any command not in this list is ignored for those elements, including commands that would otherwise count by default.                         |
+| `documentScope` | Optional |         | An ordered list of CSS selectors identifying the iframe or shadow DOM hosts that must contain the element, from the outermost document to the innermost. When set, the rule applies only to matching elements inside those nested documents. |
+| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on processing and are not displayed in reports.                                                            |
+
+Each `selector`/`documentScope` combination must be unique across the list; duplicate rules are rejected by validation.
+
+## How rules are applied
+
+Understanding the matching behavior is the key to using this option correctly:
+
+- **Elements that match no rule are unaffected.** They keep the full [default set of interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), plus anything you've added with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands).
+- **Matching a rule replaces the defaults for that element.** Once an element matches a rule, only the commands listed in that rule count as coverage for it. The default commands no longer apply. This is how the option both narrows coverage (a listed command like `click` still counts, an unlisted default like `type` no longer does) and expands it (a listed non-default command like `assert` now counts).
+- **Commands are combined across all matching rules.** If an element matches more than one rule, the commands from every matching rule are allowed for it. Because rules are additive this way, a later rule can never remove a command an earlier rule granted. Favor a high degree of selector specificity so each element matches only the rule you intend.
+- **A custom command listed here doesn't need to be registered anywhere else.** Normally a custom or plugin command (one that isn't a [default command](/ui-coverage/core-concepts/interactivity#Interaction-Commands)) only counts as an interaction if you add it to [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). Naming it in a rule's `commands` list registers it as well, so a command like `realHover` is recognized here without also appearing in `additionalInteractionCommands`.
+- **Command names are case-sensitive.** Each name in `commands` must match the command exactly as it appears in your test code, and only commands that actually target a DOM element produce coverage.
 
 ## Examples
 
-### Limiting button interactions to clicks only
+### Requiring a specific interaction for a component
+
+Restrict coverage for a chart component to the command that meaningfully exercises it. Because matching the rule replaces the defaults, a plain `click` no longer marks the chart tested.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "allowedInteractionCommands": [
       {
-        "selector": "button, [role='button']",
-        "commands": ["click", "realClick"]
+        "selector": "[data-cy='revenue-chart']",
+        "commands": ["trigger"],
+        "comment": "Only a hover (dispatched via trigger) proves the chart tooltip works"
       }
     ]
   }
@@ -68,32 +95,32 @@ The `allowedInteractionCommands` property accepts an array of objects, where eac
 #### Usage in tests
 
 ```javascript
-// Only click and realClick will be tracked for buttons
-cy.get('[data-cy="submit-button"]').click() // ✓ Tracked
-cy.get('[data-cy="submit-button"]').realClick() // ✓ Tracked
-cy.get('[data-cy="submit-button"]').hover() // ✗ Not tracked
-cy.get('[data-cy="submit-button"]').focus() // ✗ Not tracked
+// Only `trigger` counts as coverage for the chart
+cy.get('[data-cy="revenue-chart"]').trigger('mouseover') // ✓ Tracked
+cy.get('[data-cy="revenue-chart"]').click() // ✗ Not tracked (a default command, now excluded)
 ```
 
 ### Different rules for form elements
 
+Apply distinct command sets to different kinds of form controls. Each control is credited only for the commands relevant to it.
+
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "allowedInteractionCommands": [
       {
         "selector": "input[type='text'], textarea",
-        "commands": ["type", "clear", "realType"]
+        "commands": ["type", "clear"]
       },
       {
         "selector": "select",
-        "commands": ["select", "click"]
+        "commands": ["select"]
       },
       {
         "selector": "input[type='checkbox'], input[type='radio']",
-        "commands": ["check", "uncheck", "click"]
+        "commands": ["check", "uncheck"]
       }
     ]
   }
@@ -103,32 +130,33 @@ cy.get('[data-cy="submit-button"]').focus() // ✗ Not tracked
 #### Usage in tests
 
 ```javascript
-// Text inputs: only type, clear, and realType are tracked
+// Text inputs: only `type` and `clear` count
 cy.get('[data-cy="username"]').type('john_doe') // ✓ Tracked
 cy.get('[data-cy="username"]').clear() // ✓ Tracked
-cy.get('[data-cy="username"]').focus() // ✗ Not tracked
+cy.get('[data-cy="username"]').focus() // ✗ Not tracked (a default command, now excluded)
 
-// Select elements: only select and click are tracked
+// Select elements: only `select` counts
 cy.get('[data-cy="country"]').select('US') // ✓ Tracked
-cy.get('[data-cy="country"]').click() // ✓ Tracked
-cy.get('[data-cy="country"]').hover() // ✗ Not tracked
+cy.get('[data-cy="country"]').click() // ✗ Not tracked (a default command, now excluded)
 
-// Checkboxes/Radio buttons: check, uncheck, and click are tracked
+// Checkboxes/radios: only `check` and `uncheck` count
 cy.get('[data-cy="agree-terms"]').check() // ✓ Tracked
-cy.get('[data-cy="agree-terms"]').click() // ✓ Tracked
+cy.get('[data-cy="agree-terms"]').click() // ✗ Not tracked (a default command, now excluded)
 ```
 
-### Excluding hover interactions for mobile components
+### Counting third-party commands for specific elements
+
+Commands from a plugin such as [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events) aren't tracked by default. Listing a command here both scopes it to the matching elements and registers it as a recognized interaction, so you don't also need to add it to [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). Reach for `allowedInteractionCommands` when the command should only count for certain elements; if you want a plugin command counted on every element, add it to [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) instead.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "allowedInteractionCommands": [
       {
-        "selector": "[data-mobile='true']",
-        "commands": ["click", "tap", "swipe", "type"]
+        "selector": "[data-cy='tooltip-trigger']",
+        "commands": ["realHover"]
       }
     ]
   }
@@ -138,24 +166,29 @@ cy.get('[data-cy="agree-terms"]').click() // ✓ Tracked
 #### Usage in tests
 
 ```javascript
-// Mobile components: hover interactions are excluded
-cy.get('[data-mobile="true"][data-cy="menu-item"]').click() // ✓ Tracked
-cy.get('[data-mobile="true"][data-cy="menu-item"]').tap() // ✓ Tracked
-cy.get('[data-mobile="true"][data-cy="menu-item"]').hover() // ✗ Not tracked
+// `realHover` counts as coverage for the tooltip trigger
+cy.get('[data-cy="tooltip-trigger"]').realHover() // ✓ Tracked
+cy.get('[data-cy="tooltip-trigger"]').click() // ✗ Not tracked (a default command, now excluded)
 ```
 
-### Allowing assertions as interactions
+:::info
 
-Note that because `allowedInteractionCommands` replaces the allowed interactions, if you add `assert` as an interaction, remember to also add any other acceptable interactions to the list.
+Like custom commands added with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands), a command listed here only produces coverage if it logs a snapshot that references the subject element. Built-in Cypress commands and well-behaved plugins do this automatically. See [custom commands](/api/cypress-api/custom-commands) for details.
+
+:::
+
+### Counting assertions as coverage
+
+Some elements are only ever validated, never interacted with, such as a read-only status badge or a computed total. Assertions don't count as coverage by default, but you can list `assert` to credit them. Remember that once a rule matches, only the commands you list count, so include any other commands you also want to accept.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "allowedInteractionCommands": [
       {
-        "selector": "button[data-no-explicit-interaction='true']",
+        "selector": "[data-cy='order-total']",
         "commands": ["assert"]
       }
     ]
@@ -166,19 +199,18 @@ Note that because `allowedInteractionCommands` replaces the allowed interactions
 #### Usage in tests
 
 ```javascript
-// Any assertions on matching elements are tracked
-cy.get('button[data-no-explicit-interaction="true"]').should('exist) // ✓ Tracked
-cy.get('button[data-no-explicit-interaction="true"]').should('be.visible) // ✓ Tracked
-cy.get('button[data-no-explicit-interaction="true"]').click() // ✗ Not tracked
+// Assertions against the element count as coverage
+cy.get('[data-cy="order-total"]').should('be.visible') // ✓ Tracked
+cy.get('[data-cy="order-total"]').click() // ✗ Not tracked (`assert` is the only allowed command)
 ```
 
-### Scoping interaction commands to shadow DOM
+### Scoping rules to shadow DOM
 
-When you need to limit interaction commands for elements within a specific shadow DOM host, use the `documentScope` property to scope your selector to that document context.
+When a rule should apply only to elements inside a specific shadow DOM host, use `documentScope` to scope the selector to that document context.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "allowedInteractionCommands": [
@@ -194,12 +226,12 @@ When you need to limit interaction commands for elements within a specific shado
 
 #### HTML
 
-```xml
+```html
 <body>
   <button id="root-button">Root Button</button>
   <custom-component>
-    #shadow-dom
-      <button id="shadow-button">Shadow Button</button>
+    #shadow-root
+    <button id="shadow-button">Shadow Button</button>
   </custom-component>
 </body>
 ```
@@ -207,24 +239,22 @@ When you need to limit interaction commands for elements within a specific shado
 #### Usage in tests
 
 ```javascript
-// Root button: all interactions tracked (default behavior)
+// Root button: unaffected, keeps all default interaction commands
 cy.get('#root-button').click() // ✓ Tracked
-cy.get('#root-button').hover() // ✓ Tracked
+cy.get('#root-button').focus() // ✓ Tracked
 
-// Shadow DOM button: only click tracked
+// Shadow DOM button: matches the rule, so only `click` counts
 cy.get('custom-component').shadow().find('#shadow-button').click() // ✓ Tracked
-cy.get('custom-component').shadow().find('#shadow-button').hover() // ✗ Not tracked
+cy.get('custom-component').shadow().find('#shadow-button').focus() // ✗ Not tracked
 ```
 
----
+### Scoping rules to iframes
 
-### Scoping interaction commands to iframes
-
-You can also scope interaction command rules to elements within specific iframes using `documentScope`.
+`documentScope` also scopes a rule to elements inside a specific iframe. List one selector per nested document, ordered from the outermost document to the innermost.
 
 #### Config
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "allowedInteractionCommands": [
@@ -240,7 +270,7 @@ You can also scope interaction command rules to elements within specific iframes
 
 #### HTML
 
-```xml
+```html
 <body>
   <input id="root-input" />
   <iframe id="embedded-form" src="http://www.foo.com">
@@ -256,20 +286,21 @@ You can also scope interaction command rules to elements within specific iframes
 #### Usage in tests
 
 ```javascript
-// Root input: all interactions tracked (default behavior)
+// Root input: unaffected, keeps all default interaction commands
 cy.get('#root-input').type('text') // ✓ Tracked
 cy.get('#root-input').focus() // ✓ Tracked
 
-// Embedded input: only type and clear tracked
+// Embedded input: matches the rule, so only `type` and `clear` count
 cy.get('#embedded-form').then(($iframe) => {
   cy.wrap($iframe.contents().find('#embedded-input')).type('text') // ✓ Tracked
   cy.wrap($iframe.contents().find('#embedded-input')).focus() // ✗ Not tracked
 })
 ```
 
-## Notes
+## See also
 
-- Elements that don't match any selector will have all interaction commands tracked (default behavior).
-- If an element matches multiple selectors, commands from all matching rules will be allowed. A high degree of specificity for these selectors is recommended.
-- Command names are case-sensitive and must match exactly as they appear in your test code.
-- This configuration works separately from `additionalInteractionCommands`. Custom commands do **not** need to be globally defined as `additionalInteractionCommands` in order to be declared here.
+- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands): count a custom or plugin command as an interaction on every element, not just specific ones.
+- [Interactivity](/ui-coverage/core-concepts/interactivity#Interaction-Commands): the default set of commands UI Coverage tracks and how interactive elements are found.
+- [Custom commands](/api/cypress-api/custom-commands): writing commands that log a snapshot so UI Coverage can attribute them.
+- [Configuration overview](/ui-coverage/configuration/overview): where to set configuration and regenerate reports.
+- [UI Coverage FAQ](/ui-coverage/faq#Interaction-commands): common questions about interaction commands and troubleshooting.
