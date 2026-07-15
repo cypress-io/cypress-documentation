@@ -56,7 +56,6 @@ Keep these behaviors in mind:
 
 - **Your list is added to the defaults, not a replacement for them.** The built-in commands keep counting; you're extending the set, not overriding it. To _limit_ which commands count for specific elements, use [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands).
 - **Custom command names are matched case-sensitively.** `"realClick"` matches `realClick` but not `realclick`. Copy the name exactly as you registered it with `Cypress.Commands.add`. (The built-in commands are matched case-insensitively; this exact-match rule applies to the names you add here.)
-- **Duplicate names are rejected.** Each command name may appear once; a repeated entry fails configuration validation.
 
 ### Requirements for a custom command
 
@@ -66,7 +65,10 @@ Listing a command name isn't enough on its own. For UI Coverage to credit the in
 2. Log the interaction against that element with [`Cypress.log`](/api/cypress-api/cypress-log), passing the subject as `$el`.
 3. Capture at least one snapshot on that log entry.
 
-```javascript
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/commands.js"
 // A custom command that UI Coverage can track
 Cypress.Commands.add(
   'selectDate',
@@ -83,6 +85,30 @@ Cypress.Commands.add(
   }
 )
 ```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/commands.ts"
+// A custom command that UI Coverage can track
+Cypress.Commands.add(
+  'selectDate',
+  { prevSubject: ['element'] },
+  (subject: JQuery<HTMLElement>, date: string) => {
+    const log = Cypress.log({ $el: subject, message: date, autoEnd: false })
+
+    log.snapshot('before')
+    // ...interact with the element to pick the date...
+
+    return cy.wrap(subject, { log: false }).then(() => {
+      log.snapshot('after').end()
+    })
+  }
+)
+```
+
+</TabItem>
+</Tabs>
 
 Beyond letting UI Coverage credit the interaction, logging a snapshot that references the subject is what renders element highlights for the command in Cypress open mode and [Test Replay](/cloud/features/test-replay). See [Custom Commands](/api/cypress-api/custom-commands) for the full API.
 
