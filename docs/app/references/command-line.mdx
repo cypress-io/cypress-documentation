@@ -943,14 +943,25 @@ install on its own with debug logging enabled:
 
 <CypressCommandTabs command="install" env="DEBUG=cypress:cli*" />
 
-If a matching binary is already present in the cache, `cypress install` does
-nothing. Pass `--force` to download and reinstall the binary anyway.
-
-<CypressCommandTabs command="install --force" />
-
 The binary that gets installed, the cache location, and the download source can
 be customized through environment variables. See
 [Advanced Installation](/app/references/advanced-installation) for details.
+
+#### Options
+
+| Option          | Description                                                      |
+| --------------- | --------------------------------------------------------------- |
+| `--force`, `-f` | [Force install the Cypress binary](#cypress-install-force)      |
+| `--help`, `-h`  | Output usage information                                         |
+
+#### `cypress install --force` {#cypress-install-force}
+
+By default, `cypress install` does nothing when a binary matching the package
+version is already present in the
+[cache](/app/references/advanced-installation#Binary-cache). Pass `--force` to
+download and reinstall the binary anyway, overwriting any existing installation.
+
+<CypressCommandTabs command="install --force" />
 
 ### `cypress verify`
 
