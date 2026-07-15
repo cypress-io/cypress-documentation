@@ -35,6 +35,43 @@ export function getCurrentSectionLvl0(pathname) {
 }
 
 /**
+ * Decides whether a hit has anything worth displaying to the user.
+ *
+ * The docsearch scraper emits one `type: "lvl0"` record per page whose only
+ * populated field is `hierarchy.lvl0` — the section label ("API", "App",
+ * "Cloud", …) — with every deeper level and `content` left null. DocSearch
+ * renders a result's title from the deepest hierarchy level (or the content
+ * snippet), so these section-label-only records render as blank rows. They are
+ * also an exact match for queries like "api", so they flood the top of the
+ * list (see the `type:-lvl0` query filter in docusaurus.config.js, which drops
+ * them at query time; this is the client-side backstop).
+ *
+ * A hit is displayable only if it has a hierarchy level below lvl0, or body
+ * content, to render as its title.
+ *
+ * @param {{ hierarchy?: Record<string, string | null>, content?: string | null }} hit
+ * @returns {boolean}
+ */
+export function isDisplayableHit(hit) {
+  const h = hit?.hierarchy ?? {}
+  return Boolean(
+    h.lvl1 || h.lvl2 || h.lvl3 || h.lvl4 || h.lvl5 || h.lvl6 || hit?.content
+  )
+}
+
+/**
+ * Removes hits that have nothing to render (see {@link isDisplayableHit}),
+ * preserving the relative order of everything that remains.
+ *
+ * @template {{ hierarchy?: Record<string, string | null>, content?: string | null }} T
+ * @param {T[]} items
+ * @returns {T[]}
+ */
+export function filterDisplayableHits(items) {
+  return items.filter(isDisplayableHit)
+}
+
+/**
  * Soft-boosts results from the section the reader is currently in to the top of
  * the list, preserving Algolia's relevance order within each partition and
  * keeping every other result visible. This is the client-side equivalent of an

@@ -280,8 +280,19 @@ const config = {
         // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
         // externalUrlRegex: "external\\.com|domain\\.com",
 
-        // Optional: Algolia search parameters
-        // searchParameters: {},
+        // Algolia search parameters.
+        //
+        // The docsearch scraper emits one `type: "lvl0"` record per page whose
+        // only populated field is the section label (`hierarchy.lvl0`, e.g.
+        // "API") — every deeper level and `content` is null. Those records have
+        // no title to render, so they show up as blank rows, and because they
+        // exactly match generic queries like "api" they flood the top of the
+        // results. Excluding `type:lvl0` at query time removes them while the
+        // per-hit `hierarchy.lvl0` (used for grouping) is unaffected.
+        // `type` is declared in attributesForFaceting in scripts/search/config.json.
+        searchParameters: {
+          facetFilters: ['type:-lvl0'],
+        },
 
         // Optional: path for search page that enabled by default (`false` to disable it)
         // searchPagePath: "search",
