@@ -199,7 +199,7 @@ Yes. The [`profiles`](/ui-coverage/configuration/profiles) property applies conf
 
 ### <Icon name="angle-right" /> How do I apply different UI Coverage settings to different runs?
 
-Add a [`profiles`](/ui-coverage/configuration/profiles) array to your configuration, give each profile a `name`, and record the run with a matching [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt). When a run's tag matches a profile's `name`, that profile's `config` overrides your base configuration for that run, so a smoke run and a full regression run can each use their own settings without changing your test code. If no tag matches, the base configuration is used unchanged.
+In your project's App Quality configuration in Cypress Cloud, add a [`profiles`](/ui-coverage/configuration/profiles) array, give each profile a `name`, and record the run with a matching [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt). When a run's tag matches a profile's `name`, that profile's `config` overrides your base configuration for that run, so a smoke run and a full regression run can each use their own settings without changing your test code. If no tag matches, the base configuration is used unchanged.
 
 ### <Icon name="angle-right" /> Does a UI Coverage profile override my base configuration or merge with it?
 
