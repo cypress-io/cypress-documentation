@@ -55,6 +55,8 @@ A command you list here counts as an interaction only when it logs a [snapshot](
 Keep these behaviors in mind:
 
 - **Your list is added to the defaults, not a replacement for them.** The built-in commands keep counting; you're extending the set, not overriding it. To _limit_ which commands count for specific elements, use [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands).
+- **Listing a built-in command has no effect.** The [built-in interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) already count on their own. `additionalInteractionCommands` is only for names UI Coverage doesn't already recognize.
+- **Overwriting a built-in command keeps its name.** UI Coverage matches on the name a command logs under, so a built-in interaction command customized with [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands) stays recognized automatically under its original name, without being listed here, as long as your version still logs a snapshot referencing the subject. Only a brand-new command name added with `Cypress.Commands.add` needs to be listed.
 - **Custom command names are matched case-sensitively.** `"realClick"` matches `realClick` but not `realclick`. Copy the name exactly as you registered it with `Cypress.Commands.add`. (The built-in commands are matched case-insensitively; this exact-match rule applies to the names you add here.)
 
 ### Requirements for a custom command
@@ -140,6 +142,8 @@ cy.get('[data-cy="button"]').realClick()
 cy.get('[data-cy="input"]').realType('Hello World')
 cy.get('[data-cy="tooltip-trigger"]').realHover()
 ```
+
+Any plugin that adds commands acting on an element works the same way. `cypress-real-events` also provides `realPress`, `realSwipe`, and `realMouseDown`; other common examples are `drag` and `move` from [`@4tw/cypress-drag-drop`](https://www.npmjs.com/package/@4tw/cypress-drag-drop) and `tab` from [`cypress-plugin-tab`](https://www.npmjs.com/package/cypress-plugin-tab). Whichever plugin you use, the command counts only if it meets the [requirement above](#How-additional-interaction-commands-are-applied): it must log a snapshot that references the element it acts on.
 
 ### Track your own custom commands
 
