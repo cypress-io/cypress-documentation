@@ -151,6 +151,24 @@ The most common causes are:
 - The rule targets a tag name or sibling position. Only attributes and individual `class` tokens can be filtered, not an element's tag name or `nth-child` position.
 - The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
 
+## Interaction commands
+
+### <Icon name="angle-right" /> Which Cypress commands count as interactions by default?
+
+UI Coverage marks an interactive element as tested when a recognized command targets it. The built-in set includes `click`, `dblclick`, `rightclick`, `type`, `clear`, `check`, `uncheck`, `select`, `selectFile`, `trigger`, `focus`, `blur`, `scrollTo`, `scrollIntoView`, and `submit`. See [Interaction Commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) for the full list. To count commands beyond these, such as your own custom commands or third-party ones, use [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands).
+
+### <Icon name="angle-right" /> How do I make UI Coverage count cypress-real-events commands like realClick and realType?
+
+[`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events) commands (`realClick`, `realType`, `realHover`) aren't built-in Cypress commands, so UI Coverage doesn't count them until you list them in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands), nested under the `uiCoverage` key. Once listed, the elements they target are marked as tested.
+
+### <Icon name="angle-right" /> Why isn't my custom command counted as an interaction in UI Coverage?
+
+Two conditions must both hold. First, the command name must be listed in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) (or [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)), matched case-sensitively and written exactly as you registered it. Second, the command must log a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that references the subject element, so UI Coverage knows which element to credit. In practice, register the command with [`prevSubject`](/api/cypress-api/custom-commands#Arguments), call [`Cypress.log`](/api/cypress-api/cypress-log) with the subject as `$el`, and capture a snapshot. If you added the command after a run was processed, regenerate the run to apply the change.
+
+### <Icon name="angle-right" /> What's the difference between additionalInteractionCommands and allowedInteractionCommands?
+
+[`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) _adds_ command names to the recognized set so they count everywhere they're used. [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) _restricts_ which commands count for elements matching a selector, and any command it names is also recognized as an interaction. Use the first to count a custom or third-party command across your whole app, and the second to require specific interactions on specific elements.
+
 ## Configuration
 
 ### <Icon name="angle-right" /> Where do I set UI Coverage configuration?
