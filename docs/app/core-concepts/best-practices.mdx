@@ -247,9 +247,12 @@ brittle selectors that are subject to change.
 
 :::tip
 
-<Icon name="check-circle" color="green" /> **Best Practice:** Use `data-*`
-attributes to provide context to your selectors and isolate them from CSS or JS
-changes.
+<Icon name="check-circle" color="green" /> **Best Practice:** Choose selectors
+that couple your test to what is **contractually meaningful** (an element's
+role, accessible name, or user-facing text) and decouple it from what is
+**incidental** (CSS classes, DOM structure, generated IDs). Reach for a
+dedicated `data-*` attribute when there is no meaningful semantic handle, or
+when you deliberately want to isolate a test from content and styling changes.
 
 :::
 
@@ -261,15 +264,93 @@ Oftentimes we see users run into problems targeting their elements because:
 - Your application may use dynamic classes or ID's that change
 - Your selectors break from development changes to CSS styles or JS behavior
 
-Luckily, it is possible to avoid both of these problems.
+The good news is that both problems are avoidable once you are deliberate about
+_what_ your selectors are coupled to.
 
-1. Don't target elements based on CSS attributes such as: `id`, `class`, `tag`
-2. Don't target elements that may change their `textContent`
-3. Add `data-*` attributes to make it easier to target elements
+### Two Properties of a Good Selector
+
+Every selector trades off two properties, and much of the confusion around "the
+right way" to select elements comes from optimizing for only one of them:
+
+- **Resilience** — the selector should not break when something _incidental_
+  changes: a refactored CSS class, a re-nested `<div>`, an auto-generated ID. A
+  dedicated `data-*` attribute maximizes resilience because nothing but your
+  tests depends on it.
+- **Fidelity** — the selector should couple your test to what is _contractually
+  meaningful_: the element's role, its accessible name, or user-facing text that
+  matters. Selecting the way a user (or assistive technology) finds an element
+  means your test fails when that contract breaks — which is often exactly what
+  you want.
+
+`data-*` attributes are unbeatable for resilience but carry no fidelity on their
+own: a `[data-cy="submit"]` selector passes whether the element is a real
+`<button>`, a styled `<div>`, or an inaccessible control with no name. Role- and
+text-based selectors carry high fidelity but couple you to details that may
+legitimately change. Neither is universally "best" — the right choice depends on
+what you want the test to guarantee.
+
+So rather than asking _"which selector is the most stable?"_, ask:
+
+> **What do I want this test to be coupled to?**
+
+Couple tightly to the contract; decouple entirely from the incidental.
+
+### Selection and Assertion Are Separable
+
+A common misconception is that choosing a `data-*` selector means giving up on
+semantics or accessibility. It does not. _Finding_ an element and _asserting_
+something about it are separate steps — you can use a stable hook to locate an
+element and still assert that it is the right kind of element:
+
+```js
+// Use a stable hook to FIND the element,
+// then assert on its semantics to ENFORCE the contract.
+cy.get('[data-cy="submit"]')
+  .should('have.prop', 'tagName', 'BUTTON')
+  .and('have.attr', 'type', 'submit')
+```
+
+Conversely, a role-based query collapses both steps into one line — it finds the
+element _and_ proves it exposes the right role and accessible name:
+
+```js
+// Selecting by role doubles as a lightweight accessibility check:
+// if this cannot find the button, neither can a screen reader.
+cy.findByRole('button', { name: 'Submit' }).click()
+```
+
+Keeping these two concerns distinct lets you pick a resilient selector without
+sacrificing the guarantees you care about.
+
+### A Recommended Hierarchy
+
+Work down this list and stop at the first tier that fits your element and your
+intent:
+
+1. **Role + accessible name** — e.g.
+   `cy.findByRole('button', { name: 'Submit' })` (see
+   [Cypress and Testing Library](#Cypress-and-Testing-Library)). The best default
+   when the element is part of the user-facing contract. It selects the way users
+   and assistive technology do, and doubles as a lightweight accessibility check.
+2. **User-visible text** — [`cy.contains('Submit')`](/api/commands/contains) —
+   when the text _is_ the contract and you would _want_ a failure if it changed.
+   See [Text Content](#Text-Content) below.
+3. **`data-*` test attribute** —
+   [`cy.get('[data-cy="submit"]')`](/api/commands/get) — the correct choice, not a
+   fallback of last resort, when:
+   - the element has no meaningful role or accessible name (generic rows,
+     wrappers, containers),
+   - the accessible name is dynamic, localized, or otherwise volatile and you
+     deliberately don't want to couple to it, or
+   - you need a stable hook and explicitly _don't_ want the test to assert on
+     content or presentation.
+4. **Never** — `class`, generated `id`, bare `tag`, or DOM position. These are
+   coupled to styling and structure and break constantly.
 
 The [`cypress/require-data-selectors`](https://github.com/cypress-io/eslint-plugin-cypress#rules)
 rule in [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress) can
-enforce `data-*` selectors automatically at lint time.
+enforce the third tier automatically at lint time if your team decides to
+standardize on `data-*` selectors.
 
 ### How It Works
 
@@ -289,28 +370,32 @@ Given a button that we want to interact with:
 
 Let's investigate how we could target it:
 
-| Selector                                | Recommended                                                   | Notes                                                           |
-| --------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
-| `cy.get('button').click()`              | <Icon name="exclamation-triangle" color="red" /> Never        | Worst - too generic, no context.                                |
-| `cy.get('.btn.btn-large').click()`      | <Icon name="exclamation-triangle" color="red" /> Never        | Bad. Coupled to styling. Highly subject to change.              |
-| `cy.get('#main').click()`               | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Better. But still coupled to styling or JS event listeners.     |
-| `cy.get('[name="submission"]').click()` | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
-| `cy.contains('Submit').click()`         | <Icon name="check-circle" color="green" /> Depends            | Much better. But still coupled to text content that may change. |
-| `cy.get('[data-cy="submit"]').click()`  | <Icon name="check-circle" color="green" /> Always             | Best. Isolated from all changes.                                |
+| Selector                                      | Recommended                                                   | Notes                                                                                             |
+| --------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `cy.get('.btn.btn-large').click()`            | <Icon name="exclamation-triangle" color="red" /> Never        | Coupled to styling. Highly subject to change.                                                     |
+| `cy.get('#main').click()`                     | <Icon name="exclamation-triangle" color="red" /> Never        | Coupled to a possibly-generated `id`, which may also drive JS behavior.                           |
+| `cy.get('button').click()`                    | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Only safe when there is exactly one button. No fidelity about _which_ button.                     |
+| `cy.get('[name="submission"]').click()`       | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Coupled to the `name` attribute, which carries form-submission semantics.                         |
+| `cy.get('button').contains('Submit').click()` | <Icon name="check-circle" color="green" /> Depends            | Good fidelity — asserts a `<button>` with this text. Couples to both the tag and the text.        |
+| `cy.contains('Submit').click()`               | <Icon name="check-circle" color="green" /> Depends            | Couples to user-visible text; fails if the text changes (often what you want).                    |
+| `cy.findByRole('button', { name: 'Submit' })` | <Icon name="check-circle" color="green" /> Depends            | High fidelity — finds by role and accessible name, the way users do. Requires Testing Library.    |
+| `cy.get('[data-cy="submit"]').click()`        | <Icon name="check-circle" color="green" /> Depends            | Maximally resilient; isolated from content and styling. Carries no semantic guarantee on its own. |
 
-Targeting the element above by `tag`, `class` or `id` is very volatile and
-highly subject to change. You may swap out the element, you may refactor CSS and
-update ID's, or you may add or remove classes that affect the style of the
-element.
+The four green options are all defensible — they simply guarantee different
+things. Which one is right depends on the tier of the
+[hierarchy above](#A-Recommended-Hierarchy) that matches your intent. Targeting
+the element by `tag`, `class`, or `id`, on the other hand, is very volatile and
+highly subject to change: you may swap out the element, refactor CSS and update
+IDs, or add or remove classes that affect its style.
 
-Instead, adding the `data-cy` attribute to the element gives us a targeted
-selector that's only used for testing.
-
-The `data-cy` attribute will not change from CSS style or JS behavioral changes,
-meaning it's not coupled to the **behavior** or **styling** of an element.
-
-Additionally, it makes it clear to everyone that this element is used directly
-by test code.
+When you do reach for the `data-cy` attribute, it gives you a targeted selector
+that is only used for testing. It will not change from CSS style or JS behavioral
+changes, meaning it's not coupled to the **behavior** or **styling** of an
+element, and it makes it clear to everyone that this element is used directly by
+test code. Its trade-off is the flip side of that isolation: on its own it proves
+nothing about whether the element is a real, accessible control — so pair it with
+an assertion (see [Selection and Assertion Are
+Separable](#Selection-and-Assertion-Are-Separable)) when that matters.
 
 #### <Icon name="graduation-cap" /> Real World Example
 
@@ -353,12 +438,14 @@ _<Icon name="github" /> Source:
 
 ### Text Content
 
-After reading the above rules you may be wondering:
+The second tier of the hierarchy — user-visible text — deserves its own rule of
+thumb, because deciding between it and a `data-*` attribute is one of the most
+common questions:
 
-> If I should always use data attributes, then when should I use
-> `cy.contains()`?
+> When should I couple to text with `cy.contains()`, and when should I use a data
+> attribute instead?
 
-A rule of thumb is to ask yourself this:
+Ask yourself this:
 
 If the content of the element **changed** would you want the test to fail?
 
@@ -399,6 +486,30 @@ package to use the familiar testing library methods (like `findByRole`,
 
 If you are coming from a React Testing Library background and looking for more resources to understand how we
 recommend you approach testing your components, look to: [Cypress Component Testing](/app/component-testing/get-started).
+
+### How Much Control Do You Have Over the Markup?
+
+The right strategy also depends on how much control your team has over the UI
+under test:
+
+- **You own the markup.** Invest in real semantics first — the correct elements,
+  labels, and roles — then add `data-*` attributes _where semantics can't express
+  the hook you need_. The two are complementary, not competing.
+- **You don't own the markup** (a third-party embed, a legacy app, or another
+  team's UI). You take whatever is stable and available. Role- and text-based
+  queries often win here because you can't inject attributes into markup you don't
+  control.
+- **Consider what else is testing this UI.** If strong unit or
+  [component tests](/app/component-testing/get-started) already enforce structure
+  and accessibility, your end-to-end selectors can lean on resilient `data-*`
+  hooks without losing that coverage. If your end-to-end suite is the _only_
+  safety net, higher-fidelity role and text queries pull double duty and are worth
+  preferring.
+
+There is no single answer that fits every team. Use the
+[hierarchy above](#A-Recommended-Hierarchy) as a default, and adjust based on what
+your selectors need to guarantee and what the rest of your test suite already
+covers.
 
 ### Accessibility Testing
 
