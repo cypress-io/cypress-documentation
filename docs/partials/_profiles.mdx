@@ -104,44 +104,33 @@ On every other run the widget stays excluded. On the tagged run, the profile's `
 
 ### Multiple profiles
 
-Different kinds of runs need different scoping. Pull request runs that gate merges should stay focused on the core application, while staging runs need to ignore an internal admin area that only exists in that environment. Both still inherit the base cookie-banner exclusion because neither profile redefines `elementFilters`.
+You can define several profiles, each for a different kind of run. Here, two focused audit suites want the same routes broken down into separate [views](/ui-coverage/core-concepts/views) so they can see coverage per value: a reporting audit splits `/reports/:type` by report type, and a localization audit splits `/:locale/account` by locale. You wouldn't want either split applied to every run, since it would fragment your normal reports into many low-traffic views, so each `views` rule is scoped to its own tag.
 
 #### Config
 
 ```json title="App Quality Config"
 {
-  "elementFilters": [
-    {
-      "selector": "#cookie-consent-banner",
-      "include": false,
-      "comment": "Exclude the cookie-consent banner from all reports"
-    }
-  ],
   "profiles": [
     {
-      "name": "aq-config-pull-request",
+      "name": "aq-config-reporting-audit",
       "config": {
-        "viewFilters": [
+        "views": [
           {
-            "pattern": "/blog/*",
-            "include": false,
-            "comment": "Keep merge-blocking reports on the app, not marketing pages"
-          },
-          {
-            "pattern": "/docs/*",
-            "include": false
+            "pattern": "/reports/:type",
+            "groupBy": ["type"],
+            "comment": "One view per report type for the reporting audit"
           }
         ]
       }
     },
     {
-      "name": "aq-config-staging",
+      "name": "aq-config-localization-audit",
       "config": {
-        "viewFilters": [
+        "views": [
           {
-            "pattern": "/admin/*",
-            "include": false,
-            "comment": "Exclude the internal admin area that only exists in staging"
+            "pattern": "/:locale/account",
+            "groupBy": ["locale"],
+            "comment": "One view per locale for the localization audit"
           }
         ]
       }
@@ -155,11 +144,11 @@ Different kinds of runs need different scoping. Pull request runs that gate merg
 Use different tags to activate different profiles:
 
 ```shell
-# Pull request runs that gate merges
-cypress run --record --tag "aq-config-pull-request"
+# Reporting audit runs
+cypress run --record --tag "aq-config-reporting-audit"
 
-# Staging runs
-cypress run --record --tag "aq-config-staging"
+# Localization audit runs
+cypress run --record --tag "aq-config-localization-audit"
 ```
 
 ---
@@ -168,19 +157,12 @@ cypress run --record --tag "aq-config-staging"
 
 Profiles can override configuration at any level, including configuration specific to Cypress Accessibility or UI Coverage when your project has both products enabled. Because `uiCoverage` and `accessibility` merge one level deep, a profile can add or replace a single nested property while inheriting the rest.
 
-Here the base configuration ignores React's auto-generated IDs, so a control isn't counted as a brand-new element on every render. A profile for the branch building a checkout redesign groups those new controls together so they're tracked as a single unit.
+Here the base configuration groups every product card into one [element group](/ui-coverage/configuration/elementgroups) so the repeated cards count once and don't dominate the score. A suite that specifically exercises each card variant, tagged `aq-config-card-variants`, needs the opposite: the same cards split into separate groups so featured and standard cards are tracked independently. The two groupings can't both be the base configuration, so the difference lives in a profile.
 
 #### Config
 
 ```json title="App Quality Config"
 {
-  "elementFilters": [
-    {
-      "selector": "#cookie-consent-banner",
-      "include": false,
-      "comment": "Exclude the cookie-consent banner from all reports"
-    }
-  ],
   "uiCoverage": {
     "attributeFilters": [
       {
@@ -189,18 +171,28 @@ Here the base configuration ignores React's auto-generated IDs, so a control isn
         "include": false,
         "comment": "Ignore React auto-generated IDs so elements stay stable across renders"
       }
+    ],
+    "elementGroups": [
+      {
+        "selector": "[data-cy='product-card']",
+        "name": "Product card",
+        "comment": "Count the repeated product cards as one group"
+      }
     ]
   },
   "profiles": [
     {
-      "name": "aq-config-checkout-redesign",
+      "name": "aq-config-card-variants",
       "config": {
         "uiCoverage": {
           "elementGroups": [
             {
-              "selector": "[data-cy^='checkout-']",
-              "name": "Checkout redesign",
-              "comment": "Track the new checkout controls as a single group"
+              "selector": "[data-cy='product-card'][data-variant='featured']",
+              "name": "Featured product card"
+            },
+            {
+              "selector": "[data-cy='product-card'][data-variant='standard']",
+              "name": "Standard product card"
             }
           ]
         }
@@ -213,10 +205,10 @@ Here the base configuration ignores React's auto-generated IDs, so a control isn
 #### Usage
 
 ```shell
-cypress run --record --tag "aq-config-checkout-redesign"
+cypress run --record --tag "aq-config-card-variants"
 ```
 
-The root `elementFilters` is inherited because the profile doesn't mention it. Inside `uiCoverage`, the profile supplies `elementGroups` while the root's `attributeFilters` is inherited; only the keys the profile names are replaced.
+Inside `uiCoverage`, the profile replaces `elementGroups` with its own two groups while the sibling `attributeFilters` is inherited; only the keys the profile names are replaced. On every other run, the single "Product card" group still applies.
 
 ---
 
