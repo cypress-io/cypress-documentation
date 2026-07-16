@@ -58,7 +58,9 @@ While relying on existing tags works just fine, being explicit will help avoid u
 
 ### Basic profile structure
 
-You record runs from more than one environment to the same project. Every environment shows the cookie-consent banner, which you exclude from all reports. Runs against your preview environment (tagged `aq-config-preview`) also render an internal feature-flag panel and a "preview build" banner that never ship to production, and you want those out of preview reports too.
+Your base configuration excludes a third-party support-chat widget, since it isn't your code and just adds noise to most reports. But one suite exists specifically to test the support-chat flow, and it records under the `aq-config-support-chat` tag. For that run, and only that run, the widget should count toward coverage.
+
+This is the kind of difference that genuinely needs a profile: the same widget can't be both excluded and included in a single base configuration, so the conflicting value has to live under a tag.
 
 #### Config
 
@@ -66,30 +68,20 @@ You record runs from more than one environment to the same project. Every enviro
 {
   "elementFilters": [
     {
-      "selector": "#cookie-consent-banner",
+      "selector": "#support-chat-widget",
       "include": false,
-      "comment": "Exclude the cookie-consent banner from all reports"
+      "comment": "Exclude the third-party support-chat widget from most reports"
     }
   ],
   "profiles": [
     {
-      "name": "aq-config-preview",
+      "name": "aq-config-support-chat",
       "config": {
         "elementFilters": [
           {
-            "selector": "#cookie-consent-banner",
-            "include": false,
-            "comment": "Still exclude the cookie-consent banner"
-          },
-          {
-            "selector": "[data-testid='feature-flag-panel']",
-            "include": false,
-            "comment": "Exclude the internal feature-flag panel, which only renders in preview"
-          },
-          {
-            "selector": "[data-testid='preview-build-banner']",
-            "include": false,
-            "comment": "Exclude the preview-build banner that never ships to production"
+            "selector": "#support-chat-widget",
+            "include": true,
+            "comment": "The support-chat suite tests this widget, so count it here"
           }
         ]
       }
@@ -100,13 +92,13 @@ You record runs from more than one environment to the same project. Every enviro
 
 #### Usage
 
-Record the preview environment's runs with a matching tag:
+Record the support-chat suite with a matching tag:
 
 ```shell
-cypress run --record --tag "aq-config-preview"
+cypress run --record --tag "aq-config-support-chat"
 ```
 
-Preview runs use this profile's `elementFilters` in place of the base list. Because a profile's list replaces the base list rather than adding to it, the cookie-banner rule is repeated here alongside the preview-only exclusions; dropping it would let the banner back into your preview reports.
+On every other run the widget stays excluded. On the tagged run, the profile's `elementFilters` replaces the base list, so the `include: true` rule wins and the widget counts toward coverage. Because a profile's list replaces the base list rather than adding to it, list every rule the run needs, not only the one that changed.
 
 ---
 
