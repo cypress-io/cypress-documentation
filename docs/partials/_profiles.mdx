@@ -58,7 +58,7 @@ While relying on existing tags works just fine, being explicit will help avoid u
 
 ### Basic profile structure
 
-Your base configuration hides the cookie-consent banner from every report. On nightly regression runs, an internal QA debug toolbar is also rendered, and you want it out of those reports too.
+You record runs from more than one environment to the same project. Every environment shows the cookie-consent banner, which you exclude from all reports. Runs against your preview environment (tagged `aq-config-preview`) also render an internal feature-flag panel and a "preview build" banner that never ship to production, and you want those out of preview reports too.
 
 #### Config
 
@@ -73,7 +73,7 @@ Your base configuration hides the cookie-consent banner from every report. On ni
   ],
   "profiles": [
     {
-      "name": "aq-config-regression",
+      "name": "aq-config-preview",
       "config": {
         "elementFilters": [
           {
@@ -82,9 +82,14 @@ Your base configuration hides the cookie-consent banner from every report. On ni
             "comment": "Still exclude the cookie-consent banner"
           },
           {
-            "selector": "[data-testid='debug-toolbar']",
+            "selector": "[data-testid='feature-flag-panel']",
             "include": false,
-            "comment": "Exclude the internal QA debug toolbar shown on regression runs"
+            "comment": "Exclude the internal feature-flag panel, which only renders in preview"
+          },
+          {
+            "selector": "[data-testid='preview-build-banner']",
+            "include": false,
+            "comment": "Exclude the preview-build banner that never ships to production"
           }
         ]
       }
@@ -95,13 +100,13 @@ Your base configuration hides the cookie-consent banner from every report. On ni
 
 #### Usage
 
-To use this profile, run Cypress with a matching tag:
+Record the preview environment's runs with a matching tag:
 
 ```shell
-cypress run --record --tag "aq-config-regression"
+cypress run --record --tag "aq-config-preview"
 ```
 
-On regression runs, the profile's `elementFilters` replaces the base `elementFilters` entirely, so the cookie-banner rule is repeated alongside the new debug-toolbar rule. Because arrays are replaced rather than merged, dropping the repeated rule would let the cookie banner back into your regression reports.
+Preview runs use this profile's `elementFilters` in place of the base list. Because a profile's list replaces the base list rather than adding to it, the cookie-banner rule is repeated here alongside the preview-only exclusions; dropping it would let the banner back into your preview reports.
 
 ---
 
