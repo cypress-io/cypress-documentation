@@ -58,15 +58,17 @@ While relying on existing tags works just fine, being explicit will help avoid u
 
 ### Basic profile structure
 
+Your base configuration hides the cookie-consent banner from every report. On nightly regression runs, an internal QA debug toolbar is also rendered, and you want it out of those reports too.
+
 #### Config
 
 ```json title="App Quality Config"
 {
   "elementFilters": [
     {
-      "selector": "[data-testid*='temp']",
+      "selector": "#onetrust-banner-sdk",
       "include": false,
-      "comment": "Exclude temporary test elements"
+      "comment": "Exclude the cookie-consent banner from all reports"
     }
   ],
   "profiles": [
@@ -75,14 +77,14 @@ While relying on existing tags works just fine, being explicit will help avoid u
       "config": {
         "elementFilters": [
           {
-            "selector": "[data-testid*='temp']",
+            "selector": "#onetrust-banner-sdk",
             "include": false,
-            "comment": "Exclude temporary test elements in regression runs"
+            "comment": "Still exclude the cookie-consent banner"
           },
           {
-            "selector": "[data-role='debug']",
+            "selector": "[data-testid='debug-toolbar']",
             "include": false,
-            "comment": "Exclude debug elements in regression runs"
+            "comment": "Exclude the internal QA debug toolbar shown on regression runs"
           }
         ]
       }
@@ -99,13 +101,13 @@ To use this profile, run Cypress with a matching tag:
 cypress run --record --tag "aq-config-regression"
 ```
 
-When this tag is used, the profile's `elementFilters` replaces the base `elementFilters` entirely, so both rules are repeated to exclude temporary test elements and debug elements. Because arrays are replaced rather than merged, dropping the first rule here would stop excluding temporary test elements on regression runs.
+On regression runs, the profile's `elementFilters` replaces the base `elementFilters` entirely, so the cookie-banner rule is repeated alongside the new debug-toolbar rule. Because arrays are replaced rather than merged, dropping the repeated rule would let the cookie banner back into your regression reports.
 
 ---
 
 ### Multiple profiles
 
-You can define multiple profiles for different scenarios:
+Different kinds of runs need different scoping. Pull request runs that gate merges should stay focused on the core application, while staging runs need to ignore an internal admin area that only exists in that environment. Both still inherit the base cookie-banner exclusion because neither profile redefines `elementFilters`.
 
 #### Config
 
@@ -113,23 +115,24 @@ You can define multiple profiles for different scenarios:
 {
   "elementFilters": [
     {
-      "selector": "[data-testid*='temp']",
-      "include": false
+      "selector": "#onetrust-banner-sdk",
+      "include": false,
+      "comment": "Exclude the cookie-consent banner from all reports"
     }
   ],
   "profiles": [
     {
-      "name": "aq-config-regression",
+      "name": "aq-config-pull-request",
       "config": {
-        "elementFilters": [
+        "viewFilters": [
           {
-            "selector": "[data-testid*='temp']",
-            "include": false
+            "pattern": "/blog/*",
+            "include": false,
+            "comment": "Keep merge-blocking reports on the app, not marketing pages"
           },
           {
-            "selector": "[data-role='debug']",
-            "include": false,
-            "comment": "Exclude debug elements in regression runs"
+            "pattern": "/docs/*",
+            "include": false
           }
         ]
       }
@@ -139,9 +142,9 @@ You can define multiple profiles for different scenarios:
       "config": {
         "viewFilters": [
           {
-            "pattern": "https://staging.example.com/admin/*",
+            "pattern": "/admin/*",
             "include": false,
-            "comment": "Exclude admin pages in staging runs"
+            "comment": "Exclude the internal admin area that only exists in staging"
           }
         ]
       }
@@ -155,10 +158,10 @@ You can define multiple profiles for different scenarios:
 Use different tags to activate different profiles:
 
 ```shell
-# For regression runs
-cypress run --record --tag "aq-config-regression"
+# Pull request runs that gate merges
+cypress run --record --tag "aq-config-pull-request"
 
-# For staging runs
+# Staging runs
 cypress run --record --tag "aq-config-staging"
 ```
 
@@ -166,7 +169,9 @@ cypress run --record --tag "aq-config-staging"
 
 ### Profile with nested configuration
 
-Profiles can override configuration at any level, including nested configuration specific to Cypress Accessibility or UI Coverage, if your project has both products enabled. Because `uiCoverage` and `accessibility` merge one level deep, a profile can add or replace a single nested property while inheriting the rest from the root. For example:
+Profiles can override configuration at any level, including configuration specific to Cypress Accessibility or UI Coverage when your project has both products enabled. Because `uiCoverage` and `accessibility` merge one level deep, a profile can add or replace a single nested property while inheriting the rest.
+
+Here the base configuration ignores React's auto-generated IDs, so a control isn't counted as a brand-new element on every render. A profile for the branch building a checkout redesign groups those new controls together so they're tracked as a single unit.
 
 #### Config
 
@@ -174,8 +179,9 @@ Profiles can override configuration at any level, including nested configuration
 {
   "elementFilters": [
     {
-      "selector": "[data-testid*='temp']",
-      "include": false
+      "selector": "#onetrust-banner-sdk",
+      "include": false,
+      "comment": "Exclude the cookie-consent banner from all reports"
     }
   ],
   "uiCoverage": {
@@ -184,20 +190,20 @@ Profiles can override configuration at any level, including nested configuration
         "attribute": "id",
         "value": ":r.*:",
         "include": false,
-        "comment": "Filter out React auto-generated IDs"
+        "comment": "Ignore React auto-generated IDs so elements stay stable across renders"
       }
     ]
   },
   "profiles": [
     {
-      "name": "aq-config-feature-branch",
+      "name": "aq-config-checkout-redesign",
       "config": {
         "uiCoverage": {
           "elementGroups": [
             {
-              "selector": "[data-feature='new-checkout']",
-              "name": "New Checkout Flow",
-              "comment": "Group new checkout elements for feature branch testing"
+              "selector": "[data-cy^='checkout-']",
+              "name": "Checkout redesign",
+              "comment": "Track the new checkout controls as a single group"
             }
           ]
         }
@@ -210,16 +216,16 @@ Profiles can override configuration at any level, including nested configuration
 #### Usage
 
 ```shell
-cypress run --record --tag "aq-config-feature-branch"
+cypress run --record --tag "aq-config-checkout-redesign"
 ```
 
-This profile adds element grouping for the new checkout flow. The root `elementFilters` is inherited because the profile doesn't mention it, and inside `uiCoverage`, the profile supplies `elementGroups` while the root's `attributeFilters` is inherited; only the keys the profile names are replaced.
+The root `elementFilters` is inherited because the profile doesn't mention it. Inside `uiCoverage`, the profile supplies `elementGroups` while the root's `attributeFilters` is inherited; only the keys the profile names are replaced.
 
 ---
 
 ### Profile selection with multiple matching tags
 
-If you pass multiple tags and more than one matches a profile name, the first matching profile in the `profiles` array is used, regardless of the order the tags appear on the run:
+Two teams share one Cypress Cloud project, and each has a profile that scopes the report to the views they own. A shared nightly job is tagged for both teams. When more than one tag matches a profile name, Cypress Cloud uses the first matching profile in the `profiles` array, regardless of the order the tags appear on the run.
 
 #### Config
 
@@ -227,23 +233,33 @@ If you pass multiple tags and more than one matches a profile name, the first ma
 {
   "profiles": [
     {
-      "name": "aq-config-regression",
+      "name": "aq-config-team-checkout",
       "config": {
-        "elementFilters": [
+        "viewFilters": [
           {
-            "selector": "[data-role='debug']",
-            "include": false
+            "pattern": "/checkout/*",
+            "include": true
+          },
+          {
+            "pattern": "*",
+            "include": false,
+            "comment": "Checkout team: report only on checkout views"
           }
         ]
       }
     },
     {
-      "name": "aq-config-staging",
+      "name": "aq-config-team-account",
       "config": {
         "viewFilters": [
           {
-            "pattern": "https://staging.example.com/admin/*",
-            "include": false
+            "pattern": "/account/*",
+            "include": true
+          },
+          {
+            "pattern": "*",
+            "include": false,
+            "comment": "Account team: report only on account views"
           }
         ]
       }
@@ -255,7 +271,7 @@ If you pass multiple tags and more than one matches a profile name, the first ma
 #### Usage
 
 ```shell
-cypress run --record --tag "aq-config-staging,aq-config-regression"
+cypress run --record --tag "aq-config-team-account,aq-config-team-checkout"
 ```
 
-In this case, the `aq-config-regression` profile is used because it appears first in the `profiles` array, even though `aq-config-staging` is listed first among the tags. Only profile-array order decides the winner.
+Both tags match a profile, but Cypress Cloud applies `aq-config-team-checkout` because it appears first in the `profiles` array, even though `aq-config-team-account` is listed first among the tags. The checkout team's report is produced; tag order on the command line doesn't change the outcome.
