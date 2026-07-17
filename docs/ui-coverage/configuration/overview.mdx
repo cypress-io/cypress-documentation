@@ -57,14 +57,14 @@ Several options change what appears in reports and how it's organized. Pick the 
 
 | Your goal                                                           | Use                                                                                                         |
 | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Combine repeated or related elements so they count as one           | [`elementGroups`](/ui-coverage/configuration/elementgroups)                                                 |
-| Rename or stabilize the identity of a single element                | [`elements`](/ui-coverage/configuration/elements)                                                           |
-| Remove elements from reports and scores entirely                    | [`elementFilters`](/ui-coverage/configuration/elementfilters)                                               |
-| Define groups in your application's markup instead of configuration | [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) |
-| Stop dynamic or generated attributes from identifying elements      | [`attributeFilters`](/ui-coverage/configuration/attributefilters)                                           |
-| Prioritize your own attributes for identifying and naming elements  | [`significantAttributes`](/ui-coverage/configuration/significantattributes)                                 |
 | Control how URLs are grouped into views                             | [`views`](/ui-coverage/configuration/views)                                                                 |
 | Remove entire views from reports                                    | [`viewFilters`](/ui-coverage/configuration/viewfilters)                                                     |
+| Remove elements from reports and scores entirely                    | [`elementFilters`](/ui-coverage/configuration/elementfilters)                                               |
+| Rename or stabilize the identity of a single element                | [`elements`](/ui-coverage/configuration/elements)                                                           |
+| Combine repeated or related elements so they count as one           | [`elementGroups`](/ui-coverage/configuration/elementgroups)                                                 |
+| Define groups in your application's markup instead of configuration | [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) |
+| Prioritize your own attributes for identifying and naming elements  | [`significantAttributes`](/ui-coverage/configuration/significantattributes)                                 |
+| Stop dynamic or generated attributes from identifying elements      | [`attributeFilters`](/ui-coverage/configuration/attributefilters)                                           |
 | Count your custom commands as interactions                          | [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)                 |
 | Limit which interaction commands count for specific elements        | [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)                       |
 | Apply different configuration to runs based on run tags             | [`profiles`](/ui-coverage/configuration/profiles)                                                           |
@@ -81,7 +81,7 @@ A `comment` lives inside the rule and has no effect on behavior. Comments appear
     {
       "selector": ".intercom-launcher",
       "include": false,
-      "comment": "Third-party chat widget owned by support, not covered by our tests"
+      "comment": "Third-party chat widget, not covered by our tests"
     }
   ]
 }
@@ -97,14 +97,6 @@ A complete configuration with all available options looks as follows:
 
 ```json title="App Quality Config"
 {
-  "elementFilters": [
-    {
-      "selector": string,
-      "include": boolean,
-      "documentScope": [string],
-      "comment": string
-    }
-  ],
   "views": [
     {
       "pattern": string,
@@ -119,20 +111,20 @@ A complete configuration with all available options looks as follows:
       "comment": string
     }
   ],
-  "profiles": [
+  "elementFilters": [
     {
-      "name": string,
-      "config": {
-        // Any App Quality configuration options
-      }
+      "selector": string,
+      "include": boolean,
+      "documentScope": [string],
+      "comment": string
     }
   ],
   "uiCoverage": {
-    "attributeFilters": [
+    "elements": [
       {
-        "attribute": string,
-        "value": string,
-        "include": boolean,
+        "selector": string,
+        "name": string,
+        "documentScope": [string],
         "comment": string
       }
     ],
@@ -144,16 +136,16 @@ A complete configuration with all available options looks as follows:
         "comment": string
       }
     ],
-    "elements": [
-      {
-        "selector": string,
-        "name": string,
-        "documentScope": [string],
-        "comment": string
-      }
-    ],
     "significantAttributes": [
       string
+    ],
+    "attributeFilters": [
+      {
+        "attribute": string,
+        "value": string,
+        "include": boolean,
+        "comment": string
+      }
     ],
     "additionalInteractionCommands": [
       string
@@ -166,7 +158,15 @@ A complete configuration with all available options looks as follows:
         "comment": string
       }
     ]
-  }
+  },
+  "profiles": [
+    {
+      "name": string,
+      "config": {
+        // Any App Quality configuration options
+      }
+    }
+  ]
 }
 ```
 
@@ -196,10 +196,10 @@ Check out the following configuration guides.
 - [Views](/ui-coverage/configuration/views)
 - [View Filters](/ui-coverage/configuration/viewfilters)
 - [Element Filters](/ui-coverage/configuration/elementfilters)
-- [Attribute Filters](/ui-coverage/configuration/attributefilters)
-- [Significant Attributes](/ui-coverage/configuration/significantattributes)
-- [Element Groups](/ui-coverage/configuration/elementgroups)
 - [Elements](/ui-coverage/configuration/elements)
+- [Element Groups](/ui-coverage/configuration/elementgroups)
+- [Significant Attributes](/ui-coverage/configuration/significantattributes)
+- [Attribute Filters](/ui-coverage/configuration/attributefilters)
 - [Additional Interaction Commands](/ui-coverage/configuration/additionalinteractioncommands)
 - [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands)
 - [Profiles](/ui-coverage/configuration/profiles)
