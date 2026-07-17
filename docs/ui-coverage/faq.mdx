@@ -193,7 +193,7 @@ Once an element matches an [`allowedInteractionCommands`](/ui-coverage/configura
 
 ### <Icon name="angle-right" /> Do I need to configure anything to use UI Coverage?
 
-No. UI Coverage works out of the box with no configuration—every recorded run produces a report automatically. Configuration is opt-in and incremental: add a rule only when you want to sharpen the report, such as ignoring a dynamic attribute, filtering out a third-party widget, or grouping related elements. See the [Configuration overview](/ui-coverage/configuration/overview) for what each option does.
+No. UI Coverage works out of the box with no configuration. Every recorded run produces a report automatically. Configuration is opt-in and incremental: add a rule only when you want to sharpen the report, such as ignoring a dynamic attribute, filtering out a third-party widget, or grouping related elements. See the [Configuration overview](/ui-coverage/configuration/overview) for what each option does.
 
 ### <Icon name="angle-right" /> Where do I set UI Coverage configuration?
 
@@ -205,7 +205,7 @@ Add a `comment` property to any rule. Comments are for humans only and have no e
 
 ### <Icon name="angle-right" /> Why is my configuration being rejected as invalid?
 
-Cypress Cloud validates your configuration against a strict schema and rejects any property it doesn't recognize. The usual causes are a misspelled property name, a value of the wrong type (for example, a string where an array is expected), or a note added on an unsupported field—put explanations in a [`comment`](/ui-coverage/configuration/overview#Comments) instead. The editor reports the offending property so you can correct it before saving.
+Cypress Cloud validates your configuration against a strict schema and rejects any property it doesn't recognize. The usual causes are a misspelled property name, a value of the wrong type (for example, a string where an array is expected), or a note added on an unsupported field. Put explanations in a [`comment`](/ui-coverage/configuration/overview#Comments) instead. The editor reports the offending property so you can correct it before saving.
 
 ### <Icon name="angle-right" /> Do I need to rerun my tests after changing configuration?
 
