@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Get answers to common questions about Cypress Accessibility, including ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, and configuration.'
+description: 'Get answers to common questions about Cypress Accessibility, including ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, configuration, and per-run profiles.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -91,9 +91,37 @@ In the **App Quality** tab of your project settings in Cypress Cloud. See [Setti
 
 No. You can regenerate any historical run from its **Properties** tab, and the report is reprocessed with the current configuration. This lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
 
+## Profiles
+
+### <Icon name="angle-right" /> How do I apply different Cypress Accessibility settings to different runs?
+
+In your project's App Quality configuration in Cypress Cloud, add a [`profiles`](/accessibility/configuration/profiles) array, give each profile a `name`, and record the run with a matching [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt). When a run's tag matches a profile's `name`, that profile's `config` overrides your base Cypress Accessibility configuration for that run, so a smoke run and a full regression run can each use their own settings without changing your test code. If no tag matches, the base configuration is used unchanged.
+
+### <Icon name="angle-right" /> Does a Cypress Accessibility profile override my base configuration or merge with it?
+
+Cypress Cloud overrides one property at a time with a shallow merge, not a deep merge. Any property the profile lists replaces the root value for that property entirely (arrays are replaced, not concatenated), so if a profile defines [`elementFilters`](/accessibility/configuration/elementfilters), repeat any root rules you still want to keep. Properties the profile doesn't mention are inherited from the root. The `accessibility` and `uiCoverage` objects merge one level deep, so a profile can override `accessibility.viewFilters` while still inheriting `accessibility.attributeFilters`. See [How a profile changes your configuration](/accessibility/configuration/profiles#How-a-profile-changes-your-configuration).
+
+### <Icon name="angle-right" /> If a run has multiple tags that match profiles, which Cypress Accessibility profile is used?
+
+Cypress Cloud uses the first profile in the [`profiles`](/accessibility/configuration/profiles) array whose `name` matches one of the run's tags. The tie is broken by the order of the profiles array, not the order of the tags on the run, so reordering tags on the command line never changes which profile applies.
+
+### <Icon name="angle-right" /> Why isn't my Cypress Accessibility profile applied even though I tagged the run?
+
+The most common causes are:
+
+- The run tag doesn't exactly match the profile `name`. Matching is case-sensitive and exact, so `aq-config-regression` matches only the tag `aq-config-regression`, not `AQ-Config-Regression` or `aq-config-regression-nightly`.
+- The tag never reached Cypress Cloud. Profiles are selected from the tags passed to `cypress run --record --tag`, so a run recorded without `--record`, or without that specific `--tag`, falls back to the base configuration.
+- An earlier profile in the array also matches one of the tags and is used instead, because the first match wins.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+### <Icon name="angle-right" /> Can a profile turn off Cypress Accessibility or skip a run entirely?
+
+There's no dedicated "skip this run" switch in a profile. To suppress a report for certain runs, point a profile at a deliberately narrow configuration (for example, [`viewFilters`](/accessibility/configuration/viewfilters) that exclude every view) so Cypress Cloud produces an empty or tightly scoped accessibility report for the run instead. See [Why use profiles?](/accessibility/configuration/profiles#Why-use-profiles).
+
 ## See also
 
 - [Configuration overview](/accessibility/configuration/overview) lists every configuration option and what each one is for.
+- [`profiles`](/accessibility/configuration/profiles) apply different configuration to runs based on run tags.
 - [`elementFilters`](/accessibility/configuration/elementfilters) is the full reference for ignoring elements.
 - [`viewFilters`](/accessibility/configuration/viewfilters) is the full reference for excluding URLs.
 - [Run-level reports](/accessibility/core-concepts/run-level-reports) explains element statuses, including **Ignored**.
