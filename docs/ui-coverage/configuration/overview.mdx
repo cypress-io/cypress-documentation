@@ -26,10 +26,13 @@ By default, editing configuration is limited to Admin users. Your Cypress point-
 
 ## Setting configuration
 
-To add or modify the configuration for your project:
+Configuration lives in Cypress Cloud, not in your repository. To view or change it for a project:
 
-1. Navigate to the **App Quality** tab in your project settings on Cypress Cloud.
-2. Use the configuration editor to add or edit configuration in JSON format.
+1. Open your project in Cypress Cloud and go to **Project Settings**.
+2. Select the **App Quality** tab, which holds the configuration editor.
+3. Edit the configuration as JSON, then **Save**. **Discard** reverts unsaved edits back to the last saved version.
+
+Editing is limited to Admin users by default. The editor validates your JSON against the schema when you save, so an invalid configuration can't be saved, and it shows how long ago the configuration was last saved.
 
 After you save configuration changes, you can reprocess any historical run to apply them. You can start a reprocess from two places:
 
@@ -166,6 +169,13 @@ A complete configuration with all available options looks as follows:
 }
 ```
 
+## How rules are applied
+
+Two behaviors govern every rule you write, regardless of which property it belongs to:
+
+- **Order matters.** For [`elementFilters`](/ui-coverage/configuration/elementfilters), [`viewFilters`](/ui-coverage/configuration/viewfilters), and [`elementGroups`](/ui-coverage/configuration/elementgroups), rules are evaluated top to bottom and the **first** rule that matches an element or URL wins; later rules that also match it are ignored. List specific rules before broad, catch-all rules, and place an `include: true` exception above the `include: false` rule it should override. [`elements`](/ui-coverage/configuration/elements) is the exception: when more than one rule matches the same element, the **last** one wins.
+- **Unknown properties are rejected.** When you save, Cypress Cloud validates your configuration against a strict schema and rejects anything it doesn't recognize, such as a misspelled property, a value of the wrong type, or a note on a property that doesn't accept one. Correct the flagged property to save, and keep freeform notes in a [`comment`](#Comments).
+
 ## Configuration scope
 
 Some properties are shared across App Quality products, and some belong to UI Coverage alone.
@@ -178,7 +188,7 @@ Some properties are shared across App Quality products, and some belong to UI Co
 
 ## Viewing configuration for a run
 
-You can review the configuration used during a specific run by checking the **Properties** tab, as shown below. This displays the configuration as it was applied at the start of the run.
+Every run permanently records the exact configuration it was processed with, so the runs themselves are the history of how your configuration has changed over time. To review the configuration a specific run used, open its **Properties** tab, as shown below. This displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-configuration) the run to reprocess it with the current configuration.
 
 <DocsImage
   src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
