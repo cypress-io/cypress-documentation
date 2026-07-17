@@ -1,6 +1,6 @@
 ---
 title: Configure UI Coverage in Cypress
-description: 'Configuration allows you to customize and fine-tune UI Coverage in Cypress to suit specific needs and scenarios.'
+description: 'Configure Cypress UI Coverage to get a coverage score you can trust: ignore dynamic attributes, filter out noise, group elements, shape views, and count the interactions that matter. Set it all in the App Quality config editor.'
 sidebar_label: Overview
 sidebar_position: 10
 ---
@@ -9,18 +9,18 @@ sidebar_position: 10
 
 # Configuration overview
 
-Configuration enables you to customize and fine-tune UI Coverage in Cypress to suit the unique needs of your application. While UI Coverage is designed to work seamlessly out of the box, there are scenarios where fine-tuning may be necessary—such as dealing with dynamic attributes, filtering out irrelevant elements, or grouping related components. These guides explain how to configure UI Coverage effectively to improve accuracy and usability.
+UI Coverage works out of the box with no setup—but a few lines of configuration make your reports match your application. Configuration lets you get a coverage score you can trust and act on by:
 
-**Note**: By default, setting configuration is limited to Admin users. At your request, this can be changed to allow setting config by all users. Reach out to your Cypress point-of-contact if you would like to change this.
+- **Reflecting your app, not the framework**: ignore dynamic or auto-generated attributes so the same button is recognized as one element across snapshots instead of many.
+- **Removing noise**: filter out third-party widgets, admin-only pages, and elements your team doesn't own so the report focuses on what matters.
+- **Organizing reports around your product**: group related elements and shape how URLs roll up into [views](/ui-coverage/core-concepts/views) that map to real pages and flows.
+- **Counting the interactions you care about**: recognize custom or plugin commands, require a meaningful interaction on specific elements, and even credit assertions as coverage.
 
-:::success
+You don't need any of this to get started, and you can add it incrementally—reprocess a past run after each change to see the effect immediately, without re-running your tests.
 
-## New configuration options
+:::info
 
-UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:
-
-- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)
-- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)
+By default, editing configuration is limited to Admin users. Your Cypress point-of-contact can enable editing for all users on request.
 
 :::
 
@@ -44,7 +44,7 @@ Regenerating reports in this way allows you to make config changes and see their
 
 :::info
 
-For a quick overview of the practical application of the most common UI Coverage confiuration properties, you can read [this blog post](https://www.cypress.io/blog/making-the-most-of-ui-coverage).
+For a quick overview of the practical application of the most common UI Coverage configuration properties, you can read [this blog post](https://www.cypress.io/blog/making-the-most-of-ui-coverage).
 
 :::
 
@@ -105,9 +105,7 @@ A complete configuration with all available options looks as follows:
   "views": [
     {
       "pattern": string,
-      "groupBy": [
-        string
-      ],
+      "groupBy": string | [string],
       "comment": string
     }
   ],
@@ -171,11 +169,15 @@ A complete configuration with all available options looks as follows:
 
 ## Configuration scope
 
-The root-level properties `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Accessibility. These properties can also be nested under `uiCoverage` or `accessibility` to apply to only that product, with nested configuration taking precedence over root-level configuration.
+Some properties are shared across App Quality products, and some belong to UI Coverage alone.
 
-The `views` property applies to UI Coverage and Accessibility but cannot be nested.
+**Shared properties** — `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Cypress Accessibility when set at the root of your configuration. To apply one to a single product, nest it under a `uiCoverage` or `accessibility` key. A nested value **completely replaces** the root-level value for that product—the two are not merged—so repeat any shared rules you still want in the nested list.
 
-## Viewing Configuration for a Run
+**Shared, but not nestable** — `views` applies to both UI Coverage and Cypress Accessibility and can only be set at the root.
+
+**UI Coverage only** — `elementGroups`, `elements`, `additionalInteractionCommands`, and `allowedInteractionCommands` are specific to UI Coverage and are always set under the `uiCoverage` key.
+
+## Viewing configuration for a run
 
 You can review the configuration used during a specific run by checking the **Properties** tab, as shown below. This displays the configuration as it was applied at the start of the run.
 
@@ -198,5 +200,3 @@ Check out the following configuration guides.
 - [Additional Interaction Commands](/ui-coverage/configuration/additionalinteractioncommands)
 - [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands)
 - [Profiles](/ui-coverage/configuration/profiles)
-
-UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:
