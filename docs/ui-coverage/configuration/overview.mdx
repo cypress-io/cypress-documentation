@@ -31,7 +31,10 @@ To add or modify the configuration for your project:
 1. Navigate to the **App Quality** tab in your project settings on Cypress Cloud.
 2. Use the configuration editor to add or edit configuration in JSON format.
 
-After new configuration changes have been saved, you can reprocess any historical run using the "regenerate" button on the properties tab where the configuration values that were used for that run are displayed, or through the UI Coverage report where the "configuration updated" message appears if you are looking at a historical run using an old config.
+After you save configuration changes, you can reprocess any historical run to apply them. You can start a reprocess from two places:
+
+- The **Properties** tab, using the "regenerate" button next to the configuration values that were used for that run.
+- The UI Coverage report, using the "configuration updated" message that appears when you view a historical run that was processed with an older configuration.
 
 Regenerating reports in this way allows you to make config changes and see their effects without running your Cypress tests again.
 
@@ -68,9 +71,9 @@ Several options change what appears in reports and how it's organized. Pick the 
 
 ### Comments
 
-All configuration objects support an optional `comment` property that you can use to provide context and explanations for why certain values are set. This helps make your configuration easier to understand and maintain, especially when working in teams or revisiting configuration after some time.
+Most configuration rules support an optional `comment` property that you can use to record why a value is set. This makes your configuration easier to understand and maintain, especially when working in a team or revisiting configuration after some time. Any rule defined as an object accepts a `comment`; the options that are plain lists of strings, such as [`significantAttributes`](/ui-coverage/configuration/significantattributes) and [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands), do not take a per-entry comment.
 
-Comments have no effect on behavior. They belong inside each rule object; Cypress Cloud validates every rule and rejects properties it doesn't recognize, so `comment` is the supported place for notes.
+A `comment` lives inside the rule and has no effect on behavior. Comments appear only in the configuration itself and are never displayed in reports. Because Cypress Cloud validates every rule and rejects properties it doesn't recognize, `comment` is the supported place to keep notes.
 
 ```json title="App Quality Config"
 {
