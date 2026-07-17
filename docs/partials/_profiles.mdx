@@ -58,9 +58,7 @@ While relying on existing tags works just fine, being explicit will help avoid u
 
 ### Basic profile structure
 
-Your base configuration excludes a third-party support-chat widget, since it isn't your code and just adds noise to most reports. But one suite exists specifically to test the support-chat flow, and it records under the `aq-config-support-chat` tag. For that run, and only that run, the widget should count toward coverage.
-
-This is the kind of difference that genuinely needs a profile: the same widget can't be both excluded and included in a single base configuration, so the conflicting value has to live under a tag.
+Your base configuration excludes the support-chat widget, since another team owns it and it just adds noise to most reports. But one suite exists specifically to test the support-chat flow, and it records under the `aq-config-support-chat` tag. For that run, and only that run, the widget should count toward coverage.
 
 #### Config
 
@@ -70,7 +68,7 @@ This is the kind of difference that genuinely needs a profile: the same widget c
     {
       "selector": "#support-chat-widget",
       "include": false,
-      "comment": "Exclude the third-party support-chat widget from most reports"
+      "comment": "Exclude the support-chat widget from most reports"
     }
   ],
   "profiles": [
