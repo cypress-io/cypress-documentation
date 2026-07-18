@@ -38,7 +38,7 @@ Reference: [Understanding GitHub Actions](https://docs.github.com/en/actions/lea
 - `GITHUB_RUN_ID` - Value uniquely identifies a GitHub Actions workflow instance. Value does not change as jobs in the workflow are re-executed.
 - `GITHUB_RUN_ATTEMPT` - Value identifies the workflow instance's attempt index. Value is incremented each time jobs are re-executed.
 
-Full environment variable reference: [GitHub Actions default environment variables](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables)
+[GitHub Actions default environment variables](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables)
 
 </AccordionBlock>
 
@@ -53,7 +53,7 @@ Reference: [GitLab CI/CD pipelines](https://docs.gitlab.com/ee/ci/pipelines/)
 - `CI_JOB_NAME` - Value uniquely identifies a single job name within a pipeline. Ex. `run-e2e`
 - `CI_JOB_ID` - Value uniquely identifies an execution instance of a job. This value will change each time a job is executed/re-executed.
 
-Full environment variable reference: [GitLab predefined variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html)
+[GitLab predefined variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html)
 
 </AccordionBlock>
 
@@ -70,7 +70,7 @@ We have implemented Jenkins support within this module using the broadest set of
 - `JENKINS_HOME` - Presence identifies the environment as a Jenkins environment
 - `BUILD_URL` - Value uniquely identifies a Jenkins job execution, including name and id characteristics.
 
-Full environment variable reference: [Jenkins environment variables](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables)
+[Jenkins environment variables](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables)
 
 </AccordionBlock>
 
@@ -87,7 +87,7 @@ Reference: [Azure Pipelines key concepts](https://learn.microsoft.com/en-us/azur
 - `SYSTEM_JOBID` - Value uniquely identifies a job execution. Value changes each time a job is retried from failure, in conjunction with the `SYSTEM_JOBATTEMPT` being incremented.
 - `SYSTEM_JOBATTEMPT` - Value identifies the pipelines shared attempt index. Value is incremented when jobs are retried from failure.
 
-Full environment variable reference: [Azure Pipelines predefined variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml)
+[Azure Pipelines predefined variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml)
 
 </AccordionBlock>
 
@@ -104,7 +104,7 @@ Reference: [About CircleCI](https://circleci.com/docs/about-circleci/)
 - `CIRCLE_WORKFLOW_ID` - Value uniquely identifies an instance of a workflow's execution within a pipeline. This value will be updated upon each workflow execution; in other words, retrying a workflow from failure from the Circle UI will create a new workflow with a new `CIRCLE_WORKFLOW_ID` value available to the jobs executed within it.
 - `CIRCLE_WORKFLOW_JOB_ID` - Value uniquely identifies an execution instance of a named job within a workflow instance.
 
-Full environment variable reference: [CircleCI built-in environment variables](https://circleci.com/docs/variables/#built-in-environment-variables)
+[CircleCI built-in environment variables](https://circleci.com/docs/variables/#built-in-environment-variables)
 
 </AccordionBlock>
 
@@ -116,7 +116,7 @@ Reference: [AWS CodeBuild documentation](https://docs.aws.amazon.com/codebuild/)
 
 - `CODEBUILD_BUILD_ID` - Presence identifies the environment as an AWS CodeBuild environment. Value uniquely identifies a build.
 
-Full environment variable reference: [AWS CodeBuild environment variables](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
+[AWS CodeBuild environment variables](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
 
 </AccordionBlock>
 
@@ -129,7 +129,7 @@ Reference: [Drone pipeline overview](https://docs.drone.io/pipeline/overview/)
 - `DRONE` - Presence identifies the environment as a Drone environment.
 - `DRONE_BUILD_NUMBER` - Value uniquely identifies a Drone build.
 
-Full environment variable reference: [Drone environment reference](https://docs.drone.io/pipeline/environment/reference/)
+[Drone environment reference](https://docs.drone.io/pipeline/environment/reference/)
 
 </AccordionBlock>
 
@@ -142,7 +142,7 @@ Reference: [Bitbucket Cloud documentation](https://support.atlassian.com/bitbuck
 - `BITBUCKET_BUILD_NUMBER` - Presence identifies the environment as a Bitbucket environment. Value uniquely identifies a build.
 - `BITBUCKET_STEP_RUN_NUMBER` - Value indicates a build step execution index and increments when a step is retried. Initial value of 1.
 
-Full environment variable reference: [Bitbucket variables and secrets](https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/)
+[Bitbucket variables and secrets](https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/)
 
 </AccordionBlock>
 
@@ -157,7 +157,7 @@ Reference: [Buildkite documentation](https://buildkite.com/docs)
 - `BUILDKITE_JOB_ID` - Value uniquely identifies a job execution. Each job in a build has a unique job ID.
 - `BUILDKITE_RETRY_COUNT` - Value indicates the retry attempt for a job. Default value of 0.
 
-Full environment variable reference: [Buildkite environment variables](https://buildkite.com/docs/pipelines/environment-variables)
+[Buildkite environment variables](https://buildkite.com/docs/pipelines/environment-variables)
 
 </AccordionBlock>
 
