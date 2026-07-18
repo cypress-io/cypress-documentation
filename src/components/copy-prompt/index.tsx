@@ -115,7 +115,7 @@ export default function CopyPrompt({
         id={promptId}
         className={expanded ? s.promptText : s.promptTextCollapsed}
       >
-        &ldquo;{prompt}&rdquo;
+        {prompt}
       </p>
       <span aria-live="polite" className={s.srOnly}>
         {copied ? 'Prompt copied to clipboard' : ''}
