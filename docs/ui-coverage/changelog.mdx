@@ -9,6 +9,15 @@ sidebar_position: 200
 
 # Changelog
 
+## Week of Apr 27, 2026
+
+- **UI Coverage in Cypress Cloud MCP:** AI agents can now query UI Coverage for a run through the [Cypress Cloud MCP server](/cloud/integrations/cloud-mcp), using three new tools:
+  - `cypress_get_ui_coverage_report`: Returns a run's overall coverage score, tested and untested element and link counts, and the riskiest views.
+  - `cypress_get_ui_coverage_views`: Browses all of the views in a run beyond the riskiest ones in the report.
+  - `cypress_get_ui_coverage_elements`: Drills down into individual elements, with filtering by tested or untested status and by view.
+
+  See [working with AI agents](/ui-coverage/work-with-ai-agents) for example prompts and setup.
+
 ## Week of Feb 06, 2026
 
 - **Buildkite support for the Results API:** You can now fetch UI Coverage results from Buildkite CI using the [Results API](/ui-coverage/results-api).
