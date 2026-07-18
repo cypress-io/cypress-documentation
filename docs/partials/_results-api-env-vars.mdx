@@ -35,7 +35,7 @@ Full environment variable reference: [GitHub Actions default environment variabl
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same workflow.
+1. Record the Cypress run and execute this module's validation script within the same workflow.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by either:
    1. Executing the module script in a separate job that is dependent upon the job that records the run (using the `needs: [job-name]` option in the config), or
    2. Executing the module script in serial with the cypress recording in the same job.
@@ -57,7 +57,7 @@ Full environment variable reference: [GitLab predefined variables](https://docs.
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same pipeline.
+1. Record the Cypress run and execute this module's validation script within the same pipeline.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by:
    1. Executing the module script in a separate job that is dependent upon the job that records the run (using the `needs: [job-name]` option in the config), or
    2. Executing the module script in a separate job that is executed in a lower stage than the job that records the Cypress run, or
@@ -82,7 +82,7 @@ Full environment variable reference: [Jenkins environment variables](https://www
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same job.
+1. Record the Cypress run and execute this module's validation script within the same job.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same job.
 
 </AccordionBlock>
@@ -104,7 +104,7 @@ Full environment variable reference: [Azure Pipelines predefined variables](http
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same pipeline run (i.e. they share a `SYSTEM_PLANID` value).
+1. Record the Cypress run and execute this module's validation script within the same pipeline run (i.e. they share a `SYSTEM_PLANID` value).
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by either:
    1. Executing the module script in a separate job that is dependent upon the job that records the run (using the `dependsOn: [job-name]` option in the config), or
    2. Executing the module script in serial with the Cypress recording in the same job.
@@ -128,7 +128,7 @@ Full environment variable reference: [CircleCI built-in environment variables](h
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same pipeline **and** workflow.
+1. Record the Cypress run and execute this module's validation script within the same pipeline **and** workflow.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by:
    1. Executing the module script in a separate job that is dependent upon the job that records the run (using the `requires: [job-name]` option in the config), or
    2. Executing the module script in serial with the cypress recording in the same job.
@@ -147,7 +147,7 @@ Full environment variable reference: [AWS CodeBuild environment variables](https
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same build.
+1. Record the Cypress run and execute this module's validation script within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
 
 </AccordionBlock>
@@ -165,7 +165,7 @@ Full environment variable reference: [Drone environment reference](https://docs.
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same build.
+1. Record the Cypress run and execute this module's validation script within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
 
 </AccordionBlock>
@@ -183,7 +183,7 @@ Full environment variable reference: [Bitbucket variables and secrets](https://s
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same build.
+1. Record the Cypress run and execute this module's validation script within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
 
 </AccordionBlock>
@@ -203,7 +203,7 @@ Full environment variable reference: [Buildkite environment variables](https://b
 
 **Prerequisites**
 
-1. The run to validate and this module's validation script are being executed within the same build.
+1. Record the Cypress run and execute this module's validation script within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
 
 </AccordionBlock>
