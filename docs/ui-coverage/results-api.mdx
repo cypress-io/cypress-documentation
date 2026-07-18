@@ -72,25 +72,16 @@ Test Replay being enabled and a supported Cypress version. See the
 
 ## Supported CI Providers
 
-The Results API supports the following CI providers. Refer to the linked guides
-for general setup details:
+The Results API supports the following CI providers:
 
-- <Icon name="microsoft" inline="true" />
-  [Azure](/app/continuous-integration/overview#Azure-Pipelines) (requires
-  Cypress v13.13.1)
-- <Icon name="cog" inline="true" />
-  [CircleCI](/app/continuous-integration/circleci) (requires Cypress v13.13.1)
-- <Icon name="github" inline="true" /> [GitHub
-  Actions](/app/continuous-integration/github-actions)
-- <Icon name="gitlab" inline="true" />
-  [GitLab](/app/continuous-integration/gitlab-ci)
-- <Icon name="jenkins" inline="true" />
-  [Jenkins](/app/continuous-integration/overview#Jenkins)
-- <Icon name="aws" inline="true" /> [AWS
-  CodeBuild](/app/continuous-integration/aws-codebuild)
+- <Icon name="microsoft" inline="true" /> Azure
+- <Icon name="cog" inline="true" /> CircleCI
+- <Icon name="github" inline="true" /> GitHub Actions
+- <Icon name="gitlab" inline="true" /> GitLab
+- <Icon name="jenkins" inline="true" /> Jenkins
+- <Icon name="aws" inline="true" /> AWS CodeBuild
 - <Icon name="cog" inline="true" /> Drone
-- <Icon name="bitbucket" inline="true" />
-  [Bitbucket](/app/continuous-integration/bitbucket-pipelines)
+- <Icon name="bitbucket" inline="true" /> Bitbucket
 - <Icon name="cog" inline="true" /> Buildkite
 
 For other CI providers, contact Cypress Support at support@cypress.io to request
@@ -162,7 +153,6 @@ getUICoverageResults({
   // The run tags associated with the run.
   // Required IF you record multiple Cypress runs from a single CI build.
   // Pass the same tags you used when recording each run.
-  // A single tag can also be provided via the CYPRESS_RUN_TAG env var.
   runTags: string[]
 })
 ```
@@ -175,13 +165,9 @@ navigational element (such as an anchor) that points at another view;
 
 ```javascript
 {
-  // The run number of the identified build.
   runNumber: number
-  // The run URL for the identified build.
   runUrl: 'https://cloud.cypress.io/projects/:project_id/runs/:run_number'
-  // The status of the identified build.
   runStatus: 'passed' | 'failed' | 'errored' | 'timedOut' | 'cancelled' | 'noTests' | 'running' | 'overLimit'
-  // The URL that links to the UI Coverage report for the identified build.
   uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
   summary: {
     // Whether a complete UI Coverage report was generated.
@@ -190,32 +176,21 @@ navigational element (such as an anchor) that points at another view;
     isPartialReport: boolean
     // The report coverage from 0-100 with 2-decimal precision (e.g. 92.45).
     coverage: number
-    // The number of views tested and analyzed.
     viewCount: number
-    // The number of interactive elements that were tested.
     testedElementsCount: number
-    // The number of interactive elements that were not tested.
     untestedElementsCount: number
-    // The number of links that were tested (visited).
     testedLinksCount: number
-    // The number of links that were not tested (never visited).
     untestedLinksCount: number
   }
-  // The list of tested views and the coverage of each.
   views: [{
     // The sanitized URL pattern shown in the report.
     displayName: string
     // The view coverage from 0-100 with 2-decimal precision (e.g. 92.45).
     coverage: number
-    // The number of interactive elements that were tested on this view.
     testedElementsCount: number
-    // The number of interactive elements that were not tested on this view.
     untestedElementsCount: number
-    // The number of links that were tested (visited) on this view.
     testedLinksCount: number
-    // The number of links that were not tested (never visited) on this view.
     untestedLinksCount: number
-    // The URL that links to the report for this view.
     uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
   }]
   // The App Quality configuration that produced this report.
