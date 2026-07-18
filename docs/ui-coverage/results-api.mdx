@@ -311,30 +311,6 @@ In the CI workflow that runs your Cypress tests:
 2. Pass any necessary arguments to `getUICoverageResults`.
 3. Add a step, after your Cypress run, that executes your verification script.
 
-:::info
-
-If you record multiple runs in a single CI build, you must record each run with
-the `--tag` parameter and then call `getUICoverageResults` with the matching
-`runTags` argument for each run.
-
-This is how each run is uniquely identified so the correct results are returned.
-Tags can also activate [Profiles](/ui-coverage/configuration/profiles) that
-apply different configuration to different runs.
-
-**Example**
-
-- Imagine that within a single CI build you call `cypress run --record` twice,
-  once against a `staging` environment and once against `production`.
-- Pass a different `--tag` to each Cypress run:
-  - `cypress run --record --tag staging`
-  - `cypress run --record --tag production`
-- When calling `getUICoverageResults`, pass the same tags to get the results for
-  each run:
-  - `getUICoverageResults({ runTags: ['staging'] })`
-  - `getUICoverageResults({ runTags: ['production'] })`
-
-:::
-
 #### Example workflow updates
 
 <Tabs groupId="ui-cov-results-api">
@@ -574,6 +550,27 @@ steps:
 
 </TabItem>
 </Tabs>
+
+### Recording multiple runs in one CI build
+
+If you record multiple runs in a single CI build, you must record each run with
+the `--tag` parameter and then call `getUICoverageResults` with the matching
+`runTags` argument for each run. This is how each run is uniquely identified so
+the correct results are returned. Tags can also activate
+[Profiles](/ui-coverage/configuration/profiles) that apply different
+configuration to different runs.
+
+For example, imagine that within a single CI build you call
+`cypress run --record` twice, once against a `staging` environment and once
+against `production`:
+
+- Pass a different `--tag` to each Cypress run:
+  - `cypress run --record --tag staging`
+  - `cypress run --record --tag production`
+- When calling `getUICoverageResults`, pass the same tags to get the results for
+  each run:
+  - `getUICoverageResults({ runTags: ['staging'] })`
+  - `getUICoverageResults({ runTags: ['production'] })`
 
 ## Examples
 
