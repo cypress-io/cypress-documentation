@@ -232,6 +232,15 @@ There's no dedicated "skip this run" switch in a profile. To suppress a report f
 
 ## Results API and CI
 
+### <Icon name="angle-right" /> What are the prerequisites for using the Results API?
+
+A few conditions must hold before `getUICoverageResults` can return a report:
+
+- **Test Replay must be enabled** for the run. UI Coverage reports are built from [Test Replay](/cloud/features/test-replay) data, so a run recorded with Test Replay off has no report and the helper throws. Enable it in your project settings.
+- **Record with Cypress v13 or later.** [Azure Pipelines](/app/continuous-integration/overview#Azure-Pipelines) and [CircleCI](/app/continuous-integration/circleci) additionally require **Cypress v13.13.1 or later** to capture the CI metadata needed to identify runs.
+- **The run must have been recorded within the last 7 days.** Older runs can no longer be identified from CI context.
+- **Run the script after recording, in the same CI build**, so the run it should report on already exists.
+
 ### <Icon name="angle-right" /> How do I fail a CI build or block a pull request when UI Coverage drops?
 
 Use the [Results API](/ui-coverage/results-api). Add a step to your CI workflow that installs the `@cypress/extract-cloud-results` module and calls `getUICoverageResults()` after your Cypress run. The helper returns the run's coverage summary and per-view breakdown, and your script decides whether to fail, for example by throwing an error when `summary.coverage` is below a threshold. Because the check lives in your CI job, nothing in the Cypress run itself fails; enforcement is entirely opt-in. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) for a complete example.

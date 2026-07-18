@@ -38,21 +38,6 @@ Because reports are processed server-side from
 overhead to your Cypress runs. The enforcement step is entirely opt-in and
 lives in your CI workflow.
 
-:::info
-
-<CalloutLabel icon="question-circle" color="#0097A8">
-  Examples and use cases
-</CalloutLabel>
-
-This page describes how the Results API works and what data it returns. For
-worked end-to-end examples, such as setting a policy, failing a pull request, and
-comparing against a baseline, see the
-[Block pull requests and set policies](/ui-coverage/guides/block-pull-requests)
-guide, or [Monitor changes](/ui-coverage/guides/monitor-changes) to track
-coverage over time.
-
-:::
-
 ## How it works
 
 When you call `getUICoverageResults` inside a CI job, the helper:
@@ -67,22 +52,23 @@ When you call `getUICoverageResults` inside a CI job, the helper:
 3. **Returns the results** as a structured object you can assert against, or
    **throws a descriptive error** if no matching run or report can be found.
 
-As it runs, the helper logs its progress to the console (the run it matched, the
-report URL, and each polling attempt) so you can follow along in your CI logs.
+Because the helper matches the run from the current CI context, call it **after
+`cypress run --record` completes within the same CI build**, so the run it should
+report on already exists.
 
-### Prerequisites
+As it runs, the helper logs its progress to the console so you can follow along
+in your CI logs:
 
-- **Test Replay must be enabled** for the run. UI Coverage reports are built
-  from Test Replay data, so a run recorded with Test Replay off has no report,
-  and the helper throws. Test Replay can be enabled in your project settings.
-- **Record with Cypress v13 or later.** Azure Pipelines and CircleCI
-  additionally require **Cypress v13.13.1 or later** to capture the CI metadata
-  needed to identify runs.
-- **Run the script after recording, within the same CI build.** The helper
-  matches the run using the current CI context, so it must execute after
-  `cypress run --record` in the same workflow.
-- **The run must have been recorded within the last 7 days.** Older runs can no
-  longer be identified from CI context.
+```shell
+Cypress found run #68086 (https://cloud.cypress.io/projects/ypt4pf/runs/68086) associated with this CI workflow.
+Cypress is fetching the UI Coverage report for run #68086.
+Cypress found a UI Coverage report for run #68086 that is still processing. 8 of 12 specs have been processed. Cypress will fetch again in 30 seconds [Attempt 1 of 30]
+Cypress found a UI Coverage report for run #68086 (https://cloud.cypress.io/projects/ypt4pf/runs/68086/ui-coverage).
+```
+
+A run must also meet a few conditions before a report can be found, including
+Test Replay being enabled and a supported Cypress version. See the
+[Results API FAQ](/ui-coverage/faq#Results-API-and-CI) for the full list.
 
 ## Supported CI Providers
 
@@ -99,24 +85,20 @@ for general setup details:
 - [Bitbucket](/app/continuous-integration/bitbucket-pipelines)
 - Buildkite
 
-For other CI providers, contact Cypress Support to request support.
+For other CI providers, contact Cypress Support at support@cypress.io to request
+support.
 
 ## Installation
 
 Install the `@cypress/extract-cloud-results` module in your install step in CI.
 
-```shell
-npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
-```
+<PackageManagerTabs install="--force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz" />
 
 :::caution
 
 Do not check this module in as a dependency. We recommend you install it
 separately, outside of your normal module installation, and use `--force` to
 get the latest version.
-
-If you check this in as a dependency, your installation will fail when we update
-the package.
 
 The `v1` in the URL is the major-version line. Installing with `--force` always
 fetches the latest `1.x` release, so you receive fixes and improvements without
