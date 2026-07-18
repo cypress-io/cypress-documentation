@@ -302,6 +302,7 @@ const config = {
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ['diff'],
       },
       zoom: {
         selector: ':not(.mediaImage, .navbar__logo img, .logo, .br-ui)', // don't zoom these images
