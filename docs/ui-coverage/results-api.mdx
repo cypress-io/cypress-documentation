@@ -771,13 +771,13 @@ getUICoverageResults().then(({ config }) => {
 })
 ```
 
-### Ratchet the threshold as coverage improves
+### Raise the threshold as coverage improves
 
 Store the last run's coverage and require the next run to meet or beat it, so the
 bar rises automatically as coverage improves. Commit the floor file so it travels
 with your code:
 
-```javascript title="scripts/ratchetCoverage.js"
+```javascript title="scripts/raiseCoverageFloor.js"
 const fs = require('fs')
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
