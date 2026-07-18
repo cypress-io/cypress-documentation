@@ -9,6 +9,8 @@ interface CopyPromptProps {
   prompt: string
   title?: string
   subtext?: string
+  /** Show the prompt text on load instead of behind the Show/Hide toggle. */
+  defaultExpanded?: boolean
 }
 
 const DEFAULT_TITLE = 'Do this migration with your AI assistant'
@@ -24,9 +26,10 @@ export default function CopyPrompt({
   prompt,
   title = DEFAULT_TITLE,
   subtext = DEFAULT_SUBTEXT,
+  defaultExpanded = false,
 }: CopyPromptProps): React.JSX.Element {
   const [copied, setCopied] = useState(false)
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(defaultExpanded)
   const promptId = useId()
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
