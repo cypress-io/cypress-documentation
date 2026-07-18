@@ -16,7 +16,12 @@ sidebar_position: 200
 
 ## Week of Mar 30, 2026
 
-- The [Cloud MCP](/cloud/integrations/cloud-mcp) now includes Accessibility tools, so your AI agents can query and act on Accessibility data directly.
+- **Cypress Accessibility in Cypress Cloud MCP:** AI agents can now query and act on Cypress Accessibility data for a run through the [Cypress Cloud MCP server](/cloud/integrations/cloud-mcp), using three new tools:
+  - `cypress_get_accessibility_report`: Returns a run's violation counts by severity, the failing rules with their element counts, and the top views sorted by failure count.
+  - `cypress_get_accessibility_rule_failures`: Drills into the failing DOM elements for a specific rule, optionally scoped to a single view.
+  - `cypress_get_accessibility_views`: Browses all of the views in a run, sorted by number of failing rules.
+
+  See [working with AI agents](/accessibility/work-with-ai-agents) for example prompts and setup.
 
 ## Week of Feb 06, 2026
 
