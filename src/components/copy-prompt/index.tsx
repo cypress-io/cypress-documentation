@@ -95,20 +95,22 @@ export default function CopyPrompt({
           />
           {copied ? 'Copied' : 'Copy prompt'}
         </Button>
-        <button
-          type="button"
-          className={s.toggle}
-          aria-expanded={expanded}
-          aria-controls={promptId}
-          onClick={() => setExpanded((e) => !e)}
-        >
-          {expanded ? 'Hide prompt' : 'Show prompt'}
-          <Icon
-            name={expanded ? 'chevron-up-small' : 'chevron-down-small'}
-            className={s.chevron}
-            aria-hidden="true"
-          />
-        </button>
+        {!defaultExpanded && (
+          <button
+            type="button"
+            className={s.toggle}
+            aria-expanded={expanded}
+            aria-controls={promptId}
+            onClick={() => setExpanded((e) => !e)}
+          >
+            {expanded ? 'Hide prompt' : 'Show prompt'}
+            <Icon
+              name={expanded ? 'chevron-up-small' : 'chevron-down-small'}
+              className={s.chevron}
+              aria-hidden="true"
+            />
+          </button>
+        )}
       </div>
       {/* stays in the DOM when collapsed; CSS hides it */}
       <p
