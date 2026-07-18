@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, and per-run profiles.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, and how to troubleshoot unexpected reports.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -246,11 +246,29 @@ The most common causes are:
 
 There's no dedicated "skip this run" switch in a profile. To suppress a report for certain runs, point a profile at a deliberately narrow configuration (for example, [`viewFilters`](/ui-coverage/configuration/viewfilters) that exclude every view) so Cypress Cloud produces an empty or tightly scoped report for the run instead. See [Why use profiles?](/ui-coverage/configuration/profiles#Why-use-profiles).
 
+## Troubleshooting
+
+### <Icon name="angle-right" /> Why is my UI Coverage score lower than I expect?
+
+A few sources of untested elements commonly lower a score without pointing to a real gap in your suite. Third-party widgets, such as chat launchers, cookie banners, and analytics overlays, are interactive elements each counted as untested; exclude them with [`elementFilters`](/ui-coverage/configuration/elementfilters). [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) to pages no test visits, including your own help center, marketing pages, and external sites, also count against the score; exclude their destinations with [`viewFilters`](/ui-coverage/configuration/viewfilters). Finally, one control [split into many](/ui-coverage/troubleshooting#One-element-is-reported-as-many) by an unstable attribute adds duplicate untested elements. See [the coverage score looks wrong](/ui-coverage/troubleshooting#The-coverage-score-looks-wrong) for the fixes.
+
+### <Icon name="angle-right" /> Why does an element my test interacts with still show as untested?
+
+Usually the command your test uses isn't one UI Coverage recognizes. It counts only a [default set of interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), so custom commands and plugin commands like `cypress-real-events`' `realClick` don't count until you add them with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) or [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands). A custom command also has to log a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) referencing the element it acts on. And if you added an `allowedInteractionCommands` rule, only the commands you listed count for the matching elements, so a command you left out, even a plain `click`, no longer marks them tested. See [an element you tested is shown as untested](/ui-coverage/troubleshooting#An-element-you-tested-is-shown-as-untested).
+
+### <Icon name="angle-right" /> I changed my UI Coverage configuration but the report didn't change. Why?
+
+Most often the run was processed before you saved: reports use the configuration that was applied when they were generated, so [regenerate](/ui-coverage/configuration/overview#Setting-configuration) the run to apply your current configuration. If it still has no effect, check whether an earlier rule matched first (the first matching rule wins for most properties), whether a [nested list replaced a root one](/ui-coverage/configuration/overview#Configuration-scope) instead of merging with it, or whether the configuration failed to save because a property was misspelled or misplaced. See [a configuration rule has no effect](/ui-coverage/troubleshooting#A-configuration-rule-has-no-effect) for the full checklist.
+
+### <Icon name="angle-right" /> How do I debug a UI Coverage report that looks wrong?
+
+Start by [regenerating the run](/ui-coverage/configuration/overview#Setting-configuration) so it reflects your current configuration, then match your symptom to a cause on the [Troubleshooting](/ui-coverage/troubleshooting) page, which covers duplicate elements, mis-grouped elements, tested elements shown as untested, configuration that has no effect, and unexpected scores. Because you can regenerate any past run, the fastest approach is to make one change, regenerate a recent run, and check the result before making the next.
+
 ## See also
 
+- [Troubleshooting UI Coverage](/ui-coverage/troubleshooting) maps common report problems to their causes and fixes.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every configuration option and what each one is for.
 - [Profiles](/ui-coverage/configuration/profiles) apply different configuration to runs based on run tags.
 - [Views](/ui-coverage/core-concepts/views) explains how URLs become views and how automatic grouping works.
 - [Element Identification](/ui-coverage/core-concepts/element-identification) covers how elements are identified and grouped across snapshots.
 - [Interactivity](/ui-coverage/core-concepts/interactivity) describes which commands count as coverage.
-- [Troubleshooting UI Coverage](/ui-coverage/troubleshooting) covers common report problems and their solutions.
