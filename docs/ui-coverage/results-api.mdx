@@ -562,15 +562,21 @@ configuration to different runs.
 
 For example, imagine that within a single CI build you call
 `cypress run --record` twice, once against a `staging` environment and once
-against `production`:
+against `production`.
 
-- Pass a different `--tag` to each Cypress run:
-  - `cypress run --record --tag staging`
-  - `cypress run --record --tag production`
-- When calling `getUICoverageResults`, pass the same tags to get the results for
-  each run:
-  - `getUICoverageResults({ runTags: ['staging'] })`
-  - `getUICoverageResults({ runTags: ['production'] })`
+Pass a different `--tag` to each Cypress run:
+
+<CypressCommandTabs
+  command={'run --record --tag staging\nrun --record --tag production'}
+/>
+
+When calling `getUICoverageResults`, pass the same tags to get the results for
+each run:
+
+```javascript
+getUICoverageResults({ runTags: ['staging'] })
+getUICoverageResults({ runTags: ['production'] })
+```
 
 ## Examples
 
