@@ -21,13 +21,13 @@ The Results API will then look for the Cypress Cloud run that matches this run I
 
 ## Supported CI Provider Overview
 
-Each CI provider has a unique combination of components, patterns, and environment variables that must be interpreted by this module.
+Each CI provider has a unique combination of components, patterns, and environment variables that must be interpreted by this module. Expand a provider below for its essential environment variables and prerequisites.
 
-### GitHub Actions
+<AccordionBlock title="GitHub Actions" icon={<Icon name="github" />}>
 
 Reference: https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `GITHUB_ACTIONS` - Presence identifies the environment as a GitHub Actions environment.
 - `GITHUB_RUN_ID` - Value uniquely identifies a GitHub Actions workflow instance. Value does not change as jobs in the workflow are re-executed.
@@ -35,18 +35,20 @@ Reference: https://docs.github.com/en/actions/learn-github-actions/understanding
 
 Full environment variable reference: https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same workflow.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by either:
    1. Executing the module script in a separate job that is dependent upon the job that records the run (using the `needs: [job-name]` option in the config), or
    2. Executing the module script in serial with the cypress recording in the same job.
 
-### GitLab Pipelines
+</AccordionBlock>
+
+<AccordionBlock title="GitLab" icon={<Icon name="gitlab" />}>
 
 Reference: https://docs.gitlab.com/ee/ci/pipelines/
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `GITLAB_CI` - Presence identifies the environment as a GitLab CI environment
 - `CI_PIPELINE_ID` - Value uniquely identifies a GitLab pipeline workflow. This value does not change as jobs in the pipeline are retried.
@@ -55,7 +57,7 @@ Reference: https://docs.gitlab.com/ee/ci/pipelines/
 
 Full environment variable reference: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same pipeline.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by:
@@ -63,7 +65,9 @@ Full environment variable reference: https://docs.gitlab.com/ee/ci/variables/pre
    2. Executing the module script in a separate job that is executed in a lower stage than the job that records the Cypress run, or
    3. Executing the module script in serial with the cypress recording in the same job.
 
-### Jenkins
+</AccordionBlock>
+
+<AccordionBlock title="Jenkins" icon={<Icon name="jenkins" />}>
 
 Reference: https://www.jenkins.io/doc/
 
@@ -71,25 +75,27 @@ Jenkins is heavily customizable through the usage of plugins, which limits the a
 
 We have implemented Jenkins support within this module using the broadest set of available default values. For the purposes of this documentation, though, we will discuss terms related to Jenkins Pipeline support: https://www.jenkins.io/doc/book/pipeline/getting-started/
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `JENKINS_HOME` - Presence identifies the environment as a Jenkins environment
 - `BUILD_URL` - Value uniquely identifies a Jenkins job execution, including name and id characteristics.
 
 Full environment variable reference: https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same job.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same job.
 
-### Azure
+</AccordionBlock>
+
+<AccordionBlock title="Azure" icon={<Icon name="microsoft" />}>
 
 Reference: https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/key-pipelines-concepts?view=azure-devops
 
 > Note: Cypress v13.13.1 is the earliest Cypress release that records the environment variables necessary for this module to identify runs in an Azure environment. Previous Cypress versions are not supported in Azure pipelines.
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `TF_BUILD` and `AZURE_HTTP_USER_AGENT` - Combined presence identifies the environment as an Azure pipeline environment.
 - `SYSTEM_PLANID` - Value uniquely identifies a pipeline run. Value does not change as jobs within the pipeline are retried from failure.
@@ -98,20 +104,22 @@ Reference: https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/
 
 Full environment variable reference: https://learn.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same pipeline run (i.e. they share a `SYSTEM_PLANID` value).
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by either:
    1. Executing the module script in a separate job that is dependent upon the job that records the run (using the `dependsOn: [job-name]` option in the config), or
    2. Executing the module script in serial with the Cypress recording in the same job.
 
-### CircleCI
+</AccordionBlock>
+
+<AccordionBlock title="CircleCI" icon={<Icon name="cog" />}>
 
 Reference: https://circleci.com/docs/about-circleci/
 
 > Note: Cypress v13.13.1 is the earliest Cypress release that records the environment variables necessary for this module to identify runs in an CircleCI environment. Previous Cypress versions are not supported in CircleCI pipelines.
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `CIRCLECI` - Presence identifies the environment as a CircleCI environment
 - `CIRCLE_PIPELINE_ID` - Value uniquely identifies a CircleCI pipeline, created on push or manually triggered through the UI. This value does not change as workflows within the pipeline are re-executed.
@@ -120,65 +128,73 @@ Reference: https://circleci.com/docs/about-circleci/
 
 Full environment variable reference: https://circleci.com/docs/variables/#built-in-environment-variables
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same pipeline **and** workflow.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by:
    1. Executing the module script in a separate job that is dependent upon the job that records the run (using the `requires: [job-name]` option in the config), or
    2. Executing the module script in serial with the cypress recording in the same job.
 
-### AWS CodeBuild
+</AccordionBlock>
+
+<AccordionBlock title="AWS CodeBuild" icon={<Icon name="aws" />}>
 
 Reference: https://docs.aws.amazon.com/codebuild/
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `CODEBUILD_BUILD_ID` - Presence identifies the environment as an AWS CodeBuild environment. Value uniquely identifies a build.
 
 Full environment variable reference: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
 
-### Drone
+</AccordionBlock>
+
+<AccordionBlock title="Drone" icon={<Icon name="cog" />}>
 
 Reference: https://docs.drone.io/pipeline/overview/
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `DRONE` - Presence identifies the environment as a Drone environment.
 - `DRONE_BUILD_NUMBER` - Value uniquely identifies a Drone build.
 
 Full environment variable reference: https://docs.drone.io/pipeline/environment/reference/
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
 
-### Bitbucket
+</AccordionBlock>
+
+<AccordionBlock title="Bitbucket" icon={<Icon name="bitbucket" />}>
 
 Reference: https://support.atlassian.com/bitbucket-cloud/docs/
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `BITBUCKET_BUILD_NUMBER` - Presence identifies the environment as a Bitbucket environment. Value uniquely identifies a build.
 - `BITBUCKET_STEP_RUN_NUMBER` - Value indicates a build step execution index and increments when a step is retried. Initial value of 1.
 
 Full environment variable reference: https://support.atlassian.com/bitbucket-cloud/docs/variables-and-secrets/
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
 
-### Buildkite
+</AccordionBlock>
+
+<AccordionBlock title="Buildkite" icon={<Icon name="cog" />}>
 
 Reference: https://buildkite.com/docs
 
-#### Essential environment variables
+**Essential environment variables**
 
 - `BUILDKITE` - Presence identifies the environment as a Buildkite environment.
 - `BUILDKITE_BUILD_ID` - Value uniquely identifies a build. This value does not change across different jobs within the same build.
@@ -187,9 +203,11 @@ Reference: https://buildkite.com/docs
 
 Full environment variable reference: https://buildkite.com/docs/pipelines/environment-variables
 
-#### Prerequisites
+**Prerequisites**
 
 1. The run to validate and this module's validation script are being executed within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
+
+</AccordionBlock>
 
 In order to iterate on your verification script and see everything working without putting code into your CI environment, it can be useful to simulate the CI context for a specific Cypress run locally. This can save a lot of time when getting started.
