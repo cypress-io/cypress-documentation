@@ -180,11 +180,9 @@ Two behaviors govern every rule you write, regardless of which property it belon
 
 Some properties are shared across App Quality products, and some belong to UI Coverage alone.
 
-**Shared properties**: `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Cypress Accessibility when set at the root of your configuration. To apply one to a single product, nest it under a `uiCoverage` or `accessibility` key. A nested value **completely replaces** the root-level value for that product (the two are not merged), so repeat any shared rules you still want in the nested list.
-
-**Shared, but not nestable**: `views` applies to both UI Coverage and Cypress Accessibility and can only be set at the root.
-
-**UI Coverage only**: `elementGroups`, `elements`, `additionalInteractionCommands`, and `allowedInteractionCommands` are specific to UI Coverage and are always set under the `uiCoverage` key.
+- **Shared properties**: `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Cypress Accessibility when set at the root of your configuration. To apply one to a single product, nest it under a `uiCoverage` or `accessibility` key. A nested value **completely replaces** the root-level value for that product (the two are not merged), so repeat any shared rules you still want in the nested list.
+- **Shared, but not nestable**: `views` applies to both UI Coverage and Cypress Accessibility and can only be set at the root.
+- **UI Coverage only**: `elementGroups`, `elements`, `additionalInteractionCommands`, and `allowedInteractionCommands` are specific to UI Coverage and are always set under the `uiCoverage` key.
 
 ## Viewing configuration for a run
 

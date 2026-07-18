@@ -33,7 +33,7 @@ Automatic grouping only replaces path segments that are numbers or IDs (UUIDs an
 
 No. Query strings are ignored when grouping, so `/dashboard?tab=overview` and `/dashboard?tab=settings` become a single `/dashboard` view. If a query parameter meaningfully changes the page, use a [`views`](/ui-coverage/configuration/views) pattern with `groupBy` on that parameter to split it into separate views.
 
-### <Icon name="angle-right" /> How do I create a separate view for each value of a URL parameter?
+### <Icon name="angle-right" /> How do I create a separate UI Coverage view for each value of a URL parameter?
 
 Write a [`views`](/ui-coverage/configuration/views) pattern that names the parameter, then list that name in `groupBy`. For a pattern like `/analytics/:type/:id`, `groupBy: ["type"]` creates a distinct view for each `type` value (such as `/analytics/performance/:id` and `/analytics/usage/:id`) while still collapsing the dynamic `:id`. `groupBy` accepts a single string or an array of strings, and each name can come from the path, query string, or hash. See [Using groupBy](/ui-coverage/configuration/views#Using-groupBy).
 
@@ -199,11 +199,11 @@ No. UI Coverage works out of the box with no configuration. Every recorded run p
 
 In the **App Quality** tab of your project settings in Cypress Cloud. By default, only Admin users can edit configuration; your Cypress point-of-contact can change this on request. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration).
 
-### <Icon name="angle-right" /> How do I document why a configuration rule exists?
+### <Icon name="angle-right" /> How do I document why a UI Coverage configuration rule exists?
 
 Add a `comment` property to any rule. Comments are for humans only and have no effect on behavior, so they're the supported place to explain a rule for teammates or your future self. Because Cypress Cloud rejects properties it doesn't recognize, `comment` is the only field you can use for freeform notes. See [Comments](/ui-coverage/configuration/overview#Comments).
 
-### <Icon name="angle-right" /> Why is my configuration being rejected as invalid?
+### <Icon name="angle-right" /> Why is Cypress Cloud rejecting my UI Coverage configuration as invalid?
 
 Cypress Cloud validates your configuration against a strict schema and rejects any property it doesn't recognize. The usual causes are a misspelled property name, a value of the wrong type (for example, a string where an array is expected), or a note added on an unsupported field. Put explanations in a [`comment`](/ui-coverage/configuration/overview#Comments) instead. The editor reports the offending property so you can correct it before saving.
 
