@@ -187,12 +187,41 @@ Some properties are shared across App Quality products, and some belong to UI Co
 
 ## Viewing configuration for a run
 
-Every run permanently records the exact configuration it was processed with, so the runs themselves are the history of how your configuration has changed over time. To review the configuration a specific run used, open its **Properties** tab, as shown below. This displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-configuration) the run to reprocess it with the current configuration.
+Every run permanently records the exact configuration it was processed with, so the runs themselves are the history of how your configuration has changed over time. You can review a run's configuration in Cypress Cloud, or read it programmatically with the Results API.
+
+### In Cypress Cloud
+
+To review the configuration a specific run used, open its **Properties** tab, as shown below. This displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-configuration) the run to reprocess it with the current configuration.
 
 <DocsImage
   src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
   alt="The properties tab for a run, with an Application Quality section at the bottom"
 />
+
+### From the Results API
+
+The [UI Coverage Results API](/ui-coverage/results-api) exposes the applied configuration on the `config` property of its result, so you can read it in a CI workflow:
+
+```js
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults().then((results) => {
+  if (results.config) {
+    // ISO timestamp of when the applied configuration was last saved
+    console.log(results.config.updatedAt)
+
+    // The App Quality configuration that was applied to the run
+    console.log(results.config.value)
+  }
+})
+```
+
+The `config` property has two fields:
+
+- `updatedAt`: an ISO timestamp of when the applied configuration was last saved.
+- `value`: the App Quality configuration applied to the run, in the same shape as the [Full configuration reference](#Full-configuration-reference).
+
+If no configuration was applied to the run, `config` may be absent, so check for it before reading `value`.
 
 ## See also
 
