@@ -2,21 +2,6 @@ The `@cypress/extract-cloud-results` helper detects the correct Cloud run by mat
 
 Knowing which variables it looks for helps with more complex setups and with local iteration: set them to match what was present in CI to pull a specific run (recorded within the last 7 days) from your machine.
 
-### Local development example
-
-If you executed a run in GitHub Actions and it was recorded to Cypress Cloud, you would set these 4 environment variables to replicate the context of that run locally and execute your local handler script. This is a great way to iterate on your script and verify everything is working as expected, without having to integrate anything in CI. It's also useful for debugging.
-
-```shell
-CYPRESS_PROJECT_ID=AAA
-CYPRESS_RECORD_KEY=BBB
-GITHUB_ACTIONS=true
-GITHUB_RUN_ID=111
-GITHUB_RUN_ATTEMPT=1
-node verifyResults.js
-```
-
-The Results API will then look for the Cypress Cloud run that matches this run ID. If there is more than one Cypress Cloud run found for that GitHub Actions Run, you can pass run tags to narrow down to one run's report.
-
 ### Prerequisites
 
 Two prerequisites apply to every provider:
@@ -161,4 +146,19 @@ Reference: [Buildkite documentation](https://buildkite.com/docs)
 
 </AccordionBlock>
 
-In order to iterate on your verification script and see everything working without putting code into your CI environment, it can be useful to simulate the CI context for a specific Cypress run locally. This can save a lot of time when getting started.
+### Local development example
+
+To iterate on your verification script and see everything working without putting code into your CI environment, simulate the CI context for a specific Cypress run locally. This can save a lot of time when getting started.
+
+If you executed a run in GitHub Actions and it was recorded to Cypress Cloud, you would set these 4 environment variables to replicate the context of that run locally and execute your local handler script. This is a great way to iterate on your script and verify everything is working as expected, without having to integrate anything in CI. It's also useful for debugging.
+
+```shell
+CYPRESS_PROJECT_ID=AAA
+CYPRESS_RECORD_KEY=BBB
+GITHUB_ACTIONS=true
+GITHUB_RUN_ID=111
+GITHUB_RUN_ATTEMPT=1
+node verifyResults.js
+```
+
+The Results API will then look for the Cypress Cloud run that matches this run ID. If there is more than one Cypress Cloud run found for that GitHub Actions Run, you can pass run tags to narrow down to one run's report.
