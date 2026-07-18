@@ -216,11 +216,6 @@ getUICoverageResults().then((results) => {
 })
 ```
 
-The `config` property has two fields:
-
-- `updatedAt`: an ISO timestamp of when the applied configuration was last saved.
-- `value`: the App Quality configuration applied to the run, in the same shape as the [Full configuration reference](#Full-configuration-reference).
-
 If no configuration was applied to the run, `config` may be absent, so check for it before reading `value`.
 
 ## See also
