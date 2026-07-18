@@ -22,9 +22,16 @@ With the `getUICoverageResults` helper from the
   threshold, or when a critical view regresses.
 - **Enforce different standards per area** of your app, such as requiring
   higher coverage on `/checkout` than on marketing pages.
-- **Track regressions over time** by comparing a run against a stored baseline.
-- **Read the exact configuration** that produced a report, including any
-  [Profile](/ui-coverage/configuration/profiles) that was applied.
+- **Surface results where your team works** by posting the coverage score and a
+  deep link to the report on the pull request or in Slack.
+- **Catch navigation gaps** by flagging pages that are linked but never visited,
+  using the tested and untested link counts.
+- **Track regressions over time** by comparing a run against a stored baseline,
+  or by trending results in a dashboard.
+- **Read and assert the applied configuration**, including any
+  [Profile](/ui-coverage/configuration/profiles) that produced the report.
+
+See [Examples](#Examples) for a worked script behind each of these.
 
 Because reports are processed server-side from
 [Test Replay](/cloud/features/test-replay) data, using the Results API adds no
@@ -143,61 +150,9 @@ getUICoverageResults().then((results) => {
 })
 ```
 
-#### Enforce coverage thresholds
-
-This example fails the build when overall coverage drops below a baseline, and
-holds critical flows like login and checkout to a higher standard:
-
-```javascript title="scripts/verifyUICoverageResults.js"
-const { getUICoverageResults } = require('@cypress/extract-cloud-results')
-
-getUICoverageResults({
-  projectId: process.env.CYPRESS_PROJECT_ID, // optional if set from env
-  recordKey: process.env.CYPRESS_RECORD_KEY, // optional if set from env
-  runTags: ['production'], // required if recording multiple runs in one CI build
-}).then((results) => {
-  const { runNumber, uiCoverageReportUrl, summary, views } = results
-
-  console.log(
-    `Received ${summary.isPartialReport ? 'partial ' : ''}results for run #${runNumber}.`
-  )
-  console.log(`See the full report at ${uiCoverageReportUrl}`)
-
-  // Fail the build if overall coverage is below 80%.
-  if (summary.coverage < 80) {
-    throw new Error(
-      `Project coverage is ${summary.coverage}%, below the minimum threshold of 80%.`
-    )
-  }
-
-  // Hold critical flows to a higher standard.
-  const criticalViews = [/login/, /checkout/]
-
-  views.forEach((view) => {
-    const { displayName, coverage, uiCoverageReportUrl } = view
-
-    if (
-      criticalViews.some((pattern) => pattern.test(displayName)) &&
-      coverage < 95
-    ) {
-      throw new Error(
-        `Critical view "${displayName}" coverage is ${coverage}%, below the required 95%. See: ${uiCoverageReportUrl}`
-      )
-    }
-  })
-
-  console.log('UI Coverage meets all thresholds.')
-})
-```
-
-:::tip
-
-The example above throws to fail the CI step. In a Node.js script an uncaught
-rejection already exits with a non-zero code, but calling `process.exit(1)`
-explicitly (as in the [baseline comparison example](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline))
-makes the failure unambiguous across CI providers.
-
-:::
+Once you can read the results, add your own logic to act on them. See
+[Examples](#Examples) for a worked script behind each supported use case, from
+enforcing thresholds to reporting on the pull request.
 
 #### `getUICoverageResults` arguments
 
@@ -652,13 +607,234 @@ steps:
 </TabItem>
 </Tabs>
 
-## Comparing against a baseline
+## Examples
 
-Once you can read a run's results, a common next step is to compare them against
-a stored baseline so a build fails only when **new** untested elements are
-introduced, letting you pay down existing gaps over time instead of blocking on
-them all at once. For complete code, the baseline structure, and best practices,
-see the
+Each example below assumes you have written a script that calls
+`getUICoverageResults` (see [Usage](#Usage)) and wired it into CI. They throw to
+fail the CI step; in a Node.js script an uncaught rejection already exits with a
+non-zero code, but calling `process.exit(1)` explicitly makes the failure
+unambiguous across CI providers.
+
+### Enforce coverage thresholds
+
+Fail the build when overall coverage drops below a floor, and hold critical
+flows like login and checkout to a higher standard:
+
+```javascript title="scripts/verifyUICoverageResults.js"
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults({
+  projectId: process.env.CYPRESS_PROJECT_ID, // optional if set from env
+  recordKey: process.env.CYPRESS_RECORD_KEY, // optional if set from env
+  runTags: ['production'], // required if recording multiple runs in one CI build
+}).then((results) => {
+  const { runNumber, uiCoverageReportUrl, summary, views } = results
+
+  console.log(
+    `Received ${summary.isPartialReport ? 'partial ' : ''}results for run #${runNumber}.`
+  )
+  console.log(`See the full report at ${uiCoverageReportUrl}`)
+
+  // Fail the build if overall coverage is below 80%.
+  if (summary.coverage < 80) {
+    throw new Error(
+      `Project coverage is ${summary.coverage}%, below the minimum threshold of 80%.`
+    )
+  }
+
+  // Hold critical flows to a higher standard.
+  const criticalViews = [/login/, /checkout/]
+
+  views.forEach((view) => {
+    const { displayName, coverage, uiCoverageReportUrl } = view
+
+    if (
+      criticalViews.some((pattern) => pattern.test(displayName)) &&
+      coverage < 95
+    ) {
+      throw new Error(
+        `Critical view "${displayName}" coverage is ${coverage}%, below the required 95%. See: ${uiCoverageReportUrl}`
+      )
+    }
+  })
+
+  console.log('UI Coverage meets all thresholds.')
+})
+```
+
+### Report coverage on the pull request
+
+Every result carries the coverage numbers and deep-link report URLs, so you can
+surface a summary where your team reviews code instead of only passing or
+failing. This example writes a Markdown summary that GitHub Actions renders on
+the job:
+
+```javascript
+const fs = require('fs')
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults().then(({ summary, views, uiCoverageReportUrl }) => {
+  const rows = views
+    .map((view) => `| ${view.displayName} | ${view.coverage}% |`)
+    .join('\n')
+
+  const markdown = `## UI Coverage: ${summary.coverage}%
+
+[View the full report](${uiCoverageReportUrl})
+
+| View | Coverage |
+| ---- | -------- |
+${rows}`
+
+  fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, markdown)
+})
+```
+
+### Fail on untested navigation links
+
+UI Coverage counts links (navigational elements that point at another view)
+separately from interactive elements. Use the link counts to catch pages that
+are linked but never visited:
+
+```javascript
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults().then(({ summary, views }) => {
+  if (summary.untestedLinksCount === 0) {
+    return
+  }
+
+  console.log(
+    `${summary.untestedLinksCount} linked page(s) were never visited:`
+  )
+  views
+    .filter((view) => view.untestedLinksCount > 0)
+    .forEach((view) => {
+      console.log(
+        `  ${view.displayName}: ${view.untestedLinksCount} untested link(s)`
+      )
+    })
+
+  throw new Error(
+    'New navigation paths are untested. Add tests that follow them.'
+  )
+})
+```
+
+### Track coverage trends over time
+
+A baseline compares one run to one prior run. To trend coverage across many runs
+and teams, push each run's numbers to a dashboard or data warehouse:
+
+```javascript
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults().then(({ runNumber, summary }) => {
+  const metrics = {
+    runNumber,
+    coverage: summary.coverage,
+    testedElements: summary.testedElementsCount,
+    untestedElements: summary.untestedElementsCount,
+    viewCount: summary.viewCount,
+  }
+
+  // Send to your metrics service, warehouse, or observability tool.
+  return fetch('https://metrics.example.com/ui-coverage', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(metrics),
+  })
+})
+```
+
+### Skip enforcement for partial or non-passing runs
+
+A run can be cancelled, time out, or produce a partial report. Check the run
+state first so an incomplete run warns instead of failing the build for the
+wrong reason:
+
+```javascript
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults().then((results) => {
+  const { runStatus, summary } = results
+
+  if (runStatus !== 'passed' && runStatus !== 'failed') {
+    console.warn(
+      `Run status is "${runStatus}". Skipping UI Coverage enforcement.`
+    )
+    return
+  }
+
+  if (summary.isPartialReport) {
+    console.warn('Report is partial. Skipping UI Coverage enforcement.')
+    return
+  }
+
+  // ...enforce your thresholds here.
+})
+```
+
+### Assert the applied configuration
+
+The `config` property returns the App Quality Config that produced the report,
+resolved with any [Profile](/ui-coverage/configuration/profiles) that matched the
+run's tags. Assert that required rules are in effect so a misconfigured run
+doesn't silently change what's measured:
+
+```javascript
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults().then(({ config }) => {
+  if (!config) {
+    throw new Error('No App Quality Config was applied to this run.')
+  }
+
+  const elementFilters = config.value.uiCoverage?.elementFilters ?? []
+  const hasCookieBannerFilter = elementFilters.some((filter) =>
+    filter.selector?.includes('cookie-banner')
+  )
+
+  if (!hasCookieBannerFilter) {
+    throw new Error('Expected the cookie-banner element filter to be applied.')
+  }
+
+  console.log(`Configuration last updated ${config.updatedAt}.`)
+})
+```
+
+### Ratchet the threshold as coverage improves
+
+Store the last run's coverage and require the next run to meet or beat it, so the
+bar rises automatically as coverage improves. Commit the floor file so it travels
+with your code:
+
+```javascript
+const fs = require('fs')
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+const FLOOR_FILE = 'ui-coverage-floor.json'
+const floor = fs.existsSync(FLOOR_FILE)
+  ? JSON.parse(fs.readFileSync(FLOOR_FILE, 'utf8')).coverage
+  : 0
+
+getUICoverageResults().then(({ summary }) => {
+  if (summary.coverage < floor) {
+    throw new Error(
+      `Coverage dropped to ${summary.coverage}%, below the previous floor of ${floor}%.`
+    )
+  }
+
+  fs.writeFileSync(FLOOR_FILE, JSON.stringify({ coverage: summary.coverage }))
+})
+```
+
+### Compare against a baseline
+
+Comparing untested-element counts against a stored baseline fails a build only
+when **new** gaps are introduced, letting you pay down existing gaps over time
+instead of blocking on them all at once. For complete code, the baseline
+structure, and best practices, see the
 [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline)
 guide.
 
