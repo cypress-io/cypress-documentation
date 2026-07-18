@@ -492,30 +492,25 @@ phases:
 </TabItem>
 
 <TabItem value="Drone" >
-```diff title=".drone.yaml"
-  kind: pipeline
-  name: default
 
-environment:
-CYPRESS_PROJECT_ID: example_project_slug
-CYPRESS_RECORD_KEY:
-from_secret: example_record_key_secret
+```diff title=".drone.yml"
+kind: pipeline
+name: default
 
 steps:
+  - name: Run Cypress tests
+    image: node:latest
+    commands:
+      - npm install
+      - npx cypress run --record
 
-- name: Run Cypress tests
-  image: node:latest
-  commands:
-  - npm install
-  - npx cypress run --record
++  - name: Get Cypress UI Coverage
++    image: node:latest
++    commands:
++      - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++      - node ./scripts/verifyUICoverageResults.js
+```
 
-* - name: Get Cypress UI Coverage
-* image: node:latest
-* commands:
-* - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
-* - node ./scripts/verifyUICoverageResults.js
-
-````
 </TabItem>
 
 <TabItem value="Bitbucket" >
@@ -532,7 +527,7 @@ pipelines:
           - npx cypress run --record
 +         - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 +         - node ./scripts/verifyUICoverageResults.js
-````
+```
 
 </TabItem>
 
