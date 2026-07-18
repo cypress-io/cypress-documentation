@@ -525,7 +525,12 @@ Disabling the integration immediately revokes access for all users in that organ
 
 You can share feedback directly through your agent:
 
-> "Send Cypress the following feedback: [Your message here]"
+<CopyPrompt
+  title="Send feedback"
+  subtext="Share feedback, use cases, or issues with Cypress from your agent."
+  defaultExpanded
+  prompt={`Send Cypress the following feedback: [Your message here]`}
+/>
 
 Alternatively, use [this feedback form](https://share.hsforms.com/2NWNpyi5KSZmG4x0geIXgBg3a4za) to share any feedback, use cases, or issues encountered with your prompts and queries.
 
