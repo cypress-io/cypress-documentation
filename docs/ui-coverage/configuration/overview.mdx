@@ -28,17 +28,17 @@ Configuration lives in Cypress Cloud, not in your repository. To view or change 
 
 The editor validates your JSON against the schema when you save, so an invalid configuration can't be saved, and it shows how long ago the configuration was last saved.
 
+<DocsImage
+  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
+  alt="The Cypress Cloud UI showing the configuration editor"
+/>
+
 After you save configuration changes, you can reprocess any historical run to apply them. You can start a reprocess from two places:
 
 - The **Properties** tab, using the "regenerate" button next to the configuration values that were used for that run.
 - The UI Coverage report, using the "configuration updated" message that appears when you view a historical run that was processed with an older configuration.
 
 Regenerating reports in this way allows you to make config changes and see their effects without running your Cypress tests again.
-
-<DocsImage
-  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
-  alt="The Cypress Cloud UI showing the configuration editor"
-/>
 
 ### Who can edit configuration
 
