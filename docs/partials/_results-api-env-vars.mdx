@@ -24,7 +24,7 @@ Two prerequisites apply to every provider:
 1. Record the Cypress run and run your validation script within the same CI run (the same build, workflow, or pipeline).
 2. Run the validation script _after_ the run has been recorded — either in a separate job that depends on the recording job (using your provider's dependency option, such as `needs`, `dependsOn`, or `requires`), or serially after the recording step in the same job.
 
-## Supported CI Provider Overview
+## Environment variables by CI provider
 
 Each CI provider has a unique combination of components, patterns, and environment variables that must be interpreted by this module. Expand a provider below for its essential environment variables.
 
