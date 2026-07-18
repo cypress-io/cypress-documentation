@@ -14,7 +14,7 @@ CYPRESS_RECORD_KEY=BBB
 GITHUB_ACTIONS=true
 GITHUB_RUN_ID=111
 GITHUB_RUN_ATTEMPT=1
-node verifyResults.js
+node verifyAccessibilityResults.js
 ```
 
 The Results API will then look for the Cypress Cloud run that matches this run ID. If there is more than one Cypress Cloud run found for that GitHub Actions Run, you can pass run tags to narrow down to one run's report.

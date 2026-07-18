@@ -232,7 +232,7 @@ There's no dedicated "skip this run" switch in a profile. To suppress a report f
 
 ## Results API and CI
 
-### <Icon name="angle-right" /> What are the prerequisites for using the Results API?
+### <Icon name="angle-right" /> What are the prerequisites for using the Cypress UI Coverage Results API?
 
 A few conditions must hold before `getUICoverageResults` can return a report:
 
@@ -241,15 +241,15 @@ A few conditions must hold before `getUICoverageResults` can return a report:
 - **The run must have been recorded within the last 7 days.** Older runs can no longer be identified from CI context.
 - **Run the script after recording, in the same CI build**, so the run it should report on already exists.
 
-### <Icon name="angle-right" /> How do I fail a CI build or block a pull request when UI Coverage drops?
+### <Icon name="angle-right" /> How do I fail a CI build or block a pull request when Cypress UI Coverage drops?
 
 Use the [Results API](/ui-coverage/results-api). Add a step to your CI workflow that installs the `@cypress/extract-cloud-results` module and calls `getUICoverageResults()` after your Cypress run. The helper returns the run's coverage summary and per-view breakdown, and your script decides whether to fail, for example by throwing an error when `summary.coverage` is below a threshold. Because the check lives in your CI job, nothing in the Cypress run itself fails; enforcement is entirely opt-in. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) for a complete example.
 
-### <Icon name="angle-right" /> Do I need to install anything to use the Results API?
+### <Icon name="angle-right" /> Do I need to install anything to use the Cypress UI Coverage Results API?
 
 Only in CI. Install the `@cypress/extract-cloud-results` module in your CI install step with `npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz`. Don't add it to your `package.json` dependencies; install it separately with `--force` so you always get the latest version, as documented in the [Results API installation steps](/ui-coverage/results-api#Installation).
 
-### <Icon name="angle-right" /> Why can't the Results API find my run?
+### <Icon name="angle-right" /> Why can't the Cypress UI Coverage Results API find my Cypress Cloud run?
 
 `getUICoverageResults` identifies the run from the CI environment variables present when the run was recorded, so the most common causes are:
 
@@ -260,15 +260,15 @@ Only in CI. Install the `@cypress/extract-cloud-results` module in your CI insta
 
 See [Required CI environment variables](/ui-coverage/results-api#Required-CI-environment-variables) for how each provider is matched.
 
-### <Icon name="angle-right" /> Why does the Results API say no UI Coverage report was found for my run?
+### <Icon name="angle-right" /> Why does the Cypress UI Coverage Results API say no report was found for my run?
 
 UI Coverage reports are generated from [Test Replay](/cloud/features/test-replay) data. If Test Replay was disabled for the run, no report is produced and the helper throws. Enable Test Replay in your project settings and record a new run.
 
-### <Icon name="angle-right" /> How do I get UI Coverage results when I record multiple runs in one CI build?
+### <Icon name="angle-right" /> How do I get Cypress UI Coverage results when I record multiple runs in one CI build?
 
 Record each run with a distinct [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) and pass that same tag to the helper via `runTags`. For example, `cypress run --record --tag staging` is retrieved with `getUICoverageResults({ runTags: ['staging'] })`. Without tags, Cypress can't tell the runs apart and can't return a single run's results.
 
-### <Icon name="angle-right" /> Can I see which configuration or profile produced a report?
+### <Icon name="angle-right" /> Can I see which App Quality configuration or profile produced a Cypress UI Coverage report?
 
 Yes. The result object includes a `config` property containing the [App Quality Config](/ui-coverage/configuration/overview) that generated the report, resolved with any [Profile](/ui-coverage/configuration/profiles) that matched the run's tags. Read `config.value` to confirm exactly which rules were in effect and `config.updatedAt` for when that configuration last changed.
 
