@@ -41,7 +41,8 @@ This page describes how the Results API works and what data it returns. For
 worked end-to-end examples — setting a policy, failing a pull request, and
 comparing against a baseline — see the
 [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests)
-guide.
+guide, or [Monitor changes](/ui-coverage/guides/monitor-changes) to track
+coverage over time.
 
 :::
 
@@ -58,6 +59,9 @@ When you call `getUICoverageResults` inside a CI job, the helper:
    30-second intervals, roughly 15 minutes) before returning.
 3. **Returns the results** as a structured object you can assert against, or
    **throws a descriptive error** if no matching run or report can be found.
+
+As it runs, the helper logs its progress to the console — the run it matched, the
+report URL, and each polling attempt — so you can follow along in your CI logs.
 
 ### Prerequisites
 
@@ -107,11 +111,15 @@ get the latest version.
 If you check this in as a dependency, your installation will fail when we update
 the package.
 
+The `v1` in the URL is the major-version line. Installing with `--force` always
+fetches the latest `1.x` release, so you receive fixes and improvements without
+changing the URL.
+
 :::
 
 ## Usage
 
-### **1. Write your verification script**
+### 1. Write your verification script
 
 Write a script to fetch UI Coverage results and assert your coverage criteria.
 This script runs in CI.
@@ -347,14 +355,30 @@ were in effect — useful when different runs use different profiles.
 }
 ```
 
-## Comparing against a baseline
+#### Handling errors
 
-For comprehensive examples of comparing results against a baseline — including
-complete code, baseline structure, and best practices — see the
-[Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline)
-guide.
+`getUICoverageResults` returns a promise that **rejects with a descriptive
+`Error`** when it can't return results — for example, when no matching run is
+found for the CI context, when the run was recorded with Test Replay disabled,
+or when the report is still processing after the poll window elapses. Decide
+whether that should fail your build (let the rejection surface, as in the
+examples above) or be tolerated (catch it and exit cleanly), depending on how
+strict you want the check to be.
 
-### **2. Add the verification step to CI**
+```javascript
+getUICoverageResults()
+  .then((results) => {
+    // assert against results
+  })
+  .catch((error) => {
+    console.error(`Could not verify UI Coverage results: ${error.message}`)
+    // Fail the build...
+    process.exit(1)
+    // ...or treat the check as non-blocking by returning without a non-zero exit.
+  })
+```
+
+### 2. Add the verification step to CI
 
 In the CI workflow that runs your Cypress tests:
 
@@ -627,6 +651,23 @@ steps:
 </TabItem>
 </Tabs>
 
+## Comparing against a baseline
+
+Once you can read a run's results, a common next step is to compare them against
+a stored baseline so a build fails only when **new** untested elements are
+introduced — letting you pay down existing gaps over time instead of blocking on
+them all at once. For complete code, the baseline structure, and best practices,
+see the
+[Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline)
+guide.
+
 ## Required CI environment variables
 
 <ResultsApiEnvVars />
+
+## See also
+
+- [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) — set a coverage policy and fail a pull request when it isn't met.
+- [Monitor changes](/ui-coverage/guides/monitor-changes) — track coverage trends and catch regressions over time.
+- [Results API FAQ](/ui-coverage/faq#Results-API-and-CI) — quick answers to common Results API and CI questions.
+- [Profiles](/ui-coverage/configuration/profiles) — apply different configuration to different runs using run tags.
