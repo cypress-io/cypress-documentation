@@ -122,16 +122,17 @@ assumes your Project ID and Record Key are set as environment variables. It
 works in any of the supported CI providers out of the box:
 
 ```javascript title="scripts/verifyUICoverageResults.js"
-// Assuming these environment variables are set:
-// CYPRESS_PROJECT_ID=your-id
-// CYPRESS_RECORD_KEY=your-record-key
-
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
-getUICoverageResults().then((results) => {
-  // use `console.dir` instead of `console.log` because the data is nested
-  console.dir(results, { depth: Infinity })
-})
+getUICoverageResults()
+  .then((results) => {
+    // use `console.dir` instead of `console.log` because the data is nested
+    console.dir(results, { depth: Infinity })
+  })
+  .catch((error) => {
+    console.error(error.message)
+    process.exit(1)
+  })
 ```
 
 Once you can read the results, add your own logic to act on them. See
