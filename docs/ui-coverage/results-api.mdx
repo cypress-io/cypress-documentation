@@ -110,7 +110,7 @@ changing the URL.
 
 ## Usage
 
-### 1. Write your verification script
+### Write your verification script
 
 Write a script to fetch UI Coverage results and assert your coverage criteria.
 This script runs in CI.
@@ -281,8 +281,8 @@ were in effect, which is useful when different runs use different profiles.
 
 #### Handling errors
 
-`getUICoverageResults` returns a promise that **rejects with a descriptive
-`Error`** when it can't return results. For example, this happens when no
+`getUICoverageResults` returns a promise that rejects with a descriptive
+`Error` when it can't return results. For example, this happens when no
 matching run is found for the CI context, when the run was recorded with Test
 Replay disabled,
 or when the report is still processing after the poll window elapses. Decide
@@ -290,7 +290,7 @@ whether that should fail your build (let the rejection surface, as in the
 examples above) or be tolerated (catch it and exit cleanly), depending on how
 strict you want the check to be.
 
-```javascript
+```javascript title="scripts/verifyUICoverageResults.js"
 getUICoverageResults()
   .then((results) => {
     // assert against results
@@ -303,7 +303,7 @@ getUICoverageResults()
   })
 ```
 
-### 2. Add the verification step to CI
+### Add the verification step to CI
 
 In the CI workflow that runs your Cypress tests:
 
@@ -352,7 +352,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: install
         run: npm install
       - name: Run
@@ -389,7 +389,7 @@ run-cypress:
 
 <TabItem value="Jenkins">
 
-```diff
+```diff title="Jenkinsfile"
 pipeline {
   agent {
     docker {
@@ -424,7 +424,7 @@ pipeline {
 
 <TabItem value="Azure">
 
-```diff
+```diff title="azure-pipelines.yml"
 jobs:
   - job: run_tests
     pool:
@@ -458,11 +458,11 @@ jobs:
 
 <TabItem value="CircleCI">
 
-```diff
+```diff title=".circleci/config.yml"
 version: 2.1
 
 jobs:
-  linux-test:
+  run-tests:
     docker:
       - image: cypress/base:22.15.0
 
@@ -478,7 +478,7 @@ workflows:
   version: 2
   tests:
     jobs:
-      - linux-test
+      - run-tests
 ```
 
 </TabItem>
@@ -504,7 +504,6 @@ phases:
   pre_build:
     commands:
       - npm run cypress:verify
-      - npm run cypress:info
   build:
     commands:
       - CYPRESS_PROJECT_ID=[slug] npx cypress run --record --key [KEY]
@@ -579,10 +578,7 @@ steps:
 ## Examples
 
 Each example below assumes you have written a script that calls
-`getUICoverageResults` (see [Usage](#Usage)) and wired it into CI. They throw to
-fail the CI step; in a Node.js script an uncaught rejection already exits with a
-non-zero code, but calling `process.exit(1)` explicitly makes the failure
-unambiguous across CI providers.
+`getUICoverageResults` and wired it into CI.
 
 ### Enforce coverage thresholds
 
@@ -638,7 +634,7 @@ surface a summary where your team reviews code instead of only passing or
 failing. This example writes a Markdown summary that GitHub Actions renders on
 the job:
 
-```javascript
+```javascript title="scripts/reportUICoverage.js"
 const fs = require('fs')
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
@@ -665,7 +661,7 @@ UI Coverage counts links (navigational elements that point at another view)
 separately from interactive elements. Use the link counts to catch pages that
 are linked but never visited:
 
-```javascript
+```javascript title="scripts/checkUntestedLinks.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
 getUICoverageResults().then(({ summary, views }) => {
@@ -695,7 +691,7 @@ getUICoverageResults().then(({ summary, views }) => {
 A baseline compares one run to one prior run. To trend coverage across many runs
 and teams, push each run's numbers to a dashboard or data warehouse:
 
-```javascript
+```javascript title="scripts/trackCoverageTrends.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
 getUICoverageResults().then(({ runNumber, summary }) => {
@@ -722,7 +718,7 @@ A run can be cancelled, time out, or produce a partial report. Check the run
 state first so an incomplete run warns instead of failing the build for the
 wrong reason:
 
-```javascript
+```javascript title="scripts/skipIncompleteRuns.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
 getUICoverageResults().then((results) => {
@@ -751,7 +747,7 @@ resolved with any [Profile](/ui-coverage/configuration/profiles) that matched th
 run's tags. Assert that required rules are in effect so a misconfigured run
 doesn't silently change what's measured:
 
-```javascript
+```javascript title="scripts/assertCoverageConfig.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
 getUICoverageResults().then(({ config }) => {
@@ -778,7 +774,7 @@ Store the last run's coverage and require the next run to meet or beat it, so th
 bar rises automatically as coverage improves. Commit the floor file so it travels
 with your code:
 
-```javascript
+```javascript title="scripts/ratchetCoverage.js"
 const fs = require('fs')
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
