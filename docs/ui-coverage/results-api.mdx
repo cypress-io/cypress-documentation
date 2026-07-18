@@ -348,16 +348,16 @@ env:
   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
 jobs:
-  run-cypress:
+  run-tests:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7
       - name: install
         run: npm install
-      - name: Run
+      - name: Run Cypress tests
         run: npx cypress run --record
-+     - name: Verify UI Coverage Results
++     - name: Get Cypress UI Coverage
 +       run: |
 +          npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 +          node ./scripts/verifyUICoverageResults.js
@@ -373,7 +373,7 @@ image: node:latest
 stages:
   - test
 
-run-cypress:
+run-tests:
   stage: test
   secrets:
     CYPRESS_RECORD_KEY:
@@ -403,14 +403,14 @@ pipeline {
   }
 
   stages {
-    stage('build and test') {
+    stage('Run Cypress tests') {
       steps {
         sh 'npm ci'
         sh 'npx cypress run --record'
       }
     }
 
-+   stage('Verify UI Coverage Results') {
++   stage('Get Cypress UI Coverage') {
 +     steps {
 +       sh 'npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz'
 +       sh 'node ./scripts/verifyUICoverageResults.js'
@@ -448,7 +448,7 @@ jobs:
 +     - script: |
 +           npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
 +           node ./scripts/verifyUICoverageResults.js
-+       displayName: 'Verify UI Coverage Results'
++       displayName: 'Get Cypress UI Coverage'
 +       env:
 +         CYPRESS_PROJECT_ID: $(CYPRESS_PROJECT_ID)
 +         CYPRESS_RECORD_KEY: $(CYPRESS_RECORD_KEY)
@@ -527,13 +527,13 @@ from_secret: example_record_key_secret
 
 steps:
 
-- name: test
+- name: Run Cypress tests
   image: node:latest
   commands:
   - npm install
   - npx cypress run --record
 
-* - name: validate
+* - name: Get Cypress UI Coverage
 * image: node:latest
 * commands:
 * - npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
