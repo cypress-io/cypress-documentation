@@ -2,7 +2,7 @@ The `@cypress/extract-cloud-results` helper detects the correct Cloud run by mat
 
 Knowing which variables it looks for helps with more complex setups and with local iteration: set them to match what was present in CI to pull a specific run (recorded within the last 7 days) from your machine.
 
-## Local development example
+### Local development example
 
 If you executed a run in GitHub Actions and it was recorded to Cypress Cloud, you would set these 4 environment variables to replicate the context of that run locally and execute your local handler script. This is a great way to iterate on your script and verify everything is working as expected, without having to integrate anything in CI. It's also useful for debugging.
 
@@ -17,14 +17,14 @@ node verifyResults.js
 
 The Results API will then look for the Cypress Cloud run that matches this run ID. If there is more than one Cypress Cloud run found for that GitHub Actions Run, you can pass run tags to narrow down to one run's report.
 
-## Prerequisites
+### Prerequisites
 
 Two prerequisites apply to every provider:
 
 1. Record the Cypress run and run your validation script within the same CI run (the same build, workflow, or pipeline).
 2. Run the validation script _after_ the run has been recorded — either in a separate job that depends on the recording job (using your provider's dependency option, such as `needs`, `dependsOn`, or `requires`), or serially after the recording step in the same job.
 
-## Environment variables by CI provider
+### Environment variables by CI provider
 
 Each CI provider has a unique combination of components, patterns, and environment variables that must be interpreted by this module. Expand a provider below for its essential environment variables.
 
