@@ -1,8 +1,6 @@
-The `@cypress/extract-cloud-results` helper cross-references some environment variables from where it is executed with ones that were present when a Cypress Cloud run was recorded. This allows for automatically detecting the correct Cloud run when the Results API is invoked from the same CI context as a given run (as is the case in the above examples).
+The `@cypress/extract-cloud-results` helper detects the correct Cloud run by matching environment variables from where it runs against those present when the run was recorded, which is why it works automatically from the same CI context (as in the examples above).
 
-For more complex setups, or for local iteration on your Results API handler code, it can be useful to know what variables Cypress is looking for so that you can make sure they are passed through where they are needed.
-
-Likewise, if you want to use the Results API locally to pull the data for a specific run (within the last 7 days), you can set these variables locally to match what was present in CI.
+Knowing which variables it looks for helps with more complex setups and with local iteration: set them to match what was present in CI to pull a specific run (recorded within the last 7 days) from your machine.
 
 ## Local development example
 
