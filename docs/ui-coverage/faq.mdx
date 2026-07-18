@@ -234,11 +234,11 @@ There's no dedicated "skip this run" switch in a profile. To suppress a report f
 
 ### <Icon name="angle-right" /> How do I fail a CI build or block a pull request when UI Coverage drops?
 
-Use the [Results API](/ui-coverage/results-api). Add a step to your CI workflow that installs the `@cypress/extract-cloud-results` module and calls `getUICoverageResults()` after your Cypress run. The helper returns the run's coverage summary and per-view breakdown, and your script decides whether to fail — for example, throwing an error when `summary.coverage` is below a threshold. Because the check lives in your CI job, nothing in the Cypress run itself fails; enforcement is entirely opt-in. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) for a complete example.
+Use the [Results API](/ui-coverage/results-api). Add a step to your CI workflow that installs the `@cypress/extract-cloud-results` module and calls `getUICoverageResults()` after your Cypress run. The helper returns the run's coverage summary and per-view breakdown, and your script decides whether to fail, for example by throwing an error when `summary.coverage` is below a threshold. Because the check lives in your CI job, nothing in the Cypress run itself fails; enforcement is entirely opt-in. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) for a complete example.
 
 ### <Icon name="angle-right" /> Do I need to install anything to use the Results API?
 
-Only in CI. Install the `@cypress/extract-cloud-results` module in your CI install step with `npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz`. Don't add it to your `package.json` dependencies — install it separately with `--force` so you always get the latest version, as documented in the [Results API installation steps](/ui-coverage/results-api#Installation).
+Only in CI. Install the `@cypress/extract-cloud-results` module in your CI install step with `npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz`. Don't add it to your `package.json` dependencies; install it separately with `--force` so you always get the latest version, as documented in the [Results API installation steps](/ui-coverage/results-api#Installation).
 
 ### <Icon name="angle-right" /> Why can't the Results API find my run?
 

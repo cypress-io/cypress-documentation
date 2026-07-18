@@ -20,7 +20,7 @@ With the `getUICoverageResults` helper from the
 
 - **Fail a build or block a pull request** when overall coverage falls below a
   threshold, or when a critical view regresses.
-- **Enforce different standards per area** of your app — for example, require
+- **Enforce different standards per area** of your app, such as requiring
   higher coverage on `/checkout` than on marketing pages.
 - **Track regressions over time** by comparing a run against a stored baseline.
 - **Read the exact configuration** that produced a report, including any
@@ -28,7 +28,7 @@ With the `getUICoverageResults` helper from the
 
 Because reports are processed server-side from
 [Test Replay](/cloud/features/test-replay) data, using the Results API adds no
-overhead to your Cypress runs — the enforcement step is entirely opt-in and
+overhead to your Cypress runs. The enforcement step is entirely opt-in and
 lives in your CI workflow.
 
 :::info
@@ -38,8 +38,8 @@ lives in your CI workflow.
 </CalloutLabel>
 
 This page describes how the Results API works and what data it returns. For
-worked end-to-end examples — setting a policy, failing a pull request, and
-comparing against a baseline — see the
+worked end-to-end examples, such as setting a policy, failing a pull request, and
+comparing against a baseline, see the
 [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests)
 guide, or [Monitor changes](/ui-coverage/guides/monitor-changes) to track
 coverage over time.
@@ -60,8 +60,8 @@ When you call `getUICoverageResults` inside a CI job, the helper:
 3. **Returns the results** as a structured object you can assert against, or
    **throws a descriptive error** if no matching run or report can be found.
 
-As it runs, the helper logs its progress to the console — the run it matched, the
-report URL, and each polling attempt — so you can follow along in your CI logs.
+As it runs, the helper logs its progress to the console (the run it matched, the
+report URL, and each polling attempt) so you can follow along in your CI logs.
 
 ### Prerequisites
 
@@ -146,7 +146,7 @@ getUICoverageResults().then((results) => {
 #### Enforce coverage thresholds
 
 This example fails the build when overall coverage drops below a baseline, and
-holds critical flows — like login and checkout — to a higher standard:
+holds critical flows like login and checkout to a higher standard:
 
 ```javascript title="scripts/verifyUICoverageResults.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
@@ -325,7 +325,7 @@ An example of a returned result:
   config: {
     updatedAt: '2026-05-14T18:22:03.000Z',
     value: {
-      /* App Quality Config — see below */
+      /* App Quality Config, see below */
     },
   },
 }
@@ -336,7 +336,7 @@ An example of a returned result:
 The `config` property returns the **App Quality Config** that Cypress Cloud used
 to generate the report, resolved with any [Profile](/ui-coverage/configuration/profiles)
 that matched the run's tags. This lets your script confirm exactly which rules
-were in effect — useful when different runs use different profiles.
+were in effect, which is useful when different runs use different profiles.
 
 ```json title="App Quality Config"
 {
@@ -358,8 +358,9 @@ were in effect — useful when different runs use different profiles.
 #### Handling errors
 
 `getUICoverageResults` returns a promise that **rejects with a descriptive
-`Error`** when it can't return results — for example, when no matching run is
-found for the CI context, when the run was recorded with Test Replay disabled,
+`Error`** when it can't return results. For example, this happens when no
+matching run is found for the CI context, when the run was recorded with Test
+Replay disabled,
 or when the report is still processing after the poll window elapses. Decide
 whether that should fail your build (let the rejection surface, as in the
 examples above) or be tolerated (catch it and exit cleanly), depending on how
@@ -398,7 +399,7 @@ apply different configuration to different runs.
 
 **Example**
 
-- Imagine that within a single CI build you call `cypress run --record` twice —
+- Imagine that within a single CI build you call `cypress run --record` twice,
   once against a `staging` environment and once against `production`.
 - Pass a different `--tag` to each Cypress run:
   - `cypress run --record --tag staging`
@@ -655,7 +656,7 @@ steps:
 
 Once you can read a run's results, a common next step is to compare them against
 a stored baseline so a build fails only when **new** untested elements are
-introduced — letting you pay down existing gaps over time instead of blocking on
+introduced, letting you pay down existing gaps over time instead of blocking on
 them all at once. For complete code, the baseline structure, and best practices,
 see the
 [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline)
@@ -667,7 +668,7 @@ guide.
 
 ## See also
 
-- [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) — set a coverage policy and fail a pull request when it isn't met.
-- [Monitor changes](/ui-coverage/guides/monitor-changes) — track coverage trends and catch regressions over time.
-- [Results API FAQ](/ui-coverage/faq#Results-API-and-CI) — quick answers to common Results API and CI questions.
-- [Profiles](/ui-coverage/configuration/profiles) — apply different configuration to different runs using run tags.
+- [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests): set a coverage policy and fail a pull request when it isn't met.
+- [Monitor changes](/ui-coverage/guides/monitor-changes): track coverage trends and catch regressions over time.
+- [Results API FAQ](/ui-coverage/faq#Results-API-and-CI): quick answers to common Results API and CI questions.
+- [Profiles](/ui-coverage/configuration/profiles): apply different configuration to different runs using run tags.
