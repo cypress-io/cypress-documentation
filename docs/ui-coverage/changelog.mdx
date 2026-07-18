@@ -9,6 +9,10 @@ sidebar_position: 200
 
 # Changelog
 
+## Week of May 18, 2026
+
+- **UI Coverage in Enterprise Reporting:** UI Coverage trends are now available in the [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage) area of Cypress Cloud, so you can track coverage scores across all projects and runs and see when they improve or drift over time. See the [Monitor Changes](/ui-coverage/guides/monitor-changes) guide for details.
+
 ## Week of Apr 27, 2026
 
 - **UI Coverage in Cypress Cloud MCP:** AI agents can now query UI Coverage for a run through the [Cypress Cloud MCP server](/cloud/integrations/cloud-mcp), using three new tools:
@@ -16,7 +20,7 @@ sidebar_position: 200
   - `cypress_get_ui_coverage_views`: Browses all of the views in a run beyond the riskiest ones in the report.
   - `cypress_get_ui_coverage_elements`: Drills down into individual elements, with filtering by tested or untested status and by view.
 
-  See [working with AI agents](/ui-coverage/work-with-ai-agents) for example prompts and setup.
+  The `cypress_get_runs` tool now also reports each run's UI Coverage score. See [working with AI agents](/ui-coverage/work-with-ai-agents) for example prompts and setup.
 
 ## Week of Feb 06, 2026
 
