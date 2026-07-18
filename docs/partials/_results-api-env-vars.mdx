@@ -13,8 +13,8 @@ CYPRESS_PROJECT_ID=AAA
 CYPRESS_RECORD_KEY=BBB
 GITHUB_ACTIONS=true
 GITHUB_RUN_ID=111
-GITHUB_RUN_ATTEMPT=0
-node verifyAccessibilityResults.js
+GITHUB_RUN_ATTEMPT=1
+node verifyResults.js
 ```
 
 The Results API will then look for the Cypress Cloud run that matches this run ID. If there is more than one Cypress Cloud run found for that GitHub Actions Run, you can pass run tags to narrow down to one run's report.
@@ -71,8 +71,6 @@ Jenkins is heavily customizable through the usage of plugins, which limits the a
 
 We have implemented Jenkins support within this module using the broadest set of available default values. For the purposes of this documentation, though, we will discuss terms related to Jenkins Pipeline support: https://www.jenkins.io/doc/book/pipeline/getting-started/
 
-#### Essential terms
-
 #### Essential environment variables
 
 - `JENKINS_HOME` - Presence identifies the environment as a Jenkins environment
@@ -93,7 +91,7 @@ Reference: https://learn.microsoft.com/en-us/azure/devops/pipelines/get-started/
 
 #### Essential environment variables
 
-- `TF_BUILD` and `AZURE_HTTP_USER_AGENT` - Combined presence identifies the environment as a Azure pipeline environment.
+- `TF_BUILD` and `AZURE_HTTP_USER_AGENT` - Combined presence identifies the environment as an Azure pipeline environment.
 - `SYSTEM_PLANID` - Value uniquely identifies a pipeline run. Value does not change as jobs within the pipeline are retried from failure.
 - `SYSTEM_JOBID` - Value uniquely identifies a job execution. Value changes each time a job is retried from failure, in conjunction with the `SYSTEM_JOBATTEMPT` being incremented.
 - `SYSTEM_JOBATTEMPT` - Value identifies the pipelines shared attempt index. Value is incremented when jobs are retried from failure.
@@ -120,7 +118,7 @@ Reference: https://circleci.com/docs/about-circleci/
 - `CIRCLE_WORKFLOW_ID` - Value uniquely identifies an instance of a workflow's execution within a pipeline. This value will be updated upon each workflow execution; in other words, retrying a workflow from failure from the Circle UI will create a new workflow with a new `CIRCLE_WORKFLOW_ID` value available to the jobs executed within it.
 - `CIRCLE_WORKFLOW_JOB_ID` - Value uniquely identifies an execution instance of a named job within a workflow instance.
 
-Full environment variable reference: https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+Full environment variable reference: https://circleci.com/docs/variables/#built-in-environment-variables
 
 #### Prerequisites
 
@@ -139,7 +137,7 @@ Reference: https://docs.aws.amazon.com/codebuild/
 
 Full environment variable reference: https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html
 
-Prerequisites
+#### Prerequisites
 
 1. The run to validate and this module's validation script are being executed within the same build.
 2. The module script is always executed _after_ the run to validate has been created. This can be achieved by executing the module script in serial with the cypress recording in the same build.
@@ -150,7 +148,7 @@ Reference: https://docs.drone.io/pipeline/overview/
 
 #### Essential environment variables
 
-- `DRONE` - Presence identifies the environment as an Drone environment.
+- `DRONE` - Presence identifies the environment as a Drone environment.
 - `DRONE_BUILD_NUMBER` - Value uniquely identifies a Drone build.
 
 Full environment variable reference: https://docs.drone.io/pipeline/environment/reference/
