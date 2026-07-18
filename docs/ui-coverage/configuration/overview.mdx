@@ -18,12 +18,6 @@ UI Coverage works out of the box with no setup, but a few lines of configuration
 
 You don't need any of this to get started, and you can add it incrementally. Reprocess a past run after each change to see the effect immediately, without re-running your tests.
 
-:::info
-
-By default, editing configuration is limited to Admin users. Your Cypress point-of-contact can enable editing for all users on request.
-
-:::
-
 ## Setting configuration
 
 Configuration lives in Cypress Cloud, not in your repository. To view or change it for a project:
@@ -32,7 +26,7 @@ Configuration lives in Cypress Cloud, not in your repository. To view or change 
 2. Select the **App Quality** tab, which holds the configuration editor.
 3. Edit the configuration as JSON, then **Save**. **Discard** reverts unsaved edits back to the last saved version.
 
-Editing is limited to Admin users by default. The editor validates your JSON against the schema when you save, so an invalid configuration can't be saved, and it shows how long ago the configuration was last saved.
+The editor validates your JSON against the schema when you save, so an invalid configuration can't be saved, and it shows how long ago the configuration was last saved.
 
 After you save configuration changes, you can reprocess any historical run to apply them. You can start a reprocess from two places:
 
@@ -45,6 +39,10 @@ Regenerating reports in this way allows you to make config changes and see their
   src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
   alt="The Cypress Cloud UI showing the configuration editor"
 />
+
+### Who can edit configuration
+
+Editing is limited to Admin users by default. Your Cypress point-of-contact can enable editing for all users on request.
 
 ## Configuration options
 
