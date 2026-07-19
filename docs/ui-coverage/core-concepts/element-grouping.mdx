@@ -1,6 +1,6 @@
 ---
 title: How UI Coverage groups related elements
-description: 'UI Coverage groups elements that are related to one another through structural or behavioral hints, but this is configurable.'
+description: 'UI Coverage automatically groups repeated interactive elements so they count once and a single test can cover the whole set. Learn the automatic grouping rules and how to customize them.'
 sidebar_label: Element Grouping
 sidebar_position: 30
 ---
@@ -9,35 +9,44 @@ sidebar_position: 30
 
 # Element Grouping
 
-Testing every element on a page is not always necessary when multiple elements share the same behavior. UI Coverage simplifies this by grouping related elements, allowing interactions with any element in the group to count as testing the entire group. This reduces redundancy and ensures efficient and accurate coverage. For example, options in a dropdown menu can be grouped if interacting with one option verifies the behavior of the entire set.
+Applications reuse the same control in many places. A product listing renders an "Add to cart" button on every card, and a data table renders the same action button on every row. UI Coverage sees each rendered button as its own interactive element, so without grouping a single page can add hundreds of near-identical elements to your report, each counted on its own. Because these buttons all behave the same way, testing one is enough to verify the rest. Without grouping, though, every button a test doesn't touch still counts as untested and lowers your coverage score.
 
-## How element grouping works
+UI Coverage solves this by grouping elements that behave the same way. A group counts **once** toward your coverage score, and interacting with **any** element in the group marks the whole group as tested. Fifty untested product cards become one clearly named group that a single test can cover.
 
-UI Coverage groups elements using structural and behavioral hints, along with user-defined configurations. When grouped, interacting with one element is considered equivalent to testing all elements in the group.
+## How grouping affects your report and score
 
-## Grouping Rules
+Grouping changes what you see and what you're measured against:
 
-- **User-Defined Groups**: Elements are grouped by [Element Groups](/ui-coverage/configuration/elementgroups) configuration if specified.
-- **Labels and Form Elements**: `label` elements are automatically grouped with the form elements they are associated with.
-- **Table Row Grouping**: Elements within table rows are grouped with elements sharing common attributes or the same position across rows.
-- **Repeated Elements**: Duplicate elements in the DOM with shared attributes are grouped.
-- **Parent-Shared Attributes**: Duplicate elements with parents that share common attributes are grouped.
-- **Dynamic Links**: Links with similar `href` patterns are resolved into [views](/ui-coverage/configuration/views) and grouped by their `href` pattern.
+- **The group counts once.** A group of 50 buttons contributes a single unit to your total element count, not 50.
+- **One interaction covers the group.** Testing any one member marks the entire group as tested, since every member shares the same behavior.
+- **Reports stay readable.** A group appears as one row, labeled by a shared attribute or a name you choose, instead of a long list of machine-generated selectors.
 
-### Example
+## Automatic grouping
 
-Consider a table where each row contains a delete button:
+Out of the box, with no configuration, UI Coverage groups elements it can recognize as variations of the same control. It uses structural and behavioral signals from the DOM:
+
+- **Shared test attributes.** Interactive elements with the same [identifying attribute](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified) value are grouped, such as a `data-cy="favorite"` button repeated on every product card.
+- **Form controls and their labels.** A `<label>` is grouped with the form control it identifies, so the pair counts as one unit instead of two.
+- **Table and grid rows.** Controls in the same position across sibling rows are grouped, in `<table>` elements and ARIA grids (`role="grid"`, `role="table"`, and `role="treegrid"`).
+- **Repeated structures.** Elements that share a tag and class hierarchy up to a common parent are grouped, catching repeated lists and cards that behave alike even without test attributes.
+- **Links to the same view.** Links whose `href` resolves to the same [view](/ui-coverage/core-concepts/views) are represented by that view instead of listed separately.
+
+Automatic grouping requires at least two similar elements. A control that appears only once stays on its own.
+
+### Example: repeated controls in a table
+
+Consider a customer table where each row has a "Delete" button:
 
 ```html
 <table>
   <tr>
-    <td>John Doe</td>
+    <td>Aisha Rahman</td>
     <td>
       <button>Delete</button>
     </td>
   </tr>
   <tr>
-    <td>Jane Smith</td>
+    <td>Mateo Ramirez</td>
     <td>
       <button>Delete</button>
     </td>
@@ -45,11 +54,34 @@ Consider a table where each row contains a delete button:
 </table>
 ```
 
-In this case, UI Coverage groups the delete buttons together in accordance with our grouping rules. Interacting with one delete button is equivalent to testing all delete buttons in the table.
+The "Delete" buttons occupy the same position in sibling rows, so UI Coverage groups them. A test that deletes one customer marks the group as tested, and the report shows a single "Delete" group instead of one element per row.
 
-## Grouping with markup attributes
+## Custom grouping
 
-You can define groups directly in your application's markup with the `data-cy-ui-group` attribute, without any Cypress Cloud configuration. Elements that share the same attribute value are grouped together, and the group appears in reports under a selector formatted with that value, such as `[data-cy-ui-group="pagination"]`.
+Automatic grouping handles most cases, but you can override it when it collapses too much, too little, or names things unhelpfully. You have two ways to take control: centrally in Cypress Cloud, or in your application's markup.
+
+### Grouping with configuration
+
+When you want to manage grouping centrally in Cypress Cloud without changing application code, use the [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration. Each rule matches interactive elements with a CSS selector and collects them into one named group. This is the right tool when the team reading the reports isn't the team that owns the markup, or when you want to correct the automatic grouping without a code change.
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "elementGroups": [
+      {
+        "selector": "[data-cy^='add-to-cart-']",
+        "name": "Add to Cart Button"
+      }
+    ]
+  }
+}
+```
+
+The [`elementGroups` configuration guide](/ui-coverage/configuration/elementgroups) covers the full syntax, including how to name groups, order rules, and scope them to specific iframes or shadow DOM hosts with `documentScope`.
+
+### Grouping with markup attributes
+
+You can also define groups directly in your application's markup with the `data-cy-ui-group` attribute, without any Cypress Cloud configuration. Elements that share the same attribute value are grouped together, and the group appears in reports under a selector formatted with that value, such as `[data-cy-ui-group="pagination"]`.
 
 ```html
 <button data-cy-ui-group="pagination">1</button>
@@ -57,15 +89,19 @@ You can define groups directly in your application's markup with the `data-cy-ui
 <button data-cy-ui-group="pagination">3</button>
 ```
 
-The attribute follows these rules:
+Where you place the attribute determines what it groups:
 
-- Placing the attribute on an interactive element applies the group to that element only.
-- Placing the attribute on a wrapper or parent element applies the group to all interactive elements inside it.
-- When wrappers with the attribute are nested, each interactive element joins the group of its closest ancestor with the attribute.
-- Groups defined with this attribute take priority over every other grouping mechanism, including [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration rules.
+- **On an interactive element**, it groups that element only.
+- **On a wrapper or parent element**, it groups every interactive element inside it.
+- **On nested wrappers**, each interactive element joins the group of its closest ancestor that has the attribute.
 
-Use the attribute when the team that owns the markup also owns the grouping decisions, and use [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration when you want to manage grouping centrally in Cypress Cloud without changing application code.
+Groups defined this way take priority over every other grouping mechanism, including [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration rules. Reach for the attribute when the team that owns the markup also owns the grouping decisions.
 
-## Customizing element grouping
+## See also
 
-You can customize element grouping to suit your application's structure and behavior. Refer to the [Element Groups](/ui-coverage/configuration/elementgroups) configuration guide to learn how to define custom groups and group elements based on specific attributes or selectors.
+- [`elementGroups`](/ui-coverage/configuration/elementgroups) defines custom groups in Cypress Cloud and overrides the automatic rules.
+- [`significantAttributes`](/ui-coverage/configuration/significantattributes) changes which attributes identify and group elements.
+- [`elementFilters`](/ui-coverage/configuration/elementfilters) removes elements from reports entirely, so they're never grouped or scored.
+- [Element Identification](/ui-coverage/core-concepts/element-identification) explains the significant attributes that drive grouping and how elements are recognized across snapshots.
+- [Guide: Reduce noise in UI Coverage reports](/ui-coverage/guides/reduce-noise) walks through combining grouping and filtering to clean up a report.
+- [UI Coverage FAQ](/ui-coverage/faq) answers common questions about grouping, scores, and configuration.
