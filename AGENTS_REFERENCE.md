@@ -172,14 +172,14 @@ Use a **fenced code block** for:
 ### `<CopyPrompt>` authoring rules
 
 Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
-(required), `title`, `subtext`, `defaultExpanded`, `excludeFromLlmExport`. Live
+(required), `title`, `subtext`, `defaultCollapsed`, `excludeFromLlmExport`. Live
 examples: `docs/cloud/integrations/cloud-mcp.mdx` and `docs/app/guides/migration/`.
 
 - **No quotes** around the prompt — the card renders it verbatim.
 - **No tool calls** unless explicitly required: prefer _"Find all failing tests
   on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
-- **Expand by default** (`defaultExpanded`); omit it for prompts over **350
-  characters** so they collapse behind a **Show prompt** toggle.
+- **Expanded by default** (no prop needed); add `defaultCollapsed` for prompts
+  over **350 characters** so they sit behind a **Show prompt** toggle.
 - **Format longer prompts** with newlines and bullet/numbered lists in the
   `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
   prompts stay on one line and wrap.
@@ -192,15 +192,15 @@ examples: `docs/cloud/integrations/cloud-mcp.mdx` and `docs/app/guides/migration
 <CopyPrompt
   title="The Health Check"
   subtext="Get a high-level summary of any failures in the latest run on your branch."
-  defaultExpanded
   prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
 />
 ```
 
-For a prompt over 350 characters, drop `defaultExpanded` and add structure:
+For a prompt over 350 characters, add `defaultCollapsed` and structure:
 
 ```mdx
 <CopyPrompt
+  defaultCollapsed
   title="Migrate this project to Cypress"
   subtext="Walk your AI assistant through the migration end to end."
   prompt={`Migrate this project's tests to Cypress. Work through these steps:\n\n1. Take inventory of my existing tests and config.\n2. Install Cypress alongside my current tooling.\n3. Migrate one spec at a time and keep the originals until the Cypress versions pass.\n4. Show me the changes before applying them, then run the migrated tests.`}

@@ -85,7 +85,7 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
 - For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
   not a code block; keep example-specific prompts, code, commands, and diagrams in
-  code blocks. Prompts default to `defaultExpanded`; collapse (omit it) past 350
+  code blocks. Prompts are expanded by default; add `defaultCollapsed` past 350
   characters, and never wrap the prompt in quotes.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.

@@ -9,8 +9,8 @@ interface CopyPromptProps {
   prompt: string
   title?: string
   subtext?: string
-  /** Show the prompt text on load instead of behind the Show/Hide toggle. */
-  defaultExpanded?: boolean
+  /** Hide the prompt behind a Show/Hide toggle instead of showing it on load. */
+  defaultCollapsed?: boolean
   /**
    * Strip the entire card — prompt included — from the LLM markdown export.
    * Use when the prompt just tells the agent to read this page, so exporting
@@ -35,11 +35,11 @@ export default function CopyPrompt({
   prompt,
   title = DEFAULT_TITLE,
   subtext = DEFAULT_SUBTEXT,
-  defaultExpanded = false,
+  defaultCollapsed = false,
   excludeFromLlmExport = false,
 }: CopyPromptProps): React.JSX.Element {
   const [copied, setCopied] = useState(false)
-  const [expanded, setExpanded] = useState(defaultExpanded)
+  const [expanded, setExpanded] = useState(!defaultCollapsed)
   const promptId = useId()
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
@@ -111,7 +111,7 @@ export default function CopyPrompt({
           />
           {copied ? 'Copied' : 'Copy prompt'}
         </Button>
-        {!defaultExpanded && (
+        {defaultCollapsed && (
           <button
             type="button"
             className={s.toggle}
