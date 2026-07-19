@@ -165,8 +165,8 @@ Use **`<CopyPrompt>`** (a card with a one-click **Copy prompt** button) when:
 Use a **fenced code block** when:
 
 - The text is an AI prompt that is example-specific and gives no reusable value
-  copied verbatim — it only illustrates syntax. e.g. a `cy.prompt()` step like
-  ` ```js cy.prompt("Click on the 'Add to cart' button") ``` `.
+  copied verbatim — it only illustrates syntax, e.g. a step like
+  _"Click on the 'Add to cart' button"_.
 - The snippet is code (TypeScript, JavaScript, YAML, JSON, HTML, etc.),
   configuration, or CI setup that is not AI instructions.
 - It is an example terminal command or terminal output.
