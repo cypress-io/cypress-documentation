@@ -146,6 +146,82 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
 
+## AI prompts: `<CopyPrompt>` vs a code block
+
+Some examples are AI prompts the reader feeds to an agent; others are code,
+commands, or `cy.prompt()` steps. Pick the presentation by whether the reader
+would **copy the text into an AI agent and get value from it in their own
+project**.
+
+Use **`<CopyPrompt>`** (a card with a one-click **Copy prompt** button) when:
+
+- The example is an AI prompt a reader could copy, paste into an agent, and run
+  directly — it generalizes to their own work. e.g. _"Evaluate my last run on
+  this branch and summarize the failures."_
+- The example is a standard AI skill, instruction, or rule that could live in an
+  agent/rules/skills file (a `CLAUDE.md`, `.cursorrules`, a saved skill or custom
+  instruction, etc.).
+
+Use a **fenced code block** when:
+
+- The text is an AI prompt that is example-specific and gives no reusable value
+  copied verbatim — it only illustrates syntax. e.g. a `cy.prompt()` step like
+  ` ```js cy.prompt("Click on the 'Add to cart' button") ``` `.
+- The snippet is code (TypeScript, JavaScript, YAML, JSON, HTML, etc.),
+  configuration, or CI setup that is not AI instructions.
+- It is an example terminal command or terminal output.
+- It is a Mermaid diagram, an example file/folder tree, or a code diff.
+- It is any other literal artifact the reader copies as-is: an env-var block, an
+  API request/response payload, a GraphQL query, a regex, a URL template, or an
+  error message shown for reference.
+
+Rule of thumb: **copyable-and-reusable AI prompt → `<CopyPrompt>`; everything
+else → code block.**
+
+### `<CopyPrompt>` authoring rules
+
+`CopyPrompt` is registered globally in `src/theme/MDXComponents.js`, so **no
+import** is needed in `.mdx`. Props: `prompt` (required), `title`, `subtext`,
+`defaultExpanded`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx` and the
+migration guides under `docs/app/guides/migration/`.
+
+- **No quotes.** Do not wrap the prompt in `"…"`; the card renders the text
+  verbatim.
+- **No tool calls** unless the reader was explicitly told to use one. Prefer
+  _"Find all failing tests on this branch"_ over
+  _"`cypress_get_runs` Find all failing tests…"_.
+- **Expansion.** Default to `defaultExpanded` (prompt visible on load, no
+  Show/Hide toggle). Omit `defaultExpanded` for any prompt longer than **350
+  characters** so it renders collapsed behind a **Show prompt** toggle. (When
+  `defaultExpanded` is set the toggle is hidden — there is nothing to collapse.)
+- **Formatting.** For longer prompts, use newlines and bullet/numbered lists
+  inside the `prompt` template string. The card preserves line breaks
+  (`white-space: pre-wrap`), so structure makes multi-step prompts easier to
+  digest. Short one- or two-sentence prompts can stay on a single line and wrap
+  naturally.
+
+Short, expanded prompt:
+
+```mdx
+<CopyPrompt
+  title="The Health Check"
+  subtext="Get a high-level summary of any failures in the latest run on your branch."
+  defaultExpanded
+  prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
+/>
+```
+
+Longer prompt (over 350 characters, so no `defaultExpanded` — it renders
+collapsed — with newlines and a numbered list for readability):
+
+```mdx
+<CopyPrompt
+  title="Migrate this project to Cypress"
+  subtext="Walk your AI assistant through the migration end to end."
+  prompt={`Migrate this project's tests to Cypress. Work through these steps:\n\n1. Take inventory of my existing tests and config.\n2. Install Cypress alongside my current tooling.\n3. Migrate one spec at a time and keep the originals until the Cypress versions pass.\n4. Show me the changes before applying them, then run the migrated tests.`}
+/>
+```
+
 ## Admonition blocks
 
 Call-outs use Docusaurus admonition directives: `:::type` to open, `:::` to
