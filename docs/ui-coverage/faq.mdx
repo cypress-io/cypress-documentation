@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, and per-run profiles.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, the Results API for CI, and how to troubleshoot unexpected reports.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -22,6 +22,20 @@ No. UI Coverage requires no code changes or instrumentation. Reports are generat
 ### <Icon name="angle-right" /> How is the UI Coverage score calculated?
 
 The score compares the number of tested interactive elements to the total number of interactive elements in your application. [Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit: the group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
+
+## Interactive elements
+
+### <Icon name="angle-right" /> What does Cypress UI Coverage count as an interactive element?
+
+UI Coverage follows the WHATWG definition of [interactive content](https://html.spec.whatwg.org/dev/dom.html#interactive-content), plus a few Cypress-specific rules. In short, an element counts when it is natively interactive (like `<a>`, `<button>`, or a form control), when it has an interactive ARIA `role` (such as `button` or `tab`), or when it is keyboard-focusable with `tabindex="0"` or higher. See [Interactive Elements](/ui-coverage/core-concepts/interactivity#Interactive-Elements) for the full rules.
+
+### <Icon name="angle-right" /> Why doesn't Cypress UI Coverage track my custom widget as an interactive element?
+
+UI Coverage detects interactivity from HTML semantics, not from event handlers, so a `<div>` with a click handler isn't recognized as interactive. The best fix is to give the control real semantics, such as using a `<button>` or adding an appropriate `role`, which also improves accessibility. When that isn't possible, add [`data-cy-ui-interactive="include"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) to the element so UI Coverage tracks it.
+
+### <Icon name="angle-right" /> How do I stop Cypress UI Coverage from tracking an element or a whole section?
+
+You have two options. In your markup, add [`data-cy-ui-interactive="exclude"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) to a single element or `data-cy-ui-interactive="exclude-all"` to a container to also exclude everything inside it (and `reset` to re-enable a subtree). To do the same from Cypress Cloud without changing application code, add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false`. Excluded elements are removed from both the report and the score.
 
 ## Views and URLs
 
@@ -58,6 +72,22 @@ Yes. List `include: true` rules for the URLs you want, followed by a catch-all r
 ### <Icon name="angle-right" /> Why is a page missing from my report?
 
 Views are created from URLs your tests actually visit, so a page that no test navigates to has no view. Check [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) in the report, where pages that are linked to but never visited appear. Also confirm that a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule isn't excluding the page unintentionally.
+
+### <Icon name="angle-right" /> What is an untested link in Cypress UI Coverage?
+
+An untested link is an `<a>` element whose destination URL is never visited during your run. Because a link points to a page, an untested link surfaces a flow your suite is missing even when no [view](/ui-coverage/core-concepts/views) exists for that page. Untested links count against your score unless you exclude their destination with [`viewFilters`](/ui-coverage/configuration/viewfilters). See [Untested Links](/ui-coverage/core-concepts/interactivity#Untested-Links).
+
+### <Icon name="angle-right" /> Why don't `mailto:` and `tel:` links appear in Cypress UI Coverage?
+
+Contact links, meaning anchors whose `href` uses `tel:`, `mailto:`, or `sms:`, aren't treated as interactive elements, so they never appear in reports and never count toward your score. If you need one tracked, add [`data-cy-ui-interactive="include"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) to the anchor.
+
+### <Icon name="angle-right" /> Why does Cypress UI Coverage count an external or non-`http` link as an untested link?
+
+Any `href` that resolves to a URL is treated as a link to a destination, including absolute URLs to external sites and schemes like `ftp:`, `file:`, `data:`, `blob:`, or a custom app scheme. If the destination is never visited, it appears as an untested link. Only `#`, `javascript:`, on-page fragments like `#pricing`, and the contact schemes above are excluded. Exclude destinations you don't intend to test with [`viewFilters`](/ui-coverage/configuration/viewfilters). See [Which hrefs count as links](/ui-coverage/core-concepts/interactivity#Which-hrefs-count-as-links).
+
+### <Icon name="angle-right" /> In Cypress UI Coverage, what's the difference between a hash route like `#/settings` and a page anchor like `#pricing` for untested links?
+
+The leading slash. A hash route (`#/settings`) is treated as a URL, so it can be a destination and can appear as an untested link if never visited. A page anchor, or document fragment (`#pricing`), points to a section of the current page, so it's an ordinary interactive element that must be interacted with to count as tested and never appears as an untested link.
 
 ## Element grouping and identification
 
@@ -110,7 +140,11 @@ This usually means the element's identifying attributes change between [snapshot
 
 ### <Icon name="angle-right" /> Which attributes does UI Coverage use to identify elements?
 
-UI Coverage checks a prioritized list of attributes on each element: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, in that order, falling back to `id` and `name` when none of those are present. The first attribute found with a usable value identifies the element. See [Element Identification](/ui-coverage/core-concepts/element-identification) for how identification works across snapshots.
+UI Coverage checks a prioritized list of attributes on each element and uses the first one present with a usable value. In order, that's: any attributes you add to [`significantAttributes`](/ui-coverage/configuration/significantattributes), then the default test attributes `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, falling back to `id` and `name` when none of those are present. See [Element Identification](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified) for the full priority list and how identification works across snapshots.
+
+### <Icon name="angle-right" /> How does UI Coverage identify an element that has no test attribute or id?
+
+When an element has none of the [identifying attributes](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified), UI Coverage falls back to identifying it by its structure and position in the DOM. Because that identity is less stable than an attribute you control, adding a stable `data-cy` (or similar) attribute is the reliable fix. See [When an element has no identifying attribute](/ui-coverage/core-concepts/element-identification#When-an-element-has-no-identifying-attribute).
 
 ### <Icon name="angle-right" /> How do I make UI Coverage use my own attribute to identify elements?
 
@@ -246,11 +280,72 @@ The most common causes are:
 
 There's no dedicated "skip this run" switch in a profile. To suppress a report for certain runs, point a profile at a deliberately narrow configuration (for example, [`viewFilters`](/ui-coverage/configuration/viewfilters) that exclude every view) so Cypress Cloud produces an empty or tightly scoped report for the run instead. See [Why use profiles?](/ui-coverage/configuration/profiles#Why-use-profiles).
 
+## Results API and CI
+
+### <Icon name="angle-right" /> What are the prerequisites for using the Cypress UI Coverage Results API?
+
+A few conditions must hold before `getUICoverageResults` can return a report:
+
+- **Test Replay must be enabled** for the run. UI Coverage reports are built from [Test Replay](/cloud/features/test-replay) data, so a run recorded with Test Replay off has no report and the helper throws. Enable it in your project settings.
+- **Record with Cypress v13 or later.** [Azure Pipelines](/app/continuous-integration/overview#Azure-Pipelines) and [CircleCI](/app/continuous-integration/circleci) additionally require **Cypress v13.13.1 or later** to capture the CI metadata needed to identify runs.
+- **The run must have been recorded within the last 7 days.** Older runs can no longer be identified from CI context.
+- **Run the script after recording, in the same CI build**, so the run it should report on already exists.
+
+### <Icon name="angle-right" /> How do I fail a CI build or block a pull request when Cypress UI Coverage drops?
+
+Use the [Results API](/ui-coverage/results-api). Add a step to your CI workflow that installs the `@cypress/extract-cloud-results` module and calls `getUICoverageResults()` after your Cypress run. The helper returns the run's coverage summary and per-view breakdown, and your script decides whether to fail, for example by throwing an error when `summary.coverage` is below a threshold. Because the check lives in your CI job, nothing in the Cypress run itself fails; enforcement is entirely opt-in. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) for a complete example.
+
+### <Icon name="angle-right" /> Do I need to install anything to use the Cypress UI Coverage Results API?
+
+Only in CI. Install the `@cypress/extract-cloud-results` module in your CI install step with `npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz`. Don't add it to your `package.json` dependencies; install it separately with `--force` so you always get the latest version, as documented in the [Results API installation steps](/ui-coverage/results-api#Installation).
+
+### <Icon name="angle-right" /> Why can't the Cypress UI Coverage Results API find my Cypress Cloud run?
+
+`getUICoverageResults` identifies the run from the CI environment variables present when the run was recorded, so the most common causes are:
+
+- The script runs in a **different CI build** than the one that recorded the run, or **before** the `cypress run --record` step. Run it after recording, in the same build.
+- The run was recorded **more than 7 days ago**. Only runs from the last 7 days can be identified from CI context.
+- You record **multiple runs in one CI build** but didn't pass `runTags`. Tag each run with `--tag` and pass the matching tag to `getUICoverageResults`.
+- The run was recorded on an **unsupported Cypress version**. Azure Pipelines and CircleCI require Cypress v13.13.1 or later.
+
+See [Required CI environment variables](/ui-coverage/results-api#Required-CI-environment-variables) for how each provider is matched.
+
+### <Icon name="angle-right" /> Why does the Cypress UI Coverage Results API say no report was found for my run?
+
+UI Coverage reports are generated from [Test Replay](/cloud/features/test-replay) data. If Test Replay was disabled for the run, no report is produced and the helper throws. Enable Test Replay in your project settings and record a new run.
+
+### <Icon name="angle-right" /> How do I get Cypress UI Coverage results when I record multiple runs in one CI build?
+
+Record each run with a distinct [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) and pass that same tag to the helper via `runTags`. For example, `cypress run --record --tag staging` is retrieved with `getUICoverageResults({ runTags: ['staging'] })`. Without tags, Cypress can't tell the runs apart and can't return a single run's results.
+
+### <Icon name="angle-right" /> Can I see which App Quality configuration or profile produced a Cypress UI Coverage report?
+
+Yes. The result object includes a `config` property containing the [App Quality Config](/ui-coverage/configuration/overview) that generated the report, resolved with any [Profile](/ui-coverage/configuration/profiles) that matched the run's tags. Read `config.value` to confirm exactly which rules were in effect and `config.updatedAt` for when that configuration last changed.
+
+## Troubleshooting
+
+### <Icon name="angle-right" /> Why is my UI Coverage score lower than I expect?
+
+A few sources of untested elements commonly lower a score without pointing to a real gap in your suite. Third-party widgets, such as chat launchers, cookie banners, and analytics overlays, are interactive elements each counted as untested; exclude them with [`elementFilters`](/ui-coverage/configuration/elementfilters). [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) to pages no test visits, including your own help center, marketing pages, and external sites, also count against the score; exclude their destinations with [`viewFilters`](/ui-coverage/configuration/viewfilters). Finally, one control [split into many](/ui-coverage/troubleshooting#One-element-is-reported-as-many) by an unstable attribute adds duplicate untested elements. See [the coverage score looks wrong](/ui-coverage/troubleshooting#The-coverage-score-looks-wrong) for the fixes.
+
+### <Icon name="angle-right" /> Why does an element my test interacts with still show as untested?
+
+Usually the command your test uses isn't one UI Coverage recognizes. It counts only a [default set of interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), so custom commands and plugin commands like `cypress-real-events`' `realClick` don't count until you add them with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) or [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands). A custom command also has to log a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) referencing the element it acts on. And if you added an `allowedInteractionCommands` rule, only the commands you listed count for the matching elements, so a command you left out, even a plain `click`, no longer marks them tested. See [an element you tested is shown as untested](/ui-coverage/troubleshooting#An-element-you-tested-is-shown-as-untested).
+
+### <Icon name="angle-right" /> I changed my UI Coverage configuration but the report didn't change. Why?
+
+Most often the run was processed before you saved: reports use the configuration that was applied when they were generated, so [regenerate](/ui-coverage/configuration/overview#Setting-configuration) the run to apply your current configuration. If it still has no effect, check whether an earlier rule matched first (the first matching rule wins for most properties), whether a [nested list replaced a root one](/ui-coverage/configuration/overview#Configuration-scope) instead of merging with it, or whether the configuration failed to save because a property was misspelled or misplaced. See [a configuration rule has no effect](/ui-coverage/troubleshooting#A-configuration-rule-has-no-effect) for the full checklist.
+
+### <Icon name="angle-right" /> How do I debug a UI Coverage report that looks wrong?
+
+Start by [regenerating the run](/ui-coverage/configuration/overview#Setting-configuration) so it reflects your current configuration, then match your symptom to a cause on the [Troubleshooting](/ui-coverage/troubleshooting) page, which covers duplicate elements, mis-grouped elements, tested elements shown as untested, configuration that has no effect, and unexpected scores. Because you can regenerate any past run, the fastest approach is to make one change, regenerate a recent run, and check the result before making the next.
+
 ## See also
 
+- [Troubleshooting UI Coverage](/ui-coverage/troubleshooting) maps common report problems to their causes and fixes.
+- [Results API](/ui-coverage/results-api) fetches a run's UI Coverage results in CI so you can enforce coverage standards.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every configuration option and what each one is for.
 - [Profiles](/ui-coverage/configuration/profiles) apply different configuration to runs based on run tags.
 - [Views](/ui-coverage/core-concepts/views) explains how URLs become views and how automatic grouping works.
 - [Element Identification](/ui-coverage/core-concepts/element-identification) covers how elements are identified and grouped across snapshots.
 - [Interactivity](/ui-coverage/core-concepts/interactivity) describes which commands count as coverage.
-- [Troubleshooting UI Coverage](/ui-coverage/troubleshooting) covers common report problems and their solutions.
