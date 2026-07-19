@@ -134,8 +134,8 @@ A command only counts when it logs a [snapshot](/ui-coverage/core-concepts/eleme
 
 Two configuration options let you change which commands count:
 
-- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) **extends** the built-in set everywhere, so custom commands or ones from third-party libraries (such as [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events)' `realClick`) count as coverage on any element.
-- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works **per element**: for elements matching a selector, only the commands you list count. This lets you both require a meaningful interaction (a chart that must be hovered, not just clicked) and credit commands the defaults ignore (an `assert` on a read-only badge).
+- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) extends the built-in set everywhere, so custom commands or ones from third-party libraries (such as [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events)' `realClick`) count as coverage on any element.
+- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works per element: for elements matching a selector, only the commands you list count. This lets you both require a meaningful interaction (a chart that must be hovered, not just clicked) and credit commands the defaults ignore (an `assert` on a read-only badge).
 
 For example, to require a hover rather than a plain click on a chart before it counts as tested:
 
