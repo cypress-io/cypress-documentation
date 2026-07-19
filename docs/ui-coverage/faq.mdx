@@ -23,6 +23,20 @@ No. UI Coverage requires no code changes or instrumentation. Reports are generat
 
 The score compares the number of tested interactive elements to the total number of interactive elements in your application. [Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit: the group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
 
+## Interactive elements
+
+### <Icon name="angle-right" /> What does Cypress UI Coverage count as an interactive element?
+
+UI Coverage follows the WHATWG definition of [interactive content](https://html.spec.whatwg.org/dev/dom.html#interactive-content), plus a few Cypress-specific rules. In short, an element counts when it is natively interactive (like `<a>`, `<button>`, or a form control), when it has an interactive ARIA `role` (such as `button` or `tab`), or when it is keyboard-focusable with `tabindex="0"` or higher. See [Interactive Elements](/ui-coverage/core-concepts/interactivity#Interactive-Elements) for the full rules.
+
+### <Icon name="angle-right" /> Why doesn't Cypress UI Coverage track my custom widget as an interactive element?
+
+UI Coverage detects interactivity from HTML semantics, not from event handlers, so a `<div>` with a click handler isn't recognized as interactive. The best fix is to give the control real semantics, such as using a `<button>` or adding an appropriate `role`, which also improves accessibility. When that isn't possible, add [`data-cy-ui-interactive="include"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) to the element so UI Coverage tracks it.
+
+### <Icon name="angle-right" /> How do I stop Cypress UI Coverage from tracking an element or a whole section?
+
+You have two options. In your markup, add [`data-cy-ui-interactive="exclude"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) to a single element or `data-cy-ui-interactive="exclude-all"` to a container to also exclude everything inside it (and `reset` to re-enable a subtree). To do the same from Cypress Cloud without changing application code, add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false`. Excluded elements are removed from both the report and the score.
+
 ## Views and URLs
 
 ### <Icon name="angle-right" /> Why do similar URLs show up as separate views?
@@ -58,6 +72,22 @@ Yes. List `include: true` rules for the URLs you want, followed by a catch-all r
 ### <Icon name="angle-right" /> Why is a page missing from my report?
 
 Views are created from URLs your tests actually visit, so a page that no test navigates to has no view. Check [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) in the report, where pages that are linked to but never visited appear. Also confirm that a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule isn't excluding the page unintentionally.
+
+### <Icon name="angle-right" /> What is an untested link in Cypress UI Coverage?
+
+An untested link is an `<a>` element whose destination URL is never visited during your run. Because a link points to a page, an untested link surfaces a flow your suite is missing even when no [view](/ui-coverage/core-concepts/views) exists for that page. Untested links count against your score unless you exclude their destination with [`viewFilters`](/ui-coverage/configuration/viewfilters). See [Untested Links](/ui-coverage/core-concepts/interactivity#Untested-Links).
+
+### <Icon name="angle-right" /> Why don't `mailto:` and `tel:` links appear in Cypress UI Coverage?
+
+Contact links, meaning anchors whose `href` uses `tel:`, `mailto:`, or `sms:`, aren't treated as interactive elements, so they never appear in reports and never count toward your score. If you need one tracked, add [`data-cy-ui-interactive="include"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) to the anchor.
+
+### <Icon name="angle-right" /> Why does Cypress UI Coverage count an external or non-`http` link as an untested link?
+
+Any `href` that resolves to a URL is treated as a link to a destination, including absolute URLs to external sites and schemes like `ftp:`, `file:`, `data:`, `blob:`, or a custom app scheme. If the destination is never visited, it appears as an untested link. Only `#`, `javascript:`, on-page fragments like `#pricing`, and the contact schemes above are excluded. Exclude destinations you don't intend to test with [`viewFilters`](/ui-coverage/configuration/viewfilters). See [Which hrefs count as links](/ui-coverage/core-concepts/interactivity#Which-hrefs-count-as-links).
+
+### <Icon name="angle-right" /> In Cypress UI Coverage, what's the difference between a hash route like `#/settings` and a page anchor like `#pricing` for untested links?
+
+The leading slash. A hash route (`#/settings`) is treated as a URL, so it can be a destination and can appear as an untested link if never visited. A page anchor, or document fragment (`#pricing`), points to a section of the current page, so it's an ordinary interactive element that must be interacted with to count as tested and never appears as an untested link.
 
 ## Element grouping and identification
 
