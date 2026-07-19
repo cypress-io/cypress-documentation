@@ -133,6 +133,16 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   best fit, and rarely more than one per paragraph.
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug.
+- **Bold vs. quotes for UI labels.** Reserve **bold** for real controls the
+  reader acts on in a walkthrough or tutorial, meaning actual buttons, links,
+  tabs, menu items, and flows in the Cypress Cloud or Cypress App UI (for
+  example, "open the **App Quality** tab" or "click **Record run**"). Bolding
+  these makes the clickable target scannable as the reader follows along. When a
+  UI label is only a hypothetical example in an illustrative scenario, not a real
+  control the reader is being told to use, put it in `"double quotes"` instead
+  (for example, an `"Add to cart"` button repeated on every card, or a `"Delete"`
+  button in a sample table). This keeps invented example labels visually distinct
+  from the real UI the tutorial navigates.
 
 ## Code blocks
 

@@ -84,6 +84,12 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
+- Use **bold** only for real UI controls the reader acts on in a walkthrough
+  (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
+  e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
+  examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
+  so invented examples stay distinct from the real UI a tutorial navigates. See
+  [Writing style](./AGENTS_REFERENCE.md#writing-style).
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
   instructions. They undermine a reader who is struggling and add nothing; state
   the step plainly instead.
