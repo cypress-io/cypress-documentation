@@ -69,6 +69,10 @@ A few things to keep in mind when writing rules:
 
 For all options and how rules are evaluated, including rule ordering and `documentScope`, see the [`elementFilters` reference](/ui-coverage/configuration/elementfilters).
 
+### Exclude elements from your markup instead
+
+When the team that owns the markup also owns the decision to exclude an element, you can do it in the application code instead of Cloud configuration. Add [`data-cy-ui-interactive="exclude"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) to a single element, or `data-cy-ui-interactive="exclude-all"` to a container to also exclude everything inside it. Prefer `elementFilters` when you want to manage exclusions centrally in Cypress Cloud without changing application code.
+
 ## Validate Ignored Elements
 
 After saving the configuration, regenerate a recent run from its **Properties** tab and review the UI Coverage report. The ignored elements should no longer appear, and your score should reflect only the elements you intend to test. There's no need to rerun your tests to see the effect of a configuration change.

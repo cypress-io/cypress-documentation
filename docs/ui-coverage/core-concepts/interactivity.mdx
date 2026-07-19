@@ -1,37 +1,101 @@
 ---
 title: How UI Coverage detects interactive elements
-description: 'UI Coverage uses a set of rules, based on HTML semantics, WHATWG standards, as well as some additional rules defined by Cypress, to determine which elements are interactive.'
+description: 'Understand what drives your UI Coverage score: the interactive elements Cypress tracks, the commands that mark them as tested, and the links to unvisited pages it flags, plus the overrides that make each one match your app.'
 sidebar_label: Interactivity
 sidebar_position: 10
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# Interactivity
+# How UI Coverage measures interactivity
+
+Your UI Coverage score is built from the interactive parts of your app: the buttons, inputs, links, and controls a user can actually touch. To read your report with confidence, it helps to know the three rules that shape it:
+
+1. **An element is counted when it is interactive**, which forms the denominator of your score.
+2. **An interactive element is marked as tested when a recognized Cypress command targets it**, which forms the numerator.
+3. **A link is flagged as untested when its destination is never visited** during your run.
+
+Put simply, your score is the share of interactive elements your tests exercise: **tested ÷ total**, where [grouped elements](/ui-coverage/core-concepts/element-grouping) count once. See [how the score is calculated](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) for the details.
+
+This page covers all three, along with the configuration and markup overrides you can use to make each one match your application. All three are computed from [Test Replay](/cloud/features/test-replay) data, so they work automatically with no setup or instrumentation. Reach for the overrides only when the defaults don't fit.
+
+<DocsImage
+  src="/img/ui-coverage/core-concepts/how-ui-coverage-fits-together.svg"
+  alt="Flow diagram: Test Replay captures DOM snapshots, UI Coverage analyzes each one to detect interactive elements (the total) and the interaction commands that mark them tested (the numerator), and flags untested links, all feeding the coverage score and report."
+  caption="How UI Coverage turns a recorded run into a coverage score."
+  noBorder="true"
+/>
 
 ## Interactive Elements
 
-UI Coverage determines interactivity based on a combination of HTML semantics, [WHATWG standards](https://html.spec.whatwg.org/dev/dom.html#interactive-content), and Cypress-specific rules. Interactive elements included in UI Coverage are:
+UI Coverage follows the WHATWG definition of [interactive content](https://html.spec.whatwg.org/dev/dom.html#interactive-content), extended with a few Cypress-specific rules. An element is counted as interactive when it falls into any of these categories:
 
-- **Implicit interactive roles**: Elements with a tag of `a`, `button`, `input`, `select`, `textarea`, etc.
-- **Explicit interactive roles**: Elements with a `role` attribute set to values like `button`, `checkbox`, `radio`, `tab`, `textbox`, etc.
-- **Tab-navigable elements**: Elements with a `tabindex` attribute set to `>= 0`.
+- **Natively interactive elements**: elements the browser already treats as interactive, such as `<a>` links, `<button>`, form controls like `<input>` and `<select>`, and any element that is `contenteditable`.
+- **Elements with an interactive ARIA role**: an explicit `role` such as `button`, `checkbox`, `tab`, or `menuitem`, or an `aria-haspopup` value that opens a menu or dialog.
+- **Tab-navigable elements**: any element made keyboard-focusable with a `tabindex` of `0` or greater.
 
-These elements are tracked for interaction to provide actionable insights into test coverage.
+Contact links are the one deliberate exception: anchors whose `href` uses `tel:`, `mailto:`, or `sms:` are not treated as interactive. See [Untested Links](#Untested-Links) for how the rest of an anchor's `href` is handled.
 
-### Customizing interactive elements
+Because detection is based on semantics rather than event handlers, a real `<button>` is recognized automatically, while a `<div>` wired up with a click handler is not, until you give it interactive semantics.
 
-Custom interactive elements that do not meet the criteria above can also be declared with a `data-cy-ui-interactive="include"` attribute, used as follows:
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-view-drilldown.png"
+  alt="A UI Coverage report drilldown showing an interactive button highlighted in a snapshot, with its interactions listed alongside"
+  caption="UI Coverage finds each interactive element in a snapshot and tracks whether your tests exercise it."
+/>
+
+### Overriding interactive elements with `data-cy-ui-interactive`
+
+When the automatic rules don't match your app, the `data-cy-ui-interactive` attribute lets you override them directly in your markup. It accepts four values, matched case-insensitively:
+
+| Value         | Effect                                                                           |
+| ------------- | -------------------------------------------------------------------------------- |
+| `include`     | Treats the element as interactive even when it wouldn't be otherwise.            |
+| `exclude`     | Removes the element from UI Coverage, even when it's normally interactive.       |
+| `exclude-all` | Removes the element and every element nested inside it.                          |
+| `reset`       | Re-enables tracking for a subtree nested inside an element marked `exclude-all`. |
+
+**Include a custom control** the browser doesn't recognize:
 
 ```html
-<div data-cy-ui-interactive="include">Custom interactive widget</div>
+<!-- A custom drag handle built from a div -->
+<div role="presentation" data-cy-ui-interactive="include">Reorder</div>
 ```
 
-It most cases we recommend **not** using this override, and instead updating the HTML to be something the browser would already consider to be interactive. This will likely produce better overall behavior, including for accessibility purposes. `data-cy-ui-interactive` is a fallback for situations where that may not be possible.
+**Exclude a whole section** while keeping one control inside it tracked:
 
-## Interaction Commands
+```html
+<section data-cy-ui-interactive="exclude-all">
+  <!-- Nothing in this experimental panel is tracked... -->
+  <button>Beta action</button>
+  <div data-cy-ui-interactive="reset">
+    <!-- ...except controls inside here -->
+    <button>Save feedback</button>
+  </div>
+</section>
+```
 
-Interactive elements are marked as "tested" when they are interacted with using specific Cypress commands. These include:
+Excluding an element removes it from UI Coverage entirely: it no longer counts as an interactive element, and if it's a link, it also stops appearing as an untested link, so neither affects your score.
+
+In most cases we recommend **not** using `include`, and instead updating the HTML to be something the browser already treats as interactive, such as a real `<button>` in place of a clickable `<div>`. That produces better overall behavior, including for accessibility, since the same semantics that let assistive technology operate a control are what UI Coverage reads. `data-cy-ui-interactive` is a fallback for situations where that isn't possible.
+
+To exclude elements without editing your application's markup, [`elementFilters`](/ui-coverage/configuration/elementfilters) does the same job from Cypress Cloud configuration. Prefer it when the team that manages configuration isn't the team that owns the markup:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": ".intercom-launcher, .intercom-launcher *",
+      "include": false,
+      "comment": "Third-party chat widget, not owned by our tests"
+    }
+  ]
+}
+```
+
+## How elements get marked tested {#Interaction-Commands}
+
+An interactive element is marked as **tested** when a recognized Cypress command targets it. UI Coverage recognizes this built-in set of commands:
 
 - `blur`
 - `check`
@@ -49,41 +113,133 @@ Interactive elements are marked as "tested" when they are interacted with using 
 - `type`
 - `uncheck`
 
-By ensuring that at least one of these commands is used on every interactive element, UI Coverage accurately reflects your test coverage.
+Using at least one of them on every interactive element is what drives your coverage score, so a test flow naturally marks the elements it exercises as tested:
+
+```js
+// Each command marks its target element as tested
+cy.get('[data-cy="signup-email"]').type('sarah@example.com')
+cy.get('[data-cy="signup-plan-pro"]').check()
+cy.get('[data-cy="signup-submit"]').click()
+```
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-tested-elements-with-high-interactions.png"
+  alt="The Tested elements list in a UI Coverage report, with Interactions and Tests columns counting how often each element was exercised"
+  caption="An element moves to the Tested list once a recognized command interacts with it, with the interaction count shown per element."
+/>
+
+A command only counts when it logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that highlights the element it acts on, which is how UI Coverage knows which element to credit. Built-in commands do this automatically; a custom command must do it explicitly (see [Requirements for a custom command](/ui-coverage/configuration/additionalinteractioncommands#Requirements-for-a-custom-command)).
 
 ### Customizing interaction commands
 
-Configuration is available to support adding [additional interaction commands](/ui-coverage/configuration/additionalinteractioncommands), such as custom commands or ones from third-party libraries, to count towards UI Coverage scores.
+Two configuration options let you change which commands count:
 
-It is also possible to adjust the [allowed commands](/ui-coverage/configuration/allowedinteractioncommands) for specific elements, to restrict or expand the commands that are accepted as coverage for specific elements.
+- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) extends the built-in set everywhere, so custom commands or ones from third-party libraries (such as [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events)' `realClick`) count as coverage on any element.
+- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works per element: for elements matching a selector, only the commands you list count. This lets you both require a meaningful interaction (a chart that must be hovered, not just clicked) and credit commands the defaults ignore (an `assert` on a read-only badge).
+
+For example, to require a hover rather than a plain click on a chart before it counts as tested:
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "allowedInteractionCommands": [
+      {
+        "selector": "[data-cy='revenue-chart']",
+        "commands": ["trigger"],
+        "comment": "Only a hover (dispatched via trigger) proves the tooltip works"
+      }
+    ]
+  }
+}
+```
+
+See [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) for a side-by-side comparison.
 
 ## Untested Links
 
-UI Coverage tracks links (`<a>` elements) whose destination URLs are never visited during testing.
+UI Coverage tracks links (`<a>` elements) whose destination URLs are never visited during testing. A link to a page no test navigates to is a coverage gap even when no [view](/ui-coverage/core-concepts/views) exists for that page, so untested links surface the flows your suite is missing, not just the elements it skipped.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-link-view.png"
+  alt="A UI Coverage snapshot with an untested link highlighted in red in the rendered page, showing it had no interactions during the run"
+  caption="An untested link highlighted in the report: its destination was never visited during the run."
+/>
 
 ### Which hrefs count as links
 
-The `href` value determines how UI Coverage treats each anchor:
+The `href` value determines how UI Coverage treats each anchor. At a glance:
 
-- **URLs**: An `href` that resolves to a URL is treated as a link to a destination. This includes relative paths like `/settings`, hash routes like `#/settings`, and absolute URLs, including links to entirely external websites. If the destination is never visited, the link appears as an untested link and counts against your score, unless a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule excludes the destination URL.
-- **Document fragments**: An `href` that points to a fragment on the current page, such as `#pricing`, makes the anchor an ordinary interactive element. It must be interacted with to count as tested, but it never appears as an untested link.
-- **`#` and `javascript:` values**: Anchors with `href="#"` or a `javascript:` value are also treated as ordinary interactive elements rather than links to a destination.
-- **`tel:`, `mailto:`, and `sms:` values**: Contact links are not considered interactive elements. They don't appear in reports and don't count toward your coverage score.
+| `href` example                                             | Interactive element? | Can be an untested link? |
+| ---------------------------------------------------------- | -------------------- | ------------------------ |
+| `/settings`, `#/settings`, `https://external.com`, `blob:` | Yes                  | Yes                      |
+| `#pricing` (page fragment)                                 | Yes                  | No                       |
+| `#` or `javascript:`                                       | Yes                  | No                       |
+| Empty or missing `href`                                    | Yes                  | No                       |
+| `tel:`, `mailto:`, `sms:`                                  | No                   | No                       |
 
-For each untested link, detailed information is available:
+The three cases in detail:
 
-### Referrers
+#### 1. Counted as untested links and interactive elements
 
-The **Referrers** section identifies views that contain links to the untested destination, helping you:
+An `href` that resolves to a URL is treated as a link to a destination, and the anchor is also an ordinary interactive element. This covers:
 
-- Pinpoint untested areas referenced from these links.
-- Understand navigation paths leading to untested sections.
-- Gain context on where these links appear within your application.
+- **URLs**: relative paths like `/settings`, hash routes like `#/settings`, and absolute URLs, including links to entirely external websites.
+- **Other schemes**: any other scheme, such as `ftp:`, `file:`, `data:`, `blob:`, or a custom app scheme, treated the same as an `http(s)` URL.
 
-### URLs
+The anchor counts as tested once a test either interacts with it or visits its destination. If the destination is never visited, the link appears as an untested link and counts against your score, unless a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule excludes the destination URL.
 
-The **URLs** section groups similar patterns for dynamic routing. For instance, links to `/users/1`, `/users/2`, and `/users/3` are grouped as /users/\*. This grouping aids in:
+#### 2. Counted only as interactive elements
 
-- Understanding the scope of dynamic routes in your application
-- Viewing the count and variations of a URL pattern.
-- Writing configuration rules to handle these patterns effectively.
+These anchors are ordinary interactive elements that must be interacted with to count as tested. They point to no separate destination, so they never appear as untested links:
+
+- **Document fragments**: an `href` pointing to a fragment on the current page, such as `#pricing`.
+- **`#` and `javascript:` values**: anchors with `href="#"` or a `javascript:` value.
+- **Empty or missing `href`**: an anchor with no usable `href` value.
+
+#### 3. Not counted in UI Coverage
+
+- **`tel:`, `mailto:`, and `sms:` values**: contact links are not considered interactive elements. They don't appear in reports and don't count toward your coverage score. To track one anyway, add [`data-cy-ui-interactive="include"`](#Overriding-interactive-elements-with-data-cy-ui-interactive) to the anchor.
+
+### Exclude link destinations from your score
+
+To keep destinations you'll never test, such as external sites, your marketing pages, or a status page, from counting against your score, exclude them by URL:
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "https://status.example.com/*",
+      "include": false,
+      "comment": "External status page, linked from the footer but not owned by our team"
+    }
+  ]
+}
+```
+
+Excluding a destination with `viewFilters` also removes the links that point to it, so they stop appearing as untested links. See [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) for the full workflow. To exclude a single link from your markup instead, add [`data-cy-ui-interactive="exclude"`](#Overriding-interactive-elements-with-data-cy-ui-interactive) to the anchor.
+
+### Untested link details
+
+Expanding an untested link in the report reveals where it came from and which destinations it covers, so you can decide whether to test it or exclude it. That detail is organized into two tabs, **Referrers** and **URLs**.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-links.png"
+  alt="The Untested links list in Cypress Cloud with one link expanded to show its Referrers and URLs tabs"
+/>
+
+#### Referrers
+
+The **Referrers** tab lists the views that contain a link to the untested destination, so you can trace it back to the pages that link to it and the flows that lead there.
+
+#### URLs
+
+The **URLs** tab groups similar destinations for dynamic routing. For instance, links to `/users/1`, `/users/2`, and `/users/3` are grouped as `/users/*`. Only path segments that are numbers or UUID-like IDs are treated as dynamic, so `/users/alice` and `/users/bob` stay separate. The grouping shows the scope and variations of a dynamic route, and the pattern it surfaces is the one to use when writing [`views`](/ui-coverage/configuration/views) and [`viewFilters`](/ui-coverage/configuration/viewfilters) rules.
+
+## See also
+
+- [Element Identification](/ui-coverage/core-concepts/element-identification): how UI Coverage gives each interactive element a stable identity across snapshots.
+- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands): count custom or plugin commands as interactions everywhere.
+- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands): control which commands count for specific elements.
+- [`elementFilters`](/ui-coverage/configuration/elementfilters): remove elements from reports and scores using configuration.
+- [`viewFilters`](/ui-coverage/configuration/viewfilters): exclude views and link destinations from reports.
+- [UI Coverage FAQ](/ui-coverage/faq): common questions about interactive elements, interaction commands, and links.
