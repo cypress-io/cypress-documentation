@@ -148,59 +148,41 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 
 ## AI prompts: `<CopyPrompt>` vs a code block
 
-Some examples are AI prompts the reader feeds to an agent; others are code,
-commands, or `cy.prompt()` steps. Pick the presentation by whether the reader
-would **copy the text into an AI agent and get value from it in their own
-project**.
+Pick by whether the reader would **copy the text into an AI agent and get value
+from it in their own project**: reusable AI prompt → `<CopyPrompt>`; everything
+else → code block.
 
-Use **`<CopyPrompt>`** (a card with a one-click **Copy prompt** button) when:
+Use **`<CopyPrompt>`** (a card with a **Copy prompt** button) for:
 
-- The example is an AI prompt a reader could copy, paste into an agent, and run
-  directly — it generalizes to their own work. e.g. _"Evaluate my last run on
-  this branch and summarize the failures."_
-- The example is a standard AI skill, instruction, or rule that could live in an
-  agent/rules/skills file (a `CLAUDE.md`, `.cursorrules`, a saved skill or custom
-  instruction, etc.).
+- A prompt the reader can paste into an agent and run as-is, e.g. _"Evaluate my
+  last run on this branch and summarize the failures."_
+- A reusable AI skill, instruction, or rule that could live in an agent file
+  (`CLAUDE.md`, `.cursorrules`, a saved skill or custom instruction).
 
-Use a **fenced code block** when:
+Use a **fenced code block** for:
 
-- The text is an AI prompt that is example-specific and gives no reusable value
-  copied verbatim — it only illustrates syntax, e.g. a step like
+- An example-specific prompt that only illustrates syntax, e.g. a step like
   _"Click on the 'Add to cart' button"_.
-- The snippet is code (TypeScript, JavaScript, YAML, JSON, HTML, etc.),
-  configuration, or CI setup that is not AI instructions.
-- It is an example terminal command or terminal output.
-- It is a Mermaid diagram, an example file/folder tree, or a code diff.
-- It is any other literal artifact the reader copies as-is: an env-var block, an
-  API request/response payload, a GraphQL query, a regex, a URL template, or an
-  error message shown for reference.
-
-Rule of thumb: **copyable-and-reusable AI prompt → `<CopyPrompt>`; everything
-else → code block.**
+- Code, config, or CI (TypeScript, JavaScript, YAML, JSON, HTML, …) that is not
+  AI instructions.
+- Terminal commands or output, Mermaid diagrams, file/folder trees, and diffs.
+- Any literal artifact copied as-is: env-var blocks, API payloads, GraphQL
+  queries, regexes, URL templates, or error messages shown for reference.
 
 ### `<CopyPrompt>` authoring rules
 
-`CopyPrompt` is registered globally in `src/theme/MDXComponents.js`, so **no
-import** is needed in `.mdx`. Props: `prompt` (required), `title`, `subtext`,
-`defaultExpanded`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx` and the
-migration guides under `docs/app/guides/migration/`.
+Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
+(required), `title`, `subtext`, `defaultExpanded`. Live examples:
+`docs/cloud/integrations/cloud-mcp.mdx` and `docs/app/guides/migration/`.
 
-- **No quotes.** Do not wrap the prompt in `"…"`; the card renders the text
-  verbatim.
-- **No tool calls** unless the reader was explicitly told to use one. Prefer
-  _"Find all failing tests on this branch"_ over
-  _"`cypress_get_runs` Find all failing tests…"_.
-- **Expansion.** Default to `defaultExpanded` (prompt visible on load, no
-  Show/Hide toggle). Omit `defaultExpanded` for any prompt longer than **350
-  characters** so it renders collapsed behind a **Show prompt** toggle. (When
-  `defaultExpanded` is set the toggle is hidden — there is nothing to collapse.)
-- **Formatting.** For longer prompts, use newlines and bullet/numbered lists
-  inside the `prompt` template string. The card preserves line breaks
-  (`white-space: pre-wrap`), so structure makes multi-step prompts easier to
-  digest. Short one- or two-sentence prompts can stay on a single line and wrap
-  naturally.
-
-Short, expanded prompt:
+- **No quotes** around the prompt — the card renders it verbatim.
+- **No tool calls** unless explicitly required: prefer _"Find all failing tests
+  on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
+- **Expand by default** (`defaultExpanded`); omit it for prompts over **350
+  characters** so they collapse behind a **Show prompt** toggle.
+- **Format longer prompts** with newlines and bullet/numbered lists in the
+  `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
+  prompts stay on one line and wrap.
 
 ```mdx
 <CopyPrompt
@@ -211,8 +193,7 @@ Short, expanded prompt:
 />
 ```
 
-Longer prompt (over 350 characters, so no `defaultExpanded` — it renders
-collapsed — with newlines and a numbered list for readability):
+For a prompt over 350 characters, drop `defaultExpanded` and add structure:
 
 ```mdx
 <CopyPrompt
