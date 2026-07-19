@@ -19,8 +19,9 @@ const DEFAULT_SUBTEXT =
 
 /**
  * Card offering a ready-made prompt for the reader's AI coding assistant,
- * e.g. to walk a project through a version migration. data-sanitize keeps
- * the card out of the LLM markdown export.
+ * e.g. to walk a project through a version migration. Only the interactive
+ * controls carry data-sanitize, so the prompt (and its title/subtext) still
+ * ship in the LLM markdown export while the buttons are stripped.
  */
 export default function CopyPrompt({
   prompt,
@@ -70,7 +71,7 @@ export default function CopyPrompt({
   }
 
   return (
-    <section className={s.copyPrompt} data-sanitize="">
+    <section className={s.copyPrompt}>
       <p className={s.title}>
         <Icon
           name="general-sparkle-triple"
@@ -80,7 +81,7 @@ export default function CopyPrompt({
         {title}
       </p>
       <p className={s.subtext}>{subtext}</p>
-      <div className={s.actions}>
+      <div className={s.actions} data-sanitize="">
         <Button
           variant={
             colorMode === 'dark' ? 'outline-indigo-dark-mode' : 'outline-indigo'
