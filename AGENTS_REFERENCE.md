@@ -172,8 +172,8 @@ Use a **fenced code block** for:
 ### `<CopyPrompt>` authoring rules
 
 Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
-(required), `title`, `subtext`, `defaultExpanded`. Live examples:
-`docs/cloud/integrations/cloud-mcp.mdx` and `docs/app/guides/migration/`.
+(required), `title`, `subtext`, `defaultExpanded`, `excludeFromLlmExport`. Live
+examples: `docs/cloud/integrations/cloud-mcp.mdx` and `docs/app/guides/migration/`.
 
 - **No quotes** around the prompt — the card renders it verbatim.
 - **No tool calls** unless explicitly required: prefer _"Find all failing tests
@@ -183,6 +183,10 @@ Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
 - **Format longer prompts** with newlines and bullet/numbered lists in the
   `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
   prompts stay on one line and wrap.
+- **Ships in the LLM export by default** (the prompt is reusable content). Add
+  `excludeFromLlmExport` only when the prompt tells the agent to read this same
+  page (e.g. the migration guides), so the export does not duplicate the page's
+  own content back to it.
 
 ```mdx
 <CopyPrompt

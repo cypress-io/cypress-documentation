@@ -11,6 +11,13 @@ interface CopyPromptProps {
   subtext?: string
   /** Show the prompt text on load instead of behind the Show/Hide toggle. */
   defaultExpanded?: boolean
+  /**
+   * Strip the entire card — prompt included — from the LLM markdown export.
+   * Use when the prompt just tells the agent to read this page, so exporting
+   * it would duplicate the page's own content. By default only the buttons are
+   * stripped and the prompt still ships in the export.
+   */
+  excludeFromLlmExport?: boolean
 }
 
 const DEFAULT_TITLE = 'Do this migration with your AI assistant'
@@ -19,15 +26,17 @@ const DEFAULT_SUBTEXT =
 
 /**
  * Card offering a ready-made prompt for the reader's AI coding assistant,
- * e.g. to walk a project through a version migration. Only the interactive
- * controls carry data-sanitize, so the prompt (and its title/subtext) still
- * ship in the LLM markdown export while the buttons are stripped.
+ * e.g. to walk a project through a version migration. By default only the
+ * interactive controls carry data-sanitize, so the prompt (and its
+ * title/subtext) still ship in the LLM markdown export while the buttons are
+ * stripped. Pass `excludeFromLlmExport` to strip the whole card instead.
  */
 export default function CopyPrompt({
   prompt,
   title = DEFAULT_TITLE,
   subtext = DEFAULT_SUBTEXT,
   defaultExpanded = false,
+  excludeFromLlmExport = false,
 }: CopyPromptProps): React.JSX.Element {
   const [copied, setCopied] = useState(false)
   const [expanded, setExpanded] = useState(defaultExpanded)
@@ -71,7 +80,13 @@ export default function CopyPrompt({
   }
 
   return (
-    <section className={s.copyPrompt}>
+    <section
+      className={s.copyPrompt}
+      // When excluded, sanitize the whole card so the prompt is not duplicated
+      // into the LLM export (used when the prompt just tells the agent to read
+      // this page). Otherwise only the buttons below are stripped.
+      data-sanitize={excludeFromLlmExport ? '' : undefined}
+    >
       <p className={s.title}>
         <Icon
           name="general-sparkle-triple"
