@@ -110,7 +110,11 @@ This usually means the element's identifying attributes change between [snapshot
 
 ### <Icon name="angle-right" /> Which attributes does UI Coverage use to identify elements?
 
-UI Coverage checks a prioritized list of attributes on each element: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, in that order, falling back to `id` and `name` when none of those are present. The first attribute found with a usable value identifies the element. See [Element Identification](/ui-coverage/core-concepts/element-identification) for how identification works across snapshots.
+UI Coverage checks a prioritized list of attributes on each element and uses the first one present with a usable value. In order, that's: any attributes you add to [`significantAttributes`](/ui-coverage/configuration/significantattributes), then the default test attributes `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, falling back to `id` and `name` when none of those are present. See [Element Identification](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified) for the full priority list and how identification works across snapshots.
+
+### <Icon name="angle-right" /> How does UI Coverage identify an element that has no test attribute or id?
+
+When an element has none of the [identifying attributes](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified), UI Coverage falls back to identifying it by its structure and position in the DOM. Because that identity is less stable than an attribute you control, adding a stable `data-cy` (or similar) attribute is the reliable fix. See [When an element has no identifying attribute](/ui-coverage/core-concepts/element-identification#When-an-element-has-no-identifying-attribute).
 
 ### <Icon name="angle-right" /> How do I make UI Coverage use my own attribute to identify elements?
 
