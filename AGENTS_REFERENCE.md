@@ -172,12 +172,17 @@ Use a **fenced code block** for:
 ### `<CopyPrompt>` authoring rules
 
 Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
-(required), `title`, `subtext`, `defaultCollapsed`, `excludeFromLlmExport`. Live
-examples: `docs/cloud/integrations/cloud-mcp.mdx` and `docs/app/guides/migration/`.
+(required), `title`, `subtext`, `hideTitle`, `defaultCollapsed`,
+`excludeFromLlmExport`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx`
+and `docs/app/guides/migration/`.
 
 - **No quotes** around the prompt — the card renders it verbatim.
 - **No tool calls** unless explicitly required: prefer _"Find all failing tests
   on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
+- **Give each card a Markdown heading** when it's one of several in a section
+  (e.g. a list of example prompts), so the workflow shows up in the page's table
+  of contents. Put a `###` heading above the card and pass `hideTitle` (keep
+  `title` for analytics) so the heading, not the card, provides the label.
 - **Expanded by default** (no prop needed); add `defaultCollapsed` for prompts
   over **350 characters** so they sit behind a **Show prompt** toggle.
 - **Format longer prompts** with newlines and bullet/numbered lists in the

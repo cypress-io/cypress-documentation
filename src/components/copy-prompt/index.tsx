@@ -9,6 +9,12 @@ interface CopyPromptProps {
   prompt: string
   title?: string
   subtext?: string
+  /**
+   * Hide the card's own title row. Use when the card sits directly under a
+   * Markdown heading that already names it (so the heading, not the card,
+   * feeds the page's table of contents). `title` is still used for analytics.
+   */
+  hideTitle?: boolean
   /** Hide the prompt behind a Show/Hide toggle instead of showing it on load. */
   defaultCollapsed?: boolean
   /**
@@ -35,6 +41,7 @@ export default function CopyPrompt({
   prompt,
   title = DEFAULT_TITLE,
   subtext = DEFAULT_SUBTEXT,
+  hideTitle = false,
   defaultCollapsed = false,
   excludeFromLlmExport = false,
 }: CopyPromptProps): React.JSX.Element {
@@ -87,14 +94,16 @@ export default function CopyPrompt({
       // this page). Otherwise only the buttons below are stripped.
       data-sanitize={excludeFromLlmExport ? '' : undefined}
     >
-      <p className={s.title}>
-        <Icon
-          name="general-sparkle-triple"
-          className={s.sparkle}
-          aria-hidden="true"
-        />
-        {title}
-      </p>
+      {!hideTitle && (
+        <p className={s.title}>
+          <Icon
+            name="general-sparkle-triple"
+            className={s.sparkle}
+            aria-hidden="true"
+          />
+          {title}
+        </p>
+      )}
       <p className={s.subtext}>{subtext}</p>
       <div className={s.actions} data-sanitize="">
         <Button
