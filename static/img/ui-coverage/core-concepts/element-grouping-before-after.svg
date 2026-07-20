@@ -4,7 +4,7 @@
 
   <defs>
     <marker id="eg-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#94A3B8"/>
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748B"/>
     </marker>
   </defs>
 
@@ -62,7 +62,7 @@
   <!-- ============ MIDDLE: transform ============ -->
   <text x="460" y="212" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">UI Coverage</text>
   <text x="460" y="226" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">groups them</text>
-  <line x1="392" y1="244" x2="528" y2="244" stroke="#94A3B8" stroke-width="2" marker-end="url(#eg-arrow)"/>
+  <line x1="392" y1="244" x2="528" y2="244" stroke="#64748B" stroke-width="2" marker-end="url(#eg-arrow)"/>
 
   <!-- ============ RIGHT: with grouping ============ -->
   <text x="716" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#0F172A">With grouping</text>
@@ -70,13 +70,13 @@
   <rect x="536" y="104" width="360" height="252" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
 
   <!-- single group -->
-  <rect x="576" y="176" width="280" height="108" rx="12" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <rect x="576" y="176" width="280" height="108" rx="12" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
   <!-- check badge -->
-  <circle cx="606" cy="212" r="11" fill="#10B981"/>
+  <circle cx="606" cy="212" r="11" fill="#047857"/>
   <path d="M600.5 212 l4 4 l7 -8" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="626" y="217" font-size="15" font-weight="700" fill="#065F46">Add to Cart Button</text>
   <!-- count badge -->
-  <rect x="792" y="198" width="44" height="26" rx="13" fill="#10B981"/>
+  <rect x="792" y="198" width="44" height="26" rx="13" fill="#047857"/>
   <text x="814" y="216" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">&#215;6</text>
   <line x1="596" y1="240" x2="836" y2="240" stroke="#A7F3D0" stroke-width="1.5"/>
   <text x="716" y="264" text-anchor="middle" font-size="12" fill="#047857">One interaction marks all six tested</text>
