@@ -91,6 +91,22 @@ The leading slash. A hash route (`#/settings`) is treated as a URL, so it can be
 
 ## Element grouping and identification
 
+### <Icon name="angle-right" /> How does UI Coverage group elements automatically?
+
+Out of the box, with no Cypress Cloud configuration, UI Coverage combines elements it recognizes as variations of the same control. It groups interactive elements that share the same [identifying attribute](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified) value (such as a `data-cy="favorite"` button repeated on every card), form controls with their `<label>`, controls in the same position across table and grid rows, repeated structures that share a tag and class hierarchy, and links that resolve to the same [view](/ui-coverage/core-concepts/views). Automatic grouping needs at least two similar elements; a control that appears once stays on its own. See [Element Grouping](/ui-coverage/core-concepts/element-grouping#Automatic-grouping) for the full set of rules.
+
+### <Icon name="angle-right" /> How does grouping affect my UI Coverage score?
+
+A [group](/ui-coverage/core-concepts/element-grouping) counts once toward your total element count in Cypress Cloud, and interacting with any one member marks the whole group as tested. So a list of 50 identical "Remove" buttons contributes a single unit to your score, and one test that removes one item covers all 50. This keeps repeated elements from inflating your total and keeps a single untested set from sinking your score for no real gap in testing.
+
+### <Icon name="angle-right" /> Why does my UI Coverage report show one group instead of every repeated element?
+
+That's grouping working as intended. When UI Coverage detects that many elements are copies of the same control, such as a "Delete" button on every table row, it collapses them into one named group so the report stays readable and the score reflects distinct behaviors rather than raw element counts. If the automatic grouping is combining elements you'd rather see separately, split them apart with an [`elementGroups`](/ui-coverage/configuration/elementgroups) rule in your Cypress Cloud configuration.
+
+### <Icon name="angle-right" /> Which UI Coverage grouping mechanism wins when more than one could apply?
+
+The [`data-cy-ui-group` markup attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) takes priority over everything, then [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration rules in Cypress Cloud, and finally the [automatic grouping rules](/ui-coverage/core-concepts/element-grouping#Automatic-grouping) apply to whatever no attribute or rule claimed. Elements removed by [`elementFilters`](/ui-coverage/configuration/elementfilters) are never grouped at all.
+
 ### <Icon name="angle-right" /> What happens if two elementGroups rules match the same element?
 
 The first matching rule in your [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration wins, so list specific rules before broad catch-all rules. A rule that appears after another rule matching the same elements never applies to them.
