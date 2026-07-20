@@ -14,6 +14,7 @@ Applications reuse the same control in many places. A product listing renders an
 UI Coverage solves this by grouping elements that behave the same way. A group counts **once** toward your coverage score, and interacting with **any** element in the group marks the whole group as tested. Fifty untested product cards become one clearly named group that a single test can cover.
 
 <DocsImage
+  noBorder
   src="/img/ui-coverage/core-concepts/element-grouping-before-after.svg"
   alt="A before-and-after comparison of element grouping. On the left, without grouping, six identical 'Add to cart' buttons each appear as their own untested element, totaling six elements and six untested. An arrow labeled 'UI Coverage groups them' points to the right. On the right, with grouping, the six buttons collapse into a single 'Add to Cart Button' group that is counted once, where one interaction marks all six of them tested."
 />
