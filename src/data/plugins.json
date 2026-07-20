@@ -140,7 +140,7 @@
       "description": "Connect AI coding assistants and agents to Cypress so they write, understand, and debug tests more reliably. See our <a target=\"_blank\" href=\"/app/tooling/ai-skills\">Cypress AI Skills</a> guide to get started.",
       "plugins": [
         {
-          "name": "Cypress MCP",
+          "name": "Cloud MCP",
           "description": "Model Context Protocol server that connects AI coding assistants directly to Cypress Cloud, giving them access to your application's health and test stability data.",
           "link": "/cloud/integrations/cloud-mcp",
           "keywords": ["ai", "mcp", "cloud", "agents"],

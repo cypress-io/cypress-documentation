@@ -25,7 +25,6 @@ import DocsVideo from '@site/src/components/docs-video'
 import DocumentDomainWorkaround from '@site/docs/partials/_document-domain-workaround.mdx'
 import E2EOnlyBadge from '@site/src/components/e2e-only-badge'
 import E2EOrCtTabs from '@site/src/components/e2e-or-ct-tabs'
-import ElementFilters from '@site/docs/partials/_elementfilters.mdx'
 import VueSyntaxTabs from '@site/src/components/vue-syntax-tabs'
 import HeaderAssertions from '@site/docs/partials/_header-assertions.mdx'
 import InterceptAliasIndex from '@site/docs/partials/_intercept-alias-index.mdx'
@@ -39,14 +38,20 @@ import InvertedContainsSelection from '@site/docs/partials/_inverted-contains-se
 import ProductHeading from '@site/src/components/product-heading'
 import Profiles from '@site/docs/partials/_profiles.mdx'
 import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
-import SignificantAttributes from '@site/docs/partials/_significantattributes.mdx'
+import SignificantAttributesValidation from '@site/docs/partials/_significantattributes-validation.mdx'
+import SitemapScanExample from '@site/docs/partials/_sitemap-scan-example.mdx'
 import SourceMaps from '@site/docs/partials/_source-maps.mdx'
 import SupportFileConfiguration from '@site/docs/partials/_support-file-configuration.mdx'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 import ThenShouldAndDifference from '@site/docs/partials/_then-should-and-difference.mdx'
 import WarningSetupNodeEvents from '@site/docs/partials/_warning-setup-node-events.mdx'
-import ViewFilters from '@site/docs/partials/_viewfilters.mdx'
+import ViewFiltersSyntax from '@site/docs/partials/_viewfilters-syntax.mdx'
+import ViewFiltersOptions from '@site/docs/partials/_viewfilters-options.mdx'
+import ViewFiltersMatchingAndValidation from '@site/docs/partials/_viewfilters-matching-and-validation.mdx'
+import ViewFiltersExampleThirdParty from '@site/docs/partials/_viewfilters-example-third-party.mdx'
+import ViewFiltersSharedExamples from '@site/docs/partials/_viewfilters-shared-examples.mdx'
+import ViewFiltersTroubleshootingValidationErrors from '@site/docs/partials/_viewfilters-troubleshooting-validation-errors.mdx'
 import Views from '@site/docs/partials/_views.mdx'
 import LineBreak from '@site/src/components/line-break'
 import OsTabs from '@site/src/components/os-tabs'
@@ -217,7 +222,6 @@ export default {
   DocumentDomainWorkaround,
   E2EOnlyBadge,
   E2EOrCtTabs,
-  ElementFilters,
   VueSyntaxTabs,
   HeaderAssertions,
   InterceptAliasIndex,
@@ -231,7 +235,8 @@ export default {
   ProductHeading,
   Profiles,
   RecordKeyEnvVar,
-  SignificantAttributes,
+  SignificantAttributesValidation,
+  SitemapScanExample,
   SourceMaps,
   SupportFileConfiguration,
   Tabs,
@@ -239,7 +244,12 @@ export default {
   TestReplayInfo,
   ThenShouldAndDifference,
   WarningSetupNodeEvents,
-  ViewFilters,
+  ViewFiltersSyntax,
+  ViewFiltersOptions,
+  ViewFiltersMatchingAndValidation,
+  ViewFiltersExampleThirdParty,
+  ViewFiltersSharedExamples,
+  ViewFiltersTroubleshootingValidationErrors,
   Views,
   Logo,
   LineBreak,

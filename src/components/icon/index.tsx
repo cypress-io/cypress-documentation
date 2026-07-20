@@ -3,7 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CypressIcon from "@cypress-design/react-icon";
 
 // Names resolved from the Font Awesome brands pack instead of solid
-const BRAND_ICONS = new Set(["github", "claude", "openai"]);
+const BRAND_ICONS = new Set([
+  "github",
+  "claude",
+  "openai",
+  "gitlab",
+  "jenkins",
+  "aws",
+  "bitbucket",
+  "microsoft",
+]);
 
 interface IconProps {
   useCypressIcon?: boolean;

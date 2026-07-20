@@ -1,50 +1,57 @@
 ---
 title: Configure UI Coverage in Cypress
-description: 'Configuration allows you to customize and fine-tune UI Coverage in Cypress to suit specific needs and scenarios.'
+description: 'Configure Cypress UI Coverage to get a coverage score you can trust: ignore dynamic attributes, filter out noise, group elements, shape views, and count the interactions that matter.'
 sidebar_label: Overview
 sidebar_position: 10
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# Configuration
+# Configuration overview
 
-Configuration enables you to customize and fine-tune UI Coverage in Cypress to suit the unique needs of your application. While UI Coverage is designed to work seamlessly out of the box, there are scenarios where fine-tuning may be necessary—such as dealing with dynamic attributes, filtering out irrelevant elements, or grouping related components. These guides explain how to configure UI Coverage effectively to improve accuracy and usability.
+UI Coverage works out of the box with no setup, but a few lines of configuration make your reports match your application. Configuration lets you get a coverage score you can trust and act on by:
 
-**Note**: By default, setting configuration is limited to Admin users. At your request, this can be changed to allow setting config by all users. Reach out to your Cypress point-of-contact if you would like to change this.
+- **Reflecting your app, not the framework**: ignore dynamic or auto-generated attributes so the same button is recognized as one element across snapshots instead of many.
+- **Removing noise**: filter out third-party widgets, admin-only pages, and elements your team doesn't own so the report focuses on what matters.
+- **Organizing reports around your product**: group related elements and shape how URLs roll up into [views](/ui-coverage/core-concepts/views) that map to real pages and flows.
+- **Counting the interactions you care about**: recognize custom or plugin commands, require a meaningful interaction on specific elements, and even credit assertions as coverage.
 
-:::success
-
-## New configuration options
-
-UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:
-
-- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)
-- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)
-
-:::
+You don't need any of this to get started, and you can add it incrementally. Reprocess a past run after each change to see the effect immediately, without re-running your tests.
 
 ## Setting configuration
 
-To add or modify the configuration for your project:
+Configuration lives in Cypress Cloud, not in your repository. To view or change it for a project:
 
-1. Navigate to the **App Quality** tab in your project settings on Cypress Cloud.
-2. Use the configuration editor to add or edit configuration in JSON format.
+1. Open your project in Cypress Cloud and go to **Project Settings**.
+2. Select the **App Quality** tab, which holds the configuration editor.
+3. Edit the configuration as JSON, then **Save**. **Discard** reverts unsaved edits back to the last saved version.
 
-After new configuration changes have been saved, you can reprocess any historical run using the "regenerate" button on the properties tab where the configuration values that were used for that run are displayed, or through the UI Coverage report where the "configuration updated" message appears if you are looking at a historical run using an old config.
-
-Regenerating reports in this way allows you to make config changes and see their effects without running your Cypress tests again.
+The editor validates your JSON against the schema when you save, so an invalid configuration can't be saved, and it shows how long ago the configuration was last saved.
 
 <DocsImage
   src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
   alt="The Cypress Cloud UI showing the configuration editor"
 />
 
+After you save configuration changes, you can reprocess any historical run to apply them. You can start a reprocess from two places:
+
+- The **Properties** tab, using the "regenerate" button next to the configuration values that were used for that run.
+- The UI Coverage report, using the "configuration updated" message that appears when you view a historical run that was processed with an older configuration.
+
+Regenerating reports in this way allows you to make config changes and see their effects without running your Cypress tests again.
+
+### Who can edit configuration
+
+Editing is limited to Admin users by default. Your Cypress point-of-contact can enable editing for all users on request.
+
 ## Configuration options
 
 :::info
 
-For a quick overview of the practical application of the most common UI Coverage confiuration properties, you can read [this blog post](https://www.cypress.io/blog/making-the-most-of-ui-coverage).
+<Icon name="book-open-reader" /> For a quick overview of the practical
+application of the most common UI Coverage configuration properties, you can
+read [this blog
+post](https://www.cypress.io/blog/making-the-most-of-ui-coverage).
 
 :::
 
@@ -54,58 +61,46 @@ Several options change what appears in reports and how it's organized. Pick the 
 
 | Your goal                                                           | Use                                                                                                         |
 | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Combine repeated or related elements so they count as one           | [`elementGroups`](/ui-coverage/configuration/elementgroups)                                                 |
-| Rename or stabilize the identity of a single element                | [`elements`](/ui-coverage/configuration/elements)                                                           |
-| Remove elements from reports and scores entirely                    | [`elementFilters`](/ui-coverage/configuration/elementfilters)                                               |
-| Define groups in your application's markup instead of configuration | [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) |
-| Stop dynamic or generated attributes from identifying elements      | [`attributeFilters`](/ui-coverage/configuration/attributefilters)                                           |
-| Prioritize your own attributes for identifying and naming elements  | [`significantAttributes`](/ui-coverage/configuration/significantattributes)                                 |
 | Control how URLs are grouped into views                             | [`views`](/ui-coverage/configuration/views)                                                                 |
 | Remove entire views from reports                                    | [`viewFilters`](/ui-coverage/configuration/viewfilters)                                                     |
+| Remove elements from reports and scores entirely                    | [`elementFilters`](/ui-coverage/configuration/elementfilters)                                               |
+| Rename or stabilize the identity of a single element                | [`elements`](/ui-coverage/configuration/elements)                                                           |
+| Combine repeated or related elements so they count as one           | [`elementGroups`](/ui-coverage/configuration/elementgroups)                                                 |
+| Define groups in your application's markup instead of configuration | [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) |
+| Prioritize your own attributes for identifying and naming elements  | [`significantAttributes`](/ui-coverage/configuration/significantattributes)                                 |
+| Stop dynamic or generated attributes from identifying elements      | [`attributeFilters`](/ui-coverage/configuration/attributefilters)                                           |
 | Count your custom commands as interactions                          | [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)                 |
 | Limit which interaction commands count for specific elements        | [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)                       |
 | Apply different configuration to runs based on run tags             | [`profiles`](/ui-coverage/configuration/profiles)                                                           |
 
 ### Comments
 
-All configuration objects support an optional `comment` property that you can use to provide context and explanations for why certain values are set. This helps make your configuration easier to understand and maintain, especially when working in teams or revisiting configuration after some time.
+Most configuration rules support an optional `comment` property that you can use to record why a value is set. This makes your configuration easier to understand and maintain, especially when working in a team or revisiting configuration after some time. Any rule defined as an object accepts a `comment`; the options that are plain lists of strings, such as [`significantAttributes`](/ui-coverage/configuration/significantattributes) and [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands), do not take a per-entry comment.
 
-```json
+A `comment` lives inside the rule and has no effect on behavior. Comments appear only in the configuration itself and are never displayed in reports. Because Cypress Cloud validates every rule and rejects properties it doesn't recognize, `comment` is the supported place to keep notes.
+
+```json title="App Quality Config"
 {
   "elementFilters": [
     {
-      "selector": "[data-testid*='temp']",
+      "selector": ".intercom-launcher",
       "include": false,
-      "comment": "Exclude temporary test elements from coverage"
+      "comment": "Third-party chat widget, not covered by our tests"
     }
   ]
 }
 ```
 
-### Profiles
+### Full configuration reference
 
-The `profiles` property allows you to use different configuration settings for different runs based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). See the [Profiles](/ui-coverage/configuration/profiles) guide for more details.
+The shape of every available option, with the type each value expects:
 
-### Complete configuration example
-
-A complete configuration with all available options looks as follows:
-
-```json
+```json title="App Quality Config"
 {
-  "elementFilters": [
-    {
-      "selector": string,
-      "include": boolean,
-      "documentScope": [string],
-      "comment": string
-    }
-  ],
   "views": [
     {
       "pattern": string,
-      "groupBy": [
-        string
-      ],
+      "groupBy": string | [string],
       "comment": string
     }
   ],
@@ -116,20 +111,20 @@ A complete configuration with all available options looks as follows:
       "comment": string
     }
   ],
-  "profiles": [
+  "elementFilters": [
     {
-      "name": string,
-      "config": {
-        // Any App Quality configuration options
-      }
+      "selector": string,
+      "include": boolean,
+      "documentScope": [string],
+      "comment": string
     }
   ],
   "uiCoverage": {
-    "attributeFilters": [
+    "elements": [
       {
-        "attribute": string,
-        "value": string,
-        "include": boolean,
+        "selector": string,
+        "name": string,
+        "documentScope": [string],
         "comment": string
       }
     ],
@@ -143,39 +138,95 @@ A complete configuration with all available options looks as follows:
     ],
     "significantAttributes": [
       string
+    ],
+    "attributeFilters": [
+      {
+        "attribute": string,
+        "value": string,
+        "include": boolean,
+        "comment": string
+      }
+    ],
+    "additionalInteractionCommands": [
+      string
+    ],
+    "allowedInteractionCommands": [
+      {
+        "selector": string,
+        "commands": [string],
+        "documentScope": [string],
+        "comment": string
+      }
     ]
-  }
+  },
+  "profiles": [
+    {
+      "name": string,
+      "config": {
+        // Any App Quality configuration options
+      }
+    }
+  ]
 }
 ```
 
+## How rules are applied
+
+Two behaviors govern every rule you write, regardless of which property it belongs to:
+
+- **Order matters.** For [`elementFilters`](/ui-coverage/configuration/elementfilters), [`viewFilters`](/ui-coverage/configuration/viewfilters), and [`elementGroups`](/ui-coverage/configuration/elementgroups), rules are evaluated top to bottom and the **first** rule that matches an element or URL wins; later rules that also match it are ignored. List specific rules before broad, catch-all rules, and place an `include: true` exception above the `include: false` rule it should override. [`elements`](/ui-coverage/configuration/elements) is the exception: when more than one rule matches the same element, the **last** one wins.
+- **Unknown properties are rejected.** When you save, Cypress Cloud validates your configuration against a strict schema and rejects anything it doesn't recognize, such as a misspelled property, a value of the wrong type, or a note on a property that doesn't accept one. Correct the flagged property to save, and keep freeform notes in a [`comment`](#Comments).
+
 ## Configuration scope
 
-The root-level properties `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Accessibility. These properties can also be nested under `uiCoverage` or `accessibility` to apply to only that product, with nested configuration taking precedence over root-level configuration.
+Some properties are shared across App Quality products, and some belong to UI Coverage alone.
 
-The `views` property applies to UI Coverage and Accessibility but cannot be nested.
+- **Shared properties**: `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Cypress Accessibility when set at the root of your configuration. To apply one to a single product, nest it under a `uiCoverage` or `accessibility` key. A nested value **completely replaces** the root-level value for that product (the two are not merged), so repeat any shared rules you still want in the nested list.
+- **Shared, but not nestable**: `views` applies to both UI Coverage and Cypress Accessibility and can only be set at the root.
+- **UI Coverage only**: `elementGroups`, `elements`, `additionalInteractionCommands`, and `allowedInteractionCommands` are specific to UI Coverage and are always set under the `uiCoverage` key.
 
-## Viewing Configuration for a Run
+## Viewing configuration for a run
 
-You can review the configuration used during a specific run by checking the **Properties** tab, as shown below. This displays the configuration as it was applied at the start of the run.
+Every run permanently records the exact configuration it was processed with, so the runs themselves are the history of how your configuration has changed over time. You can review a run's configuration in Cypress Cloud, or read it programmatically with the Results API.
+
+### In Cypress Cloud
+
+To review the configuration a specific run used, open its **Properties** tab, as shown below. This displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-configuration) the run to reprocess it with the current configuration.
 
 <DocsImage
   src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
   alt="The properties tab for a run, with an Application Quality section at the bottom"
 />
 
-## Next steps
+### From the Results API
 
-Check out the following configuration guides.
+The [UI Coverage Results API](/ui-coverage/results-api) exposes the applied configuration on the `config` property of its result, so you can read it in a CI workflow:
+
+```js
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
+
+getUICoverageResults().then((results) => {
+  if (results.config) {
+    // ISO timestamp of when the applied configuration was last saved
+    console.log(results.config.updatedAt)
+
+    // The App Quality configuration that was applied to the run
+    console.log(results.config.value)
+  }
+})
+```
+
+If no configuration was applied to the run, `config` may be absent, so check for it before reading `value`.
+
+## See also
 
 - [Views](/ui-coverage/configuration/views)
 - [View Filters](/ui-coverage/configuration/viewfilters)
 - [Element Filters](/ui-coverage/configuration/elementfilters)
-- [Attribute Filters](/ui-coverage/configuration/attributefilters)
-- [Significant Attributes](/ui-coverage/configuration/significantattributes)
-- [Element Groups](/ui-coverage/configuration/elementgroups)
 - [Elements](/ui-coverage/configuration/elements)
+- [Element Groups](/ui-coverage/configuration/elementgroups)
+- [Significant Attributes](/ui-coverage/configuration/significantattributes)
+- [Attribute Filters](/ui-coverage/configuration/attributefilters)
 - [Additional Interaction Commands](/ui-coverage/configuration/additionalinteractioncommands)
 - [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands)
 - [Profiles](/ui-coverage/configuration/profiles)
-
-UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:

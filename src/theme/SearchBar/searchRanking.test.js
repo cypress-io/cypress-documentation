@@ -2,7 +2,9 @@ import { describe, expect, test } from 'vitest'
 import {
   assignDisplayPositions,
   boostCurrentSection,
+  filterDisplayableHits,
   getCurrentSectionLvl0,
+  isDisplayableHit,
   mergeFacetFilters,
 } from './searchRanking.js'
 
@@ -49,6 +51,92 @@ describe('getCurrentSectionLvl0', () => {
 })
 
 const hit = (id, lvl0) => ({ id, hierarchy: { lvl0 } })
+
+describe('isDisplayableHit', () => {
+  test('rejects a section-label-only lvl0 record (nothing to render)', () => {
+    // This is exactly the shape the scraper emits for the blank "API" rows.
+    expect(
+      isDisplayableHit({
+        type: 'lvl0',
+        hierarchy: {
+          lvl0: 'API',
+          lvl1: null,
+          lvl2: null,
+          lvl3: null,
+          lvl4: null,
+          lvl5: null,
+          lvl6: null,
+        },
+        content: null,
+      })
+    ).toBe(false)
+  })
+
+  test('accepts a hit with a lvl1 title', () => {
+    expect(
+      isDisplayableHit({
+        hierarchy: { lvl0: 'API', lvl1: 'Configuration API' },
+      })
+    ).toBe(true)
+  })
+
+  test.each(['lvl2', 'lvl3', 'lvl4', 'lvl5', 'lvl6'])(
+    'accepts a hit whose deepest level is %s',
+    (level) => {
+      expect(
+        isDisplayableHit({ hierarchy: { lvl0: 'API', [level]: 'x' } })
+      ).toBe(true)
+    }
+  )
+
+  test('accepts a content hit even without a deeper hierarchy level', () => {
+    expect(
+      isDisplayableHit({
+        type: 'content',
+        hierarchy: { lvl0: 'API' },
+        content: 'You can make an API request with cy.request().',
+      })
+    ).toBe(true)
+  })
+
+  test('treats a missing hierarchy as non-displayable', () => {
+    expect(isDisplayableHit({})).toBe(false)
+    expect(isDisplayableHit(undefined)).toBe(false)
+  })
+})
+
+describe('filterDisplayableHits', () => {
+  test('drops blank lvl0 records but keeps everything renderable', () => {
+    const blank = { id: 1, type: 'lvl0', hierarchy: { lvl0: 'API' } }
+    const page = {
+      id: 2,
+      type: 'lvl1',
+      hierarchy: { lvl0: 'API', lvl1: 'Configuration API' },
+    }
+    const content = {
+      id: 3,
+      type: 'content',
+      hierarchy: { lvl0: 'API' },
+      content: 'text',
+    }
+    expect(
+      filterDisplayableHits([blank, page, content]).map((h) => h.id)
+    ).toEqual([2, 3])
+  })
+
+  test('preserves relative order of the kept hits', () => {
+    const items = [
+      { id: 1, hierarchy: { lvl0: 'API', lvl1: 'A' } },
+      { id: 2, hierarchy: { lvl0: 'API' } },
+      { id: 3, hierarchy: { lvl0: 'API', lvl1: 'B' } },
+    ]
+    expect(filterDisplayableHits(items).map((h) => h.id)).toEqual([1, 3])
+  })
+
+  test('handles an empty list', () => {
+    expect(filterDisplayableHits([])).toEqual([])
+  })
+})
 
 describe('boostCurrentSection', () => {
   const items = [

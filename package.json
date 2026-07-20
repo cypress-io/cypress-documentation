@@ -97,5 +97,10 @@
   },
   "lint-staged": {
     "**/*.{md,mdx}": "prettier --write"
+  },
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "core-js": true,
+    "cypress": true
   }
 }

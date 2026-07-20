@@ -84,9 +84,21 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
+- Use **bold** only for real UI controls the reader acts on in a walkthrough
+  (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
+  e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
+  examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
+  so invented examples stay distinct from the real UI a tutorial navigates. See
+  [Writing style](./AGENTS_REFERENCE.md#writing-style).
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
   instructions. They undermine a reader who is struggling and add nothing; state
   the step plainly instead.
+- Describe configuration by what it does and accepts. Don't call out fields or
+  features a property lacks (e.g. "there is no `comment` field") unless the
+  absence is a documented point of confusion.
+- Frame behavior explanations positively and reader-first. Avoid phrasings that
+  sound like caveats about the product's design, such as "consequences of this
+  design"; prefer neutral lead-ins like "Keep these behaviors in mind".
 
 **Directives & tabs** — [tabs](./AGENTS_REFERENCE.md#tabs),
 [config](./AGENTS_REFERENCE.md#cypress-config-examples),
@@ -124,3 +136,14 @@ Each rule is a hard convention. See the linked section for the how and why.
   dependencies resolve from the repository root's `node_modules`. Declare new
   dependencies in the **root** `package.json`, never in a plugin's own
   `package.json` (pins there are never installed and just drift stale).
+
+**GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
+
+- When adding or editing a workflow in `.github/workflows/`, look up each
+  action's latest major release on its GitHub repository at the time of
+  writing and pin that major tag.
+- Workflows are copied into forks, where they run with reduced permissions
+  (Actions cannot create or approve pull requests there). Guard any job that
+  pushes commits, creates pull requests, or uses repo secrets with a job-level
+  `if` restricting it to the `main` branch of
+  `cypress-io/cypress-documentation`.
