@@ -15,24 +15,7 @@ Understanding your application's test coverage is crucial for ensuring quality a
 
 To identify coverage gaps, you need to first run and record Cypress tests to the Cloud. If you're new to Cypress, refer to the [Cypress documentation](/app/end-to-end-testing/writing-your-first-end-to-end-test) to get started with writing tests.
 
-### Example: Automated Sitemap-Based Testing
-
-If your project lacks existing Cypress tests, a common approach is to understand test coverage from a sitemap or an array of target URLs. These URLs can be used to perform light interactions and capture the initial gaps in testing. Below is an example of how to automate this process by using a sitemap:
-
-```js
-describe('UI Coverage Scan', () => {
-  it('Checks ui coverage with the sitemap.xml', () => {
-    cy.request('https://<YOUR_WEBSITE>/sitemap.xml').then((response) => {
-      const xmlString = response.body
-      const parser = new DOMParser()
-        (loc) => loc.textContent
-    })
-    Cypress._.each(URLs, (URL) => {
-      cy.visit(URL)
-    })
-  })
-})
-```
+<SitemapScanExample product="ui-coverage" />
 
 ## Review Coverage Reports
 

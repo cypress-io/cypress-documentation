@@ -39,6 +39,7 @@ import ProductHeading from '@site/src/components/product-heading'
 import Profiles from '@site/docs/partials/_profiles.mdx'
 import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
 import SignificantAttributesValidation from '@site/docs/partials/_significantattributes-validation.mdx'
+import SitemapScanExample from '@site/docs/partials/_sitemap-scan-example.mdx'
 import SourceMaps from '@site/docs/partials/_source-maps.mdx'
 import SupportFileConfiguration from '@site/docs/partials/_support-file-configuration.mdx'
 import Tabs from '@theme/Tabs'
@@ -235,6 +236,7 @@ export default {
   Profiles,
   RecordKeyEnvVar,
   SignificantAttributesValidation,
+  SitemapScanExample,
   SourceMaps,
   SupportFileConfiguration,
   Tabs,
