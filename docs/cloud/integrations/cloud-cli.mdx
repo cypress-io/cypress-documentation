@@ -12,7 +12,7 @@ sidebar_custom_props: { 'new_label': true }
 
 The Cypress Cloud CLI (`cy-cloud`) brings your Cypress Cloud data to the command line. Check the status of a CI run, pull the screenshot of a failed test, or replay the exact commands, network calls, and console logs that led to a failure, all without opening a browser.
 
-Every command returns structured JSON, so the CLI is equally at home in a shell script, a CI job, or an [AI coding agent](#Use-with-AI-agents). It closes the gap between a red build in CI and a fix in your editor: instead of context switching to Cypress Cloud to triage a failure, you stay where you already are.
+Every command returns structured JSON, so the CLI is equally at home in a shell script, a CI job, or an [AI coding agent](#Use-with-AI-agents).
 
 :::info
 
@@ -33,10 +33,10 @@ When a test fails in CI, the friction is rarely the fix. It is the triage: findi
 The Cloud CLI removes that round trip. It exposes the same Cloud data you would click through, as commands you can pipe, script, and compose:
 
 - **Stay in your terminal.** List failing runs, drill into failing tests, and read errors and stack traces from the shell.
-- **Pull artifacts on demand.** Save the failure screenshot for a test straight to disk.
 - **Replay without a browser.** Query the [Test Replay](/cloud/features/test-replay) timeline for a specific attempt, scoped to the commands, network requests, and logs around the point of failure.
 - **Automate it.** Because output is JSON, you can wire the CLI into scripts, dashboards, and custom tooling.
 - **Hand it to an agent.** The CLI is designed for both humans and AI agents, so your coding assistant can gather the same context you would.
+- **Pull artifacts on demand.** Save the failure screenshot for a test straight to disk.
 
 ## <Icon name="gear" /> How it works
 
