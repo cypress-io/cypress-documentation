@@ -155,13 +155,15 @@ cy-cloud org list
 
 ### Projects
 
-List projects across one or more organizations:
+List every project you can access:
 
 ```bash
-# All projects you can access
 cy-cloud project list
+```
 
-# Projects in specific organizations, 10 per page
+Or list projects in specific organizations, with pagination:
+
+```bash
 cy-cloud project list --orgId <orgId1>,<orgId2> --limit 10
 ```
 
@@ -173,10 +175,9 @@ cy-cloud project get <projectId>
 
 ### Runs
 
-List runs for a project. Filter by branch and status to find the run you care about:
+List runs for a project. Filter by branch and status to find the run you care about, for example the most recent failed run on `main`:
 
 ```bash
-# The most recent failed run on main
 cy-cloud run list --projectId <projectId> --branch main --status failed --limit 1
 ```
 
@@ -190,13 +191,17 @@ cy-cloud run get <projectId> <runNumber>
 
 ### Specs
 
-List specs for a run, or look up specs by ID. Provide a project ID together with a run number, or one or more spec IDs:
+List specs for a run, or look up specs by ID. Provide a project ID together with a run number, or one or more spec IDs.
+
+List the failing specs in a run:
 
 ```bash
-# Failing specs in a run
 cy-cloud spec list --projectId <projectId> --runNumber <runNumber> --status failed
+```
 
-# Specific specs by ID
+Or look up specific specs by ID:
+
+```bash
 cy-cloud spec list --specId <specId1>,<specId2>
 ```
 
@@ -208,13 +213,17 @@ cy-cloud spec get <specId>
 
 ### Tests
 
-List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`:
+List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`.
+
+List the failing tests in a run:
 
 ```bash
-# Failing tests in a run
 cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed
+```
 
-# Tests within specific specs
+Or list tests within specific specs:
+
+```bash
 cy-cloud test list --specId <specId>
 ```
 
@@ -224,10 +233,9 @@ Get details for a single test, including its error and stack trace:
 cy-cloud test get <testId>
 ```
 
-Save the failure screenshot for a test. Pass `--screenshot` on its own to write to a temporary directory, or give it a path to choose the destination. The saved file path is included in the JSON output:
+Save the failure screenshot for a test. Pass `--screenshot` on its own to write to a temporary directory, or give it a path to choose the destination (for example, a `screenshots` directory). The saved file path is included in the JSON output:
 
 ```bash
-# Save to a directory you choose
 cy-cloud test get <testId> --screenshot ./screenshots
 ```
 
@@ -249,13 +257,17 @@ Get a summary of a replay, including how many command, network, and log events i
 cy-cloud replay info --testId <testId>
 ```
 
-Query the replay timeline. By default the timeline is broad, so scope it to what you need. Include `--commands`, `--logs`, and `--network` to choose event types, and narrow to the failure with `--failedOnly` or `--aroundFailure`:
+Query the replay timeline. By default the timeline is broad, so scope it to what you need. Include `--commands`, `--logs`, and `--network` to choose event types, and narrow to the failure with `--failedOnly` or `--aroundFailure`.
+
+Get the five commands leading up to the failure, plus the failed command:
 
 ```bash
-# The 5 commands leading up to the failure, plus the failed command
 cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5
+```
 
-# Command, network (XHR and Fetch), and console log events for an attempt
+Or include command, network (XHR and Fetch), and console log events for an attempt:
+
+```bash
 cy-cloud replay timeline --testId <testId> --commands --network --logs
 ```
 
@@ -278,11 +290,9 @@ Useful `replay timeline` options:
 
 Manage the local replay cache. See [Caching](#Caching) for how it works.
 
-```bash
-cy-cloud cache info     # Location, file count, and size on disk
-cy-cloud cache clear    # Remove everything in the cache
-cy-cloud cache cleanup  # Delete expired and oversized entries
-```
+- `cy-cloud cache info` shows the cache location, file count, and size on disk.
+- `cy-cloud cache clear` removes everything in the cache.
+- `cy-cloud cache cleanup` deletes expired and oversized entries.
 
 ## <Icon name="bug-slash" /> Workflow: triage a failing run
 
@@ -328,10 +338,9 @@ Wrap this sequence in a shell script that takes a project ID and branch, and you
 
 ## <Icon name="code" /> Output format and schemas
 
-Every data command prints JSON to standard output, so you can pipe results into other tools. For example, with [`jq`](https://jqlang.github.io/jq/):
+Every data command prints JSON to standard output, so you can pipe results into other tools. For example, print the run numbers of the last five failed runs on `main` with [`jq`](https://jqlang.github.io/jq/):
 
 ```bash
-# Print the run numbers of the last 5 failed runs on main
 cy-cloud run list --projectId <projectId> --branch main --status failed --limit 5 \
   | jq '.runs[].runNumber'
 ```
