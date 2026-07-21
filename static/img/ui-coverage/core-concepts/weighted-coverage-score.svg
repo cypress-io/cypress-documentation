@@ -17,11 +17,11 @@
   <text x="40" y="48" class="title">How the UI Coverage score is calculated</text>
   <text x="40" y="74" class="subtitle">Total tested elements ÷ total interactive elements, with bigger views pulling the score harder.</text>
 
-  <!-- legend -->
-  <rect x="559" y="36" width="13" height="13" rx="3" fill="#0B7A54"/>
-  <text x="578" y="47" class="legend">tested</text>
-  <rect x="641" y="36" width="13" height="13" rx="3" fill="#D9DFE3" stroke="#7A8591"/>
-  <text x="712" y="47" class="legend" text-anchor="end">untested</text>
+  <!-- legend (own row below the subtitle so it clears the title) -->
+  <rect x="559" y="90" width="13" height="13" rx="3" fill="#0B7A54"/>
+  <text x="578" y="101" class="legend">tested</text>
+  <rect x="641" y="90" width="13" height="13" rx="3" fill="#D9DFE3" stroke="#7A8591"/>
+  <text x="712" y="101" class="legend" text-anchor="end">untested</text>
 
   <!-- scale: 1 element = 12px, bars start at x=250 -->
 
