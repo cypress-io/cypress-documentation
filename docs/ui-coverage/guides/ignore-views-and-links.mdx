@@ -1,63 +1,67 @@
 ---
 title: Ignore views and links in UI Coverage
-description: 'Exclude irrelevant views and links from UI Coverage reports so scores reflect the parts of your app you test.'
+description: 'Exclude irrelevant views and links from UI Coverage reports with viewFilters, so coverage scores reflect the parts of your application you test.'
 sidebar_label: Ignore views and links
-sidebar_position: 40
+sidebar_position: 60
 ---
 
 <ProductHeading product="ui-coverage" />
 
 # Ignore views and links
 
-Cypress UI Coverage provides detailed insights into test coverage, but not all views or links in your application are relevant to your test suite. By ignoring certain URLs, you can focus on meaningful coverage and streamline your reports. This guide explains why and how to ignore views and links in your UI Coverage reports.
+UI Coverage includes every URL your tests visit, but not every URL is relevant to your testing goals. This guide walks through finding irrelevant views and links in your report and excluding them with [`viewFilters`](/ui-coverage/configuration/viewfilters), so your coverage score reflects the parts of your application you own and intend to test.
 
-## Why Ignore Views and Links?
+## Why ignore views and links?
 
-Ignoring views and links can help in the following scenarios:
+Ignoring views and links helps in the following scenarios:
 
-- **Third-Party Pages**: Exclude external URLs like OAuth login pages or embedded content that you don't control or need to test.
-- **Non-Critical Pages**: Remove irrelevant views, such as informational pages (e.g., FAQs) or admin-only sections.
-- **Test Links**: Avoid testing URLs only generated for testing purposes or dynamically generated URLs that don't impact application functionality.
-- **Focus on Key Areas**: Streamline coverage reports to prioritize high-impact areas and avoid clutter.
+- **Third-party pages**: Exclude external URLs, such as OAuth login pages or embedded content, that you don't control or need to test.
+- **Non-critical pages**: Remove views that aren't part of your testing goals, such as informational pages or admin-only sections.
+- **Error pages and redirects**: URLs that tests visit incidentally don't represent meaningful user flows.
+- **Links you never plan to test**: Links pointing to excluded URLs are removed from reports and scores, so they stop appearing as untested elements.
 
-By ignoring unnecessary views or links, you can maintain clear and actionable coverage metrics.
+By ignoring unnecessary views and links, you maintain clear and actionable coverage metrics.
 
-## Identify Views and Links to Ignore
+## Identify views and links to ignore
 
-After recording your tests to Cypress Cloud, review the UI Coverage reports:
+After recording your tests to Cypress Cloud, review the UI Coverage report:
 
 1. Navigate to the **UI Coverage** tab in your test run.
-1. Look for views or links that consistently appear but don't require testing.
-1. Note down the URLs, paths, or patterns for these views and links.
+1. Look for views that consistently appear but don't require testing.
+1. Review [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) for destinations no test should ever visit.
+1. Note the URLs, paths, or patterns for these views and links.
 
-### Common Candidates for Exclusion
+### Common candidates for exclusion
 
-- Third-party authentication pages (e.g., https://auth.example.com).
-- Redirects or intermediate URLs (e.g., /redirect).
-- Informational pages (e.g., /terms).
+- Third-party authentication pages (for example, `https://auth.example.com`)
+- Redirects or intermediate URLs (for example, `/redirect`)
+- Informational pages with few or no interactive elements (for example, `/terms` or `/privacy`)
 
-## Configure Ignored Views and Links
+## Configure ignored views and links
 
-[View Filters](/ui-coverage/configuration/viewfilters) in the **App Quality** configuration are used to exclude views and links based on their URLs or patterns. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add a **viewFilters** configuration.
+[`viewFilters`](/ui-coverage/configuration/viewfilters) rules in the **App Quality** configuration exclude views and links based on their URLs. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add a `viewFilters` configuration.
 
-Some examples of common view filter configurations are shown below:
+Rules apply in order, and the first rule whose pattern matches a URL decides whether it's included or excluded. URLs that match no rule are included by default. Some common view filter configurations are shown below:
 
-### Exclude a single URL
+### Exclude a third-party page
 
-```json
+```json title="App Quality Config"
 {
   "viewFilters": [
     {
       "pattern": "https://auth.example.com/*",
-      "include": false
+      "include": false,
+      "comment": "Exclude the external login flow"
     }
   ]
 }
 ```
 
-### Exclude all third party URLs
+### Include only your application's URLs
 
-```json
+The catch-all `*` rule excludes everything the earlier rules don't include, and must come last.
+
+```json title="App Quality Config"
 {
   "viewFilters": [
     {
@@ -72,10 +76,38 @@ Some examples of common view filter configurations are shown below:
 }
 ```
 
-To learn more about the configuration options, refer to the [View Filters](/ui-coverage/configuration/viewfilters) documentation.
+### Exclude error pages in every environment
 
-## Validate Ignored Views and Links
+Patterns without a protocol and hostname match on any environment your tests run against.
 
-After updating the configuration, record your tests again and review the UI Coverage report. The ignored views and links should no longer appear in the coverage reports, streamlining the data and focusing on the critical areas of your application.
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "/404",
+      "include": false
+    },
+    {
+      "pattern": "/error/*",
+      "include": false
+    }
+  ]
+}
+```
+
+To learn more about the options, pattern matching behavior, and validation rules, refer to the [`viewFilters` configuration reference](/ui-coverage/configuration/viewfilters).
+
+## Validate ignored views and links
+
+After saving the configuration, regenerate a recent run from its **Properties** tab to reprocess it with your new filters. You don't need to rerun your tests. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for how to regenerate a report.
+
+In the regenerated report, confirm that the ignored views no longer appear and that links to the excluded URLs no longer count as untested elements. If a URL you excluded still appears, see [troubleshooting view filters](/ui-coverage/configuration/viewfilters#A-URL-you-excluded-still-appears-in-the-report).
 
 If new unnecessary views or links appear in future reports, update your filters accordingly to keep reports clean and actionable.
+
+## See also
+
+- [`viewFilters` configuration](/ui-coverage/configuration/viewfilters) is the full reference for options, pattern matching, and validation.
+- [`views` configuration](/ui-coverage/configuration/views) groups and names URLs instead of removing them.
+- [Guide: Ignore elements](/ui-coverage/guides/ignore-elements) removes individual elements from reports rather than whole pages.
+- [UI Coverage FAQ](/ui-coverage/faq) answers common questions about excluding URLs.

@@ -2,7 +2,7 @@
 title: Block pull requests with UI Coverage policies
 description: "Set policies and block pull requests automatically with Cypress UI Coverage's Results API, enabling custom CI workflows to enforce test coverage standards and prevent regressions."
 sidebar_label: Block pull requests and set policies
-sidebar_position: 40
+sidebar_position: 90
 ---
 
 <ProductHeading product="ui-coverage" />
@@ -98,7 +98,7 @@ In our example the baseline is a JSON object that captures the state of untested
 
 #### Why use untested element counts instead of UI Coverage percentage scores?
 
-The [UI Coverage score](/ui-coverage/guides/identify-coverage-gaps#Overall-Score) is expressed as based on a ratio of what was and was not tested over time, within what was rendered in Cypress during the run. Since testing one new element might reveal many more elements that aren't tested yet, the score isn't useful for a fine-grained baseline comparison between runs. Comparing the number of tested elements gives a more accurate sense of whether one run has added or removed coverage when compared to another, and is a better predictor of what information would be in the report.
+The [UI Coverage score](/ui-coverage/guides/identify-coverage-gaps#Step-2-Read-your-overall-coverage-score) is expressed as based on a ratio of what was and was not tested over time, within what was rendered in Cypress during the run. Since testing one new element might reveal many more elements that aren't tested yet, the score isn't useful for a fine-grained baseline comparison between runs. Comparing the number of tested elements gives a more accurate sense of whether one run has added or removed coverage when compared to another, and is a better predictor of what information would be in the report.
 
 ### Complete example
 

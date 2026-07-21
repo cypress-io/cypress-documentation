@@ -1,13 +1,13 @@
 ---
 title: 'elements: rename and stabilize element identity in UI Coverage'
 description: 'Rename elements and give them a stable identity in Cypress UI Coverage reports, so dynamic attributes do not create duplicate untested elements.'
-sidebar_label: elements
-sidebar_position: 70
+sidebar_label: 'Stabilize element identity'
+sidebar_position: 50
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# elements
+# Stabilize element identity - `elements`
 
 The `elements` configuration assigns a stable identity and a display name to a single element in your UI Coverage report.
 
@@ -77,7 +77,7 @@ In each snapshot captured by your tests, every rule is evaluated independently:
 - **Later rules take precedence.** When more than one rule matches the same element, the last matching rule in the list determines its identity and name.
 - **Filtered elements are never matched.** Elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters) are not considered, and don't count toward a rule's one-match limit.
 
-If a rule doesn't seem to take effect, see [Why isn't my elements rule applying?](/ui-coverage/faq#Why-isnt-my-elements-rule-applying) in the UI Coverage FAQ.
+If a rule doesn't seem to take effect, see [Why isn't my elements rule applying?](/ui-coverage/faq#Why-isnt-my-UI-Coverage-elements-rule-applying) in the UI Coverage FAQ.
 
 ### Validation rules
 

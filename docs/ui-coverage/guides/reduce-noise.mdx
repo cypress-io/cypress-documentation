@@ -1,141 +1,243 @@
 ---
 title: Reduce noise in UI Coverage reports
-description: 'Cut noise from UI Coverage reports by filtering out elements that do not represent real coverage gaps.'
+description: 'A workflow for turning a noisy UI Coverage report into an actionable one: recognize the noise, diagnose its cause, apply the matching fix, and validate.'
 sidebar_label: Reduce noise
-sidebar_position: 60
+sidebar_position: 40
 ---
 
 <ProductHeading product="ui-coverage" />
 
 # Reduce noise
 
-A clean and focused UI Coverage report enables you to make informed decisions about your testing strategy. Cypress UI Coverage provides tools to reduce noise in your reports by properly grouping elements, stabilizing element identities, special attribute handling, and grouping views that share common URL patterns. This guide explains how and why to create a streamlined report.
+When you first record a run, UI Coverage reports every interactive element it
+finds. Some of what appears as an "untested element" isn't a real gap. It might
+be the same button counted many times, one element whose generated ID keeps
+changing, or dozens of near-identical pages listed as separate views. Left
+alone, this noise hides the gaps that actually matter.
 
-## Group views by URL patterns
+This guide recommends a workflow for cleaning that up:
 
-Cypress attempts to group views with similar URL patterns (like when a URL contains a user ID) to provide a more consolidated view of coverage metrics.
+- **Recognize** the noise.
+- **Diagnose** what's causing it.
+- **Apply** the matching configuration.
+- **Validate** the result.
 
-Customizing views with similar URL patterns allows you to consolidate coverage metrics for pages you know are related. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add a **views** configuration.
+Each fix below is a small piece of configuration, but the value is in knowing
+_which_ one to reach for.
 
-### Example: Grouping user profiles
+:::info
+This guide is about consolidating and stabilizing elements that _should_ be in
+your report. To remove elements or pages entirely (third-party widgets, admin
+pages, error routes), see [Ignore elements](/ui-coverage/guides/ignore-elements)
+and [Ignore views and links](/ui-coverage/guides/ignore-views-and-links).
+:::
 
-```
-https://cypress.io/users/alice
-https://cypress.io/users/alice?foo=bar
-https://cypress.io/users/bob
-https://cypress.io/users/bob#baz
-```
+## Step 1: Recognize the noise
 
-```json
-{
-  "views": [
-    {
-      "pattern": "https://cypress.io/users/*"
-    }
-  ]
-}
-```
+Open the **UI Coverage** tab for a recent run and look for these patterns:
 
-To learn more about the configuration options, refer to the [Views](/ui-coverage/configuration/views) documentation.
+- **One element appears many times.** A control with the same purpose shows up
+  as several separate untested entries, often because its `id` or another
+  attribute is generated fresh on each render.
+- **A group of similar elements each listed separately.** A navigation bar,
+  list, or set of form fields where every item is its own entry, inflating the
+  count without adding insight.
+- **Too many views.** Pages that differ only by a slug
+  (`/products/wireless-mouse`, `/products/usb-c-cable`) appear as distinct views,
+  spreading coverage across pages you think of as one.
+- **Elements identified by unstable attributes.** Selectors in the report are
+  built from stateful or hashed attributes (like a `data-headlessui-state`
+  toggle or a hashed `css-1a2b3c` class) instead of the stable attributes your
+  team recognizes.
 
-## Group similar elements
+## Step 2: Diagnose and apply the matching fix
 
-Grouping elements improves clarity by reducing repetitive entries for elements with the same functionality. This is especially useful for elements like buttons, links, or form fields that appear across multiple views. By grouping similar elements, you can focus on the overall coverage of a specific element type rather than individual instances.
+Each pattern from Step 1 maps to one of the fixes below. Configure them in the
+**App Quality** tab of your project settings, under the `uiCoverage` key.
 
-### Example: Grouping dynamic IDs
+### Many similar elements → group them
 
-In the example below, the UI Coverage report shows multiple buttons that represent the same button due to a dynamically generated ID. By grouping these buttons, you can reduce noise and see the total coverage for the buttons with similar functionality in your application.
+When several elements share the same function and differ only by a generated
+value, group them into a single entry with `elementGroups`. This is the right
+choice for a control that repeats, such as an action button on every row of a
+list.
+
+Given a list of rows that each repeat the same action, where the button's `id`
+is generated from the row's record ID:
 
 ```html
-<nav>
-  <button id="nav-button819230">Page 1</button>
-  <button id="nav-button819231">Page 2</button>
-  <button id="nav-button819232">Page 3</button>
-</nav>
+<ul class="cart">
+  <li>
+    Wireless Mouse
+    <button id="remove-item-8a2f">Remove</button>
+  </li>
+  <li>
+    USB-C Cable
+    <button id="remove-item-3d9b">Remove</button>
+  </li>
+  <li>
+    Laptop Stand
+    <button id="remove-item-c710">Remove</button>
+  </li>
+</ul>
 ```
 
-To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **elementGroups** configuration under **uiCoverage**.
+Every **Remove** button does the same thing, so you want to know that
+interaction is covered without tracking each row separately. Group them by their
+stable prefix:
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elementGroups": [
       {
-        "selector": "nav [id^=nav-button]"
+        "selector": ".cart [id^='remove-item-']"
       }
     ]
   }
 }
 ```
 
-Now instead of 3 separate elements in the UI Coverage report, the report will show a single entry for all buttons with the `nav-button` ID prefix, simplifying the view and providing a clearer picture of the coverage.
+The report now shows a single entry instead of three:
 
 ```
-nav [id^=nav-button] (3 instances)
+.cart [id^='remove-item-'] (3 instances)
 ```
 
-To learn more about the configuration options, refer to the [Element Groups](/ui-coverage/configuration/elementgroups) documentation.
+See the [Element Groups](/ui-coverage/configuration/elementgroups) reference for
+all options.
 
-## Stabilize a single element's identity
+:::caution
+Group only elements that share the same purpose. Grouping controls that do
+different things, or distinct links you want covered separately, hides real gaps
+instead of reducing noise.
+:::
 
-When one element appears as several untested elements because a generated attribute changes between snapshots, an `elements` rule identifies it by a selector you choose and can rename it in the report. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **elements** configuration under **uiCoverage**.
+### One element splitting into many → stabilize its identity
 
-```json
+When a _single_ element appears as several untested entries because a generated
+attribute changes between snapshots, identify it by a selector you choose with
+an `elements` rule, and optionally give it a readable name:
+
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "elements": [
       {
-        "selector": "#search [id^='combobox']",
-        "name": "Search Combobox"
+        "selector": "input[id^='downshift-'][id$='-input']",
+        "name": "Search input"
       }
     ]
   }
 }
 ```
 
-The rule applies only when its selector matches exactly one interactive element in a snapshot. If many elements share the same generated attribute, use [Attribute Filters](/ui-coverage/configuration/attributefilters) instead.
+The rule applies only when its selector matches exactly one interactive element
+in a snapshot. If many elements share the same generated attribute, group them
+with `elementGroups` (above) or filter the attribute (below) instead. See the
+[Elements](/ui-coverage/configuration/elements) reference for details.
 
-To learn more about the configuration options, refer to the [Elements](/ui-coverage/configuration/elements) documentation.
+### Noisy or meaningless attributes → tune identification
 
-## Configure attribute handling
+If elements are being identified by the wrong attributes, steer Cypress toward
+the attributes you care about and away from the ones you don't.
 
-Attribute configuration ensures that Cypress surfaces element attributes that are most meaningful to your project.
+Prioritize your own stable attributes with `significantAttributes`:
 
-### Define significant attributes
-
-Specify which attributes Cypress should prioritize when identifying elements. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **significantAttributes** configuration under **uiCoverage**.
-
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
-    "significantAttributes": ["data-custom-id"]
+    "significantAttributes": ["data-testid"]
   }
 }
 ```
 
-To learn more about the configuration options, refer to the [Significant Attributes](/ui-coverage/configuration/significantattributes) documentation.
+Cypress already filters the most common unstable attributes, so use
+`attributeFilters` only for the ones it misses. This example keeps your `data-cy`
+hook while ignoring the `data-*` state attributes component libraries toggle as
+the UI changes:
 
-### Use Attribute Filters
-
-Exclude auto-generated or irrelevant attributes that add unnecessary noise. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **attributeFilters** configuration under **uiCoverage**.
-
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "attributeFilters": [
       {
-        "attribute": "id",
-        "value": "sizzle.*",
-        "include": false
+        "attribute": "data-cy",
+        "include": true,
+        "comment": "Always identify elements by our test hook"
       },
       {
-        "attribute": "ng-.*",
-        "value": ".*",
-        "include": false
+        "attribute": "data-.*",
+        "include": false,
+        "comment": "Ignore library state attributes like data-state, data-headlessui-state"
       }
     ]
   }
 }
 ```
 
-To learn more about the configuration options, refer to the [Attribute Filters](/ui-coverage/configuration/attributefilters) documentation.
+See the [Significant Attributes](/ui-coverage/configuration/significantattributes)
+and [Attribute Filters](/ui-coverage/configuration/attributefilters) references
+for the full matching rules.
+
+### Too many near-identical pages → group views
+
+Cypress groups URLs that differ only by numeric IDs or UUIDs automatically, but
+not ones that differ by a slug or name. When these product pages share a
+template you want reported as one view, consolidate them with a `views` pattern:
+
+```
+/products/wireless-mouse
+/products/wireless-mouse?ref=email
+/products/usb-c-cable
+/products/laptop-stand#reviews
+```
+
+Collapse them into one view. Leaving the protocol and hostname off the pattern
+lets it match these paths on any environment your tests run against:
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "views": [
+      {
+        "pattern": "/products/*"
+      }
+    ]
+  }
+}
+```
+
+See the [Views](/ui-coverage/configuration/views) reference for pattern syntax.
+
+## Step 3: Validate the result
+
+Configuration changes are applied when a report is generated, so you don't need
+to rerun your tests to see their effect. After saving your configuration,
+regenerate a recent run from its **Properties** tab.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
+  alt="The Properties tab for a run, with an Application Quality section where you can regenerate the report with the current configuration"
+/>
+
+Then reopen the UI Coverage report and confirm that:
+
+- The elements you grouped now appear as a single entry.
+- The element you stabilized no longer splits across snapshots.
+- The views you consolidated are reported together.
+- The overall element and view counts have dropped to reflect real coverage
+  rather than duplication.
+
+If new noise appears in future reports as your application grows, repeat this
+loop (recognize, diagnose, apply, validate) to keep the report actionable.
+
+## See also
+
+- [Ignore elements](/ui-coverage/guides/ignore-elements): remove elements from
+  the report entirely instead of grouping them.
+- [Ignore views and links](/ui-coverage/guides/ignore-views-and-links): remove
+  whole pages from the report.
+- [Element Identification](/ui-coverage/core-concepts/element-identification) and
+  [Element Grouping](/ui-coverage/core-concepts/element-grouping): the concepts
+  behind how Cypress identifies and consolidates elements.

@@ -33,6 +33,11 @@ interface PackageManagerTabsProps {
    * command, e.g. `CYPRESS_RECORD_KEY=abc123`.
    */
   env?: string
+  /**
+   * Comma-separated package-manager values to omit from the tabs, e.g.
+   * `"bun"`. Use when a command isn't portable to a given manager.
+   */
+  exclude?: string
 }
 
 /**
@@ -99,6 +104,7 @@ const PackageManagerTabs: React.FC<PackageManagerTabsProps> = ({
   exec,
   dev = false,
   env,
+  exclude,
 }) => {
   const provided = [install, run, exec].filter(
     (value) => value !== undefined
@@ -111,10 +117,19 @@ const PackageManagerTabs: React.FC<PackageManagerTabsProps> = ({
 
   const envPrefix = env ? `${env} ` : ''
   const lines = toLines(install ?? run ?? exec ?? '')
+  const excluded = new Set(
+    (exclude ?? '')
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean)
+  )
+  const visibleManagers = managers.filter(
+    (manager) => !excluded.has(manager.value)
+  )
 
   return (
     <Tabs groupId="package-manager">
-      {managers.map((manager) => {
+      {visibleManagers.map((manager) => {
         const commands = install
           ? [manager.install(lines.join(' '), dev)]
           : lines.map((line) => `${run ? manager.run : manager.exec} ${line}`)
