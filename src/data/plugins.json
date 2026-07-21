@@ -649,6 +649,13 @@
           "link": "https://github.com/bahmutov/cypress-network-idle",
           "keywords": ["network", "idle", "wait", "commands"],
           "badge": "community"
+        },
+         {
+          "name": "cypress-mock-latency",
+          "description": "Easily mock real-world flaky network latency and jitter in Cypress tests.",
+          "link": "https://github.com/dhrusoni84/cypress-mock-latency",
+          "keywords": ["network", "latency", "jitter", "mock", "throttle"],
+          "badge": "community"
         }
       ]
     },
