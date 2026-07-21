@@ -94,48 +94,54 @@ export default function CopyPrompt({
       // this page). Otherwise only the buttons below are stripped.
       data-sanitize={excludeFromLlmExport ? '' : undefined}
     >
-      {!hideTitle && (
-        <p className={s.title}>
-          <Icon
-            name="general-sparkle-triple"
-            className={s.sparkle}
-            aria-hidden="true"
-          />
-          {title}
-        </p>
-      )}
-      <p className={s.subtext}>{subtext}</p>
-      <div className={s.actions} data-sanitize="">
-        <Button
-          variant={
-            colorMode === 'dark' ? 'outline-indigo-dark-mode' : 'outline-indigo'
-          }
-          size="32"
-          onClick={copyPrompt}
-          aria-label="Copy prompt to clipboard"
-        >
-          <Icon
-            name={copied ? 'checkmark' : 'general-clipboard'}
-            className="mr-1"
-          />
-          {copied ? 'Copied' : 'Copy prompt'}
-        </Button>
-        {defaultCollapsed && (
-          <button
-            type="button"
-            className={s.toggle}
-            aria-expanded={expanded}
-            aria-controls={promptId}
-            onClick={() => setExpanded((e) => !e)}
+      <div className={s.header}>
+        <div className={s.headerText}>
+          {!hideTitle && (
+            <p className={s.title}>
+              <Icon
+                name="general-sparkle-triple"
+                className={s.sparkle}
+                aria-hidden="true"
+              />
+              {title}
+            </p>
+          )}
+          <p className={s.subtext}>{subtext}</p>
+        </div>
+        <div className={s.actions} data-sanitize="">
+          <Button
+            variant={
+              colorMode === 'dark'
+                ? 'outline-indigo-dark-mode'
+                : 'outline-indigo'
+            }
+            size="32"
+            onClick={copyPrompt}
+            aria-label="Copy prompt to clipboard"
           >
-            {expanded ? 'Hide prompt' : 'Show prompt'}
             <Icon
-              name={expanded ? 'chevron-up-small' : 'chevron-down-small'}
-              className={s.chevron}
-              aria-hidden="true"
+              name={copied ? 'checkmark' : 'general-clipboard'}
+              className="mr-1"
             />
-          </button>
-        )}
+            {copied ? 'Copied' : 'Copy prompt'}
+          </Button>
+          {defaultCollapsed && (
+            <button
+              type="button"
+              className={s.toggle}
+              aria-expanded={expanded}
+              aria-controls={promptId}
+              onClick={() => setExpanded((e) => !e)}
+            >
+              {expanded ? 'Hide prompt' : 'Show prompt'}
+              <Icon
+                name={expanded ? 'chevron-up-small' : 'chevron-down-small'}
+                className={s.chevron}
+                aria-hidden="true"
+              />
+            </button>
+          )}
+        </div>
       </div>
       {/* stays in the DOM when collapsed; CSS hides it */}
       <p
