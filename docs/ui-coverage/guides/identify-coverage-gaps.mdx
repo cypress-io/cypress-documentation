@@ -87,14 +87,14 @@ are grouped into patterns; for component tests, each spec file is a view. The
 
 - **Snapshots**: how many DOM snapshots were captured for the view.
 - **Tested elements**: how many of the view's interactive elements were tested, out of the total found.
-- **Coverage score**: the percentage of the view's interactive elements that were tested.
+- **Coverage %**: the percentage of the view's interactive elements that were tested.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-list-of-views.png"
   alt="Cypress Cloud screenshot showing the list of views within the UI Coverage tab, with columns for snapshots, tested elements, and coverage score alongside the lefthand navigation and a filter"
 />
 
-Sort by coverage score to bring your lowest-covered views to the top, then
+Sort by **Coverage %** to bring your lowest-covered views to the top, then
 weigh each one against how important it is to your users. A checkout or signup
 view at 40% is a more urgent gap than a settings page at the same score. This
 is where you decide which views deserve the next test.
@@ -104,8 +104,8 @@ is where you decide which views deserve the next test.
 Selecting a view breaks it down into the specific elements your tests did and
 didn't reach, so you can see each gap in context. A view drilldown includes:
 
-- **Untested Elements**: interactive elements that no recognized Cypress command targeted during the run.
-- **Tested Elements**: interactive elements a test exercised, with a count of how many times.
+- **Untested elements**: interactive elements that no recognized Cypress command targeted during the run.
+- **Tested elements**: interactive elements a test exercised, with a count of how many times.
 - **DOM Snapshot**: a full-page, inspectable snapshot of the view as it appeared during the run. Tested elements are highlighted green, untested elements red.
 - **Snapshot Navigation**: move between snapshots to see the view's different states during the run.
 - **Snapshot Coverage Score**: the coverage score for the specific snapshot you're viewing.
@@ -121,7 +121,7 @@ developer tools on it to understand why an element went untested: it may be
 hidden behind a menu, rendered only after login, or shown in a state your tests
 never reach. That context tells you what setup a new test needs.
 
-The **Untested Elements** section at the top level of the tab collects untested
+The **Untested elements** section at the top level of the tab collects untested
 elements across _all_ views, so you can spot a single control that's missed
 everywhere, such as a "Download" button repeated on every report page, and
 cover it in one place.
