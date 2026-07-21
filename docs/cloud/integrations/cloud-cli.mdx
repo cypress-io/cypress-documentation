@@ -117,15 +117,7 @@ cy-cloud login --token <YOUR_PERSONAL_ACCESS_TOKEN>
 Set `CYPRESS_CLOUD_TOKEN` to authenticate without a `login` step and without writing any credentials to disk. This takes precedence over any stored credentials, which makes it ideal for CI and other non-interactive environments.
 
 <OsTabs>
-  <TabItem value="macos" label="macOS">
-
-```bash
-export CYPRESS_CLOUD_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN>
-cy-cloud run list --projectId <projectId>
-```
-
-  </TabItem>
-  <TabItem value="linux" label="Linux">
+  <TabItem value="macos" label="macOS / Linux">
 
 ```bash
 export CYPRESS_CLOUD_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN>
@@ -166,8 +158,7 @@ cy-cloud status
 {
   "authenticated": true,
   "method": "oauth",
-  "expiresAt": "2026-07-21T18:30:00.000Z",
-  "cloudStatus": "unknown"
+  "expiresAt": "2026-07-21T18:30:00.000Z"
 }
 ```
 
@@ -245,7 +236,7 @@ Get details for a single project by its project ID (the `projectId` from your Cy
 cy-cloud project get <projectId>
 ```
 
-The response adds pointers to the project's latest runs:
+The response also includes the project's latest run numbers:
 
 ```json
 {
@@ -445,7 +436,26 @@ Save the failure screenshot for a test. Pass `--screenshot` on its own to write 
 cy-cloud test get <testId> --screenshot ./screenshots
 ```
 
-The output is the same test object with an added `failureScreenshotPath` pointing to the saved file, for example `./screenshots/<testId>-attempt-1-failure.png`. If the test passed, or no failure screenshot exists, the output includes a `failureScreenshotReason` instead and writes no file.
+The output is the same test object shown above, with a `failureScreenshotPath` pointing to the saved file (other fields omitted here):
+
+```json
+{
+  "testId": "7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f",
+  "state": "failed",
+  "attempt": 1,
+  "failureScreenshotPath": "./screenshots/7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f-attempt-1-failure.png"
+}
+```
+
+If the test passed, or no failure screenshot exists, the output includes a `failureScreenshotReason` instead and writes no file (other fields omitted here):
+
+```json
+{
+  "testId": "b4d1f0a2-6c7e-4a9b-8d3f-5e2c1a0b9d8e",
+  "state": "passed",
+  "failureScreenshotReason": "test passed"
+}
+```
 
 ### Replays
 
@@ -453,7 +463,7 @@ The output is the same test object with an added `failureScreenshotPath` pointin
 
 :::note
 
-Replay attempts are **1-indexed to match the Cypress Cloud dashboard**, where the first run of a test is Attempt 1. When you omit `--attempt`, the timeline defaults to the latest attempt.
+Replay attempts are **1-indexed to match the Cypress Cloud dashboard**, where the first run of a test is Attempt 1. When you omit `--attempt`, the timeline defaults to the last (most recent) attempt, which is the final retry for a test that was retried.
 
 :::
 
@@ -512,6 +522,34 @@ Or include command, network (XHR and Fetch), and console log events for an attem
 cy-cloud replay timeline --testId <testId> --commands --network --logs
 ```
 
+The `events` array now also holds `network` and `log` entries alongside the commands, each tagged by its `category`:
+
+```json
+{
+  "events": [
+    {
+      "category": "network",
+      "id": "n-42",
+      "timestamp": 1753063205000,
+      "url": "https://api.example.com/cart",
+      "method": "POST",
+      "request": { "headers": { "content-type": "application/json" } },
+      "response": {
+        "status": 500,
+        "headers": { "content-type": "application/json" }
+      }
+    },
+    {
+      "category": "log",
+      "id": 7,
+      "type": "console",
+      "timestamp": 1753063205200,
+      "payload": "Uncaught TypeError: Cannot read properties of undefined (reading 'total')"
+    }
+  ]
+}
+```
+
 Useful `replay timeline` options:
 
 | Option               | Description                                                               |
@@ -547,7 +585,7 @@ For example, `cy-cloud cache info` prints:
 
 ## <Icon name="bug-slash" /> Workflow: triage a failing run
 
-Here is the friction the Cloud CLI is built to remove. The nightly run on `main` failed, and a checkout test is red. This walkthrough goes from "something failed" to "I know exactly what broke" without opening a browser.
+This walkthrough puts the commands together on a common situation: the nightly run on `main` failed, and a checkout test is red. It takes you from a failing run to the exact cause, without opening a browser.
 
 **1. Find the failing run.** Grab the most recent failed run on `main` and note its run number.
 
@@ -555,7 +593,7 @@ Here is the friction the Cloud CLI is built to remove. The nightly run on `main`
 cy-cloud run list --projectId <projectId> --branch main --status failed --limit 1
 ```
 
-**2. List the failing tests in that run.** Now that you have the run number, see which tests failed.
+**2. List the failing tests in that run.**
 
 ```bash
 cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed
@@ -602,6 +640,22 @@ To see the exact shape of a command's output before you parse it, add `--schema`
 cy-cloud test get --schema
 ```
 
+It returns a JSON Schema describing the output fields and their types, which begins like this (abbreviated):
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "testId": { "type": "string", "format": "uuid" },
+    "status": { "type": "string" },
+    "attempt": { "type": "integer" },
+    "state": { "type": "string" },
+    "failureScreenshotPath": { "type": "string" }
+  },
+  "required": ["testId", "status", "attempt", "state"]
+}
+```
+
 This is especially useful when generating parsing code or briefing an agent on what to expect.
 
 ## <Icon name="database" /> Caching
@@ -620,20 +674,20 @@ The CLI stores configuration and credentials under `~/.config/cy-cloud` (or `$XD
 
 The following environment variables adjust its behavior:
 
-| Variable                     | Purpose                                                                              |
-| ---------------------------- | ------------------------------------------------------------------------------------ |
-| `CYPRESS_CLOUD_TOKEN`        | Authenticate with a personal access token. Takes precedence over stored credentials. |
-| `CYCLOUD_CACHE_DIR`          | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.               |
-| `CYCLOUD_DISABLE_CACHE_MGMT` | Set to `true` to disable automatic cache validation and cleanup.                     |
-| `CYCLOUD_URL`                | Override the Cypress Cloud API base URL. Most users never need to change this.       |
+| Variable                     | Purpose                                                                                                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `CYPRESS_CLOUD_TOKEN`        | Authenticate with a personal access token. Takes precedence over stored credentials.                                                                   |
+| `CYCLOUD_CACHE_DIR`          | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.                                                                                 |
+| `CYCLOUD_DISABLE_CACHE_MGMT` | Set to `true` to disable automatic cache validation and cleanup.                                                                                       |
+| `CYCLOUD_URL`                | Point the CLI at a non-production Cypress Cloud API instance. Intended for Cypress internal development and testing; leave it unset to use production. |
 
 ## <Icon name="gauge" /> Rate limits
 
-The Cloud CLI is available on all Cypress Cloud plans, and the same rate limit applies across every plan. Requests are limited **per user** to a default of **100 requests per hour**. Some organizations have a higher limit configured, in which case the CLI uses the highest limit available to you across your organizations. Telemetry does not count toward the limit.
+The Cloud CLI is available on all Cypress Cloud plans, and the same rate limit applies across every plan. Requests are limited **per user** to a default of **100 requests per hour**.
 
 If you exceed the limit, requests return an error until the hour resets. Contact [support@cypress.io](mailto:support@cypress.io) if you need a higher limit.
 
-Rate limits are separate from data availability. What data you can retrieve follows the same recording limits and [data retention](/cloud/account-management/billing-and-usage) policies as the rest of Cypress Cloud, so those limits do vary by plan. Runs beyond your retention window or usage limits are not accessible through the CLI.
+Rate limits are separate from data availability. What data you can retrieve follows the same recording limits and [data retention](/cloud/account-management/billing-and-usage) policies as the rest of Cypress Cloud, so those limits do vary by plan. Runs beyond your retention window or usage limits are not accessible through the Cloud CLI.
 
 ## <Icon name="shield-halved" /> Restrictive VPNs and allowlists
 
