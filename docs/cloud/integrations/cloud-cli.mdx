@@ -28,7 +28,7 @@ Every command returns structured JSON, so the CLI is equally at home in a shell 
 
 :::note
 
-The Cloud CLI is available on **every Cypress Cloud plan**, including the free Starter plan, at no additional cost. An organization admin enables it once from the **Integrations** page.
+The Cloud CLI is available on **every Cypress Cloud plan**, including the free Starter plan, at no additional cost. An organization admin enables it once from the organization's **Integrations** page.
 
 :::
 
@@ -46,7 +46,7 @@ The Cloud CLI removes that round trip. It exposes the same Cloud data you would 
 
 ## How it works
 
-The CLI authenticates you against Cypress Cloud, then calls the Cypress Cloud API on your behalf. Data you retrieve is scoped to the projects and organizations your Cypress Cloud user can already see.
+The CLI authenticates you against Cypress Cloud, then calls the Cypress Cloud API on your behalf. Data you retrieve is scoped to the same organizations, [teams](/cloud/account-management/teams), and projects your Cypress Cloud user can already see. Access follows your role and team assignments, so the CLI never returns a project you could not open in the Cloud UI.
 
 1. **Authenticate** once with `cy-cloud login` (OAuth) or a personal access token.
 2. **Query** your Cloud data with commands like `run list`, `test get`, and `replay timeline`.
@@ -59,7 +59,7 @@ Replay data is downloaded once and [cached locally](#Caching), so repeated queri
 To use the Cloud CLI you must:
 
 - Have a [Cypress Cloud](https://cloud.cypress.io) account.
-- Have the Cloud CLI integration enabled for your organization. An organization admin enables it from the **Integrations** page in Cypress Cloud.
+- Have the Cloud CLI integration enabled for your organization. An organization admin enables it from the organization's **Integrations** page in Cypress Cloud.
 - Be running [Node.js](https://nodejs.org) `22.21.0` or later.
 
 :::note
@@ -67,6 +67,15 @@ To use the Cloud CLI you must:
 The Cloud CLI reads recorded run data. Your tests still run and record the same way they do today, using `cypress run --record`. See [Recording Cloud Runs](/cloud/features/recorded-runs) if you have not set up recording yet.
 
 :::
+
+## Enable for your organization
+
+The Cloud CLI is an organization integration. An organization admin turns it on once from the organization's **Integrations** page in Cypress Cloud: find **Cloud CLI** and select **Enable**. Once enabled, any member can authenticate and use the CLI within that organization, scoped to their own role and [team](/cloud/account-management/teams) permissions.
+
+<DocsImage
+  src="/img/cloud/integrations/cloud-cli/cloud-cli-org-integration.png"
+  alt="Cloud CLI listed on the organization Integrations page in Cypress Cloud with an Enable button"
+/>
 
 ## Install
 
@@ -107,6 +116,11 @@ cy-cloud login --timeout 180
 ### Personal access token
 
 Generate a personal access token from your [Cypress Cloud profile](https://cloud.cypress.io/profile): in the **Cloud CLI access** section, under **Personal access token**, select **Generate token**, choose an expiration, and copy the token (it is shown only once). Access is scoped to your role and permissions in each organization.
+
+<DocsImage
+  src="/img/cloud/integrations/cloud-cli/cloud-cli-access-pat.png"
+  alt="Cloud CLI access section on the Cypress Cloud profile page, showing the OAuth and Personal Access Token options with a Generate token button"
+/>
 
 If you prefer a token, or your environment cannot open a browser, pass it to `login`. The CLI checks the token with Cypress Cloud and, if it is valid, saves it to a credentials file (`~/.config/cy-cloud/auth.json`, readable only by your user) so later commands reuse it without you passing it each time:
 
