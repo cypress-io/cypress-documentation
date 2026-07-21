@@ -738,19 +738,28 @@ and Node.js `22.21.0` or later. See the
 
 ### <Icon name="angle-right" /> How do I authenticate the Cloud CLI in CI?
 
-Set the `CYPRESS_CLOUD_TOKEN` environment variable to a personal access token.
+Set the `CYPRESS_CLOUD_TOKEN` environment variable to a
+[personal access token](/cloud/integrations/cloud-cli#Personal-access-token),
+which you generate from your [Cypress Cloud profile](https://cloud.cypress.io/profile).
 This authenticates without an interactive `login` step and without writing
 credentials to disk, and it takes precedence over any stored credentials. Note
 that `cy-cloud logout` clears stored credentials but does not unset that
 environment variable.
 
+See [Authenticate the Cloud CLI](/cloud/integrations/cloud-cli#Authenticate) for
+the full setup, including OAuth and personal access token options.
+
 ### <Icon name="angle-right" /> How is the Cloud CLI different from Cloud MCP?
 
-Both give programmatic access to your Cypress Cloud data. [Cloud MCP](/cloud/integrations/cloud-mcp)
-is a remote server your AI client connects to, and the agent selects Cypress
-tools automatically, which suits conversational, in-editor debugging. The
+Both give programmatic access to your Cypress Cloud data.
+
+[Cloud MCP](/cloud/integrations/cloud-mcp) is a remote server your AI client
+connects to, and the agent selects Cypress tools automatically, which suits
+conversational, in-editor debugging.
+
 [Cloud CLI](/cloud/integrations/cloud-cli) is a command-line tool for humans,
 scripts, and terminal-based agents, which suits automation and custom tooling.
+
 Many teams use both.
 
 ### <Icon name="angle-right" /> Which URL does the Cloud CLI need allowed on a restrictive VPN?
