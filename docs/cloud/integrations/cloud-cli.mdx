@@ -191,7 +191,7 @@ Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`,
 
 Most `list` commands accept `--page` and `--limit` for pagination. For example, `--page 2 --limit 25` returns the second page of 25 results, and every list response includes a `pagination` object with the current `page`, `perPage`, and the `total` number of matching results. Filters that take multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) accept a comma-separated list, such as `--status passed,failed`.
 
-### `cy-cloud org list`
+### cy-cloud org list
 
 List the organizations your account belongs to. Use this to find the organization ID you need for other commands.
 
@@ -211,7 +211,7 @@ Prints the organizations you belong to, each with the `uuid` you pass to other c
 }
 ```
 
-### `cy-cloud project list`
+### cy-cloud project list
 
 List every project you can access:
 
@@ -237,7 +237,7 @@ Or list projects in specific organizations, with pagination:
 cy-cloud project list --orgId <orgId1>,<orgId2> --limit 10
 ```
 
-### `cy-cloud project get`
+### cy-cloud project get
 
 Get details for a single project by its project ID (the `projectId` from your Cypress [configuration](/cloud/account-management/projects)):
 
@@ -256,7 +256,7 @@ The response also includes the project's latest run numbers:
 }
 ```
 
-### `cy-cloud run list`
+### cy-cloud run list
 
 List runs for a project. Filter by branch and status to find the run you care about, for example the most recent failed run on `main`:
 
@@ -283,7 +283,7 @@ Each run includes its number, branch, timestamps, and status:
 
 `--status` accepts `passed`, `failed`, `running`, `errored`, `timedOut`, `cancelled`, and `noTests` (comma-separate to combine).
 
-### `cy-cloud run get`
+### cy-cloud run get
 
 Get details for a specific run by project ID and run number:
 
@@ -309,7 +309,7 @@ The details add the commit SHA, per-status test counts, and duration in millisec
 }
 ```
 
-### `cy-cloud spec list`
+### cy-cloud spec list
 
 List specs for a run, or look up specs by ID. Provide a project ID together with a run number, or one or more spec IDs.
 
@@ -340,7 +340,7 @@ Or look up specific specs by ID:
 cy-cloud spec list --specId <specId1>,<specId2>
 ```
 
-### `cy-cloud spec get`
+### cy-cloud spec get
 
 Get details for a single spec:
 
@@ -363,7 +363,7 @@ The details add timing and per-status test counts for the spec:
 }
 ```
 
-### `cy-cloud test list`
+### cy-cloud test list
 
 List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`.
 
@@ -408,7 +408,7 @@ Or list tests within specific specs:
 cy-cloud test list --specId <specId>
 ```
 
-### `cy-cloud test get`
+### cy-cloud test get
 
 Get details for a single test, including its error and stack trace:
 
@@ -472,7 +472,7 @@ If the test passed, or no failure screenshot exists, the output includes a `fail
 }
 ```
 
-### `cy-cloud replay info`
+### cy-cloud replay info
 
 [Test Replay](/cloud/features/test-replay) captures the commands, network traffic, and console logs for a test. The `replay` commands let you query that timeline for a single test attempt.
 
@@ -507,7 +507,7 @@ The summary reports the event counts and where the failure occurred:
 }
 ```
 
-### `cy-cloud replay timeline`
+### cy-cloud replay timeline
 
 Query the replay timeline. By default the timeline is broad, so scope it to what you need. Include `--commands`, `--logs`, and `--network` to choose event types, and narrow to the failure with `--failedOnly` or `--aroundFailure`.
 
@@ -588,7 +588,7 @@ Useful `replay timeline` options:
 
 `--network` accepts standard resource types, including `XHR`, `Fetch`, `Document`, `Script`, `Stylesheet`, `Image`, `Font`, `WebSocket`, and `All`.
 
-### `cy-cloud status`
+### cy-cloud status
 
 Print your authentication state and Cloud status. See [Authenticate](#Authenticate) for the fields and example output.
 
@@ -596,7 +596,7 @@ Print your authentication state and Cloud status. See [Authenticate](#Authentica
 cy-cloud status
 ```
 
-### `cy-cloud version`
+### cy-cloud version
 
 Print the CLI version and whether an upgrade is required.
 
@@ -604,7 +604,7 @@ Print the CLI version and whether an upgrade is required.
 cy-cloud version
 ```
 
-### `cy-cloud login`
+### cy-cloud login
 
 Sign in to Cypress Cloud. With no arguments it starts a browser-based OAuth sign-in; pass `--token` to use a personal access token instead. See [Authenticate](#Authenticate) for details.
 
@@ -612,7 +612,7 @@ Sign in to Cypress Cloud. With no arguments it starts a browser-based OAuth sign
 cy-cloud login
 ```
 
-### `cy-cloud logout`
+### cy-cloud logout
 
 Clear the credentials stored by `login`. This does not unset the `CYPRESS_CLOUD_TOKEN` environment variable.
 
@@ -620,7 +620,7 @@ Clear the credentials stored by `login`. This does not unset the `CYPRESS_CLOUD_
 cy-cloud logout
 ```
 
-### `cy-cloud cache info`
+### cy-cloud cache info
 
 Print the local Test Replay cache location, file count, and total size on disk.
 
@@ -636,7 +636,7 @@ cy-cloud cache info
 }
 ```
 
-### `cy-cloud cache clear`
+### cy-cloud cache clear
 
 Remove everything from the cache. Prints `{ "success": true }` when done.
 
@@ -644,7 +644,7 @@ Remove everything from the cache. Prints `{ "success": true }` when done.
 cy-cloud cache clear
 ```
 
-### `cy-cloud cache cleanup`
+### cy-cloud cache cleanup
 
 Delete expired and oversized entries. This runs automatically as a maintenance task after commands, but you can trigger it manually. See [Caching](#Caching) for the size and age limits.
 
