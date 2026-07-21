@@ -168,53 +168,28 @@ If you are not signed in, `authenticated` is `false` and the other fields are om
 
 Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`, `test`, `replay`, `cache`), each with subcommands such as `list` and `get`. For example, `cy-cloud run list` lists runs and `cy-cloud run get` fetches one run. Authentication and utility commands (`login`, `logout`, `status`, `version`) sit at the top level. Each data command returns JSON on standard output.
 
-| Command             | What it does                                              |
-| ------------------- | --------------------------------------------------------- |
-| `cy-cloud login`    | Sign in to Cypress Cloud.                                 |
-| `cy-cloud logout`   | Clear stored credentials.                                 |
-| `cy-cloud status`   | Check your authentication state and Cloud status.         |
-| `cy-cloud version`  | Print the CLI version and whether an upgrade is required. |
-| `cy-cloud org list` | List the organizations you belong to.                     |
-| `cy-cloud project`  | List projects, or get details for one project.            |
-| `cy-cloud run`      | List runs for a project, or get details for one run.      |
-| `cy-cloud spec`     | List specs, or get details for one spec.                  |
-| `cy-cloud test`     | List tests, or get details for one test.                  |
-| `cy-cloud replay`   | Get Test Replay info and query the replay timeline.       |
-| `cy-cloud cache`    | Inspect and clear the local Test Replay cache.            |
+| Command                    | What it does                                              |
+| -------------------------- | --------------------------------------------------------- |
+| `cy-cloud org list`        | List the organizations you belong to.                     |
+| `cy-cloud project list`    | List the projects you can access.                         |
+| `cy-cloud project get`     | Get details for a specific project.                       |
+| `cy-cloud run list`        | List runs for a project.                                  |
+| `cy-cloud run get`         | Get details for a specific run.                           |
+| `cy-cloud spec list`       | List specs for a run, or by spec ID.                      |
+| `cy-cloud spec get`        | Get details for a specific spec.                          |
+| `cy-cloud test list`       | List tests for a run, spec, or test ID.                   |
+| `cy-cloud test get`        | Get details for a specific test.                          |
+| `cy-cloud replay info`     | Summarize a test's replay event counts.                   |
+| `cy-cloud replay timeline` | Query a test's replay timeline of events.                 |
+| `cy-cloud status`          | Print your authentication state and Cloud status.         |
+| `cy-cloud version`         | Print the CLI version and whether an upgrade is required. |
+| `cy-cloud login`           | Sign in to Cypress Cloud.                                 |
+| `cy-cloud logout`          | Clear stored credentials.                                 |
+| `cy-cloud cache info`      | Print the local Test Replay cache location and size.      |
+| `cy-cloud cache clear`     | Remove everything from the cache.                         |
+| `cy-cloud cache cleanup`   | Delete expired and oversized cache entries.               |
 
 Most `list` commands accept `--page` and `--limit` for pagination. For example, `--page 2 --limit 25` returns the second page of 25 results, and every list response includes a `pagination` object with the current `page`, `perPage`, and the `total` number of matching results. Filters that take multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) accept a comma-separated list, such as `--status passed,failed`.
-
-### `cy-cloud version`
-
-Print the CLI version and whether an upgrade is required.
-
-```bash
-cy-cloud version
-```
-
-### `cy-cloud status`
-
-Print your authentication state and Cloud status. See [Authenticate](#Authenticate) for the fields and example output.
-
-```bash
-cy-cloud status
-```
-
-### `cy-cloud login`
-
-Sign in to Cypress Cloud. With no arguments it starts a browser-based OAuth sign-in; pass `--token` to use a personal access token instead. See [Authenticate](#Authenticate) for details.
-
-```bash
-cy-cloud login
-```
-
-### `cy-cloud logout`
-
-Clear the credentials stored by `login`. This does not unset the `CYPRESS_CLOUD_TOKEN` environment variable.
-
-```bash
-cy-cloud logout
-```
 
 ### `cy-cloud org list`
 
@@ -613,6 +588,38 @@ Useful `replay timeline` options:
 
 `--network` accepts standard resource types, including `XHR`, `Fetch`, `Document`, `Script`, `Stylesheet`, `Image`, `Font`, `WebSocket`, and `All`.
 
+### `cy-cloud status`
+
+Print your authentication state and Cloud status. See [Authenticate](#Authenticate) for the fields and example output.
+
+```bash
+cy-cloud status
+```
+
+### `cy-cloud version`
+
+Print the CLI version and whether an upgrade is required.
+
+```bash
+cy-cloud version
+```
+
+### `cy-cloud login`
+
+Sign in to Cypress Cloud. With no arguments it starts a browser-based OAuth sign-in; pass `--token` to use a personal access token instead. See [Authenticate](#Authenticate) for details.
+
+```bash
+cy-cloud login
+```
+
+### `cy-cloud logout`
+
+Clear the credentials stored by `login`. This does not unset the `CYPRESS_CLOUD_TOKEN` environment variable.
+
+```bash
+cy-cloud logout
+```
+
 ### `cy-cloud cache info`
 
 Print the local Test Replay cache location, file count, and total size on disk.
@@ -719,6 +726,51 @@ It returns a JSON Schema describing the output fields and their types, which beg
 ```
 
 This is especially useful when generating parsing code or briefing an agent on what to expect.
+
+## <Icon name="terminal" /> Use in a shell script
+
+Because `cy-cloud` prints JSON, it drops straight into shell scripts. Make the `cy-cloud` command available (install it globally, or invoke it with `npx @cypress/cloud`), authenticate non-interactively with `CYPRESS_CLOUD_TOKEN`, and parse the output with a tool like [`jq`](https://jqlang.github.io/jq/). Every command exits non-zero on failure, so `set -e` stops the script if a call fails.
+
+The script below finds the most recent failed run on a branch, then prints each failing test with its first error message:
+
+```bash title="why-did-it-fail.sh"
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Authenticate non-interactively (read the token from your CI secret store)
+export CYPRESS_CLOUD_TOKEN="${CYPRESS_CLOUD_TOKEN:?Set CYPRESS_CLOUD_TOKEN first}"
+
+project_id="$1"
+branch="${2:-main}"
+
+# Most recent failed run number on the branch
+run_number=$(cy-cloud run list --projectId "$project_id" --branch "$branch" --status failed --limit 1 \
+  | jq -r '.runs[0].runNumber // empty')
+
+if [ -z "$run_number" ]; then
+  echo "No failed runs on $branch."
+  exit 0
+fi
+
+echo "Failing tests in run #$run_number:"
+
+# Print each failing test's name and first error message
+cy-cloud test list --projectId "$project_id" --runNumber "$run_number" --status failed \
+  | jq -r '.tests[] | "- \(.testName | join(" > "))\n    \(.attempts[0].errorMessage // "no error message")"'
+```
+
+Make it executable and run it with a project ID (and optional branch):
+
+```bash
+chmod +x why-did-it-fail.sh
+./why-did-it-fail.sh abc123 main
+```
+
+:::tip
+
+Run any command with `--schema` (for example `cy-cloud test list --schema`) to see the exact JSON shape before you write your `jq` filters.
+
+:::
 
 ## <Icon name="database" /> Caching
 
