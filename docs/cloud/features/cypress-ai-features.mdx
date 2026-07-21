@@ -54,11 +54,12 @@ Cypress AI are easy-to-use capabilities and tools across your testing lifecycle.
 
 ### AI Tools
 
-| When To Use      | AI Tool                                    | Outcome                                                                                               |
-| ---------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| Author Tests     | `cypress-author` and `cypress-docs` Skills | Improves how AI tools create, update, and fix Cypress tests.                                          |
-| Understand Tests | `cypress-explain` Skill                    | Helps AI describe, and critique existing tests.                                                       |
-| Analyze & Triage | Cloud MCP                                  | Gives AI coding assistants and AI agents a direct window into your application's health and stability |
+| When To Use       | AI Tool                                    | Outcome                                                                                               |
+| ----------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| Author Tests      | `cypress-author` and `cypress-docs` Skills | Improves how AI tools create, update, and fix Cypress tests.                                          |
+| Understand Tests  | `cypress-explain` Skill                    | Helps AI describe, and critique existing tests.                                                       |
+| Analyze & Triage  | Cloud MCP                                  | Gives AI coding assistants and AI agents a direct window into your application's health and stability |
+| Automate & Script | Cloud CLI                                  | Brings the same Cloud data to the terminal for scripts, CI, and terminal-based AI agents              |
 
 ## Capabilities in detail
 
@@ -214,6 +215,18 @@ Instead of spending time investigating runs, your assistant uses the [Model Cont
 
 Read the [Cloud MCP documentation →](/cloud/integrations/cloud-mcp)
 
+### Cloud CLI
+
+:::note
+**Best for:** developers and terminal-based agents that query Cloud data from scripts, CI, and the command line.
+:::
+
+The Cloud CLI (`cy-cloud`) brings your Cypress Cloud data to the command line. Check run status, read failing tests, and pull the Test Replay timeline of commands, network requests, and console logs, all as JSON that scripts and AI agents can parse.
+
+Where Cloud MCP connects an AI client directly to your Cloud data, the Cloud CLI is the scriptable counterpart: give it to agents that work through a terminal, or wire it into your own automation and tooling. It is available on all Cypress Cloud plans at no additional cost.
+
+Read the [Cloud CLI documentation →](/cloud/integrations/cloud-cli)
+
 ## FAQs
 
 ### Why do I need a Cloud Account?
@@ -249,6 +262,7 @@ Some hourly limits apply to all plans. Those are as follows:
 | Error Summaries             | Included               | Included                  |
 | AI Skills                   | unlimited              | unlimited                 |
 | Cloud MCP requests          | 100 per hour, per user | 100 per hour, per user    |
+| Cloud CLI requests          | 100 per hour, per user | 100 per hour, per user    |
 | UI Coverage Test Generation | Not available          | Included with UI Coverage |
 
 If you need to increase your limits, contact support at support@cypress.io.
@@ -257,7 +271,7 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 AI Skills are available to all Cypress users.
 
-Cloud MCP, Test Intent Summaries and Error Summaries are available for free to all Cypress Cloud plans, including the Starter plan.
+Cloud MCP, the Cloud CLI, Test Intent Summaries and Error Summaries are available for free to all Cypress Cloud plans, including the Starter plan.
 
 UI Coverage Test Generation is included with UI Coverage premium solutions subscriptions.
 
@@ -280,6 +294,7 @@ See [Cypress Cloud plans](https://www.cypress.io/pricing) for full plan details.
 | Error Summaries             | Generally Available |
 | AI Skills                   | Generally Available |
 | Cloud MCP                   | Generally Available |
+| Cloud CLI                   | Beta                |
 | UI Coverage Test Generation | Generally Available |
 
 ### Security and data handling
@@ -297,13 +312,14 @@ See [Cypress Cloud plans](https://www.cypress.io/pricing) for full plan details.
 
 **AI tools** must be installed individually and are not enabled by default. To stop using an AI Tool, remove it from your AI client's configuration.
 
-Cloud MCP can be disabled for an organization in the organization's Integrations page. Disabling the integration immediately revokes access for all users in that organization, regardless of whether they authenticated via OAuth or a personal access token.
+Cloud MCP and the Cloud CLI can each be disabled for an organization from the organization's Integrations page. Disabling an integration immediately revokes access for all users in that organization, regardless of whether they authenticated via OAuth or a personal access token.
 
 ## See also
 
 - [cy.prompt()](/api/commands/prompt)
 - [Cypress Studio AI](/app/guides/cypress-studio)
 - [Cloud MCP](/cloud/integrations/cloud-mcp)
+- [Cloud CLI](/cloud/integrations/cloud-cli)
 - [AI Skills](/app/tooling/ai-skills)
 - [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports)
 - [Recorded Runs](/cloud/features/recorded-runs)
