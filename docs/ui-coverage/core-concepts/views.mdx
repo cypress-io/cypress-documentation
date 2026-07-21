@@ -25,6 +25,7 @@ Views come from two sources, depending on testing type:
 - **Component tests**: Each spec file becomes a single view, named by the spec's file path. All components mounted within a spec are grouped into that view.
 
 <DocsImage
+  noBorder
   src="/img/ui-coverage/core-concepts/view-sources.svg"
   alt="Diagram of what makes a view in UI Coverage: in end-to-end tests, unique URLs like /users/1, /users/2, /products/42, /products/99, and /cart are consolidated into fewer views such as /users/*, /products/*, and /cart; in component tests, each spec file such as Button.cy.tsx, Modal.cy.tsx, and Nav.cy.tsx becomes one view named by its file path."
 />
@@ -74,6 +75,7 @@ The UI Coverage report lists every view along with:
 Your run's overall coverage score uses the same calculation across all included views combined: the total number of tested elements divided by the total number of interactive elements. Each view contributes in proportion to how many elements it contains, and excluding a view removes its elements from the score entirely.
 
 <DocsImage
+  noBorder
   src="/img/ui-coverage/core-concepts/weighted-coverage-score.svg"
   alt="Diagram showing how the UI Coverage score is calculated: each view's bar is sized by its number of interactive elements and filled by how many were tested. /checkout has 19 of 20 elements tested (95%), /settings/* has 4 of 10 (40%), and /dashboard has 4 of 5 (80%), combining into an overall score of 27 of 35 tested elements, or 77%."
 />
