@@ -777,6 +777,35 @@ Rate limits are separate from data availability. What data you can retrieve
 follows the same recording limits and data retention policies as the rest of
 Cypress Cloud, which do vary by plan.
 
+### <Icon name="angle-right" /> Which version of Cypress do I need to use the Cloud CLI?
+
+The Cloud CLI reads recorded run data from Cypress Cloud, so there is no minimum
+Cypress app version. You do need to be recording runs to Cloud with
+`cypress run --record`.
+
+### <Icon name="angle-right" /> Do I need to change my tests to use the Cloud CLI?
+
+No. The Cloud CLI reads data your runs already record. You do not modify test
+code to use it.
+
+### <Icon name="angle-right" /> Why am I getting an authentication error from the Cloud CLI?
+
+Confirm you are logged in with `cy-cloud status`. If you authenticate through the
+`CYPRESS_CLOUD_TOKEN` environment variable, verify the token is set and valid.
+Remember that `cy-cloud logout` does not unset that environment variable.
+
+### <Icon name="angle-right" /> Why can't the Cloud CLI find my run or project?
+
+Verify the Cloud CLI integration is enabled for your organization, and that your
+Cypress Cloud user has access to the project. The CLI only returns data you can
+already see in Cypress Cloud.
+
+### <Icon name="angle-right" /> What does the Cloud CLI error "Replay not available" mean?
+
+That test does not have Test Replay data available. Confirm
+[Test Replay](/cloud/features/test-replay) capturing was enabled for the run, and
+that the run is within your data retention window.
+
 ## Cloud AI :sparkles:
 
 ### <Icon name="angle-right" /> What is Cloud AI?
