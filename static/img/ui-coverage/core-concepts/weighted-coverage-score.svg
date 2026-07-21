@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" width="1000" height="400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="How the UI Coverage score is calculated: each view's bar is sized by its number of interactive elements and filled by how many were tested. /checkout has 19 of 20 elements tested (95%), /settings/* has 4 of 10 (40%), and /dashboard has 4 of 5 (80%). Combined, the overall score is 27 of 35 tested elements, or 77%, so the large well-tested /checkout view weighs more heavily than a simple average of the three view scores.">
+  <defs>
+    <style>
+      .title{font-size:25px;font-weight:600;fill:#1B1E2E}
+      .subtitle{font-size:14px;fill:#5A6672}
+      .vlabel{font-size:13.5px;font-weight:600;font-family:ui-monospace,'SF Mono',Menlo,monospace;fill:#28303B}
+      .vmeta{font-size:12px;fill:#54606C}
+      .pct{font-size:13px;font-weight:700;fill:#1B1E2E}
+      .legend{font-size:12px;fill:#5A6672}
+      .big{font-size:15px;font-weight:600;fill:#1B1E2E}
+    </style>
+  </defs>
+
+  <!-- card background so the diagram reads on light or dark site themes -->
+  <rect x="1" y="1" width="998" height="398" rx="16" fill="#ffffff" stroke="#E2E8F0" stroke-width="2"/>
+
+  <text x="40" y="48" class="title">How the UI Coverage score is calculated</text>
+  <text x="40" y="74" class="subtitle">Total tested elements ÷ total interactive elements, with bigger views pulling the score harder.</text>
+
+  <!-- legend -->
+  <rect x="559" y="36" width="13" height="13" rx="3" fill="#0B7A54"/>
+  <text x="578" y="47" class="legend">tested</text>
+  <rect x="641" y="36" width="13" height="13" rx="3" fill="#D9DFE3" stroke="#7A8591"/>
+  <text x="712" y="47" class="legend" text-anchor="end">untested</text>
+
+  <!-- scale: 1 element = 12px, bars start at x=250 -->
+
+  <!-- Row 1: /checkout  20 total, 19 tested = 95% -->
+  <text x="40" y="132" class="vlabel">/checkout</text>
+  <text x="40" y="150" class="vmeta">19 / 20 elements</text>
+  <rect x="250" y="116" width="240" height="30" rx="5" fill="#D9DFE3" stroke="#7A8591"/>
+  <rect x="250" y="116" width="228" height="30" rx="5" fill="#0B7A54"/>
+  <text x="506" y="136" class="pct">95%</text>
+
+  <!-- Row 2: /settings/*  10 total, 4 tested = 40% -->
+  <text x="40" y="192" class="vlabel">/settings/*</text>
+  <text x="40" y="210" class="vmeta">4 / 10 elements</text>
+  <rect x="250" y="176" width="120" height="30" rx="5" fill="#D9DFE3" stroke="#7A8591"/>
+  <rect x="250" y="176" width="48" height="30" rx="5" fill="#0B7A54"/>
+  <text x="386" y="196" class="pct">40%</text>
+
+  <!-- Row 3: /dashboard  5 total, 4 tested = 80% -->
+  <text x="40" y="252" class="vlabel">/dashboard</text>
+  <text x="40" y="270" class="vmeta">4 / 5 elements</text>
+  <rect x="250" y="236" width="60" height="30" rx="5" fill="#D9DFE3" stroke="#7A8591"/>
+  <rect x="250" y="236" width="48" height="30" rx="5" fill="#0B7A54"/>
+  <text x="326" y="256" class="pct">80%</text>
+
+  <!-- divider -->
+  <line x1="40" y1="300" x2="960" y2="300" stroke="#E2E7EB" stroke-width="1.5"/>
+
+  <!-- Overall row -->
+  <text x="40" y="350" class="big">Overall</text>
+  <text x="40" y="370" class="vmeta">27 / 35 elements</text>
+  <rect x="250" y="330" width="420" height="34" rx="5" fill="#D9DFE3" stroke="#7A8591"/>
+  <rect x="250" y="330" width="324" height="34" rx="5" fill="#0B7A54"/>
+  <text x="686" y="353" class="big" fill="#0B7A54">77%</text>
+</svg>

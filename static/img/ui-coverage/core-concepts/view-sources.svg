@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" width="900" height="430" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="What makes a view: Views in UI Coverage come from two sources. In end-to-end tests, unique URLs such as /users/1, /users/2, /products/42, /products/99, and /cart are consolidated into fewer views like /users/*, /products/*, and /cart. In component tests, each spec file such as Button.cy.tsx, Modal.cy.tsx, and Nav.cy.tsx becomes one view named by its file path.">
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9AA4AD"/>
+    </marker>
+    <style>
+      .title{font-size:25px;font-weight:600;fill:#1B1E2E}
+      .subtitle{font-size:14px;fill:#5A6672}
+      .url{font-size:12px;font-family:ui-monospace,'SF Mono',Menlo,monospace;fill:#28303B}
+      .view{font-size:12px;font-weight:600;font-family:ui-monospace,'SF Mono',Menlo,monospace;fill:#0B7A54}
+      .tag{font-size:11px;font-weight:700;fill:#ffffff;letter-spacing:.04em}
+      .note{font-size:11px;fill:#54606C}
+    </style>
+  </defs>
+
+  <!-- card background so the diagram reads on light or dark site themes -->
+  <rect x="1" y="1" width="898" height="428" rx="16" fill="#ffffff" stroke="#E2E8F0" stroke-width="2"/>
+
+  <text x="40" y="48" class="title">What makes a view</text>
+  <text x="40" y="74" class="subtitle">Views in UI Coverage come from two sources, depending on how you test.</text>
+
+  <!-- ============ Left panel: E2E ============ -->
+  <rect x="30" y="100" width="394" height="300" rx="14" fill="#FBFCFD" stroke="#DAE0E4"/>
+  <rect x="30" y="100" width="394" height="46" rx="14" fill="#EAF6F1"/>
+  <rect x="30" y="128" width="394" height="18" fill="#EAF6F1"/>
+  <rect x="46" y="112" width="128" height="22" rx="11" fill="#0B7A54"/>
+  <text x="110" y="127" text-anchor="middle" class="tag">END-TO-END</text>
+
+  <!-- url chips -->
+  <g>
+    <rect x="52" y="170" width="150" height="26" rx="6" fill="#EEF1F3" stroke="#D9DFE3"/><text x="62" y="187" class="url">/users/1</text>
+    <rect x="52" y="204" width="150" height="26" rx="6" fill="#EEF1F3" stroke="#D9DFE3"/><text x="62" y="221" class="url">/users/2</text>
+    <rect x="52" y="238" width="150" height="26" rx="6" fill="#EEF1F3" stroke="#D9DFE3"/><text x="62" y="255" class="url">/products/42</text>
+    <rect x="52" y="272" width="150" height="26" rx="6" fill="#EEF1F3" stroke="#D9DFE3"/><text x="62" y="289" class="url">/products/99</text>
+    <rect x="52" y="306" width="150" height="26" rx="6" fill="#EEF1F3" stroke="#D9DFE3"/><text x="62" y="323" class="url">/cart</text>
+  </g>
+  <!-- arrows converging -->
+  <line x1="206" y1="183" x2="244" y2="220" stroke="#9AA4AD" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="206" y1="217" x2="244" y2="220" stroke="#9AA4AD" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="206" y1="251" x2="244" y2="263" stroke="#9AA4AD" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="206" y1="285" x2="244" y2="263" stroke="#9AA4AD" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <line x1="206" y1="319" x2="244" y2="306" stroke="#9AA4AD" stroke-width="1.5" marker-end="url(#arrow2)"/>
+  <!-- view chips -->
+  <rect x="250" y="206" width="150" height="28" rx="6" fill="#E6F7F0" stroke="#9BE0C4"/><text x="260" y="224" class="view">/users/*</text>
+  <rect x="250" y="249" width="150" height="28" rx="6" fill="#E6F7F0" stroke="#9BE0C4"/><text x="260" y="267" class="view">/products/*</text>
+  <rect x="250" y="292" width="150" height="28" rx="6" fill="#E6F7F0" stroke="#9BE0C4"/><text x="260" y="310" class="view">/cart</text>
+  <text x="52" y="368" class="note">5 URLs → 3 views. Dynamic IDs collapse into shared patterns.</text>
+
+  <!-- ============ Right panel: Component ============ -->
+  <rect x="454" y="100" width="414" height="300" rx="14" fill="#FBFCFD" stroke="#DAE0E4"/>
+  <rect x="454" y="100" width="414" height="46" rx="14" fill="#EEF0FA"/>
+  <rect x="454" y="128" width="414" height="18" fill="#EEF0FA"/>
+  <rect x="470" y="112" width="128" height="22" rx="11" fill="#5B6AD9"/>
+  <text x="534" y="127" text-anchor="middle" class="tag">COMPONENT</text>
+
+  <!-- spec rows: file -> view, with component dots -->
+  <g>
+    <!-- row 1 -->
+    <rect x="474" y="172" width="176" height="40" rx="8" fill="#EEF1F3" stroke="#D9DFE3"/>
+    <text x="488" y="190" class="url" font-size="11.5">Button.cy.tsx</text>
+    <circle cx="492" cy="202" r="4" fill="#5B6AD9"/><circle cx="506" cy="202" r="4" fill="#5B6AD9"/><circle cx="520" cy="202" r="4" fill="#5B6AD9"/>
+    <line x1="654" y1="192" x2="684" y2="192" stroke="#9AA4AD" stroke-width="1.5" marker-end="url(#arrow2)"/>
+    <rect x="688" y="176" width="160" height="32" rx="6" fill="#E6F7F0" stroke="#9BE0C4"/>
+    <text x="698" y="196" class="view" font-size="11">Button.cy.tsx</text>
+
+    <!-- row 2 -->
+    <rect x="474" y="236" width="176" height="40" rx="8" fill="#EEF1F3" stroke="#D9DFE3"/>
+    <text x="488" y="254" class="url" font-size="11.5">Modal.cy.tsx</text>
+    <circle cx="492" cy="266" r="4" fill="#5B6AD9"/><circle cx="506" cy="266" r="4" fill="#5B6AD9"/>
+    <line x1="654" y1="256" x2="684" y2="256" stroke="#9AA4AD" stroke-width="1.5" marker-end="url(#arrow2)"/>
+    <rect x="688" y="240" width="160" height="32" rx="6" fill="#E6F7F0" stroke="#9BE0C4"/>
+    <text x="698" y="260" class="view" font-size="11">Modal.cy.tsx</text>
+
+    <!-- row 3 -->
+    <rect x="474" y="300" width="176" height="40" rx="8" fill="#EEF1F3" stroke="#D9DFE3"/>
+    <text x="488" y="318" class="url" font-size="11.5">Nav.cy.tsx</text>
+    <circle cx="492" cy="330" r="4" fill="#5B6AD9"/><circle cx="506" cy="330" r="4" fill="#5B6AD9"/><circle cx="520" cy="330" r="4" fill="#5B6AD9"/><circle cx="534" cy="330" r="4" fill="#5B6AD9"/>
+    <line x1="654" y1="320" x2="684" y2="320" stroke="#9AA4AD" stroke-width="1.5" marker-end="url(#arrow2)"/>
+    <rect x="688" y="304" width="160" height="32" rx="6" fill="#E6F7F0" stroke="#9BE0C4"/>
+    <text x="698" y="324" class="view" font-size="11">Nav.cy.tsx</text>
+  </g>
+  <text x="474" y="368" class="note">One-to-one: the spec path is the view name.</text>
+</svg>
