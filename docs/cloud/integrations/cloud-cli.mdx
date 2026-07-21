@@ -106,7 +106,9 @@ cy-cloud login --timeout 180
 
 ### Personal access token
 
-If you prefer a token, or your environment cannot open a browser, pass a personal access token to `login`. The CLI checks the token with Cypress Cloud and, if it is valid, saves it to a credentials file (`~/.config/cy-cloud/auth.json`, readable only by your user) so later commands reuse it without you passing it each time:
+Generate a personal access token from your [Cypress Cloud profile](https://cloud.cypress.io/profile): in the **Cloud CLI access** section, under **Personal access token**, select **Generate token**, choose an expiration, and copy the token (it is shown only once). Access is scoped to your role and permissions in each organization.
+
+If you prefer a token, or your environment cannot open a browser, pass it to `login`. The CLI checks the token with Cypress Cloud and, if it is valid, saves it to a credentials file (`~/.config/cy-cloud/auth.json`, readable only by your user) so later commands reuse it without you passing it each time:
 
 ```bash
 cy-cloud login --token <YOUR_PERSONAL_ACCESS_TOKEN>
@@ -114,7 +116,7 @@ cy-cloud login --token <YOUR_PERSONAL_ACCESS_TOKEN>
 
 ### Environment variable (best for CI)
 
-Set `CYPRESS_CLOUD_TOKEN` to authenticate without a `login` step and without writing any credentials to disk. This takes precedence over any stored credentials, which makes it ideal for CI and other non-interactive environments.
+Set `CYPRESS_CLOUD_TOKEN` to a [personal access token](#Personal-access-token) to authenticate without a `login` step and without writing any credentials to disk. This takes precedence over any stored credentials, which makes it ideal for CI and other non-interactive environments.
 
 <OsTabs>
   <TabItem value="macos" label="macOS / Linux">
