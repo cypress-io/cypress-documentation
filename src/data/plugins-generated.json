@@ -338,6 +338,12 @@
       "lastPublished": "2026-03-18T16:09:03.626Z",
       "cypressVersion": "15.12.0"
     },
+    "cypress-mock-latency": {
+      "npm": "cypress-mock-latency",
+      "version": "1.0.0",
+      "lastPublished": "2026-07-19T07:00:59.172Z",
+      "cypressVersion": ">=10.0.0"
+    },
     "cypress-mongodb": {
       "npm": "cypress-mongodb",
       "version": "7.0.0",
