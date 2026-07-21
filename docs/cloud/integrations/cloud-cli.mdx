@@ -582,10 +582,16 @@ If a test's replay data is not available (for example, it is still processing or
 
 ### cy-cloud status
 
-Print your authentication state and Cloud status. See [Authenticate](#Authenticate) for the fields and example output.
+Print your authentication state and Cloud status. See [Authenticate](#Authenticate) for the signed-in example and field details.
 
 ```bash
 cy-cloud status
+```
+
+When you are not signed in:
+
+```json
+{ "authenticated": false }
 ```
 
 ### cy-cloud version
@@ -596,6 +602,17 @@ Print the CLI version and whether an upgrade is required.
 cy-cloud version
 ```
 
+It reports your installed version, the latest published version, and whether your version is still supported:
+
+```json
+{
+  "version": "0.1.1",
+  "latestVersion": "0.1.1",
+  "status": "supported",
+  "suggestedMinVersionUpgrade": null
+}
+```
+
 ### cy-cloud login
 
 Sign in to Cypress Cloud. With no arguments it starts a browser-based OAuth sign-in; pass `--token` to use a personal access token instead. See [Authenticate](#Authenticate) for details.
@@ -604,12 +621,24 @@ Sign in to Cypress Cloud. With no arguments it starts a browser-based OAuth sign
 cy-cloud login
 ```
 
+On success it prints:
+
+```json
+"Successfully logged in"
+```
+
 ### cy-cloud logout
 
 Clear the credentials stored by `login`. This does not unset the `CYPRESS_CLOUD_TOKEN` environment variable.
 
 ```bash
 cy-cloud logout
+```
+
+On success it prints:
+
+```json
+"Successfully logged out"
 ```
 
 ### cy-cloud cache info
@@ -630,10 +659,14 @@ cy-cloud cache info
 
 ### cy-cloud cache clear
 
-Remove everything from the cache. Prints `{ "success": true }` when done.
+Remove everything from the cache.
 
 ```bash
 cy-cloud cache clear
+```
+
+```json
+{ "success": true }
 ```
 
 ### cy-cloud cache cleanup
@@ -642,6 +675,17 @@ Delete expired and oversized entries. This runs automatically as a maintenance t
 
 ```bash
 cy-cloud cache cleanup
+```
+
+It reports the cache size before and after, and how many entries it removed:
+
+```json
+{
+  "originalSize": "1.15 GB",
+  "newSize": "1.02 GB",
+  "expiredEntriesDeleted": 4,
+  "oversizedEntriesDeleted": 1
+}
 ```
 
 ## Workflow: triage a failing run
@@ -682,7 +726,7 @@ At this point you have the error, the screenshot, the commands that led up to it
 
 :::tip
 
-Wrap this sequence in a shell script that takes a project ID and branch, and you have a one-command "why did the last build fail" tool for your team.
+Wrap this sequence in a [shell script](#Use-in-a-shell-script) that takes a project ID and branch, and you have a one-command "why did the last build fail" tool for your team.
 
 :::
 
@@ -751,13 +795,6 @@ cy-cloud test list --projectId "$project_id" --runNumber "$run_number" --status 
   | jq -r '.tests[] | "- \(.testName | join(" > "))\n    \(.attempts[0].errorMessage // "no error message")"'
 ```
 
-Make it executable and run it with a project ID (and optional branch):
-
-```bash
-chmod +x why-did-it-fail.sh
-./why-did-it-fail.sh abc123 main
-```
-
 :::tip
 
 Run any command with `--schema` (for example `cy-cloud test list --schema`) to see the exact JSON shape before you write your `jq` filters.
@@ -780,12 +817,11 @@ The CLI stores configuration and credentials under `~/.config/cy-cloud` (or `$XD
 
 The following environment variables adjust its behavior:
 
-| Variable                     | Purpose                                                                                                                                                |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `CYPRESS_CLOUD_TOKEN`        | Authenticate with a personal access token. Takes precedence over stored credentials.                                                                   |
-| `CYCLOUD_CACHE_DIR`          | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.                                                                                 |
-| `CYCLOUD_DISABLE_CACHE_MGMT` | Set to `true` to disable automatic cache validation and cleanup.                                                                                       |
-| `CYCLOUD_URL`                | Point the CLI at a non-production Cypress Cloud API instance. Intended for Cypress internal development and testing; leave it unset to use production. |
+| Variable                     | Purpose                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------ |
+| `CYPRESS_CLOUD_TOKEN`        | Authenticate with a personal access token. Takes precedence over stored credentials. |
+| `CYCLOUD_CACHE_DIR`          | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.               |
+| `CYCLOUD_DISABLE_CACHE_MGMT` | Set to `true` to disable automatic cache validation and cleanup.                     |
 
 ## Rate limits
 
