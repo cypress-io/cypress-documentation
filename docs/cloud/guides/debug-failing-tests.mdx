@@ -253,6 +253,25 @@ to the root cause.
 Cloud MCP is generally available on **every Cypress Cloud plan at no additional
 cost**.
 
+### Debug from your terminal with the Cloud CLI
+
+If you live in a terminal, the [**Cloud CLI**](/cloud/integrations/cloud-cli)
+(`cy-cloud`) runs this same triage from the command line. Find the most recent
+failing run on your branch, list its failing tests, then pull the Test Replay
+timeline of the commands, network requests, and console logs around the failure.
+Every command returns JSON, so you can read it, pipe it into a script, or hand it
+to a terminal-based agent.
+
+```bash
+cy-cloud run list --projectId <projectId> --branch main --status failed --limit 1
+cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed
+cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --network --logs
+```
+
+Like Cloud MCP, the Cloud CLI is available on **every Cypress Cloud plan at no
+additional cost**. See the [Cloud CLI documentation](/cloud/integrations/cloud-cli)
+for the full workflow and command reference.
+
 ## Which tool should I use?
 
 Different symptoms call for different Cypress Cloud tools. Use this as a quick
@@ -266,6 +285,7 @@ reference:
 | Did my PR cause this, or was it already broken? | [Branch Review](/cloud/features/branch-review)                                                                                         |
 | When did this test start failing?               | [Previous runs](/cloud/features/recorded-runs#Previous-runs) & [Test Code History](/cloud/features/recorded-runs#Test-Code-History)    |
 | I want to debug without leaving my editor       | [Cloud MCP](/cloud/integrations/cloud-mcp)                                                                                             |
+| I want to debug from a terminal or script       | [Cloud CLI](/cloud/integrations/cloud-cli)                                                                                             |
 | Keep failing or flaky code from merging         | [GitHub](/cloud/integrations/github) / [GitLab](/cloud/integrations/gitlab) / [Bitbucket](/cloud/integrations/bitbucket) status checks |
 
 ## Get started
