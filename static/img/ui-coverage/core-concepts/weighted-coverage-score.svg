@@ -8,6 +8,7 @@
       .pct{font-size:13px;font-weight:700;fill:#1B1E2E}
       .legend{font-size:12px;fill:#5A6672}
       .big{font-size:15px;font-weight:600;fill:#1B1E2E}
+      .score{font-size:15px;font-weight:600;fill:#0B7A54}
     </style>
   </defs>
 
@@ -54,5 +55,5 @@
   <text x="40" y="370" class="vmeta">27 / 35 elements</text>
   <rect x="250" y="330" width="420" height="34" rx="5" fill="#D9DFE3" stroke="#7A8591"/>
   <rect x="250" y="330" width="324" height="34" rx="5" fill="#0B7A54"/>
-  <text x="686" y="353" class="big" fill="#0B7A54">77%</text>
+  <text x="686" y="353" class="score">77%</text>
 </svg>
