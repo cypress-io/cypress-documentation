@@ -1,0 +1,424 @@
+---
+title: 'Cypress Cloud CLI: Debug CI failures from your terminal'
+description: 'Query Cypress Cloud runs, tests, and Test Replay data from the command line with the cy-cloud CLI. Built for developers and AI agents.'
+sidebar_label: Cloud CLI
+sidebar_position: 65
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="cloud" />
+
+# <Icon name="terminal" /> Cloud CLI: Debug from your terminal
+
+The Cypress Cloud CLI (`cy-cloud`) brings your Cypress Cloud data to the command line. Check the status of a CI run, pull the screenshot of a failed test, or replay the exact commands, network calls, and console logs that led to a failure, all without opening a browser.
+
+Every command returns structured JSON, so the CLI is equally at home in a shell script, a CI job, or an [AI coding agent](#Use-with-AI-agents). It closes the gap between a red build in CI and a fix in your editor: instead of context switching to Cypress Cloud to triage a failure, you stay where you already are.
+
+:::info
+
+<WhatYoullLearn />
+
+- How the Cloud CLI helps you debug CI failures without leaving your terminal
+- How to install and authenticate `cy-cloud`
+- The full command reference for orgs, projects, runs, specs, tests, and replays
+- A step-by-step workflow for triaging a failing run
+- How caching, rate limits, output schemas, and configuration work
+
+:::
+
+## <Icon name="circle-question" /> Why the Cloud CLI
+
+When a test fails in CI, the friction is rarely the fix. It is the triage: finding the run, opening the right test, reading the error, and reconstructing what the app was doing at the moment it failed. That usually means leaving your editor, signing in to Cypress Cloud, and clicking through a run.
+
+The Cloud CLI removes that round trip. It exposes the same Cloud data you would click through, as commands you can pipe, script, and compose:
+
+- **Stay in your terminal.** List failing runs, drill into failing tests, and read errors and stack traces from the shell.
+- **Pull artifacts on demand.** Save the failure screenshot for a test straight to disk.
+- **Replay without a browser.** Query the [Test Replay](/cloud/features/test-replay) timeline for a specific attempt, scoped to the commands, network requests, and logs around the point of failure.
+- **Automate it.** Because output is JSON, you can wire the CLI into scripts, dashboards, and custom tooling.
+- **Hand it to an agent.** The CLI is designed for both humans and AI agents, so your coding assistant can gather the same context you would.
+
+## <Icon name="gear" /> How it works
+
+The CLI authenticates you against Cypress Cloud, then calls the Cypress Cloud API on your behalf. Data you retrieve is scoped to the projects and organizations your Cypress Cloud user can already see.
+
+1. **Authenticate** once with `cy-cloud login` (OAuth) or a personal access token.
+2. **Query** your Cloud data with commands like `run list`, `test get`, and `replay timeline`.
+3. **Receive JSON** on standard output, ready to read, pipe, or parse.
+
+Replay data is downloaded once and [cached locally](#Caching), so repeated queries against the same test are fast and do not re-download data.
+
+## <Icon name="list-check" /> Requirements
+
+To use the Cloud CLI you must:
+
+- Have a [Cypress Cloud](https://cloud.cypress.io) account.
+- Have the Cloud CLI integration enabled for your organization. An organization admin enables it from the **Integrations** page in Cypress Cloud.
+- Be running [Node.js](https://nodejs.org) `22.21.0` or later.
+
+:::note
+
+The Cloud CLI reads recorded run data. Your tests still run and record the same way they do today, using `cypress run --record`. See [Recording Cloud Runs](/cloud/features/recorded-runs) if you have not set up recording yet.
+
+:::
+
+## <Icon name="download" /> Install
+
+Install `@cypress/cloud` globally to get the `cy-cloud` command:
+
+```bash
+npm install --global @cypress/cloud
+```
+
+Confirm the install and see every available command:
+
+```bash
+cy-cloud --help
+```
+
+Every command and subcommand also supports `--help`, so you can explore the CLI as you go:
+
+```bash
+cy-cloud run list --help
+```
+
+## <Icon name="lock" /> Authenticate
+
+You can authenticate in three ways. OAuth is recommended for local use; a token in an environment variable is best for CI.
+
+### OAuth (recommended)
+
+Running `login` with no arguments starts a browser-based sign-in. The CLI opens Cypress Cloud, you approve the request, and your session is stored securely on your machine. OAuth sessions refresh automatically, so you do not manage token expiry yourself.
+
+```bash
+cy-cloud login
+```
+
+If the browser does not open automatically, the CLI prints a URL you can open manually. You can set how long the CLI waits for the sign-in to complete:
+
+```bash
+cy-cloud login --timeout 180
+```
+
+### Personal access token
+
+If you prefer a token, or your environment cannot open a browser, pass a personal access token to `login`. The CLI validates and stores it:
+
+```bash
+cy-cloud login --token <YOUR_PERSONAL_ACCESS_TOKEN>
+```
+
+### Environment variable (best for CI)
+
+Set `CYPRESS_CLOUD_TOKEN` to authenticate without a `login` step and without writing any credentials to disk. This takes precedence over any stored credentials, which makes it ideal for CI and other non-interactive environments.
+
+```bash
+export CYPRESS_CLOUD_TOKEN=<YOUR_PERSONAL_ACCESS_TOKEN>
+cy-cloud run list --projectId <projectId>
+```
+
+:::note
+
+`cy-cloud logout` clears credentials stored by `login`. It does not unset `CYPRESS_CLOUD_TOKEN`. If that variable is set, you remain authenticated through it until you unset it.
+
+:::
+
+Check your current authentication state at any time:
+
+```bash
+cy-cloud status
+```
+
+## <Icon name="book" /> Command reference
+
+The CLI is organized into command groups. Each data command returns JSON on standard output.
+
+| Command group                          | What it does                                               |
+| -------------------------------------- | ---------------------------------------------------------- |
+| `cy-cloud login` / `logout` / `status` | Manage authentication and check Cloud status.              |
+| `cy-cloud version`                     | Print the CLI version and whether an upgrade is required.  |
+| `cy-cloud org list`                    | List the organizations you belong to.                      |
+| `cy-cloud project`                     | List projects, or get details for one project.             |
+| `cy-cloud run`                         | List runs for a project, or get details for one run.       |
+| `cy-cloud spec`                        | List specs, or get details for one spec.                   |
+| `cy-cloud test`                        | List tests, get one test, and save its failure screenshot. |
+| `cy-cloud replay`                      | Get Test Replay info and query the replay timeline.        |
+| `cy-cloud cache`                       | Inspect and clear the local replay cache.                  |
+
+Most `list` commands accept `--page` and `--limit` for pagination. Filters that take multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) accept a comma-separated list.
+
+### Organizations
+
+List the organizations your account belongs to. Use this to find the organization ID you need for other commands.
+
+```bash
+cy-cloud org list
+```
+
+### Projects
+
+List projects across one or more organizations:
+
+```bash
+# All projects you can access
+cy-cloud project list
+
+# Projects in specific organizations, 10 per page
+cy-cloud project list --orgId <orgId1>,<orgId2> --limit 10
+```
+
+Get details for a single project by its project ID (the `projectId` from your Cypress [configuration](/cloud/account-management/projects)):
+
+```bash
+cy-cloud project get <projectId>
+```
+
+### Runs
+
+List runs for a project. Filter by branch and status to find the run you care about:
+
+```bash
+# The most recent failed run on main
+cy-cloud run list --projectId <projectId> --branch main --status failed --limit 1
+```
+
+`--status` accepts `passed`, `failed`, `running`, `errored`, `timedOut`, `cancelled`, and `noTests` (comma-separate to combine).
+
+Get details for a specific run by project ID and run number:
+
+```bash
+cy-cloud run get <projectId> <runNumber>
+```
+
+### Specs
+
+List specs for a run, or look up specs by ID. Provide a project ID together with a run number, or one or more spec IDs:
+
+```bash
+# Failing specs in a run
+cy-cloud spec list --projectId <projectId> --runNumber <runNumber> --status failed
+
+# Specific specs by ID
+cy-cloud spec list --specId <specId1>,<specId2>
+```
+
+Get details for a single spec:
+
+```bash
+cy-cloud spec get <specId>
+```
+
+### Tests
+
+List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`:
+
+```bash
+# Failing tests in a run
+cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed
+
+# Tests within specific specs
+cy-cloud test list --specId <specId>
+```
+
+Get details for a single test, including its error and stack trace:
+
+```bash
+cy-cloud test get <testId>
+```
+
+Save the failure screenshot for a test. Pass `--screenshot` on its own to write to a temporary directory, or give it a path to choose the destination. The saved file path is included in the JSON output:
+
+```bash
+# Save to a directory you choose
+cy-cloud test get <testId> --screenshot ./screenshots
+```
+
+If the test passed, or no failure screenshot exists, the output explains why instead of writing a file.
+
+### Replays
+
+[Test Replay](/cloud/features/test-replay) captures the commands, network traffic, and console logs for a test. The `replay` commands let you query that timeline for a single test attempt.
+
+:::note
+
+Replay attempts are **1-indexed to match the Cypress Cloud dashboard**, where the first run of a test is Attempt 1. When you omit `--attempt`, the timeline defaults to the latest attempt.
+
+:::
+
+Get a summary of a replay, including how many command, network, and log events it holds and where the failure occurred:
+
+```bash
+cy-cloud replay info --testId <testId>
+```
+
+Query the replay timeline. By default the timeline is broad, so scope it to what you need. Include `--commands`, `--logs`, and `--network` to choose event types, and narrow to the failure with `--failedOnly` or `--aroundFailure`:
+
+```bash
+# The 5 commands leading up to the failure, plus the failed command
+cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5
+
+# Command, network (XHR and Fetch), and console log events for an attempt
+cy-cloud replay timeline --testId <testId> --commands --network --logs
+```
+
+Useful `replay timeline` options:
+
+| Option               | Description                                                               |
+| -------------------- | ------------------------------------------------------------------------- |
+| `--testId`           | The test to replay (required).                                            |
+| `--attempt`          | Attempt number (1-indexed). Defaults to the latest attempt.               |
+| `--commands`         | Include Cypress command events.                                           |
+| `--network`          | Include network events by type, comma-separated. Defaults to `XHR,Fetch`. |
+| `--logs`             | Include console log events.                                               |
+| `--failedOnly`       | Return only failed command events.                                        |
+| `--aroundFailure`    | Return N commands before the failure, plus the failed command.            |
+| `--page` / `--limit` | Paginate through the timeline.                                            |
+
+`--network` accepts standard resource types, including `XHR`, `Fetch`, `Document`, `Script`, `Stylesheet`, `Image`, `Font`, `WebSocket`, and `All`.
+
+### Cache
+
+Manage the local replay cache. See [Caching](#Caching) for how it works.
+
+```bash
+cy-cloud cache info     # Location, file count, and size on disk
+cy-cloud cache clear    # Remove everything in the cache
+cy-cloud cache cleanup  # Delete expired and oversized entries
+```
+
+## <Icon name="bug-slash" /> Workflow: triage a failing run
+
+Here is the friction the Cloud CLI is built to remove. The nightly run on `main` failed, and a checkout test is red. This walkthrough goes from "something failed" to "I know exactly what broke" without opening a browser.
+
+**1. Find the failing run.** Grab the most recent failed run on `main` and note its run number.
+
+```bash
+cy-cloud run list --projectId <projectId> --branch main --status failed --limit 1
+```
+
+**2. List the failing tests in that run.** Now that you have the run number, see which tests failed.
+
+```bash
+cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed
+```
+
+**3. Read the failure.** Get the failing test's error and stack trace, and save its screenshot so you can see the app at the moment it broke.
+
+```bash
+cy-cloud test get <testId> --screenshot ./screenshots
+```
+
+**4. See what the replay holds.** Check the replay summary to confirm where the failure occurred and how much detail is captured.
+
+```bash
+cy-cloud replay info --testId <testId>
+```
+
+**5. Reconstruct the moment of failure.** Pull the commands right before the failure, plus the network calls and console logs for the attempt. This is the same context you would scrub through in Test Replay, delivered as JSON.
+
+```bash
+cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --network --logs
+```
+
+At this point you have the error, the screenshot, the commands that led up to it, and the network and console activity around it, all in your terminal. From here you can fix the test, or hand the JSON to an [agent](#Use-with-AI-agents) and ask it to propose a fix.
+
+:::tip
+
+Wrap this sequence in a shell script that takes a project ID and branch, and you have a one-command "why did the last build fail" tool for your team.
+
+:::
+
+## <Icon name="code" /> Output format and schemas
+
+Every data command prints JSON to standard output, so you can pipe results into other tools. For example, with [`jq`](https://jqlang.github.io/jq/):
+
+```bash
+# Print the run numbers of the last 5 failed runs on main
+cy-cloud run list --projectId <projectId> --branch main --status failed --limit 5 \
+  | jq '.runs[].runNumber'
+```
+
+To see the exact shape of a command's output before you parse it, add `--schema`. It prints the Zod-compliant JSON schema for that command's output and makes no network call:
+
+```bash
+cy-cloud test get --schema
+```
+
+This is especially useful when generating parsing code or briefing an agent on what to expect.
+
+## <Icon name="database" /> Caching
+
+Replay data can cover an entire spec, so the CLI downloads a replay database once and caches it locally. Later `replay` queries for any test in that database read from the cache instead of downloading again.
+
+- The cache lives at `~/.cache/cy-cloud` by default. Override it with the `CYCLOUD_CACHE_DIR` environment variable.
+- Entries expire after **30 days**, and the cache is capped at **1 GB** by default. When the cap is exceeded, the oldest entries are removed first.
+- Maintenance runs automatically. The CLI validates cache integrity at most once a day, and prunes expired or oversized entries after commands run.
+
+Inspect or clear the cache at any time with the [`cache` commands](#Cache). To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
+
+## <Icon name="sliders" /> Configuration
+
+The CLI stores configuration and credentials under `~/.config/cy-cloud` (or `$XDG_CONFIG_HOME/cy-cloud` if that variable is set). Credentials are written with owner-only permissions.
+
+The following environment variables adjust its behavior:
+
+| Variable                     | Purpose                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------ |
+| `CYPRESS_CLOUD_TOKEN`        | Authenticate with a personal access token. Takes precedence over stored credentials. |
+| `CYCLOUD_CACHE_DIR`          | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.               |
+| `CYCLOUD_DISABLE_CACHE_MGMT` | Set to `true` to disable automatic cache validation and cleanup.                     |
+| `CYCLOUD_URL`                | Override the Cypress Cloud API base URL. Most users never need to change this.       |
+
+## <Icon name="gauge" /> Rate limits
+
+Cloud CLI requests are rate limited per user, with a default of **100 requests per hour**. If you exceed the limit, requests return an error until the window resets. Telemetry does not count toward your limit. If you need a higher limit, contact [support@cypress.io](mailto:support@cypress.io).
+
+Data availability follows the same recording limits and [data retention](/cloud/account-management/billing-and-usage) policies as the rest of Cypress Cloud. Runs beyond your retention window or usage limits are not accessible through the CLI.
+
+## <Icon name="shield-halved" /> Restrictive VPNs and allowlists
+
+The Cloud CLI communicates with the Cypress Cloud API at `https://cloud-api.cypress.io`. If you run the CLI from behind a restrictive VPN or firewall, add that host to your allowlist so the CLI can reach Cloud. Sign-in also uses `https://cloud.cypress.io`.
+
+<UrlAllowList />
+
+## <Icon name="robot" /> Use with AI agents
+
+Because every command returns structured JSON and exposes its output schema with `--schema`, the Cloud CLI is a natural tool for AI coding agents. An agent can list failing tests, read errors, and pull replay timelines, then use that context to propose a fix in your editor.
+
+The Cloud CLI and [Cloud MCP](/cloud/integrations/cloud-mcp) solve related problems in different ways:
+
+- **Cloud MCP** is a remote server your AI client connects to. The agent selects Cypress tools automatically based on your prompt. It is the best fit for conversational, in-editor debugging.
+- **The Cloud CLI** is a command-line tool for humans, scripts, and agents that run shell commands. It is the best fit for automation, custom tooling, and agents that work through a terminal.
+
+Many teams use both. If your agent works through a terminal, give it the CLI. If it speaks MCP, connect it to Cloud MCP.
+
+## FAQs
+
+**Which version of Cypress do I need?**
+
+The Cloud CLI reads recorded run data from Cypress Cloud, so there is no minimum Cypress app version. You do need to be recording runs to Cloud with `cypress run --record`.
+
+**Do I need to change my tests?**
+
+No. The CLI reads data your runs already record. You do not modify test code to use it.
+
+**Why am I getting an authentication error?**
+
+Confirm you are logged in with `cy-cloud status`. If you authenticate through `CYPRESS_CLOUD_TOKEN`, verify the token is set and valid. Remember that `logout` does not unset that environment variable.
+
+**Why can't the CLI find my run or project?**
+
+Verify the Cloud CLI integration is enabled for your organization, and that your Cypress Cloud user has access to the project. The CLI only returns data you can already see in Cypress Cloud.
+
+**A command returns "Replay not available." What does that mean?**
+
+That test does not have Test Replay data available. Confirm [Test Replay](/cloud/features/test-replay) capturing was enabled for the run and that the run is within your data retention window.
+
+## See also
+
+- [Cloud MCP: Agentic debugging](/cloud/integrations/cloud-mcp)
+- [Test Replay](/cloud/features/test-replay)
+- [Recording Cloud Runs](/cloud/features/recorded-runs)
+- [Data Extract API](/cloud/integrations/data-extract-api)
+- [Debug failing tests](/cloud/guides/debug-failing-tests)
+- [Cypress Cloud FAQ](/cloud/faq)
