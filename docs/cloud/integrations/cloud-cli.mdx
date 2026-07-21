@@ -26,6 +26,12 @@ Every command returns structured JSON, so the CLI is equally at home in a shell 
 
 :::
 
+:::note
+
+The Cloud CLI is available on **every Cypress Cloud plan**, including the free Starter plan, at no additional cost. An organization admin enables it once from the **Integrations** page.
+
+:::
+
 ## <Icon name="circle-question" /> Why the Cloud CLI
 
 When a test fails in CI, the friction is rarely the fix. It is the triage: finding the run, opening the right test, reading the error, and reconstructing what the app was doing at the moment it failed. That usually means leaving your editor, signing in to Cypress Cloud, and clicking through a run.
@@ -378,9 +384,11 @@ The following environment variables adjust its behavior:
 
 ## <Icon name="gauge" /> Rate limits
 
-Cloud CLI requests are rate limited per user, with a default of **100 requests per hour**. If you exceed the limit, requests return an error until the window resets. Telemetry does not count toward your limit. If you need a higher limit, contact [support@cypress.io](mailto:support@cypress.io).
+The Cloud CLI is available on all Cypress Cloud plans, and the same rate limit applies across every plan. Requests are limited **per user** to a default of **100 requests per hour**. Some organizations have a higher limit configured, in which case the CLI uses the highest limit available to you across your organizations. Telemetry does not count toward the limit.
 
-Data availability follows the same recording limits and [data retention](/cloud/account-management/billing-and-usage) policies as the rest of Cypress Cloud. Runs beyond your retention window or usage limits are not accessible through the CLI.
+If you exceed the limit, requests return an error until the hour resets. Contact [support@cypress.io](mailto:support@cypress.io) if you need a higher limit.
+
+Rate limits are separate from data availability. What data you can retrieve follows the same recording limits and [data retention](/cloud/account-management/billing-and-usage) policies as the rest of Cypress Cloud, so those limits do vary by plan. Runs beyond your retention window or usage limits are not accessible through the CLI.
 
 ## <Icon name="shield-halved" /> Restrictive VPNs and allowlists
 

@@ -761,12 +761,22 @@ Add these to your allowlist if you run the CLI behind a restrictive VPN or
 firewall. See the full list of
 [URLs to allow](#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
+### <Icon name="angle-right" /> Which Cypress Cloud plans is the Cloud CLI available on?
+
+The Cloud CLI is available on all Cypress Cloud plans, including the free Starter
+plan, at no additional cost. An organization admin enables it once from the
+**Integrations** page in Cypress Cloud.
+
 ### <Icon name="angle-right" /> Does the Cloud CLI have usage limits?
 
 Yes. Cloud CLI requests are rate limited per user, defaulting to 100 requests
-per hour. Data availability follows the same recording limits and data retention
-policies as the rest of Cypress Cloud. Contact
+per hour, and the same limit applies across all plans (some organizations have a
+higher limit configured). Telemetry does not count toward the limit. Contact
 [support@cypress.io](mailto:support@cypress.io) if you need a higher limit.
+
+Rate limits are separate from data availability. What data you can retrieve
+follows the same recording limits and data retention policies as the rest of
+Cypress Cloud, which do vary by plan.
 
 ## Cloud AI :sparkles:
 
