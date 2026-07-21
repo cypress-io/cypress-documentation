@@ -184,7 +184,39 @@ Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`,
 
 Most `list` commands accept `--page` and `--limit` for pagination. For example, `--page 2 --limit 25` returns the second page of 25 results, and every list response includes a `pagination` object with the current `page`, `perPage`, and the `total` number of matching results. Filters that take multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) accept a comma-separated list, such as `--status passed,failed`.
 
-### `cy-cloud org`
+### `cy-cloud version`
+
+Print the CLI version and whether an upgrade is required.
+
+```bash
+cy-cloud version
+```
+
+### `cy-cloud status`
+
+Print your authentication state and Cloud status. See [Authenticate](#Authenticate) for the fields and example output.
+
+```bash
+cy-cloud status
+```
+
+### `cy-cloud login`
+
+Sign in to Cypress Cloud. With no arguments it starts a browser-based OAuth sign-in; pass `--token` to use a personal access token instead. See [Authenticate](#Authenticate) for details.
+
+```bash
+cy-cloud login
+```
+
+### `cy-cloud logout`
+
+Clear the credentials stored by `login`. This does not unset the `CYPRESS_CLOUD_TOKEN` environment variable.
+
+```bash
+cy-cloud logout
+```
+
+### `cy-cloud org list`
 
 List the organizations your account belongs to. Use this to find the organization ID you need for other commands.
 
@@ -204,7 +236,7 @@ Prints the organizations you belong to, each with the `uuid` you pass to other c
 }
 ```
 
-### `cy-cloud project`
+### `cy-cloud project list`
 
 List every project you can access:
 
@@ -230,6 +262,8 @@ Or list projects in specific organizations, with pagination:
 cy-cloud project list --orgId <orgId1>,<orgId2> --limit 10
 ```
 
+### `cy-cloud project get`
+
 Get details for a single project by its project ID (the `projectId` from your Cypress [configuration](/cloud/account-management/projects)):
 
 ```bash
@@ -247,7 +281,7 @@ The response also includes the project's latest run numbers:
 }
 ```
 
-### `cy-cloud run`
+### `cy-cloud run list`
 
 List runs for a project. Filter by branch and status to find the run you care about, for example the most recent failed run on `main`:
 
@@ -274,6 +308,8 @@ Each run includes its number, branch, timestamps, and status:
 
 `--status` accepts `passed`, `failed`, `running`, `errored`, `timedOut`, `cancelled`, and `noTests` (comma-separate to combine).
 
+### `cy-cloud run get`
+
 Get details for a specific run by project ID and run number:
 
 ```bash
@@ -298,7 +334,7 @@ The details add the commit SHA, per-status test counts, and duration in millisec
 }
 ```
 
-### `cy-cloud spec`
+### `cy-cloud spec list`
 
 List specs for a run, or look up specs by ID. Provide a project ID together with a run number, or one or more spec IDs.
 
@@ -329,6 +365,8 @@ Or look up specific specs by ID:
 cy-cloud spec list --specId <specId1>,<specId2>
 ```
 
+### `cy-cloud spec get`
+
 Get details for a single spec:
 
 ```bash
@@ -350,7 +388,7 @@ The details add timing and per-status test counts for the spec:
 }
 ```
 
-### `cy-cloud test`
+### `cy-cloud test list`
 
 List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`.
 
@@ -394,6 +432,8 @@ Or list tests within specific specs:
 ```bash
 cy-cloud test list --specId <specId>
 ```
+
+### `cy-cloud test get`
 
 Get details for a single test, including its error and stack trace:
 
@@ -457,13 +497,19 @@ If the test passed, or no failure screenshot exists, the output includes a `fail
 }
 ```
 
-### `cy-cloud replay`
+### `cy-cloud replay info`
 
 [Test Replay](/cloud/features/test-replay) captures the commands, network traffic, and console logs for a test. The `replay` commands let you query that timeline for a single test attempt.
 
 :::note
 
-Replay attempts are **1-indexed to match the Cypress Cloud dashboard**, where the first run of a test is Attempt 1. When you omit `--attempt`, the timeline defaults to the last (most recent) attempt, which is the final retry for a test that was retried.
+Replay attempts are **1-indexed to match the Cypress Cloud dashboard**, where the first run of a test is Attempt 1. When you omit `--attempt`, replay commands default to the last (most recent) attempt, which is the final retry for a test that was retried.
+
+:::
+
+:::caution
+
+If a test's replay data is not available yet (for example, it is still processing after the run completes) or was never captured, `replay` commands return an error like `Failed to download replay: Replay "<testId>" not available`. The CLI does not wait or poll, so re-run the command once processing has finished. If it keeps failing, confirm [Test Replay](/cloud/features/test-replay) was enabled for the run and that it is within your data retention window.
 
 :::
 
@@ -485,6 +531,8 @@ The summary reports the event counts and where the failure occurred:
   "failedAt": 1753063204120
 }
 ```
+
+### `cy-cloud replay timeline`
 
 Query the replay timeline. By default the timeline is broad, so scope it to what you need. Include `--commands`, `--logs`, and `--network` to choose event types, and narrow to the failure with `--failedOnly` or `--aroundFailure`.
 
@@ -555,7 +603,7 @@ Useful `replay timeline` options:
 | Option               | Description                                                               |
 | -------------------- | ------------------------------------------------------------------------- |
 | `--testId`           | The test to replay (required).                                            |
-| `--attempt`          | Attempt number (1-indexed). Defaults to the latest attempt.               |
+| `--attempt`          | Attempt number (1-indexed). Defaults to the last (most recent) attempt.   |
 | `--commands`         | Include Cypress command events.                                           |
 | `--network`          | Include network events by type, comma-separated. Defaults to `XHR,Fetch`. |
 | `--logs`             | Include console log events.                                               |
@@ -565,15 +613,13 @@ Useful `replay timeline` options:
 
 `--network` accepts standard resource types, including `XHR`, `Fetch`, `Document`, `Script`, `Stylesheet`, `Image`, `Font`, `WebSocket`, and `All`.
 
-### `cy-cloud cache`
+### `cy-cloud cache info`
 
-Manage the local replay cache. See [Caching](#Caching) for how it works.
+Print the local Test Replay cache location, file count, and total size on disk.
 
-- `cy-cloud cache info` shows the cache location, file count, and size on disk.
-- `cy-cloud cache clear` removes everything in the cache.
-- `cy-cloud cache cleanup` deletes expired and oversized entries.
-
-For example, `cy-cloud cache info` prints:
+```bash
+cy-cloud cache info
+```
 
 ```json
 {
@@ -581,6 +627,22 @@ For example, `cy-cloud cache info` prints:
   "files": 12,
   "bytes": 48210432
 }
+```
+
+### `cy-cloud cache clear`
+
+Remove everything from the cache. Prints `{ "success": true }` when done.
+
+```bash
+cy-cloud cache clear
+```
+
+### `cy-cloud cache cleanup`
+
+Delete expired and oversized entries. This runs automatically as a maintenance task after commands, but you can trigger it manually. See [Caching](#Caching) for the size and age limits.
+
+```bash
+cy-cloud cache cleanup
 ```
 
 ## Workflow: triage a failing run
@@ -666,7 +728,7 @@ Replay data can cover an entire spec, so the CLI downloads a replay database onc
 - Entries expire after **30 days**, and the cache is capped at **1 GB** by default. When the cap is exceeded, the oldest entries are removed first.
 - Maintenance runs automatically. The CLI validates cache integrity at most once a day, and prunes expired or oversized entries after commands run.
 
-Inspect or clear the cache at any time with the [`cache` commands](#cy-cloud-cache). To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
+Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
 
 ## <Icon name="sliders" /> Configuration
 
