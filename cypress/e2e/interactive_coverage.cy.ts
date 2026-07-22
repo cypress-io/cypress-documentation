@@ -77,8 +77,16 @@ function exerciseMobileChrome() {
       cy.wrap(back.first()).click()
     }
   })
-  cy.get('.navbar-sidebar__close:visible').click()
-  cy.get('.navbar-sidebar').should('not.be.visible')
+  // Alias the close button before clicking so the click acts on a stable
+  // reference even if the drawer re-renders and detaches the element mid-close.
+  cy.get('.navbar-sidebar__close:visible').first().as('closeBtn')
+  cy.get('@closeBtn').click()
+  // Key off the toggle's aria-expanded flipping to 'false' — a stable signal the
+  // drawer has closed — rather than racing the CSS close animation with a
+  // visibility check (which flakes mid-animation).
+  cy.get('.navbar__toggle')
+    .first()
+    .should('have.attr', 'aria-expanded', 'false')
   exerciseContentTabs()
   exerciseSearch()
 }
