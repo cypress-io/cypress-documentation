@@ -255,8 +255,8 @@ cost**.
 
 ### Debug from your terminal with the Cloud CLI
 
-If you live in a terminal, the [**Cloud CLI**](/cloud/integrations/cloud-cli)
-(`cy-cloud`) runs this same triage from the command line. Find the most recent
+You can run this same triage from your terminal with the
+[**Cloud CLI**](/cloud/integrations/cloud-cli) (`cy-cloud`). Find the most recent
 failing run on your branch, list its failing tests, then pull the Test Replay
 timeline of the commands, network requests, and console logs around the failure.
 Every command returns JSON, so you can read it, pipe it into a script, or hand it
@@ -268,8 +268,8 @@ cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status fail
 cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --network --logs
 ```
 
-Like Cloud MCP, the Cloud CLI is available on **every Cypress Cloud plan at no
-additional cost**. See the [Cloud CLI documentation](/cloud/integrations/cloud-cli)
+Like Cloud MCP, the Cloud CLI is available on every Cypress Cloud plan at no
+additional cost. See the [Cloud CLI documentation](/cloud/integrations/cloud-cli)
 for the full workflow and command reference.
 
 ## Which tool should I use?
