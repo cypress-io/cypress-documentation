@@ -97,7 +97,7 @@ cy-cloud run list --help
 
 ## Keep the CLI updated
 
-Older versions are eventually unsupported. When your version falls behind, commands print a warning to upgrade, and versions older than the minimum stop working. Check your version and its support status with [`cy-cloud version`](#cy-cloud-version), and upgrade to the latest release when needed:
+Always run the latest version. Older versions eventually become unsupported: the CLI warns you when yours falls behind, and versions below the minimum stop working. Check your version and support status any time with [`cy-cloud version`](#cy-cloud-version), and upgrade to the latest release regularly:
 
 ```bash
 npm install --global @cypress/cloud@latest
@@ -197,7 +197,21 @@ If you are not signed in, `authenticated` is `false` and the other fields are om
 
 ### Revoke access
 
-`cy-cloud logout` clears the credentials stored on your machine, but the underlying session or token stays valid until it expires. To revoke access, open your [Cypress Cloud profile](https://cloud.cypress.io/profile) and, under **Cloud CLI access**, remove the OAuth connection or delete the personal access token. Revoking there invalidates the credential everywhere, including anywhere it is still stored locally.
+`cy-cloud logout` clears the credentials stored on your machine, but the underlying session or token stays valid until it expires. To revoke access entirely, open your [Cypress Cloud profile](https://cloud.cypress.io/profile) and revoke the credential under **Cloud CLI access**. Revoking there invalidates it everywhere, including anywhere it is still stored locally.
+
+To revoke an OAuth session, find it under **OAuth** and select **Revoke connection**.
+
+<DocsImage
+  src="/img/cloud/integrations/cloud-cli/cloud-cli-revoke-oauth.png"
+  alt="OAuth section of Cloud CLI access listing a Cypress Cloud CLI connection with a Revoke connection action"
+/>
+
+To revoke a personal access token, find it under **Personal access token** and select **Revoke token**, or **Regenerate token** to replace it.
+
+<DocsImage
+  src="/img/cloud/integrations/cloud-cli/cloud-cli-revoke-pat.png"
+  alt="Personal access token section of Cloud CLI access with Regenerate token and Revoke token actions"
+/>
 
 ## Command reference
 
