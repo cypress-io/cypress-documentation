@@ -95,6 +95,14 @@ Every command and subcommand also supports `--help`, so you can explore the CLI 
 cy-cloud run list --help
 ```
 
+## Keep the CLI updated
+
+Always run the latest version. Older versions eventually become unsupported: the CLI warns you when yours falls behind, and versions below the minimum stop working. Check your version and support status any time with [`cy-cloud version`](#cy-cloud-version), and upgrade to the latest release regularly:
+
+```bash
+npm install --global @cypress/cloud@latest
+```
+
 ## Authenticate
 
 You can authenticate in three ways. OAuth is recommended for local use; a token in an environment variable is best for CI.
@@ -187,6 +195,24 @@ cy-cloud status
 
 If you are not signed in, `authenticated` is `false` and the other fields are omitted.
 
+### Revoke access
+
+`cy-cloud logout` clears the credentials stored on your machine, but the underlying session or token stays valid until it expires. To revoke access entirely, open your [Cypress Cloud profile](https://cloud.cypress.io/profile) and revoke the credential under **Cloud CLI access**. Revoking there invalidates it everywhere, including anywhere it is still stored locally.
+
+To revoke an OAuth session, find it under **OAuth** and select **Revoke connection**.
+
+<DocsImage
+  src="/img/cloud/integrations/cloud-cli/cloud-cli-revoke-oauth.png"
+  alt="OAuth section of Cloud CLI access listing a Cypress Cloud CLI connection with a Revoke connection action"
+/>
+
+To revoke a personal access token, find it under **Personal access token** and select **Revoke token**, or **Regenerate token** to replace it.
+
+<DocsImage
+  src="/img/cloud/integrations/cloud-cli/cloud-cli-revoke-pat.png"
+  alt="Personal access token section of Cloud CLI access with Regenerate token and Revoke token actions"
+/>
+
 ## Command reference
 
 Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`, `test`, `replay`, `cache`), each with subcommands such as `list` and `get`. For example, `cy-cloud run list` lists runs and `cy-cloud run get` fetches one run. Authentication and utility commands (`login`, `logout`, `status`, `version`) sit at the top level. Each data command returns JSON on standard output.
@@ -238,7 +264,7 @@ cy-cloud test list --projectId <projectId> --runNumber <runNumber> --limit 100 -
 
 ### cy-cloud org list
 
-List the organizations your account belongs to. Use this to find the organization ID you need for other commands.
+List the organizations your account belongs to, sorted alphabetically by name. Use this to find the organization ID you need for other commands.
 
 ```bash
 cy-cloud org list
@@ -853,9 +879,13 @@ It returns a JSON Schema describing the output fields and their types, which beg
 
 This is especially useful when generating parsing code or briefing an agent on what to expect.
 
+## Exit codes
+
+Every command exits `0` on success and a non-zero code on failure, with the error message written to standard error. Failures include authentication errors, a resource that is not found or not accessible, an exceeded rate limit, and network problems. This makes the CLI safe to gate CI steps on and to use with `set -e` in scripts.
+
 ## Use in a shell script
 
-Because `cy-cloud` prints JSON, it drops straight into shell scripts. Make the `cy-cloud` command available (install it globally, or invoke it with `npx @cypress/cloud`), authenticate non-interactively with `CYPRESS_CLOUD_TOKEN`, and parse the output with a tool like [`jq`](https://jqlang.github.io/jq/). Every command exits non-zero on failure, so `set -e` stops the script if a call fails.
+Because `cy-cloud` prints JSON, it drops straight into shell scripts. Make the `cy-cloud` command available (install it globally, or invoke it with `npx @cypress/cloud`), authenticate non-interactively with `CYPRESS_CLOUD_TOKEN`, and parse the output with a tool like [`jq`](https://jqlang.github.io/jq/).
 
 The script below finds the most recent failed run on a branch, then prints each failing test with its first error message:
 
@@ -891,6 +921,18 @@ Run any command with `--schema` (for example `cy-cloud test list --schema`) to s
 
 :::
 
+The same approach works in CI. Install the CLI in your job and authenticate with a token from your secret store. For example, in a GitHub Actions workflow:
+
+```yaml title=".github/workflows/triage.yml"
+- name: Summarize the latest failed Cypress Cloud run
+  if: always()
+  env:
+    CYPRESS_CLOUD_TOKEN: ${{ secrets.CYPRESS_CLOUD_TOKEN }}
+  run: |
+    npm install --global @cypress/cloud
+    cy-cloud run list --projectId <projectId> --branch "$GITHUB_REF_NAME" --status failed --limit 1
+```
+
 ## Caching
 
 Replay data can cover an entire spec, so the CLI downloads a replay database once and caches it locally. Later `replay` queries for any test in that database read from the cache instead of downloading again.
@@ -920,6 +962,12 @@ The Cloud CLI is available on all Cypress Cloud plans, and the same rate limit a
 If you exceed the limit, requests return an error until the hour resets. Contact [support@cypress.io](mailto:support@cypress.io) if you need a higher limit.
 
 Rate limits are separate from data availability. What data you can retrieve follows the same recording limits and [data retention](/cloud/account-management/billing-and-usage) policies as the rest of Cypress Cloud, so those limits do vary by plan. Runs beyond your retention window or usage limits are not accessible through the Cloud CLI.
+
+## Security and privacy
+
+- **Read-only.** The CLI only retrieves data. It cannot modify your test code, delete runs, or change any Cloud settings.
+- **Scoped to your access.** Every request runs as your Cypress Cloud user, so you only ever see the organizations, teams, and projects you can already access in the Cloud UI.
+- **Local credentials.** Credentials from `cy-cloud login` are stored on your machine under `~/.config/cy-cloud`, in files readable only by your user. The `CYPRESS_CLOUD_TOKEN` environment variable is never written to disk.
 
 ## Restrictive VPNs and allowlists
 
