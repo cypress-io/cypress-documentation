@@ -1,6 +1,6 @@
 ---
 title: Identify coverage gaps with UI Coverage
-description: 'Find untested interactive elements in your app using UI Coverage reports from recorded Cypress runs.'
+description: 'A step-by-step workflow to find the untested buttons, forms, links, and pages in your app using Cypress UI Coverage reports, with no code instrumentation required.'
 sidebar_label: Identify coverage gaps
 sidebar_position: 10
 ---
@@ -9,108 +9,237 @@ sidebar_position: 10
 
 # Identify coverage gaps
 
-Understanding your application's test coverage is crucial for ensuring quality and reliability. Cypress's UI Coverage tool provides insights into which parts of your application are tested and highlights untested areas. This guide will help you get started with UI Coverage to identify and address coverage gaps effectively.
+Most teams can name a few flows they know are well tested. Naming the buttons,
+forms, and pages that _no_ test ever touches is much harder, and those are the
+gaps that let regressions ship. UI Coverage turns every recorded run into a
+ranked map of exactly those gaps: every interactive element your tests
+exercised, every one they missed, and every page they never opened. It reads
+this from [Test Replay](/cloud/features/test-replay) data in Cypress Cloud, so
+there's no code to instrument and nothing to add to your app.
 
-## Run Tests
+This workflow takes you from a recorded run to a prioritized list of gaps to
+close:
 
-To identify coverage gaps, you need to first run and record Cypress tests to the Cloud. If you're new to Cypress, refer to the [Cypress documentation](/app/end-to-end-testing/writing-your-first-end-to-end-test) to get started with writing tests.
+1. [Record a run](#Step-1-Record-a-run-to-Cypress-Cloud) so Cypress Cloud can build a UI Coverage report.
+2. [Read your overall coverage score](#Step-2-Read-your-overall-coverage-score) to see a baseline.
+3. [Start with your lowest-scoring views](#Step-3-Start-with-your-lowest-scoring-views) to find where gaps cluster.
+4. [Drill into a view](#Step-4-Drill-into-a-view-to-see-untested-elements) to see the untested elements in context.
+5. [Find the pages your tests never visit](#Step-5-Find-the-pages-your-tests-never-visit) from untested links.
+6. [Sharpen the signal with configuration](#Step-6-Sharpen-the-signal-with-configuration) so every gap is a real gap.
+7. [Turn gaps into tests](#Step-7-Turn-gaps-into-tests) to close them.
+
+:::tip
+
+<Icon useCypressIcon name="general-sparkle-triple" className="inline" /> If you
+use an AI coding assistant, you can run most of this workflow without opening a
+browser tab. [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets your agent
+pull the report, rank the riskiest views, and drill into specific untested
+elements from your editor. See [Work with AI
+agents](/ui-coverage/work-with-ai-agents) for prompts.
+
+:::
+
+## Step 1: Record a run to Cypress Cloud
+
+UI Coverage needs a recorded run to analyze. Any run recorded to
+[Cypress Cloud](https://on.cypress.io/cloud) with Test Replay produces a report
+automatically, with no configuration or code changes. If
+you already record your tests, you're ready; open the run and skip to
+[Step 2](#Step-2-Read-your-overall-coverage-score).
+
+If your project has few or no Cypress tests yet, you can still get a first
+report. Drive UI Coverage from your sitemap or a list of URLs: visiting each
+page captures the interactive elements on it, giving you a baseline for the
+pages your suite doesn't reach yet.
 
 <SitemapScanExample product="ui-coverage" />
 
-## Review Coverage Reports
+## Step 2: Read your overall coverage score
 
-Once your tests have recorded to Cypress Cloud, you can analyze the coverage reports to identify gaps. Click on the runs in your project in [Cypress Cloud](https://on.cypress.io/cloud) to access the UI Coverage reports. This report provides a visual representation of your application's test coverage, highlighting tested and untested elements.
-
-:::tip
-If you use an AI coding assistant, you can query UI Coverage data directly from your editor using [Cypress Cloud MCP](/cloud/integrations/cloud-mcp). Ask your agent to pull the report, identify the riskiest views, and drill into specific untested elements — without opening a browser tab.
-:::
-
-### Overall Score
-
-The first metric to review is the **overall coverage score**. This score is calculated by comparing the number of tested elements to the total number of [interactive elements](/ui-coverage/core-concepts/interactivity) in your application. A higher score indicates better coverage, while a lower score indicates areas that need additional testing. The score will display on the runs page and within individual runs.
+Once your run has recorded, start with the **overall coverage score**. It's the
+percentage of your application's interactive elements that your tests
+exercised, so it's the single number that tells you how much of your UI is
+covered and gives you a baseline to improve against. The score appears on the
+runs list and on each individual run.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-runs-list-with-uicov-score.png"
-  alt="Cypress Cloud screenshot cropping to show a list of 4 runs with the details of the run like git commit, committer, branch, and the UI Coverage score of 11%"
+  alt="Cypress Cloud screenshot showing a list of runs with each run's git commit, committer, branch, and UI Coverage score"
 />
 
-### Views
+[Grouped elements](/ui-coverage/core-concepts/element-grouping) count once
+toward the score, so a list of 50 identical "Remove" buttons is a single unit,
+and one test that removes one item covers all of them. This keeps repeated
+elements from inflating or sinking your score. For the exact calculation, see
+[how the score is calculated](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated).
 
-Within a run's **UI Coverage** tab, you'll find a **Views** section. Views represent different pages or components of your application. Each view in the list displays the URL or component path, the number of snapshots, the number of untested and tested elements in that view, and the coverage score.
+A low score isn't automatically a problem, and a high one isn't automatically
+safe. The goal isn't a perfect number, but to make sure the score reflects
+_real_ coverage of the flows that matter. The next steps show you where the
+untested elements behind the number actually are.
+
+## Step 3: Start with your lowest-scoring views
+
+Open the run's **UI Coverage** tab. A [view](/ui-coverage/core-concepts/views)
+is a distinct page or state of your application. For end-to-end tests, URLs
+are grouped into patterns; for component tests, each spec file is a view. The
+**Views** section lists every view with:
+
+- **Snapshots**: how many DOM snapshots were captured for the view.
+- **Tested elements**: how many of the view's interactive elements were tested, out of the total found.
+- **Coverage %**: the percentage of the view's interactive elements that were tested.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-list-of-views.png"
-  alt="Cypress Cloud screenshot cropping to show a list of views within the UI Coverage tab including a lefthand navigation, a list of views and a filter"
+  alt="Cypress Cloud screenshot showing the list of views within the UI Coverage tab, with columns for snapshots, tested elements, and coverage score alongside the lefthand navigation and a filter"
 />
 
-#### View Drilldown
+Sort by **Coverage %** to bring your lowest-covered views to the top, then
+weigh each one against how important it is to your users. A checkout or signup
+view at 40% is a more urgent gap than a settings page at the same score. This
+is where you decide which views deserve the next test.
 
-Clicking into a view shows a detailed breakdown of the tested and untested elements within that view. You can use this information to inspect the DOM snapshot of the element using your browser's developer tools and understand the context of any coverage gaps. The view includes:
+## Step 4: Drill into a view to see untested elements
 
-- **Untested Elements**: A list of interactive elements that were not interacted with during the test run.
-- **Tested Elements**: A list of interactive elements that were interacted with during the test run.
-- **DOM Snapshot**: A full-page, inspectable DOM snapshot of the view as it appeared during the test run. Tested elements highlight as green, while untested elements highlight as red.
-- **Snapshot Navigation**: Navigate between snapshots to see the state of the view at different points during the test run.
-- **Snapshot Coverage Score**: The coverage score for the specific snapshot based on the number of tested elements.
-- **Test Replay**: A link to the Test Replay for the specific snapshot.
-- **URL** and **Viewport size**: Metadata for the view.
+Selecting a view breaks it down into the specific elements your tests did and
+didn't reach, so you can see each gap in context. A view drilldown includes:
+
+- **Untested elements**: interactive elements that no recognized Cypress command targeted during the run.
+- **Tested elements**: interactive elements a test exercised, with a count of how many times.
+- **DOM Snapshot**: a full-page, inspectable snapshot of the view as it appeared during the run. Tested elements are highlighted green, untested elements red.
+- **Snapshot Navigation**: move between snapshots to see the view's different states during the run.
+- **Snapshot Coverage Score**: the coverage score for the specific snapshot you're viewing.
+- **Test Replay**: a link to open [Test Replay](/cloud/features/test-replay) at that snapshot, where you can see the element within the full test run instead of a single captured state.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-view-drilldown.png"
-  alt="Cypress Cloud screenshot cropping a single view within the cypress-documentation project showing the view's URL, the list of tested and untested elements and a DOM snapshot of the view"
+  alt="Cypress Cloud screenshot of a single view showing its URL, the list of tested and untested elements, and a DOM snapshot of the view"
 />
 
-### Untested links
+Because the snapshot is a real, inspectable DOM, you can open your browser's
+developer tools on it to understand why an element went untested: it may be
+hidden behind a menu, rendered only after login, or shown in a state your tests
+never reach. That context tells you what setup a new test needs.
 
-In the **UI Coverage** tab, the **Untested links** section lists all the links not interacted with during the test run. This can help you identify pages of your application that are not being visited and tested. Use this to identify unvisited pages and prioritize testing.
-
-<DocsImage
-  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-links.png"
-  alt="Cypress Cloud screenshot cropping the untested links section with a list of links that were not interacted with during the test run"
-/>
-
-#### Referrer Drilldown
-
-Clicking a referrer link redirects you to the referrer's view, where the untested link is highlighted in red.
-
-<DocsImage
-  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-link-view.png"
-  alt="Cypress Cloud screenshot showing a view with the untested link highlighted in red"
-/>
-
-### Untested elements
-
-The **Untested Elements** section in the **UI Coverage** tab lists all interactive elements not interacted with during the test run. This can help you identify specific elements that are not being tested across views. Use this information to prioritize testing for these elements.
+The **Untested elements** section at the top level of the tab collects untested
+elements across _all_ views, so you can spot a single control that's missed
+everywhere, such as a "Download" button repeated on every report page, and
+cover it in one place.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-expanded.png"
-  alt="Cypress Cloud screenshot cropping the untested elements section with a list of elements that were not interacted with during the test run"
+  alt="Cypress Cloud screenshot of the untested elements section listing elements that were not interacted with during the run"
 />
 
-#### View Drilldown
-
-Clicking into an untested element's view shows a detailed breakdown of the element, including the element's selector, the number of times the element was interacted with, and the views without interactions. You can use this information to inspect the DOM snapshot of the element using your browser's developer tools and understand the context of any coverage gaps.
+Expanding an untested element shows its selector, how many times it was
+interacted with, and the views where it appears without any interaction, so
+you can trace the same element back to every page it shows up on.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-view-drilldown.png"
-  alt="Cypress Cloud screenshot cropping a single untested element showing the element's selector, the number of times the element was interacted with, the views without interactions, and a full DOM snapshot of the view"
+  alt="Cypress Cloud screenshot of a single untested element showing its selector, interaction count, the views without interactions, and a full DOM snapshot of the view"
 />
 
-## Configure UI Coverage
+## Step 5: Find the pages your tests never visit
 
-While UI Coverage is designed to work seamlessly out of the box, there are instances where custom configuration may be necessary to address unique application structures, testing requirements, or edge cases. Refer to the [Configuration Guide](/ui-coverage/configuration/overview) to learn how to customize UI Coverage to address these common needs:
+Untested elements only exist for pages your tests actually open. To find the
+pages your suite never reaches at all, use the **Untested links** section. It
+lists links (`<a>` elements) whose destination URL was never visited during the
+run. Each one is a flow your tests are missing, even when no view exists for
+that page yet.
 
-- **Filtering**: Exclude specific elements or views from coverage reports.
-  - [Element Filters](/ui-coverage/configuration/elementfilters): Exclude specific elements from coverage reports.
-  - [View Filters](/ui-coverage/configuration/viewfilters): Exclude specific views from coverage reports.
-- **Grouping**: Group similar elements together for easier analysis.
-  - [Elements](/ui-coverage/configuration/elements): Specify selectors to uniquely identify elements, even when they lack stable identifiers across snapshots.
-  - [Element Grouping](/ui-coverage/configuration/elementgroups): Group similar elements together for easier analysis.
-  - [Views](/ui-coverage/configuration/views): Group views together based on defined URL patterns.
-- **Defining Attribute Patterns**: Define patterns for identifying and grouping elements by attributes.
-  - [Attribute Filters](/ui-coverage/configuration/attributefilters): Specify patterns for attributes and their values that should not be used for identifying and grouping elements.
-  - [Significant Attributes](/ui-coverage/configuration/significantattributes): Define selectors to prioritize above the default attributes Cypress uses for the purpose of identification and grouping.
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-links.png"
+  alt="Cypress Cloud screenshot of the untested links section listing links whose destinations were never visited during the run"
+/>
 
-## Next Steps
+Expanding an untested link organizes its detail into two tabs:
 
-By leveraging these tools and techniques, you can effectively identify test coverage gaps. Next, read our guide on [addressing coverage gaps](/ui-coverage/guides/address-coverage-gaps) to ensure a robust and reliable application.
+- **Referrers**: the tested pages that link to this destination, showing you where in your app the untested page is reachable from.
+- **URLs**: the concrete destinations behind the link, grouped for dynamic routes, so you can see the full scope of a route your tests haven't reached.
+
+Selecting a referrer opens that view with the untested link highlighted in red,
+so you can see where in the page the link lives.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-link-view.png"
+  alt="Cypress Cloud screenshot of a view with an untested link highlighted in red in the rendered page"
+/>
+
+Untested links count against your coverage score, which is deliberate: a page
+you link to but never test is a real gap. But links to destinations you'll
+never own, such as external sites, a marketing page, or a status page,
+shouldn't drag your score down. That's what the next step addresses.
+
+## Step 6: Sharpen the signal with configuration
+
+Before you invest in writing tests, make sure the gaps you're looking at are
+_real_ gaps. Two kinds of noise commonly lower a score without pointing to
+anything worth testing:
+
+- **Third-party widgets**, such as chat launchers, cookie banners, and ad embeds, are interactive elements you don't own, each counted as untested.
+- **Untested links to pages you'll never test**, such as external sites, marketing pages, and a status page, count against your score even though testing them isn't your job.
+
+UI Coverage is configured from the **App Quality** tab of your project settings
+in Cypress Cloud. Configuration is opt-in: add a rule only to remove noise or
+sharpen the report. After saving, you can regenerate any historical run from its
+**Properties** tab to see the effect immediately, with no need to re-run your tests.
+
+Exclude a third-party widget so it stops counting as an untested element with
+[`elementFilters`](/ui-coverage/configuration/elementfilters):
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#intercom-container, #intercom-container *",
+      "include": false,
+      "comment": "Third-party support chat, not part of our app, shouldn't count as a gap"
+    }
+  ]
+}
+```
+
+Exclude a destination you'll never test so its untested links stop counting
+against your score with [`viewFilters`](/ui-coverage/configuration/viewfilters):
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "https://status.example.com/*",
+      "include": false,
+      "comment": "External status page linked from the footer, not owned by our team"
+    }
+  ]
+}
+```
+
+The [Reduce noise](/ui-coverage/guides/reduce-noise) guide walks through the
+other common adjustments, such as grouping repeated elements and stabilizing
+elements with dynamic attributes. With the noise removed, every remaining gap is
+one worth a decision.
+
+## Step 7: Turn gaps into tests
+
+You now have a prioritized, trustworthy list of gaps: the untested elements on
+your riskiest views and the pages your suite never opens. The last step is to
+close them.
+
+You have a few ways to close them, depending on how you like to work:
+
+- **Prompt an AI agent with [Cypress Cloud MCP](/cloud/integrations/cloud-mcp)**: point your AI coding assistant at the report and have it pull the untested elements for a view, then draft targeted tests in your editor alongside your existing code and custom commands. See [Work with AI agents](/ui-coverage/work-with-ai-agents).
+- **Generate a test from Cypress Cloud**: select an untested element in the report and click **Generate test code**. Cypress writes a test that navigates to the element and interacts with it, following your existing patterns. See [Generate tests from UI Coverage reports](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports).
+- **Write the test yourself**: copy the element's selector from the report with the **Copy element selector** action, or inspect it in the DOM snapshot with your browser's developer tools, then write a focused test by hand.
+
+Whichever you choose, the [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps)
+guide covers the details: writing tests for specific elements, adding navigation
+to reach untested pages, revealing hidden or conditionally rendered elements, and
+confirming the score improved on your next run.
+
+## See also
+
+- [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps): close the gaps you found by adding and improving tests.
+- [Monitor changes](/ui-coverage/guides/monitor-changes): track your score over time so new gaps don't slip in.
+- [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests): enforce a coverage threshold in CI with the [Results API](/ui-coverage/results-api).
+- [UI Coverage FAQ](/ui-coverage/faq): answers to common questions about scores, views, links, and configuration.

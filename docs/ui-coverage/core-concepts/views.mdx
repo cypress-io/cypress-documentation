@@ -24,6 +24,12 @@ Views come from two sources, depending on testing type:
 - **End-to-end tests**: The unique URLs across all snapshots are consolidated into URL patterns. Each pattern becomes a view.
 - **Component tests**: Each spec file becomes a single view, named by the spec's file path. All components mounted within a spec are grouped into that view.
 
+<DocsImage
+  noBorder
+  src="/img/ui-coverage/core-concepts/view-sources.svg"
+  alt="Diagram of what makes a view in UI Coverage: in end-to-end tests, unique URLs like /users/1, /users/2, /products/42, /products/99, and /cart are consolidated into fewer views such as /users/*, /products/*, and /cart; in component tests, each spec file such as Button.cy.tsx, Modal.cy.tsx, and Nav.cy.tsx becomes one view named by its file path."
+/>
+
 ## How views are created
 
 Every URL visited in an end-to-end run passes through three steps, in order:
