@@ -161,8 +161,7 @@ Query the timeline itself as JSON. Choose event types with `--commands`,
 cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --network --logs
 ```
 
-Attempts are 1-indexed to match the dashboard, and the commands default to the
-last (most recent) attempt when you omit `--attempt`. The CLI reads the same
+The CLI reads the same
 captured data as the Test Replay interface, so it works on any run where Test
 Replay was recorded and is within your data retention window. See the
 [Cloud CLI documentation](/cloud/integrations/cloud-cli#cy-cloud-replay-timeline)

@@ -212,7 +212,29 @@ Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`,
 | [`cy-cloud cache clear`](#cy-cloud-cache-clear)         | Remove everything from the cache.                         |
 | [`cy-cloud cache cleanup`](#cy-cloud-cache-cleanup)     | Delete expired and oversized cache entries.               |
 
-Most `list` commands accept `--page` and `--limit` for pagination. For example, `--page 2 --limit 25` returns the second page of 25 results, and every list response includes a `pagination` object with the current `page`, `perPage`, and the `total` number of matching results. Filters that take multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) accept a comma-separated list, such as `--status passed,failed`.
+### Pagination and filtering
+
+Every `list` command returns one page of results plus a `pagination` object describing the full result set.
+
+- `--limit` sets how many items to return per page. The default is 30 and the maximum is 100; larger values are capped at 100.
+- `--page` selects which page to return, starting at 1 (the default).
+- The response's `pagination` object reports the effective `page`, `perPage`, and the `total` number of matching items, so you can tell how many results exist and whether more pages remain.
+
+Filters that accept multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) take a comma-separated list, and you can combine any of them with `--page` and `--limit`:
+
+| Goal                                                  | Command                                                                                                  |
+| ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| The first 5 runs for a project                        | `cy-cloud run list --projectId <projectId> --limit 5`                                                    |
+| The second page of 25 runs                            | `cy-cloud run list --projectId <projectId> --page 2 --limit 25`                                          |
+| Up to 50 passed or failed runs on `main` or `develop` | `cy-cloud run list --projectId <projectId> --branch main,develop --status passed,failed --limit 50`      |
+| Up to 100 failed or errored tests in a run            | `cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed,errored --limit 100` |
+
+To walk an entire result set, request the largest page you can (`--limit 100`), then keep incrementing `--page` until a page returns fewer than `--limit` items, or until you have collected `pagination.total` items:
+
+```bash
+cy-cloud test list --projectId <projectId> --runNumber <runNumber> --limit 100 --page 1
+cy-cloud test list --projectId <projectId> --runNumber <runNumber> --limit 100 --page 2
+```
 
 ### cy-cloud org list
 
