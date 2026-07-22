@@ -14,18 +14,6 @@ The Cypress Cloud CLI (`cy-cloud`) brings your Cypress Cloud data to the command
 
 Every command returns structured JSON, so the CLI is equally at home in a shell script, a CI job, or an [AI coding agent](#Use-with-AI-agents).
 
-:::info
-
-<WhatYoullLearn />
-
-- How the Cloud CLI helps you debug CI failures without leaving your terminal
-- How to install and authenticate `cy-cloud`
-- The full command reference for orgs, projects, runs, specs, tests, and replays
-- A step-by-step workflow for triaging a failing run
-- How caching, rate limits, output schemas, and configuration work
-
-:::
-
 :::note
 
 The Cloud CLI is available on **every Cypress Cloud plan**, including the free Starter plan, at no additional cost.
@@ -34,7 +22,7 @@ The Cloud CLI is available on **every Cypress Cloud plan**, including the free S
 
 ## Why the Cloud CLI
 
-When a test fails in CI, the friction is rarely the fix. It is the triage: finding the run, opening the right test, reading the error, and reconstructing what the app was doing at the moment it failed. That usually means leaving your editor, signing in to Cypress Cloud, clicking to the run, finding the failing spec and test, then putting the pieces together on the Test Replay of what contributed to the failure.
+Getting to the root cause of a CI failure is the slow part. Before you can fix a failing test you have to triage it: find the run, open the right test, read the error, and reconstruct what the app was doing when it broke. That usually means leaving your editor, signing in to Cypress Cloud, clicking to the run, finding the failing spec and test, then piecing the story together from Test Replay.
 
 The Cloud CLI removes that round trip. It exposes the same Cloud data you would click through, as commands you can pipe, script, and compose:
 
@@ -52,15 +40,7 @@ The CLI authenticates you against Cypress Cloud, then calls the Cypress Cloud AP
 2. **Query** your Cloud data with commands like `run list`, `test get`, and `replay timeline`.
 3. **Receive JSON** on standard output, ready to read, pipe, or parse.
 
-Replay data is downloaded once and [cached locally](#Caching), so repeated queries against the same test are fast and do not re-download data.
-
-## Requirements
-
-To use the Cloud CLI you must:
-
-- Have a [Cypress Cloud](https://cloud.cypress.io) account.
-- Have the Cloud CLI integration enabled for your organization. An organization admin enables it from the organization's **Integrations** page in Cypress Cloud.
-- Be running [Node.js](https://nodejs.org) `22.21.0` or later.
+Replay data is downloaded once and [cached locally](#Test-Replay-Caching), so repeated queries against the same test are fast and do not re-download data.
 
 :::note
 
@@ -68,7 +48,19 @@ The Cloud CLI reads recorded run data. Your tests still run and record the same 
 
 :::
 
-## Enable for your organization
+## Configure the Cloud CLI
+
+Set up the CLI once: confirm you meet the requirements, enable the integration for your organization, install the `cy-cloud` command, and authenticate.
+
+### Requirements
+
+To use the Cloud CLI you must:
+
+- Have a [Cypress Cloud](https://cloud.cypress.io) account.
+- Have the Cloud CLI integration enabled for your organization. An organization admin enables it from the organization's **Integrations** page in Cypress Cloud.
+- Be running [Node.js](https://nodejs.org) `22.21.0` or later.
+
+### Enable for your organization
 
 The Cloud CLI is an organization integration. An organization admin turns it on once from the organization's **Integrations** page in Cypress Cloud: find **Cloud CLI** and select **Enable**. Once enabled, any member can authenticate and use the CLI within that organization, scoped to their own role and [team](/cloud/account-management/teams) permissions.
 
@@ -77,7 +69,7 @@ The Cloud CLI is an organization integration. An organization admin turns it on 
   alt="Cloud CLI listed on the organization Integrations page in Cypress Cloud with an Enable button"
 />
 
-## Install
+### Install
 
 Install `@cypress/cloud` globally to get the `cy-cloud` command:
 
@@ -95,7 +87,7 @@ Every command and subcommand also supports `--help`, so you can explore the CLI 
 cy-cloud run list --help
 ```
 
-## Keep the CLI updated
+### Keep the CLI updated
 
 Always run the latest version. Older versions eventually become unsupported: the CLI warns you when yours falls behind, and versions below the minimum stop working. Check your version and support status any time with [`cy-cloud version`](#cy-cloud-version), and upgrade to the latest release regularly:
 
@@ -103,11 +95,11 @@ Always run the latest version. Older versions eventually become unsupported: the
 npm install --global @cypress/cloud@latest
 ```
 
-## Authenticate
+### Authenticate
 
 You can authenticate in three ways. OAuth is recommended for local use; a token in an environment variable is best for CI.
 
-### OAuth (recommended)
+#### OAuth (recommended)
 
 Running `login` with no arguments starts a browser-based sign-in. It opens Cypress Cloud in your browser, you approve the request, and your session is stored securely on your machine. OAuth sessions refresh automatically, so you do not manage token expiry yourself.
 
@@ -128,24 +120,24 @@ If the browser does not open automatically, the CLI prints a URL you can open ma
 cy-cloud login --timeout 180
 ```
 
-### Personal access token
+#### Personal access token
 
-Generate a personal access token from your [Cypress Cloud profile](https://cloud.cypress.io/profile): in the **Cloud CLI access** section, under **Personal access token**, select **Generate token**, choose an expiration, and copy the token (it is shown only once). Access is scoped to your role and permissions in each organization.
+A personal access token (PAT) authenticates you without a browser, which makes it the right choice for CI, remote shells, and any environment where the OAuth browser flow is not available. Access is scoped to your role and permissions in each organization.
+
+Generate a token from your [Cypress Cloud profile](https://cloud.cypress.io/profile): in the **Cloud CLI access** section, under **Personal access token**, select **Generate token**, choose an expiration, and copy the token (it is shown only once).
 
 <DocsImage
   src="/img/cloud/integrations/cloud-cli/cloud-cli-access-pat.png"
   alt="Cloud CLI access section on the Cypress Cloud profile page, showing the OAuth and Personal Access Token options with a Generate token button"
 />
 
-If you prefer a token, or your environment cannot open a browser, pass it to `login`. The CLI checks the token with Cypress Cloud and, if it is valid, saves it to a credentials file (`~/.config/cy-cloud/auth.json`, readable only by your user) so later commands reuse it without you passing it each time:
+Pass the token to `login` to store it. The CLI checks the token with Cypress Cloud and, if it is valid, saves it to a credentials file (`~/.config/cy-cloud/auth.json`, readable only by your user) so later commands reuse it without you passing it each time:
 
 ```bash
 cy-cloud login --token <YOUR_PERSONAL_ACCESS_TOKEN>
 ```
 
-### Environment variable (best for CI)
-
-Set `CYPRESS_CLOUD_TOKEN` to a [personal access token](#Personal-access-token) to authenticate without a `login` step and without writing any credentials to disk. This takes precedence over any stored credentials, which makes it ideal for CI and other non-interactive environments.
+For CI and other non-interactive environments, set the token as the `CYPRESS_CLOUD_TOKEN` environment variable instead. This authenticates without a `login` step and without writing any credentials to disk, and it takes precedence over any stored credentials:
 
 <OsTabs>
   <TabItem value="macos" label="macOS / Linux">
@@ -177,13 +169,13 @@ cy-cloud run list --projectId <projectId>
 
 :::
 
-Check your current authentication state at any time:
+#### Check your sign-in
+
+Confirm you are signed in at any time with `cy-cloud status`, which reports `authenticated`, the `method` in use, and, for OAuth, when the session refreshes:
 
 ```bash
 cy-cloud status
 ```
-
-`"authenticated": true` is the signal that you are signed in. `method` is `oauth` or `pat`, and `expiresAt`, when present, is when an OAuth session refreshes:
 
 ```json
 {
@@ -193,9 +185,7 @@ cy-cloud status
 }
 ```
 
-If you are not signed in, `authenticated` is `false` and the other fields are omitted.
-
-### Revoke access
+#### Revoke access
 
 `cy-cloud logout` clears the credentials stored on your machine, but the underlying session or token stays valid until it expires. To revoke access entirely, open your [Cypress Cloud profile](https://cloud.cypress.io/profile) and revoke the credential under **Cloud CLI access**. Revoking there invalidates it everywhere, including anywhere it is still stored locally.
 
@@ -581,11 +571,11 @@ Replay data ready, caching...
 Replay data cached.
 ```
 
-Later queries for the same test read from the [cache](#Caching) and skip the download.
+Later queries for the same test read from the [cache](#Test-Replay-Caching) and skip the download.
 
 :::note
 
-Because replay data is cached locally after the first download, repeated `replay info` and `replay timeline` queries for the same test run entirely against the local cache and do not count against your [rate limit](#Rate-limits). Only the first query for a test, the one that downloads the replay, makes a request that counts.
+Because replay data is cached locally after the first download, repeated `replay info` and `replay timeline` queries for the same test run entirely against the local cache and do not count against your [usage limit](#Usage-limits). Only the first query for a test, the one that downloads the replay, makes a request that counts.
 
 :::
 
@@ -763,7 +753,7 @@ cy-cloud cache clear
 
 ### cy-cloud cache cleanup
 
-Delete expired and oversized entries. This runs automatically as a maintenance task after commands, but you can trigger it manually. See [Caching](#Caching) for the size and age limits.
+Delete expired and oversized entries. This runs automatically as a maintenance task after commands, but you can trigger it manually. See [Test Replay Caching](#Test-Replay-Caching) for the size and age limits.
 
 ```bash
 cy-cloud cache cleanup
@@ -779,6 +769,22 @@ It reports the cache size before and after, and how many entries it removed:
   "oversizedEntriesDeleted": 1
 }
 ```
+
+## Use with AI agents
+
+Because every command returns structured JSON and exposes its output schema with `--schema`, the Cloud CLI is a natural tool for AI coding agents. An agent can list failing tests, read errors, and pull Test Replay timelines, then use that context to propose a fix in your editor. The workflows below are written to run by hand or to hand to an agent.
+
+If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copilot CLI), point it at `cy-cloud` and describe the goal in plain language. A few prompts to start from:
+
+> "Using the `cy-cloud` CLI, find the most recent failed run on `main` for project `abc123` and summarize why each failing test failed."
+
+> "With `cy-cloud`, pull the replay timeline around the failure for test `<testId>`, including commands, network requests, and console logs, then look at my code and propose a fix."
+
+> "Run `cy-cloud status` to confirm I am signed in, then list the failing specs in run 4021 of project `abc123` and save the first failure's screenshot to `./screenshots`."
+
+> "Every morning, run `cy-cloud` to check the latest run on `main` for project `abc123`. If it failed, open a summary of the failing tests and their errors."
+
+For a conversational, in-editor alternative that speaks the Model Context Protocol, see [Cloud MCP](/cloud/integrations/cloud-mcp). Many teams use both: give a terminal-based agent the CLI, and connect an MCP client to Cloud MCP. The two are compared in the [Cloud MCP FAQ](/cloud/integrations/cloud-mcp#Cloud-MCP-vs-the-Cloud-CLI).
 
 ## Workflow: triage a failing run
 
@@ -954,19 +960,19 @@ The same approach works in CI. Install the CLI in your job and authenticate with
     cy-cloud run list --projectId <projectId> --branch "$GITHUB_REF_NAME" --status failed --limit 1
 ```
 
-## Caching
+## Test Replay Caching
 
-Replay data can cover an entire spec, so the CLI downloads a replay database once and caches it locally. Later `replay` queries for any test in that database read from the cache instead of downloading again.
+Test Replay data can cover an entire spec, so the CLI downloads the replay once and caches it locally. The `replay` commands query Test Replay from the cache instead of downloading again.
 
 - The cache lives at `~/.cache/cy-cloud` by default. Override it with the `CYCLOUD_CACHE_DIR` environment variable.
-- Entries expire after **30 days**, and the cache is capped at **1 GB** by default. When the cap is exceeded, the oldest entries are removed first.
+- Generally, entries expire after **30 days**. The cache is capped at **1 GB** by default and when the cap is exceeded, the oldest entries are removed first.
 - Maintenance runs automatically. The CLI validates cache integrity at most once a day, and prunes expired or oversized entries after commands run.
 
 Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
 
 ## Configuration
 
-The CLI stores configuration and credentials under `~/.config/cy-cloud` (or `$XDG_CONFIG_HOME/cy-cloud` if that variable is set). Credentials are written with owner-only permissions.
+The CLI stores configuration and credentials under `~/.config/cy-cloud`. If the `XDG_CONFIG_HOME` environment variable is set, it uses `$XDG_CONFIG_HOME/cy-cloud` instead. Credentials are written with owner-only permissions.
 
 The following environment variables adjust its behavior:
 
@@ -976,48 +982,25 @@ The following environment variables adjust its behavior:
 | `CYCLOUD_CACHE_DIR`          | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.               |
 | `CYCLOUD_DISABLE_CACHE_MGMT` | Set to `true` to disable automatic cache validation and cleanup.                     |
 
-## Rate limits
+## FAQs
+
+### Usage limits
 
 The Cloud CLI is available on all Cypress Cloud plans, and the same rate limit applies across every plan. Requests are limited **per user** to a default of **100 requests per hour**.
 
 If you exceed the limit, requests return an error until the hour resets. Contact [support@cypress.io](mailto:support@cypress.io) if you need a higher limit.
 
-Rate limits are separate from data availability. What data you can retrieve follows the same recording limits and [data retention](/cloud/account-management/billing-and-usage) policies as the rest of Cypress Cloud, so those limits do vary by plan. Runs beyond your retention window or usage limits are not accessible through the Cloud CLI.
+Usage limits are separate from data availability. What data you can retrieve follows the same recording limits and [data retention](/cloud/account-management/billing-and-usage) policies as the rest of Cypress Cloud, so those limits do vary by plan. Runs beyond your retention window or usage limits are not accessible through the Cloud CLI.
 
-## Security and privacy
+### Security and privacy
 
 - **Read-only.** The CLI only retrieves data. It cannot modify your test code, delete runs, or change any Cloud settings.
 - **Scoped to your access.** Every request runs as your Cypress Cloud user, so you only ever see the organizations, teams, and projects you can already access in the Cloud UI.
 - **Local credentials.** Credentials from `cy-cloud login` are stored on your machine under `~/.config/cy-cloud`, in files readable only by your user. The `CYPRESS_CLOUD_TOKEN` environment variable is never written to disk.
 
-## Restrictive VPNs and allowlists
+### Restrictive VPNs and allowlists
 
-The Cloud CLI communicates with the Cypress Cloud API at `https://cloud-api.cypress.io`. If you run the CLI from behind a restrictive VPN or firewall, add that host to your allowlist so the CLI can reach Cloud. Sign-in also uses `https://cloud.cypress.io`.
-
-<UrlAllowList />
-
-## Use with AI agents
-
-Because every command returns structured JSON and exposes its output schema with `--schema`, the Cloud CLI is a natural tool for AI coding agents. An agent can list failing tests, read errors, and pull replay timelines, then use that context to propose a fix in your editor.
-
-The Cloud CLI and [Cloud MCP](/cloud/integrations/cloud-mcp) solve related problems in different ways:
-
-- **Cloud MCP** is a remote server your AI client connects to. The agent selects Cypress tools automatically based on your prompt. It is the best fit for conversational, in-editor debugging.
-- **The Cloud CLI** is a command-line tool for humans, scripts, and agents that run shell commands. It is the best fit for automation, custom tooling, and agents that work through a terminal.
-
-Many teams use both. If your agent works through a terminal, give it the CLI. If it speaks MCP, connect it to Cloud MCP.
-
-### Example prompts
-
-If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copilot CLI), point it at `cy-cloud` and describe the goal in plain language. A few prompts to start from:
-
-> "Using the `cy-cloud` CLI, find the most recent failed run on `main` for project `abc123` and summarize why each failing test failed."
-
-> "With `cy-cloud`, pull the replay timeline around the failure for test `<testId>`, including commands, network requests, and console logs, then look at my code and propose a fix."
-
-> "Run `cy-cloud status` to confirm I am signed in, then list the failing specs in run 4021 of project `abc123` and save the first failure's screenshot to `./screenshots`."
-
-> "Every morning, run `cy-cloud` to check the latest run on `main` for project `abc123`. If it failed, open a summary of the failing tests and their errors."
+The Cloud CLI communicates with the Cypress Cloud API at `https://cloud-api.cypress.io`. If you run the CLI from behind a restrictive VPN or firewall, add that host to your allowlist so the CLI can reach Cloud. Sign-in also uses `https://cloud.cypress.io`. See the [Cypress Cloud allowlist URLs](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly) for the full list.
 
 ## See also
 
