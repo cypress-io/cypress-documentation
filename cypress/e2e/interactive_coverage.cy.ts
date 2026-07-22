@@ -35,7 +35,6 @@ function exerciseContentTabs() {
 }
 
 function exerciseSearch() {
-  // Match the button, not the "Search ⌘K" label, which is hidden below `sm`.
   cy.contains('button', 'Search ⌘K').click()
   cy.get('.DocSearch-Modal').should('be.visible')
   cy.get('.DocSearch-Input').type('cypress')
@@ -50,9 +49,6 @@ function exerciseDesktopChrome() {
 }
 
 function openMobileDrawer() {
-  // Retry the toggle until it reports expanded — its first click can be dropped
-  // pre-hydration. Query without `:visible` (the toggle is hidden once the
-  // drawer covers it) and key off aria-expanded, which stays accurate.
   const ensureExpanded = (n: number) => {
     cy.get('.navbar__toggle', { timeout: 15000 }).first().then(($toggle) => {
       if ($toggle.attr('aria-expanded') === 'true' || n >= 6) {
@@ -70,15 +66,17 @@ function openMobileDrawer() {
 function exerciseMobileChrome() {
   openMobileDrawer()
   expandSidebar('.navbar-sidebar')
-  // The back button only exists while the secondary menu is shown.
   cy.get('.navbar-sidebar').then(($drawer) => {
     const back = $drawer.find('.navbar-sidebar__back:visible')
     if (back.length) {
       cy.wrap(back.first()).click()
     }
   })
-  cy.get('.navbar-sidebar__close:visible').click()
-  cy.get('.navbar-sidebar').should('not.be.visible')
+  cy.get('.navbar-sidebar__close:visible').first().as('closeBtn')
+  cy.get('@closeBtn').click()
+  cy.get('.navbar__toggle')
+    .first()
+    .should('have.attr', 'aria-expanded', 'false')
   exerciseContentTabs()
   exerciseSearch()
 }
