@@ -179,10 +179,14 @@ and `docs/app/guides/migration/`.
 - **No quotes** around the prompt — the card renders it verbatim.
 - **No tool calls** unless explicitly required: prefer _"Find all failing tests
   on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
-- **Give each card a Markdown heading** when it's one of several in a section
-  (e.g. a list of example prompts), so the workflow shows up in the page's table
-  of contents. Put a `###` heading above the card and pass `hideTitle` (keep
-  `title` for analytics) so the heading, not the card, provides the label.
+- **For a titled card, pass `title`** — rendered as the card's heading with a
+  sparkle icon (used by the migration guides).
+- **When a card is one of several in a section** (e.g. a list of example
+  prompts), pass a `###` Markdown heading as the card's **children** instead of
+  a `title`. It stays a real heading, so the workflow shows up in the page's
+  table of contents, and the card styles it to match. Keep `title` too, for
+  analytics. Use `hideTitle` only for a lone card that already sits under its
+  own Markdown heading.
 - **Expanded by default** (no prop needed); add `defaultCollapsed` for prompts
   over **350 characters** so they sit behind a **Show prompt** toggle.
 - **Format longer prompts** with newlines and bullet/numbered lists in the
@@ -198,7 +202,11 @@ and `docs/app/guides/migration/`.
   title="The Health Check"
   subtext="Get a high-level summary of any failures in the latest run on your branch."
   prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
-/>
+>
+
+### The Health Check
+
+</CopyPrompt>
 ```
 
 For a prompt over 350 characters, add `defaultCollapsed` and structure:

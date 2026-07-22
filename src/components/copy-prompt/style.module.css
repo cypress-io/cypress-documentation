@@ -6,7 +6,8 @@
   margin-bottom: var(--ifm-leading);
 }
 
-.copyPrompt p.title {
+.copyPrompt p.title,
+.heading {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
@@ -15,6 +16,15 @@
   font-weight: 600;
   color: var(--ifm-heading-color);
   margin: 0;
+}
+
+/* Reset the Markdown heading passed as children so it matches the card title
+   instead of a page heading (Docusaurus keeps its anchor + hash link). */
+.heading :is(h1, h2, h3, h4, h5, h6) {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+  scroll-margin-top: 5rem;
 }
 
 .sparkle {

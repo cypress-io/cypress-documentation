@@ -10,9 +10,17 @@ interface CopyPromptProps {
   title?: string
   subtext?: string
   /**
-   * Hide the card's own title row. Use when the card sits directly under a
-   * Markdown heading that already names it (so the heading, not the card,
-   * feeds the page's table of contents). `title` is still used for analytics.
+   * Optional Markdown heading rendered as the card's title. Pass a `###`
+   * heading here (as component children) when the card is one of several in a
+   * section: it stays a real Markdown heading, so it feeds the page's table of
+   * contents, while the card styles it to match. Still pass `title` for
+   * analytics. When omitted, the `title` prop is rendered instead.
+   */
+  children?: React.ReactNode
+  /**
+   * Render no title row at all. Use for a lone card that already sits under a
+   * Markdown heading of its own. Ignored when `children` is provided. `title`
+   * is still used for analytics.
    */
   hideTitle?: boolean
   /** Hide the prompt behind a Show/Hide toggle instead of showing it on load. */
@@ -41,6 +49,7 @@ export default function CopyPrompt({
   prompt,
   title = DEFAULT_TITLE,
   subtext = DEFAULT_SUBTEXT,
+  children,
   hideTitle = false,
   defaultCollapsed = false,
   excludeFromLlmExport = false,
@@ -96,15 +105,28 @@ export default function CopyPrompt({
     >
       <div className={s.header}>
         <div className={s.headerText}>
-          {!hideTitle && (
-            <p className={s.title}>
+          {children ? (
+            // A Markdown heading passed as children; the card styles it to
+            // match the title while keeping it in the page's table of contents.
+            <div className={s.heading}>
               <Icon
                 name="general-sparkle-triple"
                 className={s.sparkle}
                 aria-hidden="true"
               />
-              {title}
-            </p>
+              {children}
+            </div>
+          ) : (
+            !hideTitle && (
+              <p className={s.title}>
+                <Icon
+                  name="general-sparkle-triple"
+                  className={s.sparkle}
+                  aria-hidden="true"
+                />
+                {title}
+              </p>
+            )
           )}
           <p className={s.subtext}>{subtext}</p>
         </div>
