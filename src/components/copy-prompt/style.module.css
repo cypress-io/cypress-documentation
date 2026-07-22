@@ -58,7 +58,10 @@
   margin: 0;
 }
 
-.copyPrompt p.title + p.subtext {
+/* space the subtext below either title form (the `title` prop or a Markdown
+   heading passed as children) */
+.copyPrompt p.title + p.subtext,
+.heading + p.subtext {
   margin-top: 0.25rem;
 }
 
