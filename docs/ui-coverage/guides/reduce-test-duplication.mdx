@@ -1,6 +1,6 @@
 ---
 title: Reduce test duplication with UI Coverage
-description: 'Optimize your test suite by identifying and consolidating duplicate tests with Cypress UI Coverage.'
+description: 'A step-by-step workflow to find the elements your Cypress suite exercises far more than any test intends, then consolidate the repeated setup to cut CI time without losing coverage.'
 sidebar_label: Reduce test duplication
 sidebar_position: 30
 ---
@@ -9,67 +9,191 @@ sidebar_position: 30
 
 # Reduce test duplication
 
-Efficient test suites not only maximize coverage but also avoid redundant tests that slow down development and CI pipelines. Cypress UI Coverage provides insights into areas where elements have been tested multiple times, helping you optimize your test strategy and reduce duplication. This guide explains how to identify and address test duplication for streamlined and effective testing.
+Most suites spend real time on work no test is actually checking. Every test
+that clicks through the same login, onboarding, or cookie banner to reach the
+thing it cares about repeats that setup on every run, and those minutes add up
+across a suite and across CI. UI Coverage turns each recorded run into a ranked
+list of the elements your tests exercise, with a count of how many times and how
+many separate tests touched each one. The controls at the top of that list are
+usually shared setup steps you can consolidate: collapse them into one
+programmatic step and you cut CI time and make the report easier to read,
+without losing any coverage. It reads this from
+[Test Replay](/cloud/features/test-replay) data in Cypress Cloud, so there's no
+code to instrument and nothing to add to your app.
 
-## Identify & Consolidate Duplicate Tests
+This workflow takes you from a recorded run to a leaner, faster suite:
 
-UI Coverage reports in Cypress Cloud highlight elements that have been tested multiple times across a run. To identify duplication:
+1. [Record a run](#Step-1-Record-a-run-to-Cypress-Cloud) so Cypress Cloud can build a UI Coverage report.
+2. [Open the Tested elements list](#Step-2-Open-the-Tested-elements-list) to see every element your tests exercised, ranked.
+3. [Read the Interactions and Tests columns](#Step-3-Read-the-Interactions-and-Tests-columns) to spot the elements your suite over-exercises.
+4. [Tell intentional coverage from pass-through](#Step-4-Tell-intentional-coverage-from-pass-through) by drilling into an element.
+5. [Consolidate the repeated setup](#Step-5-Consolidate-the-repeated-setup) with a programmatic step instead of UI clicks.
+6. [Confirm the duplication dropped](#Step-6-Confirm-the-duplication-dropped) on your next run.
+7. [Keep duplication from creeping back](#Step-7-Keep-duplication-from-creeping-back).
 
-1. Navigate to the **Tested elements** section within the **UI Coverage** tab in your test run.
-1. Locate tested elements that have a large number of interactions.
-1. Review the Snapshots within the view to identify duplicate tests that interact with the tested element.
+:::info
+
+**Reducing duplication is not the same as [reducing
+noise](/ui-coverage/guides/reduce-noise).** Noise is a report-accuracy problem
+you fix with App Quality configuration, when the report over-counts elements
+that are really one control. Duplication is a _test-effort_ problem: the report
+is correct, but your suite is doing the same work many times over. The fix lives
+in your test code, not your configuration.
+
+:::
+
+## Step 1: Record a run to Cypress Cloud
+
+UI Coverage needs a recorded run to analyze. Any run recorded to
+[Cypress Cloud](https://on.cypress.io/cloud) with Test Replay produces a report
+automatically, with no configuration or code changes. Use a run that reflects
+your suite as it normally executes, such as a full regression run, so the
+interaction counts are representative. If you already record your tests, open a
+recent run and skip to [Step 2](#Step-2-Open-the-Tested-elements-list).
+
+## Step 2: Open the Tested elements list
+
+Open the run's **UI Coverage** tab and go to the **Tested elements** section. It
+lists every interactive element your tests exercised across the whole run, one
+row per element or [group](/ui-coverage/core-concepts/element-grouping), with
+these columns:
+
+- **Snapshots**: how many DOM snapshots the element appeared in.
+- **Views**: how many [views](/ui-coverage/core-concepts/views) the element appeared in.
+- **Interactions**: how many times a recognized command targeted the element across the run.
+- **Tests**: how many _separate_ tests interacted with the element.
+
+The list is sorted by **Interactions**, highest first, so the elements your
+suite exercises most are already at the top, exactly where duplication tends to
+hide.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-tested-elements-with-high-interactions.png"
-  alt="Cypress Cloud screenshot showing the Welcome Screen of the Cypress App with the Continue button highlighted and the number of snapshots it appears in"
+  alt="The Tested elements list in a UI Coverage report, sorted by Interactions, with a Continue button at the top showing a high interaction and test count"
 />
 
-### Common Signs of Duplication
+## Step 3: Read the Interactions and Tests columns
 
-- **Repeated Interactions**: Elements interacted with in multiple snapshots or across different tests.
-- **Overlapping Tests**: Multiple tests cover the same workflows or user journeys.
-- **Excessive Setup Steps**: Repeated setup steps across tests that interact with the same elements.
+The two columns tell you different things, and the difference is what points you
+to duplication:
 
-### Example: Welcome Screen Duplication
+- **Interactions** counts every command against the element. A high number can
+  come from one test that hits it in a loop, which usually isn't duplication.
+- **Tests** counts the distinct tests that touched it. A high number here means
+  many _separate_ tests all interact with the same control, which is the
+  signature of shared setup repeated across your suite.
 
-In the example below, the launchpad within Cypress App shows that the **Continue** button on the Welcome Screen has been interacted with **184 times** in **327 snapshots**. This indicates that many tests interact with this element. Clicking through to some of the Test Replay's of the snapshots however reveal that most of our tests are not concerned with the behavior of the Welcome Screen - we're just passing through to get to our other tests. This highlights an opportunity to reduce test duplication.
+So sort by **Tests**, or scan it alongside **Interactions**, and look for
+controls that a large share of your suite touches. A **Submit** button covered
+by a handful of form tests is expected. A **Continue** button on a welcome
+screen, or a **Log in** button, that shows up in hundreds of tests is a strong
+signal those tests are passing _through_ a flow to reach something else.
+
+## Step 4: Tell intentional coverage from pass-through
+
+A high count isn't automatically a problem. Before changing anything, confirm
+the interactions are incidental rather than the point of the tests. Expand the
+element to break its counts down by view, with a **Test Replay** link for each
+occurrence:
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-test-duplication-welcome-screen-example.png"
-  alt="Cypress Cloud screenshot showing the snapshots and interactions of a button with many snapshots and interactions"
+  alt="An expanded tested element in the UI Coverage report showing the views it appears in, its per-view interaction and test counts, and Test Replay links"
 />
 
-Now we can focus on consolidating tests and optimizing our test suite to avoid unnecessary duplication.
+Open [Test Replay](/cloud/features/test-replay) on a few of the tests. Ask:
+
+- **Is any assertion about this element?** If tests interact with it but never
+  assert on its behavior, they're passing through, not testing it.
+- **Do the tests share the same purpose?** Dozens of unrelated tests clicking
+  the same **Continue** button are all paying for setup that belongs somewhere
+  cheaper.
+- **Does the interaction happen before the test's real work begins?** Setup that
+  runs at the start of nearly every test is the prime candidate to consolidate.
+
+In the example above, the **Continue** button on the welcome screen is
+interacted with by most of the suite, but Test Replay shows almost none of those
+tests care about the welcome screen. They're just getting past it to reach the
+projects page. That's the duplication to remove.
+
+## Step 5: Consolidate the repeated setup
+
+Once you've confirmed a control is pass-through setup, replace the repeated UI
+interaction with a single programmatic step. Which technique fits depends on
+what the setup does.
+
+### Cache authentication with `cy.session()`
+
+Logging in through the UI is the most common pass-through in any suite. Wrap it
+in [`cy.session()`](/api/commands/session) so the login runs once and every
+later test restores the cached session instead of driving the form again:
 
 <Tabs>
-<TabItem value="cypress/support/commands.js">
+<TabItem value="js" label="JavaScript">
 
-```js
-// This example is simplified for demonstration purposes
-// In a real-world scenario, you would change the properties that are checked
-// to hide or display the welcome screen for first-time users
-Cypress.Commands.add('skipWelcome', () => {
-  cy.setCookie('welcome', 'dismissed')
-})
-
-it('shows welcome page', () => {
-  cy.visit('/')
-  cy.contains('Welcome')
-  cy.get('[data-cy="continue"]').click()
-  cy.contains('Projects')
-})
-
-it('shows projects page', () => {
-  cy.skipWelcome()
-  cy.visit('/')
-  cy.contains('Projects')
+```js title="cypress/support/commands.js"
+Cypress.Commands.add('login', (username = 'user@example.com') => {
+  cy.session(username, () => {
+    cy.visit('/login')
+    cy.get('[data-cy="email"]').type(username)
+    cy.get('[data-cy="password"]').type('super-secret')
+    cy.get('[data-cy="submit"]').click()
+    cy.url().should('include', '/projects')
+  })
 })
 ```
 
 </TabItem>
-<TabItem value="cypress/support/commands.ts">
+<TabItem value="ts" label="TypeScript">
 
-```ts
+```ts title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username?: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username = 'user@example.com') => {
+  cy.session(username, () => {
+    cy.visit('/login')
+    cy.get('[data-cy="email"]').type(username)
+    cy.get('[data-cy="password"]').type('super-secret')
+    cy.get('[data-cy="submit"]').click()
+    cy.url().should('include', '/projects')
+  })
+})
+```
+
+</TabItem>
+</Tabs>
+
+Keep one dedicated test that drives the login form through the UI so the flow
+itself stays covered, then call `cy.login()` everywhere else. UI Coverage still
+marks the form as tested from that one test, while the interaction count on it
+drops from hundreds to one.
+
+### Set state directly instead of clicking through it
+
+When the pass-through is a modal, banner, or onboarding step gated by a cookie
+or stored flag, set that state before the page loads rather than dismissing it
+in the UI each time:
+
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/commands.js"
+// Skip the first-run welcome screen by pre-setting the flag it checks
+Cypress.Commands.add('skipWelcome', () => {
+  cy.setCookie('welcome-dismissed', 'true')
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -78,27 +202,106 @@ declare global {
   }
 }
 
+// Skip the first-run welcome screen by pre-setting the flag it checks
 Cypress.Commands.add('skipWelcome', () => {
-  cy.setCookie('welcome', 'dismissed')
+  cy.setCookie('welcome-dismissed', 'true')
 })
 ```
 
 </TabItem>
 </Tabs>
 
-After updating our tests and recording a new run, we can visit the **Tested elements** section to see the impact of our changes. The **Continue** button now appears in fewer snapshots and less interactions, indicating that we've successfully reduced duplication.
+The projects test no longer clicks **Continue** to get past the welcome screen;
+one test still covers the welcome flow on purpose:
+
+```js title="cypress/e2e/projects.cy.js"
+it('shows the welcome screen to first-time users', () => {
+  cy.visit('/')
+  cy.contains('Welcome')
+  cy.get('[data-cy="continue"]').click()
+  cy.contains('Projects')
+})
+
+it('lists the current user projects', () => {
+  cy.skipWelcome()
+  cy.visit('/')
+  cy.contains('Projects')
+})
+```
+
+The same approach works for seeding data with
+[`cy.request()`](/api/commands/request) against your API, or stubbing a
+response with [`cy.intercept()`](/api/commands/intercept), instead of building
+that state by hand through the UI in every test.
+
+:::tip
+
+If the over-exercised control is a third-party widget you never intend to test,
+such as a cookie-consent banner or support chat, the fix isn't consolidation,
+it's exclusion. Remove it from the report with an
+[`elementFilters`](/ui-coverage/configuration/elementfilters) rule so it stops
+dominating the list:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#cookie-consent, #cookie-consent *",
+      "include": false,
+      "comment": "Third-party consent banner, dismissed in setup and not part of our app"
+    }
+  ]
+}
+```
+
+See [Ignore elements](/ui-coverage/guides/ignore-elements) for the full
+workflow.
+
+:::
+
+## Step 6: Confirm the duplication dropped
+
+Record a new run after consolidating, then reopen the **Tested elements**
+section. The control you consolidated now sits far lower in the list: its
+**Interactions** and **Tests** counts fall to reflect the one test that still
+exercises it on purpose, and its coverage is unchanged because that test still
+marks it tested.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-test-duplication-example-after.png"
-  alt="Cypress Cloud screenshot showing the snapshots and interactions of a tested element after reducing test duplication"
+  alt="The Tested elements list after consolidation, with the Continue button showing a much lower interaction and test count"
 />
 
-## Monitor and Prevent Duplication
+To see the change directly, [compare the two
+runs](/ui-coverage/guides/compare-reports): the before-and-after makes it easy
+to confirm the element's interactions dropped while your overall coverage score
+held steady.
 
-### Document Your Testing Strategy
+## Step 7: Keep duplication from creeping back
 
-Maintain a clear testing strategy that outlines:
+Consolidation sticks only if new tests reuse the shared setup instead of
+re-introducing the UI steps. A few habits keep the list clean:
 
-- The scope and purpose of each test suite.
-- Which workflows and components each test covers.
-- Guidelines for avoiding overlap in new tests.
+- **Reach for shared commands first.** Make `cy.login()`, `cy.skipWelcome()`,
+  and similar setup commands the default way to get a test to its starting
+  point, so no one hand-rolls the flow again.
+- **Recheck the top of the list periodically.** Revisit the **Tested elements**
+  section after big changes, or on a
+  [regular cadence](/ui-coverage/guides/monitor-changes), and treat a control
+  climbing back toward the top as a prompt to consolidate again.
+- **Write down the boundary.** Note which flows are covered once on purpose (the
+  login form, the welcome screen) and which should always be reached
+  programmatically, so the intent survives beyond the person who set it up.
+
+Time you get back from a leaner suite is best spent on the flows you _haven't_
+covered yet. See [Identify coverage
+gaps](/ui-coverage/guides/identify-coverage-gaps) to find them.
+
+## See also
+
+- [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps): find the untested elements and pages to spend your reclaimed time on.
+- [Reduce noise](/ui-coverage/guides/reduce-noise): sharpen a report that over-counts elements, the report-accuracy counterpart to this test-effort guide.
+- [Compare reports](/ui-coverage/guides/compare-reports): confirm interactions dropped and coverage held between your before-and-after runs.
+- [Monitor changes](/ui-coverage/guides/monitor-changes): track the report over time so duplication doesn't creep back.
+- [`cy.session()`](/api/commands/session): cache and restore login so authentication runs once instead of in every test.
+- [UI Coverage FAQ](/ui-coverage/faq#Reducing-test-duplication): common questions about over-tested elements and consolidating setup.

@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, the Results API for CI, and how to troubleshoot unexpected reports.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, finding and reducing test duplication, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, the Results API for CI, and how to troubleshoot unexpected reports.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -40,6 +40,28 @@ They describe three different gaps. An **untested element** is an interactive el
 ### <Icon name="angle-right" /> How do I find pages my tests never visit?
 
 Use the **Untested links** section of the UI Coverage report. It lists links whose destinations your Cypress tests never opened during the run, and expanding one shows a **Referrers** tab (the views that link to the page) and a **URLs** tab (the concrete destinations, grouped for dynamic routes like `/orders/*`). Because a page with no view can still be linked from a tested page, this is how UI Coverage surfaces flows your suite is missing entirely. Add navigation to reach them, as shown in [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps#Add-tests-for-untested-links).
+
+## Reducing test duplication
+
+### <Icon name="angle-right" /> How do I find elements my tests exercise more than they need to?
+
+Open the **Tested elements** section of the UI Coverage report. It lists every interactive element your tests exercised, with an **Interactions** column (how many times a command targeted it) and a **Tests** column (how many separate tests touched it), and it's sorted by interactions with the most-exercised elements first. A control that a large share of your suite interacts with, such as a **Log in** or **Continue** button, is usually shared setup being repeated across tests. Expand a row to break its counts down by view and open [Test Replay](/cloud/features/test-replay) on each occurrence. See [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication).
+
+### <Icon name="angle-right" /> What's the difference between the Interactions and Tests columns in UI Coverage?
+
+**Interactions** counts every recognized command against an element across the run, so one test that hits a control in a loop can run the number up on its own. **Tests** counts the distinct tests that interacted with it, so a high number there means many _separate_ tests all touch the same control. The **Tests** column is the better signal for duplication, because shared setup repeated across your suite shows up as one element touched by a large share of your tests.
+
+### <Icon name="angle-right" /> How do I reduce test duplication with UI Coverage?
+
+Find the elements at the top of the **Tested elements** list, confirm with [Test Replay](/cloud/features/test-replay) that the tests are passing _through_ a flow rather than testing it, then replace the repeated UI steps with a single programmatic step: cache authentication with [`cy.session()`](/api/commands/session), set a cookie or storage flag directly, or seed state with [`cy.request()`](/api/commands/request). Keep one test that still drives the flow through the UI so its coverage is preserved. The [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication) guide walks through the full workflow.
+
+### <Icon name="angle-right" /> Does reducing test duplication lower my UI Coverage score?
+
+No. An element stays tested as long as at least one test still interacts with it, so consolidating redundant setup removes _interactions_, not _coverage_. When you replace a UI login in 200 tests with [`cy.session()`](/api/commands/session) and keep one test that drives the login form, the form's interaction count drops sharply while it remains marked as tested, and your overall score is unchanged.
+
+### <Icon name="angle-right" /> What's the difference between reducing noise and reducing test duplication in UI Coverage?
+
+[Reducing noise](/ui-coverage/guides/reduce-noise) is a report-accuracy problem: the report over-counts because one control is reported as many elements, or unrelated pages are split into separate views, and you fix it with [App Quality configuration](/ui-coverage/configuration/overview). [Reducing test duplication](/ui-coverage/guides/reduce-test-duplication) is a test-effort problem: the report is correct, but your suite repeats the same setup across many tests, and you fix it in your test code by consolidating that setup.
 
 ## Interactive elements
 
