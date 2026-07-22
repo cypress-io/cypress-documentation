@@ -777,13 +777,13 @@ Wrap this sequence in a [shell script](#Use-in-a-shell-script) that takes a proj
 
 ## Workflow: debug a flaky test
 
-A [flaky test](/cloud/features/flaky-test-management) is one that failed and then passed on retry within the same run. The CLI has no `--status flaky` filter, but a flaky test is easy to spot: its `status` is `passed` and it still carries an `attempts` array, because at least one earlier attempt failed. This workflow assumes [test retries](/app/guides/test-retries) are enabled, since that is what lets a test recover and be marked flaky.
+A [flaky test](/cloud/features/flaky-test-management) is one that failed and then passed on retry within the same run. The CLI has no `--status flaky` filter, but a flaky test is easy to spot: its `status` is `passed` and its `attempts` array holds more than one attempt, because it retried after a failure. A test that passes the first time has a single attempt. This workflow assumes [test retries](/app/guides/test-retries) are enabled, since that is what lets a test recover and be marked flaky.
 
-**1. Find the flaky tests in a run.** List the passed tests and keep only those that retried after a failure:
+**1. Find the flaky tests in a run.** List the passed tests and keep only those with more than one attempt:
 
 ```bash
 cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status passed \
-  | jq '.tests[] | select(.attempts != null) | {testId, testName, attempts}'
+  | jq '.tests[] | select((.attempts | length) > 1) | {testId, testName, attempts}'
 ```
 
 Each result shows the failed attempt's error next to the passing attempt, so you can read what went wrong the first time:
