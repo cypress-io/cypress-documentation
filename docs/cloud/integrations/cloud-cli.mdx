@@ -405,6 +405,8 @@ Each spec includes its `id`, status, and file path:
 }
 ```
 
+`--status` accepts `passed`, `failed`, `running`, `errored`, `timedOut`, `cancelled`, and `noTests` (comma-separate to combine).
+
 Or look up specific specs by ID:
 
 ```bash
@@ -478,6 +480,8 @@ Or list tests within specific specs:
 ```bash
 cy-cloud test list --specId <specId>
 ```
+
+`--status` accepts `passed`, `failed`, `pending`, `skipped`, `running`, `errored`, `timedOut`, and `cancelled` (comma-separate to combine).
 
 ### cy-cloud test get
 
@@ -567,6 +571,25 @@ The summary reports the event counts and where the failure occurred:
   "failedAt": 1753063204120
 }
 ```
+
+The first time you query a test's replay, the CLI downloads and caches the replay database and prints its progress before the summary:
+
+```text
+Resolving replay... 52e51732-06d6-4fdb-ac31-640a8acebf31
+Replay resolved.
+Downloading replay data... f4e3f7559ec3d28e63993fa084fe1f6a62e4b1483c320292b822968cf205f959
+Download complete.
+Replay data ready, caching...
+Replay data cached.
+```
+
+Later queries for the same test read from the [cache](#Caching) and skip the download.
+
+:::note
+
+Because replay data is cached locally after the first download, repeated `replay info` and `replay timeline` queries for the same test run entirely against the local cache and do not count against your [rate limit](#Rate-limits). Only the first query for a test, the one that downloads the replay, makes a request that counts.
+
+:::
 
 ### cy-cloud replay timeline
 
