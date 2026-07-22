@@ -276,7 +276,7 @@ Each project includes its `projectId` and display name:
 }
 ```
 
-Or list projects in specific organizations, with pagination:
+Or list projects in specific organizations, capping the number returned:
 
 ```bash
 cy-cloud project list --orgId <orgId1>,<orgId2> --limit 10
@@ -774,6 +774,51 @@ At this point you have the error, the screenshot, the commands that led up to it
 Wrap this sequence in a [shell script](#Use-in-a-shell-script) that takes a project ID and branch, and you have a one-command "why did the last build fail" tool for your team.
 
 :::
+
+## Workflow: debug a flaky test
+
+A [flaky test](/cloud/features/flaky-test-management) is one that failed and then passed on retry within the same run. The CLI has no `--status flaky` filter, but a flaky test is easy to spot: its `status` is `passed` and it still carries an `attempts` array, because at least one earlier attempt failed. This workflow assumes [test retries](/app/guides/test-retries) are enabled, since that is what lets a test recover and be marked flaky.
+
+**1. Find the flaky tests in a run.** List the passed tests and keep only those that retried after a failure:
+
+```bash
+cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status passed \
+  | jq '.tests[] | select(.attempts != null) | {testId, testName, attempts}'
+```
+
+Each result shows the failed attempt's error next to the passing attempt, so you can read what went wrong the first time:
+
+```json
+{
+  "testId": "7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f",
+  "testName": ["Checkout", "applies a discount code"],
+  "attempts": [
+    {
+      "attemptNumber": 1,
+      "errorName": "AssertionError",
+      "errorMessage": "expected '.cart-total' to have text '$45.00'",
+      "stackTrace": "at Context.eval (webpack:///./cypress/e2e/checkout.cy.ts:42:7)"
+    },
+    {
+      "attemptNumber": 2,
+      "errorName": null,
+      "errorMessage": null,
+      "stackTrace": null
+    }
+  ]
+}
+```
+
+**2. Compare the failing and passing attempts.** Pull the Test Replay timeline for the attempt that failed, then for the one that passed, and look for the difference in timing, network, or state:
+
+```bash
+cy-cloud replay timeline --testId <testId> --attempt 1 --commands --network --logs
+cy-cloud replay timeline --testId <testId> --attempt 2 --commands --network --logs
+```
+
+A command that ran slower, a request that returned late, or a value that differed between the two attempts usually points straight at the cause of the flake.
+
+For flake trends across many runs, such as flake rate and your most flaky tests over time, use [Flaky Test Management](/cloud/features/flaky-test-management) in Cypress Cloud. The CLI is best for inspecting and debugging the flaky tests in a specific run.
 
 ## Output format and schemas
 
