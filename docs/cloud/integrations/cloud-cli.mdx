@@ -238,7 +238,7 @@ cy-cloud test list --projectId <projectId> --runNumber <runNumber> --limit 100 -
 
 ### cy-cloud org list
 
-List the organizations your account belongs to. Use this to find the organization ID you need for other commands.
+List the organizations your account belongs to. Use this to find the organization ID you need for other commands. Organizations are returned in no particular order.
 
 ```bash
 cy-cloud org list
@@ -258,7 +258,7 @@ Prints the organizations you belong to, each with the `uuid` you pass to other c
 
 ### cy-cloud project list
 
-List every project you can access:
+List every project you can access, sorted alphabetically by name:
 
 ```bash
 cy-cloud project list
@@ -356,7 +356,7 @@ The details add the commit SHA, per-status test counts, and duration in millisec
 
 ### cy-cloud spec list
 
-List specs for a run, or look up specs by ID. Provide a project ID together with a run number, or one or more spec IDs.
+List specs for a run, or look up specs by ID. Provide a project ID together with a run number, or one or more spec IDs. Listed by run, specs come back in the order they ran; looked up by `--specId`, they follow the order of the IDs you pass.
 
 List the failing specs in a run:
 
@@ -410,7 +410,7 @@ The details add timing and per-status test counts for the spec:
 
 ### cy-cloud test list
 
-List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`.
+List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`. Tests are returned in the order they ran within the run.
 
 List the failing tests in a run:
 
