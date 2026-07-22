@@ -777,7 +777,7 @@ Wrap this sequence in a [shell script](#Use-in-a-shell-script) that takes a proj
 
 ## Workflow: debug a flaky test
 
-A [flaky test](/cloud/features/flaky-test-management) is one that failed and then passed on retry within the same run. The CLI has no `--status flaky` filter, but a flaky test is easy to spot: its `status` is `passed` and its `attempts` array holds more than one attempt, because it retried after a failure. A test that passes the first time has a single attempt. This workflow assumes [test retries](/app/guides/test-retries) are enabled, since that is what lets a test recover and be marked flaky.
+A [flaky test](/cloud/features/flaky-test-management) failed and then passed on retry, so its status is `passed` but it has more than one attempt. There is no `--status flaky` filter, so you spot them by attempt count. This requires [test retries](/app/guides/test-retries).
 
 **1. Find the flaky tests in a run.** List the passed tests and keep only those with more than one attempt:
 
