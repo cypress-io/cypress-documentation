@@ -216,7 +216,7 @@ Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`,
 
 Every `list` command returns one page of results plus a `pagination` object describing the full result set.
 
-- `--limit` sets how many items to return per page. The default is 30 and the maximum is 100; larger values are capped at 100.
+- `--limit` sets how many items to return per page. The default is 30 and the maximum is 100.
 - `--page` selects which page to return, starting at 1 (the default).
 - The response's `pagination` object reports the effective `page`, `perPage`, and the `total` number of matching items, so you can tell how many results exist and whether more pages remain.
 
@@ -224,7 +224,7 @@ Filters that accept multiple values (`--status`, `--branch`, `--specId`, `--test
 
 | Goal                                                  | Command                                                                                                  |
 | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| The first 5 runs for a project                        | `cy-cloud run list --projectId <projectId> --limit 5`                                                    |
+| The 5 most recent runs for a project                  | `cy-cloud run list --projectId <projectId> --limit 5`                                                    |
 | The second page of 25 runs                            | `cy-cloud run list --projectId <projectId> --page 2 --limit 25`                                          |
 | Up to 50 passed or failed runs on `main` or `develop` | `cy-cloud run list --projectId <projectId> --branch main,develop --status passed,failed --limit 50`      |
 | Up to 100 failed or errored tests in a run            | `cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed,errored --limit 100` |
@@ -303,7 +303,7 @@ The response also includes the project's latest run numbers:
 
 ### cy-cloud run list
 
-List runs for a project. Filter by branch and status to find the run you care about, for example the most recent failed run on `main`:
+List runs for a project, returned most recent first. Filter by branch and status to find the run you care about, for example the most recent failed run on `main`:
 
 ```bash
 cy-cloud run list --projectId <projectId> --branch main --status failed --limit 1
