@@ -491,7 +491,7 @@ Get details for a single test, including its error and stack trace:
 cy-cloud test get --testId <testId>
 ```
 
-The single-test response adds the resolved `attempt` (1-indexed), `duration`, and `state`:
+The single-test response adds the resolved `attempt` (1-indexed), `runnerId`, and `duration`:
 
 ```json
 {
@@ -512,11 +512,9 @@ The single-test response adds the resolved `attempt` (1-indexed), `duration`, an
       "stackTrace": "at Context.eval (webpack:///./cypress/e2e/checkout.cy.ts:42:7)"
     }
   ],
-  "id": "7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f",
   "attempt": 1,
   "runnerId": "r3-88f2",
-  "duration": 5200,
-  "state": "failed"
+  "duration": 5200
 }
 ```
 
@@ -531,7 +529,7 @@ The output is the same test object shown above, with a `failureScreenshotPath` p
 ```json
 {
   "testId": "7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f",
-  "state": "failed",
+  "status": "failed",
   "attempt": 1,
   "failureScreenshotPath": "./screenshots/7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f-attempt-1-failure.png"
 }
@@ -542,7 +540,7 @@ If the test passed, or no failure screenshot exists, the output includes a `fail
 ```json
 {
   "testId": "b4d1f0a2-6c7e-4a9b-8d3f-5e2c1a0b9d8e",
-  "state": "passed",
+  "status": "passed",
   "failureScreenshotReason": "test passed"
 }
 ```
@@ -893,10 +891,10 @@ It returns a JSON Schema describing the output fields and their types, which beg
     "testId": { "type": "string", "format": "uuid" },
     "status": { "type": "string" },
     "attempt": { "type": "integer" },
-    "state": { "type": "string" },
+    "duration": { "type": "integer" },
     "failureScreenshotPath": { "type": "string" }
   },
-  "required": ["testId", "status", "attempt", "state"]
+  "required": ["testId", "status", "attempt"]
 }
 ```
 
