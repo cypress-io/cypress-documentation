@@ -1,6 +1,6 @@
 ---
-title: 'Continuous Integration with Cypress'
-description: 'Learn how to set up Cypress in Continuous Integration (CI), record tests, run tests in parallel, and set up CI workflows to use Cypress Docker images.'
+title: 'Continuous Integration with Cypress: Run Tests in CI'
+description: 'Set up Cypress in CI: install and run commands, boot your server, record to Cypress Cloud, run in parallel, and use Cypress Docker images on any CI provider.'
 sidebar_label: Overview
 sidebar_position: 10
 ---
@@ -9,18 +9,37 @@ sidebar_position: 10
 
 # Continuous Integration with Cypress
 
+Cypress runs in any continuous integration (CI) provider, including GitHub
+Actions, CircleCI, GitLab CI, Jenkins, and AWS CodeBuild. Running your Cypress
+tests on every push and pull request catches regressions before they reach
+your users, and recorded results show you exactly what happened when a test
+fails.
+
+Setting it up takes two commands: install Cypress, then run it. This guide
+covers those commands and everything around them: booting your app's server,
+choosing a Docker image, caching, parallelization, and setup guides for each
+major CI provider.
+
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
-- How to set up Cypress in Continuous Integration (CI)
-- How to run Cypress in CI, record tests, and run tests in parallel
-- How to set up CI workflows to use Cypress Docker images
-- Advanced configuration for OS, dependencies, caching, and environment variables
+- How to install and run Cypress in any CI provider
+- How to start your app's server before running tests
+- How to record results to Cypress Cloud and run tests in parallel
+- How to pick a Cypress Docker image for a consistent test environment
+- How to configure machine resources, caching, and environment variables
+- How to troubleshoot common CI failures
 
 :::
 
 ## What is Continuous Integration?
+
+Continuous integration is the practice of merging code changes into a shared
+repository frequently, where each change is verified by an automated build and
+test run. When Cypress is part of that pipeline, every commit runs your
+end-to-end and component tests against your application, so a change that
+breaks a user flow fails the build instead of shipping.
 
 <DocsVideo
   src="https://youtube.com/embed/USX6AntcPyg"
@@ -34,10 +53,10 @@ sidebar_position: 10
   title="Continuous Integration with Cypress"
 />
 
-### Basics
+### Install and run Cypress
 
-Running Cypress in Continuous Integration is almost the same as running it
-locally in your terminal. You generally only need to do two things:
+Running Cypress in CI is almost the same as running it locally in your
+terminal. You generally only need to do two things:
 
 1. **Install Cypress**
 
@@ -47,103 +66,50 @@ locally in your terminal. You generally only need to do two things:
 
 <CypressRunCommands />
 
-Depending on which CI provider you use, you may need a config file. You'll want
-to refer to your CI provider's documentation to know where to add the commands
-to install and run Cypress. For more configuration examples check out our
-[examples](/app/continuous-integration/overview#CI-Examples).
+Where these commands go depends on your CI provider: each defines its own
+configuration file format for the steps in a build. Refer to your CI
+provider's documentation for where to add the commands to install and run
+Cypress, or start from one of our [CI examples](#CI-Examples).
 
 ### Boot your server
 
-#### Challenges
-
-Typically you will need to boot a local server prior to running Cypress. When
-you boot your web server, it runs as a **long running process** that will never
-exit. Because of this, you'll need it to run in the **background** - else your
-CI provider will never move onto the next command.
-
-Backgrounding your server process means that your CI provider will continue to
-execute the next command after executing the signal to start your server.
-
-Many people approach this situation by running a command like the following:
+Typically you will need to boot a local server before running Cypress. A web
+server is a **long running process** that never exits, so you need to run it
+in the **background** or your CI provider will never move on to the next
+command. You also need to wait for the server to be ready before Cypress
+starts. A command like this has a race condition:
 
 ```shell
-npm start & cypress run // Do not do this
+npm start & npx cypress run # don't do this
 ```
 
-The problem is - what happens if your server takes time to boot? There is no
-guarantee that when the next command runs (`cypress run`) that your web server
-is up and available. So your Cypress test may start and try to visit your local
-server before it is ready to be visited.
+There is no guarantee that your server has booted by the time `cypress run`
+executes, so your tests may try to visit your local server before it is ready.
+Instead of adding an arbitrary wait (like `sleep 20`), use a tool that waits
+for the server to respond.
 
-#### Solutions
+:::tip
 
-Luckily, there are some solutions for this. Instead of introducing arbitrary
-waits (like `sleep 20`) you can use a better option.
-
-**`wait-on` module**
-
-Using the [wait-on](https://github.com/jeffbski/wait-on) module, you can block
-the `cypress run` command from executing until your server has booted.
-
-```shell
-npm start & wait-on http://localhost:8080
-```
-
-```shell
-cypress run
-```
-
-:::info
-
-Most CI providers will automatically kill background processes so you don't have
-to worry about cleaning up your server process once Cypress finishes.
-
-However, if you're running this script locally you'll have to do a bit more work
-to collect the backgrounded PID and then kill it after `cypress run`.
+If you run your tests with the official
+[Cypress GitHub Action](https://github.com/cypress-io/github-action), its
+`start` and `wait-on` options boot and wait for your server without any extra
+packages. See our
+[GitHub Actions guide](/app/continuous-integration/github-actions).
 
 :::
 
-**`start-server-and-test` module**
+#### `start-server-and-test` module
 
-If the server takes a very long time to start, we recommend trying the
-[start-server-and-test](https://github.com/bahmutov/start-server-and-test)
-module.
+The [start-server-and-test](https://github.com/bahmutov/start-server-and-test)
+module starts your server, waits until a URL responds, runs your test command,
+and shuts the server down when the tests finish.
 
-<Tabs>
-  <TabItem value="npm">
+<PackageManagerTabs install="start-server-and-test" dev />
 
-    ```shell
-    npm install start-server-and-test --save-dev
-    ```
+In your `package.json` scripts, pass the command that boots your server, the
+URL your server is hosted on, and your Cypress test command.
 
-  </TabItem>
-  <TabItem value="yarn">
-
-    ```shell
-    yarn add start-server-and-test --dev
-    ```
-
-  </TabItem>
-  <TabItem value="pnpm">
-
-    ```shell
-    pnpm add --save-dev start-server-and-test
-    ```
-
-  </TabItem>
-  <TabItem value="bun">
-
-    ```shell
-    bun add --dev start-server-and-test
-    ```
-
-  </TabItem>
-</Tabs>
-
-In your `package.json` scripts, pass the command to boot your server, the url
-your server is hosted on and your Cypress test command.
-
-```json
+```json title="package.json"
 {
   "scripts": {
     "start": "my-server -p 3030",
@@ -155,16 +121,16 @@ your server is hosted on and your Cypress test command.
 
 In the example above, the `cy:run` command will only be executed when the URL
 `http://localhost:3030` responds with an HTTP status code of 200. The server
-will also shut down when the tests complete.
+also shuts down when the tests complete.
 
-#### Gotchas
+**Gotchas**
 
 When
 [working with `webpack-dev-server`](https://github.com/bahmutov/start-server-and-test#note-for-webpack-dev-server-users)
-that does not respond to `HEAD` requests, use an explicit `GET` method to ping
-the server like this:
+or another server that does not respond to `HEAD` requests, use an explicit
+`GET` method to ping the server like this:
 
-```json
+```json title="package.json"
 {
   "scripts": {
     "test": "start-server-and-test start http-get://localhost:3030 cy:run"
@@ -172,10 +138,10 @@ the server like this:
 }
 ```
 
-When working with local `https` in webpack, set a system environment variable to allow
-local certificate:
+When working with local `https` in webpack, set a system environment variable
+to allow the local certificate:
 
-```json
+```json title="package.json"
 {
   "scripts": {
     "start": "my-server -p 3030 --https",
@@ -185,51 +151,100 @@ local certificate:
 }
 ```
 
+#### `wait-on` module
+
+If you'd rather manage the server process yourself, the
+[wait-on](https://github.com/jeffbski/wait-on) module blocks until a URL
+responds. Background the server, wait for it, then run Cypress:
+
+```shell
+npm start & npx wait-on http://localhost:8080
+```
+
+```shell
+npx cypress run
+```
+
+:::info
+
+Most CI providers automatically kill background processes, so you don't have
+to worry about cleaning up your server process once Cypress finishes.
+
+However, if you're running this script locally you'll have to do a bit more
+work to collect the backgrounded PID and then kill it after `cypress run`.
+
+:::
+
+#### `concurrently` module
+
+A general-purpose process runner like
+[concurrently](https://github.com/open-cli-tools/concurrently) can compose the
+same flow: start the server and a `wait-on`-gated test command together, kill
+the server when the tests finish (`-k`), and pass or fail based on the test
+command alone (`-s first`).
+
+```shell
+npx concurrently -k -s first "npm start" "npx wait-on http://localhost:8080 && npx cypress run"
+```
+
 ### Record tests
 
-Cypress can record your tests and make the results available in
-[Cypress Cloud](/cloud/get-started/introduction). Cloud gives you access to recorded
-tests - typically when running Cypress tests from your
-[CI provider](/app/continuous-integration/overview) - and provides you
-insight into what happened when your tests ran.
+Cypress can record your test runs and make the results available in
+[Cypress Cloud](/cloud/get-started/introduction), giving you insight into what
+happened when your tests ran in CI.
 
-#### Recording tests allow you to:
+Recording tests allows you to:
 
-- See the number of failed, pending and passing tests.
-- Get the entire stack trace of failed tests.
+- See the number of failed, pending, and passing tests.
+- Debug failures with [Test Replay](/cloud/features/test-replay), which
+  captures the state of your application so you can inspect the DOM, network
+  requests, and console logs at every step of the failed test.
+- Get the entire stack trace of failed tests, or hand that same failure
+  context to your AI coding agent through
+  [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so it can debug the
+  failing run for you.
 - View screenshots taken when tests fail and when using
   [`cy.screenshot()`](/api/commands/screenshot).
-- Watch a video of your entire test run or a clip at the point of test failure
-  when the `video` configuration is enabled.
+- Detect and manage [flaky tests](/cloud/features/flaky-test-management) that
+  pass and fail across recorded runs.
+- Analyze trends in your test suite with
+  [Analytics](/cloud/features/analytics/overview), like run duration,
+  most common errors, and slowest tests.
+- Generate [UI Coverage](/ui-coverage/get-started/introduction) and
+  [Cypress Accessibility](/accessibility/get-started/introduction) reports
+  from your recorded runs with no additional test code or configuration
+  (premium solutions).
 - See which machines ran each test when
   [parallelized](/cloud/features/smart-orchestration/parallelization).
 
-#### To record tests:
+To record tests:
 
-1. [Set up your project to record](/cloud/get-started/setup#Setup)
+1. [Set up your project to record](/cloud/get-started/setup#Setup) and copy
+   your record key.
 2. [Pass the `--record` flag to `cypress run`](/app/references/command-line#cypress-run)
-   within CI.
+   within CI, along with the record key, either inline with the `--key` flag
+   or via the
+   [`CYPRESS_RECORD_KEY` environment variable](#Environment-variables).
 
-```shell
-cypress run --record --key=abc123
-```
+<CypressCommandTabs command="run --record --key=abc123" />
 
-[Read the full guide on the Cypress Cloud.](/cloud/get-started/introduction)
+[Read the full guide on Cypress Cloud.](/cloud/get-started/introduction)
 
 ### Run tests in parallel
 
-Cypress can run tests in parallel across multiple machines.
+Cypress can run tests in parallel across multiple machines, cutting your total
+run time roughly in proportion to the number of machines.
 
 You'll want to refer to your CI provider's documentation on how to set up
 multiple machines to run in your CI environment.
 
 Once multiple machines are available within your CI environment, you can pass
-the [--parallel](/app/references/command-line#cypress-run-parallel) flag to have
-your tests run in parallel.
+the [--parallel](/app/references/command-line#cypress-run-parallel) flag to
+have your tests run in parallel. Parallelization requires recording to
+[Cypress Cloud](/cloud/get-started/introduction), which load-balances specs
+across your machines.
 
-```shell
-cypress run --record --key=abc123 --parallel
-```
+<CypressCommandTabs command="run --record --key=abc123 --parallel" />
 
 [Read the full guide on parallelization.](/cloud/features/smart-orchestration/parallelization)
 
@@ -246,10 +261,11 @@ Images are Linux-based and support the following platforms:
 - Linux/amd64
 - Linux/arm64
 
-Cypress Docker images provide a consistent environment tailored for use with Cypress.
-By choosing an appropriate Cypress Docker image, you determine the exact environment that your Cypress tests run in.
-This allows you to shield your workflows from version updates made by your CI provider,
-for instance if they update Node.js or browser versions.
+Cypress Docker images provide a consistent environment tailored for use with
+Cypress. By choosing an appropriate Cypress Docker image, you determine the
+exact environment that your Cypress tests run in. This shields your workflows
+from version updates made by your CI provider, for instance if they update
+Node.js or browser versions.
 
 Cypress Docker images are available from:
 
@@ -267,7 +283,7 @@ Cypress Docker images are available from:
 - [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) builds on the
   [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) image.
   For `Linux/amd64` images it adds **Chrome**, **Firefox** and **Edge** browsers.
-  For `Linux/arm64` images it adds only **Firefox** browsers from version `136.0.2` and above.
+  For `Linux/arm64` images it adds only **Firefox** browsers from version `136` and above.
   Chrome and Edge browsers are currently not available for `Linux/arm64`.
   A corresponding image `<tag>` allows selection of the combined Node.js and browser versions.
   The version tags for the unavailable Chrome and Edge browsers on the `Linux/arm64` platform are empty place-holders only,
@@ -285,15 +301,18 @@ Cypress Docker images are available from:
 
 ### CI Docker examples
 
-You can find examples that use Cypress Docker images below
+You can find examples that use Cypress Docker images below:
 
 - [cypress-docker-images examples](https://github.com/cypress-io/cypress-docker-images/blob/master/README.md#examples)
-- [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/README.md).
+- [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/README.md)
 - [Real World App - CircleCI](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.circleci/config.yml)
 - [Real World App - GitHub Actions](https://github.com/cypress-io/cypress-realworld-app/blob/develop/.github/workflows/main.yml)
 - [cypress-docker-images - GitHub Actions](https://github.com/cypress-io/cypress-docker-images/blob/master/.github/workflows/example-cypress-github-action.yml)
 
 ## CI Examples
+
+We maintain in-depth setup guides for the most popular CI providers, and
+working example configurations for many others.
 
 ### AWS Amplify Console
 
@@ -312,13 +331,13 @@ Read our extensive guide on how to set up Cypress in [AWS CodeBuild](/app/contin
 
 Read our extensive guide on how to set up Cypress in [Bitbucket Pipelines](/app/continuous-integration/bitbucket-pipelines).
 
-### CircleCI
-
-Read our extensive guide on how to set up Cypress in [CircleCI](/app/continuous-integration/circleci).
-
 ### Buildkite
 
 - [Parallel Example](https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.buildkite/pipeline.yml)
+
+### CircleCI
+
+Read our extensive guide on how to set up Cypress in [CircleCI](/app/continuous-integration/circleci).
 
 ### GitHub Actions
 
@@ -335,11 +354,10 @@ Read our extensive guide on how to set up Cypress in [GitLab](/app/continuous-in
 
 ### Netlify
 
-We recommend using our official
+Use our official
 [netlify-plugin-cypress](https://github.com/cypress-io/netlify-plugin-cypress)
-to execute end-to-end tests before and after deployment to Netlify platform.
-Read our tutorial
-[Run Cypress Tests on Netlify Using a Single Line](https://cypress.io/blog/2020/03/30/run-cypress-tests-on-netlify-using-a-single-line/).
+to execute end-to-end tests before and after deployment to the Netlify
+platform.
 
 ### Semaphore
 
@@ -355,9 +373,9 @@ Read our tutorial
 
 ### Machine requirements
 
-Hardware requirements to run Cypress depend how much memory the browser, the
-application under test, and the server (if running it locally) need to run the
-tests without crashing. Visit our
+Hardware requirements to run Cypress depend on how much memory the browser,
+the application under test, and the server (if running it locally) need to run
+the tests without crashing. Visit our
 [System Requirements](/app/get-started/install-cypress#System-requirements)
 guide for minimum hardware recommendations.
 
@@ -378,8 +396,8 @@ command.
 ```css
 npx cypress info
 ...
-Cypress Version: 13.6.6 (stable)
-System Platform: linux (Debian - 11.6)
+Cypress Version: 15.18.1 (stable)
+System Platform: linux (Debian - 12)
 System Memory: 73.6 GB free 48.6 GB
 ```
 
@@ -432,7 +450,7 @@ Cypress downloads its binary to the global system cache - on Linux that is
 `~/.cache/Cypress`. By ensuring this cache persists across builds you can save
 minutes off install time by preventing a large binary download.
 
-#### We recommend users:
+We recommend that you:
 
 - Cache the `~/.cache` folder after running `npm install`, `yarn`,
   [`npm ci`](https://docs.npmjs.com/cli/ci) or equivalents as demonstrated in
@@ -453,12 +471,13 @@ minutes off install time by preventing a large binary download.
   Cypress caches. Consider using `yarn install --frozen-lockfile` as an
   [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
-- If you need to override the binary location for some reason, use
+- If you need to override the binary location for some reason, use the
   [CYPRESS_CACHE_FOLDER](/app/references/advanced-installation#Binary-cache)
   environment variable.
 
 - Make sure you are not restoring the previous cache using lax keys; then the
-  Cypress binaries can "snowball".
+  Cypress binaries can "snowball", accumulating every version you have ever
+  installed.
 
 **Tip:** you can find lots of CI examples with configured caching in our
 [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)
@@ -470,16 +489,21 @@ You can set various environment variables to modify how Cypress runs.
 
 #### Configuration Values
 
-You can set any configuration value as an environment variable. This overrides
-values in the Cypress configuration.
+You can set any [configuration value](/app/references/configuration) as an
+environment variable by prefixing it with `CYPRESS_`. This overrides values in
+the Cypress configuration.
 
 **_Typical use cases would be modifying things like:_**
 
-- `CYPRESS_BASE_URL`
-- `CYPRESS_VIDEO`
-- `CYPRESS_VIDEO_COMPRESSION`
-- `CYPRESS_REPORTER`
-- `CYPRESS_INSTALL_BINARY`
+- `CYPRESS_BASE_URL` - point tests at a preview or staging deployment
+- `CYPRESS_REPORTER` - switch to a CI-friendly reporter like `junit`
+- `CYPRESS_DEFAULT_COMMAND_TIMEOUT` - allow more time on slower CI machines
+- `CYPRESS_VIEWPORT_WIDTH` and `CYPRESS_VIEWPORT_HEIGHT` - vary the screen
+  size per CI job
+
+The install-time variable
+[`CYPRESS_INSTALL_BINARY`](/app/references/advanced-installation#Download-URLs)
+is also commonly set in CI, to skip or redirect the binary download.
 
 Refer to the
 [Environment Variables recipe](/app/references/configuration#Environment-Variables)
@@ -493,33 +517,19 @@ to protect your Record Key.
 
 Instead of hard coding it into your run command like this:
 
-```shell
-cypress run --record --key abc-key-123
-```
+<CypressCommandTabs command="run --record --key abc-key-123" />
 
-You can set the record key as the environment variable, `CYPRESS_RECORD_KEY`,
+You can set the record key as the environment variable `CYPRESS_RECORD_KEY`
 and we'll automatically use that value. You can now omit the `--key` flag when
 recording.
 
-```shell
-cypress run --record
-```
+<CypressCommandTabs command="run --record" />
 
-Typically you'd set this inside of your CI provider.
+Set `CYPRESS_RECORD_KEY` in your CI provider's settings as a secret or masked
+environment variable so it doesn't appear in your configuration files or build
+logs.
 
-**_CircleCI Environment Variable_**
-
-<DocsImage
-  src="/img/app/continuous-integration/cypress-record-key-as-environment-variable.png"
-  alt="Record key environment variable"
-/>
-
-**_TravisCI Environment Variable_**
-
-<DocsImage
-  src="/img/app/continuous-integration/cypress-record-key-as-env-var-travis.png"
-  alt="Travis key environment variable"
-/>
+<RecordKeyEnvVar />
 
 #### Git information
 
@@ -550,7 +560,7 @@ DEBUG=cypress:server:record
 #### CI Build Information
 
 In some newer CI providers, Cypress can't map the system environment variables required
-to link back to builds or pull requests. In this case we provided users some
+to link back to builds or pull requests. In this case we provide users some
 environment variables to help pass that information along.
 
 - Pull Request Id: `CYPRESS_PULL_REQUEST_ID`
@@ -562,24 +572,43 @@ appropriate place.
 
 #### Custom Environment Variables
 
-You can also set custom environment variables for use in your tests. These
-enable your test code and browser to reference dynamic values.
+You can also set custom values for use in your tests. Which API you use
+depends on whether the value is sensitive.
+
+**_Private values: `cy.env()`_**
+
+For secrets like API tokens, set an OS environment variable prefixed with
+`CYPRESS_` using your CI provider's secret or masked variable settings:
 
 ```shell
-export "EXTERNAL_API_SERVER=https://corp.acme.co"
+export CYPRESS_SERVICE_API_TOKEN=secret-token-123
 ```
 
-And then in your tests:
+Cypress strips the prefix, and your tests read the value with
+[`cy.env()`](/api/commands/env), which retrieves only the values you request
+without serializing them into browser state:
 
 ```javascript
-cy.request({
-  method: 'POST',
-  url: Cypress.expose('EXTERNAL_API_SERVER') + '/users/1',
-  body: {
-    foo: 'bar',
-    baz: 'quux',
-  },
+cy.env(['SERVICE_API_TOKEN']).then(({ SERVICE_API_TOKEN }) => {
+  cy.request({
+    url: 'https://api.example.com/users',
+    headers: { Authorization: `Bearer ${SERVICE_API_TOKEN}` },
+  })
 })
+```
+
+**_Public values: `Cypress.expose()`_**
+
+For non-sensitive configuration that is safe to appear in browser state, like
+feature flags or API versions, pass values with the `--expose` CLI flag:
+
+<CypressCommandTabs command="run --expose apiVersion=v2,featureFlag=true" />
+
+and read them synchronously with
+[`Cypress.expose()`](/api/cypress-api/expose):
+
+```javascript
+const apiVersion = Cypress.expose('apiVersion') // => 'v2'
 ```
 
 Refer to the dedicated
@@ -595,20 +624,19 @@ If you're using our [Module API](/app/references/module-api) then you can write 
 script that boots and then shuts down the server later. As a bonus, you can work
 with the results and do other things.
 
-```js
-// scripts/run-cypress-tests.js
-
+```js title="scripts/run-cypress-tests.js"
 const cypress = require('cypress')
 const server = require('./lib/my-server')
 
-// start your server
-return server.start().then(() => {
+;(async () => {
+  await server.start()
+
   // kick off a cypress run
-  return cypress.run().then((results) => {
-    // stop your server when it's complete
-    return server.stop()
-  })
-})
+  const results = await cypress.run()
+
+  // stop your server when it's complete
+  await server.stop()
+})()
 ```
 
 ```shell
@@ -628,10 +656,10 @@ To better diagnose the error, add
 to your CI setup. This will print where the binary is located and what versions
 are already present.
 
-```shell
-npx cypress cache path
-npx cypress cache list
-```
+<CypressCommandTabs
+  command={`cache path
+cache list`}
+/>
 
 If the required binary version is not found in the cache, you can try the
 following:
@@ -648,7 +676,8 @@ When running on Linux, Cypress needs an X11 server; otherwise it spawns its own
 X11 server during the test run. When running several Cypress instances in
 parallel, the spawning of multiple X11 servers at once can cause problems for
 some of them. In this case, you can separately start a single X11 server and
-pass the server's address to each Cypress instance using `DISPLAY` variable.
+pass the server's address to each Cypress instance using the `DISPLAY`
+variable.
 
 First, spawn the X11 server in the background at some port, for example `:99`.
 If you have installed `xvfb` on Linux or if you are using one of our Docker
@@ -710,9 +739,7 @@ NO_COLOR=1 cypress run
   viewport sizes.
 - [cypress-example-kitchensink](https://github.com/cypress-io/cypress-example-kitchensink#ci-status)
   is set up to run on multiple CI providers.
+- [Command Line](/app/references/command-line) - all `cypress run` flags and
+  options
 - [Test Replay](/cloud/features/test-replay)
 - [Cross Browser Testing Guide](/app/guides/cross-browser-testing)
-- [Blog: Setting up Bitbucket Pipelines with proper caching of npm and Cypress](https://www.cypress.io/blog/2018/08/30/setting-up-bitbucket-pipelines-with-proper-caching-of-npm-and-cypress/)
-- [Blog: Record Test Artifacts from any Docker CI](https://www.cypress.io/blog/2018/08/28/record-test-artifacts-from-any-ci/)
-- [Continuous Integration with Cypress](https://www.cypress.io/blog/2019/10/04/webcast-recording-continuous-integration-with-cypress/)
-  webinar covering TeamCity, Travis and CircleCI setups.

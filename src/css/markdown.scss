@@ -46,6 +46,19 @@ div.markdown {
     --ifm-h5-font-size: 1.2rem;
   }
 
+  // Icon + text callout labels (e.g. "What you'll learn", "Examples and use
+  // cases"). Rendered as a non-heading (see src/components/callout-label) to
+  // avoid the heading-order violation they caused as an h5 following the page
+  // h1, but styled to match that h5 exactly.
+  p.callout-label {
+    color: var(--ifm-heading-color);
+    font-family: var(--ifm-heading-font-family);
+    font-weight: var(--ifm-heading-font-weight);
+    line-height: var(--ifm-heading-line-height);
+    margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
+    font-size: 1.2rem;
+  }
+
   p {
     margin-bottom: 1rem;
   }
@@ -108,8 +121,10 @@ div.markdown {
 
   .alert,
   & {
-    // add border bottom to code tags that are in a link
-    a:has(> code) {
+    // give links that wrap a code tag a pill-style border; :not(.cy-button-width)
+    // raises specificity above the base link rule so its dotted border-bottom
+    // doesn't double up with the code tag's dotted text-decoration underline
+    a:not(.cy-button-width):has(> code) {
       &,
       &:hover {
         border: 0.1rem solid rgba(0, 0, 0, 0.1);

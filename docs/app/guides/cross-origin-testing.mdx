@@ -1,5 +1,5 @@
 ---
-title: 'Cross Origin Testing: Cypress Guide'
+title: 'Cross origin testing in Cypress'
 description: 'Learn how to test cross-origin content with Cypress.'
 sidebar_label: Cross Origin Testing
 e2eSpecific: true
@@ -11,7 +11,7 @@ e2eSpecific: true
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - What strategies Cypress uses to work around same-origin policy
 - Limitations and workarounds with cross-origin content
@@ -217,6 +217,11 @@ If you'd like support for this
 (check our [open issue](https://github.com/cypress-io/cypress/issues/136)), or
 you can
 [disable web security](/app/guides/cross-origin-testing#Disabling-Web-Security).
+
+Note that **same-origin** iframes are not affected by this restriction and can be
+queried natively. See
+[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
+in the FAQ.
 
 ### Insecure Content
 
@@ -554,7 +559,11 @@ flag also does the following:
   config option.
 - Removes
   [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
-  from modified scripts as they will not execute otherwise.
+  from modified third-party scripts as they will not execute otherwise. To also
+  remove SRI from first-party resources (and from `integrity` set via a runtime
+  DOM property assignment), use the
+  [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes)
+  configuration option.
 - Updates the `Sec-Fetch-Dest` Metadata header from `iframe` to `document` in
   cases where requests come from the application under test.
 

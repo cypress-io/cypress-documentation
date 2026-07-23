@@ -1,19 +1,19 @@
 ---
+title: Configure Cypress Accessibility
+description: 'Customize Cypress Accessibility element identification, filters, profiles, and Axe Core® rules'
 sidebar_label: Overview
-title: 'Configuration | Cypress Accessibility'
-description: 'Configuration allows you to customize and fine-tune Cypress Accessibility.'
 sidebar_position: 10
 ---
 
 <ProductHeading product="accessibility" />
 
-# Configuration
+# Configuration overview
 
 Configuration allows you to customize and fine-tune accessibility reports in Cypress. While Cypress Accessibility is designed to work seamlessly out of the box, there are instances where custom configuration may be necessary, or preferred. Using configuration, you can avoid reporting on pages or elements that don't matter to your team, combine related urls together into a single View, and modify the element identification and deduplication behavior to reflect your application's specific structure.
 
 **Note**: By default, setting configuration is limited to Admin users. At your request, this can be changed to allow setting config by all users. Reach out to your Cypress point-of-contact if you would like to change this.
 
-### Setting Configuration
+## Setting Configuration
 
 To add or modify the configuration for your project, navigate to the "App Quality" tab in your project settings.
 
@@ -28,7 +28,7 @@ After new configuration changes have been saved, you can reprocess any historica
 
 This allows you to iterate on the config quickly without having to execute test runs and wait for the results. You can try out different configurations and see what effects your changes have to make sure everything works the way you intend.
 
-### Viewing Configuration for a Run
+## Viewing Configuration for a Run
 
 You can view configuration information for each run in the Properties tab, as shown below. This configuration is determined when your run begins.
 
@@ -37,7 +37,7 @@ You can view configuration information for each run in the Properties tab, as sh
   alt="The properties tab for a run, with an Application Quality section at the bottom"
 />
 
-### Comments
+## Comments
 
 All configuration objects support an optional `comment` property that you can use to provide context and explanations for why certain values are set. This helps make your configuration easier to understand and maintain, especially when working in teams or revisiting configuration after some time.
 
@@ -53,11 +53,11 @@ All configuration objects support an optional `comment` property that you can us
 }
 ```
 
-### Profiles
+## Profiles
 
 The `profiles` property allows you to use different configuration settings for different runs based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). See the [Profiles](/accessibility/configuration/profiles) guide for more details.
 
-### Complete configuration example
+## Complete configuration example
 
 A complete configuration with all available options looks as follows:
 

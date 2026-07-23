@@ -47,6 +47,7 @@ llm_guidance:
   - use chunked JSON for retrieval and embeddings
   - use full JSON for complete context
   - use markdown for semantic understanding
+  - for a single topic, fetch one section's markdown at <page-path>/<h2-slug>.md instead of the full page
   - use HTML only as a fallback
 ---
 

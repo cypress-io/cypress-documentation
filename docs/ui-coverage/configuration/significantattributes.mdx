@@ -1,14 +1,255 @@
 ---
-title: 'Significant Attributes | Cypress UI Coverage'
-description: 'The `significantAttributes` configuration property allows users to specify custom attributes that should be considered "significant" for the purpose of identification and grouping in UI Coverage.'
-sidebar_label: significantAttributes
-sidebar_position: 50
+title: 'significantAttributes: identify elements by your attributes in UI Coverage'
+description: 'Make Cypress UI Coverage identify, name, and group elements using your own HTML attributes, such as data-component, data-analytics-id, or aria-label, by adding them to the priority list of significant attributes.'
+sidebar_label: 'Prioritize identifying attributes'
+sidebar_position: 70
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# significantAttributes
+# Prioritize identifying attributes - `significantAttributes`
 
-The `significantAttributes` property allows you to specify which attributes should be considered significant when identifying elements in UI Coverage.
+The `significantAttributes` configuration adds your own HTML attributes to the priority list UI Coverage uses to identify elements. Attributes you list are checked before the default test attributes, in the order you list them.
 
-<SignificantAttributes />
+To count each element once across the many [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) captured in a run, UI Coverage identifies elements by a [prioritized list of attributes](/ui-coverage/core-concepts/element-identification): test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as a `data-component` attribute from your design system or a `data-analytics-id` your team maintains for tracking. Listing them in `significantAttributes` makes UI Coverage prefer them, so elements are named by the attributes your team recognizes, deduplicated by values that stay stable across snapshots, and grouped by the structure your markup already expresses.
+
+## Why use significantAttributes?
+
+- **Use attributes your application already has**: If your components render an attribute like `data-component`, UI Coverage can identify and name elements by it. No new markup required.
+- **Make reports read in your team's vocabulary**: Elements appear in reports under selectors built from their identifying attribute, so `[data-component="SearchInput"]` is easier to recognize and act on than a generated selector.
+- **Promote one of the default attributes**: The defaults are checked in a fixed order (`data-cy` before `data-qa`, for example). If your application uses `data-qa` but another tool populates `data-cy` with less useful values, listing `data-qa` moves it to the front of the line.
+
+`significantAttributes` changes which attributes are preferred. If your goal is different, such as stopping a dynamic attribute from being used at all, or fixing a single element's identity, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
+
+## Scope
+
+:::info
+
+**Note:** setting `significantAttributes` at the root of your configuration impacts both UI Coverage and Cypress Accessibility reports. To configure the products separately, nest the property under a `uiCoverage` or `accessibility` key. A nested `significantAttributes` completely replaces a root-level one for that product; the two lists are not merged.
+
+:::
+
+## Setting significantAttributes
+
+To add or edit `significantAttributes`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+
+<DocsImage
+  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
+
+## Syntax
+
+```json title="App Quality Config"
+{
+  "significantAttributes": [string]
+}
+```
+
+To apply the list to UI Coverage only, nest the property under the `uiCoverage` key:
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "significantAttributes": [string]
+  }
+}
+```
+
+Each entry is the name of an HTML attribute, such as `"data-component"` or `"aria-label"`. Any valid HTML attribute qualifies, not only `data-*` attributes. Entries are attribute names only: not CSS selectors, not regular expressions, and not attribute values.
+
+### How are significant attributes applied?
+
+For each [interactive element](/ui-coverage/core-concepts/interactivity) it tracks, UI Coverage checks one combined list of attributes, in priority order:
+
+1. The [markup attributes](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) `data-cy-ui-id` and `data-cy-ui-group`
+2. Your `significantAttributes`, in the order you list them
+3. The default significant attributes, in order: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`
+4. `id` and `name`, as fallbacks when no attribute above produced an identifier
+
+The first attribute in this list that is present on the element, with a value that isn't excluded by your [`attributeFilters`](/ui-coverage/configuration/attributefilters), becomes the element's identifying attribute. That single attribute-value pair drives how the element is named in reports, deduplicated across snapshots, and [grouped](/ui-coverage/core-concepts/element-grouping) with repeated elements that share the same value.
+
+Keep these behaviors in mind when building your list:
+
+- **Your list is added to the defaults, not a replacement for them.** An element that has none of your attributes is still identified by `data-testid`, `id`, or whatever else it has, exactly as it would be without configuration. To stop an attribute from being used entirely, use [`attributeFilters`](/ui-coverage/configuration/attributefilters); listing other attributes in `significantAttributes` doesn't disable it.
+- **To reorder the defaults, list them.** Your entries outrank every default, so `"significantAttributes": ["data-qa"]` is all it takes to check `data-qa` before `data-cy`.
+- **One attribute is chosen per element.** Higher-priority attributes aren't combined with lower ones; once a match is found, the rest of the list is ignored for that element.
+- **Filtered values are skipped, not final.** When an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule excludes the value of a higher-priority attribute, UI Coverage moves on to the next attribute in the list. The two properties work together: `significantAttributes` sets the preference order, and `attributeFilters` removes unusable values from consideration.
+- **Labels can lend their attributes.** A form control linked to a `<label>` can be identified by the label's significant attribute when the control itself has none, with the control's own attributes preferred.
+
+### Validation rules
+
+<SignificantAttributesValidation />
+
+## Examples
+
+### Identify elements by a component attribute
+
+Your configured attribute outranks the defaults, so the button is identified by `data-component` even though `data-testid` is also present. The second button has no `data-component`, so it falls back to the default behavior and is identified by `data-testid`.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "significantAttributes": ["data-component"]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-component="SignupSubmit" data-testid="submit">
+    Submit
+  </button>
+  <button data-testid="cancel">Cancel</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[data-component="SignupSubmit"]
+[data-testid="cancel"]
+```
+
+---
+
+### List several attributes in priority order
+
+`significantAttributes` is a list, so you can prioritize more than one attribute. They're checked in the order you write them, and each element is identified by the first attribute it has. This helps when different parts of your application use different conventions.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "significantAttributes": ["data-qa", "data-component"]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-qa="save" data-component="SaveButton">Save</button>
+  <button data-component="CancelButton">Cancel</button>
+</body>
+```
+
+#### Elements shown in UI
+
+The Save button has both attributes, so `data-qa`, listed first, identifies it. The Cancel button has only `data-component`, so that identifies it instead:
+
+```
+[data-qa="save"]
+[data-component="CancelButton"]
+```
+
+---
+
+### Identify elements by their `aria-label`
+
+Significant attributes aren't limited to `data-*` attributes; any HTML attribute qualifies, including semantic ones like `aria-label`. Icon-only controls often carry no test attribute, so listing `aria-label` gives them a readable identity in reports instead of a generated selector.
+
+This does double duty. Automated accessibility tools confirm only that a control _has_ an accessible name, not that the name is clear, so `aria-label="button"` passes the same check as `aria-label="Close dialog"`. Because UI Coverage lists every interactive element, identifying elements by `aria-label` turns the report into an inventory of your label text, where a person can catch a vague label that passes automated checks but wouldn't help someone relying on it.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "significantAttributes": ["aria-label"]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button aria-label="Close dialog"><i class="icon-x"></i></button>
+  <button aria-label="button"><i class="icon-x"></i></button>
+</body>
+```
+
+#### Elements shown in UI
+
+Each button is listed by its label, where the vague second one stands out:
+
+```
+[aria-label="Close dialog"]
+[aria-label="button"]
+```
+
+Because the label text becomes the identifier, `aria-label` values that are localized or include dynamic content, such as an unread count, change between snapshots and split one element into several. Choose it when the labels you want to track are stable.
+
+---
+
+### Promote a default attribute
+
+Both defaults are present, and by default `data-cy` would win. Listing `data-qa` moves it above every default, so it identifies the element instead.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "significantAttributes": ["data-qa"]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-cy="widget-4172" data-qa="save-button">Save</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[data-qa="save-button"]
+```
+
+---
+
+### Deduplicate repeated elements by a shared attribute
+
+Elements that share the same identifying attribute and value are recognized as instances of the same control and [grouped together](/ui-coverage/core-concepts/element-grouping) in reports. Here, every product card tags its button with the same `data-analytics-id`, so the report shows one entry instead of three, and an interaction with any card's button counts the whole group as tested.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "significantAttributes": ["data-analytics-id"]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button data-analytics-id="add-to-cart" id="cart-btn-1">Add</button>
+  <button data-analytics-id="add-to-cart" id="cart-btn-2">Add</button>
+  <button data-analytics-id="add-to-cart" id="cart-btn-3">Add</button>
+</body>
+```
+
+#### Elements shown in UI
+
+```
+[data-analytics-id="add-to-cart"] (3 instances)
+```
+
+:::tip
+
+After saving configuration changes, regenerate a recent run to preview the effect of your rules without rerunning your tests. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for how to regenerate a report.
+
+:::
+
+## See also
+
+- [Element Identification](/ui-coverage/core-concepts/element-identification): how elements are identified across snapshots.
+- [`attributeFilters`](/ui-coverage/configuration/attributefilters): stop dynamic or generated attribute values from identifying elements.
+- [`elements`](/ui-coverage/configuration/elements): rename a single element or stabilize its identity with a selector.
+- [`elementGroups`](/ui-coverage/configuration/elementgroups): combine related elements into one group by selector.
+- [Configuration overview](/ui-coverage/configuration/overview): where to set configuration and regenerate reports.
+- [UI Coverage FAQ](/ui-coverage/faq): common questions and troubleshooting.

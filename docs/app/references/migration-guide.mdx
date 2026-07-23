@@ -1,6 +1,6 @@
 ---
-title: 'Migration Guide | Cypress Documentation'
-description: 'A guide to help you migrate to the latest version of Cypress.'
+title: 'Migration guide in Cypress'
+description: 'A guide to help you upgrade to the latest version of Cypress.'
 sidebar_label: 'Migration Guide'
 ---
 
@@ -9,6 +9,13 @@ sidebar_label: 'Migration Guide'
 # Migration Guide
 
 ## Migrating away from Cypress.env()
+
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Migrate off Cypress.env() with your AI assistant"
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-away-from-cypress-env.md, then migrate this project off Cypress.env() by working through these steps:\n\n1. Check my Cypress version. cy.env() and Cypress.expose() require Cypress 15.10.0 or newer, so check my installed version first: if it's on an older 15.x release, detect my package manager and update the cypress dependency to the latest 15.x; if it's below Cypress 15, stop and tell me, since majors should be upgraded one at a time first.\n\n2. Classify each value. Find every Cypress.env() usage and classify each value as sensitive or public.\n\n3. Migrate the values. Migrate sensitive reads to cy.env() and public values to Cypress.expose() with a top-level expose block in my Cypress config. Check for --env CLI flags and plugins that rely on Cypress.env(), and show me the proposed changes before applying them.\n\n4. Lock it down and verify. Once every Cypress.env() call is gone, add allowCypressEnv: false to my config and run my Cypress tests to confirm nothing broke.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
 
 Starting with Cypress 15.10.0, `Cypress.env()` has been deprecated and will be removed in a future major version. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
 
@@ -288,6 +295,38 @@ Update to version 4.0.0+ of `@cypress/code-coverage` and follow its [migration g
 
 Update to version 6.0.0+ of `@cypress/grep` and follow its [migration guide](https://github.com/cypress-io/cypress/tree/develop/npm/grep#migration) to move from environment variables to `--expose` CLI flags and `expose` config.
 
+##### Community plugins
+
+Many community plugins have already adopted the new API. Update to at least the version listed below to stop the `Cypress.env()` deprecation warning, and make the config change noted, if any.
+
+| Plugin                                                                                                               | Version | Config changes                                                                           |
+| -------------------------------------------------------------------------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------- |
+| [@bahmutov/cy-api](https://github.com/bahmutov/cy-api)                                                               | 2.3.0+  | Move options from `env` to `expose`                                                      |
+| [@chromatic-com/cypress](https://github.com/chromaui/chromatic-e2e)                                                  | 0.12.5+ | Move options from `env` to `expose`; requires Cypress 15.10+                             |
+| [@frsource/cypress-plugin-visual-regression-diff](https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff) | 4.1.0+  | Move options from `env` to `expose`                                                      |
+| [@percy/cypress](https://github.com/percy/percy-cypress)                                                             | 3.1.8+  | Move `PERCY_*` values from `env` to `expose` (unexposed still warns)                     |
+| [cypress-data-session](https://github.com/bahmutov/cypress-data-session)                                             | 3.0.0+  | Move options from `env` to `expose`; requires Cypress 15.10+                             |
+| [cypress-fail-fast](https://github.com/javierbrea/cypress-fail-fast)                                                 | 8.0.0+  | Move options from `env` to `expose`; renamed (`FAIL_FAST_STRATEGY` → `failFastStrategy`) |
+| [cypress-firebase](https://github.com/prescottprue/cypress-firebase)                                                 | 4.4.0+  | Set `allowCypressEnv: false` to disable its `Cypress.env()` fallback                     |
+| [cypress-image-diff-js](https://github.com/uktrade/cypress-image-diff)                                               | 2.7.0+  | None                                                                                     |
+| [cypress-localstorage-commands](https://github.com/javierbrea/cypress-localstorage-commands)                         | 2.3.0+  | None                                                                                     |
+| [cypress-maildev](https://github.com/Clebiez/cypress-maildev)                                                        | 2.0.0+  | Move `MAILDEV_*` values from `env` to `expose`                                           |
+| [cypress-mailosaur](https://github.com/mailosaur/cypress-mailosaur)                                                  | 4.0.0+  | None                                                                                     |
+| [cypress-mailpit](https://github.com/pushpak1300/cypress-mailpit)                                                    | 2.0.0+  | Move `MAILPIT_URL` from `env` to `expose`; keep credentials in `env`                     |
+| [cypress-mongodb](https://github.com/Zaista/cypress-mongodb)                                                         | 7.0.0+  | None                                                                                     |
+| [cypress-network-idle](https://github.com/bahmutov/cypress-network-idle)                                             | 2.0.1+  | None; requires Cypress 15.10+                                                            |
+| [cypress-ntlm-auth](https://github.com/bjowes/cypress-ntlm-auth)                                                     | 4.2.4+  | None                                                                                     |
+| [cypress-plugin-api](https://github.com/filiphric/cypress-plugin-api)                                                | 2.12.0+ | Move options from `env` to `expose` (unexposed options still warn)                       |
+| [cypress-plugin-grep-boxes](https://github.com/dennisbergevin/cypress-plugin-grep-boxes)                             | 3.0.0+  | Move options from `env` to `expose`                                                      |
+| [cypress-plugin-last-failed](https://github.com/dennisbergevin/cypress-plugin-last-failed)                           | 3.0.0+  | Requires Cypress 15.10+; also update `@cypress/grep` to 6.0.0+                           |
+| [cypress-plugin-xhr-toggle](https://github.com/filiphric/cypress-plugin-xhr-toggle)                                  | 1.3.0+  | Move `hideXhr` from `env` to `expose` (unexposed still warns)                            |
+| [cypress-runner-themes](https://github.com/dingraham/cypress-runner-themes)                                          | 1.1.0+  | Move `theme` from `env` to `expose` (unexposed still warns)                              |
+| [cypress-visual-regression](https://github.com/cypress-visual-regression/cypress-visual-regression)                  | 6.0.0+  | Move options from `env` to `expose`                                                      |
+| [cypress-voice-plugin](https://github.com/dennisbergevin/cypress-voice-plugin)                                       | 2.0.0+  | Move options from `env` to `expose`                                                      |
+| [cypress-watch-and-reload](https://github.com/bahmutov/cypress-watch-and-reload)                                     | 2.1.0+  | Requires Cypress 15.11+                                                                  |
+
+If a plugin you depend on isn't listed here, search its shipped code for `Cypress.env()` to check whether it has migrated.
+
 ### Lock it down with `allowCypressEnv: false`
 
 Once you've migrated all `Cypress.env()` invocations to either `cy.env()` or `Cypress.expose()`, you should set `allowCypressEnv: false` in your Cypress configuration.
@@ -325,6 +364,13 @@ When `allowCypressEnv` is set to `false`:
 
 ## Migrating to Cypress 15.0
 
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Upgrade to Cypress 15 with your AI assistant"
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-to-cypress-15-0.md, then upgrade this project from Cypress 14 to 15 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 14.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in that section (Node.js 20, 22, or 24+, a supported Linux distribution, and webpack 5 / Vite 5 / Angular 18+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency.\n\n4. Fix breaking changes. Fix every breaking change in that section that affects my code and config.\n\n5. Verify. Run npx cypress verify and my Cypress tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
+
 This guide details the code changes needed to migrate to Cypress
 version 15.
 [See the full changelog for version v15.0](/app/references/changelog#15-0-0).
@@ -351,6 +397,22 @@ cy.exec('rake db:seed').its('code').should('eq', 0)
 cy.exec('rake db:seed').its('exitCode').should('eq', 0)
 ```
 
+### cy.stub 3-argument signature removed
+
+The deprecated 3 argument signature of [`cy.stub()`](/api/commands/stub), `cy.stub(object, name, fn)`, is no longer supported. Use `cy.stub(object, name).callsFake(fn)` instead.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+cy.stub(user, 'getName', () => 'Jane')
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+cy.stub(user, 'getName').callsFake(() => 'Jane')
+```
+
 ### Unsupported Linux Distributions
 
 Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.31`.
@@ -374,9 +436,7 @@ Cypress is no longer supporting Webpack `4` as it is no longer maintained by the
 
 If you haven't been able to migrate away from Webpack `4` or Webpack Dev Server `4` and still need to be able to run your component tests with Webpack `4` or Webpack Dev Server `4`, you can install the following packages independently:
 
-```sh
-npm install --save-dev @cypress/webpack-dev-server@4
-```
+<PackageManagerTabs install="@cypress/webpack-dev-server@4" dev />
 
 and configure the dev server within your `cypress.config.js` or `cypress.config.ts` file:
 
@@ -403,9 +463,7 @@ Note that this package version is deprecated and no longer supported by Cypress 
 
 If you haven't been able to migrate away from Webpack `4`, need custom end-to-end spec file preprocessing, are already using `@cypress/webpack-preprocessor` as a standalone package, and still need to be able to run your end-to-end tests with Webpack `4`, you can install the following package independently:
 
-```sh
-npm install --save-dev @cypress/webpack-preprocessor@6
-```
+<PackageManagerTabs install="@cypress/webpack-preprocessor@6" dev />
 
 and configure the preprocessor within your `cypress.config.js` or `cypress.config.ts` file:
 
@@ -458,6 +516,16 @@ module.exports = (on) => {
 }
 ```
 
+### Vite `4` is no longer supported
+
+`@cypress/vite-dev-server` no longer supports Vite `4` for component testing. The minimum supported Vite version is now `5`. Review the [Vite migration guide](https://vite.dev/guide/migration) for any changes needed in your own Vite configuration when upgrading.
+
+### `@cypress/vite-dev-server` is now ESM-only
+
+`@cypress/vite-dev-server`, used for Vite-based component testing, is now an ESM-only package and can no longer be used from a CommonJS context.
+
+If your Cypress configuration is CommonJS (for example a `cypress.config.cjs`, or a `cypress.config.js` using `require()` and `module.exports` without `"type": "module"` in your `package.json`), move it to an ESM context: convert the config to use `import`/`export default` (a `cypress.config.mjs`, or set `"type": "module"` in your `package.json`), or use a TypeScript config (`cypress.config.ts`).
+
 ### Angular `17` CT no longer supported
 
 With [LTS end](https://angular.dev/reference/releases#actively-supported-versions) for Angular 17, the minimum required Angular version for component testing is now `18.0.0`.
@@ -468,9 +536,7 @@ If you haven't been able to migrate away from an older Angular version and still
 
 Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v18.0.0+.
 
-```sh
-npm install --save-dev @cypress/angular@3
-```
+<PackageManagerTabs install="@cypress/angular@3" dev />
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
@@ -486,10 +552,18 @@ import { mount } from `cypress/angular`
 import { mount } from `@cypress/angular`
 ```
 
+### `@cypress/angular` requires zone.js `0.14.0+`
+
+`@cypress/angular` now requires a minimum [zone.js](https://www.npmjs.com/package/zone.js) version of `0.14.0`. If your project uses Angular component testing and resolves a `zone.js` version below `0.14.0`, update it:
+
+```sh
+npm install --save-dev zone.js@^0.14.0
+```
+
 ### Selector Playground API changes
 
 The `Cypress.SelectorPlayground` API has been renamed to
-[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api). Additionally, the `onElement` function has been removed as an option to the `defaults` method.
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api). Additionally, the `getSelector` method has been removed, and the `onElement` function has been removed as an option to the `defaults` method.
 
 This change was made in order to reflect its use in features beyond just the Selector Playground - like Cypress Studio.
 
@@ -513,6 +587,13 @@ Cypress.ElementSelector.defaults({
 ```
 
 ## Migrating to Cypress 14.0
+
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Upgrade to Cypress 14 with your AI assistant"
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-to-cypress-14-0.md, then upgrade this project from Cypress 13 to 14 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 13.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in that section (Node.js 18+, macOS 11+, a supported Linux distribution, and, if I use component testing, that my framework and bundler versions are still supported) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency.\n\n4. Fix breaking changes. Fix every breaking change in that section that affects my code and config.\n\n5. Verify. Run npx cypress verify and my Cypress tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
 
 This guide details the code changes needed to migrate to Cypress
 version 14.
@@ -607,12 +688,34 @@ and issue any newly necessary `cy.origin()` commands.
 
 :::
 
+Additionally, the `experimentalSkipDomainInjection` configuration option has been removed. Its behavior (not injecting `document.domain`) is now the default. Remove it from your configuration. If you still need the legacy `document.domain` injection behavior, set [`injectDocumentDomain`](/app/references/configuration#injectDocumentDomain) to `true` instead, keeping in mind the deprecation warnings above.
+
 ### Deprecation of `resourceType` on `cy.intercept`
 
 The `resourceType` option on [`cy.intercept`](/api/commands/intercept) has been deprecated in Cypress 14.0.0. We anticipate the types of the `resourceType` to change in the future or be completely removed
 from the API.
 
 Our intention is to replace essential functionality dependent on the `resourceType` within Cypress in a future version (like [hiding network logs that are not fetch/xhr](/api/commands/intercept#Disabling-logs-for-a-request)). If you're using `resourceType` in your tests, please leave feedback on which `resourceType` values are important to you in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
+
+### `experimentalFetchPolyfill` removed
+
+The `experimentalFetchPolyfill` configuration option, deprecated since Cypress [6.0.0](/app/references/changelog#6-0-0), has been removed. Remove it from your configuration and use [`cy.intercept()`](/api/commands/intercept) to handle `fetch` requests.
+
+### `before:browser:launch` browser arguments
+
+The second argument of the [`before:browser:launch`](/api/node-events/browser-launch-api) node event is no longer yielded as an array of browser arguments. This behavior had been deprecated since Cypress [4.0.0](/app/references/changelog#4-0-0). Update any handler that treats the second argument as an array to use the `launchOptions` object (for example, `launchOptions.args`) instead.
+
+### `open-ct` and `run-ct` commands removed
+
+The `cypress open-ct` and `cypress run-ct` CLI commands, deprecated since Cypress [10.0](#Migrating-to-Cypress-100), have been removed. Update any npm scripts or CI jobs to use [`cypress open --component`](/app/references/command-line#cypress-open) or [`cypress run --component`](/app/references/command-line#cypress-run) respectively.
+
+### Undocumented `Cypress.backend` methods removed
+
+The undocumented `Cypress.backend('firefox:force:gc')` and `Cypress.backend('log:memory:pressure')` methods have been removed. There is no replacement; remove any calls to them.
+
+### Fetch from `about:blank` in Electron no longer supported
+
+It is no longer possible to make a `fetch` or `XMLHttpRequest` request from the `about:blank` page in Electron (for example, `cy.window().then((win) => win.fetch('<some-url>'))` before any navigation). Use [`cy.request()`](/api/commands/request) instead, or perform an initial navigation with [`cy.visit()`](/api/commands/visit) first.
 
 ### CT Just in Time Compile changes
 
@@ -642,6 +745,10 @@ If you would like to disable JIT compilation, you can do so by setting [`justInT
 
 For users with the existing `experimentalJustInTimeCompile` flag set, you can remove this flag from your configuration.
 
+### `webpack-dev-server` v3 no longer supported
+
+`@cypress/webpack-dev-server` no longer supports `webpack-dev-server` version 3, and now ships with `webpack-dev-server` version 5 by default. If you are still using `webpack` version 4, install `webpack-dev-server` version 4 alongside Cypress.
+
 ### React `<18` CT no longer supported
 
 With [LTS ending](https://github.com/reactjs/react.dev/issues/1745#issuecomment-466767389) for React 16 and 17 several years ago, the minimum required React version for component testing is now `18.0.0`.
@@ -668,9 +775,7 @@ If you haven't been able to migrate away from an older React version and still n
 
 Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to React v18+.
 
-```sh
-npm install --save-dev @cypress/react@8
-```
+<PackageManagerTabs install="@cypress/react@8" dev />
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
@@ -685,6 +790,10 @@ import { mount } from 'cypress/react'
 ```ts
 import { mount } from '@cypress/react'
 ```
+
+### Next.js `<15` CT no longer supported
+
+Component testing no longer supports Next.js versions 10, 11, 12, and 13. The minimum supported Next.js version is now `15.0.4`. Versions `15.0.0` - `15.0.3` depend on the React 19 Release Candidate and are not officially supported by Cypress, but should still work.
 
 ### Angular `<17.2.0` CT no longer supported
 
@@ -712,9 +821,7 @@ If you haven't been able to migrate away from an older Angular version and still
 
 Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v17.2.0+.
 
-```sh
-npm install --save-dev @cypress/angular@2
-```
+<PackageManagerTabs install="@cypress/angular@2" dev />
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
@@ -740,9 +847,7 @@ If you haven't been able to migrate away from Vue 2 and still need that test har
 
 Note that this test harness is deprecated and no longer supported by Cypress. This package is intended to serve as a temporary workaround to migrate your project to Vue 3. The Cypress launchpad will warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
 
-```sh
-npm install --save-dev @cypress/vue2
-```
+<PackageManagerTabs install="@cypress/vue2" dev />
 
 Inside your support file (ex: `./cypress/support/component.(js|ts)`), or wherever your mount function is imported, make the following update to add `@`.
 
@@ -757,6 +862,16 @@ import { mount } from 'cypress/vue2'
 ```ts
 import { mount } from '@cypress/vue2'
 ```
+
+### Nuxt 2 CT no longer supported
+
+[Nuxt 2 reached end-of-life on June 30th, 2024](https://v2.nuxt.com/) and is built on Vue 2, which is also end-of-life. Component testing a Nuxt 2 project relied on the Vue 2 harness. With Cypress 14 no longer shipping that harness with the binary, Nuxt 2 apps can no longer be component tested out of the box.
+
+For component testing a Nuxt 3+ app (which is Vue 3 + Vite), see [Using Cypress with Nuxt](/app/component-testing/vue/overview#Using-Cypress-with-Nuxt).
+
+#### To continue using Nuxt 2
+
+If you haven't been able to migrate away from Nuxt 2, the underlying Vue 2 harness can still be installed independently via the [@cypress/vue2](https://www.npmjs.com/package/@cypress/vue2) package, as described in [To continue using Vue 2](#Vue-2-CT-no-longer-supported). Note that this package is deprecated and no longer supported by Cypress, and is intended only as a temporary workaround while you migrate to Nuxt 3+.
 
 ### Create React App CT no longer supported
 
@@ -832,9 +947,7 @@ With Cypress 14, Cypress no longer ships the Svelte 3 and 4 component testing ha
 
 However, if you have not been able to upgrade Svelte and still need the Cypress Svelte 3 and 4 test harness, it can be installed independently via version 2.x.x of the [@cypress/svelte](https://www.npmjs.com/package/@cypress/svelte) package.
 
-```sh
-npm install --save-dev @cypress/svelte@2
-```
+<PackageManagerTabs install="@cypress/svelte@2" dev />
 
 Note that this version of the test harness is deprecated and no longer actively supported by Cypress and is intended to serve as a temporary work around until you are able to migrate your project to Svelte 5+. The Cypress launchpad will also warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
 
@@ -863,9 +976,22 @@ it('renders', () => {
 
 ## Migrating to Cypress 13.0
 
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Upgrade to Cypress 13 with your AI assistant"
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-to-cypress-13-0.md, then upgrade this project from Cypress 12 to 13 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 12.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my Node.js version is 16+ (18+ recommended) and, if I use TypeScript, that it's 4.x or newer, and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency.\n\n4. Fix breaking changes. Fix every breaking change in that section that affects my code and config, calling out behavior changes like video recording being off by default.\n\n5. Verify. Run npx cypress verify and my Cypress tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
+
 This guide details the changes and how to change your code to migrate to Cypress
 version 13.
 [See the full changelog for version v13.0](/app/references/changelog#13-0-0).
+
+### Node.js 16+ support
+
+Node.js 14 support has been removed and Node.js 16 support has been deprecated. Node.js 16 may continue to work with Cypress `v13`, but is not supported moving forward, to closer coincide with [Node.js 16's end-of-life](https://nodejs.org/en/blog/announcements/nodejs16-eol) schedule. It is recommended that users update to at least Node.js 18.
+
+Additionally, the minimum supported TypeScript version is `4.x`.
 
 ### Cypress Cloud Test Replay
 
@@ -873,7 +999,7 @@ version 13.
 
 You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
-With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/references/command-line#cypress-run) command.
+With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. This has two side effects: recorded video will not show the Runner, and a screenshot taken with `capture: 'runner'` is captured as if `capture: 'viewport'` were passed. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/references/command-line#cypress-run) command.
 
 You can [opt-out](/cloud/features/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
 
@@ -916,6 +1042,10 @@ You can enable this with the `videoCompression` [configuration](/app/references/
 
 :::
 
+### `nodeVersion` configuration option removed
+
+The deprecated `nodeVersion` configuration option has been removed. Remove it from your configuration; Cypress now always uses the Node.js version it was launched with to execute your [setupNodeEvents](/app/references/configuration#setupNodeEvents).
+
 ### `cy.readFile()` is now a query command
 
 In Cypress `v13`, the [`.readFile()`](/api/commands/readfile) command is now a query.
@@ -945,7 +1075,18 @@ than `Cypress.Commands.overwrite('readFile', () => { ... })`. For more details
 on overwriting queries, see the
 [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
 
+### Module API, `after:run`, and `after:spec` changes
+
+The properties and values returned by the [Module API](/app/references/module-api) and included in the arguments of handlers for the [`after:run`](/api/node-events/after-run-api) and [`after:spec`](/api/node-events/after-spec-api) events have been changed to be more consistent. If you use the Module API (the return value of `cypress.run()`) or read the result arguments in `after:run` or `after:spec` handlers within [setupNodeEvents](/app/references/configuration#setupNodeEvents), review that code against the linked API documentation and update any property access to the new result shape.
+
 ## Migrating to Cypress 12.0
+
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Upgrade to Cypress 12 with your AI assistant"
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-to-cypress-12-0.md, then upgrade this project from Cypress 11 to 12 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 11.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my Node.js version is 14, 16, or 18+ and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency.\n\n4. Fix breaking changes. Fix every breaking change in that section that affects my code and config, paying special attention to test isolation being enabled by default: audit my tests for state shared between tests and fix them or configure testIsolation as that section describes.\n\n5. Verify. Run npx cypress verify and my Cypress tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 12.0.
@@ -960,6 +1101,12 @@ free of issues in the majority of use cases. With releasing this as GA, the
 [Test Isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled by default.
 
+One exception: using `require` and `import` with a callback supplied to
+[`cy.origin()`](/api/commands/origin) is not enabled by default. To leverage
+external dependencies in `cy.origin()` callbacks, set the
+[`e2e.experimentalOriginDependencies`](/app/references/experiments#End-to-End-Testing)
+configuration option to `true`.
+
 ### Node.js 14+ support
 
 Cypress comes bundled with its own
@@ -967,17 +1114,19 @@ Cypress comes bundled with its own
 However, installing the `cypress` npm package uses the Node.js version installed
 on your system.
 
-Node.js 12 reached its end of life on April 30, 2022.
-[See Node's release schedule](https://github.com/nodejs/Release). This Node.js
-version will no longer be supported when installing Cypress. The minimum Node.js
-version supported to install Cypress is Node.js 14+.
+Node.js 12, 15, and 17 have reached their end of life and are no longer
+supported when installing Cypress.
+[See Node's release schedule](https://github.com/nodejs/Release). Installing
+Cypress now requires Node.js 14, 16, or 18+.
 
 ### Test Isolation
 
 The
 [`testIsolation`](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
-config option is enabled by default. This means Cypress resets the browser
-context _before_ each test by:
+config option is enabled by default. Additionally, the `testIsolation`
+configuration values have changed from `on` or `off` to `true` or `false`. If
+you configured this option while it was experimental, update its value. Test
+isolation means Cypress resets the browser context _before_ each test by:
 
 - clearing the dom state by visiting `about:blank`
 - clearing [cookies](/api/cypress-api/cookies) in all domains
@@ -1204,6 +1353,17 @@ The `Cypress.Cookies.defaults` and `Cypress.Cookies.preserveOnce` APIs been
 removed. Use the [`cy.session()`](/api/commands/session) command to preserve
 cookies (and local and session storage) between tests.
 
+#### Cookie commands now use `hostname` instead of `superdomain`
+
+The cookie commands now use the `hostname` as the domain by default instead of
+the `superdomain`. This change aligns Cypress' cookie rules with the browser
+cookie rules. This may affect what cookies are returned by
+[`cy.getCookie()`](/api/commands/getcookie), what cookies are set with
+[`cy.setCookie()`](/api/commands/setcookie), and the cookies cleared with
+[`cy.clearCookies()`](/api/commands/clearcookies). If your tests depend on
+cookies being shared across subdomains, pass an explicit `domain` option to
+these commands.
+
 If you were using `Cypress.Cookies.preserveOnce` to preserve a specific cookie
 within a single spec, this might look like the following:
 
@@ -1372,6 +1532,16 @@ cy.get('tr')
 +  })
 ```
 
+#### `cy.request()` query string handling
+
+The [`cy.request()`](/api/commands/request) command now uses
+[`querystringify`](https://www.npmjs.com/package/querystringify) to stringify
+and parse the `qs` option. This change aligns with how the
+[`cy.visit()`](/api/commands/visit) command generates urls with query
+parameters. If you pass complex values (like arrays or nested objects) in the
+`qs` option, verify the generated query strings still match what your server
+expects.
+
 #### `Cypress.Commands.overwrite()`
 
 In Cypress 12.0.0, we introduced a new command type, called queries. A query is
@@ -1421,6 +1591,13 @@ name.
 
 ## Migrating to Cypress 11.0
 
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Upgrade to Cypress 11 with your AI assistant"
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-to-cypress-11-0.md, then upgrade this project from Cypress 10 to 11 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 10.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Update Cypress. Detect my package manager and update the cypress dependency.\n\n3. Fix breaking changes. Fix every breaking change in that section that affects my code and config. If I use component testing, update my devServer configuration and any removed mounting APIs (mountHook, unmount, mountCallback) as that section describes.\n\n4. Verify. Run npx cypress verify and my Cypress tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
+
 This guide details the changes and how to change your code to migrate to Cypress
 version 11.0.
 [See the full changelog for version 11.0](/app/references/changelog#11-0-0).
@@ -1430,6 +1607,19 @@ version 11.0.
 As of Cypress 11, Component Testing is now generally available. There are some
 minor breaking changes. Most projects should be able to migrate without any code
 modifications.
+
+#### Repeated `mount` calls
+
+Subsequent `cy.mount()` calls within the same test now remove the previously
+mounted component from the DOM. If a test relies on multiple mounted components
+existing at the same time, combine them into a single mounted component.
+
+#### Vue `mount` return value
+
+`mount` from `cypress/vue` now returns an object with both the `VueWrapper`
+(`wrapper`) and the component instance (`component`), instead of the
+`VueWrapper` itself. Update any code that consumes the yielded value
+accordingly.
 
 #### Changes to Mounting Options
 
@@ -1685,7 +1875,29 @@ export default defineConfig({
 Vite 3+ users could make use of the
 [`mergeConfig`](https://vitejs.dev/guide/api-javascript.html#mergeconfig) API.
 
+### `cy.session()` requires a setup function
+
+[`cy.session()`](/api/commands/session) now requires a `setup` function to be
+provided when a session is created. If you were calling `cy.session()` without
+a setup argument, add one that recreates the session's browser state (for
+example, logging in).
+
+### Cypress Cloud communication verifies certificate authorities
+
+Communication with Cypress Cloud now verifies certificate authorities (CAs) and
+rejects any unauthorized calls. If your network intercepts this traffic with a
+self-signed CA, set the `npm_config_ca`, `npm_config_cafile`, or
+`NODE_EXTRA_CA_CERTS` environment variable so recorded runs can reach Cypress
+Cloud.
+
 ## Migrating to Cypress 10.0
+
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Upgrade to Cypress 10 with your AI assistant"
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-to-cypress-10-0.md, then upgrade this project from Cypress 9 to 10 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 9.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Update Cypress. Detect my package manager and update the cypress dependency.\n\n3. Apply the configuration migration. Apply the configuration migration that section describes: convert cypress.json to a cypress.config file, move the plugins file into setupNodeEvents, rename support files and spec file locations to the new defaults, and update any removed config options or APIs my code uses.\n\n4. Verify. Run npx cypress verify and my Cypress tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
 
 This guide details the changes and how to change your code to migrate to Cypress
 version 10.0.

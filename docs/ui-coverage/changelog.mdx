@@ -1,6 +1,6 @@
 ---
-title: 'Changelog | Cypress UI Coverage'
-description: 'Stay up to date with the latest features, improvements, and bug fixes for UI Coverage.'
+title: 'Changelog: UI Coverage'
+description: 'Track new features, improvements, and bug fixes for Cypress UI Coverage, including configuration options, CI integrations, and Results API updates.'
 sidebar_label: Changelog
 sidebar_position: 200
 ---
@@ -9,105 +9,114 @@ sidebar_position: 200
 
 # Changelog
 
+## Week of May 18, 2026
+
+- **UI Coverage in Enterprise Reporting:** UI Coverage trends are now available in the [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage) area of Cypress Cloud, so you can track coverage scores across all projects and runs and see when they improve or drift over time. See the [Monitor Changes](/ui-coverage/guides/monitor-changes) guide for details.
+
+## Week of Apr 27, 2026
+
+- **UI Coverage in Cypress Cloud MCP:** AI agents can now query UI Coverage for a run through the [Cypress Cloud MCP server](/cloud/integrations/cloud-mcp), using three new tools:
+  - `cypress_get_ui_coverage_report`: Returns a run's overall coverage score, tested and untested element and link counts, and the riskiest views.
+  - `cypress_get_ui_coverage_views`: Browses all of the views in a run beyond the riskiest ones in the report.
+  - `cypress_get_ui_coverage_elements`: Drills down into individual elements, with filtering by tested or untested status and by view.
+
+  The `cypress_get_runs` tool now also reports each run's UI Coverage score. See [working with AI agents](/ui-coverage/work-with-ai-agents) for example prompts and setup.
+
 ## Week of Feb 06, 2026
 
-- We now support fetching UI Coverage results from Buildkite CI with the [Results API](/ui-coverage/results-api).
+- **Buildkite support for the Results API:** You can now fetch UI Coverage results from Buildkite CI using the [Results API](/ui-coverage/results-api).
 
 ## Week of Jan 16, 2026
 
-- We now support fetching UI Coverage results from Bitbucket CI with the [Results API](/ui-coverage/results-api).
+- **Bitbucket support for the Results API:** You can now fetch UI Coverage results from Bitbucket CI using the [Results API](/ui-coverage/results-api).
 
 ## Week of Dec 19, 2025
 
-- The `elementFilters`, `elements`, `elementGroups`, and `allowedInteractionCommands` configuration properties now support an optional `documentScope` field that allows you to scope selectors to specific document hosts (iframes or shadow DOM hosts). This enables you to target elements within nested document contexts without requiring DOM changes. For example, you can filter, identify, group, or restrict interactions for elements within a specific shadow DOM component or iframe by combining a selector with `documentScope`. Multiple document hosts can be chained in the array to target elements within nested documents (e.g., an iframe containing a shadow DOM component). See the [Element Filters](/ui-coverage/configuration/elementfilters), [Elements](/ui-coverage/configuration/elements), [Element Groups](/ui-coverage/configuration/elementgroups), and [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands) documentation for more details and examples.
+- **Document scoping for nested contexts (`documentScope`):** The `elementFilters`, `elements`, `elementGroups`, and `allowedInteractionCommands` configuration properties now accept an optional `documentScope` field that scopes selectors to specific document hosts, such as iframes or shadow DOM hosts. This lets you filter, identify, group, or restrict interactions for elements inside nested document contexts without changing your application's DOM. Chain multiple hosts in the array to target elements within nested documents, such as an iframe that contains a shadow DOM component. See the [Element Filters](/ui-coverage/configuration/elementfilters), [Elements](/ui-coverage/configuration/elements), [Element Groups](/ui-coverage/configuration/elementgroups), and [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands) documentation for details and examples.
 
 ## Week of Dec 12, 2025
 
-- The `profiles` configuration property allows you to use different configuration settings for different runs based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). This enables you to customize UI Coverage behavior for different environments, branches, or test scenarios. See the [Profiles](/ui-coverage/configuration/profiles) guide for more details.
-- All configuration objects now support an optional `comment` property that you can use to provide context and explanations for why certain values are set. This helps make your configuration easier to understand and maintain, especially when working in teams or revisiting configuration after some time.
-- A new guide on [blocking pull requests and setting policies](/ui-coverage/guides/block-pull-requests) is now available. This guide demonstrates how to use the Results API to enforce test coverage standards, compare results against baselines, and automatically block pull requests when coverage thresholds are not met.
+- **Per-run configuration with `profiles`:** The `profiles` configuration property lets you apply different configuration settings to different runs based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). Use it to customize UI Coverage behavior for specific environments, branches, or test scenarios. See the [Profiles](/ui-coverage/configuration/profiles) guide for details.
+- **Inline configuration comments:** All configuration objects now support an optional `comment` property for documenting why a value is set. Comments make your configuration easier to understand and maintain, especially across teams or when revisiting it later.
+- **Guide: block pull requests and set policies:** A new guide on [blocking pull requests and setting policies](/ui-coverage/guides/block-pull-requests) shows how to use the Results API to enforce coverage standards, compare results against baselines, and automatically block pull requests when coverage thresholds are not met.
 
 ## Week of Jun 23, 2025
 
-UI Coverage now supports defining custom commands that will count towards coverage scores, restricting which kinds of interactions are allowed for certain elements, and including assertions in the UI Coverage calculations. See the following new properties for more details:
-
-- [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)
-- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)
+- **Custom interaction commands:** UI Coverage now lets you define custom commands that count toward coverage scores, restrict which kinds of interactions are allowed for certain elements, and include assertions in coverage calculations. See the new configuration properties:
+  - [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)
+  - [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)
 
 ## Week of Jun 02, 2025
 
-- We now support fetching UI Coverage results from Drone CI with the [Results API](/ui-coverage/results-api).
+- **Drone CI support for the Results API:** You can now fetch UI Coverage results from Drone CI using the [Results API](/ui-coverage/results-api).
 
 ## Week of May 26, 2025
 
-- Launched AI-powered Test Generation in Cypress Cloud, to help you quickly add tests for the untested elements detected in UI Coverage reports, in a way that follows your existing practices and conventions. For more details, read [our blog post](https://www.cypress.io/blog/add-your-missing-tests-faster-with-test-generation-in-ui-coverage).
+- **AI-powered Test Generation:** We launched Test Generation in Cypress Cloud to help you quickly add tests for the untested elements found in UI Coverage reports, following your existing practices and conventions. Read about [adding your missing tests faster with Test Generation](https://www.cypress.io/blog/add-your-missing-tests-faster-with-test-generation-in-ui-coverage) for details.
 
 ## Week of May 12, 2025
 
-- We now support fetching UI Coverage results from AWS CodeBuild with the [Results API](/ui-coverage/results-api).
+- **AWS CodeBuild support for the Results API:** You can now fetch UI Coverage results from AWS CodeBuild using the [Results API](/ui-coverage/results-api).
 
-## Week of Apr 01, 2024
+## Week of Apr 14, 2025
 
-- **Shadow DOM and iFrame Support:** UI Coverage now supports Shadow DOM and iFrames for reporting on interactions. Both of these settings are off by default. Please contact your Cypress representative to opt in.
+- **Shadow DOM and iframe support:** UI Coverage can now report on interactions inside Shadow DOM and iframes. Both are off by default. Contact your Cypress representative to opt in.
 
 ## Week of Mar 24, 2025
 
-- UI Coverage results are now included in the [Data Extract API](/cloud/integrations/data-extract-api) so that you can retrieve data over time.
+- **UI Coverage in the Data Extract API:** UI Coverage results are now available through the [Data Extract API](/cloud/integrations/data-extract-api), so you can retrieve and analyze your coverage data over time.
 
-## Week of Jan 15, 2024
+## Week of Jan 15, 2025
 
-- **Branch Review Integration (Beta):** Added UI Coverage comparisons to Branch Review, enabling teams to see how code changes impact test coverage across branches. Available for all Git providers and includes manual run selection for customized comparisons.
+- **Branch Review integration (Beta):** UI Coverage comparisons are now available in Branch Review, so teams can see how code changes affect test coverage across branches. Comparisons work for all Git providers and support manual run selection for customized comparisons.
 
-## Week of Dec 16, 2023
+## Week of Dec 16, 2024
 
-- **URL Handling:** Fixed issues with URLs containing special characters (like parentheses) that could break view generation.
-- **Performance Improvements:** Optimized rendering performance for reports containing large numbers of elements and snapshots.
+- **URL handling:** Fixed issues with URLs containing special characters, such as parentheses, that could break view generation.
+- **Performance improvements:** Optimized rendering performance for reports that contain large numbers of elements and snapshots.
 
 ## Week of Oct 07, 2024
 
-- **Improved Table Grouping:** The default grouping rules have been updated to more accurately identify and group elements in tables.
+- **Improved table grouping:** The default grouping rules now identify and group elements in tables more accurately.
 
 ## Week of Sep 30, 2024
 
-- **Slack Messages:** UI Coverage results results are now included in Slack messages alongside test results. [Learn more about our Slack integration here](/cloud/integrations/slack).
+- **Slack messages:** UI Coverage results now appear in Slack messages alongside test results. See our [Slack integration](/cloud/integrations/slack) for setup details.
 
 ## Week of Sep 23, 2024
 
-- **Improved Link Display Logic:** Links will now more consistently display across the reports, matching defined views more closely.
+- **Improved link display logic:** Links now display more consistently across reports, matching your defined views more closely.
 
 ## Week of Sep 09, 2024
 
-- **Element Tooltips:** We have improved the user experience of UI Coverage by adding tooltips for elements, emphasizing their selectors, making it easier to navigate coverage reports and identify elements.
+- **Element tooltips:** UI Coverage now shows tooltips for elements that emphasize their selectors, making it easier to navigate coverage reports and identify elements.
 
 ## Week of Aug 19, 2024
 
-- **Results API:** We have added the new [Results API](/ui-coverage/results-api) which enables you to programmatically fetch your run's UI Coverage results in a CI environment. This allows you to act the results within CI by allowing you to determine if the results are acceptable or need to be addressed before code changes can merge.
-- **Pull and Merge Request Comments:** UI Coverage results will now appear in [GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab) and [Bitbucket](/cloud/integrations/bitbucket) pull request and merge request comments alongside test results. Integrations can be installed and comments can be enabled in Project Settings.
+- **Results API:** The new [Results API](/ui-coverage/results-api) lets you programmatically fetch a run's UI Coverage results in a CI environment. You can act on the results within CI to determine whether they are acceptable or need to be addressed before code changes can merge.
+- **Pull and merge request comments:** UI Coverage results now appear in [GitHub](/cloud/integrations/github), [GitLab](/cloud/integrations/gitlab), and [Bitbucket](/cloud/integrations/bitbucket) pull request and merge request comments alongside test results. Install integrations and enable comments in Project Settings.
 
 ## Week of Aug 12, 2024
 
-- **Improved attributeFilters Behavior:** When matching against class attributes, the [attributeFilters](/ui-coverage/configuration/attributefilters) configuration option now targets and filters individual class names rather than the entire value of the class attribute.
+- **Improved `attributeFilters` behavior:** When matching against class attributes, the [`attributeFilters`](/ui-coverage/configuration/attributefilters) configuration option now targets and filters individual class names rather than the entire `class` attribute value.
 
 ## Week of Aug 05, 2024
 
-- **View Untested Elements:** You can now quickly access all of the untested elements across all views in the "Untested elements" section.
-  Save time and improve your coverage by testing these areas of your application, or use
-  [elementFilters](/ui-coverage/configuration/elementfilters) in UI Coverage [configuration](/ui-coverage/configuration/overview) to ignore certain elements.
-- **View Tested Elements:** You can now quickly access all of the tested elements across all views in the "Tested elements" section. Identify potential redundant coverage by looking through the elements with the highest numbers of interactions and tests.
+- **View untested elements:** You can now quickly access all untested elements across all views in the "Untested elements" section. Save time and improve your coverage by testing these areas of your application, or use [`elementFilters`](/ui-coverage/configuration/elementfilters) in your UI Coverage [configuration](/ui-coverage/configuration/overview) to ignore certain elements.
+- **View tested elements:** You can now quickly access all tested elements across all views in the "Tested elements" section. Spot potentially redundant coverage by reviewing the elements with the highest numbers of interactions and tests.
 
 ## Week of Jul 22, 2024
 
-- **View Untested Links:** You can now quickly access all of the untested links across all views in the "Untested links" section. Save time and improve your coverage by testing these areas of your application,
-  or use [viewFilters](/ui-coverage/configuration/viewfilters) in UI Coverage [configuration](/ui-coverage/configuration/overview) to ignore certain links.
+- **View untested links:** You can now quickly access all untested links across all views in the "Untested links" section. Save time and improve your coverage by testing these areas of your application, or use [`viewFilters`](/ui-coverage/configuration/viewfilters) in your UI Coverage [configuration](/ui-coverage/configuration/overview) to ignore certain links.
 
 ## Week of Jun 24, 2024
 
-- **View** [**configuration information for each run**](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run) **in the properties tab:** There, you'll find the configuration set for the project at the start of the run. This will help you understand what factors might be driving a score change. This helps distinguish config criteria changes from other factors such as changes to your application, tests, Cypress versions, and more.
+- **View configuration information for each run:** The properties tab now shows the configuration set for the project at the start of the run. This helps you understand what might be driving a score change and distinguishes configuration changes from other factors, such as changes to your application, tests, and Cypress versions. See [viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
 - **Anchor elements considered interactive:** Anchor elements (`a` tags) are now considered interactive even when they do not have an `href` attribute.
 
 ## Week of May 20, 2024
 
-- **Manage Configuration in Project Settings:** Added the ability to configure what should be tested or ignored in your score calculations to ensure your team is capturing what's relevant to your testing strategy. This feature allows owners and admins to easily update and manage settings using an editor within Project Settings.
+- **Manage configuration in Project Settings:** Owners and admins can now configure what should be tested or ignored in score calculations using an editor within Project Settings, so your team captures what's relevant to your testing strategy:
   - `elementFilters`: Exclude specific elements by CSS selector.
   - `views`: Define URL patterns for grouping in the UI.
   - `viewFilters`: Exclude groups of URLs from reports.
@@ -117,17 +126,17 @@ UI Coverage now supports defining custom commands that will count towards covera
 
 ## Week of Mar 25, 2024
 
-- **Project-Level Configuration Options:** UI Coverage now supports project-level configuration, enabling users to customize UI Coverage settings without updating their HTML. Users can exclude specific URLs and elements by selector and group elements to simplify coverage analysis. For configuration assistance, contact your Account Executive.
+- **Project-level configuration options:** UI Coverage now supports project-level configuration, so you can customize UI Coverage settings without updating your HTML. Exclude specific URLs and elements by selector, and group elements to simplify coverage analysis. For configuration assistance, contact your Account Executive.
 
 ## Week of Mar 04, 2024
 
-- **Element Interaction Details:** UI Coverage now provides detailed insights into the testing status of every interactive element, including interaction types, frequency, and locations within the UI. A new tracking system shows where each element has been identified and tested, and link details indicate visit frequency.
+- **Element interaction details:** UI Coverage now provides detailed insights into the testing status of every interactive element, including interaction types, frequency, and location within the UI. A new tracking system shows where each element has been identified and tested, and link details indicate visit frequency.
 
 ## Week of Feb 26, 2024
 
-- **Element Grouping Improvements:** Introduced "cascade" behavior for the `data-cy-ui-group` attribute, which now allows users to place the attribute on a wrapper or parent element, so that it pass grouping values to child interactive elements.
-- **Text Filter:** Text filtering has been added to UI Coverage reports, allowing users to filter the "Views" list by name for easy searching.
+- **Element grouping improvements:** The `data-cy-ui-group` attribute now supports "cascade" behavior, so you can place it on a wrapper or parent element to pass grouping values down to child interactive elements.
+- **Text filter:** You can now filter the "Views" list by name, making it easier to search UI Coverage reports.
 
 ## Week of Dec 31, 2023
 
-- **URL Grouping:** UI Coverage reports now intelligently group repeated URLs to reduce duplicate Views. This update simplifies reports, making it easier to identify and prioritize issues by minimizing duplicate Views, resulting in a more polished and user-friendly experience.
+- **URL grouping:** UI Coverage reports now intelligently group repeated URLs to reduce duplicate views. This simplifies reports and makes it easier to identify and prioritize issues.

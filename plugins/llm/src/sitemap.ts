@@ -2,9 +2,21 @@ import fs from 'fs';
 import path from 'path';
 import { toPosixPath } from './utils';
 
-export function writeSitemap(rootUrl: string, distRoot: string) {
-    // Walk all files under /llm, write all to a `sitemap-llm.xml` file. Also include `llms.txt`
-    const llmFiles = walkDir(distRoot, path.join(distRoot, 'llm'));
+export function writeSitemap(
+    rootUrl: string,
+    distRoot: string,
+    fragmentDirs: ReadonlySet<string> = new Set(),
+) {
+    // Walk all files under /llm, write all to a `sitemap-llm.xml` file. Also include `llms.txt`.
+    // Files in `fragmentDirs` (per-h2 section folders) are excluded to keep the sitemap page-level.
+    const markdownPrefix = 'llm/markdown/';
+    const llmFiles = walkDir(distRoot, path.join(distRoot, 'llm')).filter((file) => {
+        if (!file.startsWith(markdownPrefix)) {
+            return true;
+        }
+        const parentDir = path.posix.dirname(file.slice(markdownPrefix.length));
+        return !fragmentDirs.has(parentDir);
+    });
     llmFiles.push(toPosixPath(path.relative(distRoot, path.join(distRoot, 'llms.txt'))));
     const llmSitemapUrls = llmFiles.map(file => `<url><loc>${rootUrl}/${file}</loc></url>`).join('\n');
     fs.writeFileSync(

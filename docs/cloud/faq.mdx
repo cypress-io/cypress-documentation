@@ -1,8 +1,8 @@
 ---
-title: 'Frequently Asked Questions (FAQ) | Cypress Cloud'
+title: 'Frequently asked questions (FAQ) in Cypress Cloud'
 description: 'Get answers to common questions about Cypress Cloud.'
-sidebar_position: 200
 sidebar_label: FAQ
+sidebar_position: 200
 ---
 
 <ProductHeading product="cloud" />
@@ -94,7 +94,7 @@ means your [test run data](/cloud/features/recorded-runs#Latest-Runs) is being
 We consider each time the `it()` function is called to be a single test. So you
 will generally have several tests recorded within each spec file and likely
 several spec files within a single run. Only the
-[passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Test-statuses)
+[passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Understanding-test-results)
 are counted. The pending and skipped tests are NOT counted.
 
 You can always see how many tests you've recorded from your organization's
@@ -155,9 +155,11 @@ retention to 30 days and test results to 500 per billing period.
 
 Your usage cycle resets at the start of each billing period, at which point
 your recorded [test result](#What-counts-as-a-test-result) and AI usage counters
-return to zero for the new period. Most plans bill monthly, though some annual
-plans use an annual test results allowance. You can confirm the dates of your
-current period on your organization's
+return to zero for the new period. Org-level
+[`cy.prompt`](/api/commands/prompt) execution counts reset on the same schedule.
+See [cy.prompt](/cloud/faq#cyprompt) for details. Most plans bill monthly,
+though some annual plans use an annual test results allowance. You can confirm
+the dates of your current period on your organization's
 [Billing & Usage](/cloud/account-management/billing-and-usage) page.
 
 ### <Icon name="angle-right" /> How do I reduce my Cypress Cloud usage or lower my bill?
@@ -555,7 +557,7 @@ organization.
 Organization owners and admins can invite users, create teams, configure
 [Cloud AI](/cloud/account-management/organizations#Manage-Cloud-AI), and set up integrations. Only
 owners can rename or delete an organization and configure
-[enterprise SSO](/cloud/account-management/enterprise-sso). See
+[single sign-on (SSO)](/cloud/account-management/enterprise-sso). See
 [user roles](/cloud/account-management/users#User-roles) for the full permissions breakdown.
 
 ### <Icon name="angle-right" /> How do I delete an organization?
@@ -766,8 +768,127 @@ Yes. This displays console logs from within the application under test or your s
 
 ## Cloud AI :sparkles:
 
-### What is Cloud AI?
+### <Icon name="angle-right" /> What is Cloud AI?
 
 Cloud AI is part of Cypress AI: capabilities in Cypress Cloud (such as Test Intent Summaries, Error Summaries, and UI Coverage Test Generation) plus AI in the Cypress App ([Studio AI](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt)) when you're connected to Cloud. These capabilities are continuously being added to improve insights and make it easier to accomplish tasks.
 
-See [AI at Cypress](/cloud/features/cypress-ai-features) for the full picture.
+See [AI at Cypress](/cloud/features/cypress-ai-features) for the full picture. For [`cy.prompt`](/api/commands/prompt) execution limits, billing, and the grace period, see [cy.prompt](#cyprompt) below.
+
+## cy.prompt
+
+### <Icon name="angle-right" /> What is a cy.prompt execution?
+
+Every time a [`cy.prompt`](/api/commands/prompt) command runs, in open mode or run
+mode, that counts as a single cy.prompt execution. Usage is treated consistently
+whether you are authoring and running tests locally or in CI runs.
+
+As an example: if a test suite includes 3 `cy.prompt` commands in the test code and they are each invoked exactly once,
+each full run of that suite consumes 3 `cy.prompt` executions.
+
+Track usage on your organization's
+[Billing & Usage](/cloud/account-management/billing-and-usage#Prompt-executions)
+page. For migrating from `cy.prompt` to regular Cypress code, see the
+[App FAQ](/app/faq#cyprompt).
+
+### <Icon name="angle-right" /> What is AI self-healing?
+
+[`cy.prompt`](/api/commands/prompt) self-heals a step when the element it needs
+has changed since the step last ran, so tests keep passing as the UI evolves. When possible, the step may self-heal from a cache of previously-successful selectors for the element referenced in that spec. If no good selector exists, `cy.prompt` will create a new one using AI to find the appropriate element. See
+[Self-healing](/app/guides/ai-test-generation#Self-healing) in the AI Test
+Generation guide.
+
+### <Icon name="angle-right" /> What are the cy.prompt usage limits?
+
+Beyond your plan's execution allowance, `cy.prompt` has two additional sets of
+limits.
+
+**Per-user hourly limits** apply only to runs that are not recording to Cypress
+Cloud:
+
+- Free accounts: 100 prompts per hour per user, and 500 prompt steps per hour per
+  user.
+- Paid accounts (or on a free trial): 600 prompts per hour per user, and 3,000
+  prompt steps per hour per user.
+
+**Per-prompt limits** apply to every `cy.prompt` call:
+
+- Up to 50 steps per call, to maintain context fidelity and produce reliable,
+  executable commands.
+- System-wide limits apply to the total input length. Very long prompts may be
+  rejected or require splitting. To stay within these limits, keep one action or
+  assertion per step and split long flows into multiple `cy.prompt` calls.
+
+### <Icon name="angle-right" /> My organization shows that it is over the limit during the `cy.prompt` grace period, will I be charged anything for this?
+
+No. There are no charges or limiting behavior related to any usage prior to the
+August 1, 2026 cutoff.
+
+### <Icon name="angle-right" /> What happens at the end of the `cy.prompt` grace period?
+
+Your accumulated usage from before August 1, 2026 will be fully ignored for
+billing purposes. On August 1, 2026, your organization will start with a count
+of zero `cy.prompt` executions consumed. You will see a limit that matches your
+plan and is pro-rated to your contract term.
+
+For example, if you have 6 months remaining on your plan on August 1, 2026, and
+the plan has 2,000 built-in cy.prompt executions for the year, you would have
+1,000 executions available.
+
+### <Icon name="angle-right" /> What happens when I exceed my allowed limit of cy.prompt executions?
+
+You will see warnings in the Cypress Cloud UI as you approach your limit, and
+after you cross it.
+
+On a paid plan:
+
+- Your tests and `cy.prompt` will run normally. You will not be automatically charged for prompt executions over your plan's limit.
+- If you regularly go over your limit, we ask that you update your plan to
+  match your usage.
+
+On a free plan:
+
+- AI self-healing and new prompt creation will be turned off for the rest of
+  your monthly billing cycle.
+- When your plan renews, these features will work again.
+
+### <Icon name="angle-right" /> What happens when AI is disabled for my organization?
+
+Existing prompt commands and steps will continue to execute, but operations that
+require AI to function will fail. This includes most self-healing behavior and
+the creation of new prompt commands.
+
+Organization admins and owners can enable or disable AI capabilities from
+[organization settings](/cloud/account-management/organizations#Manage-Cloud-AI).
+
+### <Icon name="angle-right" /> When does my usage reset?
+
+Usage is tracked similar to test results and resets on the same schedule with the
+start of the billing period for your existing plan. See
+[When does my billing period reset?](#When-does-my-billing-period-reset) and your
+organization's
+[Billing & Usage](/cloud/account-management/billing-and-usage) page for dates.
+
+### <Icon name="angle-right" /> Can I buy increased limits?
+
+You can upgrade your plan to gain increased execution limits, along with the
+other benefits of higher-level plans. See
+[Cypress Cloud plans](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cloud-faq)
+for details.
+
+Reach out to your Cypress representative if you have questions about this, or
+if you are on a plan where a self-serve upgrade is not an option for you.
+
+### <Icon name="angle-right" /> Can I be notified of usage approaching limits?
+
+Yes. On the [Billing & Usage](/cloud/account-management/billing-and-usage#Usage-notification)
+page, you can set thresholds for email alerts based on usage, similar to the
+ones you already get for test management.
+
+### <Icon name="angle-right" /> What limitations does cy.prompt have?
+
+See the [Limitations](/api/commands/prompt#Limitations) section in the
+[`cy.prompt` API reference](/api/commands/prompt) to learn what commands and
+other techniques are not supported.
+
+Review the steps of your generated tests to confirm they are behaving as
+intended, especially if attempting steps that are documented as not supported.

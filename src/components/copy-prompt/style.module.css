@@ -1,0 +1,144 @@
+.copyPrompt {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background-color: var(--ifm-background-surface-color);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: var(--ifm-leading);
+}
+
+.copyPrompt p.title,
+.heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+  margin: 0;
+}
+
+/* Reset the Markdown heading passed as children so it matches the card title
+   instead of a page heading (Docusaurus keeps its anchor + hash link). */
+.heading :is(h1, h2, h3, h4, h5, h6) {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+  scroll-margin-top: 5rem;
+}
+
+.sparkle {
+  color: var(--ifm-color-indigo-500);
+  flex-shrink: 0;
+  /* centers the 16px icon on the title's 24px first line */
+  margin-top: 0.25rem;
+}
+
+/* Text on the left, Copy prompt button on the right. Wraps to two rows
+   (text, then button) when the card is too narrow to fit them side by side. */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.headerText {
+  /* grow to push the button right; min-width: 0 lets long text wrap instead
+     of forcing the button off the card */
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.copyPrompt p.subtext {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--ifm-color-emphasis-700);
+  margin: 0;
+}
+
+/* space the subtext below either title form (the `title` prop or a Markdown
+   heading passed as children) */
+.copyPrompt p.title + p.subtext,
+.heading + p.subtext {
+  margin-top: 0.25rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  /* keep the button from shrinking as the text column grows */
+  flex-shrink: 0;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: var(--ifm-color-indigo-500);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  text-decoration: underline;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--ifm-color-indigo-500);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.chevron {
+  flex-shrink: 0;
+}
+
+.copyPrompt p.promptText {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--ifm-color-gray-100);
+  background-color: var(--ifm-code-background-color);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin: 0.75rem 0 0;
+  /* space below the header row above */
+  /* preserve the prompt's line breaks so numbered steps stay readable */
+  white-space: pre-wrap;
+  /* the docs URL has no natural break points */
+  overflow-wrap: anywhere;
+}
+
+.copyPrompt p.promptTextCollapsed {
+  display: none;
+}
+
+:global([data-theme='dark']) .sparkle,
+:global([data-theme='dark']) .toggle {
+  color: var(--ifm-color-indigo-300);
+}
+
+:global([data-theme='dark']) .toggle:focus-visible {
+  outline-color: var(--ifm-color-indigo-300);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

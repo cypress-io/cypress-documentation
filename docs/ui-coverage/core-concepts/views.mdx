@@ -1,6 +1,6 @@
 ---
-title: 'Views of URLs and mounted components | Cypress UI Coverage'
-description: 'UI Coverage is organized into views, which are the unique URLs across all snapshots from end-to-end tests and the unique mounted components from component tests.'
+title: 'Views: pages and components in UI Coverage'
+description: 'How UI Coverage groups the URLs your tests visit into views: URL pattern rules, per-view coverage scores, and configuration to group or exclude URLs.'
 sidebar_label: Views
 sidebar_position: 100
 ---
@@ -9,43 +9,100 @@ sidebar_position: 100
 
 # Views
 
-UI Coverage organizes unique URLs from snapshots in end-to-end tests and mounted components in component tests into Views. Each View represents a distinct page or state in your application, allowing you to track coverage across different parts of your application.
+A view in UI Coverage is a distinct page or state of your application, created by grouping the URLs your tests visit into URL patterns. In component tests, each spec file is a view.
+
+Views turn a run's raw coverage data into a page-by-page breakdown you can act on. When your report shows `/checkout` at 95% and `/settings/*` at 40%, you can weigh each area's coverage against how critical it is to your users and decide where the next test belongs. Views show you:
+
+- **Where coverage is strong**: views with high scores confirm which areas of your application are well tested.
+- **Where the gaps are**: views with low scores, and untested views discovered from links, show exactly which pages need attention.
+- **How to prioritize**: per-view scores let you focus testing effort on the most critical areas of your application first.
+
+## What makes a view
+
+Views come from two sources, depending on testing type:
+
+- **End-to-end tests**: The unique URLs across all snapshots are consolidated into URL patterns. Each pattern becomes a view.
+- **Component tests**: Each spec file becomes a single view, named by the spec's file path. All components mounted within a spec are grouped into that view.
+
+<DocsImage
+  noBorder
+  src="/img/ui-coverage/core-concepts/view-sources.svg"
+  alt="Diagram of what makes a view in UI Coverage: in end-to-end tests, unique URLs like /users/1, /users/2, /products/42, /products/99, and /cart are consolidated into fewer views such as /users/*, /products/*, and /cart; in component tests, each spec file such as Button.cy.tsx, Modal.cy.tsx, and Nav.cy.tsx becomes one view named by its file path."
+/>
 
 ## How views are created
 
-By default, UI Coverage applies a set of rules to generate a single View for dynamic URLs representing the same page. These rules ensure clarity by grouping similar URLs and reducing noise:
+Every URL visited in an end-to-end run passes through three steps, in order:
 
-- **Search Parameters**: All query parameters are removed (e.g., `/dashboard?tab=overview` becomes `/dashboard`).
-- **Hash Parameters**: Fragment identifiers are removed unless they represent a subpath (e.g., `#/admin`).
-- **Dynamic Segments**: URL segments that differ only by integers or UUIDs are replaced with a wildcard (`*`).
+1. **Filtering**: URLs excluded by your [`viewFilters`](/ui-coverage/configuration/viewfilters) configuration are removed from the report.
+2. **Your patterns**: The remaining URLs are matched against your [`views`](/ui-coverage/configuration/views) configuration patterns, in the order they're listed. The first matching pattern wins.
+3. **Automatic grouping**: Any URLs that didn't match one of your patterns are grouped by the automatic rules below.
 
-### Examples of views
+The automatic rules consolidate the dynamic URLs that represent the same page into a single view. They reduce noise so that your report reflects the structure of your application, not the number of records in your test data:
 
-- `/users/123/profile` and `/users/456/profile` become `/users/*/profile`
-- `/dashboard?tab=overview` and `/dashboard?tab=settings` become `/dashboard`
-- `/app#settings` and `/app#profile` become `/app`
-- `/app#/admin` and `/app#/settings` remain separate Views
+- **Dynamic segments**: Any path segment that is a number or an ID is replaced with a wildcard (`*`). A segment counts as an ID when it is a UUID, a UUID-shaped hexadecimal value (even if not a strictly valid UUID), or a string of 20 or more hexadecimal characters. This applies even when only one URL matches the pattern, so `/orders/123` becomes `/orders/*` on its own.
+- **Query parameters**: Query strings are ignored when grouping, so URLs that differ only by query parameters become a single view, and view names do not include a query string.
+- **Hash routing**: If a URL's hash begins with `#/`, UI Coverage treats your application as using hash-based routing. Each hash route becomes its own view, and the dynamic segment rules also apply within the hash. Hashes that do not begin with `#/` (e.g., `#section-2`) are ignored.
+- **Trailing slashes**: URLs that differ only by a trailing slash are the same view.
+- **Common origins**: When all views share the same protocol, host, and port, view names omit them for readability.
 
-These rules help consolidate similar pages into manageable Views while maintaining specificity where needed.
+### Examples
 
-## Using Views
+| Visited URLs                                                     | Resulting view                                      |
+| ---------------------------------------------------------------- | --------------------------------------------------- |
+| `/users/123/profile`, `/users/456/profile`                       | `/users/*/profile`                                  |
+| `/orders/f14005b2-6e14-4ac2-b41c-4dcd48ee9dbc`                   | `/orders/*`                                         |
+| `/dashboard?tab=overview`, `/dashboard#section-2`, `/dashboard/` | `/dashboard`                                        |
+| `/app#/users/1`, `/app#/users/2`                                 | `/app#/users/*`                                     |
+| `/app#/admin`, `/app#/settings`                                  | `/app#/admin` and `/app#/settings` (separate views) |
+| `/users/alice`, `/users/bob`                                     | `/users/alice` and `/users/bob` (separate views)    |
 
-In the UI Coverage interface, Views are listed along with their coverage scores, providing insights into:
+Note the last example: segments that are dynamic but are not numbers or IDs, like usernames, are **not** grouped automatically. Use the [`views`](/ui-coverage/configuration/views) configuration to group these yourself.
 
-- **Tested Areas**: Identify which parts of your application have sufficient test coverage.
-- **Untested Areas**: Spot pages or components that lack testing and prioritize them.
-- **Coverage Trends**: Track how coverage evolves across Views over time.
-- **Critical Flows**: Focus testing efforts on key user journeys and ensure their completeness.
+## Views in your coverage report
+
+The UI Coverage report lists every view along with:
+
+- **Snapshots**: The number of snapshots captured for the view, which you can browse to see the states your tests produced.
+- **Tested elements**: How many of the view's interactive elements were tested, out of the total found.
+- **Coverage score**: The percentage of the view's interactive elements that were tested.
+
+<DocsImage
+  src="/img/ui-coverage/core-concepts/views-list.png"
+  alt="UI Coverage tab in Cypress Cloud showing a 58% coverage score and a list of views with columns for snapshots, tested elements, and coverage percentage, alongside navigation for untested links, tested elements, and untested elements"
+/>
+
+Your run's overall coverage score uses the same calculation across all included views combined: the total number of tested elements divided by the total number of interactive elements. Each view contributes in proportion to how many elements it contains, and excluding a view removes its elements from the score entirely.
+
+Selecting a view drills into its [elements](/ui-coverage/core-concepts/element-identification) so you can see exactly which ones your tests missed.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-view-drilldown.png"
+  alt="Cypress Cloud screenshot cropping a single view within the cypress-documentation project showing the view's URL, the list of tested and untested elements and a DOM snapshot of the view"
+/>
+
+The report also surfaces **untested views**: pages that were never visited during your run, discovered from [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) found in the pages you did test. These highlight areas of your application with no coverage at all, along with the views that link to them.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-links.png"
+  alt="Cypress Cloud screenshot cropping the untested links section with a list of links that were not interacted with during the test run"
+/>
 
 ## Customizing views
 
-You can tailor how URLs are grouped into Views using configuration options:
+Two configuration properties control how URLs become views. Note that both properties also affect Cypress Accessibility reports.
 
-### View grouping
+| If your report shows                                            | Try this                                                                                                                                                                                                |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Many near-duplicate views, like `/users/alice` and `/users/bob` | Group them with a [`views`](/ui-coverage/configuration/views) pattern.                                                                                                                                  |
+| Third-party, admin, or error pages you don't intend to test     | Exclude them with [`viewFilters`](/ui-coverage/configuration/viewfilters).                                                                                                                              |
+| A page missing from the report entirely                         | The page was never visited during the run. Check [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) for it, and confirm a `viewFilters` rule isn't excluding it unintentionally. |
 
-Define rules for grouping URLs into Views to align with your application's structure:
+### Grouping URLs into views
 
-```json
+The [`views`](/ui-coverage/configuration/views) configuration defines your own URL patterns for grouping, using [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) syntax:
+
+```json title="App Quality Config"
 {
   "views": [
     {
@@ -55,13 +112,13 @@ Define rules for grouping URLs into Views to align with your application's struc
 }
 ```
 
-To learn more about the configuration options, refer to the [Views](/ui-coverage/configuration/views) documentation.
+Patterns with named parameters can also use `groupBy` to split one pattern into multiple views based on a parameter's values, such as one view per document type. See the [views configuration](/ui-coverage/configuration/views) documentation for the full syntax, matching rules, and worked examples.
 
 ### Ignoring views
 
-Exclude irrelevant or low-priority URLs from being tracked as Views:
+The [`viewFilters`](/ui-coverage/configuration/viewfilters) configuration excludes URLs you don't want tracked, such as third-party authentication pages:
 
-```json
+```json title="App Quality Config"
 {
   "viewFilters": [
     {
@@ -72,4 +129,12 @@ Exclude irrelevant or low-priority URLs from being tracked as Views:
 }
 ```
 
-To learn more about the configuration options, refer to the [View Filters](/ui-coverage/configuration/viewfilters) documentation.
+## See also
+
+- [`views` configuration](/ui-coverage/configuration/views) covers the full syntax for grouping URLs into views, including `groupBy`.
+- [`viewFilters` configuration](/ui-coverage/configuration/viewfilters) covers excluding URLs from your reports.
+- [Interactivity](/ui-coverage/core-concepts/interactivity) explains which elements count as interactive, which commands mark them as tested, and how untested links are tracked.
+- [Element identification](/ui-coverage/core-concepts/element-identification) explains how elements are identified within a view across snapshots.
+- The [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps) guide shows how to use views to find untested areas of your application.
+- The [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) guide walks through excluding irrelevant views from your coverage scores.
+- The [UI Coverage FAQ](/ui-coverage/faq) answers common questions about view grouping and missing pages.

@@ -1,7 +1,7 @@
 ---
-sidebar_label: Production monitoring and website crawling
-title: 'Production monitoring | Cypress Accessibility Documentation'
+title: 'Monitor accessibility issues in production'
 description: 'Monitor accessibility issues in production by running scheduled Cypress tests against live environments, capturing dynamic content changes, and generating automated reports for a comprehensive accessibility overview.'
+sidebar_label: Production monitoring
 sidebar_position: 60
 ---
 
@@ -17,30 +17,6 @@ Dynamic or externally controlled content, such as A/B tests or user-generated co
 
 Cypress Accessibility enables you to test dynamic content seamlessly. By visiting a production URL within your Cypress tests and performing minimal UI interactions, you can capture the page's accessibility state in reports. This allows teams to detect accessibility issues introduced outside the regular development lifecycle.
 
-## Example: Automated Sitemap-Based Testing
+## Scan every page from a sitemap
 
-If your project lacks existing Cypress tests, a common approach is to generate test coverage from a sitemap or an array of target URLs. These URLs can be used to perform light interactions and capture accessibility reports. Below is an example of how to automate this process by using a sitemap and scrolling to the footer on each page:
-
-```js
-describe('Accessibility Scan', () => {
-  it('Checks accessibility with the sitemap.xml', () => {
-    cy.request('https://<YOUR_WEBSITE>/sitemap.xml').then((response) => {
-      const xmlString = response.body
-      const parser = new DOMParser()
-      const xmlDoc = parser.parseFromString(xmlString, 'application/xml')
-      const URLs = Array.from(xmlDoc.querySelectorAll('loc')).map(
-        (loc) => loc.textContent
-      )
-      Cypress._.each(URLs, (URL) => {
-        cy.visit(URL)
-        cy.contains('<YOUR_FOOTER_CONTENT>').scrollIntoView()
-        // perform some repeatable actions here that influence accessibility, for example:
-        //  - change from light mode to dark mode
-        //  - modify the viewport size to simulate mobile screens and higher zoom levels
-      })
-    })
-  })
-})
-```
-
-The outcome of this is a first-page-load accessibility report for every URL in the site. Any Cypress UI tests for specific workflows will increase the coverage area automatically to include the states and variations reached during the workflows.
+<SitemapScanExample product="accessibility" />

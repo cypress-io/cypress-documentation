@@ -1,16 +1,25 @@
 ---
-title: 'Attribute Filters | Cypress UI Coverage'
-description: 'The `attributeFilters` configuration property allows users to specify patterns for attributes and their values that should not be used for identifying and grouping elements.'
-sidebar_label: attributeFilters
-sidebar_position: 60
+title: 'attributeFilters: control element identification'
+description: 'Use attributeFilters to stop dynamic, auto-generated, or state-based attributes from splitting one element into many or mis-grouping elements in Cypress UI Coverage reports.'
+sidebar_label: 'Ignore attributes for identification'
+sidebar_position: 80
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# attributeFilters
+# Ignore attributes for identification - `attributeFilters`
 
-UI Coverage [identifies](/ui-coverage/core-concepts/element-identification) and [groups](/ui-coverage/core-concepts/element-grouping) elements based on their attributes and structure in the DOM.
+UI Coverage [identifies](/ui-coverage/core-concepts/element-identification) and [groups](/ui-coverage/core-concepts/element-grouping) elements from their attributes and their position in the DOM. Use `attributeFilters` to keep unstable attributes out of that process so your reports stay accurate.
 
 {' '}
 
 <AttributeFilters />
+
+## See also
+
+- [`significantAttributes`](/ui-coverage/configuration/significantattributes): prioritize the attributes Cypress should prefer as identifiers. This is the complement to filtering out the ones it should ignore.
+- [`elements`](/ui-coverage/configuration/elements): pin a specific element's identity when its attributes change between snapshots.
+- [`elementGroups`](/ui-coverage/configuration/elementgroups): combine related elements into a single group.
+- [Element identification](/ui-coverage/core-concepts/element-identification): how UI Coverage builds an identifier for each element.
+- [Configuration overview](/ui-coverage/configuration/overview): where to set configuration and regenerate reports.
+- [UI Coverage FAQ](/ui-coverage/faq): common questions and troubleshooting.

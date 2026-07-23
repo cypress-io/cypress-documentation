@@ -7,7 +7,7 @@ executors:
   node-executor:
     resource_class: medium+
     docker:
-      - image: cimg/node:22.15.1
+      - image: cimg/node:22.23.1
 
 commands:
   docs-build:
@@ -51,12 +51,46 @@ jobs:
           at: ~/repo
       - run: npm run lint
 
+  unit-tests:
+    <<: *job-defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Search / Algolia unit tests
+          command: npm run test:search
+
   install-and-persist:
     executor:
       name: cypress/default
-      node-version: 22.15.1
+      node-version: 22.23.1
+    resource_class: medium+
     steps:
-      - cypress/install
+      - checkout
+      - restore_cache:
+          keys:
+            - npm-cache-project-{{ checksum "package-lock.json" }}
+      - restore_cache:
+          keys:
+            - cypress-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm ci
+      - run:
+          name: Install Cypress binary
+          command: npx cypress install
+      - save_cache:
+          key: npm-cache-project-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - save_cache:
+          key: cypress-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.cache/Cypress
+      - run:
+          name: Build site for tests
+          command: npm run build
       - persist_to_workspace:
           root: ~/
           paths:
@@ -66,15 +100,15 @@ jobs:
   run-tests-in-parallel:
     executor:
       name: cypress/default
-      node-version: 22.15.1
+      node-version: 22.23.1
     resource_class: large
-    parallelism: 6
+    parallelism: 8
     steps:
       - checkout
       - attach_workspace:
           at: ~/
       - cypress/run-tests:
-          start-command: 'npm run start'
+          start-command: 'npm run serve'
           cypress-command: 'npx wait-on http://localhost:3000 && npx cypress run --parallel --record'
 
   release:
@@ -99,14 +133,16 @@ workflows:
           name: "Lint JS/CSS/Markdown"
           requires:
             - build
+      - unit-tests:
+          name: "Unit Tests (Search/Algolia)"
+          requires:
+            - build
       - install-and-persist:
           name: Install & Persist To Workspace
       - run-tests-in-parallel:
           name: Run Tests in Parallel
           requires:
-            - build
             - Install & Persist To Workspace
-      # Run Algolia scraper only on main.
       - release:
           name: 'Run Algolia scraper'
           requires:

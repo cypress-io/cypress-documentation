@@ -1,8 +1,8 @@
 ---
-title: 'Data Storage and Controls | Cypress Cloud'
+title: 'Data storage and controls in Cypress Cloud'
 description: 'Learn how to mask and control test data that is sent to Cypress Cloud'
-sidebar_position: 80
 sidebar_label: Data Storage and Controls
+sidebar_position: 80
 ---
 
 <ProductHeading product="cloud" />
@@ -11,7 +11,7 @@ sidebar_label: Data Storage and Controls
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - What data is stored in Cypress Cloud and how it is used
 - How to control what data is sent to Cypress Cloud
@@ -188,6 +188,14 @@ Organization admins and owners can enable and disable the AI capabilities for th
   src="/img/faq/questions/cypress-ai-org-setting.png"
   alt="Image showing the Cypress AI organization setting"
 />
+
+:::note Automatic redaction of sensitive fields
+
+When Cypress AI test-authoring tools read your app's DOM, values from sensitive field types are automatically excluded before any data is sent to the AI model. This applies to password fields (`input[type=password]`), credit card fields using standard autocomplete attributes, and hidden inputs (`input[type=hidden]`). The surrounding DOM structure is still used; only the field values are excluded.
+
+For details, see [`cy.prompt` sensitive data handling](/app/guides/ai-test-generation#Sensitive-data-handling) and [Studio AI sensitive data handling](/app/guides/cypress-studio#Sensitive-data-handling).
+
+:::
 
 ## See Also
 

@@ -2,20 +2,22 @@ import React from "react";
 import s from "./style.module.css";
 import { VideoProps } from "./types";
 
-export default function LocalVideo({ src, title, autoPlay = false }: VideoProps) {
+export default function LocalVideo({ src, title, autoPlay = false, poster }: VideoProps) {
   return (
     <div className={s.docsVideo}>
       {autoPlay ? (
-      <video 
-        controls 
+      <video
+        controls
         autoPlay
-        muted 
+        muted
         loop
+        preload="metadata"
+        poster={poster}
       >
         <source src={src} />
       </video>
       ) : (
-        <video controls>
+        <video controls preload="metadata" poster={poster}>
           <source src={src} />
         </video>
       )}

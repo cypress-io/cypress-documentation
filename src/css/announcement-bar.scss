@@ -35,12 +35,12 @@ div[class^='announcementBar'],
 
   a {
     text-decoration: none !important;
-    color: rgb(99 102 241) !important; /* text-indigo-500 */
+    color: rgb(79 70 229) !important; /* text-indigo-600 (a11y contrast on bg-indigo-50) */
     border-bottom: 1px dotted var(--ifm-color-gray-500) !important;
 
     &:hover {
       border-bottom: 1px solid var(--ifm-color-gray-500) !important;
-      border-bottom-color: rgb(99 102 241) !important; /* border-b-indigo-500 */
+      border-bottom-color: rgb(79 70 229) !important; /* border-b-indigo-600 */
     }
   }
 

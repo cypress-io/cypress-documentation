@@ -7,6 +7,8 @@ import AutoCancellationBenefits from '@site/docs/partials/_auto-cancellation-ben
 import Badge from '@site/src/components/badge'
 import Btn from '@site/src/components/button'
 import ComponentOnlyBadge from '@site/src/components/component-only-badge'
+import ComponentTestingErrorStates from '@site/docs/partials/_component-testing-error-states.mdx'
+import CopyPrompt from '@site/src/components/copy-prompt'
 import TestReplayInfo from '@site/docs/partials/_test-replay-info.mdx'
 import CypressConfigFileTabs from '@site/src/components/cypress-config-file-tabs'
 import CypressInstallCommands from '@site/docs/partials/_cypress-install-commands.mdx'
@@ -16,13 +18,13 @@ import CypressEnvVsCypressExpose from '@site/docs/partials/_cy-env-vs-cypress-ex
 import CypressOpenCommands from '@site/docs/partials/_cypress-open-commands.mdx'
 import CypressRunCommands from '@site/docs/partials/_cypress-run-commands.mdx'
 import CypressCommandTabs from '@site/src/components/cypress-command-tabs'
+import PackageManagerTabs from '@site/src/components/package-manager-tabs'
 import DefaultSelectorPriority from '@site/docs/partials/_default-selector-priority.mdx'
 import DocsImage from '@site/src/components/docs-image'
 import DocsVideo from '@site/src/components/docs-video'
 import DocumentDomainWorkaround from '@site/docs/partials/_document-domain-workaround.mdx'
 import E2EOnlyBadge from '@site/src/components/e2e-only-badge'
 import E2EOrCtTabs from '@site/src/components/e2e-or-ct-tabs'
-import ElementFilters from '@site/docs/partials/_elementfilters.mdx'
 import VueSyntaxTabs from '@site/src/components/vue-syntax-tabs'
 import HeaderAssertions from '@site/docs/partials/_header-assertions.mdx'
 import InterceptAliasIndex from '@site/docs/partials/_intercept-alias-index.mdx'
@@ -32,20 +34,31 @@ import HeaderYields from '@site/docs/partials/_header-yields.mdx'
 import Icon from '@site/src/components/icon'
 import ImportMountFunctions from '@site/docs/partials/_import-mount-functions.mdx'
 import IntellisenseCodeCompletion from '@site/docs/partials/_intellisense-code-completion.mdx'
+import InvertedContainsSelection from '@site/docs/partials/_inverted-contains-selection.mdx'
 import ProductHeading from '@site/src/components/product-heading'
 import Profiles from '@site/docs/partials/_profiles.mdx'
-import SignificantAttributes from '@site/docs/partials/_significantattributes.mdx'
+import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
+import SignificantAttributesValidation from '@site/docs/partials/_significantattributes-validation.mdx'
+import SitemapScanExample from '@site/docs/partials/_sitemap-scan-example.mdx'
 import SourceMaps from '@site/docs/partials/_source-maps.mdx'
 import SupportFileConfiguration from '@site/docs/partials/_support-file-configuration.mdx'
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 import ThenShouldAndDifference from '@site/docs/partials/_then-should-and-difference.mdx'
 import WarningSetupNodeEvents from '@site/docs/partials/_warning-setup-node-events.mdx'
-import ViewFilters from '@site/docs/partials/_viewfilters.mdx'
+import ViewFiltersSyntax from '@site/docs/partials/_viewfilters-syntax.mdx'
+import ViewFiltersOptions from '@site/docs/partials/_viewfilters-options.mdx'
+import ViewFiltersMatchingAndValidation from '@site/docs/partials/_viewfilters-matching-and-validation.mdx'
+import ViewFiltersExampleThirdParty from '@site/docs/partials/_viewfilters-example-third-party.mdx'
+import ViewFiltersSharedExamples from '@site/docs/partials/_viewfilters-shared-examples.mdx'
+import ViewFiltersTroubleshootingValidationErrors from '@site/docs/partials/_viewfilters-troubleshooting-validation-errors.mdx'
 import Views from '@site/docs/partials/_views.mdx'
 import LineBreak from '@site/src/components/line-break'
 import OsTabs from '@site/src/components/os-tabs'
 import Logo from '@site/src/components/logo'
+import ScrollableTable from '@site/src/components/scrollable-table'
+import WhatYoullLearn from '@site/src/components/what-youll-learn'
+import CalloutLabel from '@site/src/components/callout-label'
 import AccordionBlock from '@site/src/components/accordion-block'
 import CloudFreePlan from '@site/docs/partials/_cloud_free_plan.mdx'
 import CiProviderCloudSteps from '@site/docs/partials/_ci_provider_cloud_steps.mdx'
@@ -110,6 +123,10 @@ import {
   faListCheck,
   faClipboardCheck,
   faFilter,
+  faChartDiagram,
+  faHexagonNodes,
+  faHexagonNodesBolt,
+  faUniversalAccess,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -166,12 +183,21 @@ library.add(
   faLinkSlash,
   faListCheck,
   faClipboardCheck,
-  faFilter
+  faFilter,
+  faChartDiagram,
+  faHexagonNodes,
+  faHexagonNodesBolt,
+  faUniversalAccess
 )
 
 export default {
   // Re-use the default mapping
   ...MDXComponents,
+  // Make horizontally scrollable tables keyboard-focusable (a11y:
+  // scrollable-region-focusable)
+  table: ScrollableTable,
+  WhatYoullLearn,
+  CalloutLabel,
   AnatomyOfAnError,
   AccessibilityPremiumNote,
   AttributeFilters,
@@ -179,6 +205,8 @@ export default {
   Badge,
   Btn,
   ComponentOnlyBadge,
+  ComponentTestingErrorStates,
+  CopyPrompt,
   CypressConfigFileTabs,
   CypressInstallCommands,
   CypressCacheClearCommands,
@@ -187,13 +215,13 @@ export default {
   CypressOpenCommands,
   CypressRunCommands,
   CypressCommandTabs,
+  PackageManagerTabs,
   DefaultSelectorPriority,
   DocsImage,
   DocsVideo,
   DocumentDomainWorkaround,
   E2EOnlyBadge,
   E2EOrCtTabs,
-  ElementFilters,
   VueSyntaxTabs,
   HeaderAssertions,
   InterceptAliasIndex,
@@ -203,9 +231,12 @@ export default {
   Icon,
   ImportMountFunctions,
   IntellisenseCodeCompletion,
+  InvertedContainsSelection,
   ProductHeading,
   Profiles,
-  SignificantAttributes,
+  RecordKeyEnvVar,
+  SignificantAttributesValidation,
+  SitemapScanExample,
   SourceMaps,
   SupportFileConfiguration,
   Tabs,
@@ -213,7 +244,12 @@ export default {
   TestReplayInfo,
   ThenShouldAndDifference,
   WarningSetupNodeEvents,
-  ViewFilters,
+  ViewFiltersSyntax,
+  ViewFiltersOptions,
+  ViewFiltersMatchingAndValidation,
+  ViewFiltersExampleThirdParty,
+  ViewFiltersSharedExamples,
+  ViewFiltersTroubleshootingValidationErrors,
   Views,
   Logo,
   LineBreak,

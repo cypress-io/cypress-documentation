@@ -1,16 +1,24 @@
 ---
-title: 'Attribute Filters | Cypress Accessibility'
-description: 'The `attributeFilters` configuration property allows users to specify patterns for attributes and their values that should not be used for identifying and grouping elements.'
-sidebar_label: attributeFilters
-sidebar_position: 50
+title: 'attributeFilters: control element identification in Cypress Accessibility'
+description: 'Use attributeFilters to stop dynamic, auto-generated, or state-based attributes from splitting one element into many or mis-grouping violations in Cypress Accessibility reports.'
+sidebar_label: 'Ignore attributes for identification'
+sidebar_position: 80
 ---
 
 <ProductHeading product="accessibility" />
 
-# attributeFilters
+# Ignore attributes for identification - `attributeFilters`
 
-Cypress Accessibility [identifies elements](/ui-coverage/core-concepts/element-identification) based on a combination of attributes and the surrounding DOM structure.
+Cypress Accessibility [identifies elements](/ui-coverage/core-concepts/element-identification) from a combination of their attributes and the surrounding DOM structure. Use `attributeFilters` to keep unstable attributes out of that process so violations are grouped against stable targets.
 
 {' '}
 
 <AttributeFilters />
+
+## See also
+
+- [`significantAttributes`](/accessibility/configuration/significantattributes): prioritize the attributes Cypress should prefer as identifiers. This is the complement to filtering out the ones it should ignore.
+- [Component attributes](/accessibility/configuration/components): an Accessibility-only option (`componentAttributes` and `componentAttributeFilters`) that shapes which attributes appear in stable violation-target selectors.
+- [Element identification](/ui-coverage/core-concepts/element-identification): how elements are identified for both Cypress Accessibility and UI Coverage.
+- [Configuration overview](/accessibility/configuration/overview): where to set configuration and regenerate reports.
+- [Cypress Accessibility FAQ](/accessibility/faq): common questions and troubleshooting.

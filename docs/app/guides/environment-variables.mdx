@@ -1,5 +1,5 @@
 ---
-title: 'Environment Variables & Secrets'
+title: 'Environment variables and secrets in Cypress'
 description: 'Learn how to manage environment variables and secrets in Cypress. Understand when to use cy.env(), when to use Cypress.expose(), and how to safely pass values across environments.'
 sidebar_label: 'Environment Variables & Secrets'
 ---
@@ -125,6 +125,19 @@ The environment variable `CYPRESS_INTERNAL_ENV` is reserved and should not be se
 
 :::
 
+:::note
+
+Some `CYPRESS_`-prefixed variables are consumed by the Cypress CLI and Cypress
+Cloud rather than being treated as test environment variables. Most notably,
+[`CYPRESS_RECORD_KEY`](/app/references/command-line#cypress-run-record-key-lt-record-key-gt)
+and [`CYPRESS_PROJECT_ID`](/cloud/account-management/projects#Identification) are
+read directly from your operating system environment when recording to Cypress
+Cloud. They must be set as OS-level environment variables (as shown above) and
+**cannot** be supplied through `cypress.env.json` or the `env` block of your
+Cypress configuration.
+
+:::
+
 ### 4. `--env` CLI flag
 
 Pass environment variables via the command line. Multiple values must be separated by a comma, not a space. In some shells, like Windows PowerShell, you may need to surround the key/value pair with quotes.
@@ -132,6 +145,18 @@ Pass environment variables via the command line. Multiple values must be separat
 ```shell
 cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
+
+To pass a complex value, such as an object with nested fields, provide it as a
+JSON string. This is also the way to include values that contain commas, spaces,
+or quotes, since those characters would otherwise be interpreted by the shell or
+as delimiters.
+
+```shell
+cypress run --env credentials='{"apiKey":"secret-key-12345","auth":{"user":"jane","token":"abc123"}}'
+```
+
+See the [`--env`](/app/references/command-line#cypress-run-env-lt-env-gt) command
+line reference for more details.
 
 ### 5. setupNodeEvents
 

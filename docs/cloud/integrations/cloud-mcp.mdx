@@ -1,8 +1,8 @@
 ---
-title: 'Cloud MCP | Cypress Documentation'
+title: 'Cypress Cloud MCP: Agentic debugging'
 description: 'Give AI coding assistants real-time access to your Cypress test results.'
-sidebar_position: 60
 sidebar_label: Cloud MCP
+sidebar_position: 60
 sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 ---
 
@@ -20,7 +20,7 @@ Cloud MCP reached general availability on May 20, 2026. It is included on every 
 
 :::
 
-## How it Works
+## <Icon name="hexagon-nodes-bolt" /> How it Works
 
 The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) is an open standard that enables AI models to safely access external data and tools.
 
@@ -93,7 +93,7 @@ Configure your agent or AI client to connect to Cloud MCP. Cloud MCP is a remote
 
 The remote URL is: `https://mcp.cypress.io/mcp`. Clients that support OAuth will handle authentication automatically via a browser sign-in. For clients that do not support OAuth, set the authorization header with `Bearer YOUR_MCP_TOKEN` using your personal access token.
 
-<AccordionBlock title="Antigravity">
+<AccordionBlock title="Antigravity" icon={<Icon name="hexagon-nodes" />}>
 
 **OAuth (Recommended)**
 
@@ -135,7 +135,7 @@ See [Antigravity's documentation](https://antigravity.google/docs/mcp) for more 
 
 </AccordionBlock>
 
-<AccordionBlock title="Claude Desktop">
+<AccordionBlock title="Claude Desktop" icon={<Icon name="claude" />}>
 
 **OAuth (Recommended)**
 
@@ -180,7 +180,7 @@ Note: `mcp-remote` requires Node.js v20+ in the path to run successfully.
 
 </AccordionBlock>
 
-<AccordionBlock title="Claude Code (CLI)">
+<AccordionBlock title="Claude Code (CLI)" icon={<Icon name="claude" />}>
 
 **OAuth (Recommended)**
 
@@ -219,7 +219,7 @@ See [Claude Code's documentation](https://code.claude.com/docs/en/mcp) for more 
 
 </AccordionBlock>
 
-<AccordionBlock title="Cursor">
+<AccordionBlock title="Cursor" icon={<Icon name="hexagon-nodes" />}>
 
 **OAuth (Recommended)**
 
@@ -262,7 +262,7 @@ See [Cursor's documentation](https://cursor.com/docs/mcp) for more details.
 
 </AccordionBlock>
 
-<AccordionBlock title="GitHub Copilot in VS Code">
+<AccordionBlock title="GitHub Copilot in VS Code" icon={<Icon name="github" />}>
 
 You can install the Cloud MCP server in your user profile or a specific workspace. See [VS Code's MCP installation options](https://code.visualstudio.com/docs/copilot/customization/mcp-servers).
 
@@ -311,7 +311,7 @@ See [VS Code's documentation](https://code.visualstudio.com/docs/copilot/customi
 
 </AccordionBlock>
 
-<AccordionBlock title="GitHub Copilot CLI">
+<AccordionBlock title="GitHub Copilot CLI" icon={<Icon name="github" />}>
 
 GitHub Copilot CLI uses a personal access token for Cloud MCP authentication.
 
@@ -338,7 +338,7 @@ See [GitHub Copilot's documentation](https://docs.github.com/en/copilot/how-tos/
 
 </AccordionBlock>
 
-<AccordionBlock title="OpenAI Codex CLI">
+<AccordionBlock title="OpenAI Codex CLI" icon={<Icon name="openai" />}>
 
 Codex stores MCP configuration in `~/.codex/config.toml`, which is shared between the CLI and Codex IDE extension.
 
@@ -404,7 +404,7 @@ Some tools are relevant for all Cypress Cloud plans (including free), but some o
 | `cypress_get_ui_coverage_report`          | Returns a high-level UI Coverage report for a run: overall coverage score, tested and untested element and link counts, and the top 5 riskiest views sorted by most untested interactive elements. | "Summarize UI Coverage for the latest run on this branch."              |
 | `cypress_get_ui_coverage_views`           | Returns paginated views from a UI Coverage report, sorted by most untested elements and links. Use to browse all views beyond the top 5 in the report summary.                                     | "Which pages have the most untested elements in this run?"              |
 | `cypress_get_ui_coverage_elements`        | Returns paginated interactive elements for a run. Filter by tested or untested, and optionally scope to a specific view by name.                                                                   | "Show me the untested elements on the checkout page in this run."       |
-| `cypress_feedback`                        | Shares feedback with Cypress directly from your agentic environment.                                                                                                                               | "Report a bug or request a new MCP feature."                            |
+| `submit_mcp_feedback`                     | Shares feedback with Cypress directly from your agentic environment.                                                                                                                               | "Report a bug or request a new MCP feature."                            |
 
 ## Writing effective prompts
 
@@ -420,27 +420,57 @@ To get the most out of Cloud MCP, follow these three principles:
 **Pro-Tip:** If you find a workflow that works well, save it as a Custom Instruction or Skill in your AI client to standardize debugging for your entire team.
 :::
 
+<CopyPrompt
+  title="The Health Check"
+  subtext="Get a high-level summary of any failures in the latest run on your branch."
+  prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
+>
+
 ### The Health Check
 
-> "Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures."
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Deep Debug"
+  subtext="Investigate each failing test and propose a fix for the regression."
+  prompt={`Find the failing tests for [Run URL]. For each failure, look at the stack trace, check my local code, and propose a fix to stop the regression.`}
+>
 
 ### The Deep Debug
 
-> "Find the failing tests for [Run URL]. For each failure, look at the stack trace, check my local code, and propose a fix to stop the regression."
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Flake Audit"
+  subtext="Surface flaky tests across recent runs and look for common patterns."
+  prompt={`List all flaky tests from the last 5 runs in Cypress Cloud. Are there any common patterns in the error messages?`}
+>
 
 ### The Flake Audit
 
-> "List all flaky tests from the last 5 runs in Cypress Cloud. Are there any common patterns in the error messages?"
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Accessibility Triage"
+  subtext="Summarize accessibility violations for the latest run, grouped by rule and view."
+  prompt={`Pull the Cypress Cloud Accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted.`}
+>
 
 ### The Accessibility Triage
 
-> "Pull the Cypress Cloud Accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted."
+</CopyPrompt>
 
 For a deeper exploration of working with Cloud MCP's accessibility tools, read our guide [Cypress Accessibility - Work with AI agents](/accessibility/work-with-ai-agents).
 
+<CopyPrompt
+  title="The UI Coverage Triage"
+  subtext="Review UI Coverage for the latest run and drill into the riskiest view."
+  prompt={`Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. Tell me the overall coverage score, list the views with the most untested elements, and show me the specific untested elements on the riskiest view.`}
+>
+
 ### The UI Coverage Triage
 
-> "Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. Tell me the overall coverage score, list the views with the most untested elements, and show me the specific untested elements on the riskiest view."
+</CopyPrompt>
 
 For more patterns, example prompts, and governance ideas when using UI Coverage with agents, read [Cypress UI Coverage - Work with AI agents](/ui-coverage/work-with-ai-agents).
 
@@ -510,7 +540,12 @@ Disabling the integration immediately revokes access for all users in that organ
 
 You can share feedback directly through your agent:
 
-> "Send Cypress the following feedback: [Your message here]"
+<CopyPrompt
+  hideTitle
+  title="Send feedback"
+  subtext="Share feedback, use cases, or issues with Cypress from your agent."
+  prompt={`Send Cypress the following feedback: [Your message here]`}
+/>
 
 Alternatively, use [this feedback form](https://share.hsforms.com/2NWNpyi5KSZmG4x0geIXgBg3a4za) to share any feedback, use cases, or issues encountered with your prompts and queries.
 

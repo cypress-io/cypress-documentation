@@ -1,5 +1,5 @@
 ---
-title: 'Command Line Interface (CLI) Commands and Options for Cypress'
+title: 'Command line interface (CLI) commands and options in Cypress'
 description: 'Learn how to run Cypress from the command line using npm, Yarn, or pnpm.'
 sidebar_label: 'Command Line'
 ---
@@ -553,6 +553,8 @@ Now you can omit the `--key` flag.
 cypress run --record
 ```
 
+<RecordKeyEnvVar />
+
 For more information on recording runs, see the
 [Cypress Cloud setup instructions](/cloud/get-started/setup#Setup). For an
 in-depth explanation of how Cypress uses your record key and `projectId` to save
@@ -660,6 +662,20 @@ Cypress Cloud will display any tags sent with the appropriate run.
   src="/img/cloud/runs/dashboard-run-with-tags.png"
   alt="Cypress run in Cypress Cloud displaying flags"
 />
+
+Tags are also useful for surfacing environment details that Cypress Cloud
+does not record on its own, such as the Node.js version a run used. By tagging
+runs with these values you can easily differentiate runs that were executed
+against different versions in the same matrix. For example, when testing across
+multiple Node.js versions in CI you can include the version in the tags:
+
+```shell
+cypress run --record --tag "node-${nodeVersion}"
+```
+
+This makes runs that use the same spec set but a different Node.js version (or
+any other build/environment detail Cypress Cloud does not capture) easy to tell
+apart in Cypress Cloud.
 
 :::info
 
@@ -893,6 +909,59 @@ System Memory: 17.2 GB free 670 MB
 [DEBUG environment variable](/app/references/troubleshooting#Print-DEBUG-logs)
 to `cypress:launcher:*` when running `cypress info` to troubleshoot browser
 detection.
+
+### `cypress install`
+
+Installs the Cypress binary that matches the version of the `cypress` npm
+package into the [global cache](/app/references/advanced-installation#Binary-cache).
+
+<CypressCommandTabs command="install" />
+
+This command normally runs automatically as a `postinstall` step when you add
+`cypress` with your package manager, so you rarely need to run it yourself.
+Running it explicitly is useful when the binary was not downloaded during
+`npm install`, including these scenarios:
+
+- Your package manager blocks lifecycle scripts (for example with
+  `--ignore-scripts`, or because a security policy disallows `postinstall`), so
+  you install the binary yourself at a later stage instead of granting Cypress
+  install-time script access.
+- You want to download and cache the binary on one machine (such as a CI
+  "install" stage), then skip the download on every subsequent machine that
+  reuses that [cache](/app/references/advanced-installation#Binary-cache).
+- The automatic install was skipped on purpose by setting
+  `CYPRESS_INSTALL_BINARY=0`.
+- You want to
+  [troubleshoot the installation](/app/references/advanced-installation#Troubleshoot-installation)
+  by running the download on its own with
+  [debug logging](/app/references/troubleshooting#Print-DEBUG-logs) enabled.
+
+For example, add `cypress` while skipping the binary download, then run the
+install on its own with debug logging enabled:
+
+<PackageManagerTabs install="cypress" dev env="CYPRESS_INSTALL_BINARY=0" />
+
+<CypressCommandTabs command="install" env="DEBUG=cypress:cli*" />
+
+The binary that gets installed, the cache location, and the download source can
+be customized through environment variables. See
+[Advanced Installation](/app/references/advanced-installation) for details.
+
+#### Options
+
+| Option          | Description                                                |
+| --------------- | ---------------------------------------------------------- |
+| `--force`, `-f` | [Force install the Cypress binary](#cypress-install-force) |
+| `--help`, `-h`  | Output usage information                                   |
+
+#### `cypress install --force` {#cypress-install-force}
+
+By default, `cypress install` does nothing when a binary matching the package
+version is already present in the
+[cache](/app/references/advanced-installation#Binary-cache). Pass `--force` to
+download and reinstall the binary anyway, overwriting any existing installation.
+
+<CypressCommandTabs command="install --force" />
 
 ### `cypress verify`
 

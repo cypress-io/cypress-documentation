@@ -1,8 +1,8 @@
 ---
-title: 'Frequently Asked Questions | Cypress Documentation'
-description: 'Get answers to common questions about Cypress, including general questions, how-to questions, and more.'
-sidebar_position: 200
+title: 'Frequently asked questions: Cypress App'
+description: 'Get answers to common questions about Cypress, including cy.prompt, how-to questions, and more.'
 sidebar_label: FAQ
+sidebar_position: 200
 ---
 
 <ProductHeading product="app" />
@@ -56,6 +56,29 @@ In addition to the App, Cypress offers solutions like the [Cypress Cloud](/cloud
 [UI Coverage](/ui-coverage/get-started/introduction), and [Accessibility](/accessibility/get-started/introduction) to extend the value of your tests and gain insights into the health of your test suite.
 
 You can see our evaluation of Cypress against some frameworks in our [Migrating from Playwright](/app/guides/migration/playwright-to-cypress), [Migrating from Selenium](/app/guides/migration/selenium-to-cypress), and [Migrating from Protractor](/app/guides/migration/protractor-to-cypress) guides.
+
+### <Icon name="angle-right" /> Does Cypress use Jest, Jasmine, or Mocha?
+
+Cypress is not built on Jest or Jasmine. It bundles
+[Mocha](/app/references/bundled-libraries#Mocha) as its test framework and
+[Chai](/app/references/bundled-libraries#Chai) for assertions, so tests are
+structured with `describe()` and `it()`, and assertions use Chai's globally
+available `expect` and `assert` (or the [`.should()`](/api/commands/should)
+command). Jest-style `expect` matchers aren't available by default. You can
+still run Jest for unit tests in the same project; if you use TypeScript, see
+[Clashing types with Jest](/app/tooling/typescript-support#Clashing-types-with-Jest)
+to keep the two runners' global types from conflicting.
+
+### <Icon name="angle-right" /> Can I use a different assertion library with Cypress?
+
+Cypress assertions are built on
+[Chai](/app/references/bundled-libraries#Chai), and Chai can't be swapped for
+another assertion library. It is extensible, though: you can install any Chai
+plugin and register it with `chai.use()` in your
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file) to
+add new assertions, which then work in both `expect()` and
+[`.should()`](/api/commands/should). See
+[Adding New Assertions](/app/references/assertions#Adding-New-Assertions).
 
 ### <Icon name="angle-right" /> Do you support X language or X framework?
 
@@ -421,6 +444,15 @@ Please read our extensive
 [Conditional Testing Guide](/app/guides/conditional-testing) which
 explains this in detail.
 
+### <Icon name="angle-right" /> Can I stop a test partway through and keep the steps that already ran?
+
+There is no API to abort a test midway and have it count as **passed** with
+partial results. A test is always passed, failed, or skipped. To "stop here"
+without failing, conditionally avoid enqueuing the remaining commands; to abort
+as a failure, throw an error. See
+[Ending a test early](/app/guides/conditional-testing#Ending-a-test-early) in the
+Conditional Testing guide.
+
 ### <Icon name="angle-right" /> How can I make Cypress wait until something is visible in the DOM?
 
 :::info
@@ -641,6 +673,54 @@ Check out our
 You use the [`before:browser:launch`](/api/node-events/browser-launch-api) plugin
 event.
 
+### <Icon name="angle-right" /> How do I get Kerberos authentication working in Chrome?
+
+Kerberos (integrated/SPNEGO authentication) works in Chrome via the browser
+launch args. Chromium-based browsers do not negotiate Kerberos against an
+arbitrary server by default, so you have to tell the browser which origins are
+allowed to use integrated authentication.
+
+In your
+[`setupNodeEvents`](/app/plugins/plugins-guide#Using-a-plugin) function, listen
+for the
+[`before:browser:launch`](/api/node-events/browser-launch-api) event and add the
+relevant Chromium auth flags, such as `--auth-server-allowlist` and
+`--auth-negotiate-delegate-allowlist`:
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          launchOptions.args.push('--auth-server-allowlist=*.example.com')
+          launchOptions.args.push(
+            '--auth-negotiate-delegate-allowlist=*.example.com'
+          )
+        }
+
+        return launchOptions
+      })
+    },
+  },
+}
+```
+
+:::
+
+Replace `*.example.com` with the domain(s) you want the browser to authenticate
+against.
+
+Note that the machine running Cypress must already have a valid Kerberos ticket
+(for example, the user is logged into the domain, or a ticket has been obtained
+via `kinit`). The browser flags only authorize Chrome to _use_ that ticket for
+the listed origins. They do not obtain one for you.
+
+See the [Browser Launch API](/api/node-events/browser-launch-api) for more on
+modifying browser launch arguments.
+
 ### <Icon name="angle-right" /> Can I make cy.request() poll until a condition is met?
 
 Yes. You do it the
@@ -662,11 +742,76 @@ replicating the page object pattern.
 ### <Icon name="angle-right" /> Can I run a single test or group of tests?
 
 You can run a group of tests or a single test by placing an
-[`.only`](/app/core-concepts/writing-and-organizing-tests#Excluding-and-Including-Tests)
+[`.only`](/app/core-concepts/writing-and-organizing-tests#Focusing-and-skipping-tests)
 on a test suite or specific test.
 
 You can run a single test file or group of tests by passing the `--spec` flag to
 [cypress run](/app/references/command-line#cypress-run).
+
+### <Icon name="angle-right" /> Where should I put my spec files, and how does Cypress find them?
+
+Cypress discovers spec files using the
+[`specPattern`](/app/references/configuration#e2e) configuration option, which
+defaults to `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` for end-to-end testing and
+`**/*.cy.{js,jsx,ts,tsx}` for component testing. Any file anywhere in your
+project that matches `specPattern` is picked up, so you're free to organize
+specs into whatever folder structure suits your team. See
+[How Cypress finds your specs](/app/core-concepts/writing-and-organizing-tests#How-Cypress-finds-your-specs)
+for details.
+
+### <Icon name="angle-right" /> What hooks does Cypress support, and in what order do they run?
+
+Cypress uses [Mocha](https://mochajs.org/)'s hooks: `before`, `beforeEach`,
+`afterEach`, and `after`. `before` and `after` run once per suite, while
+`beforeEach` and `afterEach` run around every test. For the full execution order,
+including how hooks interleave with tests, see
+[Hooks](/app/core-concepts/writing-and-organizing-tests#Hooks).
+
+### <Icon name="angle-right" /> What's the difference between a pending test and a skipped test?
+
+A **pending** test is one you intentionally left out of the run. It has no body,
+it's marked with `.skip` / `xit`, or it's restricted to a browser you aren't
+currently running. A **skipped** test is one Cypress _meant_ to run but couldn't
+because a `before`, `beforeEach`, or `afterEach` hook failed. See
+[Pending](/app/core-concepts/writing-and-organizing-tests#Pending) and
+[Skipped](/app/core-concepts/writing-and-organizing-tests#Skipped) for examples.
+
+### <Icon name="angle-right" /> Why does Cypress skip the rest of my tests when a hook fails?
+
+If a hook shared by a block of tests (such as a `beforeEach`) fails, Cypress
+marks the first test as **failed** and **skips** the remaining tests in that
+block. Because the same hook would fail identically for every test, re-running it
+would only produce the same failure. Fix the hook and the rest of the tests will
+run. See
+[Skipped](/app/core-concepts/writing-and-organizing-tests#Skipped).
+
+### <Icon name="angle-right" /> How do I stop Cypress from re-running my tests every time I save a file?
+
+When running with [cypress open](/app/references/command-line#cypress-open),
+Cypress watches your spec files and re-runs them on save. To turn this off, set
+[`watchForFileChanges`](/app/references/configuration#Global) to `false`:
+
+:::cypress-config-example
+
+```ts
+{
+  watchForFileChanges: false,
+}
+```
+
+:::
+
+Nothing is watched during
+[cypress run](/app/references/command-line#cypress-run), so this option only
+affects `cypress open`. See
+[Disable file watching](/app/core-concepts/writing-and-organizing-tests#Disable-file-watching).
+
+### <Icon name="angle-right" /> What's the difference between `describe`, `context`, `it`, and `specify`?
+
+Nothing functional. They're aliases provided by Mocha. `context` is an alias of
+`describe` (used to group tests into a suite), and `specify` is an alias of `it`
+(used to define an individual test). Use whichever reads best for your tests. See
+[Test Structure](/app/core-concepts/writing-and-organizing-tests#Test-Structure).
 
 ### <Icon name="angle-right" /> How do I test uploading a file?
 
@@ -744,8 +889,98 @@ fuss with your database.
 
 ### <Icon name="angle-right" /> How do I test elements inside an iframe?
 
-We have an [open proposal](https://github.com/cypress-io/cypress/issues/136) to
-expand the APIs to support "switching into" an iframe and then back out of them.
+Cypress can interact with elements inside a **same-origin** `<iframe>` today, so a
+third-party plugin is usually not required. There is no dedicated "switch into an
+iframe" command yet (see the [open proposal](https://github.com/cypress-io/cypress/issues/136)),
+but you can reach into the iframe's document with existing commands and then chain
+the usual `cy.*` queries and actions off of it.
+
+#### Query into a same-origin iframe
+
+The most common approach is to grab the iframe element, read its
+`contentDocument.body`, and re-wrap it with [`cy.wrap()`](/api/commands/wrap) so
+you can continue chaining commands into the iframe:
+
+```javascript
+cy.get('iframe')
+  // '0' indexes into the jQuery object to get the raw <iframe> DOM element,
+  // then reads its document body. `.its()` retries, so this waits for the
+  // iframe to exist.
+  .its('0.contentDocument.body')
+  // Wait for the iframe document to finish rendering its content before
+  // continuing, otherwise you may query an empty body.
+  .should('not.be.empty')
+  // Re-wrap the raw DOM body so the rest of the chain is a Cypress subject
+  // with built-in retry-ability.
+  .then(cy.wrap)
+  .find('[data-testid="submit"]')
+  .click()
+```
+
+An equivalent pattern uses jQuery's `.contents()` to reach the iframe document:
+
+```javascript
+cy.get('iframe')
+  .its('0.contentDocument')
+  .should('exist')
+  .its('body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .find('h1')
+  .should('have.text', 'Hello, iframe')
+```
+
+To keep specs readable, wrap either pattern in a custom command:
+
+```javascript title="cypress/support/commands.js"
+Cypress.Commands.add('iframe', (iframeSelector) => {
+  return cy
+    .get(iframeSelector)
+    .its('0.contentDocument.body')
+    .should('not.be.empty')
+    .then(cy.wrap)
+})
+```
+
+```javascript
+cy.iframe('#my-iframe').find('[data-testid="submit"]').click()
+```
+
+#### Why the extra steps?
+
+- `.its('0.contentDocument.body')` yields a **raw DOM element**. Passing it through
+  [`cy.wrap()`](/api/commands/wrap) turns it back into a Cypress subject, which
+  restores [retry-ability](/app/core-concepts/retry-ability) for the `.find()`,
+  `.click()`, assertions, and everything else that follows.
+- The `.should('not.be.empty')` assertion is important: an `<iframe>` loads its
+  document asynchronously, so without waiting you may query the body before its
+  content has rendered.
+
+#### The `cypress-iframe` plugin
+
+The community [`cypress-iframe`](https://www.npmjs.com/package/cypress-iframe)
+plugin (`cy.iframe()` / `cy.frameLoaded()` / `.iframe()`) essentially packages the
+patterns above by grabbing the frame's body and adding retries until it loads. For
+most same-origin iframes on modern Cypress versions it is optional, but it can
+still be a convenient shorthand if you interact with many iframes.
+
+#### Restrictions
+
+- **Cross-origin iframes are not supported.** Because of the browser's
+  [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy),
+  reading `contentDocument` on an iframe served from a different origin (a Stripe
+  payment form, an embedded YouTube/Vimeo video, an Auth0 login, a Disqus comment
+  widget, etc.) returns `null`, so none of the patterns above will work. See
+  [Cross-origin iframes](/app/guides/cross-origin-testing#Cross-origin-iframes) in
+  the Cross Origin Testing guide.
+- **[`cy.origin()`](/api/commands/origin) does not help here.** `cy.origin()`
+  handles top-level navigation to another origin. It cannot reach into an
+  embedded cross-origin `<iframe>`.
+- **Workaround for cross-origin iframes:** setting
+  [`chromeWebSecurity`](/app/references/configuration#Browser) to `false` lets
+  Chromium-family browsers access cross-origin iframes embedded in your app. This
+  is not supported in Firefox or WebKit. See
+  [Disabling Web Security](/app/guides/cross-origin-testing#Disabling-Web-Security).
 
 ### <Icon name="angle-right" /> How do I preserve cookies / localStorage in between my tests?
 
@@ -771,7 +1006,7 @@ beforeEach(() => {
 
 If your cookie is generated by the server after login (e.g. a session or auth
 token cookie), use [`cy.session()`](/api/commands/session) to capture and replay
-the full browser context — cookies, localStorage, and sessionStorage — for every
+the full browser context (cookies, localStorage, and sessionStorage) for every
 subsequent test without repeating the login flow:
 
 ```javascript
@@ -1493,19 +1728,19 @@ Yes! Check out our official
 [`eslint-plugin-cypress`](https://github.com/cypress-io/eslint-plugin-cypress).
 It does two things:
 
-**1. Globals setup** — configures `cy`, `Cypress`, `expect`, and all
+**1. Globals setup:** configures `cy`, `Cypress`, `expect`, and all
 [Mocha](https://mochajs.org/) globals (`it`, `describe`, `before`, `beforeEach`,
 etc.) so ESLint stops flagging them as undefined. Without this, linting fails on
 every Cypress spec file, blocking CI pipelines and adding noise to code reviews.
 
-**2. Best-practice lint rules** — catches Cypress anti-patterns in your editor
+**2. Best-practice lint rules:** catches Cypress anti-patterns in your editor
 _before_ tests ever run, which reduces flaky tests and avoids wasted CI time.
 See the [full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules)
 in the official repo for what's available and which rules are enabled by the
 `recommended` config.
 
 Catching these issues at lint time (in-editor or pre-commit) is far cheaper than
-debugging a failing CI run — especially for flaky-test patterns like hard-coded
+debugging a failing CI run, especially for flaky-test patterns like hard-coded
 waits that fail intermittently under load.
 
 ## Component Testing
@@ -1656,3 +1891,34 @@ files inside that folder should use.
 Don't forget to update your
 [`specPattern`](/app/references/configuration#component)
 to include the new file location.
+
+## cy.prompt
+
+The `cy.prompt` command supports natural language testing directly within the Cypress App. It requires a free or paid Cypress Cloud account. For Cloud-related `cy.prompt` execution limits, billing, and usage information, see the [Cloud FAQ](/cloud/faq#cyprompt).
+
+### <Icon name="angle-right" /> What happens when AI is disabled for my organization and the `cy.prompt` is called in the app?
+
+Any **pre-existing** prompt commands and steps that are called in the app will attempt to run based on previously cached generated code. AI-dependent functionality will no longer work. This includes most self-healing behavior and
+the creation of new prompt commands.
+
+### <Icon name="angle-right" /> How do I migrate from cy.prompt code to regular Cypress code?
+
+If you plan to do this as you write tests, use the **Code** button in the
+Cypress App's command log. It gives you the code for any prompt and allows you to
+save it. This represents an author-only use of `cy.prompt`.
+
+If you plan to do this after tests have been recorded, download a full report of
+all the test code and related `cy.prompt` steps, and where they are located in
+your test suite. This is available in the **Properties** tab in the cy.prompt
+area for a specific run. See
+[View and export generated code](/app/guides/ai-test-generation#View-and-export-generated-code)
+for step-by-step instructions.
+
+### <Icon name="angle-right" /> What limitations does cy.prompt have?
+
+See the [Limitations](/api/commands/prompt#Limitations) section in the
+[`cy.prompt` API reference](/api/commands/prompt) to learn what commands and
+other techniques are not supported.
+
+Review the steps of your generated tests to confirm they are behaving as
+intended, especially if attempting steps that are documented as not supported.

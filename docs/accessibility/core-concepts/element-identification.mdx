@@ -1,6 +1,6 @@
 ---
-title: 'Uniquely identify test elements | Cypress Accessibility'
-description: 'Elements are uniquely identified across views and snapshots by their HTML attributes, location, and other signals in the DOM.'
+title: How Cypress Accessibility identifies elements
+description: 'How Cypress Accessibility uniquely identifies elements across views and snapshots using HTML attributes, location, and other DOM signals.'
 sidebar_label: Element identification
 sidebar_position: 20
 ---
@@ -17,7 +17,7 @@ Good element identification makes element selectors more readable and meaningful
 
 ## Significant attributes for identification
 
-Certain attributes are prioritized by Cypress Accessibility for element identification. These include:
+Cypress Accessibility checks a prioritized list of attributes on each element to find its identifier. The defaults, in priority order, are:
 
 - `data-cy`
 - `data-test`
@@ -25,10 +25,8 @@ Certain attributes are prioritized by Cypress Accessibility for element identifi
 - `data-test-id`
 - `data-qa`
 - `row-id`
-- `id`
-- `name`
 
-If you already have Test IDs or similar attributes in your application, Cypress Accessibility will pick these up and use them to recognize the same element in a new place for improved deduplication. This behavior itself is configurable as well, so that highly-dynamic Test IDs can be avoided, for example.
+When an element has none of these, `id`, `name`, and other DOM signals are used as fallbacks. If you already have Test IDs or similar attributes in your application, Cypress Accessibility will pick these up and use them to recognize the same element in a new place for improved deduplication. This behavior itself is configurable as well, so that highly-dynamic Test IDs can be avoided, for example.
 
 ## Configuring element identification
 
@@ -38,7 +36,7 @@ Using these configuration properties helps you adjust the amount of deduplicatio
 
 Exclude irrelevant or dynamically generated attributes to reduce noise in Cypress Accessibility reports. For example, this would avoid certain IDs that are commonly generated in React applications from being used as element references in Cypress Accessibility.
 
-```json
+```json title="App Quality Config"
 {
   "attributeFilters": [
     {
@@ -58,7 +56,7 @@ Learn more about attribute filtering in the [Attribute Filters guide](/accessibi
 
 Define custom significant attributes to prioritize specific selectors that align with your application’s structure. For example:
 
-```json
+```json title="App Quality Config"
 {
   "significantAttributes": ["data-custom-id"]
 }
@@ -70,7 +68,7 @@ Refer to the [Significant Attributes](/accessibility/configuration/significantat
 
 Require extra attributes (such as a component or team identifier) in the **violation target selectors** shown in reports, to provide consistency and readability in your selectors:
 
-```json
+```json title="App Quality Config"
 {
   "accessibility": {
     "components": {

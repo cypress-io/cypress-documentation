@@ -26,6 +26,20 @@ npm run test:plugins  # vitest unit tests for plugins/
 3. `npm run test:plugins` — only when you touched `plugins/`.
 4. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
 
+## Pull requests
+
+When opening a PR, fill out **[`.github/pull_request_template.md`](./.github/pull_request_template.md)**
+(GitHub loads it into the PR body automatically). It is the historical record of
+the change: complete every section, explaining _why_ the change was made, not
+just _what_ changed.
+
+For a **release PR** (opened from a `releases/*` branch to document a specific
+product release), use the release template instead:
+**[`.github/PULL_REQUEST_TEMPLATE/release.md`](./.github/PULL_REQUEST_TEMPLATE/release.md)**.
+Select it by appending `?template=release.md` to the compare URL. Name the
+target release, list every included change, and make sure a new changelog entry
+is one of them.
+
 ## Rules
 
 Each rule is a hard convention. See the linked section for the how and why.
@@ -53,6 +67,7 @@ Each rule is a hard convention. See the linked section for the how and why.
 [partials](./AGENTS_REFERENCE.md#partials),
 [naming](./AGENTS_REFERENCE.md#product-heading--naming),
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
+[AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
 [alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
@@ -68,11 +83,27 @@ Each rule is a hard convention. See the linked section for the how and why.
   genuinely related pages worth surfacing. Don't pad it with tangential links or
   repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
+- For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
+  not a code block; keep example-specific prompts, code, commands, and diagrams in
+  code blocks. Prompts are expanded by default; add `defaultCollapsed` past 350
+  characters, and never wrap the prompt in quotes.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
+- Use **bold** only for real UI controls the reader acts on in a walkthrough
+  (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
+  e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
+  examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
+  so invented examples stay distinct from the real UI a tutorial navigates. See
+  [Writing style](./AGENTS_REFERENCE.md#writing-style).
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
   instructions. They undermine a reader who is struggling and add nothing; state
   the step plainly instead.
+- Describe configuration by what it does and accepts. Don't call out fields or
+  features a property lacks (e.g. "there is no `comment` field") unless the
+  absence is a documented point of confusion.
+- Frame behavior explanations positively and reader-first. Avoid phrasings that
+  sound like caveats about the product's design, such as "consequences of this
+  design"; prefer neutral lead-ins like "Keep these behaviors in mind".
 
 **Directives & tabs** — [tabs](./AGENTS_REFERENCE.md#tabs),
 [config](./AGENTS_REFERENCE.md#cypress-config-examples),
@@ -82,9 +113,12 @@ Each rule is a hard convention. See the linked section for the how and why.
   `:::cypress-config-plugin-example`). Never hand-write `defineConfig` + tabs.
 - TS/JS examples → one `ts` block tagged `copyTsToJs`; never maintain a JS copy.
 - E2E-vs-component snippets → `:::visit-mount-example`.
+- Package-manager commands → `<PackageManagerTabs>` (with `install`, `run`, or
+  `exec`) or `<CypressCommandTabs>` for `cypress` subcommands. Never hand-write
+  npm/Yarn/pnpm/Bun tab sets.
 - Tabs sync via a shared `groupId`. Fixed orders: package managers
-  **npm → Yarn → pnpm**; frameworks **React → Angular → Vue → Svelte**; JS before
-  TS.
+  **npm → Yarn → pnpm → Bun**; frameworks **React → Angular → Vue → Svelte**; JS
+  before TS.
 
 **Admonitions** — [details](./AGENTS_REFERENCE.md#admonition-blocks)
 
@@ -100,3 +134,21 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Links to `www.cypress.io` / `on.cypress.io` / `learn.cypress.io` need UTM
   params (`utm_source=docs.cypress.io` + a placement `utm_medium`). Do not add
   them to internal links or `cloud.cypress.io`.
+
+**Plugins** — [details](./AGENTS_REFERENCE.md#project-layout)
+
+- The sub-packages in `plugins/` are never installed on their own; all of their
+  dependencies resolve from the repository root's `node_modules`. Declare new
+  dependencies in the **root** `package.json`, never in a plugin's own
+  `package.json` (pins there are never installed and just drift stale).
+
+**GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
+
+- When adding or editing a workflow in `.github/workflows/`, look up each
+  action's latest major release on its GitHub repository at the time of
+  writing and pin that major tag.
+- Workflows are copied into forks, where they run with reduced permissions
+  (Actions cannot create or approve pull requests there). Guard any job that
+  pushes commits, creates pull requests, or uses repo secrets with a job-level
+  `if` restricting it to the `main` branch of
+  `cypress-io/cypress-documentation`.

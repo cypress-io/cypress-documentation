@@ -109,6 +109,7 @@ const config = {
     require.resolve('docusaurus-plugin-image-zoom'),
     require.resolve('./plugins/llm'),
     require.resolve('./plugins/faq-structured-data'),
+    require.resolve('./plugins/og-image-cards'),
     // ....
     function docusaurusTailwindcssPlugin(context, options) {
       return {
@@ -125,7 +126,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
-      image: 'img/logo/cypress-logo-circle-dark.png',
+      image: 'img/social-card.png',
+      metadata: [
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'Cypress Documentation' },
+        { property: 'og:image:width', content: '2400' },
+        { property: 'og:image:height', content: '1260' },
+        { property: 'og:image:alt', content: 'Cypress Documentation' },
+      ],
       navbar: {
         style: 'dark',
         logo: {
@@ -170,9 +178,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cloud-mcp-april-2026',
+        id: 'qitl-july-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🌟 Close the context gap. Bring real-time test data to your AI assistant with Cloud MCP &mdash; <a href="/cloud/integrations/cloud-mcp?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=cloud-mcp">Learn more</a>`,
+        content: `🌟 Learn how leaders keep Quality in the Loop in the AI Era &mdash; <a href="https://cypress.registration.goldcast.io/events/07d07799-c355-4e19-b008-b4b1552f57ac?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=qitl">Save your Seat</a>`,
         isCloseable: true,
       },
       footer: {
@@ -272,8 +280,19 @@ const config = {
         // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
         // externalUrlRegex: "external\\.com|domain\\.com",
 
-        // Optional: Algolia search parameters
-        // searchParameters: {},
+        // Algolia search parameters.
+        //
+        // The docsearch scraper emits one `type: "lvl0"` record per page whose
+        // only populated field is the section label (`hierarchy.lvl0`, e.g.
+        // "API") — every deeper level and `content` is null. Those records have
+        // no title to render, so they show up as blank rows, and because they
+        // exactly match generic queries like "api" they flood the top of the
+        // results. Excluding `type:lvl0` at query time removes them while the
+        // per-hit `hierarchy.lvl0` (used for grouping) is unaffected.
+        // `type` is declared in attributesForFaceting in scripts/search/config.json.
+        searchParameters: {
+          facetFilters: ['type:-lvl0'],
+        },
 
         // Optional: path for search page that enabled by default (`false` to disable it)
         // searchPagePath: "search",
@@ -283,7 +302,7 @@ const config = {
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['groovy'],
+        additionalLanguages: ['diff'],
       },
       zoom: {
         selector: ':not(.mediaImage, .navbar__logo img, .logo, .br-ui)', // don't zoom these images

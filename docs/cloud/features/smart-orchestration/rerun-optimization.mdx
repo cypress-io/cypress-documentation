@@ -171,9 +171,10 @@ CircleCI and Bitbucket Pipelines require Cypress v15.15.0 or later.
 
 **All other CI providers that require manual setup**
 
-For these providers, `CYPRESS_RERUN_GROUP_ID` is the rerun group ID that links an original CI run to
-all of its reruns. Set it when your CI provider isn't automatically supported, or
-when you want explicit control over grouping.
+For these providers, `CYPRESS_RERUN_GROUP_ID` is the rerun group ID that links an
+original CI run to all of its reruns. Set it when your CI provider isn't
+automatically supported, or when you want explicit control over grouping.
+Requires Cypress v15.15.0 or later.
 
 The value must be:
 
@@ -185,61 +186,6 @@ Cloud receives a run with `CYPRESS_RERUN_GROUP_ID` set, it uses that value to fi
 the anchor run and, if Re-run optimization is enabled, skips the specs that passed
 there.
 
-<Tabs groupId="rerun-group-id">
-
-<TabItem value="Jenkins">
-
-```groovy
-environment {
-  CYPRESS_RERUN_GROUP_ID = "${env.BUILD_TAG}"
-}
-```
-
-</TabItem>
-
-<TabItem value="GitHub Actions" active>
-
-```yaml
-env:
-  CYPRESS_RERUN_GROUP_ID: ${{ github.run_id }}
-```
-
-</TabItem>
-
-<TabItem value="Azure">
-
-```yaml
-steps:
-  - script: npx cypress run --record
-    env:
-      CYPRESS_RERUN_GROUP_ID: $(System.PlanId)
-```
-
-</TabItem>
-
-<TabItem value="CircleCI">
-
-```yaml
-environment:
-  CYPRESS_RERUN_GROUP_ID: ${CIRCLE_PIPELINE_ID}
-```
-
-</TabItem>
-
-<TabItem value="Bitbucket">
-
-```yaml
-pipelines:
-  default:
-    - step:
-        script:
-          - export CYPRESS_RERUN_GROUP_ID=$BITBUCKET_BUILD_NUMBER
-```
-
-</TabItem>
-
-</Tabs>
-
 :::note
 
 `CYPRESS_RERUN_GROUP_ID` takes precedence over automatic detection. On supported
@@ -250,10 +196,11 @@ construct for you.
 
 ## Opting out in CI
 
-To force a full run and skip the optimization, set the `CYPRESS_RERUN_ALL_TESTS`  
-environment variable to `true`. Cloud then treats the run as a full run and runs
-every spec, even if a matching anchor run exists. This is useful for specific
-branches or pipelines where you always want the complete suite to run.
+To force a full run and skip the optimization, set the `CYPRESS_RERUN_ALL_TESTS`
+environment variable to `true` (requires Cypress v15.15.0 or later). Cloud then
+treats the run as a full run and runs every spec, even if a matching anchor run
+exists. This is useful for specific branches or pipelines where you always want
+the complete suite to run.
 
 ```yaml
 env:
@@ -264,9 +211,10 @@ env:
 
 Every rerun is compared against your **most recent completed run** in the rerun
 group, and re-executes only the specs that were still failing there. That means
-you can trust a rerun to always work from your latest results: it never re-runs
-specs that already passed, and it never reverts to an older, larger set of
-failures. That most-recent completed run is called the **anchor run**.
+you can trust a rerun to always work from your latest results: within the
+[depth limit](#Behavior-and-limitations) it does not re-run specs that already
+passed, and it does not revert to an older, larger set of failures. That
+most-recent completed run is called the **anchor run**.
 
 Knowing this lets you predict exactly what a rerun will do:
 
@@ -291,6 +239,9 @@ the speed and cost savings far outweigh them, but it's worth understanding them
 before enabling Re-run optimization on critical pipelines:
 
 - **Passing results are not carried forward.** A rerun-optimized run shows only the specs that were re-executed. Specs that passed in the anchor run do not appear in the rerun's results.
+- **Passing specs are skipped for up to 5 chained reruns.** Re-run optimization
+  filters out specs that passed in earlier runs in the group, looking back up to
+  5 runs. A 6th rerun re-executes the passing specs from the original run.
 - **Reporter output reflects only the re-executed specs.** CI guardrails based on
   test counts (JUnit/XML reporters, custom reporters, threshold checks) will see
   fewer specs and tests than a full run. You may need to adjust these on your end.

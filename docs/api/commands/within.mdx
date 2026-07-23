@@ -1,5 +1,5 @@
 ---
-title: 'within | Cypress Documentation'
+title: 'cy.within()'
 description: Scopes all subsequent Cypress commands to within the element.
 sidebar_label: within
 ---
@@ -158,8 +158,11 @@ cy.contains('My first client')
 ### Temporarily escape
 
 You can temporarily escape the `.within` context by starting a new command chain
-with [cy.root](/api/commands/root) followed by [.closest](/api/commands/closest)
-commands.
+with [cy.root](/api/commands/root) followed by [.closest](/api/commands/closest).
+Inside a `.within()` block, `cy.root()` yields the scoped element (here, the
+`<form>`) rather than `<html>`. Chaining [.closest](/api/commands/closest) then
+traverses _up_ from that element to a shared ancestor outside the scope, from
+which you can query elements that live outside the `.within()` context.
 
 ```html
 <section class="example">
@@ -175,13 +178,50 @@ commands.
 
 ```javascript
 cy.get('form').within(($form) => {
-  // temporarily escape the .within context
+  // temporarily escape the .within context: cy.root() is the <form>, and
+  // .closest('.example') walks up to the ancestor outside it
   cy.root().closest('.example').find('#name').type('Joe')
   // continue using the .within context
   cy.get('input[name="email"]').type('john.doe@email.com')
   cy.get('input[name="password"]').type('password')
   cy.root().submit()
 })
+```
+
+## Notes
+
+### Yielded Subject
+
+#### `.within()` cannot be used to return an inner element
+
+The subject yielded by `.within()` is _always_ the original parent element. Any
+command you run, value you return, or [`cy.wrap()`](/api/commands/wrap) you call
+**inside** the callback has no effect on what `.within()` yields. This is true
+even when `.within()` is used inside a
+[custom command](/api/cypress-api/custom-commands) or when `.within()` blocks are
+nested.
+
+If you need to yield an element found inside the scope, query it _after_ the
+`.within()` block instead. For example, scope to the parent with
+[`.find()`](/api/commands/find) (or chain queries off the parent directly)
+rather than relying on `.within()` to hand back the inner element:
+
+```javascript
+// ✗ The inner `cy.get()` is NOT yielded — `.within()` yields the parent,
+// so chaining `.type()` operates on the wrong (parent) subject.
+cy.get('.ag-header-cell')
+  .first()
+  .within(() => {
+    cy.get('.ag-text-field-input')
+  })
+  .type('hello') // operates on `.ag-header-cell`, not the input
+
+// ✓ Query the inner element directly so it becomes the yielded subject.
+cy.get('.ag-header-cell')
+  .first()
+  // the input is now the yielded subject, so `.type()` operates on it
+  .find('.ag-text-field-input')
+  .type('hello')
 ```
 
 ## Rules

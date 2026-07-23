@@ -1,12 +1,311 @@
 ---
-title: 'Element Filters | Cypress Accessibility'
-description: 'The `elementFilters` property allows you to specify selectors for elements that should be excluded from Cypress Accessibility.'
-sidebar_label: elementFilters
-sidebar_position: 30
+title: 'elementFilters: ignore elements in Cypress Accessibility'
+description: 'Ignore elements in Cypress Accessibility reports with elementFilters, so third-party widgets and out-of-scope elements stop counting against your accessibility score.'
+sidebar_label: 'Exclude elements'
+sidebar_position: 40
 ---
 
 <ProductHeading product="accessibility" />
 
-# elementFilters
+# Exclude elements - `elementFilters`
 
-<ElementFilters />
+The `elementFilters` configuration ignores elements in your Cypress Accessibility report. An ignored element's failed and incomplete checks stop counting against your views and your [accessibility score](/accessibility/core-concepts/accessibility-score), and the element appears under an **Ignored** status instead, so you can always audit what your configuration ignores.
+
+By default, Cypress Accessibility reports on every element that Axe Core® checks in your application during your tests, including elements you can't fix: a third-party chat widget, an embedded cookie banner, content rendered by a library you don't control. Failures in those elements obscure the failures your team can act on. An `elementFilters` rule moves them out of the way, so your report and score reflect the accessibility of the application you own.
+
+## Why use elementFilters?
+
+- **Ignore third-party components**: Chat widgets, cookie banners, embedded media players, and other elements rendered by libraries or services you don't control can be ignored, since your team can't fix their violations.
+- **Ignore out-of-scope elements**: Remove test-only controls or areas of the application that are outside the scope of your accessibility work.
+- **Keep the score meaningful**: A score that only reflects elements you can fix makes progress and regressions easier to see and act on.
+
+Ignoring an element ignores all accessibility results for that element. To keep an element in your report but ignore specific rules for it, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) instead. To ignore entire pages, use [`viewFilters`](/accessibility/configuration/viewfilters).
+
+## Scope
+
+:::info
+
+**Note:** setting `elementFilters` at the root of your configuration impacts both Cypress Accessibility and UI Coverage reports. To configure the products separately, nest the property under an `accessibility` or `uiCoverage` key. A nested `elementFilters` completely replaces a root-level one for that product; the two lists are not merged.
+
+:::
+
+## Setting elementFilters
+
+To add or edit `elementFilters`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-accessibility-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
+
+## Syntax
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": string,
+      "include": boolean,
+      "documentScope": [string],
+      "comment": string
+    }
+  ]
+}
+```
+
+To apply rules to Cypress Accessibility only, nest the property under the `accessibility` key:
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "elementFilters": [
+      {
+        "selector": string,
+        "include": boolean
+      }
+    ]
+  }
+}
+```
+
+### Options
+
+| Option          | Required | Default | Description                                                                                                                                                                                                                                                                                                           |
+| --------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `selector`      | Required |         | A CSS selector that matches the elements to ignore. Supports standard CSS selector syntax, including IDs, classes, attributes, combinators, and functional pseudo-classes like `:has()`. The selector must match the element with the accessibility result itself, not just a container around it.                    |
+| `include`       | Required |         | Whether elements matched by this rule appear as normal results in the report. Use `false` to ignore the matched elements. In Cypress Accessibility, `true` has no additional effect, because every element is included unless an exclude rule matches it. See [When to use include: true](#When-to-use-include-true). |
+| `documentScope` | Optional |         | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to limit a rule to elements inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are.                   |
+| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on filtering and are not displayed in reports.                                                                                                                                      |
+
+### How are elementFilters rules applied?
+
+- **Any matching exclude rule ignores the element.** An element is ignored when any rule with `include: false` matches it, regardless of where the rule appears in the list. Elements that no exclude rule matches stay in the report as normal results.
+- **An `include: true` rule cannot protect or restore an element.** An include rule doesn't shield its elements from exclude rules elsewhere in the list.
+- **The selector must match the element itself.** Accessibility results are reported per element, and each rule is evaluated against those elements using standard CSS matching. A rule with the selector `footer` ignores results on the `<footer>` element only, not on the elements inside it. To ignore a whole region, match the container and its descendants: `footer, footer *`.
+- **Ignored elements stay visible in the report.** Elements with failed or incomplete checks that your configuration ignores appear under the **Ignored** [element status](/accessibility/core-concepts/run-level-reports#Elements) rather than disappearing, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect the accessibility score.
+- **The score changes once every failing element of a rule is ignored.** The [accessibility score](/accessibility/core-concepts/accessibility-score) weighs each failed rule per snapshot, not each failing element. Ignoring some, but not all, of a rule's failing elements in a snapshot doesn't change that snapshot's score; the rule stops counting against the snapshot when all of its failing elements there are ignored.
+- **Ignoring an element ignores all of its results.** An `elementFilters` rule applies to every accessibility rule for the matched element. To ignore only specific rules for an element, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
+- **Rules match in any document unless scoped.** A rule without `documentScope` can match elements in the main document, in iframes, and in shadow DOMs. Add `documentScope` to restrict a rule to one of those documents.
+
+If a rule doesn't seem to take effect, see [Why is an element still failing after I added an elementFilters rule?](/accessibility/faq#Why-is-an-element-still-failing-after-I-added-an-elementFilters-rule) in the Cypress Accessibility FAQ.
+
+### Validation rules
+
+Cypress Cloud rejects a configuration when:
+
+- Two rules have the same `selector` (with the same `documentScope`).
+- A rule is missing `selector` or `include`.
+- A `selector` or `documentScope` entry isn't valid CSS selector syntax.
+- A rule contains a property other than the four listed above.
+
+## Examples
+
+### Ignore a third-party widget
+
+The selector matches both the widget's container and everything inside it, so results on the container itself are ignored along with results on its contents.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#chat-widget, #chat-widget *",
+      "include": false,
+      "comment": "Vendor chat widget, accessibility issues reported upstream"
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <main>
+    <button id="checkout">Check out</button>
+  </main>
+  <div id="chat-widget">
+    <button class="chat-open">Chat with us</button>
+  </div>
+</body>
+```
+
+#### Result
+
+Violations on `#checkout` are reported as failures. Violations on the chat widget and its contents appear under the **Ignored** status and don't affect the score.
+
+---
+
+### Ignore elements by attribute
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "[data-vendor]",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="save">Save</button>
+  <button data-vendor="analytics">Feedback</button>
+</body>
+```
+
+#### Result
+
+Violations on `#save` are reported as failures. Violations on the `data-vendor` button appear under the **Ignored** status.
+
+---
+
+### Ignore dynamic elements by pattern
+
+Attribute prefix, suffix, and substring selectors (`[class^='...']`, `[class$='...']`, `[class*='...']`) are useful when class names or IDs are partially generated.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "[class^='ext-embed']",
+      "include": false
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button class="cancel">Cancel</button>
+  <div class="ext-embed-90283" role="button">External content</div>
+</body>
+```
+
+#### Result
+
+Violations on `.cancel` are reported as failures. Violations on the embed appear under the **Ignored** status.
+
+---
+
+### Ignore elements inside a shadow DOM or iframe
+
+Use `documentScope` to limit a rule to elements inside a specific shadow DOM host or iframe. Here, the button inside the `<custom-component>` shadow root shares its `id` with a button in the main document. The scope restricts the rule to the shadow DOM, so results on the button in the main document are still reported.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#my-button",
+      "include": false,
+      "documentScope": ["custom-component"]
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <button id="my-button">Button Outside Shadow DOM</button>
+  <custom-component>
+    #shadow-dom
+      <button id="my-button">Button Inside Shadow DOM</button>
+  </custom-component>
+</body>
+```
+
+#### Result
+
+Violations on the button in the main document are reported as failures. Violations on the button inside the shadow DOM appear under the **Ignored** status.
+
+`documentScope` works the same way for content that renders inside an iframe. The scope selector matches the `iframe` element itself in its parent document, and a wildcard selector ignores everything the iframe contains:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "*",
+      "include": false,
+      "documentScope": ["iframe[title='Support']"]
+    }
+  ]
+}
+```
+
+For nested documents, list one selector per host from outermost to innermost. For example, `"documentScope": ["#my-iframe", "custom-component"]` scopes a rule to a shadow DOM component rendered inside an iframe.
+
+---
+
+### When to use include: true
+
+For rules that only affect Cypress Accessibility, there's no reason to write `include: true`. Every element is included unless an exclude rule matches it, and an include rule can't override an exclusion.
+
+The value exists for `elementFilters` lists defined at the root of your configuration, which are shared with UI Coverage. In UI Coverage, the first matching rule wins, so an `include: true` rule placed before a broader exclude rule keeps its elements in UI Coverage reports. Cypress Accessibility reads the same list but treats the include rule as inert.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "nav a",
+      "include": true,
+      "comment": "Keep nav links in UI Coverage despite the vendor exclude below"
+    },
+    {
+      "selector": "[data-vendor] a",
+      "include": false,
+      "comment": "Ignore links rendered by the vendor toolbar"
+    }
+  ]
+}
+```
+
+#### HTML
+
+```xml
+<body>
+  <nav data-vendor="toolbar">
+    <a href="/home">Home</a>
+  </nav>
+  <div data-vendor="promos">
+    <a href="https://vendor.example">Sponsored</a>
+  </div>
+</body>
+```
+
+#### Result
+
+The Home link matches both rules. In Cypress Accessibility, the exclude rule ignores it anyway, so results on both links appear under the **Ignored** status. In UI Coverage, the first matching rule wins, so the Home link stays in the report while the sponsored link is excluded.
+
+To get different outcomes per product, nest a separate `elementFilters` list under each product key instead of sharing one root-level list.
+
+:::tip
+
+After saving configuration changes, regenerate a recent run to preview the effect of your rules without rerunning your tests. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration) for how to regenerate a report.
+
+:::
+
+## See also
+
+- [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element): ignore specific rules for an element instead of the whole element.
+- [`viewFilters`](/accessibility/configuration/viewfilters): ignore entire pages.
+- [Run-level reports](/accessibility/core-concepts/run-level-reports): where ignored elements appear in your report.
+- [Accessibility score](/accessibility/core-concepts/accessibility-score): how the score is calculated.
+- [Configuration overview](/accessibility/configuration/overview): where to set configuration and regenerate reports.
+- [Cypress Accessibility FAQ](/accessibility/faq): common questions and troubleshooting.

@@ -1,5 +1,5 @@
 ---
-title: 'Migrate from Playwright to Cypress: Complete Migration Guide'
+title: 'Migrate from Playwright to Cypress: complete migration guide'
 description: 'Step-by-step guide to migrate end-to-end and component tests from Playwright to Cypress. Compare syntax, learn retry-ability, network stubbing, auth patterns, CI parallelization, and Cloud features.'
 sidebar_label: Migrating from Playwright
 ---
@@ -7,6 +7,13 @@ sidebar_label: Migrating from Playwright
 <ProductHeading product="app" />
 
 # Migrating from Playwright to Cypress
+
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Migrate from Playwright to Cypress with your AI assistant"
+  prompt={`Migrate this project's tests from Playwright to Cypress. First read https://docs.cypress.io/llm/markdown/app/guides/migration/playwright-to-cypress.md for the syntax mappings and patterns, then work through these steps:\n\n1. Take inventory. Detect my package manager, find my Playwright config and test files, and summarize the patterns I use: locators, assertions, network mocking, authentication, fixtures/page objects, web server startup, and CI configuration.\n\n2. Agree on a selector strategy. If my tests rely on getByRole/getByLabel/getByText and I have no test attributes, recommend installing @testing-library/cypress for a near 1:1 mapping instead of editing my app to add data-testid attributes.\n\n3. Install Cypress alongside Playwright. Configure them to coexist, and do not modify or delete my Playwright config or specs until the Cypress equivalents pass.\n\n4. Migrate one spec at a time. Translate async/await and the locator API to Cypress command chaining and retry-ability (never assign a cy.* return value to a variable), map expect() assertions to Cypress assertions, convert page.route() mocks to cy.intercept(), and port authentication, fixtures, and page objects. If my Playwright config uses a webServer block, set up start-server-and-test so Cypress has a running app.\n\n5. Flag gaps. Call out anything with no direct Cypress equivalent (visual snapshots, soft assertions, test.step) instead of guessing.\n\n6. Verify. Show me the proposed changes before applying them, then install and run eslint-plugin-cypress and my migrated Cypress tests to confirm they pass.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
 
 This guide helps you translate Playwright tests to Cypress. It covers the
 core execution model differences, syntax mappings, and patterns for auth,
@@ -20,11 +27,12 @@ Jump to the [cheat sheet](#Cheat-sheet) for a quick reference.
 
 ::::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - How Cypress executes tests: command chaining, retry-ability, and what
   replaces async/await
-- Configuration, CLI flags, and browser installation
+- Configuration, CLI flags, browser installation, and starting your app
+- Choosing a selector strategy for Playwright's semantic locators
 - Locators, interactions, assertions, and network stubbing mapped side by side
 - Authentication, cross-origin testing, and multi-tab patterns
 - Clock control, dialogs, iframes, and file handling
@@ -97,6 +105,18 @@ Once installed, open the Cypress app to complete initial configuration:
 
 The Cypress App will walk you through choosing a testing type (end-to-end or component) and generating a starter configuration file. After setup, Cypress creates a `cypress.config.js` (or `.ts`) file and a `cypress/` directory in your project root.
 
+If your Playwright tests are written in TypeScript, add a `tsconfig.json` inside
+the `cypress/` folder so Cypress globals (`cy`, `Cypress`) type-check:
+
+```json title="cypress/tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts"]
+}
+```
+
 ## Configuration migration
 
 Both Playwright and Cypress use a `defineConfig`-based configuration file at the
@@ -108,12 +128,12 @@ block.
 
 The configuration file location is configurable using the `--config-file` command line flag or the `configFile` Module API option.
 
-|                      | Playwright                       | Cypress                  |
-| -------------------- | -------------------------------- | ------------------------ |
-| Default config file  | `playwright.config.ts`           | `cypress.config.ts`      |
-| Test files           | `testDir: './tests'`             | `e2e.specPattern` (glob) |
-| E2E-specific options | `use: { ... }`                   | `e2e: { ... }`           |
-| Node event hooks     | `globalSetup` / `globalTeardown` | `e2e.setupNodeEvents`    |
+| <span className="sr-only">Configuration</span> | Playwright                       | Cypress                  |
+| ---------------------------------------------- | -------------------------------- | ------------------------ |
+| Default config file                            | `playwright.config.ts`           | `cypress.config.ts`      |
+| Test files                                     | `testDir: './tests'`             | `e2e.specPattern` (glob) |
+| E2E-specific options                           | `use: { ... }`                   | `e2e: { ... }`           |
+| Node event hooks                               | `globalSetup` / `globalTeardown` | `e2e.setupNodeEvents`    |
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -122,7 +142,6 @@ import { defineConfig } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests',
-  testExclude: '**/*.cy.ts',
   outputDir: './test-results',
   retries: process.env.CI ? 2 : 0,
   timeout: 30000,
@@ -151,7 +170,6 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
     specPattern: 'tests/**/*.cy.ts',
-    excludeSpecPattern: '**/*.ts',
     retries: {
       runMode: 2,
       openMode: 0,
@@ -219,17 +237,17 @@ section covers the most common translations.
 | `--quiet`                          | `--quiet`                                                                                                                        |
 | `--retries=2`                      | `--config retries=2`                                                                                                             |
 | `--reporter=html`                  | `--reporter html`                                                                                                                |
-| `--shard=1/4`                      | `--parallel`                                                                                                                     |
-| `--fully-parallel`                 | `--parallel`                                                                                                                     |
-| `--workers=4`                      | `--parallel`                                                                                                                     |
+| `--shard=1/4`                      | `--record --parallel` (requires [Cypress Cloud](/cloud/get-started/introduction))                                                |
+| `--fully-parallel`                 | `--record --parallel` (requires [Cypress Cloud](/cloud/get-started/introduction))                                                |
+| `--workers=4`                      | `--record --parallel` (requires [Cypress Cloud](/cloud/get-started/introduction))                                                |
 | `--trace on`                       | `--record` automatically records [Test Replay](/cloud/features/test-replay)                                                      |
 
 ### Passing environment variables
 
 In Cypress, use `cy.env()` for sensitive values (credentials, tokens, secrets)
 or `Cypress.expose()` for non-sensitive configuration (feature flags, public
-URLs, API versions). These must be set in the Node.js environment within
-`setupNodeEvents` in your Cypress configuration file.
+URLs, API versions). These are set via the top-level `env` and `expose` keys in
+your Cypress configuration file. Both APIs require Cypress 15.10.0 or newer.
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -407,6 +425,39 @@ The `launchOptions` object exposes three properties depending on the browser:
 See the [Browser Launch Event](/api/node-events/browser-launch-api) for the
 full reference and per-browser examples.
 
+## Starting your application under test
+
+Playwright's config can start your dev server automatically through the
+`webServer` option. Cypress does not start your application for you — it assumes
+the app is already running at the `baseUrl` you configured.
+
+The standard solution is
+[`start-server-and-test`](https://github.com/bahmutov/start-server-and-test),
+which boots your server, waits for the URL to respond, runs Cypress, then shuts
+the server down.
+
+<Badge type="danger">Before: Playwright</Badge>
+
+```ts title="playwright.config.ts"
+export default defineConfig({
+  webServer: {
+    command: 'npm run start',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+  },
+})
+```
+
+<Badge type="success">After: Cypress</Badge>
+
+```json title="package.json"
+{
+  "scripts": {
+    "cy:run": "start-server-and-test start http://localhost:3000 'cypress run'"
+  }
+}
+```
+
 ## Test structure and syntax migration
 
 Playwright imports `test` from `@playwright/test`. Cypress uses Mocha's BDD interface, which provides `it()` and `describe()` globally. `test` is not available in Cypress and must be replaced.
@@ -492,6 +543,36 @@ cy.get('[data-testid="toast"]').should('have.text', 'Success')
 ```
 
 See Cypress's command model in the [Introduction to Cypress](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue).
+
+## Choosing a selector strategy
+
+Playwright suites lean on semantic locators — `getByRole()`, `getByLabel()`,
+and `getByText()`. Before translating tests, decide how these map to Cypress,
+because the choice affects nearly every test.
+
+**Option A — Cypress Testing Library (lowest friction, no app changes).**
+Install
+[`@testing-library/cypress`](https://github.com/testing-library/cypress-testing-library)
+for a near 1:1 replacement of Playwright's semantic locators:
+
+| Playwright                      | Cypress (Testing Library)         |
+| ------------------------------- | --------------------------------- |
+| `getByRole('button', { name })` | `findByRole('button', { name })`  |
+| `getByLabel('Email')`           | `findByLabelText('Email')`        |
+| `getByText('Welcome')`          | `findByText('Welcome')`           |
+| `getByPlaceholder('Search')`    | `findByPlaceholderText('Search')` |
+| `getByTestId('submit')`         | `findByTestId('submit')`          |
+
+**Option B — `data-*` attributes (Cypress best practice for new code).**
+Add `data-testid` (or `data-cy`) attributes to your application and select with
+`cy.get('[data-testid="..."]')`, as described in
+[Best Practices](/app/core-concepts/best-practices#Selecting-Elements). This is
+the most resilient long-term strategy, but it requires editing your application
+source.
+
+The examples in this guide use `data-testid` for brevity. If your Playwright
+suite relies on semantic locators and you don't already have test attributes,
+Option A is the fastest path to parity without touching application code.
 
 ## Locators and selectors
 
@@ -767,7 +848,7 @@ setup('authenticate', async ({ page }) => {
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="cypress.config.ts"
+```ts title="cypress/support/e2e.ts"
 const login = () => {
   cy.visit('/login')
   cy.get('#username').type('jane')
@@ -871,17 +952,22 @@ Both Playwright and Cypress let you replace native browser time functions with a
 <Badge type="danger">Before: Playwright</Badge>
 
 ```ts title="test.ts"
-await page.clock.setFixedTime(new Date('2024-02-02T10:00:00')) await
-page.goto('/') await
-expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM')
+await page.clock.setFixedTime(new Date('2024-02-02T10:00:00'))
+await page.goto('/')
+await expect(page.getByTestId('current-time')).toHaveText(
+  '2/2/2024, 10:00:00 AM'
+)
 ```
 
 <Badge type="success">After: Cypress</Badge>
 
 ```ts title="test.cy.ts"
-cy.clock(new Date('2024-02-02T10:00:00')) cy.visit('/')
-cy.get('[data-testid="current-time"]').should('have.text', '2/2/2024, 10:00:00
-AM')
+cy.clock(new Date('2024-02-02T10:00:00'))
+cy.visit('/')
+cy.get('[data-testid="current-time"]').should(
+  'have.text',
+  '2/2/2024, 10:00:00 AM'
+)
 ```
 
 ### Advancing time
@@ -891,8 +977,9 @@ To simulate the passage of time and trigger scheduled timers, Playwright uses `f
 <Badge type="danger">Before: Playwright</Badge>
 
 ```ts title="test.ts"
-await page.clock.install() await page.goto('/') await
-page.getByRole('button').click()
+await page.clock.install()
+await page.goto('/')
+await page.getByRole('button').click()
 
 // Skip forward 5 minutes, firing all timers that fall within the window
 await page.clock.fastForward('05:00')
@@ -905,7 +992,7 @@ await expect(page.getByText('Session expired')).toBeVisible()
 ```ts title="test.cy.ts"
 cy.clock()
 cy.visit('/')
-cy.getByRole('button').click()
+cy.get('button').click()
 
 // cy.tick() takes milliseconds; 5 minutes = 300,000 ms
 cy.tick(5 * 60 * 1000)
@@ -1118,6 +1205,13 @@ cy.getIframeBody('#payment-frame').within(() => {
   cy.contains('button', 'Pay now').click()
 })
 ```
+
+This works for **same-origin** iframes. Unlike Playwright's `frameLocator`,
+Cypress cannot reach into a **cross-origin** iframe unless you set
+[`chromeWebSecurity`](/app/references/configuration#Browser) to `false` in
+Chromium-family browsers. See
+[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
+for the full details and restrictions.
 
 ## Shadow DOM
 
@@ -1354,10 +1448,10 @@ Playwright Component Testing is **experimental** and uses a `mount` fixture (for
 
 ### Framework and bundler support
 
-|            | Playwright Component Testing                     | Cypress Component Testing                                                                                                                                                                                                            |
-| ---------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Frameworks | Experimental packages for React, Vue, and Svelte | Official mounting libraries for [React](/app/component-testing/react/overview), [Vue](/app/component-testing/vue/overview), [Angular](/app/component-testing/angular/overview), and [Svelte](/app/component-testing/svelte/overview) |
-| Bundlers   | Vite                                             | Vite & Webpack                                                                                                                                                                                                                       |
+| <span className="sr-only">Capability</span> | Playwright Component Testing                     | Cypress Component Testing                                                                                                                                                                                                            |
+| ------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Frameworks                                  | Experimental packages for React, Vue, and Svelte | Official mounting libraries for [React](/app/component-testing/react/overview), [Vue](/app/component-testing/vue/overview), [Angular](/app/component-testing/angular/overview), and [Svelte](/app/component-testing/svelte/overview) |
+| Bundlers                                    | Vite                                             | Vite & Webpack                                                                                                                                                                                                                       |
 
 See [Component Testing](/app/component-testing/get-started) for more details.
 
@@ -1410,7 +1504,7 @@ export class LoginPage {
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="support.cy.ts"
+```ts title="loginPage.ts"
 export class LoginPage {
   login(username: string, password: string) {
     cy.get('[data-testid="username"]').type(username)
@@ -1475,7 +1569,7 @@ export const test = base.extend({
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="support.cy.ts"
+```ts title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -1512,7 +1606,8 @@ command line.
 <Badge type="danger">Before: Playwright</Badge>
 
 ```shell
-playwright test --shard=2/4 # Machine 2 playwright test --shard=3/4 # Machine 3
+playwright test --shard=2/4 # Machine 2
+playwright test --shard=3/4 # Machine 3
 playwright test --shard=4/4 # Machine 4
 ```
 
@@ -1527,7 +1622,7 @@ on historical run durations. This requires a Cypress Cloud account.
 <Badge type="success">After: Cypress Cloud</Badge>
 
 ```shell
-cypress run--record --parallel
+cypress run --record --parallel
 ```
 
 ### Smart Orchestration in Cypress Cloud
@@ -1626,58 +1721,77 @@ Rather than requiring `checkA11y()` calls in each test, Cypress Accessibility ca
 
 Learn more about [Accessibility testing](/accessibility/get-started/introduction).
 
+## Features without a direct equivalent
+
+A few Playwright features have no built-in Cypress counterpart. Identify these
+up front so you can plan alternatives rather than discovering them mid-migration.
+
+| Playwright feature                                          | Cypress equivalent                                                                                                                                   |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `toHaveScreenshot()` / `toMatchSnapshot()` visual snapshots | No built-in visual diffing. See [Visual Testing](/app/tooling/visual-testing) for plugin options.                                                    |
+| `expect.soft()` (soft assertions)                           | No equivalent. Cypress fails on the first failed assertion; split into separate assertions or tests.                                                 |
+| `test.step()`                                               | No direct equivalent. Group related commands and annotate with [`cy.log()`](/api/commands/log) or nested `context()` blocks.                         |
+| `toMatchAriaSnapshot()`                                     | No equivalent. Assert roles and labels individually, or use [Cypress Accessibility](/accessibility/get-started/introduction) for automated scanning. |
+
 ## Cheat sheet
 
 The `await` required in Playwright is not included in the cheat sheet for readability.
 
-| Playwright                                               | Cypress                                                 |
-| -------------------------------------------------------- | ------------------------------------------------------- |
-| `page.locator('css')`                                    | `cy.get('css')`                                         |
-| `page.getByTestId('submit')`                             | `cy.get('[data-testid="submit"]')`                      |
-| `page.goto('/path')`                                     | `cy.visit('/path')`                                     |
-| `page.reload()`                                          | `cy.reload()`                                           |
-| `page.title()`                                           | `cy.title()`                                            |
-| `page.url()`                                             | `cy.url()`                                              |
-| `page.waitForResponse(...)`                              | `cy.intercept(...).as('x'); cy.wait('@x')`              |
-| `page.setInputFiles(selector, 'file.png')`               | `cy.get(selector).selectFile('file.png')`               |
-| `page.locator(selector).click()`                         | `cy.get(selector).click()`                              |
-| `page.locator(selector).click({ force: true })`          | `cy.get(selector).click({force: true})`                 |
-| `page.locator(selector).click({ button: 'right' })`      | `cy.get(selector).rightclick()`                         |
-| `page.locator(selector).click({ modifiers: ['Shift'] })` | `cy.get(selector).click({shiftKey: true})`              |
-| `page.locator(selector).dblclick()`                      | `cy.get(selector).dblclick()`                           |
-| `page.locator(selector).hover()`                         | `cy.get(selector).trigger('mouseover')`                 |
-| `page.locator(selector).fill('text')`                    | `cy.get(selector).clear().type('text')`                 |
-| `page.locator(selector).focus()`                         | `cy.get(selector).focus()`                              |
-| `page.locator(selector).press('Tab')`                    | `cy.get(selector).press(Cypress.Keyboard.Keys.TAB)`     |
-| `page.locator(selector).selectOption('blue')`            | `cy.get('[data-testid="color"]').select('blue')`        |
-| `page.locator(selector).scrollIntoViewIfNeeded()`        | `cy.get(selector).scrollIntoView()`                     |
-| `page.locator(selector).screenshot()`                    | cy.get(selector).screenshot()                           |
-| `page.route('**/api', ...)`                              | `cy.intercept('/api', ...)`                             |
-| `page.screenshot()`                                      | cy.screenshot()                                         |
-| `use: { storageState: 'state.json' }`                    | `cy.session('user', login)`                             |
-| `page.clock.setFixedTime(date)`                          | `cy.clock(now)`                                         |
-| `page.clock.install({ time })`                           | `cy.clock(now)`                                         |
-| `page.clock.fastForward(duration)`                       | `cy.tick(ms)`                                           |
-| `page.clock.runFor(duration)`                            | `cy.tick(ms)`                                           |
-| `page.clock.setSystemTime(date)`                         | `clock.setSystemTime(date)`                             |
-| `page.on('dialog', dialog => dialog.accept())`           | Auto-accepted by default                                |
-| `page.on('dialog', dialog => dialog.dismiss())`          | `cy.on('window:confirm', () => false)`                  |
-| `page.on('dialog', dialog => dialog.accept('x'))`        | `cy.stub(win, 'prompt').returns('x')` in `onBeforeLoad` |
-| `page.on('dialog')` with `beforeunload`                  | `cy.on('window:before:unload', event => ...)`           |
-| `expect(page).toHaveURL(/re/)`                           | `cy.url().should('contain', 're')`                      |
-| `expect(locator).toHaveText('Yes!')`                     | `cy.get(selector).should('have.text', 'Yes!')`          |
-| `expect(locator).toHaveAttribute('href')`                | `cy.get(selector).should('have.attr', 'href')`          |
-| `expect(locator).toBeChecked()`                          | `cy.get(selector).should('be.checked')`                 |
-| `expect(locator).toBeDisabled()`                         | `cy.get(selector).should('be.disabled')`                |
-| `expect(locator).toBeVisible()`                          | `cy.get(selector).should('be.visible')`                 |
-| `expect(locator).toBeHidden()`                           | `cy.get(selector).should('be.hidden')`                  |
-| `expect(locator).toBeEnabled()`                          | `cy.get(selector).should('be.enabled')`                 |
-| `expect(locator).toBeAttached()`                         | `Cypress.dom.isAttached($el)`                           |
-| `expect(locator).toBeFocused()`                          | `cy.get(selector).should('have.focus')`                 |
-| `expect(locator).toHaveValue('123')`                     | `cy.get(selector).should('have.value', '123')`          |
-| `expect(locator).toContainText('Yes!')`                  | `cy.get(selector).should('contain', 'Yes!')`            |
-| `expect(locator).toContainClass('light')`                | `cy.get(selector).should('have.class', 'light')`        |
-| `expect(locator).toHaveCSS('color', 'red')`              | `cy.get(selector).should('have.css', 'color', 'red')`   |
-| `browserContext.cookies()`                               | `cy.getCookies()`                                       |
-| `browserContext.clearCookies()`                          | `cy.clearCookies()`                                     |
-| `browserContext.addCookies(cookie)`                      | `cy.setCookie(name, value)`                             |
+| Playwright                                               | Cypress                                                         |
+| -------------------------------------------------------- | --------------------------------------------------------------- |
+| `page.locator('css')`                                    | `cy.get('css')`                                                 |
+| `page.getByTestId('submit')`                             | `cy.get('[data-testid="submit"]')`                              |
+| `page.goto('/path')`                                     | `cy.visit('/path')`                                             |
+| `page.reload()`                                          | `cy.reload()`                                                   |
+| `page.title()`                                           | `cy.title()`                                                    |
+| `page.url()`                                             | `cy.url()`                                                      |
+| `page.waitForResponse(...)`                              | `cy.intercept(...).as('x'); cy.wait('@x')`                      |
+| `page.setInputFiles(selector, 'file.png')`               | `cy.get(selector).selectFile('file.png')`                       |
+| `page.locator(selector).click()`                         | `cy.get(selector).click()`                                      |
+| `page.locator(selector).click({ force: true })`          | `cy.get(selector).click({force: true})`                         |
+| `page.locator(selector).click({ button: 'right' })`      | `cy.get(selector).rightclick()`                                 |
+| `page.locator(selector).click({ modifiers: ['Shift'] })` | `cy.get(selector).click({shiftKey: true})`                      |
+| `page.locator(selector).dblclick()`                      | `cy.get(selector).dblclick()`                                   |
+| `page.locator(selector).hover()`                         | `cy.get(selector).trigger('mouseover')`                         |
+| `page.locator(selector).fill('text')`                    | `cy.get(selector).clear().type('text')`                         |
+| `page.locator(selector).focus()`                         | `cy.get(selector).focus()`                                      |
+| `page.locator(selector).press('Tab')`                    | `cy.get(selector).focus(); cy.press(Cypress.Keyboard.Keys.TAB)` |
+| `page.locator(selector).selectOption('blue')`            | `cy.get(selector).select('blue')`                               |
+| `page.locator(selector).scrollIntoViewIfNeeded()`        | `cy.get(selector).scrollIntoView()`                             |
+| `page.locator(selector).screenshot()`                    | `cy.get(selector).screenshot()`                                 |
+| `page.route('**/api', ...)`                              | `cy.intercept('/api', ...)`                                     |
+| `page.screenshot()`                                      | `cy.screenshot()`                                               |
+| `use: { storageState: 'state.json' }`                    | `cy.session('user', login)`                                     |
+| `page.clock.setFixedTime(date)`                          | `cy.clock(now)`                                                 |
+| `page.clock.install({ time })`                           | `cy.clock(now)`                                                 |
+| `page.clock.fastForward(duration)`                       | `cy.tick(ms)`                                                   |
+| `page.clock.runFor(duration)`                            | `cy.tick(ms)`                                                   |
+| `page.clock.setSystemTime(date)`                         | `clock.setSystemTime(date)`                                     |
+| `page.on('dialog', dialog => dialog.accept())`           | Auto-accepted by default                                        |
+| `page.on('dialog', dialog => dialog.dismiss())`          | `cy.on('window:confirm', () => false)`                          |
+| `page.on('dialog', dialog => dialog.accept('x'))`        | `cy.stub(win, 'prompt').returns('x')` in `onBeforeLoad`         |
+| `page.on('dialog')` with `beforeunload`                  | `cy.on('window:before:unload', event => ...)`                   |
+| `expect(page).toHaveURL(/re/)`                           | `cy.url().should('match', /re/)`                                |
+| `expect(locator).toHaveText('Yes!')`                     | `cy.get(selector).should('have.text', 'Yes!')`                  |
+| `expect(locator).toHaveAttribute('href')`                | `cy.get(selector).should('have.attr', 'href')`                  |
+| `expect(locator).toBeChecked()`                          | `cy.get(selector).should('be.checked')`                         |
+| `expect(locator).toBeDisabled()`                         | `cy.get(selector).should('be.disabled')`                        |
+| `expect(locator).toBeVisible()`                          | `cy.get(selector).should('be.visible')`                         |
+| `expect(locator).toBeHidden()`                           | `cy.get(selector).should('be.hidden')`                          |
+| `expect(locator).toBeEnabled()`                          | `cy.get(selector).should('be.enabled')`                         |
+| `expect(locator).toBeAttached()`                         | `cy.get(selector).should('exist')`                              |
+| `expect(locator).toBeFocused()`                          | `cy.get(selector).should('have.focus')`                         |
+| `expect(locator).toHaveValue('123')`                     | `cy.get(selector).should('have.value', '123')`                  |
+| `expect(locator).toContainText('Yes!')`                  | `cy.get(selector).should('contain', 'Yes!')`                    |
+| `expect(locator).toContainClass('light')`                | `cy.get(selector).should('have.class', 'light')`                |
+| `expect(locator).toHaveCSS('color', 'red')`              | `cy.get(selector).should('have.css', 'color', 'red')`           |
+| `browserContext.cookies()`                               | `cy.getCookies()`                                               |
+| `browserContext.clearCookies()`                          | `cy.clearCookies()`                                             |
+| `browserContext.addCookies(cookie)`                      | `cy.setCookie(name, value)`                                     |
+| `page.locator(selector).first()`                         | `cy.get(selector).first()`                                      |
+| `page.locator(selector).last()`                          | `cy.get(selector).last()`                                       |
+| `page.locator(selector).nth(n)`                          | `cy.get(selector).eq(n)`                                        |
+| `page.locator(selector).filter({ hasText: 'x' })`        | `cy.get(selector).filter(':contains("x")')`                     |
+| `page.waitForURL('**/dashboard')`                        | `cy.url().should('include', '/dashboard')`                      |
+| `page.goBack()`                                          | `cy.go('back')`                                                 |
+| `page.goForward()`                                       | `cy.go('forward')`                                              |

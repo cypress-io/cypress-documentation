@@ -1,5 +1,5 @@
 ---
-title: 'Launching Browsers in Cypress: Chrome, Firefox, Edge & WebKit'
+title: 'Launching browsers in Cypress: Chrome, Firefox, Edge & WebKit'
 description: 'Learn how Cypress launches and controls Chrome, Firefox, Edge, Electron, and WebKit. Choose and customize browsers, run headless, and fix launch issues.'
 sidebar_label: 'Launching Browsers'
 ---
@@ -10,7 +10,7 @@ sidebar_label: 'Launching Browsers'
 
 :::info
 
-##### <Icon name="question-circle" color="#4BBFD2" /> What you'll learn
+<WhatYoullLearn />
 
 - Why Cypress launches and controls its own browser
 - Which browsers Cypress supports and how to choose between them
@@ -269,7 +269,7 @@ of our [docker images](/app/continuous-integration/overview#Cypress-Docker-Image
 By default, we will launch Firefox headlessly during `cypress run`. To run
 Firefox headed, you can pass the `--headed` argument to `cypress run`.
 
-##### Mozilla geckodriver
+#### Mozilla geckodriver
 
 Cypress requires the
 [Mozilla geckodriver](https://github.com/mozilla/geckodriver) to launch Firefox.
@@ -332,9 +332,7 @@ GitHub repository.
 WebKit requires additional dependencies to run on Linux. To install the required
 dependencies, run this:
 
-```shell
-npx playwright install-deps webkit
-```
+<PackageManagerTabs exec="playwright install-deps webkit" />
 
 #### Known Issues with `experimentalWebKitSupport`
 

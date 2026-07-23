@@ -14,6 +14,15 @@ This is the **Cypress Documentation** site, built with
 - The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
   content into stripped-down markdown and chunked JSON published under `/llm`,
   with `/llms.txt` as the index (both are build output, not committed files).
+- The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
+  **never installed on their own**: they have no lockfiles and are not npm
+  workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
+  run their scripts. Everything they use (typescript, prettier, vitest, the
+  remark/unist ecosystem, etc.) resolves from the repository root's
+  `node_modules`, so their `package.json` files intentionally declare **no**
+  `dependencies`/`devDependencies`. Declare any new plugin dependency in the
+  **root** `package.json` — pins added to a plugin's own `package.json` are
+  never installed and just drift stale.
 - Reusable React/MDX components live in `src/components` and are registered in
   `src/theme/MDXComponents.js`.
 
@@ -113,8 +122,8 @@ Images go in `static/img/...` and are referenced via `/img/...`.
 
 To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 (name, description, repo link, keywords). Entries are grouped in this order:
-`official` (Cypress-owned) → `verified` (community, verified by Cypress) →
-`community` (unverified) → `deprecated` (unmaintained / incompatible with v10+).
+`official` (Cypress-owned) → `community` (community-owned) → `deprecated`
+(unmaintained / incompatible with v10+).
 
 ## Writing style
 
@@ -124,6 +133,16 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   best fit, and rarely more than one per paragraph.
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug.
+- **Bold vs. quotes for UI labels.** Reserve **bold** for real controls the
+  reader acts on in a walkthrough or tutorial, meaning actual buttons, links,
+  tabs, menu items, and flows in the Cypress Cloud or Cypress App UI (for
+  example, "open the **App Quality** tab" or "click **Record run**"). Bolding
+  these makes the clickable target scannable as the reader follows along. When a
+  UI label is only a hypothetical example in an illustrative scenario, not a real
+  control the reader is being told to use, put it in `"double quotes"` instead
+  (for example, an `"Add to cart"` button repeated on every card, or a `"Delete"`
+  button in a sample table). This keeps invented example labels visually distinct
+  from the real UI the tutorial navigates.
 
 ## Code blocks
 
@@ -136,6 +155,80 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   [`:::cypress-config-example`](#cypress-config-examples) directive, and for
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
+
+## AI prompts: `<CopyPrompt>` vs a code block
+
+Pick by whether the reader would **copy the text into an AI agent and get value
+from it in their own project**: reusable AI prompt → `<CopyPrompt>`; everything
+else → code block.
+
+Use **`<CopyPrompt>`** (a card with a **Copy prompt** button) for:
+
+- A prompt the reader can paste into an agent and run as-is, e.g. _"Evaluate my
+  last run on this branch and summarize the failures."_
+- A reusable AI skill, instruction, or rule that could live in an agent file
+  (`CLAUDE.md`, `.cursorrules`, a saved skill or custom instruction).
+
+Use a **fenced code block** for:
+
+- An example-specific prompt that only illustrates syntax, e.g. a step like
+  _"Click on the 'Add to cart' button"_.
+- Code, config, or CI (TypeScript, JavaScript, YAML, JSON, HTML, …) that is not
+  AI instructions.
+- Terminal commands or output, Mermaid diagrams, file/folder trees, and diffs.
+- Any literal artifact copied as-is: env-var blocks, API payloads, GraphQL
+  queries, regexes, URL templates, or error messages shown for reference.
+
+### `<CopyPrompt>` authoring rules
+
+Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
+(required), `title`, `subtext`, `hideTitle`, `defaultCollapsed`,
+`excludeFromLlmExport`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx`
+and `docs/app/guides/migration/`.
+
+- **No quotes** around the prompt — the card renders it verbatim.
+- **No tool calls** unless explicitly required: prefer _"Find all failing tests
+  on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
+- **For a titled card, pass `title`** — rendered as the card's heading with a
+  sparkle icon (used by the migration guides).
+- **When a card is one of several in a section** (e.g. a list of example
+  prompts), pass a `###` Markdown heading as the card's **children** instead of
+  a `title`. It stays a real heading, so the workflow shows up in the page's
+  table of contents, and the card styles it to match. Keep `title` too, for
+  analytics. Use `hideTitle` only for a lone card that already sits under its
+  own Markdown heading.
+- **Expanded by default** (no prop needed); add `defaultCollapsed` for prompts
+  over **350 characters** so they sit behind a **Show prompt** toggle.
+- **Format longer prompts** with newlines and bullet/numbered lists in the
+  `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
+  prompts stay on one line and wrap.
+- **Ships in the LLM export by default** (the prompt is reusable content). Add
+  `excludeFromLlmExport` only when the prompt tells the agent to read this same
+  page (e.g. the migration guides), so the export does not duplicate the page's
+  own content back to it.
+
+```mdx
+<CopyPrompt
+  title="The Health Check"
+  subtext="Get a high-level summary of any failures in the latest run on your branch."
+  prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
+>
+
+### The Health Check
+
+</CopyPrompt>
+```
+
+For a prompt over 350 characters, add `defaultCollapsed` and structure:
+
+```mdx
+<CopyPrompt
+  defaultCollapsed
+  title="Migrate this project to Cypress"
+  subtext="Walk your AI assistant through the migration end to end."
+  prompt={`Migrate this project's tests to Cypress. Work through these steps:\n\n1. Take inventory of my existing tests and config.\n2. Install Cypress alongside my current tooling.\n3. Migrate one spec at a time and keep the originals until the Cypress versions pass.\n4. Show me the changes before applying them, then run the migrated tests.`}
+/>
+```
 
 ## Admonition blocks
 
@@ -173,41 +266,47 @@ syncing and the initial selection.
 
 ### Package-manager commands
 
-Install / CLI commands: one tab per manager with `groupId="package-manager"` and
-`defaultValue="npm"`. Order is always **npm → Yarn → pnpm** (labels `npm`,
-`Yarn`, `pnpm`). Reach for the shared
-`docs/partials/_cypress-install-commands.mdx` partial when showing the basic
-install rather than re-authoring it.
+**Never hand-write npm/Yarn/pnpm/Bun tab sets.** Generate them with
+`<PackageManagerTabs>` (globally available, no import), which renders the
+command for every supported package manager in the canonical order
+(**npm → Yarn → pnpm → Bun**) with the shared `groupId="package-manager"` so
+the reader's choice syncs site-wide. Give it exactly one of three props,
+matching how the command is executed:
 
-````mdx
-<Tabs groupId="package-manager" defaultValue="npm" values={[
-  {label: 'npm', value: 'npm'},
-  {label: 'Yarn', value: 'yarn'},
-  {label: 'pnpm', value: 'pnpm'},
-]}>
-  <TabItem value="npm">
+```mdx
+<!-- Add a dependency: npm install / yarn add / pnpm add / bun add -->
 
-```shell
-npm install cypress --save-dev
+<PackageManagerTabs install="cypress" dev />
+
+<!-- Run an installed dependency's binary: npx / yarn / pnpm / bunx -->
+
+<PackageManagerTabs run="cypress open" />
+
+<!-- Download and run a one-off command: npx / yarn dlx / pnpm dlx / bunx -->
+
+<PackageManagerTabs exec="skills add cypress-io/ai-toolkit" />
 ```
 
-  </TabItem>
-  <TabItem value="yarn">
+- `dev` (with `install`) saves as a dev dependency (`--save-dev` / `--dev`).
+- `env="CYPRESS_RECORD_KEY=abc123"` prepends environment variable
+  assignment(s) to each generated command.
+- `run` / `exec` accept multiple commands on separate lines (pass a template
+  literal: `run={`cypress run\ncypress open`}`).
 
-```shell
-yarn add cypress --dev
-```
+For `cypress` subcommands there is the earlier `<CypressCommandTabs>`
+shorthand, which prepends `cypress` for you:
+`<CypressCommandTabs command="run --browser chrome" />` is equivalent to
+`<PackageManagerTabs run="cypress run --browser chrome" />`. Either is fine.
 
-  </TabItem>
-  <TabItem value="pnpm">
+The most common commands already exist as shared partials; reach for them
+rather than re-authoring: `<CypressInstallCommands />`, `<CypressOpenCommands />`,
+`<CypressRunCommands />`, `<CypressCacheClearCommands />`, and
+`<CypressInstallBinaryCommands />`.
 
-```shell
-pnpm add --save-dev cypress
-```
-
-  </TabItem>
-</Tabs>
-````
+Only fall back to explicit `<Tabs groupId="package-manager">` + `<TabItem>`s
+when the per-manager commands differ irregularly and can't be generated (e.g.
+`npm ci --foreground-scripts` vs `yarn install --frozen-lockfile`). Keep the
+canonical tab order and labels (`npm`, `Yarn`, `pnpm`, `Bun`) when you do.
 
 ### TypeScript / JavaScript examples
 
@@ -372,6 +471,9 @@ Rules for building the hash:
   anchors above. Only fall back to an explicit `{#CustomId}` at the end of a
   heading in the rare cases where the regular casing-based reference does not
   work (see the `docs/partials/_header-*.mdx` files, e.g. `{#Yields}`).
+  Preserving inbound links to a renamed heading is **not** one of those cases:
+  keep the original heading text (including its casing) instead of attaching a
+  custom ID to new wording.
 - `npm run write-heading-ids` generates explicit IDs for headings if you want
   them materialized.
 
@@ -416,3 +518,30 @@ that already embed the correct params rather than re-writing the URL.
 - **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
+
+## GitHub Actions workflows
+
+Repo automation lives in `.github/workflows/`. When adding or editing a
+workflow:
+
+- **Look up the current major version of every action you use.** Check the
+  action's own GitHub repository (its releases or tags page) at the time you
+  write the workflow, and use the latest major version published there.
+- Pin each action to its latest major tag (`uses: <owner>/<action>@v<major>`),
+  matching this repo's existing style. Pinning to a commit SHA is not required
+  here.
+- After a new or changed workflow runs, read its logs and bump any action the
+  runner flags with a deprecation warning.
+- This repository is frequently forked, and workflows (including scheduled
+  `cron` jobs) are copied into every fork, where they run with reduced
+  permissions: GitHub Actions cannot create or approve pull requests in a fork
+  by default, so an unguarded job fails with a fatal error. Guard any job that
+  pushes commits, creates pull requests, or uses repo secrets with a job-level
+  condition so it only runs on the default branch of the parent repository:
+
+  ```yml
+  jobs:
+    my-job:
+      if: (github.ref == 'refs/heads/main') &&
+        (github.repository == 'cypress-io/cypress-documentation')
+  ```

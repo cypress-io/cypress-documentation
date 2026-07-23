@@ -1,7 +1,7 @@
 ---
+title: Ignore elements in UI Coverage reports
+description: 'Exclude specific elements from UI Coverage with elementFilters so reports and scores focus on what you actually test.'
 sidebar_label: Ignore elements
-title: 'Ignore elements | Cypress UI Coverage Documentation'
-description: 'Learn how to exclude irrelevant elements from your UI Coverage reports to focus on meaningful insights.'
 sidebar_position: 50
 ---
 
@@ -9,52 +9,72 @@ sidebar_position: 50
 
 # Ignore elements
 
-Not all elements in your application are relevant to your test coverage. Cypress UI Coverage allows you to exclude specific elements from coverage reports, helping you focus on meaningful insights and avoid unnecessary noise. This guide explains why and how to ignore elements in your UI Coverage reports.
+Not all elements in your application are relevant to your test coverage. Cypress UI Coverage lets you exclude specific elements from coverage reports, so your score and untested-elements list focus on the elements your team is responsible for testing. This guide walks through finding the right elements to ignore and configuring the filters.
 
 ## Why ignore elements?
 
-Ignoring elements can be beneficial in the following scenarios:
+Ignoring elements helps in scenarios like these:
 
-- **Transitional Elements**: Exclude elements that are still in a loading state or undergoing changes, as they may not represent the final state of the element.
-- **Third-Party Widgets**: Exclude elements controlled by external libraries or third-party integrations.
+- **Third-Party Widgets**: Exclude elements controlled by external libraries or services, such as chat launchers or cookie banners, that your tests will never interact with.
+- **Out-of-Scope Elements**: Exclude test-only controls or areas of the application that you've decided not to test.
 
-By ignoring irrelevant elements, you can maintain clean and actionable coverage metrics.
+An excluded element is removed from the report entirely and doesn't count toward your coverage score, whether it was tested or not.
 
 ## Identify Elements to Ignore
 
 After recording your tests to Cypress Cloud, review the UI Coverage reports:
 
 1. Navigate to the **UI Coverage** tab in your test run.
-1. Look for elements that consistently appear but don't require testing.
+1. Look for untested elements that don't require testing.
 1. Note down the selectors, attributes, or patterns for these elements.
 
 ## Configure Ignored Elements
 
-[Element Filters](/ui-coverage/configuration/elementfilters) in the **App Quality** configuration are used to exclude elements based on their selectors or attributes. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **elementFilters** configuration.
+Add an [`elementFilters`](/ui-coverage/configuration/elementfilters) configuration in the **App Quality** tab of your project settings. Each rule pairs a CSS selector with `include: false` to exclude the elements it matches:
 
-```json
+```json title="App Quality Config"
 {
   "elementFilters": [
     {
-      "selector": "[data-external*]",
-      "include": false
-    },
-    {
-      "selector": "iframe[title='Login']",
-      "include": false
+      "selector": "[data-external]",
+      "include": false,
+      "comment": "Elements our tests never interact with"
     },
     {
       "selector": ".rdrDateRangePicker, .rdrDateRangePicker *",
-      "include": false
+      "include": false,
+      "comment": "Third-party date picker library"
     }
   ]
 }
 ```
 
-To learn more about the configuration options, refer to the [Element Filters](/ui-coverage/configuration/elementfilters) documentation.
+A few things to keep in mind when writing rules:
+
+- The selector must match the interactive elements themselves, not just a container around them. To exclude everything within a container, include its descendants in the selector, as the date picker example above does.
+- To exclude the contents of an iframe or shadow DOM, combine a selector with `documentScope`:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "*",
+      "include": false,
+      "documentScope": ["iframe[title='Login']"],
+      "comment": "Embedded third-party login form"
+    }
+  ]
+}
+```
+
+For all options and how rules are evaluated, including rule ordering and `documentScope`, see the [`elementFilters` reference](/ui-coverage/configuration/elementfilters).
+
+### Exclude elements from your markup instead
+
+When the team that owns the markup also owns the decision to exclude an element, you can do it in the application code instead of Cloud configuration. Add [`data-cy-ui-interactive="exclude"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) to a single element, or `data-cy-ui-interactive="exclude-all"` to a container to also exclude everything inside it. Prefer `elementFilters` when you want to manage exclusions centrally in Cypress Cloud without changing application code.
 
 ## Validate Ignored Elements
 
-After updating the configuration, record your tests again and review the UI Coverage report. The ignored elements should no longer appear in the coverage reports, streamlining the data and focusing on the critical areas of your application.
+After saving the configuration, regenerate a recent run from its **Properties** tab and review the UI Coverage report. The ignored elements should no longer appear, and your score should reflect only the elements you intend to test. There's no need to rerun your tests to see the effect of a configuration change.
 
-If new unnecessary elements appear in future reports, update your filters accordingly to keep reports clean and actionable.
+If new irrelevant elements appear in future reports, update your filters accordingly to keep reports clean and actionable.

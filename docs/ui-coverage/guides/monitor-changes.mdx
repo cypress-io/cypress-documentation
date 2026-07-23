@@ -1,24 +1,107 @@
 ---
+title: Monitor UI Coverage changes over time
+description: 'Set up a repeatable workflow to catch UI Coverage regressions before they merge and track coverage trends across your projects.'
 sidebar_label: Monitor changes
-title: 'Monitor changes | Cypress UI Coverage Documentation'
-description: 'Learn how to monitor changes to your UI Coverage scores over time to ensure proactive quality assurance.'
-sidebar_position: 70
+sidebar_position: 80
 ---
 
 <ProductHeading product="ui-coverage" />
 
 # Monitor changes
 
-Monitoring changes to your UI Coverage scores over time ensures that regressions are identified and addressed before they are merged. Cypress UI Coverage provides tools to track these changes, enabling proactive quality assurance in your development workflow.
+A single UI Coverage score tells you where you are today. Monitoring tells you
+which direction you're moving, so a drop in coverage is caught and reviewed
+before it merges, rather than discovered months later. This guide walks through
+a repeatable monitoring workflow, from establishing a cadence of runs to
+reviewing individual changes and tracking long-term trends.
 
-## Automate monitoring with the Results API
+:::note
+This guide assumes UI Coverage is enabled and your tests are recording to
+Cypress Cloud. If you haven't set that up yet, start with the
+[UI Coverage setup guide](/ui-coverage/get-started/setup).
+:::
 
-The UI Coverage [Results API](/ui-coverage/results-api) allows you to programmatically fetch UI Coverage data for integration into your CI/CD pipeline.
+## Step 1: Record runs on a regular cadence
 
-## Deep dive on changes with Branch Review
+Monitoring only works when there is something to compare. Two recording
+patterns give you that:
 
-[Branch Review for UI Coverage](/ui-coverage/guides/compare-reports) allows you to compare any two runs in detail and review new untested elements and links, as well as all new interactive elements added to the application.
+- **On every pull request**: record a run for each PR so you can compare it
+  against your base branch. This is what surfaces coverage regressions while
+  they can still be fixed cheaply.
+- **On a schedule**: add a recurring job to your CI (for example, a nightly
+  cron workflow) that records a run against a stable environment. Scheduled
+  runs give you a consistent point of comparison that isn't affected by which
+  files a particular PR happened to touch.
 
-## Spot trends overtime with cross-project analytics
+When a run is split across parallel machines or multiple `cypress run` calls,
+combine those specs into a single [Cypress run](/cloud/features/recorded-runs)
+with the [`--group` flag](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs)
+so each report reflects your entire suite rather than a slice of it.
 
-In the [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage) area of Cypress Cloud, you can view high-level trends across all projects and runs, as well as download reports or retrieve details with an API.
+Once runs are recording, connect [Slack](/cloud/integrations/slack) or
+[Microsoft Teams](/cloud/integrations/microsoft-teams) so your team is alerted
+whenever a run finishes, with Slack surfacing UI Coverage results directly. For
+scheduled runs especially, this is what turns a nightly regression into an alert
+rather than a report no one opens.
+
+## Step 2: Catch regressions on each pull request
+
+With a run recorded for every PR, compare it against the base branch to see the
+exact coverage impact of the change.
+
+- For a **manual review**, open [Branch Review](/ui-coverage/guides/compare-reports)
+  and compare the PR run against your base branch. The report highlights new
+  untested elements and links introduced by the change, so you can decide whether
+  to add a test or ignore the element with configuration.
+- To **enforce a policy automatically**, add a Results API check to CI that
+  fails the build when new gaps appear. See
+  [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests)
+  for a status-check workflow and a baseline-comparison script that fails only
+  on _new_ untested elements.
+- To **surface the change in code review**, connect a version control
+  integration ([GitHub](/cloud/integrations/github#Pull-request-comments),
+  [GitLab](/cloud/integrations/gitlab#Merge-Request-comments), or
+  [Bitbucket](/cloud/integrations/bitbucket#Pull-Request-comments)). Cypress
+  Cloud comments on the pull request with the run summary and a link straight to
+  Branch Review, putting the coverage comparison one click from the reviewer.
+
+## Step 3: Investigate a specific change
+
+When a monitoring run or a PR shows an unexpected shift, use
+[Branch Review](/ui-coverage/guides/compare-reports) to pin down the cause. Its
+dropdowns let you compare any two runs, so you can:
+
+- Compare a nightly run against the previous night's to catch drift in the
+  application.
+- Step back through runs to find the exact commit that introduced a new
+  untested element or link.
+- Confirm that a fix had the intended effect before sharing it with your team.
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/uic-branch-review.png"
+  alt="UI Coverage Branch Review comparing two runs, with sections for new untested elements, resolved coverage gaps, and elements whose coverage status changed"
+/>
+
+When you find a real gap, follow
+[Address coverage gaps](/ui-coverage/guides/address-coverage-gaps) to close it.
+
+## Step 4: Track trends across projects
+
+Individual comparisons answer "what changed between these two runs?" To answer
+"how is coverage trending over weeks and months?", use the
+[Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage)
+area of Cypress Cloud, available on the Enterprise plan. It rolls trends up
+across every project in your organization, not just one, so you can view
+high-level UI Coverage trends across all projects and runs, download reports, or
+pull the data through the [data extract API](/cloud/integrations/data-extract-api)
+for your own dashboards.
+
+## See also
+
+- [Compare reports](/ui-coverage/guides/compare-reports): the full Branch
+  Review workflow for diffing two runs.
+- [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests):
+  automate the regression gate in CI.
+- [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps): close the
+  gaps your monitoring surfaces.
