@@ -289,7 +289,7 @@ cy-cloud project list --orgId <orgId1>,<orgId2>
 
 ### cy-cloud project get
 
-Get details for a single project by its project ID (the `projectId` from your Cypress [configuration](/cloud/account-management/projects)):
+Get details for a single project by its project ID (the `projectId` from your Cypress configuration):
 
 ```bash
 cy-cloud project get --projectId <projectId>
@@ -340,7 +340,7 @@ Get details for a specific run by project ID and run number:
 cy-cloud run get --projectId <projectId> --runNumber <runNumber>
 ```
 
-The details add the commit SHA, per-status test counts, and duration in milliseconds:
+The details surface the commit SHA, per-status test counts, and duration in milliseconds:
 
 ```json
 {
@@ -368,7 +368,7 @@ List the failing specs in a run:
 cy-cloud spec list --projectId <projectId> --runNumber <runNumber> --status failed
 ```
 
-Each spec includes its `id`, status, and file path:
+Each spec includes its id, status, and file path:
 
 ```json
 {
