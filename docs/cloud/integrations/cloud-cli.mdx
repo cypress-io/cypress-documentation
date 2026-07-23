@@ -89,11 +89,9 @@ cy-cloud run list --help
 
 ### Keep the CLI updated
 
-Always run the latest version. Older versions eventually become unsupported: the CLI warns you when yours falls behind, and versions below the minimum stop working. Check your version and support status any time with [`cy-cloud version`](#cy-cloud-version), and upgrade to the latest release regularly:
+Always run the latest version. Check your version any time with [`cy-cloud version`](#cy-cloud-version), and upgrade to the latest release regularly:
 
-```bash
-npm install --global @cypress/cloud@latest
-```
+<PackageManagerTabs install="@cypress/cloud@latest" global />
 
 ### Authenticate
 
@@ -205,7 +203,7 @@ To revoke a personal access token, find it under **Personal access token** and s
 
 ## Command reference
 
-Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`, `test`, `replay`, `cache`), each with subcommands such as `list` and `get`. For example, `cy-cloud run list` lists runs and `cy-cloud run get` fetches one run. Authentication and utility commands (`login`, `logout`, `status`, `version`) sit at the top level. Each data command returns JSON on standard output.
+Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`, `test`, `replay`, `cache`), each with subcommands such as `list` and `get`. For example, `cy-cloud run list` lists runs. Each data command returns JSON on standard output.
 
 | Command                                                 | What it does                                              |
 | ------------------------------------------------------- | --------------------------------------------------------- |
@@ -236,14 +234,7 @@ Every `list` command returns one page of results plus a `pagination` object desc
 - `--page` selects which page to return, starting at 1 (the default).
 - The response's `pagination` object reports the effective `page`, `perPage`, and the `total` number of matching items, so you can tell how many results exist and whether more pages remain.
 
-Filters that accept multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) take a comma-separated list, and you can combine any of them with `--page` and `--limit`:
-
-| Goal                                                  | Command                                                                                                  |
-| ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| The 5 most recent runs for a project                  | `cy-cloud run list --projectId <projectId> --limit 5`                                                    |
-| The second page of 25 runs                            | `cy-cloud run list --projectId <projectId> --page 2 --limit 25`                                          |
-| Up to 50 passed or failed runs on `main` or `develop` | `cy-cloud run list --projectId <projectId> --branch main,develop --status passed,failed --limit 50`      |
-| Up to 100 failed or errored tests in a run            | `cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed,errored --limit 100` |
+Filters that accept multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) take a comma-separated list, and you can combine any of them with `--page` and `--limit`.
 
 To walk an entire result set, request the largest page you can (`--limit 100`), then keep incrementing `--page` until a page returns fewer than `--limit` items, or until you have collected `pagination.total` items:
 
@@ -254,7 +245,7 @@ cy-cloud test list --projectId <projectId> --runNumber <runNumber> --limit 100 -
 
 ### cy-cloud org list
 
-List the organizations your account belongs to, sorted alphabetically by name. Use this to find the organization ID you need for other commands.
+List the organizations your account belongs to, sorted alphabetically by name. Use this to find the organization uuid you need for other commands.
 
 ```bash
 cy-cloud org list
@@ -267,8 +258,7 @@ Prints the organizations you belong to, each with the `uuid` you pass to other c
   "organizations": [
     { "uuid": "8a7f0b2c-1d3e-4f5a-9b6c-2d1e0f3a4b5c", "name": "Acme Corp" },
     { "uuid": "1b2c3d4e-5f6a-7b8c-9d0e-1f2a3b4c5d6e", "name": "Acme Labs" }
-  ],
-  "pagination": { "page": 1, "perPage": 30, "total": 2 }
+  ]
 }
 ```
 
@@ -280,22 +270,21 @@ List every project you can access, sorted alphabetically by name:
 cy-cloud project list
 ```
 
-Each project includes its `projectId` and display name:
+Each project includes its `projectId` and name:
 
 ```json
 {
   "projects": [
     { "projectId": "abc123", "name": "design-system" },
     { "projectId": "def456", "name": "storefront" }
-  ],
-  "pagination": { "page": 1, "perPage": 30, "total": 2 }
+  ]
 }
 ```
 
-Or list projects in specific organizations, capping the number returned:
+Or list projects in specific organizations:
 
 ```bash
-cy-cloud project list --orgId <orgId1>,<orgId2> --limit 10
+cy-cloud project list --orgId <orgId1>,<orgId2>
 ```
 
 ### cy-cloud project get
@@ -306,7 +295,7 @@ Get details for a single project by its project ID (the `projectId` from your Cy
 cy-cloud project get --projectId <projectId>
 ```
 
-The response also includes the project's latest run numbers:
+The response also includes the project's latest run ids:
 
 ```json
 {
@@ -337,8 +326,7 @@ Each run includes its number, branch, timestamps, and status:
       "completedAt": "2026-07-21T02:19:44.000Z",
       "status": "failed"
     }
-  ],
-  "pagination": { "page": 1, "perPage": 30, "total": 87 }
+  ]
 }
 ```
 
@@ -390,8 +378,7 @@ Each spec includes its `id`, status, and file path:
       "status": "failed",
       "path": "cypress/e2e/checkout.cy.ts"
     }
-  ],
-  "pagination": { "page": 1, "perPage": 30, "total": 42 }
+  ]
 }
 ```
 
@@ -410,8 +397,6 @@ Get details for a single spec:
 ```bash
 cy-cloud spec get --specId <specId>
 ```
-
-The details add timing and per-status test counts for the spec:
 
 ```json
 {
@@ -460,8 +445,7 @@ Each test includes its title parts, spec, status, a Test Replay URL (when availa
         }
       ]
     }
-  ],
-  "pagination": { "page": 1, "perPage": 30, "total": 2 }
+  ]
 }
 ```
 
@@ -508,7 +492,7 @@ The single-test response adds the resolved `attempt` (1-indexed), `runnerId`, an
 }
 ```
 
-Save the failure screenshot for a test. Pass `--screenshot` on its own to write to a temporary directory, or give it a path to choose the destination (for example, a `screenshots` directory):
+Save the failure screenshot for a test. Pass `--screenshot` on its own to write to a temporary directory, or give it a path to choose the destination:
 
 ```bash
 cy-cloud test get --testId <testId> --screenshot ./screenshots
