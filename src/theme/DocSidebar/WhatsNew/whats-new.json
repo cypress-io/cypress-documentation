@@ -32,6 +32,12 @@
   ],
   "cloud": [
     {
+      "label": "Cloud CLI",
+      "href": "/cloud/integrations/cloud-cli?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-cli",
+      "description": "Query and script your Cypress Cloud data from the terminal.",
+      "isNew": true
+    },
+    {
       "label": "Cloud MCP",
       "href": "/cloud/integrations/cloud-mcp?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-mcp",
       "description": "Connect AI agents directly to Cypress Cloud runs.",
