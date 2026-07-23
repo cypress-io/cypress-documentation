@@ -774,12 +774,12 @@ It reports the cache size before and after, and how many entries it removed:
 
 Because every command returns structured JSON and exposes its output schema with `--schema`, the Cloud CLI is a natural tool for AI coding agents. An agent can list failing tests, read errors, and pull Test Replay timelines, then use that context to propose a fix in your editor. The workflows below are written to run by hand or to hand to an agent.
 
-If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copilot CLI), point it at `cy-cloud` and describe the goal in plain language. Copy one of the prompts below to get started, swapping in your own project ID, branch, and test ID.
+If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copilot CLI), point it at `cy-cloud` and describe the goal in plain language. Copy one of the prompts below to get started, replacing the `<projectId>`, `<branch>`, `<runNumber>`, and `<testId>` placeholders with your own values.
 
 <CopyPrompt
   title="Summarize the latest failure"
   subtext="Find the most recent failed run on a branch and explain why each test failed."
-  prompt={`Using the cy-cloud CLI, find the most recent failed run on main for project abc123 and summarize why each failing test failed.`}
+  prompt={`Using the cy-cloud CLI, find the most recent failed run on <branch> for project <projectId> and summarize why each failing test failed.`}
 >
 
 ### Summarize the latest failure
@@ -799,7 +799,7 @@ If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copil
 <CopyPrompt
   title="Triage a specific run"
   subtext="Confirm you are signed in, list the failing specs in a run, and save a failure screenshot."
-  prompt={`Run cy-cloud status to confirm I am signed in, then list the failing specs in run 4021 of project abc123 and save the first failure's screenshot to ./screenshots.`}
+  prompt={`Run cy-cloud status to confirm I am signed in, then list the failing specs in run <runNumber> of project <projectId> and save the first failure's screenshot to ./screenshots.`}
 >
 
 ### Triage a specific run
@@ -809,7 +809,7 @@ If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copil
 <CopyPrompt
   title="Daily failure check"
   subtext="Check the latest run each day and summarize any failures."
-  prompt={`Every morning, run cy-cloud to check the latest run on main for project abc123. If it failed, open a summary of the failing tests and their errors.`}
+  prompt={`Every morning, run cy-cloud to check the latest run on <branch> for project <projectId>. If it failed, open a summary of the failing tests and their errors.`}
 >
 
 ### Daily failure check
