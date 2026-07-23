@@ -67,6 +67,7 @@ Each rule is a hard convention. See the linked section for the how and why.
 [partials](./AGENTS_REFERENCE.md#partials),
 [naming](./AGENTS_REFERENCE.md#product-heading--naming),
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
+[AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
 [alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
@@ -82,6 +83,10 @@ Each rule is a hard convention. See the linked section for the how and why.
   genuinely related pages worth surfacing. Don't pad it with tangential links or
   repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
+- For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
+  not a code block; keep example-specific prompts, code, commands, and diagrams in
+  code blocks. Prompts are expanded by default; add `defaultCollapsed` past 350
+  characters, and never wrap the prompt in quotes.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
 - Use **bold** only for real UI controls the reader acts on in a walkthrough

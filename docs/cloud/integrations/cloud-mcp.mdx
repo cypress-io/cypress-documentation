@@ -420,27 +420,57 @@ To get the most out of Cloud MCP, follow these three principles:
 **Pro-Tip:** If you find a workflow that works well, save it as a Custom Instruction or Skill in your AI client to standardize debugging for your entire team.
 :::
 
+<CopyPrompt
+  title="The Health Check"
+  subtext="Get a high-level summary of any failures in the latest run on your branch."
+  prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
+>
+
 ### The Health Check
 
-> "Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures."
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Deep Debug"
+  subtext="Investigate each failing test and propose a fix for the regression."
+  prompt={`Find the failing tests for [Run URL]. For each failure, look at the stack trace, check my local code, and propose a fix to stop the regression.`}
+>
 
 ### The Deep Debug
 
-> "Find the failing tests for [Run URL]. For each failure, look at the stack trace, check my local code, and propose a fix to stop the regression."
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Flake Audit"
+  subtext="Surface flaky tests across recent runs and look for common patterns."
+  prompt={`List all flaky tests from the last 5 runs in Cypress Cloud. Are there any common patterns in the error messages?`}
+>
 
 ### The Flake Audit
 
-> "List all flaky tests from the last 5 runs in Cypress Cloud. Are there any common patterns in the error messages?"
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Accessibility Triage"
+  subtext="Summarize accessibility violations for the latest run, grouped by rule and view."
+  prompt={`Pull the Cypress Cloud Accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted.`}
+>
 
 ### The Accessibility Triage
 
-> "Pull the Cypress Cloud Accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted."
+</CopyPrompt>
 
 For a deeper exploration of working with Cloud MCP's accessibility tools, read our guide [Cypress Accessibility - Work with AI agents](/accessibility/work-with-ai-agents).
 
+<CopyPrompt
+  title="The UI Coverage Triage"
+  subtext="Review UI Coverage for the latest run and drill into the riskiest view."
+  prompt={`Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. Tell me the overall coverage score, list the views with the most untested elements, and show me the specific untested elements on the riskiest view.`}
+>
+
 ### The UI Coverage Triage
 
-> "Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. Tell me the overall coverage score, list the views with the most untested elements, and show me the specific untested elements on the riskiest view."
+</CopyPrompt>
 
 For more patterns, example prompts, and governance ideas when using UI Coverage with agents, read [Cypress UI Coverage - Work with AI agents](/ui-coverage/work-with-ai-agents).
 
@@ -510,7 +540,12 @@ Disabling the integration immediately revokes access for all users in that organ
 
 You can share feedback directly through your agent:
 
-> "Send Cypress the following feedback: [Your message here]"
+<CopyPrompt
+  hideTitle
+  title="Send feedback"
+  subtext="Share feedback, use cases, or issues with Cypress from your agent."
+  prompt={`Send Cypress the following feedback: [Your message here]`}
+/>
 
 Alternatively, use [this feedback form](https://share.hsforms.com/2NWNpyi5KSZmG4x0geIXgBg3a4za) to share any feedback, use cases, or issues encountered with your prompts and queries.
 
