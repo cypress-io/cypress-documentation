@@ -1018,6 +1018,47 @@ Usage limits are separate from data availability. What data you can retrieve fol
 
 The Cloud CLI communicates with the Cypress Cloud API at `https://cloud-api.cypress.io`. If you run the CLI from behind a restrictive VPN or firewall, add that host to your allowlist so the CLI can reach Cloud. Sign-in also uses `https://cloud.cypress.io`. See the [Cypress Cloud allowlist URLs](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly) for the full list.
 
+## Changelog
+
+### 0.3.0
+
+_Released July 27, 2026_
+
+- Support Cypress Cloud test URLs via `--testResultUrl` in `test get`, `replay info`, and `replay timeline`
+- Fix an issue in `replay *` commands that caused queries against some tests to fail with a "SQLite3 can only bind numbers, strings, bigints, buffers, and null" error message
+- Redirect some logging so that command output is cleanly output to stdout
+- Improve handling of expired or invalid credentials without discarding OAuth credentials during transient refresh failures
+- Fix test setup to prevent network calls
+
+### 0.2.0
+
+_Released July 23, 2026_
+
+- Improve error logging
+- Convert all positional CLI arguments to flags
+- Update field names used in `test get` after duplicates were removed from API
+- Append additional metadata to API requests to aid troubleshooting
+- Remove unused fields from output of the `status` command
+- Default `replay timeline` to commands around the failure plus XHR/Fetch network events; add `--all` to opt into the full timeline
+- Add check to ensure user is authenticated prior to making API calls
+- Improve validation of arguments when calling `spec list` and `test list`
+- Fix `--schema` flag to not require other arguments, now outputs recursively
+
+### 0.1.1
+
+_Released July 16, 2026_
+
+- Clarify license metadata
+- Fix minor issues in some error messages
+- Fix issue with release process
+- Fix typo in default URL
+
+### 0.1.0
+
+_Released July 16, 2026_
+
+- Initial Release
+
 ## See also
 
 - [Cloud MCP: Agentic debugging](/cloud/integrations/cloud-mcp)
