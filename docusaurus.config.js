@@ -108,6 +108,12 @@ const config = {
     ],
     require.resolve('docusaurus-plugin-image-zoom'),
     require.resolve('./plugins/llm'),
+    [
+      'docusaurus-plugin-copy-page-button',
+      {
+        injectButton: false,
+      },
+    ],
     require.resolve('./plugins/faq-structured-data'),
     require.resolve('./plugins/og-image-cards'),
     // ....

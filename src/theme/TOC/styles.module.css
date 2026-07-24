@@ -1,0 +1,9 @@
+.copyPageButton {
+  background: transparent !important;
+  border-radius: 4px;
+  font-size: 0;
+  gap: 4px;
+  margin-bottom: 0;
+  padding: 8px;
+  height: 32px;
+}
