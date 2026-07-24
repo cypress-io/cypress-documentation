@@ -43,6 +43,10 @@ Use the **Untested links** section of the UI Coverage report. It lists links who
 
 ## Reducing test duplication
 
+### <Icon name="angle-right" /> What is test duplication in Cypress UI Coverage?
+
+Test duplication is when many separate tests exercise the same interactive element to pass _through_ a flow rather than to test it, such as every test clicking a **Log in** or **Continue** button during setup. UI Coverage surfaces it in the **Tested elements** section, where those shared setup steps rise to the top on interaction and test count. It's wasted suite time, not a coverage gap: the element is tested, just redundantly. See [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication).
+
 ### <Icon name="angle-right" /> How do I find elements my tests exercise more than they need to?
 
 Open the **Tested elements** section of the UI Coverage report. It lists every interactive element your tests exercised, with an **Interactions** column (how many times a command targeted it) and a **Tests** column (how many separate tests touched it), and it's sorted by interactions with the most-exercised elements first. A control that a large share of your suite interacts with, such as a **Log in** or **Continue** button, is usually shared setup being repeated across tests. Expand a row to break its counts down by view and open [Test Replay](/cloud/features/test-replay) on each occurrence. See [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication).

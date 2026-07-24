@@ -42,6 +42,17 @@ in your test code, not your configuration.
 
 :::
 
+:::tip
+
+<Icon useCypressIcon name="general-sparkle-triple" className="inline" /> If you
+use an AI coding assistant, you can run this workflow without leaving your
+editor. [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets your agent pull
+the tested elements from a run, rank the most-exercised controls, and draft the
+consolidating command (such as a `cy.session()` wrapper) alongside your existing
+code. See [Work with AI agents](/ui-coverage/work-with-ai-agents) for prompts.
+
+:::
+
 ## Step 1: Record a run to Cypress Cloud
 
 UI Coverage needs a recorded run to analyze. Any run recorded to
@@ -116,11 +127,29 @@ interacted with by most of the suite, but Test Replay shows almost none of those
 tests care about the welcome screen. They're just getting past it to reach the
 projects page. That's the duplication to remove.
 
+:::caution
+
+A high count on a [grouped element](/ui-coverage/core-concepts/element-grouping)
+sums the interactions of every member of the group, so a **Delete** button
+repeated on every row of a list, or a nav link shown on every page, can top the
+list without any test being redundant. Check the **Tests** count and expand the
+row before consolidating: real duplication is one control that many _separate_
+tests pass through, not one control that legitimately appears in many places.
+
+:::
+
 ## Step 5: Consolidate the repeated setup
 
 Once you've confirmed a control is pass-through setup, replace the repeated UI
 interaction with a single programmatic step. Which technique fits depends on
-what the setup does.
+what the setup does:
+
+| When the pass-through is…                           | Reach for                                                                                 |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Logging in through a form                           | [`cy.session()`](/api/commands/session) to cache and restore the login                    |
+| A modal, banner, or onboarding step gated by a flag | Set the cookie or storage value directly with [`cy.setCookie()`](/api/commands/setcookie) |
+| Building up data your test needs to exist first     | Seed it through your API with [`cy.request()`](/api/commands/request)                     |
+| Waiting on a network response to reach a state      | Stub it with [`cy.intercept()`](/api/commands/intercept)                                  |
 
 ### Cache authentication with `cy.session()`
 
@@ -172,7 +201,9 @@ Cypress.Commands.add('login', (username = 'user@example.com') => {
 Keep one dedicated test that drives the login form through the UI so the flow
 itself stays covered, then call `cy.login()` everywhere else. UI Coverage still
 marks the form as tested from that one test, while the interaction count on it
-drops from hundreds to one.
+drops from hundreds to one. When your login lives on a separate identity
+provider, pair `cy.session()` with [`cy.origin()`](/api/commands/origin) to
+drive the form across the origin boundary.
 
 ### Set state directly instead of clicking through it
 
@@ -211,21 +242,32 @@ Cypress.Commands.add('skipWelcome', () => {
 </TabItem>
 </Tabs>
 
-The projects test no longer clicks **Continue** to get past the welcome screen;
-one test still covers the welcome flow on purpose:
+Moving the setup into a `beforeEach` hook is what multiplies the interaction
+count in the first place, so it's also where the fix belongs: the projects specs
+skip the welcome screen once per test in setup, while one dedicated test still
+covers the welcome flow on purpose.
 
 ```js title="cypress/e2e/projects.cy.js"
-it('shows the welcome screen to first-time users', () => {
-  cy.visit('/')
-  cy.contains('Welcome')
-  cy.get('[data-cy="continue"]').click()
-  cy.contains('Projects')
-})
+describe('Projects', () => {
+  it('shows the welcome screen to first-time users', () => {
+    cy.visit('/')
+    cy.contains('Welcome')
+    cy.get('[data-cy="continue"]').click()
+    cy.contains('Projects')
+  })
 
-it('lists the current user projects', () => {
-  cy.skipWelcome()
-  cy.visit('/')
-  cy.contains('Projects')
+  describe('for returning users', () => {
+    beforeEach(() => {
+      cy.skipWelcome()
+      cy.visit('/')
+    })
+
+    it('lists the current user projects', () => {
+      cy.contains('Projects')
+    })
+
+    // Every other test starts past the welcome screen without clicking Continue
+  })
 })
 ```
 
@@ -276,6 +318,12 @@ To see the change directly, [compare the two
 runs](/ui-coverage/guides/compare-reports): the before-and-after makes it easy
 to confirm the element's interactions dropped while your overall coverage score
 held steady.
+
+The time you saved shows up outside UI Coverage, in how long the suite takes to
+run. Watch the run duration on the [runs
+list](/cloud/features/recorded-runs#Latest-Runs) or in
+[Test Replay](/cloud/features/test-replay) fall as the redundant UI steps come
+out, so you can put a number on the payoff.
 
 ## Step 7: Keep duplication from creeping back
 
