@@ -156,6 +156,80 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
 
+## AI prompts: `<CopyPrompt>` vs a code block
+
+Pick by whether the reader would **copy the text into an AI agent and get value
+from it in their own project**: reusable AI prompt → `<CopyPrompt>`; everything
+else → code block.
+
+Use **`<CopyPrompt>`** (a card with a **Copy prompt** button) for:
+
+- A prompt the reader can paste into an agent and run as-is, e.g. _"Evaluate my
+  last run on this branch and summarize the failures."_
+- A reusable AI skill, instruction, or rule that could live in an agent file
+  (`CLAUDE.md`, `.cursorrules`, a saved skill or custom instruction).
+
+Use a **fenced code block** for:
+
+- An example-specific prompt that only illustrates syntax, e.g. a step like
+  _"Click on the 'Add to cart' button"_.
+- Code, config, or CI (TypeScript, JavaScript, YAML, JSON, HTML, …) that is not
+  AI instructions.
+- Terminal commands or output, Mermaid diagrams, file/folder trees, and diffs.
+- Any literal artifact copied as-is: env-var blocks, API payloads, GraphQL
+  queries, regexes, URL templates, or error messages shown for reference.
+
+### `<CopyPrompt>` authoring rules
+
+Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
+(required), `title`, `subtext`, `hideTitle`, `defaultCollapsed`,
+`excludeFromLlmExport`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx`
+and `docs/app/guides/migration/`.
+
+- **No quotes** around the prompt — the card renders it verbatim.
+- **No tool calls** unless explicitly required: prefer _"Find all failing tests
+  on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
+- **For a titled card, pass `title`** — rendered as the card's heading with a
+  sparkle icon (used by the migration guides).
+- **When a card is one of several in a section** (e.g. a list of example
+  prompts), pass a `###` Markdown heading as the card's **children** instead of
+  a `title`. It stays a real heading, so the workflow shows up in the page's
+  table of contents, and the card styles it to match. Keep `title` too, for
+  analytics. Use `hideTitle` only for a lone card that already sits under its
+  own Markdown heading.
+- **Expanded by default** (no prop needed); add `defaultCollapsed` for prompts
+  over **350 characters** so they sit behind a **Show prompt** toggle.
+- **Format longer prompts** with newlines and bullet/numbered lists in the
+  `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
+  prompts stay on one line and wrap.
+- **Ships in the LLM export by default** (the prompt is reusable content). Add
+  `excludeFromLlmExport` only when the prompt tells the agent to read this same
+  page (e.g. the migration guides), so the export does not duplicate the page's
+  own content back to it.
+
+```mdx
+<CopyPrompt
+  title="The Health Check"
+  subtext="Get a high-level summary of any failures in the latest run on your branch."
+  prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
+>
+
+### The Health Check
+
+</CopyPrompt>
+```
+
+For a prompt over 350 characters, add `defaultCollapsed` and structure:
+
+```mdx
+<CopyPrompt
+  defaultCollapsed
+  title="Migrate this project to Cypress"
+  subtext="Walk your AI assistant through the migration end to end."
+  prompt={`Migrate this project's tests to Cypress. Work through these steps:\n\n1. Take inventory of my existing tests and config.\n2. Install Cypress alongside my current tooling.\n3. Migrate one spec at a time and keep the originals until the Cypress versions pass.\n4. Show me the changes before applying them, then run the migrated tests.`}
+/>
+```
+
 ## Admonition blocks
 
 Call-outs use Docusaurus admonition directives: `:::type` to open, `:::` to
