@@ -374,8 +374,35 @@ Most often the run was processed before you saved: reports use the configuration
 
 Start by [regenerating the run](/ui-coverage/configuration/overview#Setting-configuration) so it reflects your current configuration, then match your symptom to a cause on the [Troubleshooting](/ui-coverage/troubleshooting) page, which covers duplicate elements, mis-grouped elements, tested elements shown as untested, configuration that has no effect, and unexpected scores. Because you can regenerate any past run, the fastest approach is to make one change, regenerate a recent run, and check the result before making the next.
 
+## Using AI agents with Cypress UI Coverage
+
+### <Icon name="angle-right" /> Can AI agents read my Cypress UI Coverage results?
+
+Yes. AI agents can read your Cypress UI Coverage results through [Cypress Cloud MCP](/cloud/integrations/cloud-mcp), which exposes UI Coverage data to compatible agents through structured, read-only tools. An agent can pull a Cypress run's coverage score and untested elements directly instead of you copy-pasting from the report. See [Work with AI agents](/ui-coverage/work-with-ai-agents) for setup and example prompts.
+
+### <Icon name="angle-right" /> Which Cypress Cloud MCP tools expose UI Coverage data to AI agents?
+
+Cypress Cloud MCP provides three UI Coverage tools: `cypress_get_ui_coverage_report` returns a run's overall coverage score, tested and untested element and link counts, and the top 5 riskiest views; `cypress_get_ui_coverage_views` pages through all views sorted by most untested elements and links; and `cypress_get_ui_coverage_elements` pages through individual elements, filterable by tested or untested and scopable to a single view. Your AI agent selects them automatically based on your prompt.
+
+### <Icon name="angle-right" /> Can Cypress Cloud MCP update my Cypress tests, configuration, or runs?
+
+No. The Cypress UI Coverage MCP tools are read-only: they retrieve report data and can't edit your test code, update your [App Quality configuration](/ui-coverage/configuration/overview), or delete runs. An AI agent can draft test code locally in your editor, but nothing an agent does through Cypress Cloud MCP writes back to Cypress Cloud. Access is also scoped to the projects your Cypress Cloud user can already see. See [Cloud MCP security](/cloud/integrations/cloud-mcp#Security--Privacy).
+
+### <Icon name="angle-right" /> How do I make Cypress UI Coverage reports easier for an AI agent to use?
+
+Shape your Cypress UI Coverage report the same way you would for human review. [Filter out](/ui-coverage/configuration/elementfilters) third-party widgets you don't own, [promote a stable attribute](/ui-coverage/configuration/significantattributes) so elements have clean, readable names, and [group](/ui-coverage/configuration/elementgroups) repeated controls so they count once. A high-signal report gives the agent accurate context and avoids wasting tokens on noise. See [Tune reports for better agent results](/ui-coverage/work-with-ai-agents#Tune-reports-for-better-agent-results).
+
+### <Icon name="angle-right" /> Can an AI agent write Cypress tests for my untested UI Coverage elements?
+
+Yes, with your review. Because Cypress UI Coverage lists untested elements with the selectors and views that produced them, an AI agent can draft Cypress tests targeting those elements and suggest the existing spec file that's the best home for them. Pair the agent with [Cypress AI Skills](/app/tooling/ai-skills) so the tests it drafts follow Cypress best practices and match your project's conventions. Ask it to show a diff before writing files, and confirm intent and risk yourself before merging. See the [prompts to plan and draft tests](/ui-coverage/work-with-ai-agents#Prompts-to-plan-and-draft-tests).
+
+### <Icon name="angle-right" /> Is my Cypress UI Coverage data used to train AI models?
+
+No. Cypress UI Coverage data returned through Cypress Cloud MCP is used only to fulfill the agent's request and is never used to train or improve any LLM. Cypress also has no visibility into your AI assistant's conversation or outputs. See [Cloud MCP security and privacy](/cloud/integrations/cloud-mcp#Security--Privacy).
+
 ## See also
 
+- [Work with AI agents](/ui-coverage/work-with-ai-agents) explains how to query UI Coverage with AI agents over Cypress Cloud MCP.
 - [Troubleshooting UI Coverage](/ui-coverage/troubleshooting) maps common report problems to their causes and fixes.
 - [Results API](/ui-coverage/results-api) fetches a run's UI Coverage results in CI so you can enforce coverage standards.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every configuration option and what each one is for.

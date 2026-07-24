@@ -1,6 +1,6 @@
 ---
 title: Use AI agents with UI Coverage
-description: 'Use AI assistants with UI Coverage and Cypress Cloud MCP: pull coverage scores and untested elements from recorded runs, tune reports for clearer signal, and review coverage deltas alongside passing tests.'
+description: 'Use AI agents with UI Coverage and Cypress Cloud MCP to pull coverage scores and untested elements from recorded runs and turn gaps into drafted tests.'
 sidebar_label: Work with AI agents
 sidebar_position: 110
 ---
@@ -9,44 +9,264 @@ sidebar_position: 110
 
 # Work with AI agents
 
-UI Coverage maps how your Cypress tests use the interface: which [interactive elements and links](/ui-coverage/core-concepts/interactivity) were exercised in each view, how that adds up to a [coverage score](/ui-coverage/get-started/introduction), and the DOM snapshots from [Test Replay](/cloud/features/test-replay) that put each finding in context. That picture is built from what actually ran in the browser, so it is a strong signal for **test completeness** relative to the UI states your suite reaches.
+UI Coverage gives your AI agent the grounded context it needs to improve your tests. For every recorded Cypress run, it reports which interactive elements and links your tests exercised, assigns a coverage score to each view, and names the exact untested controls to go after, all built from what really ran in the browser during [Test Replay](/cloud/features/test-replay). Working from that report, an agent can find real coverage gaps and write tests that target them, rather than guessing at your app's structure.
 
-AI agents can use that signal to summarize gaps, draft targeted tests, or correlate a drop in coverage with specific specs—while your team keeps ownership of what “enough coverage” means for each area.
+## What an AI agent can do with UI Coverage
 
-## Cypress Cloud MCP
+Connected to your UI Coverage report, an agent can turn coverage gaps into concrete testing work:
 
-[Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets compatible agents query UI Coverage for a run using structured tools.
+- **Turn "coverage dropped" into a work list**: which views regressed, which elements are newly untested, and where the risk is concentrated.
+- **Draft tests for untested elements**, and suggest the existing spec file that's the best home for them.
+- **Correlate gaps with ownership**: group untested areas by team, feature, or route so the right people get the right list.
+- **Backfill incrementally**: sequence the work from highest-risk to lowest instead of dumping every control on every page.
 
-Use it to turn “something changed in coverage” into a concrete next step: which views regressed, which elements are newly untested, and where to add or restore interactions.
+Your team still decides what "enough coverage" means for each area. The agent handles the triage, drafting, and bookkeeping around that judgment.
 
-### Example prompts
+## Quickstart
 
-Here are some example prompts to try out:
+Three steps to your first useful result:
 
-> "Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. Summarize the overall coverage score, the views with the most untested elements, and list the untested elements on the top view."
+1. **Connect the MCP.** Add Cypress Cloud MCP to your AI client by following [Configuring the Cloud MCP](/cloud/integrations/cloud-mcp#Configuring-the-Cloud-MCP).
+2. **Ask for the riskiest view.** Prompt: _"Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch and list the untested elements on the riskiest view."_
+3. **Act on one gap.** Have the agent [draft a test](#Prompts-to-plan-and-draft-tests) for one of those elements, review the diff, and run it.
 
-> "Get UI Coverage for this run URL. For the view named `/checkout`, list untested interactive elements and suggest which existing spec file is the best place to add a test that exercises them."
+The rest of this page deepens each step: better prompts, report tuning, and how to keep the score honest.
 
-> "Use this CSV of our most-used pages based on Google Analytics data and create a matrix of risk where pages with large amounts of user interactions have relatively low UI Coverage. Create an action plan around this to backfill missing coverage in small increments starting from the most urgent work and working backwards."
+## Query UI Coverage with Cypress Cloud MCP
 
-## Tune UI Coverage for agent-friendly signal
+[Cypress Cloud MCP](/cloud/integrations/cloud-mcp), Cypress Cloud's Model Context Protocol server, lets compatible agents read UI Coverage results for a recorded run through structured tools, so they work from your real report. Set it up once by following [Configuring the Cloud MCP](/cloud/integrations/cloud-mcp#Configuring-the-Cloud-MCP), then prompt your agent in natural language, and it selects the right tool for you.
 
-Agents work best when reports emphasize the surfaces your team cares about. Use [configuration](/ui-coverage/configuration/overview) to shape what appears in Cloud and in MCP responses:
+### UI Coverage MCP tools
 
-- Use config [profiles](/ui-coverage/configuration/profiles) for team or owner-based customization,
-- [Reduce noise](/ui-coverage/guides/reduce-noise) with filters to ignore third-party or out-of-scope ui
-- Create clear [element identification](/ui-coverage/core-concepts/element-identification) and [grouping](/ui-coverage/core-concepts/element-grouping) so your agent can quickly make correct assumptions about an elements purpose.
+An agent connected to Cloud MCP can call these UI Coverage tools, choosing them based on your prompt.
 
-You can also use your agent to help you define and shape your configuration, by referencing the Cypress docs and describing intended changes.
+| Tool                               | What it returns                                                                                                                                              |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `cypress_get_ui_coverage_report`   | A run's high-level report: overall coverage score, tested and untested element and link counts, and the top 5 riskiest views (most untested elements first). |
+| `cypress_get_ui_coverage_views`    | Paginated views for a run, sorted by most untested elements and links. Use it to browse past the top 5 in the report summary.                                |
+| `cypress_get_ui_coverage_elements` | Paginated interactive elements for a run. Filter by tested or untested, and optionally scope to a single view by name.                                       |
 
-The goal is the same as for human review: high-signal lists of views and elements tied to ownership and critical flows, not an undifferentiated dump of every control on every page.
+These tools are read-only: they retrieve data and can't change your configuration, tests, or runs. Access is scoped to the projects your Cypress Cloud user can already see. For availability, limits, and security details, see the [Cloud MCP reference](/cloud/integrations/cloud-mcp).
 
-## Governance: when to involve a human
+### How to prompt effectively
 
-Treat unexpected coverage movement as a **quality gate on the tests and the UI under test**, not noise to ignore by default.
+A few habits make every prompt land better:
 
-- Use [Branch Review](/ui-coverage/guides/compare-reports) to see what changed between runs: new untested elements, new links, or new interactables in the application.
-- Use [monitoring and the Results API](/ui-coverage/guides/monitor-changes) to watch trends and wire checks into CI.
-- Use [policies and blocking flows](/ui-coverage/guides/block-pull-requests) when you need explicit thresholds or baselines before merge.
+- **Say "Cypress Cloud"** so the agent reaches for the MCP tools instead of guessing.
+- **Name the run** with a branch, commit, or run URL, so the agent reads the report you mean.
+- **Start with the riskiest view** and work one view at a time, rather than the whole app at once.
+- **Ask for a plan or a diff** before any file changes, so you review intent before code lands.
 
-Agents can draft tests, suggest spec placement, or narrate diffs; reviewers should still confirm intent, risk, and whether a drop in coverage is acceptable (for example, after a deliberate scope change). That split keeps velocity while avoiding silent drift in what your suite actually exercises.
+## Prompts to summarize and triage coverage
+
+Point the agent at a run and ask it to summarize where the risk is.
+
+<CopyPrompt
+  title="Summarize coverage for a run"
+  subtext="Pull the UI Coverage report for the latest run and surface the riskiest view."
+  prompt={`Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. Give me the overall coverage score, the views with the most untested elements, and the specific untested elements on the riskiest view.`}
+>
+
+### Summarize coverage for a run
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Find where new tests belong"
+  subtext="List the untested elements on a view and suggest which spec should cover them."
+  prompt={`Get UI Coverage for this run URL. For the /checkout view, list the untested interactive elements and suggest which existing spec file is the best place to add a test that exercises them.`}
+>
+
+### Find where new tests belong
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Assess release readiness"
+  subtext="Get a go/no-go on your critical flows, with the exact gaps blocking each one."
+  prompt={`Using Cypress Cloud MCP, get the UI Coverage report for the latest run on the release branch. For our critical flows (checkout, login, and payments), give me each view's coverage score and its untested interactive elements. Then give me a go/no-go: flag any critical flow below 80% and list the specific gaps blocking it.`}
+>
+
+### Assess release readiness
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Report coverage progress over a sprint"
+  subtext="Summarize how coverage moved across recent runs into a shareable status update."
+  prompt={`Using Cypress Cloud MCP, compare UI Coverage across the last 10 runs on main. Summarize how coverage moved over the sprint: the net score change, the views that improved the most, and the views that regressed. Format it as a short status update I can share with the team.`}
+>
+
+### Report coverage progress over a sprint
+
+</CopyPrompt>
+
+## Prompts to plan and draft tests
+
+Once the agent can read the report, ask it to produce a plan or a change rather than a summary.
+
+<CopyPrompt
+  title="Plan the coverage backfill"
+  subtext="Turn untested elements into a risk-ordered, incremental test plan."
+  prompt={`Using Cypress Cloud MCP, get UI Coverage for the latest run on main. Build a backfill plan that groups untested elements by view, orders the views from most to least risky, and proposes small, reviewable batches of tests, starting with the checkout and account flows.`}
+>
+
+### Plan the coverage backfill
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Write a Markdown test plan"
+  subtext="Turn untested elements, links, and views into a Markdown test plan, prioritized against your PRD."
+  prompt={`Using Cypress Cloud MCP, get the untested interactive elements, untested links, and riskiest views for the latest run on this branch. Write a Markdown test plan grouped by view: for each untested element or link, add a row with the user action to perform and the expected result. Then cross-reference our product requirement document (PRD) at docs/prd.md and move the flows it marks as required to the top of the plan.`}
+>
+
+### Write a Markdown test plan
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Open a ticket for each untested area"
+  subtext="Turn each view's gaps into a ready-to-file ticket, grouped by view."
+  prompt={`Using Cypress Cloud MCP, group the untested interactive elements by view for the latest run on main. For each view with meaningful gaps, draft a ticket with a title, the list of untested elements, the user-facing risk, and a suggested test approach. If you have access to our issue tracker, create one ticket per view and link them under an epic; otherwise output them as Markdown I can paste in.`}
+>
+
+### Open a ticket for each untested area
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Diff coverage between two branches"
+  subtext="Compare two branches' coverage scores and diff their untested elements to catch regressions or gains."
+  prompt={`Using Cypress Cloud MCP, get the UI Coverage report for the latest run on this branch and for the latest run on main. Compare the overall coverage scores, then diff the untested interactive elements and links between the two runs: list what became untested on this branch (regressions) and what is now covered (gains), grouped by view. For each regression, point me to the spec or app change most likely responsible.`}
+>
+
+### Diff coverage between two branches
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Draft tests for untested elements"
+  subtext="Draft focused tests for untested elements on a view, diff-first."
+  prompt={`You are a Cypress test author. Using Cypress Cloud, take the untested elements on the /settings/team view from the latest run. For each, draft a focused test using our existing data-cy selectors and add it to the closest matching spec under cypress/e2e/settings/. Show me a diff before writing files.`}
+>
+
+### Draft tests for untested elements
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Author tests in natural language with cy.prompt"
+  subtext="Cover untested areas by describing each flow in plain language and letting cy.prompt write the Cypress commands."
+  prompt={`Using Cypress Cloud, list the untested interactive elements on the /checkout view for the latest run. For each, add a test that uses cy.prompt to drive the flow in natural language: describe the user action to take and what to verify in plain English, and let cy.prompt generate the Cypress commands. Put the tests in cypress/e2e/checkout/ and show me a diff before writing files.`}
+>
+
+### Author tests in natural language with cy.prompt
+
+</CopyPrompt>
+
+:::tip
+
+When the agent moves from finding gaps to authoring tests, pair it with [Cypress AI Skills](/app/tooling/ai-skills). The skills teach your AI tool to write Cypress tests the way an experienced Cypress engineer would, following best practices and matching your project's conventions.
+
+:::
+
+To align risk with real-world usage, combine coverage data with your own analytics:
+
+<CopyPrompt
+  title="Prioritize gaps by traffic and risk"
+  subtext="Cross-reference page traffic with coverage to prioritize backfill."
+  prompt={`Here is a CSV of our most-visited pages from Google Analytics. Cross-reference it with the latest UI Coverage report from Cypress Cloud to build a risk matrix where high-traffic pages with low coverage rank highest. Turn the top of that matrix into an incremental backfill plan.`}
+>
+
+### Prioritize gaps by traffic and risk
+
+</CopyPrompt>
+
+Coverage data also points the other way, at tests you can safely trim:
+
+<CopyPrompt
+  title="Trim over-tested UI"
+  subtext="Find elements your tests hit far more than needed and suggest redundant tests to cut."
+  prompt={`Using Cypress Cloud MCP, list the tested interactive elements for the latest run on main, sorted by interaction count. Flag elements interacted with far more than their importance warrants (for example a nav link exercised by dozens of tests), and suggest which redundant tests we could consolidate or remove to speed up the suite without losing meaningful coverage.`}
+>
+
+### Trim over-tested UI
+
+</CopyPrompt>
+
+## Tune reports for better agent results
+
+Agents produce better work from reports that already reflect what your team cares about. The same [configuration](/ui-coverage/configuration/overview) that sharpens reports for human review also sharpens the context an agent reads over MCP.
+
+A few high-value changes make the report sharper for both people and agents:
+
+- **Remove noise and stabilize identity** so the agent reads clean element names instead of third-party clutter or the same button counted many ways. Filter out widgets you don't own, [promote a stable attribute](/ui-coverage/configuration/significantattributes) your app already renders, and [group](/ui-coverage/configuration/elementgroups) repeated controls so they count once.
+- **Count the interactions that reflect real usage** so coverage isn't understated where your suite drives the UI through plugin or [custom commands](/ui-coverage/configuration/additionalinteractioncommands).
+- **Scope the report to the runs your agent triages** with [`profiles`](/ui-coverage/configuration/profiles), so a smoke run and a full regression run each read the configuration that fits them.
+
+See the [configuration overview](/ui-coverage/configuration/overview) to get started. The goal is the same as for human review: a high-signal list of views and elements tied to ownership and critical flows, not an exhaustive list of every control on every page.
+
+You can also let the agent draft that configuration for you. It reads the untested elements over MCP, spots the noise, and hands back rules to paste into your App Quality Config. To review the configuration a run actually used before changing it, open the run's **Properties** tab or read the `config` property from the [Results API](/ui-coverage/results-api).
+
+<CopyPrompt
+  title="Draft configuration to cut noise"
+  subtext="Have the agent read the untested elements and propose App Quality Config rules that remove noise."
+  prompt={`First read https://docs.cypress.io/llm/markdown/ui-coverage/configuration/overview.md for the App Quality configuration reference. Then use Cypress Cloud MCP to list the untested interactive elements for the latest run on this branch, flag third-party widgets and controls split apart by dynamic attributes, and propose App Quality Config rules (elementFilters, attributeFilters, elementGroups) to remove that noise. Show the JSON I can paste into the App Quality tab.`}
+>
+
+### Draft configuration to cut noise
+
+</CopyPrompt>
+
+## Keep coverage honest
+
+Coverage measures whether your tests _touch_ an element, not whether they confirm the desired behavior. An agent told to raise the score can write tests that click everything and assert nothing, lifting the number without adding real protection.
+
+:::caution
+
+Require meaningful assertions, not just interactions. Ask the agent to assert the outcome of each action, and use [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) to require a real check (for example, listing `assert`) on elements where a bare click shouldn't count as tested.
+
+:::
+
+Keep a person in the loop wherever judgment matters:
+
+- **Intent.** Confirm the drafted test verifies the right behavior, not just that an element was interacted with.
+- **What's worth testing.** Agents target trivial controls as eagerly as critical ones. You decide which gaps matter.
+- **Selectors.** When your app lacks stable `data-*` attributes, agent-written selectors can be brittle. Add attributes (or [`significantAttributes`](/ui-coverage/configuration/significantattributes)) rather than accept fragile ones, or have the agent author the test with [`cy.prompt`](/api/commands/prompt), whose selectors self-heal as your app changes.
+- **Intentional drops.** A coverage decrease after removing a feature is correct. Don't let an agent "fix" it.
+
+## Review and enforce coverage
+
+Treat unexpected coverage movement as a quality gate, not noise to wave through, and wire that gate into your workflow so regressions surface before they merge:
+
+- Use [Branch Review](/ui-coverage/guides/compare-reports) to see exactly what changed between two runs: new untested elements, new links, and newly interactive parts of the app.
+- Use [monitoring and the Results API](/ui-coverage/guides/monitor-changes) to track trends and wire coverage checks into CI.
+- Use [blocking flows](/ui-coverage/guides/block-pull-requests) when you need explicit thresholds or baselines before a merge.
+
+An agent can draft tests, propose spec placement, and narrate diffs, but these gates keep a human in control of what merges. The signal that it is genuinely helping is your coverage score trending up across runs, which you can watch through [monitoring and analytics](/ui-coverage/guides/monitor-changes).
+
+## Generate tests directly from the report
+
+Prefer not to wire up an agent at all? Cypress Cloud can write the test for you. Select an untested element in a UI Coverage report and click **Generate test code**, and [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports) drafts a Cypress test that navigates to the element and interacts with it, following your existing patterns.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-generate-test.png"
+  alt="Cypress Cloud showing a generated Cypress test after clicking Generate test code for an untested link in a UI Coverage report."
+/>
+
+## Standardize across your team
+
+These workflows pay off most when everyone gets the same results, not just one power user:
+
+- **Save your best prompts.** Once a prompt works, store it as a reusable skill or custom instruction in your AI client so the whole team runs the same play.
+- **Make it a habit in the repo.** Add a project rule to your agent's instructions file, such as "before adding tests, check UI Coverage for the affected view and cover the highest-risk gaps first."
+- **Standardize the report.** Share one [App Quality configuration](/ui-coverage/configuration/overview) so every teammate's agent reads the same high-signal report, and use [`profiles`](/ui-coverage/configuration/profiles) where different run types need different rules.
+
+## See also
+
+- [Cloud MCP: Agentic debugging](/cloud/integrations/cloud-mcp): setup, available tools, limits, and security.
+- [UI Coverage FAQ](/ui-coverage/faq#Using-AI-agents-with-Cypress-UI-Coverage): answers to common questions about using agents with UI Coverage.
+- [Configuration overview](/ui-coverage/configuration/overview): every option for shaping your reports.
+- [Cypress AI Skills](/app/tooling/ai-skills): teach your AI tool to author Cypress tests following best practices.
+- [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports): generate a Cypress test for an untested element directly from the report.
