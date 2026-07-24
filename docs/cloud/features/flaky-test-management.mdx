@@ -31,9 +31,11 @@ flaky tests that matter most.
 
 ## Why Flaky Test Management
 
-A **flaky test** passes and fails across retries without any code change. It
-"fails" once, runs again on the same code, and passes. A single flaky test
-seems harmless. At scale, flake is one of the most expensive and corrosive
+A **flaky test** passes and fails across retries without any code change. 
+In a Cypress Cloud run, the "flaky" badge is added to a test when the test fails on the first attempt, 
+then passes on a later attempt, based on the allowed number of attempts you have configured.
+
+A single flaky test seems harmless. At scale, flake is one of the most expensive and corrosive
 problems a software organization faces:
 
 - **It erodes trust in the entire test suite.** Once developers learn that a
@@ -47,6 +49,34 @@ problems a software organization faces:
 - **It hides the real picture.** Without data, "the tests are flaky" is just a
   vague complaint. There's no way to know whether reliability is improving or
   degrading over time, or which tests are actually responsible.
+
+### The four main sources of flake
+
+Any test can show flake due to do a range of causes, including legitmate bugs.
+
+- **Real bugs**: In a stable test environment with well-written tests, flake
+in a certain test often represents **hidden race conditions** in the application you are
+testing. These might not show up on developer machines but become material on
+lower-powered CI machines, as well as real user devices.
+- **Test design**: Some tests are written to move quickly without verifying the
+ready-state before making an assertion. This can lead to inconsistent results because
+of assumptions the tests rely on about the order of events - for example, which part 
+of the page loads first.
+- **Unstable test environment**: End-to-end tests often execute against live
+production environments or staging/QA servers that integrate many systems, which
+can indpendently have downtime.
+- **Third-party dependencies**: If your test requires passing through a service
+that's outside of your control (such as a payment provider), it may appear flaky
+due to issues in the third party.
+
+Understanding flake helps you find and control what might be unstable, improving
+your pipeline success rate, and boosting confidence in the results. It also helps you
+avoid real bugs that can have financial impact to your organization. A persistent,
+unexplained flaky test should be addressed, even if it is not something you want to block
+the pipeline itself.
+
+
+### How Cypress Flaky Test Management helps
 
 Flaky Test Management turns flake from an invisible, anecdotal cost into
 **measurable, prioritized** work. Cypress Cloud automatically detects flake from
@@ -68,7 +98,7 @@ Flaky Test Management works on runs
 [recorded to Cypress Cloud](/cloud/get-started/setup) from your CI/CD pipeline,
 with [test retries](/app/guides/test-retries#Configure-Test-Retries) enabled.
 Detection, analytics, and alerting require a
-[Team Cypress Cloud plan](https://cypress.io/pricing).
+[paid Cypress Cloud plan](https://cypress.io/pricing).
 
 :::
 
@@ -76,8 +106,8 @@ Detection, analytics, and alerting require a
 
 :::tip
 
-**Cypress Cloud Feature:** Test flake insights are available to organizations with a
-[Team Cypress Cloud plan](https://cypress.io/pricing).
+**Cypress Cloud Feature:** Test flake insights are available to organizations with any 
+[paid Cypress Cloud plan](https://cypress.io/pricing), and during your 30-day free trial period.
 
 :::
 
@@ -89,9 +119,11 @@ developers to remember and report intermittent failures.
 ### Enable test retries
 
 Test retries are the _fundamental mechanism_ that enables Cypress Cloud to
-detect flaky tests. Enabling
-test retries in your Cypress configuration is required
-to take advantage of any Flaky Test Management feature. Read more about [test retries](/app/guides/test-retries) in the Cypress App guide.
+detect flaky tests. Enabling test retries is required to take advantage of any 
+Flaky Test Management feature. Retries can be confirgured globally for your project
+or individually for specific tests or test suites.
+
+Read more about [test retries](/app/guides/test-retries) in the Cypress App guide.
 
 :::cypress-config-example
 
@@ -302,7 +334,7 @@ by flake they didn't.
 
 The **Flaky** tab lists every spec that flaked, marking each result as:
 
-- **new**: flake not previously captured, and possibly introduced by this
+- **new**: flake not captured on the base branch, and possibly introduced by this
   branch
 - **existing**: flake already present on the base branch
 - **resolved**: flake that was present before but no longer appears
@@ -339,6 +371,14 @@ with data. It includes:
   pain is greatest.
 - A filterable **log of every flaky test**, ordered by severity, ready to triage
   and assign.
+
+**Cross-run flake analysis is the key** to discovering and tracking flake in a way that
+accounts indvidual run variation in results, to give you the true success rate of your s
+uite over time. Sometimes a flaky test will pass on the first
+attempt, or fail all attempts, and not have been considered flaky on that specifc run.
+
+This means you can be comprehensive in your approach to flake, without needless 
+extra repetitions of passing tests.
 
 ### Flake severity
 
@@ -390,18 +430,23 @@ analytics page as shown below.
   alt="Flake rate vs. failure rate over time in Cypress Cloud flaky test analytics"
 />
 
-A test flagged as flaky may still have ultimately passed after retries. The
+A test being flagged as flaky means that, within the runs you have filtered to,
+that test failed on the first attempt then passed after retries. The
 status of an individual retry attempt is separate from the final test status.
 
 For example, a project configured to retry failing tests up to three times may
 fail the first two attempts and pass on the third, a final status of passing.
 
 Because of this, a test can show a **zero final failure rate while still
-exhibiting flake**.
+exhibiting flake**. On the other hand, a test that fails all attempts is
+considered failed, not flaky - it was consistent. And a test that passes first time
+is considered passing, it will not be repeated.
 
 This is exactly why flake is so easy to
 miss without dedicated tracking: the build goes green, but the underlying
 instability, and its cost, is still there.
+
+
 
 ## Flake analytics across all projects with Enterprise Reporting
 
