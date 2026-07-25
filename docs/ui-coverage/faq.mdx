@@ -85,9 +85,9 @@ Open the **Tested elements** section of the UI Coverage report. It lists every i
 
 **Interactions** counts every recognized command against an element across the run, so one test that hits a control in a loop can run the number up on its own. **Tests** counts the distinct tests that interacted with it, so a high number there means many _separate_ tests all touch the same control. The **Tests** column is the better signal for duplication, because shared setup repeated across your suite shows up as one element touched by a large share of your tests.
 
-### <Icon name="angle-right" /> How do I reduce test duplication with UI Coverage?
+### <Icon name="angle-right" /> How do I reduce test duplication?
 
-Find the elements at the top of the **Tested elements** list, confirm with [Test Replay](/cloud/features/test-replay) that the tests are passing _through_ a flow rather than testing it, then replace the repeated UI steps with a single programmatic step: cache authentication with [`cy.session()`](/api/commands/session), set a cookie or storage flag directly, or seed state with [`cy.request()`](/api/commands/request). Keep one test that still drives the flow through the UI so its coverage is preserved. The [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication) guide walks through the full workflow.
+Use UI Coverage to find the elements at the top of the **Tested elements** list, confirm with [Test Replay](/cloud/features/test-replay) that the tests are passing _through_ a flow rather than testing it, then replace the repeated UI steps with a single programmatic step: cache authentication with [`cy.session()`](/api/commands/session), set a cookie or storage flag directly, or seed state with [`cy.request()`](/api/commands/request). Keep one test that still drives the flow through the UI so its coverage is preserved. The [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication) guide walks through the full workflow.
 
 ### <Icon name="angle-right" /> Does reducing test duplication lower my UI Coverage score?
 

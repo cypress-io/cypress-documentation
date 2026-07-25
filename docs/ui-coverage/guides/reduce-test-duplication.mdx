@@ -68,9 +68,9 @@ Each element carries a few counts, and two of them tell you what you need:
 />
 
 The **Tests** count is the clearer duplication signal, so look for controls that
-a large share of your suite touches. A **Submit** button covered by a handful of
-form tests is expected. A **Continue** button on a welcome screen, or a
-**Log in** button, that shows up in hundreds of tests is a strong signal those
+a large share of your suite touches. A "Submit" button covered by a handful of
+form tests is expected. A "Continue" button on a welcome screen, or a
+"Log in" button, that shows up in hundreds of tests is a strong signal those
 tests are passing _through_ a flow to reach something else.
 
 <CopyPrompt
@@ -100,12 +100,12 @@ Open [Test Replay](/cloud/features/test-replay) on a few of the tests. Ask:
 - **Is any assertion about this element?** If tests interact with it but never
   assert on its behavior, they're passing through, not testing it.
 - **Do the tests share the same purpose?** Dozens of unrelated tests clicking
-  the same **Continue** button are all paying for setup that belongs somewhere
+  the same "Continue" button are all paying for setup that belongs somewhere
   cheaper.
 - **Does the interaction happen before the test's real work begins?** Setup that
   runs at the start of nearly every test is the prime candidate to consolidate.
 
-In the example above, the **Continue** button on the welcome screen is
+In the example above, the "Continue" button on the welcome screen is
 interacted with by most of the suite, but Test Replay shows almost none of those
 tests care about the welcome screen. They're just getting past it to reach the
 projects page. That's the duplication to remove.
