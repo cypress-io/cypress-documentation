@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, the Results API for CI, and how to troubleshoot unexpected reports.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, closing coverage gaps with Test Generation, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, the Results API for CI, and how to troubleshoot unexpected reports.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -39,7 +39,37 @@ They describe three different gaps. An **untested element** is an interactive el
 
 ### <Icon name="angle-right" /> How do I find pages my tests never visit?
 
-Use the **Untested links** section of the UI Coverage report. It lists links whose destinations your Cypress tests never opened during the run, and expanding one shows a **Referrers** tab (the views that link to the page) and a **URLs** tab (the concrete destinations, grouped for dynamic routes like `/orders/*`). Because a page with no view can still be linked from a tested page, this is how UI Coverage surfaces flows your suite is missing entirely. Add navigation to reach them, as shown in [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps#Add-tests-for-untested-links).
+Use the **Untested links** section of the UI Coverage report. It lists links whose destinations your Cypress tests never opened during the run, and expanding one shows a **Referrers** tab (the views that link to the page) and a **URLs** tab (the concrete destinations, grouped for dynamic routes like `/orders/*`). Because a page with no view can still be linked from a tested page, this is how UI Coverage surfaces flows your suite is missing entirely. Add navigation to reach them, as shown in [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps#Cover-untested-links).
+
+## Closing coverage gaps
+
+### <Icon name="angle-right" /> How do I close a coverage gap in Cypress UI Coverage?
+
+Add a test that exercises the untested element the report surfaces. First [confirm each gap is worth testing](/ui-coverage/guides/address-coverage-gaps#Step-1-Confirm-the-gap-is-real), starting with the ones that carry the most risk, such as controls on your checkout or login views, then close each one either with [Test Generation](#What-is-Test-Generation-in-Cypress-UI-Coverage) or by writing a targeted test yourself. An element moves from untested to tested once a [recognized interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) targets it. See [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps) for the full workflow.
+
+### <Icon name="angle-right" /> What is Test Generation in Cypress UI Coverage? {#What-is-Test-Generation-in-Cypress-UI-Coverage}
+
+Test Generation uses AI to draft a Cypress test for an untested interactive element, following the setup and conventions your existing specs already use. Select an untested element in the report, click **Generate test code**, and choose a spec from the list of specs where that element appears. Cypress generates a test that reproduces the setup to reach the element (reusing your custom commands), performs an appropriate interaction, and leaves a `TODO` marking where to add your assertions. Treat it as a reviewed starting point, then add the assertions that prove the flow works. See [Generate tests from UI Coverage reports](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports).
+
+### <Icon name="angle-right" /> Can Cypress UI Coverage write tests for me?
+
+Yes, through [Test Generation](#What-is-Test-Generation-in-Cypress-UI-Coverage). It produces a working test that exercises the untested element so UI Coverage counts it, built from the same patterns and custom commands your existing specs use. It's a starting point rather than a finished test: you copy the snippet into the suggested spec and add the assertions that verify behavior. Test Generation is part of UI Coverage and isn't available on standard Cloud plans; it also requires a report processed on or after November 21, 2024, project membership, and that AI capabilities are enabled for your organization.
+
+### <Icon name="angle-right" /> How do I test a page that my Cypress suite never visits?
+
+Add navigation to the page so it renders during a run. Pages your tests link to but never visit appear in the [**Untested links**](/ui-coverage/core-concepts/interactivity#Untested-Links) section, and UI Coverage can't report on any element they contain until a test goes there. Add a `cy.visit()` (or a click that navigates to it), which turns the untested link green and creates a [view](/ui-coverage/core-concepts/views) for the page that then surfaces its own untested elements. Test Generation doesn't apply to untested links; it targets interactive elements, so navigation is the fix here.
+
+### <Icon name="angle-right" /> How do I cover an element that only appears after login or a click?
+
+Drive the interaction that puts the UI into that state before interacting with the element. A control inside a collapsed menu, a modal, or a section that only renders after signing in won't be exercised until your test reveals it, so click the toggle or run your `cy.login()` command first, then interact with the now-visible element. Each new state your tests reach adds its snapshot to the report, so previously hidden elements start appearing as tested.
+
+### <Icon name="angle-right" /> Which coverage gaps should I fix first in Cypress UI Coverage?
+
+Prioritize by risk, not by count. Start with the views behind your highest-value flows (checkout, login, account settings), then untested links, which often hide an entire flow rather than a single control, and weight the list by real usage so a heavily used page with low coverage is closed before a lightly used one. See [Confirm the gap is real](/ui-coverage/guides/address-coverage-gaps#Step-1-Confirm-the-gap-is-real) and [Start with your lowest-scoring views](/ui-coverage/guides/identify-coverage-gaps#Step-3-Start-with-your-lowest-scoring-views).
+
+### <Icon name="angle-right" /> Why did closing one coverage gap reveal more untested elements?
+
+Because visiting a page or reaching a new state exposes controls UI Coverage had never seen. When a test navigates to a previously [untested link](/ui-coverage/core-concepts/interactivity#Untested-Links), UI Coverage creates a [view](/ui-coverage/core-concepts/views) for that page and lists every interactive element on it, most of which start untested. This is expected, and it's why closing gaps is a loop: each pass surfaces the next set of elements to prioritize.
 
 ## Interactive elements
 
