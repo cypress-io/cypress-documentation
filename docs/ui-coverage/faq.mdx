@@ -129,6 +129,18 @@ Write a [`views`](/ui-coverage/configuration/views) pattern that names the param
 
 Add a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule with `include: false` for a URL pattern. Excluding a URL removes its snapshots from the report and stops links pointing to it from counting against your coverage score. The [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) guide walks through common cases.
 
+### <Icon name="angle-right" /> In Cypress UI Coverage, what's the difference between viewFilters and views?
+
+They do opposite things. [`viewFilters`](/ui-coverage/configuration/viewfilters) _removes_ URLs from your report and score, so excluded pages and the links pointing to them stop counting. [`views`](/ui-coverage/configuration/views) _keeps_ URLs but changes how they're grouped and named, so related pages collapse into a single view or a dynamic route splits into several. Use `viewFilters` for pages you don't own or intend to test, and `views` to organize the pages you do. See [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need).
+
+### <Icon name="angle-right" /> How do I exclude a third-party login or OAuth page from UI Coverage?
+
+Add a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule with `include: false` for the provider's URL, such as `{ "pattern": "https://acme.okta.com/*", "include": false }`. Tests that sign in through an external identity provider (Okta, Auth0, and similar) capture snapshots of its pages, and your links to it count as untested elements. One rule removes both, while every other URL stays included by default. See [Ignore views and links](/ui-coverage/guides/ignore-views-and-links).
+
+### <Icon name="angle-right" /> Can I exclude a URL from UI Coverage without affecting Cypress Accessibility?
+
+Yes. A [`viewFilters`](/ui-coverage/configuration/viewfilters) list at the root of your configuration applies to both products, but nesting it under a `uiCoverage` key applies it to UI Coverage only, so Cypress Accessibility keeps scanning the URL. A nested list completely replaces the root-level one for UI Coverage; the two are not merged, so include every rule UI Coverage needs. See [Scope](/ui-coverage/configuration/viewfilters#Scope).
+
 ### <Icon name="angle-right" /> Why is a URL still in my UI Coverage report after I excluded it with viewFilters?
 
 The most common causes are:
