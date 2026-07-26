@@ -81,8 +81,8 @@ so you can skip the manual scan. See
 
 <CopyPrompt
   title="Find elements to ignore with your AI assistant"
-  subtext="Copies a prompt that shortlists untested elements worth excluding, with a suggested selector for each."
-  prompt={`Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. First, list all of the untested interactive elements. Then, from that list, give me a second list of the ones that look like third-party widgets or out-of-scope controls worth excluding, such as chat launchers, cookie banners, analytics overlays, and embeds. For each element you suggest excluding, include a stable CSS selector I can drop into an elementFilters rule to exclude it and everything inside it.`}
+  subtext="Shortlists untested elements worth excluding, with a suggested selector for each."
+  prompt={`Using Cypress Cloud MCP, pull the UI Coverage report for the latest run on this branch. First, list all of the untested interactive elements. Then, from that list, give me a second list of the ones that look like third-party widgets or out-of-scope controls worth excluding, such as chat launchers, cookie banners, analytics overlays, and embeds. For each element you suggest excluding, include a stable CSS selector I can drop into an elementFilters rule to exclude it and everything inside it.`}
 />
 
 Treat the agent's list as a shortlist, not a decision: you still confirm which
