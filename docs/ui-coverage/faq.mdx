@@ -207,6 +207,14 @@ The most common causes are:
 
 Add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. Excluded elements are removed from the report and don't count toward your coverage score. This is the standard way to remove third-party widgets, such as chat launchers or cookie banners, from your reports. The [Ignore elements](/ui-coverage/guides/ignore-elements) guide walks through common cases.
 
+### <Icon name="angle-right" /> How do I exclude a third-party widget like a chat launcher or cookie banner from UI Coverage?
+
+Add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false` whose selector matches the widget's container _and_ its descendants, so every control inside it is removed rather than just the wrapper. For a support chat like Intercom, that's `{ "selector": "#intercom-container, #intercom-container *", "include": false }`. Widgets rendered inside an iframe or shadow DOM are removed by pairing a `*` selector with [`documentScope`](/ui-coverage/configuration/elementfilters#Options). See [Ignore elements](/ui-coverage/guides/ignore-elements) for the full walkthrough.
+
+### <Icon name="angle-right" /> Should I exclude UI Coverage elements with elementFilters or data-cy-ui-interactive?
+
+Both remove an element from the report and the score; choose by who owns the decision. Use [`elementFilters`](/ui-coverage/configuration/elementfilters) to manage exclusions centrally in Cypress Cloud with no code change, which fits when the team editing configuration isn't the team that owns the markup. Use the [`data-cy-ui-interactive`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) attribute (`exclude` on one element, `exclude-all` on a container) when the exclusion belongs next to the markup that owns it. `elementFilters` also supports `include: true` exceptions and `documentScope`, which the markup attribute doesn't.
+
 ### <Icon name="angle-right" /> Do excluded elements count toward my UI Coverage score?
 
 No. An element excluded by [`elementFilters`](/ui-coverage/configuration/elementfilters) doesn't appear in the report and doesn't count toward the score, whether your tests interacted with it or not. It's also not considered by [`elementGroups`](/ui-coverage/configuration/elementgroups) or [`elements`](/ui-coverage/configuration/elements) rules.
