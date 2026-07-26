@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, closing coverage gaps with Test Generation, finding and reducing test duplication, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, the Results API for CI, and how to troubleshoot unexpected reports.'
+description: 'Get answers to common questions about Cypress UI Coverage, including scores, closing coverage gaps with Test Generation, comparing reports across runs with Branch Review, finding and reducing test duplication, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, the Results API for CI, and how to troubleshoot unexpected reports.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -70,6 +70,40 @@ Prioritize by risk, not by count. Start with the views behind your highest-value
 ### <Icon name="angle-right" /> Why did closing one coverage gap reveal more untested elements?
 
 Because visiting a page or reaching a new state exposes controls UI Coverage had never seen. When a test navigates to a previously [untested link](/ui-coverage/core-concepts/interactivity#Untested-Links), UI Coverage creates a [view](/ui-coverage/core-concepts/views) for that page and lists every interactive element on it, most of which start untested. This is expected, and it's why closing gaps is a loop: each pass surfaces the next set of elements to prioritize.
+
+## Comparing reports across runs
+
+### <Icon name="angle-right" /> How do I compare UI Coverage reports between two runs?
+
+Use [Branch Review](/cloud/features/branch-review) in Cypress Cloud. It compares the UI Coverage reports from any two recorded runs and shows only what changed between them: the elements and pages that became untested, the gaps the change closed, and everything new it added. Pick a **base run** and a **changed run** from the dropdowns, or let Cypress select them automatically when the changed run is tied to a pull request. See [Compare reports](/ui-coverage/guides/compare-reports) for the full workflow.
+
+### <Icon name="angle-right" /> What's the difference between the base run and the changed run in Branch Review?
+
+The **changed run** is the focal point of the comparison, so everything you see, including every count and drilldown, is data from the changed run. The **base run** is the reference it's measured against. In a pull request, the changed run is your feature branch and the base run is the branch you're merging into, so the diff shows exactly what your change did to coverage. (In the Detail View these are labeled "Base Run" and "Target Run," where "Target" means the same run shown as "Changed" elsewhere.)
+
+### <Icon name="angle-right" /> How do I tell whether a pull request reduced my UI Coverage?
+
+Open the pull request's run in [Branch Review](/cloud/features/branch-review) and read the coverage-score change at the top: it's labeled a **coverage improvement** when the score rose and a **reduction in coverage** when it fell. A reduction points you to the **New untested elements** and **New untested links** sections, which list the specific controls and pages the change left untested. See [Compare reports](/ui-coverage/guides/compare-reports) and [Block pull requests](/ui-coverage/guides/block-pull-requests) to fail CI automatically when coverage drops.
+
+### <Icon name="angle-right" /> What's the difference between a new untested element and a resolved untested element in UI Coverage?
+
+A **new untested element** is untested in the changed run and was either tested in the base run or didn't exist there, so it represents coverage that regressed. A **resolved untested element** was untested in the base run and is now tested, so it's proof a gap was closed. Branch Review shows both, along with a link to the elements untested in both runs. Untested links are broken out the same way. A new untested element appears either because the test code stopped interacting with it, or because an application change added it without a test. See [Compare reports](/ui-coverage/guides/compare-reports#Step-3-Review-new-untested-elements-and-links).
+
+### <Icon name="angle-right" /> Why does a page or element appear as "new" when I compare two UI Coverage runs?
+
+Usually because a dynamic value in the URL or an element attribute isn't being matched consistently across runs. A URL slug that isn't grouped into a stable [view](/ui-coverage/core-concepts/views) can appear as a new page, and an identifier carrying a per-build hash can make one element show as both resolved and new. Group dynamic URLs with [`views`](/ui-coverage/configuration/views) and exclude unstable identifiers with [`attributeFilters`](/ui-coverage/configuration/attributefilters), then regenerate the run. See [Stabilize the comparison](/ui-coverage/guides/compare-reports#Step-6-Stabilize-the-comparison-with-configuration).
+
+### <Icon name="angle-right" /> How do I get an accurate Cypress UI Coverage comparison between two runs?
+
+For an accurate Cypress UI Coverage comparison, compare passing runs that ran similar tests on the same content, so each run visited roughly the same pages and completed the same workflows; then any difference in the diff reflects the change in the newer run. This is what you get out of the box when comparing a pull-request branch against its base. Comparing runs from different points in time is still valid, as long as you account for the other sources of difference as you read the results. To see unified changes for your whole suite, group all of a commit's tests under a single Cypress run per report. See [Compare reports](/ui-coverage/guides/compare-reports) and [Branch Review best practices](/cloud/features/branch-review#Best-Practices).
+
+### <Icon name="angle-right" /> Do I need to rerun my tests to compare two UI Coverage reports?
+
+No. Branch Review compares two runs that are already recorded to Cypress Cloud, so any two recorded runs can be compared without re-running anything. If you only changed configuration and want to compare the effect, regenerate a past run from its **Properties** tab instead of recording again. See [Compare reports](/ui-coverage/guides/compare-reports).
+
+### <Icon name="angle-right" /> Can I compare UI Coverage reports with an AI agent or the Cypress Cloud MCP?
+
+Yes. The [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets a compatible AI agent pull the UI Coverage for two runs and report the diff from your editor, using `cypress_get_runs` to find the runs and `cypress_get_ui_coverage_report`, `cypress_get_ui_coverage_views`, and `cypress_get_ui_coverage_elements` to read each run's coverage. There's no single compare tool; the agent assembles the diff and can then draft a test to close a regression. It's a peer to Branch Review, which remains the place to see full-page DOM snapshots of what changed. See [Compare reports with the Cypress Cloud MCP](/ui-coverage/guides/compare-reports#Compare-reports-with-the-Cypress-Cloud-MCP).
 
 ## Reducing test duplication
 
