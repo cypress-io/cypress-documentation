@@ -492,7 +492,9 @@ Both are available on every Cypress Cloud plan at no additional cost. See the [C
 **Agent can't find your run:**
 
 - Verify the organization has the Cloud MCP integration enabled in Cypress Cloud.
-- Ensure your Git branch name in CI matches the branch name you're telling agent.
+- Ensure your Git branch name in CI matches the branch name you're telling the agent.
+- A failed CI job doesn't mean no run was recorded. A red CI conclusion only reflects the job's exit code. As long as Cypress recorded the run, it's in Cypress Cloud and the agent can query it, so point the agent at the run by branch, commit, run number, or Run URL instead of assuming a failed job left nothing to find.
+- If you pair Cloud MCP with a CI or GitHub MCP that reads job logs, the recorded Run URL prints near the _end_ of the Cypress CLI output. Have the agent read the tail of the log so it doesn't miss the link.
 
 **Connection errors:**
 
