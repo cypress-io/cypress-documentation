@@ -197,15 +197,12 @@ example of that element or link on a full-page, inspectable DOM snapshot, with
 tested elements highlighted green and untested elements red. Items with the same
 status on both runs are removed here, so you focus only on what changed.
 
-Because the snapshot is a real DOM, you can open your browser's developer tools
-on it to understand _why_ an element went untested, for example because it's now
-behind a menu or only renders after a step your tests no longer reach. That
-context tells you what a new test needs to do.
-
-:::note
-The Detail View labels the two runs **Base Run** and **Target Run**. "Target
-Run" here is the same run shown as "Changed" in the section headers.
-:::
+The Detail View shows the changed run's snapshots, consistent with the changed
+run being the focal point of the comparison. Because the snapshot is a real DOM,
+you can open your browser's developer tools on it to understand _why_ an element
+went untested, for example because it's now behind a menu or only renders after a
+step your tests no longer reach. That context tells you what a new test needs to
+do.
 
 ### Step 6: Stabilize the comparison with configuration
 
