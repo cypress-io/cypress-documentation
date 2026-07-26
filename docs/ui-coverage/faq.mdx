@@ -75,7 +75,7 @@ Because visiting a page or reaching a new state exposes controls UI Coverage had
 
 ### <Icon name="angle-right" /> How do I compare UI Coverage reports between two runs?
 
-Use [Branch Review](/cloud/features/branch-review) in Cypress Cloud. It compares the UI Coverage reports from any two recorded runs and shows only what changed between them: the elements and pages that became untested, the gaps the change closed, and everything new it added. Pick a **base run** and a **changed run** from the dropdowns, or let Cypress select them automatically when the changed run is tied to a pull request. See [Compare reports](/ui-coverage/guides/compare-reports) for the full workflow.
+You have two routes. In [Branch Review](/cloud/features/branch-review) in Cypress Cloud, pick a **base run** and a **changed run** from the dropdowns (or let Cypress select them automatically when the changed run is tied to a pull request) and it shows only what changed between them: the elements and pages that became untested, the gaps the change closed, and everything new it added. If you'd rather stay in your editor, the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets an AI agent pull both runs' coverage and report the diff for you. Both compare any two runs already recorded to Cypress Cloud. See [Compare reports](/ui-coverage/guides/compare-reports) for the full workflow with each.
 
 ### <Icon name="angle-right" /> What's the difference between the base run and the changed run in Branch Review?
 
@@ -83,7 +83,7 @@ The **changed run** is the focal point of the comparison, so everything you see,
 
 ### <Icon name="angle-right" /> How do I tell whether a pull request reduced my UI Coverage?
 
-Open the pull request's run in [Branch Review](/cloud/features/branch-review) and read the coverage-score change at the top: it's labeled a **coverage improvement** when the score rose and a **reduction in coverage** when it fell. A reduction points you to the **New untested elements** and **New untested links** sections, which list the specific controls and pages the change left untested. See [Compare reports](/ui-coverage/guides/compare-reports) and [Block pull requests](/ui-coverage/guides/block-pull-requests) to fail CI automatically when coverage drops.
+Open the pull request's run in [Branch Review](/cloud/features/branch-review) and read the coverage-score change at the top: it's labeled a **coverage improvement** when the score rose and a **reduction in coverage** when it fell. A reduction points you to the **New untested elements** and **New untested links** sections, which list the specific controls and pages the change left untested. You can also ask an AI agent to report the same diff from your editor with the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp). See [Compare reports](/ui-coverage/guides/compare-reports) and [Block pull requests](/ui-coverage/guides/block-pull-requests) to fail CI automatically when coverage drops.
 
 ### <Icon name="angle-right" /> What's the difference between a new untested element and a resolved untested element in UI Coverage?
 
@@ -95,11 +95,11 @@ Usually because a dynamic value in the URL or an element attribute isn't being m
 
 ### <Icon name="angle-right" /> How do I get an accurate Cypress UI Coverage comparison between two runs?
 
-For an accurate Cypress UI Coverage comparison, compare passing runs that ran similar tests on the same content, so each run visited roughly the same pages and completed the same workflows; then any difference in the diff reflects the change in the newer run. This is what you get out of the box when comparing a pull-request branch against its base. Comparing runs from different points in time is still valid, as long as you account for the other sources of difference as you read the results. To see unified changes for your whole suite, group all of a commit's tests under a single Cypress run per report. See [Compare reports](/ui-coverage/guides/compare-reports) and [Branch Review best practices](/cloud/features/branch-review#Best-Practices).
+For an accurate Cypress UI Coverage comparison, compare passing runs that ran similar tests on the same content, so each run visited roughly the same pages and completed the same workflows; then any difference in the diff reflects the change in the newer run. This is what you get out of the box when comparing a pull-request branch against its base. Comparing runs from different points in time is still valid, as long as you account for the other sources of difference as you read the results. To see unified changes for your whole suite, group all of a commit's tests under a single Cypress run per report. This guidance applies whether you compare in Branch Review or with the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp), since both read the same recorded runs. See [Compare reports](/ui-coverage/guides/compare-reports) and [Branch Review best practices](/cloud/features/branch-review#Best-Practices).
 
 ### <Icon name="angle-right" /> Do I need to rerun my tests to compare two UI Coverage reports?
 
-No. Branch Review compares two runs that are already recorded to Cypress Cloud, so any two recorded runs can be compared without re-running anything. If you only changed configuration and want to compare the effect, regenerate a past run from its **Properties** tab instead of recording again. See [Compare reports](/ui-coverage/guides/compare-reports).
+No. Branch Review compares two runs that are already recorded to Cypress Cloud, so any two recorded runs can be compared without re-running anything. The same is true when comparing with the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp), which reads those same recorded runs. If you only changed configuration and want to compare the effect, regenerate a past run from its **Properties** tab instead of recording again. See [Compare reports](/ui-coverage/guides/compare-reports).
 
 ### <Icon name="angle-right" /> Can I compare UI Coverage reports with an AI agent or the Cypress Cloud MCP?
 
