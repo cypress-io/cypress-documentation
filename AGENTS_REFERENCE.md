@@ -197,6 +197,12 @@ and `docs/app/guides/migration/`.
   table of contents, and the card styles it to match. Keep `title` too, for
   analytics. Use `hideTitle` only for a lone card that already sits under its
   own Markdown heading.
+- **Write `subtext` as the outcome, not the mechanism.** Say what the reader gets
+  from running the prompt, like the example below (_"Get a high-level summary of
+  any failures in the latest run on your branch."_). The card's title and **Copy
+  prompt** button already signal that it copies a prompt for an AI assistant, so
+  don't restate that: skip openers like _"Copies a ready-made prompt that has your
+  AI coding assistant…"_, which just repeat the component's own UI.
 - **Expanded by default** (no prop needed); add `defaultCollapsed` for prompts
   over **350 characters** so they sit behind a **Show prompt** toggle.
 - **Format longer prompts** with newlines and bullet/numbered lists in the
