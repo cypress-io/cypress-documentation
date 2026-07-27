@@ -86,7 +86,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
   not a code block; keep example-specific prompts, code, commands, and diagrams in
   code blocks. Prompts are expanded by default; add `defaultCollapsed` past 350
-  characters, and never wrap the prompt in quotes.
+  characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
+  the reader gets, not a restatement that the card copies a prompt for an AI
+  assistant.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
 - Use **bold** only for real UI controls the reader acts on in a walkthrough

@@ -21,7 +21,7 @@ No. UI Coverage requires no code changes or instrumentation. Reports are generat
 
 ### <Icon name="angle-right" /> How is the UI Coverage score calculated?
 
-The score compares the number of tested interactive elements to the total number of interactive elements in your application. [Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit: the group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
+The Cypress UI Coverage score compares the number of tested interactive elements to the total number of interactive elements in your application. [Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit: the group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
 
 ### <Icon name="angle-right" /> How do I get started with UI Coverage?
 
@@ -51,7 +51,7 @@ Record a run to Cypress Cloud with [Test Replay](/cloud/features/test-replay) en
 
 ### <Icon name="angle-right" /> Where should I start if my UI Coverage score is low?
 
-Start with your lowest-scoring [views](/ui-coverage/core-concepts/views), weighed against how critical each one is to your users, since a checkout or signup view at 40% is more urgent than a settings page at the same score. Before writing tests, rule out noise: third-party widgets counted as untested elements (exclude them with [`elementFilters`](/ui-coverage/configuration/elementfilters)) and links to pages you'll never test (exclude them with [`viewFilters`](/ui-coverage/configuration/viewfilters)) both lower a score without pointing to a real gap. See [Why is my UI Coverage score lower than I expect?](#Why-is-my-UI-Coverage-score-lower-than-I-expect) and [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps).
+In Cypress Cloud, start with your lowest-scoring [views](/ui-coverage/core-concepts/views), weighed against how critical each one is to your users, since a checkout or signup view at 40% is more urgent than a settings page at the same score. Before writing tests, rule out noise: third-party widgets counted as untested elements (exclude them with [`elementFilters`](/ui-coverage/configuration/elementfilters)) and links to pages you'll never test (exclude them with [`viewFilters`](/ui-coverage/configuration/viewfilters)) both lower a score without pointing to a real gap. See [Why is my UI Coverage score lower than I expect?](#Why-is-my-UI-Coverage-score-lower-than-I-expect) and [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps).
 
 ### <Icon name="angle-right" /> In Cypress UI Coverage, what's the difference between an untested element, an untested link, and an untested view?
 
@@ -81,7 +81,7 @@ Add navigation to the page so it renders during a run. Pages your tests link to 
 
 ### <Icon name="angle-right" /> How do I cover an element that only appears after login or a click?
 
-Drive the interaction that puts the UI into that state before interacting with the element. A control inside a collapsed menu, a modal, or a section that only renders after signing in won't be exercised until your test reveals it, so click the toggle or run your `cy.login()` command first, then interact with the now-visible element. Each new state your tests reach adds its snapshot to the report, so previously hidden elements start appearing as tested.
+Drive the interaction that puts the UI into that state before interacting with the element. A control inside a collapsed menu, a modal, or a section that only renders after signing in won't be exercised until your test reveals it, so click the toggle or run your `cy.login()` command first, then interact with the now-visible element. Each new state your tests reach adds its snapshot to the Cypress UI Coverage report, so previously hidden elements start appearing as tested.
 
 ### <Icon name="angle-right" /> Which coverage gaps should I fix first in Cypress UI Coverage?
 
@@ -89,7 +89,7 @@ Prioritize by risk, not by count. Start with the views behind your highest-value
 
 ### <Icon name="angle-right" /> Why did closing one coverage gap reveal more untested elements?
 
-Because visiting a page or reaching a new state exposes controls UI Coverage had never seen. When a test navigates to a previously [untested link](/ui-coverage/core-concepts/interactivity#Untested-Links), UI Coverage creates a [view](/ui-coverage/core-concepts/views) for that page and lists every interactive element on it, most of which start untested. This is expected, and it's why closing gaps is a loop: each pass surfaces the next set of elements to prioritize.
+Because visiting a page or reaching a new state exposes controls Cypress UI Coverage had never seen. When a test navigates to a previously [untested link](/ui-coverage/core-concepts/interactivity#Untested-Links), UI Coverage creates a [view](/ui-coverage/core-concepts/views) for that page and lists every interactive element on it, most of which start untested. This is expected, and it's why closing gaps is a loop: each pass surfaces the next set of elements to prioritize.
 
 ## Comparing reports across runs
 
@@ -133,23 +133,23 @@ Test duplication is when many separate tests exercise the same interactive eleme
 
 ### <Icon name="angle-right" /> How do I find elements my tests exercise more than they need to?
 
-Open the **Tested elements** section of the UI Coverage report. It lists every interactive element your tests exercised, with an **Interactions** column (how many times a command targeted it) and a **Tests** column (how many separate tests touched it), and it's sorted by interactions with the most-exercised elements first. A control that a large share of your suite interacts with, such as a **Log in** or **Continue** button, is usually shared setup being repeated across tests. Expand a row to break its counts down by view and open [Test Replay](/cloud/features/test-replay) on each occurrence. See [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication).
+Open the **Tested elements** section of the Cypress UI Coverage report. It lists every interactive element your tests exercised, with an **Interactions** column (how many times a command targeted it) and a **Tests** column (how many separate tests touched it), and it's sorted by interactions with the most-exercised elements first. A control that a large share of your suite interacts with, such as a **Log in** or **Continue** button, is usually shared setup being repeated across tests. Expand a row to break its counts down by view and open [Test Replay](/cloud/features/test-replay) on each occurrence. See [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication).
 
 ### <Icon name="angle-right" /> What's the difference between the Interactions and Tests columns in UI Coverage?
 
-**Interactions** counts every recognized command against an element across the run, so one test that hits a control in a loop can run the number up on its own. **Tests** counts the distinct tests that interacted with it, so a high number there means many _separate_ tests all touch the same control. The **Tests** column is the better signal for duplication, because shared setup repeated across your suite shows up as one element touched by a large share of your tests.
+In Cypress UI Coverage, **Interactions** counts every recognized command against an element across the run, so one test that hits a control in a loop can run the number up on its own. **Tests** counts the distinct tests that interacted with it, so a high number there means many _separate_ tests all touch the same control. The **Tests** column is the better signal for duplication, because shared setup repeated across your suite shows up as one element touched by a large share of your tests.
 
 ### <Icon name="angle-right" /> How do I reduce test duplication?
 
-Use UI Coverage to find the elements at the top of the **Tested elements** list, confirm with [Test Replay](/cloud/features/test-replay) that the tests are passing _through_ a flow rather than testing it, then replace the repeated UI steps with a single programmatic step: cache authentication with [`cy.session()`](/api/commands/session), set a cookie or storage flag directly, or seed state with [`cy.request()`](/api/commands/request). Keep one test that still drives the flow through the UI so its coverage is preserved. The [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication) guide walks through the full workflow.
+Use Cypress UI Coverage to find the elements at the top of the **Tested elements** list, confirm with [Test Replay](/cloud/features/test-replay) that the tests are passing _through_ a flow rather than testing it, then replace the repeated UI steps with a single programmatic step: cache authentication with [`cy.session()`](/api/commands/session), set a cookie or storage flag directly, or seed state with [`cy.request()`](/api/commands/request). Keep one test that still drives the flow through the UI so its coverage is preserved. The [Reduce test duplication](/ui-coverage/guides/reduce-test-duplication) guide walks through the full workflow.
 
 ### <Icon name="angle-right" /> Does reducing test duplication lower my UI Coverage score?
 
-No. An element stays tested as long as at least one test still interacts with it, so consolidating redundant setup removes _interactions_, not _coverage_. When you replace a UI login in 200 tests with [`cy.session()`](/api/commands/session) and keep one test that drives the login form, the form's interaction count drops sharply while it remains marked as tested, and your overall score is unchanged.
+No. In Cypress UI Coverage, an element stays tested as long as at least one test still interacts with it, so consolidating redundant setup removes _interactions_, not _coverage_. When you replace a UI login in 200 tests with [`cy.session()`](/api/commands/session) and keep one test that drives the login form, the form's interaction count drops sharply while it remains marked as tested, and your overall score is unchanged.
 
 ### <Icon name="angle-right" /> What's the difference between reducing noise and reducing test duplication in UI Coverage?
 
-[Reducing noise](/ui-coverage/guides/reduce-noise) is a report-accuracy problem: the report over-counts because one control is reported as many elements, or unrelated pages are split into separate views, and you fix it with [App Quality configuration](/ui-coverage/configuration/overview). [Reducing test duplication](/ui-coverage/guides/reduce-test-duplication) is a test-effort problem: the report is correct, but your suite repeats the same setup across many tests, and you fix it in your test code by consolidating that setup.
+[Reducing noise](/ui-coverage/guides/reduce-noise) is a report-accuracy problem: the report over-counts because one control is reported as many elements, or unrelated pages are split into separate views, and you fix it with [App Quality configuration](/ui-coverage/configuration/overview) in Cypress Cloud. [Reducing test duplication](/ui-coverage/guides/reduce-test-duplication) is a test-effort problem: the report is correct, but your suite repeats the same setup across many tests, and you fix it in your test code by consolidating that setup.
 
 ## Interactive elements
 
@@ -177,11 +177,11 @@ No. Query strings are ignored when grouping, so `/dashboard?tab=overview` and `/
 
 ### <Icon name="angle-right" /> How do I create a separate UI Coverage view for each value of a URL parameter?
 
-Write a [`views`](/ui-coverage/configuration/views) pattern that names the parameter, then list that name in `groupBy`. For a pattern like `/analytics/:type/:id`, `groupBy: ["type"]` creates a distinct view for each `type` value (such as `/analytics/performance/:id` and `/analytics/usage/:id`) while still collapsing the dynamic `:id`. `groupBy` accepts a single string or an array of strings, and each name can come from the path, query string, or hash. See [Using groupBy](/ui-coverage/configuration/views#Using-groupBy).
+In Cypress UI Coverage, write a [`views`](/ui-coverage/configuration/views) pattern that names the parameter, then list that name in `groupBy`. For a pattern like `/analytics/:type/:id`, `groupBy: ["type"]` creates a distinct view for each `type` value (such as `/analytics/performance/:id` and `/analytics/usage/:id`) while still collapsing the dynamic `:id`. `groupBy` accepts a single string or an array of strings, and each name can come from the path, query string, or hash. See [Using groupBy](/ui-coverage/configuration/views#Using-groupBy).
 
 ### <Icon name="angle-right" /> How do I exclude URLs from UI Coverage?
 
-Add a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule with `include: false` for a URL pattern. Excluding a URL removes its snapshots from the report and stops links pointing to it from counting against your coverage score. The [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) guide walks through common cases.
+In Cypress Cloud, add a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule with `include: false` for a URL pattern. Excluding a URL removes its snapshots from the report and stops links pointing to it from counting against your coverage score. The [Ignore views and links](/ui-coverage/guides/ignore-views-and-links) guide walks through common cases.
 
 ### <Icon name="angle-right" /> In Cypress UI Coverage, what's the difference between viewFilters and views?
 
@@ -197,7 +197,7 @@ Yes. A [`viewFilters`](/ui-coverage/configuration/viewfilters) list at the root 
 
 ### <Icon name="angle-right" /> Why is a URL still in my UI Coverage report after I excluded it with viewFilters?
 
-The most common causes are:
+The most common causes in Cypress UI Coverage are:
 
 - An earlier rule matches the URL first. Rules apply in order and the first match wins, so a broad `include: true` rule listed before your exclusion prevents it from ever applying.
 - The pattern doesn't match the full URL. Hostnames must match exactly (`https://my-app.com/*` doesn't match `www.my-app.com`), or you can use a path-only pattern like `/admin/*` to match any hostname.
@@ -207,7 +207,7 @@ See [pattern matching behavior](/ui-coverage/configuration/viewfilters#How-are-v
 
 ### <Icon name="angle-right" /> Can I include only specific URLs in UI Coverage?
 
-Yes. List `include: true` rules for the URLs you want, followed by a catch-all rule that excludes everything else: `{ "pattern": "*", "include": false }`. Because the first matching rule wins, the catch-all must come last. See [Include only your application's URLs](/ui-coverage/configuration/viewfilters#Include-only-your-applications-URLs) for a complete example.
+Yes. In Cypress Cloud, list `include: true` rules for the URLs you want, followed by a catch-all rule that excludes everything else: `{ "pattern": "*", "include": false }`. Because the first matching rule wins, the catch-all must come last. See [Include only your application's URLs](/ui-coverage/configuration/viewfilters#Include-only-your-applications-URLs) for a complete example.
 
 ### <Icon name="angle-right" /> Why is a page missing from my Cypress UI Coverage report?
 
@@ -249,7 +249,7 @@ The [`data-cy-ui-group` markup attribute](/ui-coverage/core-concepts/element-gro
 
 ### <Icon name="angle-right" /> What happens if two UI Coverage elementGroups rules match the same element?
 
-The first matching rule in your [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration wins, so list specific rules before broad catch-all rules. A rule that appears after another rule matching the same elements never applies to them.
+In Cypress UI Coverage, the first matching rule in your [`elementGroups`](/ui-coverage/configuration/elementgroups) configuration wins, so list specific rules before broad catch-all rules. A rule that appears after another rule matching the same elements never applies to them.
 
 ### <Icon name="angle-right" /> Can I group UI Coverage elements in my application code instead of Cypress Cloud configuration?
 
@@ -257,11 +257,11 @@ Yes. Add the [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-g
 
 ### <Icon name="angle-right" /> Can I group or filter UI Coverage elements inside iframes or shadow DOM?
 
-Yes. The [`elementGroups`](/ui-coverage/configuration/elementgroups), [`elementFilters`](/ui-coverage/configuration/elementfilters), and [`elements`](/ui-coverage/configuration/elements) configuration options all accept a `documentScope` property that limits a rule to elements inside specific iframes or shadow DOM hosts. List one CSS selector per host, ordered from the outermost document to the innermost.
+Yes. In Cypress UI Coverage, the [`elementGroups`](/ui-coverage/configuration/elementgroups), [`elementFilters`](/ui-coverage/configuration/elementfilters), and [`elements`](/ui-coverage/configuration/elements) configuration options all accept a `documentScope` property that limits a rule to elements inside specific iframes or shadow DOM hosts. List one CSS selector per host, ordered from the outermost document to the innermost.
 
 ### <Icon name="angle-right" /> Why isn't my element group showing up in the UI Coverage report?
 
-The most common causes are:
+The most common causes in Cypress UI Coverage are:
 
 - An earlier `elementGroups` rule matches the same elements, and the first matching rule wins.
 - The elements are excluded by [`elementFilters`](/ui-coverage/configuration/elementfilters), so they're never considered for grouping.
@@ -271,11 +271,11 @@ The most common causes are:
 
 ### <Icon name="angle-right" /> How do I exclude elements from UI Coverage?
 
-Add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. Excluded elements are removed from the report and don't count toward your coverage score. This is the standard way to remove third-party widgets, such as chat launchers or cookie banners, from your reports. The [Ignore elements](/ui-coverage/guides/ignore-elements) guide walks through common cases.
+In Cypress Cloud, add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. Excluded elements are removed from the report and don't count toward your coverage score. This is the standard way to remove third-party widgets, such as chat launchers or cookie banners, from your reports. The [Ignore elements](/ui-coverage/guides/ignore-elements) guide walks through common cases.
 
 ### <Icon name="angle-right" /> How do I exclude a third-party widget like a chat launcher or cookie banner from UI Coverage?
 
-Add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false` whose selector matches the widget's container _and_ its descendants, so every control inside it is removed rather than just the wrapper. For a support chat like Intercom, that's `{ "selector": "#intercom-container, #intercom-container *", "include": false }`. Widgets rendered inside an iframe or shadow DOM are removed by pairing a `*` selector with [`documentScope`](/ui-coverage/configuration/elementfilters#Options). See [Ignore elements](/ui-coverage/guides/ignore-elements) for the full walkthrough.
+In Cypress Cloud, add an [`elementFilters`](/ui-coverage/configuration/elementfilters) rule with `include: false` whose selector matches the widget's container _and_ its descendants, so every control inside it is removed rather than just the wrapper. For a support chat like Intercom, that's `{ "selector": "#intercom-container, #intercom-container *", "include": false }`. Widgets rendered inside an iframe or shadow DOM are removed by pairing a `*` selector with [`documentScope`](/ui-coverage/configuration/elementfilters#Options). See [Ignore elements](/ui-coverage/guides/ignore-elements) for the full walkthrough.
 
 ### <Icon name="angle-right" /> Should I exclude UI Coverage elements with elementFilters or data-cy-ui-interactive?
 
@@ -283,11 +283,11 @@ Both remove an element from the report and the score; choose by who owns the dec
 
 ### <Icon name="angle-right" /> Do excluded elements count toward my UI Coverage score?
 
-No. An element excluded by [`elementFilters`](/ui-coverage/configuration/elementfilters) doesn't appear in the report and doesn't count toward the score, whether your tests interacted with it or not. It's also not considered by [`elementGroups`](/ui-coverage/configuration/elementgroups) or [`elements`](/ui-coverage/configuration/elements) rules.
+No. In Cypress UI Coverage, an element excluded by [`elementFilters`](/ui-coverage/configuration/elementfilters) doesn't appear in the report and doesn't count toward the score, whether your tests interacted with it or not. It's also not considered by [`elementGroups`](/ui-coverage/configuration/elementgroups) or [`elements`](/ui-coverage/configuration/elements) rules.
 
 ### <Icon name="angle-right" /> Why isn't my UI Coverage elementFilters rule excluding an element?
 
-The most common causes are:
+The most common causes in Cypress UI Coverage are:
 
 - The selector matches a container instead of the element itself. Filters use standard CSS matching against each tracked element, so `footer` matches only the `<footer>` element. Use a descendant selector like `footer *` to exclude everything inside a container.
 - An earlier `elementFilters` rule already matched the element, and the first matching rule wins. An `include: true` rule above your exclude rule protects the elements it matches.
@@ -304,27 +304,27 @@ This usually means the element's identifying attributes change between [snapshot
 
 ### <Icon name="angle-right" /> Which attributes does UI Coverage use to identify elements?
 
-UI Coverage checks a prioritized list of attributes on each element and uses the first one present with a usable value. In order, that's: any attributes you add to [`significantAttributes`](/ui-coverage/configuration/significantattributes), then the default test attributes `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, falling back to `id` and `name` when none of those are present. See [Element Identification](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified) for the full priority list and how identification works across snapshots.
+Cypress UI Coverage checks a prioritized list of attributes on each element and uses the first one present with a usable value. In order, that's: any attributes you add to [`significantAttributes`](/ui-coverage/configuration/significantattributes), then the default test attributes `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, falling back to `id` and `name` when none of those are present. See [Element Identification](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified) for the full priority list and how identification works across snapshots.
 
 ### <Icon name="angle-right" /> How does UI Coverage identify an element that has no test attribute or id?
 
-When an element has none of the [identifying attributes](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified), UI Coverage falls back to identifying it by its structure and position in the DOM. Because that identity is less stable than an attribute you control, adding a stable `data-cy` (or similar) attribute is the reliable fix. See [When an element has no identifying attribute](/ui-coverage/core-concepts/element-identification#When-an-element-has-no-identifying-attribute).
+When an element has none of the [identifying attributes](/ui-coverage/core-concepts/element-identification#How-an-element-is-identified), Cypress UI Coverage falls back to identifying it by its structure and position in the DOM. Because that identity is less stable than an attribute you control, adding a stable `data-cy` (or similar) attribute is the reliable fix. See [When an element has no identifying attribute](/ui-coverage/core-concepts/element-identification#When-an-element-has-no-identifying-attribute).
 
 ### <Icon name="angle-right" /> How do I make UI Coverage use my own attribute to identify elements?
 
-Add the attribute name to [`significantAttributes`](/ui-coverage/configuration/significantattributes). Attributes you list are checked before the default list, in the order you list them, so an attribute your application already renders, such as `data-component-name`, can identify, name, and group elements in your reports.
+Add the attribute name to [`significantAttributes`](/ui-coverage/configuration/significantattributes). In Cypress UI Coverage, attributes you list are checked before the default list, in the order you list them, so an attribute your application already renders, such as `data-component-name`, can identify, name, and group elements in your reports.
 
 ### <Icon name="angle-right" /> In UI Coverage, does significantAttributes replace the default attribute list?
 
-No. Your attributes are checked first, and the defaults still apply after them, so an element without any of your attributes is identified exactly as it would be without configuration. Listing a default attribute like `data-qa` promotes it above the other defaults. To stop an attribute from being used at all, use [`attributeFilters`](/ui-coverage/configuration/attributefilters) instead.
+No. In Cypress UI Coverage, your attributes are checked first, and the defaults still apply after them, so an element without any of your attributes is identified exactly as it would be without configuration. Listing a default attribute like `data-qa` promotes it above the other defaults. To stop an attribute from being used at all, use [`attributeFilters`](/ui-coverage/configuration/attributefilters) instead.
 
 ### <Icon name="angle-right" /> Can I use a non-`data-` attribute like aria-label as a UI Coverage significant attribute?
 
-Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/ui-coverage/configuration/significantattributes) identifies elements by their label text, which gives icon-only controls a readable identity. Because UI Coverage lists every interactive element, it also surfaces every label for a person to read and judge for clarity, since automated accessibility tools confirm only that a label exists, not that it is well written.
+Yes. In Cypress UI Coverage, any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/ui-coverage/configuration/significantattributes) identifies elements by their label text, which gives icon-only controls a readable identity. Because UI Coverage lists every interactive element, it also surfaces every label for a person to read and judge for clarity, since automated accessibility tools confirm only that a label exists, not that it is well written.
 
 ### <Icon name="angle-right" /> Why isn't my UI Coverage elements rule applying?
 
-An [`elements`](/ui-coverage/configuration/elements) rule applies only when its selector matches exactly one interactive element in a snapshot. The most common causes are:
+In Cypress UI Coverage, an [`elements`](/ui-coverage/configuration/elements) rule applies only when its selector matches exactly one interactive element in a snapshot. The most common causes are:
 
 - The selector matches more than one interactive element in the same snapshot, so the rule is skipped for that snapshot. Add [`documentScope`](/ui-coverage/configuration/elements#Options) or a more specific selector, or use [`elementGroups`](/ui-coverage/configuration/elementgroups) if several elements should share an identity.
 - The selector only matches non-interactive elements, such as a wrapper around the actual button or input.
@@ -346,7 +346,7 @@ They pull in opposite directions. [`attributeFilters`](/ui-coverage/configuratio
 
 ### <Icon name="angle-right" /> Why isn't my UI Coverage attributeFilters rule working?
 
-The most common causes are:
+The most common causes in Cypress UI Coverage are:
 
 - The pattern doesn't match the full value. Patterns are anchored automatically (as if wrapped in `^(...)$`), so `value: "user"` matches only the exact string `user`. Use wildcards for partial matches, such as `value: "user-.*"`.
 - An earlier rule matches the same attribute first, and the first matching rule wins. List specific `include: true` exceptions before broad `include: false` rules.
@@ -369,29 +369,29 @@ Two conditions must both hold. First, the command name must be listed in [`addit
 
 ### <Icon name="angle-right" /> In UI Coverage, what's the difference between additionalInteractionCommands and allowedInteractionCommands?
 
-[`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) _extends_ the set of commands recognized as interactions everywhere, so a custom or plugin command counts as coverage on any element. [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works _per element_: for elements matching a selector, only the commands you list count, which lets you both restrict coverage to a meaningful interaction and accept commands that are otherwise ignored. Use `additionalInteractionCommands` to recognize a command globally, and `allowedInteractionCommands` to control which commands matter for specific elements.
+In Cypress UI Coverage, [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) _extends_ the set of commands recognized as interactions everywhere, so a custom or plugin command counts as coverage on any element. [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works _per element_: for elements matching a selector, only the commands you list count, which lets you both restrict coverage to a meaningful interaction and accept commands that are otherwise ignored. Use `additionalInteractionCommands` to recognize a command globally, and `allowedInteractionCommands` to control which commands matter for specific elements.
 
 ### <Icon name="angle-right" /> How do I require a specific interaction in UI Coverage, like a hover, to mark an element tested?
 
-Add an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule whose `selector` matches the element and whose `commands` list contains only the interaction you require. Because matching a rule replaces the default commands for that element, interactions you didn't list, including a plain `click`, no longer mark it tested, so the element only counts once the meaningful interaction runs.
+In Cypress UI Coverage, add an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule whose `selector` matches the element and whose `commands` list contains only the interaction you require. Because matching a rule replaces the default commands for that element, interactions you didn't list, including a plain `click`, no longer mark it tested, so the element only counts once the meaningful interaction runs.
 
 ### <Icon name="angle-right" /> Can I count assertions as UI Coverage?
 
-Yes. Assertions don't count by default, but an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule listing `assert` credits assertions against the matching elements. This is useful for read-only elements such as status badges or computed totals that your tests validate but never interact with. Remember that the rule replaces the defaults for those elements, so include any other commands you also want to accept alongside `assert`.
+Yes. In Cypress UI Coverage, assertions don't count by default, but an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule listing `assert` credits assertions against the matching elements. This is useful for read-only elements such as status badges or computed totals that your tests validate but never interact with. Remember that the rule replaces the defaults for those elements, so include any other commands you also want to accept alongside `assert`.
 
 ### <Icon name="angle-right" /> In UI Coverage, do commands in allowedInteractionCommands also need to be in additionalInteractionCommands?
 
-No. Listing a command in an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule automatically registers it as a recognized interaction, so a custom or plugin command works without also appearing in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). As with any custom command, it only produces coverage if it logs a snapshot that references the subject element.
+No. In Cypress UI Coverage, listing a command in an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule automatically registers it as a recognized interaction, so a custom or plugin command works without also appearing in [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands). As with any custom command, it only produces coverage if it logs a snapshot that references the subject element.
 
 ### <Icon name="angle-right" /> Why did an element stop counting as tested in UI Coverage after I added an allowedInteractionCommands rule?
 
-Once an element matches an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule, only the commands listed in the matching rules count for it, and the default commands no longer apply. If your tests exercise the element with a command you didn't list, it's now treated as untested. Add that command to the rule, or tighten the `selector` so the rule doesn't match elements you didn't intend to restrict.
+In Cypress UI Coverage, once an element matches an [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) rule, only the commands listed in the matching rules count for it, and the default commands no longer apply. If your tests exercise the element with a command you didn't list, it's now treated as untested. Add that command to the rule, or tighten the `selector` so the rule doesn't match elements you didn't intend to restrict.
 
 ## Configuration
 
 ### <Icon name="angle-right" /> Do I need to configure anything to use UI Coverage?
 
-No. UI Coverage works out of the box with no configuration. Every recorded run produces a report automatically. Configuration is opt-in and incremental: add a rule only when you want to sharpen the report, such as ignoring a dynamic attribute, filtering out a third-party widget, or grouping related elements. See the [Configuration overview](/ui-coverage/configuration/overview) for what each option does.
+No. Cypress UI Coverage works out of the box with no configuration. Every recorded run produces a report automatically. Configuration is opt-in and incremental: add a rule only when you want to sharpen the report, such as ignoring a dynamic attribute, filtering out a third-party widget, or grouping related elements. See the [Configuration overview](/ui-coverage/configuration/overview) for what each option does.
 
 ### <Icon name="angle-right" /> Where do I set UI Coverage configuration?
 
@@ -415,7 +415,7 @@ Root-level properties like [`viewFilters`](/ui-coverage/configuration/viewfilter
 
 ### <Icon name="angle-right" /> Can I use different UI Coverage configuration for different runs?
 
-Yes. The [`profiles`](/ui-coverage/configuration/profiles) property applies configuration overrides based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt), so a smoke-test run and a full regression run can each use their own settings.
+Yes. In Cypress UI Coverage, the [`profiles`](/ui-coverage/configuration/profiles) property applies configuration overrides based on [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt), so a smoke-test run and a full regression run can each use their own settings.
 
 ## Profiles
 
@@ -486,11 +486,27 @@ Record each run with a distinct [`--tag`](/app/references/command-line#cypress-r
 
 Yes. The result object includes a `config` property containing the [App Quality Config](/ui-coverage/configuration/overview) that generated the report, resolved with any [Profile](/ui-coverage/configuration/profiles) that matched the run's tags. Read `config.value` to confirm exactly which rules were in effect and `config.updatedAt` for when that configuration last changed.
 
+### <Icon name="angle-right" /> Should I block pull requests on a coverage threshold or on new coverage gaps?
+
+Both are valid Cypress UI Coverage policies, and they suit different situations. A **coverage threshold** fails the build when overall or per-view coverage drops below a fixed percentage; it's simple and works well once your coverage is already where you want it, or for holding a critical flow like checkout to a high bar. A **baseline comparison** fails only when a run introduces _new_ untested elements, which is the better fit for an existing app with known coverage debt: it stops gaps from growing without blocking every pull request until all the old debt is paid down. Many teams enforce a threshold on critical views and a baseline everywhere else. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#Choose-a-policy).
+
+### <Icon name="angle-right" /> How do I block a pull request only when new untested elements are introduced?
+
+Compare each run against a stored **baseline** instead of a fixed threshold. Record a known-good run, save each [view's](/ui-coverage/core-concepts/views) `untestedElementsCount` to a small JSON file committed to your repository, then in CI use the [Cypress UI Coverage Results API](/ui-coverage/results-api) to fail the build only when a view's untested-element count rises above its baseline (or a new view arrives carrying untested elements). This lets you pay down existing gaps on your own schedule while preventing new ones from merging. The [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline) guide has the complete script.
+
+### <Icon name="angle-right" /> Why compare untested-element counts instead of the UI Coverage score when gating pull requests?
+
+The [coverage score](/ui-coverage/guides/identify-coverage-gaps#Step-2-Read-your-overall-coverage-score) is the share of your app's interactive elements that your tests exercise (tested ÷ total, with grouped elements counting once), which makes it ideal for tracking direction over time but noisy as a per-run gate: adding a single test can reveal a whole page of previously unseen elements and _lower_ the score even though coverage improved. In Cypress UI Coverage, a view's `untestedElementsCount` is a more direct answer to "did this change add gaps?": if it rises against the baseline, the change introduced untested elements regardless of what the percentage did. Note the two aren't interchangeable, since the score's denominator also counts navigable links while `untestedElementsCount` doesn't. See [Why compare untested-element counts instead of the coverage score?](/ui-coverage/guides/block-pull-requests#Why-compare-untested-element-counts-instead-of-the-coverage-score).
+
+### <Icon name="angle-right" /> Where should I store my UI Coverage baseline?
+
+Commit the Cypress UI Coverage baseline JSON file to version control so it's reviewed and versioned alongside the code that changes your coverage, and is available to every CI run. If you can't commit it, store it as a CI build artifact retrieved on later runs, or in a database when you need richer versioning across many projects. For long-lived branches, keep branch-specific baseline files so a feature branch isn't gated against `main`'s numbers. See [Best practices](/ui-coverage/guides/block-pull-requests#Where-to-store-the-baseline).
+
 ## Troubleshooting
 
 ### <Icon name="angle-right" /> Why is my UI Coverage score lower than I expect?
 
-A few sources of untested elements commonly lower a score without pointing to a real gap in your suite. Third-party widgets, such as chat launchers, cookie banners, and analytics overlays, are interactive elements each counted as untested; exclude them with [`elementFilters`](/ui-coverage/configuration/elementfilters). [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) to pages no test visits, including your own help center, marketing pages, and external sites, also count against the score; exclude their destinations with [`viewFilters`](/ui-coverage/configuration/viewfilters). Finally, one control [split into many](/ui-coverage/troubleshooting#One-element-is-reported-as-many) by an unstable attribute adds duplicate untested elements. See [the coverage score looks wrong](/ui-coverage/troubleshooting#The-coverage-score-looks-wrong) for the fixes.
+A few sources of untested elements commonly lower a Cypress UI Coverage score without pointing to a real gap in your suite. Third-party widgets, such as chat launchers, cookie banners, and analytics overlays, are interactive elements each counted as untested; exclude them with [`elementFilters`](/ui-coverage/configuration/elementfilters). [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) to pages no test visits, including your own help center, marketing pages, and external sites, also count against the score; exclude their destinations with [`viewFilters`](/ui-coverage/configuration/viewfilters). Finally, one control [split into many](/ui-coverage/troubleshooting#One-element-is-reported-as-many) by an unstable attribute adds duplicate untested elements. See [the coverage score looks wrong](/ui-coverage/troubleshooting#The-coverage-score-looks-wrong) for the fixes.
 
 ### <Icon name="angle-right" /> Why does an element my test interacts with still show as untested in UI Coverage?
 
@@ -498,11 +514,11 @@ Usually the command your test uses isn't one UI Coverage recognizes. It counts o
 
 ### <Icon name="angle-right" /> I changed my UI Coverage configuration but the report didn't change. Why?
 
-Most often the run was processed before you saved: reports use the configuration that was applied when they were generated, so [regenerate](/ui-coverage/configuration/overview#Setting-configuration) the run to apply your current configuration. If it still has no effect, check whether an earlier rule matched first (the first matching rule wins for most properties), whether a [nested list replaced a root one](/ui-coverage/configuration/overview#Configuration-scope) instead of merging with it, or whether the configuration failed to save because a property was misspelled or misplaced. See [a configuration rule has no effect](/ui-coverage/troubleshooting#A-configuration-rule-has-no-effect) for the full checklist.
+Most often the run was processed before you saved: Cypress UI Coverage reports use the configuration that was applied when they were generated, so [regenerate](/ui-coverage/configuration/overview#Setting-configuration) the run to apply your current configuration. If it still has no effect, check whether an earlier rule matched first (the first matching rule wins for most properties), whether a [nested list replaced a root one](/ui-coverage/configuration/overview#Configuration-scope) instead of merging with it, or whether the configuration failed to save because a property was misspelled or misplaced. See [a configuration rule has no effect](/ui-coverage/troubleshooting#A-configuration-rule-has-no-effect) for the full checklist.
 
 ### <Icon name="angle-right" /> How do I debug a UI Coverage report that looks wrong?
 
-Start by [regenerating the run](/ui-coverage/configuration/overview#Setting-configuration) so it reflects your current configuration, then match your symptom to a cause on the [Troubleshooting](/ui-coverage/troubleshooting) page, which covers duplicate elements, mis-grouped elements, tested elements shown as untested, configuration that has no effect, and unexpected scores. Because you can regenerate any past run, the fastest approach is to make one change, regenerate a recent run, and check the result before making the next.
+Start by [regenerating the run](/ui-coverage/configuration/overview#Setting-configuration) in Cypress Cloud so it reflects your current configuration, then match your symptom to a cause on the [Troubleshooting](/ui-coverage/troubleshooting) page, which covers duplicate elements, mis-grouped elements, tested elements shown as untested, configuration that has no effect, and unexpected scores. Because you can regenerate any past run, the fastest approach is to make one change, regenerate a recent run, and check the result before making the next.
 
 ## See also
 
