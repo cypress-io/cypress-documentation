@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, configuration, and per-run profiles.'
+description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, component context, configuration scope, reading applied config, Axe Core® rules and color contrast, component testing, and per-run profiles.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -107,6 +107,10 @@ No. Your attributes are checked first, and the defaults still apply after them, 
 
 Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/accessibility/configuration/significantattributes) identifies elements by their label text, so the elements you triage are shown by their labels. This adds a manual check on top of the automated one: Cypress Accessibility confirms that a control has an accessible name, but not that the name is understandable, so `aria-label="button"` passes the same name-presence rules as `aria-label="Close dialog"`. Seeing the label as the identifier makes an unclear one easy to catch.
 
+### <Icon name="angle-right" /> How do I add component or page context to my Cypress Accessibility violation selectors?
+
+Use [`components`](/accessibility/configuration/components), a Cypress Accessibility-only option that requires attributes like `data-page-area` or `data-component-name` in the violation-target selector when they're present. Instead of a bare `#button-123`, the target reads as `[data-page-area="hero"] [data-design-system="IconButton"]#button-123`, so whoever picks up the issue, whether a developer, a Jira ticket, or an AI agent triaging through [Cypress Cloud MCP](/accessibility/work-with-ai-agents), can see where it lives without opening the page HTML. This differs from [`significantAttributes`](/accessibility/configuration/significantattributes), which chooses the single attribute that _identifies_ the element, whereas `components` adds required context _around_ it.
+
 ## Configuration
 
 ### <Icon name="angle-right" /> Where do I set Cypress Accessibility configuration?
@@ -116,6 +120,32 @@ In the **App Quality** tab of your project settings in Cypress Cloud. See [Setti
 ### <Icon name="angle-right" /> Do I need to rerun my tests after changing configuration?
 
 No. You can regenerate any historical run from its **Properties** tab, and the report is reprocessed with the current configuration. This lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
+
+### <Icon name="angle-right" /> How do I apply a setting to Cypress Accessibility without changing UI Coverage?
+
+Nest the property under an `accessibility` key. `viewFilters`, `elementFilters`, `significantAttributes`, and `attributeFilters` apply to both products when set at the root, but a copy nested under `accessibility` applies to Cypress Accessibility alone. A nested value completely replaces the root value for that product rather than merging, so repeat any rules you still want. `views` is the exception: it's shared and can only be set at the root. See [Configuration scope](/accessibility/configuration/overview#Configuration-scope).
+
+### <Icon name="angle-right" /> Can I read the configuration a Cypress Accessibility run was processed with?
+
+Yes, two ways. In Cypress Cloud, open the run's **Properties** tab to see the exact configuration that was applied. In CI, the [Accessibility Results API](/accessibility/results-api) exposes it on the `config` property of `getAccessibilityResults()`, where `config.value` is the applied App Quality configuration and `config.updatedAt` is when it was last saved. See [Viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
+
+### <Icon name="angle-right" /> How do I add a note explaining a Cypress Accessibility configuration rule?
+
+Add a `comment` property to the rule. Any rule defined as an object accepts one, and it's the supported place for notes because Cypress Cloud rejects properties it doesn't recognize. Comments live in your Cypress Accessibility configuration only and never appear in reports. See [Comments](/accessibility/configuration/overview#Comments).
+
+## Axe Core® rules
+
+### <Icon name="angle-right" /> Why isn't color contrast reported in my Cypress Accessibility results?
+
+The Axe Core® color-contrast rule is off by default in Cypress Accessibility. It's both the slowest rule in the ruleset and the one most prone to false positives and incomplete checks, so Cypress leaves it off unless you ask for it. It works well in many applications, and your Account Executive can turn it on for your project. See [Axe Core® configuration](/accessibility/configuration/axe-core-configuration).
+
+### <Icon name="angle-right" /> Does Cypress Accessibility work with component tests?
+
+Yes. Cypress Accessibility runs against component tests as well as end-to-end tests. Because a component is usually a page fragment, "page-level" rules that check page structure and document-wide attributes don't run for component tests, while the rest of the ruleset does. See [Component testing](/accessibility/configuration/axe-core-configuration#Component-Testing).
+
+### <Icon name="angle-right" /> How often does Cypress Accessibility update its Axe Core® version?
+
+Cypress Accessibility doesn't commit to a fixed schedule, but always waits at least 30 days before adopting a new Axe Core® release. Because updates can add rules or change how issues are detected, that buffer gives you time to adjust your [Results API](/accessibility/results-api) logic if needed. The exact version used for a run appears on its **Properties** tab and in the Results API. See [Updates to the Axe Core® library](/accessibility/configuration/axe-core-configuration#Updates-to-the-Axe-Core-library).
 
 ## Profiles
 
