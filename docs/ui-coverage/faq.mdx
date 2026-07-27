@@ -23,6 +23,26 @@ No. UI Coverage requires no code changes or instrumentation. Reports are generat
 
 The score compares the number of tested interactive elements to the total number of interactive elements in your application. [Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit: the group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
 
+### <Icon name="angle-right" /> How do I get started with UI Coverage?
+
+Record a run to Cypress Cloud with [Test Replay](/cloud/features/test-replay) enabled on Cypress v13 or later, then open its **UI Coverage** tab. A report is generated automatically for every recorded run, with no code changes, plugin, or instrumentation. From there you can read your coverage score, drill into your lowest-scoring [views](/ui-coverage/core-concepts/views), and optionally tune the report with [App Quality configuration](/ui-coverage/configuration/overview). The [Get Started guide](/ui-coverage/get-started/setup) walks through the whole path.
+
+### <Icon name="angle-right" /> What do I need to use UI Coverage?
+
+Three things: a Cypress project recording to [Cypress Cloud](/cloud/get-started/introduction), [Test Replay](/cloud/features/test-replay) enabled for the run (reports are built entirely from Test Replay data), and Cypress v13 or later. UI Coverage isn't included in standard Cloud plans, so you'll also need it enabled for your organization, which you can do with a [free trial](/ui-coverage/get-started/setup#Step-1-Start-your-UI-Coverage-trial). No test changes, plugins, or code instrumentation are required.
+
+### <Icon name="angle-right" /> Is UI Coverage included in my Cypress Cloud plan?
+
+UI Coverage isn't part of the standard Cypress Cloud plans; it's enabled separately for your organization. You can turn it on for your projects with a [free trial](/ui-coverage/get-started/setup#Step-1-Start-your-UI-Coverage-trial), which uses your existing recorded runs so you can see your coverage gaps before committing. To find out what's available for your account, start a trial or talk to your Cypress point-of-contact.
+
+### <Icon name="angle-right" /> How soon after a run can I see its UI Coverage report?
+
+The report is generated in Cypress Cloud after the run finishes recording, so it's ready shortly after your run completes rather than during the run itself. Nothing in your Cypress pipeline waits on or fails because of UI Coverage; open the run's **UI Coverage** tab once processing finishes to read it.
+
+### <Icon name="angle-right" /> Does UI Coverage work with Cypress component testing?
+
+Yes. UI Coverage reports on both end-to-end and component runs. In component testing, each spec file becomes a single [view](/ui-coverage/core-concepts/views) named by the spec's file path, and every component mounted in that spec is grouped into it. Everything else, including the coverage score, untested elements, and configuration, works the same way as it does for end-to-end runs.
+
 ## Finding coverage gaps
 
 ### <Icon name="angle-right" /> How do I find which parts of my UI aren't tested?
