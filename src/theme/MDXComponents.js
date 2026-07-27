@@ -36,6 +36,8 @@ import ImportMountFunctions from '@site/docs/partials/_import-mount-functions.md
 import IntellisenseCodeCompletion from '@site/docs/partials/_intellisense-code-completion.mdx'
 import InvertedContainsSelection from '@site/docs/partials/_inverted-contains-selection.mdx'
 import ProductHeading from '@site/src/components/product-heading'
+import AppQualityConfigEditing from '@site/docs/partials/_app-quality-config-editing.mdx'
+import AppQualityConfigWhoCanEdit from '@site/docs/partials/_app-quality-config-who-can-edit.mdx'
 import Profiles from '@site/docs/partials/_profiles.mdx'
 import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
 import SignificantAttributesValidation from '@site/docs/partials/_significantattributes-validation.mdx'
@@ -233,6 +235,8 @@ export default {
   IntellisenseCodeCompletion,
   InvertedContainsSelection,
   ProductHeading,
+  AppQualityConfigEditing,
+  AppQualityConfigWhoCanEdit,
   Profiles,
   RecordKeyEnvVar,
   SignificantAttributesValidation,
