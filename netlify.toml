@@ -1166,6 +1166,18 @@
   force = true
 
 [[redirects]]
+  from = "/accessibility/core-concepts/run-level-reports"
+  to = "/accessibility/guides/run-level-reports"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/core-concepts/inspecting-violation-details"
+  to = "/accessibility/guides/inspecting-violation-details"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/accessibility/guides/working-with-ai-agents"
   to = "/accessibility/work-with-ai-agents"
   status = 301
