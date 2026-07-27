@@ -87,6 +87,59 @@ Every command and subcommand also supports `--help`, so you can explore the CLI 
 cy-cloud run list --help
 ```
 
+#### Allow native build scripts
+
+`@cypress/cloud` depends on [`better-sqlite3`](https://github.com/WiseLibs/better-sqlite3), a native module the CLI uses to read cached [Test Replay](/cloud/features/test-replay) data. When you install the CLI, `better-sqlite3` runs an install script that puts its native binary in place: it downloads a prebuilt binary for your platform when one is available, and compiles from source only when one is not. That script runs on every platform and is how the CLI gets a working database binding, so it is never optional.
+
+**npm** and **Yarn** run dependency install scripts automatically, so the commands above just work. **pnpm** and **Bun** block them by default for security, so you have to allow `better-sqlite3` explicitly. If you skip that step the install still appears to succeed, but `cy-cloud` fails the first time you run it with a missing-binding error such as `Could not locate the bindings file`.
+
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm">
+
+After installing, approve the build (add `--global` to match the global install) and select `better-sqlite3` when prompted:
+
+```bash
+pnpm approve-builds --global
+```
+
+To allow it ahead of time instead, add it to `onlyBuiltDependencies` in your `package.json` before you install:
+
+```json title="package.json"
+{
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3"]
+  }
+}
+```
+
+</TabItem>
+<TabItem value="bun" label="Bun">
+
+Trust the package so Bun runs its install script:
+
+```bash
+bun pm trust better-sqlite3
+```
+
+To allow it ahead of time instead, add it to `trustedDependencies` in your `package.json` before you install:
+
+```json title="package.json"
+{
+  "trustedDependencies": ["better-sqlite3"]
+}
+```
+
+</TabItem>
+</Tabs>
+
+Most users get a prebuilt binary and need nothing else. If your platform has no prebuilt binary (for example an uncommon architecture, a musl-based distribution such as Alpine, or a very new Node.js version), the install script compiles `better-sqlite3` from source, which additionally needs a C/C++ build toolchain: `node-gyp`, Python, and a compiler such as Clang, GCC, or MSVC.
+
+:::note
+
+If your organization sets `ignore-scripts=true` in an `.npmrc`, npm and Yarn skip install scripts too, which produces the same missing-binding error. Allow scripts for this install, or use a package manager step that permits them.
+
+:::
+
 ### Keep the CLI updated
 
 Always run the latest version. Check your version any time with [`cy-cloud version`](#cy-cloud-version), and upgrade to the latest release regularly:
