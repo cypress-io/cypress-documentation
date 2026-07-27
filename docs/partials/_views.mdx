@@ -266,6 +266,6 @@ A pattern that doesn't match any URLs in the run is dropped from the report. Con
 
 Each name in `groupBy` must appear in `pattern` as a named parameter. For example, `groupBy: ["type"]` requires `:type` somewhere in the pattern's path, query string, or hash.
 
-### Error: `No duplicate values allowed`
+### Error: `No duplicate values allowed - "..." was added multiple times`
 
-Each pattern in `views` must be unique. Named parameters are compared as wildcards, so `/users/:name` and `/users/*` count as the same pattern.
+Each pattern in `views` must be unique. Named parameters are compared as wildcards, so `/users/:name` and `/users/*` count as the same pattern and trigger this error.
