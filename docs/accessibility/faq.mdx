@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Get answers to common questions about Cypress Accessibility, including ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, configuration, and per-run profiles.'
+description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, configuration, and per-run profiles.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -42,6 +42,32 @@ Yes. An `elementFilters` list at the root of your configuration applies to both 
 ### <Icon name="angle-right" /> Does include: true do anything in Cypress Accessibility?
 
 Not on its own. Every element is included unless an exclude rule matches it, and an include rule can't protect an element from exclusion. The value matters in root-level `elementFilters` lists shared with UI Coverage, where include rules do protect their elements. See [When to use include: true](/accessibility/configuration/elementfilters#When-to-use-include-true).
+
+## Grouping and naming views
+
+### <Icon name="angle-right" /> Why do similar URLs show up as separate views in my accessibility report?
+
+Automatic grouping only replaces path segments that are numbers or IDs (UUIDs and UUID-like values) with a wildcard. Segments like usernames or slugs aren't recognized as dynamic, so `/users/alice` and `/users/bob` stay separate views, and a violation on that shared template is reported once per URL. Add a [`views`](/accessibility/configuration/views) pattern to group them into one view and triage the issue once.
+
+### <Icon name="angle-right" /> Do query parameters create separate views in Cypress Accessibility?
+
+No. Query strings are ignored when grouping, so `/dashboard?tab=overview` and `/dashboard?tab=settings` become a single `/dashboard` view. If a query parameter meaningfully changes the page, use a [`views`](/accessibility/configuration/views) pattern with `groupBy` on that parameter to report on each value separately.
+
+### <Icon name="angle-right" /> How do I create a separate accessibility view for each value of a URL parameter?
+
+Write a [`views`](/accessibility/configuration/views) pattern that names the parameter, then list that name in `groupBy`. For a pattern like `/analytics/:type/:id`, `groupBy: ["type"]` creates a distinct view for each `type` value (such as `/analytics/performance/:id` and `/analytics/usage/:id`) while still collapsing the dynamic `:id`. `groupBy` accepts a single string or an array of strings, and each name can come from the path, query string, or hash. See [Using groupBy](/accessibility/configuration/views#Using-groupBy).
+
+### <Icon name="angle-right" /> Does grouping URLs into a view change my accessibility score?
+
+Not your run-level score. The [run score](/accessibility/core-concepts/accessibility-score) averages every snapshot in the run regardless of how snapshots are grouped, so grouping URLs into a view reorganizes the report without moving the top-line number. What changes is the per-view score: the snapshots you group roll up into one view's score instead of several, which makes each page's accessibility easier to read and track over time.
+
+### <Icon name="angle-right" /> What's the difference between views and viewFilters in Cypress Accessibility?
+
+They do opposite things. [`views`](/accessibility/configuration/views) _keeps_ URLs but changes how they're grouped and named, so related pages collapse into a single view or a dynamic route splits into several. [`viewFilters`](/accessibility/configuration/viewfilters) _removes_ URLs, so matching snapshots are never scanned and don't appear in your report or score. Use `views` to organize the pages you scan, and `viewFilters` for pages you don't own or intend to remediate.
+
+### <Icon name="angle-right" /> Can I configure views for Cypress Accessibility without affecting UI Coverage?
+
+No. Unlike [`viewFilters`](/accessibility/configuration/viewfilters) and [`elementFilters`](/accessibility/configuration/elementfilters), `views` is defined only at the root of your configuration and can't be nested under an `accessibility` or `uiCoverage` key. A single set of view patterns groups URLs the same way for both products. To exclude a URL from one product only, use a nested `viewFilters` list instead. See [Scope](/accessibility/configuration/views#Scope).
 
 ## Ignoring views and URLs
 
@@ -121,6 +147,7 @@ There's no dedicated "skip this run" switch in a profile. To suppress a report f
 ## See also
 
 - [Configuration overview](/accessibility/configuration/overview) lists every configuration option and what each one is for.
+- [`views`](/accessibility/configuration/views) is the full reference for grouping and naming views.
 - [`profiles`](/accessibility/configuration/profiles) apply different configuration to runs based on run tags.
 - [`elementFilters`](/accessibility/configuration/elementfilters) is the full reference for ignoring elements.
 - [`viewFilters`](/accessibility/configuration/viewfilters) is the full reference for excluding URLs.
