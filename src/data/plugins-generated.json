@@ -155,9 +155,9 @@
     },
     "cypress-conditional-tags": {
       "npm": "cypress-conditional-tags",
-      "version": "1.0.1",
-      "lastPublished": "2026-05-03T07:40:52.449Z",
-      "cypressVersion": ">=10.0.0"
+      "version": "2.0.0",
+      "lastPublished": "2026-07-26T13:14:20.108Z",
+      "cypressVersion": ">=15.10.0"
     },
     "cypress-expect": {
       "npm": "cypress-expect",
