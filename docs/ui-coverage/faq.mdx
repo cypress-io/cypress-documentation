@@ -1,6 +1,6 @@
 ---
 title: 'UI Coverage FAQ'
-description: 'Get answers to common questions about Cypress UI Coverage, including scores, closing coverage gaps with Test Generation, comparing reports across runs with Branch Review, finding and reducing test duplication, view and URL grouping, element identification, grouping and filtering, iframes and shadow DOM, interaction commands, configuration, per-run profiles, the Results API for CI, and how to troubleshoot unexpected reports.'
+description: 'Answers to common questions about Cypress UI Coverage: how it differs from code coverage, coverage scores, closing gaps, configuration, and the Results API.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -42,6 +42,22 @@ The report is generated in Cypress Cloud after the run finishes recording, so it
 ### <Icon name="angle-right" /> Does UI Coverage work with Cypress component testing?
 
 Yes. UI Coverage reports on both end-to-end and component runs. In component testing, each spec file becomes a single [view](/ui-coverage/core-concepts/views) named by the spec's file path, and every component mounted in that spec is grouped into it. Everything else, including the coverage score, untested elements, and configuration, works the same way as it does for end-to-end runs.
+
+### <Icon name="angle-right" /> Is UI Coverage the same as code coverage?
+
+No. Code coverage measures which lines, branches, or functions of your source code ran during a test. UI Coverage measures your application the way a user meets it: the share of _interactive elements_ (buttons, inputs, links, and controls) your tests actually exercised. The two answer different questions. A line of code can back many controls, and simply importing a module can mark it "covered" without a user ever touching the interface, so high code coverage can still hide untested buttons and pages. UI Coverage closes that gap by reporting on the rendered DOM, and it needs no instrumentation or build tooling to do it. The two are complementary, and many teams track both.
+
+### <Icon name="angle-right" /> Does UI Coverage affect how my tests run or slow them down?
+
+No. UI Coverage adds nothing to test execution. Reports are generated in Cypress Cloud _after_ a run finishes recording, from the [Test Replay](/cloud/features/test-replay) data your run already captured, so there's no extra work during the run and nothing in your Cypress pipeline waits on or fails because of UI Coverage.
+
+### <Icon name="angle-right" /> Does UI Coverage work with my framework, and do I have to change my code?
+
+Yes, and no. UI Coverage analyzes the rendered DOM captured by [Test Replay](/cloud/features/test-replay), not your source code, so it's framework-agnostic. React, Vue, Angular, Svelte, server-rendered HTML, or anything else that produces a DOM works the same way. You don't change your application code, add a plugin, or write any configuration to get a report; configuration is opt-in and comes later, only when you want to sharpen the results.
+
+### <Icon name="angle-right" /> What's the difference between UI Coverage and Cypress Accessibility?
+
+Both are Cypress Cloud [App Quality](/ui-coverage/configuration/overview) features built on the same [Test Replay](/cloud/features/test-replay) data, and both need no code changes. They measure different things: UI Coverage tells you _how much_ of your interactive UI your tests exercise (a coverage score plus untested elements and links), while [Cypress Accessibility](/accessibility/get-started/introduction) tells you _whether_ the UI your tests render has accessibility violations. They share configuration properties like [`viewFilters`](/ui-coverage/configuration/viewfilters) and [`elementFilters`](/ui-coverage/configuration/elementfilters), which you can scope to one product or the other. See [Configuration scope](/ui-coverage/configuration/overview#Configuration-scope).
 
 ## Finding coverage gaps
 

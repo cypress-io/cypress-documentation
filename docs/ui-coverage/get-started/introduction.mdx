@@ -1,15 +1,17 @@
 ---
 title: What is UI Coverage?
-description: 'Increase your test coverage with UI Coverage, a visual test coverage report based on the interactive elements that make up your application.'
+description: 'UI Coverage turns your recorded Cypress runs into a visual map of which interactive elements your tests cover, and which they miss. No code changes needed.'
 sidebar_label: Introduction
 sidebar_position: 10
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# Identify testing gaps with UI Coverage
+# What is UI Coverage?
 
-Easily track, monitor, and visualize the test coverage of your UI to prevent regressions by ensuring critical flows of your app are tested. Quickly close coverage gaps with Test Generation, and react to changes you previously would have missed with API access and on-demand comparisons between any two test runs.
+UI Coverage shows you which interactive parts of your application your tests actually exercise, and which they miss. Part of Cypress Cloud, it turns every run you already record into a visual map of the buttons, inputs, links, and controls your users touch, scores how much of that surface your suite covers, and lets you track the score over time.
+
+It answers a question code coverage can't: not _which code ran_, but _whether the things a user can actually do are tested_. And it does it with **no code changes, no plugin, and no instrumentation**. Reports are generated in Cypress Cloud from the [Test Replay](/cloud/features/test-replay) data your runs already capture.
 
 <Btn
   label="Request trial ➜"
@@ -36,13 +38,52 @@ Easily track, monitor, and visualize the test coverage of your UI to prevent reg
   noBorder="true"
 />
 
-## Get Started
+## Why UI Coverage
 
-UI Coverage works instantly, with no setup or code instrumentation required. If you record to Cypress Cloud with Test Replay, you're ready to start. The [Get Started guide](/ui-coverage/get-started/setup) walks you through recording a run, reading your report, and tuning it with configuration.
+A passing suite only tells you the flows you _wrote tests for_ work. It says nothing about the parts of your app no test touches: the buttons your tests never click, the forms they never submit, and the pages they never open. Because these gaps never produce a failing test, they stay invisible until a user hits them in production.
+
+Code coverage doesn't catch these gaps either. It reports which lines of your source code ran, which says little about whether the features those lines power actually work for the people using them. UI Coverage takes the opposite view: it measures your application the way your users meet it, by the interactive elements on each page and whether your tests exercise them.
+
+With UI Coverage you can:
+
+- **See your untested surface at a glance.** A single coverage score, and a per-[view](/ui-coverage/core-concepts/views) score for every page and state your tests reach, so you can rank pages by risk instead of guessing.
+- **Find the exact gaps.** Every untested button, input, and link is listed with a full-page, inspectable DOM snapshot showing precisely where it is.
+- **Discover flows you never test.** [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) surface pages your app links to but no test ever visits, revealing whole flows your suite is missing.
+- **Close gaps fast.** Generate a Cypress test for an untested element with [Test Generation](/ui-coverage/faq#What-is-Test-Generation-in-Cypress-UI-Coverage), or pull scores and gaps into your editor with the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp).
+- **Catch regressions before they merge.** Compare any two runs in [Branch Review](/cloud/features/branch-review), and [fail CI or block a pull request](/ui-coverage/guides/block-pull-requests) when coverage drops, using the [Results API](/ui-coverage/results-api).
+- **Trim redundant tests.** See the controls your suite exercises far more than it needs to, then [consolidate that duplicated setup](/ui-coverage/guides/reduce-test-duplication) to cut test runtime, CI time, and test-results usage without losing coverage.
+
+## How it works
+
+UI Coverage is built entirely on [Test Replay](/cloud/features/test-replay), the same capture protocol Cypress already uses to record your runs. Because the data is captured during a run you're already recording, there's nothing extra to install and no impact on how your tests execute.
+
+1. **You record a run** to Cypress Cloud with Test Replay enabled, exactly as you do today.
+2. **Cypress Cloud analyzes the DOM snapshots** Test Replay captured for every unique state your tests reached, in both end-to-end and component testing.
+3. **It finds every interactive element** in those snapshots and checks whether a [recognized Cypress command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) interacted with it.
+4. **It produces a report** on the run's **UI Coverage** tab, with a coverage score, per-view breakdowns, and the specific untested elements and links.
+
+Because the report is generated after the run finishes recording, nothing in your Cypress pipeline waits on or fails because of UI Coverage.
+
+## What a report shows you
+
+Open a run's **UI Coverage** tab and the report answers four questions:
+
+- **What's my overall coverage?** The [coverage score](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) is the share of interactive elements your tests exercised: tested ÷ total, where [grouped elements](/ui-coverage/core-concepts/element-grouping) count once.
+- **Which pages need the most attention?** Each [view](/ui-coverage/core-concepts/views) (a page or state of your app) gets its own score, so you can rank pages and weigh each against how critical it is to your users.
+- **What did my tests miss on a page?** Drilling into a view lists its untested [interactive elements](/ui-coverage/core-concepts/interactivity#Interactive-Elements), each with a full-page, inspectable DOM snapshot showing exactly where it is.
+- **Which pages do my tests never reach?** [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) surface pages your tests link to but never visit, so you can see the flows your suite is missing entirely.
+
+<DocsImage
+  src="/img/ui-coverage/core-concepts/views-list.png"
+  alt="UI Coverage tab in Cypress Cloud showing an overall coverage score and a list of views with columns for snapshots, tested elements, and coverage percentage, alongside navigation for untested links, tested elements, and untested elements"
+  caption="The UI Coverage tab: an overall coverage score, a per-view breakdown, and navigation to untested links, tested elements, and untested elements."
+/>
+
+## Get started
+
+UI Coverage works instantly. If you already record runs to Cypress Cloud with Test Replay, you can be reading your first report in minutes. The [Get Started guide](/ui-coverage/get-started/setup) walks you through recording a run, reading the report, and tuning it with configuration.
 
 [Get started with UI Coverage ➜](/ui-coverage/get-started/setup)
-
-## Top Guides
 
 <ul class="guidesList">
   <li class="card">
@@ -53,9 +94,8 @@ UI Coverage works instantly, with no setup or code instrumentation required. If 
       <Icon name="list-check" />
       <h3 id="card-title-1">Identify coverage gaps</h3>
       <p>
-        Identify gaps in your application's test coverage by running tests,
-        analyzing coverage reports, expanding scans into untested areas, and
-        configuring settings to optimize report clarity and focus.
+        Go from a recorded run to a prioritized list of the untested buttons,
+        forms, links, and pages in your application.
       </p>
     </a>
   </li>
@@ -67,110 +107,55 @@ UI Coverage works instantly, with no setup or code instrumentation required. If 
       <Icon name="clipboard-check" />
       <h3 id="card-title-2">Address coverage gaps</h3>
       <p>
-        Address test coverage gaps by prioritizing critical views, creating
-        targeted tests for untested elements, refining configuration to exclude
-        irrelevant data, and regularly reviewing reports to maintain
-        comprehensive application testing.
+        Close the gaps that matter by writing targeted tests or generating them
+        directly from untested elements in the report.
       </p>
     </a>
   </li>
   <li class="card">
-    <a href="/ui-coverage/work-with-ai-agents" aria-labelledby="card-title-8">
-      <Icon
-        useCypressIcon
-        name="general-sparkle-triple"
-        size="24"
-        fillColor="teal-600"
-      />
-      <h3 id="card-title-8">Work with AI agents</h3>
-      <p>
-        Use Cypress Cloud MCP with UI Coverage to pull scores, views, and
-        untested elements from recorded runs, tune reports for clearer signal,
-        and review coverage deltas alongside passing tests.
-      </p>
-    </a>
-  </li>
-  <li class="card">
-    <a
-      href="/ui-coverage/guides/reduce-test-duplication"
-      aria-labelledby="card-title-3"
-    >
-      <Icon name="check-double" />
-      <h3 id="card-title-3">Reduce test duplication</h3>
-      <p>
-        Use UI Coverage to identify and consolidate duplicate tests,
-        streamlining workflows and improving suite efficiency.
-      </p>
-    </a>
-  </li>
-  <li class="card">
-    <a
-      href="/ui-coverage/guides/ignore-views-and-links"
-      aria-labelledby="card-title-4"
-    >
-      <Icon name="link-slash" />
-      <h3 id="card-title-4">Ignore views and links</h3>
-      <p>
-        Learn how to exclude irrelevant views and links from UI Coverage reports
-        to streamline insights, prioritize critical areas, and maintain
-        actionable coverage metrics.
-      </p>
-    </a>
-  </li>
-  <li class="card">
-    <a
-      href="/ui-coverage/guides/ignore-elements"
-      aria-labelledby="card-title-5"
-    >
-      <Icon name="ban" />
-      <h3 id="card-title-5">Ignore elements</h3>
-      <p>
-        Learn how to refine UI Coverage reports by excluding non-essential
-        elements, ensuring a clearer focus on key insights and actionable
-        metrics.
-      </p>
-    </a>
-  </li>
-  <li class="card">
-    <a href="/ui-coverage/guides/reduce-noise" aria-labelledby="card-title-6">
+    <a href="/ui-coverage/guides/reduce-noise" aria-labelledby="card-title-3">
       <Icon name="filter" />
-      <h3 id="card-title-6">Reduce noise</h3>
+      <h3 id="card-title-3">Reduce noise</h3>
       <p>
-        Streamline UI Coverage reports by grouping views and elements,
-        customizing attribute handling, and reducing repetitive entries to
-        reduce noise.
+        Group views and elements and tune attribute handling so your report
+        reflects your app, not the framework.
       </p>
     </a>
   </li>
   <li class="card">
     <a
       href="/ui-coverage/guides/monitor-changes"
-      aria-labelledby="card-title-7"
+      aria-labelledby="card-title-4"
     >
       <Icon name="chart-diagram" />
-      <h3 id="card-title-7">Monitor changes</h3>
+      <h3 id="card-title-4">Monitor changes</h3>
       <p>
-        Track and address UI Coverage score changes over time with tools like
-        the Results API, enabling proactive quality assurance and seamless
-        integration into your CI/CD workflow.
+        Track coverage over time and catch regressions as part of your CI/CD
+        workflow with the Results API.
+      </p>
+    </a>
+  </li>
+  <li class="card">
+    <a href="/ui-coverage/work-with-ai-agents" aria-labelledby="card-title-5">
+      <Icon
+        useCypressIcon
+        name="general-sparkle-triple"
+        size="24"
+        fillColor="teal-600"
+      />
+      <h3 id="card-title-5">Work with AI agents</h3>
+      <p>
+        Use Cypress Cloud MCP to pull scores, views, and untested elements from
+        recorded runs and generate tests from your AI coding assistant.
       </p>
     </a>
   </li>
 </ul>
 
-## How it Works
+## See also
 
-UI Coverage provides an interactive, visual map of test coverage for your application, powered by Cypress [Test Replay](/cloud/features/test-replay) (requires Cypress v13+). These reports are automatically generated for every unique state reached during your Cypress tests, whether in end-to-end or component testing.
-
-- **Effortless Setup**: No extra configuration is required. UI Coverage uses the same capture protocol as Test Replay, so no additional code or configuration is needed.
-- **Dynamic Coverage Mapping**: Each interactive element is identified and highlighted as tested or untested, giving you a clear view of your test coverage across all pages and components.
-- **DOM Snapshots**: Each tested and untested element is accompanied by a full-page, inspectable [DOM snapshot](/ui-coverage/core-concepts/element-identification#Snapshots), highlighting the exact location and context of the element.
-- **Comprehensive Scoring**: A UI Coverage score is calculated by comparing tested elements to the total interactable elements in your application.
-- **Actionable Reports**: Sortable and filterable views provide insights into which areas are tested and which need improvement.
-- **Test Generation**: Quickly close coverage gaps with AI-powered test generation of untested elements and links surfaced in reports.
-- **Flexible configuration**: Customize and fine-tune UI Coverage to suit specific needs and scenarios like ignoring views or elements or grouping similar elements together.
-- **Configurable CI Integration**: The [Results API](/ui-coverage/results-api) allows you to programmatically control your CI pipeline's behavior based on UI Coverage scores.
-- **Run-specific configuration**: Use [Profiles](/ui-coverage/configuration/profiles) to apply different configuration settings based on run tags, enabling team-specific reporting and optimized settings for different run types.
-- **AI agent integration**: Use [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) to query coverage scores, identify untested views, and generate tests directly from your AI coding assistant. For prompts, configuration tips, and governance patterns, see [Work with AI agents](/ui-coverage/work-with-ai-agents).
-
-Read more about how it works in the [Core Concepts](/ui-coverage/core-concepts/interactivity) section.
+- [Interactivity](/ui-coverage/core-concepts/interactivity) covers which elements are counted and which commands mark them tested.
+- [Views](/ui-coverage/core-concepts/views) explains how the URLs your tests visit become views.
+- [Configuration overview](/ui-coverage/configuration/overview) lists every App Quality configuration option and what each one does.
+- [Results API](/ui-coverage/results-api) fetches a run's results in CI so you can enforce coverage standards.
+- [UI Coverage FAQ](/ui-coverage/faq) answers common questions about scores, gaps, configuration, and troubleshooting.
