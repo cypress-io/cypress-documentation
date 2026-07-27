@@ -1,5 +1,5 @@
 ---
-title: 'UI Coverage FAQ'
+title: 'Cypress UI Coverage FAQ'
 description: 'Answers to common questions about Cypress UI Coverage: how it differs from code coverage, coverage scores, closing gaps, configuration, and the Results API.'
 sidebar_label: FAQ
 sidebar_position: 160
@@ -7,7 +7,7 @@ sidebar_position: 160
 
 <ProductHeading product="ui-coverage" />
 
-# UI Coverage FAQ
+# Cypress UI Coverage FAQ
 
 ## General
 
@@ -58,6 +58,10 @@ Yes, and no. UI Coverage analyzes the rendered DOM captured by [Test Replay](/cl
 ### <Icon name="angle-right" /> What's the difference between UI Coverage and Cypress Accessibility?
 
 Both are Cypress Cloud [App Quality](/ui-coverage/configuration/overview) features built on the same [Test Replay](/cloud/features/test-replay) data, and both need no code changes. They measure different things: UI Coverage tells you _how much_ of your interactive UI your tests exercise (a coverage score plus untested elements and links), while [Cypress Accessibility](/accessibility/get-started/introduction) tells you _whether_ the UI your tests render has accessibility violations. They share configuration properties like [`viewFilters`](/ui-coverage/configuration/viewfilters) and [`elementFilters`](/ui-coverage/configuration/elementfilters), which you can scope to one product or the other. See [Configuration scope](/ui-coverage/configuration/overview#Configuration-scope).
+
+### <Icon name="angle-right" /> Can I use UI Coverage with AI agents?
+
+Yes. Because every report is structured data about which interactive elements your tests exercised, a compatible AI agent can read it and act on it through the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp). An agent can pull a run's coverage score and untested elements, summarize the biggest gaps, correlate a coverage drop with specific specs, and draft targeted tests to close the gaps, while your team keeps ownership of what "enough coverage" means for each area. See [Use AI agents with UI Coverage](/ui-coverage/work-with-ai-agents) for example prompts and how to tune reports for clearer agent signal.
 
 ## Finding coverage gaps
 
@@ -140,6 +144,20 @@ No. Branch Review compares two runs that are already recorded to Cypress Cloud, 
 ### <Icon name="angle-right" /> Can I compare UI Coverage reports with an AI agent or the Cypress Cloud MCP?
 
 Yes. The [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets a compatible AI agent pull the UI Coverage for two runs and report the diff from your editor, using `cypress_get_runs` to find the runs and `cypress_get_ui_coverage_report`, `cypress_get_ui_coverage_views`, and `cypress_get_ui_coverage_elements` to read each run's coverage. There's no single compare tool; the agent assembles the diff and can then draft a test to close a regression. It's a peer to Branch Review, which remains the place to see full-page DOM snapshots of what changed. See [Compare reports with the Cypress Cloud MCP](/ui-coverage/guides/compare-reports#Compare-reports-with-the-Cypress-Cloud-MCP).
+
+## Monitoring coverage over time
+
+### <Icon name="angle-right" /> How do I track my UI Coverage score over time?
+
+Record runs on a regular cadence so there's always something to compare, then watch the direction the score moves rather than a single number. Record a run for every pull request to catch regressions before they merge, and add a scheduled job (such as a nightly CI cron) that records against a stable environment for a consistent baseline that isn't affected by which files a given pull request touched. From there, [Branch Review](/cloud/features/branch-review) diffs any two runs and the [Results API](/ui-coverage/results-api) enforces the trend in CI. See [Monitor changes](/ui-coverage/guides/monitor-changes) for the full workflow.
+
+### <Icon name="angle-right" /> How do I get notified when my UI Coverage changes?
+
+Connect [Slack](/cloud/integrations/slack) or [Microsoft Teams](/cloud/integrations/microsoft-teams) to your project so your team is alerted whenever a run finishes, with Slack surfacing UI Coverage results directly. To put the change in front of reviewers, connect a version control integration ([GitHub](/cloud/integrations/github#Pull-request-comments), [GitLab](/cloud/integrations/gitlab#Merge-Request-comments), or [Bitbucket](/cloud/integrations/bitbucket#Pull-Request-comments)) so Cypress Cloud comments on each pull request with the run summary and a link straight to Branch Review. See [Monitor changes](/ui-coverage/guides/monitor-changes#Step-1-Record-runs-on-a-regular-cadence).
+
+### <Icon name="angle-right" /> Can I see UI Coverage trends across all my projects?
+
+Yes. [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage) in Cypress Cloud, available on the Enterprise plan, rolls UI Coverage trends up across every project in your organization rather than one run at a time. You can view high-level trends, download reports, or pull the numbers through the [data extract API](/cloud/integrations/data-extract-api) to build your own dashboards. See [Track trends across projects](/ui-coverage/guides/monitor-changes#Step-4-Track-trends-across-projects).
 
 ## Reducing test duplication
 
@@ -539,6 +557,8 @@ Start by [regenerating the run](/ui-coverage/configuration/overview#Setting-conf
 ## See also
 
 - [Troubleshooting UI Coverage](/ui-coverage/troubleshooting) maps common report problems to their causes and fixes.
+- [Monitor changes](/ui-coverage/guides/monitor-changes) sets up a repeatable workflow to track coverage trends and catch regressions before they merge.
+- [Work with AI agents](/ui-coverage/work-with-ai-agents) uses the Cypress Cloud MCP to read reports, summarize gaps, and draft tests.
 - [Results API](/ui-coverage/results-api) fetches a run's UI Coverage results in CI so you can enforce coverage standards.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every configuration option and what each one is for.
 - [Profiles](/ui-coverage/configuration/profiles) apply different configuration to runs based on run tags.

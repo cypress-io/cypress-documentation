@@ -80,6 +80,12 @@ describe('toPlainText', () => {
     )
   })
 
+  test('strips explicit heading id attributes', () => {
+    expect(
+      toPlainText('What is Test Generation? {#What-is-Test-Generation}')
+    ).toBe('What is Test Generation?')
+  })
+
   test('unescapes markdown backslash escapes', () => {
     expect(toPlainText('version 1\\.0 costs \\#1 priority')).toBe(
       'version 1.0 costs #1 priority'
