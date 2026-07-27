@@ -1134,7 +1134,7 @@ jobs:
   install:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: cypress-io/github-action@v7
         with:
           runTests: false
@@ -1144,7 +1144,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: install
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: cypress-io/github-action@v7
         with:
           start: npm start
