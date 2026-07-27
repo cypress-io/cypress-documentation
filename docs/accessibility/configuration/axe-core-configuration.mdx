@@ -1,6 +1,6 @@
 ---
-title: 'Configure Axe Core® rules in Cypress Accessibility'
-description: 'Enable, disable, and tune individual Axe Core® rules to control which accessibility checks run in Cypress.'
+title: 'Axe Core® configuration in Cypress Accessibility'
+description: 'How Cypress Accessibility runs the Axe Core® ruleset, which rules are off by default, and how Cypress can tune rules for your project.'
 sidebar_label: 'Axe Core® configuration'
 sidebar_position: 50
 ---
@@ -9,27 +9,64 @@ sidebar_position: 50
 
 # Axe Core® configuration
 
-Configuration for Axe-Core® rules is available through your Account Executive. We are happy to have a call with you to dial in your report config to make sure you are getting the most useful reports possible, and we find this onboarding very effective.
+Cypress Accessibility runs the full [Axe-Core®](https://github.com/dequelabs/axe-core) ruleset against every snapshot captured during your test run, with no setup, assertions, or `cy.` commands to add to your specs. The ruleset is tuned to favor high-confidence results, so the report you get out of the box is already the recommended configuration for most teams.
 
-In most cases, configuration of these rules as they run in Cypress Cloud isn't needed, because your implementation of any policies about what should "fail a build" is handled using the [Accessibility Results API](/accessibility/results-api), where you have full control over how to parse the results and what rules need to be reacted to. Keeping the results in Cypress Cloud broad helps you to still be able to see and understand all of the accessibility information, even if only a subset of the results would be considered blocking.
+Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/results-api), where you have full control over how to parse results and which rules to react to, there is rarely a need to change which rules run in Cypress Cloud. Keeping the ruleset broad means you can still see and understand every accessibility finding, even when only a subset of results is treated as blocking in your pipeline.
 
-**Note.** Certain Axe Core® rules are off by default. Here are the rules that are currently either ignored by configuration, or for which results cannot be detected.
+When you do need to change how the ruleset behaves for your project, Cypress can tune it for you. This is a guided process handled through your Cypress point of contact rather than a setting in the App Quality editor, so you get results that fit your application without the risk of silently turning off important checks.
 
-- `Elements must meet minimum color contrast ratio thresholds`
-  - This is off by default. This is both the slowest rule in the Axe Core® ruleset, and the one that can have the highest percentage of false positives or incomplete checks.
-  - It does work perfectly in many projects, so we are happy to turn this on for you if requested, so that you can see the results.
-- `<video> or <audio> elements must not play automatically`
-  - Ignored because Test Replay does not yet capture the metadata to check this
-- `Delayed refresh under 20 hours must not be used`
-  - Ignored because Test Replay does not collect the metadata for this
+## How Cypress can tune the ruleset for your project {#how-cypress-can-tune-the-ruleset-for-your-project}
 
-## Component Testing
+Teams reach out for a few common adjustments. In each case, Cypress applies the change on your behalf and can regenerate historical runs so you can preview the effect before adopting it:
 
-Cypress Accessibility works great with component testing. In addition to the rules mentioned above that are off by default, "page-level" rules do not run for component tests. Since a component is usually a page fragment, rules related to page structure and expected attributes do no need to run.
+- **Enable a rule that is off by default.** The most common request is turning on [color contrast checking](#rules-that-are-off-by-default) for a project where you've confirmed it produces reliable results.
+- **Turn off a rule that is a known false positive.** If a specific rule consistently misfires because of a third-party framework you can't change, it can be disabled project-wide so it stops adding noise to your reports.
+- **Scope the report to a conformance target.** Cypress can narrow the ruleset to the standard your team is committed to, such as WCAG 2.1 Level A and AA, so the report reflects exactly the criteria you're measuring against.
 
-## Updates to the Axe Core® library
+We're happy to have a call to dial in your report configuration and make sure you're getting the most useful reports possible.
 
-Updates to the Axe Core® library are released several times each year. While Cypress does not commit to updating our internal Axe Core® version within a specific timeframe, we will always wait at least 30 days before making an update.
-Since some updates introduce new rules or address bugs that change how issues are detected, this buffer is intended to give you time to make changes in your use of our [Results API](/accessibility/results-api) if needed. Axe Core® releases can be tracked [in GitHub](https://github.com/dequelabs/axe-core/releases).
+### Adjustments you can make yourself
 
-The specific Axe Core® version used by Cypress for a run can be seen in the Properties tab for that run in Cypress Cloud, and is also included in the Results API.
+Some ways of shaping your results don't require any rule configuration and are fully in your control:
+
+- To ignore a specific rule for individual elements, add the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
+- To keep a rule enabled but stop a particular element or page from being reported, use [`elementFilters`](/accessibility/configuration/elementfilters) or [`viewFilters`](/accessibility/configuration/viewfilters).
+- To decide which findings block a build in CI, parse your run's results with the [Results API](/accessibility/results-api). Leaving a rule reported but non-blocking is often the best choice, since you keep full visibility into the issue.
+
+## Rules that are off by default {#rules-that-are-off-by-default}
+
+A small number of Axe-Core® rules are turned off in Cypress Accessibility by default. Color contrast can be enabled per project on request. The other two depend on live runtime behavior that isn't reproduced when Cypress re-renders a captured snapshot for analysis, so they can't be evaluated reliably.
+
+| Rule                                                        | Why it's off by default                                                                                                                                                                                      |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Elements must meet minimum color contrast ratio thresholds  | This is the slowest rule in the Axe-Core® ruleset and the one most likely to produce false positives or incomplete results. It works well in many projects, so we're happy to turn it on for you on request. |
+| `<video>` or `<audio>` elements must not play automatically | Detecting a violation requires loading and playing the media to measure how long it plays. Cypress analyzes a reconstructed snapshot of the page without playable media, so this rule can't be evaluated.    |
+| Delayed refresh under 20 hours must not be used             | This rule reads a page's meta refresh directive, which Cypress disables while it analyzes a run so the reconstructed page doesn't navigate away. With the directive disabled, the rule can't be evaluated.   |
+
+In addition, the custom [Cypress rule](/accessibility/core-concepts/cypress-rules) _Interactive elements should be semantically correct_ is available in all projects but is not enabled by default. Reach out to Cypress if you'd like it turned on.
+
+You can confirm which rules were turned off for any run in its Accessibility report. In the **Rules** view, disabled rules are listed with an **Ignored by configuration** status, so it's always clear which checks a run did and did not include.
+
+## Component testing {#component-testing}
+
+Cypress Accessibility works with [component testing](/app/component-testing/get-started) as well as end-to-end testing. Alongside the rules that are off by default above, **page-level rules do not run for component tests**. Because a component is usually a fragment of a page rather than a complete document, rules that assert on overall page structure would report failures that don't apply to a component in isolation.
+
+Rules skipped for component tests include page-structure and document-level checks, such as whether the page has a main landmark, a single top-level heading, a language attribute, and a document title. Rules that evaluate the components themselves, such as color contrast (when enabled), button naming, and image alternative text, run as normal.
+
+The exact set of skipped rules isn't a fixed list Cypress maintains. It's derived from which rules Axe-Core® classifies as page-level, so it can shift when Cypress updates its Axe-Core® version. In a component's report, these page-structure rules are reported as not applicable rather than as failures.
+
+## Axe-Core® library version and updates {#axe-core-library-version-and-updates}
+
+Cypress pins a specific, tested version of the Axe-Core® library. New Axe-Core® versions are released several times a year. While Cypress doesn't commit to updating our internal version within a specific timeframe, we always wait at least 30 days before adopting a new release.
+
+Because some updates introduce new rules or change how existing issues are detected, this buffer gives you time to adjust how you use the [Results API](/accessibility/results-api) if needed. You can track Axe-Core® releases [on GitHub](https://github.com/dequelabs/axe-core/releases).
+
+The exact Axe-Core® version used for a given run is shown in the **Properties** tab for that run in Cypress Cloud, and is also included as `axeVersion` in the [Results API](/accessibility/results-api) response. To get a heads-up in CI when the version changes, see [how to detect a change in the axe-core version](/accessibility/results-api#how-to-detect-a-change-in-the-axe-core-version).
+
+## See also
+
+- [Configuration overview](/accessibility/configuration/overview) lists every App Quality Config option you can set yourself and how to apply and regenerate configuration.
+- [Results API](/accessibility/results-api) is where you decide which rules block a build in CI.
+- [Ignore rules per element - `data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) turns off specific rules for individual elements from your application code.
+- [Cypress rules](/accessibility/core-concepts/cypress-rules) documents the custom rules Cypress layers on top of Axe-Core®.
+- [Cypress Accessibility FAQ](/accessibility/faq) answers common questions about rules and configuration.

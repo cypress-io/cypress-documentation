@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, component context, configuration scope, reading applied config, Axe Core® rules and color contrast, component testing, and per-run profiles.'
+description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, component context, configuration scope, reading applied config, which Axe Core® rules run and color contrast, component testing, the Axe Core® version, and per-run profiles.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -135,17 +135,33 @@ Add a `comment` property to the rule. Any rule defined as an object accepts one,
 
 ## Axe Core® rules
 
+### <Icon name="angle-right" /> Which accessibility rules does Cypress Accessibility run?
+
+Cypress Accessibility runs the full [Axe-Core®](https://github.com/dequelabs/axe-core) ruleset against every captured snapshot, plus a few [custom Cypress rules](/accessibility/core-concepts/cypress-rules). A small number of Axe-Core® rules are [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default): `color-contrast`, `no-autoplay-audio`, and `meta-refresh`. You don't add any assertions or `cy.` commands to your tests to run these checks; they run automatically when Cypress Accessibility is enabled.
+
+### <Icon name="angle-right" /> Can I change which Axe-Core® rules Cypress Accessibility runs?
+
+Yes. Cypress can [tune the Cypress Accessibility ruleset for your project](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project), including enabling a rule that's off by default, turning off a rule that's a known false positive, or scoping the report to a WCAG conformance target. This is a guided change applied by Cypress rather than a setting in the App Quality editor, so reach out to your Cypress point of contact. To ignore a rule for individual elements yourself, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
+
 ### <Icon name="angle-right" /> Why isn't color contrast reported in my Cypress Accessibility results?
 
-The Axe Core® color-contrast rule is off by default in Cypress Accessibility. It's both the slowest rule in the ruleset and the one most prone to false positives and incomplete checks, so Cypress leaves it off unless you ask for it. It works well in many applications, and your Account Executive can turn it on for your project. See [Axe Core® configuration](/accessibility/configuration/axe-core-configuration).
+Color contrast checking is off by default in Cypress Accessibility because it's the slowest Axe-Core® rule and the most likely to produce false positives or incomplete results. It works well in many projects, so Cypress can turn it on for your project on request. Reach out to your Cypress point of contact. See [Rules that are off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default).
+
+### <Icon name="angle-right" /> How do I stop Cypress Accessibility from reporting a rule I can't fix?
+
+You have three options in Cypress Accessibility, from broadest to narrowest. Ask Cypress to disable the rule project-wide, which is a [guided change applied for you](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project); ignore the rule for specific elements yourself with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element); or leave the rule on and control whether it blocks your build in CI with the [Results API](/accessibility/results-api). Keeping a rule reported but non-blocking is often the best choice, since you retain visibility into the issue.
 
 ### <Icon name="angle-right" /> Does Cypress Accessibility work with component tests?
 
-Yes. Cypress Accessibility runs against component tests as well as end-to-end tests. Because a component is usually a page fragment, "page-level" rules that check page structure and document-wide attributes don't run for component tests, while the rest of the ruleset does. See [Component testing](/accessibility/configuration/axe-core-configuration#Component-Testing).
+Yes. Cypress Accessibility runs against component tests as well as end-to-end tests. Because a component is usually a page fragment, "page-level" rules that check page structure and document-wide attributes don't run for component tests, while the rest of the ruleset does. See [Component testing](/accessibility/configuration/axe-core-configuration#component-testing).
 
-### <Icon name="angle-right" /> How often does Cypress Accessibility update its Axe Core® version?
+### <Icon name="angle-right" /> Why does Cypress Accessibility skip some rules for my component tests?
 
-Cypress Accessibility doesn't commit to a fixed schedule, but always waits at least 30 days before adopting a new Axe Core® release. Because updates can add rules or change how issues are detected, that buffer gives you time to adjust your [Results API](/accessibility/results-api) logic if needed. The exact version used for a run appears on its **Properties** tab and in the Results API. See [Updates to the Axe Core® library](/accessibility/configuration/axe-core-configuration#Updates-to-the-Axe-Core-library).
+Cypress Accessibility skips page-level rules such as `region`, `landmark-one-main`, and `document-title` for [component tests](/accessibility/configuration/axe-core-configuration#component-testing). A component is usually a fragment of a page, so rules that assert on overall page structure would report failures that don't apply to a component in isolation. Rules that evaluate the component itself, such as `button-name` and `image-alt`, still run.
+
+### <Icon name="angle-right" /> Which version of Axe-Core® does Cypress Accessibility use?
+
+Cypress Accessibility pins a specific, tested version of Axe-Core® and waits at least 30 days before adopting a new release, so new or changed rules don't alter your results without warning. The exact version used for a run is shown in that run's **Properties** tab in Cypress Cloud and in the [Results API](/accessibility/results-api) response. See [Axe-Core® library version and updates](/accessibility/configuration/axe-core-configuration#axe-core-library-version-and-updates).
 
 ## Profiles
 
@@ -181,4 +197,5 @@ There's no dedicated "skip this run" switch in a profile. To suppress a report f
 - [`profiles`](/accessibility/configuration/profiles) apply different configuration to runs based on run tags.
 - [`elementFilters`](/accessibility/configuration/elementfilters) is the full reference for ignoring elements.
 - [`viewFilters`](/accessibility/configuration/viewfilters) is the full reference for excluding URLs.
+- [Axe Core® configuration](/accessibility/configuration/axe-core-configuration) is the full reference for enabling, disabling, and scoping accessibility rules.
 - [Run-level reports](/accessibility/guides/run-level-reports) explains element statuses, including **Ignored**.

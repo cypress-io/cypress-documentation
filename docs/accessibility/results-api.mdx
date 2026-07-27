@@ -157,6 +157,50 @@ getAccessibilityResults({
 })
 ```
 
+#### How to detect a change in the axe-core version {#how-to-detect-a-change-in-the-axe-core-version}
+
+Each result includes the `axeVersion` used to generate the report. Cypress updates its internal Axe-Core® version periodically, and a new version can add rules or change how issues are detected. You can pin the version your team has reviewed and get a heads-up when it changes, so you can reconcile any new results before they surprise you. See [Axe Core® library version and updates](/accessibility/configuration/axe-core-configuration#axe-core-library-version-and-updates) for the update policy.
+
+```javascript title="scripts/checkAxeVersion.js"
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+// The Axe-Core® version your team has last reviewed and calibrated against.
+// Bump this deliberately, after reconciling a new Axe-Core® release.
+const EXPECTED_AXE_VERSION = '4.12.1'
+
+getAccessibilityResults().then((results) => {
+  if (!results) {
+    console.warn('No Accessibility report was found for this run.')
+    return
+  }
+
+  const { axeVersion, runNumber, accessibilityReportUrl } = results
+
+  if (axeVersion === EXPECTED_AXE_VERSION) {
+    console.log(
+      `Accessibility report used the expected Axe-Core® ${axeVersion}.`
+    )
+    return
+  }
+
+  console.warn(
+    `Cypress Accessibility used Axe-Core® ${axeVersion} for run #${runNumber}, but this project is calibrated against ${EXPECTED_AXE_VERSION}.`
+  )
+  console.warn(
+    `Review the release notes at https://github.com/dequelabs/axe-core/releases, reconcile any new results, then update EXPECTED_AXE_VERSION. Report: ${accessibilityReportUrl}`
+  )
+
+  // Opt in to a hard failure so the pipeline blocks until the bump is reviewed:
+  if (process.env.FAIL_ON_AXE_VERSION_CHANGE === 'true') {
+    throw new Error(
+      `Axe-Core® version changed from ${EXPECTED_AXE_VERSION} to ${axeVersion}. Review the changes and update the expected version.`
+    )
+  }
+})
+```
+
+Warning by default is usually the right posture, since a version change isn't a failure on its own. Set `FAIL_ON_AXE_VERSION_CHANGE=true` when you want CI to stop until someone reviews the bump.
+
 ### `getAccessibilityResults` Arguments
 
 `getAccessibilityResults` uses the following attributes to identify the Cypress run and return the Accessibility results:
