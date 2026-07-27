@@ -49,7 +49,7 @@ This guide assumes you've completed the
 [Results API setup](/ui-coverage/results-api#Installation): your CI install step
 adds the `@cypress/extract-cloud-results` module, and a verification script runs
 **after** `cypress run --record` in the **same** CI build. A run also needs
-[Test Replay](/cloud/features/test-replay) enabled and must have been recorded
+Test Replay enabled and must have been recorded
 within the last 7 days for the helper to find it. See the
 [Results API FAQ](/ui-coverage/faq#Results-API-and-CI) for the full prerequisite
 list.
@@ -130,7 +130,7 @@ compares.
 ### Baseline structure
 
 The baseline is a small JSON file you commit alongside your code. It records, for
-a known-good run, how many untested elements each [view](/ui-coverage/core-concepts/views)
+a known-good run, how many untested elements each view
 had:
 
 - **runNumber**: the run the baseline was captured from, for reference.
@@ -165,7 +165,7 @@ either run the script locally by replaying a recent run's CI context (see
 [Required CI environment variables](/ui-coverage/results-api#Required-CI-environment-variables)),
 or upload `ui-coverage-baseline.next.json` as a build artifact from the CI run.
 
-<AccordionBlock title="View the comparison script">
+<AccordionBlock title="View the comparison script" icon={<Icon name="laptop-code" />}>
 
 This script reads the committed baseline, fails the build when any view has
 _more_ untested elements than its baseline (or when a new view ships untested
