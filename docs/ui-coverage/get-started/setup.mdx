@@ -1,19 +1,40 @@
 ---
-title: Set up UI Coverage with no instrumentation required
-description: 'Set up UI Coverage by recording a run. No setup or instrumentation is required.'
+title: Get started with Cypress UI Coverage
+description: 'Record a run with Test Replay, read your UI Coverage report, and tune it with App Quality configuration — no code changes or instrumentation required.'
 sidebar_label: Get Started
 sidebar_position: 20
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# Get Started
+# Get started with UI Coverage
 
-UI Coverage works instantly, with no setup or code instrumentation required. If you record test runs to the Cypress Cloud with Test Replay, you're ready to start using UI Coverage.
+UI Coverage turns every run you already record to Cypress Cloud into a visual map of which interactive elements your tests exercise and which they miss, plus a coverage score you can track over time. There's nothing to install and no code to instrument: reports are generated in Cypress Cloud from the [Test Replay](/cloud/features/test-replay) data your runs already capture. If you record to Cypress Cloud with Test Replay, you can be reading your first report in minutes.
 
-## 1. Request a trial
+<DocsImage
+  src="/img/ui-coverage/get-started/Cypress_UI_Coverage_demo.gif"
+  alt="Animated walkthrough of a UI Coverage report in Cypress Cloud: an overall coverage score, per-view scores, and a drilldown highlighting tested and untested elements on a DOM snapshot"
+  noBorder="true"
+/>
 
-Get started with a free trial of UI Coverage. You'll receive a personalized demo using your existing test data to see where testing gaps exist for all of your Cypress projects.
+## What you'll need
+
+Before you start, make sure you have:
+
+- **A Cypress project recording to [Cypress Cloud](/cloud/get-started/introduction)** with a run or two already recorded.
+- **[Test Replay](/cloud/features/test-replay) enabled** on the project. UI Coverage reports are built entirely from Test Replay data, so a run recorded with Test Replay off produces no report.
+- **Cypress v13 or later**, the minimum version that captures Test Replay data.
+- **UI Coverage enabled for your organization.** UI Coverage isn't included in standard Cloud plans. [Start a trial](#Step-1-Start-your-UI-Coverage-trial) to enable it for your projects.
+
+:::info
+
+You don't need to change your tests, add a plugin, or write any configuration to get a report. Configuration is opt-in and comes later, once you want to [sharpen the results](#Step-4-Tune-your-reports-with-App-Quality-configuration).
+
+:::
+
+## Step 1: Start your UI Coverage trial
+
+UI Coverage is enabled through a free trial. You'll get a personalized walkthrough that uses your **existing** recorded runs, so you can see exactly where your testing gaps are across your real projects before writing a single new test.
 
 <Btn
   label="Request trial ➜"
@@ -22,40 +43,180 @@ Get started with a free trial of UI Coverage. You'll receive a personalized demo
   href="https://www.cypress.io/ui-coverage?utm_medium=get-started-page&utm_source=docs.cypress.io&utm_content=Request%20trial"
 />
 
-## 2. Record a run
+## Step 2: Record a run with Test Replay
 
-UI Coverage generates reports using [Test Replay](/cloud/features/test-replay) data and requires Cypress v13+. No additional configuration or instrumentation is required to start using UI Coverage.
+UI Coverage needs a run recorded to Cypress Cloud with Test Replay enabled. If you're already recording runs with Test Replay on, you can skip ahead to [Step 3](#Step-3-Explore-your-UI-Coverage-report) and open an existing run.
 
-[Record a run](/cloud/get-started/setup) to the Cypress Cloud with Test Replay to start using UI Coverage.
+To record a new run, pass `--record` and your project's record key to `cypress run`:
 
-## 3. View your UI Coverage results
+<CypressCommandTabs command="run --record --key <your-record-key>" />
 
-After recording a test run, you can view your UI Coverage results in the Cypress Cloud via the **UI Coverage** tab.
+New to recording? Follow [Record a run to Cypress Cloud](/cloud/get-started/setup) for the full setup, and confirm [Test Replay](/cloud/features/test-replay) is enabled in your project settings.
 
-<DocsImage
-  src="/img/ui-coverage/get-started/uicov-docs-1.gif"
-  alt="UI Coverage demo showing a mouse hovering and interacting with the UI of the Cloud product"
-  noBorder="true"
-/>
+## Step 3: Explore your UI Coverage report
 
-## 4. Customize your results
+After a run finishes recording, open it in Cypress Cloud and select the **UI Coverage** tab. A report is generated automatically for every recorded run, covering every unique state your tests reached, in both end-to-end and component testing.
 
-UI Coverage provides flexible configuration options to customize your reports. You can configure:
+Your report answers four questions:
 
-- [Views](/ui-coverage/configuration/views): specify URL patterns that represent related pages or states of your application
-- [View filters](/ui-coverage/configuration/viewfilters): specify URL patterns for URLs that should be excluded from UI Coverage for visiting and linking purposes
-- [Element filters](/ui-coverage/configuration/elementfilters): specify selectors for elements that should be excluded from UI Coverage
-- [Element groups](/ui-coverage/configuration/elementgroups): groups elements that are related to one another
-- [Elements](/ui-coverage/configuration/elements): specify selectors to uniquely identify elements
-- [Significant Attributes](/ui-coverage/configuration/significantattributes): prioritize the identification and grouping of specific attributes
-- [Attribute filters](/ui-coverage/configuration/attributefilters): specify patterns for attributes and their values that should not be used for identifying and grouping elements
-- [Additional Interaction Commands](/ui-coverage/configuration/additionalinteractioncommands): Define custom interactions that will count towards coverage scores, beyond built-in Cypress interaction commands
-- [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands): Control which kinds of interactions are allowed for certain elements to restrict or expand what counts as "covered" for that element
-- [Profiles](/ui-coverage/configuration/profiles): use different configuration settings for different runs based on run tags
-
-To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings.
+- **What's my overall coverage?** The [coverage score](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) is the share of interactive elements your tests exercised.
+- **Which pages need the most attention?** Each [view](/ui-coverage/core-concepts/views) (a page or state of your app) gets its own score, so you can rank pages and weigh each one against how critical it is to your users.
+- **What did my tests miss on a page?** Drilling into a view lists its untested [interactive elements](/ui-coverage/core-concepts/interactivity#Interactive-Elements), each with a full-page, inspectable DOM snapshot showing exactly where it is.
+- **Which pages do my tests never reach?** [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) surface pages your tests link to but never visit, so you can see the flows your suite is missing entirely.
 
 <DocsImage
-  src="/img/accessibility/configuration/cypress-accessibility-configuration-editor.png"
-  alt="The Cypress Cloud UI showing the configuration editor"
+  src="/img/ui-coverage/core-concepts/views-list.png"
+  alt="UI Coverage tab in Cypress Cloud showing an overall coverage score and a list of views with columns for snapshots, tested elements, and coverage percentage, alongside navigation for untested links, tested elements, and untested elements"
+  caption="The UI Coverage tab: an overall coverage score, a per-view breakdown, and navigation to untested links, tested elements, and untested elements."
 />
+
+Start with your lowest-scoring critical views. The [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps) guide walks through this workflow step by step, and [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps) shows how to close each gap, including generating a test for an untested element with [Test Generation](/ui-coverage/faq#What-is-Test-Generation-in-Cypress-UI-Coverage).
+
+## Step 4: Tune your reports with App Quality configuration
+
+Your first report is often noisier than the real gaps in your suite. Third-party widgets (chat launchers, cookie banners) count as untested elements, and links to pages you'll never test (identity providers, marketing sites) count against your score. A few lines of configuration remove that noise so every gap the report shows is a real one.
+
+Configuration lives in Cypress Cloud, not in your repository. Open your project's **Project Settings**, select the **App Quality** tab, and edit the configuration as JSON. This example excludes a support chat widget and a third-party login page:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#intercom-container, #intercom-container *",
+      "include": false,
+      "comment": "Support chat widget rendered on every page"
+    }
+  ],
+  "viewFilters": [
+    {
+      "pattern": "https://auth.mycompany.com/*",
+      "include": false,
+      "comment": "Third-party identity provider — not our app to test"
+    }
+  ]
+}
+```
+
+<DocsImage
+  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
+  alt="The Cypress Cloud UI showing the App Quality configuration editor"
+/>
+
+After saving, you don't need to re-run your tests: reprocess any historical run from its **Properties** tab to see the effect of your change immediately. UI Coverage offers a full set of configuration options you can add incrementally:
+
+| Your goal                                                      | Use                                                                                         |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Remove third-party widgets and other elements from the report  | [`elementFilters`](/ui-coverage/configuration/elementfilters)                               |
+| Remove entire pages, and links to them, from the report        | [`viewFilters`](/ui-coverage/configuration/viewfilters)                                     |
+| Group related URLs into a single view                          | [`views`](/ui-coverage/configuration/views)                                                 |
+| Combine repeated or related elements so they count as one      | [`elementGroups`](/ui-coverage/configuration/elementgroups)                                 |
+| Rename or stabilize the identity of a single element           | [`elements`](/ui-coverage/configuration/elements)                                           |
+| Prioritize your own attributes for identifying elements        | [`significantAttributes`](/ui-coverage/configuration/significantattributes)                 |
+| Stop dynamic or generated attributes from splitting an element | [`attributeFilters`](/ui-coverage/configuration/attributefilters)                           |
+| Count a custom or plugin command as an interaction             | [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) |
+| Limit which commands count as coverage for specific elements   | [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)       |
+| Apply different configuration to runs based on run tags        | [`profiles`](/ui-coverage/configuration/profiles)                                           |
+
+See the [Configuration overview](/ui-coverage/configuration/overview) for how every option fits together, including which properties are [shared](/ui-coverage/configuration/overview#Configuration-scope) with Cypress Accessibility.
+
+## Step 5: Enforce coverage in CI (optional)
+
+Once you trust your reports, you can hold the line on coverage automatically. The [Results API](/ui-coverage/results-api) fetches a run's UI Coverage results in your CI job so your script can fail the build or [block a pull request](/ui-coverage/guides/block-pull-requests) when coverage drops below a threshold you set. Enforcement is entirely opt-in and lives in your CI workflow.
+
+## Next steps
+
+<ul class="guidesList">
+  <li class="card">
+    <a
+      href="/ui-coverage/guides/identify-coverage-gaps"
+      aria-labelledby="get-started-card-title-1"
+    >
+      <Icon name="list-check" />
+      <h3 id="get-started-card-title-1">Identify coverage gaps</h3>
+      <p>
+        Go from a recorded run to a prioritized list of the untested buttons,
+        forms, links, and pages in your application.
+      </p>
+    </a>
+  </li>
+  <li class="card">
+    <a
+      href="/ui-coverage/guides/address-coverage-gaps"
+      aria-labelledby="get-started-card-title-2"
+    >
+      <Icon name="clipboard-check" />
+      <h3 id="get-started-card-title-2">Address coverage gaps</h3>
+      <p>
+        Close the gaps that matter by writing targeted tests or generating them
+        directly from untested elements in the report.
+      </p>
+    </a>
+  </li>
+  <li class="card">
+    <a
+      href="/ui-coverage/guides/reduce-noise"
+      aria-labelledby="get-started-card-title-3"
+    >
+      <Icon name="filter" />
+      <h3 id="get-started-card-title-3">Reduce noise</h3>
+      <p>
+        Group views and elements and tune attribute handling so your report
+        reflects your app, not the framework.
+      </p>
+    </a>
+  </li>
+  <li class="card">
+    <a
+      href="/ui-coverage/guides/compare-reports"
+      aria-labelledby="get-started-card-title-5"
+    >
+      <Icon name="circle-half-stroke" />
+      <h3 id="get-started-card-title-5">Compare reports</h3>
+      <p>
+        See exactly what a change did to your coverage by comparing any two runs
+        in Branch Review.
+      </p>
+    </a>
+  </li>
+  <li class="card">
+    <a
+      href="/ui-coverage/guides/monitor-changes"
+      aria-labelledby="get-started-card-title-6"
+    >
+      <Icon name="chart-diagram" />
+      <h3 id="get-started-card-title-6">Monitor changes</h3>
+      <p>
+        Track coverage over time and catch regressions as part of your CI/CD
+        workflow with the Results API.
+      </p>
+    </a>
+  </li>
+  <li class="card">
+    <a
+      href="/ui-coverage/work-with-ai-agents"
+      aria-labelledby="get-started-card-title-4"
+    >
+      <Icon
+        useCypressIcon
+        name="general-sparkle-triple"
+        size="24"
+        fillColor="teal-600"
+      />
+      <h3 id="get-started-card-title-4">Work with AI agents</h3>
+      <p>
+        Use Cypress Cloud MCP to pull scores, views, and untested elements from
+        recorded runs and generate tests from your AI coding assistant.
+      </p>
+    </a>
+  </li>
+</ul>
+
+## See also
+
+- [What is UI Coverage?](/ui-coverage/get-started/introduction) explains the product and how it works at a glance.
+- [Interactivity](/ui-coverage/core-concepts/interactivity) covers which elements are counted and which commands mark them tested.
+- [Views](/ui-coverage/core-concepts/views) explains how the URLs your tests visit become views.
+- [Configuration overview](/ui-coverage/configuration/overview) lists every App Quality configuration option and what each one does.
+- [Results API](/ui-coverage/results-api) fetches a run's results in CI so you can enforce coverage standards.
+- [UI Coverage FAQ](/ui-coverage/faq) answers common questions about scores, gaps, configuration, and troubleshooting.
+- [Troubleshooting](/ui-coverage/troubleshooting) maps common report problems to their causes and fixes.
