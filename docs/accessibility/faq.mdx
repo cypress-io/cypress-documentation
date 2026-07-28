@@ -111,11 +111,11 @@ Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [
 
 Use [`components`](/accessibility/configuration/components), a Cypress Accessibility-only option that adds attributes like `data-component` or `data-team` to the violation target selector when they're present on the element or one of its ancestors. Instead of a bare `[data-cy="signup"]`, the target reads as `[data-cy="signup"][data-component="IconButton"]`, so whoever picks up the issue, whether a developer, a Jira ticket, or an AI agent triaging through [Cypress Cloud MCP](/accessibility/work-with-ai-agents), can see which component or team it belongs to without opening the page HTML. This differs from [`significantAttributes`](/accessibility/configuration/significantattributes), which chooses the single attribute that _identifies_ the element, whereas `components` adds context on top of that identifier.
 
-### <Icon name="angle-right" /> What's the difference between significantAttributes and components?
+### <Icon name="angle-right" /> What's the difference between significantAttributes and components in Cypress Accessibility?
 
 Both put your attributes into violation target selectors, but they play different roles. [`significantAttributes`](/accessibility/configuration/significantattributes) chooses the single attribute that _identifies_ an element, so `["data-component"]` makes the selector `[data-component="SearchInput"]` instead of a test id or generated selector. [`components`](/accessibility/configuration/components) _adds_ attributes on top of whatever already identifies the element, so a selector stays `[data-cy="signup"]` but gains `[data-component="IconButton"]`. Use `significantAttributes` when your attribute is the best identifier, and `components` when you want to keep the identifier but append component, team, or page context around it.
 
-### <Icon name="angle-right" /> Why isn't my components attribute showing up in the selector?
+### <Icon name="angle-right" /> Why isn't my components attribute showing up in my Cypress Accessibility selectors?
 
 The most common causes are:
 
@@ -124,7 +124,7 @@ The most common causes are:
 - A [`componentAttributeFilters`](/accessibility/configuration/components#componentAttributeFilters) rule with `include: false` matches the value, so it's skipped.
 - The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
 
-### <Icon name="angle-right" /> Can I keep certain component attribute values out of my selectors?
+### <Icon name="angle-right" /> Can I keep certain component attribute values out of my Cypress Accessibility selectors?
 
 Yes. Add a [`componentAttributeFilters`](/accessibility/configuration/components#componentAttributeFilters) rule with `include: false` for the values you don't want appended, matched by regex. This is useful when an attribute is meaningful on some elements but generic on others, such as a `data-component` that's a specific component in most places but a layout primitive like `Box` elsewhere. The default attribute filters that drop dynamic values from _identifying_ selectors don't apply to component attributes, so `componentAttributeFilters` are the only way to filter them.
 
