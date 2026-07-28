@@ -1,68 +1,99 @@
 ---
-title: Component attributes in Cypress Accessibility
-description: 'The accessibility components configuration controls how component-related HTML attributes appear in stable violation-target selectors.'
-sidebar_label: 'Define components'
+title: 'components: add component and team context to Cypress Accessibility selectors'
+description: 'Make Cypress Accessibility append component-identifying attributes, such as data-component-name, data-team, or data-page-area, to violation target selectors so every finding shows which component, team, or region it belongs to.'
+sidebar_label: 'Add component context'
 sidebar_position: 90
 ---
 
 <ProductHeading product="accessibility" />
 
-# Define components - `components`
+# Add component context - `components`
 
-The `accessibility.components` options provide a small but powerful set of controls for how elements are identified in Cypress Accessibility. This helps provide guaranteed "breadcrumbs" to place accessibility findings in context quickly and easily, for fast review by developers and testers, and when using AI agents to triage reports through Cypress Cloud MCP.
+The components configuration adds context to the selectors in your accessibility reports. When an element has a violation, Cypress Accessibility shows a **violation target selector** that points to it. components lets you add your own component-identifying attributes, such as `data-component-name`, `data-team`, or `data-page-area`, to that selector, so a finding reads as `[data-cy="signup"][data-component="IconButton"]` instead of a bare `[data-cy="signup"]`.
 
-For example, here's a button element in a hero section:
+That extra context tells whoever picks up the issue, whether a developer, a Jira ticket, or an [AI agent triaging through Cypress Cloud MCP](/accessibility/work-with-ai-agents), which component, team, or region the element belongs to, without having to open the page HTML or search the codebase to place it. Many teams already render attributes like these for testing or design-system tracing; when they exist, components puts them into your selectors in a predictable, consistent way.
 
-```html
-<div data-page-area="hero" class="mt-2 hero__1asdK">
-  <button
-    data-design-system="IconButton"
-    data-track="analytics-click-id"
-    id="#button123"
-  >
-    <span style="display:none"> Sign up now! </span>
-  </button>
-</div>
+## Why use components?
+
+- **Place every finding in context**: A selector like `[data-cy="row-action"][data-component="DataGridDeleteButton"]` says exactly which component is responsible, where a bare identifier could be any button in your application.
+- **Route issues to the right owner**: Append an attribute like `data-team` and you can assign accessibility findings, or group them in a report, by the team that owns the DOM.
+- **Speed up handoffs to people and AI**: Selectors that carry component and page context can be dropped into a Jira ticket or handed to an LLM for triage without the surrounding page HTML.
+- **Cross-reference your design system**: Attributes such as `data-design-system-version` in the selector let you correlate accessibility issues with the component library version that produced them.
+
+## How component attributes appear in selectors
+
+Cypress Accessibility identifies each element with a stable selector, replacing the default Axe-Core® target so results for the same element can be deduplicated across the many snapshots in a run. That identifier is chosen from a prioritized list of attributes ([`significantAttributes`](/accessibility/configuration/significantattributes) followed by defaults like `data-cy` and `id`) and is usually the shortest thing that uniquely identifies the element.
+
+Every attribute you list in `componentAttributes` is treated as **required**: wherever it appears on the element or one of its ancestors, Cypress keeps it in the selector. Take this button, which fails an accessibility check because its label text is hidden:
+
+```xml
+<button data-cy="signup" data-component="IconButton">
+  <span style="display:none">Sign up now!</span>
+</button>
 ```
 
-The button has an accessibility violation because the label text is hidden.
+By default, the violation target selector is just the identifier:
 
-The default Axe-Core® behavior is to capture a any suitable unique selector to refer to the the button element. Typically, for an element like this it would be the ID, since that's both short and unique.
-
-```css
-#button-123
+```
+[data-cy="signup"]
 ```
 
-When this selector is viewed in isolation, the problem could be with any button in our application. We would need to go deeper to understand where the issue might be - we might have to search the codebase or go looking for hints in the page HTML output.
+Viewed on its own, that could be any button. List `data-component` as a component attribute:
 
-`components` configuration lets us tell Cypress about some signals that might be present in the DOM attributes of your pages, and if they are present, Cypress will put them into selectors in a predictable, consistent way. In this case, if we set `data-page-area` and `data-design-system` as `componentAttributes`, the button would be identified in reports like this instead:
-
-```css
-[data-page-area="hero"] [data-design-system="IconButton"]#button-123
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "components": {
+      "componentAttributes": [
+        { "attributeName": "data-component", "includeInSelector": true }
+      ]
+    }
+  }
+}
 ```
 
-## Why use this?
+Now the component name is appended, even though the selector was already unique:
 
-This can improve the readability of selectors and make it easier to work with your accessibility findings. Many teams already have attributes like this for testing purposes or component identification when debugging and tracing things back to the design system or other source. If not, it can be easy to add them.
+```
+[data-cy="signup"][data-component="IconButton"]
+```
 
-This is especially useful for handoffs between people or systems, because it can prevent the need to go back to the full page HTML contents just to understand where something is or what code is responsible for it. Here are some examples:
+When a required attribute is on an **ancestor** instead of the element itself, Cypress adds it as context with a descendant combinator. Given a `data-page-area` on a wrapping section:
 
-- Reference elements in a Jira ticket
-- Process elements with an LLM to propose solutions or triage them
-- Assign team ownership based on signals in the DOM
-- Cross-reference accessibility issues with design system versions
+```xml
+<section data-page-area="checkout">
+  <button data-cy="pay"><span style="display:none">Pay</span></button>
+</section>
+```
 
-We have seen that customers have attributes like `data-team`, `data-cy-component`, `data-component-filepath`, `data-design-system-version` in projects currently tested with Cypress Accessibility.
+listing `data-page-area` reports the button with that region in front:
+
+```
+[data-page-area="checkout"] [data-cy="pay"]
+```
+
+:::tip
+
+components adds context on top of whatever already identifies an element. To change which attribute _identifies_ it, use [`significantAttributes`](/accessibility/configuration/significantattributes) instead.
+
+:::
 
 ## Scope
 
-:::info
-The `components` object is only valid under `accessibility` in your App Quality configuration. It does not apply to UI Coverage configuration.
-:::
+The components object is only valid under an `accessibility` key in your App Quality configuration. Unlike [`significantAttributes`](/accessibility/configuration/significantattributes) or [`attributeFilters`](/accessibility/configuration/attributefilters), it has no root-level or UI Coverage form. It can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply to tagged runs.
+
+## Setting components
+
+To add or edit components, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-accessibility-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
 
 ## Syntax
 
-```json
+```json title="App Quality Config"
 {
   "accessibility": {
     "components": {
@@ -89,79 +120,180 @@ The `components` object is only valid under `accessibility` in your App Quality 
 
 ### `componentAttributes`
 
-Each entry names an attribute that may be **required** in the generated selector when it is present on the element. Attribute names are stored case-insensitively and **must be unique** in the list.
+Each entry names an attribute to append to the selector when it's present on the element with the violation. Attribute names are stored in lowercase and **must be unique** in the list.
 
-| Option              | Required | Default | Description                                                                                    |
-| ------------------- | -------- | ------- | ---------------------------------------------------------------------------------------------- |
-| `attributeName`     | Required |         | The HTML attribute name (for example, `data-component-name`).                                  |
-| `includeInSelector` | Optional | `true`  | When `true`, the attribute is eligible to appear as a required segment in the stable selector. |
-| `comment`           | Optional |         | Optional note for your team explaining why this entry exists.                                  |
+| Option              | Required | Default | Description                                                                                      |
+| ------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------ |
+| `attributeName`     | Yes      |         | The HTML attribute name to append, for example `data-component-name`. `class` is also supported. |
+| `includeInSelector` | No       | `true`  | When `true`, the attribute is appended to the selector wherever the element has it.              |
+| `comment`           | No       |         | A note for your team explaining why the entry exists. Comments never appear in reports.          |
 
-When `includeInSelector` is `false`, the attribute is listed for documentation or future use but does not change selector generation (equivalent to omitting it for selector purposes).
+When `includeInSelector` is `false`, the entry is kept for documentation or future use but doesn't change selector generation, the same as leaving it out.
 
 ### `componentAttributeFilters`
 
-These filters fine-tune **which attribute values** actually receive the required-attribute treatment from `componentAttributes`. They use the same regular-expression style as [`attributeFilters`](/accessibility/configuration/attributefilters): `attribute` and `value` are regex patterns. **The first rule that matches both the attribute name and value** controls whether that value is included.
+These filters fine-tune **which attribute values** are appended. They apply only to the attributes in `componentAttributes`, using the same regular-expression style as [`attributeFilters`](/accessibility/configuration/attributefilters): `attribute` and `value` are regex patterns. For a given attribute value, **the first rule whose `attribute` and `value` both match** decides whether it's appended. A filter with no matching `componentAttributes` entry does nothing.
 
-| Option      | Required | Default | Description                                                                   |
-| ----------- | -------- | ------- | ----------------------------------------------------------------------------- |
-| `attribute` | Required |         | Regex string matched against the attribute name.                              |
-| `value`     | Optional | `.*`    | Regex string matched against the attribute value.                             |
-| `include`   | Optional | `true`  | If `false`, matching values skip required injection for component attributes. |
-| `comment`   | Optional |         | Optional note for maintainers.                                                |
+| Option      | Required | Default | Description                                                     |
+| ----------- | -------- | ------- | --------------------------------------------------------------- |
+| `attribute` | Yes      |         | Regex matched against the component attribute's name.           |
+| `value`     | No       | `.*`    | Regex matched against the attribute's value.                    |
+| `include`   | No       | `true`  | When `false`, matching values are not appended to the selector. |
+| `comment`   | No       |         | A note for your team. Comments never appear in reports.         |
 
-Use `include: false` to omit noisy or redundant segments (for example, skip a slot name on one branch while keeping it on another).
+Use `include: false` to keep a noisy or generic value out of your selectors, such as a layout primitive whose name adds no context, while still appending the meaningful ones.
+
+You can also add a `comment` to the components object itself to document the whole block. Comments are for your team, never appear in reports, and are the supported place for notes because Cypress Cloud rejects properties it doesn't recognize. See [Comments](/accessibility/configuration/overview#Comments).
+
+### How are components rules applied?
+
+Keep these behaviors in mind when building your configuration:
+
+- **Listed attributes are kept wherever they appear.** A component attribute on the element is appended to its selector; the same attribute on an ancestor is added in front as descendant-combinator context. An element whose ancestor chain has none of the listed attributes is unaffected.
+- **They're added on top of the identifier, not instead of it.** The element is still identified by `significantAttributes` and the defaults; component attributes add context. They're added even when the selector is already unique.
+- **They help with uniqueness and deduplication.** Because a required attribute is part of the selector, one that distinguishes the element can make the selector shorter and more stable than the positional fallback Cypress would use otherwise, which keeps the same element from splitting into several across snapshots.
+- **On one element, appended attributes follow your list order.** Multiple attributes appended to the same element appear in the order you list them in `componentAttributes`. An attribute that already identifies the element isn't added a second time.
+- **Default attribute filters don't apply here.** The [default filters](/accessibility/configuration/attributefilters) that keep dynamic, UUID-like values out of _identifying_ selectors don't touch component attributes. `componentAttributeFilters` are the only way to exclude component-attribute values, so list a rule if an attribute's value is sometimes noisy.
+- **`class` is supported.** Listing `class` as a component attribute appends the element's class value; `componentAttributeFilters` apply to it the same way.
+
+### Validation rules
+
+Cypress Cloud validates the whole configuration before saving it and rejects a components block that breaks any of these:
+
+- Each `attributeName` must be a valid HTML attribute name. Names are compared in lowercase and must be unique across `componentAttributes`.
+- Each `componentAttributeFilters` `attribute` and `value` must be a valid regular expression.
+- No two `componentAttributeFilters` rules may be identical across `attribute`, `value`, and `include`.
+- Only the properties documented above are allowed. An unrecognized key is rejected rather than ignored.
 
 ## Examples
 
-### Require a component slot attribute
+### Append the design-system component name
 
-```json
+The button below fails `button-name` because its label is hidden. It carries a `data-cy` test id and a `data-component` name from the design system. Listing `data-component` appends the component name to the selector, so the finding names the component instead of a generic id.
+
+#### Config
+
+```json title="App Quality Config"
 {
   "accessibility": {
     "components": {
       "componentAttributes": [
-        { "attributeName": "data-component-name", "includeInSelector": true }
+        { "attributeName": "data-component", "includeInSelector": true }
       ]
     }
   }
 }
 ```
 
-### Require multiple attributes
+#### HTML
 
-Require both a component identifier and Cypress test id when both are present, even if neither would otherwise be unique in the page:
+```xml
+<button data-cy="signup" data-component="IconButton">
+  <span style="display:none">Sign up now!</span>
+</button>
+```
 
-```json
+#### Result
+
+The violation target selector displayed in the report:
+
+```
+[data-cy="signup"][data-component="IconButton"]
+```
+
+### Add component and team context together
+
+`componentAttributes` is a list, so you can append more than one attribute. Here the design-system component name and the owning team are both added, so findings can be read, filtered, or assigned by either.
+
+#### Config
+
+```json title="App Quality Config"
 {
   "accessibility": {
     "components": {
       "componentAttributes": [
-        { "attributeName": "data-component-name", "includeInSelector": true },
-        { "attributeName": "data-cy", "includeInSelector": true }
+        { "attributeName": "data-component", "includeInSelector": true },
+        { "attributeName": "data-team", "includeInSelector": true }
       ]
     }
   }
 }
 ```
 
-### Skip injection for specific attribute values
+#### HTML
 
-Keep both attributes required in general, but **exclude** the component segment when the slot is `primary-slot`:
+```xml
+<img
+  data-testid="hero-banner"
+  data-component="HeroBanner"
+  data-team="marketing"
+  src="hero.png"
+/>
+```
 
-```json
+#### Result
+
+The image fails `image-alt`, and its selector now shows the component and the team that owns it:
+
+```
+[data-testid="hero-banner"][data-component="HeroBanner"][data-team="marketing"]
+```
+
+### Add the surrounding page region
+
+Component attributes don't have to be on the element itself. When a listed attribute sits on an ancestor, such as a `data-page-area` on the wrapping landmark, Cypress adds it in front of the identifier as context, so a violation reads as belonging to a region of the page.
+
+#### Config
+
+```json title="App Quality Config"
 {
   "accessibility": {
     "components": {
       "componentAttributes": [
-        { "attributeName": "data-component-name", "includeInSelector": true },
-        { "attributeName": "data-cy", "includeInSelector": true }
+        { "attributeName": "data-page-area", "includeInSelector": true }
+      ]
+    }
+  }
+}
+```
+
+#### HTML
+
+```xml
+<nav data-page-area="global-header">
+  <button data-cy="menu-toggle">
+    <span style="display:none">Open menu</span>
+  </button>
+</nav>
+```
+
+#### Result
+
+The button is identified by its own `data-cy`, with the region prepended as ancestor context:
+
+```
+[data-page-area="global-header"] [data-cy="menu-toggle"]
+```
+
+### Keep a generic component name out of selectors
+
+Some component names add no context. A layout primitive like `Box` wraps elements all over the application, so appending it to every selector is noise. Keep `data-component` appended in general, but use a `componentAttributeFilters` rule to skip the values that don't help.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "components": {
+      "componentAttributes": [
+        { "attributeName": "data-component", "includeInSelector": true }
       ],
       "componentAttributeFilters": [
         {
-          "attribute": "data-component-name",
-          "value": "^primary-slot$",
-          "include": false
+          "attribute": "data-component",
+          "value": "^(Box|Stack|Flex)$",
+          "include": false,
+          "comment": "Layout primitives add no useful context"
         }
       ]
     }
@@ -169,13 +301,44 @@ Keep both attributes required in general, but **exclude** the component segment 
 }
 ```
 
-After saving configuration in the [App Quality settings](/accessibility/configuration/overview), you can [reprocess an existing run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run) to preview selector changes without a new test run.
+#### HTML
 
-## Comparison to other config properties
+```xml
+<button data-cy="row-delete" data-component="DataGridDeleteButton">Delete</button>
+<button data-cy="page-close" data-component="Box">Close</button>
+```
 
-This is separate from [`attributeFilters`](/accessibility/configuration/attributefilters) and [`significantAttributes`](/accessibility/configuration/significantattributes):
+#### Result
 
-- `attributeFilters` are used to avoid specific attributes and values being used for element identification and tracking
-- `significantAttributes` indicate preferred attributes for element identification and tracking, when the attributes would uniquely identify elements within a given state in a page.
+The meaningful component name is appended; the layout primitive is filtered out, leaving that element on its identifier alone:
+
+```
+[data-cy="row-delete"][data-component="DataGridDeleteButton"]
+[data-cy="page-close"]
+```
+
+:::tip
+
+After saving configuration changes, regenerate a recent run to preview the effect of your rules without rerunning your tests. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration) for how to regenerate a report.
+
+:::
+
+## How components compares to other options
+
+Three configuration properties all work with attributes, but they do different jobs:
+
+- [`significantAttributes`](/accessibility/configuration/significantattributes) chooses the single attribute that **identifies** the element and becomes its selector.
+- [`attributeFilters`](/accessibility/configuration/attributefilters) **removes** dynamic or generated attribute values from identification, so they can't be used as selectors.
+- components **adds context** to the selector, from the element or its ancestors, on top of whatever identifies the element, without changing which attribute identifies it.
 
 For background on how Cypress picks identifiers, see [Element identification](/accessibility/core-concepts/element-identification).
+
+## See also
+
+- [Element identification](/accessibility/core-concepts/element-identification): how elements are identified across snapshots.
+- [`significantAttributes`](/accessibility/configuration/significantattributes): choose which attribute identifies an element.
+- [`attributeFilters`](/accessibility/configuration/attributefilters): stop dynamic or generated attribute values from identifying elements.
+- [Inspecting violation details](/accessibility/guides/inspecting-violation-details): where violation target selectors appear in reports.
+- [Work with AI agents](/accessibility/work-with-ai-agents): triage findings through Cypress Cloud MCP.
+- [Configuration overview](/accessibility/configuration/overview): where to set configuration and regenerate reports.
+- [Cypress Accessibility FAQ](/accessibility/faq): common questions and troubleshooting.
