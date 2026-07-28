@@ -9,9 +9,9 @@ sidebar_position: 90
 
 # Add component context - `components`
 
-The `components` configuration adds context to the selectors in your accessibility reports. When an element has a violation, Cypress Accessibility shows a **violation target selector** that points to it. `components` lets you add your own component-identifying attributes, such as `data-component-name`, `data-team`, or `data-page-area`, to that selector, so a finding reads as `[data-cy="signup"][data-component="IconButton"]` instead of a bare `[data-cy="signup"]`.
+The components configuration adds context to the selectors in your accessibility reports. When an element has a violation, Cypress Accessibility shows a **violation target selector** that points to it. components lets you add your own component-identifying attributes, such as `data-component-name`, `data-team`, or `data-page-area`, to that selector, so a finding reads as `[data-cy="signup"][data-component="IconButton"]` instead of a bare `[data-cy="signup"]`.
 
-That extra context tells whoever picks up the issue, whether a developer, a Jira ticket, or an [AI agent triaging through Cypress Cloud MCP](/accessibility/work-with-ai-agents), which component, team, or region the element belongs to, without having to open the page HTML or search the codebase to place it. Many teams already render attributes like these for testing or design-system tracing; when they exist, `components` puts them into your selectors in a predictable, consistent way.
+That extra context tells whoever picks up the issue, whether a developer, a Jira ticket, or an [AI agent triaging through Cypress Cloud MCP](/accessibility/work-with-ai-agents), which component, team, or region the element belongs to, without having to open the page HTML or search the codebase to place it. Many teams already render attributes like these for testing or design-system tracing; when they exist, components puts them into your selectors in a predictable, consistent way.
 
 ## Why use components?
 
@@ -74,17 +74,17 @@ listing `data-page-area` reports the button with that region in front:
 
 :::tip
 
-`components` adds context on top of whatever already identifies an element. To change which attribute _identifies_ it, use [`significantAttributes`](/accessibility/configuration/significantattributes) instead.
+components adds context on top of whatever already identifies an element. To change which attribute _identifies_ it, use [`significantAttributes`](/accessibility/configuration/significantattributes) instead.
 
 :::
 
 ## Scope
 
-The `components` object is only valid under an `accessibility` key in your App Quality configuration. Unlike [`significantAttributes`](/accessibility/configuration/significantattributes) or [`attributeFilters`](/accessibility/configuration/attributefilters), it has no root-level or UI Coverage form. It can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply to tagged runs.
+The components object is only valid under an `accessibility` key in your App Quality configuration. Unlike [`significantAttributes`](/accessibility/configuration/significantattributes) or [`attributeFilters`](/accessibility/configuration/attributefilters), it has no root-level or UI Coverage form. It can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply to tagged runs.
 
 ## Setting components
 
-To add or edit `components`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+To add or edit components, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
 
 <DocsImage
   src="/img/accessibility/configuration/cypress-accessibility-configuration-editor.png"
@@ -143,7 +143,7 @@ These filters fine-tune **which attribute values** are appended. They apply only
 
 Use `include: false` to keep a noisy or generic value out of your selectors, such as a layout primitive whose name adds no context, while still appending the meaningful ones.
 
-You can also add a `comment` to the `components` object itself to document the whole block. Comments are for your team, never appear in reports, and are the supported place for notes because Cypress Cloud rejects properties it doesn't recognize. See [Comments](/accessibility/configuration/overview#Comments).
+You can also add a `comment` to the components object itself to document the whole block. Comments are for your team, never appear in reports, and are the supported place for notes because Cypress Cloud rejects properties it doesn't recognize. See [Comments](/accessibility/configuration/overview#Comments).
 
 ### How are components rules applied?
 
@@ -158,7 +158,7 @@ Keep these behaviors in mind when building your configuration:
 
 ### Validation rules
 
-Cypress Cloud validates the whole configuration before saving it and rejects a `components` block that breaks any of these:
+Cypress Cloud validates the whole configuration before saving it and rejects a components block that breaks any of these:
 
 - Each `attributeName` must be a valid HTML attribute name. Names are compared in lowercase and must be unique across `componentAttributes`.
 - Each `componentAttributeFilters` `attribute` and `value` must be a valid regular expression.
@@ -323,13 +323,13 @@ After saving configuration changes, regenerate a recent run to preview the effec
 
 :::
 
-## How `components` compares to other options
+## How components compares to other options
 
 Three configuration properties all work with attributes, but they do different jobs:
 
 - [`significantAttributes`](/accessibility/configuration/significantattributes) chooses the single attribute that **identifies** the element and becomes its selector.
 - [`attributeFilters`](/accessibility/configuration/attributefilters) **removes** dynamic or generated attribute values from identification, so they can't be used as selectors.
-- `components` **adds context** to the selector, from the element or its ancestors, on top of whatever identifies the element, without changing which attribute identifies it.
+- components **adds context** to the selector, from the element or its ancestors, on top of whatever identifies the element, without changing which attribute identifies it.
 
 For background on how Cypress picks identifiers, see [Element identification](/accessibility/core-concepts/element-identification).
 
