@@ -16,6 +16,7 @@ sidebar_position: 20
 - How Cypress balances spec files across multiple machines
 - How to run tests in parallel across multiple machines
 - How to group test runs and why you might want to
+- How to complete a run early with the Run Completion API
 - How to visualize parallelization and groups in Cypress Cloud
 
 :::
@@ -419,6 +420,108 @@ the last known CI machine has completed as shown in the diagram below:
 
 This **delay is 60 seconds by default**, but is
 [configurable within Cypress Cloud project settings page](/cloud/account-management/projects#Run-completion-delay).
+
+## Run Completion API
+
+The run completion delay is a safety buffer: it protects against late CI machines
+racing past a run that Cypress Cloud has already marked complete. For teams with
+non-deterministic build timing, that buffer often has to be long, which taxes
+_every_ run — including the ones where CI already knows all the work is done.
+
+The **Run Completion API** gives CI and tooling an explicit "we're done" signal.
+When you know a parallelized or grouped run has finished, you can call the API to
+complete the run immediately and skip the remaining completion delay.
+
+:::info
+
+This is an imperative signal, not a force. The API never seals a run mid-flight —
+if groups are still in progress when you call it, the request is _deferred_ and the
+run completes (with no delay) the instant it stabilizes. See
+[Outcomes](#Outcomes) below.
+
+:::
+
+### Endpoint
+
+```
+POST https://api.cypress.io/runs/complete
+```
+
+Requests are authenticated with your **project ID** and **record key** — the same
+credentials used to [record the run](/cloud/get-started/setup#Setup).
+
+### Request body
+
+The request body is JSON. `projectId` and `recordKey` are always required, and the
+run is identified by **exactly one** of `runUrl` or `runNumber`.
+
+| Property             | Type     | Required    | Description                                                                                                                                                        |
+| -------------------- | -------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `projectId`          | `string` | Yes         | The [project ID](/cloud/account-management/projects#Project-ID) of the run.                                                                                        |
+| `recordKey`          | `string` | Yes         | A valid [record key](/cloud/account-management/projects#Record-key) for the project.                                                                               |
+| `runUrl`             | `string` | Conditional | The Cypress Cloud run URL (Cypress prints this when a run starts). Provide this **or** `runNumber`.                                                                |
+| `runNumber`          | `number` | Conditional | The run's sequential number within the project. Provide this **or** `runUrl`.                                                                                      |
+| `expectedGroupCount` | `number` | No          | The number of [groups](#Grouping-test-runs) the run is expected to have before it completes. When set, the run only completes once that many groups have finished. |
+
+#### Example — `fetch`
+
+```javascript
+const response = await fetch('https://api.cypress.io/runs/complete', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    projectId: 'abc123',
+    recordKey: 'f858a2bc-b469-4e48-be67-0876339ee7e1',
+    runUrl: 'https://cloud.cypress.io/projects/abc123/runs/42',
+    // runNumber: 42, // optional, in lieu of runUrl
+    // expectedGroupCount: 4, // optional
+  }),
+})
+
+const result = await response.json()
+console.log(result) // e.g. { outcome: 'completed' }
+```
+
+#### Example — `curl`
+
+```shell
+curl -X POST https://api.cypress.io/runs/complete \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "projectId": "abc123",
+    "recordKey": "f858a2bc-b469-4e48-be67-0876339ee7e1",
+    "runUrl": "https://cloud.cypress.io/projects/abc123/runs/42"
+  }'
+```
+
+### Outcomes
+
+The endpoint always responds with a JSON body containing an `outcome` field. The
+HTTP status reflects whether the run reached a terminal state as a result of the
+request.
+
+| Status | `outcome`          | Meaning                                                                                                                                    |
+| ------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `200`  | `completed`        | The run was ready and has been completed immediately, skipping the completion delay.                                                       |
+| `200`  | `already-complete` | The run had already completed. The request is idempotent — no change was made.                                                             |
+| `202`  | `deferred`         | The run is not ready yet (groups are still in progress). The request was recorded; the run will complete with no delay once it stabilizes. |
+| `202`  | `run-not-active`   | There is no live recording session for the run. It will finalize on its own.                                                               |
+
+When a `deferred` response is returned for a request that included an
+`expectedGroupCount`, the body also echoes the progress toward that target:
+
+```json
+{
+  "outcome": "deferred",
+  "completedGroupCount": 2,
+  "expectedGroupCount": 4
+}
+```
+
+Here, `completedGroupCount` is the number of groups that have actually _finished_
+(not merely registered). A request that arrives slightly early waits for the
+remaining in-flight groups — and absorbs any that join in the meantime — rather
+than sealing the run partway through.
 
 ## Visualizing parallelization and groups in Cypress Cloud
 
