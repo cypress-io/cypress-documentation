@@ -74,7 +74,10 @@ Each rule is a hard convention. See the linked section for the how and why.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
-- Reuse `docs/partials/_*.mdx` instead of repeating content.
+- Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
+  partial for content rendered in **more than one location**. If it's used in a
+  single page, inline it there — don't add a partial (or keep an existing one)
+  that has just one render site.
 - End related pages with a `## See also` section (sentence-case H2, as the page's
   last section): a short bulleted list of doc-to-doc links to closely related
   pages, command names in backticks, with an optional `- short description` after

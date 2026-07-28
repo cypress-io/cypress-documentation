@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, component context, configuration scope, reading applied config, which Axe Core® rules run and color contrast, component testing, the Axe Core® version, and per-run profiles.'
+description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, component context, configuration scope, reading applied config, which Axe Core® rules run and color contrast, component testing, the Axe Core® version, and per-run profiles for pull request gating and per-team reports.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -207,12 +207,14 @@ The most common causes are:
 
 There's no dedicated "skip this run" switch in a profile. To suppress a report for certain runs, point a profile at a deliberately narrow configuration (for example, [`viewFilters`](/accessibility/configuration/viewfilters) that exclude every view) so Cypress Cloud produces an empty or tightly scoped accessibility report for the run instead. See [Why use profiles?](/accessibility/configuration/profiles#Why-use-profiles).
 
-## See also
+### <Icon name="angle-right" /> How do I make accessibility checks on pull requests faster and more focused than regression runs?
 
-- [Configuration overview](/accessibility/configuration/overview) lists every configuration option and what each one is for.
-- [`views`](/accessibility/configuration/views) is the full reference for grouping and naming views.
-- [`profiles`](/accessibility/configuration/profiles) apply different configuration to runs based on run tags.
-- [`elementFilters`](/accessibility/configuration/elementfilters) is the full reference for ignoring elements.
-- [`viewFilters`](/accessibility/configuration/viewfilters) is the full reference for excluding URLs.
-- [Axe Core® configuration](/accessibility/configuration/axe-core-configuration) is the full reference for enabling, disabling, and scoping accessibility rules.
-- [Run-level reports](/accessibility/guides/run-level-reports) explains element statuses, including **Ignored**.
+Add a profile (for example, `aq-config-pr`) whose `config` narrows the report to your most critical flows with [`viewFilters`](/accessibility/configuration/viewfilters), then tag pull request runs with `cypress run --record --tag "aq-config-pr"`. The pull request report covers only those flows, so it's small and unambiguous for a developer to act on before merging, while regression runs record without the tag and keep the full base configuration. Combine the profile with the [Results API](/accessibility/results-api) to fail the build when a critical flow regresses. See [Block pull requests](/accessibility/guides/block-pull-requests#Using-Profiles-for-PR-specific-configuration).
+
+### <Icon name="angle-right" /> Can a Cypress Accessibility profile change which Axe Core® rules run for a specific run?
+
+No. A profile's `config` can override the App Quality settings in the editor ([`views`](/accessibility/configuration/views), [`viewFilters`](/accessibility/configuration/viewfilters), [`elementFilters`](/accessibility/configuration/elementfilters), [`significantAttributes`](/accessibility/configuration/significantattributes), [`attributeFilters`](/accessibility/configuration/attributefilters), and [`components`](/accessibility/configuration/components)), but the [Axe Core® ruleset](/accessibility/configuration/axe-core-configuration) isn't one of those settings. Enabling a rule that's off by default (such as `color-contrast`), turning off a false positive, or scoping to a WCAG target is a guided change Cypress applies at the project level, so it can't vary run to run through a profile. To ignore a rule only for certain elements yourself, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
+
+### <Icon name="angle-right" /> Can a Cypress Accessibility profile change how violation targets are identified, such as components or significantAttributes, for certain runs?
+
+Yes. Anything you can set under an `accessibility` key can go in a profile's `config`, including [`components`](/accessibility/configuration/components) and [`significantAttributes`](/accessibility/configuration/significantattributes). Because the `accessibility` object merges one level deep, a profile can override just one of them, for example identifying elements by `aria-label` during a labels audit, while inheriting the rest. See [How a profile changes your configuration](/accessibility/configuration/profiles#How-a-profile-changes-your-configuration).
