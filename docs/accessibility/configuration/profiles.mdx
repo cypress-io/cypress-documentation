@@ -182,6 +182,24 @@ cypress run --record --tag "aq-config-team-account,aq-config-team-checkout"
 
 Both tags match a profile, but Cypress Cloud applies `aq-config-team-checkout` because it appears first in the `profiles` array, even though `aq-config-team-account` is listed first among the tags. To change which profile wins, reorder the `profiles` array; tag order on the command line never changes the outcome.
 
+## Confirm which profile a run used
+
+After you tag and record a run, check which configuration was actually applied so you know the profile took effect. Every run permanently records its resolved configuration: your base configuration with any matching profile already merged in.
+
+- **In Cypress Cloud**, open the run's **Properties** tab to see the exact configuration that was applied.
+- **In CI**, read it from the [Accessibility Results API](/accessibility/results-api), where `config.value` is the applied App Quality configuration and `config.updatedAt` is when it was last saved.
+
+If the applied configuration matches your base rather than the profile you expected, the tag didn't select the profile — see [Troubleshooting](#Troubleshooting). For more on reading a run's configuration, see [Viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
+
+## Troubleshooting
+
+### A profile you tagged wasn't applied
+
+- The run tag doesn't exactly match the profile `name`. Matching is case-sensitive and exact, so `aq-config-regression` matches only the tag `aq-config-regression`, not `AQ-Config-Regression` or `aq-config-regression-nightly`.
+- The tag never reached Cypress Cloud. Profiles are selected from the tags passed to `cypress run --record --tag`, so a run recorded without `--record`, or without that `--tag`, uses the base configuration.
+- An earlier profile in the array also matches one of the run's tags and is used instead, because the first match wins. Reorder the `profiles` array to change precedence.
+- The report was processed before you saved the configuration. Regenerate the run to apply your current profiles. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
+
 ## See also
 
 - [Cypress run `--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) is the flag that selects which profile a run uses.

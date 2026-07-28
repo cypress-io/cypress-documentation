@@ -14,6 +14,8 @@ Before reaching for profiles, consider whether separate Cypress Cloud projects w
 
 Profiles are selected by matching run tags to profile names. When you record a run with the [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) flag, Cypress Cloud walks the `profiles` array in order and applies the **first profile whose `name` exactly matches one of the run's tags**. Matching is an exact, case-sensitive string comparison: the profile name `aq-config-regression` matches only the tag `aq-config-regression`, not `AQ-Config-Regression`, and not `aq-config-regression-nightly`. If no tag matches a profile name, your base configuration is used unchanged.
 
+Profiles are resolved when a run is processed, not when your tests execute. Reprocessing a past run re-applies the profiles and configuration you have saved now, so you can adjust a profile and see its effect on an existing run without recording again.
+
 ### How a profile changes your configuration
 
 When a profile applies, its `config` is laid over your base configuration one setting at a time. Only the settings you include in the profile change; everything else stays exactly as it is in your base configuration. A few things are worth knowing so the result matches what you expect:
@@ -34,6 +36,8 @@ A profile's `config` accepts any App Quality configuration setting your base con
 Use a naming convention like `aq-config-*` (for example, `aq-config-regression`, `aq-config-pr`) so it's obvious that a tag exists for configuration lookup rather than for filtering or grouping runs in Cypress Cloud.
 
 Being explicit this way helps avoid accidentally changing or removing a tag that a profile depends on. Because names are matched exactly against run tags, keep them stable: renaming a profile or changing a tag silently falls back to the base configuration for those runs.
+
+When a run could match more than one profile, order matters: the first match in the array wins, so list more specific profiles before broader ones.
 
 ## Syntax
 
