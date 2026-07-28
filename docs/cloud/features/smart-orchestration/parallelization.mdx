@@ -494,6 +494,71 @@ curl -X POST https://api.cypress.io/runs/complete \
   }'
 ```
 
+### Finding the run URL or run number
+
+Both identifiers come from the results Cypress produces when a run is recorded —
+you don't need to construct them yourself.
+
+- **From the [Module API](/app/references/module-api#Results):** the object that
+  `cypress.run()` resolves with includes a `runUrl` field (present whenever the
+  run was recorded).
+
+  ```javascript
+  const cypress = require('cypress')
+
+  const results = await cypress.run({ record: true, key: 'your-record-key' })
+
+  // "https://cloud.cypress.io/projects/abc123/runs/42"
+  const runUrl = results.runUrl
+  ```
+
+- **From the [`after:run`](/api/node-events/after-run-api) Node event:** the
+  `results` argument is the same object resolved by the Module API, so `runUrl`
+  is available there as well.
+
+  ```javascript
+  // cypress.config.js
+  setupNodeEvents(on) {
+    on('after:run', (results) => {
+      const runUrl = results.runUrl
+      // ...call the Run Completion API with runUrl
+    })
+  }
+  ```
+
+Pass that value as `runUrl`. If you'd rather send `runNumber`, it's the trailing
+segment of the run URL — `.../runs/42` corresponds to `runNumber: 42`.
+
+:::info
+
+`runUrl` is only present when the run was recorded (`--record`). Runs that aren't
+recorded aren't tracked by Cypress Cloud and can't be completed through this API.
+
+:::
+
+:::caution
+
+<strong>Where to call the API in a parallelized run</strong>
+
+On a parallelized or grouped run, `after:run` fires **once per machine** — so
+every machine sees the same `runUrl` and would each call the endpoint. Firing a
+bare "complete now" request from all of them races: whichever machine finishes
+its own specs first would ask to complete a run whose other groups are still
+going.
+
+For that reason, the most reliable place to make the call is a **dedicated
+post-run step in your CI pipeline** that runs after all parallel jobs have
+finished — one machine, one call, once you truly know the run is done.
+
+Calling from inside `after:run` is fine **when you pass a known
+`expectedGroupCount`** with every call. Because the API defers until that many
+groups have finished (and absorbs any still joining), it doesn't matter which
+machine's handler wins the race — the run only completes once all expected groups
+are in. Use this pattern when your group count is fixed and available to the
+handler (for example, injected as an environment variable by CI).
+
+:::
+
 ### Outcomes
 
 The endpoint always responds with a JSON body containing an `outcome` field. The
