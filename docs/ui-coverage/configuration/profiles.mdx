@@ -11,6 +11,209 @@ sidebar_position: 110
 
 <Profiles />
 
+## Examples
+
+### Basic profile structure
+
+Your base configuration excludes the support-chat widget, since another team owns it and it just adds noise to most reports. But one suite exists specifically to test the support-chat flow, and it records under the `aq-config-support-chat` tag. For that run, and only that run, the widget should count toward coverage.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#support-chat-widget",
+      "include": false,
+      "comment": "Exclude the support-chat widget from most reports"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "aq-config-support-chat",
+      "config": {
+        "elementFilters": [
+          {
+            "selector": "#support-chat-widget",
+            "include": true,
+            "comment": "The support-chat suite tests this widget, so count it here"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+Record the support-chat suite with a matching tag:
+
+```shell
+cypress run --record --tag "aq-config-support-chat"
+```
+
+On every other run the widget stays excluded. On the tagged run, the profile's `elementFilters` replaces the base list, so the `include: true` rule wins and the widget counts toward coverage. Because a profile's list replaces the base list rather than adding to it, list every rule the run needs, not only the one that changed.
+
+### Multiple profiles
+
+You can define several profiles, each for a different kind of run. Here, two focused audit suites want the same routes broken down into separate [views](/ui-coverage/core-concepts/views) so they can see coverage per value: a reporting audit splits `/reports/:type` by report type, and a localization audit splits `/:locale/account` by locale. You wouldn't want either split applied to every run, since it would fragment your normal reports into many low-traffic views, so each `views` rule is scoped to its own tag.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "profiles": [
+    {
+      "name": "aq-config-reporting-audit",
+      "config": {
+        "views": [
+          {
+            "pattern": "/reports/:type",
+            "groupBy": ["type"],
+            "comment": "One view per report type for the reporting audit"
+          }
+        ]
+      }
+    },
+    {
+      "name": "aq-config-localization-audit",
+      "config": {
+        "views": [
+          {
+            "pattern": "/:locale/account",
+            "groupBy": ["locale"],
+            "comment": "One view per locale for the localization audit"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+Use different tags to activate different profiles:
+
+```shell
+# Reporting audit runs
+cypress run --record --tag "aq-config-reporting-audit"
+
+# Localization audit runs
+cypress run --record --tag "aq-config-localization-audit"
+```
+
+### Profile with nested configuration
+
+Profiles can override configuration at any level, including configuration specific to Cypress Accessibility or UI Coverage when your project has both products enabled. Because `uiCoverage` and `accessibility` merge one level deep, a profile can add or replace a single nested property while inheriting the rest.
+
+Here the base configuration groups every product card into one [element group](/ui-coverage/configuration/elementgroups) so the repeated cards count once and don't dominate the score. A suite that specifically exercises each card variant, tagged `aq-config-card-variants`, needs the opposite: the same cards split into separate groups so featured and standard cards are tracked independently. The two groupings can't both be the base configuration, so the difference lives in a profile.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "attributeFilters": [
+      {
+        "attribute": "id",
+        "value": ":r.*:",
+        "include": false,
+        "comment": "Ignore React auto-generated IDs so elements stay stable across renders"
+      }
+    ],
+    "elementGroups": [
+      {
+        "selector": "[data-cy='product-card']",
+        "name": "Product card",
+        "comment": "Count the repeated product cards as one group"
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "aq-config-card-variants",
+      "config": {
+        "uiCoverage": {
+          "elementGroups": [
+            {
+              "selector": "[data-cy='product-card'][data-variant='featured']",
+              "name": "Featured product card"
+            },
+            {
+              "selector": "[data-cy='product-card'][data-variant='standard']",
+              "name": "Standard product card"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+```shell
+cypress run --record --tag "aq-config-card-variants"
+```
+
+Inside `uiCoverage`, the profile replaces `elementGroups` with its own two groups while the sibling `attributeFilters` is inherited; only the keys the profile names are replaced. On every other run, the single "Product card" group still applies.
+
+### Profile selection with multiple matching tags
+
+Two teams share one Cypress Cloud project, and each has a profile that scopes the report to the views they own. A shared nightly job is tagged for both teams. When more than one tag matches a profile name, Cypress Cloud uses the first matching profile in the `profiles` array, regardless of the order the tags appear on the run.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "profiles": [
+    {
+      "name": "aq-config-team-checkout",
+      "config": {
+        "viewFilters": [
+          {
+            "pattern": "/checkout/*",
+            "include": true
+          },
+          {
+            "pattern": "*",
+            "include": false,
+            "comment": "Checkout team: report only on checkout views"
+          }
+        ]
+      }
+    },
+    {
+      "name": "aq-config-team-account",
+      "config": {
+        "viewFilters": [
+          {
+            "pattern": "/account/*",
+            "include": true
+          },
+          {
+            "pattern": "*",
+            "include": false,
+            "comment": "Account team: report only on account views"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+```shell
+cypress run --record --tag "aq-config-team-account,aq-config-team-checkout"
+```
+
+Both tags match a profile, but Cypress Cloud applies `aq-config-team-checkout` because it appears first in the `profiles` array, even though `aq-config-team-account` is listed first among the tags. The checkout team's report is produced; tag order on the command line doesn't change the outcome.
+
 ## See also
 
 - [Cypress run `--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) is the flag that selects which profile a run uses.

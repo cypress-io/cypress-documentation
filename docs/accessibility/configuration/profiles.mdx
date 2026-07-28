@@ -1,6 +1,6 @@
 ---
 title: 'profiles: apply config overrides by run tag'
-description: 'Use the profiles property to apply Cypress Accessibility configuration overrides based on run tags.'
+description: 'Use the profiles property to apply different Cypress Accessibility configuration to different runs, whether a narrow pull request gate, a full regression run, or per-team reports, selected automatically by run tag, without changing your test code.'
 sidebar_label: 'Override config by run tag'
 sidebar_position: 100
 ---
@@ -11,9 +11,181 @@ sidebar_position: 100
 
 <Profiles />
 
+## Examples
+
+Each example shows the App Quality configuration and the `cypress run` command that selects the profile. Anything a profile doesn't mention is inherited from your base configuration.
+
+### Scope a pull request gate to critical flows
+
+The highest-value use of profiles in Cypress Accessibility is a fast, focused gate for pull requests. Your base configuration scans every view so regression runs track accessibility everywhere. A pull request run doesn't need that breadth; it needs a small, unambiguous report a developer can act on before merging. The `aq-config-pr` profile keeps only your most critical flows with [`viewFilters`](/accessibility/configuration/viewfilters), so the pull request report covers login and checkout and nothing else.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "profiles": [
+    {
+      "name": "aq-config-pr",
+      "comment": "Pull request gate: report only on the flows that block a merge",
+      "config": {
+        "viewFilters": [
+          { "pattern": "/login", "include": true },
+          { "pattern": "/checkout/*", "include": true },
+          {
+            "pattern": "*",
+            "include": false,
+            "comment": "Ignore every other view on pull request runs"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+Tag pull request runs so they pick up the profile:
+
+```shell
+cypress run --record --tag "aq-config-pr"
+```
+
+`viewFilters` applies the first matching rule, so the two `include: true` rules keep login and checkout while the catch-all excludes everything else. Regression runs record without this tag and use the base configuration, scanning every view. Pair the narrow report with the [Results API](/accessibility/results-api) to fail the build when a critical flow regresses.
+
+### Re-include a widget for a dedicated audit
+
+Your base configuration excludes two third-party widgets with [`elementFilters`](/accessibility/configuration/elementfilters), a cookie banner and an embedded support chat, because another vendor owns them and their violations only add noise. One suite exists specifically to audit the support-chat integration's accessibility, recorded under the `aq-config-support-audit` tag. For that run, the chat widget should be scanned while the cookie banner stays excluded.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#onetrust-banner-sdk, #onetrust-banner-sdk *",
+      "include": false,
+      "comment": "Third-party cookie banner, reported upstream to the vendor"
+    },
+    {
+      "selector": "#support-chat, #support-chat *",
+      "include": false,
+      "comment": "Vendor support-chat widget, excluded from everyday reports"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "aq-config-support-audit",
+      "config": {
+        "elementFilters": [
+          {
+            "selector": "#onetrust-banner-sdk, #onetrust-banner-sdk *",
+            "include": false,
+            "comment": "Still exclude the cookie banner during the support-chat audit"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+```shell
+cypress run --record --tag "aq-config-support-audit"
+```
+
+A profile's `elementFilters` replaces the base list rather than adding to it, so the profile repeats the cookie-banner rule it still needs and simply omits the support-chat rule. In Cypress Accessibility an element is scanned unless an `include: false` rule matches it, so dropping the support-chat exclusion is all it takes to bring the widget back into this run's report; you don't add an `include: true` rule. On every other run, both widgets stay excluded.
+
+### Apply an accessibility-only override for a labels audit
+
+Profiles can override configuration nested under an `accessibility` key, and those objects merge one level deep, so a profile can replace a single accessibility setting while inheriting the rest. Here the base configuration identifies violation targets by their [`components`](/accessibility/configuration/components) context for everyday reports. A quarterly audit of accessible names, tagged `aq-config-label-audit`, wants each violation target shown by its `aria-label` instead, using [`significantAttributes`](/accessibility/configuration/significantattributes), so a reviewer can spot a vague label like `aria-label="button"` at a glance. The audit keeps the same component context.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "components": {
+      "componentAttributes": [
+        { "attributeName": "data-component-name", "includeInSelector": true }
+      ]
+    },
+    "significantAttributes": ["data-cy"]
+  },
+  "profiles": [
+    {
+      "name": "aq-config-label-audit",
+      "config": {
+        "accessibility": {
+          "significantAttributes": ["aria-label"]
+        }
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+```shell
+cypress run --record --tag "aq-config-label-audit"
+```
+
+Inside `accessibility`, the profile replaces only `significantAttributes`; the sibling `components` object is inherited, so violation targets still carry their component context and are now identified by their label text. On every other run, elements are identified by `data-cy` as usual.
+
+### Choose between profiles when several tags match
+
+Two teams share one Cypress Cloud project, and each has a profile that scopes the accessibility report to the views it owns with [`viewFilters`](/accessibility/configuration/viewfilters). A shared nightly job is tagged for both teams. When more than one tag matches a profile name, Cypress Cloud uses the **first matching profile in the `profiles` array**, regardless of the order the tags appear on the run.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "profiles": [
+    {
+      "name": "aq-config-team-checkout",
+      "config": {
+        "viewFilters": [
+          { "pattern": "/checkout/*", "include": true },
+          {
+            "pattern": "*",
+            "include": false,
+            "comment": "Checkout team: report only on checkout views"
+          }
+        ]
+      }
+    },
+    {
+      "name": "aq-config-team-account",
+      "config": {
+        "viewFilters": [
+          { "pattern": "/account/*", "include": true },
+          {
+            "pattern": "*",
+            "include": false,
+            "comment": "Account team: report only on account views"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+```shell
+cypress run --record --tag "aq-config-team-account,aq-config-team-checkout"
+```
+
+Both tags match a profile, but Cypress Cloud applies `aq-config-team-checkout` because it appears first in the `profiles` array, even though `aq-config-team-account` is listed first among the tags. To change which profile wins, reorder the `profiles` array; tag order on the command line never changes the outcome.
+
 ## See also
 
 - [Cypress run `--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) is the flag that selects which profile a run uses.
 - [Configuration overview](/accessibility/configuration/overview) lists every option a profile's `config` can override and how to regenerate reports after changing configuration.
-- [`viewFilters`](/accessibility/configuration/viewfilters) and [`elementFilters`](/accessibility/configuration/elementfilters) are common properties to scope a profile's report.
-- [Cypress Accessibility FAQ](/accessibility/faq) answers common questions about configuration.
+- [`viewFilters`](/accessibility/configuration/viewfilters) and [`elementFilters`](/accessibility/configuration/elementfilters) are common properties for scoping a profile's report.
+- [Block pull requests](/accessibility/guides/block-pull-requests) pairs a narrow pull request profile with the Results API to gate merges.
+- [Cypress Accessibility FAQ](/accessibility/faq#Profiles) answers common questions about profiles, including merge behavior and tag matching.
