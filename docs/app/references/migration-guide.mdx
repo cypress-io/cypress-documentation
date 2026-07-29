@@ -130,16 +130,17 @@ This changes which timeout governs them:
   governed by [`responseTimeout`](/app/references/configuration#Timeouts)
   (default `30000` ms).
 
-Because the yielded cookie (or array of cookies) is now re-queried on every
-retry, do not treat the value captured inside a
-[`.then()`](/api/commands/then) callback as a stable snapshot. If you relied on
-the previous one-shot behavior, chain [`.should()`](/api/commands/should)
-assertions instead so Cypress retries the entire chain until they pass:
+The new retry behavior applies only to assertions chained directly onto the
+command. A [`.then()`](/api/commands/then) callback still runs only once, after
+the command settles, and is **not** retried — the cookie (or array of cookies) it
+receives is a single snapshot read at that moment, so an assertion made inside
+`.then()` will not wait for the cookie to be set. To benefit from retries, chain
+[`.should()`](/api/commands/should) assertions directly instead:
 
 <Badge type="danger">Before</Badge>
 
 ```javascript
-// Retries until the cookie exists and its value matches or times out
+// Runs once and does not retry — fails immediately if the cookie isn't set yet
 cy.getCookie('session_id').then((cookie) => {
   expect(cookie).to.have.property('value', '189jd09su')
 })
@@ -148,16 +149,18 @@ cy.getCookie('session_id').then((cookie) => {
 <Badge type="success">After</Badge>
 
 ```javascript
-// Retries until the cookie exists and its value matches or times out
+// Retries, re-reading the cookie, until the assertion passes or times out
 cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
 ```
 
-If you specifically need the old non-retrying behavior — for example, to assert
-synchronously that a cookie does **not** yet exist — set the command `timeout`
-to `0`:
+If you specifically want a one-shot check that does **not** retry — for example,
+to assert that a cookie does **not** yet exist — perform the assertion inside a
+[`.then()`](/api/commands/then) callback, which runs once and is not retried:
 
 ```javascript
-cy.getCookie('session_id', { timeout: 0 }).should('not.exist')
+cy.getCookie('session_id').then((cookie) => {
+  expect(cookie).to.be.null
+})
 ```
 
 #### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
@@ -240,12 +243,14 @@ cy.getAllLocalStorage().then((result) => {
 cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')
 ```
 
-If you specifically need the old non-retrying behavior — for example, to assert
-synchronously that no storage has been written yet — set the command `timeout` to
-`0`:
+If you specifically want a one-shot check that does **not** retry — for example,
+to assert that no storage has been written yet — perform the assertion inside a
+[`.then()`](/api/commands/then) callback, which runs once and is not retried:
 
 ```javascript
-cy.getAllLocalStorage({ timeout: 0 }).should('deep.equal', {})
+cy.getAllLocalStorage().then((result) => {
+  expect(result).to.deep.equal({})
+})
 ```
 
 #### `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` can no longer be overwritten with `Cypress.Commands.overwrite()`
