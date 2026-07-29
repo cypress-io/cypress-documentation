@@ -559,6 +559,57 @@ handler (for example, injected as an environment variable by CI).
 
 :::
 
+#### Example — calling from `after:run` with `expectedGroupCount`
+
+The example below completes the run from inside `after:run`. It's safe to fire
+from every machine **only because** `expectedGroupCount` is supplied from an
+environment variable that CI sets to the run's fixed number of groups: each
+machine's call is deferred until that many groups have finished, so the run
+completes exactly once — no matter which handler runs first.
+
+```javascript
+// cypress.config.js
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on) {
+      on('after:run', async (results) => {
+        // `results` is undefined in `cypress open` mode, and `runUrl` is only
+        // set when the run was recorded — bail out otherwise.
+        if (!results?.runUrl) {
+          return
+        }
+
+        // The total number of `--group` names in this run, provided by CI.
+        // Passing this is what makes the call safe to fire from every machine.
+        const expectedGroupCount = Number(process.env.EXPECTED_GROUP_COUNT)
+
+        if (!expectedGroupCount) {
+          return
+        }
+
+        await fetch('https://api.cypress.io/runs/complete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            projectId: results.config.projectId,
+            recordKey: process.env.CYPRESS_RECORD_KEY,
+            runUrl: results.runUrl,
+            expectedGroupCount,
+          }),
+        })
+      })
+    },
+  },
+})
+```
+
+Without `expectedGroupCount`, this same handler would be unsafe: the first
+machine to finish could complete the run while other groups are still recording.
+If you can't provide a reliable group count, call the API from a
+[dedicated post-run CI step](#Finding-the-run-URL-or-run-number) instead.
+
 ### Outcomes
 
 The endpoint always responds with a JSON body containing an `outcome` field. The
