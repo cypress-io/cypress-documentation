@@ -421,7 +421,7 @@ the last known CI machine has completed as shown in the diagram below:
 This **delay is 60 seconds by default**, but is
 [configurable within Cypress Cloud project settings page](/cloud/account-management/projects#Run-completion-delay).
 
-## Run Completion API
+## Run Completion API <Badge type="caution">Experimental</Badge>
 
 The run completion delay is a safety buffer: it protects against late CI machines
 racing past a run that Cypress Cloud has already marked complete. For teams with
@@ -431,6 +431,15 @@ _every_ run — including the ones where CI already knows all the work is done.
 The **Run Completion API** gives CI and tooling an explicit "we're done" signal.
 When you know a parallelized or grouped run has finished, you can call the API to
 complete the run immediately and skip the remaining completion delay.
+
+:::caution
+
+This API is **experimental**. Its request and response contract may change in a
+backward-incompatible way, and the endpoint may be altered or removed, without a
+major version bump. Pin your usage to the behavior documented here and check back
+for updates before relying on it in critical pipelines.
+
+:::
 
 :::info
 
@@ -443,7 +452,7 @@ run completes (with no delay) the instant it stabilizes. See
 
 ### Endpoint
 
-```
+```text
 POST https://api.cypress.io/runs/complete
 ```
 
@@ -513,18 +522,10 @@ you don't need to construct them yourself.
   ```
 
 - **From the [`after:run`](/api/node-events/after-run-api) Node event:** the
-  `results` argument is the same object resolved by the Module API, so `runUrl`
-  is available there as well.
-
-  ```javascript
-  // cypress.config.js
-  setupNodeEvents(on) {
-    on('after:run', (results) => {
-      const runUrl = results.runUrl
-      // ...call the Run Completion API with runUrl
-    })
-  }
-  ```
+  `results` argument is the same object resolved by the Module API, so
+  `results.runUrl` is available there as well. See the
+  [example below](#after-run-example) for a full `after:run` handler that calls
+  this API.
 
 Pass that value as `runUrl`. If you'd rather send `runNumber`, it's the trailing
 segment of the run URL — `.../runs/42` corresponds to `runNumber: 42`.
@@ -559,7 +560,7 @@ handler (for example, injected as an environment variable by CI).
 
 :::
 
-#### Example — calling from `after:run` with `expectedGroupCount`
+#### Example — calling from `after:run` with `expectedGroupCount` {#after-run-example}
 
 The example below completes the run from inside `after:run`. It's safe to fire
 from every machine **only because** `expectedGroupCount` is supplied from an
@@ -567,43 +568,38 @@ environment variable that CI sets to the run's fixed number of groups: each
 machine's call is deferred until that many groups have finished, so the run
 completes exactly once — no matter which handler runs first.
 
-```javascript
-// cypress.config.js
-const { defineConfig } = require('cypress')
+:::cypress-config-plugin-example
 
-module.exports = defineConfig({
-  e2e: {
-    setupNodeEvents(on) {
-      on('after:run', async (results) => {
-        // `results` is undefined in `cypress open` mode, and `runUrl` is only
-        // set when the run was recorded — bail out otherwise.
-        if (!results?.runUrl) {
-          return
-        }
+```ts
+on('after:run', async (results) => {
+  // `results` is undefined in `cypress open` mode, and `runUrl` is only
+  // set when the run was recorded — bail out otherwise.
+  if (!results?.runUrl) {
+    return
+  }
 
-        // The total number of `--group` names in this run, provided by CI.
-        // Passing this is what makes the call safe to fire from every machine.
-        const expectedGroupCount = Number(process.env.EXPECTED_GROUP_COUNT)
+  // The total number of `--group` names in this run, provided by CI.
+  // Passing this is what makes the call safe to fire from every machine.
+  const expectedGroupCount = Number(process.env.EXPECTED_GROUP_COUNT)
 
-        if (!expectedGroupCount) {
-          return
-        }
+  if (!expectedGroupCount) {
+    return
+  }
 
-        await fetch('https://api.cypress.io/runs/complete', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            projectId: results.config.projectId,
-            recordKey: process.env.CYPRESS_RECORD_KEY,
-            runUrl: results.runUrl,
-            expectedGroupCount,
-          }),
-        })
-      })
-    },
-  },
+  await fetch('https://api.cypress.io/runs/complete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      projectId: results.config.projectId,
+      recordKey: process.env.CYPRESS_RECORD_KEY,
+      runUrl: results.runUrl,
+      expectedGroupCount,
+    }),
+  })
 })
 ```
+
+:::
 
 Without `expectedGroupCount`, this same handler would be unsafe: the first
 machine to finish could complete the run while other groups are still recording.
