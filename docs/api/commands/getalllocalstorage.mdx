@@ -34,9 +34,10 @@ cy.getAllLocalStorage()
 Pass in an options object to change the default behavior of
 `cy.getAllLocalStorage()`.
 
-| Option | Default | Description                                                                         |
-| ------ | ------- | ----------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| Option    | Default                                                           | Description                                                                          |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)  |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.getAllLocalStorage()` to resolve before [timing out](#Timeouts) |
 
 <HeaderYields />
 
@@ -57,6 +58,32 @@ For example, if `key1` is set to `value1` on `https://example.cypress.io` and
   },
 }
 ```
+
+`cy.getAllLocalStorage()` is a query, and it is _safe_ to chain further commands.
+It will automatically [retry](/app/core-concepts/retry-ability) until all chained
+assertions have passed, or until it times out, re-reading `localStorage` from all
+origins on each retry so the yielded object stays up to date.
+
+:::caution
+
+Because `cy.getAllLocalStorage()` is a query, the object it yields is re-queried
+on every retry. Avoid capturing the object inside a
+[`.then()`](/api/commands/then) callback and assuming it is a single, stable
+snapshot — the callback runs once the chain settles, but any values you save from
+it will not update on later retries. Prefer chaining
+[`.should()`](/api/commands/should) assertions so Cypress retries the entire chain
+(re-reading storage) until they pass.
+
+:::
+
+#### When no `localStorage` data is present:
+
+On each read, `cy.getAllLocalStorage()` yields the current object of origins to
+`localStorage` data, or an empty object if none exists yet. The yielded object is
+the subject your chained assertions run against. If an assertion fails, because
+the object is empty, or because its contents don't match yet, the query re-reads
+`localStorage` and re-runs the assertion, looping until it passes or the command
+times out.
 
 ## Examples
 
@@ -86,12 +113,20 @@ cy.getAllLocalStorage().then((result) => {
 
 <HeaderAssertions />
 
-- `cy.getAllLocalStorage()` will only run assertions you have chained once, and
-  will not [retry](/app/core-concepts/retry-ability).
+- `cy.getAllLocalStorage()` will automatically
+  [retry](/app/core-concepts/retry-ability) until all chained assertions have
+  passed.
 
 <HeaderTimeouts />
 
-- `cy.getAllLocalStorage()` cannot time out.
+- `cy.getAllLocalStorage()` can time out waiting for assertions you've added to
+  pass.
+
+## History
+
+| Version                                    | Changes                                                                                      |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | `cy.getAllLocalStorage()` is now a query and retries assertions until they pass or time out. |
 
 ## See also
 
