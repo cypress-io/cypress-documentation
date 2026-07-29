@@ -95,10 +95,11 @@ You only need a replacement option if your application pins resources with Subre
 
 :::
 
-### `cy.getCookie()` and `cy.getCookies()` are now queries
+### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
 
-[`cy.getCookie()`](/api/commands/getcookie) and
-[`cy.getCookies()`](/api/commands/getcookies) are now retry-able
+[`cy.getCookie()`](/api/commands/getcookie),
+[`cy.getCookies()`](/api/commands/getcookies), and
+[`cy.getAllCookies()`](/api/commands/getallcookies) are now retry-able
 [query commands](/app/core-concepts/retry-ability), just like
 [`cy.get()`](/api/commands/get) and [`cy.contains()`](/api/commands/contains).
 
@@ -117,13 +118,13 @@ cookie to be written before asserting on it.
 
 This changes which timeout governs them:
 
-- **Query commands** — `cy.getCookie()` and `cy.getCookies()` — are now governed
-  by [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
+- **Query commands** — `cy.getCookie()`, `cy.getCookies()`, and
+  `cy.getAllCookies()` — are now governed by
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
   `4000` ms), the same timeout used by every other query.
 - **Cookie action commands** — [`cy.setCookie()`](/api/commands/setcookie),
   [`cy.clearCookie()`](/api/commands/clearcookie),
-  [`cy.clearCookies()`](/api/commands/clearcookies),
-  [`cy.getAllCookies()`](/api/commands/getallcookies), and
+  [`cy.clearCookies()`](/api/commands/clearcookies), and
   [`cy.clearAllCookies()`](/api/commands/clearallcookies) — are unchanged. They
   make a single automation round-trip, do not retry assertions, and remain
   governed by [`responseTimeout`](/app/references/configuration#Timeouts)
@@ -159,11 +160,11 @@ to `0`:
 cy.getCookie('session_id', { timeout: 0 }).should('not.exist')
 ```
 
-#### `cy.getCookie()` and `cy.getCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+#### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
 
 Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
-were previously overwriting `cy.getCookie()` or `cy.getCookies()`, update your
-code to use
+were previously overwriting `cy.getCookie()`, `cy.getCookies()`, or
+`cy.getAllCookies()`, update your code to use
 `Cypress.Commands.overwriteQuery('getCookie', function () { ... })` rather than
 `Cypress.Commands.overwrite('getCookie', () => { ... })`. For more details on
 overwriting queries, see
