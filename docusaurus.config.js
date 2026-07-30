@@ -180,7 +180,7 @@ const config = {
         //give id a unique value to get a new announcement bar to appear
         id: 'cloud-cli-july-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `✨ Cloud CLI: Test Replay, in your terminal &mdash; <a href="https://docs.cypress.io/cloud/integrations/cloud-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cloud-cli">Learn More</a>`,
+        content: `✨ Read Test Replay data from your terminal and script against it &mdash; <a href="https://docs.cypress.io/cloud/integrations/cloud-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cloud-cli">Learn More</a>`,
         isCloseable: true,
       },
       footer: {
