@@ -61,12 +61,13 @@ cookie exists and all chained assertions have passed, or until it times out.
 
 :::caution
 
-Because `cy.getCookie()` is a query, the cookie it yields is re-queried on every
-retry. Avoid capturing the cookie inside a [`.then()`](/api/commands/then)
-callback and assuming it is a single, stable snapshot. The callback runs once
-the chain settles, but any values you save from it will not update on later
-retries. Prefer chaining [`.should()`](/api/commands/should) assertions so
-Cypress retries the entire chain (re-querying the cookie) until they pass.
+Because `cy.getCookie()` is a query, it re-reads the cookie on every retry, and
+assertions you chain with [`.should()`](/api/commands/should) drive those retries
+until they pass or the command times out. A [`.then()`](/api/commands/then)
+callback, by contrast, runs only once after the command settles and is not
+retried — so prefer chaining [`.should()`](/api/commands/should) assertions over
+asserting inside `.then()` when you need Cypress to wait for the cookie to be
+set.
 
 :::
 

@@ -95,10 +95,11 @@ You only need a replacement option if your application pins resources with Subre
 
 :::
 
-### `cy.getCookie()` and `cy.getCookies()` are now queries
+### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
 
-[`cy.getCookie()`](/api/commands/getcookie) and
-[`cy.getCookies()`](/api/commands/getcookies) are now retry-able
+[`cy.getCookie()`](/api/commands/getcookie),
+[`cy.getCookies()`](/api/commands/getcookies), and
+[`cy.getAllCookies()`](/api/commands/getallcookies) are now retry-able
 [query commands](/app/core-concepts/retry-ability), just like
 [`cy.get()`](/api/commands/get) and [`cy.contains()`](/api/commands/contains).
 
@@ -117,28 +118,29 @@ cookie to be written before asserting on it.
 
 This changes which timeout governs them:
 
-- **Query commands** — `cy.getCookie()` and `cy.getCookies()` — are now governed
-  by [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
+- **Query commands** — `cy.getCookie()`, `cy.getCookies()`, and
+  `cy.getAllCookies()` — are now governed by
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
   `4000` ms), the same timeout used by every other query.
 - **Cookie action commands** — [`cy.setCookie()`](/api/commands/setcookie),
   [`cy.clearCookie()`](/api/commands/clearcookie),
-  [`cy.clearCookies()`](/api/commands/clearcookies),
-  [`cy.getAllCookies()`](/api/commands/getallcookies), and
+  [`cy.clearCookies()`](/api/commands/clearcookies), and
   [`cy.clearAllCookies()`](/api/commands/clearallcookies) — are unchanged. They
   make a single automation round-trip, do not retry assertions, and remain
   governed by [`responseTimeout`](/app/references/configuration#Timeouts)
   (default `30000` ms).
 
-Because the yielded cookie (or array of cookies) is now re-queried on every
-retry, do not treat the value captured inside a
-[`.then()`](/api/commands/then) callback as a stable snapshot. If you relied on
-the previous one-shot behavior, chain [`.should()`](/api/commands/should)
-assertions instead so Cypress retries the entire chain until they pass:
+The new retry behavior applies only to assertions chained directly onto the
+command. A [`.then()`](/api/commands/then) callback still runs only once, after
+the command settles, and is **not** retried — the cookie (or array of cookies) it
+receives is a single snapshot read at that moment, so an assertion made inside
+`.then()` will not wait for the cookie to be set. To benefit from retries, chain
+[`.should()`](/api/commands/should) assertions directly instead:
 
 <Badge type="danger">Before</Badge>
 
 ```javascript
-// Retries until the cookie exists and its value matches or times out
+// Runs once and does not retry — fails immediately if the cookie isn't set yet
 cy.getCookie('session_id').then((cookie) => {
   expect(cookie).to.have.property('value', '189jd09su')
 })
@@ -147,23 +149,25 @@ cy.getCookie('session_id').then((cookie) => {
 <Badge type="success">After</Badge>
 
 ```javascript
-// Retries until the cookie exists and its value matches or times out
+// Retries, re-reading the cookie, until the assertion passes or times out
 cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
 ```
 
-If you specifically need the old non-retrying behavior — for example, to assert
-synchronously that a cookie does **not** yet exist — set the command `timeout`
-to `0`:
+If you specifically want a one-shot check that does **not** retry — for example,
+to assert that a cookie does **not** yet exist — perform the assertion inside a
+[`.then()`](/api/commands/then) callback, which runs once and is not retried:
 
 ```javascript
-cy.getCookie('session_id', { timeout: 0 }).should('not.exist')
+cy.getCookie('session_id').then((cookie) => {
+  expect(cookie).to.be.null
+})
 ```
 
-#### `cy.getCookie()` and `cy.getCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+#### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
 
 Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
-were previously overwriting `cy.getCookie()` or `cy.getCookies()`, update your
-code to use
+were previously overwriting `cy.getCookie()`, `cy.getCookies()`, or
+`cy.getAllCookies()`, update your code to use
 `Cypress.Commands.overwriteQuery('getCookie', function () { ... })` rather than
 `Cypress.Commands.overwrite('getCookie', () => { ... })`. For more details on
 overwriting queries, see
@@ -182,6 +186,97 @@ Cypress.Commands.overwrite('getCookie', (name, options) => {
 ```javascript
 Cypress.Commands.overwriteQuery('getCookie', (name, options) => {
   return cy.getCookie(name, options)
+})
+```
+
+See [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) for more details.
+
+### `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` are now queries
+
+[`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage) and
+[`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) are now
+retry-able [query commands](/app/core-concepts/retry-ability), just like
+[`cy.getCookie()`](/api/commands/getcookie) and
+[`cy.getCookies()`](/api/commands/getcookies).
+
+Previously they read storage once and ran any chained assertions a single time,
+so they could fail on the first read when storage was populated asynchronously.
+As of Cypress 16 they re-read `localStorage` and `sessionStorage` from all
+origins and retry their chained assertions until they pass or time out.
+
+#### Reads are now retried
+
+A read such as
+`cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')`
+no longer fails on the first empty read. The command re-reads storage and retries
+the assertion until it passes or the command times out, so you no longer need to
+manually wait for storage to be written before asserting on it.
+
+#### Timeouts now follow `defaultCommandTimeout`
+
+Both commands are now [`Timeoutable`](/api/commands/getalllocalstorage#Arguments)
+and accept a `timeout` option. They are governed by
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
+`4000` ms), the same timeout used by every other query. When a read times out,
+the error is reported with the standard `Timed out retrying after ...` prefix.
+
+The new retry behavior applies only to assertions chained directly onto the
+command. A [`.then()`](/api/commands/then) callback still runs only once, after
+the command settles, and is **not** retried — the object it receives is a single
+snapshot read at that moment, so an assertion made inside `.then()` will not wait
+for storage to be populated. To benefit from retries, chain
+[`.should()`](/api/commands/should) assertions directly instead:
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+// Runs once and does not retry — fails immediately if the origin isn't present yet
+cy.getAllLocalStorage().then((result) => {
+  expect(result).to.have.property('https://example.cypress.io')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+// Retries, re-reading storage, until the assertion passes or times out
+cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')
+```
+
+If you specifically want a one-shot check that does **not** retry — for example,
+to assert that no storage has been written yet — perform the assertion inside a
+[`.then()`](/api/commands/then) callback, which runs once and is not retried:
+
+```javascript
+cy.getAllLocalStorage().then((result) => {
+  expect(result).to.deep.equal({})
+})
+```
+
+#### `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.getAllLocalStorage()` or
+`cy.getAllSessionStorage()`, update your code to use
+`Cypress.Commands.overwriteQuery('getAllLocalStorage', function () { ... })`
+rather than
+`Cypress.Commands.overwrite('getAllLocalStorage', () => { ... })`. For more
+details on overwriting queries, see
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+Cypress.Commands.overwrite('getAllLocalStorage', (options) => {
+  return cy.getAllLocalStorage(options)
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+Cypress.Commands.overwriteQuery('getAllLocalStorage', (options) => {
+  return cy.getAllLocalStorage(options)
 })
 ```
 
