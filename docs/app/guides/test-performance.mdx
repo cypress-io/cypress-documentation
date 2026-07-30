@@ -179,7 +179,7 @@ Apply these optimizations in order. The highest-impact changes are at the top.
 15. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
 16. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
 17. [experimentalFastVisibility](#Enable-faster-visibility-checks) — high impact on complex DOMs; replaces the layout-thrashing legacy visibility algorithm
-18. [experimentalMemoryManagement](#Manage-memory-accumulation) — targeted remedy for suites that slow down over time or crash; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+18. [manageBrowserMemory](#Manage-memory-accumulation) — targeted remedy for suites that slow down over time or crash; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
 19. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
 20. [UI Coverage to identify over-tested elements](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
 21. [cy.prompt for selector maintenance](#Reduce-selector-maintenance-overhead-with-cyprompt) — reduces recurring fix time when the UI changes; cached commands run without AI overhead in CI
@@ -728,13 +728,13 @@ This flag is most impactful on suites with many visibility assertions or suites 
 
 In a long-running Cypress test suite, the browser accumulates memory across tests. References to DOM nodes, event listeners, and application state from earlier tests can linger in the browser's heap even after Cypress clears the page. As memory pressure builds, the browser can slow down and in severe cases crash mid-run.
 
-[`experimentalMemoryManagement`](/app/references/experiments) enables improved memory management for Chromium-based browsers, actively clearing memory between tests. It does this by clearing the browser's heap after each test.
+[`manageBrowserMemory`](/app/references/configuration#Global) enables improved memory management for Chromium-based browsers, actively clearing memory between tests. It does this by clearing the browser's heap after each test.
 
 :::cypress-config-example
 
 ```js
 {
-  experimentalMemoryManagement: true // ✅ Faster approach: enable memory management
+  manageBrowserMemory: true // ✅ Faster approach: enable memory management
 }
 ```
 
@@ -742,7 +742,9 @@ In a long-running Cypress test suite, the browser accumulates memory across test
 
 :::info
 
-`experimentalMemoryManagement` only applies to Chromium-based browsers (Chrome, Edge, Electron). It has no effect in Firefox or WebKit.
+`manageBrowserMemory` only applies to Chromium-based browsers (Chrome, Edge, Electron). It has no effect in Firefox or WebKit.
+
+`manageBrowserMemory` replaces the deprecated `experimentalMemoryManagement` option, which continues to work as an alias but will be removed in a future major version.
 
 :::
 
@@ -935,7 +937,7 @@ Increase the resource class for the job that runs Cypress. You'll find the most 
 - **CircleCI**: `resource_class: large`: 4 vCPUs, 8 GB RAM
 - **GitHub Actions**: standard Ubuntu runner: 4 vCPUs, 16 GB RAM
 
-Also see [experimentalMemoryManagement](#Manage-memory-accumulation) for information on how to improve memory management.
+Also see [manageBrowserMemory](#Manage-memory-accumulation) for information on how to improve memory management.
 
 ### Spec prioritization
 

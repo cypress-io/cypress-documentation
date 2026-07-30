@@ -8,7 +8,7 @@ export default defineConfig({
   fixturesFolder: false,
   viewportHeight: 800,
   viewportWidth: 1200,
-  experimentalMemoryManagement: true,
+  manageBrowserMemory: true,
   experimentalFastVisibility: true,
   video: false,
   retries: {
