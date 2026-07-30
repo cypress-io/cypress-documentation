@@ -178,9 +178,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'qitl-july-2026',
+        id: 'cloud-cli-july-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🌟 Learn how leaders keep Quality in the Loop in the AI Era &mdash; <a href="https://cypress.registration.goldcast.io/events/07d07799-c355-4e19-b008-b4b1552f57ac?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=qitl">Save your Seat</a>`,
+        content: `✨ Read Test Replay data from your terminal and script against it &mdash; <a href="https://docs.cypress.io/cloud/integrations/cloud-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cloud-cli">Learn More</a>`,
         isCloseable: true,
       },
       footer: {
