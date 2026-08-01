@@ -424,8 +424,8 @@
     },
     "cypress-mochawesome-reporter": {
       "npm": "cypress-mochawesome-reporter",
-      "version": "4.0.2",
-      "lastPublished": "2025-08-21T06:22:19.234Z",
+      "version": "5.0.0",
+      "lastPublished": "2026-07-31T10:59:20.129Z",
       "cypressVersion": ">=6.2.0"
     },
     "cypress-slack-reporter": {
