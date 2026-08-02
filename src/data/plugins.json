@@ -1288,6 +1288,13 @@
           "badge": "community"
         },
         {
+          "name": "cypress-device-emulate",
+          "description": "Real mobile device emulation for Cypress — viewport, touch, user agent, device pixel ratio, and live orientation rotation via Chrome DevTools Protocol.",
+          "link": "https://github.com/sekharsdet/cypress-device-emulate",
+          "keywords": ["mobile", "device-emulation", "viewport", "touch", "cdp", "orientation"],
+          "badge": "community"
+        },
+        {
           "name": "cypress-plugin-tab",
           "description": "A Cypress plugin to add a tab command.",
           "link": "https://github.com/Bkucera/cypress-plugin-tab",
