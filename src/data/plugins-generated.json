@@ -470,8 +470,8 @@
     },
     "Cypress Image Snapshot": {
       "npm": "@simonsmith/cypress-image-snapshot",
-      "version": "10.0.4",
-      "lastPublished": "2026-05-16T10:13:26.007Z",
+      "version": "10.1.1",
+      "lastPublished": "2026-08-02T18:36:20.293Z",
       "cypressVersion": ">13.0.0"
     },
     "Visual Regression Diff": {
