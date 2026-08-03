@@ -273,9 +273,11 @@ elements** into view when using DOM commands such as
 
 :::
 
-By default, the scrolling algorithm works by scrolling the top, leftmost point
-of the element we issued the command on to the top, leftmost scrollable point of
-its scrollable container.
+By default, the scrolling algorithm works by scrolling the top of the element we
+issued the command on to the top of its scrollable container. The horizontal
+position is left to the browser, which scrolls only as far as it needs to bring
+the element into view, so a container that already shows the element
+horizontally is not scrolled sideways.
 
 After scrolling the element, if we determine that it is still being covered up,
 we will continue to scroll and "nudge" the page until it becomes visible. This
@@ -288,24 +290,79 @@ covered.
 To change the position in the viewport to where we scroll an element, you can
 use the [`scrollBehavior`](/app/references/configuration#Actionability)
 configuration option. This can be useful if the element is covered up when
-aligned to the top of the viewport, or if you just prefer the element to be
-centered during scrolling of action commands. Accepted values are `'center'`,
-`'top'`, `'bottom'`, `'nearest'`, and `false`, with `false` disabling scrolling
-altogether.
+aligned to the top of the viewport, or if you prefer the element to be centered
+during scrolling of action commands.
 
-Each value controls where in the viewport the element is aligned after
-scrolling, using the browser's
+`scrollBehavior` accepts a single alignment, an object that sets each axis
+independently, or `false` to skip scrolling. Cypress translates the value into
+the options it hands to the browser's
 [`scrollIntoView()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)
-method under the hood:
+method.
 
-- `'top'` — aligns the element to the top of the scrollable container.
-- `'bottom'` — aligns the element to the bottom of the scrollable container.
-- `'center'` — centers the element within the scrollable container.
-- `'nearest'` — scrolls the minimum amount needed to bring the element into
-  view. If the element is above the visible area it aligns to the top; if it is
-  below, it aligns to the bottom; if it is already fully visible, no scrolling
-  occurs.
-- `false` — disables scrolling entirely before executing the command.
+#### Aligning with a single value
+
+| Value       | `scrollIntoView()` options                | Result                                                                                                                                                                                                                                     |
+| ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `'top'`     | `{ block: 'start' }`                      | Aligns the element to the top of its scrollable container and leaves the horizontal position to the browser. This is the default.                                                                                                          |
+| `'bottom'`  | `{ block: 'end' }`                        | Aligns the element to the bottom of its scrollable container and leaves the horizontal position to the browser.                                                                                                                            |
+| `'start'`   | `{ block: 'start', inline: 'start' }`     | Aligns the element to the start of both axes, which is the top, leftmost point of its scrollable container in a left-to-right document.                                                                                                    |
+| `'end'`     | `{ block: 'end', inline: 'end' }`         | Aligns the element to the end of both axes, which is the bottom, rightmost point of its scrollable container in a left-to-right document.                                                                                                  |
+| `'center'`  | `{ block: 'center', inline: 'center' }`   | Centers the element within its scrollable container on both axes.                                                                                                                                                                          |
+| `'nearest'` | `{ block: 'nearest', inline: 'nearest' }` | Scrolls the minimum amount needed on both axes to bring the element into view. If the element is above the visible area it aligns to the top; if it is below, it aligns to the bottom; if it is already fully visible, it does not scroll. |
+| `false`     | Not applicable                            | Disables scrolling entirely before executing the command.                                                                                                                                                                                  |
+
+`'top'` and `'bottom'` describe the vertical axis only, the same way
+`scrollIntoView(true)` and `scrollIntoView(false)` do, so they never scroll a
+horizontally scrollable container that is already showing the element. Use
+`'start'` or `'end'` when you want both axes aligned.
+
+:::info
+
+In Cypress `15.18.1` through `15.19.1`, `'top'` and `'bottom'` aligned both axes.
+That could scroll a horizontally scrollable container, such as a carousel that
+positions itself, even when the element was already visible. Cypress `15.20.0`
+restored the pre-`15.18.1` behavior described above.
+
+:::
+
+#### Aligning each axis independently
+
+Pass an object to control the two axes separately. `block` is the vertical axis
+and `inline` is the horizontal axis, and each takes the same values as the native
+`scrollIntoView()` method: `'start'`, `'end'`, `'center'`, or `'nearest'`.
+
+:::cypress-config-example
+
+```ts
+{
+  scrollBehavior: { block: 'center', inline: 'nearest' },
+}
+```
+
+:::
+
+`'top'` and `'bottom'` are Cypress shorthands for a whole alignment rather than
+positions an axis can take, so they are not valid inside the object. Use
+`'start'` in place of `'top'` and `'end'` in place of `'bottom'`.
+
+An axis you leave out is omitted from the `scrollIntoView()` call, so the
+browser's own default applies: `'start'` for `block` and `'nearest'` for
+`inline`.
+
+#### Overriding the configured value
+
+A `scrollBehavior` passed to a command replaces the configured value rather than
+merging with it one axis at a time. With `scrollBehavior: { block: 'center' }` in
+your Cypress configuration, this click scrolls with `{ inline: 'start' }` alone,
+and `block` uses the browser default instead of staying `'center'`:
+
+```js
+cy.get('button').click({ scrollBehavior: { inline: 'start' } })
+```
+
+[Test configuration](/app/references/configuration#Test-Configuration) overrides
+replace the global value the same way, so include every axis you care about in
+the value you pass.
 
 ### Coordinates
 

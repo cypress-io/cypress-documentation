@@ -67,19 +67,19 @@ The distance in pixels from the element's top to issue the double click.
 
 Pass in an options object to change the default behavior of `.dblclick()`.
 
-| Option                       | Default                                                                     | Description                                                                                                                                     |
-| ---------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `altKey`                     | `false`                                                                     | Activates the alt key (option key for Mac). Aliases: `optionKey`.                                                                               |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).  |
-| `ctrlKey`                    | `false`                                                                     | Activates the control key. Aliases: `controlKey`.                                                                                               |
-| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                             |
-| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                            |
-| `metaKey`                    | `false`                                                                     | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`.                                                   |
-| `multiple`                   | `true`                                                                      | Serially click multiple elements                                                                                                                |
-| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command |
-| `shiftKey`                   | `false`                                                                     | Activates the shift key.                                                                                                                        |
-| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.dblclick()` to resolve before [timing out](#Timeouts)                                                                        |
-| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
+| Option                       | Default                                                                     | Description                                                                                                                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `altKey`                     | `false`                                                                     | Activates the alt key (option key for Mac). Aliases: `optionKey`.                                                                                                                                                               |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                  |
+| `ctrlKey`                    | `false`                                                                     | Activates the control key. Aliases: `controlKey`.                                                                                                                                                                               |
+| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                             |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                            |
+| `metaKey`                    | `false`                                                                     | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`.                                                                                                                                   |
+| `multiple`                   | `true`                                                                      | Serially click multiple elements                                                                                                                                                                                                |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`. |
+| `shiftKey`                   | `false`                                                                     | Activates the shift key.                                                                                                                                                                                                        |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.dblclick()` to resolve before [timing out](#Timeouts)                                                                                                                                                        |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                       |
 
 <HeaderYields />
 
@@ -239,12 +239,13 @@ following:
 
 ## History
 
-| Version                                  | Changes                                                                                                                 |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| [6.1.0](/app/references/changelog#6-1-0) | Added option `scrollBehavior`                                                                                           |
-| [3.5.0](/app/references/changelog#3-5-0) | Added support for options `force` and `multiple`.                                                                       |
-| [3.5.0](/app/references/changelog#3-5-0) | Added support for `position`, `x`, and `y` arguments.                                                                   |
-| [3.5.0](/app/references/changelog#3-5-0) | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.dblclick()`. |
+| Version                                      | Changes                                                                                                                 |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments      |
+| [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                           |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added support for options `force` and `multiple`.                                                                       |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added support for `position`, `x`, and `y` arguments.                                                                   |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.dblclick()`. |
 
 ## See also
 
