@@ -110,7 +110,7 @@ cy.intercept('/users*', { hostname: 'localhost' }, (req) => {
 
 Match the route to a specific
 [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) (`GET`,
-`POST`, `PUT`, etc).
+`POST`, `PUT`, `QUERY`, etc).
 
 :::note
 
@@ -1776,6 +1776,7 @@ information about the request and response to the console:
 
 | Version                                    | Changes                                                                                                                                                                                                                                                                                              |
 | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.20.0](/app/references/changelog)       | Added support for matching the HTTP `QUERY` method.                                                                                                                                                                                                                                                  |
 | [14.0.0](/app/references/changelog#14-0-0) | Deprecated `resourceType` property                                                                                                                                                                                                                                                                   |
 | [12.2.0](/app/references/changelog#12-2-0) | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
 | [7.6.0](/app/references/changelog#7-0-0)   | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
