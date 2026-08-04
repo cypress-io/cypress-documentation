@@ -18,7 +18,7 @@ _Released TBD_
 
 **Bugfixes:**
 
-- Fixed a regression in [15.18.1](#15-18-1) where action commands (such as [`.click()`](/api/commands/click) and [`.type()`](/api/commands/type)) also scrolled the element's scrollable container horizontally, which could move a container the application positions itself, such as a carousel, even when the element was already visible. The `'top'` and `'bottom'` values of [`scrollBehavior`](/app/references/configuration#Actionability) again align the vertical axis only, matching the behavior of `scrollIntoView(alignToTop)`. To align both axes as `15.18.1` and `15.19.0` did, use `'start'` or `'end'`. Fixes [#34460](https://github.com/cypress-io/cypress/issues/34460). Fixed in [#34474](https://github.com/cypress-io/cypress/pull/34474).
+- Fixed a regression in [15.18.1](#15-18-1) where action commands scrolled an already-visible element's container horizontally. The [`scrollBehavior`](/app/references/configuration#Actionability) values `'top'` and `'bottom'` revert to aligning only the vertical axis; use `'start'` or `'end'` to align both. Fixes [#34460](https://github.com/cypress-io/cypress/issues/34460).
 
 ## 15.19.0
 
