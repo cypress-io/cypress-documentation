@@ -8,6 +8,18 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 15.20.0
+
+_Released TBD_
+
+**Features:**
+
+- [`scrollBehavior`](/app/references/configuration#Actionability) now accepts a per-axis value, such as `{ block: 'start', inline: 'nearest' }`, so the vertical and horizontal alignment used to scroll an element into view before an action command can be set independently. The per-axis form takes the same values as the native `scrollIntoView`: `'start'`, `'end'`, `'center'`, and `'nearest'`. A single value also accepts the new `'start'` and `'end'` alignments, which align both axes at once. See [Scrolling](/app/core-concepts/interacting-with-elements#Scrolling). Addresses [#34460](https://github.com/cypress-io/cypress/issues/34460). Addressed in [#34474](https://github.com/cypress-io/cypress/pull/34474).
+
+**Bugfixes:**
+
+- Fixed a regression in [15.18.1](#15-18-1) where action commands scrolled an already-visible element's container horizontally. The [`scrollBehavior`](/app/references/configuration#Actionability) values `'top'` and `'bottom'` revert to aligning only the vertical axis; use `'start'` or `'end'` to align both. Fixes [#34460](https://github.com/cypress-io/cypress/issues/34460).
+
 ## 15.19.0
 
 _Released Jul 21, 2026_
