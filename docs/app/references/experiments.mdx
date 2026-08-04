@@ -125,6 +125,18 @@ modified HTML or JS value.
 
 :::
 
+## Experimental CLI Commands
+
+Not every experiment is a configuration option. The experimental
+[`cypress tap`](/app/tooling/cypress-tap) CLI commands ship enabled — no
+configuration required — and interact with a running `cypress open` session
+from the terminal: run specs, poll run status, read test results, and inspect
+the app under test. They are designed for AI agents that verify their own
+changes while coding.
+
+See the [cypress tap guide](/app/tooling/cypress-tap) and the
+[command line reference](/app/references/command-line#cypress-tap).
+
 ## Experimental Fast Visibility
 
 The `experimentalFastVisibility` option enables a faster visibility detection algorithm that uses point sampling instead of the legacy algorithm. This can significantly improve performance when interacting with complex DOM structures.

@@ -1093,6 +1093,374 @@ currently-installed version.
 cypress cache prune
 ```
 
+### `cypress tap` {#cypress-tap}
+
+:::caution
+
+<Icon name="exclamation-triangle" /> `cypress tap` is
+[experimental](/app/references/experiments). Its commands and output may change
+in any release.
+
+:::
+
+Interacts with a running Cypress session. `cypress tap` lets you — or an AI
+agent working in your terminal — drive Cypress in open mode: run specs, poll
+run status, read test results the way the reporter shows them, and inspect the
+app under test. New to `cypress tap`? Start with the
+[cypress tap guide](/app/tooling/cypress-tap).
+
+```shell
+cypress tap [command] [args...] [options]
+```
+
+`cypress tap` attaches to interactive `cypress open` sessions in the current
+directory's project. Reading the browser (`reporter`, `command`, `pin`, `dom`,
+`aria`, and `inspect`) requires a Chromium-family browser (Chrome, Chromium,
+Edge, or Electron) open in the session; Firefox and WebKit are not supported.
+The CLI and the running Cypress must be the same version.
+
+Every subcommand accepts these options:
+
+| Option             | Description                                                               |
+| ------------------ | ------------------------------------------------------------------------- |
+| `--instance <pid>` | Target a specific running Cypress instance by its server process id (pid) |
+| `--json`           | Print the raw JSON result instead of the human-readable rendering         |
+| `--help`, `-h`     | Output usage information                                                  |
+
+Commands exit with `0` on success and `1` on any failure. Failures print a
+typed code and a message that names the next command to run, for example:
+
+```text
+RUN_IN_PROGRESS: a spec is currently running — call `cypress tap status` to check its current status; wait for it to finish before trying again
+```
+
+#### `cypress tap instances` {#cypress-tap-instances}
+
+Lists the running Cypress sessions the CLI can reach. Pass a listed pid to
+`--instance` to target that session with another `tap` command.
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap instances
+INSTANCES (2)
+  PID  PROJECT          TYPE  BROWSER
+  111  /projects/app    e2e   Chrome
+  222  /projects/other  —     —
+```
+
+With `--json`:
+
+```json
+[
+  {
+    "pid": 111,
+    "projectRoot": "/projects/app",
+    "testingType": "e2e",
+    "browserAttached": true,
+    "browserName": "Chrome"
+  },
+  {
+    "pid": 222,
+    "projectRoot": "/projects/other",
+    "testingType": "component",
+    "browserAttached": false,
+    "browserName": null
+  }
+]
+```
+
+#### `cypress tap status` {#cypress-tap-status}
+
+Reports where a running Cypress session is in its lifecycle — built for
+polling. The stages are `not connected`, `browser not selected`,
+`spec not selected`, `loading`, `running`, `passed`, and `failed`. Only
+`passed` and `failed` are verdicts; `loading` is a selected spec waiting on
+its own build and stays `loading` for as long as that takes, so a poller
+needs its own timeout.
+
+`status` always exits `0` for a determinable stage, including
+`not connected` — branch on the `status` field, not the exit code.
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap status
+PID   PROJECT        TYPE  BROWSER
+4242  /projects/app  e2e   Chrome
+
+● cypress/e2e/login.cy.ts  running
+✓ 1  ✖ 1  ○ 2
+```
+
+With `--json`, the output carries `startedAt` (the run's start time, `null`
+while loading) from `loading` onwards. Compare `startedAt` before believing a
+verdict: a `passed` or `failed` status still carrying the previous run's
+`startedAt` describes the run before this one.
+
+```json
+{
+  "status": "loading",
+  "pid": 87258,
+  "testingType": "e2e",
+  "browserAttached": true,
+  "totalSpecs": 20,
+  "spec": "cypress/e2e/todo.cy.js",
+  "startedAt": null
+}
+```
+
+From `running` onwards the JSON also reports `totalTests` and per-outcome
+`results` counts, and a `pinned` object rides along whenever a
+[pin](#cypress-tap-pin) is active.
+
+#### `cypress tap specs` {#cypress-tap-specs}
+
+Lists the specs the running Cypress session can run, with each spec's
+last-modified time when git history is available. The list covers the testing
+type the session has open; to reach the other testing type, open a new Cypress
+session with that testing type selected.
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap specs
+SPECS (2)
+  cypress/e2e/a.cy.ts            2 hours ago
+  cypress/e2e/longer-name.cy.ts
+```
+
+#### `cypress tap run <spec>` {#cypress-tap-run}
+
+Runs (or reruns) a spec by its project-relative path, as listed by the
+[`specs`](#cypress-tap-specs) command. If no browser is open, Cypress launches
+one. The command requests the run and returns immediately — returning does not
+mean the run has started, let alone finished. Poll the
+[`status`](#cypress-tap-status) command for run progress.
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap run cypress/e2e/login.cy.ts
+▶ cypress/e2e/login.cy.ts
+
+  testing type  e2e
+  browser       Chrome
+```
+
+The `--json` result reports `relativePath`, `testingType`, `browser`, and
+`previousStartedAt` — the `startedAt` that `status` was reporting when the
+request was accepted (`null` on a first run). A verdict still carrying that
+same `startedAt` describes the run before this one, so wait for a verdict
+whose `startedAt` differs.
+
+A path that matches no runnable spec fails with `SPEC_NOT_FOUND`; requesting a
+run while a spec is already running fails with `RUN_IN_PROGRESS`.
+
+#### `cypress tap reporter` {#cypress-tap-reporter}
+
+Shows test results the way the Cypress app's reporter panel does, right in
+your terminal.
+
+| Option                | Description                                                     |
+| --------------------- | --------------------------------------------------------------- |
+| `--test <test>`       | Test id, as listed by the spec overview this command prints     |
+| `--attempt <attempt>` | 1-based attempt (attempt 1 = first run); defaults to the latest |
+
+Without `--test`, it prints the spec-level overview: the run's pass/fail stats
+and every suite's tests, with the test ids the other commands accept.
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap reporter
+cypress/e2e/actions.cy.js
+✓ 2  ✖ 1  ○ 1  - 1  00:17
+
+A
+   t2  ✓ a1  10ms
+   t4  ○ a2
+
+A > B
+   t3  ✖ b1  30ms  (2 retries)
+         ✖ attempt 1  4.5s
+         ✖ attempt 2  4.4s
+         ✖ attempt 3  30ms
+
+C
+   t5  - c1
+```
+
+With `--test <id>`, it renders that test's full story: its network routes, the
+hooks that ran, the complete Command Log, and — when the test failed — the
+error with its code frame. Add `--attempt` to view an earlier retry.
+
+#### `cypress tap command` {#cypress-tap-command}
+
+Details one Command Log entry of a test: its reporter row, the DOM snapshots
+pinnable on it, and its console properties — what the browser's developer
+tools console shows after clicking the command in the Cypress app.
+
+| Option                | Description                                                                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `--test <test>`       | Test id, as listed by the [`reporter`](#cypress-tap-reporter) command (required)                                                |
+| `--command <command>` | Command id, as listed by the `reporter` command: a row number, an e-prefixed event id, or hook-qualified like `h1:3` (required) |
+| `--attempt <attempt>` | 1-based attempt (attempt 1 = first run); defaults to the latest                                                                 |
+| `--depth <depth>`     | How many levels of nested console properties to expand before summarizing the rest: a number or `all` (default 3)               |
+| `--path <path>`       | Show one section of the console properties, addressed from the top level as `Response>headers` (case-insensitive)               |
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap command --test r2 --command 3
+TEST BODY · r2
+✓  3  -click  #submit  passed
+
+SNAPSHOTS (2)
+  #  NAME    TIME
+  1  before  14:03:22.481
+  2  after   14:03:22.613
+
+CONSOLE PROPS
+  [NO CONSOLE PROPS]
+```
+
+Console properties render collapsed past the configured depth, with a footer
+naming the collapsed sections:
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap command --test r4 --command e1 --depth 0
+CONSOLE PROPS
+  Resource Type             xhr
+  Method                    POST
+  URL                       https://jsonplaceholder.cypress.io/comments
+  Matched `cy.intercept()`  {4 keys}
+  Alias                     postComment
+
+1 section collapsed — open one with --path 'Matched `cy.intercept()`', or all of it with --depth all
+```
+
+Values long enough to bury the rest of the payload — a response body, a long
+string — are named by their length instead of printed; pass `--json` for the
+complete result with every console property in full.
+
+#### `cypress tap pin` {#cypress-tap-pin}
+
+Pins a command's DOM snapshot into the live app-under-test frame — the same
+mechanism as clicking a command in the Cypress app — so the
+[`dom`](#cypress-tap-dom), [`aria`](#cypress-tap-aria), and
+[`inspect`](#cypress-tap-inspect) commands read the page as it was when that
+command ran.
+
+```shell
+cypress tap pin [test] [command] [options]
+```
+
+| Option                | Description                                                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `--at <at>`           | Which snapshot to pin: a name like `before`/`after` or a 1-based index; defaults to the last (the command's final state) |
+| `--attempt <attempt>` | 1-based attempt (attempt 1 = first run); defaults to the latest                                                          |
+| `--clear`             | Release the current pin and restore the app to its pre-pin state                                                         |
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap pin r3 h2:1 --at after
+⚲ PINNED - (2/2) after
+BEFORE EACH · h2
+   1  task  db:seed
+```
+
+Rerunning `pin` on the pinned command switches snapshots without releasing the
+pin. Pins can't be created while a spec is running, and snapshots are kept
+only for the most recent tests (see
+[`numTestsKeptInMemory`](/app/references/configuration#Global)).
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap pin --clear
+⚲ PIN CLEARED
+```
+
+#### `cypress tap dom [selector]` {#cypress-tap-dom}
+
+Reads the app under test's DOM as HTML: the whole page, or the `outerHTML` of
+each element matching a CSS selector (each match includes its full subtree).
+Output is capped so a heavy page never ships megabytes at once.
+
+| Option                    | Description                                     |
+| ------------------------- | ----------------------------------------------- |
+| `--max-chars <max-chars>` | Cap on returned HTML characters (default 30000) |
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap dom .todo-list
+MATCHES (2)  http://localhost:5555/
+
+<a></a>
+
+<b></b>
+
+(output truncated)
+```
+
+`dom`, `aria`, and `inspect` read the app between runs. Before any run they
+fail with `NO_RUN`, and during a run with `RUN_IN_PROGRESS` — wait for
+`status` to report `passed` or `failed`.
+
+#### `cypress tap aria [selector]` {#cypress-tap-aria}
+
+Reads the accessibility (ARIA) tree of the app-under-test frame, or the
+subtree rooted at a CSS selector. Structural and text-only roles are dropped,
+leaving the compact role/name/state tree browser developer tools show.
+
+| Option                    | Description                                                     |
+| ------------------------- | --------------------------------------------------------------- |
+| `--max-nodes <max-nodes>` | Cap on the number of accessibility nodes returned (default 200) |
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap aria
+ARIA (4)  http://localhost:3000
+  RootWebArea  Login
+    heading  Sign in
+    textbox  Username = ada  [disabled]
+    button  Submit
+```
+
+#### `cypress tap inspect <selector>` {#cypress-tap-inspect}
+
+Inspects the first element matching the selector: its tag, attributes, curated
+computed styles, box model, and accessibility node.
+
+{/* hack: using css language label to respect decimals in syntax highlighting */}
+
+```css
+cypress tap inspect "[data-testid=username]"
+input  [data-testid=username]  http://localhost:3000
+
+ATTRIBUTES (2)
+  data-testid  username
+  name         username
+
+ACCESSIBILITY
+  role    textbox
+  name    Username
+  states  disabled
+
+BOX
+  x 8   y 40   width 200   height 30
+
+STYLES (2)
+  display  block
+  color    rgb(0, 0, 0)
+```
+
 ## Debugging commands
 
 ### Enable Debug Logs
