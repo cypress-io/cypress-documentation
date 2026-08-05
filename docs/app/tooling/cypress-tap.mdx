@@ -21,7 +21,7 @@ exact moment a command ran.
 Any agent that can run shell commands can use it, including Cursor, Claude
 Code, GitHub Copilot, Windsurf, and Codex CLI.
 
-:::note
+:::warning
 
 `cypress tap` is in [beta](/app/references/roadmap#Beta). It is enabled by
 default and no longer expected to change in major ways, but its commands and
@@ -430,6 +430,8 @@ A field that does not apply is absent rather than `null`, except where a
 `null` is meaningful in itself, as with `startedAt` while a spec is still
 building.
 
+### Add cypress tap to your agent's instructions
+
 To make your agent use it, add instructions to the file your agent reads:
 `AGENTS.md` for Cursor, Codex CLI, and most others, `CLAUDE.md` for Claude
 Code, or `.github/copilot-instructions.md` for GitHub Copilot.
@@ -466,6 +468,8 @@ Prefer `--json` output.
    it means the Cypress window was touched while you were working.
 ```
 
+### Example prompts
+
 With that in place, you can hand your agent a failing test and let it work
 without relaying results back and forth:
 
@@ -476,6 +480,16 @@ without relaying results back and forth:
 >
 
 #### Fix a failing test
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Reproduce a flaky test"
+  subtext="Runs one spec repeatedly through cypress tap, since a single green run never proves a flake is gone."
+  prompt={`The [test name] test in [spec path] is flaky. Use cypress tap to run that spec against my open Cypress session at least 10 times, polling cypress tap status --json for a verdict each time and comparing startedAt so you attribute each verdict to your own run. Record how many runs passed and failed. For every failure, capture the command log with cypress tap reporter --test <id> and compare the failing runs against the passing ones to identify what differs, such as timing, network responses, or leftover state.`}
+>
+
+#### Reproduce a flaky test
 
 </CopyPrompt>
 
@@ -506,16 +520,6 @@ without relaying results back and forth:
 >
 
 #### Check a refactor changed nothing
-
-</CopyPrompt>
-
-<CopyPrompt
-  title="Reproduce a flaky test"
-  subtext="Runs one spec repeatedly through cypress tap, since a single green run never proves a flake is gone."
-  prompt={`The [test name] test in [spec path] is flaky. Use cypress tap to run that spec against my open Cypress session at least 10 times, polling cypress tap status --json for a verdict each time and comparing startedAt so you attribute each verdict to your own run. Record how many runs passed and failed. For every failure, capture the command log with cypress tap reporter --test <id> and compare the failing runs against the passing ones to identify what differs, such as timing, network responses, or leftover state.`}
->
-
-#### Reproduce a flaky test
 
 </CopyPrompt>
 
@@ -551,8 +555,11 @@ runs shell commands.
   title="Fix a CI failure end to end"
   subtext="Chains Cloud MCP and cypress tap: diagnose from the recorded run, fix, then verify locally before pushing."
   prompt={`Using Cypress Cloud MCP, find the failing tests in the latest run on this branch. For each failure, read the error and stack trace to work out the cause, then fix the test or the application code. I have Cypress open locally, so after each fix use cypress tap to run that spec against my session and poll cypress tap status --json until it reports a verdict. Keep going until every spec you touched passes locally, then summarize what you changed and why.`}
-  hideTitle
-/>
+>
+
+#### Fix a CI failure end to end
+
+</CopyPrompt>
 
 ### With the Cloud CLI
 
@@ -647,8 +654,11 @@ already know works.
   title="Reproduce a CI failure locally"
   subtext="Chains the Cloud CLI and cypress tap: pull the failure from CI, rerun that spec against your local session, and iterate until it passes."
   prompt={`Use the cy-cloud CLI to find the most recent failed run on <branch> for project <projectId> and list its failing tests. For each one, read the error and pull the replay timeline around the failure, then work out the cause and fix the test or the application code. After each fix, run that test's specFilepath with cypress tap run against my local Cypress session, poll cypress tap status --json until it reports a verdict, and read the failure with cypress tap reporter if it is still red. Keep going until every spec you touched passes locally, then summarize what you changed and why.`}
-  hideTitle
-/>
+>
+
+#### Reproduce a CI failure locally
+
+</CopyPrompt>
 
 ## Fix an accessibility violation
 
@@ -730,8 +740,11 @@ alongside its accessibility node.
   title="Verify an accessibility fix"
   subtext="Pulls failing elements from Cypress Accessibility, then confirms each fix against the accessibility tree the browser actually computes."
   prompt={`Using Cypress Cloud MCP, get the <rule name> accessibility failures from the latest run on this branch and list the failing elements with their selectors and views. I have Cypress open locally. For each element, run a spec that reaches its view with cypress tap run, wait for cypress tap status to report a verdict, then read the element with cypress tap aria <selector> and tell me what role, name, and states the browser resolves. Where the accessible name is missing or wrong, fix the markup, rerun the spec, and read it again to confirm the name now resolves.`}
-  hideTitle
-/>
+>
+
+### Verify an accessibility fix
+
+</CopyPrompt>
 
 ## Troubleshooting
 
@@ -739,7 +752,7 @@ Every failure prints a typed code followed by a message naming what to do
 next, and exits `1`. The code is stable, so an agent can branch on it.
 
 ```text title="Output"
-RUN_IN_PROGRESS: a spec is currently running — call `cypress tap status` to check its current status; wait for it to finish before trying again
+INVALID_LIMIT: max-nodes must be a positive integer
 ```
 
 ### The run isn't ready yet
