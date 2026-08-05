@@ -99,7 +99,7 @@ The full syntax, options, and output of every command are documented in the
 
 Start Cypress in your project and pick a testing type and browser:
 
-```shell
+```shell title="Command"
 npx cypress open
 ```
 
@@ -107,13 +107,13 @@ In another terminal in the same project, ask what that session is doing.
 `status` finds the session for you and reports where it is in its run
 lifecycle, along with the instance it picked:
 
-```shell
+```shell title="Command"
 npx cypress tap status
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 PID   PROJECT        TYPE  BROWSER
 4242  /projects/app  e2e   Chrome
 
@@ -127,13 +127,13 @@ all and `--instance <pid>` to target a specific one.
 
 List the specs the session can run:
 
-```shell
+```shell title="Command"
 npx cypress tap specs
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 SPECS (2)
   cypress/e2e/checkout.cy.ts  2 hours ago
   cypress/e2e/login.cy.ts
@@ -142,13 +142,13 @@ SPECS (2)
 Run one. The command returns as soon as the run is requested, and does not
 wait for the result:
 
-```shell
+```shell title="Command"
 npx cypress tap run cypress/e2e/checkout.cy.ts
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ▶ cypress/e2e/checkout.cy.ts
 
   testing type  e2e
@@ -158,13 +158,13 @@ npx cypress tap run cypress/e2e/checkout.cy.ts
 Poll `status` until it reports a verdict. `status` always exits 0 for a
 determinable stage, so a poller branches on the output, not the exit code:
 
-```shell
+```shell title="Command"
 npx cypress tap status
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 PID   PROJECT        TYPE  BROWSER
 4242  /projects/app  e2e   Chrome
 
@@ -194,7 +194,7 @@ In `--json` output, each run carries a
 before believing a verdict: a `passed` or `failed` status still carrying the
 previous run's `startedAt` describes the run before yours.
 
-```json
+```json title="Output"
 {
   "status": "loading",
   "pid": 4242,
@@ -210,13 +210,13 @@ previous run's `startedAt` describes the run before yours.
 
 The run failed, so read the spec's reporter overview to find the failing test:
 
-```shell
+```shell title="Command"
 npx cypress tap reporter
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 cypress/e2e/checkout.cy.ts
 ✓ 3  ✖ 1  ○ --  00:12
 
@@ -235,13 +235,13 @@ here, debugging is three commands away.
 Ask for the failing test's full reporter view: the same routes, hooks,
 Command Log, and error you'd read in the Cypress app.
 
-```shell
+```shell title="Command"
 npx cypress tap reporter --test r5
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ✖ Checkout > applies a discount code  failed
 
 TEST BODY · r5
@@ -269,13 +269,13 @@ row's hook section, its pinnable DOM snapshots, and its console properties:
 what you'd see in the browser's developer tools console after clicking the
 command in the app.
 
-```shell
+```shell title="Command"
 npx cypress tap command --test r2 --command 3
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 TEST BODY · r2
 ✓  3  -click  #submit  passed
 
@@ -299,13 +299,13 @@ The commands above tell you what Cypress did. To see what the page looked like
 at the moment a given command ran, pin that command's DOM snapshot into the
 live app-under-test frame:
 
-```shell
+```shell title="Command"
 npx cypress tap pin r3 h2:1 --at after
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ⚲ PINNED - (2/2) after
 BEFORE EACH · h2
    1  task  db:seed
@@ -329,13 +329,13 @@ While a pin is active, `dom`, `aria`, and `inspect` read the pinned snapshot
 instead of the app's final state. Inspect the element the failing assertion
 cared about:
 
-```shell
+```shell title="Command"
 npx cypress tap inspect "[data-testid=username]"
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 input  [data-testid=username]  http://localhost:3000
 
 ATTRIBUTES (2)
@@ -361,10 +361,13 @@ developer tools show (capped at 200 nodes by default), which is often the
 cheapest way for an agent to understand a page. Release the pin when you're
 done:
 
+```shell title="Command"
+npx cypress tap pin --clear
+```
+
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
-npx cypress tap pin --clear
+```css title="Output"
 ⚲ PIN CLEARED
 ```
 
@@ -390,7 +393,7 @@ reports `passed`.
 `cypress tap --help` prints every command with its arguments and options.
 `cypress tap <command> --help` prints one command in detail.
 
-```shell
+```shell title="Command"
 npx cypress tap --help
 npx cypress tap pin --help
 ```
@@ -560,18 +563,18 @@ takes. Your agent can hand the path straight from one command to the other.
 
 **1. Find the last failed run on your branch.**
 
-```bash
+```bash title="Command"
 cy-cloud run list --projectId abc123 --branch main --status failed --limit 1
 ```
 
 **2. List its failing tests.** Each result carries the spec path, the test id,
 and the error.
 
-```bash
+```bash title="Command"
 cy-cloud test list --projectId abc123 --runNumber 4021 --status failed
 ```
 
-```json
+```json title="Output"
 {
   "tests": [
     {
@@ -595,7 +598,7 @@ cy-cloud test list --projectId abc123 --runNumber 4021 --status failed
 console logs around the failure, which is the context Test Replay shows in the
 browser.
 
-```bash
+```bash title="Command"
 cy-cloud replay timeline --testId 7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f \
   --commands --aroundFailure 5 --network --logs
 ```
@@ -604,23 +607,23 @@ cy-cloud replay timeline --testId 7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f \
 session to attach to, so start one with `cypress open` and pick a testing type
 and browser first. Then feed the `specFilepath` straight to `cypress tap run`.
 
-```shell
+```shell title="Command"
 npx cypress open
 ```
 
-```shell
+```shell title="Command"
 npx cypress tap run cypress/e2e/checkout.cy.ts
 ```
 
 **5. Poll for the verdict.**
 
-```shell
+```shell title="Command"
 npx cypress tap status
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 PID   PROJECT        TYPE  BROWSER
 4242  /projects/app  e2e   Chrome
 
@@ -633,7 +636,7 @@ gives you the same command log the replay timeline gave you for the CI run, so
 your agent can see whether the failure it reproduced is the one it set out to
 fix.
 
-```shell
+```shell title="Command"
 npx cypress tap reporter --test r5
 ```
 
@@ -668,19 +671,19 @@ that the button has no accessible name.
 the run left it, so run a spec that ends on the page you care about, and wait
 for a verdict.
 
-```shell
+```shell title="Command"
 npx cypress tap run cypress/e2e/checkout.cy.ts
 ```
 
 **3. Read the element's accessibility node.** Pass the selector Cloud gave you.
 
-```shell
+```shell title="Command"
 npx cypress tap aria ".cart-item__remove"
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ARIA (1)  http://localhost:3000/checkout
   button
 ```
@@ -693,7 +696,7 @@ button whose `aria-label` never made it to the DOM looks exactly like this.
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ARIA (1)  http://localhost:3000/checkout
   button  Remove item
 ```
@@ -702,13 +705,13 @@ The name now resolves, so the rule passes for that element. Drop the selector
 to read the whole page's tree instead, which is a cheap way for an agent to
 check that a fix didn't break the structure around it:
 
-```shell
+```shell title="Command"
 npx cypress tap aria
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ARIA (6)  http://localhost:3000/checkout
   RootWebArea  Checkout
     heading  Your cart
@@ -735,7 +738,7 @@ alongside its accessibility node.
 Every failure prints a typed code followed by a message naming what to do
 next, and exits `1`. The code is stable, so an agent can branch on it.
 
-```text
+```text title="Output"
 RUN_IN_PROGRESS: a spec is currently running — call `cypress tap status` to check its current status; wait for it to finish before trying again
 ```
 

@@ -891,13 +891,13 @@ Commands exit with `0` on success and `1` on any failure.
 Lists the running Cypress sessions the CLI can reach. Pass a listed pid to
 `--instance` to target that session with another `tap` command.
 
-```shell
+```shell title="Command"
 cypress tap instances
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 INSTANCES (2)
   PID  PROJECT          TYPE       BROWSER
   111  /projects/app    e2e        Chrome
@@ -906,7 +906,7 @@ INSTANCES (2)
 
 With `--json`:
 
-```json
+```json title="Output"
 [
   {
     "pid": 111,
@@ -948,13 +948,13 @@ one of them skipped or pending, finishes `passed` with `results.passed` at `0`.
 Read the `results` counts alongside the stage when it matters whether anything
 actually ran.
 
-```shell
+```shell title="Command"
 cypress tap status
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 PID   PROJECT        TYPE  BROWSER
 4242  /projects/app  e2e   Chrome
 
@@ -968,7 +968,7 @@ start time, or `null` while the spec is still building. Always check
 `passed` or `failed` result readable until the new run starts, so a verdict
 carrying the earlier `startedAt` describes the previous run, not yours.
 
-```json
+```json title="Output"
 {
   "status": "loading",
   "pid": 4242,
@@ -985,7 +985,7 @@ carrying the earlier `startedAt` describes the previous run, not yours.
 From `running` onwards the JSON also reports `totalTests` and per-outcome
 `results` counts:
 
-```json
+```json title="Output"
 {
   "status": "running",
   "pid": 4242,
@@ -1003,7 +1003,7 @@ From `running` onwards the JSON also reports `totalTests` and per-outcome
 
 A `pinned` object rides along whenever a [pin](#cypress-tap-pin) is active:
 
-```json
+```json title="Output"
 {
   "pinned": {
     "test": "r3",
@@ -1026,13 +1026,13 @@ time when git history is available. Only the session's current testing type is
 listed, so to see the specs of the other testing type, open a new Cypress
 session with that testing type selected.
 
-```shell
+```shell title="Command"
 cypress tap specs
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 SPECS (2)
   cypress/e2e/a.cy.ts            2 hours ago
   cypress/e2e/longer-name.cy.ts
@@ -1046,13 +1046,13 @@ one. The command requests the run and returns immediately; returning does not
 mean the run has started, let alone finished. Poll the
 [`status`](#cypress-tap-status) command for run progress.
 
-```shell
+```shell title="Command"
 cypress tap run cypress/e2e/login.cy.ts
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ▶ cypress/e2e/login.cy.ts
 
   testing type  e2e
@@ -1064,7 +1064,7 @@ reporting when the request was accepted (`null` on a first run). A verdict
 still carrying that same `startedAt` describes the run before this one, so wait
 for a verdict whose `startedAt` differs.
 
-```json
+```json title="Output"
 {
   "relativePath": "cypress/e2e/login.cy.ts",
   "previousStartedAt": "2026-07-29T10:15:00.000Z",
@@ -1094,13 +1094,13 @@ its reporter panel.
 Without `--test`, it prints the spec-level overview: the run's pass/fail stats
 and every suite's tests, with the test ids the other commands accept.
 
-```shell
+```shell title="Command"
 cypress tap reporter
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 cypress/e2e/login.cy.ts
 ✓ 2  ✖ 1  ○ 1  - 1  00:17
 
@@ -1138,13 +1138,13 @@ tools console shows after clicking the command in the Cypress app.
 | `--depth <depth>`     | How many levels of nested console properties to expand before summarizing the rest: a number or `all`. A section over 8 rows folds at any depth unless this is passed | `3`                |
 | `--path <path>`       | Show one section of the console properties, addressed from the top level as `Response>headers` (case-insensitive)                                                     | The whole payload  |
 
-```shell
+```shell title="Command"
 cypress tap command --test r2 --command 3
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 TEST BODY · r2
 ✓  3  -click  #submit  passed
 
@@ -1160,13 +1160,13 @@ CONSOLE PROPS
 Console properties render collapsed past the configured depth, with a footer
 naming the collapsed sections:
 
-```shell
+```shell title="Command"
 cypress tap command --test r4 --command e1 --depth 0
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 CONSOLE PROPS
   Resource Type             xhr
   Method                    POST
@@ -1199,13 +1199,13 @@ cypress tap pin [test] [command] [options]
 | `--attempt <attempt>` | 1-based attempt, where attempt 1 is the first run                       | The latest attempt                           |
 | `--clear`             | Release the current pin and restore the app to its pre-pin state        | Off                                          |
 
-```shell
+```shell title="Command"
 cypress tap pin r3 h2:1 --at after
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ⚲ PINNED - (2/2) after
 BEFORE EACH · h2
    1  task  db:seed
@@ -1229,13 +1229,13 @@ pinning a command in the app changes what [`dom`](#cypress-tap-dom),
 
 :::
 
-```shell
+```shell title="Command"
 cypress tap pin --clear
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ⚲ PIN CLEARED
 ```
 
@@ -1249,13 +1249,13 @@ Output is capped so a heavy page never ships megabytes at once.
 | ------------------------- | ------------------------------- | ------- |
 | `--max-chars <max-chars>` | Cap on returned HTML characters | `30000` |
 
-```shell
+```shell title="Command"
 cypress tap dom .todo-list
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 MATCHES (2)  http://localhost:5555/
 
 <a></a>
@@ -1278,13 +1278,13 @@ leaving the compact role/name/state tree browser developer tools show.
 | ------------------------- | ------------------------------------------------- | ------- |
 | `--max-nodes <max-nodes>` | Cap on the number of accessibility nodes returned | `200`   |
 
-```shell
+```shell title="Command"
 cypress tap aria
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 ARIA (4)  http://localhost:3000
   RootWebArea  Login
     heading  Sign in
@@ -1300,13 +1300,13 @@ roughly 350 properties, so `inspect` reports a fixed subset of two dozen that
 answer why an element looks or behaves the way it does, covering layout,
 visibility, text, and the box.
 
-```shell
+```shell title="Command"
 cypress tap inspect "[data-testid=username]"
 ```
 
 {/* hack: using css language label to respect decimals in syntax highlighting */}
 
-```css
+```css title="Output"
 input  [data-testid=username]  http://localhost:3000
 
 ATTRIBUTES (2)
