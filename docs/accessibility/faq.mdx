@@ -1,0 +1,220 @@
+---
+title: 'Cypress Accessibility FAQ'
+description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, component context, configuration scope, reading applied config, which Axe Core® rules run and color contrast, component testing, the Axe Core® version, and per-run profiles for pull request gating and per-team reports.'
+sidebar_label: FAQ
+sidebar_position: 160
+---
+
+<ProductHeading product="accessibility" />
+
+# Cypress Accessibility FAQ
+
+## Ignoring elements
+
+### <Icon name="angle-right" /> How do I exclude elements from Cypress Accessibility?
+
+Add an [`elementFilters`](/accessibility/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. Their failed and incomplete checks move to the **Ignored** status and stop counting against your views and your [accessibility score](/accessibility/core-concepts/accessibility-score). This is the standard way to handle third-party widgets whose violations you can't fix. To ignore only specific rules for an element, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) instead, and to ignore entire pages, use [`viewFilters`](/accessibility/configuration/viewfilters).
+
+### <Icon name="angle-right" /> Do ignored elements affect my accessibility score?
+
+No. An element ignored by [`elementFilters`](/accessibility/configuration/elementfilters) doesn't count as a failed or incomplete element, and its results don't affect the score. It stays visible in the report under the **Ignored** status so you can always audit what your configuration ignores.
+
+### <Icon name="angle-right" /> Why didn't my score improve after ignoring an element?
+
+The [accessibility score](/accessibility/core-concepts/accessibility-score) weighs each failed rule per snapshot, not each failing element. If a rule has several failing elements in a snapshot and you ignore only some of them, the rule still counts against that snapshot and the score doesn't change. The rule stops affecting the snapshot's score once all of its failing elements there are ignored.
+
+### <Icon name="angle-right" /> Why is an element still failing after I added an elementFilters rule?
+
+The most common causes are:
+
+- The selector matches a container instead of the element itself. Rules use standard CSS matching against the element with the result, so `footer` matches only the `<footer>` element. Match the container and its descendants, like `footer, footer *`, to ignore a whole region.
+- The rule has a `documentScope` that doesn't match the element's iframe or shadow DOM hosts.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+### <Icon name="angle-right" /> Why do ignored elements still appear in my report?
+
+This is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/guides/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect your score.
+
+### <Icon name="angle-right" /> Can I ignore elements in Cypress Accessibility without affecting UI Coverage?
+
+Yes. An `elementFilters` list at the root of your configuration applies to both products, but nesting it under an `accessibility` or `uiCoverage` key applies it to that product only. A nested list completely replaces a root-level one for that product, and the two are not merged. See [Exclude elements](/accessibility/configuration/elementfilters#Scope).
+
+### <Icon name="angle-right" /> Does include: true do anything in Cypress Accessibility?
+
+Not on its own. Every element is included unless an exclude rule matches it, and an include rule can't protect an element from exclusion. The value matters in root-level `elementFilters` lists shared with UI Coverage, where include rules do protect their elements. See [When to use include: true](/accessibility/configuration/elementfilters#When-to-use-include-true).
+
+## Grouping and naming views
+
+### <Icon name="angle-right" /> Why do similar URLs show up as separate views in my accessibility report?
+
+Automatic grouping only replaces path segments that are numbers or IDs (UUIDs and UUID-like values) with a wildcard. Segments like usernames or slugs aren't recognized as dynamic, so `/users/alice` and `/users/bob` stay separate views, and a violation on that shared template is reported once per URL. Add a [`views`](/accessibility/configuration/views) pattern to group them into one view and triage the issue once.
+
+### <Icon name="angle-right" /> Do query parameters create separate views in Cypress Accessibility?
+
+No. Query strings are ignored when grouping, so `/dashboard?tab=overview` and `/dashboard?tab=settings` become a single `/dashboard` view. If a query parameter meaningfully changes the page, use a [`views`](/accessibility/configuration/views) pattern with `groupBy` on that parameter to report on each value separately.
+
+### <Icon name="angle-right" /> How do I create a separate accessibility view for each value of a URL parameter?
+
+Write a [`views`](/accessibility/configuration/views) pattern that names the parameter, then list that name in `groupBy`. For a pattern like `/analytics/:type/:id`, `groupBy: ["type"]` creates a distinct view for each `type` value (such as `/analytics/performance/:id` and `/analytics/usage/:id`) while still collapsing the dynamic `:id`. `groupBy` accepts a single string or an array of strings, and each name can come from the path, query string, or hash. See [Using groupBy](/accessibility/configuration/views#Using-groupBy).
+
+### <Icon name="angle-right" /> Does grouping URLs into a view change my accessibility score?
+
+Not your run-level score. The [run score](/accessibility/core-concepts/accessibility-score) averages every snapshot in the run regardless of how snapshots are grouped, so grouping URLs into a view reorganizes the report without moving the top-line number. What changes is the per-view score: the snapshots you group roll up into one view's score instead of several, which makes each page's accessibility easier to read and track over time.
+
+### <Icon name="angle-right" /> What's the difference between views and viewFilters in Cypress Accessibility?
+
+They do opposite things. [`views`](/accessibility/configuration/views) _keeps_ URLs but changes how they're grouped and named, so related pages collapse into a single view or a dynamic route splits into several. [`viewFilters`](/accessibility/configuration/viewfilters) _removes_ URLs, so matching snapshots are never scanned and don't appear in your report or score. Use `views` to organize the pages you scan, and `viewFilters` for pages you don't own or intend to remediate.
+
+### <Icon name="angle-right" /> Can I configure views for Cypress Accessibility without affecting UI Coverage?
+
+No. Unlike [`viewFilters`](/accessibility/configuration/viewfilters) and [`elementFilters`](/accessibility/configuration/elementfilters), `views` is defined only at the root of your configuration and can't be nested under an `accessibility` or `uiCoverage` key. A single set of view patterns groups URLs the same way for both products. To exclude a URL from one product only, use a nested `viewFilters` list instead. See [Scope](/accessibility/configuration/views#Scope).
+
+## Ignoring views and URLs
+
+### <Icon name="angle-right" /> How do I exclude URLs from Cypress Accessibility?
+
+Add a [`viewFilters`](/accessibility/configuration/viewfilters) rule with `include: false` for a URL pattern. Snapshots from matching URLs are not scanned for accessibility violations and don't appear in your report. This is the standard way to keep third-party pages your tests pass through, such as an OAuth provider's login page, out of your results.
+
+### <Icon name="angle-right" /> Can I exclude URLs from Cypress Accessibility without affecting UI Coverage?
+
+Yes. A `viewFilters` list at the root of your configuration applies to both products, but nesting it under an `accessibility` or `uiCoverage` key applies it to that product only. A nested list completely replaces a root-level one for that product, and the two are not merged. See [Exclude views](/accessibility/configuration/viewfilters#Scope).
+
+### <Icon name="angle-right" /> Why is a URL still in my report after I excluded it with viewFilters?
+
+The most common causes are:
+
+- An earlier rule matches the URL first. Rules apply in order and the first match wins, so a broad `include: true` rule listed before your exclusion prevents it from ever applying.
+- The pattern doesn't match the full URL. Hostnames must match exactly (`https://my-app.com/*` doesn't match `www.my-app.com`), or you can use a path-only pattern like `/admin/*` to match any hostname.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+See [troubleshooting view filters](/accessibility/configuration/viewfilters#A-URL-you-excluded-still-appears-in-the-report) for details.
+
+## Element identification
+
+### <Icon name="angle-right" /> Which attributes does Cypress Accessibility use to identify elements?
+
+Cypress Accessibility checks a prioritized list of attributes on each element: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`, in that order, falling back to `id`, `name`, `class`, and other DOM signals when none of those uniquely identify the element. See [Element identification](/accessibility/core-concepts/element-identification) for how identification works across snapshots.
+
+### <Icon name="angle-right" /> How do I make Cypress Accessibility use my own attribute in violation selectors?
+
+Add the attribute name to [`significantAttributes`](/accessibility/configuration/significantattributes). Attributes you list are checked before the default list, in the order you list them, so an attribute your application already renders, such as `data-component`, can identify elements and appear as the violation target selector in your reports.
+
+### <Icon name="angle-right" /> Does significantAttributes replace the default attribute list?
+
+No. Your attributes are checked first, and the defaults still apply after them, so an element without any of your attributes is identified exactly as it would be without configuration. Listing a default attribute like `data-qa` promotes it above the other defaults. To stop an attribute from being used at all, use [`attributeFilters`](/accessibility/configuration/attributefilters) instead.
+
+### <Icon name="angle-right" /> Can I use aria-label as a significant attribute to review my labels?
+
+Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/accessibility/configuration/significantattributes) identifies elements by their label text, so the elements you triage are shown by their labels. This adds a manual check on top of the automated one: Cypress Accessibility confirms that a control has an accessible name, but not that the name is understandable, so `aria-label="button"` passes the same name-presence rules as `aria-label="Close dialog"`. Seeing the label as the identifier makes an unclear one easy to catch.
+
+### <Icon name="angle-right" /> How do I add component or team context to my Cypress Accessibility violation selectors?
+
+Use [`components`](/accessibility/configuration/components), a Cypress Accessibility-only option that adds attributes like `data-component` or `data-team` to the violation target selector when they're present on the element or one of its ancestors. Instead of a bare `[data-cy="signup"]`, the target reads as `[data-cy="signup"][data-component="IconButton"]`, so whoever picks up the issue, whether a developer, a Jira ticket, or an AI agent triaging through [Cypress Cloud MCP](/accessibility/work-with-ai-agents), can see which component or team it belongs to without opening the page HTML. This differs from [`significantAttributes`](/accessibility/configuration/significantattributes), which chooses the single attribute that _identifies_ the element, whereas `components` adds context on top of that identifier.
+
+### <Icon name="angle-right" /> What's the difference between significantAttributes and components in Cypress Accessibility?
+
+Both put your attributes into violation target selectors, but they play different roles. [`significantAttributes`](/accessibility/configuration/significantattributes) chooses the single attribute that _identifies_ an element, so `["data-component"]` makes the selector `[data-component="SearchInput"]` instead of a test id or generated selector. [`components`](/accessibility/configuration/components) _adds_ attributes on top of whatever already identifies the element, so a selector stays `[data-cy="signup"]` but gains `[data-component="IconButton"]`. Use `significantAttributes` when your attribute is the best identifier, and `components` when you want to keep the identifier but append component, team, or page context around it.
+
+### <Icon name="angle-right" /> Why isn't my components attribute showing up in my Cypress Accessibility selectors?
+
+The most common causes are:
+
+- The attribute isn't on the element or any of its ancestors. `components` keeps a listed attribute wherever it appears on the element or an ancestor, but it can't add one that isn't in the DOM.
+- `includeInSelector` is `false`, which keeps the entry for documentation but doesn't change selectors.
+- A [`componentAttributeFilters`](/accessibility/configuration/components#componentAttributeFilters) rule with `include: false` matches the value, so it's skipped.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+### <Icon name="angle-right" /> Can I keep certain component attribute values out of my Cypress Accessibility selectors?
+
+Yes. Add a [`componentAttributeFilters`](/accessibility/configuration/components#componentAttributeFilters) rule with `include: false` for the values you don't want appended, matched by regex. This is useful when an attribute is meaningful on some elements but generic on others, such as a `data-component` that's a specific component in most places but a layout primitive like `Box` elsewhere. The default attribute filters that drop dynamic values from _identifying_ selectors don't apply to component attributes, so `componentAttributeFilters` are the only way to filter them.
+
+## Configuration
+
+### <Icon name="angle-right" /> Where do I set Cypress Accessibility configuration?
+
+In the **App Quality** tab of your project settings in Cypress Cloud. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
+
+### <Icon name="angle-right" /> Do I need to rerun my tests after changing configuration?
+
+No. You can regenerate any historical run from its **Properties** tab, and the report is reprocessed with the current configuration. This lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
+
+### <Icon name="angle-right" /> How do I apply a setting to Cypress Accessibility without changing UI Coverage?
+
+Nest the property under an `accessibility` key. `viewFilters`, `elementFilters`, `significantAttributes`, and `attributeFilters` apply to both products when set at the root, but a copy nested under `accessibility` applies to Cypress Accessibility alone. A nested value completely replaces the root value for that product rather than merging, so repeat any rules you still want. `views` is the exception: it's shared and can only be set at the root. See [Configuration scope](/accessibility/configuration/overview#Configuration-scope).
+
+### <Icon name="angle-right" /> Can I read the configuration a Cypress Accessibility run was processed with?
+
+Yes, two ways. In Cypress Cloud, open the run's **Properties** tab to see the exact configuration that was applied. In CI, the [Accessibility Results API](/accessibility/results-api) exposes it on the `config` property of `getAccessibilityResults()`, where `config.value` is the applied App Quality configuration and `config.updatedAt` is when it was last saved. See [Viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
+
+### <Icon name="angle-right" /> How do I add a note explaining a Cypress Accessibility configuration rule?
+
+Add a `comment` property to the rule. Any rule defined as an object accepts one, and it's the supported place for notes because Cypress Cloud rejects properties it doesn't recognize. Comments live in your Cypress Accessibility configuration only and never appear in reports. See [Comments](/accessibility/configuration/overview#Comments).
+
+## Axe Core® rules
+
+### <Icon name="angle-right" /> Which accessibility rules does Cypress Accessibility run?
+
+Cypress Accessibility runs the full [Axe-Core®](https://github.com/dequelabs/axe-core) ruleset against every captured snapshot, plus a few [custom Cypress rules](/accessibility/core-concepts/cypress-rules). A small number of Axe-Core® rules are [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default): `color-contrast`, `no-autoplay-audio`, and `meta-refresh`. You don't add any assertions or `cy.` commands to your tests to run these checks; they run automatically when Cypress Accessibility is enabled.
+
+### <Icon name="angle-right" /> Can I change which Axe-Core® rules Cypress Accessibility runs?
+
+Yes. Cypress can [tune the Cypress Accessibility ruleset for your project](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project), including enabling a rule that's off by default, turning off a rule that's a known false positive, or scoping the report to a WCAG conformance target. This is a guided change applied by Cypress rather than a setting in the App Quality editor, so reach out to your Cypress point of contact. To ignore a rule for individual elements yourself, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
+
+### <Icon name="angle-right" /> Why isn't color contrast reported in my Cypress Accessibility results?
+
+Color contrast checking is off by default in Cypress Accessibility because it's the slowest Axe-Core® rule and the most likely to produce false positives or incomplete results. It works well in many projects, so Cypress can turn it on for your project on request. Reach out to your Cypress point of contact. See [Rules that are off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default).
+
+### <Icon name="angle-right" /> How do I stop Cypress Accessibility from reporting a rule I can't fix?
+
+You have three options in Cypress Accessibility, from broadest to narrowest. Ask Cypress to disable the rule project-wide, which is a [guided change applied for you](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project); ignore the rule for specific elements yourself with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element); or leave the rule on and control whether it blocks your build in CI with the [Results API](/accessibility/results-api). Keeping a rule reported but non-blocking is often the best choice, since you retain visibility into the issue.
+
+### <Icon name="angle-right" /> Does Cypress Accessibility work with component tests?
+
+Yes. Cypress Accessibility runs against component tests as well as end-to-end tests. Because a component is usually a page fragment, "page-level" rules that check page structure and document-wide attributes don't run for component tests, while the rest of the ruleset does. See [Component testing](/accessibility/configuration/axe-core-configuration#component-testing).
+
+### <Icon name="angle-right" /> Why does Cypress Accessibility skip some rules for my component tests?
+
+Cypress Accessibility skips page-level rules such as `region`, `landmark-one-main`, and `document-title` for [component tests](/accessibility/configuration/axe-core-configuration#component-testing). A component is usually a fragment of a page, so rules that assert on overall page structure would report failures that don't apply to a component in isolation. Rules that evaluate the component itself, such as `button-name` and `image-alt`, still run.
+
+### <Icon name="angle-right" /> Which version of Axe-Core® does Cypress Accessibility use?
+
+Cypress Accessibility pins a specific, tested version of Axe-Core® and waits at least 30 days before adopting a new release, so new or changed rules don't alter your results without warning. The exact version used for a run is shown in that run's **Properties** tab in Cypress Cloud and in the [Results API](/accessibility/results-api) response. See [Axe-Core® library version and updates](/accessibility/configuration/axe-core-configuration#axe-core-library-version-and-updates).
+
+## Profiles
+
+### <Icon name="angle-right" /> How do I apply different Cypress Accessibility settings to different runs?
+
+In your project's App Quality configuration in Cypress Cloud, add a [`profiles`](/accessibility/configuration/profiles) array, give each profile a `name`, and record the run with a matching [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt). When a run's tag matches a profile's `name`, that profile's `config` overrides your base Cypress Accessibility configuration for that run, so a smoke run and a full regression run can each use their own settings without changing your test code. If no tag matches, the base configuration is used unchanged.
+
+### <Icon name="angle-right" /> Does a Cypress Accessibility profile override my base configuration or merge with it?
+
+Cypress Cloud overrides one property at a time with a shallow merge, not a deep merge. Any property the profile lists replaces the root value for that property entirely (arrays are replaced, not concatenated), so if a profile defines [`elementFilters`](/accessibility/configuration/elementfilters), repeat any root rules you still want to keep. Properties the profile doesn't mention are inherited from the root. The `accessibility` and `uiCoverage` objects merge one level deep, so a profile can override `accessibility.viewFilters` while still inheriting `accessibility.attributeFilters`. See [How a profile changes your configuration](/accessibility/configuration/profiles#How-a-profile-changes-your-configuration).
+
+### <Icon name="angle-right" /> If a run has multiple tags that match profiles, which Cypress Accessibility profile is used?
+
+Cypress Cloud uses the first profile in the [`profiles`](/accessibility/configuration/profiles) array whose `name` matches one of the run's tags. The tie is broken by the order of the profiles array, not the order of the tags on the run, so reordering tags on the command line never changes which profile applies.
+
+### <Icon name="angle-right" /> Why isn't my Cypress Accessibility profile applied even though I tagged the run?
+
+The most common causes are:
+
+- The run tag doesn't exactly match the profile `name`. Matching is case-sensitive and exact, so `aq-config-regression` matches only the tag `aq-config-regression`, not `AQ-Config-Regression` or `aq-config-regression-nightly`.
+- The tag never reached Cypress Cloud. Profiles are selected from the tags passed to `cypress run --record --tag`, so a run recorded without `--record`, or without that specific `--tag`, falls back to the base configuration.
+- An earlier profile in the array also matches one of the tags and is used instead, because the first match wins.
+- The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
+
+### <Icon name="angle-right" /> Can a profile turn off Cypress Accessibility or skip a run entirely?
+
+There's no dedicated "skip this run" switch in a profile. To suppress a report for certain runs, point a profile at a deliberately narrow configuration (for example, [`viewFilters`](/accessibility/configuration/viewfilters) that exclude every view) so Cypress Cloud produces an empty or tightly scoped accessibility report for the run instead. See [Why use profiles?](/accessibility/configuration/profiles#Why-use-profiles).
+
+### <Icon name="angle-right" /> How do I make accessibility checks on pull requests faster and more focused than regression runs?
+
+Add a profile (for example, `aq-config-pr`) whose `config` narrows the report to your most critical flows with [`viewFilters`](/accessibility/configuration/viewfilters), then tag pull request runs with `cypress run --record --tag "aq-config-pr"`. The pull request report covers only those flows, so it's small and unambiguous for a developer to act on before merging, while regression runs record without the tag and keep the full base configuration. Combine the profile with the [Results API](/accessibility/results-api) to fail the build when a critical flow regresses. See [Block pull requests](/accessibility/guides/block-pull-requests#Using-Profiles-for-PR-specific-configuration).
+
+### <Icon name="angle-right" /> Can a Cypress Accessibility profile change which Axe Core® rules run for a specific run?
+
+No. A profile's `config` can override the App Quality settings in the editor ([`views`](/accessibility/configuration/views), [`viewFilters`](/accessibility/configuration/viewfilters), [`elementFilters`](/accessibility/configuration/elementfilters), [`significantAttributes`](/accessibility/configuration/significantattributes), [`attributeFilters`](/accessibility/configuration/attributefilters), and [`components`](/accessibility/configuration/components)), but the [Axe Core® ruleset](/accessibility/configuration/axe-core-configuration) isn't one of those settings. Enabling a rule that's off by default (such as `color-contrast`), turning off a false positive, or scoping to a WCAG target is a guided change Cypress applies at the project level, so it can't vary run to run through a profile. To ignore a rule only for certain elements yourself, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
+
+### <Icon name="angle-right" /> Can a Cypress Accessibility profile change how violation targets are identified, such as components or significantAttributes, for certain runs?
+
+Yes. Anything you can set under an `accessibility` key can go in a profile's `config`, including [`components`](/accessibility/configuration/components) and [`significantAttributes`](/accessibility/configuration/significantattributes). Because the `accessibility` object merges one level deep, a profile can override just one of them, for example identifying elements by `aria-label` during a labels audit, while inheriting the rest. See [How a profile changes your configuration](/accessibility/configuration/profiles#How-a-profile-changes-your-configuration).

@@ -1,6 +1,6 @@
 ---
 title: Ignore elements in UI Coverage reports
-description: 'Exclude specific elements from UI Coverage with elementFilters so reports focus on what you actually test.'
+description: 'Exclude third-party widgets, chat launchers, cookie banners, and other out-of-scope elements from Cypress UI Coverage with elementFilters, so your coverage score and untested-elements list stay focused on real gaps.'
 sidebar_label: Ignore elements
 sidebar_position: 50
 ---
@@ -9,52 +9,292 @@ sidebar_position: 50
 
 # Ignore elements
 
-Not all elements in your application are relevant to your test coverage. Cypress UI Coverage allows you to exclude specific elements from coverage reports, helping you focus on meaningful insights and avoid unnecessary noise. This guide explains why and how to ignore elements in your UI Coverage reports.
+UI Coverage tracks every [interactive element](/ui-coverage/core-concepts/interactivity)
+your application renders during a run, including plenty you never intend to test:
+a third-party chat launcher, the buttons in a cookie banner, a test-only debug
+toolbar. Each of these counts as an untested element, drags down your score, and
+buries the real coverage gaps under noise you can't act on.
 
-## Why ignore elements?
+Excluding those elements is what makes the report trustworthy. Once the elements
+your team isn't responsible for are gone, every remaining untested element is a
+genuine decision, and your score reflects coverage of the UI you actually own.
+This guide walks through finding those elements and excluding them.
 
-Ignoring elements can be beneficial in the following scenarios:
+:::info
+Excluding removes an element from the report and the score entirely, whether a
+test touched it or not. If your goal is different, such as combining repeated
+elements so they count as one or renaming an element, see
+[Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need).
+To exclude whole pages instead of individual elements, use
+[`viewFilters`](/ui-coverage/guides/ignore-views-and-links).
+:::
 
-- **Transitional Elements**: Exclude elements that are still in a loading state or undergoing changes, as they may not represent the final state of the element.
-- **Third-Party Widgets**: Exclude elements controlled by external libraries or third-party integrations.
+## When to ignore an element
 
-By ignoring irrelevant elements, you can maintain clean and actionable coverage metrics.
+Reach for an exclusion when an untested element isn't a gap you'd ever close:
 
-## Identify Elements to Ignore
+- **Third-party widgets** you don't control, such as chat launchers, cookie
+  consent banners, analytics or session-replay overlays, feedback and survey
+  popups, social share buttons, and A/B-testing toolbars. Your team isn't
+  responsible for testing them, so they shouldn't count as gaps.
+- **Out-of-scope controls** you've deliberately decided not to test, such as a
+  test-only debug panel, an internal admin toggle, or a decorative control that
+  triggers no behavior.
+- **Elements inside an embed** you don't own, such as a payment iframe, an
+  embedded media player, a maps widget, or a third-party sign-in form rendered
+  in an iframe or shadow DOM.
 
-After recording your tests to Cypress Cloud, review the UI Coverage reports:
+If an element is a real part of your product that you haven't tested _yet_,
+don't exclude it. That's a gap worth keeping. See
+[Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps) for how to
+close it instead.
 
-1. Navigate to the **UI Coverage** tab in your test run.
-1. Look for elements that consistently appear but don't require testing.
-1. Note down the selectors, attributes, or patterns for these elements.
+## Step 1: Find the elements to ignore
 
-## Configure Ignored Elements
+Start from a recorded run and collect the elements that don't represent real
+gaps, along with a stable way to match each one. Do this in the Cypress Cloud UI,
+or have an AI agent shortlist candidates for you through Cypress Cloud MCP.
 
-[Element Filters](/ui-coverage/configuration/elementfilters) in the **App Quality** configuration are used to exclude elements based on their selectors or attributes. To add or modify the configuration for your project, navigate to the **App Quality** tab in your project settings and add an **elementFilters** configuration.
+### From the Cloud UI
 
-```json
+Open the run's **UI Coverage** tab and scan the **Untested elements** section for
+entries that don't represent real gaps:
+
+1. Look for untested elements your tests will never interact with, like the
+   examples above.
+2. Expand an element to see its selector, and note a stable way to match it: an
+   `id`, a `data-*` attribute, a class, or a container it lives in.
+3. Prefer a selector that matches a whole family at once (a third-party widget
+   and everything inside it) over listing each element individually.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-expanded.png"
+  alt="The Untested elements section of a UI Coverage report expanded to show individual untested elements and their selectors"
+/>
+
+### With an AI agent
+
+If you use an AI coding assistant, [Cypress Cloud MCP](/cloud/integrations/cloud-mcp)
+lets it pull the same report into your editor and shortlist exclusion candidates,
+so you can skip the manual scan. See
+[Work with AI agents](/ui-coverage/work-with-ai-agents) for setup and more prompts.
+
+<CopyPrompt
+  title="Find elements to ignore with your AI assistant"
+  subtext="Shortlists untested elements worth excluding, with a suggested selector for each."
+  prompt={`Using Cypress Cloud MCP, pull the UI Coverage report for the latest run on this branch. First, list all of the untested interactive elements. Then, from that list, give me a second list of the ones that look like third-party widgets or out-of-scope controls worth excluding, such as chat launchers, cookie banners, analytics overlays, and embeds. For each element you suggest excluding, include a stable CSS selector I can drop into an elementFilters rule to exclude it and everything inside it.`}
+/>
+
+Treat the agent's list as a shortlist, not a decision: you still confirm which
+entries are genuinely out of scope versus a real gap before excluding them.
+
+## Step 2: Add an elementFilters rule
+
+Open the **App Quality** tab in your project settings in Cypress Cloud and add an
+[`elementFilters`](/ui-coverage/configuration/elementfilters) rule. Each rule
+pairs a CSS selector with `include: false` to exclude the elements it matches.
+Here, a support chat widget rendered by a third party is removed so it stops
+counting as an untested element:
+
+```json title="App Quality Config"
 {
   "elementFilters": [
     {
-      "selector": "[data-external*]",
-      "include": false
-    },
-    {
-      "selector": "iframe[title='Login']",
-      "include": false
-    },
-    {
-      "selector": ".rdrDateRangePicker, .rdrDateRangePicker *",
-      "include": false
+      "selector": "#intercom-container, #intercom-container *",
+      "include": false,
+      "comment": "Third-party support chat, not part of our app"
     }
   ]
 }
 ```
 
-To learn more about the configuration options, refer to the [Element Filters](/ui-coverage/configuration/elementfilters) documentation.
+<DocsImage
+  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
 
-## Validate Ignored Elements
+Two things decide whether a rule matches:
 
-After updating the configuration, record your tests again and review the UI Coverage report. The ignored elements should no longer appear in the coverage reports, streamlining the data and focusing on the critical areas of your application.
+- **The selector must match the interactive elements themselves, not just a
+  container around them.** A rule with the selector `#intercom-container` matches
+  only that one `<div>`, not the buttons inside it. To exclude everything within
+  a container, include its descendants with a descendant selector such as
+  `#intercom-container *`, as above.
+- **The first matching rule wins.** Rules are evaluated top to bottom, and each
+  element is decided by the first rule whose selector matches it. List specific
+  rules before general ones.
 
-If new unnecessary elements appear in future reports, update your filters accordingly to keep reports clean and actionable.
+### Exclude everything inside an iframe or shadow DOM
+
+Third-party embeds often render inside an iframe or shadow DOM. Pair a wildcard
+selector with `documentScope` to remove the entire embed at once. The
+`documentScope` selector matches the iframe or shadow-DOM host in its parent
+document:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "*",
+      "include": false,
+      "documentScope": ["iframe[title='Secure payment']"],
+      "comment": "Embedded third-party payment form"
+    }
+  ]
+}
+```
+
+For content nested more than one level deep, list one selector per host from
+outermost to innermost. See the
+[`documentScope` reference](/ui-coverage/configuration/elementfilters#Options)
+for details.
+
+### Keep specific elements out of a broad exclusion
+
+Because the first matching rule wins, an `include: true` rule placed _before_ a
+broader exclude rule protects the elements it matches. This is useful when a
+third-party container also holds elements you _do_ want to test, such as your own
+navigation links inside a vendor toolbar:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "nav a",
+      "include": true,
+      "comment": "Keep our nav links despite the vendor exclusion below"
+    },
+    {
+      "selector": "[data-vendor] a",
+      "include": false,
+      "comment": "Ignore links rendered by the vendor toolbar"
+    }
+  ]
+}
+```
+
+On its own, an `include: true` rule changes nothing, since everything is included
+by default. It only matters as an exception ordered ahead of an exclude rule. For
+the full evaluation model, see
+[How are elementFilters rules applied?](/ui-coverage/configuration/elementfilters#How-are-elementFilters-rules-applied).
+
+:::info
+Setting `elementFilters` at the root of your configuration affects both UI
+Coverage and Cypress Accessibility. To exclude elements for UI Coverage only,
+nest the property under a `uiCoverage` key. Note that `include: true` exceptions
+have no effect in Cypress Accessibility. See
+[Scope](/ui-coverage/configuration/elementfilters#Scope).
+:::
+
+### Exclude an area for your team's runs only
+
+A root-level rule changes the report for _everyone_. When several teams share one
+Cypress Cloud project, that's often too broad: an area that's noise for your team
+may be exactly what another team is responsible for testing. Excluding it at the
+root would erase it from the other team's report too.
+
+Use a [`profiles`](/ui-coverage/configuration/profiles) override to scope the
+exclusion to your own runs. A profile applies its `config` only to runs recorded
+with a matching [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt),
+so your team tags its runs and gets a report that drops what it doesn't own,
+while every other team's runs keep the base configuration.
+
+For example, the Account team doesn't own the support-chat widget, so its runs
+exclude it, but the Support team's runs (and the default report) still count it:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#analytics-overlay, #analytics-overlay *",
+      "include": false,
+      "comment": "Analytics overlay, noise for every team"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "aq-config-team-account",
+      "config": {
+        "elementFilters": [
+          {
+            "selector": "#analytics-overlay, #analytics-overlay *",
+            "include": false,
+            "comment": "Repeat base rules — a profile replaces the base list, it doesn't merge"
+          },
+          {
+            "selector": "#support-chat-widget, #support-chat-widget *",
+            "include": false,
+            "comment": "Account team doesn't own support chat, so it isn't a gap for us"
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+The Account team records with the matching tag, and only those runs pick up the
+extra exclusion:
+
+```shell
+cypress run --record --tag "aq-config-team-account"
+```
+
+A profile's `elementFilters` **replaces** the base list rather than merging with
+it, so repeat every base rule the tagged run still needs, as the example does for
+the analytics overlay. See
+[`profiles`](/ui-coverage/configuration/profiles) for merge behavior and how a
+tag selects a profile.
+
+### Exclude elements from your markup instead
+
+When the team that owns the markup also owns the decision to exclude an element,
+you can do it in application code instead of Cloud configuration. Add
+[`data-cy-ui-interactive="exclude"`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive)
+to a single element, or `data-cy-ui-interactive="exclude-all"` to a container to
+also exclude everything inside it:
+
+```html
+<!-- Excludes just this button -->
+<button data-cy-ui-interactive="exclude">Debug</button>
+
+<!-- Excludes the toolbar and every control inside it -->
+<div data-cy-ui-interactive="exclude-all">
+  <button>Reset state</button>
+  <button>Seed data</button>
+</div>
+```
+
+Prefer `elementFilters` when you want to manage exclusions centrally in Cypress
+Cloud without changing application code, or when the team that manages
+configuration isn't the team that owns the markup.
+
+## Step 3: Validate the result
+
+After saving, you don't need to rerun your tests. Open a recent run, go to its
+**Properties** tab, and use the **regenerate** button to reprocess it with your
+new configuration. In the regenerated report, confirm that:
+
+- The excluded elements no longer appear in the **Untested elements** list.
+- Your coverage score reflects only the elements you intend to test.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
+  alt="A run's Properties tab in Cypress Cloud, showing the App Quality configuration that was applied and the regenerate button used to reprocess the run"
+/>
+
+If an element you excluded still appears, see
+[Why isn't my elementFilters rule excluding an element?](/ui-coverage/faq#Why-isnt-my-UI-Coverage-elementFilters-rule-excluding-an-element).
+As your application grows, new third-party or out-of-scope elements may show up;
+update your filters when they do to keep reports actionable.
+
+## See also
+
+- [`elementFilters` configuration](/ui-coverage/configuration/elementfilters): the full reference for options, rule ordering, and validation.
+- [Ignore views and links](/ui-coverage/guides/ignore-views-and-links): exclude entire pages, and the links pointing to them, with [`viewFilters`](/ui-coverage/configuration/viewfilters).
+- [Reduce noise](/ui-coverage/guides/reduce-noise): consolidate repeated elements and stabilize dynamic identities instead of removing them.
+- [`profiles` configuration](/ui-coverage/configuration/profiles): apply a different set of exclusions per run tag, so shared projects can report per team.
+- [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps): find the real gaps that remain once the noise is gone.
+- [Interactivity](/ui-coverage/core-concepts/interactivity): which elements UI Coverage tracks, and the `data-cy-ui-interactive` markup attribute.
+- [Configuration overview](/ui-coverage/configuration/overview): where to set configuration and how to regenerate reports.
+- [UI Coverage FAQ](/ui-coverage/faq): common questions about excluding elements and scores.

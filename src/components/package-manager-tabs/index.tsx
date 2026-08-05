@@ -29,10 +29,22 @@ interface PackageManagerTabsProps {
    */
   dev?: boolean
   /**
+   * With `install`, install the package globally (`npm install --global` /
+   * `yarn global add` / `pnpm add --global` / `bun add --global`). Use for
+   * CLIs meant to be available on the user's PATH. Takes precedence over
+   * `dev`.
+   */
+  global?: boolean
+  /**
    * Optional environment variable assignment(s) to prepend before each
    * command, e.g. `CYPRESS_RECORD_KEY=abc123`.
    */
   env?: string
+  /**
+   * Comma-separated package-manager values to omit from the tabs, e.g.
+   * `"bun"`. Use when a command isn't portable to a given manager.
+   */
+  exclude?: string
 }
 
 /**
@@ -43,32 +55,40 @@ const managers = [
   {
     value: 'npm',
     label: 'npm',
-    install: (pkg: string, dev: boolean) =>
-      `npm install ${pkg}${dev ? ' --save-dev' : ''}`,
+    install: (pkg: string, dev: boolean, global: boolean) =>
+      global
+        ? `npm install --global ${pkg}`
+        : `npm install ${pkg}${dev ? ' --save-dev' : ''}`,
     run: 'npx',
     exec: 'npx',
   },
   {
     value: 'yarn',
     label: 'Yarn',
-    install: (pkg: string, dev: boolean) =>
-      `yarn add ${pkg}${dev ? ' --dev' : ''}`,
+    install: (pkg: string, dev: boolean, global: boolean) =>
+      global
+        ? `yarn global add ${pkg}`
+        : `yarn add ${pkg}${dev ? ' --dev' : ''}`,
     run: 'yarn',
     exec: 'yarn dlx',
   },
   {
     value: 'pnpm',
     label: 'pnpm',
-    install: (pkg: string, dev: boolean) =>
-      `pnpm add ${dev ? '--save-dev ' : ''}${pkg}`,
+    install: (pkg: string, dev: boolean, global: boolean) =>
+      global
+        ? `pnpm add --global ${pkg}`
+        : `pnpm add ${dev ? '--save-dev ' : ''}${pkg}`,
     run: 'pnpm',
     exec: 'pnpm dlx',
   },
   {
     value: 'bun',
     label: 'Bun',
-    install: (pkg: string, dev: boolean) =>
-      `bun add ${dev ? '--dev ' : ''}${pkg}`,
+    install: (pkg: string, dev: boolean, global: boolean) =>
+      global
+        ? `bun add --global ${pkg}`
+        : `bun add ${dev ? '--dev ' : ''}${pkg}`,
     run: 'bunx',
     exec: 'bunx',
   },
@@ -87,6 +107,7 @@ const toLines = (value: string): string[] =>
  * Provide exactly one of:
  *
  * - `install` — add a dependency: `<PackageManagerTabs install="cypress" dev />`
+ * - `install` + `global` — install a CLI globally: `<PackageManagerTabs install="@cypress/cloud" global />`
  * - `run` — run an installed dependency's binary: `<PackageManagerTabs run="cypress open" />`
  * - `exec` — download and run a one-off command: `<PackageManagerTabs exec="skills update" />`
  *
@@ -98,7 +119,9 @@ const PackageManagerTabs: React.FC<PackageManagerTabsProps> = ({
   run,
   exec,
   dev = false,
+  global = false,
   env,
+  exclude,
 }) => {
   const provided = [install, run, exec].filter(
     (value) => value !== undefined
@@ -108,19 +131,37 @@ const PackageManagerTabs: React.FC<PackageManagerTabsProps> = ({
       'PackageManagerTabs requires exactly one of the `install`, `run`, or `exec` props'
     )
   }
+  if (global && install === undefined) {
+    throw new Error(
+      'PackageManagerTabs `global` can only be used with the `install` prop'
+    )
+  }
 
   const envPrefix = env ? `${env} ` : ''
   const lines = toLines(install ?? run ?? exec ?? '')
+  const excluded = new Set(
+    (exclude ?? '')
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean)
+  )
+  const visibleManagers = managers.filter(
+    (manager) => !excluded.has(manager.value)
+  )
 
   return (
     <Tabs groupId="package-manager">
-      {managers.map((manager) => {
+      {visibleManagers.map((manager) => {
         const commands = install
-          ? [manager.install(lines.join(' '), dev)]
+          ? [manager.install(lines.join(' '), dev, global)]
           : lines.map((line) => `${run ? manager.run : manager.exec} ${line}`)
 
         return (
-          <TabItem key={manager.value} value={manager.value} label={manager.label}>
+          <TabItem
+            key={manager.value}
+            value={manager.value}
+            label={manager.label}
+          >
             <CodeBlock language="shell">
               {commands.map((command) => `${envPrefix}${command}`).join('\n')}
             </CodeBlock>

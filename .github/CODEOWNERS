@@ -1,0 +1,5 @@
+# Plugins data — review requested automatically on PRs touching these files,
+# including the nightly update-plugins-data automation.
+/src/data/plugins.json @jennifer-shehane
+/src/data/plugins-generated.json @jennifer-shehane
+/.github/workflows/update-plugins-data.yml @jennifer-shehane

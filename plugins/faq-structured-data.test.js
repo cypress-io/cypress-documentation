@@ -28,15 +28,15 @@ afterEach(() => {
 
 describe('toPlainText', () => {
   test('strips JSX / HTML tags', () => {
-    expect(toPlainText('<Icon name="angle-right" /> Hello <strong>there</strong>')).toBe(
-      'Hello there'
-    )
+    expect(
+      toPlainText('<Icon name="angle-right" /> Hello <strong>there</strong>')
+    ).toBe('Hello there')
   })
 
   test('unwraps markdown links to their text', () => {
-    expect(toPlainText('See the [install guide](/app/get-started/install).')).toBe(
-      'See the install guide.'
-    )
+    expect(
+      toPlainText('See the [install guide](/app/get-started/install).')
+    ).toBe('See the install guide.')
   })
 
   test('removes images entirely', () => {
@@ -51,9 +51,9 @@ describe('toPlainText', () => {
   })
 
   test('unwraps inline code and emphasis markers', () => {
-    expect(toPlainText('Use `cy.get()` with **bold** and _italic_ and ~~strike~~')).toBe(
-      'Use cy.get() with bold and italic and strike'
-    )
+    expect(
+      toPlainText('Use `cy.get()` with **bold** and _italic_ and ~~strike~~')
+    ).toBe('Use cy.get() with bold and italic and strike')
   })
 
   test('drops admonition / directive markers', () => {
@@ -78,6 +78,12 @@ describe('toPlainText', () => {
     expect(toPlainText('Select Custom > Add from the drawer')).toBe(
       'Select Custom > Add from the drawer'
     )
+  })
+
+  test('strips explicit heading id attributes', () => {
+    expect(
+      toPlainText('What is Test Generation? {#What-is-Test-Generation}')
+    ).toBe('What is Test Generation?')
   })
 
   test('unescapes markdown backslash escapes', () => {
@@ -173,9 +179,11 @@ describe('parseFaq', () => {
   })
 
   test('drops questions whose answer is empty', () => {
-    const content = ['### Question with no answer?', '', '## Next section'].join(
-      '\n'
-    )
+    const content = [
+      '### Question with no answer?',
+      '',
+      '## Next section',
+    ].join('\n')
     expect(parseFaq(content)).toEqual([])
   })
 
@@ -419,9 +427,12 @@ function countHeadings(raw, { iconOnly = false } = {}) {
 }
 
 describe('integration with repository FAQ pages', () => {
-  const faqFiles = ['docs/app/faq.mdx', 'docs/cloud/faq.mdx'].filter((file) =>
-    fs.existsSync(path.join(siteDir, file))
-  )
+  const faqFiles = [
+    'docs/app/faq.mdx',
+    'docs/cloud/faq.mdx',
+    'docs/ui-coverage/faq.mdx',
+    'docs/accessibility/faq.mdx',
+  ].filter((file) => fs.existsSync(path.join(siteDir, file)))
 
   test.each(faqFiles)(
     'every ### heading in %s yields a well-formed FAQPage entry',

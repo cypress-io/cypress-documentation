@@ -146,6 +146,18 @@ Pass environment variables via the command line. Multiple values must be separat
 cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
 
+To pass a complex value, such as an object with nested fields, provide it as a
+JSON string. This is also the way to include values that contain commas, spaces,
+or quotes, since those characters would otherwise be interpreted by the shell or
+as delimiters.
+
+```shell
+cypress run --env credentials='{"apiKey":"secret-key-12345","auth":{"user":"jane","token":"abc123"}}'
+```
+
+See the [`--env`](/app/references/command-line#cypress-run-env-lt-env-gt) command
+line reference for more details.
+
 ### 5. setupNodeEvents
 
 Set environment variables dynamically in the `setupNodeEvents` function:

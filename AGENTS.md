@@ -67,13 +67,17 @@ Each rule is a hard convention. See the linked section for the how and why.
 [partials](./AGENTS_REFERENCE.md#partials),
 [naming](./AGENTS_REFERENCE.md#product-heading--naming),
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
+[AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
 [alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
-- Reuse `docs/partials/_*.mdx` instead of repeating content.
+- Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
+  partial for content rendered in **more than one location**. If it's used in a
+  single page, inline it there — don't add a partial (or keep an existing one)
+  that has just one render site.
 - End related pages with a `## See also` section (sentence-case H2, as the page's
   last section): a short bulleted list of doc-to-doc links to closely related
   pages, command names in backticks, with an optional `- short description` after
@@ -82,11 +86,29 @@ Each rule is a hard convention. See the linked section for the how and why.
   genuinely related pages worth surfacing. Don't pad it with tangential links or
   repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
+- For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
+  not a code block; keep example-specific prompts, code, commands, and diagrams in
+  code blocks. Prompts are expanded by default; add `defaultCollapsed` past 350
+  characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
+  the reader gets, not a restatement that the card copies a prompt for an AI
+  assistant.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
+- Use **bold** only for real UI controls the reader acts on in a walkthrough
+  (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
+  e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
+  examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
+  so invented examples stay distinct from the real UI a tutorial navigates. See
+  [Writing style](./AGENTS_REFERENCE.md#writing-style).
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
   instructions. They undermine a reader who is struggling and add nothing; state
   the step plainly instead.
+- Describe configuration by what it does and accepts. Don't call out fields or
+  features a property lacks (e.g. "there is no `comment` field") unless the
+  absence is a documented point of confusion.
+- Frame behavior explanations positively and reader-first. Avoid phrasings that
+  sound like caveats about the product's design, such as "consequences of this
+  design"; prefer neutral lead-ins like "Keep these behaviors in mind".
 
 **Directives & tabs** — [tabs](./AGENTS_REFERENCE.md#tabs),
 [config](./AGENTS_REFERENCE.md#cypress-config-examples),
@@ -124,3 +146,14 @@ Each rule is a hard convention. See the linked section for the how and why.
   dependencies resolve from the repository root's `node_modules`. Declare new
   dependencies in the **root** `package.json`, never in a plugin's own
   `package.json` (pins there are never installed and just drift stale).
+
+**GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
+
+- When adding or editing a workflow in `.github/workflows/`, look up each
+  action's latest major release on its GitHub repository at the time of
+  writing and pin that major tag.
+- Workflows are copied into forks, where they run with reduced permissions
+  (Actions cannot create or approve pull requests there). Guard any job that
+  pushes commits, creates pull requests, or uses repo secrets with a job-level
+  `if` restricting it to the `main` branch of
+  `cypress-io/cypress-documentation`.

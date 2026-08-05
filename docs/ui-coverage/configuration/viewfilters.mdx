@@ -1,12 +1,99 @@
 ---
 title: 'viewFilters: exclude URLs from UI Coverage'
-description: 'The viewFilters property allows you to specify URL patterns for URLs that should be excluded from UI Coverage.'
-sidebar_label: viewFilters
+description: 'The viewFilters configuration excludes URLs from UI Coverage reports and scores, so third-party pages, error pages, and the links that point to them stop counting against your coverage.'
+sidebar_label: 'Exclude views'
 sidebar_position: 30
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# viewFilters
+# Exclude views - `viewFilters`
 
-<ViewFilters />
+The `viewFilters` configuration excludes URLs from UI Coverage. By default, every URL your tests visit is included. A `viewFilters` rule with `include: false` removes matching URLs before any analysis happens: their snapshots don't appear in your report, and no view is created for them. Links are filtered too: any link whose destination URL matches an excluded pattern is removed from the report and the coverage score, and excluded URLs never appear as [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links). The result is a report and score that reflect the parts of your application you own and intend to test.
+
+## Why use viewFilters?
+
+- **Exclude third-party pages**: Your tests may pass through pages you don't control, such as an OAuth provider's login page or a payment processor's checkout. Excluding them keeps external UI out of your report and links to it out of your score.
+- **Exclude pages you don't intend to test**: Remove sections that aren't part of your coverage goals, such as admin-only tools or informational pages, so their untested elements stop diluting your score.
+- **Remove links to pages of your own that no test visits**: Your application may link to pages your tests never navigate to, such as a help center or marketing site. Those links count against your score as [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) even though no view exists for them. Excluding the destination URLs is the way to remove them, since there is no view to exclude.
+- **Remove links to external websites**: Links to entirely different sites, such as social media profiles or a partner's website, count against your score the same way. Exclude their URLs individually, or use an allowlist that includes only your application's URLs and excludes everything else at once.
+- **Reduce noise**: URLs that tests visit incidentally, such as error pages or intermediate redirect URLs, don't represent meaningful user flows. Excluding them keeps reports clean.
+
+If your goal is different, such as organizing URLs into views rather than removing them, or removing individual elements rather than whole pages, see [Which option do I need?](/ui-coverage/configuration/overview#Which-option-do-I-need) in the configuration overview.
+
+## Scope
+
+:::info
+
+A root-level `viewFilters` property applies to both UI Coverage and Cypress Accessibility. To configure UI Coverage separately, nest `viewFilters` under a `uiCoverage` key. A nested `viewFilters` completely replaces the root-level one for UI Coverage; the two lists are not merged.
+
+:::
+
+<ViewFiltersSyntax />
+
+To add or edit `viewFilters`, open the **App Quality** tab in your project settings in Cypress Cloud. After saving, regenerate a recent run to see the effect of your filters without rerunning your tests. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details.
+
+<ViewFiltersOptions />
+
+### How are viewFilters rules applied?
+
+- Every URL visited during a run, and every link destination found, is compared against your rules in order. The **first** rule whose `pattern` matches decides whether that URL is included or excluded, so place specific rules before broad ones.
+- URLs that match no rule are **included** by default. To include only specific URLs, list `include: true` rules for them followed by a catch-all `{ "pattern": "*", "include": false }` rule.
+
+<ViewFiltersMatchingAndValidation />
+
+## Examples
+
+### Exclude a third-party page
+
+Tests that sign in through an external identity provider capture snapshots of its pages, and your application's links to it count as untested elements. One rule removes both, while every other URL stays included by default.
+
+<ViewFiltersExampleThirdParty />
+
+---
+
+<ViewFiltersSharedExamples />
+
+---
+
+### Exclude URLs from UI Coverage only
+
+Nesting `viewFilters` under `uiCoverage` applies the rules to UI Coverage alone. Here, an embedded documentation site is excluded from coverage scores while Cypress Accessibility continues to scan it.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "viewFilters": [
+      {
+        "pattern": "https://docs.my-app.com/*",
+        "include": false,
+        "comment": "Don't count docs pages or links to them toward coverage"
+      }
+    ]
+  }
+}
+```
+
+A nested `viewFilters` replaces any root-level `viewFilters` for UI Coverage, so include every rule the product needs in the nested list.
+
+## Troubleshooting
+
+### A URL you excluded still appears in the report
+
+- Rules apply in order, and the first match wins. Check whether an earlier rule with `include: true` matches the URL.
+- A pattern that starts with a hostname, like `my-app.com/admin`, is interpreted as a path rather than a hostname and never matches the URLs you intend. Include the protocol, as in `https://my-app.com/admin/*`, or use the path-only form `/admin/*`.
+- Hostnames must match exactly. `https://my-app.com/*` doesn't match URLs on `www.my-app.com`; add a wildcard such as `https://*.my-app.com/*` to span subdomains.
+- Reports use the configuration saved at the time they were processed. Regenerate the run to apply your current configuration. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration).
+
+<ViewFiltersTroubleshootingValidationErrors />
+
+## See also
+
+- [Guide: Ignore views and links](/ui-coverage/guides/ignore-views-and-links) walks through finding and excluding irrelevant URLs in an existing report.
+- [`views`](/ui-coverage/configuration/views) groups and names URLs instead of removing them.
+- [`elementFilters`](/ui-coverage/configuration/elementfilters) removes individual elements from reports rather than whole pages.
+- [Views core concept](/ui-coverage/core-concepts/views) explains how included URLs become the views your report is organized around.
+- [Configuration overview](/ui-coverage/configuration/overview) covers where configuration lives and how to regenerate reports after changing it.
+- [UI Coverage FAQ](/ui-coverage/faq) answers common questions about excluding URLs and coverage scores.

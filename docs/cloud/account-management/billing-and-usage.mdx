@@ -24,7 +24,7 @@ The **Billing & Usage** section of [Cypress Cloud](https://on.cypress.io/cloud) 
 
 :::
 
-Your plan meters two things that matter day to day: how many **test results** you can record per billing period, and the limits on **AI** capabilities. Depending on your plan, the test results allowance may be monthly or annual. Watching both here keeps the value of Cloud flowing without surprises.
+Your plan meters two things that matter day to day: how many **test results** you can record per billing period, and the limits on **AI** capabilities. Test results are counted across three tiers: **included**, **bundled**, and **on-demand** (explained in [Cloud test results](#Cloud-test-results)). Depending on your plan, the test results allowance may be monthly or annual. Watching both here keeps the value of Cloud flowing without surprises.
 
 <DocsImage
   src="/img/cloud/billing/billing-and-usage-tests-overview.png"
@@ -36,8 +36,10 @@ Your plan meters two things that matter day to day: how many **test results** yo
 The card at the top of the page summarizes your subscription at a glance, so you always know what you are entitled to and when it renews:
 
 - **Current plan:** your plan tier and price.
-- **Included test results:** the number of [test results](#Cloud-test-results) included in your plan each billing period.
-- **Additional test results:** the per-unit price for usage beyond your included amount, so you can anticipate overage costs before they appear on an invoice.
+- **Included test results:** the number of [test results](#Cloud-test-results) included in your plan (Team, Business, etc.) each billing period.
+- **Bundled test results:** the number of extra test results you have purchased up front, mid-term, to extend your allowance before you rely on on-demand pricing.
+- **On-demand test results:** the per-unit price for any test results recorded beyond your included and bundled amounts, so you can anticipate these costs before they appear on an invoice.
+- **cy.prompt executions:** how many [cy.prompt](/api/commands/prompt) executions your plan allows and how many you have used.
 - **Users:** how many of your plan's [user](/cloud/account-management/users) seats are in use.
 - **Data Retention:** how long your recorded runs and their artifacts stay available in Cypress Cloud.
 - **Renews on:** the date your plan renews and your usage cycle resets.
@@ -46,7 +48,7 @@ Use the **Subscribe**, **Change plan**, or **Contact us** buttons to subscribe, 
 
 <DocsImage
   src="/img/cloud/billing/plan-overview.png"
-  alt="Plan overview card with Current plan, Included test results, Additional test results, Users, Data Retention, and Renews on information"
+  alt="Plan overview card with Current plan, Included test results, Bundled test results, On-demand test results, cy.prompt executions, Users, Data Retention, and Renews on information"
   noBorder={true}
 />
 
@@ -54,16 +56,23 @@ Use the **Subscribe**, **Change plan**, or **Contact us** buttons to subscribe, 
 
 A **test result** is each passed or failed test recorded when you run [`cypress run --record`](/app/references/command-line#cypress-run); pending and skipped tests are not counted (see [what counts as a test result](/cloud/faq#What-counts-as-a-test-result)). It is the core unit Cypress Cloud meters, and it is what unlocks everything Cloud does for your team. In exchange for recording, each run becomes debuggable and measurable: you get [Test Replay](/cloud/features/test-replay) to reproduce failures exactly as they happened in CI, [Flaky Test Management](/cloud/features/flaky-test-management) to catch unreliable tests, [analytics](/cloud/features/analytics/overview) to track quality over time, and [Smart Orchestration](/cloud/features/smart-orchestration/overview) to run specs in parallel and cut CI time. Test results are the meter behind all of that value.
 
-The **Test results** card highlights the number of used and included test results in your current billing period. It will also show how many additional test results have been purchased and used, if applicable.
+Cypress Cloud counts test results across three tiers, consumed in this order:
 
-Keeping an eye on this card matters because of what happens at the limit. Once you reach your included test results, recording keeps working but [parallelization is disabled and new results are hidden from the dashboard](/cloud/faq#What-happens-once-I-reach-the-test-results-limit) until you upgrade or the cycle resets:
+- **Included:** the test results included in your plan (Team, Business, etc.) for each billing period.
+- **Bundled:** extra test results you purchase up front, mid-term, to top up your allowance before any on-demand usage begins.
+- **On-demand:** unexpected, non-prepaid test results recorded beyond your included and bundled amounts, generally billed at a higher per-unit price point.
 
-| At your test result limit | Behavior                                       |
-| ------------------------- | ---------------------------------------------- |
-| Recording (`--record`)    | Still runs                                     |
-| Parallelization           | Disabled                                       |
-| New results in dashboard  | Hidden until upgrade or cycle reset            |
-| Usage cycle               | Resets each billing period (monthly or annual) |
+The **Test results** card highlights the number of used and included test results in your current billing period. It also shows how many **bundled** test results you have purchased and used, and any **on-demand** test results recorded beyond those amounts, if applicable.
+
+Keeping an eye on this card matters because of what happens once you exhaust your included and bundled test results. If your plan does not allow on-demand usage, recording keeps working but [parallelization is disabled and new results are hidden from the dashboard](/cloud/faq#What-happens-once-I-reach-the-test-results-limit) until you upgrade or the cycle resets:
+
+| Once included and bundled test results are used | Behavior                                                          |
+| ----------------------------------------------- | ----------------------------------------------------------------- |
+| Recording (`--record`)                          | Still runs                                                        |
+| On-demand test results                          | Recorded at a higher per-unit price, where your plan allows       |
+| Parallelization                                 | Disabled if on-demand usage is not available                      |
+| New results in dashboard                        | Hidden until upgrade or cycle reset if on-demand is not available |
+| Usage cycle                                     | Resets each billing period (monthly or annual)                    |
 
 Reviewing usage here lets you [upgrade](https://www.cypress.io/pricing) ahead of time and avoid any interruption.
 
@@ -71,7 +80,7 @@ Reviewing usage here lets you [upgrade](https://www.cypress.io/pricing) ahead of
 
 Click the **Usage details** button in order to view graphs of your test results usage.
 
-The **Detailed** tab shows your usage over time during the selected billing period. Use it to spot trends: a steadily rising line tells you when it's time to move to a larger plan, while a sudden spike can reveal a misconfigured pipeline recording far more than you expected.
+The **Detailed** tab shows your usage over time during the selected billing period, broken down by **included**, **bundled**, and **on-demand** test results. Use it to spot trends: a steadily rising line tells you when it's time to move to a larger plan, while a sudden spike can reveal a misconfigured pipeline recording far more than you expected. A growing share of on-demand usage is a signal to consider more included or bundled test results, which are typically more cost-effective.
 
 <DocsImage
   src="/img/cloud/billing/billing-and-usage-tests-detailed.png"

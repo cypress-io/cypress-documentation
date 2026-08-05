@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 392" width="920" height="392" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="Element grouping, before and after. Without grouping, six repeated Add to cart buttons are each counted as their own untested element. UI Coverage groups them into one Add to Cart Button group that is counted once, and a single interaction with any button marks the whole group tested.">
+  <!-- card background so the diagram reads on light or dark site themes -->
+  <rect x="1" y="1" width="918" height="390" rx="16" fill="#ffffff" stroke="#E2E8F0" stroke-width="2"/>
+
+  <defs>
+    <marker id="eg-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#64748B"/>
+    </marker>
+  </defs>
+
+  <!-- caption -->
+  <text x="460" y="34" text-anchor="middle" font-size="13" fill="#475569">The same six "Add to cart" buttons, before and after grouping</text>
+
+  <!-- ============ LEFT: without grouping ============ -->
+  <text x="204" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#0F172A">Without grouping</text>
+  <text x="204" y="90" text-anchor="middle" font-size="11" fill="#64748B">Each button is its own untested element</text>
+  <rect x="24" y="104" width="360" height="252" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+
+  <!-- six repeated product-card buttons -->
+  <!-- row 1 -->
+  <g>
+    <rect x="42" y="120" width="160" height="62" rx="8" fill="#ffffff" stroke="#E2E8F0" stroke-width="1.5"/>
+    <circle cx="184" cy="136" r="5" fill="#F43F5E"/>
+    <rect x="60" y="140" width="110" height="24" rx="12" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+    <text x="115" y="156" text-anchor="middle" font-size="11" fill="#9F1239">Add to cart</text>
+  </g>
+  <g>
+    <rect x="214" y="120" width="160" height="62" rx="8" fill="#ffffff" stroke="#E2E8F0" stroke-width="1.5"/>
+    <circle cx="356" cy="136" r="5" fill="#F43F5E"/>
+    <rect x="232" y="140" width="110" height="24" rx="12" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+    <text x="287" y="156" text-anchor="middle" font-size="11" fill="#9F1239">Add to cart</text>
+  </g>
+  <!-- row 2 -->
+  <g>
+    <rect x="42" y="192" width="160" height="62" rx="8" fill="#ffffff" stroke="#E2E8F0" stroke-width="1.5"/>
+    <circle cx="184" cy="208" r="5" fill="#F43F5E"/>
+    <rect x="60" y="212" width="110" height="24" rx="12" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+    <text x="115" y="228" text-anchor="middle" font-size="11" fill="#9F1239">Add to cart</text>
+  </g>
+  <g>
+    <rect x="214" y="192" width="160" height="62" rx="8" fill="#ffffff" stroke="#E2E8F0" stroke-width="1.5"/>
+    <circle cx="356" cy="208" r="5" fill="#F43F5E"/>
+    <rect x="232" y="212" width="110" height="24" rx="12" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+    <text x="287" y="228" text-anchor="middle" font-size="11" fill="#9F1239">Add to cart</text>
+  </g>
+  <!-- row 3 -->
+  <g>
+    <rect x="42" y="264" width="160" height="62" rx="8" fill="#ffffff" stroke="#E2E8F0" stroke-width="1.5"/>
+    <circle cx="184" cy="280" r="5" fill="#F43F5E"/>
+    <rect x="60" y="284" width="110" height="24" rx="12" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+    <text x="115" y="300" text-anchor="middle" font-size="11" fill="#9F1239">Add to cart</text>
+  </g>
+  <g>
+    <rect x="214" y="264" width="160" height="62" rx="8" fill="#ffffff" stroke="#E2E8F0" stroke-width="1.5"/>
+    <circle cx="356" cy="280" r="5" fill="#F43F5E"/>
+    <rect x="232" y="284" width="110" height="24" rx="12" fill="#FFF1F2" stroke="#F43F5E" stroke-width="1.5"/>
+    <text x="287" y="300" text-anchor="middle" font-size="11" fill="#9F1239">Add to cart</text>
+  </g>
+
+  <text x="204" y="344" text-anchor="middle" font-size="11" fill="#9F1239">6 elements &#183; 6 untested</text>
+
+  <!-- ============ MIDDLE: transform ============ -->
+  <text x="460" y="212" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">UI Coverage</text>
+  <text x="460" y="226" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">groups them</text>
+  <line x1="392" y1="244" x2="528" y2="244" stroke="#64748B" stroke-width="2" marker-end="url(#eg-arrow)"/>
+
+  <!-- ============ RIGHT: with grouping ============ -->
+  <text x="716" y="70" text-anchor="middle" font-size="15" font-weight="700" fill="#0F172A">With grouping</text>
+  <text x="716" y="90" text-anchor="middle" font-size="11" fill="#64748B">Collapsed into one unit, counted once</text>
+  <rect x="536" y="104" width="360" height="252" rx="12" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1.5"/>
+
+  <!-- single group -->
+  <rect x="576" y="176" width="280" height="108" rx="12" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+  <!-- check badge -->
+  <circle cx="606" cy="212" r="11" fill="#047857"/>
+  <path d="M600.5 212 l4 4 l7 -8" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="626" y="217" font-size="15" font-weight="700" fill="#065F46">Add to Cart Button</text>
+  <!-- count badge -->
+  <rect x="792" y="198" width="44" height="26" rx="13" fill="#047857"/>
+  <text x="814" y="216" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">&#215;6</text>
+  <line x1="596" y1="240" x2="836" y2="240" stroke="#A7F3D0" stroke-width="1.5"/>
+  <text x="716" y="264" text-anchor="middle" font-size="12" fill="#047857">One interaction marks all six tested</text>
+
+  <text x="716" y="344" text-anchor="middle" font-size="11" fill="#047857">1 group &#183; 1 test covers the set</text>
+</svg>

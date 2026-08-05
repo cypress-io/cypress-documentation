@@ -139,6 +139,34 @@ Toggle each test attempt, play back errors at a variety of speeds or scrub throu
   alt="Test Replay scrubber controls"
 />
 
+## Access Test Replay from the command line
+
+You can also query a test's Test Replay from your terminal with the
+[Cloud CLI](/cloud/integrations/cloud-cli) (`cy-cloud`), without opening a
+browser. This is handy for scripting and for AI agents that work through a
+terminal.
+
+Get a summary of a replay, including how many command, network, and log events
+it holds and where the failure occurred:
+
+```bash
+cy-cloud replay info --testId <testId>
+```
+
+Query the timeline itself as JSON. Choose event types with `--commands`,
+`--network`, and `--logs`, and narrow to the failure with `--aroundFailure` or
+`--failedOnly`:
+
+```bash
+cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --network --logs
+```
+
+The CLI reads the same
+captured data as the Test Replay interface, so it works on any run where Test
+Replay was recorded and is within your data retention window. See the
+[Cloud CLI documentation](/cloud/integrations/cloud-cli#cy-cloud-replay-timeline)
+for the full command reference.
+
 ## How Test Replay Works
 
 Our aim is to create an impactful debugging experience that covers the most ground for users.
@@ -333,6 +361,7 @@ The exact error message can be seen by viewing the spec's output.
 ## See also
 
 - [Branch Review](/cloud/features/branch-review) - compare test results and Test Replays side by side between branches
+- [Cloud CLI](/cloud/integrations/cloud-cli) - query a test's replay timeline of commands, network requests, and logs from your terminal
 - [Test Replay FAQ](/cloud/faq#Test-Replay)
 - [Cypress v13 changelog](/app/references/changelog#13-0-0)
 - [Cypress Default Video Configuration](/app/references/configuration#Videos)

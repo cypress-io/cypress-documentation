@@ -910,6 +910,59 @@ System Memory: 17.2 GB free 670 MB
 to `cypress:launcher:*` when running `cypress info` to troubleshoot browser
 detection.
 
+### `cypress install`
+
+Installs the Cypress binary that matches the version of the `cypress` npm
+package into the [global cache](/app/references/advanced-installation#Binary-cache).
+
+<CypressCommandTabs command="install" />
+
+This command normally runs automatically as a `postinstall` step when you add
+`cypress` with your package manager, so you rarely need to run it yourself.
+Running it explicitly is useful when the binary was not downloaded during
+`npm install`, including these scenarios:
+
+- Your package manager blocks lifecycle scripts (for example with
+  `--ignore-scripts`, or because a security policy disallows `postinstall`), so
+  you install the binary yourself at a later stage instead of granting Cypress
+  install-time script access.
+- You want to download and cache the binary on one machine (such as a CI
+  "install" stage), then skip the download on every subsequent machine that
+  reuses that [cache](/app/references/advanced-installation#Binary-cache).
+- The automatic install was skipped on purpose by setting
+  `CYPRESS_INSTALL_BINARY=0`.
+- You want to
+  [troubleshoot the installation](/app/references/advanced-installation#Troubleshoot-installation)
+  by running the download on its own with
+  [debug logging](/app/references/troubleshooting#Print-DEBUG-logs) enabled.
+
+For example, add `cypress` while skipping the binary download, then run the
+install on its own with debug logging enabled:
+
+<PackageManagerTabs install="cypress" dev env="CYPRESS_INSTALL_BINARY=0" />
+
+<CypressCommandTabs command="install" env="DEBUG=cypress:cli*" />
+
+The binary that gets installed, the cache location, and the download source can
+be customized through environment variables. See
+[Advanced Installation](/app/references/advanced-installation) for details.
+
+#### Options
+
+| Option          | Description                                                |
+| --------------- | ---------------------------------------------------------- |
+| `--force`, `-f` | [Force install the Cypress binary](#cypress-install-force) |
+| `--help`, `-h`  | Output usage information                                   |
+
+#### `cypress install --force` {#cypress-install-force}
+
+By default, `cypress install` does nothing when a binary matching the package
+version is already present in the
+[cache](/app/references/advanced-installation#Binary-cache). Pass `--force` to
+download and reinstall the binary anyway, overwriting any existing installation.
+
+<CypressCommandTabs command="install --force" />
+
 ### `cypress verify`
 
 Verify that Cypress is installed correctly and is executable.

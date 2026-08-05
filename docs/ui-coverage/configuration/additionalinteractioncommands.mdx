@@ -1,72 +1,132 @@
 ---
-title: 'additionalInteractionCommands'
-description: 'Use additionalInteractionCommands to extend the default set of interaction command types recognized by UI Coverage.'
-sidebar_label: additionalInteractionCommands
+title: 'additionalInteractionCommands: count custom commands as coverage in UI Coverage'
+description: 'Make Cypress UI Coverage count your custom Cypress commands and third-party commands, such as cypress-real-events realClick and realType, as interactions so the elements they touch are marked as tested.'
+sidebar_label: 'Track custom commands'
 sidebar_position: 90
 ---
 
 <ProductHeading product="ui-coverage" />
 
-# additionalInteractionCommands
+# Track custom commands - `additionalInteractionCommands`
 
-UI Coverage automatically tracks how elements are used in tests using a predefined set of [Cypress interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) such as `click`, `type`, `dblclick`, and more.
+The `additionalInteractionCommands` configuration tells UI Coverage that your own Cypress commands, or commands from a third-party plugin, count as interactions. Commands you list are added to the built-in set, so the elements they touch are marked as tested and contribute to your coverage score.
 
-The `additionalInteractionCommands` configuration allows you to extend this default set. You can specify custom command types that should also be recognized as interactions, which can increase the range of actions that are counted towards UI Coverage
+UI Coverage marks an [interactive element](/ui-coverage/core-concepts/interactivity) as tested when a recognized [interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) targets it. Out of the box it recognizes a fixed set of built-in Cypress commands such as `click`, `type`, and `check`. A command it doesn't recognize doesn't count, so an element that your tests only ever exercise through a custom command like `selectDate()`, or a third-party command like [`cypress-real-events`](#Track-cypress-real-events-commands)' `realClick()`, is reported as untested even though your suite interacts with it on every run. Listing those command names in `additionalInteractionCommands` closes that gap, so your coverage score reflects what your tests actually do.
 
 ## Why use additionalInteractionCommands?
 
-- **Custom command support**: Track interactions from custom Cypress commands that aren't included in the default set.
-- **Third-party library support**: Ensure interactions from third-party testing libraries (such as [`cypress-real-events`](#Adding-third-party-library-commands)) are properly recognized and tracked.
-- **Enhanced reporting**: Improve the accuracy of your UI Coverage reports by including all relevant interaction types.
+- **Get credit for custom commands**: If your team wraps interactions in [custom commands](/api/cypress-api/custom-commands), such as a `login()` helper that types and clicks, list them so the elements they touch count as tested.
+- **Support third-party interaction plugins**: Plugins like [`cypress-real-events`](#Track-cypress-real-events-commands) add commands (`realClick`, `realType`, `realHover`) that fire native browser events. These aren't built-in Cypress commands, so UI Coverage doesn't recognize them until you list them.
+- **Keep your score accurate**: Every command your tests rely on that UI Coverage doesn't recognize leaves real coverage unreported. Declaring them removes false gaps from your reports.
+
+## Scope
+
+:::info
+
+**Note:** `additionalInteractionCommands` applies to UI Coverage only and must be nested under the `uiCoverage` key. Unlike properties such as `significantAttributes`, it has no root-level or Cypress Accessibility equivalent, so it never affects Accessibility reports.
+
+:::
+
+## Setting additionalInteractionCommands
+
+To add or edit `additionalInteractionCommands`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+
+<DocsImage
+  src="/img/ui-coverage/configuration/cypress-ui-coverage-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
 
 ## Syntax
 
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
-    "additionalInteractionCommands": [
-      string
-    ]
+    "additionalInteractionCommands": [string]
   }
 }
 ```
 
-### Options
+Each entry is the name of a Cypress command, such as `"realClick"` or `"selectDate"`, written exactly as it appears in your test code. Entries are command names only: not CSS selectors and not the `cy.` prefix. The property is optional and defaults to an empty list, so the [built-in interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) always apply on their own.
 
-The `additionalInteractionCommands` property accepts an array of strings, where each string represents a command name that should be treated as an interaction command by UI Coverage.
+## How additional interaction commands are applied
 
-| Option                          | Required | Default | Description                                                                                                        |
-| ------------------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------ |
-| `additionalInteractionCommands` | Optional | `[]`    | An array of command names (strings) that should be recognized as interaction commands in addition to the defaults. |
+A command you list here counts as an interaction only when it logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that highlights the element it acts on. UI Coverage reads that snapshot to know which element the interaction belongs to, so a command with no subject-referencing snapshot is ignored even when its name is listed. Built-in commands log this snapshot automatically; a custom command must do it explicitly (see [Requirements for a custom command](#Requirements-for-a-custom-command)).
+
+Keep these behaviors in mind:
+
+- **Your list is added to the defaults, not a replacement for them.** The built-in commands keep counting; you're extending the set, not overriding it. To _limit_ which commands count for specific elements, use [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands).
+- **Listing a built-in command has no effect.** The [built-in interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) already count on their own. `additionalInteractionCommands` is only for names UI Coverage doesn't already recognize.
+- **Overwriting a built-in command keeps its name.** UI Coverage matches on the name a command logs under, so a built-in interaction command customized with [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands) stays recognized automatically under its original name, without being listed here, as long as your version still logs a snapshot referencing the subject. Only a brand-new command name added with `Cypress.Commands.add` needs to be listed.
+- **Custom command names are matched case-sensitively.** `"realClick"` matches `realClick` but not `realclick`. Copy the name exactly as you registered it with `Cypress.Commands.add`. (The built-in commands are matched case-insensitively; this exact-match rule applies to the names you add here.)
+
+### Requirements for a custom command
+
+Listing a command name isn't enough on its own. For UI Coverage to credit the interaction to an element, the custom command must give it an element to credit, by logging a snapshot that references the subject element. In practice that means the command should:
+
+1. Receive the element as its subject, by registering with [`prevSubject`](/api/cypress-api/custom-commands#Arguments).
+2. Log the interaction against that element with [`Cypress.log`](/api/cypress-api/cypress-log), passing the subject as `$el`.
+3. Capture at least one snapshot on that log entry.
+
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/commands.js"
+// A custom command that UI Coverage can track
+Cypress.Commands.add(
+  'selectDate',
+  { prevSubject: ['element'] },
+  (subject, date) => {
+    const log = Cypress.log({ $el: subject, message: date, autoEnd: false })
+
+    log.snapshot('before')
+    // ...interact with the element to pick the date...
+
+    return cy.wrap(subject, { log: false }).then(() => {
+      log.snapshot('after').end()
+    })
+  }
+)
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/commands.ts"
+// A custom command that UI Coverage can track
+Cypress.Commands.add(
+  'selectDate',
+  { prevSubject: ['element'] },
+  (subject: JQuery<HTMLElement>, date: string) => {
+    const log = Cypress.log({ $el: subject, message: date, autoEnd: false })
+
+    log.snapshot('before')
+    // ...interact with the element to pick the date...
+
+    return cy.wrap(subject, { log: false }).then(() => {
+      log.snapshot('after').end()
+    })
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
+Beyond letting UI Coverage credit the interaction, logging a snapshot that references the subject is what renders element highlights for the command in Cypress open mode and [Test Replay](/cloud/features/test-replay). See [Custom Commands](/api/cypress-api/custom-commands) for the full API.
+
+### Relationship to allowedInteractionCommands
+
+Any command name you list in [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) is automatically recognized as an interaction command as well. You don't need to declare the same custom command in both places: use `additionalInteractionCommands` to count a command everywhere it's used, and `allowedInteractionCommands` when a command should count only for elements matching a specific selector.
 
 ## Examples
 
-### Adding custom interaction commands
+### Track `cypress-real-events` commands
+
+[`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events) fires native browser events through commands like `realClick`, `realType`, and `realHover`. Because these aren't built-in Cypress commands, UI Coverage doesn't count them until you list them.
 
 #### Config
 
-```json
-{
-  "uiCoverage": {
-    "additionalInteractionCommands": ["customClick", "dragAndDrop", "swipeLeft"]
-  }
-}
-```
-
-#### Usage in tests
-
-```javascript
-// These custom commands will now be tracked as interactions
-cy.get('[data-testid="submit-button"]').customClick()
-cy.get('[data-testid="draggable"]').dragAndDrop()
-cy.get('[data-testid="carousel"]').swipeLeft()
-```
-
-### Adding third-party library commands
-
-#### Config
-
-```json
+```json title="App Quality Config"
 {
   "uiCoverage": {
     "additionalInteractionCommands": ["realClick", "realType", "realHover"]
@@ -77,15 +137,40 @@ cy.get('[data-testid="carousel"]').swipeLeft()
 #### Usage in tests
 
 ```javascript
-// Commands from cypress-real-events plugin will be tracked
+// Now these commands mark their target elements as tested
 cy.get('[data-cy="button"]').realClick()
-cy.get('[data-cy="input"]).realType('Hello World')
+cy.get('[data-cy="input"]').realType('Hello World')
 cy.get('[data-cy="tooltip-trigger"]').realHover()
 ```
 
-## Notes
+Any plugin that adds commands acting on an element works the same way. `cypress-real-events` also provides `realPress`, `realSwipe`, and `realMouseDown`; other common examples are `drag` and `move` from [`@4tw/cypress-drag-drop`](https://www.npmjs.com/package/@4tw/cypress-drag-drop) and `tab` from [`cypress-plugin-tab`](https://www.npmjs.com/package/cypress-plugin-tab). Whichever plugin you use, the command counts only if it meets the [requirement above](#How-additional-interaction-commands-are-applied): it must log a snapshot that references the element it acts on.
 
-- Command names are case-sensitive and must match exactly as they appear in your test code.
-- The additional commands are merged with the default interaction commands, the default commands are not replaced.
-- Only commands that actually interact with DOM elements should be included in this configuration.
-- Custom commands must log a snapshot that references the subject element. This ensures that the command renders element highlights in Cypress open mode/Test Replay, and also ensures that UI Coverage can properly attribute the interaction to the expected element. More information regarding Custom Commands can be found [here](/api/cypress-api/custom-commands).
+### Track your own custom commands
+
+List the custom commands your team defines with `Cypress.Commands.add`. Make sure each one meets the [requirements for a custom command](#Requirements-for-a-custom-command) so UI Coverage can credit the interaction to an element.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "uiCoverage": {
+    "additionalInteractionCommands": ["selectDate", "dragAndDrop"]
+  }
+}
+```
+
+#### Usage in tests
+
+```javascript
+// Custom commands that log a snapshot referencing their subject element
+cy.get('[data-testid="due-date"]').selectDate('2026-01-01')
+cy.get('[data-testid="card"]').dragAndDrop('[data-testid="done-column"]')
+```
+
+## See also
+
+- [Interactivity](/ui-coverage/core-concepts/interactivity): how UI Coverage detects interactive elements and which commands count as interactions.
+- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands): limit which interaction commands count for specific elements.
+- [Custom Commands](/api/cypress-api/custom-commands): create custom commands and overwrite built-in ones.
+- [Configuration overview](/ui-coverage/configuration/overview): where to set configuration and regenerate reports.
+- [UI Coverage FAQ](/ui-coverage/faq): common questions and troubleshooting.

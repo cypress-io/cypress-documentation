@@ -513,7 +513,10 @@ h6 {
 
 ul.guidesList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  // `min(400px, 100%)` keeps the 400px minimum track on wide screens but lets
+  // each card shrink to the container width on narrow viewports, so cards no
+  // longer overflow and clip their text on small mobile screens.
+  grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
   gap: 1.5rem;
   margin: 0 !important;
   padding: 0 !important;

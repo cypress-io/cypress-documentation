@@ -1,97 +1,350 @@
 ---
 title: Compare UI Coverage reports across runs
-description: 'Review where coverage has changed in the application between two runs.'
+description: 'Compare two UI Coverage reports to see which parts of your UI lost or gained test coverage between runs, using Branch Review in Cypress Cloud or the Cypress Cloud MCP from your editor, so you can catch new gaps before they merge.'
 sidebar_label: Compare reports
-sidebar_position: 40
+sidebar_position: 70
 ---
 
 <ProductHeading product="ui-coverage" />
 
 # Compare reports
 
-UI Coverage reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Get-started) area of Cypress Cloud. This allows you to understand the exact change in coverage between any two points in time, revealing the impact of application changes or test code updates on your overall coverage area.
+A single UI Coverage report tells you which parts of your UI are untested
+_today_. It can't tell you whether your latest change made that better or worse.
+Comparing two reports answers the question that matters in a pull request:
+**did this change leave any part of the UI newly untested?**
+
+[Branch Review](/cloud/features/branch-review#Get-started) in Cypress Cloud
+compares the UI Coverage reports from any two runs and surfaces only what changed
+between them: the elements and pages that became untested, the gaps the change
+closed, and everything new it added. Instead of re-reading a full report and
+guessing what moved, you review a focused diff.
 
 <DocsImage
   src="/img/ui-coverage/branch-review/uic-branch-review.png"
-  alt="UI Coverage Branch Review showing coverage changes between two runs, with sections highlighting new untested elements, resolved coverage gaps, and elements with changed coverage status"
+  alt="UI Coverage Branch Review showing the coverage-score change between two runs alongside sections for new untested elements, new untested links, and added items"
 />
+
+Every comparison has a direction. The **changed run** is the focal point, so
+everything you see is data from the changed run, and the **base run** is the
+reference it's measured against. In a pull request, the changed run is your
+feature branch and the base run is the branch you're merging into, so the diff
+shows exactly what your PR did to coverage.
+
+There are two first-class ways to compare reports, built on the same underlying
+data. Use whichever fits how you're working:
+
+- **[In Cypress Cloud](#Compare-reports-in-Cypress-Cloud)** with Branch Review: a visual diff with full-page DOM snapshots, best for reviewing changes in the browser and sharing them with your team.
+- **[With the Cypress Cloud MCP](#Compare-reports-with-the-Cypress-Cloud-MCP)**: an AI agent pulls both runs' coverage into your editor and reports what changed, best for staying in your coding workflow and acting on the diff right away.
 
 ## Use cases
 
-Comparing the results from different runs is useful in multiple scenarios.
+Comparing two runs is useful whenever you need to know how coverage _moved_,
+not just where it stands:
 
-**Key use cases:**
+- **Pre-merge checks**: catch any interactive elements or pages a pull request leaves newly untested, before the change ships.
+- **Confirming a fix**: prove a gap you set out to close is now tested, and that the view's score went up.
+- **Monitoring changes**: compare nightly runs to catch coverage drifting down from an unexpected application change.
+- **Reviewing AI-generated changes**: AI-generated tests and application code can quietly drop or duplicate coverage. The diff makes the impact of the change explicit.
+- **Tracing a regression**: with a dropdown for each run, rapidly compare different A/B runs to find the exact commit that introduced a gap.
+- **Sharing results with your team**: hand a reviewer a focused before/after instead of two full reports to review.
 
-- **Pre-merge checks**: Know if any net-new untested elements are introduced by UI code changes.
-- **Monitoring changes**: Compare nightly monitoring runs and track down changes in coverage caused by unexpected changes in the application.
-- **Reviewing AI-generated code changes**: The increased use of AI to generate and/or review both tests and application code increases the risk of reducing coverage, or adding redundant coverage.
-- **Tracing the introduction of issues**: With dropdowns for each run, it's easy to rapidly compare different A and B runs to find the exact commit that introduced a problem.
-- **Demonstrating the resolution of issues**: Confirm the effect of your improvements, and share the overview with your team to more quickly review changes.
+## Compare reports in Cypress Cloud
 
-## Content of the report
+Branch Review gives you the full visual diff: the coverage-score change, the
+elements and pages that changed status, and full-page DOM snapshots that put
+each finding in context. Work through the steps below to go from two runs to a
+reviewed, trustworthy list of what changed.
 
-The Branch Review report is organized into three sections:
+### Step 1: Open Branch Review and choose your two runs
 
-### Untested links
+Open the [Branch Review](/cloud/features/branch-review) area of Cypress Cloud.
+You can get there by clicking the branch name associated with a run, or in
+[several other ways](/cloud/features/branch-review#Get-started). Each run is
+chosen from a dropdown labeled **Base** and **Changed**.
+
+Branch Review compares any two runs recorded to Cypress Cloud, so no source
+control integration is required: the Git branch and commit for each run are
+captured automatically when it records, and you can select the two runs to
+compare manually.
+
+:::tip
+
+Connecting your project to a source control provider adds convenience on top of
+manual selection: you can select runs by their associated pull request, and
+Cypress picks the two runs for you. Cypress Cloud integrates with:
+
+- <Icon name="github" inline />
+  [GitHub](/cloud/integrations/github#Install-the-Cypress-GitHub-app)
+- <Icon name="gitlab" inline /> [GitLab](/cloud/integrations/gitlab)
+- <Icon name="bitbucket" inline /> [Bitbucket](/cloud/integrations/bitbucket)
+
+:::
+
+For the diff to be meaningful, both runs should have exercised a **similar set
+of tests over similar content**, so each run visited roughly the same pages and
+completed the same workflows. When that's true, any difference in the results is
+down to the change itself, which is what happens out of the box when you compare
+a pull-request branch against its base.
+
+You can still compare runs from different points in time with different test
+results, as long as you keep the other sources of difference in mind as you read
+the diff. To see unified changes for your whole suite, group all of a commit's
+tests under a single Cypress run for each report. See the
+[Branch Review best practices](/cloud/features/branch-review#Best-Practices) for
+how to group runs.
 
 <DocsImage
-  src="/img/ui-coverage/branch-review/new-untested-links.png"
-  alt="UI Coverage Branch Review showing new untested links that appear in the Changed run but were not present in the Base run"
+  src="/img/cloud/features/branch-review/branch-review-header.png"
+  alt="Cypress Branch Review header showing the base and changed run selectors, the commit message, and the base and feature branch labels with their run numbers"
 />
 
-Untested links represent unopened doors in your application - pages that a user can reach through your UI, but that are not tested with Cypress. This report shows any new untested pages that appear in the Changed run that were not present in the Base run.
+### Step 2: Read the coverage-score change
 
-### Untested elements
+Start with the headline: the change in overall coverage score between the two
+runs. Branch Review shows the delta as a badge, labeled a **coverage
+improvement** when the score rose and a **reduction in coverage** when it fell,
+comparing the changed run's score against the base run's.
+
+A reduction is your cue to dig into the untested sections below to see which
+elements or pages caused it. An improvement confirms the change added coverage,
+which you can verify in detail in the resolved items. If the score didn't move,
+the sections below will be empty, meaning the change had no net effect on
+coverage.
+
+### Step 3: Review new untested elements and links
+
+Two sections surface coverage that **regressed**: parts of the UI that are
+untested in the changed run but weren't a gap in the base run. These are the
+sections to watch on a pull request.
+
+#### Untested elements
 
 <DocsImage
   src="/img/ui-coverage/branch-review/new-untested-elements.png"
-  alt="UI Coverage Branch Review showing new untested elements that appear in the Changed run but were not present or tested in the Base run"
+  alt="UI Coverage Branch Review showing new untested elements that are untested in the changed run but were tested or absent in the base run"
 />
 
-Untested interactive elements can increase for two potential reasons:
+The **Untested elements** section separates the interactive elements into:
 
-1. In the Changed run, the tests are no longer interacting with an element that was interacted with in the Base run. The element is still present, but the **test code** has changed.
-2. In the Changed run, new elements exist that were not present in the Base run, and they are not tested in the Changed run. This happens when the **application code** has changed but tests have not kept up.
+- **New untested elements**: elements that are untested in the changed run and were either tested in the base run or didn't exist there. This is the bucket a pull request review focuses on.
+- **Resolved untested elements**: elements that were untested in the base run and are now tested. This is your proof that a gap was closed.
+- **Existing untested elements**: a link to the elements that are untested in both runs, so you can jump to the full report when you want the complete picture rather than only the diff.
 
-Both changes are worth reviewing, and while the causes are different, the way to increase coverage is the same. The elements can be tested with Cypress to contribute towards your coverage score, or they can be ignored with configuration if it is not important to test the elements.
+A **new untested element** appears for one of three reasons, and all are worth
+reviewing:
 
-### Added links, elements, and views
+1. The element still exists, but the **test code changed** so that nothing interacts with it anymore.
+2. The **application code changed**, adding new elements that no test covers yet.
+3. Your tests now capture **new views or snapshots** that weren't rendered in the previous run, so their interactive elements enter the report for the first time and need coverage.
+
+The cause differs, but the fix is the same: exercise the element with a test so
+it contributes to your coverage score, or [ignore it with
+configuration](/ui-coverage/guides/ignore-elements) if it isn't worth testing.
+See [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps) for how to
+close a gap.
+
+#### Untested links
+
+<DocsImage
+  src="/img/ui-coverage/branch-review/new-untested-links.png"
+  alt="UI Coverage Branch Review showing new untested links, which are pages reachable through the UI in the changed run that no test visited"
+/>
+
+The **Untested links** section works the same way, but for whole pages.
+[Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) are
+unopened doors in your application: pages a user can reach through your UI that
+no test visits. Like elements, they're split into:
+
+- **New untested links**: a page that is reachable but untested in the changed run and wasn't an untested link in the base run.
+- **Resolved untested links**: pages that were untested links in the base run and are now visited by a test.
+- **Existing untested links**: a link to the untested links present in both runs.
+
+A new untested link is often the first sign that a change added a whole flow your
+suite doesn't reach yet. Visiting that page in a test also creates a
+[view](/ui-coverage/core-concepts/views) for it, which then surfaces its own
+untested elements to work through.
+
+### Step 4: See what the change added
 
 <DocsImage
   src="/img/ui-coverage/branch-review/added-links-and-elements.png"
-  alt="UI Coverage Branch Review showing a summary of new links, elements, and views added in the Changed run compared to the Base run"
+  alt="UI Coverage Branch Review Added section summarizing the links, elements, and views that are new in the changed run compared to the base run"
 />
 
-This is a summary of everything that appears to be new in the Changed run, and includes both tested and untested items. It's a useful way to compare two builds of your application and how the changes in the application itself relate to your overall coverage metrics.
+The **Added** section summarizes everything that is new in the changed run and
+wasn't present in the base run. Unlike the untested sections, it includes both
+tested and untested items, so it's the clearest view of how the application
+itself changed between the two runs, and whether your tests kept pace. It's
+grouped into:
 
-### Detail View
+- **Added links**: new links the change introduced, showing where new navigation paths appear in your app.
+- **Added elements**: new interactive elements the change introduced. A batch that's all untested is a feature that shipped without coverage.
+- **Added views**: new pages or states the change introduced, telling you which parts of the app became reachable for the first time.
+
+Because it counts both tested and untested items, the Added section is a useful
+way to compare two builds of your application independent of the coverage score.
+
+### Step 5: Drill into the Detail View
 
 <DocsImage
   src="/img/ui-coverage/branch-review/detail-view.png"
-  alt="A list of only the new untested elements, displaying a log-out link in red with a tooltip pointing to it."
+  alt="UI Coverage Branch Review Detail View listing only the elements that changed between runs, with an untested log-out link highlighted in red on a full-page snapshot"
 />
 
-Clicking on any untested link or element will take you into the Detail View, where you can see all the examples of the specific elements that have changed between the two runs. Elements that have the same status on both runs are removed here, so you can focus only on the changes.
+Clicking any new or resolved item opens the **Detail View**, where you see every
+example of that element or link on a full-page, inspectable DOM snapshot, with
+tested elements highlighted green and untested elements red. Items with the same
+status on both runs are removed here, so you focus only on what changed.
 
-## How to compare runs
+The Detail View shows the changed run's snapshots, consistent with the changed
+run being the focal point of the comparison. Because the snapshot is a real DOM,
+you can open your browser's developer tools on it to understand _why_ an element
+went untested, for example because it's now behind a menu or only renders after a
+step your tests no longer reach. That context tells you what a new test needs to
+do.
 
-The first step is to get to the [Branch Review](/cloud/features/branch-review) area of Cypress Cloud, which will let you compare one branch against another - or different runs on the same branch, if needed.
-You can access this area by clicking the branch name associated with a run, or in several other ways. [Learn more about how to compare runs](/cloud/features/branch-review).
+### Step 6: Stabilize the comparison with configuration
 
-## FAQ
+On most projects, comparing reports works well out of the box. But dynamic values
+in URLs or element attributes can make unchanged parts of your app _look_ like
+they changed, adding noise to the diff. Because UI Coverage is configured from
+the **App Quality** tab of your project settings in Cypress Cloud, you can fix
+this without touching your tests, then regenerate a past run from its
+**Properties** tab to see the effect immediately.
 
-### How do I ensure a good comparison?
+<DocsImage
+  src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
+  alt="The Properties tab for a run, with an Application Quality section at the bottom and a button to regenerate the report with the current configuration"
+/>
 
-The best subjects to compare are passing runs that ran similar tests on the same set of content. This means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. This is usually what happens out-of-the box when comparing a pull-request branch with your main branch.
+**Stabilize views** so a page matches across runs. UI Coverage groups URLs that
+differ only by numeric IDs automatically (`/orders/123` and `/orders/456` become
+`/orders/*`), but other dynamic segments, such as slugs, are not grouped by
+default and can show up as "new" views between runs. Group them with a
+[`views`](/ui-coverage/configuration/views) pattern:
 
-That said, it is still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
+```json title="App Quality Config"
+{
+  "views": [
+    {
+      "pattern": "https://www.my-app.com/products/:slug"
+    }
+  ]
+}
+```
 
-In order to see unified changes for your entire test suite, you need to group all the tests together under a single Cypress run, for each report. Learn more about this in the [Branch Review Best Practices documentation](/cloud/features/branch-review#Best-Practices).
+This groups `/products/blue-widget` and `/products/red-widget` into a single
+`/products/:slug` view that's recognized the same way in both runs.
 
-### What is the purpose of the Beta label?
+**Stabilize elements** so the same control isn't matched as two different
+elements between builds. If an element's identifier carries a per-build hash, the
+same element can appear as _resolved_ in the base run and _new untested_ in the
+changed run even though nothing really changed. UI Coverage already ignores the
+most common unstable identifiers, such as hashed CSS classes; for anything it
+doesn't cover, exclude the unstable attribute with
+[`attributeFilters`](/ui-coverage/configuration/attributefilters):
 
-This indicates the feature is ready for use and actively seeking feedback based on real usage of the current implementation. We have a few known issues to work through on our side before we consider this fully production-ready and remove the beta label. These issues only affect a subset of projects -- in most cases everything is working as intended. If you see anything unexpected, please use the feedback button and let us know.
+```json title="App Quality Config"
+{
+  "attributeFilters": [
+    {
+      "attribute": "id",
+      "value": "input-[a-f0-9]{6}",
+      "include": false,
+      "comment": "IDs carry a per-build hash, so the same field appears as resolved on the base run and new untested on the changed run"
+    }
+  ]
+}
+```
 
-### Why do I see some views (pages or components) changing from run-to-run?
+The [Reduce noise](/ui-coverage/guides/reduce-noise) guide covers the other
+common adjustments. With the noise removed, a clean diff means nothing changed,
+and anything the diff shows is a real change worth reviewing.
 
-URLs with dynamic slugs in them can appear as "new" pages in some situations. This behavior can be adjusted with [View configuration](/accessibility/configuration/views) to make sure page names will match across runs by wildcarding parts of the URL as needed.
+## Compare reports with the Cypress Cloud MCP
+
+[Cypress Cloud MCP](/cloud/integrations/cloud-mcp) gives a compatible AI agent
+structured access to your UI Coverage data, so you can compare two runs without
+leaving your editor. Point the agent at a base run and a changed run, and it
+pulls the coverage for each and reports what changed: the score delta, the newly
+untested elements and links, and where to add the interactions that close them.
+
+Unlike Branch Review, there's no single "compare" call. The agent assembles the
+diff from a few read-only tools, which also means it can go straight from the diff
+to drafting the test that fixes it, using the specs and custom commands already in
+your project. What it can't show is the full-page DOM snapshots Branch Review
+renders, so reach for the two methods together: the MCP to find and act on the
+diff, and [Branch Review](#Compare-reports-in-Cypress-Cloud) when you want to see
+a change in context.
+
+### What the agent uses
+
+You don't call these tools directly. You ask for a comparison in plain language,
+and the agent chooses and runs the right tools for you. The comparison draws on
+these Cloud MCP tools (see the [full
+list](/cloud/integrations/cloud-mcp#Available-tools)):
+
+- [`cypress_get_runs`](/cloud/integrations/cloud-mcp#Available-tools): find the two runs to compare from a branch, project, or run URL.
+- [`cypress_get_ui_coverage_report`](/cloud/integrations/cloud-mcp#Available-tools): the overall score, tested and untested counts, and riskiest views for each run.
+- [`cypress_get_ui_coverage_views`](/cloud/integrations/cloud-mcp#Available-tools): browse every view in a run to compare coverage view by view.
+- [`cypress_get_ui_coverage_elements`](/cloud/integrations/cloud-mcp#Available-tools): list the tested or untested elements in a run, optionally scoped to a single view, to see exactly which controls changed status.
+
+The agent reads a run's coverage from each of the two runs and compares them, so
+the same guidance from [Step 1](#Step-1-Open-Branch-Review-and-choose-your-two-runs)
+applies: the cleanest comparison is between two runs that exercised a similar set
+of tests over similar content.
+
+:::tip
+Cloud MCP must be enabled for your organization, and your agent must be
+authenticated, before these tools are available. See [Configuring the Cloud
+MCP](/cloud/integrations/cloud-mcp#Configuring-the-Cloud-MCP).
+:::
+
+### Example prompts
+
+Copy one of these prompts into your AI coding assistant, filling in the run URLs
+or view names for your project.
+
+<CopyPrompt
+  title="Compare coverage against the base branch"
+  subtext="Reports what your change left newly untested versus main, and where to fix it."
+  prompt={`Using Cypress Cloud MCP, pull the UI Coverage report for the latest run on this branch and for the latest run on main. Compare them and tell me: the change in overall coverage score, the interactive elements and links that are untested now but were tested (or didn't exist) on main, and the views where coverage dropped. For the highest-priority regression, name the spec file I should update and draft the interaction that would cover it.`}
+/>
+
+<CopyPrompt
+  title="Confirm a gap you closed"
+  subtext="Verifies the elements you targeted are now tested."
+  prompt={`Using Cypress Cloud MCP, compare the UI Coverage for run <BASE_RUN_URL> with the latest run on this branch. Confirm the elements that were untested on the <VIEW_NAME> view in the base run are now tested in the latest run, and list anything on <VIEW_NAME> that is still untested.`}
+/>
+
+<CopyPrompt
+  title="Explain a drop in coverage"
+  subtext="Pinpoints the views and elements behind a coverage drop."
+  prompt={`Using Cypress Cloud MCP, the UI Coverage score dropped between run <BASE_RUN_URL> and run <CHANGED_RUN_URL>. Compare the two runs, list the views and untested elements responsible for the drop, and for each one tell me whether it looks like a test-code change (an element that used to be tested) or a new part of the application.`}
+/>
+
+For more UI Coverage prompt patterns, see [Work with AI
+agents](/ui-coverage/work-with-ai-agents).
+
+### Keep a human in the loop
+
+An agent is good at assembling the diff and drafting a fix, but whether a drop in
+coverage is acceptable is a judgment call. A lower score after a deliberate scope
+change is fine; the same drop from a test that quietly stopped interacting with a
+control is not. Treat unexpected coverage movement as a quality gate: let the
+agent narrate the diff and propose tests, and have a reviewer confirm intent and
+risk before merging. See [Governance: when to involve a
+human](/ui-coverage/work-with-ai-agents#Governance-when-to-involve-a-human).
+
+## See also
+
+- [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps): read a single report to find the untested elements and pages behind your score.
+- [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps): close the gaps this diff surfaces, then confirm they stay closed.
+- [Monitor changes](/ui-coverage/guides/monitor-changes): track your score over time so new gaps don't slip in.
+- [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests): enforce a coverage threshold in CI with the [Results API](/ui-coverage/results-api).
+- [Reduce noise](/ui-coverage/guides/reduce-noise): remove the dynamic values and third-party elements that make a diff harder to read.
+- [Branch Review](/cloud/features/branch-review): how run comparison works across all of Cypress Cloud.
+- [Work with AI agents](/ui-coverage/work-with-ai-agents): use the Cypress Cloud MCP to summarize gaps and draft targeted tests from your editor.
+- [Cloud MCP](/cloud/integrations/cloud-mcp): set up the MCP server and see the full list of tools your agent can call.
+- [UI Coverage FAQ](/ui-coverage/faq): answers to common questions about scores, views, links, and configuration.

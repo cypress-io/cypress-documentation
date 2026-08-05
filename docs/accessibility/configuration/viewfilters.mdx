@@ -1,12 +1,96 @@
 ---
 title: 'viewFilters: exclude URLs from scans'
-description: 'The viewFilters property allows you to specify URL patterns for URLs that should be excluded from Accessibility.'
-sidebar_label: viewFilters
-sidebar_position: 20
+description: 'The viewFilters configuration excludes URLs from Cypress Accessibility, so third-party pages and other URLs outside your control are left out of your accessibility reports.'
+sidebar_label: 'Exclude views'
+sidebar_position: 30
 ---
 
 <ProductHeading product="accessibility" />
 
-# viewFilters
+# Exclude views - `viewFilters`
 
-<ViewFilters />
+The `viewFilters` configuration excludes URLs from Cypress Accessibility. By default, every URL your tests visit is included. A `viewFilters` rule with `include: false` removes matching URLs before any analysis happens: their snapshots are not scanned for accessibility violations and don't appear in your report. The result is a report and [accessibility score](/accessibility/core-concepts/accessibility-score) that reflect the parts of your application you own and can remediate.
+
+## Why use viewFilters?
+
+- **Exclude third-party pages**: Your tests may pass through pages you don't control, such as an OAuth provider's login page or a payment processor's checkout. Violations on those pages aren't yours to fix, so excluding them keeps your report actionable.
+- **Exclude pages outside your remediation scope**: Remove sections that aren't part of your accessibility goals yet, such as internal admin tools or legacy areas, so your score tracks the pages you're actively improving.
+- **Reduce noise**: URLs that tests visit incidentally, such as error pages or intermediate redirect URLs, don't represent meaningful user flows. Excluding them keeps reports clean.
+
+To remove individual elements from scans rather than whole pages, use [`elementFilters`](/accessibility/configuration/elementfilters) instead. To organize URLs into views rather than removing them, use [`views`](/accessibility/configuration/views).
+
+## Scope
+
+:::info
+
+A root-level `viewFilters` property applies to both Cypress Accessibility and UI Coverage. To configure Cypress Accessibility separately, nest `viewFilters` under an `accessibility` key. A nested `viewFilters` completely replaces the root-level one for Cypress Accessibility; the two lists are not merged.
+
+:::
+
+<ViewFiltersSyntax />
+
+To add or edit `viewFilters`, open the **App Quality** tab in your project settings in Cypress Cloud. After saving, regenerate a recent run to see the effect of your filters without rerunning your tests. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration) for details.
+
+<ViewFiltersOptions />
+
+### How are viewFilters rules applied?
+
+- Every URL visited during a run is compared against your rules in order. The **first** rule whose `pattern` matches decides whether that URL is included or excluded, so place specific rules before broad ones.
+- URLs that match no rule are **included** by default. To include only specific URLs, list `include: true` rules for them followed by a catch-all `{ "pattern": "*", "include": false }` rule.
+
+<ViewFiltersMatchingAndValidation />
+
+## Examples
+
+### Exclude a third-party page
+
+Tests that sign in through an external identity provider capture snapshots of its pages, and any violations found there appear in your report even though you can't fix them. One rule removes those pages, while every other URL stays included by default.
+
+<ViewFiltersExampleThirdParty />
+
+---
+
+<ViewFiltersSharedExamples />
+
+---
+
+### Exclude URLs from Cypress Accessibility only
+
+Nesting `viewFilters` under `accessibility` applies the rules to Cypress Accessibility alone. Here, a legacy admin area that isn't in remediation scope yet is excluded from accessibility scans while UI Coverage continues to track it.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "viewFilters": [
+      {
+        "pattern": "https://admin.my-app.com/*",
+        "include": false,
+        "comment": "Legacy admin area, not yet in accessibility remediation scope"
+      }
+    ]
+  }
+}
+```
+
+A nested `viewFilters` replaces any root-level `viewFilters` for Cypress Accessibility, so include every rule the product needs in the nested list.
+
+## Troubleshooting
+
+### A URL you excluded still appears in the report
+
+- Rules apply in order, and the first match wins. Check whether an earlier rule with `include: true` matches the URL.
+- A pattern that starts with a hostname, like `my-app.com/admin`, is interpreted as a path rather than a hostname and never matches the URLs you intend. Include the protocol, as in `https://my-app.com/admin/*`, or use the path-only form `/admin/*`.
+- Hostnames must match exactly. `https://my-app.com/*` doesn't match URLs on `www.my-app.com`; add a wildcard such as `https://*.my-app.com/*` to span subdomains.
+- Reports use the configuration saved at the time they were processed. Regenerate the run to apply your current configuration. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
+
+<ViewFiltersTroubleshootingValidationErrors />
+
+## See also
+
+- [`views` configuration](/accessibility/configuration/views) groups and names URLs instead of removing them.
+- [`elementFilters` configuration](/accessibility/configuration/elementfilters) removes individual elements from scans rather than whole pages.
+- [Accessibility score](/accessibility/core-concepts/accessibility-score) explains how the score your filters affect is calculated.
+- [Configuration overview](/accessibility/configuration/overview) covers where configuration lives and how to regenerate reports after changing it.
+- [Cypress Accessibility FAQ](/accessibility/faq) answers common questions about excluding URLs and configuration.

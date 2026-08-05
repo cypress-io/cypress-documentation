@@ -1,0 +1,16 @@
+Pattern matching follows [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) semantics, with a few behaviors worth knowing:
+
+- A pattern that omits the query string and hash matches URLs with any query string or hash. For example, `https://www.my-app.com/admin` matches `https://www.my-app.com/admin?tab=users`.
+- Trailing slashes are optional by default: `https://www.my-app.com/admin` matches both `/admin` and `/admin/`. If your pattern ends with a `/`, only URLs with a trailing slash match it.
+- A pattern without a protocol and hostname, such as `/admin/*`, matches that path on any protocol, hostname, and port. This is useful when tests run against multiple environments.
+- A hostname must match exactly unless it contains a wildcard: `https://my-app.com/*` does not match `https://www.my-app.com/home`, but `https://*.my-app.com/*` does.
+- The pattern `*` on its own matches every URL.
+
+### Validation rules
+
+Cypress Cloud rejects a configuration when:
+
+- A rule is missing `pattern` or `include`.
+- A `pattern` isn't valid URL Pattern syntax.
+- Two rules have the same `pattern`. Duplicates can never both apply, because the first matching rule wins.
+- A rule contains a property other than the three listed above.

@@ -1,0 +1,63 @@
+import CodeBlock from '@theme/CodeBlock'
+import {
+  copy,
+  singleTestCode,
+  separateTestCode,
+} from '@site/docs/partials/sitemapScanCode'
+
+If your project lacks existing Cypress tests, a common approach is to drive{' '}
+{copy[props.product].name} from a sitemap or an array of target URLs. Visiting
+each URL performs a light interaction that {copy[props.product].name} records,
+giving you a first {copy[props.product].reportKind} report for the pages your
+suite doesn't reach yet.
+
+### Example: Visit every sitemap URL in a single test
+
+The example below fetches your `sitemap.xml` at runtime and visits every URL it
+finds in a single test. This is the quickest way to get started, with no list to
+maintain:
+
+<CodeBlock language="js">{singleTestCode[props.product]}</CodeBlock>
+
+{props.product === 'accessibility' ? (
+
+<p>
+  The <code>scrollIntoView</code> call is optional. Test Replay captures the
+  full page for accessibility analysis on load, so you only need it when content
+  appears through progressive scrolling, such as lazy-loaded images or infinite
+  lists. It can also be worth keeping to exercise scrolling itself, since a page
+  that cannot be scrolled to reach its content is an accessibility problem in
+  its own right.
+</p>
+
+) : null}
+
+### Example: Visit each URL in separate tests
+
+The single-test scan above is quick to set up, but putting each URL in a
+separate test is often the better choice:
+
+- **Tracking**: each page becomes a distinct test in Cypress Cloud, so a page
+  that fails to load shows up as its own failing test with its own
+  [Test Replay](/cloud/features/test-replay), instead of collapsing the whole
+  scan into one pass/fail.
+- **Performance**: a single test that visits every page keeps accumulating DOM
+  snapshots and command history as it runs, which slows it down and makes it
+  harder to debug. Separate tests each start clean, so they stay fast.
+- **Isolation**: [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
+  resets the browser state between pages, so one page's cookies or storage can't
+  leak into the next.
+
+Because Cypress defines tests when the spec loads (before any command runs), the
+list of URLs has to exist before the run starts rather than come from a sitemap
+fetched at runtime. You can hard-code it in the spec, import it from a committed
+file, or generate it in your Cypress config and pass it to the spec. This
+documentation's own test suite takes the last approach: it builds the list of
+pages in `cypress.config` and loops over them to create one test per page.
+
+<CodeBlock language="js">{separateTestCode[props.product]}</CodeBlock>
+
+The result is a first-load {copy[props.product].reportKind} report for every URL
+in your site. Any Cypress tests you write for specific workflows automatically
+expand the {copy[props.product].reportKind} area to include the states and
+variations those workflows reach.

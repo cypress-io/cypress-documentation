@@ -1,407 +1,474 @@
 ---
 title: Block pull requests with UI Coverage policies
-description: "Set policies and block pull requests automatically with Cypress UI Coverage's Results API, enabling custom CI workflows to enforce test coverage standards and prevent regressions."
+description: 'Block pull requests with Cypress UI Coverage: use the Results API to fail a build when coverage drops below a threshold or a run introduces new untested elements.'
 sidebar_label: Block pull requests and set policies
-sidebar_position: 40
+sidebar_position: 90
 ---
 
 <ProductHeading product="ui-coverage" />
 
 # Block pull requests and set policies
 
-Cypress UI Coverage reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs, but also means that nothing in your Cypress pipeline will fail due to coverage issues that are detected. Failing a build is a fully opt-in step based on your handling of the results in your CI process.
+Once you've used UI Coverage to [find the untested parts of your app](/ui-coverage/guides/identify-coverage-gaps),
+the next step is keeping new gaps from creeping back in. This guide turns your UI
+Coverage report into a **merge gate**, so a pull request that adds an untested
+button, form, or page can't merge without a deliberate decision.
 
-## Using the Results API
+UI Coverage reports are generated server-side in Cypress Cloud from
+[Test Replay](/cloud/features/test-replay) data, so they add no overhead to your
+test runs, and nothing in your Cypress pipeline fails on its own when coverage
+drops. Enforcement is entirely opt-in: you choose a policy and apply it in your
+CI job with the [Results API](/ui-coverage/results-api). With it you can:
 
-The [Cypress UI Coverage Results API](/ui-coverage/results-api) allows you to access UI Coverage results post-test run, enabling workflows like blocking pull requests or triggering alerts based on specific coverage criteria. This involves adding a dedicated UI Coverage verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context.
+- **Fail a build or block a pull request** when overall coverage falls below a
+  threshold, or when a critical view regresses.
+- **Block only on _new_ gaps** by comparing each run against a stored baseline,
+  so you can pay down existing coverage debt over time instead of all at once.
+- **Post the result where reviewers work**, linking straight to the report on
+  the pull request.
 
-## Implementing a status check
+## Choose a policy
 
-The Results API offers full flexibility to analyze results and take tailored actions. It can also integrate with status checks on pull requests, allowing you to block merges when coverage thresholds are not met.
+The Results API gives you the run's coverage numbers; _how_ you gate on them is
+the policy. Two models cover most teams, and you can combine them.
 
-## Defining policies in the verification step
+| Policy                                                   | Blocks when…                                                 | Best for                                                                                          |
+| -------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| [Coverage threshold](#Enforce-a-coverage-threshold)      | Overall or per-view coverage drops below a fixed percentage  | A codebase whose coverage is already where you want it, or a critical flow you hold to a high bar |
+| [New gaps vs. a baseline](#comparing-against-a-baseline) | A run introduces untested elements that weren't there before | An existing app with known coverage debt you want to stop growing                                 |
 
-The [Results API Documentation](/ui-coverage/results-api) provides detailed guidance on the API's capabilities. Here's a simplified example demonstrating how to enforce a minimum coverage threshold:
+A fixed threshold is simple but blunt: if your app sits at 62% coverage, a
+threshold of 80% blocks _every_ pull request until you've paid down all the
+existing debt. A **baseline** compares each run against a known-good state and
+fails only on _newly_ introduced gaps, which lets you hold the line today and
+improve incrementally. Most teams with an established suite start here.
 
-```js
+## Before you begin
+
+This guide assumes you've completed the
+[Results API setup](/ui-coverage/results-api#Installation): your CI install step
+adds the `@cypress/extract-cloud-results` module, and a verification script runs
+**after** `cypress run --record` in the **same** CI build. A run also needs
+Test Replay enabled and must have been recorded
+within the last 7 days for the helper to find it. See the
+[Results API FAQ](/ui-coverage/faq#Results-API-and-CI) for the full prerequisite
+list.
+
+Every example below is a script that calls `getUICoverageResults()` and, when
+your policy isn't met, exits with a non-zero status to fail the CI step. See
+[Wire the check into CI](#Wire-the-check-into-CI) for how that failed step
+becomes a required status check that blocks the merge.
+
+## Enforce a coverage threshold
+
+The simplest policy fails the build when overall coverage drops below a floor,
+and holds critical flows like login and checkout to a higher standard:
+
+```javascript title="scripts/verifyUICoverageResults.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
-// Fetch UI Coverage results
-getUICoverageResults().then((results) => {
-  const { summary, views } = results
+getUICoverageResults()
+  .then((results) => {
+    const { summary, views } = results
 
-  // Verify overall coverage
-  if (summary.coverage < 80) {
-    throw new Error(
-      `Project coverage is ${summary.coverage}%, below the minimum threshold of 80%.`
-    )
-  }
-
-  // Verify critical view coverage
-  const criticalViews = [/login/, /checkout/]
-  views.forEach((view) => {
-    if (
-      criticalViews.some((pattern) => pattern.test(view.displayName)) &&
-      view.coverage < 95
-    ) {
+    // Fail the build if overall coverage is below 80%.
+    if (summary.coverage < 80) {
       throw new Error(
-        `Critical view "${view.displayName}" coverage is ${view.coverage}%, below the required 95%.`
+        `Project coverage is ${summary.coverage}%, below the minimum threshold of 80%.`
       )
     }
+
+    // Hold critical flows to a higher standard.
+    const criticalViews = [/login/, /checkout/]
+
+    views.forEach((view) => {
+      if (
+        criticalViews.some((pattern) => pattern.test(view.displayName)) &&
+        view.coverage < 95
+      ) {
+        throw new Error(
+          `Critical view "${view.displayName}" coverage is ${view.coverage}%, below the required 95%. See: ${view.uiCoverageReportUrl}`
+        )
+      }
+    })
+
+    console.log('UI Coverage meets all thresholds.')
   })
-})
+  .catch((error) => {
+    console.error(error.message)
+    process.exit(1)
+  })
 ```
 
-By examining the results and customizing your response, you gain maximum control over how to handle coverage gaps. Leverage CI environment context, such as tags, to fine-tune responses to specific coverage outcomes.
+The [Results API examples](/ui-coverage/results-api#Examples) cover more
+threshold variations, including reporting the score on the pull request, failing
+on untested navigation links, and ratcheting the floor up as coverage improves.
 
-## Using Profiles for PR-specific configuration
+## Block only on new gaps with a baseline {#comparing-against-a-baseline}
 
-You can use [Profiles](/ui-coverage/configuration/profiles) to apply different configuration settings for pull request runs versus regression runs. This allows you to:
+A threshold treats all untested elements the same, whether they've been untested
+for a year or arrived in the pull request under review. Comparing a run against a
+stored **baseline** lets you ignore existing gaps and fail only when a change
+introduces _new_ untested elements. This is what makes UI Coverage enforceable on
+a real codebase: you stop the debt from growing today, and pay it down on your own
+schedule without blocking every merge.
 
-- Use a narrow, focused configuration for PR runs that blocks merges based on critical coverage thresholds
-- Maintain a broader configuration for regression runs that tracks all coverage gaps for long-term monitoring
-- Apply team-specific configurations when multiple teams share the same Cypress Cloud project
+### Why compare untested-element counts instead of the coverage score?
 
-For example, you might configure a profile named `aq-config-pr` that excludes non-critical pages and focuses only on the most important coverage areas, while your base configuration includes all pages for comprehensive regression tracking.
+The coverage score is the share of your app's interactive elements that your
+tests exercise (tested ÷ total). It's the right number for tracking direction
+over time, but a poor signal for a per-run gate: adding a single test can reveal a
+whole page of previously unseen elements and _lower_ the score even though your
+coverage improved.
 
-```shell
-cypress run --record --tag "aq-config-pr"
-```
-
-This approach ensures that PR checks are fast and focused, while still maintaining comprehensive reporting for your full test suite.
-
-## Comparing against a baseline {#comparing-against-a-baseline}
-
-Comparing current results against a stored baseline allows you to detect only new untested elements that have been introduced, while ignoring existing coverage gaps. This approach helps you focus on regressions in test coverage and track improvements over time.
-
-This is particularly useful in CI/CD pipelines where you want to fail builds only when new untested elements are introduced, allowing you to address existing coverage gaps incrementally without blocking deployments.
+The **untested-element count per view** is a more direct signal for "did this
+change add gaps?" If a view's `untestedElementsCount` rises above its baseline,
+or a brand-new view arrives carrying untested elements, the change introduced
+gaps, regardless of what the percentage did. That's the number the script below
+compares.
 
 ### Baseline structure
 
-In our example the baseline is a JSON object that captures the state of untested elements from a specific run. It includes:
+The baseline is a small JSON file you commit alongside your code. It records, for
+a known-good run, how many untested elements each view
+had:
 
-- **runNumber**: The run number used as the baseline reference
-- **views**: An object mapping view display names to arrays of view identifiers and their untested elements counts
-- **runUrl**: The link to the cloud run that generated this report
+- **runNumber**: the run the baseline was captured from, for reference.
+- **runUrl**: a link back to that run in Cypress Cloud.
+- **views**: a map of each view's `displayName` to its `untestedElementsCount`.
 
-```javascript
+```json title="ui-coverage-baseline.json"
 {
   "runNumber": 68086,
   "runUrl": "https://cloud.cypress.io/projects/ypt4pf/runs/68086",
   "views": {
-    "/": { testedElements: 55 },
-    "/login": { testedElements: 3 },
-    "/products/*": { testedElements: 3 },
+    "/": 0,
+    "/login": 2,
+    "/products/*": 4,
+    "/checkout": 1
   }
 }
 ```
 
-#### Why use untested element counts instead of UI Coverage percentage scores?
+### Create your first baseline
 
-The [UI Coverage score](/ui-coverage/guides/identify-coverage-gaps#Overall-Score) is expressed as based on a ratio of what was and was not tested over time, within what was rendered in Cypress during the run. Since testing one new element might reveal many more elements that aren't tested yet, the score isn't useful for a fine-grained baseline comparison between runs. Comparing the number of tested elements gives a more accurate sense of whether one run has added or removed coverage when compared to another, and is a better predictor of what information would be in the report.
+You need a known-good run to anchor the baseline against. Pick a recent run whose
+coverage reflects the state you want to hold the line at, typically a run on your
+base branch, then capture its per-view untested counts one of two ways.
 
-### Complete example
+**From the comparison script.** The script below is the same one you wire into
+CI. Run it once with no committed baseline and it writes the current run's numbers
+to `ui-coverage-baseline.next.json` without failing the build. Review that file,
+then commit it as `ui-coverage-baseline.json` so every later run compares against
+it. A CI runner is discarded after the job, so to capture that first candidate
+either run the script locally by replaying a recent run's CI context (see
+[Required CI environment variables](/ui-coverage/results-api#Required-CI-environment-variables)),
+or upload `ui-coverage-baseline.next.json` as a build artifact from the CI run.
 
-The following example demonstrates how to compare current results against a baseline, detect new views with untested elements, identify views where coverage has improved, and generate a new baseline on every run so that it's easy to copy and update if needed.
+<AccordionBlock title="View the comparison script" icon={<Icon name="laptop-code" />}>
+
+This script reads the committed baseline, fails the build when any view has
+_more_ untested elements than its baseline (or when a new view ships untested
+elements), and writes the current run's numbers to a separate candidate file so
+you can promote them when you're ready to accept a new state. Running it the first
+time with no baseline just writes the candidate for you.
 
 ```javascript title="scripts/compareUICoverageBaseline.js"
-require('dotenv').config()
-
-const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 const fs = require('fs')
+const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
-// Define your baseline - this should be stored and updated as your application improves
-// Running the script once with no baseline will generate a baseline for you
-const baseline = {
-  runNumber: undefined,
-  runUrl: undefined,
-  views: [],
-}
+const BASELINE_FILE = 'ui-coverage-baseline.json'
+// Written on every run; promote it to BASELINE_FILE when you accept a new state.
+const CANDIDATE_FILE = 'ui-coverage-baseline.next.json'
 
-// Function to compare coverage between current results and baseline
-const compareTestedElementsWithBaseline = (currentResults, baselineData) => {
-  const testedElementsIssues = []
-  const testedElementsImprovements = []
-  const newPages = []
-
-  // Check if current results has views
-  if (!currentResults.views || !Array.isArray(currentResults.views)) {
-    console.log(
-      'Warning: Current results do not contain a valid "views" array. Skipping comparison.'
-    )
-    return {
-      testedElementsIssues,
-      testedElementsImprovements,
-      newPages,
-      hasChanges: false,
-    }
-  }
-
-  const currentViews = currentResults.views
-
-  // Check if baseline data has the expected structure
-  if (!baselineData.views) {
-    console.log(
-      'Warning: Baseline data does not contain "views" property. Skipping comparison.'
-    )
-    console.log('Current baseline structure:', Object.keys(baselineData))
-    return {
-      testedElementsIssues,
-      testedElementsImprovements,
-      newPages,
-      hasChanges: true,
-    }
-  }
-
-  const baselineViews = baselineData.views
-
-  // Ensure baselineViews is an array
-  if (!Array.isArray(baselineViews)) {
-    console.log('Warning: Baseline views is not an array. Skipping comparison.')
-    return {
-      testedElementsIssues,
-      testedElementsImprovements,
-      newPages,
-      hasChanges: true,
-    }
-  }
-
-  // Create a map of baseline testedElementsCount by displayName for quick lookup
-  const baselineTestedElementsMap = {}
-  baselineViews.forEach((view) => {
-    baselineTestedElementsMap[view.displayName] = view.testedElementsCount
-  })
-
-  // Create a map of current views by displayName to check for missing pages
-  const currentViewsMap = {}
-  currentViews.forEach((view) => {
-    currentViewsMap[view.displayName] = view.testedElementsCount
-  })
-
-  // Compare each current view with baseline
-  currentViews.forEach((currentView) => {
-    const pageName = currentView.displayName
-    const currentTestedElements = currentView.testedElementsCount
-    const pageExistsInBaseline = pageName in baselineTestedElementsMap
-
-    if (pageExistsInBaseline) {
-      const baselineTestedElements = baselineTestedElementsMap[pageName]
-      if (currentTestedElements < baselineTestedElements) {
-        testedElementsIssues.push({
-          page: pageName,
-          currentTestedElements: currentTestedElements,
-          baselineTestedElements: baselineTestedElements,
-          difference: baselineTestedElements - currentTestedElements,
-        })
-      } else if (currentTestedElements > baselineTestedElements) {
-        testedElementsImprovements.push({
-          page: pageName,
-          currentTestedElements: currentTestedElements,
-          baselineTestedElements: baselineTestedElements,
-          difference: currentTestedElements - baselineTestedElements,
-        })
-      }
-    } else {
-      // New page not in baseline
-      newPages.push({
-        page: pageName,
-        testedElementsCount: currentTestedElements,
-      })
-    }
-  })
-
-  // Check for pages in baseline that are missing from current results
-  // These are treated as regressions (0 tested elements)
-  baselineViews.forEach((baselineView) => {
-    const pageName = baselineView.displayName
-    if (!(pageName in currentViewsMap)) {
-      testedElementsIssues.push({
-        page: pageName,
-        currentTestedElements: 0,
-        baselineTestedElements: baselineView.testedElementsCount,
-        difference: baselineView.testedElementsCount,
-        isMissing: true,
-      })
-    }
-  })
-
-  const hasChanges =
-    testedElementsIssues.length > 0 ||
-    testedElementsImprovements.length > 0 ||
-    newPages.length > 0
-
-  return {
-    testedElementsIssues,
-    testedElementsImprovements,
-    newPages,
-    hasChanges,
-  }
-}
-
-function generateUICoverageBaseline(results) {
-  try {
-    // Generate simplified baseline with only runNumber, runUrl, and views with displayName and testedElementsCount
-    return {
-      runNumber: results.runNumber,
-      runUrl: results.runUrl,
-      views: results.views.map((view) => ({
-        displayName: view.displayName,
-        testedElementsCount: view.testedElementsCount,
-      })),
-    }
-  } catch (error) {
-    console.error('Error generating UI Coverage baseline:', error)
-    return null
-  }
-}
+const hasBaseline = fs.existsSync(BASELINE_FILE)
+const baseline = hasBaseline
+  ? JSON.parse(fs.readFileSync(BASELINE_FILE, 'utf8'))
+  : { runNumber: null, runUrl: null, views: {} }
 
 getUICoverageResults()
   .then((results) => {
-    // Compare tested elements count with baseline
-    const {
-      testedElementsIssues,
-      testedElementsImprovements,
-      newPages,
-      hasChanges,
-    } = compareTestedElementsWithBaseline(results, baseline)
+    const { runNumber, runUrl, uiCoverageReportUrl, summary, views } = results
 
-    if (hasChanges) {
-      // Generate and log the new baseline values if there has been a change
-      const newBaseline = generateUICoverageBaseline(results)
-      console.log('\nTo use this run as the new baseline, copy these values:')
-      console.log(JSON.stringify(newBaseline, null, 2))
-      fs.writeFileSync(
-        'new-UICbaseline.json',
-        JSON.stringify(newBaseline, null, 2)
-      )
+    // A cancelled or incomplete run can under-report views, which would look
+    // like a regression. Skip enforcement instead of failing for the wrong reason.
+    if (summary.isPartialReport) {
+      console.warn('Report is partial. Skipping baseline comparison.')
+      return
     }
 
-    // Log tested elements regressions
-    if (testedElementsIssues.length > 0) {
-      console.error('\n❌ TESTED ELEMENTS REGRESSION DETECTED!')
-      console.error(
-        'The following pages have fewer tested elements than the baseline:'
-      )
-      console.error('')
+    const newGaps = []
+    const improvements = []
 
-      testedElementsIssues.forEach((issue) => {
-        console.error(`  📄 ${issue.page}`)
-        if (issue.isMissing) {
-          console.error(
-            `     ⚠️  MISSING FROM REPORT (treated as 0 tested elements)`
-          )
-          console.error(
-            `     Current: 0 | Baseline: ${issue.baselineTestedElements} | Difference: -${issue.difference}`
-          )
-        } else {
-          console.error(
-            `     Current: ${issue.currentTestedElements} | Baseline: ${issue.baselineTestedElements} | Difference: -${issue.difference}`
-          )
+    views.forEach((view) => {
+      const current = view.untestedElementsCount
+      const previous = baseline.views[view.displayName]
+
+      if (previous === undefined) {
+        // A view with no baseline entry is new. Only flag it if it ships gaps.
+        if (current > 0) {
+          newGaps.push({
+            view: view.displayName,
+            previous: 0,
+            current,
+            url: view.uiCoverageReportUrl,
+          })
         }
-        console.error('')
-      })
+      } else if (current > previous) {
+        newGaps.push({
+          view: view.displayName,
+          previous,
+          current,
+          url: view.uiCoverageReportUrl,
+        })
+      } else if (current < previous) {
+        improvements.push({ view: view.displayName, previous, current })
+      }
+    })
 
+    // Save the current run's numbers as the next candidate baseline.
+    fs.writeFileSync(
+      CANDIDATE_FILE,
+      JSON.stringify(
+        {
+          runNumber,
+          runUrl,
+          views: Object.fromEntries(
+            views.map((view) => [view.displayName, view.untestedElementsCount])
+          ),
+        },
+        null,
+        2
+      )
+    )
+
+    // On the first run there's no committed baseline to compare against, so seed
+    // the candidate and exit cleanly. Commit it to start gating later runs.
+    if (!hasBaseline) {
+      console.log(
+        `No committed baseline yet. Wrote ${CANDIDATE_FILE}; commit it as ${BASELINE_FILE} to start gating.`
+      )
+      return
+    }
+
+    improvements.forEach(({ view, previous, current }) =>
+      console.log(`✅ ${view}: untested elements ${previous} → ${current}`)
+    )
+
+    if (newGaps.length > 0) {
+      console.error('\n❌ New untested elements were introduced:\n')
+      newGaps.forEach(({ view, previous, current, url }) =>
+        console.error(`   ${view}: ${previous} → ${current} untested (${url})`)
+      )
       console.error(
-        `Total pages with tested elements regression: ${testedElementsIssues.length}`
+        '\nAdd tests for the new elements, or exclude them with App Quality configuration.'
       )
-    }
-
-    // Log tested elements improvements
-    if (testedElementsImprovements.length > 0) {
-      console.log('\n✅ TESTED ELEMENTS IMPROVEMENTS DETECTED!')
-      console.log(
-        'The following pages have more tested elements than the baseline:'
-      )
-      console.log('')
-
-      testedElementsImprovements.forEach((improvement) => {
-        console.log(`  📄 ${improvement.page}`)
-        console.log(
-          `     Current: ${improvement.currentTestedElements} | Baseline: ${improvement.baselineTestedElements} | Difference: +${improvement.difference}`
-        )
-        console.log('')
-      })
-
-      console.log(
-        `Total pages with tested elements improvement: ${testedElementsImprovements.length}`
-      )
-    }
-
-    // Log new pages
-    if (newPages.length > 0) {
-      console.log('\n📝 NEW PAGES DETECTED (not in baseline):')
-      newPages.forEach((page) => {
-        console.log(
-          `  📄 ${page.page} - Tested Elements: ${page.testedElementsCount}`
-        )
-      })
-      console.log(`Total new pages: ${newPages.length}`)
-    }
-
-    // Summary
-    if (!hasChanges) {
-      console.log(
-        '\n✅ All pages meet or exceed baseline tested elements count!'
-      )
-    } else if (testedElementsIssues.length === 0) {
-      console.log('\n✅ No tested elements regressions detected!')
-    }
-
-    // Exit with error code if there are regressions
-    if (testedElementsIssues.length > 0) {
+      console.error(`Full report: ${uiCoverageReportUrl}`)
       process.exit(1)
     }
+
+    console.log('\n✅ No new untested elements against the baseline.')
   })
   .catch((error) => {
-    console.error('Error getting UI coverage results:', error)
+    console.error(`Could not compare UI Coverage results: ${error.message}`)
     process.exit(1)
   })
 ```
+
+</AccordionBlock>
+
+**From your editor with an AI assistant.** If you use an agent that supports
+[Cypress Cloud MCP](/cloud/integrations/cloud-mcp), you can build the baseline
+without wiring up CI first by having it pull the report and write the file:
+
+<CopyPrompt
+  title="Build a UI Coverage baseline with your AI assistant"
+  subtext="Pulls the UI Coverage report from Cypress Cloud and writes a baseline file you can commit."
+  prompt={`Using Cypress Cloud, pull the UI Coverage report for the latest run on main. Write a ui-coverage-baseline.json file with runNumber, runUrl, and a views object that maps each view's display name to its untested element count.`}
+/>
+
+Review the generated file the same way, then commit it. See
+[Work with AI agents](/ui-coverage/work-with-ai-agents) for more on using Cloud
+MCP with UI Coverage.
 
 ### Key concepts
 
 #### New untested elements
 
-A **new untested element** situation occurs when a view has untested elements in the current run but did not have untested elements in the baseline. This represents a regression in test coverage that needs to be addressed. The script will fail the build if any views with new untested elements are detected.
+A view has **new untested elements** when its `untestedElementsCount` is higher
+than the baseline, or when a view absent from the baseline appears with untested
+elements. This is a coverage regression: the change added interactive elements no
+test exercises. The script fails the build so the pull request can't merge until
+you cover them or exclude them.
 
-#### Resolved untested elements
+#### Resolved gaps
 
-A **resolved untested element** situation occurs when a view had untested elements in the baseline but no longer has untested elements in the current run. This represents an improvement in test coverage. The script reports these but does not fail the build, allowing you to track progress.
+A view has **resolved gaps** when its `untestedElementsCount` is lower than the
+baseline. This is an improvement: a change added coverage. The script reports
+these but doesn't fail the build, so progress is visible without blocking anyone.
 
 #### View-level comparison
 
-Untested elements are tracked per view (URL pattern or component), allowing you to see exactly which pages or components have coverage regressions or improvements. This granular tracking makes it easier to identify where new tests are needed or where coverage has improved.
+Untested elements are compared per [view](/ui-coverage/core-concepts/views) (a URL
+pattern for end-to-end tests, or a spec file for component tests), so the failure
+message points at the exact page or component where the new gap appeared, rather
+than a single project-wide number. Views are matched by `displayName`, so renaming
+a route or changing how views are grouped changes the key: an unchanged page can
+then look like a new view and trip the gate. Re-promote the baseline after changes
+like that.
 
-### Best practices
+## Wire the check into CI
 
-#### When to update the baseline
+Add a step to the CI workflow that runs your Cypress tests, after the
+`cypress run --record` step, that installs the Results API module and executes
+your verification script:
 
-Update your baseline when:
+```diff title="test_cypress.yaml"
+name: My Workflow
+on: push
 
-- You've added tests to cover previously untested elements and want to prevent regressions
-- You've accepted certain coverage gaps as known issues that won't block deployments
-- You want to track coverage improvements over time
+jobs:
+  run-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - run: npm install
+      - name: Run Cypress tests
+        run: npx cypress run --record
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
++     - name: Enforce UI Coverage policy
++       run: |
++          npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
++          node ./scripts/compareUICoverageBaseline.js
++       env:
++         CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
++         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+```
 
-Store the baseline in version control so it's versioned alongside your code and accessible in CI environments.
+This example runs the baseline script. If you chose the
+[threshold policy](#Enforce-a-coverage-threshold) instead, run
+`verifyUICoverageResults.js` in that step, or run whichever script matches the
+policy you settled on.
 
-#### Handling partial reports
+When your script exits non-zero, the CI step fails, which surfaces as a failed
+**status check** on the pull request. To make that check _block_ the merge rather
+than just show red, mark it as required in your version control provider's branch
+protection settings (for example,
+[GitHub's required status checks](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#require-status-checks-before-merging)).
+Because enforcement lives entirely in your CI job, you control exactly when a
+coverage gap is advisory versus blocking.
 
-If a run is cancelled or incomplete, the Results API may return a partial report. Consider checking `summary.isPartialReport` before comparing against the baseline, as partial reports may not include all views and could produce false positives.
+See the [Results API CI setup](/ui-coverage/results-api#Add-the-verification-step-to-CI)
+for the equivalent step in GitLab, Jenkins, Azure, CircleCI, and other providers.
 
-#### Managing baseline across branches
+## Use Profiles for PR-specific configuration
 
-You may want different baselines for different branches (e.g., `main` vs feature branches). Consider storing baselines in branch-specific files or using environment variables to specify which baseline to use.
+A pull request check should be fast and focused, while your nightly regression
+run tracks everything. [Profiles](/ui-coverage/configuration/profiles) let you
+apply different app quality configuration
+to different runs based on their [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt),
+so both can share one Cypress Cloud project.
 
-#### Storing the baseline
+For example, this configuration defines a `pr-critical` profile that narrows PR
+runs to just the flows you gate merges on, while the base configuration still
+reports on everything for regression tracking:
 
-Common approaches for storing baselines:
+```json title="App Quality Config"
+{
+  "profiles": [
+    {
+      "name": "pr-critical",
+      "comment": "Narrow, fast config for PR runs: only the flows we block merges on",
+      "config": {
+        "viewFilters": [
+          { "pattern": "/checkout/*", "include": true },
+          { "pattern": "/login", "include": true },
+          { "pattern": "*", "include": false }
+        ]
+      }
+    }
+  ]
+}
+```
 
-- **Version control**: Commit the baseline JSON file to your repository
-- **CI artifacts**: Store baselines as build artifacts that can be retrieved in subsequent runs
-- **External storage**: Use cloud storage or a database for baselines if you need more sophisticated versioning
+Record your PR runs with the matching tag, and Cypress Cloud applies the profile
+automatically:
+
+```shell
+cypress run --record --tag pr-critical
+```
+
+When you record more than one run in a single CI build, pass the same tag to the
+helper so it returns the right run's results:
+
+```javascript title="Fetch results for a tagged run"
+getUICoverageResults({ runTags: ['pr-critical'] })
+```
+
+You can confirm which profile produced a report by reading the
+[`config`](/ui-coverage/results-api#Reading-the-applied-configuration) property on
+the result, which is useful for asserting that a PR run actually used the narrow
+configuration you expect.
+
+## Best practices
+
+### When to update the baseline
+
+Promote the candidate baseline (`ui-coverage-baseline.next.json`) to your
+committed `ui-coverage-baseline.json` when you:
+
+- Add tests that cover previously untested elements and want to lock in the gain.
+- Deliberately accept a new gap as known debt that shouldn't block deployments.
+- Want a fresh reference point after a large change to the application.
+
+Commit the baseline to version control so it's versioned alongside your code and
+available to every CI run.
+
+### Skip incomplete or non-passing runs
+
+A run can be cancelled, time out, or produce a partial report. The example
+already skips comparison when `summary.isPartialReport` is `true`; you can also
+check [`runStatus`](/ui-coverage/results-api#Result-properties) and skip
+enforcement for statuses like `cancelled` or `timedOut`, so an incomplete run
+warns instead of failing the build for the wrong reason. See
+[Skip enforcement for partial or non-passing runs](/ui-coverage/results-api#Skip-enforcement-for-partial-or-non-passing-runs).
+
+### Manage baselines across branches
+
+You may want different baselines for different branches. Store branch-specific
+baseline files, or use an environment variable to choose which baseline to load,
+so a long-lived feature branch doesn't fail against `main`'s numbers.
+
+### Where to store the baseline
+
+- **Version control** (recommended): commit the JSON file so it's reviewed and
+  versioned with the code that changed the coverage.
+- **CI artifacts**: store baselines as build artifacts retrieved on later runs.
+- **External storage**: use a database if you need richer versioning across many
+  projects.
 
 :::info
 
-This baseline comparison approach complements the [Branch Review](/ui-coverage/guides/compare-reports) UI feature, which provides visual comparisons between runs. The programmatic approach is ideal for CI/CD automation, while Branch Review is better suited for manual investigation and code review workflows.
+This programmatic baseline complements the
+[Branch Review](/ui-coverage/guides/compare-reports) UI, which visually compares
+two runs. Use the script to gate merges automatically in CI, and Branch Review
+for manual investigation during code review.
 
 :::
+
+## See also
+
+- [Results API](/ui-coverage/results-api): the full `getUICoverageResults`
+  reference and more enforcement examples.
+- [Monitor changes](/ui-coverage/guides/monitor-changes): track coverage trends
+  and catch regressions over time.
+- [Compare reports](/ui-coverage/guides/compare-reports): diff two runs visually
+  with Branch Review.
+- [Profiles](/ui-coverage/configuration/profiles): apply different configuration
+  to runs using run tags.
+- [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps) and
+  [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps): find the
+  gaps a policy will block, and close them.
+- [UI Coverage FAQ](/ui-coverage/faq#Results-API-and-CI): quick answers to common
+  Results API, baseline, and CI questions.

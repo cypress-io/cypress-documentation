@@ -16,16 +16,21 @@ sidebar_position: 200
 
 ## Week of Mar 30, 2026
 
-- The [Cloud MCP](/cloud/integrations/cloud-mcp) now includes Accessibility tools, so your AI agents can query and act on Accessibility data directly.
+- **Cypress Accessibility in Cypress Cloud MCP:** AI agents can now query and act on Cypress Accessibility data for a run through the [Cypress Cloud MCP server](/cloud/integrations/cloud-mcp), using three new tools:
+  - `cypress_get_accessibility_report`: Returns a run's violation counts by severity, the failing rules with their element counts, and the top views sorted by failure count.
+  - `cypress_get_accessibility_rule_failures`: Drills into the failing DOM elements for a specific rule, optionally scoped to a single view.
+  - `cypress_get_accessibility_views`: Browses all of the views in a run, sorted by number of failing rules.
+
+  See [working with AI agents](/accessibility/work-with-ai-agents) for example prompts and setup.
 
 ## Week of Feb 06, 2026
 
-- We now support fetching Accessibility results from Buildkite CI with the [Results API](/accessibility/guides/results-api).
+- We now support fetching Accessibility results from Buildkite CI with the [Results API](/accessibility/results-api).
 
 ## Week of Jan 16, 2026
 
 - We've upgraded our axe-core version to [4.11.0](https://docs.deque.com/axe-release-impact/4.11.0/en/release-notes).
-- We now support fetching Accessibility results from Bitbucket CI with the [Results API](/accessibility/guides/results-api).
+- We now support fetching Accessibility results from Bitbucket CI with the [Results API](/accessibility/results-api).
 
 ## Week of Dec 19, 2025
 
@@ -33,7 +38,7 @@ sidebar_position: 200
 
 ## Week of Dec 12, 2025
 
-- You can now create Jira issues directly from accessibility violations in the detail view. This allows you to quickly track and prioritize accessibility issues within your existing Jira workflow. The created Jira issue will include a link back to the accessibility violation in Cypress Cloud. [Learn more about creating Jira issues](/accessibility/core-concepts/inspecting-violation-details#Create-Jira-issue).
+- You can now create Jira issues directly from accessibility violations in the detail view. This allows you to quickly track and prioritize accessibility issues within your existing Jira workflow. The created Jira issue will include a link back to the accessibility violation in Cypress Cloud. [Learn more about creating Jira issues](/accessibility/guides/inspecting-violation-details#Create-Jira-issue).
 
 ## Week of Dec 01, 2025
 
@@ -54,17 +59,17 @@ sidebar_position: 200
 
 ## Week of Jun 02, 2025
 
-- We now support fetching Accessibility results from Drone CI with the [Results API](/accessibility/guides/results-api).
+- We now support fetching Accessibility results from Drone CI with the [Results API](/accessibility/results-api).
 
 ## Week of May 26, 2025
 
 - A new [element identification](/accessibility/core-concepts/element-identification) algorithm is now available for Cypress Accessibility. This produces improved element deduplication across different snapshots and runs, and incorporates testing-specific attributes like Test IDs into the element recognition and deduplication process. This replaces the default Axe-Core® element identification behavior.
 - Two new configuration options are available in Cypress Accessibility - [`significantAttributes`](/accessibility/configuration/significantattributes) and [`attributeFilters`](/accessibility/configuration/attributefilters). These allow you to fine-tune Cypress's element identification behavior to ensure stable and relevant locators are used.
-- Branch Review for Cypress Accessibility is now generally available, with an updated interface for displaying new and resolved violations, based on feedback during the Beta period. Thank you all for hitting the feedback button! [Learn more about comparing reports](/accessibility/core-concepts/compare-reports).
+- Branch Review for Cypress Accessibility is now generally available, with an updated interface for displaying new and resolved violations, based on feedback during the Beta period. Thank you all for hitting the feedback button! [Learn more about comparing reports](/accessibility/guides/compare-reports).
 
 ## Week of May 12, 2025
 
-- We now support fetching Accessibility results from AWS CodeBuild with the [Results API](/accessibility/guides/results-api).
+- We now support fetching Accessibility results from AWS CodeBuild with the [Results API](/accessibility/results-api).
 
 ## Week of Mar 24, 2025
 
@@ -72,7 +77,7 @@ sidebar_position: 200
 
 ## Week of Mar 10, 2025
 
-- The [Cypress Accessibility Results API](/accessibility/guides/results-api) has been updated with additional details about accessibility scores and failed element counts at the run level. Also, view-level reporting has been added, breaking out accessibility report data by the pages and components covered in the report. These improvements support more advanced workflows based on the accessibility data in the API, such as alerting a specific team about violations in a part of the app they own, or implementing different standards for different parts of the application.
+- The [Cypress Accessibility Results API](/accessibility/results-api) has been updated with additional details about accessibility scores and failed element counts at the run level. Also, view-level reporting has been added, breaking out accessibility report data by the pages and components covered in the report. These improvements support more advanced workflows based on the accessibility data in the API, such as alerting a specific team about violations in a part of the app they own, or implementing different standards for different parts of the application.
 
 ## Week of Mar 03, 2025
 
@@ -81,7 +86,7 @@ sidebar_position: 200
 
 ## Week of Feb 24, 2025
 
-- [Cypress Accessibility Branch Review](/accessibility/core-concepts/compare-reports) has entered beta. Read the docs to learn how to compare runs and automatically spot newly introduced issues.
+- [Cypress Accessibility Branch Review](/accessibility/guides/compare-reports) has entered beta. Read the docs to learn how to compare runs and automatically spot newly introduced issues.
 
 ## Week of Jan 13, 2025
 
@@ -107,7 +112,7 @@ sidebar_position: 200
 ## Week of Sep 09, 2024
 
 - We have introduced the new "Rules" tab for all users. This allows you to more easily review the outcome of all the rules that were tested for, across the entire run, and see which rules have the most failing elements. This also helps you understand the exact effect of any underlying configuration on rule outcomes.
-- We have introduced new element statuses, beyond just failures. This allows Cypress Accessibility to surface any inconclusive or "manual review" items from Axe Core, as well as track and display elements whose results were explicitly ignored. Learn more in the [run-level reports](/accessibility/core-concepts/run-level-reports) [Elements section](/accessibility/core-concepts/run-level-reports#Elements).
+- We have introduced new element statuses, beyond just failures. This allows Cypress Accessibility to surface any inconclusive or "manual review" items from Axe Core, as well as track and display elements whose results were explicitly ignored. Learn more in the [run-level reports](/accessibility/guides/run-level-reports) [Elements section](/accessibility/guides/run-level-reports#Elements).
 - Elements ignored by configuration will have results captured, but these results will not affect your score. This ensures you can use filters to peek behind the curtain and understand exactly what is being excluded from a given run's results.
 - The Detail View that displays failing elements will now also display inconclusive and (optionally) ignored elements for each rule. Inconclusive and ignored elements have distinct orange and gray icons and highlights respectively.
 
@@ -118,19 +123,19 @@ sidebar_position: 200
 
 ## Week of Aug 05, 2024
 
-- We now support fetching Accessibility results from CircleCI workflows with the [Results API](/accessibility/guides/results-api).
+- We now support fetching Accessibility results from CircleCI workflows with the [Results API](/accessibility/results-api).
 
 ## Week of Jul 29, 2024
 
-- Fetching results in Azure and Jenkins is now supported in the new [Results API](/accessibility/guides/results-api), which enables you to programmatically fetch your run's Accessibility results in a CI environment.
+- Fetching results in Azure and Jenkins is now supported in the new [Results API](/accessibility/results-api), which enables you to programmatically fetch your run's Accessibility results in a CI environment.
 
 ## Week of Jul 15, 2024
 
-- The new [Results API](/accessibility/guides/results-api), which enables you to programmatically fetch your run's Accessibility results in a CI environment, now supports fetching results in GitLab CI workflows.
+- The new [Results API](/accessibility/results-api), which enables you to programmatically fetch your run's Accessibility results in a CI environment, now supports fetching results in GitLab CI workflows.
 
 ## Week of Jun 24, 2024
 
-- We have added the new [Results API](/accessibility/guides/results-api) which enables you to programmatically fetch your run's Accessibility results in a CI environment. This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge.
+- We have added the new [Results API](/accessibility/results-api) which enables you to programmatically fetch your run's Accessibility results in a CI environment. This allows you to review the results within CI and to determine if the results are acceptable or need to be addressed before code changes can merge.
 - View [configuration information for each run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run) in the properties tab. There, you'll find the configuration set for the project at the start of the run. This will help you understand what factors might be driving a score change. This helps distinguish config criteria changes from other factors such as changes to your application, tests, Cypress versions, and more.
 
 ## Week of May 20, 2024

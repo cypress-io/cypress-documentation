@@ -1154,14 +1154,32 @@
   force = true
 
 [[redirects]]
-  from = "/accessibility/results-api"
-  to = "/accessibility/guides/results-api"
+  from = "/accessibility/guides/results-api"
+  to = "/accessibility/results-api"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/accessibility/guides/block-pull-requests"
-  to = "/accessibility/block-pull-requests"
+  from = "/accessibility/block-pull-requests"
+  to = "/accessibility/guides/block-pull-requests"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/core-concepts/compare-reports"
+  to = "/accessibility/guides/compare-reports"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/core-concepts/run-level-reports"
+  to = "/accessibility/guides/run-level-reports"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/core-concepts/inspecting-violation-details"
+  to = "/accessibility/guides/inspecting-violation-details"
   status = 301
   force = true
 

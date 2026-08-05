@@ -19,6 +19,7 @@ import { IconObjectMagnifyingGlass } from '@cypress-design/react-icon'
 import {
   assignDisplayPositions,
   boostCurrentSection,
+  filterDisplayableHits,
   getCurrentSectionLvl0,
   mergeFacetFilters,
 } from './searchRanking'
@@ -209,13 +210,16 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
           queryID: queryIDRef.current || item.queryID,
         }))
 
+    // Drop section-label-only records (lvl0 hits with no title/content) that
+    // would otherwise render as blank rows. The `type:-lvl0` facet filter in
+    // docusaurus.config.js already excludes them at query time; this is the
+    // client-side backstop.
+    const displayable = filterDisplayableHits(transformedItems)
+
     // Prefer results from the product section the reader is currently in, then
     // record each hit's final displayed position so click analytics report the
     // rank the user actually saw rather than Algolia's original ordering.
-    const boosted = boostCurrentSection(
-      transformedItems,
-      currentSectionRef.current
-    )
+    const boosted = boostCurrentSection(displayable, currentSectionRef.current)
     return assignDisplayPositions(boosted)
   }).current
   const resultsFooterComponent = useMemo(

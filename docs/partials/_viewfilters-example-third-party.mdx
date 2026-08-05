@@ -1,0 +1,28 @@
+#### Config
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "https://app.okta.com/*",
+      "include": false,
+      "comment": "Exclude the Okta login flow"
+    }
+  ]
+}
+```
+
+#### Visited URLs
+
+```
+https://app.okta.com/login
+https://www.my-app.com/home
+https://www.my-app.com/about
+```
+
+#### Views shown in UI
+
+```
+https://www.my-app.com/home
+https://www.my-app.com/about
+```
