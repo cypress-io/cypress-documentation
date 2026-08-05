@@ -1922,3 +1922,135 @@ other techniques are not supported.
 
 Review the steps of your generated tests to confirm they are behaving as
 intended, especially if attempting steps that are documented as not supported.
+
+## cypress tap
+
+The `cypress tap` CLI commands let you, or an AI coding agent, drive a running
+Cypress session from the terminal. See the
+[cypress tap guide](/app/tooling/cypress-tap) and the
+[command line reference](/app/references/command-line#cypress-tap).
+
+### <Icon name="angle-right" /> What is `cypress tap` in Cypress?
+
+`cypress tap` is a set of Cypress CLI commands that interact with a Cypress
+session already running in open mode. From another terminal you can list the
+specs Cypress can run, start a run, poll its status, read test results the way
+the Cypress Command Log shows them, and inspect the DOM and accessibility tree
+of the application under test.
+
+It is built for AI coding agents. Every command prints stable JSON with
+`--json`, so an agent can run the Cypress test it just changed and read the
+failure itself instead of asking you to paste results back to it.
+
+### <Icon name="angle-right" /> How do I let an AI agent run my Cypress tests and read the results?
+
+Start Cypress in open mode with `cypress open`, then point your agent at the
+`cypress tap` commands in another terminal. A typical loop is
+`cypress tap run <spec>` to start a Cypress run, `cypress tap status --json` to
+poll until it reports `passed` or `failed`, and `cypress tap reporter --test <id>`
+to read the failing test's Command Log, error, and code frame.
+
+Add those steps to the instructions file your agent reads, such as `AGENTS.md`
+or `CLAUDE.md`. See
+[Use cypress tap with AI agents](/app/tooling/cypress-tap#Use-cypress-tap-with-AI-agents)
+for a snippet you can copy.
+
+### <Icon name="angle-right" /> How do I use Cypress with Cursor, Claude Code, or GitHub Copilot?
+
+Any AI coding tool that can run shell commands can drive Cypress through the
+`cypress tap` CLI. Start Cypress with `cypress open`, then add the
+`cypress tap` workflow to the instructions file your tool reads: `AGENTS.md`
+for Cursor and Codex CLI, `CLAUDE.md` for Claude Code, or
+`.github/copilot-instructions.md` for GitHub Copilot. See
+[Use cypress tap with AI agents](/app/tooling/cypress-tap#Use-cypress-tap-with-AI-agents)
+for a snippet to copy.
+
+To teach the same tools how to write good Cypress tests in the first place,
+see [Cypress AI Skills](/app/tooling/ai-skills). The two work well together:
+the skills cover how to write Cypress tests, and `cypress tap` reports what
+happened when those tests ran.
+
+### <Icon name="angle-right" /> Can an AI agent fix my failing Cypress tests automatically?
+
+It can get much closer than it could without a way to run them. With
+[`cypress tap`](/app/tooling/cypress-tap), an agent can run the Cypress spec
+it just changed, poll for a verdict, read the failing test's Command Log and
+error, inspect the DOM of the application under test, then fix and rerun until
+the spec passes, all without you pasting results back into the conversation.
+
+Review what it changed before you commit it. Cypress reports the run honestly,
+but a passing Cypress test only proves the assertions the agent wrote are
+satisfied, and `passed` on a spec whose tests were all skipped still reports
+`passed`.
+
+### <Icon name="angle-right" /> Does `cypress tap` work with `cypress run` in CI?
+
+No. `cypress tap` attaches to interactive `cypress open` sessions only.
+Headless `cypress run` sessions, including the ones in your CI pipeline, are
+not discoverable. `cypress tap` is a local development tool for tightening the
+loop while you and your agent write code.
+
+To give an agent your Cypress CI results instead, use
+[Cloud MCP](/cloud/integrations/cloud-mcp) or the
+[Cloud CLI](/cloud/integrations/cloud-cli), which read recorded runs from
+Cypress Cloud.
+
+### <Icon name="angle-right" /> Does `cypress tap` require a Cypress Cloud account?
+
+No. `cypress tap` talks only to the Cypress session running on your own
+machine, so it needs no Cypress Cloud account, login, or network access. It
+ships with the `cypress` npm package like every other Cypress CLI command.
+
+### <Icon name="angle-right" /> Which browsers does `cypress tap` support?
+
+The commands that read the browser (`reporter`, `command`, `pin`, `dom`,
+`aria`, and `inspect`) require a Chromium-family browser open in the Cypress
+session: Chrome, Chromium, Edge, or Electron. Firefox and WebKit are not
+supported for reading the browser.
+
+The session-level commands (`instances`, `status`, `specs`, and `run`) work
+whatever browser the Cypress session has open.
+
+### <Icon name="angle-right" /> How do I check whether a Cypress session is running from the terminal?
+
+Run `cypress tap status`. It finds the Cypress session for you and reports
+where it is in its run lifecycle: `not connected`, `browser not selected`,
+`spec not selected`, `loading`, `running`, `passed`, or `failed`. It exits `0`
+for any stage it can determine, including `not connected`, so branch on the
+`status` field rather than the exit code.
+
+To list every Cypress session the CLI can reach, run `cypress tap instances`,
+and pass a listed pid to `--instance` to target one.
+
+### <Icon name="angle-right" /> Can my AI agent read the DOM of the application under test in Cypress?
+
+Yes. `cypress tap dom` returns the application under test's HTML,
+`cypress tap aria` returns its accessibility tree as a role, name, and state
+tree, and `cypress tap inspect <selector>` returns one element's tag,
+attributes, computed styles, box model, and accessibility node.
+
+To read the page as it was at an earlier point in the Cypress test rather than
+its final state, pin a command's DOM snapshot first with `cypress tap pin`.
+These commands read a completed run, so wait for `status` to report `passed`
+or `failed` before calling them.
+
+### <Icon name="angle-right" /> What is the difference between `cypress tap` and Cypress Cloud MCP?
+
+They cover different halves of the same loop. Cypress
+[Cloud MCP](/cloud/integrations/cloud-mcp) and the
+[Cloud CLI](/cloud/integrations/cloud-cli) give an agent your **recorded**
+Cypress runs from Cypress Cloud, so it can see what failed in CI.
+`cypress tap` gives it the **live** Cypress session on your machine, so it can
+rerun a spec and confirm a fix before you push.
+
+Many teams use both: diagnose a CI failure through Cloud, then verify the fix
+locally with `cypress tap`. See
+[Verify a Cloud failure locally](/app/tooling/cypress-tap#Verify-a-Cloud-failure-locally).
+
+### <Icon name="angle-right" /> Should I use the Cypress window while `cypress tap` is running?
+
+No. `cypress tap` drives the same Cypress session you are looking at, and
+there is no lock between the two. Starting a run from the Cypress app,
+switching spec, or pinning and unpinning commands all change what your agent's
+next command reads. Treat a Cypress session an agent is driving as one you
+watch rather than touch.
