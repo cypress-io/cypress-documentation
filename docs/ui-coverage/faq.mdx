@@ -299,6 +299,8 @@ Yes. Add the [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-g
 
 Yes. In Cypress UI Coverage, the [`elementGroups`](/ui-coverage/configuration/elementgroups), [`elementFilters`](/ui-coverage/configuration/elementfilters), [`elements`](/ui-coverage/configuration/elements), and [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) configuration options all accept a `documentScope` property that limits a rule to elements inside specific iframes or shadow DOM hosts. List one CSS selector per host, ordered from the outermost document to the innermost.
 
+**Note:** Shadow DOM and iframe processing for UI Coverage is optional and off by default. If you are experiencing unexpected results, reach out your Cypress representative or use the feedback button in the product.
+
 ### <Icon name="angle-right" /> Why isn't my element group showing up in the UI Coverage report?
 
 The most common causes in Cypress UI Coverage are:
