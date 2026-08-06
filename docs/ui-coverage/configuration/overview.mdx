@@ -91,7 +91,7 @@ The shape of every available option, with the type each value expects:
 
 ```json title="App Quality Config"
 {
-  // Root level only — applies to both UI Coverage and Cypress Accessibility
+  // Root level only: applies to both UI Coverage and Cypress Accessibility
   "views": [
     {
       "pattern": string,
@@ -102,7 +102,7 @@ The shape of every available option, with the type each value expects:
   // or as a bare pattern string, if you do not want comments or grouping: "views": ["/users/*"]
 
   // Shared properties. Valid here and, with the same shape, nested under
-  // "uiCoverage" — if both are present, the nested list replaces the root-level one
+  // "uiCoverage". If both are present, the nested list replaces the root-level one
   "viewFilters": [
     {
       "pattern": string,
@@ -162,7 +162,7 @@ The shape of every available option, with the type each value expects:
     ],
     "comment": string
     // plus viewFilters, elementFilters, significantAttributes, and
-    // attributeFilters — same shape as the root, replacing it for UI Coverage
+    // attributeFilters: same shape as the root, replacing it for UI Coverage
   },
 
   "profiles": [

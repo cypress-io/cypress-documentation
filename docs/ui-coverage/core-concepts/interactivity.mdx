@@ -15,7 +15,7 @@ Your UI Coverage score is built from the interactive parts of your app: the butt
 2. **An interactive element is marked as tested when a recognized Cypress command targets it**, which forms the numerator. Links are also marked tested when a test visits their destination.
 3. **A link is flagged as untested when its destination is never visited** during your run.
 
-Put simply, your score is the share of interactive elements your tests exercise: **tested ÷ total**. Links share this total — each distinct destination counts as one unit. See [how the score is calculated](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) for the details.
+In short, your score is the share of interactive elements your tests exercise: **tested ÷ total**. Links share this total: each distinct destination counts as one unit. See [how the score is calculated](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) for the details.
 
 This page covers all three, along with the configuration and markup overrides you can use to make each one match your application. All three are computed from [Test Replay](/cloud/features/test-replay) data, so they work automatically with no setup or instrumentation. Reach for the overrides only when the defaults don't fit.
 
@@ -38,17 +38,17 @@ UI Coverage follows the WHATWG definition of [interactive content](https://html.
 
 An element with a widget role is skipped when it contains another interactive element, so a `role="button"` wrapper around a real `<button>` is counted once rather than twice.
 
-**Contact links** are the one deliberate exception: anchors whose `href` uses `tel:`, `mailto:`, or `sms:` are not treated as interactive. This applies to the anchor rule only — a `mailto:` link that independently qualifies, for example by carrying `tabindex="0"` or an interactive `role`, is still tracked. See [Untested Links](#Untested-Links) for how the rest of an anchor's `href` is handled.
+**Contact links** are the one deliberate exception: anchors whose `href` uses `tel:`, `mailto:`, or `sms:` are not treated as interactive. This applies to the anchor rule only. A `mailto:` link that independently qualifies, for example by carrying `tabindex="0"` or an interactive `role`, is still tracked. See [Untested Links](#Untested-Links) for how the rest of an anchor's `href` is handled.
 
 Because detection is based on semantics rather than event handlers, a real `<button>` is recognized automatically, while a `<div>` wired up with a click handler is not, until you give it interactive semantics or use the `data-cy-ui-interactive` attribute, described below.
 
 ### Visibility
 
-An interactive element only counts toward your score if it was **visible in at least one snapshot** during the run. Visibility means the element passes a CSS visibility check and is the topmost element at its own center point once scrolled into view. Elements with `opacity: 0` still count as visible for this purpose, since they remain clickable, and may be used as an "interaction target" area for a card or other element.
+An interactive element only counts toward your score if it was **visible in at least one snapshot** during the run. Visibility means the element passes a CSS visibility check and is the topmost element at its own center point once scrolled into view. Elements with `opacity: 0` still count as visible for this purpose, since they remain clickable (and teams sometimes use them as an invisible "interaction target" area for a card or similar control).
 
 :::note
 
-**Note:** A control that only ever sits inside a collapsed menu your tests never open is not counted at all — it neither raises nor lowers your score. This is why your total element count can be lower than the number of controls you know exist in your markup.
+A control that only ever sits inside a collapsed menu your tests never open is not counted at all. It neither raises nor lowers your score. This is why your total element count can be lower than the number of controls you know exist in your markup.
 :::
 
 <DocsImage
@@ -68,7 +68,7 @@ When the automatic rules don't match your app, the `data-cy-ui-interactive` attr
 | `exclude-all` | Removes the element and every element nested inside it.                          |
 | `reset`       | Re-enables tracking for a subtree nested inside an element marked `exclude-all`. |
 
-Only the closest `data-cy-ui-interactive` ancestor applies, which is what makes `reset` work: it sits between an `exclude-all` container and the subtree you want back. `reset` isn't a special keyword — any value other than `exclude` or `exclude-all` has the same effect — but use `reset` so the intent reads clearly.
+Only the closest `data-cy-ui-interactive` ancestor applies, which is what makes `reset` work: it sits between an `exclude-all` container and the subtree you want back. `reset` isn't a special keyword (any value other than `exclude` or `exclude-all` has the same effect), but use `reset` so the intent reads clearly.
 
 **Include a custom control** the browser doesn't recognize:
 

@@ -13,7 +13,7 @@ By default, UI Coverage reports every interactive element it finds, with built-i
 
 For many projects, you will want to adjust the default identification and grouping of the elements to match your team's goals and how you think about coverage. For example, an action might be possible from dozens of different locations within a page (like an "edit" button on every item in a list). In most cases, UI Coverage will group such actions together based on the repeated DOM structure so that testing **any of the instances** counts as testing **the whole group**.
 
-But sometimes, you may not see what appears as a "untested element" by default as a real gap. It might
+But sometimes what appears as an "untested element" by default isn't a gap your team would care about. It might
 be the same button counted many times, one element whose generated ID keeps
 changing, or dozens of near-identical pages listed as separate views. Left
 alone, this noise hides the gaps that actually matter.

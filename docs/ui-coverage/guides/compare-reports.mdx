@@ -102,19 +102,18 @@ how to group runs.
 ### Step 2: Read the coverage-score and element changes
 
 Start with the headline: the change in overall coverage score between the two
-runs. Branch Review shows the delta as a badge — a positive value when the score
+runs. Branch Review shows the delta as a badge: a positive value when the score
 rose and a negative one when it fell, comparing the changed run's score against
 the base run's.
 
-This gives you a good sense of whether the overall ratio of tested to untested elements has changed.
-It should help you understand if things are going off-track at a high level,
-but it doesn't tell you anything about changes to the actual nature of what is tested.
+This gives you a sense of whether the overall ratio of tested to untested elements has changed.
+It is a useful high-level signal, but it does not describe _what_ changed in the set of tested or untested items.
 
-Even if the score has not changed, it is important to review any new untested elements,
-as they may represent missing coverage on new features.
+Even if the score has not changed, review any new untested elements.
+They may represent missing coverage on new features.
 
-For example, if a code change adds 2 buttons and only test one of them, that would introduce
-one new tested element and one new untested at the same time - keeping the ratio, and the score, flat.
+For example, if a code change adds 2 buttons and you only test one of them, that would introduce
+one new tested element and one new untested element at the same time, keeping the ratio, and the score, flat.
 
 ### Step 3: Review new untested elements and links
 
@@ -124,10 +123,10 @@ sections to watch on a pull request.
 
 :::tip
 
-**Tip:** Reviewing the element diffs on a routine basis is incredibly useful. It will help your team:
+**Tip:** Reviewing the element diffs regularly helps your team:
 
 - **Spread out maintenance** of your coverage into small increments
-- **Take ownership** over changes in the test suite by explicitly deciding to ignore new elements or not
+- **Take ownership of** changes in the test suite by explicitly deciding whether to ignore new elements
 - **Communicate quickly** with developers or AI agents adding user-facing functionality without coverage
 
 :::

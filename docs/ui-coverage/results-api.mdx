@@ -172,7 +172,7 @@ getUICoverageResults({
 `getUICoverageResults` resolves with the following data. A **link** is a navigable
 anchor that points at another view; **elements** are the other interactive
 controls. Both count toward the coverage score, but the counts below report them
-separately — so `testedElementsCount` plus `untestedElementsCount` is **not** the
+separately, so `testedElementsCount` plus `untestedElementsCount` is **not** the
 score's denominator. Add the link counts to reconstruct it.
 
 ```javascript
@@ -210,7 +210,7 @@ score's denominator. Add the link counts to reconstruct it.
   config: {
     // ISO 8601 timestamp of when the configuration was last updated.
     updatedAt: string
-  // The App Quality configuration used for this report.
+    // The App Quality configuration saved for the project when this report was processed.
     value: object
   }
 }
@@ -765,8 +765,11 @@ If you use config [profiles](/ui-coverage/configuration/profiles) to produce a d
 ```javascript title="scripts/assertCoverageConfig.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
-// Tags this run was recorded with, e.g. from your CI environment.
-const RUN_TAGS = (process.env.CYPRESS_RUN_TAG || '').split(',').filter(Boolean)
+// Tags this run was recorded with. CYPRESS_RUN_TAG holds a single tag only;
+// pass runTags directly when a run carries more than one.
+const RUN_TAGS = process.env.CYPRESS_RUN_TAG
+  ? [process.env.CYPRESS_RUN_TAG]
+  : []
 
 getUICoverageResults({ runTags: RUN_TAGS }).then(({ config }) => {
   if (!config) {
