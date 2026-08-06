@@ -592,8 +592,8 @@
     },
     "cypress-device-emulate": {
       "npm": "cypress-device-emulate",
-      "version": "0.1.2",
-      "lastPublished": "2026-08-03T05:00:19.831Z",
+      "version": "0.1.3",
+      "lastPublished": "2026-08-05T14:08:54.541Z",
       "cypressVersion": ">=12.0.0"
     },
     "cypress-plugin-tab": {
