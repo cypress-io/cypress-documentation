@@ -23,7 +23,11 @@ No. UI Coverage requires no code changes or instrumentation. Reports are generat
 
 ### <Icon name="angle-right" /> How is the UI Coverage score calculated?
 
-The Cypress UI Coverage score compares the number of tested interactive elements to the total number of interactive elements in your application. [Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit: the group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
+The Cypress UI Coverage score compares the number of tested interactive elements to the total number of interactive elements in your application. Three rules determine what goes into that comparison:
+
+- **[Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit.** The group counts once toward the total, and an interaction with any element in the group marks the whole group as tested. Fifty identical buttons are one unit, not fifty.
+- **Links share the same total.** Each distinct link destination counts as one unit, and counts as tested when a test either interacts with the link or visits its destination. Untested links lower your score. They're reported in a separate list from untested elements, so `testedElementsCount` plus `untestedElementsCount` won't add up to the score's total on its own — add the link counts to get the true total.
+- **Only [visible](/ui-coverage/core-concepts/interactivity#Visibility) elements count.** An element that was never visible in any snapshot is excluded from both the tested and total counts, so it neither raises nor lowers your score. If the element
 
 ### <Icon name="angle-right" /> How do I get started with UI Coverage?
 
@@ -159,7 +163,7 @@ Connect [Slack](/cloud/integrations/slack) or [Microsoft Teams](/cloud/integrati
 
 ### <Icon name="angle-right" /> Can I see UI Coverage trends across all my projects?
 
-Yes. [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage) in Cypress Cloud, available on the Enterprise plan, rolls UI Coverage trends up across every project in your organization rather than one run at a time. You can view high-level trends, download reports, or pull the numbers through the [data extract API](/cloud/integrations/data-extract-api) to build your own dashboards. See [Track trends across projects](/ui-coverage/guides/monitor-changes#Step-4-Track-trends-across-projects).
+Yes. [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage) in Cypress Cloud, included with your UI Coverage subscription, rolls UI Coverage trends up across every project in your organization rather than one run at a time. You can view high-level trends, download reports, or pull the numbers through the [data extract API](/cloud/integrations/data-extract-api) to build your own dashboards. See [Track trends across projects](/ui-coverage/guides/monitor-changes#Step-4-Track-trends-across-projects).
 
 ## Reducing test duplication
 
@@ -293,7 +297,7 @@ Yes. Add the [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-g
 
 ### <Icon name="angle-right" /> Can I group or filter UI Coverage elements inside iframes or shadow DOM?
 
-Yes. In Cypress UI Coverage, the [`elementGroups`](/ui-coverage/configuration/elementgroups), [`elementFilters`](/ui-coverage/configuration/elementfilters), and [`elements`](/ui-coverage/configuration/elements) configuration options all accept a `documentScope` property that limits a rule to elements inside specific iframes or shadow DOM hosts. List one CSS selector per host, ordered from the outermost document to the innermost.
+Yes. In Cypress UI Coverage, the [`elementGroups`](/ui-coverage/configuration/elementgroups), [`elementFilters`](/ui-coverage/configuration/elementfilters), [`elements`](/ui-coverage/configuration/elements), and [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) configuration options all accept a `documentScope` property that limits a rule to elements inside specific iframes or shadow DOM hosts. List one CSS selector per host, ordered from the outermost document to the innermost.
 
 ### <Icon name="angle-right" /> Why isn't my element group showing up in the UI Coverage report?
 
@@ -394,6 +398,8 @@ The most common causes in Cypress UI Coverage are:
 ### <Icon name="angle-right" /> Which Cypress commands does UI Coverage count as coverage by default?
 
 UI Coverage marks an element as tested when it's targeted by one of a default set of Cypress interaction commands: `blur`, `check`, `clear`, `click`, `dblclick`, `focus`, `rightclick`, `scrollIntoView`, `scrollTo`, `select`, `selectFile`, `submit`, `trigger`, `type`, and `uncheck`. Commands outside this set, including plugin commands like `realClick` and `realHover` and assertions, don't count until you add them with [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) or [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands). See [Interaction Commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands).
+
+Two commands in this list behave differently from the rest. `scrollIntoView` credits the element's nearest **scrollable ancestor**, not the element you called it on, so it usually produces no coverage for the target itself — use a real interaction to mark that element tested. `scrollTo` credits only an exact match and is never credited through a parent element.
 
 ### <Icon name="angle-right" /> How do I make UI Coverage count cypress-real-events commands like realClick and realType?
 
@@ -520,7 +526,7 @@ Record each run with a distinct [`--tag`](/app/references/command-line#cypress-r
 
 ### <Icon name="angle-right" /> Can I see which App Quality configuration or profile produced a Cypress UI Coverage report?
 
-Yes. The result object includes a `config` property containing the [App Quality Config](/ui-coverage/configuration/overview) that generated the report, resolved with any [Profile](/ui-coverage/configuration/profiles) that matched the run's tags. Read `config.value` to confirm exactly which rules were in effect and `config.updatedAt` for when that configuration last changed.
+Yes. The result object includes a `config` property containing the [App Quality Config](/ui-coverage/configuration/overview) as saved for the project when the run was processed. Read `config.value` for the rules and `config.updatedAt` for when that configuration last changed. Note that `config.value` is not resolved against the run's tags, so if a [Profile](/ui-coverage/configuration/profiles) applied you match the run's tags against profile names yourself — see [Assert the saved configuration](/ui-coverage/results-api#Assert-the-saved-configuration).
 
 ### <Icon name="angle-right" /> Should I block pull requests on a coverage threshold or on new coverage gaps?
 
