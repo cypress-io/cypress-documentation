@@ -179,7 +179,7 @@ Apply these optimizations in order. The highest-impact changes are at the top.
 15. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
 16. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
 17. [Modern visibility algorithm](#Use-the-modern-visibility-algorithm) — high impact on complex DOMs; Cypress 16 defaults to the faster `checkVisibility()`-based algorithm
-18. [manageBrowserMemory](#Manage-memory-accumulation) — on by default in Cypress 16; collections are threshold-gated rather than per-test, so most suites should leave it enabled
+18. [manageBrowserMemory](#Manage-memory-accumulation) — on by default in Cypress 16; remedy for suites that slow down over time or crash
 19. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
 20. [UI Coverage to identify over-tested elements](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
 21. [cy.prompt for selector maintenance](#Reduce-selector-maintenance-overhead-with-cyprompt) — reduces recurring fix time when the UI changes; cached commands run without AI overhead in CI
@@ -726,9 +726,7 @@ The modern algorithm is most impactful on suites with many visibility assertions
 
 In a long-running Cypress test suite, the browser accumulates memory across tests. References to DOM nodes, event listeners, and application state from earlier tests can linger in the browser's heap even after Cypress clears the page. As memory pressure builds, the browser can slow down and in severe cases crash mid-run.
 
-As of Cypress 16, [`manageBrowserMemory`](/app/references/configuration#Global) defaults to `true`, so this is handled for you without any configuration. Cypress samples the browser's memory usage on an interval while your tests run, and forces a garbage collection before the next test only when a sample has crossed a memory threshold. It is not a collection after every test.
-
-That gating is what keeps the cost proportional. A suite that never approaches the threshold pays only for the periodic sampling and never pays for a collection; a suite under real memory pressure gets collections exactly when it needs them. In practice this means most suites should simply leave the option enabled.
+As of Cypress 16, [`manageBrowserMemory`](/app/references/configuration#Global) defaults to `true`, so this is handled for you without any configuration. Cypress samples the browser's memory usage on an interval while your tests run, and forces a garbage collection before the next test only when a sample has crossed a memory threshold.
 
 :::info
 
@@ -745,14 +743,6 @@ If you have measured your own suite and want to reclaim the sampling overhead �
   manageBrowserMemory: false
 }
 ```
-
-:::
-
-Weigh that against what you give up: disabling memory management removes the protection against the browser running out of memory mid-run, which costs far more time than the sampling ever will. If turning it off doesn't produce a measurable win on your suite, leave it on.
-
-:::caution
-
-`manageBrowserMemory` cannot be overridden per test or per suite, or with `Cypress.config()`. Set it in your Cypress configuration.
 
 :::
 
