@@ -8,7 +8,6 @@ export default defineConfig({
   fixturesFolder: false,
   viewportHeight: 800,
   viewportWidth: 1200,
-  experimentalFastVisibility: true,
   video: false,
   retries: {
     runMode: 2,
