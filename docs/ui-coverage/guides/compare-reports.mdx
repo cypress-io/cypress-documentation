@@ -99,24 +99,38 @@ how to group runs.
   alt="Cypress Branch Review header showing the base and changed run selectors, the commit message, and the base and feature branch labels with their run numbers"
 />
 
-### Step 2: Read the coverage-score change
+### Step 2: Read the coverage-score and element changes
 
 Start with the headline: the change in overall coverage score between the two
-runs. Branch Review shows the delta as a badge, labeled a **coverage
-improvement** when the score rose and a **reduction in coverage** when it fell,
-comparing the changed run's score against the base run's.
+runs. Branch Review shows the delta as a badge — a positive value when the score
+rose and a negative one when it fell, comparing the changed run's score against
+the base run's.
 
-A reduction is your cue to dig into the untested sections below to see which
-elements or pages caused it. An improvement confirms the change added coverage,
-which you can verify in detail in the resolved items. If the score didn't move,
-the sections below will be empty, meaning the change had no net effect on
-coverage.
+This gives you a good sense of whether the overall ratio of tested to untested elements has changed.
+It should help you understand if things are going off-track at a high level,
+but it doesn't tell you anything about changes to the actual nature of what is tested.
+
+Even if the score has not changed, it is important to review any new untested elements,
+as they may represent missing coverage on new features.
+
+For example, if a code change adds 2 buttons and only test one of them, that would introduce
+one new tested element and one new untested at the same time - keeping the ratio, and the score, flat.
 
 ### Step 3: Review new untested elements and links
 
 Two sections surface coverage that **regressed**: parts of the UI that are
 untested in the changed run but weren't a gap in the base run. These are the
 sections to watch on a pull request.
+
+:::tip
+
+**Tip:** Reviewing the element diffs on a routine basis is incredibly useful. It will help your team:
+
+- **Spread out maintenance** of your coverage into small increments
+- **Take ownership** over changes in the test suite by explicitly deciding to ignore new elements or not
+- **Communicate quickly** with developers or AI agents adding user-facing functionality without coverage
+
+:::
 
 #### Untested elements
 
@@ -135,7 +149,7 @@ A **new untested element** appears for one of three reasons, and all are worth
 reviewing:
 
 1. The element still exists, but the **test code changed** so that nothing interacts with it anymore.
-2. The **application code changed**, adding new elements that no test covers yet.
+2. The **application code changed**, adding new elements that no test covers yet. These display with a green "plus" icon.
 3. Your tests now capture **new views or snapshots** that weren't rendered in the previous run, so their interactive elements enter the report for the first time and need coverage.
 
 The cause differs, but the fix is the same: exercise the element with a test so
@@ -185,19 +199,19 @@ grouped into:
 Because it counts both tested and untested items, the Added section is a useful
 way to compare two builds of your application independent of the coverage score.
 
-### Step 5: Drill into the Detail View
+### Step 5: Drill into a changed item
 
 <DocsImage
   src="/img/ui-coverage/branch-review/detail-view.png"
   alt="UI Coverage Branch Review Detail View listing only the elements that changed between runs, with an untested log-out link highlighted in red on a full-page snapshot"
 />
 
-Clicking any new or resolved item opens the **Detail View**, where you see every
-example of that element or link on a full-page, inspectable DOM snapshot, with
-tested elements highlighted green and untested elements red. Items with the same
-status on both runs are removed here, so you focus only on what changed.
+Clicking any new or resolved item opens a detail view of that item, where you see
+every example of that element or link on a full-page, inspectable DOM snapshot,
+with tested elements highlighted green and untested elements red. Items with the
+same status on both runs are removed here, so you focus only on what changed.
 
-The Detail View shows the changed run's snapshots, consistent with the changed
+The detail view shows the changed run's snapshots, consistent with the changed
 run being the focal point of the comparison. Because the snapshot is a real DOM,
 you can open your browser's developer tools on it to understand _why_ an element
 went untested, for example because it's now behind a menu or only renders after a
@@ -219,8 +233,8 @@ this without touching your tests, then regenerate a past run from its
 />
 
 **Stabilize views** so a page matches across runs. UI Coverage groups URLs that
-differ only by numeric IDs automatically (`/orders/123` and `/orders/456` become
-`/orders/*`), but other dynamic segments, such as slugs, are not grouped by
+differ only by numeric IDs or UUIDs automatically (`/orders/123` and `/orders/456`
+become `/orders/*`), but other dynamic segments, such as slugs, are not grouped by
 default and can show up as "new" views between runs. Group them with a
 [`views`](/ui-coverage/configuration/views) pattern:
 
