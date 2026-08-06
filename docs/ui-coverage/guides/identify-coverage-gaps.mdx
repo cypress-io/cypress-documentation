@@ -96,7 +96,7 @@ are grouped into patterns; for component tests, each spec file is a view. The
   alt="Cypress Cloud screenshot showing the list of views within the UI Coverage tab, with columns for snapshots, tested elements, and coverage score alongside the lefthand navigation and a filter"
 />
 
-Sort by **Coverage %** to bring your lowest-covered views to the top, then
+The table is sorted by **Views** by default. Sort by **Coverage %** to bring your lowest-covered views to the top, then
 weigh each one against how important it is to your users. A checkout or signup
 view at 40% is a more urgent gap than a settings page at the same score. This
 is where you decide which views deserve the next test.
@@ -108,10 +108,10 @@ didn't reach, so you can see each gap in context. A view drilldown includes:
 
 - **Untested elements**: interactive elements that no recognized Cypress command targeted during the run.
 - **Tested elements**: interactive elements a test exercised, with a count of how many times.
-- **DOM Snapshot**: a full-page, inspectable snapshot of the view as it appeared during the run. Tested elements are highlighted green, untested elements red.
-- **Snapshot Navigation**: move between snapshots to see the view's different states during the run.
-- **Snapshot Coverage Score**: the coverage score for the specific snapshot you're viewing.
-- **Test Replay**: a link to open [Test Replay](/cloud/features/test-replay) at that snapshot, where you can see the element within the full test run instead of a single captured state.
+- **Snapshot**: a full-page, inspectable snapshot of the view as it appeared during the run. Tested elements are highlighted green, untested elements red.
+- **Snapshot navigation**: previous and next controls, labeled `Snapshot {n} of {total}`, to move between the view's different states during the run.
+- **Snapshot coverage score**: the coverage score for the specific snapshot you're viewing.
+- **Test Replay**: a menu of the tests that reached the snapshot, each opening [Test Replay](/cloud/features/test-replay) at that point, where you can see the element within the full test run instead of a single captured state.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-view-drilldown.png"
@@ -133,9 +133,11 @@ cover it in one place.
   alt="Cypress Cloud screenshot of the untested elements section listing elements that were not interacted with during the run"
 />
 
-Expanding an untested element shows its selector, how many times it was
-interacted with, and the views where it appears without any interaction, so
-you can trace the same element back to every page it shows up on.
+Expanding an untested element shows its selector and navigates to an example snapshot if needed. It lists any views where the element appears without any interaction, so you can trace the same
+element back to every page it shows up on.
+
+For tested elements, the individual interactions
+are shown and can be traced through to the tests themselves.
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-view-drilldown.png"
