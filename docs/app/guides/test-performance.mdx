@@ -179,7 +179,7 @@ Apply these optimizations in order. The highest-impact changes are at the top.
 15. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
 16. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
 17. [Modern visibility algorithm](#Use-the-modern-visibility-algorithm) — high impact on complex DOMs; Cypress 16 defaults to the faster `checkVisibility()`-based algorithm
-18. [experimentalMemoryManagement](#Manage-memory-accumulation) — targeted remedy for suites that slow down over time or crash; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
+18. [manageBrowserMemory](#Manage-memory-accumulation) — on by default in Cypress 16, protecting suites that slow down over time or crash; disable it only if your suite is demonstrably not memory-constrained and you can measure a win
 19. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
 20. [UI Coverage to identify over-tested elements](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
 21. [cy.prompt for selector maintenance](#Reduce-selector-maintenance-overhead-with-cyprompt) — reduces recurring fix time when the UI changes; cached commands run without AI overhead in CI
@@ -726,27 +726,41 @@ The modern algorithm is most impactful on suites with many visibility assertions
 
 In a long-running Cypress test suite, the browser accumulates memory across tests. References to DOM nodes, event listeners, and application state from earlier tests can linger in the browser's heap even after Cypress clears the page. As memory pressure builds, the browser can slow down and in severe cases crash mid-run.
 
-[`experimentalMemoryManagement`](/app/references/experiments) enables improved memory management for Chromium-based browsers, actively clearing memory between tests. It does this by clearing the browser's heap after each test.
+As of Cypress 16, [`manageBrowserMemory`](/app/references/configuration#Global) defaults to `true`, so Cypress clears the browser's heap after each test without any configuration on your part. Memory-heavy suites get this protection automatically.
+
+:::info
+
+`manageBrowserMemory` only applies to Chromium-based browsers (Chrome, Edge). It has no effect in Firefox or WebKit.
+
+:::
+
+#### When to turn it off
+
+Memory management is not free. Clearing the heap between tests takes time, paid on every test transition, and a suite that was never under memory pressure pays that cost for no benefit. On a large suite of short tests, the per-test overhead is the part you'll notice.
+
+Consider setting `manageBrowserMemory: false` when **all** of the following hold:
+
+- Your suite runs at a consistent pace from start to finish — it doesn't get progressively slower
+- The browser never [crashes mid-run](/app/references/error-messages#Browser-Errors)
+- Your CI machines have memory headroom to spare, rather than sitting near their limit (see [Allocate enough CI machine resources](#Allocate-enough-CI-machine-resources))
 
 :::cypress-config-example
 
 ```js
 {
-  experimentalMemoryManagement: true // ✅ Faster approach: enable memory management
+  manageBrowserMemory: false // opt out if your suite isn't memory-constrained
 }
 ```
 
 :::
 
-:::info
+Measure before and after, the same way you would for any other change in this guide: run the suite both ways and compare total duration. If disabling it doesn't produce a measurable win, leave it on — the crash protection is worth more than a marginal timing difference.
 
-`experimentalMemoryManagement` only applies to Chromium-based browsers (Chrome, Edge). It has no effect in Firefox or WebKit.
+:::caution
+
+`manageBrowserMemory` cannot be overridden per test or per suite, or with `Cypress.config()`. Set it in your Cypress configuration.
 
 :::
-
-This flag is not a blanket speed improvement. Clearing memory between tests takes time, paid on every test transition. If your suite is not under meaningful memory pressure, enabling this flag may slow it down rather than speed it up. You should measure the performance impact before and after enabling this flag.
-
-Enable it only if your suite gets progressively slower as it runs, or if the browser crashes before completion. Both symptoms point to memory accumulation. If your suite runs at a consistent pace from start to finish and doesn't crash, memory is not the bottleneck.
 
 ### Use test retries deliberately
 
@@ -933,7 +947,7 @@ Increase the resource class for the job that runs Cypress. You'll find the most 
 - **CircleCI**: `resource_class: large`: 4 vCPUs, 8 GB RAM
 - **GitHub Actions**: standard Ubuntu runner: 4 vCPUs, 16 GB RAM
 
-Also see [experimentalMemoryManagement](#Manage-memory-accumulation) for information on how to improve memory management.
+Also see [Manage memory accumulation](#Manage-memory-accumulation) for how Cypress manages browser memory on your behalf, and when it makes sense to turn that off.
 
 ### Spec prioritization
 

@@ -95,6 +95,31 @@ You only need a replacement option if your application pins resources with Subre
 
 :::
 
+### `experimentalMemoryManagement` replaced by `manageBrowserMemory`
+
+The experimental `experimentalMemoryManagement` configuration option has been removed. Its successor is the new [`manageBrowserMemory`](/app/references/configuration#Global) configuration option, which defaults to **`true`**. Memory management is now on by default for **all** users running Chromium-based browsers, not just those who opted into the experiment.
+
+There is no alias and no value remapping between the two options. If your `cypress.config` still sets `experimentalMemoryManagement`, Cypress prints a warning and otherwise ignores the option.
+
+**If you were setting `experimentalMemoryManagement: true`:** remove it. Memory management is now the default.
+
+**If you were setting `experimentalMemoryManagement: false`:** you must replace it with `manageBrowserMemory: false`. Deleting it without adding the replacement silently opts you **into** memory management, since the removed option is ignored and the new option defaults to `true`.
+
+:::cypress-config-example
+
+```ts
+{
+  // Remove this line
+  experimentalMemoryManagement: false,
+  // Add this line to stay opted out
+  manageBrowserMemory: false,
+}
+```
+
+:::
+
+Unlike `numTestsKeptInMemory`, `manageBrowserMemory` cannot be overridden per test or per suite, or with `Cypress.config()`. It can only be set in your Cypress configuration or at the command line. See [Manage memory accumulation](/app/guides/test-performance#Manage-memory-accumulation) for how to tell whether your suite benefits from leaving it enabled.
+
 ### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
 
 [`cy.getCookie()`](/api/commands/getcookie),
