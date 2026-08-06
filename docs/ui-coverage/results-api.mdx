@@ -30,8 +30,7 @@ With the `getUICoverageResults` helper from the
   using the tested and untested link counts.
 - **Track regressions over time** by comparing a run against a stored baseline,
   or by trending results in a dashboard.
-- **Read and assert the applied configuration**, including any
-  [Profile](/ui-coverage/configuration/profiles) that produced the report.
+- **Read and assert the configuration** that was in place when this UI Coverage report was processed.
 
 See [Examples](#Examples) for a worked script behind each of these.
 
@@ -161,15 +160,20 @@ getUICoverageResults({
   // The run tags associated with the run.
   // Required IF you record multiple Cypress runs from a single CI build.
   // Pass the same tags you used when recording each run.
+  // Optional if the CYPRESS_RUN_TAG env var is set. That variable holds a
+  // single tag only (it is not comma-separated), so pass runTags directly
+  // when a run carries more than one tag.
   runTags: string[]
 })
 ```
 
 #### Result properties
 
-`getUICoverageResults` resolves with the following data. A **link** is a
-navigational element (such as an anchor) that points at another view;
-**elements** are the interactive controls counted toward coverage.
+`getUICoverageResults` resolves with the following data. A **link** is a navigable
+anchor that points at another view; **elements** are the other interactive
+controls. Both count toward the coverage score, but the counts below report them
+separately — so `testedElementsCount` plus `untestedElementsCount` is **not** the
+score's denominator. Add the link counts to reconstruct it.
 
 ```javascript
 {
@@ -201,13 +205,12 @@ navigational element (such as an anchor) that points at another view;
     untestedLinksCount: number
     uiCoverageReportUrl: 'https://cloud.cypress.io/[...]'
   }]
-  // The App Quality configuration that produced this report.
+  // The App Quality configuration used for this report.
   // Present when configuration exists for the project.
   config: {
     // ISO 8601 timestamp of when the configuration was last updated.
     updatedAt: string
-    // The resolved configuration value, including any Profile applied
-    // to this run via run tags. See the example below.
+  // The App Quality configuration used for this report.
     value: object
   }
 }
@@ -240,7 +243,7 @@ An example of a returned result:
       testedLinksCount: 5,
       untestedLinksCount: 0,
       uiCoverageReportUrl:
-        'https://cloud.cypress.io/projects/ypt4pf/runs/68086/ui-coverage/view/checkout',
+        'https://cloud.cypress.io/projects/ypt4pf/runs/68086/ui-coverage/view/a1b2c3d4e5f60718',
     },
     {
       displayName: '/products/*',
@@ -250,7 +253,7 @@ An example of a returned result:
       testedLinksCount: 9,
       untestedLinksCount: 3,
       uiCoverageReportUrl:
-        'https://cloud.cypress.io/projects/ypt4pf/runs/68086/ui-coverage/view/products',
+        'https://cloud.cypress.io/projects/ypt4pf/runs/68086/ui-coverage/view/9f8e7d6c5b4a3021',
     },
   ],
   config: {
@@ -264,10 +267,18 @@ An example of a returned result:
 
 #### Reading the applied configuration
 
-The `config` property returns the **App Quality Config** that Cypress Cloud used
-to generate the report, resolved with any [Profile](/ui-coverage/configuration/profiles)
-that matched the run's tags. This lets your script confirm exactly which rules
-were in effect, which is useful when different runs use different profiles.
+The `config` property returns the **App Quality Config** saved for your project when this report was processed, including the full `profiles` array.
+
+:::caution
+
+`config.value` is **not** resolved against the run's tags. If a
+[Profile](/ui-coverage/configuration/profiles) applied to this run, `config.value`
+still shows the base configuration plus the profile definitions, not the merged
+result. If you need to determine which profile applied, match the run's tags against the
+`name` of each entry in `config.value.profiles`. Reach out to your Cypress point-of-contact
+or use the in-product feedback buttons if you need more than the current functionality.
+
+:::
 
 ```json title="App Quality Config"
 {
@@ -662,9 +673,8 @@ ${rows}`
 
 ### Fail on untested navigation links
 
-UI Coverage counts links (navigational elements that point at another view)
-separately from interactive elements. Use the link counts to catch pages that
-are linked but never visited:
+UI Coverage reports links (navigable anchors that point at another view)
+separately from other interactive elements, though both count toward your score. Use the link counts to catch pages that have user-facing links rendered in Cypress tests, but are never visited:
 
 ```javascript title="scripts/checkUntestedLinks.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
@@ -745,22 +755,32 @@ getUICoverageResults().then((results) => {
 })
 ```
 
-### Assert the applied configuration
+### Assert the configuration
 
-The `config` property returns the App Quality Config that produced the report,
-resolved with any [Profile](/ui-coverage/configuration/profiles) that matched the
-run's tags. Assert that required rules are in effect so a misconfigured run
-doesn't silently change what's measured:
+The `config` property returns the App Quality Config that was used to process this run. You can assert that required rules are present so a configuration change doesn't
+silently alter what's measured.
+
+If you use config [profiles](/ui-coverage/configuration/profiles) to produce a different config based on run tags, resolve the effective config first by matching the run's tags against profile names:
 
 ```javascript title="scripts/assertCoverageConfig.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
 
-getUICoverageResults().then(({ config }) => {
+// Tags this run was recorded with, e.g. from your CI environment.
+const RUN_TAGS = (process.env.CYPRESS_RUN_TAG || '').split(',').filter(Boolean)
+
+getUICoverageResults({ runTags: RUN_TAGS }).then(({ config }) => {
   if (!config) {
-    throw new Error('No App Quality Config was applied to this run.')
+    throw new Error('No App Quality Config was saved for this run.')
   }
 
-  const elementFilters = config.value.uiCoverage?.elementFilters ?? []
+  // The first profile whose name matches a run tag wins. Its config replaces
+  // the base value for the properties it defines, so check it first.
+  const activeProfile = (config.value.profiles ?? []).find((profile) =>
+    RUN_TAGS.includes(profile.name)
+  )
+  const effective = activeProfile?.config ?? config.value
+
+  const elementFilters = effective.uiCoverage?.elementFilters ?? []
   const hasCookieBannerFilter = elementFilters.some((filter) =>
     filter.selector?.includes('cookie-banner')
   )
