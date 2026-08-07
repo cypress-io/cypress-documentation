@@ -97,26 +97,45 @@ You only need a replacement option if your application pins resources with Subre
 
 ### `experimentalMemoryManagement` replaced by `manageBrowserMemory`
 
-The experimental `experimentalMemoryManagement` configuration option has been replaced by the new [`manageBrowserMemory`](/app/references/configuration#manageBrowserMemory) configuration option, which defaults to **`true`**. Browser memory management is now on by default for **all** users running Chromium-based browsers, not just those who opted into the experiment.
+The experimental `experimentalMemoryManagement` configuration option has been replaced by the new [`manageBrowserMemory`](/app/references/configuration#manageBrowserMemory) configuration option, which defaults to **`true`**. Browser memory management is now on by default for **all** users running Chromium-based browsers.
 
-There is no alias and no value remapping between the two options. If your `cypress.config` still sets `experimentalMemoryManagement`, Cypress prints a warning and otherwise ignores the option.
+If your Cypress configuration still sets `experimentalMemoryManagement`, Cypress now ignores the option and prints a warning.
 
 **If you were setting `experimentalMemoryManagement: true`:** remove it. Memory management is now the default.
 
-**If you were setting `experimentalMemoryManagement: false`:** you must replace it with `manageBrowserMemory: false`. Deleting it without adding the replacement silently opts you **into** memory management, since the removed option is ignored and the new option defaults to `true`.
-
-:::cypress-config-example
+<Badge type="danger">Before</Badge>
 
 ```ts
 {
-  // Remove this line
-  experimentalMemoryManagement: false,
-  // Add this line to stay opted out
-  manageBrowserMemory: false,
+  experimentalMemoryManagement: true,
 }
 ```
 
-:::
+<Badge type="success">After</Badge>
+
+```ts
+{
+  // Remove the experimentalMemoryManagement option
+}
+```
+
+**If you were setting `experimentalMemoryManagement: false`:** replace it with `manageBrowserMemory: false`. Deleting it without adding the replacement silently opts you **into** memory management.
+
+<Badge type="danger">Before</Badge>
+
+```ts
+{
+  experimentalMemoryManagement: false,
+}
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+{
+  manageBrowserMemory: false,
+}
+```
 
 See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory) for more information.
 
