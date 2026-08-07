@@ -760,7 +760,7 @@ getUICoverageResults().then((results) => {
 The `config` property returns the App Quality Config that was used to process this run. You can assert that required rules are present so a configuration change doesn't
 silently alter what's measured.
 
-If you use config [profiles](/ui-coverage/configuration/profiles) to produce a different config based on run tags, resolve the effective config first by matching the run's tags against profile names:
+If you use config [profiles](/ui-coverage/configuration/profiles) to produce a different config based on run tags, resolve the effective config first: match the run's tags against profile names, then layer the matching profile's `config` over the base configuration, since a profile replaces only the properties it defines.
 
 ```javascript title="scripts/assertCoverageConfig.js"
 const { getUICoverageResults } = require('@cypress/extract-cloud-results')
@@ -776,14 +776,23 @@ getUICoverageResults({ runTags: RUN_TAGS }).then(({ config }) => {
     throw new Error('No App Quality Config was saved for this run.')
   }
 
-  // The first profile whose name matches a run tag wins. Its config replaces
-  // the base value for the properties it defines, so check it first.
-  const activeProfile = (config.value.profiles ?? []).find((profile) =>
+  // The first profile whose name matches a run tag wins.
+  const base = config.value
+  const activeProfile = (base.profiles ?? []).find((profile) =>
     RUN_TAGS.includes(profile.name)
   )
-  const effective = activeProfile?.config ?? config.value
 
-  const elementFilters = effective.uiCoverage?.elementFilters ?? []
+  // A profile replaces only the properties it defines, and `uiCoverage` and
+  // `accessibility` merge one level deep, so layer the profile over the base
+  // config rather than reading it on its own.
+  const overrides = activeProfile?.config ?? {}
+  const effective = {
+    ...base,
+    ...overrides,
+    uiCoverage: { ...base.uiCoverage, ...overrides.uiCoverage },
+  }
+
+  const elementFilters = effective.uiCoverage.elementFilters ?? []
   const hasCookieBannerFilter = elementFilters.some((filter) =>
     filter.selector?.includes('cookie-banner')
   )
