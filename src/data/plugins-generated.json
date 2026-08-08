@@ -131,9 +131,9 @@
     },
     "cypress-watch-and-reload": {
       "npm": "cypress-watch-and-reload",
-      "version": "2.1.7",
-      "lastPublished": "2026-08-04T00:27:29.934Z",
-      "cypressVersion": "15.19.0"
+      "version": "2.1.8",
+      "lastPublished": "2026-08-07T20:41:50.248Z",
+      "cypressVersion": "15.20.0"
     },
     "cypress-html-validate": {
       "npm": "cypress-html-validate",
@@ -143,8 +143,8 @@
     },
     "@cypress/grep": {
       "npm": "@cypress/grep",
-      "version": "6.0.2",
-      "lastPublished": "2026-06-03T18:37:53.446Z",
+      "version": "6.0.3",
+      "lastPublished": "2026-08-07T17:26:51.363Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-cli-select": {
