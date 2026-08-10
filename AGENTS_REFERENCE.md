@@ -41,9 +41,17 @@ hosting platform's deploy context (Netlify `CONTEXT`, Vercel `VERCEL_ENV`) and
 plugin. Gate any new tracking script the same way. Set `ANALYTICS_ENABLED=true`
 to force tracking on for a preview build (or `false` to force it off).
 
-Osano is deliberately **not** gated — it's the consent manager, `osano.cy.ts`
-asserts on the real banner, and `cypress/support/e2e.ts` stubs it out for every
-other spec.
+`cypress.config.ts` adds a second layer with
+[`blockHosts`](/app/references/configuration#blockHosts), which makes Cypress
+return an immediate `503` for those vendors. That's defense in depth, not the
+primary fix — it only applies inside Cypress, so it does nothing for deploy
+previews, and it can't stop an inline snippet that has already defined its
+global (FullStory's loader defines `window.FS` before it fetches anything). Add
+any new tracking host there too.
+
+Osano is deliberately **not** gated or blocked — it's the consent manager,
+`osano.cy.ts` asserts on the real banner, and `cypress/support/e2e.ts` stubs it
+out for every other spec.
 
 ## Adding, moving & removing pages
 

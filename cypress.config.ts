@@ -18,6 +18,25 @@ export default defineConfig({
   e2e: {
     supportFile: "cypress/support/e2e.ts",
     baseUrl: "http://localhost:3000",
+    // Defense in depth for third-party tracking. `plugins/analytics-env.js`
+    // already keeps these scripts out of every non-production build, so nothing
+    // here should fire — this is the net that catches a tag added to the Google
+    // Tag Manager container (which is configured outside this repo) or a
+    // regression in that gate. Blocked requests get an immediate 503, so they
+    // cost the suite nothing.
+    //
+    // Host only, no protocol. `*host` — not `*.host` — so the bare apex domain
+    // matches too. See /app/references/configuration#blockHosts.
+    //
+    // Osano is deliberately absent: it's the consent manager, osano.cy.ts
+    // asserts on the real banner, and cypress/support/e2e.ts stubs it for
+    // every other spec.
+    blockHosts: [
+      '*pendo.io',
+      '*googletagmanager.com',
+      '*google-analytics.com',
+      '*fullstory.com',
+    ],
     setupNodeEvents(on, config) {
       const path = 'docs';
 
