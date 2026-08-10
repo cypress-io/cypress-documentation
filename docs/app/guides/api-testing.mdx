@@ -1,0 +1,631 @@
+---
+title: 'API testing in Cypress'
+description: 'Learn how to test REST and GraphQL APIs in Cypress with cy.request(): authentication, CRUD workflows, error responses, polling, and combining API calls with UI tests.'
+sidebar_label: API Testing
+---
+
+<ProductHeading product="app" />
+
+# API Testing
+
+:::info
+
+<WhatYoullLearn />
+
+- Why API tests belong in the same suite as your UI tests
+- How to write, run, and organize API tests with `cy.request()`
+- What `cy.request()` does under the hood, and why that matters
+- How to authenticate, assert on error responses, and poll async endpoints
+- When to reach for `cy.request()`, `cy.intercept()`, or `cy.task()`
+
+:::
+
+## Why test APIs with Cypress
+
+Most teams already own a Cypress suite for their UI. Adding API tests to it means
+one runner, one config, one CI job, and one place to look when something breaks.
+You get a few concrete wins:
+
+- **Faster feedback on the contract.** An API test that fails tells you the
+  backend changed. A UI test that fails could mean the backend changed, a
+  selector moved, or a race condition surfaced. Testing the endpoint directly
+  removes that ambiguity.
+- **Setup and teardown that is faster than clicking.** Creating a user, seeding
+  an order, or logging in over HTTP takes milliseconds. Doing the same through
+  the UI takes seconds, and it re-tests code paths you already cover elsewhere.
+- **Coverage for the parts of the backend the UI never reaches.** Validation
+  errors, permission boundaries, rate limits, and pagination edges are often
+  hard to trigger from a form but trivial to trigger with a request.
+- **Real inspection while you work.** In [open mode](/app/core-concepts/open-mode),
+  every request shows up in the Command Log with its method, status, and URL,
+  and clicking it prints the full request and response to the browser console.
+- **Tests that span both layers.** Because API calls and UI commands live in the
+  same chain, you can seed state over HTTP, drive the app through its interface,
+  then verify over HTTP that the backend really persisted the change.
+
+Cypress runs API tests in the [end-to-end testing type](/app/core-concepts/testing-types).
+The workhorse is [`cy.request()`](/api/commands/request), which makes a real HTTP
+request and yields the response.
+
+## Write your first API test
+
+### Set a `baseUrl`
+
+Point `baseUrl` at your API so every request can use a relative path. This also
+lets you swap environments without touching a spec.
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    baseUrl: 'http://localhost:3001'
+  }
+}
+```
+
+:::
+
+### Create the spec
+
+```js title="cypress/e2e/api/users.cy.js"
+describe('GET /users', () => {
+  it('returns a list of users', () => {
+    cy.request('GET', '/users').then((response) => {
+      expect(response.status).to.eq(200)
+      expect(response.body.results).to.have.length.greaterThan(1)
+    })
+  })
+})
+```
+
+### Run it
+
+<CypressCommandTabs command="run --spec 'cypress/e2e/api/users.cy.js'" />
+
+That is a complete API test. No page has to be visited first, and no browser
+navigation happens. `cy.request()` resolves the relative `/users` against
+`baseUrl` and yields the response.
+
+## Anatomy of the response
+
+`cy.request()` yields a response object. These are the properties you will
+assert on most often:
+
+| Property              | Description                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| `status`              | The HTTP status code, for example `200`                                                     |
+| `statusText`          | The status text, for example `'OK'`                                                         |
+| `body`                | The response body, parsed into an object when the response `Content-Type` ends in `json`    |
+| `headers`             | The response headers                                                                        |
+| `duration`            | How long the request took, in milliseconds                                                  |
+| `isOkStatusCode`      | `true` for `2xx` and `3xx` responses                                                        |
+| `requestHeaders`      | The headers Cypress actually sent, including cookies it attached for you                    |
+| `requestBody`         | The body Cypress actually sent                                                              |
+| `redirects`           | Present when redirects were followed, as an array like `['301: http://localhost:3001/new']` |
+| `allRequestResponses` | Every request and response in the chain, useful when redirects were followed                |
+
+Body parsing follows the response, not the request. If the server returns
+`Content-Type: application/json`, `response.body` is an object. Otherwise it is
+a string, even if you sent a JSON request body.
+
+You can assert with `.then()` for multiple checks, or chain assertions directly
+when you only care about one value:
+
+```js
+// several assertions against one response
+cy.request('/users/1').then((response) => {
+  expect(response.status).to.eq(200)
+  expect(response.body).to.have.property('email')
+  expect(response.duration).to.be.lessThan(1000)
+})
+
+// a single value, read as a sentence
+cy.request('/users/1').its('body.username').should('eq', 'jdoe')
+
+// implicit assertion on the whole body
+cy.request('/users/1').its('body').should('deep.include', {
+  id: 1,
+  role: 'admin',
+})
+```
+
+## How `cy.request()` works
+
+Understanding the mechanics prevents most of the surprises people hit.
+
+When you call `cy.request()`, the driver hands the options to the Cypress Node
+process over its websocket connection, and Node makes the HTTP request. The
+browser is never asked to make the call.
+
+That single fact explains the behaviors below.
+
+| Behavior                                                             | Why                                                                                                               |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| The request never appears in the browser DevTools **Network** tab    | It is not a browser request, so the browser has nothing to report                                                 |
+| [`cy.intercept()`](/api/commands/intercept) cannot spy on or stub it | Interception works on browser traffic flowing through the Cypress proxy, and this request never enters that proxy |
+| CORS and same-origin policy do not apply                             | Those are browser rules, and no browser is involved. You can request any host                                     |
+| Cookies still work                                                   | Cypress reads the browser's cookie jar for the request URL, sends them, and writes `Set-Cookie` responses back    |
+| The `User-Agent` matches the browser under test                      | Cypress forwards the browser's user agent so the server sees a consistent client                                  |
+| Invalid or self-signed TLS certificates do not fail the request      | Certificate verification is relaxed, which keeps requests against staging environments working                    |
+
+A few more defaults worth knowing:
+
+- **Non-`2xx`/`3xx` responses fail the test.** `failOnStatusCode` defaults to
+  `true`. Set it to `false` when the error response _is_ what you are testing.
+- **Redirects are followed.** `followRedirect` defaults to `true`. Set it to
+  `false` to assert on the `Location` header via `response.redirectedToUrl`.
+- **Object bodies are serialized for you.** When `body` is an object or boolean,
+  Cypress JSON-serializes it and sets `Content-Type: application/json`. A string
+  body is sent as-is with no content type added.
+- **Transient network errors are retried.** `retryOnNetworkFailure` defaults to
+  `true` and retries up to 4 times. Status code failures are not retried unless
+  you opt in with `retryOnStatusCodeFailure`.
+- **The timeout is `responseTimeout`**, not `defaultCommandTimeout`. Override it
+  per request with the `timeout` option.
+
+:::caution
+
+Because there is no page navigation driving the request, `SameSite` is not
+evaluated the way it would be for a browser-initiated request. Cypress attaches
+every cookie in the jar that matches the request URL's domain, path, and secure
+flag. If a cookie appears on a request unexpectedly, see
+[cookie scope](/api/commands/setcookie#Cookie-scope-host-only-vs-domain-cookies).
+
+:::
+
+## Common scenarios
+
+### Test a full CRUD lifecycle
+
+Cypress commands are chainable, so a create-read-update-delete flow reads
+top to bottom. Capture the id from the create response and carry it forward.
+
+```js title="cypress/e2e/api/articles.cy.js"
+describe('/articles', () => {
+  it('creates, reads, updates, and deletes an article', () => {
+    cy.request('POST', '/articles', {
+      title: 'Testing APIs with Cypress',
+      status: 'draft',
+    })
+      .then((response) => {
+        expect(response.status).to.eq(201)
+        expect(response.body).to.include({ status: 'draft' })
+
+        return response.body.id
+      })
+      .then((articleId) => {
+        cy.request(`/articles/${articleId}`)
+          .its('body.title')
+          .should('eq', 'Testing APIs with Cypress')
+
+        cy.request('PATCH', `/articles/${articleId}`, { status: 'published' })
+          .its('body.status')
+          .should('eq', 'published')
+
+        cy.request('DELETE', `/articles/${articleId}`)
+          .its('status')
+          .should('eq', 204)
+
+        cy.request({
+          url: `/articles/${articleId}`,
+          failOnStatusCode: false,
+        })
+          .its('status')
+          .should('eq', 404)
+      })
+  })
+})
+```
+
+### Authenticate once and reuse the session
+
+Logging in over HTTP is the fastest way to get an authenticated test. Wrap it in
+[`cy.session()`](/api/commands/session) so the result is cached and restored
+instead of re-run for every test.
+
+When the API authenticates with a cookie, `cy.request()` picks it up for free,
+because Cypress reads the browser cookie jar on every request.
+
+```js title="cypress/support/commands.js"
+Cypress.Commands.add('loginByApi', (username, password) => {
+  cy.session(
+    ['loginByApi', username],
+    () => {
+      cy.request('POST', '/auth/login', { username, password })
+        .its('status')
+        .should('eq', 200)
+    },
+    {
+      cacheAcrossSpecs: true,
+      validate() {
+        cy.request('/auth/me').its('status').should('eq', 200)
+      },
+    }
+  )
+})
+```
+
+When it authenticates with a bearer token instead, store the token during login
+and send it explicitly. `cy.session()` caches `localStorage` alongside cookies,
+so the token survives the restore.
+
+```js title="cypress/support/commands.js"
+const authToken = () => window.localStorage.getItem('authToken')
+
+Cypress.Commands.add('loginByApi', (username, password) => {
+  cy.session(
+    ['loginByApi', username],
+    () => {
+      cy.request('POST', '/auth/login', { username, password }).then(
+        (response) => {
+          expect(response.status).to.eq(200)
+          window.localStorage.setItem('authToken', response.body.token)
+        }
+      )
+    },
+    {
+      cacheAcrossSpecs: true,
+      validate() {
+        cy.request({
+          url: '/auth/me',
+          headers: { authorization: `Bearer ${authToken()}` },
+        })
+          .its('status')
+          .should('eq', 200)
+      },
+    }
+  )
+})
+```
+
+Keep the credentials themselves in
+[environment variables](/app/guides/environment-variables), never in the spec.
+
+```js title="cypress/e2e/api/orders.cy.js"
+describe('GET /orders', () => {
+  beforeEach(() => {
+    cy.loginByApi(Cypress.env('username'), Cypress.env('password'))
+  })
+
+  it('returns orders belonging only to the signed-in customer', () => {
+    cy.request({
+      url: '/orders',
+      headers: { authorization: `Bearer ${authToken()}` },
+    })
+      .its('body.orders')
+      .should('have.length.greaterThan', 0)
+      .each((order) => {
+        expect(order.customerId).to.eq(Cypress.env('customerId'))
+      })
+  })
+})
+```
+
+:::tip
+
+Repeating the same `headers` object in every test is a sign you want a custom
+command. See [organize an API test suite](#Organize-an-API-test-suite) for a
+`cy.api()` wrapper that fills in the auth header and base path.
+
+:::
+
+### Assert on error responses
+
+Error paths are usually the least tested part of an API and the cheapest to
+cover here. Set `failOnStatusCode: false` so Cypress yields the response instead
+of failing the test.
+
+```js title="cypress/e2e/api/validation.cy.js"
+describe('POST /orders validation', () => {
+  it('rejects an order with no line items', () => {
+    cy.request({
+      method: 'POST',
+      url: '/orders',
+      body: { lineItems: [] },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(422)
+      expect(response.body.errors).to.deep.include({
+        field: 'lineItems',
+        message: 'must contain at least one item',
+      })
+    })
+  })
+
+  it('refuses an unauthenticated request', () => {
+    cy.request({
+      url: '/orders',
+      headers: { authorization: '' },
+      failOnStatusCode: false,
+    })
+      .its('status')
+      .should('eq', 401)
+  })
+
+  it('hides an order belonging to another customer behind a 404', () => {
+    cy.request({
+      url: '/orders/does-not-belong-to-me',
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(404)
+      expect(response.body).to.not.have.property('customerId')
+    })
+  })
+})
+```
+
+### Send query parameters and walk pagination
+
+The `qs` option merges an object into the URL's query string, so you do not have
+to build and encode it yourself.
+
+```js title="cypress/e2e/api/search.cy.js"
+it('paginates search results', () => {
+  cy.request({
+    url: '/products/search',
+    qs: { q: 'wireless keyboard', page: 1, perPage: 25 },
+  }).then((response) => {
+    expect(response.status).to.eq(200)
+    expect(response.body.items).to.have.length(25)
+    expect(response.body.page).to.eq(1)
+
+    cy.request({
+      url: '/products/search',
+      qs: { q: 'wireless keyboard', page: 2, perPage: 25 },
+    }).then((secondPage) => {
+      const firstIds = response.body.items.map((item) => item.id)
+      const secondIds = secondPage.body.items.map((item) => item.id)
+
+      expect(secondIds).to.not.have.members(firstIds)
+    })
+  })
+})
+```
+
+### Validate the shape of a response
+
+Asserting on values catches data bugs. Asserting on shape catches contract
+breaks, which are the changes most likely to reach production unnoticed.
+
+```js title="cypress/e2e/api/contract.cy.js"
+it('returns every field the checkout page depends on', () => {
+  cy.request('/cart')
+    .its('body')
+    .then((cart) => {
+      expect(cart).to.have.all.keys(
+        'id',
+        'items',
+        'subtotal',
+        'tax',
+        'total',
+        'currency'
+      )
+
+      expect(cart.currency).to.be.oneOf(['USD', 'EUR', 'GBP'])
+      expect(cart.total).to.be.a('number')
+
+      cart.items.forEach((item) => {
+        expect(item).to.include.all.keys('sku', 'quantity', 'unitPrice')
+        expect(item.quantity).to.be.greaterThan(0)
+      })
+    })
+})
+```
+
+### Upload a file
+
+Pass a `FormData` instance as the body. Cypress encodes it and sets the
+`multipart/form-data` content type with the correct boundary.
+
+```js title="cypress/e2e/api/uploads.cy.js"
+it('accepts an avatar upload', () => {
+  // image fixtures are read as base64 by default
+  cy.fixture('avatar.png').then((image) => {
+    const formData = new FormData()
+
+    formData.append(
+      'file',
+      Cypress.Blob.base64StringToBlob(image, 'image/png'),
+      'avatar.png'
+    )
+    formData.append('visibility', 'public')
+
+    cy.request({
+      method: 'POST',
+      url: '/users/me/avatar',
+      body: formData,
+    }).then((response) => {
+      expect(response.status).to.eq(201)
+      expect(response.body.url).to.match(/avatar\.png$/)
+    })
+  })
+})
+```
+
+### Query a GraphQL API
+
+GraphQL is a single endpoint taking a JSON body, so no special handling is
+needed. Assert on `body.data`, and assert that `body.errors` is absent, because
+GraphQL returns `200` even for query errors.
+
+```js title="cypress/e2e/api/graphql.cy.js"
+const gql = (query, variables) =>
+  cy.request('POST', '/graphql', { query, variables })
+
+it('fetches a user with their recent orders', () => {
+  gql(
+    `query User($id: ID!) {
+      user(id: $id) {
+        id
+        email
+        orders(last: 3) { id total }
+      }
+    }`,
+    { id: '1' }
+  ).then((response) => {
+    expect(response.status).to.eq(200)
+    expect(response.body).to.not.have.property('errors')
+    expect(response.body.data.user.email).to.eq('jdoe@example.com')
+    expect(response.body.data.user.orders).to.have.length.of.at.most(3)
+  })
+})
+```
+
+### Poll an asynchronous job
+
+When an endpoint kicks off background work, poll until it finishes. A recursive
+function gives you a bounded retry with a clear failure message.
+
+```js title="cypress/e2e/api/exports.cy.js"
+const waitForExport = (exportId, attemptsLeft = 10) => {
+  if (attemptsLeft === 0) {
+    throw new Error(`Export ${exportId} never completed`)
+  }
+
+  return cy.request(`/exports/${exportId}`).then((response) => {
+    if (response.body.status === 'complete') {
+      return response.body
+    }
+
+    cy.wait(1000)
+
+    return waitForExport(exportId, attemptsLeft - 1)
+  })
+}
+
+it('generates a CSV export', () => {
+  cy.request('POST', '/exports', { format: 'csv' })
+    .its('body.id')
+    .then((exportId) => waitForExport(exportId))
+    .then((completed) => {
+      expect(completed.downloadUrl).to.be.a('string')
+
+      cy.request(completed.downloadUrl)
+        .its('body')
+        .should('contain', 'order_id,total,currency')
+    })
+})
+```
+
+### Combine API calls with UI tests
+
+This is where running API tests in the same tool pays off. Seed state over HTTP,
+drive the application through its interface, then confirm over HTTP that the
+change persisted.
+
+```js title="cypress/e2e/checkout.cy.js"
+describe('checkout', () => {
+  beforeEach(() => {
+    cy.loginByApi(Cypress.env('username'), Cypress.env('password'))
+
+    // set up the cart over HTTP instead of clicking through the catalog
+    cy.request('POST', '/cart/items', { sku: 'KB-102', quantity: 1 })
+  })
+
+  it('places an order and persists it on the server', () => {
+    cy.visit('/checkout')
+    cy.get('[data-cy="place-order"]').click()
+    cy.contains('Thanks for your order').should('be.visible')
+
+    // the UI says it worked, now confirm the backend agrees
+    cy.request('/orders')
+      .its('body.orders.0')
+      .should('include', { status: 'confirmed' })
+      .its('lineItems.0.sku')
+      .should('eq', 'KB-102')
+  })
+})
+```
+
+<Icon name="graduation-cap" /> The Cypress
+<Icon name="github" inline="true" contentType="rwa" />
+was built API-first: its [API test
+suites](https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/api)
+were written before the UI existed, and they still run alongside the UI tests in
+the same suite today.
+
+## Organize an API test suite
+
+A few conventions keep an API suite readable as it grows:
+
+- **Group specs by resource, not by verb.** `cypress/e2e/api/users.cy.js` holds
+  every test for `/users`. Inside it, use a `describe` block per endpoint
+  (`GET /users`, `POST /users`) so failures name the endpoint that broke.
+- **Wrap repeated request setup in a custom command.** Auth headers, an API
+  version prefix, and a default `failOnStatusCode` belong in one
+  [custom command](/api/cypress-api/custom-commands), not in every test.
+- **Keep request bodies in fixtures.** Large payloads live better in
+  `cypress/fixtures/` and load with [`cy.fixture()`](/api/commands/fixture).
+- **Reset state between tests with `cy.task()`.** `cy.request()` talks to your
+  API. When you need to talk to the database directly, use
+  [`cy.task()`](/api/commands/task), which runs in Node.
+- **Put hosts and credentials in environment variables.** See
+  [environment variables](/app/guides/environment-variables) for per-environment
+  configuration.
+- **Alias responses you need later** with [`.as()`](/api/commands/as) instead of
+  assigning to a `let`, so the value is available across commands.
+
+```js title="cypress/support/commands.js"
+Cypress.Commands.add('api', (options) => {
+  return cy.request({
+    ...options,
+    url: `/api/v2${options.url}`,
+    headers: {
+      accept: 'application/json',
+      authorization: `Bearer ${Cypress.env('apiToken')}`,
+      ...options.headers,
+    },
+  })
+})
+```
+
+```js
+cy.api({ url: '/users/me' }).its('body.role').should('eq', 'admin')
+```
+
+## Debug API tests
+
+When a request behaves unexpectedly, the Command Log is the fastest way in.
+
+Every `cy.request()` renders as `METHOD STATUS URL`, for example
+`POST 201 /articles`, with a colored indicator showing whether the status was
+successful. Click the entry and Cypress prints the full detail to the browser
+console: the request URL, headers, and body it sent, the response status,
+headers, and body it received, and the value the command yielded. When redirects
+were followed, every hop is listed.
+
+Two more things to reach for:
+
+- **Failed status codes print the whole exchange.** When `failOnStatusCode` is
+  `true` and the server returns an error, the failure message includes the
+  request body and headers, the response status, and the response body, so you
+  usually do not need to re-run with logging added.
+- **`response.duration`** tells you how long the call took. Asserting on it
+  turns a slow endpoint into a failing test rather than a slow suite.
+
+## Choose the right tool
+
+| You want to                                            | Use                                         |
+| ------------------------------------------------------ | ------------------------------------------- |
+| Call an endpoint directly and assert on its response   | [`cy.request()`](/api/commands/request)     |
+| Assert on, wait for, or stub a request your app makes  | [`cy.intercept()`](/api/commands/intercept) |
+| Run code in Node, such as a database query or file I/O | [`cy.task()`](/api/commands/task)           |
+| Run a shell command, such as a seed script             | [`cy.exec()`](/api/commands/exec)           |
+
+The distinction between the first two is the one that trips people up.
+`cy.request()` makes a request. `cy.intercept()` observes and controls requests
+your application makes. They operate on different traffic, which is why
+`cy.intercept()` never matches a `cy.request()` call. For the full picture on
+stubbing and waiting for application traffic, see
+[Network Requests](/app/guides/network-requests).
+
+## See also
+
+- [`cy.request()`](/api/commands/request) - full option and response reference
+- [`cy.intercept()`](/api/commands/intercept)
+- [`cy.session()`](/api/commands/session)
+- [`cy.task()`](/api/commands/task)
+- [Network Requests](/app/guides/network-requests) - stubbing and waiting on
+  traffic your application makes
+- [Recipes: Logging In](/app/references/recipes#Logging-In)
