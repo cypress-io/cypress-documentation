@@ -47,15 +47,17 @@ You get a few concrete wins:
   then verify over HTTP that the backend really persisted the change.
 
 Cypress runs API tests in the [end-to-end testing type](/app/core-concepts/testing-types).
-The workhorse is [`cy.request()`](/api/commands/request), which makes a real HTTP
-request and yields the response.
+The command you will use most is [`cy.request()`](/api/commands/request), which
+makes a real HTTP request and yields the response.
 
 ## Write your first API test
 
-### Set a `baseUrl`
+### Set a `baseUrl` (optional)
 
-Point `baseUrl` at your API so every request can use a relative path. This also
-lets you swap environments without touching a spec.
+You can pass a full URL to `cy.request()` and start writing tests right away, so
+this step is not required. Setting `baseUrl` is a convenience: it lets every
+request use a relative path, and it lets you point the same specs at a different
+environment by changing one value.
 
 :::cypress-config-example
 
@@ -68,6 +70,14 @@ lets you swap environments without touching a spec.
 ```
 
 :::
+
+```js
+// with a baseUrl set
+cy.request('/users')
+
+// without one, pass the full URL
+cy.request('http://localhost:3001/users')
+```
 
 ### Create the spec
 
@@ -511,6 +521,67 @@ it('generates a CSV export', () => {
 })
 ```
 
+### Save a response as a fixture
+
+Writing a real response to disk with [`cy.writeFile()`](/api/commands/writefile)
+turns a live endpoint into reusable test data. Point it at your fixtures folder
+and the file becomes available to [`cy.fixture()`](/api/commands/fixture) like
+any hand-written fixture.
+
+```js title="cypress/e2e/api/record-fixtures.cy.js"
+it('records the product catalog for later use', () => {
+  cy.request('/products').then((response) => {
+    expect(response.status).to.eq(200)
+
+    cy.writeFile('cypress/fixtures/products.json', response.body)
+  })
+})
+```
+
+The payoff comes in the tests that read it back. A UI test can stub the same
+endpoint with the recorded response, so it runs fast and deterministically
+against a payload the server really produced:
+
+```js title="cypress/e2e/catalog.cy.js"
+it('renders every product in the catalog', () => {
+  cy.intercept('GET', '/products', { fixture: 'products.json' }).as('products')
+
+  cy.visit('/catalog')
+  cy.wait('@products')
+
+  cy.fixture('products').then((products) => {
+    cy.get('[data-cy="product-card"]').should('have.length', products.length)
+  })
+})
+```
+
+You do not have to record the whole response. Pull out the values later tests
+need and write those instead:
+
+```js
+cy.request('/users?role=admin').then((response) => {
+  cy.writeFile('cypress/fixtures/admin.json', {
+    id: response.body.results[0].id,
+    email: response.body.results[0].email,
+    capturedAt: new Date().toISOString(),
+  })
+})
+```
+
+:::caution
+
+Two things to settle before you record fixtures routinely. First, decide whether
+a fixture is committed or regenerated: a committed fixture is stable but drifts
+from the API over time, which is the failure mode stubbed tests are known for,
+while regenerating on every run keeps it honest but makes the test depend on a
+reachable server. Committing the fixture and keeping one unstubbed API test
+against the same endpoint gives you both, since the suite still fails when the
+real contract changes. Second, `cy.writeFile()` overwrites the file, so never
+record a response containing real credentials, tokens, or personal data into a
+fixture you commit.
+
+:::
+
 ### Combine API calls with UI tests
 
 This is where running API tests in the same tool pays off. Seed state over HTTP,
@@ -558,8 +629,11 @@ A few conventions keep an API suite readable as it grows:
 - **Wrap repeated request setup in a custom command.** Auth headers, an API
   version prefix, and a default `failOnStatusCode` belong in one
   [custom command](/api/cypress-api/custom-commands), not in every test.
-- **Keep request bodies in fixtures.** Large payloads live better in
+- **Keep large payloads in fixtures.** Request bodies live better in
   `cypress/fixtures/` and load with [`cy.fixture()`](/api/commands/fixture).
+  Responses can go the other way, recorded to a fixture with
+  [`cy.writeFile()`](/api/commands/writefile). See
+  [save a response as a fixture](#Save-a-response-as-a-fixture).
 - **Reset state between tests with `cy.task()`.** `cy.request()` talks to your
   API. When you need to talk to the database directly, use
   [`cy.task()`](/api/commands/task), which runs in Node.
@@ -652,6 +726,7 @@ stubbing and waiting for application traffic, see
 - [`cy.intercept()`](/api/commands/intercept)
 - [`cy.session()`](/api/commands/session)
 - [`cy.task()`](/api/commands/task)
+- [`cy.writeFile()`](/api/commands/writefile) - recording a response as a fixture
 - [Network Requests](/app/guides/network-requests) - stubbing and waiting on
   traffic your application makes
 - [Test Replay](/cloud/features/test-replay) - inspecting requests from a run
