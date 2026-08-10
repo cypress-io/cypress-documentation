@@ -989,8 +989,9 @@ This can happen for a number of reasons, including:
 - There is a bug in the browser involving memory management
 - There is a memory leak in Cypress
 
-For Chromium-based browsers, you can try enabling
-[experimentalMemoryManagement](/app/references/experiments).
+For Chromium-based browsers, Cypress manages browser memory by default through
+[manageBrowserMemory](/app/references/configuration#Global), so confirm you
+haven't set it to `false`.
 
 If you are running in `open` mode, you can also try lowering
 [numTestsKeptInMemory](/app/references/configuration#Global).

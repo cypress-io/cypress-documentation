@@ -95,6 +95,50 @@ You only need a replacement option if your application pins resources with Subre
 
 :::
 
+### `experimentalMemoryManagement` replaced by `manageBrowserMemory`
+
+The experimental `experimentalMemoryManagement` configuration option has been replaced by the new [`manageBrowserMemory`](/app/references/configuration#manageBrowserMemory) configuration option, which defaults to **`true`**. Browser memory management is now on by default for **all** users running Chromium-based browsers.
+
+If your Cypress configuration still sets `experimentalMemoryManagement`, Cypress now ignores the option and prints a warning.
+
+**If you were setting `experimentalMemoryManagement: true`:** remove it. Memory management is now the default.
+
+<Badge type="danger">Before</Badge>
+
+```ts
+{
+  experimentalMemoryManagement: true,
+}
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+{
+  // Remove the experimentalMemoryManagement option
+}
+```
+
+**If you were setting `experimentalMemoryManagement: false`:** replace it with `manageBrowserMemory: false`. Deleting it without adding the replacement silently opts you **into** memory management.
+
+<Badge type="danger">Before</Badge>
+
+```ts
+{
+  experimentalMemoryManagement: false,
+}
+```
+
+<Badge type="success">After</Badge>
+
+```ts
+{
+  manageBrowserMemory: false,
+}
+```
+
+See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory) for more information.
+
 ### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
 
 [`cy.getCookie()`](/api/commands/getcookie),

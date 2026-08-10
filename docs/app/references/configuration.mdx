@@ -153,6 +153,7 @@ default values.
 | `env`                  | `{}`                                  | Any secret values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                |
 | `expose`               | `{}`                                  | Any public values to be set as [exposed variables](/api/cypress-api/expose).                                                                                                                                                                                                                              |
 | `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
+| `manageBrowserMemory`  | `true`                                | Whether Cypress monitors browser memory and collects garbage when usage crosses a threshold, so memory-heavy suites don't crash the browser. Chromium-based browsers only; no effect in Firefox or WebKit. See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory).                  |
 | `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
 | `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                    |
 | `projectId`            | `null`                                | The unique ID used to record test results to [Cypress Cloud](/cloud/get-started/introduction). Set automatically when you [connect your project to Cypress Cloud](/cloud/get-started/setup#Setup).                                                                                                        |
@@ -812,6 +813,30 @@ if (Cypress.config('isInteractive')) {
 }
 ```
 
+### manageBrowserMemory
+
+In a long-running Cypress test suite, the browser accumulates memory across tests. References to DOM nodes, event listeners, and application state from earlier tests can linger in the browser's heap even after Cypress clears the page. As memory pressure builds, the browser can slow down and in severe cases crash mid-run.
+
+As of Cypress 16, [`manageBrowserMemory`](/app/references/configuration#Global) defaults to `true`, so this is handled for you without any configuration. Cypress samples the browser's memory usage on an interval while your tests run, and forces a garbage collection before the next test only when a sample has crossed a memory threshold.
+
+:::info
+
+`manageBrowserMemory` only applies to Chromium-based browsers (Chrome, Edge). It has no effect in Firefox or WebKit.
+
+:::
+
+This flag is not a blanket speed improvement. Clearing memory between tests takes time, paid on every test transition. If your suite is not under meaningful memory pressure, you can opt out to potentially save the overhead. You should measure the performance impact before and after disabling the flag.
+
+:::cypress-config-example
+
+```js
+{
+  manageBrowserMemory: false
+}
+```
+
+:::
+
 ### modifyObstructiveCode
 
 With this option enabled - Cypress will search through the response streams
@@ -974,6 +999,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 | Version                                      | Changes                                                                                                                                                                         |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [16.0.0](/app/references/changelog#16-0-0)   | Removed `allowCypressEnv` option.                                                                                                                                               |
+| [16.0.0](/app/references/changelog#16-0-0)   | Renamed `manageBrowserMemory` option to `manageBrowserMemory` and set to `true` by default.                                                                                     |
 | [16.0.0](/app/references/changelog#16-0-0)   | `keystrokeDelay` resolved fallback changed from `10` to `0` when unset in configuration and [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api).                     |
 | [15.20.0](/app/references/changelog#15-20-0) | Added per-axis `{ block, inline }` values and the `'start'` and `'end'` alignments to `scrollBehavior`, and restored `'top'` and `'bottom'` to aligning the vertical axis only. |
 | [15.18.0](/app/references/changelog#15-18-0) | Added `removeSRIAttributes` option.                                                                                                                                             |

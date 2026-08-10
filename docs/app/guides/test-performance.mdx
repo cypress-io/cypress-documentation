@@ -163,32 +163,33 @@ node -p 'os.cpus()'
 Apply these optimizations in order. The highest-impact changes are at the top.
 
 1. [Upgrade to the latest Cypress](#Keep-Cypress-up-to-date)
-2. [Choose the right test level](#Choose-the-right-test-level) — moving tests from E2E to component or API level is often the single largest gain
-3. [cy.session() for authentication caching](#Cache-authentication) — eliminates 2-5 seconds per test
-4. [Stub network requests](#Stub-network-requests-strategically) — replaces 100-2000ms real calls with < 20ms stubs
-5. [Programmatic state setup](#Set-up-state-programmatically-not-through-the-UI) — replaces minutes of UI navigation with seconds of API calls
-6. [Parallelization](#Parallelization) — linear scaling with the number of machines
-7. [Spec prioritization and auto cancellation](#Spec-prioritization) — surfaces failures faster; reduces cost of broken builds
-8. [Disable video, use Test Replay](#Disable-video-use-Test-Replay-instead) — removes per-spec encoding overhead from CI; Test Replay provides better debugging at lower cost
-9. [Tag tests with @cypress/grep for CI tiers](#Run-the-right-tests-at-the-right-time) — run a fast smoke or critical subset on every PR; `grepFilterSpecs` skips loading specs that contain no matching tests
-10. [Cache the Cypress binary in CI](#Cache-the-Cypress-binary-in-CI) — prevents a 100 MB+ binary download on every run
-11. [Right-size CI machine resources](#Allocate-enough-CI-machine-resources) — resource starvation presents as slow or flaky tests, not a clear error; fix this before other CI tuning
-12. [Eliminate arbitrary cy.wait()](#Avoid-arbitrary-waits-and-adjust-timeouts)
-13. [Slim support file and imports](#Keep-support-and-spec-imports-lean) — avoids bundling unused code on every spec startup
-14. [Block third-party requests with blockHosts](#Block-third-party-requests-with-blockHosts) — analytics and monitoring services consume time in test environments; blocked requests resolve immediately
-15. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
-16. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
-17. [Modern visibility algorithm](#Use-the-modern-visibility-algorithm) — high impact on complex DOMs; Cypress 16 defaults to the faster `checkVisibility()`-based algorithm
-18. [experimentalMemoryManagement](#Manage-memory-accumulation) — targeted remedy for suites that slow down over time or crash; measure before committing, as the cleanup cost can exceed the benefit on lighter suites
-19. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
-20. [UI Coverage to identify over-tested elements](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
-21. [cy.prompt for selector maintenance](#Reduce-selector-maintenance-overhead-with-cyprompt) — reduces recurring fix time when the UI changes; cached commands run without AI overhead in CI
+1. [Choose the right test level](#Choose-the-right-test-level) — moving tests from E2E to component or API level is often the single largest gain
+1. [cy.session() for authentication caching](#Cache-authentication) — eliminates 2-5 seconds per test
+1. [Stub network requests](#Stub-network-requests-strategically) — replaces 100-2000ms real calls with < 20ms stubs
+1. [Programmatic state setup](#Set-up-state-programmatically-not-through-the-UI) — replaces minutes of UI navigation with seconds of API calls
+1. [Parallelization](#Parallelization) — linear scaling with the number of machines
+1. [Spec prioritization and auto cancellation](#Spec-prioritization) — surfaces failures faster; reduces cost of broken builds
+1. [Disable video, use Test Replay](#Disable-video-use-Test-Replay-instead) — removes per-spec encoding overhead from CI; Test Replay provides better debugging at lower cost
+1. [Tag tests with @cypress/grep for CI tiers](#Run-the-right-tests-at-the-right-time) — run a fast smoke or critical subset on every PR; `grepFilterSpecs` skips loading specs that contain no matching tests
+1. [Cache the Cypress binary in CI](#Cache-the-Cypress-binary-in-CI) — prevents a 100 MB+ binary download on every run
+1. [Right-size CI machine resources](#Allocate-enough-CI-machine-resources) — resource starvation presents as slow or flaky tests, not a clear error; fix this before other CI tuning
+1. [Eliminate arbitrary cy.wait()](#Avoid-arbitrary-waits-and-adjust-timeouts)
+1. [Slim support file and imports](#Keep-support-and-spec-imports-lean) — avoids bundling unused code on every spec startup
+1. [Block third-party requests with blockHosts](#Block-third-party-requests-with-blockHosts) — analytics and monitoring services consume time in test environments; blocked requests resolve immediately
+1. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
+1. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
+1. [Modern visibility algorithm](#Use-the-modern-visibility-algorithm) — high impact on complex DOMs; Cypress 16 defaults to the faster `checkVisibility()`-based algorithm
+1. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
+1. [UI Coverage to identify over-tested elements](#Find-and-eliminate-over-tested-UI-with-UI-Coverage) — interaction count data identifies UI your tests repeatedly pass through without intending to test
+1. [cy.prompt for selector maintenance](#Reduce-selector-maintenance-overhead-with-cyprompt) — reduces recurring fix time when the UI changes; cached commands run without AI overhead in CI
 
 ## Strategies to speed up tests
 
 ### Keep Cypress up to date
 
-Before tuning configuration or restructuring tests, make sure you're running the latest version of Cypress. The Cypress team continuously ships performance improvements: faster test execution, reduced memory overhead, more efficient visibility checks, and improvements to the underlying browser automation. Older versions don't get these improvements.
+Before tuning configuration or restructuring tests, make sure you're running the latest version of Cypress. The Cypress team continuously ships performance improvements. Older versions don't get these improvements.
+
+For example, if you're using an older version of Cypress, you can upgrade to 16.0.0 to get automatic garbage collection of browser memory between tests (see [manageBrowserMemory](/app/references/configuration#manageBrowserMemory)), faster visibility checks, faster default keystroke typing, and other performance improvements.
 
 <Tabs>
   <TabItem value="npm">
@@ -722,32 +723,6 @@ describe('Dashboard', { visibilityStrategy: 'legacy' }, () => {
 
 The modern algorithm is most impactful on suites with many visibility assertions or suites that run against applications with large, deeply nested component trees.
 
-### Manage memory accumulation
-
-In a long-running Cypress test suite, the browser accumulates memory across tests. References to DOM nodes, event listeners, and application state from earlier tests can linger in the browser's heap even after Cypress clears the page. As memory pressure builds, the browser can slow down and in severe cases crash mid-run.
-
-[`experimentalMemoryManagement`](/app/references/experiments) enables improved memory management for Chromium-based browsers, actively clearing memory between tests. It does this by clearing the browser's heap after each test.
-
-:::cypress-config-example
-
-```js
-{
-  experimentalMemoryManagement: true // ✅ Faster approach: enable memory management
-}
-```
-
-:::
-
-:::info
-
-`experimentalMemoryManagement` only applies to Chromium-based browsers (Chrome, Edge). It has no effect in Firefox or WebKit.
-
-:::
-
-This flag is not a blanket speed improvement. Clearing memory between tests takes time, paid on every test transition. If your suite is not under meaningful memory pressure, enabling this flag may slow it down rather than speed it up. You should measure the performance impact before and after enabling this flag.
-
-Enable it only if your suite gets progressively slower as it runs, or if the browser crashes before completion. Both symptoms point to memory accumulation. If your suite runs at a consistent pace from start to finish and doesn't crash, memory is not the bottleneck.
-
 ### Use test retries deliberately
 
 Test retries keep CI moving when flaky tests fail, but they come with an execution cost that compounds quickly if configured carelessly.
@@ -933,7 +908,7 @@ Increase the resource class for the job that runs Cypress. You'll find the most 
 - **CircleCI**: `resource_class: large`: 4 vCPUs, 8 GB RAM
 - **GitHub Actions**: standard Ubuntu runner: 4 vCPUs, 16 GB RAM
 
-Also see [experimentalMemoryManagement](#Manage-memory-accumulation) for information on how to improve memory management.
+Also see [manageBrowserMemory](/app/references/configuration#manageBrowserMemory) for how Cypress manages browser memory on your behalf and when it makes sense to turn that off.
 
 ### Spec prioritization
 
