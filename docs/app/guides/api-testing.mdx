@@ -36,9 +36,12 @@ You get a few concrete wins:
 - **Coverage for the parts of the backend the UI never reaches.** Validation
   errors, permission boundaries, rate limits, and pagination edges are often
   hard to trigger from a form but trivial to trigger with a request.
-- **Real inspection while you work.** In [open mode](/app/core-concepts/open-mode),
-  every request shows up in the Command Log with its method, status, and URL,
-  and clicking it prints the full request and response to the browser console.
+- **Real inspection, locally and in CI.** Every request shows up in the Command
+  Log with its method, status, and URL, and clicking it prints the full request
+  and response to your browser console. That works in
+  [open mode](/app/core-concepts/open-mode) and, through
+  [Test Replay](/cloud/features/test-replay), on a run that already finished in
+  CI.
 - **Tests that span both layers.** Because API calls and UI commands live in the
   same chain, you can seed state over HTTP, drive the app through its interface,
   then verify over HTTP that the backend really persisted the change.
@@ -588,6 +591,8 @@ cy.api({ url: '/users/me' }).its('body.role').should('eq', 'admin')
 
 When a request behaves unexpectedly, the Command Log is the fastest way in.
 
+### While you write tests
+
 Every `cy.request()` renders as `METHOD STATUS URL`, for example
 `POST 201 /articles`, with a colored indicator showing whether the status was
 successful. Click the entry and Cypress prints the full detail to the browser
@@ -595,7 +600,28 @@ console: the request URL, headers, and body it sent, the response status,
 headers, and body it received, and the value the command yielded. When redirects
 were followed, every hop is listed.
 
-Two more things to reach for:
+### After a run in CI
+
+The same inspection works on a run that already finished.
+[Test Replay](/cloud/features/test-replay) records the command log for each
+test, so you can open the failing run in Cypress Cloud, click the `cy.request()`
+command in the replay, and get that same request and response detail printed to
+your browser console.
+
+:::tip
+
+Open your browser DevTools **before** clicking the command. The detail is
+printed to the console, so with DevTools closed there is nowhere for it to
+appear.
+
+:::
+
+This closes the loop that usually makes API failures in CI painful. Rather than
+re-running the suite locally with extra logging added to guess at what the
+server returned, you read the actual request and response from the run that
+failed.
+
+### Two more things to reach for
 
 - **Failed status codes print the whole exchange.** When `failOnStatusCode` is
   `true` and the server returns an error, the failure message includes the
@@ -628,4 +654,6 @@ stubbing and waiting for application traffic, see
 - [`cy.task()`](/api/commands/task)
 - [Network Requests](/app/guides/network-requests) - stubbing and waiting on
   traffic your application makes
+- [Test Replay](/cloud/features/test-replay) - inspecting requests from a run
+  that already finished in CI
 - [Recipes: Logging In](/app/references/recipes#Logging-In)

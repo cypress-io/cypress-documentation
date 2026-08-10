@@ -750,6 +750,11 @@ the browser has nothing to report. To inspect it, click the `cy.request()` entry
 in the [Command Log](/app/core-concepts/open-mode#Command-Log) and Cypress
 prints the full request and response to the browser console.
 
+This also works after the fact on a CI run. Open the run in
+[Test Replay](/cloud/features/test-replay), click the `cy.request()` command,
+and the same detail is printed to your console. Open DevTools before clicking,
+since that is where the output goes.
+
 ### <Icon name="angle-right" /> How do I send an authentication token with cy.request()?
 
 Pass it in the `headers` option, and keep the credential itself in an
