@@ -1,69 +1,56 @@
 ---
-title: 'Cypress 16: faster tests and HTTP/2 support'
-description: 'What changed in Cypress 16: HTTP/2 support in Chromium-based browsers, faster typing, faster visibility checks, retryable cookie and storage queries, and browser memory management on by default.'
+title: 'Cypress 16: HTTP/2 support and performance improvements'
+description: 'What changed in Cypress 16: HTTP/2 support in Chromium-based browsers, a zero keystroke delay, faster visibility checks, retryable cookie and storage queries, and browser memory management on by default.'
 sidebar_label: 'Cypress 16'
 ---
 
 <ProductHeading product="app" />
 
-# Cypress 16: faster tests and HTTP/2 support
+# Cypress 16
 
-Cypress 16 is a performance release. Look across the changes and one theme runs through nearly all of them: your suite spends less time waiting.
+Cypress 16 adds HTTP/2 support and makes four performance improvements the default. Every change on this page applies when you upgrade, without editing a spec.
 
-HTTP/2 support is the headline. It is on by default in Chromium-based browsers, it works with your existing specs, and it has been the most requested change on the Cypress networking roadmap since the original issue was opened in 2019. Behind it sit a faster default typing speed, a faster visibility algorithm, retryable cookie and storage queries, and a newer browser and runtime foundation underneath everything.
+Cypress 16 is also a major release with breaking changes. See [Before you upgrade](#Before-you-upgrade).
 
 :::info
 
 <WhatYoullLearn />
 
-- What changed in Cypress 16, and which changes apply without touching a spec
-- How HTTP/2 support affects request-heavy pages and streaming workflows
-- Which options to set when you need the previous behavior
+- What changed in Cypress 16 and whether it affects your project
+- How to restore the previous behavior when you need it
 - What to check before you upgrade
 
 :::
 
-## Where the time goes back
+## What changed
 
-- **HTTP/2 support**, on by default in Chromium-based browsers, so request-heavy pages load in parallel instead of queuing.
-- **Faster typing by default**, with the delay between keystrokes now zero.
-- **A faster visibility algorithm by default**, which matters most on large, deeply nested applications.
-- **Cookie and storage commands retry**, removing a common source of flake and the reruns that follow it.
-- **Browser memory management on by default**, so long runs stop degrading and crashing partway through.
+| Change                                                       | Previous behavior                                  | Affects                                      |
+| ------------------------------------------------------------ | -------------------------------------------------- | -------------------------------------------- |
+| Requests use HTTP/2 when the server supports it              | All requests used HTTP/1.1                         | Chromium-based browsers                      |
+| `keystrokeDelay` defaults to `0`                             | Defaulted to `10` milliseconds                     | Every [`cy.type()`](/api/commands/type) call |
+| Faster visibility algorithm is the default                   | Opt-in as `experimentalFastVisibility`             | Every visibility check                       |
+| Cookie and storage commands are queries, so assertions retry | Read state once and failed if it was not ready yet | The five commands listed below               |
+| `manageBrowserMemory` is on by default                       | Opt-in as `experimentalMemoryManagement`           | Chromium-based browsers                      |
 
-The [test performance guide](/app/guides/test-performance#Keep-Cypress-up-to-date) puts keeping Cypress up to date at the top of its [priority checklist](/app/guides/test-performance#Priority-checklist), ahead of every configuration change you could make. Cypress 16 is a good argument for why.
-
-## Why speed was the theme
-
-Slow tests change how a team works. When a run takes 30 minutes, people stop waiting for it. They batch unrelated changes together, context-switch away, and lose the tight feedback loop that made the tests worth writing.
-
-Most advice about test speed asks you to change something: restructure a suite, cache a login, stub a request. That advice is good, and it is also work. Cypress 16 is built around the changes that arrive when you upgrade, without touching a single spec.
+Keeping Cypress up to date is the first item on the [priority checklist](/app/guides/test-performance#Priority-checklist) in our test performance guide, ahead of any configuration change you can make.
 
 ## HTTP/2 support
 
-Cypress sits between the browser and your servers, proxying every request so commands like [`cy.intercept()`](/api/commands/intercept) can observe and modify network traffic. When that proxy was built, HTTP/1.1 was the standard. The web moved on, and today the overwhelming majority of production traffic is HTTP/2. Until now, your application ran over an older protocol under test than it does for real users.
+Cypress proxies every request between the browser and your servers so that commands like [`cy.intercept()`](/api/commands/intercept) can observe and modify network traffic. That proxy spoke HTTP/1.1, which meant your application ran over an older protocol under test than it does in production.
 
-In Cypress 16, requests use HTTP/2 whenever the server supports it, in Chromium-based browsers, with no changes to your tests.
+In Cypress 16, requests use HTTP/2 whenever the server supports it. Your tests do not change.
 
-### Request-heavy pages load faster
+**Request-heavy pages load faster.** HTTP/2 multiplexes many requests over one connection instead of queuing them behind a small number of parallel slots. In our benchmark loading 1,000 images, the HTTP/2 page finished in 1,362ms compared to 3,896ms over HTTP/1.1. Pages that fire many small requests, such as those served by a Vite dev server, benefit most.
 
-HTTP/2 multiplexes many requests over one connection instead of queuing them behind a small number of parallel slots. In a benchmark loading 1,000 images, the HTTP/2 page finished in 1,362ms against 3,896ms over HTTP/1.1. If your pages fire off many small requests, especially through a Vite dev server, you should see the difference in both open mode and CI.
+**Server-Sent Events are no longer capped at 6 connections.** Browsers limit Server-Sent Events to 6 connections per domain over HTTP/1.1, which put upload progress indicators, live notifications, and activity feeds out of reach. Over HTTP/2, the number of concurrent streams is negotiated with the server and defaults to 100.
 
-### Streaming features become testable
+HTTP/2 applies to Chromium-based browsers, including Chrome, Chromium, and Edge. Firefox and WebKit continue to use HTTP/1.1.
 
-Over HTTP/1.1, browsers cap Server-Sent Events at six connections per domain. That limit put upload progress indicators, live notifications, and activity feeds effectively out of reach. Over HTTP/2, the number of concurrent streams is negotiated with the server and defaults to 100. If you gave up on testing a streaming workflow, it is worth another look.
+## Zero keystroke delay
 
-### Browser support
+[`cy.type()`](/api/commands/type) waited 10 milliseconds between keystrokes. In Cypress 16, [`keystrokeDelay`](/api/cypress-api/keyboard-api) defaults to `0`, and forms fill as fast as your application accepts the input.
 
-HTTP/2 applies to Chromium-based browsers, including Chrome, Chromium, and Edge. Firefox and WebKit continue to use HTTP/1.1 in this release.
-
-## Typing at full speed
-
-Every [`cy.type()`](/api/commands/type) call has paid a 10ms delay between keystrokes. On a single field that is invisible. Across a suite that fills forms in hundreds of tests, it is real time spent doing nothing.
-
-In Cypress 16 the default [`keystrokeDelay`](/api/cypress-api/keyboard-api) is `0`. Forms fill as fast as your application can accept the input.
-
-Applications that depend on inter-keystroke timing, such as inputs with aggressive debouncing, can restore the previous delay globally in a support file:
+If your application depends on the timing between keystrokes, such as an input with aggressive debouncing, restore the previous delay globally in a support file:
 
 ```js title="cypress/support/e2e.js"
 Cypress.Keyboard.defaults({
@@ -71,7 +58,7 @@ Cypress.Keyboard.defaults({
 })
 ```
 
-Or for a single command:
+Or set it for a single command:
 
 ```js title="spec.cy.js"
 cy.get('#search').type('cypress', { delay: 10 })
@@ -79,15 +66,15 @@ cy.get('#search').type('cypress', { delay: 10 })
 
 ## Faster visibility checks
 
-Every time Cypress asserts that an element is visible, it runs a visibility algorithm. The legacy version walked up the ancestor tree reading CSS properties at each level, which repeatedly triggered layout recalculation in the browser. On a large, deeply nested component tree, with a suite full of visibility assertions, that cost adds up quietly across every run.
+Cypress runs a visibility algorithm every time it asserts or checks that an element is visible. The legacy algorithm walked up the ancestor tree and read CSS properties at each level, which repeatedly triggered layout recalculation in the browser.
 
-Cypress 16 makes the modern algorithm the default. It calls the browser's built-in visibility check first, then confirms coverage with an adaptive point-sampling approach, which avoids most of that layout thrashing. It shipped as [`experimentalFastVisibility`](/app/references/experiments#Experimental-Fast-Visibility), it earned its place, and now every project gets it without opting in.
+Cypress 16 makes the faster algorithm the default. It calls the browser's built-in `checkVisibility()` method first, then confirms coverage with an adaptive point-sampling algorithm, which avoids most of that layout recalculation. We shipped it as [`experimentalFastVisibility`](/app/references/experiments#Experimental-Fast-Visibility) and are promoting it now that it has proven itself.
 
-## Fewer flaky reruns
+Suites with many visibility assertions see the largest improvement, as do suites that run against applications with large, deeply nested component trees.
 
-Not all wasted time looks like a slow test. A test that retries on every run costs you on every run, and a test that fails on flake costs a developer the investigation plus a full re-trigger of CI.
+## Retryable cookie and storage queries
 
-Cookie and storage reads were a reliable source of that flake. Reading a cookie set asynchronously, after a redirect or a server round trip, could miss it by a few milliseconds and fail. In Cypress 16, these commands are queries:
+Reading a cookie that was set asynchronously, after a redirect or a server round trip, could miss it by a few milliseconds and fail. These commands are now queries:
 
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
@@ -95,21 +82,19 @@ Cookie and storage reads were a reliable source of that flake. Reading a cookie 
 - [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage)
 - [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage)
 
-Assertions chained to a query re-read the underlying state and retry until they pass:
+Assertions chained to a query re-read the underlying state and retry until they pass or time out:
 
 ```js title="spec.cy.js"
 cy.getCookie('session_id').should('exist')
 ```
 
-That assertion now waits for the cookie the same way [`cy.get()`](/api/commands/get) waits for an element. One less race, and one less reason for a green suite to go red for no good reason.
+That assertion waits for the cookie the same way [`cy.get()`](/api/commands/get) waits for an element, which removes a common cause of flake.
 
-## Long runs that stay up
+## Browser memory management on by default
 
-In a long run, the browser accumulates memory across tests. As pressure builds, the browser slows down, and in bad cases it crashes before the suite finishes. Since Cypress 12.4.0 the remedy has been the [`experimentalMemoryManagement`](/app/references/experiments#Configuration) flag, which clears memory between tests. The Cypress team has recommended it for years and runs it on its own suites, but as an experimental flag most projects never found it.
+In a long run, the browser accumulates memory across tests. As memory pressure builds, the browser slows down and can crash before the suite finishes. [`experimentalMemoryManagement`](/app/references/experiments#Configuration) has addressed this since Cypress 12.4.0 by clearing memory between tests. In Cypress 16 it is stable, renamed to `manageBrowserMemory`, and enabled by default.
 
-In Cypress 16 it is stable, renamed to `manageBrowserMemory`, and on by default.
-
-It is worth being precise about what this is. For suites under memory pressure, the ones that get slower as they run or crash before they finish, this removes a failure mode that costs entire runs. It is not a universal speed-up: clearing memory takes time, and on a light suite that was never near a memory ceiling, that work is overhead rather than savings. It remains a single option to turn off:
+This is not a blanket speed improvement. Clearing memory takes time, paid on every test transition. It helps suites that get progressively slower as they run or that crash before finishing. On a suite that was never near a memory limit, it adds overhead instead. Measure your suite before and after, and turn it off if it does not help:
 
 :::cypress-config-example
 
@@ -121,29 +106,29 @@ It is worth being precise about what this is. For suites under memory pressure, 
 
 :::
 
-The test performance guide covers [how to measure whether it is helping your suite](/app/guides/test-performance#Manage-memory-accumulation).
+`manageBrowserMemory` applies to Chromium-based browsers, including Chrome, Edge, and Electron. It has no effect in Firefox or WebKit. See [Manage memory accumulation](/app/guides/test-performance#Manage-memory-accumulation) for how to measure the impact on your suite.
 
-## A faster foundation
+## Updated runtime and browser versions
 
-Some of the gain in this release is not a feature at all. Cypress 16 moves onto a newer runtime and browser foundation: Node.js 24 under the hood, Chromium 146, and current major versions of the component testing toolchain, including Vite 8 and Angular 21 and 22. Each of those brings its own performance work that your tests inherit for free.
+Cypress 16 ships on Node.js 24 and Chromium 146, and supports current major versions of the component testing toolchain, including Vite 8 and Angular 21 and 22. Each brings performance work that your tests inherit.
 
-Code was removed rather than added, too. `experimentalSourceRewriting`, an experiment that could make a single [`cy.visit()`](/api/commands/visit) five to ten times slower for the projects that enabled it, is gone. So are several long-deprecated APIs. A smaller surface is a faster and more predictable one.
+We also removed `experimentalSourceRewriting`, which could make a single [`cy.visit()`](/api/commands/visit) 5 to 10 times slower in projects that enabled it, along with several long-deprecated APIs.
 
 ## Before you upgrade
 
-Cypress 16 is a major release, and it includes breaking changes: removed APIs, changed defaults, and higher minimum versions for Node.js, Vite, and Angular. The Electron browser is now deprecated as a test browser, though it still runs tests in this release.
+Cypress 16 is a major release. It removes several long-deprecated APIs, changes the defaults described above, and raises the minimum versions of Node.js, Vite, and Angular. The Electron browser is deprecated as a test browser and warns when selected, though it still runs tests in this release.
 
-The [migration guide](/app/references/migration-guide) covers every change with concrete steps, and the [changelog](/app/references/changelog) has the full list.
+Read the [migration guide](/app/references/migration-guide) for the steps behind each change, and the [changelog](/app/references/changelog) for the full list.
 
-A practical order to work in: read the migration guide and note the changes that touch your project, then upgrade on a branch.
+To upgrade, install the latest version on a branch:
 
 <PackageManagerTabs install="cypress@latest" dev />
 
-From there, run your suite in the [browser your users actually use](/app/references/launching-browsers), and record the run to [Cypress Cloud](/cloud/get-started/introduction) so you can compare durations against your last run on Cypress 15.
+Then run your suite in the [browsers your users use](/app/references/launching-browsers), and record the run to [Cypress Cloud](/cloud/get-started/introduction) to compare durations against your last run on Cypress 15.
 
-Most projects will find the work is small. If something behaves differently and the migration guide does not explain why, [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
+If something behaves differently and the migration guide does not explain why, [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
-## Common questions about Cypress 16
+## Common questions
 
 ### <Icon name="angle-right" /> Does Cypress support HTTP/2?
 
@@ -155,15 +140,15 @@ No. Requests use HTTP/2 automatically when the server supports it.
 
 ### <Icon name="angle-right" /> Will Cypress 16 make my tests faster?
 
-It depends on where your time is going. The gains are largest for suites with request-heavy pages, lots of typing, many visibility assertions, or long runs that hit memory pressure. If your suite is slow because of long waits, repeated UI logins, or real network calls, those causes are unchanged, and the [test performance guide](/app/guides/test-performance) is the place to start.
+It depends on where your suite spends its time. The improvements are largest for suites with request-heavy pages, frequent typing, many visibility assertions, or long runs that hit memory pressure. Suites that are slow because of fixed waits, repeated logins through the UI, or slow real network calls are unaffected by these changes. Start with the [test performance guide](/app/guides/test-performance) to find your bottleneck.
 
 ### <Icon name="angle-right" /> Is the Electron browser removed in Cypress 16?
 
-No. Electron is deprecated and warns when selected, but it still runs tests. Removal will come in a later major version that has not been scheduled.
+No. Electron is deprecated and warns when selected, but it still runs tests. We have not scheduled the major version that will remove it.
 
 ### <Icon name="angle-right" /> Is Cypress 16 a breaking release?
 
-Yes. It removes several long-deprecated APIs, changes some defaults, and raises minimum versions for Node.js, Vite, and Angular. Every change has migration steps in the [migration guide](/app/references/migration-guide).
+Yes. It removes several long-deprecated APIs, changes some defaults, and raises the minimum versions of Node.js, Vite, and Angular. The [migration guide](/app/references/migration-guide) covers the steps for each change.
 
 ## See also
 
