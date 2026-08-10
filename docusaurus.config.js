@@ -72,14 +72,20 @@ const config = {
         googleAnalytics: {
           trackingID: 'UA-59606812-1',
         },
-        googleTagManager: {
-          containerId: 'GTM-KNKBWLD',
-        },
+        // googleTagManager is handled by ./plugins/googleTagManager instead, so
+        // the container can be skipped under Cypress.
       },
     ],
   ],
 
   plugins: [
+    [
+      './plugins/googleTagManager',
+      {
+        id: 'docs-google-tag-manager',
+        containerId: 'GTM-KNKBWLD',
+      },
+    ],
     [
       './plugins/osano',
       {
