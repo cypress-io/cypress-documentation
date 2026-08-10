@@ -280,6 +280,122 @@ hard-to-test code not covered by other tests. You can find such places in the
 code using the [code coverage](/app/tooling/code-coverage) as a guide. Watch
 the
 
+## Cypress 16
+
+### <Icon name="angle-right" /> What's new in Cypress 16?
+
+Cypress 16 is a performance and reliability release. Cookie and storage commands
+now retry like other queries, visibility checks use the browser's native
+`Element.checkVisibility()` engine, memory management is enabled by default in
+Chromium-based browsers, and the default `keystrokeDelay` for
+[`cy.type()`](/api/commands/type) dropped from `10` to `0`. It also moves to
+Node.js 24, Electron 41, and Chromium 146, and removes `Cypress.env()`.
+
+See [What's New in Cypress 16](/app/references/whats-new-in-cypress-16) for the
+full picture, or the [Migration Guide](/app/references/migration-guide) for
+upgrade steps.
+
+### <Icon name="angle-right" /> Do I need to change my tests to upgrade to Cypress 16?
+
+Most suites upgrade without test changes. The performance and reliability
+improvements apply automatically.
+
+Two things do need attention: any remaining
+[`Cypress.env()`](/app/references/migration-guide) calls must move to
+[`cy.env()`](/api/commands/env) or
+[`Cypress.expose()`](/api/cypress-api/expose), and a small number of tests may
+see different visibility results. Configuration options that were removed print
+a warning rather than failing the run, so a stale config file will not block you.
+
+### <Icon name="angle-right" /> Why is my `should('be.visible')` assertion failing after upgrading to Cypress 16?
+
+Cypress 16 defaults to the modern visibility strategy, which delegates to the
+browser's `Element.checkVisibility()`. A few cases resolve differently from the
+legacy algorithm. The most common is `<option>` and `<optgroup>` elements inside
+a closed `<select>`, which the browser reports as hidden. Elements with zero
+width or height are also now treated as hidden, even when their text overflows.
+
+Assert on existence or on the select's value instead:
+
+```javascript
+cy.get('select[data-cy="country"] option[value="CA"]').should('exist')
+cy.get('select[data-cy="country"]').select('CA').should('have.value', 'CA')
+```
+
+If you need time to adjust, set `visibilityStrategy: 'legacy'` for the affected
+suite or test. See
+[Visibility checks now use the browser's engine](/app/references/whats-new-in-cypress-16#Visibility-checks-now-use-the-browsers-engine)
+for the full list of differences.
+
+### <Icon name="angle-right" /> Why does `cy.getCookie()` behave differently in Cypress 16?
+
+[`cy.getCookie()`](/api/commands/getcookie),
+[`cy.getCookies()`](/api/commands/getcookies),
+[`cy.getAllCookies()`](/api/commands/getallcookies),
+[`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage), and
+[`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) are now
+queries. They re-read state and retry attached assertions instead of reading
+once, so `cy.getCookie('token').should('exist')` waits for a cookie set
+asynchronously.
+
+Two consequences: their timeout follows `defaultCommandTimeout` (default `4000`)
+rather than `responseTimeout` (default `30000`), and overwriting them requires
+[`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries) instead of
+`Cypress.Commands.overwrite()`.
+
+### <Icon name="angle-right" /> What replaced `experimentalMemoryManagement` in Cypress 16?
+
+`manageBrowserMemory`, which defaults to `true`. Memory management graduated out
+of experimental status and now runs by default in Chromium-based browsers.
+
+Setting `experimentalMemoryManagement` prints a warning and is otherwise
+ignored. If you previously set it to `false` to opt out, set
+`manageBrowserMemory: false` instead.
+
+### <Icon name="angle-right" /> What replaced `Cypress.env()` in Cypress 16?
+
+Use [`cy.env()`](/api/commands/env) for sensitive values, which keeps them in the
+Node process and returns only the keys you request, and
+[`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive values that need
+synchronous access in the browser.
+
+The `env` key is no longer accepted in per-test or per-suite configuration
+overrides, and the `allowCypressEnv` option has been removed. The
+[Migration Guide](/app/references/migration-guide) includes an AI prompt that
+classifies each value and rewrites the call sites for you.
+
+### <Icon name="angle-right" /> Is the Electron browser still supported in Cypress 16?
+
+Yes, but it is deprecated and will be removed in a future major version. Cypress
+prints a warning when you launch it.
+
+Switch your runs to Chrome or another installed browser to avoid a breaking
+change on a later upgrade:
+
+```bash
+npx cypress run --browser chrome
+```
+
+See [Launching Browsers](/app/references/launching-browsers) for the supported
+list.
+
+### <Icon name="angle-right" /> Which Node.js versions does Cypress 16 support?
+
+Cypress 16 supports `^22.0.0 || ^24.0.0 || >=26.0.0` as the Node.js version you
+install and run the CLI with. Separately, the Node.js version bundled inside the
+Cypress binary moved from `22.19.0` to `24.15.0`, so plugins loaded in
+[`setupNodeEvents`](/api/node-events/configuration-api) execute under Node 24.
+
+### <Icon name="angle-right" /> Why did my typing test start failing after upgrading to Cypress 16?
+
+The default `keystrokeDelay` for [`cy.type()`](/api/commands/type) changed from
+`10` milliseconds to `0`. Applications that debounce input or re-render on every
+keystroke occasionally depend on that pause.
+
+Restore it globally with `keystrokeDelay: 10` in your Cypress configuration, per
+test with `it('...', { keystrokeDelay: 10 }, ...)`, or for a single command with
+`cy.get('[data-cy="search"]').type('cypress', { delay: 10 })`.
+
 ## "How-to" Cypress Questions
 
 ### <Icon name="angle-right" /> How do I get an element's text contents?

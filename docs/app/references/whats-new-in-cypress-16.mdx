@@ -1,0 +1,366 @@
+---
+title: "What's New in Cypress 16"
+description: 'Cypress 16 makes test suites faster and less flaky by default with retryable cookie and storage commands, a browser-native visibility algorithm, memory management enabled by default, and a modernized runtime built on Node.js 24 and Chromium 146.'
+sidebar_label: "What's New in Cypress 16"
+---
+
+<ProductHeading product="app" />
+
+# What's New in Cypress 16
+
+:::info
+
+<WhatYoullLearn />
+
+- What Cypress 16 improves and why it matters for your suite
+- How retryable cookie and storage commands remove a class of flaky tests
+- How the visibility algorithm changed and where results differ
+- Which configuration options were renamed, removed, or given new defaults
+- How to decide what to change first when you upgrade
+
+:::
+
+Cypress 16 is a performance and reliability release. Most of what it delivers arrives without you editing a single test: cookie and storage commands now retry like every other query, visibility checks defer to the browser's own engine, memory management runs by default in Chromium browsers, and typing no longer pauses between keystrokes.
+
+The release also modernizes the foundation Cypress runs on, moving to Node.js 24, Electron 41, and Chromium 146, and it completes the security work started in Cypress 15 by removing `Cypress.env()` so secrets stay in the Node process.
+
+:::tip
+
+This page explains **what changed and why**. For the exact, ordered steps to move a project from Cypress 15 to 16, read the [Migration Guide](/app/references/migration-guide).
+
+:::
+
+## Upgrade to Cypress 16
+
+<PackageManagerTabs install="cypress@16" dev />
+
+Then confirm the version Cypress resolved:
+
+<PackageManagerTabs run="cypress version" />
+
+## Cookie and storage commands now retry
+
+This is the change most likely to delete flake from your suite.
+
+In Cypress 15, [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.getAllCookies()`](/api/commands/getallcookies), [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage), and [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) read state exactly once. If your application wrote the cookie a few milliseconds after the command ran, the assertion failed and the test was flaky.
+
+In Cypress 16 all five are [queries](/api/cypress-api/custom-queries). They re-read state from the browser and retry any attached assertion until it passes or the command times out.
+
+### Waiting for a session cookie
+
+A login flow sets its session cookie when the network request resolves, not when the button click returns. Cypress 16 waits for it.
+
+```javascript
+it('sets a session cookie after login', () => {
+  cy.visit('/login')
+  cy.get('[data-cy="email"]').type('user@example.com')
+  cy.get('[data-cy="password"]').type('s3cret')
+  cy.get('[data-cy="submit"]').click()
+
+  // Retries until the cookie exists or defaultCommandTimeout elapses
+  cy.getCookie('session_id').should('exist')
+  cy.getCookie('session_id').should('have.property', 'httpOnly', true)
+})
+```
+
+Previously this test needed a synchronization step before the assertion, such as intercepting the login request and waiting on the alias, or asserting on the post-login URL. Those steps are still good practice when you want to assert on the response itself, but they are no longer required to keep the cookie assertion stable.
+
+### Waiting for storage written by the application
+
+The same applies to storage that an application populates asynchronously, such as a draft autosave or a cached feature flag payload.
+
+```javascript
+it('persists the draft to local storage', () => {
+  cy.visit('/posts/new')
+  cy.get('[data-cy="title"]').type('Release notes')
+  cy.get('[data-cy="save-draft"]').click()
+
+  cy.getAllLocalStorage()
+    .its('http://localhost:3000')
+    .should('have.property', 'draft:title', 'Release notes')
+})
+```
+
+### Two behaviors to keep in mind
+
+**Timeouts now follow `defaultCommandTimeout`.** As queries, the cookie commands use [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default `4000`) rather than `responseTimeout` (default `30000`). If a cookie is genuinely slow to appear, raise the timeout on the command:
+
+```javascript
+cy.getCookie('session_id', { timeout: 10000 }).should('exist')
+```
+
+**Overwriting these commands uses a different API.** Queries are overwritten with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries), not `Cypress.Commands.overwrite()`:
+
+```javascript title="cypress/support/commands.js"
+Cypress.Commands.overwriteQuery(
+  'getCookie',
+  function (originalFn, name, options) {
+    return originalFn.call(this, name, { ...options, log: false })
+  }
+)
+```
+
+:::caution
+
+Because these commands retry, an assertion that a cookie is absent now waits for the full timeout before passing. `cy.getCookie('session_id').should('not.exist')` is correct but takes up to `defaultCommandTimeout` when the cookie never appears.
+
+:::
+
+## Visibility checks now use the browser's engine
+
+Cypress 16 introduces the `visibilityStrategy` configuration option, which accepts `'legacy'` or `'modern'` and defaults to `'modern'`. It replaces the `experimentalFastVisibility` flag, and the modern algorithm is now the default for everyone.
+
+The modern strategy asks the browser directly by calling [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility), with `contentVisibilityAuto`, `opacityProperty`, and `visibilityProperty` enabled, then treats any element with zero width or zero height as hidden. That replaces a large amount of hand-written CSS traversal, so visibility checks are faster and no longer walk the DOM repeatedly on text-heavy pages.
+
+### Where results differ from Cypress 15
+
+Delegating to the browser means a small set of edge cases resolve differently. These are the cases to check if a test that passed on Cypress 15 fails after upgrading.
+
+| Scenario                                                          | Cypress 15 (`legacy`) | Cypress 16 (`modern`) |
+| ----------------------------------------------------------------- | --------------------- | --------------------- |
+| `<option>` or `<optgroup>` inside a closed `<select>`             | Visible               | Hidden                |
+| Element with zero width or height whose text content overflows    | Visible               | Hidden                |
+| Absolutely or fixed positioned child of a zero-dimension ancestor | Visible               | Hidden                |
+| Element scrolled or clipped out of an `overflow: hidden` ancestor | Hidden                | Visible               |
+| Element fully covered by another element                          | Hidden                | Visible               |
+| `transform: scaleZ(0)`                                            | Hidden                | Visible               |
+| `backface-visibility: hidden` combined with a 180 degree rotation | Hidden                | Visible               |
+
+The most common one to hit is `<option>`. If you assert that a specific option exists in a dropdown, assert on existence or on the select's value rather than on visibility:
+
+```javascript
+// Fails in Cypress 16: an option inside a closed select is not visible to the browser
+cy.get('select[data-cy="country"] option[value="CA"]').should('be.visible')
+
+// Works in both: assert the option exists, then assert the selection
+cy.get('select[data-cy="country"] option[value="CA"]').should('exist')
+cy.get('select[data-cy="country"]').select('CA').should('have.value', 'CA')
+```
+
+Action commands such as [`.click()`](/api/commands/click) are unaffected by the covering row in that table. They continue to run their own covering check as part of [actionability](/app/core-concepts/interacting-with-elements), so clicking an element hidden behind an overlay still fails.
+
+### Falling back to the legacy algorithm
+
+If a suite depends on legacy semantics and you need time to adjust, set `visibilityStrategy` to `'legacy'`:
+
+:::cypress-config-example
+
+```ts
+{
+  visibilityStrategy: 'legacy'
+}
+```
+
+:::
+
+The option is also overridable per suite or per test, which is the better tool when only a handful of specs are affected:
+
+```javascript
+describe('legacy dropdown widget', { visibilityStrategy: 'legacy' }, () => {
+  it('shows the selected option', () => {
+    // ...
+  })
+})
+```
+
+:::caution
+
+`visibilityStrategy` is deprecated on arrival. It exists to give you a migration path, and setting it to `'legacy'` prints a warning. Treat it as temporary rather than as a permanent setting.
+
+:::
+
+## Typing is faster by default
+
+The default [`keystrokeDelay`](/api/cypress-api/keyboard-api) for [`cy.type()`](/api/commands/type) changed from `10` milliseconds to `0`. On a form-heavy suite that types thousands of characters, removing a 10 millisecond pause per keystroke is a measurable saving.
+
+Applications that debounce input, or that re-render on every keystroke, occasionally depend on that pause. If you need it back, restore it globally in your configuration:
+
+:::cypress-config-example
+
+```ts
+{
+  keystrokeDelay: 10
+}
+```
+
+:::
+
+Or scope it to the tests that need it:
+
+```javascript
+it('filters as the user types', { keystrokeDelay: 10 }, () => {
+  cy.get('[data-cy="search"]').type('cypress')
+  cy.get('[data-cy="results"]').should('have.length', 3)
+})
+```
+
+You can also set it for a single command, which is the narrowest option:
+
+```javascript
+cy.get('[data-cy="search"]').type('cypress', { delay: 10 })
+```
+
+## Memory management is on by default
+
+`experimentalMemoryManagement` graduated out of experimental status and is now `manageBrowserMemory`, which defaults to `true`. Cypress monitors renderer memory during a run in Chromium-based browsers and triggers garbage collection before the browser runs out, which is the difference between a long spec finishing and a `We detected that the Chrome Renderer process just crashed` failure.
+
+Long specs and memory-limited CI containers benefit the most, and neither needs configuration anymore. To opt out:
+
+:::cypress-config-example
+
+```ts
+{
+  manageBrowserMemory: false
+}
+```
+
+:::
+
+Leaving `experimentalMemoryManagement` in your configuration prints a warning and has no effect. If you previously set `experimentalMemoryManagement: false` to opt out, set `manageBrowserMemory: false` instead, otherwise memory management turns on for you.
+
+## Secrets stay in the Node process
+
+`Cypress.env()` has been removed. It hydrated every configured environment variable into the browser, which meant a single secret in your environment was readable by application code, third-party scripts, and any cross-origin context your test entered.
+
+Cypress 16 splits that into two APIs with different guarantees:
+
+- [`cy.env()`](/api/commands/env) reads sensitive values asynchronously and keeps them in the Node process. Only the keys you request cross into the test.
+- [`Cypress.expose()`](/api/cypress-api/expose) publishes non-sensitive values, such as feature flags or a public API base URL, for synchronous access.
+
+```javascript
+it('calls the API with a secret key', () => {
+  cy.env(['apiKey']).then(({ apiKey }) => {
+    cy.request({
+      url: `${Cypress.config('baseUrl')}/api/users`,
+      headers: { Authorization: `Bearer ${apiKey}` },
+    })
+      .its('status')
+      .should('eq', 200)
+  })
+})
+```
+
+The `env` key is no longer accepted in per-test or per-suite configuration overrides, and the `allowCypressEnv` option that gated the deprecation has been removed.
+
+Related to the same goal, `cypress info` no longer prints `HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`, or any `CYPRESS_*` environment variable. The command was a common thing to paste into a public bug report, and it now reports only file paths, version, and system information.
+
+:::tip
+
+The [Migration Guide](/app/references/migration-guide) has a step-by-step walkthrough for moving off `Cypress.env()`, including an AI prompt that classifies each value and rewrites the call sites.
+
+:::
+
+## Viewport changes belong to cy.viewport()
+
+`viewportWidth` and `viewportHeight` can no longer be set through [`Cypress.config()`](/api/cypress-api/config) while a test is running. Setting them that way applied to the _next_ test rather than the current one, and the change never appeared in [Test Replay](/cloud/features/test-replay).
+
+Both options remain settable in a `describe` or `it` configuration block, which is the right tool when a whole spec targets one breakpoint:
+
+```javascript
+describe(
+  'mobile navigation',
+  { viewportWidth: 375, viewportHeight: 667 },
+  () => {
+    it('collapses the menu', () => {
+      cy.visit('/')
+      cy.get('[data-cy="menu-toggle"]').should('be.visible')
+    })
+  }
+)
+```
+
+To change the viewport partway through a test, use [`cy.viewport()`](/api/commands/viewport):
+
+```javascript
+it('adapts the layout across breakpoints', () => {
+  cy.visit('/')
+
+  cy.viewport(375, 667)
+  cy.get('[data-cy="menu-toggle"]').should('be.visible')
+
+  cy.viewport(1440, 900)
+  cy.get('[data-cy="menu-toggle"]').should('not.be.visible')
+  cy.get('[data-cy="nav-links"]').should('be.visible')
+})
+```
+
+If you try the old approach, Cypress now fails the test with an error pointing you at `cy.viewport()`.
+
+## A modernized runtime
+
+| Component       | Cypress 15 (latest) | Cypress 16       |
+| --------------- | ------------------- | ---------------- |
+| Bundled Node.js | `22.19.0`           | `24.15.0`        |
+| Electron        | `37.6.0`            | `41.7.0`         |
+| Chromium        | `138.0.7204.251`    | `146.0.7680.216` |
+
+The bundled Node.js version is what Cypress itself runs on, so plugins loaded in [`setupNodeEvents`](/api/node-events/configuration-api) execute under Node 24. The Node version you install Cypress with is separate, and the supported range is `^22.0.0 || ^24.0.0 || >=26.0.0`.
+
+The Chromium bump matters for tests that use recent platform APIs. If your application ships features gated on newer web platform support, the bundled Electron browser now runs them.
+
+## Browser and framework support
+
+### The Electron browser is deprecated
+
+Electron is deprecated as a test browser and will be removed in a future major version. Cypress prints a warning when you launch it, both in `cypress run` and when you select it in `cypress open`.
+
+Nothing breaks in Cypress 16, but this is the release to plan the move. Switch your CI runs to Chrome to avoid a breaking change later:
+
+```bash
+npx cypress run --browser chrome
+```
+
+See [Launching Browsers](/app/references/launching-browsers) for the full list of supported browsers.
+
+### Component testing framework versions
+
+| Framework | Supported versions |
+| --------- | ------------------ |
+| Angular   | `21` and `22`      |
+| Next.js   | `15.0.4+` and `16` |
+
+Angular 22 is supported across component testing, Launchpad project detection, and the [`@cypress/schematic`](/app/component-testing/angular/overview) Angular CLI integration. Next.js 14 support was removed.
+
+### CoffeeScript is no longer bundled
+
+`@cypress/webpack-batteries-included-preprocessor`, the default preprocessor, no longer ships `coffee-loader` or `coffeescript`. Write specs, fixtures, and support files in JavaScript or TypeScript, or add CoffeeScript to your own webpack configuration through [`@cypress/webpack-preprocessor`](/api/node-events/preprocessors-api).
+
+## Configuration options at a glance
+
+| Option                             | Status in Cypress 16                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------- |
+| `manageBrowserMemory`              | New. Defaults to `true`                                                   |
+| `visibilityStrategy`               | New. Defaults to `'modern'`. Deprecated, for migration only               |
+| `keystrokeDelay`                   | Default is now `0`                                                        |
+| `viewportWidth` / `viewportHeight` | No longer settable at runtime via `Cypress.config()`                      |
+| `experimentalMemoryManagement`     | Removed. Replaced by `manageBrowserMemory`                                |
+| `experimentalFastVisibility`       | Removed. Replaced by `visibilityStrategy`                                 |
+| `experimentalSourceRewriting`      | Removed. Default regex-based rewriting is unchanged, so remove the option |
+| `allowCypressEnv`                  | Removed alongside `Cypress.env()`                                         |
+
+Removed options produce a warning rather than a hard failure, so a stale configuration file will not stop your suite from running. It will not do what you expect either, which makes cleaning them up worth doing on the upgrade.
+
+The `cy.end()` command was also removed. A Cypress chain already ends when the next `cy.<command>()` starts a new one, so existing `.end()` calls can be deleted.
+
+## Planning your upgrade
+
+A practical order for most projects:
+
+1. **Upgrade and run the suite unchanged.** The retryable cookie and storage commands, faster typing, and default memory management need no code changes, and many suites pass on the first try.
+2. **Triage visibility failures first.** They are the most likely source of new failures. Check them against the differences table above before reaching for `visibilityStrategy: 'legacy'`.
+3. **Remove options that now warn.** Search your configuration for `experimentalMemoryManagement`, `experimentalFastVisibility`, `experimentalSourceRewriting`, and `allowCypressEnv`.
+4. **Finish the `Cypress.env()` migration.** This is the largest mechanical change and the one the [Migration Guide](/app/references/migration-guide) automates most.
+5. **Move Electron runs to Chrome.** Deprecation warnings now, breaking change later.
+
+For the ordered, copy-paste walkthrough of each breaking change, see the [Migration Guide](/app/references/migration-guide). For the complete list of everything in the release, including bug fixes and dependency updates, see the [Changelog](/app/references/changelog).
+
+## See also
+
+- [Migration Guide](/app/references/migration-guide) - step-by-step instructions for upgrading
+- [Changelog](/app/references/changelog) - the full list of changes in every release
+- [Configuration](/app/references/configuration) - every configuration option and its default
+- [Release Stages](/app/references/release-stages) - how Cypress versions and communicates change
+- [`cy.env()`](/api/commands/env) and [`Cypress.expose()`](/api/cypress-api/expose)
+- [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries)
+- [Interacting with Elements](/app/core-concepts/interacting-with-elements) - how visibility and actionability work
+- [Launching Browsers](/app/references/launching-browsers) - supported browsers and how to select one
