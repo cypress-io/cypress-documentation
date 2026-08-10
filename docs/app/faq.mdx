@@ -396,6 +396,29 @@ Restore it globally with `keystrokeDelay: 10` in your Cypress configuration, per
 test with `it('...', { keystrokeDelay: 10 }, ...)`, or for a single command with
 `cy.get('[data-cy="search"]').type('cypress', { delay: 10 })`.
 
+### <Icon name="angle-right" /> Why do I get `cy.end is not a function` in Cypress 16?
+
+The `cy.end()` command was removed in Cypress 16. Because it is no longer
+registered as a command, calling it throws a standard JavaScript
+`TypeError: cy.end is not a function` rather than a Cypress error.
+
+Delete the `.end()` call. A Cypress chain is already terminated when the next
+`cy.<command>()` starts a new chain, so nothing replaces it:
+
+```javascript
+// Before
+cy.get('[data-cy="submit"]').click().end()
+cy.get('[data-cy="banner"]').should('be.visible')
+
+// After
+cy.get('[data-cy="submit"]').click()
+cy.get('[data-cy="banner"]').should('be.visible')
+```
+
+If `.end()` appears in a custom command or support file, remove it there too.
+Searching your project for `.end()` finds every call site, though be aware the
+same text appears in unrelated APIs such as `Cypress.log().end()`.
+
 ## "How-to" Cypress Questions
 
 ### <Icon name="angle-right" /> How do I get an element's text contents?
