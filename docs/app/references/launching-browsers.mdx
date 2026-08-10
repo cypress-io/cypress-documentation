@@ -103,6 +103,22 @@ drift.
 You can use the information in [Download Chromium](https://on.cypress.io/chromium-downloads) to download a
 specific released version of Chrome for Testing or Chromium for every platform.
 
+:::note
+
+<strong>Linux ARM64</strong>
+
+Google publishes native ARM64 Linux packages of Chrome (`.deb` and `.rpm`) from Chrome
+`151` onwards, so Chrome can be installed and launched on Linux ARM64 machines such as
+AWS Graviton instances or Apple Silicon containers.
+[Chrome for Testing](https://github.com/GoogleChromeLabs/chrome-for-testing/) does not
+publish `linux-arm64` builds yet, so a fixed browser version cannot be pinned that way on
+this platform.
+Cypress [Docker images](/app/continuous-integration/overview#Cypress-Docker-Images) for
+`Linux/arm64` include Chrome from version `151` and Firefox from version `136`. Edge is
+not available for Linux ARM64.
+
+:::
+
 ### Electron Browser
 
 In addition to the browsers found on your system, you'll notice that Electron is
@@ -170,8 +186,8 @@ has a few advantages over a standard, day-to-day Chrome install:
   yesterday to fail today. Chrome for Testing is pinned to a specific version and
   never updates on its own, so your environment stays deterministic.
 - **Versioned, reproducible binaries.** A matching build is published for every
-  Chrome version and every major OS, so you can install the exact same browser
-  locally and in CI. See
+  Chrome version on Windows, macOS and Linux x64, so you can install the exact
+  same browser locally and in CI. See
   [Download specific Chrome version](#Download-specific-Chrome-version).
 - **Built for automation, not browsing.** Because it is intended only for
   testing, it is not subject to the enterprise/group
