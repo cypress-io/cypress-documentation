@@ -11,7 +11,12 @@ const {
   cypressConfigExample,
   visitMountExample,
 } = require('./plugins/cypressRemarkPlugins/dist')
+const { isProductionDeploy } = require('./plugins/analytics-env')
 const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
+
+// Google Tag Manager fires Pendo (and friends), so it must only run on the real
+// docs.cypress.io deploy — not on local builds, Cypress runs, or previews.
+const analyticsEnabled = isProductionDeploy()
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -69,12 +74,16 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.scss'),
         },
-        googleAnalytics: {
-          trackingID: 'UA-59606812-1',
-        },
-        googleTagManager: {
-          containerId: 'GTM-KNKBWLD',
-        },
+        ...(analyticsEnabled
+          ? {
+              googleAnalytics: {
+                trackingID: 'UA-59606812-1',
+              },
+              googleTagManager: {
+                containerId: 'GTM-KNKBWLD',
+              },
+            }
+          : {}),
       },
     ],
   ],

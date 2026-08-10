@@ -26,6 +26,25 @@ This is the **Cypress Documentation** site, built with
 - Reusable React/MDX components live in `src/components` and are registered in
   `src/theme/MDXComponents.js`.
 
+### Analytics & tracking scripts
+
+Third-party tracking is injected only on the real `docs.cypress.io` deploy.
+`docusaurus build` sets `NODE_ENV=production` for _every_ build, so `NODE_ENV`
+alone can't tell production apart from a local `npm run build && npm run serve`,
+the CI build the Cypress specs run against, or a Netlify deploy preview — all of
+which used to load Google Tag Manager (and everything it fires, such as Pendo).
+
+`plugins/analytics-env.js` exports `isProductionDeploy()`, which reads the
+hosting platform's deploy context (Netlify `CONTEXT`, Vercel `VERCEL_ENV`) and
+**fails closed**: an environment it can't identify gets no tracking. It gates
+`googleAnalytics`/`googleTagManager` in `docusaurus.config.js` and the FullStory
+plugin. Gate any new tracking script the same way. Set `ANALYTICS_ENABLED=true`
+to force tracking on for a preview build (or `false` to force it off).
+
+Osano is deliberately **not** gated — it's the consent manager, `osano.cy.ts`
+asserts on the real banner, and `cypress/support/e2e.ts` stubs it out for every
+other spec.
+
 ## Adding, moving & removing pages
 
 - **A page is an `.mdx` file under `docs/<section>/`.** Sidebars are

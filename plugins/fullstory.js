@@ -1,6 +1,8 @@
 
+const { isProductionDeploy } = require('./analytics-env')
+
 module.exports = async function fullStory({ context, options }) {
-  const isProd = process.env.NODE_ENV === 'production'
+  const isProd = isProductionDeploy()
   return {
     name: 'docusaurus-plugin-fullstory',
     injectHtmlTags({ content }) {
