@@ -139,6 +139,36 @@ If your Cypress configuration still sets `experimentalMemoryManagement`, Cypress
 
 See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory) for more information.
 
+### `blockHosts` can no longer be set with `Cypress.config()` during test execution
+
+[`blockHosts`](/app/references/configuration#blockHosts) can no longer be set with [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Doing so applied to the _next_ test rather than the current one, and the value leaked into every test that followed, so Cypress now throws instead.
+
+Set `blockHosts` in the [test configuration](/app/references/configuration#Test-specific-Configuration) of a `describe`, `context`, or `it` block instead, which takes effect for the suite or test where it is set and is restored afterwards.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+it('does not load analytics', () => {
+  Cypress.config('blockHosts', 'www.google-analytics.com')
+
+  cy.visit('/')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+it(
+  'does not load analytics',
+  { blockHosts: 'www.google-analytics.com' },
+  () => {
+    cy.visit('/')
+  }
+)
+```
+
+Setting `blockHosts` in your Cypress configuration, or with `Cypress.config()` outside of test execution (for example at the top level of a support file or spec file), is unchanged.
+
 ### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
 
 [`cy.getCookie()`](/api/commands/getcookie),

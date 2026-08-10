@@ -451,7 +451,8 @@ readonly and cannot be changed at run time.
 
 - `animationDistanceThreshold`
 - `baseUrl`
-- `blockHosts`
+- `blockHosts` - this option cannot be overridden with `Cypress.config()` while a
+  test is executing
 - `defaultCommandTimeout`
 - `execTimeout`
 - `includeShadowDom`
@@ -486,6 +487,15 @@ Cypress.config('pageLoadTimeout', 100000)
 
 Cypress.config('pageLoadTimeout') // => 100000
 ```
+
+:::caution
+
+`blockHosts` cannot be overridden with `Cypress.config()` while a test is
+executing, because doing so would affect the _next_ test rather than the current
+one. Set it in [test-specific configuration](#Test-specific-Configuration)
+instead.
+
+:::
 
 ### Test-specific Configuration
 
@@ -998,6 +1008,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 | Version                                      | Changes                                                                                                                                                                         |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0)   | Updated `blockHosts` to no longer be settable with `Cypress.config()` during test execution.                                                                                    |
 | [16.0.0](/app/references/changelog#16-0-0)   | Removed `allowCypressEnv` option.                                                                                                                                               |
 | [16.0.0](/app/references/changelog#16-0-0)   | Renamed `manageBrowserMemory` option to `manageBrowserMemory` and set to `true` by default.                                                                                     |
 | [16.0.0](/app/references/changelog#16-0-0)   | `keystrokeDelay` resolved fallback changed from `10` to `0` when unset in configuration and [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api).                     |
