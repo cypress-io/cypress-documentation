@@ -469,8 +469,10 @@ readonly and cannot be changed at run time.
 - `taskTimeout`
 - `testIsolation` - this option can only be overridden at the suite-specific
   override level
-- `viewportHeight`
-- `viewportWidth`
+- `viewportHeight` - this option cannot be overridden with `Cypress.config()`
+  while a test is executing
+- `viewportWidth` - this option cannot be overridden with `Cypress.config()`
+  while a test is executing
 - `waitForAnimations`
 
 ### `Cypress.config()`
@@ -490,10 +492,11 @@ Cypress.config('pageLoadTimeout') // => 100000
 
 :::caution
 
-`blockHosts` cannot be overridden with `Cypress.config()` while a test is
-executing, because doing so would affect the _next_ test rather than the current
-one. Set it in [test-specific configuration](#Test-specific-Configuration)
-instead.
+`blockHosts`, `viewportHeight`, and `viewportWidth` cannot be overridden with
+`Cypress.config()` while a test is executing, because doing so would affect the
+_next_ test rather than the current one. Set them in
+[test-specific configuration](#Test-specific-Configuration) instead, or use
+[`cy.viewport()`](/api/commands/viewport) to change the viewport during a test.
 
 :::
 
@@ -1008,7 +1011,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 | Version                                      | Changes                                                                                                                                                                         |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [16.0.0](/app/references/changelog#16-0-0)   | Updated `blockHosts` to no longer be settable with `Cypress.config()` during test execution.                                                                                    |
+| [16.0.0](/app/references/changelog#16-0-0)   | Updated `blockHosts`, `viewportHeight`, and `viewportWidth` to no longer be settable with `Cypress.config()` during test execution.                                             |
 | [16.0.0](/app/references/changelog#16-0-0)   | Removed `allowCypressEnv` option.                                                                                                                                               |
 | [16.0.0](/app/references/changelog#16-0-0)   | Renamed `manageBrowserMemory` option to `manageBrowserMemory` and set to `true` by default.                                                                                     |
 | [16.0.0](/app/references/changelog#16-0-0)   | `keystrokeDelay` resolved fallback changed from `10` to `0` when unset in configuration and [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api).                     |

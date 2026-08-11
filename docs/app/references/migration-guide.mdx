@@ -139,6 +139,49 @@ If your Cypress configuration still sets `experimentalMemoryManagement`, Cypress
 
 See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory) for more information.
 
+### `viewportWidth` and `viewportHeight` can no longer be set with `Cypress.config()` during test execution
+
+[`viewportWidth`](/app/references/configuration#Viewport) and [`viewportHeight`](/app/references/configuration#Viewport) can no longer be set with [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Doing so applied to the _next_ test rather than the current one, and the change was not reflected in Test Replay, so Cypress now throws instead.
+
+Use [`cy.viewport()`](/api/commands/viewport) to change the viewport during a test, or set the values in the [test configuration](/app/references/configuration#Test-specific-Configuration) of a `describe`, `context`, or `it` block.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+it('does not display the sidebar on small screens', () => {
+  Cypress.config('viewportWidth', 400)
+  Cypress.config('viewportHeight', 1000)
+
+  cy.get('#sidebar').should('not.be.visible')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+it('does not display the sidebar on small screens', () => {
+  cy.viewport(400, 1000)
+
+  cy.get('#sidebar').should('not.be.visible')
+})
+```
+
+Or, to apply the viewport to a whole suite or test:
+
+```javascript
+describe(
+  'page display on medium size screen',
+  { viewportWidth: 400, viewportHeight: 1000 },
+  () => {
+    it('does not display the sidebar', () => {
+      cy.get('#sidebar').should('not.be.visible')
+    })
+  }
+)
+```
+
+Setting `viewportWidth` and `viewportHeight` in your Cypress configuration, or with `Cypress.config()` outside of test execution (for example at the top level of a support file or spec file), is unchanged.
+
 ### `blockHosts` can no longer be set with `Cypress.config()` during test execution
 
 [`blockHosts`](/app/references/configuration#blockHosts) can no longer be set with [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Doing so applied to the _next_ test rather than the current one, and the value leaked into every test that followed, so Cypress now throws instead.
