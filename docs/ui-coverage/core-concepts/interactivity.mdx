@@ -32,23 +32,23 @@ This page covers all three, along with the configuration and markup overrides yo
 
 UI Coverage follows the WHATWG definition of [interactive content](https://html.spec.whatwg.org/dev/dom.html#interactive-content), extended with a few Cypress-specific rules. An element is counted as interactive when it falls into any of these categories:
 
-- **Natively interactive elements**: elements the browser already treats as interactive, such as `<a>` links, `<button>`, form controls like `<input>`, `<select>`, and `<textarea>`, `<label>`, and any element that is `contenteditable`. A `<label>` counts on its own and is [grouped with the control it identifies](/ui-coverage/core-concepts/element-grouping#Automatic-grouping).
-- **Elements with an interactive ARIA role**: an explicit `role` such as `button`, `checkbox`, `tab`, or `menuitem`, or an `aria-haspopup` value that opens a menu or dialog. `role="textbox"` and `role="searchbox"` count only when the element is also `contenteditable`.
-- **Tab-navigable elements**: any element made keyboard-focusable with a `tabindex` of `0` or greater.
+- **Natively interactive elements**: elements the browser already treats as interactive, such as `<a>` links, `<button>`, form controls like `<input>`, and `<select>`, and any element that is `contenteditable`. A `<label>` counts on its own and is [grouped with the control it identifies](/ui-coverage/core-concepts/element-grouping#Automatic-grouping).
+- Most **elements with an interactive ARIA role**: an explicit `role` such as `button`, or `checkbox`.
+- **Tab-navigable elements**: any element made keyboard-focusable with a `tabindex` of `0` or greater. Sometimes required on certain interactive roles.
 
 An element with a widget role is skipped when it contains another interactive element, so a `role="button"` wrapper around a real `<button>` is counted once rather than twice.
 
-**Contact links** are the one deliberate exception: anchors whose `href` uses `tel:`, `mailto:`, or `sms:` are not treated as interactive. This applies to the anchor rule only. A `mailto:` link that independently qualifies, for example by carrying `tabindex="0"` or an interactive `role`, is still tracked. See [Untested Links](#Untested-Links) for how the rest of an anchor's `href` is handled.
+**Contact links** are the one deliberate exception: anchors whose `href` uses `tel:`, `mailto:`, or `sms:` are not treated as interactive.
 
 Because detection is based on semantics rather than event handlers, a real `<button>` is recognized automatically, while a `<div>` wired up with a click handler is not, until you give it interactive semantics or use the `data-cy-ui-interactive` attribute, described below.
 
 ### Visibility
 
-An interactive element only counts toward your score if it was **visible in at least one snapshot** during the run. Visibility means the element passes a CSS visibility check and is the topmost element at its own center point once scrolled into view. Elements with `opacity: 0` still count as visible for this purpose, since they remain clickable (and teams sometimes use them as an invisible "interaction target" area for a card or similar control).
+An interactive element only counts toward your score if it was **visible in at least one snapshot** during the run. 
 
 :::note
 
-A control that only ever sits inside a collapsed menu your tests never open is not counted at all. It neither raises nor lowers your score. This is why your total element count can be lower than the number of controls you know exist in your markup.
+A control that only ever sits inside a collapsed menu your tests never open is not counted at all. It neither raises nor lowers your score. This is why your total element count can be lower than the number of controls you know exist in your markup. UI Coverage will flag the _trigger_ element as untested, as an unopened door.
 :::
 
 <DocsImage
@@ -68,7 +68,7 @@ When the automatic rules don't match your app, the `data-cy-ui-interactive` attr
 | `exclude-all` | Removes the element and every element nested inside it.                          |
 | `reset`       | Re-enables tracking for a subtree nested inside an element marked `exclude-all`. |
 
-Only the closest `data-cy-ui-interactive` ancestor applies, which is what makes `reset` work: it sits between an `exclude-all` container and the subtree you want back. `reset` isn't a special keyword (any value other than `exclude` or `exclude-all` has the same effect), but use `reset` so the intent reads clearly.
+Only the closest `data-cy-ui-interactive` ancestor applies.
 
 **Include a custom control** the browser doesn't recognize:
 
@@ -130,7 +130,7 @@ An interactive element is marked as **tested** when a recognized Cypress command
 
 :::note
 
-`scrollIntoView` is a special case: it credits the element's nearest **scrollable ancestor**, not the element you called it on. If that ancestor isn't itself an interactive element, the command marks nothing as tested. Use `click`, `focus`, or `trigger` when you need to mark a specific element tested.
+`scrollIntoView` is a special case: it credits the element's nearest **scrollable ancestor**, not the element you called it on. That container must have a non-negative `tabindex` or be otherwise interactive in order to appear in the report.
 
 :::
 

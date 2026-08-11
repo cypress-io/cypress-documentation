@@ -25,8 +25,8 @@ No. UI Coverage requires no code changes or instrumentation. Reports are generat
 
 The Cypress UI Coverage score compares the number of tested interactive elements to the total number of interactive elements in your application. Three rules determine what goes into that comparison:
 
-- **[Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit.** The group counts once toward the total, and an interaction with any element in the group marks the whole group as tested. Fifty identical buttons are one unit, not fifty.
-- **Links share the same total.** Each distinct link destination counts as one unit, and counts as tested when a test either interacts with the link or visits its destination. Untested links lower your score. They're reported in a separate list from untested elements, so `testedElementsCount` plus `untestedElementsCount` won't add up to the score's total on its own. Add the link counts to get the true total.
+- **[Grouped elements](/ui-coverage/core-concepts/element-grouping) count as a single unit.** The group counts once toward the total, and an interaction with any element in the group marks the whole group as tested.
+- **Links share the same total.** Each distinct link destination counts as one unit, and counts as tested when a test either interacts with the link or visits its destination.
 - **Only [visible](/ui-coverage/core-concepts/interactivity#Visibility) elements count.** An element that was never visible in any snapshot is excluded from both the tested and total counts, so it neither raises nor lowers your score.
 
 ### <Icon name="angle-right" /> How do I get started with UI Coverage?
@@ -163,7 +163,7 @@ Connect [Slack](/cloud/integrations/slack) or [Microsoft Teams](/cloud/integrati
 
 ### <Icon name="angle-right" /> Can I see UI Coverage trends across all my projects?
 
-Yes. [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage) in Cypress Cloud, included with your UI Coverage subscription, rolls UI Coverage trends up across every project in your organization rather than one run at a time. You can view high-level trends, download reports, or pull the numbers through the [data extract API](/cloud/integrations/data-extract-api) to build your own dashboards. See [Track trends across projects](/ui-coverage/guides/monitor-changes#Step-4-Track-trends-across-projects).
+Yes. [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage) in Cypress Cloud rolls UI Coverage trends up across every project in your organization rather than one run at a time. You can view high-level trends, download reports, or pull the numbers through the [data extract API](/cloud/integrations/data-extract-api) to build your own dashboards. See [Track trends across projects](/ui-coverage/guides/monitor-changes#Step-4-Track-trends-across-projects).
 
 ## Reducing test duplication
 
