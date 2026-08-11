@@ -51,6 +51,39 @@ Cypress runs API tests in the [end-to-end testing type](/app/core-concepts/testi
 The command you will use most is [`cy.request()`](/api/commands/request), which
 makes a real HTTP request and yields the response.
 
+## When Cypress fits, and when it doesn't
+
+Cypress runs your tests inside a browser, including API tests. That shapes what
+it is good at.
+
+**Cypress is a strong fit when:**
+
+- You already run Cypress for UI tests and want your API coverage in the same
+  suite, config, and CI job.
+- Your tests span both layers: seeding state over HTTP, driving the UI, then
+  verifying the result over HTTP.
+- The API is the one your browser client talks to, and session and cookie
+  behavior is part of what you are testing.
+- You want to debug a CI failure by reading the actual request and response,
+  rather than reproducing it locally.
+
+**Reach for a dedicated API testing tool when:**
+
+- You have a large body of pure contract or schema tests and no browser client
+  in the picture at all. A Node-level HTTP client has less to set up and
+  nothing to render.
+- You need per-test concurrency within a single file. Cypress distributes work
+  by spec file, so a thousand independent requests in one spec run in sequence.
+  See [keep an API suite fast](#Keep-an-API-suite-fast) for how to work with
+  that model rather than against it.
+- Your team writes tests in `async`/`await` and does not want to adopt the
+  [Cypress command chain](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous).
+
+Most teams land in both camps at once, and that is a reasonable place to be.
+API tests that exist to support and verify the application under test belong
+next to the tests that drive it. An exhaustive contract suite for a service
+nobody browses does not have to move.
+
 ## Write your first API test
 
 ### Set a `baseUrl` (optional)
@@ -159,7 +192,7 @@ That single fact explains the behaviors below.
 | The request never appears in the browser DevTools **Network** tab    | It is not a browser request, so the browser has nothing to report                                                 |
 | [`cy.intercept()`](/api/commands/intercept) cannot spy on or stub it | Interception works on browser traffic flowing through the Cypress proxy, and this request never enters that proxy |
 | CORS and same-origin policy do not apply                             | Those are browser rules, and no browser is involved. You can request any host                                     |
-| Cookies still work                                                   | Cypress reads the browser's cookie jar for the request URL, sends them, and writes `Set-Cookie` responses back    |
+| Cookies still work, against the real browser jar                     | See [cookies are shared with the browser](#Cookies-are-shared-with-the-browser)                                   |
 | The `User-Agent` matches the browser under test                      | Cypress forwards the browser's user agent so the server sees a consistent client                                  |
 | Invalid or self-signed TLS certificates do not fail the request      | Certificate verification is relaxed, which keeps requests against staging environments working                    |
 
@@ -178,12 +211,40 @@ A few more defaults worth knowing:
 - **The timeout is `responseTimeout`**, not `defaultCommandTimeout`. Override it
   per request with the `timeout` option.
 
+### Cookies are shared with the browser
+
+This is the part worth understanding in detail, because it is what a standalone
+HTTP client cannot reproduce.
+
+`cy.request()` does not keep its own cookie jar. Before sending, Cypress asks
+the browser for the cookies that match the request URL and attaches them.
+When the response comes back with `Set-Cookie`, Cypress writes those cookies
+into the browser, honoring expiry and removing cookies the server cleared.
+
+The jar is shared in both directions, which is what makes hybrid tests work:
+
+- **Log in over HTTP, continue in the UI.** A `cy.request()` to your login
+  endpoint leaves the session cookie in the browser, so the next `cy.visit()`
+  loads an authenticated page. No form to fill in, no waiting on a redirect.
+- **Log in through the UI, continue over HTTP.** A session established by
+  clicking through your real login form is carried into every subsequent
+  `cy.request()`, so you can assert against authenticated endpoints without
+  re-authenticating or hand-building a token.
+- **Test what logging out actually does.** Because the server's `Set-Cookie`
+  clearing lands in the real browser jar, you can call the logout endpoint and
+  then assert that the UI treats the user as signed out.
+
+A dedicated API testing tool runs beside the browser rather than inside it, so
+its cookies and your application's cookies are separate worlds. Bridging them
+means exporting a token and re-injecting it, which tests your plumbing as much
+as your app.
+
 :::caution
 
-Because there is no page navigation driving the request, `SameSite` is not
-evaluated the way it would be for a browser-initiated request. Cypress attaches
-every cookie in the jar that matches the request URL's domain, path, and secure
-flag. If a cookie appears on a request unexpectedly, see
+One difference from a browser-initiated request: because no page navigation is
+driving it, `SameSite` is not evaluated. Cypress attaches every cookie in the
+jar matching the request URL's domain, path, and secure flag. If a cookie
+appears on a request unexpectedly, see
 [cookie scope](/api/commands/setcookie#Cookie-scope-host-only-vs-domain-cookies).
 
 :::
@@ -571,9 +632,10 @@ cy.request('/users?role=admin').then((response) => {
 
 ### Combine API calls with UI tests
 
-This is where running API tests in the same tool pays off. Seed state over HTTP,
-drive the application through its interface, then confirm over HTTP that the
-change persisted.
+This is the pattern that a separate API testing tool cannot give you, because
+it depends on the request and the browser sharing one session. Seed state over
+HTTP, drive the application through its interface, then confirm over HTTP that
+the change persisted.
 
 ```js title="cypress/e2e/checkout.cy.js"
 describe('checkout', () => {
@@ -598,6 +660,44 @@ describe('checkout', () => {
   })
 })
 ```
+
+Two things happened there that are worth separating out.
+
+**The setup skipped the UI.** Logging in and filling a cart are not what this
+test is checking, so they run over HTTP in milliseconds. The clicking is spent
+only on the behavior under test. Cutting UI setup out of tests that are not
+about that setup is usually the single largest speed win available in an
+end-to-end suite.
+
+**The assertion outlived the UI.** "Thanks for your order" proves a message
+rendered. `cy.request('/orders')` proves an order exists. A UI-only test passes
+against a front end that shows a confirmation and silently drops the request,
+which is exactly the bug users report and screenshots never catch.
+
+That second point generalizes. Plenty of what an application does leaves no
+trace on screen, and those effects are where UI-only suites go blind:
+
+```js title="cypress/e2e/admin-audit.cy.js"
+it('records an audit entry when an admin changes a role', () => {
+  cy.visit('/admin/users/42')
+  cy.get('[data-cy="role"]').select('editor')
+  cy.get('[data-cy="save"]').click()
+  cy.contains('Saved').should('be.visible')
+
+  // nothing on screen shows this, but it is the compliance requirement
+  cy.request('/audit-log?subject=user:42')
+    .its('body.entries.0')
+    .should('include', {
+      action: 'role.changed',
+      from: 'viewer',
+      to: 'editor',
+    })
+})
+```
+
+Webhooks queued, emails recorded, search indexes updated, caches invalidated,
+analytics events emitted: all of it is assertable in the same test that
+triggered it, without leaving Cypress.
 
 <Icon name="graduation-cap" /> The Cypress
 <Icon name="github" inline="true" contentType="rwa" />
@@ -647,6 +747,55 @@ Cypress.Commands.add('api', (options) => {
 ```js title="cypress/e2e/api/users.cy.js"
 cy.api({ url: '/users/me' }).its('body.role').should('eq', 'admin')
 ```
+
+## Keep an API suite fast
+
+Cypress starts a browser for each spec file. That cost is paid per spec, not per
+test, so the way to keep an API suite fast is to amortize it rather than
+multiply it.
+
+**Put many tests in one spec.** A spec with 200 API tests pays the startup cost
+once. Two hundred specs with one test each pay it 200 times. This is the
+opposite of the instinct that serves UI suites well, where small specs
+parallelize nicely, and it is the single biggest factor in how fast an API suite
+runs.
+
+**Parallelize by spec, not within one.** Cypress Cloud
+[distributes spec files across machines](/cloud/features/smart-orchestration/parallelization),
+so concurrency comes from having several substantial API specs, not from
+splitting one spec finer. Grouping by resource, as
+[described above](#Organize-an-API-test-suite), tends to produce the right
+granularity on its own.
+
+**Turn off test isolation for API-only suites.** Between tests, Cypress resets
+the browser by visiting `about:blank` and clearing cookies and storage across
+all domains. A spec that never renders a page gets no benefit from that reset,
+and [`testIsolation: false`](/app/core-concepts/test-isolation) skips it.
+
+```js title="cypress/e2e/api/users.cy.js"
+describe('/users', { testIsolation: false }, () => {
+  before(() => {
+    cy.loginByApi(Cypress.env('username'), Cypress.env('password'))
+  })
+
+  it('lists users', () => {
+    cy.request('/users').its('status').should('eq', 200)
+  })
+
+  it('reads a single user', () => {
+    cy.request('/users/1').its('body.id').should('eq', 1)
+  })
+})
+```
+
+Cookies now persist across the tests in that block, which is usually what you
+want: authenticate once in a `before` hook and every test in the spec inherits
+the session. It also means one test can leave state behind for the next, so keep
+each test's own setup explicit.
+
+**Skip `cy.visit()` entirely.** An API test needs no page. As soon as a spec
+visits one, it pays for navigation, page load, and network idle on every test
+that does it.
 
 ## Debug API tests
 
