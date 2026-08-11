@@ -1,0 +1,524 @@
+---
+title: Integrate Webhooks with Cypress Cloud
+description: 'Send Cypress Cloud run events to your own HTTPS endpoints, and verify their authenticity with a signing secret.'
+sidebar_label: Webhooks
+sidebar_position: 55
+---
+
+<ProductHeading product="cloud" />
+
+# Webhooks Integration
+
+:::info
+
+<WhatYoullLearn />
+
+- How to create and manage webhooks for a Cypress Cloud project
+- Which events trigger a webhook and what each payload looks like
+- How to verify webhook authenticity with a signing secret
+- How to send a test event and review delivery history and retries
+
+:::
+
+Webhooks let Cypress Cloud send a real-time HTTP request to an endpoint you own
+whenever a selected event occurs, for example when a run finishes. Unlike the
+[Slack](/cloud/integrations/slack) and
+[Microsoft Teams](/cloud/integrations/microsoft-teams) integrations, which post
+formatted messages to a chat channel, webhooks deliver a raw JSON payload to your
+own service. This lets you build custom automations: update a dashboard, open a
+ticket, gate a deployment, or forward results into any internal system.
+
+:::note
+
+**Early access**: Webhooks are rolling out to Cypress Cloud and may not yet be
+available for every organization. Today, webhooks support the `run.completed`
+event. Additional events are coming soon.
+
+:::
+
+## Getting started
+
+**You need two things to get started:**
+
+- The ability to manage webhooks for the project. You must be a **Team Admin**
+  on the project, or an **Org Admin** or **Owner** of the Cypress Cloud
+  organization. See [User roles](/cloud/account-management/users#User-roles) for
+  details. Anyone who can view the project can _view_ webhooks, but only those
+  roles can create, edit, enable, disable, delete, test, or redeliver them.
+- A publicly reachable endpoint that accepts `POST` requests. **HTTPS is
+  recommended.** Cypress Cloud will not deliver to private, loopback, or internal
+  network addresses (see [Security](#Security)). HTTP URLs are accepted, but
+  payloads then travel unencrypted.
+
+Webhooks are configured **per project**. You can create up to **5 webhooks per
+project**.
+
+## Create a webhook
+
+1. Open your project and click **Settings** at the bottom of the project
+   sidebar.
+
+   <DocsImage
+     src="/img/cloud/integrations/webhooks/project-settings-nav.png"
+     alt="The Settings link at the bottom of the project sidebar"
+     width={280}
+   />
+
+2. Open the **General** tab and locate the **Webhooks** panel.
+3. Click **Add webhook**.
+
+<DocsImage
+  src="/img/cloud/integrations/webhooks/webhooks-empty-state.png"
+  alt="The Webhooks panel in Project Settings with an Add webhook button"
+  width={800}
+/>
+
+In the **Add webhook** dialog, configure the following:
+
+- **Payload URL** _(required)_: The URL Cypress Cloud will send a `POST` request
+  to, for example `https://example.com/receive-webhook`. **HTTPS is recommended.**
+- **Secret** _(optional, recommended)_: A signing secret used to verify that a
+  request genuinely came from Cypress Cloud. Provide your own value (at least 16
+  characters) or click **Generate secret** to create a random one. **Copy and
+  store the secret somewhere safe. It is shown only once and cannot be viewed
+  again**, though you can rotate it later by editing the webhook. See
+  [Verify webhook signatures](#Verify-webhook-signatures).
+- **Events that will trigger webhook**: Select which events should be delivered
+  to this endpoint. At least one event is required.
+- **Enable this webhook**: Whether the webhook is active. Enabled by default;
+  disabled webhooks are skipped during delivery.
+
+<DocsImage
+  src="/img/cloud/integrations/webhooks/add-webhook-modal.png"
+  alt="The Add webhook dialog with Payload URL, Secret, events, and enable toggle"
+  width={600}
+/>
+
+Click **Add webhook** to save. Cypress Cloud will begin delivering the selected
+events to your endpoint.
+
+## Send a test event
+
+To confirm your endpoint is reachable and your verification logic works, use
+**Send test** on an enabled webhook. This delivers a synthetic `webhook.ping`
+event through the same signing and delivery pipeline as real events, so it
+exercises your signature verification exactly as a `run.completed` event would.
+
+The `webhook.ping` request body is:
+
+```json
+{
+  "message": "Webhook ping"
+}
+```
+
+<DocsImage
+  src="/img/cloud/integrations/webhooks/webhook-send-test.png"
+  alt="Sending a test event from a webhook row and viewing its delivery status"
+  width={800}
+/>
+
+Test events are delivered once and are **not** retried, regardless of the
+outcome. The resulting delivery appears in the webhook's delivery history like
+any other.
+
+## Manage webhooks
+
+Each webhook appears as a row in the **Webhooks** panel showing its URL, an
+enable/disable toggle, and the status of its most recent delivery (for example,
+_Last delivery succeeded_, _Retrying_, _Last delivery failed_, _Delivering…_,
+or _Never triggered_). Use the inline controls and the **⋯** actions menu to
+manage it:
+
+- **Enable or disable**: Toggle the switch on the row. A disabled webhook keeps
+  its configuration but receives no deliveries.
+- **Edit**: Open the **⋯** menu and select **Edit** to change the URL, events,
+  or secret.
+  - **Generate new secret**: Leaving the **Secret** field blank keeps the
+    existing secret. To rotate it, enter a new value (at least 16 characters) or
+    click **Generate new secret**. Copy the new secret and store it somewhere
+    safe. It is shown only once. After you save, the previous secret no longer
+    verifies requests, so update your endpoint to use the new value.
+- **Recent deliveries**: Open the **⋯** menu and select **Recent deliveries** to
+  review delivery history. See [Delivery history and retries](#Delivery-history-and-retries).
+- **Delete**: Open the **⋯** menu and select **Delete**. This permanently
+  removes the webhook **and its delivery history**. This cannot be undone.
+
+<DocsImage
+  src="/img/cloud/integrations/webhooks/webhook-row.png"
+  alt="A configured webhook row with its status, enable toggle, and actions menu"
+  width={800}
+/>
+
+:::note
+
+A project can have at most **5 webhooks**. When you reach the limit, the **Add
+webhook** button is disabled until you delete an existing webhook.
+
+:::
+
+## Events
+
+Select one or more of the following events when creating or editing a webhook:
+
+| Event           | Description                                                                                         |
+| --------------- | --------------------------------------------------------------------------------------------------- |
+| `run.completed` | Sent when a Cypress Cloud run finishes (`passed`, `failed`, `errored`, `timedOut`, or `cancelled`). |
+
+More events are coming soon. There is also a special `webhook.ping` event that
+is **only** sent by the [Send a test event](#Send-a-test-event) action. You
+cannot subscribe to it directly.
+
+## Payload
+
+Cypress Cloud sends a `POST` request whose **body is the event payload as JSON**.
+Metadata about the delivery travels in `X-Cypress-*` request headers rather than
+in the body.
+
+### Request headers
+
+Every delivery includes the following headers:
+
+| Header                      | Description                                                                                                                                   |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Content-Type`              | Always `application/json`.                                                                                                                    |
+| `X-Cypress-Event`           | The event type, for example `run.completed`.                                                                                                  |
+| `X-Cypress-Event-Id`        | Unique ID for the event. **Stable across retries**. Use it to deduplicate.                                                                    |
+| `X-Cypress-Event-Version`   | The payload schema version, for example `1`.                                                                                                  |
+| `X-Cypress-Request-Id`      | Unique ID for this individual delivery attempt. A **new** value on every retry.                                                               |
+| `X-Cypress-Timestamp`       | The time the request was sent, as a Unix timestamp in seconds.                                                                                |
+| `X-Cypress-Idempotency-Key` | Stable key for this event and webhook. Identical across retries of the same event.                                                            |
+| `X-Cypress-Signature`       | HMAC-SHA256 signature of the payload. Only present when a signing secret is set. See [Verify webhook signatures](#Verify-webhook-signatures). |
+
+:::tip
+
+Because `X-Cypress-Event-Id` (and `X-Cypress-Idempotency-Key`) stay constant
+across retries, your endpoint may receive the same event more than once. Treat
+delivery as **at-least-once** and make your handler idempotent by keying on
+`X-Cypress-Event-Id`.
+
+:::
+
+<details>
+<summary><code>run.completed</code> payload</summary>
+
+The `run.completed` payload (version `1`) is a flat JSON object with the
+following fields:
+
+| Field               | Type           | Description                                                            |
+| ------------------- | -------------- | ---------------------------------------------------------------------- |
+| `runNumber`         | number         | The run's build number in Cypress Cloud.                               |
+| `runUrl`            | string         | Link to the run in Cypress Cloud.                                      |
+| `projectId`         | string         | The project **slug** (not a numeric ID).                               |
+| `projectName`       | string         | The project name.                                                      |
+| `status`            | string         | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`. |
+| `statusReason`      | string         | Human-readable explanation of the status.                              |
+| `createdAt`         | string         | ISO 8601 timestamp when the run started.                               |
+| `completedAt`       | string \| null | ISO 8601 timestamp when the run finished.                              |
+| `totalDuration`     | number \| null | Total run duration in milliseconds.                                    |
+| `totalTests`        | number \| null | Total number of tests.                                                 |
+| `totalPassed`       | number \| null | Number of passed tests.                                                |
+| `totalFailed`       | number \| null | Number of failed tests.                                                |
+| `totalPending`      | number \| null | Number of pending tests.                                               |
+| `totalSkipped`      | number \| null | Number of skipped tests.                                               |
+| `flakyTestCount`    | number \| null | Number of tests identified as flaky.                                   |
+| `totalSpecs`        | number \| null | Number of spec files.                                                  |
+| `commitSha`         | string \| null | The commit SHA the run was recorded against.                           |
+| `commitBranch`      | string \| null | The branch name.                                                       |
+| `commitMessage`     | string \| null | The commit message.                                                    |
+| `commitAuthorName`  | string \| null | The commit author's name.                                              |
+| `commitAuthorEmail` | string \| null | The commit author's email.                                             |
+| `commitUrl`         | string \| null | Link to the commit.                                                    |
+| `ciProvider`        | string \| null | The detected CI provider, for example `circleci`.                      |
+| `ciBuildId`         | string \| null | The CI build ID.                                                       |
+| `ciUrl`             | string \| null | Link to the CI build.                                                  |
+| `ciPullRequestId`   | string \| null | The pull request ID, when available.                                   |
+| `ciPullRequestUrl`  | string \| null | Link to the pull request, when available.                              |
+| `tags`              | string[]       | The tags the run was recorded with (sorted).                           |
+| `groups`            | string[]       | The run groups (sorted).                                               |
+
+<details>
+<summary>Example <code>run.completed</code> request body</summary>
+
+```json
+{
+  "runNumber": 42,
+  "runUrl": "https://cloud.cypress.io/projects/my-project/runs/42",
+  "projectId": "my-project",
+  "projectName": "My Project",
+  "status": "passed",
+  "statusReason": "Run passed",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "completedAt": "2026-01-01T00:05:00.000Z",
+  "totalDuration": 300000,
+  "totalTests": 100,
+  "totalPassed": 95,
+  "totalFailed": 0,
+  "totalPending": 2,
+  "totalSkipped": 3,
+  "flakyTestCount": 0,
+  "totalSpecs": 4,
+  "commitSha": "abc123",
+  "commitBranch": "main",
+  "commitMessage": "fix: something",
+  "commitAuthorName": "Ada Lovelace",
+  "commitAuthorEmail": "ada@example.com",
+  "commitUrl": "https://github.com/cypress-io/cypress-services/commit/abc123",
+  "ciProvider": "circleci",
+  "ciBuildId": "circleci-workflow-777",
+  "ciUrl": "https://circleci.com/gh/cypress-io/cypress-services/555",
+  "ciPullRequestId": null,
+  "ciPullRequestUrl": null,
+  "tags": ["canary", "nightly"],
+  "groups": ["chrome", "firefox"]
+}
+```
+
+</details>
+
+:::caution
+
+The `projectId` field contains the project **slug** (for example `my-project`),
+not a numeric identifier. Fields that are unavailable for a given run (such as
+CI or commit metadata for a run recorded outside of CI) are sent as `null`.
+
+:::
+
+</details>
+
+## Verify webhook signatures
+
+When you configure a **signing secret**, Cypress Cloud signs every request so
+your endpoint can confirm that a payload genuinely came from Cypress Cloud and
+was not altered in transit. **We strongly recommend setting a signing secret for
+every webhook.** Because your Payload URL is a publicly reachable endpoint,
+anyone who discovers it could send it forged requests; verifying the signature
+lets your handler reject anything that isn't authentically from Cypress Cloud.
+
+The signing secret provides three things:
+
+- **Authenticity**: proof the request came from Cypress Cloud, not an
+  impersonator.
+- **Integrity**: proof the payload was not tampered with, since any change
+  invalidates the signature.
+- **Replay protection**: the signature covers a timestamp, so you can reject
+  stale requests that are replayed later.
+
+:::caution
+
+A signing secret does **not** encrypt the payload. Use HTTPS when the payload
+must stay confidential. Over HTTP, anyone on the network path can still read
+the request body and headers. The HMAC still proves the request came from
+Cypress Cloud and was not modified, because the secret itself is never sent.
+
+:::
+
+### How the signature is computed
+
+When a secret is set, Cypress Cloud includes an `X-Cypress-Signature` header:
+
+```
+X-Cypress-Signature: sha256=<hex-encoded HMAC>
+```
+
+The signature is an **HMAC-SHA256**, keyed with your signing secret, of the
+string `` `${timestamp}.${rawBody}` `` (the value of the `X-Cypress-Timestamp`
+header, a literal `.`, then the **exact raw bytes of the request body**). The
+result is hex-encoded and prefixed with `sha256=`.
+
+To verify a request:
+
+1. Read the `X-Cypress-Signature` and `X-Cypress-Timestamp` headers and the
+   **raw** request body (before any JSON parsing; parsing and re-serializing can
+   change the bytes and break verification).
+2. Optionally reject the request if the timestamp is too old (for example, more
+   than five minutes) to guard against replay attacks.
+3. Recompute `HMAC-SHA256(secret, "${timestamp}.${rawBody}")`, hex-encode it, and
+   prefix `sha256=`.
+4. Compare it to `X-Cypress-Signature` using a **constant-time** comparison.
+
+:::note
+
+If a webhook has no signing secret, Cypress Cloud still delivers events, but the
+`X-Cypress-Signature` header is omitted. Configure a secret to enable
+verification.
+
+:::
+
+### Verify a signature in your handler
+
+The following example handlers add a route to an existing Express or Flask app.
+They read the raw body, reject stale timestamps, recompute the HMAC, and compare
+it in constant time.
+
+<details>
+<summary>Node.js and Python examples</summary>
+
+<Tabs groupId="webhook-language">
+<TabItem value="nodejs" label="Node.js">
+
+```js
+const crypto = require('crypto')
+
+const SIGNING_SECRET = process.env.CYPRESS_WEBHOOK_SECRET
+
+// Register this route before express.json() or any other body parser.
+// Those parsers consume the body and would break signature verification.
+app.post(
+  '/receive-webhook',
+  express.raw({ type: 'application/json' }),
+  (req, res) => {
+    const signature = req.get('X-Cypress-Signature')
+    const timestamp = req.get('X-Cypress-Timestamp')
+    const rawBody = req.body // Buffer
+
+    if (!signature || !timestamp) {
+      return res.status(400).send('Missing signature headers')
+    }
+
+    // Reject stale requests to protect against replay attacks (5 minute window).
+    if (Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) {
+      return res.status(400).send('Timestamp outside of tolerance')
+    }
+
+    const expected =
+      'sha256=' +
+      crypto
+        .createHmac('sha256', SIGNING_SECRET)
+        .update(`${timestamp}.${rawBody.toString('utf8')}`)
+        .digest('hex')
+
+    const valid =
+      signature.length === expected.length &&
+      crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))
+
+    if (!valid) {
+      return res.status(401).send('Invalid signature')
+    }
+
+    const event = JSON.parse(rawBody.toString('utf8'))
+    // ...handle the event...
+
+    res.status(200).send('ok')
+  }
+)
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+import hashlib
+import hmac
+import os
+import time
+
+from flask import abort, request
+
+SIGNING_SECRET = os.environ["CYPRESS_WEBHOOK_SECRET"].encode()
+
+
+@app.post("/receive-webhook")
+def receive_webhook():
+    signature = request.headers.get("X-Cypress-Signature", "")
+    timestamp = request.headers.get("X-Cypress-Timestamp", "")
+    # Bytes as received. Don't use request.json; parsing and re-serializing
+    # can change the body and break verification.
+    raw_body = request.get_data()
+
+    if not signature or not timestamp:
+        abort(400, "Missing signature headers")
+
+    # Reject stale requests to protect against replay attacks (5 minute window).
+    if abs(time.time() - int(timestamp)) > 300:
+        abort(400, "Timestamp outside of tolerance")
+
+    signed = f"{timestamp}.".encode() + raw_body
+    digest = hmac.new(SIGNING_SECRET, signed, hashlib.sha256).hexdigest()
+    expected = f"sha256={digest}"
+
+    if not hmac.compare_digest(signature, expected):
+        abort(401, "Invalid signature")
+
+    # event = json.loads(raw_body)
+    # ...handle the event...
+
+    return "ok", 200
+```
+
+</TabItem>
+</Tabs>
+
+</details>
+
+## Delivery history and retries
+
+Open the **⋯** actions menu on a webhook and select **Recent deliveries** to
+review its delivery history. Cypress Cloud retains up to **100** deliveries per
+webhook, newest first. Each entry shows the event type and version, timestamps,
+and a status. Expand a delivery to inspect the full per-attempt request and
+response: headers, bodies, response status, and any error details.
+
+<DocsImage
+  src="/img/cloud/integrations/webhooks/webhook-deliveries.png"
+  alt="The Recent deliveries dialog listing deliveries with their statuses"
+  width={800}
+/>
+
+Delivery statuses:
+
+- **Delivered**: The endpoint returned a success response.
+- **Pending**: The delivery is queued or in progress.
+- **Retrying**: An attempt failed and another is scheduled.
+- **Failed. No more retries.**: The delivery failed and will not be retried.
+  Automatic retries are exhausted, the failure is not retryable (for example a
+  `3xx` or a `4xx` other than `408` or `429`), or the event was a test
+  (`webhook.ping`).
+
+<DocsImage
+  src="/img/cloud/integrations/webhooks/webhook-delivery-detail.png"
+  alt="An expanded delivery showing per-attempt request and response details"
+  width={800}
+/>
+
+:::note
+
+For your protection, sensitive request headers (such as `Authorization` and
+`Cookie`) are redacted in the stored delivery history.
+
+:::
+
+### Retry behavior
+
+If a delivery fails, Cypress Cloud retries it until it succeeds or reaches **10
+total attempts** (the first attempt plus up to 9 retries), using an exponential
+backoff schedule with jitter. Cypress Cloud retries on network/transport errors
+and on HTTP `408`, `429`, and `5xx` responses. Other completed responses (`3xx`
+and other `4xx`) and blocked destinations are treated as permanent failures and
+are **not** retried. Test (`webhook.ping`) events are never retried.
+
+Each attempt is listed under that delivery in **Recent deliveries**. Expand the
+delivery to see **Attempt 1**, **Attempt 2**, and so on. Automatic retries are
+tagged **Retry**; a redelivery you trigger is tagged **Manual retry**.
+
+To resend a failed or exhausted delivery yourself, expand it in the **Recent
+deliveries** dialog and choose **Redeliver**. A redelivery reuses the original
+payload and keeps the same `X-Cypress-Event-Id`, so your idempotency logic still
+recognizes it as the same event.
+
+## Security
+
+Cypress Cloud applies several protections to webhook delivery:
+
+- **Endpoint restrictions**: Destination URLs are resolved and validated before
+  each delivery. Requests to private, loopback, and link-local addresses are
+  blocked to prevent server-side request forgery (SSRF).
+- **No redirects**: Cypress Cloud does not follow HTTP redirects; the Payload URL
+  must respond directly.
+- **Timeouts and limits**: Each attempt times out after 10 seconds, and only the
+  first 8&nbsp;KB of your response body is read and stored.
+- **Secret storage**: Signing secrets are encrypted at rest and are never
+  returned by the Cypress Cloud API. A secret is shown only once, when you set
+  it.
+- **Use HTTPS**: Always use an `https://` Payload URL so payloads are encrypted
+  in transit.
