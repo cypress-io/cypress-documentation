@@ -1,0 +1,143 @@
+---
+title: 'Troubleshooting: Cypress Accessibility'
+description: 'Fix common Cypress Accessibility report problems: ignored elements that still appear, scores that do not improve, rules you cannot resolve yet, noise from third-party UI, unstable violation selectors, and configuration that has no effect.'
+sidebar_label: Troubleshooting
+sidebar_position: 150
+---
+
+<ProductHeading product="accessibility" />
+
+# Troubleshooting Cypress Accessibility
+
+Cypress Accessibility produces a report for every recorded run with no setup, running Axe Core® checks against the states your Cypress tests exercise. For most applications the defaults are accurate on their own. When a report doesn't match what you expect, the cause is usually one of a small, predictable set: configuration that hasn't been applied to the run yet, a filter that isn't matching, an unstable attribute in a violation's selector, or noise from parts of the page your team doesn't own.
+
+This page maps each symptom to its cause and the configuration that resolves it. Because you can [regenerate](/accessibility/configuration/overview#Setting-Configuration) any past run with your current configuration, you can confirm every fix in minutes without re-running your Cypress tests, so the fastest path to a report you trust is to make one change, regenerate a recent run, and check the result.
+
+:::tip Start here: regenerate the run after changing configuration
+
+Every run is processed with the configuration that was saved **at that moment**, so edits you make afterward don't change an existing report until you reprocess it. This timing is the single most common reason a rule "doesn't work."
+
+After saving configuration in the **App Quality** tab of your project settings, open a run's **Properties** tab and use its "regenerate" button. The configuration that was used for that run is displayed there, so you can confirm what was applied. Every fix on this page assumes you regenerate the run after changing configuration. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
+
+:::
+
+## An element you excluded still appears in the report
+
+You added an [`elementFilters`](/accessibility/configuration/elementfilters) rule to remove an element, but it's still shown with violations in the report.
+
+**Cause.** The rule was saved after the run was processed, the selector doesn't match the element, or an earlier rule already decided the element's fate. `elementFilters` selectors must match the element that Axe Core® reports, not a wrapper around it, and the **first** matching rule wins.
+
+**Fixes.**
+
+- **Regenerate the run** so the new rule is applied. This is by far the most common cause.
+- **Check the selector** against the exact node in the violation's HTML snapshot. A rule like `footer` matches only the `<footer>` element itself, while `footer *` matches the controls inside it.
+- **Order rules from specific to broad**, and place any `include: true` exception before the `include: false` rule it should override, because the first matching rule wins.
+
+  ```json title="App Quality Config"
+  {
+    "elementFilters": [
+      {
+        "selector": ".intercom-launcher",
+        "include": false,
+        "comment": "Third-party chat widget, not part of our tested UI"
+      }
+    ]
+  }
+  ```
+
+See [How are elementFilters rules applied?](/accessibility/configuration/elementfilters) for the full precedence rules.
+
+## Your score didn't improve after excluding an element
+
+You removed a failing element with [`elementFilters`](/accessibility/configuration/elementfilters), but the [accessibility score](/accessibility/core-concepts/accessibility-score) is unchanged or barely moved.
+
+**Cause.** The score is based on the elements checked and the severity of the rules they fail, not on a simple count of nodes. Excluding one element removes only that element's contribution, and if the same rule still fails on other elements, or higher-severity issues remain elsewhere, the score stays roughly the same. Excluding elements is meant to remove genuinely irrelevant UI, not to raise a score.
+
+**Fixes.**
+
+- **Confirm the element was actually removed** using the section above, then look at whether the same rule still fails elsewhere.
+- **Address the underlying violations** rather than filtering, when the elements are part of your application. See [Improve accessibility](/accessibility/guides/improve-accessibility) and [How the accessibility score is calculated](/accessibility/core-concepts/accessibility-score).
+
+## A rule keeps failing and you can't resolve it yet
+
+A known issue, a false positive, or a third-party defect is failing a rule, and you need to stop it from blocking work without hiding it everywhere.
+
+**Cause.** Cypress Accessibility keeps results broad on purpose so you retain full visibility of every issue in Cypress Cloud. Deciding what should _block_ is a separate, opt-in step, so the right tool depends on whether you want to suppress a single element, change how a rule runs, or enforce a policy in CI.
+
+**Fixes.**
+
+- **Ignore a rule on one specific element** with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application markup, which is the most surgical option and keeps the rule active everywhere else.
+- **Turn a rule off or adjust how Axe Core® runs** across the report with [Axe Core® configuration](/accessibility/configuration/axe-core-configuration), when a rule doesn't apply to your application at all.
+- **Keep the rule visible but non-blocking** by handling it in your CI policy instead of in Cypress Cloud. The [Results API](/accessibility/results-api) gives you full control over which rules fail a build, so you can allow a known violation while still failing on anything new. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
+
+## Third-party or out-of-scope UI is adding noise
+
+Chat launchers, cookie banners, analytics overlays, or entire pages you don't own are contributing violations that aren't yours to fix.
+
+**Cause.** Cypress Accessibility checks whatever renders in the states your tests reach, including third-party widgets and any URL your tests visit. Each is reported until you exclude it.
+
+**Fixes.**
+
+- **Remove third-party elements** with [`elementFilters`](/accessibility/configuration/elementfilters), which drops them from the report and the score.
+- **Exclude whole URLs you don't intend to cover** with [`viewFilters`](/accessibility/configuration/viewfilters). To keep only your own application's URLs, list `include: true` rules for them followed by a catch-all `{ "pattern": "*", "include": false }`; because the first matching rule wins, the catch-all must come last.
+
+  ```json title="App Quality Config"
+  {
+    "viewFilters": [
+      {
+        "pattern": "https://status.my-app.com/*",
+        "include": false,
+        "comment": "External status page, linked from the footer but out of scope"
+      }
+    ]
+  }
+  ```
+
+## Violation selectors use unstable or unhelpful identifiers
+
+The selectors shown for a violation point at framework-generated `id`s or hashed classes, or the same real element appears under different selectors across snapshots, making issues hard to find and deduplicate.
+
+**Cause.** Cypress Accessibility builds an element's identity from its attributes and position in the DOM (see [Element identification](/accessibility/core-concepts/element-identification)). When an identifying attribute changes on every render, the same element can be reported inconsistently. Cypress already ignores the most common unstable values, so add configuration only when your application produces unstable identifiers the built-in filters don't cover.
+
+**Fixes.**
+
+- **Prefer your own stable attribute** in violation selectors with [`significantAttributes`](/accessibility/configuration/significantattributes). Attributes you list are checked before the defaults, so a stable `data-cy` or `data-test` produces clearer, more consistent selectors. Listing `aria-label` also turns the report into an inventory of your label text.
+
+  ```json title="App Quality Config"
+  {
+    "significantAttributes": ["data-cy"]
+  }
+  ```
+
+- **Ignore the dynamic attribute** with [`attributeFilters`](/accessibility/configuration/attributefilters) so identification falls back to a stable attribute. When you filter a dynamic `id`, also filter the attributes that reference it, such as `for`, `aria-labelledby`, and `aria-describedby`. Patterns match the whole value (they're anchored as `^(...)$`), and JSON requires backslashes to be doubled, so a token like `\d` must be written `\\d`.
+
+## A configuration rule has no effect
+
+You saved a rule, but the report looks the same.
+
+Work through these causes in order:
+
+- **The run predates the change.** Reports use the configuration saved when they were processed. [Regenerate](/accessibility/configuration/overview#Setting-Configuration) the run to apply your current configuration. This is by far the most common cause.
+- **An earlier rule matched first.** For [`elementFilters`](/accessibility/configuration/elementfilters) and [`viewFilters`](/accessibility/configuration/viewfilters), the **first** matching rule wins, so a broad rule above your specific one prevents it from applying. List specific rules first, and place `include: true` exceptions before the `include: false` rule they should override.
+- **A nested list replaced a root one.** Nesting a shared property such as `elementFilters` or `attributeFilters` under an `accessibility` or `uiCoverage` key **completely replaces** the root-level list for that product; the two are never merged. Repeat any root rules you still want in the nested list.
+- **The pattern or selector doesn't match.** `attributeFilters` patterns are anchored to the whole value, so `value: "user"` matches only the exact string `user`; use `value: "user-.*"` for a prefix. Selectors must match the element Axe Core® reports, not a wrapper around it.
+- **The configuration didn't save.** Cypress Cloud validates against a strict schema and rejects any property it doesn't recognize, including a misspelled name, a value of the wrong type, or a freeform note on a field that doesn't accept one. Keep notes in a [`comment`](/accessibility/configuration/overview#Comments), and correct the flagged property so the configuration can save.
+
+## A profile isn't being applied
+
+You tagged a run to pick up a [profile](/accessibility/configuration/profiles), but the run used your base configuration instead.
+
+**Cause.** Profiles are selected by matching a run's tags, and a profile applies only when the run carries a tag its rules match. A profile also **overrides** the base configuration for the matched run rather than merging with it, so a partial profile can look like "nothing changed" if you expected your base rules to still apply.
+
+**Fixes.**
+
+- **Confirm the run was tagged** with a value the profile matches, for example `cypress run --record --tag "aq-config-pr"`.
+- **Include every rule the run needs in the profile**, since the profile replaces the base configuration for matched runs rather than merging.
+- **Check tag precedence** when a run carries multiple matching tags. See [Profiles](/accessibility/configuration/profiles) and the profile questions in the [FAQ](/accessibility/faq).
+
+## Still stuck?
+
+- The [Cypress Accessibility FAQ](/accessibility/faq) answers focused questions about ignoring elements and URLs, element identification, configuration, and profiles.
+- The [Configuration overview](/accessibility/configuration/overview) covers where configuration lives, how it's scoped, and how to regenerate reports.
+- [How Cypress Accessibility works](/accessibility/core-concepts/how-it-works) and [How the accessibility score is calculated](/accessibility/core-concepts/accessibility-score) explain what the report measures.
+- If a report still looks wrong after working through this page, reach out to your Cypress point of contact with a link to the run.

@@ -810,6 +810,8 @@ Test suites grow organically. A welcome screen, an onboarding modal, or a cookie
 
 [Cypress UI Coverage](/ui-coverage/get-started/introduction) surfaces this from the other direction. While most test coverage tools tell you what's not tested, UI Coverage also shows you what's tested far more than it needs to be: elements with disproportionately high interaction counts that signal redundancy across your suite.
 
+<UICovPremiumNote />
+
 #### How to find over-tested elements
 
 In [Cypress Cloud](/cloud/get-started/introduction), open any recorded run and navigate to the **UI Coverage** tab. In the **Tested elements** section, elements are listed with their interaction counts and the number of snapshots they appear in. Sort by highest interaction count and look for elements whose numbers are far out of proportion with how important they are.
@@ -1134,7 +1136,7 @@ jobs:
   install:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: cypress-io/github-action@v7
         with:
           runTests: false
@@ -1144,7 +1146,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: install
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: cypress-io/github-action@v7
         with:
           start: npm start

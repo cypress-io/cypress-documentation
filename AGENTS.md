@@ -67,13 +67,17 @@ Each rule is a hard convention. See the linked section for the how and why.
 [partials](./AGENTS_REFERENCE.md#partials),
 [naming](./AGENTS_REFERENCE.md#product-heading--naming),
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
+[AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
 [alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
-- Reuse `docs/partials/_*.mdx` instead of repeating content.
+- Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
+  partial for content rendered in **more than one location**. If it's used in a
+  single page, inline it there — don't add a partial (or keep an existing one)
+  that has just one render site.
 - End related pages with a `## See also` section (sentence-case H2, as the page's
   last section): a short bulleted list of doc-to-doc links to closely related
   pages, command names in backticks, with an optional `- short description` after
@@ -82,6 +86,12 @@ Each rule is a hard convention. See the linked section for the how and why.
   genuinely related pages worth surfacing. Don't pad it with tangential links or
   repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
+- For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
+  not a code block; keep example-specific prompts, code, commands, and diagrams in
+  code blocks. Prompts are expanded by default; add `defaultCollapsed` past 350
+  characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
+  the reader gets, not a restatement that the card copies a prompt for an AI
+  assistant.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
 - Use **bold** only for real UI controls the reader acts on in a walkthrough

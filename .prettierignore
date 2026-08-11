@@ -12,3 +12,4 @@ node_modules
 .mergify.yml
 .node-version
 .textlintrc
+.claude

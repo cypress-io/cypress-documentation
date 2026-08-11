@@ -112,6 +112,8 @@ function toPlainText(markdown) {
   text = text.replace(/^\s{0,3}(?:[-*+]|\d+\.)\s+/gm, ' ')
   // Heading markers
   text = text.replace(/^#{1,6}\s+/gm, ' ')
+  // Explicit heading IDs (Docusaurus/Markdown): "Title {#custom-id}"
+  text = text.replace(/\{#[\w-]+\}/g, ' ')
   // Inline code backticks
   text = text.replace(/`([^`]*)`/g, '$1')
   // Bold / italic / strikethrough markers

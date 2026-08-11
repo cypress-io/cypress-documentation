@@ -113,6 +113,37 @@ below, refer to
    Cloud.
 1. [Save Configuration](#Save-Configuration).
 
+#### Okta for Government
+
+We support Okta for Government. Our Okta integration is a standard SAML 2.0
+integration rather than an Okta API integration, so the setup steps above apply
+without change.
+
+Two values differ from a commercial Okta setup:
+
+- **Identity Provider Single sign-on URL:** copy the URL from your Okta for
+  Government app, not from a commercial Okta app.
+- **X.509 certificate:** download the signing certificate from your Okta for
+  Government app and upload it to Cypress Cloud. Certificates do not transfer
+  between tenants, so an existing commercial Okta certificate will not work.
+
+Everything else stays the same, including the Single sign on URL and Audience
+URI you copy from Cypress Cloud and the `User.Email`, `User.FirstName`, and
+`User.LastName` attribute statements.
+
+:::caution
+
+<strong>Migrating from commercial Okta</strong>
+
+We store one SSO configuration per organization, so saving your Okta for
+Government details replaces your existing Okta configuration. Create and test
+the Okta for Government app before you save, and make the switch outside of
+peak hours to limit the window in which your team could be locked out.
+
+:::
+
+For advanced SAML requirements, contact support at support@cypress.io.
+
 ### **SAML**
 
 Cypress Cloud can integrate with your identity provider via SAML. In addition to
