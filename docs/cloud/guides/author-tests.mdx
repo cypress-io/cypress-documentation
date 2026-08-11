@@ -1,0 +1,497 @@
+---
+title: Author Cypress tests faster with Cypress Cloud
+description: Go from no Cypress Cloud account to a working end-to-end test. Record tests with Studio AI, generate them from plain English with cy.prompt, and use Cypress AI Skills, Cloud MCP, and UI Coverage Test Generation to write Cypress tests faster.
+sidebar_label: Author Tests
+sidebar_position: 5
+---
+
+<ProductHeading product="cloud" />
+
+# Author Cypress Tests Faster with Cypress Cloud
+
+The slowest part of end-to-end testing is usually the first draft. You hunt for
+a stable selector for every element, recall which command does what, and decide
+what to assert after each interaction. Multiply that by every flow in your app
+and authoring becomes the bottleneck, long before anything runs in CI.
+
+**Cypress Cloud removes most of that work.** Interact with your app and Cypress
+writes the commands and recommends the assertions. Describe a flow in plain
+English and Cypress generates the Cypress code behind it. Point your AI coding
+assistant at your project and it writes tests that follow Cypress best practices
+instead of generic, brittle ones. Every path produces real Cypress code you can
+read, edit, and commit.
+
+This guide takes you from no Cypress Cloud account to a working, committed test.
+A free account is enough to follow every step.
+
+<Btn
+  label="Create a free account ➜"
+  variant="indigo-dark"
+  className="mr-1"
+  href="https://cloud.cypress.io/signup"
+/>
+<Btn
+  label="See a demo"
+  icon="action-play-small"
+  className="mr-1"
+  href="https://www.youtube.com/watch?v=vFLShoCM8pA"
+/>
+<Btn
+  label="Explore an example project"
+  icon="technology-terminal-log"
+  href="https://cloud.cypress.io/projects/7s5okt"
+/>
+
+:::info
+
+<WhatYoullLearn />
+
+- Why AI-assisted authoring needs a Cypress Cloud account, and what a free account includes
+- How to connect a project to Cypress Cloud so authoring features turn on
+- How to record a test and let [Studio AI](/app/guides/cypress-studio) recommend the assertions
+- How to generate a test from natural language with [`cy.prompt`](/api/commands/prompt) and export the code it writes
+- How to point your AI coding assistant at Cypress with [AI Skills](/app/tooling/ai-skills) and [Cloud MCP](/cloud/integrations/cloud-mcp)
+- How to close the flows you have not tested yet with [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports)
+- How to keep AI-authored tests reviewable and stable over time
+
+:::
+
+## What Cypress Cloud writes for you
+
+Each capability below covers a different starting point. You do not have to
+choose one: most teams record a flow in Studio, describe the tricky parts with
+`cy.prompt`, and let their coding assistant handle the rest.
+
+| Start from                             | Use                                                                                                              | What you get back                                                              |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Clicking through your app              | [Studio AI](/app/guides/cypress-studio)                                                                          | Recorded commands plus recommended assertions for what changed after each step |
+| A flow you can describe in words       | [`cy.prompt`](/api/commands/prompt)                                                                              | Executable Cypress commands generated from natural language steps              |
+| A ticket, spec, or acceptance criteria | [Cypress AI Skills](/app/tooling/ai-skills)                                                                      | Tests written by your AI assistant using Cypress best practices                |
+| Your recorded run data                 | [Cloud MCP](/cloud/integrations/cloud-mcp) and the [Cloud CLI](/cloud/integrations/cloud-cli)                    | An assistant that can read real failures, flake, and coverage while it writes  |
+| A gap in coverage                      | [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports) | A drafted test for an interactive element no test has exercised yet            |
+
+## The authoring workflow at a glance
+
+1. **[Create a free Cloud account](#Step-1-Create-a-free-Cypress-Cloud-account)** so AI-assisted authoring can run.
+2. **[Connect your project](#Step-2-Install-Cypress-and-connect-your-project)** to Cypress Cloud.
+3. **[Record the flow with Studio AI](#Step-3-Record-a-test-with-Studio-AI)** and accept the assertions worth keeping.
+4. **[Describe the harder steps with `cy.prompt`](#Step-4-Generate-a-test-from-plain-English-with-cyprompt)** and export the generated code.
+5. **[Bring in your AI coding assistant](#Step-5-Bring-in-your-AI-coding-assistant)** with AI Skills and Cloud MCP.
+6. **[Cover the flows you missed](#Step-6-Cover-the-flows-you-did-not-think-of)** with UI Coverage Test Generation.
+7. **[Record the run and review what you shipped](#Step-7-Record-the-run-and-review-what-you-shipped)**.
+
+Each step stands on its own. Steps 1 and 2 are the only prerequisites.
+
+## Step 1: Create a free Cypress Cloud account
+
+Cypress AI capabilities use large language models to interpret your prompts,
+read the DOM, and generate Cypress code. Cypress Cloud routes those requests
+securely, applies your organization's controls, and tracks usage, so a Cloud
+account is what makes AI-assisted authoring possible. Your prompts are never
+used to train AI models.
+
+1. [Sign up for Cypress Cloud](https://cloud.cypress.io/signup). No credit card
+   is required.
+2. Create an organization, or accept an invitation to one your team already
+   owns. See [organizations](/cloud/account-management/organizations) for how
+   ownership and membership work.
+
+New accounts start a [30-day free trial](/cloud/get-started/free-trial) of every
+Enterprise feature, which includes the higher AI usage limits. When the trial
+ends, your account moves to the free **Starter** plan and AI-assisted authoring
+keeps working at free-plan limits.
+
+:::tip
+
+Want to try Studio AI before signing up for anything? Studio runs without an
+account, and Studio AI offers an anonymous trial of up to **6 accepted
+recommendations** per browser session before it asks you to log in. See
+[Studio AI usage limits](/app/guides/cypress-studio#Usage-limits).
+
+:::
+
+## Step 2: Install Cypress and connect your project
+
+If Cypress is not installed yet, follow
+[Install Cypress](/app/get-started/install-cypress) and
+[Open the app](/app/get-started/open-the-app), then choose **E2E Testing**.
+The AI authoring capabilities in this guide are for end-to-end tests.
+
+Next, link the project to Cypress Cloud:
+
+1. In the Cypress App, open the **Runs** tab.
+2. Click **Connect to Cypress Cloud** and log in when prompted.
+3. Choose the organization that owns the project, then create or select the
+   Cloud project.
+
+Cypress writes a
+[`projectId`](/cloud/account-management/projects#Project-ID) into your Cypress
+configuration file. Commit it, so everyone on the team and every CI machine
+points at the same Cloud project. Full walkthrough:
+[Set up a project to record](/cloud/get-started/setup#Set-up-a-project-to-record).
+
+:::note
+
+**How authoring features authenticate.** In open mode
+(`cypress open`), being logged in to Cypress Cloud is enough. In run mode
+(`cypress run`), `cy.prompt` needs `--record` with a valid
+[record key](/cloud/account-management/projects#Record-key), which is how CI
+runs stay authenticated:
+
+```shell
+npx cypress run --record --key <record key>
+```
+
+:::
+
+Studio also needs internet access and sourcemaps, which are enabled by default
+in most projects. See [enable sourcemaps](/app/guides/cypress-studio#Enable-sourcemaps)
+if Studio reports they are missing.
+
+## Step 3: Record a test with Studio AI
+
+[Cypress Studio](/app/guides/cypress-studio) turns real interactions into
+Cypress commands as you click through your app. Studio AI adds the part that
+usually slows people down: after each interaction it compares the DOM before and
+after, then recommends an assertion for what actually changed.
+
+Say you are testing an online store and want a test that adds a product to the
+cart.
+
+1. In the Cypress App, click **New Test** on the spec or suite you want to work
+   in.
+2. Name the test something descriptive, such as `adds a product to the cart`.
+   Studio AI uses the title as context when it generates assertions, so a
+   specific name produces better recommendations than `test 1`.
+3. Enter the URL to start from, for example `http://localhost:3000/products`.
+   Studio writes a [`cy.visit()`](/api/commands/visit) and loads your app.
+4. Interact with the app the way a user would: click a product, click its
+   "Add to cart" button, open the cart.
+5. Review each recommendation as it appears. Studio AI explains what the
+   assertion validates, and hovering a recommendation shows the before and after
+   DOM snapshots with the asserted element highlighted.
+6. Click **Accept** on the assertions that reflect behavior your team cares
+   about, **Reject** on the rest, then **Save**.
+
+<DocsVideo
+  src="/img/app/cypress-studio/studio-ai-recording-multiple-actions.mp4"
+  autoPlay={true}
+  title="Recording interactions in Cypress Studio while Studio AI recommends assertions"
+/>
+
+The result is ordinary Cypress code in your spec file:
+
+```js title="cypress/e2e/cart.cy.js"
+describe('Cart', () => {
+  it('adds a product to the cart', () => {
+    cy.visit('http://localhost:3000/products')
+    cy.get('[data-cy="product-card-wireless-mouse"]').click()
+    cy.get('[data-cy="add-to-cart"]').click()
+
+    // Recommended by Studio AI: the cart badge reflects the added item
+    cy.get('[data-cy="cart-count"]').should('have.text', '1')
+
+    cy.get('[data-cy="cart-link"]').click()
+
+    // Recommended by Studio AI: the product appears in the cart
+    cy.get('[data-cy="cart-items"]').should('contain', 'Wireless Mouse')
+  })
+})
+```
+
+Recommendations are written into your test as soon as they are generated, so you
+can run the test and watch an assertion pass before deciding to keep it. To
+extend a test later, hover it in the Command Log and click **Edit in Studio**.
+Studio replays the test up to its last command and records from there.
+
+Two things worth knowing while you record:
+
+- Studio AI recommends assertions from **visible UI changes only**: visibility,
+  existence, text, element counts, form values and states, attributes, URL, and
+  page title. It has no access to your application code or business rules, so
+  rules that are not visible in the UI still need assertions you write yourself.
+- Selectors come from a
+  [priority strategy](/app/guides/cypress-studio#How-selectors-are-chosen-for-commands)
+  that favors dedicated test attributes. Configure
+  [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) once and both
+  Studio and `cy.prompt` will generate selectors that match your project's
+  conventions.
+
+## Step 4: Generate a test from plain English with cy.prompt
+
+Recording works well when you can click your way through a flow. When the flow
+is long, needs credentials, or is easier to describe than to perform,
+[`cy.prompt`](/api/commands/prompt) is faster: write the steps as sentences and
+Cypress interprets each one, picks the selectors, generates the commands, and
+runs them.
+
+Continuing the store example, here is a checkout flow written as a prompt:
+
+```js title="cypress/e2e/checkout.cy.js"
+describe('Checkout', () => {
+  it('completes an order for a signed-in shopper', () => {
+    cy.env(['USER_PASSWORD']).then(({ USER_PASSWORD }) => {
+      cy.prompt(
+        [
+          'visit http://localhost:3000/login',
+          'type "shopper@example.com" in the email field',
+          'type {{password}} in the password field',
+          'click the sign in button',
+          'visit http://localhost:3000/products',
+          'search for "wireless mouse" in the search field',
+          'click the first search result',
+          'click the "Add to cart" button',
+          'verify the cart badge shows 1 item',
+          'click the cart link in the header',
+          'click the "Checkout" button',
+          'select "Standard" from the shipping method dropdown',
+          'click the "Place order" button',
+          'verify the confirmation message contains the text "Thank you for your order"',
+        ],
+        {
+          placeholders: { password: USER_PASSWORD },
+        }
+      )
+    })
+  })
+})
+```
+
+[`cy.env()`](/api/commands/env) reads the password from a
+`CYPRESS_USER_PASSWORD` environment variable, so the real value never appears in
+the spec file. A few more details make the difference between a prompt that
+works on the first run and one you have to keep rewriting:
+
+- **One action per step, in imperative voice.** `click the "Checkout" button` is
+  interpreted reliably. `go to checkout and pay` is not.
+- **Add positional context** when a label repeats, such as
+  `click the cart link in the header`.
+- **Use [placeholders](/app/guides/ai-test-generation#Placeholders) for
+  sensitive or changing values.** Placeholder values are never sent to the AI
+  model, and because the step string stays constant, the generated code stays
+  cached instead of triggering a fresh AI call every run.
+- **Quote text you are asserting on.** Quoted text resolves to
+  [`cy.contains()`](/api/commands/contains), while an unquoted description
+  resolves to a [`cy.get()`](/api/commands/get) selector. Pick whichever is more
+  stable in your app. See
+  [targeting elements by text content](/app/guides/ai-test-generation#Targeting-elements-by-text-content).
+
+If a step is too vague to interpret, Cypress opens a dialog asking you to refine
+that specific step, saves your revision back into the spec file, and re-runs.
+
+### See the code it generated
+
+Click the **Code** button next to any `cy.prompt` command in the Command Log to
+see the exact Cypress commands it produced, with a comment mapping each command
+back to the step that generated it.
+
+<DocsImage
+  src="/img/api/prompt/cy-prompt-generated-test-code.png"
+  alt="Dialog in the Cypress App showing the Cypress commands cy.prompt generated, with each command commented with the prompt step it came from"
+/>
+
+From there you have a decision to make, and both answers are valid:
+
+- **Save the generated code into your spec** and replace the `cy.prompt` call.
+  You get predictable, reviewable code in version control and no AI calls at
+  runtime. This is the common choice for stable, high-traffic flows.
+- **Leave `cy.prompt` in the test** and let it
+  [self-heal](/app/guides/ai-test-generation#Self-healing). When an element it
+  needs has changed since the last run, Cypress resolves the new one and tags
+  the step as **Self-healed** in the Command Log. This suits areas of the app
+  that are actively changing.
+
+See [choose your workflow](/app/guides/ai-test-generation#Choose-your-workflow)
+for a fuller comparison.
+
+:::caution
+
+Self-healing is meant to absorb occasional, unexpected changes. If a step
+self-heals on every run, it is pointed at something unstable, which adds AI calls
+and slows the test. Point it at stable text, move the changing value into a
+placeholder, or configure
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api). See
+[keep self-healing from firing every run](/app/guides/ai-test-generation#Keep-self-healing-from-firing-every-run).
+
+:::
+
+`cy.prompt` also accepts Given/When/Then phrasing, so teams coming from
+Cucumber can keep their scenario style without maintaining step definition
+files. See the [Gherkin examples](/api/commands/prompt#Gherkin-style-tests).
+
+## Step 5: Bring in your AI coding assistant
+
+If you already write code with Cursor, Claude Code, GitHub Copilot, or a similar
+tool, the fastest authoring path is often the one you are already in. Two Cypress
+pieces make that assistant meaningfully better at Cypress.
+
+### Teach it Cypress with AI Skills
+
+[Cypress AI Skills](/app/tooling/ai-skills) are instruction sets that tell your
+assistant how to write Cypress tests: honor your selector configuration, avoid
+arbitrary waits in favor of [`cy.intercept()`](/api/commands/intercept) with
+aliases, reuse your existing custom commands and fixtures, and stick to APIs your
+installed Cypress version actually supports.
+
+Install all three skills:
+
+<PackageManagerTabs exec="skills add cypress-io/ai-toolkit" />
+
+Then describe the behavior you need tested. This prompt turns a ticket's
+acceptance criteria into a spec that matches your project's conventions:
+
+<CopyPrompt
+  title="Turn acceptance criteria into a Cypress test"
+  subtext="Get a spec that follows your project's existing setup, custom commands, and selector strategy."
+  prompt={`/cypress-author Write a Cypress end-to-end test for the checkout flow in our store app. Acceptance criteria:
+
+- A signed-in shopper with one item in the cart can reach the checkout page
+- Choosing "Standard" shipping updates the order total
+- Placing the order shows a confirmation containing the order number
+- The cart is empty after a successful order
+
+Before writing anything, read my existing specs, custom commands, and fixtures and follow those conventions. Tell me which spec file the test belongs in.`}
+/>
+
+`cypress-author` writes and fixes tests, `cypress-explain` reviews and explains
+them, and `cypress-docs` grounds both in the official documentation instead of
+whatever the model remembers. You can also ask `cypress-author` to write tests
+that call `cy.prompt`, which is useful when you want self-healing built into the
+specs it generates.
+
+### Ground it in your real run data with Cloud MCP
+
+An assistant that can read your recorded runs writes better tests than one
+working from the code alone. [Cloud MCP](/cloud/integrations/cloud-mcp) connects
+your AI client directly to Cypress Cloud, so it can pull failures, stack traces,
+flaky tests, [Test Replay](/cloud/features/test-replay) timelines, accessibility
+violations, and UI Coverage gaps while it works. The
+[Cloud CLI](/cloud/integrations/cloud-cli) does the same for terminal-based
+agents and scripts.
+
+<CopyPrompt
+  title="Write tests for what your suite is actually missing"
+  subtext="Turn the gaps and flake in your latest recorded run into concrete, prioritized test work."
+  prompt={`Using Cypress Cloud, look at the latest run on this branch. List the flows that failed or were flagged flaky, and the highest-priority untested interactive elements from the UI Coverage report. Then draft Cypress tests for the top three, following the conventions in my existing specs, and tell me which spec files to add them to.`}
+/>
+
+## Step 6: Cover the flows you did not think of
+
+The hardest tests to write are the ones you do not know you are missing.
+[UI Coverage](/ui-coverage/get-started/introduction) analyzes your recorded runs
+and reports which interactive elements your tests never exercised, ranked by
+view.
+
+From a report, select an untested element and click **Generate test code**.
+Choose a spec from the list of specs where that element already appears, and
+Cypress drafts a test against that spec's setup, reusing the navigation and
+custom commands it already relies on, such as `cy.login()`.
+
+<DocsImage
+  src="/img/ui-coverage/guides/cypress-ui-coverage-generate-test.png"
+  alt="Cypress Cloud showing the test code generated for an untested interactive element in a UI Coverage report"
+/>
+
+The generated code exercises the element and marks where to add your assertions.
+Treat it as a reviewed starting point: it proves the element is reachable, and
+you add the assertions that prove the flow works. Full workflow:
+[address coverage gaps](/ui-coverage/guides/address-coverage-gaps).
+
+UI Coverage Test Generation is included with UI Coverage and is not part of
+standard Cloud plans.
+
+## Step 7: Record the run and review what you shipped
+
+Once the test passes locally, record it so the rest of your team and your CI
+pipeline see the same result:
+
+```shell
+npx cypress run --record --key <record key>
+```
+
+In Cypress Cloud you can then:
+
+- **Confirm the test does what you meant.** The
+  [Test Intent Summary](/cloud/features/recorded-runs#test-intent-summary) in the
+  test detail sidebar describes in plain language what the test verifies, which
+  is a quick check that an AI-authored test matches your intent.
+- **Audit every prompt in the run at once.** Open the run's **Properties** tab,
+  find the **cy.prompt** section, and click **Download report** to export every
+  prompt and the code generated from it as JSON, YAML, or Markdown. See
+  [download a prompt report for a run](/app/guides/ai-test-generation#Download-a-prompt-report-for-a-run).
+- **Watch for steps that keep self-healing.** Runs containing self-healed tests
+  are flagged in the runs list, and you can filter a run by self-healed tests.
+  A step that heals repeatedly is a signal to rewrite it or commit the generated
+  code.
+- **Debug anything that fails** with [Test Replay](/cloud/features/test-replay)
+  and AI [Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries).
+  See [Debug failing tests](/cloud/guides/debug-failing-tests).
+
+## Which authoring tool should I use?
+
+| If you                                                | Reach for                                                                                                        |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Can click through the flow in your app                | [Studio AI](/app/guides/cypress-studio)                                                                          |
+| Are not sure what to assert after an interaction      | [Studio AI](/app/guides/cypress-studio#AI-smart-recommendations) recommendations                                 |
+| Can describe the flow but not perform it easily       | [`cy.prompt`](/api/commands/prompt)                                                                              |
+| Maintain tests against a UI that changes often        | [`cy.prompt`](/app/guides/ai-test-generation#Self-healing) left in the test to self-heal                         |
+| Are working from a ticket or acceptance criteria      | [Cypress AI Skills](/app/tooling/ai-skills)                                                                      |
+| Want your assistant to see real failures and coverage | [Cloud MCP](/cloud/integrations/cloud-mcp) or the [Cloud CLI](/cloud/integrations/cloud-cli)                     |
+| Need to know which flows are untested                 | [UI Coverage Test Generation](/ui-coverage/guides/address-coverage-gaps#Generate-tests-from-UI-Coverage-reports) |
+| Are writing component tests                           | Standard Cypress authoring, plus [AI Skills](/app/tooling/ai-skills)                                             |
+
+Studio and `cy.prompt` are end-to-end only. `cy.prompt` runs in Chromium-based
+browsers (Chrome, Edge, and Electron). See
+[`cy.prompt` limitations](/api/commands/prompt#Limitations) and
+[Studio known limitations](/app/guides/cypress-studio#Known-limitations) before
+planning a large migration around either one.
+
+## Keep AI-authored tests worth trusting
+
+AI shortens the first draft. These habits keep the result as good as a test you
+wrote by hand:
+
+- **Read the generated code before you commit it.** The **Code** button and the
+  run's prompt report exist so nothing is a black box.
+- **Assert outcomes, not activity.** A recorded flow that clicks through
+  checkout without asserting the confirmation only proves the buttons exist.
+  Studio AI recommends assertions from visible changes; business rules are still
+  yours to verify.
+- **Give your app stable hooks.** Adding `data-cy` attributes and configuring
+  [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) improves
+  what Studio, `cy.prompt`, and your AI assistant generate, all at once.
+- **Keep secrets out of prompts.** Pass them through
+  [placeholders](/app/guides/ai-test-generation#Placeholders), which are never
+  sent to the AI model. Values in password, credit card, and hidden fields are
+  also stripped from the DOM before anything is sent.
+- **Apply the same review bar as any other code.** Cypress
+  [best practices](/app/core-concepts/best-practices) still apply to generated
+  tests, and `cypress-explain` can audit a spec before you open the pull request.
+
+Organization admins and owners can turn AI capabilities off for an entire
+organization from Cypress Cloud organization settings. See
+[disabling AI features](/cloud/features/cypress-ai-features#Disabling-AI-features)
+and the [Cypress AI security page](https://on.cypress.io/ai-security).
+
+## Plans and usage limits
+
+`cy.prompt` and Studio AI work on every Cypress Cloud plan, including the free
+Starter plan, at lower hourly limits than paid plans. AI Skills, Cloud MCP, the
+Cloud CLI, Test Intent Summaries, and Error Summaries are available on all plans
+at no additional cost. UI Coverage Test Generation requires UI Coverage.
+
+For the current per-plan limits, see
+[Cypress AI usage limits](/cloud/features/cypress-ai-features#Usage-limits). For
+how `cy.prompt` executions are counted and billed at the organization level, see
+the [cy.prompt FAQ](/cloud/faq#cyprompt).
+
+## See also
+
+- [AI Test Generation](/app/guides/ai-test-generation) - the full `cy.prompt` guide
+- [`cy.prompt()`](/api/commands/prompt) - command reference, supported actions, and limitations
+- [Cypress Studio AI](/app/guides/cypress-studio) - record interactions and get assertion recommendations
+- [Cypress AI Skills](/app/tooling/ai-skills) - teach your AI coding tool to write Cypress tests
+- [Cypress AI](/cloud/features/cypress-ai-features) - every AI capability and tool in one place
+- [Cloud MCP](/cloud/integrations/cloud-mcp) - connect an AI assistant to your Cloud data
+- [Debug failing tests](/cloud/guides/debug-failing-tests) - the companion workflow for when a test fails in CI
+- [Set up your project to record](/cloud/get-started/setup) - connect a project to Cypress Cloud

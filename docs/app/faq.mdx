@@ -1892,6 +1892,104 @@ Don't forget to update your
 [`specPattern`](/app/references/configuration#component)
 to include the new file location.
 
+## Authoring tests with AI
+
+Cypress offers several ways to author tests with AI. For a walkthrough that goes
+from creating an account to a committed test, see
+[Author tests with Cypress Cloud](/cloud/guides/author-tests).
+
+### <Icon name="angle-right" /> How do I write Cypress tests faster?
+
+Three capabilities cover most authoring work, and they can be combined:
+
+- [Cypress Studio AI](/app/guides/cypress-studio) records your interactions as
+  Cypress commands and recommends assertions based on what changed in the UI
+  after each step.
+- [`cy.prompt`](/api/commands/prompt) turns natural language steps such as
+  `'click the "Add to cart" button'` into executable Cypress commands.
+- [Cypress AI Skills](/app/tooling/ai-skills) teach an AI coding assistant like
+  Cursor, Claude Code, or GitHub Copilot to write Cypress tests that follow
+  Cypress best practices and your project's existing conventions.
+
+See [Author tests with Cypress Cloud](/cloud/guides/author-tests) for the full
+workflow.
+
+### <Icon name="angle-right" /> Can AI write my Cypress tests for me?
+
+Yes, and every path produces standard Cypress code you can read, edit, and
+commit. Studio AI writes commands and assertions as you interact with your app,
+`cy.prompt` generates commands from natural language steps, and the
+[`cypress-author` skill](/app/tooling/ai-skills#cypress-author-create-update-and-fix-tests)
+lets your AI coding assistant write specs that match your existing setup. Review
+generated tests the same way you review any other code: confirm they assert
+outcomes and not only that elements exist.
+
+### <Icon name="angle-right" /> Do I need a Cypress Cloud account to use AI features in Cypress?
+
+Yes. AI capabilities use large language models to interpret prompts, read the
+DOM, and generate code, and Cypress Cloud routes those requests securely, applies
+your organization's controls, and tracks usage. A
+[free Cloud account](https://cloud.cypress.io/signup) is enough, and new accounts
+include a [30-day trial](/cloud/get-started/free-trial) of paid features with
+higher AI usage limits.
+
+In open mode, being logged in to Cypress Cloud is enough. In run mode,
+`cy.prompt` requires `--record` with a valid
+[record key](/cloud/account-management/projects#Record-key).
+
+### <Icon name="angle-right" /> What is the difference between Cypress Studio AI and cy.prompt?
+
+Both author tests, from different starting points.
+[Studio AI](/app/guides/cypress-studio) is for flows you can perform: you click
+through your app and Studio records the commands and recommends assertions.
+[`cy.prompt`](/api/commands/prompt) is for flows you can describe: you write the
+steps in plain English and Cypress generates and runs the Cypress commands. Both
+show you the generated code, and `cy.prompt` can additionally stay in the test
+and [self-heal](/app/guides/ai-test-generation#Self-healing) when the UI changes.
+
+### <Icon name="angle-right" /> Can I try Cypress Studio AI without an account?
+
+Cypress Studio records interactions and adds manual assertions without a Cloud
+account. AI assertion recommendations run as an anonymous trial of up to
+**6 accepted recommendations** per browser session, after which you are asked to
+log in and link a project. See
+[Studio AI usage limits](/app/guides/cypress-studio#Usage-limits).
+
+### <Icon name="angle-right" /> Can AI generate Cypress component tests?
+
+`cy.prompt` and Cypress Studio support end-to-end tests only. For component
+tests, use [Cypress AI Skills](/app/tooling/ai-skills) with your AI coding
+assistant, which can write component tests that reuse your existing mount
+helpers and conventions.
+
+### <Icon name="angle-right" /> Which browsers does cy.prompt support?
+
+Chromium-based browsers: Chrome, Edge, and Electron. See
+[Limitations](/api/commands/prompt#Limitations) for the full list of
+constraints.
+
+### <Icon name="angle-right" /> How do I keep AI-generated Cypress tests from becoming flaky?
+
+The same practices that keep hand-written tests stable apply. Give your
+application dedicated test attributes such as `data-cy` and configure
+[`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) so Studio,
+`cy.prompt`, and AI Skills all generate selectors your team controls. Assert
+outcomes rather than only element existence, and watch for `cy.prompt` steps
+tagged **Self-healed** on every run, which means the step is pointed at something
+unstable. See
+[keep self-healing from firing every run](/app/guides/ai-test-generation#Keep-self-healing-from-firing-every-run)
+and [best practices](/app/core-concepts/best-practices).
+
+### <Icon name="angle-right" /> Does Cypress send my application code to an AI model?
+
+No. Cypress AI capabilities read the DOM of your application under test and the
+prompts in your test code, not your application source or the contents of your
+repository. Values in password fields, credit card fields using standard
+autocomplete attributes, and hidden inputs are excluded before anything is sent,
+and [placeholder](/app/guides/ai-test-generation#Placeholders) values are never
+sent to the AI model. Prompts are not used to train AI models. See the
+[Cypress AI security page](https://on.cypress.io/ai-security).
+
 ## cy.prompt
 
 The `cy.prompt` command supports natural language testing directly within the Cypress App. It requires a free or paid Cypress Cloud account. For Cloud-related `cy.prompt` execution limits, billing, and usage information, see the [Cloud FAQ](/cloud/faq#cyprompt).
