@@ -731,7 +731,7 @@ Yes. You do it the
 See [polling an asynchronous job](/app/guides/api-testing#Poll-an-asynchronous-job)
 for a version with a bounded number of attempts.
 
-### <Icon name="angle-right" /> Why doesn't cy.intercept() match my cy.request() calls?
+### <Icon name="angle-right" /> Why doesn't cy.intercept() match cy.request() calls in Cypress?
 
 [`cy.intercept()`](/api/commands/intercept) matches traffic your application
 makes from the browser, which flows through the Cypress proxy.
@@ -743,21 +743,25 @@ endpoint and assert on its response. Use `cy.intercept()` to assert on, wait
 for, or stub the requests your app makes. See
 [choose the right tool](/app/guides/api-testing#Choose-the-right-tool).
 
-### <Icon name="angle-right" /> Why don't cy.request() calls appear in the browser's Network tab?
+### <Icon name="angle-right" /> Why don't Cypress cy.request() calls appear in the browser's Network tab?
 
-For the same reason: the request is made from Node, not from the browser, so
-the browser has nothing to report. To inspect it, click the `cy.request()` entry
-in the [Command Log](/app/core-concepts/open-mode#Command-Log) and Cypress
-prints the full request and response to the browser console.
+Cypress makes [`cy.request()`](/api/commands/request) calls from its Node
+process rather than from the browser, so the browser never sees the request and
+has nothing to show in its Network tab.
+
+To inspect one, click the `cy.request()` entry in the
+[Command Log](/app/core-concepts/open-mode#Command-Log) and Cypress prints the
+full request and response to the browser console.
 
 This also works after the fact on a CI run. Open the run in
 [Test Replay](/cloud/features/test-replay), click the `cy.request()` command,
 and the same detail is printed to your console. Open DevTools before clicking,
 since that is where the output goes.
 
-### <Icon name="angle-right" /> How do I send an authentication token with cy.request()?
+### <Icon name="angle-right" /> How do I send an authentication token with cy.request() in Cypress?
 
-Pass it in the `headers` option, and keep the credential itself in an
+Pass the token in the `headers` option of
+[`cy.request()`](/api/commands/request), and keep the credential itself in an
 [environment variable](/app/guides/environment-variables) rather than in the
 spec file.
 
@@ -775,11 +779,11 @@ When you need to log in to obtain the token first, wrap the login request in
 re-run for every test. See
 [authenticate once and reuse the session](/app/guides/api-testing#Authenticate-once-and-reuse-the-session).
 
-### <Icon name="angle-right" /> How do I test an endpoint that returns a 4xx or 5xx status code?
+### <Icon name="angle-right" /> How do I test an API endpoint that returns a 4xx or 5xx status code in Cypress?
 
-By default `cy.request()` fails the test on any response outside `2xx` and
-`3xx`. When the error response is what you are testing, set
-`failOnStatusCode: false` so the response is yielded instead.
+By default [`cy.request()`](/api/commands/request) fails the test on any
+response outside `2xx` and `3xx`. When the error response is what you are
+testing, set `failOnStatusCode: false` so the response is yielded instead.
 
 ```js
 cy.request({
