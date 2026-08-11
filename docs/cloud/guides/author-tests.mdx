@@ -9,20 +9,26 @@ sidebar_position: 5
 
 # Author Cypress Tests Faster with Cypress Cloud
 
-The slowest part of end-to-end testing is usually the first draft. You hunt for
-a stable selector for every element, recall which command does what, and decide
-what to assert after each interaction. Multiply that by every flow in your app
-and authoring becomes the bottleneck, long before anything runs in CI.
+The job is to catch regressions before your users do. A test only does that for
+the flows it actually covers, so the flows nobody got around to writing are
+exactly where broken checkout, broken login, and broken sign-up reach production.
+
+Authoring is usually what stands in the way. You hunt for a stable selector for
+every element, recall which command does what, and decide what to assert after
+each interaction. Multiply that by every flow in your app and the backlog of
+untested flows grows faster than you can close it.
 
 **Cypress Cloud removes most of that work.** Interact with your app and Cypress
 writes the commands and recommends the assertions. Describe a flow in plain
 English and Cypress generates the Cypress code behind it. Point your AI coding
 assistant at your project and it writes tests that follow Cypress best practices
-instead of generic, brittle ones. Every path produces real Cypress code you can
-read, edit, and commit.
+instead of generic, brittle ones. Cypress Cloud also tells you which flows are
+still uncovered, so you spend the time you save on the gaps that matter. Every
+path produces real Cypress code you can read, edit, and commit.
 
-This guide takes you from no Cypress Cloud account to a working, committed test.
-A free account is enough to follow every step.
+This guide takes you from no Cypress Cloud account to a test that runs on every
+change and blocks a regression from merging. A free account is enough to follow
+every step.
 
 <Btn
   label="Create a free account ➜"
@@ -64,7 +70,7 @@ choose one: you can record a flow in Studio, describe the tricky parts with
 4. **[Describe the harder steps with `cy.prompt`](#Step-4-Generate-a-test-from-plain-English-with-cyprompt)** and export the generated code.
 5. **[Bring in your AI coding assistant](#Step-5-Bring-in-your-AI-coding-assistant)** with AI Skills and Cloud MCP.
 6. **[Cover the flows you missed](#Step-6-Cover-the-flows-you-did-not-think-of)** with UI Coverage Test Generation.
-7. **[Record the run and review what you shipped](#Step-7-Record-the-run-and-review-what-you-shipped)**.
+7. **[Record the run and guard against regressions](#Step-7-Record-the-run-and-guard-against-regressions)** by running the test on every change.
 
 Each step stands on its own. Steps 1 and 2 are the only prerequisites.
 
@@ -386,14 +392,23 @@ you add the assertions that prove the flow works. Full workflow:
 UI Coverage Test Generation is included with UI Coverage and is not part of
 standard Cloud plans.
 
-## Step 7: Record the run and review what you shipped
+## Step 7: Record the run and guard against regressions
 
-Once the test passes locally, record it so the rest of your team and your CI
-pipeline see the same result:
+A test on your laptop does not catch anything. Record it so the whole team sees
+the same result, then run it on every change so it can fail the moment someone
+breaks the flow:
 
 ```shell
 npx cypress run --record --key <record key>
 ```
+
+Wire that command into your pipeline with the
+[continuous integration guide](/app/continuous-integration/overview), then
+connect the [GitHub](/cloud/integrations/github),
+[GitLab](/cloud/integrations/gitlab), or
+[Bitbucket](/cloud/integrations/bitbucket) integration so a failing run posts a
+status check and keeps the regression out of your protected branch. That is the
+point at which the test you just authored starts doing the job.
 
 In Cypress Cloud you can then:
 
@@ -440,9 +455,10 @@ wrote by hand:
 - **Read the generated code before you commit it.** The **Code** button and the
   run's prompt report exist so nothing is a black box.
 - **Assert outcomes, not activity.** A recorded flow that clicks through
-  checkout without asserting the confirmation only proves the buttons exist.
-  Studio AI recommends assertions from visible changes; business rules are still
-  yours to verify.
+  checkout without asserting the confirmation only proves the buttons exist, and
+  it will pass while the order silently fails. The assertions are what turn a
+  recorded flow into a regression check. Studio AI recommends assertions from
+  visible changes; business rules are still yours to verify.
 - **Give your app stable hooks.** Adding `data-cy` attributes and configuring
   [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) improves
   what Studio, `cy.prompt`, and your AI assistant generate, all at once.
@@ -481,3 +497,5 @@ the [cy.prompt FAQ](/cloud/faq#cyprompt).
 - [Cloud MCP](/cloud/integrations/cloud-mcp) - connect an AI assistant to your Cloud data
 - [Debug failing tests](/cloud/guides/debug-failing-tests) - the companion workflow for when a test fails in CI
 - [Set up your project to record](/cloud/get-started/setup) - connect a project to Cypress Cloud
+- [Continuous Integration](/app/continuous-integration/overview) - run your tests on every change
+- [Branch Review](/cloud/features/branch-review) - see which tests a pull request broke before you merge
