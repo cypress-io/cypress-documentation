@@ -3,8 +3,8 @@
   "plugins": {
     "Webpack": {
       "npm": "@cypress/webpack-preprocessor",
-      "version": "7.1.1",
-      "lastPublished": "2026-05-31T22:58:14.124Z"
+      "version": "7.1.2",
+      "lastPublished": "2026-08-10T16:57:22.677Z"
     },
     "@bahmutov/cypress-esbuild-preprocessor": {
       "npm": "@bahmutov/cypress-esbuild-preprocessor",
@@ -78,8 +78,8 @@
     },
     "@cypress/webpack-dev-server": {
       "npm": "@cypress/webpack-dev-server",
-      "version": "5.6.2",
-      "lastPublished": "2026-05-31T22:58:00.259Z",
+      "version": "5.6.3",
+      "lastPublished": "2026-08-10T16:56:00.540Z",
       "cypressVersion": ">=15.0.0"
     },
     "cypress-load-balancer": {
