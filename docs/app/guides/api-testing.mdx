@@ -6,19 +6,20 @@ sidebar_label: API Testing
 
 <ProductHeading product="app" />
 
-# API Testing
+# API Testing in Cypress
 
-:::info
+Cypress tests REST and GraphQL APIs directly, with no browser navigation and no
+separate tool. [`cy.request()`](/api/commands/request) sends a real HTTP request
+and yields the response, so you can assert on status codes, response bodies,
+headers, and timing in the same specs, the same config, and the same CI job that
+already run your UI tests.
 
-<WhatYoullLearn />
-
-- Why API tests belong in the same suite as your UI tests
-- How to write, run, and organize API tests with `cy.request()`
-- What `cy.request()` does under the hood, and why that matters
-- How to authenticate, assert on error responses, and poll async endpoints
-- When to reach for `cy.request()`, `cy.intercept()`, or `cy.task()`
-
-:::
+That makes Cypress a practical place to test authentication flows, CRUD
+workflows, validation errors, and pagination, and to seed application state over
+HTTP instead of clicking through a form to reach it. This guide covers writing
+your first API test, what `cy.request()` does under the hood, and the patterns
+that come up most: authentication, error responses, file uploads, GraphQL,
+polling, recording fixtures, and combining API calls with UI tests.
 
 ## Why test APIs with Cypress
 
@@ -71,7 +72,7 @@ environment by changing one value.
 
 :::
 
-```js
+```js title="cypress/e2e/api/users.cy.js"
 // with a baseUrl set
 cy.request('/users')
 
@@ -125,7 +126,7 @@ a string, even if you sent a JSON request body.
 You can assert with `.then()` for multiple checks, or chain assertions directly
 when you only care about one value:
 
-```js
+```js title="cypress/e2e/api/users.cy.js"
 // several assertions against one response
 cy.request('/users/1').then((response) => {
   expect(response.status).to.eq(200)
@@ -558,7 +559,7 @@ it('renders every product in the catalog', () => {
 You do not have to record the whole response. Pull out the values later tests
 need and write those instead:
 
-```js
+```js title="cypress/e2e/api/record-fixtures.cy.js"
 cy.request('/users?role=admin').then((response) => {
   cy.writeFile('cypress/fixtures/admin.json', {
     id: response.body.results[0].id,
@@ -567,20 +568,6 @@ cy.request('/users?role=admin').then((response) => {
   })
 })
 ```
-
-:::caution
-
-Two things to settle before you record fixtures routinely. First, decide whether
-a fixture is committed or regenerated: a committed fixture is stable but drifts
-from the API over time, which is the failure mode stubbed tests are known for,
-while regenerating on every run keeps it honest but makes the test depend on a
-reachable server. Committing the fixture and keeping one unstubbed API test
-against the same endpoint gives you both, since the suite still fails when the
-real contract changes. Second, `cy.writeFile()` overwrites the file, so never
-record a response containing real credentials, tokens, or personal data into a
-fixture you commit.
-
-:::
 
 ### Combine API calls with UI tests
 
@@ -657,7 +644,7 @@ Cypress.Commands.add('api', (options) => {
 })
 ```
 
-```js
+```js title="cypress/e2e/api/users.cy.js"
 cy.api({ url: '/users/me' }).its('body.role').should('eq', 'admin')
 ```
 
@@ -667,12 +654,23 @@ When a request behaves unexpectedly, the Command Log is the fastest way in.
 
 ### While you write tests
 
-Every `cy.request()` renders as `METHOD STATUS URL`, for example
-`POST 201 /articles`, with a colored indicator showing whether the status was
-successful. Click the entry and Cypress prints the full detail to the browser
-console: the request URL, headers, and body it sent, the response status,
-headers, and body it received, and the value the command yielded. When redirects
-were followed, every hop is listed.
+Every `cy.request()` renders as `METHOD STATUS URL`, with a colored indicator
+showing whether the status was successful.
+
+<DocsImage
+  src="/img/api/request/testing-request-url-and-its-response-body-headers.png"
+  alt="A request command in the Cypress Command Log reading GET 200 followed by the request URL, with the assertions made against the response listed beneath it"
+/>
+
+Click the entry and Cypress prints the full detail to the browser console: the
+request URL, headers, and body it sent, the response status, headers, and body
+it received, and the value the command yielded. When redirects were followed,
+every hop is listed.
+
+<DocsImage
+  src="/img/api/request/console-log-request-response-body-headers-status-url.png"
+  alt="The browser console showing the request URL, headers, and body alongside the response status, headers, and body, and the status, duration, body, and headers the command returned"
+/>
 
 ### After a run in CI
 
@@ -680,29 +678,13 @@ The same inspection works on a run that already finished.
 [Test Replay](/cloud/features/test-replay) records the command log for each
 test, so you can open the failing run in Cypress Cloud, click the `cy.request()`
 command in the replay, and get that same request and response detail printed to
-your browser console.
-
-:::tip
-
-Open your browser DevTools **before** clicking the command. The detail is
-printed to the console, so with DevTools closed there is nowhere for it to
-appear.
-
-:::
+your browser console. Open DevTools before you click, since the console is where
+the detail appears.
 
 This closes the loop that usually makes API failures in CI painful. Rather than
 re-running the suite locally with extra logging added to guess at what the
 server returned, you read the actual request and response from the run that
 failed.
-
-### Two more things to reach for
-
-- **Failed status codes print the whole exchange.** When `failOnStatusCode` is
-  `true` and the server returns an error, the failure message includes the
-  request body and headers, the response status, and the response body, so you
-  usually do not need to re-run with logging added.
-- **`response.duration`** tells you how long the call took. Asserting on it
-  turns a slow endpoint into a failing test rather than a slow suite.
 
 ## Choose the right tool
 
@@ -711,13 +693,8 @@ failed.
 | Call an endpoint directly and assert on its response   | [`cy.request()`](/api/commands/request)     |
 | Assert on, wait for, or stub a request your app makes  | [`cy.intercept()`](/api/commands/intercept) |
 | Run code in Node, such as a database query or file I/O | [`cy.task()`](/api/commands/task)           |
-| Run a shell command, such as a seed script             | [`cy.exec()`](/api/commands/exec)           |
 
-The distinction between the first two is the one that trips people up.
-`cy.request()` makes a request. `cy.intercept()` observes and controls requests
-your application makes. They operate on different traffic, which is why
-`cy.intercept()` never matches a `cy.request()` call. For the full picture on
-stubbing and waiting for application traffic, see
+For the full picture on stubbing and waiting for application traffic, see
 [Network Requests](/app/guides/network-requests).
 
 ## See also
