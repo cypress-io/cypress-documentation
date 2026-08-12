@@ -1080,8 +1080,11 @@ The request object (`req`) has several properties from the HTTP request itself:
   query: Record<string, string|number>
   /**
    * The HTTP version used in the request. Read only.
+   * Not reported in Chromium-based browsers, where the browser negotiates the
+   * protocol with the origin directly and it is not known when the request is
+   * intercepted. Firefox and WebKit still report it.
    */
-  httpVersion: string
+  httpVersion?: string
   /**
    * The resource type of the request. Read only.
    */
