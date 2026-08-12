@@ -91,6 +91,7 @@ The shape of every available option, with the type each value expects:
 
 ```json title="App Quality Config"
 {
+  // Root level only: applies to both UI Coverage and Cypress Accessibility
   "views": [
     {
       "pattern": string,
@@ -98,6 +99,10 @@ The shape of every available option, with the type each value expects:
       "comment": string
     }
   ],
+  // or as a bare pattern string, if you do not want comments or grouping: "views": ["/users/*"]
+
+  // Shared properties. Valid here and, with the same shape, nested under
+  // "uiCoverage". If both are present, the nested list replaces the root-level one
   "viewFilters": [
     {
       "pattern": string,
@@ -113,7 +118,21 @@ The shape of every available option, with the type each value expects:
       "comment": string
     }
   ],
+  "significantAttributes": [
+    string
+  ],
+  "attributeFilters": [
+    {
+      "attribute": string,
+      "value": string,
+      "include": boolean,
+      "comment": string
+    }
+  ],
+  "comment": string,
+
   "uiCoverage": {
+    // UI Coverage only
     "elements": [
       {
         "selector": string,
@@ -130,17 +149,6 @@ The shape of every available option, with the type each value expects:
         "comment": string
       }
     ],
-    "significantAttributes": [
-      string
-    ],
-    "attributeFilters": [
-      {
-        "attribute": string,
-        "value": string,
-        "include": boolean,
-        "comment": string
-      }
-    ],
     "additionalInteractionCommands": [
       string
     ],
@@ -151,14 +159,19 @@ The shape of every available option, with the type each value expects:
         "documentScope": [string],
         "comment": string
       }
-    ]
+    ],
+    "comment": string
+    // plus viewFilters, elementFilters, significantAttributes, and
+    // attributeFilters: same shape as the root, replacing it for UI Coverage
   },
+
   "profiles": [
     {
       "name": string,
       "config": {
         // Any App Quality configuration options
-      }
+      },
+      "comment": string
     }
   ]
 }
@@ -166,16 +179,16 @@ The shape of every available option, with the type each value expects:
 
 ## How rules are applied
 
-Two behaviors govern every rule you write, regardless of which property it belongs to:
+Two behaviors govern the rules you write:
 
-- **Order matters.** For [`elementFilters`](/ui-coverage/configuration/elementfilters), [`viewFilters`](/ui-coverage/configuration/viewfilters), and [`elementGroups`](/ui-coverage/configuration/elementgroups), rules are evaluated top to bottom and the **first** rule that matches an element or URL wins; later rules that also match it are ignored. List specific rules before broad, catch-all rules, and place an `include: true` exception above the `include: false` rule it should override. [`elements`](/ui-coverage/configuration/elements) is the exception: when more than one rule matches the same element, the **last** one wins.
+- **Order matters** for [`views`](/ui-coverage/configuration/views), [`viewFilters`](/ui-coverage/configuration/viewfilters), [`elementFilters`](/ui-coverage/configuration/elementfilters), [`elementGroups`](/ui-coverage/configuration/elementgroups), [`attributeFilters`](/ui-coverage/configuration/attributefilters), and [`profiles`](/ui-coverage/configuration/profiles): rules are evaluated top to bottom and the **first** rule that matches an element or URL wins; later rules that also match it are ignored. List specific rules before broad, catch-all rules, and place an `include: true` exception above the `include: false` rule it should override. Two properties differ: for [`elements`](/ui-coverage/configuration/elements) the **last** matching rule wins, and for [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands), order has no effect.
 - **Unknown properties are rejected.** When you save, Cypress Cloud validates your configuration against a strict schema and rejects anything it doesn't recognize, such as a misspelled property, a value of the wrong type, or a note on a property that doesn't accept one. Correct the flagged property to save, and keep freeform notes in a [`comment`](#Comments).
 
 ## Configuration scope
 
 Some properties are shared across App Quality products, and some belong to UI Coverage alone.
 
-- **Shared properties**: `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Cypress Accessibility when set at the root of your configuration. To apply one to a single product, nest it under a `uiCoverage` or `accessibility` key. A nested value **completely replaces** the root-level value for that product (the two are not merged), so repeat any shared rules you still want in the nested list.
+- **Shared properties**: `elementFilters`, `viewFilters`, `attributeFilters`, and `significantAttributes` apply to both UI Coverage and Cypress Accessibility when set at the root of your configuration. To apply one to a single product, nest it under a `uiCoverage` or `accessibility` key. A nested value **completely replaces** the root-level value for that product (the two are not merged), so repeat any shared rules you still want in the nested list. To disable a shared property for one product, nest an empty list (`"elementFilters": []`) rather than `null`, which falls back to the root value.
 - **Shared, but not nestable**: `views` applies to both UI Coverage and Cypress Accessibility and can only be set at the root.
 - **UI Coverage only**: `elementGroups`, `elements`, `additionalInteractionCommands`, and `allowedInteractionCommands` are specific to UI Coverage and are always set under the `uiCoverage` key.
 
