@@ -107,6 +107,13 @@ Images go in `static/img/...` and are referenced via `/img/...`.
   so they are not built as standalone pages.
 - Most are registered in `src/theme/MDXComponents.js` and used as components
   (e.g. `<CloudFreePlan />`) with no per-file import.
+- **A partial must be rendered in more than one location.** A partial earns its
+  indirection only by sharing content across pages; if it's referenced by a
+  single page, inline the content into that page instead. When splitting a
+  shared partial into product-specific pieces, keep genuinely shared sections in
+  the partial and inline the parts that live on only one page. Before removing
+  the last-but-one reference to a partial, inline it and delete the file (and its
+  `MDXComponents.js` registration).
 
 ## Product heading & naming
 
