@@ -69,17 +69,17 @@ The distance in pixels from element's top to trigger the event.
 
 Pass in an options object to change the default behavior of `.trigger()`.
 
-| Option                       | Default                                                                     | Description                                                                                                                                     |
-| ---------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).  |
-| `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                       |
-| `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                 |
-| `eventConstructor`           | `Event`                                                                     | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)                                                              |
-| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                            |
-| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                             |
-| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command |
-| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                         |
-| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.       |
+| Option                       | Default                                                                     | Description                                                                                                                                                                                                                     |
+| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                  |
+| `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                                                                                                       |
+| `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                                                                                                 |
+| `eventConstructor`           | `Event`                                                                     | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)                                                                                                                                              |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                            |
+| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                             |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`. |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                                                                                                         |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                       |
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
 they will be attached to the event. Passing in coordinate arguments (`clientX`,
@@ -335,11 +335,12 @@ following:
 
 ## History
 
-| Version                                    | Changes                                            |
-| ------------------------------------------ | -------------------------------------------------- |
-| [6.1.0](/app/references/changelog#6-1-0)   | Added option `scrollBehavior`                      |
-| [3.5.0](/app/references/changelog#3-5-0)   | Added `screenX` and `screenY` properties to events |
-| [0.20.0](/app/references/changelog#0-20-0) | `.trigger()` command added                         |
+| Version                                      | Changes                                                                                                            |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments |
+| [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                      |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added `screenX` and `screenY` properties to events                                                                 |
+| [0.20.0](/app/references/changelog#0-20-0)   | `.trigger()` command added                                                                                         |
 
 ## See also
 

@@ -642,6 +642,17 @@ and removes the previous one. To update your billing email, use the
 [billing@cypress.io](mailto:billing@cypress.io). See
 [User updates](/cloud/account-management/users#User-updates).
 
+### <Icon name="angle-right" /> Does Cypress Cloud support Okta for Government?
+
+Yes. Our Okta integration is a standard SAML 2.0 integration, so Okta for
+Government uses the same setup steps as commercial Okta. Two values differ: the
+Identity Provider Single sign-on URL and the X.509 signing certificate, which
+you need to download from your Okta for Government app because certificates do
+not transfer between tenants. If you are migrating from commercial Okta, note
+that we store one SSO configuration per organization, so saving your Okta for
+Government details replaces the existing configuration. See
+[Okta for Government](/cloud/account-management/enterprise-sso#Okta-for-Government).
+
 ## Teams
 
 ### <Icon name="angle-right" /> What is a team in Cypress Cloud?

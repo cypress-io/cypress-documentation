@@ -3,8 +3,8 @@
   "plugins": {
     "Webpack": {
       "npm": "@cypress/webpack-preprocessor",
-      "version": "7.1.1",
-      "lastPublished": "2026-05-31T22:58:14.124Z"
+      "version": "7.1.2",
+      "lastPublished": "2026-08-10T16:57:22.677Z"
     },
     "@bahmutov/cypress-esbuild-preprocessor": {
       "npm": "@bahmutov/cypress-esbuild-preprocessor",
@@ -78,8 +78,8 @@
     },
     "@cypress/webpack-dev-server": {
       "npm": "@cypress/webpack-dev-server",
-      "version": "5.6.2",
-      "lastPublished": "2026-05-31T22:58:00.259Z",
+      "version": "5.6.3",
+      "lastPublished": "2026-08-10T16:56:00.540Z",
       "cypressVersion": ">=15.0.0"
     },
     "cypress-load-balancer": {
@@ -107,14 +107,14 @@
     },
     "eslint-plugin-cypress": {
       "npm": "eslint-plugin-cypress",
-      "version": "6.4.3",
-      "lastPublished": "2026-07-14T15:05:15.856Z",
-      "cypressVersion": "^15.18.1"
+      "version": "7.0.0",
+      "lastPublished": "2026-08-06T11:49:20.078Z",
+      "cypressVersion": "^15.20.0"
     },
     "cypress-codegen": {
       "npm": "cypress-codegen",
-      "version": "2.5.3",
-      "lastPublished": "2026-05-05T17:28:04.591Z",
+      "version": "2.5.4",
+      "lastPublished": "2026-08-03T13:48:46.023Z",
       "cypressVersion": ">=13"
     },
     "cypress-runner-themes": {
@@ -131,9 +131,9 @@
     },
     "cypress-watch-and-reload": {
       "npm": "cypress-watch-and-reload",
-      "version": "2.1.6",
-      "lastPublished": "2026-07-14T23:39:27.926Z",
-      "cypressVersion": "15.18.1"
+      "version": "2.1.8",
+      "lastPublished": "2026-08-07T20:41:50.248Z",
+      "cypressVersion": "15.20.0"
     },
     "cypress-html-validate": {
       "npm": "cypress-html-validate",
@@ -143,15 +143,15 @@
     },
     "@cypress/grep": {
       "npm": "@cypress/grep",
-      "version": "6.0.2",
-      "lastPublished": "2026-06-03T18:37:53.446Z",
+      "version": "6.0.3",
+      "lastPublished": "2026-08-07T17:26:51.363Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-cli-select": {
       "npm": "cypress-cli-select",
-      "version": "2.0.6",
-      "lastPublished": "2026-06-17T01:40:36.863Z",
-      "cypressVersion": "^15.17.0"
+      "version": "2.0.7",
+      "lastPublished": "2026-08-03T18:36:25.104Z",
+      "cypressVersion": "^15.18.1"
     },
     "cypress-conditional-tags": {
       "npm": "cypress-conditional-tags",
@@ -185,14 +185,14 @@
     },
     "cypress-plugin-grep-boxes": {
       "npm": "cypress-plugin-grep-boxes",
-      "version": "3.0.7",
-      "lastPublished": "2026-07-17T01:03:47.740Z",
+      "version": "3.0.8",
+      "lastPublished": "2026-08-03T18:26:19.704Z",
       "cypressVersion": "^15.18.1"
     },
     "cypress-plugin-last-failed": {
       "npm": "cypress-plugin-last-failed",
-      "version": "3.1.1",
-      "lastPublished": "2026-07-17T00:51:04.049Z",
+      "version": "3.1.2",
+      "lastPublished": "2026-08-03T18:17:02.462Z",
       "cypressVersion": "^15.18.1"
     },
     "cypress-each": {
@@ -382,8 +382,8 @@
     },
     "cypress-accessibility-checker": {
       "npm": "cypress-accessibility-checker",
-      "version": "4.0.29",
-      "lastPublished": "2026-07-14T19:03:42.407Z",
+      "version": "4.0.30",
+      "lastPublished": "2026-08-04T22:07:13.521Z",
       "cypressVersion": "^13.2.0 || ^15"
     },
     "cypress-duration-metrics": {
@@ -458,8 +458,8 @@
     },
     "Sauce Labs Visual": {
       "npm": "@saucelabs/cypress-visual-plugin",
-      "version": "0.10.1",
-      "lastPublished": "2026-06-08T16:07:56.083Z",
+      "version": "0.10.2",
+      "lastPublished": "2026-08-04T12:55:47.961Z",
       "cypressVersion": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0"
     },
     "LambdaTest SmartUI": {
@@ -589,6 +589,12 @@
       "npm": "cy-mobile-commands",
       "version": "0.3.0",
       "lastPublished": "2021-10-31T17:01:10.627Z"
+    },
+    "cypress-device-emulate": {
+      "npm": "cypress-device-emulate",
+      "version": "0.1.3",
+      "lastPublished": "2026-08-05T14:08:54.541Z",
+      "cypressVersion": ">=12.0.0"
     },
     "cypress-plugin-tab": {
       "npm": "cypress-plugin-tab",
