@@ -607,7 +607,7 @@ at TCP.onStreamRead (node:internal/stream_base_commons:217:20) {
 }
 ```
 
-…the connection between the browser and Cypress's local proxy is being
+…the connection between the browser and Cypress is being
 **forcibly reset by software outside of Cypress**. This is an OS/network-layer
 reset, not a Cypress defect — Cypress cannot keep a connection alive that a
 third-party product tears down.
@@ -654,7 +654,7 @@ upgrade to the latest Cypress:
 #### Quick fastest-path check
 
 To confirm the problem is external and unblock yourself immediately, run with
-the bundled Electron browser, which doesn't go through the same proxied path:
+the bundled Electron browser, which doesn't go through the same network path:
 
 <CypressCommandTabs command="run --browser electron" />
 

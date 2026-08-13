@@ -229,7 +229,7 @@ For more options regarding screenshots, view the
 | `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                      |
 | `hosts`                 | `null`  | An Object of hostname patterns to IP addresses. Acts like a Cypress-specific `/etc/hosts` file, letting Cypress resolve custom hostnames within tests. [Please read the notes for examples on using this.](#hosts)                                                                                                                                                   |
 | `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                     |
-| `removeSRIAttributes`   | `false` | Whether Cypress will remove [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) `integrity` attributes from `<script>` and `<link>` elements so that proxy-rewritten first-party resources are not blocked. [Please read the notes for more information on this setting.](#removeSRIAttributes)               |
+| `removeSRIAttributes`   | `false` | Whether Cypress will remove [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) `integrity` attributes from `<script>` and `<link>` elements so that rewritten first-party resources are not blocked. [Please read the notes for more information on this setting.](#removeSRIAttributes)                     |
 | `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.                |
 
 :::caution
@@ -665,7 +665,7 @@ matched.
 By passing an object with hostname patterns as keys and IP addresses as values,
 you can resolve custom hostnames to specific IP addresses within Cypress. This
 is the equivalent of adding entries to your machine's `/etc/hosts` file, but
-scoped to Cypress's network proxy — no changes to your OS are required.
+scoped to Cypress — no changes to your OS are required.
 
 To map a hostname:
 
@@ -888,7 +888,7 @@ When this option is enabled, Cypress removes
 `integrity` attributes from `<script>` and `<link>` elements as they are served
 to the browser.
 
-Cypress's proxy rewrites obstructive JS and HTML (see
+Cypress rewrites obstructive JS and HTML (see
 [`modifyObstructiveCode`](#modifyObstructiveCode)) before it reaches the browser.
 Rewriting changes the resource's bytes, which invalidates any pinned SRI hash, so
 the browser refuses to execute or apply the resource and reports an error such

@@ -100,8 +100,7 @@ testing).
 
 ### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
 
-Yes. Cypress transparently proxies WebSocket connections, so your application's
-WebSocket traffic will work as expected during tests.
+Yes. Your application's WebSocket traffic will work as expected during tests.
 
 However, **stubbing or mocking individual WebSocket frames/messages** is not
 natively supported. If your tests need to control the messages sent over a
@@ -1140,10 +1139,9 @@ browser.
 
 [Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
 
-### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
+### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate so the page doesn't show up as "not secure"?
 
-No, Cypress modifies network traffic in real time and therefore must sit between
-your server and the browser. There is no other way for us to achieve that.
+No, Cypress modifies network traffic in real time.
 
 ### <Icon name="angle-right" /> Is there any way to detect if my app is running under Cypress?
 
@@ -1621,8 +1619,8 @@ XState model state library.
 ### <Icon name="angle-right" /> Can Cypress be used for performance testing?
 
 Cypress is not built for performance testing. Because Cypress instruments the
-page under test, proxies the network requests, and tightly controls the test
-steps, Cypress adds its own overhead. Thus, the performance numbers you get from
+page under test and tightly controls the test steps, Cypress adds its own
+overhead. Thus, the performance numbers you get from
 Cypress tests are slower than "normal" use. Still, you can access the native
 `window.performance` object and grab the page time measurements, see the
 [Evaluate performance metrics](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom)

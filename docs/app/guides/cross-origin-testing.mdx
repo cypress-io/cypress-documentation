@@ -30,14 +30,13 @@ communicate with your remote application at all times. Unfortunately, browsers
 naturally try to prevent Cypress from doing this.
 
 To get around these restrictions, Cypress implements some strategies involving
-JavaScript code, the browser's internal APIs, and network proxying to _play by
-the rules_ of same-origin policy. It's our goal to fully automate the
+JavaScript code and the browser's internal APIs to _play by the rules_ of
+same-origin policy. It's our goal to fully automate the
 application under test without you needing to modify your application's code -
 and we are _mostly_ able to do this.
 
 ### What Cypress does under the hood
 
-- Proxies all HTTP / HTTPS traffic.
 - Changes the hosted URL to match that of the application under test.
 - Uses the browser's internal APIs for network level traffic.
 

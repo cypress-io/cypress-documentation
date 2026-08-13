@@ -176,7 +176,7 @@ Apply these optimizations in order. The highest-impact changes are at the top.
 1. [Eliminate arbitrary cy.wait()](#Avoid-arbitrary-waits-and-adjust-timeouts)
 1. [Slim support file and imports](#Keep-support-and-spec-imports-lean) — avoids bundling unused code on every spec startup
 1. [Block third-party requests with blockHosts](#Block-third-party-requests-with-blockHosts) — analytics and monitoring services consume time in test environments; blocked requests resolve immediately
-1. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits proxy overhead to requests the test actually needs
+1. [Avoid wildcard cy.intercept('\*')](#Intercept-only-the-requests-you-need) — limits interception overhead to requests the test actually needs
 1. [Use specific DOM selectors](#Use-specific-selectors) — broad selectors like `*` or `div` force the browser to collect every matching node before filtering
 1. [Modern visibility algorithm](#Use-the-modern-visibility-algorithm) — high impact on complex DOMs; Cypress 16 defaults to the faster `checkVisibility()`-based algorithm
 1. [Test retries (runMode: 1)](#Use-test-retries-deliberately) — prevents flaky tests from blocking CI; keep the count low and use flake data to fix root causes
@@ -545,10 +545,10 @@ See the [Network Requests guide](/app/guides/network-requests) for a full discus
 
 #### Intercept only the requests you need
 
-Using a wildcard pattern to observe or intercept every HTTP request creates real overhead. Cypress routes every intercepted request through its proxy, so every network call the page makes is inspected, matched, and processed. Broad wildcard patterns that match dozens or hundreds of requests per page load multiply that cost across the entire suite.
+Using a wildcard pattern to observe or intercept every HTTP request creates real overhead: every network call the page makes is inspected, matched, and processed. Broad wildcard patterns that match dozens or hundreds of requests per page load multiply that cost across the entire suite.
 
 ```js
-// ❌ Anti-pattern: intercepts every request; Cypress proxies each one
+// ❌ Anti-pattern: intercepts every request; Cypress processes each one
 cy.intercept('*').as('anyRequest')
 
 // ✅ Faster approach: only intercept the specific requests your test needs

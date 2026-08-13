@@ -103,7 +103,7 @@ time.
 
 :::info
 
-**WebSocket support:** Cypress transparently proxies WebSocket connections, and
+**WebSocket support:** WebSocket connections work as expected during tests, and
 [`cy.intercept()`](/api/commands/intercept) can observe the WebSocket upgrade
 request via `resourceType: 'websocket'`. However, stubbing or mocking
 individual WebSocket **frames/messages** is not natively supported. The
