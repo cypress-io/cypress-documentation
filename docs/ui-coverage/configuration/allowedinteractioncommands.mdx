@@ -58,7 +58,24 @@ The `allowedInteractionCommands` property accepts an array of objects, where eac
 | `documentScope` | Optional |         | An ordered list of CSS selectors identifying the iframe or shadow DOM hosts that must contain the element, from the outermost document to the innermost. When set, the rule applies only to matching elements inside those nested documents. |
 | `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on processing and are not displayed in reports.                                                            |
 
-Each `selector`/`documentScope` combination must be unique across the list; duplicate rules are rejected by validation.
+### Validation rules
+
+Cypress Cloud rejects a configuration when:
+
+- Two rules have the same `selector` with the same `documentScope`.
+- The same command name appears twice within a single rule's `commands` array.
+- A `selector` or `documentScope` entry isn't valid CSS selector syntax.
+- `documentScope` is present but empty. Omit the property to match in any document.
+- A rule contains a property other than the four listed above.
+
+:::caution
+
+An empty `commands` array (`"commands": []`) passes validation but makes matching
+elements impossible to cover. In rare cases you may want this behavior, but to remove elements from
+the report instead, use [`elementFilters`](/ui-coverage/configuration/elementfilters)
+with `include: false`.
+
+:::
 
 ## How rules are applied
 

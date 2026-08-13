@@ -82,6 +82,7 @@ Cypress Cloud rejects a configuration when:
 - Two rules have the same `selector` (with the same `documentScope`). Duplicates can never both apply, because the first matching rule wins.
 - Two rules have the same `name`, or one rule's `name` matches another rule's `selector`. Groups are identified by these values, so they must be unique.
 - A `selector` or `documentScope` entry isn't valid CSS selector syntax.
+- `documentScope` is present but empty. Omit the property to match in any document.
 - A rule contains a property other than the four listed above.
 
 ## Examples

@@ -51,39 +51,6 @@ Cypress runs API tests in the [end-to-end testing type](/app/core-concepts/testi
 The command you will use most is [`cy.request()`](/api/commands/request), which
 makes a real HTTP request and yields the response.
 
-## When Cypress fits, and when it doesn't
-
-Cypress runs your tests inside a browser, including API tests. That shapes what
-it is good at.
-
-**Cypress is a strong fit when:**
-
-- You already run Cypress for UI tests and want your API coverage in the same
-  suite, config, and CI job.
-- Your tests span both layers: seeding state over HTTP, driving the UI, then
-  verifying the result over HTTP.
-- The API is the one your browser client talks to, and session and cookie
-  behavior is part of what you are testing.
-- You want to debug a CI failure by reading the actual request and response,
-  rather than reproducing it locally.
-
-**Reach for a dedicated API testing tool when:**
-
-- You have a large body of pure contract or schema tests and no browser client
-  in the picture at all. A Node-level HTTP client has less to set up and
-  nothing to render.
-- You need per-test concurrency within a single file. Cypress distributes work
-  by spec file, so a thousand independent requests in one spec run in sequence.
-  See [keep an API suite fast](#Keep-an-API-suite-fast) for how to work with
-  that model rather than against it.
-- Your team writes tests in `async`/`await` and does not want to adopt the
-  [Cypress command chain](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous).
-
-Most teams land in both camps at once, and that is a reasonable place to be.
-API tests that exist to support and verify the application under test belong
-next to the tests that drive it. An exhaustive contract suite for a service
-nobody browses does not have to move.
-
 ## Write your first API test
 
 ### Set a `baseUrl` (optional)
@@ -213,9 +180,6 @@ A few more defaults worth knowing:
 
 ### Cookies are shared with the browser
 
-This is the part worth understanding in detail, because it is what a standalone
-HTTP client cannot reproduce.
-
 `cy.request()` does not keep its own cookie jar. Before sending, Cypress asks
 the browser for the cookies that match the request URL and attaches them.
 When the response comes back with `Set-Cookie`, Cypress writes those cookies
@@ -238,16 +202,6 @@ A dedicated API testing tool runs beside the browser rather than inside it, so
 its cookies and your application's cookies are separate worlds. Bridging them
 means exporting a token and re-injecting it, which tests your plumbing as much
 as your app.
-
-:::caution
-
-One difference from a browser-initiated request: because no page navigation is
-driving it, `SameSite` is not evaluated. Cypress attaches every cookie in the
-jar matching the request URL's domain, path, and secure flag. If a cookie
-appears on a request unexpectedly, see
-[cookie scope](/api/commands/setcookie#Cookie-scope-host-only-vs-domain-cookies).
-
-:::
 
 ## Common scenarios
 
@@ -661,8 +615,6 @@ describe('checkout', () => {
 })
 ```
 
-Two things happened there that are worth separating out.
-
 **The setup skipped the UI.** Logging in and filling a cart are not what this
 test is checking, so they run over HTTP in milliseconds. The clicking is spent
 only on the behavior under test. Cutting UI setup out of tests that are not
@@ -671,11 +623,10 @@ end-to-end suite.
 
 **The assertion outlived the UI.** "Thanks for your order" proves a message
 rendered. `cy.request('/orders')` proves an order exists. A UI-only test passes
-against a front end that shows a confirmation and silently drops the request,
-which is exactly the bug users report and screenshots never catch.
+against a front end that shows a confirmation and silently drops the request.
 
-That second point generalizes. Plenty of what an application does leaves no
-trace on screen, and those effects are where UI-only suites go blind:
+Plenty of what an application does leaves no trace on screen, and those effects
+are where UI-only suites go blind:
 
 ```js title="cypress/e2e/admin-audit.cy.js"
 it('records an audit entry when an admin changes a role', () => {
@@ -698,13 +649,6 @@ it('records an audit entry when an admin changes a role', () => {
 Webhooks queued, emails recorded, search indexes updated, caches invalidated,
 analytics events emitted: all of it is assertable in the same test that
 triggered it, without leaving Cypress.
-
-<Icon name="graduation-cap" /> The Cypress
-<Icon name="github" inline="true" contentType="rwa" />
-was built API-first: its [API test
-suites](https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/api)
-were written before the UI existed, and they still run alongside the UI tests in
-the same suite today.
 
 ## Organize an API test suite
 
@@ -807,8 +751,8 @@ Every `cy.request()` renders as `METHOD STATUS URL`, with a colored indicator
 showing whether the status was successful.
 
 <DocsImage
-  src="/img/api/request/testing-request-url-and-its-response-body-headers.png"
-  alt="A request command in the Cypress Command Log reading GET 200 followed by the request URL, with the assertions made against the response listed beneath it"
+  src="/img/app/api-testing/command-log-request.png"
+  alt="A request command in the Cypress Command Log reading POST 200 followed by the request URL, with the assertions made against the response listed beneath it"
 />
 
 Click the entry and Cypress prints the full detail to the browser console: the
@@ -826,9 +770,14 @@ every hop is listed.
 The same inspection works on a run that already finished.
 [Test Replay](/cloud/features/test-replay) records the command log for each
 test, so you can open the failing run in Cypress Cloud, click the `cy.request()`
-command in the replay, and get that same request and response detail printed to
+command in the replay, and get the same request and response detail printed to
 your browser console. Open DevTools before you click, since the console is where
 the detail appears.
+
+<DocsImage
+  src="/img/app/api-testing/test-replay-request-console.png"
+  alt="A request command selected in Test Replay, with the browser console below it printing the request URL, headers, and body, the response status, headers, and body, and the status, duration, body, and headers the command returned"
+/>
 
 This closes the loop that usually makes API failures in CI painful. Rather than
 re-running the suite locally with extra logging added to guess at what the

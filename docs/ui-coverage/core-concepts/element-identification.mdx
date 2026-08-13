@@ -28,11 +28,12 @@ UI Coverage analyzes the snapshots in a recorded run: it detects the [interactiv
 
 For each interactive element it tracks, UI Coverage looks for an **identifying attribute**. It checks a single prioritized list and uses the first attribute that is present with a usable value:
 
-1. Your [`significantAttributes`](/ui-coverage/configuration/significantattributes), in the order you list them
-2. The default test attributes, in order: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id` (data grids)
-3. `id`, then `name`, as fallbacks
+1. The markup attribute `data-cy-ui-id`, which outranks every other option. `data-cy-ui-id` replaces the element's identity outright: its value becomes the identity, with no tag or selector appended.
+2. Your [`significantAttributes`](/ui-coverage/configuration/significantattributes), in the order you list them
+3. The default test attributes, in order: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id` (data grids)
+4. `id`, then `name`, as fallbacks
 
-The first attribute in this list that the element has, with a value that isn't excluded by an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule, becomes the element's **identifying attribute**. That single attribute-value pair drives how the element is identified across snapshots, named in reports, and [grouped](/ui-coverage/core-concepts/element-grouping) with repeated elements that share the same value.
+The first attribute in this list that the element has, with a value that isn't excluded by an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule, becomes the element's **identifying attribute**. That single attribute-value pair drives how the element is identified across snapshots and named in reports. It also drives [grouping](/ui-coverage/core-concepts/element-grouping), with one exception: the `id` and `name` fallbacks identify an element but never group it.
 
 For example, both attributes below can identify this button, but `data-cy` outranks `id`, so it wins:
 

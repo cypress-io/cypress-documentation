@@ -22,19 +22,6 @@ same tools you use locally, get an AI explanation of what went wrong, and confir
 whether your change introduced the failure or simply surfaced existing
 instability. This guide walks through that workflow end to end.
 
-:::info
-
-<WhatYoullLearn />
-
-- Why a test that passes locally still fails in CI, and why that is so hard to debug
-- A step-by-step workflow to find the root cause of a failing CI test in Cypress Cloud
-- How to debug the exact CI run with [Test Replay](/cloud/features/test-replay) instead of reproducing it locally
-- How AI [Error Summaries](/cloud/features/cypress-ai-features#Error-Summaries) and [Cloud MCP](/cloud/integrations/cloud-mcp) speed up triage and root-cause analysis
-- How to tell a real regression apart from pre-existing [flake](/cloud/features/flaky-test-management) before you merge
-- Which Cypress Cloud tool to reach for, based on the symptom you are seeing
-
-:::
-
 ## Why tests fail in CI but pass locally
 
 Most "works on my machine" failures come down to a difference between your laptop
@@ -59,23 +46,101 @@ and often impossible.
 
 ## The debugging workflow at a glance
 
-When a recorded run fails, the fastest path from red build to root cause is:
+The fastest path from red CI build to root cause is:
 
-1. **[Find the failing test](#Step-1-Go-straight-to-the-failing-test)** in
+1. **[Record your CI runs](#Step-1-Record-your-CI-runs-to-Cypress-Cloud)** so
+   every failure is captured as it happens.
+2. **[Find the failing test](#Step-2-Go-straight-to-the-failing-test)** in
    Cypress Cloud, without scrolling through CI logs.
-2. **[Read the AI Error Summary](#Step-2-Read-the-AI-Error-Summary)** to
+3. **[Read the AI Error Summary](#Step-3-Read-the-AI-Error-Summary)** to
    understand what went wrong in plain language.
-3. **[Replay the exact CI run](#Step-3-Replay-the-exact-failure-with-Test-Replay)**
+4. **[Replay the exact CI run](#Step-4-Replay-the-exact-failure-with-Test-Replay)**
    with Test Replay to inspect the DOM, network, and console at the moment of
    failure.
-4. **[Check whether it's a regression or flake](#Step-4-Is-it-a-regression-or-flake)**
+5. **[Check whether it's a regression or flake](#Step-5-Is-it-a-regression-or-flake)**
    with Branch Review and Flaky Test Management.
-5. **[Fix and verify](#Step-5-Fix-and-verify)**, optionally without leaving your
+6. **[Fix and verify](#Step-6-Fix-and-verify)**, optionally without leaving your
    editor using Cloud MCP.
 
 The rest of this guide covers each step in detail.
 
-## Step 1: Go straight to the failing test
+## Step 1: Record your CI runs to Cypress Cloud
+
+Cypress Cloud can only show you a failure it captured, so debugging CI starts
+with recording. Recording changes nothing about how your tests are written or
+how CI runs them. You add a flag to the `cypress run` command your pipeline
+already executes, and Cypress uploads the results, artifacts, and
+[Test Replay](/cloud/features/test-replay) data as the run happens.
+
+### Connect your project to Cypress Cloud
+
+Recording links your local project to a project in Cypress Cloud. The Cypress
+app walks you through it:
+
+1. Open your project in the Cypress app with
+   [`cypress open`](/app/references/command-line#cypress-open) and click the
+   **Runs** tab.
+2. Click **Connect to Cypress Cloud** and log in, signing up for a free account
+   if you don't have one yet.
+3. Choose who owns the project (yourself, or an
+   [organization](/cloud/account-management/organizations) your team shares),
+   name it, and choose whether it is
+   [public or private](/cloud/account-management/projects#Public-vs-Private).
+4. Click **Setup Project**. Cypress adds a
+   [`projectId`](/cloud/account-management/projects#Project-ID) to your Cypress
+   configuration file and shows you the project's
+   [record key](/cloud/account-management/projects#Record-key).
+
+**Commit the configuration file with its `projectId`.** CI reads it from your
+repository to know which Cloud project the run belongs to.
+
+### Store your record key as a CI secret
+
+The record key authorizes a machine to record runs to your project. Add it to
+your CI provider's secrets or masked environment variables as
+`CYPRESS_RECORD_KEY`, the same way you store any other credential, so it never
+appears in your pipeline configuration or build logs.
+
+<RecordKeyEnvVar />
+
+### Add `--record` to your CI run command
+
+Wherever your pipeline calls `cypress run`, add the
+[`--record`](/app/references/command-line#cypress-run) flag:
+
+<CypressCommandTabs command="run --record" />
+
+With `CYPRESS_RECORD_KEY` set in the CI environment, no other change is needed.
+If you use the
+[Cypress GitHub Action](https://github.com/cypress-io/github-action), set
+`record: true` instead:
+
+```yaml title=".github/workflows/e2e.yml"
+- name: Cypress run
+  uses: cypress-io/github-action@v7
+  with:
+    record: true
+  env:
+    CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+```
+
+Each [CI provider guide](/app/continuous-integration/overview#CI-Examples) shows
+where the flag and the secret go for that provider.
+
+### Confirm the run recorded
+
+Push a commit and let CI run. As the run executes, it appears in
+[Cypress Cloud](https://on.cypress.io/cloud) under your project's
+[Latest Runs](/cloud/features/recorded-runs#Latest-Runs), and in the **Runs** tab
+of the Cypress app. Passing runs are recorded too, which is what gives Cypress
+Cloud the history it needs to tell a new failure apart from a long-standing one.
+
+<DocsImage
+  src="/img/cloud/projects/cloud-runs-list.png"
+  alt="Latest Runs list in Cypress Cloud showing recorded runs with their status, branch, commit, and duration"
+/>
+
+## Step 2: Go straight to the failing test
 
 Instead of reading raw CI output, open the run in Cypress Cloud. The
 [**Tests for Review**](/cloud/features/recorded-runs#Tests-for-Review) panel on a
@@ -101,11 +166,13 @@ all in one place.
 The [**Previous runs**](/cloud/features/recorded-runs#Previous-runs) timeline in
 the sidebar instantly tells you whether you're looking at a brand-new regression
 or a long-standing flaky test, and exactly when its behavior changed. Check it
-first; it often reframes the whole investigation.
+first; it often reframes the whole investigation. On your first recorded run
+this timeline has nothing to compare against yet, and it fills in on its own as
+CI keeps recording.
 
 :::
 
-## Step 2: Read the AI Error Summary
+## Step 3: Read the AI Error Summary
 
 At the top of the failure, Cypress Cloud's AI
 [**Error Summaries**](/cloud/features/cypress-ai-features#Error-Summaries) give a
@@ -125,7 +192,7 @@ The full stack trace, error message, and point-of-failure code frame for each
 attempt sit directly below the summary in the
 [Attempts and errors](/cloud/features/recorded-runs#attempts-and-errors) section.
 
-## Step 3: Replay the exact failure with Test Replay
+## Step 4: Replay the exact failure with Test Replay
 
 This is the core of debugging in Cypress Cloud.
 [**Test Replay**](/cloud/features/test-replay) lets you replay the test _exactly_
@@ -168,7 +235,7 @@ collaborative debugging session instead of a back-and-forth.
 
 :::
 
-## Step 4: Is it a regression or flake?
+## Step 5: Is it a regression or flake?
 
 Before you spend time on a fix, answer the question that determines what you're
 actually dealing with: **did my change cause this, or was it already broken or
@@ -191,6 +258,12 @@ what your change broke, without re-running anything locally.
 This is also the fastest way to **stop chasing pre-existing flake**: if a test was
 already failing intermittently on the base branch, Branch Review makes that
 obvious so you don't waste time on noise you didn't create.
+
+The comparison needs a recorded run on both sides, so make sure your pipeline
+records on your default branch and not only on pull request branches. If your
+base branch has no recorded run yet, merge your recording setup to it, or
+[trigger a run](/app/continuous-integration/overview) on that branch, and the
+comparison is available from then on.
 
 ### Use Flaky Test Management when a test passes on retry
 
@@ -218,23 +291,21 @@ is so easy to miss without dedicated tracking. See
 
 :::
 
-## Step 5: Fix and verify
+## Step 6: Fix and verify
 
 Once you understand the root cause:
 
 - **Fix the issue**, whether it's a true bug in your application, a timing
   assumption in the test, or a missing wait on a network request you spotted in
   Test Replay.
-- **Re-record the run** and use [Branch Review](/cloud/features/branch-review) to
-  confirm the failure is now _resolved_ and that you didn't introduce new failures
-  or flake elsewhere.
-- **Keep failing code out of `main`.** With the
-  [GitHub](/cloud/integrations/github),
-  [GitLab](/cloud/integrations/gitlab), and
-  [Bitbucket](/cloud/integrations/bitbucket) integrations, status checks can block
-  a merge until your tests are green, and PR comments surface failure and
-  [flake](/cloud/features/flaky-test-management#Flake-Alerting) details with deep
-  links back into Cypress Cloud.
+- **Push the fix and let CI record again.** Because recording is part of the
+  pipeline, the verification run happens on its own.
+- **Confirm the fix in [Branch Review](/cloud/features/branch-review)**, which
+  shows the failure as _resolved_ and whether you introduced new failures or
+  flake elsewhere.
+- **Keep failing code out of your default branch** by connecting your source
+  control provider, covered in
+  [Where to go next](#Where-to-go-next).
 
 ### Debug from your editor with Cloud MCP
 
@@ -288,25 +359,33 @@ reference:
 | I want to debug from a terminal or script       | [Cloud CLI](/cloud/integrations/cloud-cli)                                                                                             |
 | Keep failing or flaky code from merging         | [GitHub](/cloud/integrations/github) / [GitLab](/cloud/integrations/gitlab) / [Bitbucket](/cloud/integrations/bitbucket) status checks |
 
-## Get started
+## Where to go next
 
-Every capability in this guide works on runs
-[recorded to Cypress Cloud](/cloud/get-started/setup) from your CI/CD pipeline.
-You keep writing and running tests exactly as you do today, recording is the only
-setup required.
+Once your CI runs are recording and you've debugged your first failure, these
+are the highest-value things to add:
+
+- **[Connect your source control provider](/cloud/integrations/github).** Status
+  checks block a merge until tests are green, and pull request comments surface
+  failures and [flake](/cloud/features/flaky-test-management#Flake-Alerting) with
+  deep links into Cypress Cloud.
+  [GitLab](/cloud/integrations/gitlab) and
+  [Bitbucket](/cloud/integrations/bitbucket) work the same way.
+- **[Get alerted where you work](/cloud/features/flaky-test-management#Slack).**
+  Send run and flake notifications to Slack or Microsoft Teams so a red build
+  reaches you without anyone watching the pipeline.
+- **[Run your specs in parallel](/cloud/features/smart-orchestration/parallelization).**
+  Now that runs are recorded, Cypress Cloud can load-balance specs across CI
+  machines and cut your total run time.
+- **[Connect Cloud MCP](/cloud/integrations/cloud-mcp) or the
+  [Cloud CLI](/cloud/integrations/cloud-cli).** Both are available on every plan
+  at no extra cost, and both let you triage a failing run without opening a
+  browser.
 
 :::success
 
 <CloudFreePlan />
 
 :::
-
-<Btn
-  label="Record your first run ➜"
-  variant="indigo-dark"
-  className="mr-1"
-  href="/cloud/get-started/setup"
-/>
 
 ## See also
 
