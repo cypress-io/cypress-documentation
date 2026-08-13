@@ -224,9 +224,9 @@ Knowing this lets you predict exactly what a rerun will do:
   completed run, so chained reruns keep narrowing toward what's still broken
   instead of replaying earlier failures you've already fixed.
 - **You rerun while another run is still in progress** → Cloud anchors on the last _completed_ run, since the in-progress one has no final results yet.
-- **You rerun within the [run-completion delay](/cloud/features/smart-orchestration/parallelization#Run-completion-delay) window** → Cloud hasn't marked the
+- **You rerun within the [run-completion delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay) window** → Cloud hasn't marked the
   previous run complete yet, so the rerun safely runs the **full** suite. **Set a
-  short [run-completion delay](/cloud/account-management/projects#Run-completion-delay) so more of your reruns get optimized** — this is the
+  short [run-completion delay](/cloud/account-management/projects#Run-Completion-Delay) so more of your reruns get optimized** — this is the
   main lever for getting consistent savings.
 
 Cloud never blocks parallel reruns: if several start at once, each one anchors on
