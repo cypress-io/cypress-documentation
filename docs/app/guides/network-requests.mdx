@@ -1,27 +1,20 @@
 ---
-title: 'Network requests in Cypress'
-description: 'Strategies for testing network requests in Cypress, stubbing and waiting for network responses, and best practices for testing GraphQL queries and mutations.'
-sidebar_label: Network Requests
+title: 'Intercepting network requests'
+description: 'Observe, wait on, and stub your application network requests with cy.intercept(), including fixtures, aliases, assertions, and GraphQL queries and mutations.'
+sidebar_label: Intercepting network requests
 ---
 
 <ProductHeading product="app" />
 
-# Network Requests
-
-:::info
-
-<WhatYoullLearn />
-
-- Strategies for testing network requests in Cypress
-- How to stub and wait for network responses
-- Best practices for testing GraphQL queries and mutations
-
-:::
+# Intercepting network requests in Cypress
 
 :::tip
 
-**Note:** If you're looking for a resource to make an HTTP request take a look
-at [cy.request()](/api/commands/request)
+This guide covers the requests _your application_ makes, which Cypress can
+observe, wait on, and stub with [`cy.intercept()`](/api/commands/intercept).
+
+To call an endpoint _from your test_ and assert on what it returns, see
+[API Testing](/app/guides/api-testing).
 
 :::
 

@@ -21,6 +21,15 @@ your first API test, what `cy.request()` does under the hood, and the patterns
 that come up most: authentication, error responses, file uploads, GraphQL,
 polling, recording fixtures, and combining API calls with UI tests.
 
+:::tip
+
+This guide covers the requests _your test_ makes with
+[`cy.request()`](/api/commands/request).
+
+To observe, wait on, or stub the requests _your application_ makes, see [Intercepting network requests](/app/guides/network-requests).
+
+:::
+
 ## Why test APIs with Cypress
 
 Most teams already own a Cypress suite for their UI. Adding API tests to it means
@@ -793,7 +802,7 @@ failed.
 | Run code in Node, such as a database query or file I/O | [`cy.task()`](/api/commands/task)           |
 
 For the full picture on stubbing and waiting for application traffic, see
-[Network Requests](/app/guides/network-requests).
+[Intercepting network requests](/app/guides/network-requests).
 
 ## See also
 
@@ -802,7 +811,7 @@ For the full picture on stubbing and waiting for application traffic, see
 - [`cy.session()`](/api/commands/session)
 - [`cy.task()`](/api/commands/task)
 - [`cy.writeFile()`](/api/commands/writefile) - recording a response as a fixture
-- [Network Requests](/app/guides/network-requests) - stubbing and waiting on
+- [Intercepting network requests](/app/guides/network-requests) - stubbing and waiting on
   traffic your application makes
 - [Test Replay](/cloud/features/test-replay) - inspecting requests from a run
   that already finished in CI
