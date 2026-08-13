@@ -103,10 +103,16 @@ jobs:
       node-version: 22.23.1
     resource_class: large
     parallelism: 8
+    environment:
+      DISPLAY: ':99'
     steps:
       - checkout
       - attach_workspace:
           at: ~/
+      - run:
+          name: Start Xvfb
+          background: true
+          command: Xvfb :99 -screen 0 1280x800x24 -ac
       - cypress/run-tests:
           start-command: 'npm run serve'
           cypress-command: 'npx wait-on http://localhost:3000 && npx cypress run --parallel --record'
