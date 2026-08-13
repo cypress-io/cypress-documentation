@@ -8,16 +8,6 @@ sidebar_label: Intercepting network requests
 
 # Intercepting network requests in Cypress
 
-:::tip
-
-This guide covers the requests _your application_ makes, which Cypress can
-observe, wait on, and stub with [`cy.intercept()`](/api/commands/intercept).
-
-To call an endpoint _from your test_ and assert on what it returns, see
-[API Testing](/app/guides/api-testing).
-
-:::
-
 ## Testing Strategies
 
 Cypress helps you test the entire lifecycle of HTTP requests within your
@@ -43,6 +33,16 @@ your server.
 
 Let's investigate both strategies, why you would use one versus the other, and
 why you should regularly use both.
+
+:::tip
+
+This guide covers the requests _your application_ makes, which Cypress can
+observe, wait on, and stub with [`cy.intercept()`](/api/commands/intercept).
+
+To call an endpoint _from your test_ and assert on what it returns, see
+[API Testing](/app/guides/api-testing).
+
+:::
 
 ### Use Server Responses
 
