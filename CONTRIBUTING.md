@@ -186,13 +186,6 @@ hash. `src/clientModules/hashFallback.js` rewrites those to the canonical
 heading id in the browser. Markdown links inside this repo must still use the
 exact casing; `onBrokenAnchors` / `onBrokenMarkdownLinks` remain `throw`.
 
-#### @docusaurus/core patch
-
-Docusaurus's first-load hash scroll can fire before layout is complete. This
-patch retries `scrollIntoView` after 250ms. The retry no-ops when the hash does
-not match an element (including a wrong-case hash that the client fallback has
-not rewritten yet), so a missing id does not throw.
-
 ## Committing Code
 
 ### Pull Requests
