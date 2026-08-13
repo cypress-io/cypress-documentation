@@ -212,6 +212,39 @@ it(
 
 Setting `blockHosts` in your Cypress configuration, or with `Cypress.config()` outside of test execution (for example at the top level of a support file or spec file), is unchanged.
 
+### Chrome, Chromium, and Edge use the native browser network
+
+In Cypress 16, Chrome, Chromium, and Edge intercept test traffic through the native browser network. Your application connects to your server directly and negotiates whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), exactly as it does in production.
+
+Firefox and WebKit continue to use the legacy network path because Cypress has not implemented a native browser network path for them yet. Electron is Chromium-based and could use one, but it is [deprecated as a test browser](#Electron-browser-deprecated) in Cypress 16, so it stays on the legacy path too. Suites that run only in Firefox, WebKit, or Electron are unaffected.
+
+[`cy.intercept()`](/api/commands/intercept) works as before, and most suites need no edits. A few behaviors do differ in Chrome, Chromium, and Edge on the native browser network:
+
+- Intercepted responses report a decoded body and no `content-encoding`, `content-length`, or `transfer-encoding` header.
+- `req.httpVersion` is `undefined` and `res.httpVersion` is `null`.
+- Responses the browser refuses to deliver leave `interception.response` as `undefined`.
+- Responses answered inside Cypress, such as stubs, are not stored in the browser's HTTP cache.
+
+See [Native network interception](/app/guides/native-network-interception) for the full list with examples.
+
+Aside from the `cy.intercept()` behaviors above, your suite should not need any changes. Commands, stubbing, waiting, aliases, and assertions all work as they did before, and adopting the native browser network requires no configuration change.
+
+If you need a temporary escape hatch, either while you update those tests or if you hit behavior on the native browser network that is not listed above, route every browser back through the legacy network path:
+
+:::cypress-config-example
+
+```js
+{
+  forceHttp1: true
+}
+```
+
+:::
+
+If setting `forceHttp1` to `true` is what makes your suite pass, and the difference is not one of the documented behaviors, please [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you are seeing. That points to a bug on the native browser network path, and we would rather fix it than have you keep the option set. `forceHttp1` is temporary, so anything that depends on it needs a real fix before it is removed.
+
+<ForceHttp1Deprecation />
+
 ### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
 
 [`cy.getCookie()`](/api/commands/getcookie),

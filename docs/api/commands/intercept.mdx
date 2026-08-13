@@ -1080,9 +1080,9 @@ The request object (`req`) has several properties from the HTTP request itself:
   query: Record<string, string|number>
   /**
    * The HTTP version used in the request. Read only.
-   * Not reported in Chromium-based browsers, where the browser negotiates the
+   * Not reported in Chrome, Chromium, or Edge, where the browser negotiates the
    * protocol with the origin directly and it is not known when the request is
-   * intercepted. Firefox and WebKit still report it.
+   * intercepted. Firefox, WebKit, and Electron still report it.
    */
   httpVersion?: string
   /**
@@ -1093,6 +1093,17 @@ The request object (`req`) has several properties from the HTTP request itself:
               | 'manifest' | 'other'
 }
 ```
+
+:::note
+
+`req.httpVersion` is not reported in Chrome, Chromium, or Edge, where Cypress intercepts
+traffic inside the browser and the protocol your application negotiates with your server
+is not known at the point the request is intercepted. Firefox, WebKit, and Electron route
+traffic through the Cypress HTTP/1.1 proxy and still report it. See
+[Native network interception](/app/guides/native-network-interception) for the other
+properties this affects and how to write assertions that pass in every browser.
+
+:::
 
 `req` also has some optional properties which can be set to control
 Cypress-specific behavior:

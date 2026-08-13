@@ -1,0 +1,300 @@
+---
+title: 'Native network interception in Cypress'
+description: 'How Cypress intercepts test traffic on the native browser network in Chrome, Chromium, and Edge, which testing behaviors change as a result, and how to update tests that depend on them.'
+sidebar_label: 'Native Network Interception'
+slug: /app/guides/native-network-interception
+---
+
+<ProductHeading product="app" />
+
+# Native Network Interception
+
+## What changed
+
+Before Cypress 16, Cypress routed every request your application made through the
+legacy network path. That path is how Cypress observed, stubbed, and recorded network
+traffic, and it only spoke HTTP/1.1. Requests that your server would have served over
+HTTP/2 or HTTP/3 in production were downgraded to HTTP/1.1 during a Cypress run.
+
+Starting in Cypress 16, Chrome, Chromium, and Edge intercept test traffic on the
+native browser network instead. Your application connects to your server directly,
+negotiating whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), exactly
+as it does in production.
+
+[`cy.intercept()`](/api/commands/intercept) works as before. You can match, stub,
+modify, and wait on requests with the same API. A small number of behaviors change on
+the native browser network because Cypress is no longer the connection between your
+browser and your server, and those are listed on this page.
+
+## Which browsers are affected
+
+The interception mechanism is chosen per browser, so a suite that runs in more than one
+browser can see both behaviors in the same run.
+
+<NativeBrowserNetworkBrowsers />
+
+None of the behavior differences on this page apply to Firefox, WebKit, or Electron.
+
+## Using the legacy network path
+
+If a suite depends on the previous behavior and you need time to update it, or if you hit
+behavior on the native browser network that this page does not describe, set
+[`forceHttp1`](/app/references/configuration#forceHttp1) to `true`. Every browser then
+uses the legacy network path and the Cypress 15 behavior described throughout this page.
+
+:::cypress-config-example
+
+```ts
+{
+  forceHttp1: true
+}
+```
+
+:::
+
+Changing `forceHttp1` restarts the Cypress server, and the option cannot be set per test
+or per suite.
+
+If setting `forceHttp1` to `true` is what makes your suite pass, and the difference is
+not one of the documented behaviors below, please
+[open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you
+are seeing. That points to a bug on the native browser network path, and we would rather
+fix it than have you keep the option set. `forceHttp1` is temporary, so anything that
+depends on it needs a real fix before it is removed.
+
+<ForceHttp1Deprecation />
+
+## Behavior differences
+
+Keep these behaviors in mind when a suite runs in Chrome, Chromium, or Edge on the native
+browser network.
+
+### Response headers do not report `content-encoding`
+
+In Cypress 15 and earlier, an intercepted response gave you a decoded body along with the
+compression headers from the network exchange, so `response.body` held readable text while
+`response.headers['content-encoding']` still said `br` or `gzip`. The header described
+bytes you never received.
+
+In Cypress 16 on the native browser network, an intercepted response reports a decoded
+body and no compression headers. `content-encoding`, `content-length`, and
+`transfer-encoding` are not present on `response.headers`, so the headers describe the
+body that accompanies them.
+
+```js
+// Cypress 15 and earlier
+cy.intercept('/assets/app.js').as('appJs')
+cy.visit('/')
+cy.wait('@appJs').then(({ response }) => {
+  expect(response.headers['content-encoding']).to.equal('br')
+  expect(response.body).to.contain('function')
+})
+```
+
+```js
+// Cypress 16
+cy.intercept('/assets/app.js').as('appJs')
+cy.visit('/')
+cy.wait('@appJs').then(({ response }) => {
+  expect(response.headers).to.not.have.property('content-encoding')
+  expect(response.body).to.contain('function')
+})
+```
+
+Compression is negotiated between the browser and your server, and the body Cypress hands
+you has already been decoded. Assert on the body itself rather than on the encoding
+headers.
+
+### `httpVersion` is not reported
+
+`req.httpVersion` is `undefined` and `res.httpVersion` is `null` in Chrome, Chromium, and
+Edge on the native browser network. Firefox, WebKit, and Electron use the legacy network
+path and still report `'1.1'`.
+
+On the legacy network path, the value was always `'1.1'`, because it described the hop
+between the browser and Cypress rather than the protocol your server used. The browser
+now negotiates directly with your server on the native browser network, so the protocol
+depends on what that server supports (HTTP/1.1, HTTP/2, or HTTP/3). It is not known at
+the point the request is intercepted, so Cypress reports no value instead of one that
+could be wrong.
+
+```js
+// Cypress 15 and earlier
+cy.intercept('/api/users', (req) => {
+  expect(req.httpVersion).to.equal('1.1')
+})
+```
+
+```js
+// Cypress 16: assert on the request properties that describe your application
+cy.intercept('/api/users', (req) => {
+  expect(req.method).to.equal('GET')
+  expect(req.headers).to.have.property('accept')
+})
+```
+
+If a cross-browser suite needs the assertion for browsers on the legacy network path, see
+[Writing tests that pass in every browser](#Writing-tests-that-pass-in-every-browser).
+
+### Responses the browser rejects are not observable
+
+When the browser's network stack refuses a response before delivering it (for example, a
+response it will not decode), the response never reaches Cypress. The interception still
+records the request, and `interception.response` is `undefined`.
+
+On the legacy network path, Cypress used to receive that response itself, so it could
+report a status and headers even for a load that then failed in the browser. On the native
+browser network, the status and headers stay inside the browser's network stack and are
+never surfaced.
+
+```js
+// Cypress 15 and earlier
+cy.intercept('/assets/broken.js').as('brokenJs')
+cy.visit('/page-with-a-rejected-asset')
+cy.wait('@brokenJs').its('response.statusCode').should('equal', 200)
+```
+
+```js
+// Cypress 16: the request is captured, the response is not
+cy.intercept('/assets/broken.js').as('brokenJs')
+cy.visit('/page-with-a-rejected-asset')
+cy.wait('@brokenJs').then((interception) => {
+  expect(interception.request.url).to.contain('/assets/broken.js')
+  expect(interception.response).to.be.undefined
+})
+```
+
+To assert that a resource failed to load, assert on your application instead, for example
+on the error state it renders.
+
+### Responses served without a network request are not cached by the browser
+
+Some responses are answered inside Cypress and never involve a network exchange:
+
+- Responses stubbed by [`cy.intercept()`](/api/commands/intercept) before the request is
+  sent, such as a `fixture` or a static `body`.
+- Documents loaded by [`cy.visit()`](/api/commands/visit) on `http` origins.
+- Responses whose body a request or response handler modified.
+
+The browser does not store these in its HTTP cache, because there was no network response
+to cache. A second navigation issues the request again and your intercept sees it again,
+even if the stub declared caching headers.
+
+```js
+cy.intercept('/api/config', {
+  fixture: 'config.json',
+  headers: { 'cache-control': 'max-age=3600' },
+}).as('config')
+
+cy.visit('/')
+cy.reload()
+
+// Both navigations reach the intercept in Cypress 16
+cy.get('@config.all').should('have.length', 2)
+```
+
+Tests that assert a resource was served from cache, rather than asserting on what your
+application rendered, are the ones to look at.
+
+### Stubbed bodies are decoded from their declared `content-encoding`
+
+When a stub declares a `content-encoding` header, Cypress decodes the body so the browser
+renders it. `gzip`, `x-gzip`, `deflate`, and `br` are all decoded. A `zstd` stub is passed
+through with the header and body intact, as before.
+
+If the bytes do not actually match the declared encoding, the decode fails inside Cypress
+and the request errors. In Cypress 15, the mismatched pair reached the browser, which
+rejected it there. The underlying mistake is the same in both versions and the error
+surfaces in a different place.
+
+```js
+// Declares gzip, so the body must really be gzip bytes
+cy.intercept('/api/data', {
+  headers: { 'content-encoding': 'gzip' },
+  body: gzippedBytes,
+})
+```
+
+### Compressed documents from insecure origins load
+
+Browsers refuse to decode `br` responses from insecure origins (`http` origins other than
+`localhost`). On the legacy network path, the document reached the browser still
+compressed and the visit failed.
+
+On the native browser network in Cypress 16, [`cy.visit()`](/api/commands/visit) on an
+`http` origin resolves and decodes the document before handing it to the browser, so the
+visit completes. Scripts, stylesheets, and other subresources are still fetched by the
+browser and still hit the same insecure-origin policy, matching production.
+
+A test that expected the visit itself to fail may now wait for a failure that never comes
+and time out instead.
+
+```js
+// Cypress 15 and earlier: the browser refused to decode the document, so the
+// visit never completed
+cy.visit('http://www.example.com/br/html', { timeout: 500 })
+cy.on('fail', (err) => {
+  expect(err.message).to.contain('Timed out after waiting `500ms`')
+})
+```
+
+```js
+// Cypress 16: the document loads decoded, and its br subresources still fail
+cy.visit('http://www.example.com/br/html')
+
+cy.get('#content').should('contain.text', 'hello from brotli')
+
+// the br script and stylesheet still hit the browser's insecure-origin policy
+cy.get('#from-script').should('have.text', '')
+cy.get('#content').then(($el) => {
+  expect(getComputedStyle($el[0]).fontSize).not.to.eq('42px')
+})
+```
+
+When you update these tests, assert on both the document and the subresources. Only the
+document load changed; the insecure-origin policy still applies to everything the browser
+fetches on its own.
+
+The Cypress 15 failure also varied by browser: Chromium timed out on the load, while
+Firefox rendered the raw compressed bytes as garbled text. Firefox stays on the legacy
+network path, so that behavior is unchanged.
+
+## Writing tests that pass in every browser
+
+Assertions that describe your application rather than the transport pass in every browser
+and on both network paths. Prefer asserting on the response body, on the rendered page,
+or on the request your application sent instead of transport metadata such as
+`req.httpVersion` or compression headers.
+
+If you must keep an assertion that differs between the native browser network and the
+legacy network path, and your suite runs Chrome, Chromium, or Edge alongside Firefox,
+WebKit, or Electron, gate it with [`Cypress.isBrowser()`](/api/cypress-api/isbrowser):
+
+```js
+const interceptsInBrowser = Cypress.isBrowser({
+  family: 'chromium',
+  name: '!electron',
+})
+
+cy.intercept('/api/users', (req) => {
+  if (!interceptsInBrowser) {
+    expect(req.httpVersion).to.equal('1.1')
+  }
+})
+```
+
+Excluding Electron by name is what makes the check match the network path. Electron is
+Chromium-based, so a `family: 'chromium'` filter on its own also matches Electron and
+would put it on the wrong side of the gate.
+
+Do not set [`forceHttp1`](/app/references/configuration#forceHttp1) to `true` only to avoid
+this gate; see [Using the legacy network path](#Using-the-legacy-network-path).
+
+## See also
+
+- [`cy.intercept()`](/api/commands/intercept)
+- [`Cypress.browser`](/api/cypress-api/browser)
+- [`Cypress.isBrowser()`](/api/cypress-api/isbrowser)
+- [`forceHttp1` configuration](/app/references/configuration#forceHttp1)
+- [Migration Guide](/app/references/migration-guide#Chrome-Chromium-and-Edge-use-the-native-browser-network)
+- [Network Requests](/app/guides/network-requests)

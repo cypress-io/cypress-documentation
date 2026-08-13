@@ -147,21 +147,22 @@ default values.
 
 ### Global
 
-| Option                 | Default                               | Description                                                                                                                                                                                                                                                                                               |
-| ---------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                          |
-| `env`                  | `{}`                                  | Any secret values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                |
-| `expose`               | `{}`                                  | Any public values to be set as [exposed variables](/api/cypress-api/expose).                                                                                                                                                                                                                              |
-| `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
-| `manageBrowserMemory`  | `true`                                | Whether Cypress monitors browser memory and collects garbage when usage crosses a threshold, so memory-heavy suites don't crash the browser. Chromium-based browsers only; no effect in Firefox or WebKit. See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory).                  |
-| `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
-| `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                    |
-| `projectId`            | `null`                                | The unique ID used to record test results to [Cypress Cloud](/cloud/get-started/introduction). Set automatically when you [connect your project to Cypress Cloud](/cloud/get-started/setup#Setup).                                                                                                        |
-| `redirectionLimit`     | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                         |
-| `reporter`             | `spec`                                | The [reporter](/app/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                         |
-| `reporterOptions`      | `null`                                | The [reporter options](/app/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                           |
-| `retries`              | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/app/guides/test-retries) for more information.                       |
-| `watchForFileChanges`  | Default based on `run` or `open` mode | Whether Cypress will watch and restart tests on test file changes. `watchForFileChanges` is set to `true` by default during `cypress open` and set to `false` by default during `cypress run`.                                                                                                            |
+| Option                                                | Default                               | Description                                                                                                                                                                                                                                                                                               |
+| ----------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `clientCertificates`                                  | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                          |
+| `env`                                                 | `{}`                                  | Any secret values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                |
+| `expose`                                              | `{}`                                  | Any public values to be set as [exposed variables](/api/cypress-api/expose).                                                                                                                                                                                                                              |
+| `forceHttp1` <Badge type="caution">deprecated</Badge> | `false`                               | Whether Cypress routes all browser traffic through the legacy network path instead of using the native browser network in Chrome, Chromium, and Edge. [Please read the notes on using this.](#forceHttp1)                                                                                                 |
+| `includeShadowDom`                                    | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
+| `manageBrowserMemory`                                 | `true`                                | Whether Cypress monitors browser memory and collects garbage when usage crosses a threshold, so memory-heavy suites don't crash the browser. Chromium-based browsers only; no effect in Firefox or WebKit. See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory).                  |
+| `numTestsKeptInMemory`                                | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
+| `port`                                                | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                    |
+| `projectId`                                           | `null`                                | The unique ID used to record test results to [Cypress Cloud](/cloud/get-started/introduction). Set automatically when you [connect your project to Cypress Cloud](/cloud/get-started/setup#Setup).                                                                                                        |
+| `redirectionLimit`                                    | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                         |
+| `reporter`                                            | `spec`                                | The [reporter](/app/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                         |
+| `reporterOptions`                                     | `null`                                | The [reporter options](/app/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                           |
+| `retries`                                             | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/app/guides/test-retries) for more information.                       |
+| `watchForFileChanges`                                 | Default based on `run` or `open` mode | Whether Cypress will watch and restart tests on test file changes. `watchForFileChanges` is set to `true` by default during `cypress open` and set to `false` by default during `cypress run`.                                                                                                            |
 
 ### Timeouts
 
@@ -762,6 +763,37 @@ The `**/node_modules/**` pattern is automatically added to `excludeSpecPattern`
 and does not need to be specified (and can't be overridden). See [`e2e`](#e2e)
 or [`component`](#component) testing-specific options.
 
+### forceHttp1
+
+This option is <Badge type="caution">deprecated</Badge>, and will be removed in a future version of Cypress.
+
+As of [Cypress 16](/app/references/changelog#16-0-0), Cypress intercepts network traffic inside Chrome, Chromium, and Edge on the
+native browser network. Your application connects to your server directly and negotiates
+whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), the same way it does
+in production, so requests are no longer always downgraded to HTTP/1.1.
+
+<NativeBrowserNetworkBrowsers />
+
+Set `forceHttp1` to `true` to route every browser through the legacy network path, the way
+Cypress worked before version 16. See
+[Native network interception](/app/guides/native-network-interception) for the full list of
+differences and how to update tests that rely on them. If undocumented behavior is what
+makes your suite pass, [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
+Setting it to `true` restarts the Cypress server when changed, and cannot be set per test
+or per suite.
+
+<ForceHttp1Deprecation />
+
+:::cypress-config-example
+
+```ts
+{
+  forceHttp1: true
+}
+```
+
+:::
+
 ### injectDocumentDomain
 
 This option is <Badge type="caution">deprecated</Badge>, and will be removed in a future version of Cypress.
@@ -1011,6 +1043,7 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 | Version                                      | Changes                                                                                                                                                                         |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0)   | Added `forceHttp1` option.                                                                                                                                                      |
 | [16.0.0](/app/references/changelog#16-0-0)   | Updated `blockHosts`, `viewportHeight`, and `viewportWidth` to no longer be settable with `Cypress.config()` during test execution.                                             |
 | [16.0.0](/app/references/changelog#16-0-0)   | Removed `allowCypressEnv` option.                                                                                                                                               |
 | [16.0.0](/app/references/changelog#16-0-0)   | Renamed `manageBrowserMemory` option to `manageBrowserMemory` and set to `true` by default.                                                                                     |
