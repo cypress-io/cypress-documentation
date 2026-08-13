@@ -101,7 +101,7 @@ across available CI machines by the following process:
    are distributed to it. This process repeats until all spec files are
    complete.
 6. Upon completion of all spec files, Cypress
-   [waits for a configurable amount of time](#Run-completion-delay) before
+   [waits for a configurable amount of time](#Run-Completion-Delay) before
    considering the test run as fully complete. This is done to better support
    [grouping of runs](#Grouping-test-runs).
 
@@ -414,12 +414,12 @@ This waiting period is called the **Run Completion Delay** and it begins after
 the last known CI machine has completed as shown in the diagram below:
 
 <DocsImage
-  src="/img/app/parallelization/run-completion-delay.png"
+  src="/img/app/parallelization/Run-Completion-Delay.png"
   alt="Test Run Completion Delay"
 />
 
 This **delay is 60 seconds by default**, but is
-[configurable within Cypress Cloud project settings page](/cloud/account-management/projects#Run-completion-delay).
+[configurable within Cypress Cloud project settings page](/cloud/account-management/projects#Run-Completion-Delay).
 
 ## Run Completion API
 
