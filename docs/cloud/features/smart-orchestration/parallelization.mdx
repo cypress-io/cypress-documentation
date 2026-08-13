@@ -403,19 +403,19 @@ via CLI
 cypress run --record --parallel --ci-build-id $BUILD_TAG
 ```
 
-## Run completion delay
+## Run Completion Delay
 
 During parallelization mode or when grouping runs, Cypress will wait for a
 specified amount of time before completing the test run in case any more
 relevant work remains. This is to compensate for various scenarios where CI
 machines could be backed-up in a queue.
 
-This waiting period is called the **run completion delay** and it begins after
+This waiting period is called the **Run Completion Delay** and it begins after
 the last known CI machine has completed as shown in the diagram below:
 
 <DocsImage
   src="/img/app/parallelization/run-completion-delay.png"
-  alt="Test run completion delay"
+  alt="Test Run Completion Delay"
 />
 
 This **delay is 60 seconds by default**, but is
@@ -423,27 +423,33 @@ This **delay is 60 seconds by default**, but is
 
 ## Run Completion API
 
-The run completion delay is a safety buffer: it protects against late CI machines
-racing past a run that Cypress Cloud has already marked complete. For teams with
-non-deterministic build timing, that buffer often has to be long, which taxes
-_every_ run — including the ones where CI already knows all the work is done.
-
-The **Run Completion API** gives CI and tooling an explicit "we're done" signal.
-When you know a parallelized or grouped run has finished, you can call the API to
-complete the run immediately and skip the remaining completion delay.
-
 :::caution
 
-This API is **experimental**. Its request and response contract may change in a
-backward-incompatible way, and the endpoint may be altered or removed, without a
-major version bump. Pin your usage to the behavior documented here and check back
-for updates before relying on it in critical pipelines.
+This API is **experimental**. Breaking changes are unlikely but may be made if necessary.
 
 :::
 
+The Run Completion Delay is a safety buffer. For teams with
+non-deterministic build timing (for example, when running Cypress tests using Nx), 
+that buffer often has to be long so that pauses in between test groups do not cause the run to complete early.
+
+Without keeping the run open to wait for new groups, a late group
+attempting to join an already-completed Cloud Run would cause an error.
+
+A long Run Completion Delay has only one drawback: once all your expected tests have been recorded,
+the delay becomes a needless wait for Cypress Cloud to resolve the run's "completed" status. 
+This can slow down notifications, and delay the finalization of UI Coverage and Cypress Accessibility reports.
+
+That's where the **Run Completion API** comes in. It lets you signal to Cypress Cloud,
+in real time during a run, that it **does not need to wait** for more groups. The run
+will complete when all of the currently-active run groups have finished, or immediately if nothing is in progress.
+
+The end result: **no tradeoff needed** between the potential recording gaps in your CI setup,
+and having Cypress Cloud to resolve your runs as quickly as possible with correct grouping.
+
 :::info
 
-This is an imperative signal, not a force. The API never seals a run mid-flight —
+Using this API sends an imperative signal, not a force. The API never cuts off a run mid-flight —
 if groups are still in progress when you call it, the request is _deferred_ and the
 run completes (with no delay) the instant it stabilizes. See
 [Outcomes](#Outcomes) below.
@@ -537,36 +543,37 @@ recorded aren't tracked by Cypress Cloud and can't be completed through this API
 
 :::
 
+### Where to call the API in a parallelized run
+
 :::caution
-
-<strong>Where to call the API in a parallelized run</strong>
-
-On a parallelized or grouped run, `after:run` fires **once per machine** — so
-every machine sees the same `runUrl` and would each call the endpoint. Firing a
-bare "complete now" request from all of them races: whichever machine finishes
-its own specs first would ask to complete a run whose other groups are still
-going.
-
-For that reason, the most reliable place to make the call is a **dedicated
-post-run step in your CI pipeline** that runs after all parallel jobs have
-finished — one machine, one call, once you truly know the run is done.
+`after:run` fires **once per machine** — so every machine sees the same `runUrl` and would each call the endpoint. Read this section to ensure consistent, expected outcomes in CI.
+:::
 
 Calling from inside `after:run` is fine **when you pass a known
 `expectedGroupCount`** with every call. Because the API defers until that many
-groups have finished (and absorbs any still joining), it doesn't matter which
-machine's handler wins the race — the run only completes once all expected groups
+groups have finished (and absorbs any still joining), it doesn't matter which machine 
+finishes first or how often the API is called from the run.
+The run only completes once all expected groups
 are in. Use this pattern when your group count is fixed and available to the
 handler (for example, injected as an environment variable by CI).
 
-:::
+Firing a bare "complete now" request from all of them is different: whichever machine finishes
+its own specs first would ask to complete a run whose other groups may not have joined yet. 
+For that reason, if you do not pass the `expectedGroupCount`, the most reliable place to make the call is a **dedicated
+post-run step in your CI pipeline** that runs after all parallel jobs have
+finished — one machine, one call, once you truly know the run is done.
+
 
 #### Example — calling from `after:run` with `expectedGroupCount` {#after-run-example}
 
+:::tip
+**Tip:** Hard-coding an expected group count in your config file is an easy way to try this API out with **no CI updates**,
+and in some cases may fully meet your needs.
+:::
+
 The example below completes the run from inside `after:run`. It's safe to fire
 from every machine **only because** `expectedGroupCount` is supplied from an
-environment variable that CI sets to the run's fixed number of groups: each
-machine's call is deferred until that many groups have finished, so the run
-completes exactly once — no matter which handler runs first.
+environment variable that CI it to the run's fixed number of groups.
 
 :::cypress-config-plugin-example
 
@@ -601,10 +608,6 @@ on('after:run', async (results) => {
 
 :::
 
-Without `expectedGroupCount`, this same handler would be unsafe: the first
-machine to finish could complete the run while other groups are still recording.
-If you can't provide a reliable group count, call the API from a
-[dedicated post-run CI step](#Finding-the-run-URL-or-run-number) instead.
 
 ### Outcomes
 
@@ -631,9 +634,7 @@ When a `deferred` response is returned for a request that included an
 ```
 
 Here, `completedGroupCount` is the number of groups that have actually _finished_
-(not merely registered). A request that arrives slightly early waits for the
-remaining in-flight groups — and absorbs any that join in the meantime — rather
-than sealing the run partway through.
+(not merely registered). 
 
 ## Visualizing parallelization and groups in Cypress Cloud
 

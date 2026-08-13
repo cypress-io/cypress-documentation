@@ -180,16 +180,16 @@ and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) gu
 
 <DocsImage
   src="/img/cloud/features/smart-orchestration/spec-prioritization-active.png"
-  alt="Run completion delay settings"
+  alt="Run Completion Delay settings"
 />
 
 ### Parallelization
 
-#### Run completion delay
+#### Run Completion Delay
 
-Control how long the Cypress Cloud should wait for new groups to join a run before transitioning a run to a _completed_ status with the **Run completion delay** . This gives your test groups a grace period to join an existing run before the run is considered complete.
+Control how long Cypress Cloud should wait for new groups to join a run before transitioning a run to a _completed_ status with the **Run Completion Delay** . This gives your test groups a grace period to join an existing run before the run is considered complete.
 
-Use run completion delay when you have a distributed test setup where test groups might
+Use Run Completion Delay when you have a distributed test setup where test groups might
 not all start simultaneously. For example:
 
 - CI jobs that might start at slightly different times
@@ -200,7 +200,13 @@ The default is **60 seconds**. Increasing this value gives your test groups more
 
 See our
 [Parallelization guide](/cloud/features/smart-orchestration/parallelization#Run-completion-delay)
-to learn more.
+to learn more. 
+
+:::tip
+
+If you set a long run completion delay to allow more time for groups to join, use the **[Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-completion-api)** to close the run programmatically to avoid an extra wait at the end.
+
+:::
 
 <DocsImage
   src="/img/cloud/projects/run-completion-delay.jpg"
