@@ -58,9 +58,10 @@ or per suite.
 If setting `forceHttp1` to `true` is what makes your suite pass, and the difference is
 not one of the documented behaviors below, please
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you
-are seeing. That points to a bug on the native browser network path, and we would rather
-fix it than have you keep the option set. `forceHttp1` is temporary, so anything that
-depends on it needs a real fix before it is removed.
+are seeing. That points to either a bug on the native browser network path or a gap in
+this page — either way, we would rather fix it than require you to keep the option set.
+`forceHttp1` is temporary, so anything that depends on it needs a real fix before it is
+removed.
 
 <ForceHttp1Deprecation />
 
@@ -194,7 +195,7 @@ cy.get('@config.all').should('have.length', 2)
 ```
 
 Tests that assert a resource was served from cache, rather than asserting on what your
-application rendered, are the ones to look at.
+application rendered, will be affected.
 
 ### Stubbed bodies are decoded from their declared `content-encoding`
 
