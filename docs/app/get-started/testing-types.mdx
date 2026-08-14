@@ -1,6 +1,6 @@
 ---
-title: 'End-to-end and component testing in Cypress'
-description: 'Learn the differences between Cypress end-to-end and component tests, the benefits and considerations for each type of test, and common scenarios for each type of test.'
+title: 'End-to-end, component, and API testing in Cypress'
+description: 'Learn the differences between Cypress end-to-end, component, and API tests, the benefits and considerations for each type of test, and common scenarios for each type of test.'
 sidebar_label: Choose a testing type
 sidebar_position: 20
 slug: /app/core-concepts/testing-types
@@ -14,28 +14,28 @@ slug: /app/core-concepts/testing-types
 
 <WhatYoullLearn />
 
-- The differences between end-to-end and component tests
+- The differences between end-to-end, component, and API tests
 - The benefits and considerations for each type of test
 - Common scenarios for each type of test
 
 :::
 
-## End-to-End or Component Tests?
+## Which type of test should you write?
 
 One of the first decisions you will need to make on your testing journey is what
-type of test to create. Cypress offers two options: end-to-end and component
-tests. There are benefits and considerations for each choice, and the decision
-will depend on the needs of what you are currently trying to accomplish. In the
-end, you will probably have a combination of both types of tests for your app,
-but how do you choose right now?
+type of test to create. Cypress offers three options: end-to-end, component, and
+API tests. There are benefits and considerations for each choice, and the
+decision will depend on the needs of what you are currently trying to
+accomplish. In the end, you will probably have a combination of all three types
+of tests for your app, but how do you choose right now?
 
 Let's go over each of these test types, the benefits they bring, things to
 consider, and scenarios for each.
 
 :::tip
 
-Cypress is adaptable to many different types of tests outside of end-to-end and component tests, including
-[API Testing](/app/get-started/why-cypress#Other), [Visual Testing](/app/tooling/visual-testing), [Unit Testing](/app/references/recipes#Unit-Testing),
+Cypress is adaptable to many different types of tests beyond the three covered here, including
+[Visual Testing](/app/tooling/visual-testing), [Unit Testing](/app/references/recipes#Unit-Testing),
 [Accessibility Testing](/accessibility/get-started/introduction) and more. Our [plugins](/app/plugins/plugins-list) provide many more tools to help you extensively test your app.
 
 :::
@@ -121,8 +121,8 @@ developers verify the required functionality while building it.
 One thing to consider, though, is even if all your component tests pass, it does
 not mean your app is functioning properly. Component tests do nothing to ensure
 that all the layers of your app are working well together. Therefore, a
-well-tested app has a combination of end-to-end and component tests, with each
-set of tests specializing in what they do best.
+well-tested app has a combination of test types, with each set of tests
+specializing in what they do best.
 
 :::tip
 
@@ -159,13 +159,81 @@ set of tests specializing in what they do best.
 To learn more about component testing in Cypress, visit our guide on
 [Testing Your Components with Cypress](/app/component-testing/get-started).
 
+## What is API Testing?
+
+Not every test needs a page to render. API testing exercises your application's
+HTTP endpoints directly by sending a request and asserting on what comes back:
+the status code, the response body, the headers, and how long the response took.
+
+Cypress does this with [`cy.request()`](/api/commands/request), which sends a
+real HTTP request and yields the response. Because these tests live in the same
+specs, the same configuration, and the same CI job as the rest of your suite,
+adding API coverage does not mean adopting and maintaining a second tool.
+
+API tests sit between the other two types in both speed and scope. They run
+faster than end-to-end tests because there is no page to render and no user
+interaction to simulate, and they reach further than component tests because
+they exercise your real backend, database, and business logic. They are also
+precise about failure: when an API test fails, the contract changed. A failing
+end-to-end test could mean the same thing, or a moved selector, or a race
+condition.
+
+That speed makes them the most efficient way to prepare state for other tests.
+Creating a user or seeding an order over HTTP takes milliseconds, where doing
+the same through a form takes seconds and re-tests code paths you already cover
+elsewhere.
+
+What API tests cannot tell you is whether your interface works. They say nothing
+about rendering, styling, or whether a control is reachable. As with the other
+two types, a well-tested app combines all three, with each set of tests
+specializing in what it does best.
+
+:::tip
+
+### Benefits of API tests:
+
+- Fast to run, with no rendering or user interaction to simulate
+- Failures point directly at the contract between front end and back end
+- Reach validation errors, permission boundaries, and pagination edges that are
+  hard to trigger through the UI
+- Prepare state for other tests far faster than driving a form
+- Share configuration, reporting, and CI with the rest of your suite
+
+:::
+
+:::info
+
+### Considerations for API tests:
+
+- Do not verify that your interface renders or behaves correctly
+- Require a running backend, so they need infrastructure much like end-to-end
+  tests
+- Assertions on response shape need maintenance as the API evolves
+
+:::
+
+:::note
+
+### Common scenarios for API tests:
+
+- Verifying a full create, read, update, and delete lifecycle
+- Asserting on error responses, permission boundaries, and rate limits
+- Authenticating once over HTTP and reusing the session across tests
+- Seeding application state before an end-to-end test runs
+- Checking that a GraphQL query or mutation returns the expected shape
+
+:::
+
+To learn more about API testing in Cypress, visit our guide on
+[API Testing](/app/guides/api-testing).
+
 ## Testing Type Comparison
 
-| Attributes             |                       E2E                        |                   Component                   |
-| ---------------------- | :----------------------------------------------: | :-------------------------------------------: |
-| What's Tested          |                  All app layers                  |             Individual component              |
-| Characteristics        | Comprehensive, slower, more susceptible to flake |         Specialized, quick, reliable          |
-| Used For               |     Verifying app works as a cohesive whole      | Testing functionality of individual component |
-| Written By             |            Developers, QA Team, SDETs            |             Developers, Designers             |
-| CI Infrastructure      |           Often requires complex setup           |                  None needed                  |
-| Initialization Command |                 `cy.visit(url)`                  |          `cy.mount(<MyComponent />)`          |
+| Attributes             |                       E2E                        |                   Component                   |                          API                          |
+| ---------------------- | :----------------------------------------------: | :-------------------------------------------: | :---------------------------------------------------: |
+| What's Tested          |                  All app layers                  |             Individual component              |                    HTTP endpoints                     |
+| Characteristics        | Comprehensive, slower, more susceptible to flake |         Specialized, quick, reliable          |           Fast and precise, no UI coverage            |
+| Used For               |     Verifying app works as a cohesive whole      | Testing functionality of individual component | Verifying the contract between front end and back end |
+| Written By             |            Developers, QA Team, SDETs            |             Developers, Designers             |              Developers, QA Team, SDETs               |
+| CI Infrastructure      |           Often requires complex setup           |                  None needed                  |              Requires a running backend               |
+| Initialization Command |                 `cy.visit(url)`                  |          `cy.mount(<MyComponent />)`          |                   `cy.request(url)`                   |
