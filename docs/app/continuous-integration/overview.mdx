@@ -557,6 +557,28 @@ to see why the commit information is unavailable.
 DEBUG=cypress:server:record
 ```
 
+**_Source control credentials_**
+
+The remote origin Cypress records comes from `git config --get remote.origin.url`,
+and some CI providers authenticate the checkout by embedding a token in that URL.
+Any credential sitting there is readable by every later step in the job and
+becomes part of the recorded run.
+
+Use your CI provider's standard checkout authentication rather than supplying
+your own long-lived token. Providers issue credentials that expire when the job
+ends, such as the GitHub Actions `GITHUB_TOKEN`, the GitLab CI/CD job token, a
+CircleCI checkout key, or the Azure Pipelines `System.AccessToken`. Substituting
+a personal access token puts a credential that lasts months in the same exposed
+position.
+
+If your checkout leaves a credential in the remote URL, set `COMMIT_INFO_REMOTE`
+to a clean URL so the recorded remote does not include it. On GitLab CI, for
+example, `CI_PROJECT_URL` has no token in it:
+
+```shell
+export COMMIT_INFO_REMOTE="$CI_PROJECT_URL.git"
+```
+
 #### CI Build Information
 
 In some newer CI providers, Cypress can't map the system environment variables required

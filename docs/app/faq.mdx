@@ -230,9 +230,8 @@ which can be disabled using the instructions
 
 ### <Icon name="angle-right" /> Can I write API tests using Cypress?
 
-Cypress is mainly designed to run end-to-end and component tests, but if you
-need to write a few tests that call the backend API using the
-[`cy.request()`](/api/commands/request) command ... who can stop you?
+Yes. Use [`cy.request()`](/api/commands/request) to call an endpoint directly
+and assert on the response. No page needs to be visited first.
 
 ```js
 it('adds a todo', () => {
@@ -251,12 +250,9 @@ it('adds a todo', () => {
 })
 ```
 
-Take a look at our <Icon name="github" inline="true" contentType="rwa" /> that
-uses quite a few such tests to verify the backend APIs.
-
-You can verify the responses using the built-in assertions and perform multiple
-calls. You can even write E2E tests that combine UI commands with API testing as
-needed:
+Because API calls and UI commands share the same command chain, you can also
+write tests that span both layers, driving the application through its interface
+and then confirming over HTTP that the backend persisted the change:
 
 ```js
 it('adds todos', () => {
@@ -275,10 +271,17 @@ it('adds todos', () => {
 })
 ```
 
+Our <Icon name="github" inline="true" contentType="rwa" /> was built API-first
+and still runs
+[API test suites](https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/api)
+alongside its UI tests.
+
 A good strategy for writing targeted API tests is to use them to reach the
 hard-to-test code not covered by other tests. You can find such places in the
-code using the [code coverage](/app/tooling/code-coverage) as a guide. Watch
-the
+code using [code coverage](/app/tooling/code-coverage) as a guide.
+
+For a full walkthrough covering authentication, CRUD workflows, error responses,
+GraphQL, and polling, see [API Testing](/app/guides/api-testing).
 
 ## "How-to" Cypress Questions
 
@@ -725,6 +728,74 @@ modifying browser launch arguments.
 
 Yes. You do it the
 [same way as any other recursive loop](/api/commands/request#Request-Polling).
+See [polling an asynchronous job](/app/guides/api-testing#Poll-an-asynchronous-job)
+for a version with a bounded number of attempts.
+
+### <Icon name="angle-right" /> Why doesn't cy.intercept() match cy.request() calls in Cypress?
+
+[`cy.intercept()`](/api/commands/intercept) matches traffic your application
+makes from the browser, which flows through the Cypress proxy.
+[`cy.request()`](/api/commands/request) is issued from the Cypress Node process
+instead, so it never enters that proxy and cannot be spied on or stubbed.
+
+The two commands answer different questions. Use `cy.request()` to call an
+endpoint and assert on its response. Use `cy.intercept()` to assert on, wait
+for, or stub the requests your app makes. See
+[choose the right tool](/app/guides/api-testing#Choose-the-right-tool).
+
+### <Icon name="angle-right" /> Why don't Cypress cy.request() calls appear in the browser's Network tab?
+
+Cypress makes [`cy.request()`](/api/commands/request) calls from its Node
+process rather than from the browser, so the browser never sees the request and
+has nothing to show in its Network tab.
+
+To inspect one, click the `cy.request()` entry in the
+[Command Log](/app/core-concepts/open-mode#Command-Log) and Cypress prints the
+full request and response to the browser console.
+
+This also works after the fact on a CI run. Open the run in
+[Test Replay](/cloud/features/test-replay), click the `cy.request()` command,
+and the same detail is printed to your console. Open DevTools before clicking,
+since that is where the output goes.
+
+### <Icon name="angle-right" /> How do I send an authentication token with cy.request() in Cypress?
+
+Pass the token in the `headers` option of
+[`cy.request()`](/api/commands/request), and keep the credential itself in an
+[environment variable](/app/guides/environment-variables) rather than in the
+spec file.
+
+```js
+cy.request({
+  url: '/orders',
+  headers: {
+    authorization: `Bearer ${Cypress.env('apiToken')}`,
+  },
+})
+```
+
+When you need to log in to obtain the token first, wrap the login request in
+[`cy.session()`](/api/commands/session) so it is cached and restored instead of
+re-run for every test. See
+[authenticate once and reuse the session](/app/guides/api-testing#Authenticate-once-and-reuse-the-session).
+
+### <Icon name="angle-right" /> How do I test an API endpoint that returns a 4xx or 5xx status code in Cypress?
+
+By default [`cy.request()`](/api/commands/request) fails the test on any
+response outside `2xx` and `3xx`. When the error response is what you are
+testing, set `failOnStatusCode: false` so the response is yielded instead.
+
+```js
+cy.request({
+  method: 'POST',
+  url: '/orders',
+  body: { lineItems: [] },
+  failOnStatusCode: false,
+}).then((response) => {
+  expect(response.status).to.eq(422)
+  expect(response.body.errors[0].field).to.eq('lineItems')
+})
+```
 
 ### <Icon name="angle-right" /> Can I use the Page Object pattern?
 
