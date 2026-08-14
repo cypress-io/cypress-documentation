@@ -2,5 +2,9 @@
   "label": "Work with AI",
   "position": 35,
   "collapsible": true,
-  "collapsed": true
+  "collapsed": true,
+  "customProps": {
+    "ai_icon": true,
+    "new_label": true
+  }
 }
