@@ -260,6 +260,95 @@ The Cypress 15 failure also varied by browser: Chromium timed out on the load, w
 Firefox rendered the raw compressed bytes as garbled text. Firefox stays on the legacy
 network path, so that behavior is unchanged.
 
+### Revalidated responses report `200` instead of `304`
+
+When the browser already holds a cached copy of a resource, it revalidates with a
+conditional request and your server answers `304 Not Modified`. On the legacy network
+path, Cypress made that request itself, so the intercept saw the `304`.
+
+On the native browser network, the browser's cache sits between your server and Cypress.
+The browser sends the conditional request, receives the `304`, merges it with the copy it
+already had, and hands Cypress the complete response. Your server still answers `304` —
+Cypress no longer observes it.
+
+```js
+// Cypress 15 and earlier
+cy.intercept('/assets/logo.png').as('logo')
+cy.wait('@logo').its('response.statusCode').should('equal', 200)
+// the second load revalidates and your server answers 304
+cy.wait('@logo').its('response.statusCode').should('equal', 304)
+```
+
+```js
+// Cypress 16: both loads report the complete response
+cy.intercept('/assets/logo.png').as('logo')
+cy.wait('@logo').its('response.statusCode').should('equal', 200)
+cy.wait('@logo').its('response.statusCode').should('equal', 200)
+```
+
+To assert on caching behavior itself, request the resource with
+[`cy.request()`](/api/commands/request), which goes through Cypress rather than the
+browser cache and reports the status your server sent.
+
+### `responseTimeout` does not apply to response handlers
+
+When an intercept supplies a response handler, Cypress 15 and earlier fetched the upstream
+response itself and applied
+[`responseTimeout`](/app/references/configuration#Timeouts) to that fetch. A slow endpoint
+failed the test with a timeout error naming `responseTimeout`.
+
+On the native browser network, the browser makes that request, so there is no Cypress
+request for `responseTimeout` to bound. A response handler runs when your server answers.
+Cypress still gives up if no response arrives within 30 seconds, but that limit is fixed
+and is not the value you configure.
+
+```js
+// Cypress 15 and earlier: failed after responseTimeout elapsed
+cy.intercept('/api/slow', (req) => {
+  req.reply((res) => {
+    res.send()
+  })
+})
+```
+
+```js
+// Cypress 16: bound the wait in your test instead
+cy.intercept('/api/slow').as('slow')
+cy.visit('/')
+cy.wait('@slow', { timeout: 10000 })
+```
+
+`responseTimeout` still applies to every command
+[documented as using it](/app/references/configuration#Timeouts), including
+[`cy.request()`](/api/commands/request) and [`cy.wait()`](/api/commands/wait). Only
+`cy.intercept()` response handlers are affected.
+
+### Request `content-length` is not reported
+
+`req.headers['content-length']` is not present on an intercepted request. The browser
+computes that header when it sends the request, which happens after your intercept runs,
+so the value does not exist yet at the point Cypress hands you the request. Your server
+still receives an accurate `content-length`.
+
+This also means Cypress no longer recalculates the header when a handler replaces
+`req.body`. The browser sends the real length of whatever body your handler set.
+
+```js
+// Cypress 15 and earlier
+cy.intercept('/api/users', (req) => {
+  req.body = ''
+  expect(req.headers['content-length']).to.equal('0')
+})
+```
+
+```js
+// Cypress 16: assert on the body you set
+cy.intercept('/api/users', (req) => {
+  req.body = ''
+  expect(req.body).to.equal('')
+})
+```
+
 ## Writing tests that pass in every browser
 
 Assertions that describe your application rather than the transport pass in every browser
