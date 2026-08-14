@@ -186,6 +186,11 @@ hash. `src/clientModules/hashFallback.js` rewrites those to the canonical
 heading id in the browser. Markdown links inside this repo must still use the
 exact casing; `onBrokenAnchors` / `onBrokenMarkdownLinks` remain `throw`.
 
+The `@docusaurus/core` first-load scroll retry looks up the original hash after
+250ms. A wrong-case hash is not in the DOM, so `isElementInView` must no-op
+when the element is missing. Otherwise `getBoundingClientRect` throws and
+Cypress treats it as an uncaught application error.
+
 ## Committing Code
 
 ### Pull Requests
