@@ -1,0 +1,609 @@
+---
+title: 'Angular examples'
+description: Learn how to mount an Angular component, pass data to an Angular component, test multiple scenarios of Angular components, test Angular signals, and customize `cy.mount()` for Angular.
+sidebar_label: Angular examples
+sidebar_position: 20
+slug: /app/component-testing/angular/examples
+---
+
+<ProductHeading product="app" />
+
+# Angular Examples
+
+:::info
+
+<WhatYoullLearn />
+
+- How to mount an Angular component
+- How to pass data to an Angular component
+- How to test multiple scenarios of Angular components
+- How to test Angular signals
+- How to customize the `cy.mount()` for Angular
+
+:::
+
+## Mounting Components
+
+### Using `cy.mount()`
+
+To mount a component with `cy.mount()`, import the component and pass it to the
+method:
+
+```ts
+import { StepperComponent } from './stepper.component'
+
+it('mounts', () => {
+  cy.mount(StepperComponent)
+})
+```
+
+### Passing Data to a Component
+
+You can pass inputs and outputs to a component by setting
+[componentProperties](/app/component-testing/angular/api#MountConfig)
+in the options:
+
+```ts
+cy.mount(StepperComponent, {
+  componentProperties: {
+    count: 100,
+  },
+})
+```
+
+### Testing Event Handlers
+
+Pass a Cypress [spy](/app/guides/stubs-spies-and-clocks#Spies) to an event
+prop and validate it was called:
+
+```ts
+it('clicking + fires a change event with the incremented value', () => {
+  cy.mount(StepperComponent, {
+    componentProperties: {
+      change: createOutputSpy('changeSpy'),
+    },
+  })
+  cy.get('[data-cy=increment]').click()
+  cy.get('@changeSpy').should('have.been.calledWith', 1)
+})
+```
+
+### Imports/Declarations/Providers
+
+If you need to set up any additional `imports`, `declarations`, or `providers`
+for your component to mount successfully, you can set them in the options
+(similar to setting them up in `ngModule` in a app):
+
+:::info
+Note: `imports`, `declarations`, and `providers` options do not work with `standalone` components as they are set within the test `ngModule`. This is the default behavior in Angular 19.
+:::
+
+```ts
+cy.mount(ComponentThatFetchesData, {
+  imports: [HttpClientModule],
+  declarations: [ButtonComponent],
+  providers: [DataService],
+})
+```
+
+See
+[Default Declarations, Providers, or Imports](/app/component-testing/angular/examples#Default-Declarations-Providers-or-Imports)
+to set up common options in a custom `cy.mount()` command to avoid having to
+repeat this boilerplate for each test.
+
+### Using Standalone
+
+Not only are [Standalone Components](https://angular.io/guide/standalone-components) supported, they are the simplest components to write tests for.
+Standalone Components provide the Angular compiler with everything it needs to compile through its [`@Component()`](https://angular.io/api/core/Component) decorator.
+This means that in most cases a Standalone Component can be mounted without ever providing any `imports`, `decorators`, or `providers`. Mounting then becomes as simple as:
+
+```ts
+cy.mount(MyStandaloneComponent)
+```
+
+### Using Angular Template Syntax
+
+The `cy.mount()` method also supports the Angular template syntax when mounting
+a component. Some developers might prefer this approach to the object based
+mount style:
+
+```ts
+cy.mount(`<app-stepper [count]="100"></app-stepper>`, {
+  declarations: [StepperComponent],
+})
+```
+
+> When using template syntax, the component needs to added to the declarations
+> in the options parameter.
+
+Using with event emitter spy:
+
+```ts
+cy.mount('<app-button (click)="onClick.emit($event)">Click me</app-button>', {
+  declarations: [ButtonComponent]
+  componentProperties: {
+    onClick: createOutputSpy('onClickSpy'),
+  },
+})
+cy.get('button').click();
+cy.get('@onClickSpy').should('have.been.called');
+```
+
+### Accessing the Component Instance
+
+There might be times when you might want to access the component instance
+directly in your tests. To do so, use `.then()`, which enables us to work with
+the subject that was yielded from the `cy.mount()` command. In this case, mount
+yields an object that contains the rendered component and the fixture.
+
+In the below example, we use the component to spy directly on the `change` event
+emitter.
+
+```ts
+it('clicking + fires a change event with the incremented value', () => {
+  cy.mount(
+    '<app-stepper count="100" (change)="change.emit($event)"></app-stepper>',
+    {
+      componentProperties: { change: new EventEmitter() },
+      declarations: [StepperComponent],
+    }
+  ).then((wrapper) => {
+    console.log({ wrapper })
+    cy.spy(wrapper.component.change, 'emit').as('changeSpy')
+    return cy.wrap(wrapper).as('angular')
+  })
+  cy.get(incrementSelector).click()
+  cy.get('@changeSpy').should('have.been.calledWith', 101)
+})
+```
+
+### Working with Legacy @Input() Decorators
+
+With the release of Angular 18, [signals](https://angular.dev/guide/signals) became the preferred way to handle data binding.
+However, legacy components that use `@Input()` and `@Output()` decorators are still supported.
+
+Interacting with legacy `@Input()` decorators is a bit different than working with signals.
+In order to update the `@Input()` value, you need to use the `componentRef.setInput` method so Angular change detection runs properly.
+Otherwise, you may see errors.
+
+```ts
+cy.mount(StepperComponent, { componentProperties: { count: 100 } })
+  .then(({ fixture }) => {
+    return cy.contains('span', '100').wrap(fixture)
+  })
+  .then((fixture) => {
+    fixture.componentRef.setInput('count', 110)
+    return cy.contains('span', '110')
+  })
+```
+
+### Using createOutputSpy()
+
+To make spying on event emitters easier, there is a utility function called
+`createOutputSpy()` which can be used to automatically create an `EventEmitter`
+and setup the spy on it's `.emit()` method. It can be used like the following:
+
+```ts
+import { createOutputSpy } from 'cypress/angular'
+
+it('clicking + fires a change event with the incremented value', () => {
+  // Arrange
+  cy.mount('<app-stepper (change)="change.emit($event)"></app-stepper>', {
+    declarations: [StepperComponent],
+    componentProperties: {
+      change: createOutputSpy<boolean>('changeSpy'),
+    },
+  })
+  cy.get(incrementSelector).click()
+  cy.get('@changeSpy').should('have.been.called')
+})
+```
+
+### Using autoSpyOutputs (deprecated)
+
+:::caution
+
+The `autoSpyOutputs` flag is deprecated and not supported in `cypress/angular-zoneless` and will be removed in a future version.
+
+:::
+
+You might find yourself repeatedly creating a `cy.spy()` for each of your
+component outputs. Because of this, we created an easy mechanism to handle this
+for you. This feature can be turned on by passing the `autoSpyOutputs` flag into
+`MountConfig`. After the component has been mounted you can then access each of
+the generated spies using the `@Output()` property name + `Spy`. So our `change`
+property can be accessed via its alias of `cy.get('@changeSpy')`
+
+```ts
+it('clicking + fires a change event with the incremented value', () => {
+  cy.mount(StepperComponent, {
+    autoSpyOutputs: true,
+    componentProperties: {
+      count: 100,
+    },
+  })
+  cy.get(incrementSelector).click()
+  cy.get('@changeSpy').should('have.been.calledWith', 101)
+})
+```
+
+:::caution
+
+The `autoSpyOutput` flag only works when passing in a component to the mount
+function. It currently does not work with the template syntax.
+
+:::
+
+### Signals
+
+:::info
+
+With Cypress 14, signal support is directly included in the `cypress/angular` testing harness.
+
+:::
+
+For the below examples, we'll be working with a very simple component called `TestComponent`, which looks something like shown below:
+
+```typescript
+// app/components/test-component.component.ts
+import { Component, input, model } from '@angular/core'
+
+@Component({
+  selector: 'test-component',
+  templateUrl: './test-component.component.html',
+  standalone: true,
+})
+export class TestComponent {
+  title = input.required<string>()
+  count = model<number>(1)
+}
+```
+
+```html
+<!-- app/components/test-component.component.html -->
+<p data-cy="test-component-title-display">{{ title() }}</p>
+<p data-cy="test-component-count-display">{{ count() }}</p>
+<button data-cy="test-component-count-incr" (click)="count.set(count() + 1)">
+  Increase
+</button>
+<button data-cy="test-component-count-decr" (click)="count.set(count() - 1)">
+  Decrease
+</button>
+```
+
+#### Testing Signals
+
+There are two ways to test signals within Cypress Component Testing:
+
+1. [Inferred Generic Type](#Inferred-Generic-Type)
+2. [Writable Signal](#Writable-Signal)
+
+##### Inferred Generic Type
+
+In the example below, the `title` prop being passed into our `TestComponent` is a `string`. A `string` is the generic type of our `input()` signal we defined in our `TestComponent`.
+
+```typescript
+let titleProp = 'Test Component'
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: titleProp,
+  },
+})
+
+cy.get('[data-cy="test-component-title-display"]').should(
+  'have.text',
+  'Test Component'
+)
+```
+
+:::info
+Under the hood, Cypress wraps the generic value in a writable `signal()` and merges it into the prop. In other words, this example is really:
+
+```typescript
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: signal('Test Component'),
+  },
+})
+```
+
+:::
+
+This works for any signal. Shown below is an example of testing a `model()` signal with a generic type `number` as seen in our `TestComponent`:
+
+```ts
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: 'Test Component',
+    count: 3,
+  },
+})
+
+cy.get('[data-cy="test-component-count-display"]').should('have.text', '3')
+```
+
+##### Writable Signal
+
+Inferred generic types work very well for most test cases. However, they don't allow us to update the prop in the component after the prop is passed in. For this use case, we need to use a writable `signal()`.
+
+This allows us to test our one-way data binding for our `input()` signals.
+
+```typescript
+const myTitlePropAsSignal = signal('Test Component')
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: myTitlePropAsSignal,
+  },
+})
+
+cy.get('[data-cy="test-component-title-display"]').should(
+  'have.text',
+  'Test Component'
+)
+cy.then(() => {
+  // now set the input() through a signal to update the one-way binding
+  myTitlePropAsSignal.set('FooBar')
+})
+
+cy.get('[data-cy="test-component-title-display"]').should('have.text', 'FooBar')
+```
+
+And our two-way data binding for our `model()` signals.
+
+```typescript
+let count = signal(5)
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: 'Test Component',
+    count,
+  },
+})
+
+cy.then(() => {
+  // now set the model() through a signal to update the binding in the component
+  count.set(8)
+})
+
+cy.get('[data-cy="test-component-count-display"]').should('have.text', '8')
+
+// some action occurs that changes the count to 9 inside the component, which updates the binding in our test
+cy.get('[data-cy="test-component-count-incr"]').click()
+cy.get('[data-cy="test-component-count-display"]').should('have.text', '9')
+cy.then(() => {
+  expect(count()).to.equal(9)
+})
+```
+
+##### Change Spies
+
+Cypress doesn't propagate changes via spy from `input()` signals.
+
+For writable signals, such as `model()`s or `signal()`s, Cypress **will** propagate changes if an output spy is created with the prop's name suffixed with `Change`. In the example below,
+`countChange` will spy on changes to the `count` signal.
+
+```typescript
+cy.mount(TestComponent, {
+  componentProperties: {
+    title: 'Test Component',
+    count: 4,
+    // @ts-expect-error
+    countChange: createOutputSpy('countChange'),
+  },
+})
+
+// some action occurs that changes the count
+cy.get('[data-cy="test-component-count-incr"]').click()
+
+cy.get('@countChange').should('have.been.called')
+```
+
+These spies can automatically be created if `autoSpyOutputs: true` is configured. The suffix in this case will be `ChangeSpy`.
+
+## Testing Error States
+
+<ComponentTestingErrorStates />
+
+```ts
+import { UserProfileComponent } from './user-profile.component'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(UserProfileComponent)
+})
+```
+
+### Testing with a custom `ErrorHandler`
+
+The recommended way to observe render errors in Angular is a custom
+[`ErrorHandler`](https://angular.dev/api/core/ErrorHandler) provider. Angular
+routes errors thrown during change detection to the `ErrorHandler`, so you can
+provide one backed by a [`cy.stub()`](/api/commands/stub) and assert it was
+called:
+
+```ts
+import { ErrorHandler } from '@angular/core'
+import { ChildWithErrorComponent } from './child-with-error.component'
+
+it('routes render errors to the ErrorHandler', () => {
+  const handleError = cy.stub().as('handleError')
+
+  // A custom ErrorHandler observes the error, but it does NOT stop the error
+  // from propagating to Cypress as an uncaught exception. Cypress fails on
+  // uncaught exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include('I crashed!')
+
+    return false
+  })
+
+  cy.mount(ChildWithErrorComponent, {
+    providers: [{ provide: ErrorHandler, useValue: { handleError } }],
+  })
+
+  cy.get('@handleError').should('have.been.called')
+})
+```
+
+## Custom Mount Commands
+
+### Customizing `cy.mount()`
+
+By default, `cy.mount()` is a simple passthrough to `mount()`, however, you can
+customize `cy.mount()` to fit your needs. For instance, you may find yourself
+doing repetitive work during mounting. In order to reduce boilerplate you may
+find it useful to create a custom mount command.
+
+### Default Declarations, Providers, or Imports
+
+If you find yourself registering a bunch of declarations, providers, or imports
+in your individual tests, we recommend doing them all within a custom
+`cy.mount()` command. The overhead is usually minimal for all your tests and it
+helps keep your spec code clean.
+
+Below is a sample that registers several default component declarations while
+still allowing additional ones to be passed in via the config param. The same
+pattern can also be applied to providers and module imports.
+
+<Tabs>
+<TabItem value="cypress/support/component.js">
+
+```js
+import { mount } from 'cypress/angular'
+import { ButtonComponent } from 'src/app/button/button.component'
+import { CardComponent } from 'src/app/card/card.component'
+
+const declarations = [ButtonComponent, CardComponent]
+
+function customMount(component, config) {
+  if (!config) {
+    config = { declarations }
+  } else {
+    config.declarations = [...(config?.declarations || []), ...declarations]
+  }
+  return mount(component, config)
+}
+
+Cypress.Commands.add('mount', customMount)
+```
+
+</TabItem>
+<TabItem value="cypress/support/component.ts">
+
+```ts
+import { Type } from '@angular/core'
+import { mount, MountConfig, MountResponse } from 'cypress/angular'
+import { ButtonComponent } from 'src/app/button/button.component'
+import { CardComponent } from 'src/app/card/card.component'
+
+const declarations = [ButtonComponent, CardComponent]
+
+function customMount<T>(component: string | Type<T>, config?: MountConfig<T>) {
+  if (!config) {
+    config = { declarations }
+  } else {
+    config.declarations = [...(config?.declarations || []), ...declarations]
+  }
+  return mount<T>(component, config)
+}
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Angular Components
+       * @param component Angular Component or template string to mount
+       * @param config Options passed to Angular TestBed
+       */
+      mount<T>(
+        component: string | Type<T>,
+        config?: MountConfig<T>
+      ): Cypress.Chainable<MountResponse<T>>
+    }
+  }
+}
+
+Cypress.Commands.add('mount', customMount)
+```
+
+</TabItem>
+</Tabs>
+
+This custom mount command will allow you to skip manually passing in the
+`ButtonComponent` and `CardComponent` as declarations into each `cy.mount()`
+call.
+
+### autoSpyOutputs (deprecated)
+
+:::caution
+
+The `autoSpyOutputs` flag is deprecated and not supported in `cypress/angular-zoneless` and will be removed in a future version.
+
+:::
+
+Here is an example of defaulting `autoSpyOutputs` for every mounted component:
+
+<Tabs>
+<TabItem value="cypress/support/component.js">
+
+```js
+import { mount } from 'cypress/angular'
+
+Cypress.Commands.add('mount', (component, config) => {
+  return mount(component, {
+    ...config,
+    autoSpyOutputs: true,
+  })
+})
+```
+
+</TabItem>
+<TabItem value="cypress/support/component.ts">
+
+```ts
+import { Type } from '@angular/core'
+import { mount, MountConfig, MountResponse } from 'cypress/angular'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Helper mount function for Angular Components with autoSpyOutputs enabled
+       * @param component Angular Component or template string to mount
+       * @param config Options passed to Angular TestBed
+       */
+      mount<T>(
+        component: Type<T> | string,
+        config?: MountConfig<T>
+      ): Cypress.Chainable<MountResponse<T>>
+    }
+  }
+}
+
+Cypress.Commands.add(
+  'mount',
+  <T>(component: Type<T> | string, config?: MountConfig<T>) => {
+    return mount(component, {
+      ...config,
+      autoSpyOutputs: true,
+    })
+  }
+)
+```
+
+</TabItem>
+</Tabs>
+
+:::caution
+
+The `autoSpyOutput` flag only works when passing in a component to the mount
+function. It currently does not work with the template syntax.
+
+:::

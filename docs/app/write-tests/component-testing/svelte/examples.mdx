@@ -1,0 +1,143 @@
+---
+title: 'Svelte examples'
+description: Learn how to test Svelte components with Cypress Component Testing.
+sidebar_label: Svelte examples
+sidebar_position: 20
+slug: /app/component-testing/svelte/examples
+---
+
+<ProductHeading product="app" />
+
+# Svelte Examples
+
+:::info
+
+<WhatYoullLearn />
+
+- How to mount a Svelte component
+- How to pass props to a Svelte component
+- How to test event handlers in a Svelte component
+- How to access the component instance in a test
+
+:::
+
+## Mounting Components
+
+### Using `cy.mount()`
+
+To mount a component with `cy.mount()`, import the component and pass it to the
+method:
+
+```ts
+import { Stepper } from './stepper.svelte'
+
+it('mounts', () => {
+  cy.mount(Stepper)
+})
+```
+
+### Passing Data to a Component
+
+You can pass props to a component by setting props in the options: `cy.mount()`:
+
+```ts
+it('mounts', () => {
+  cy.mount(Stepper, { props: { count: 100 } })
+})
+```
+
+### Testing Event Handlers
+
+To test emitted events from a Svelte component, we need to pass in a callback
+for when we increment the stepper. The Stepper component
+will need to invoke this callback for us. We can also pass in a
+Cypress spy so we can query the spy later for results. In the example below, we
+pass in the `onChange` callback handler and validate it was called as expected:
+
+```js
+it('clicking + fires a change event with the incremented value', () => {
+  const onChangeSpy = cy.spy().as('onChangeSpy')
+  cy.mount(Stepper, { props: { onChange: onChangeSpy } })
+  cy.get('[data-cy=increment]').click()
+  cy.get('@onChangeSpy').should('have.been.calledWith', 1)
+})
+```
+
+### Accessing the Component Instance
+
+There might be times when you might want to access the component instance
+directly in your tests. To do so, use `.then()`, which enables us to work with
+the subject that was yielded from the `cy.mount()` command.
+
+```js
+cy.mount(Stepper).then(({ component }) => {
+  //component is the rendered instance of Stepper
+})
+```
+
+## Testing Error States
+
+<ComponentTestingErrorStates />
+
+```js
+import UserProfile from './UserProfile.svelte'
+
+it('surfaces a render error', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Assert on the error thrown during render...
+    expect(err.message).to.include('user is required')
+
+    // ...and return false so Cypress does not fail the test.
+    return false
+  })
+
+  cy.mount(UserProfile)
+})
+```
+
+### Testing with `<svelte:boundary>`
+
+The recommended way to render fallback UI in Svelte 5 is
+[`<svelte:boundary>`](https://svelte.dev/docs/svelte/svelte-boundary) with a
+`failed` snippet. Rather than nesting components through `cy.mount()`, the
+cleanest approach is a dedicated fixture component that imports the failing
+component directly, then mount that fixture and assert the fallback is shown:
+
+```js
+// ErrorBoundary.cy.js
+import ErrorBoundary from './ErrorBoundary.svelte'
+
+it('displays the fallback UI on error', () => {
+  // <svelte:boundary> renders fallback UI, but it does NOT stop the error from
+  // propagating to Cypress as an uncaught exception. Cypress fails on uncaught
+  // exceptions by default, so we must still suppress that behavior.
+  cy.on('uncaught:exception', (err) => {
+    // Only suppress the specific error we expect.
+    expect(err.message).to.include('I crashed!')
+
+    return false
+  })
+
+  cy.mount(ErrorBoundary)
+
+  cy.get('[data-cy=fallback]').should('contain', 'Something went wrong.')
+})
+```
+
+Where the `ErrorBoundary` fixture wraps the failing component in a
+`<svelte:boundary>` with a `failed` snippet:
+
+```html
+<!-- ErrorBoundary.svelte -->
+<script>
+  import ChildWithError from './ChildWithError.svelte'
+</script>
+
+<svelte:boundary>
+  <ChildWithError />
+
+  {#snippet failed(error)}
+  <div data-cy="fallback">Something went wrong.</div>
+  {/snippet}
+</svelte:boundary>
+```
