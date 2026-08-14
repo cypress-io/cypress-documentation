@@ -1,0 +1,100 @@
+---
+title: 'AI in Cypress: test generation, agent skills, and agentic debugging'
+description: 'A map of every AI capability in Cypress: author tests with Cypress Studio and cy.prompt, give AI coding agents real Cypress context with skills and Cloud MCP, and analyze runs with Cypress AI.'
+sidebar_label: AI in Cypress
+sidebar_position: 10
+slug: /app/ai/overview
+---
+
+<ProductHeading product="app" />
+
+# AI in Cypress
+
+:::info
+
+<WhatYoullLearn />
+
+- Which Cypress AI capabilities write tests for you, and which give your agents context
+- What each capability does and when to reach for it
+- What runs locally and what needs a Cypress Cloud connection
+
+:::
+
+AI shows up in Cypress in two distinct ways, and knowing which one you need is
+the fastest route to the right page.
+
+**AI that writes tests for you.** You are still the author. Cypress Studio and
+[`cy.prompt`](/api/commands/prompt) turn recorded interactions or plain language
+into real Cypress commands, so less of your time goes to boilerplate and
+selector archaeology.
+
+**Cypress made legible to your agents.** Here your AI coding tool is the
+consumer. Skills, Cloud MCP, and agent-ready reports give an agent accurate
+Cypress context, so it produces tests that follow your conventions instead of
+generic ones that break in CI.
+
+Most teams end up using both. The rest of this page is a map of what exists in
+each half.
+
+## Write tests with AI
+
+Both options below produce ordinary Cypress code that you can read, edit, and
+commit. Neither is a black box: `cy.prompt` exposes the generated commands in
+the Command Log, and Studio writes directly into your spec file.
+
+- **[Cypress Studio](/app/guides/cypress-studio)** records real interactions in
+  your app and turns them into end-to-end tests. Connected to Cypress Cloud,
+  Studio AI also recommends assertions as you record. Reach for it when you want
+  to author a test by clicking through your app.
+- **[Generate tests with `cy.prompt`](/app/guides/ai-test-generation)** turns
+  natural language steps into executable Cypress commands, and can keep them
+  working as your UI changes. Reach for it when describing a flow is faster than
+  recording one.
+
+## Give agents Cypress context
+
+An AI coding agent that knows nothing about Cypress writes tests that look
+plausible and then fail in CI: brittle selectors, arbitrary waits, and
+assertions that do not retry. These two capabilities give it better information
+to work from.
+
+- **[Cypress skills for AI agents](/app/tooling/ai-skills)** teach your coding
+  tool to write, review, and explain tests the way an experienced Cypress
+  engineer would. Install them once per project.
+- **[Cloud MCP](/cloud/integrations/cloud-mcp)** connects your agent to Cypress
+  Cloud so it can read real run results, failures, and
+  [Test Replay](/cloud/features/test-replay) data while you work, rather than
+  guessing at why something failed.
+
+## Analyze and debug with AI
+
+- **[Cypress AI](/cloud/features/cypress-ai-features)** explains failures and
+  summarizes test intent across recorded runs in Cypress Cloud.
+- **[Work with AI agents in Cypress Accessibility](/accessibility/work-with-ai-agents)**
+  and **[Work with AI agents in UI Coverage](/ui-coverage/work-with-ai-agents)**
+  cover tuning those reports so an agent can act on them, then prompting it to
+  triage findings and plan the work.
+
+## What each capability needs
+
+| Capability                              | Where it runs |       Needs Cypress Cloud       |
+| --------------------------------------- | :-----------: | :-----------------------------: |
+| Cypress Studio recording                |  Cypress App  |               No                |
+| Studio AI assertion suggestions         |  Cypress App  |               Yes               |
+| `cy.prompt`                             |  Cypress App  |     Yes, on any Cloud plan      |
+| Cypress skills for AI agents            |  Your editor  |               No                |
+| Cloud MCP                               |  Your editor  |               Yes               |
+| Cypress AI failure and intent summaries | Cypress Cloud |     Yes, on any Cloud plan      |
+| Agent-ready accessibility reports       | Cypress Cloud | Yes, with Cypress Accessibility |
+| Agent-ready coverage reports            | Cypress Cloud |      Yes, with UI Coverage      |
+
+Organization admins and owners can turn AI capabilities on or off for everyone
+in the organization. See
+[Disabling AI features](/cloud/features/cypress-ai-features#Disabling-AI-features).
+
+## See also
+
+- [`cy.prompt()`](/api/commands/prompt) - the command reference
+- [Cypress Studio](/app/guides/cypress-studio)
+- [Cypress skills for AI agents](/app/tooling/ai-skills)
+- [Cloud MCP](/cloud/integrations/cloud-mcp)
