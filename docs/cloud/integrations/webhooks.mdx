@@ -31,9 +31,8 @@ ticket, gate a deployment, or forward results into any internal system.
 
 :::note
 
-**Early access**: Webhooks are rolling out to Cypress Cloud and may not yet be
-available for every organization. Today, webhooks support the `run.completed`
-event. Additional events are coming soon.
+**Early access**: Webhooks will be available on all paid plans and during trials. The feature is rolling to Cypress Cloud gradually and may not yet be
+available for every organization. If you do not see webhooks in your project settings but want to try it early, contact your Cypress representative.
 
 :::
 
@@ -41,15 +40,14 @@ event. Additional events are coming soon.
 
 **You need two things to get started:**
 
-- The ability to manage webhooks for the project. You must be a **Team Admin**
-  on the project, or an **Org Admin** or **Owner** of the Cypress Cloud
+- **The ability to manage webhooks for the project.** You must be an **Owner**, **Admin**, or **Team Admin** of your Cypress Cloud organization
   organization. See [User roles](/cloud/account-management/users#User-roles) for
   details. Anyone who can view the project can _view_ webhooks, but only those
   roles can create, edit, enable, disable, delete, test, or redeliver them.
-- A publicly reachable endpoint that accepts `POST` requests. **HTTPS is
+- **A publicly-reachable endpoint** that accepts `POST` requests. **HTTPS is
   recommended.** Cypress Cloud will not deliver to private, loopback, or internal
   network addresses (see [Security](#Security)). HTTP URLs are accepted, but
-  payloads then travel unencrypted.
+  be aware HTTP payloads travel unencrypted.
 
 Webhooks are configured **per project**. You can create up to **5 webhooks per
 project**.
@@ -77,17 +75,17 @@ project**.
 In the **Add webhook** dialog, configure the following:
 
 - **Payload URL** _(required)_: The URL Cypress Cloud will send a `POST` request
-  to, for example `https://example.com/receive-webhook`. **HTTPS is recommended.**
+  to, for example `https://example.com/receive-webhook`.
 - **Secret** _(optional, recommended)_: A signing secret used to verify that a
   request genuinely came from Cypress Cloud. Provide your own value (at least 16
   characters) or click **Generate secret** to create a random one. **Copy and
   store the secret somewhere safe. It is shown only once and cannot be viewed
-  again**, though you can rotate it later by editing the webhook. See
+  again**. If you lose it, you can rotate it later by editing the webhook. See
   [Verify webhook signatures](#Verify-webhook-signatures).
 - **Events that will trigger webhook**: Select which events should be delivered
-  to this endpoint. At least one event is required.
+  to this endpoint. At least one event is required. **Currently, only the `run.completed` event is available**, so it is preselected by default and cannot be removed.
 - **Enable this webhook**: Whether the webhook is active. Enabled by default;
-  disabled webhooks are skipped during delivery.
+  disabled webhooks not called when
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/add-webhook-modal.png"
@@ -128,21 +126,21 @@ any other.
 Each webhook appears as a row in the **Webhooks** panel showing its URL, an
 enable/disable toggle, and the status of its most recent delivery (for example,
 _Last delivery succeeded_, _Retrying_, _Last delivery failed_, _Delivering…_,
-or _Never triggered_). Use the inline controls and the **⋯** actions menu to
+or _Never triggered_). Use the inline controls and the _**Options (⋯)**_ menu to
 manage it:
 
 - **Enable or disable**: Toggle the switch on the row. A disabled webhook keeps
   its configuration but receives no deliveries.
-- **Edit**: Open the **⋯** menu and select **Edit** to change the URL, events,
+- **Edit**: Open the Options menu and select **Edit** to change the URL, events,
   or secret.
   - **Generate new secret**: Leaving the **Secret** field blank keeps the
     existing secret. To rotate it, enter a new value (at least 16 characters) or
     click **Generate new secret**. Copy the new secret and store it somewhere
     safe. It is shown only once. After you save, the previous secret no longer
     verifies requests, so update your endpoint to use the new value.
-- **Recent deliveries**: Open the **⋯** menu and select **Recent deliveries** to
+- **Recent deliveries**: Open the Options menu and select **Recent deliveries** to
   review delivery history. See [Delivery history and retries](#Delivery-history-and-retries).
-- **Delete**: Open the **⋯** menu and select **Delete**. This permanently
+- **Delete**: Open the Options menu and select **Delete**. This permanently
   removes the webhook **and its delivery history**. This cannot be undone.
 
 <DocsImage
@@ -160,13 +158,13 @@ webhook** button is disabled until you delete an existing webhook.
 
 ## Events
 
-Select one or more of the following events when creating or editing a webhook:
+Currently only one event in the Cypress Cloud lifecycle triggers a webhook:
 
 | Event           | Description                                                                                         |
 | --------------- | --------------------------------------------------------------------------------------------------- |
 | `run.completed` | Sent when a Cypress Cloud run finishes (`passed`, `failed`, `errored`, `timedOut`, or `cancelled`). |
 
-More events are coming soon. There is also a special `webhook.ping` event that
+There is also a special `webhook.ping` event that
 is **only** sent by the [Send a test event](#Send-a-test-event) action. You
 cannot subscribe to it directly.
 
@@ -238,9 +236,9 @@ following fields:
 | `tags`              | string[]       | The tags the run was recorded with (sorted).                           |
 | `groups`            | string[]       | The run groups (sorted).                                               |
 
+</details>
 <details>
 <summary>Example <code>run.completed</code> request body</summary>
-
 ```json
 {
   "runNumber": 42,
@@ -274,7 +272,6 @@ following fields:
   "groups": ["chrome", "firefox"]
 }
 ```
-
 </details>
 
 :::caution
@@ -284,8 +281,6 @@ not a numeric identifier. Fields that are unavailable for a given run (such as
 CI or commit metadata for a run recorded outside of CI) are sent as `null`.
 
 :::
-
-</details>
 
 ## Verify webhook signatures
 
@@ -454,7 +449,7 @@ def receive_webhook():
 
 ## Delivery history and retries
 
-Open the **⋯** actions menu on a webhook and select **Recent deliveries** to
+Open the Options menu on a webhook and select **Recent deliveries** to
 review its delivery history. Cypress Cloud retains up to **100** deliveries per
 webhook, newest first. Each entry shows the event type and version, timestamps,
 and a status. Expand a delivery to inspect the full per-attempt request and
