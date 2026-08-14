@@ -11,11 +11,11 @@ sidebar_position: 10
 
 Your UI Coverage score is built from the interactive parts of your app: the buttons, inputs, links, and controls a user can actually touch. To read your report with confidence, it helps to know the three rules that shape it:
 
-1. **An element is counted when it is interactive**, which forms the denominator of your score.
-2. **An interactive element is marked as tested when a recognized Cypress command targets it**, which forms the numerator.
+1. **An element is counted when it is interactive and has been visible in the run**, which forms the denominator of your score.
+2. **An interactive element is marked as tested when a recognized Cypress command targets it**, which forms the numerator. Links are also marked tested when a test visits their destination.
 3. **A link is flagged as untested when its destination is never visited** during your run.
 
-Put simply, your score is the share of interactive elements your tests exercise: **tested ÷ total**, where [grouped elements](/ui-coverage/core-concepts/element-grouping) count once. See [how the score is calculated](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) for the details.
+In short, your score is the share of interactive elements your tests exercise: **tested ÷ total**. Links share this total: each distinct destination counts as one unit. See [how the score is calculated](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) for the details.
 
 This page covers all three, along with the configuration and markup overrides you can use to make each one match your application. All three are computed from [Test Replay](/cloud/features/test-replay) data, so they work automatically with no setup or instrumentation. Reach for the overrides only when the defaults don't fit.
 
@@ -23,7 +23,7 @@ This page covers all three, along with the configuration and markup overrides yo
 
 <DocsImage
   src="/img/ui-coverage/core-concepts/how-ui-coverage-fits-together.svg"
-  alt="Flow diagram: Test Replay captures DOM snapshots, UI Coverage analyzes each one to detect interactive elements (the total) and the interaction commands that mark them tested (the numerator), and flags untested links, all feeding the coverage score and report."
+  alt="Flow diagram: Test Replay captures DOM snapshots, UI Coverage analyzes each one to produce scoring points from every visible interactive element including links (the denominator), to credit interactions and link visits (the numerator), and to list untested elements and untested links separately as coverage gaps, all feeding the coverage score and report."
   caption="How UI Coverage turns a recorded run into a coverage score."
   noBorder="true"
 />
@@ -32,13 +32,24 @@ This page covers all three, along with the configuration and markup overrides yo
 
 UI Coverage follows the WHATWG definition of [interactive content](https://html.spec.whatwg.org/dev/dom.html#interactive-content), extended with a few Cypress-specific rules. An element is counted as interactive when it falls into any of these categories:
 
-- **Natively interactive elements**: elements the browser already treats as interactive, such as `<a>` links, `<button>`, form controls like `<input>` and `<select>`, and any element that is `contenteditable`.
-- **Elements with an interactive ARIA role**: an explicit `role` such as `button`, `checkbox`, `tab`, or `menuitem`, or an `aria-haspopup` value that opens a menu or dialog.
-- **Tab-navigable elements**: any element made keyboard-focusable with a `tabindex` of `0` or greater.
+- **Natively interactive elements**: elements the browser already treats as interactive, such as `<a>` links, `<button>`, form controls like `<input>`, and `<select>`, and any element that is `contenteditable`. A `<label>` counts on its own and is [grouped with the control it identifies](/ui-coverage/core-concepts/element-grouping#Automatic-grouping).
+- Most **elements with an interactive ARIA role**: an explicit `role` such as `button`, or `checkbox`.
+- **Tab-navigable elements**: any element made keyboard-focusable with a `tabindex` of `0` or greater. Sometimes required on certain interactive roles.
 
-Contact links are the one deliberate exception: anchors whose `href` uses `tel:`, `mailto:`, or `sms:` are not treated as interactive. See [Untested Links](#Untested-Links) for how the rest of an anchor's `href` is handled.
+An element with a widget role is skipped when it contains another interactive element, so a `role="button"` wrapper around a real `<button>` is counted once rather than twice.
 
-Because detection is based on semantics rather than event handlers, a real `<button>` is recognized automatically, while a `<div>` wired up with a click handler is not, until you give it interactive semantics.
+**Contact links** are the one deliberate exception: anchors whose `href` uses `tel:`, `mailto:`, or `sms:` are not treated as interactive.
+
+Because detection is based on semantics rather than event handlers, a real `<button>` is recognized automatically, while a `<div>` wired up with a click handler is not, until you give it interactive semantics or use the `data-cy-ui-interactive` attribute, described below.
+
+### Visibility
+
+An interactive element only counts toward your score if it was **visible in at least one snapshot** during the run.
+
+:::note
+
+A control that only ever sits inside a collapsed menu your tests never open is not counted at all. It neither raises nor lowers your score. This is why your total element count can be lower than the number of controls you know exist in your markup. UI Coverage will flag the _trigger_ element as untested, as an unopened door.
+:::
 
 <DocsImage
   src="/img/ui-coverage/guides/cypress-ui-coverage-untested-elements-view-drilldown.png"
@@ -56,6 +67,8 @@ When the automatic rules don't match your app, the `data-cy-ui-interactive` attr
 | `exclude`     | Removes the element from UI Coverage, even when it's normally interactive.       |
 | `exclude-all` | Removes the element and every element nested inside it.                          |
 | `reset`       | Re-enables tracking for a subtree nested inside an element marked `exclude-all`. |
+
+Only the closest `data-cy-ui-interactive` ancestor applies.
 
 **Include a custom control** the browser doesn't recognize:
 
@@ -114,6 +127,12 @@ An interactive element is marked as **tested** when a recognized Cypress command
 - `trigger`
 - `type`
 - `uncheck`
+
+:::note
+
+`scrollIntoView` is a special case: it credits the element's nearest **scrollable ancestor**, not the element you called it on. That container must have a non-negative `tabindex` or be otherwise interactive in order to appear in the report.
+
+:::
 
 Using at least one of them on every interactive element is what drives your coverage score, so a test flow naturally marks the elements it exercises as tested:
 

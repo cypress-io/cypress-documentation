@@ -15,6 +15,8 @@ import CypressInstallCommands from '@site/docs/partials/_cypress-install-command
 import CypressCacheClearCommands from '@site/docs/partials/_cypress-cache-clear-commands.mdx'
 import CypressInstallBinaryCommands from '@site/docs/partials/_cypress-install-binary-commands.mdx'
 import CypressEnvVsCypressExpose from '@site/docs/partials/_cy-env-vs-cypress-expose.mdx'
+import CypressEnvYieldedValueCaution from '@site/docs/partials/_cy-env-yielded-value-caution.mdx'
+import CypressEnvAssertDerivedValue from '@site/docs/partials/_cy-env-assert-derived-value.mdx'
 import CypressOpenCommands from '@site/docs/partials/_cypress-open-commands.mdx'
 import CypressRunCommands from '@site/docs/partials/_cypress-run-commands.mdx'
 import CypressCommandTabs from '@site/src/components/cypress-command-tabs'
@@ -214,6 +216,8 @@ export default {
   CypressCacheClearCommands,
   CypressInstallBinaryCommands,
   CypressEnvVsCypressExpose,
+  CypressEnvYieldedValueCaution,
+  CypressEnvAssertDerivedValue,
   CypressOpenCommands,
   CypressRunCommands,
   CypressCommandTabs,

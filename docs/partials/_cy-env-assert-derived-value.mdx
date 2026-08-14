@@ -1,0 +1,20 @@
+Every assertion writes to the Command Log, and the entry contains the values
+being compared. Assertions accept no logging options, so you cannot suppress
+them. Assert on a boolean you derive from the value instead.
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.env(['apiKey']).should('deep.include', { apiKey: 'secret-key-12345' })
+// ❌ Command Log: assert expected { apiKey: 'secret-key-12345' } to deep
+// include { apiKey: 'secret-key-12345' }
+```
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```javascript
+cy.env(['apiKey']).then(({ apiKey }) => {
+  expect(Boolean(apiKey)).to.be.true
+})
+// ✅ Command Log: assert expected true to be true
+```

@@ -39,6 +39,15 @@ cy.env(['apiKey']).then(({ apiKey }) => {
 
 See the [`cy.env()`](/api/commands/env) command documentation for complete details.
 
+<CypressEnvYieldedValueCaution />
+
+### Handling the yielded value safely
+
+Keep the value inside a `.then()` callback and pass it straight to the command
+that needs it. [`.then()`](/api/commands/then) adds no entry to the Command Log.
+
+<CypressEnvAssertDerivedValue />
+
 ## Public configuration values
 
 **Use [`Cypress.expose()`](/api/cypress-api/expose)** for public, non-sensitive configuration values.

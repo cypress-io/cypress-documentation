@@ -115,14 +115,13 @@ schedule without blocking every merge.
 
 ### Why compare untested-element counts instead of the coverage score?
 
-The coverage score is the share of your app's interactive elements that your
-tests exercise (tested ÷ total). It's the right number for tracking direction
+The coverage score is the right number for tracking direction
 over time, but a poor signal for a per-run gate: adding a single test can reveal a
 whole page of previously unseen elements and _lower_ the score even though your
 coverage improved.
 
-The **untested-element count per view** is a more direct signal for "did this
-change add gaps?" If a view's `untestedElementsCount` rises above its baseline,
+The **untested element and link counts per view** provide a more direct signal for "did this
+change add gaps?" If a view's untested count rises above its baseline,
 or a brand-new view arrives carrying untested elements, the change introduced
 gaps, regardless of what the percentage did. That's the number the script below
 compares.
@@ -130,12 +129,13 @@ compares.
 ### Baseline structure
 
 The baseline is a small JSON file you commit alongside your code. It records, for
-a known-good run, how many untested elements each view
+a known-good run, how many untested items each view
 had:
 
 - **runNumber**: the run the baseline was captured from, for reference.
 - **runUrl**: a link back to that run in Cypress Cloud.
-- **views**: a map of each view's `displayName` to its `untestedElementsCount`.
+- **views**: a map of each view's `displayName` to its combined untested count
+  (`untestedElementsCount` plus `untestedLinksCount`).
 
 ```json title="ui-coverage-baseline.json"
 {
@@ -201,7 +201,9 @@ getUICoverageResults()
     const improvements = []
 
     views.forEach((view) => {
-      const current = view.untestedElementsCount
+      // Untested links are counted separately from untested elements.
+      // Sum both so a newly unreachable page can't slip through.
+      const current = view.untestedElementsCount + view.untestedLinksCount
       const previous = baseline.views[view.displayName]
 
       if (previous === undefined) {
@@ -234,7 +236,10 @@ getUICoverageResults()
           runNumber,
           runUrl,
           views: Object.fromEntries(
-            views.map((view) => [view.displayName, view.untestedElementsCount])
+            views.map((view) => [
+              view.displayName,
+              view.untestedElementsCount + view.untestedLinksCount,
+            ])
           ),
         },
         null,
@@ -295,15 +300,16 @@ MCP with UI Coverage.
 
 #### New untested elements
 
-A view has **new untested elements** when its `untestedElementsCount` is higher
-than the baseline, or when a view absent from the baseline appears with untested
-elements. This is a coverage regression: the change added interactive elements no
-test exercises. The script fails the build so the pull request can't merge until
+A view has **new untested elements** when its combined untested count
+(`untestedElementsCount` plus `untestedLinksCount`) is higher than the baseline,
+or when a view absent from the baseline appears with untested elements. This is a
+coverage regression: the change added interactive elements or link destinations no
+test reaches. The script fails the build so the pull request can't merge until
 you cover them or exclude them.
 
 #### Resolved gaps
 
-A view has **resolved gaps** when its `untestedElementsCount` is lower than the
+A view has **resolved gaps** when its combined untested count is lower than the
 baseline. This is an improvement: a change added coverage. The script reports
 these but doesn't fail the build, so progress is visible without blocking anyone.
 

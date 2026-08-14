@@ -9,8 +9,11 @@ sidebar_position: 40
 
 # Reduce noise
 
-When you first record a run, UI Coverage reports every interactive element it
-finds. Some of what appears as an "untested element" isn't a real gap. It might
+By default, UI Coverage reports every interactive element it finds, with built-in grouping for repeated elements.
+
+For many projects, you will want to adjust the default identification and grouping of the elements to match your team's goals and how you think about coverage. For example, an action might be possible from dozens of different locations within a page (like an "edit" button on every item in a list). In most cases, UI Coverage will group such actions together based on the repeated DOM structure so that testing **any of the instances** counts as testing **the whole group**.
+
+But sometimes what appears as an "untested element" by default isn't a gap your team would care about. It might
 be the same button counted many times, one element whose generated ID keeps
 changing, or dozens of near-identical pages listed as separate views. Left
 alone, this noise hides the gaps that actually matter.
@@ -29,7 +32,7 @@ _which_ one to reach for.
 This guide is about consolidating and stabilizing elements that _should_ be in
 your report. To remove elements or pages entirely (third-party widgets, admin
 pages, error routes), see [Ignore elements](/ui-coverage/guides/ignore-elements)
-and [Ignore views and links](/ui-coverage/guides/ignore-views-and-links).
+and [Ignore views and links](/ui-coverage/guides/ignore-views-and-links). This guide assumes you have already removed unwanted elements from the report. If you haven't, do that first, as it will make the rest of the work much easier.
 :::
 
 ## Step 1: Recognize the noise
@@ -48,7 +51,7 @@ Open the **UI Coverage** tab for a recent run and look for these patterns:
 - **Elements identified by unstable attributes.** Selectors in the report are
   built from stateful or hashed attributes (like a `data-headlessui-state`
   toggle or a hashed `css-1a2b3c` class) instead of the stable attributes your
-  team recognizes.
+  team recognizes. This can produce noise between pages, but also between runs when using Branch Review to [compare reports](/ui-coverage/guides/compare-reports).
 
 ## Step 2: Diagnose and apply the matching fix
 
@@ -98,11 +101,9 @@ stable prefix:
 }
 ```
 
-The report now shows a single entry instead of three:
-
-```
-.cart [id^='remove-item-'] (3 instances)
-```
+The report now shows a single entry instead of three, named
+`.cart [id^='remove-item-']` with a badge showing the number of grouped elements.
+Hovering the badge reads _3 instances grouped by configuration_.
 
 See the [Element Groups](/ui-coverage/configuration/elementgroups) reference for
 all options.
