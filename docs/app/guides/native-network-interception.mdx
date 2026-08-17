@@ -13,7 +13,7 @@ slug: /app/guides/native-network-interception
 
 Before Cypress 16, Cypress routed every request your application made through the
 legacy network path. That path is how Cypress observed, stubbed, and recorded network
-traffic, and it only spoke HTTP/1.1. Requests that your server would have served over
+traffic, and it only supported HTTP/1.1. Requests that your server would have served over
 HTTP/2 or HTTP/3 in production were downgraded to HTTP/1.1 during a Cypress run.
 
 Starting in Cypress 16, Chrome, Chromium, and Edge intercept test traffic on the
@@ -55,13 +55,10 @@ uses the legacy network path and the Cypress 15 behavior described throughout th
 Changing `forceHttp1` restarts the Cypress server, and the option cannot be set per test
 or per suite.
 
-If setting `forceHttp1` to `true` is what makes your suite pass, and the difference is
+If setting `forceHttp1` to `true` allows your suite to pass, and the difference is
 not one of the documented behaviors below, please
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you
-are seeing. That points to either a bug on the native browser network path or a gap in
-this page — either way, we would rather fix it than require you to keep the option set.
-`forceHttp1` is temporary, so anything that depends on it needs a real fix before it is
-removed.
+are experiencing so it can be investigated.
 
 <ForceHttp1Deprecation />
 
