@@ -73,7 +73,7 @@ Each subcommands exit with `0` on success and `1` on any failure and accepts the
 | `--json`          | Prints the raw JSON result instead of the human-readable rendering        |
 | `--help`, `-h`    | Outputs usage information                                                 |
 
-### `cypress tap sessions` {#cypress-tap-sessions}
+### cypress tap sessions {#cypress-tap-sessions}
 
 Lists the running Cypress sessions the CLI can reach. Pass a listed pid to
 `--session` to target that session with another `tap` command.
@@ -110,10 +110,10 @@ SESSIONS (2)
 ]
 ```
 
-### `cypress tap status` {#cypress-tap-status}
+### cypress tap status {#cypress-tap-status}
 
 Reports where a running Cypress session is in its lifecycle. It is built for
-polling, see [Polling for a verdict]().
+polling, see [Polling for a verdict](#polling).
 
 | Stage                  | Meaning                                                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -137,7 +137,6 @@ PID   PROJECT        TYPE  BROWSER
 ✓ 1  ✖ 1  ○ 2
 ```
 
-EMMILY -- FIX THIS I DONT UNDERSTAND IT
 With `--json`, the output includes `startedAt` from `loading` onwards: the run's
 start time, or `null` while the spec is still building. Always check
 `startedAt` before trusting a verdict. A rerun leaves the previous run's
@@ -161,7 +160,7 @@ With --json, the output carries startedAt from loading onwards (the run's start 
   "results": { "passed": 1, "failed": 1, "pending": 2, "skipped": 1 }
 ```
 
-### `cypress tap specs` {#cypress-tap-specs}
+### cypress tap specs {#cypress-tap-specs}
 
 Lists the specs the current session can run, ordered by last-modified from available git history. The list reflects the session's current testing type; to see the other type's specs, open a session with that type selected.
 
@@ -177,12 +176,12 @@ SPECS (2)
 
 `--json` returns the spec paths as an array.
 
-### `cypress tap run <spec>` {#cypress-tap-run}
+### cypress tap run {#cypress-tap-run}
 
 Runs (or reruns) a spec by its project-relative path, as listed by the
 [`specs`](#cypress-tap-specs). If no browser is open, Cypress launches
 one. The command requests the spec starts and returns immediately, returning does not mean the run started. Poll the
-[`status`](#cypress-tap-status) command for progress; see [Polling for a verdict]().
+[`status`](#cypress-tap-status) command for progress; see [Polling for a verdict](#polling).
 
 ```shell title="Command"
 cypress tap run cypress/e2e/login.cy.ts
@@ -195,7 +194,7 @@ cypress tap run cypress/e2e/login.cy.ts
   browser       Chrome
 ```
 
-### `cypress tap reporter` {#cypress-tap-reporter}
+### cypress tap reporter {#cypress-tap-reporter}
 
 Shows test results on the command line the way the Cypress app shows them in
 its reporter panel.
@@ -247,7 +246,7 @@ TEST BODY · r2
    4  -assert  to be visible
 ```
 
-### `cypress tap command` {#cypress-tap-command}
+### cypress tap command {#cypress-tap-command}
 
 Details one Command Log entry of a test: its reporter row, the DOM snapshots
 pinnable on it, and its console properties: what the browser's developer
@@ -299,7 +298,7 @@ A value long enough to bury the rest of the payload, such as a response body,
 is shown as a note of its length instead of being printed to the terminal. You can pass `--json` to get
 every console property if needed.
 
-### `cypress tap pin` {#cypress-tap-pin}
+### cypress tap pin {#cypress-tap-pin}
 
 Pins a command's DOM snapshot into the live app-under-test frame, just like you would see if you
 manually clicked the command in the Cypress app. This time travel behavior allows the
@@ -339,7 +338,7 @@ Don't touch the Cypress window while cypress tap is driving it. A pin is the sam
 
 :::
 
-### `cypress tap dom [selector]` {#cypress-tap-dom}
+### cypress tap dom {#cypress-tap-dom}
 
 Reads the app under test's DOM as HTML: the whole page, or the `outerHTML` of
 each element matching a CSS selector (each match includes its full subtree).
@@ -391,7 +390,7 @@ showing the first 10 of 25 matches — --at takes any index up to 24.
 cypress tap dom --selector li --at 2
 ````
 
-### `cypress tap aria [selector]` {#cypress-tap-aria}
+### cypress tap aria {#cypress-tap-aria}
 
 Reads the accessibility (ARIA) tree of the app-under-test frame, or the
 subtree rooted at a CSS selector. Structural and text-only roles are dropped,
@@ -415,7 +414,7 @@ ARIA (4)  http://localhost:3000
     button  Submit
 ```
 
-### `cypress tap inspect <selector>` {#cypress-tap-inspect}
+### cypress tap inspect {#cypress-tap-inspect}
 
 Inspects the first element matching the selector: its tag, attributes, box
 model, accessibility node, and computed styles. A full computed style runs to
@@ -454,6 +453,8 @@ STYLES (2)
 
 ## How to use the commands
 
+### Getting Started
+
 Start Cypress in your project and pick a testing type and browser:
 
 ```shell title="Command"
@@ -487,7 +488,7 @@ npx cypress tap run cypress/e2e/checkout.cy.ts
 ```
 
 Poll `status` until it reports a verdict. `status` always exits 0 for a
-determinable stage, so a poller branches on the output, not the exit code:
+determinable stage, so a poller branches on the output, not the exit code. See [Polling for a verdict](#polling) for the traps (stale verdicts, empty specs that still pass, and builds that never leave loading).
 
 ```shell title="Command"
 npx cypress tap status
@@ -499,42 +500,6 @@ PID   PROJECT        TYPE  BROWSER
 
 ✖ cypress/e2e/checkout.cy.ts  failed
 ✓ 3  ✖ 1  ○ --
-```
-
-A session moves through these stages:
-
-| Stage                  | Meaning                                          |
-| ---------------------- | ------------------------------------------------ |
-| `not connected`        | No running Cypress session could be found        |
-| `browser not selected` | A session is running, but it has no browser open |
-| `spec not selected`    | A browser is open, but no spec has been chosen   |
-| `loading`              | A spec is selected and waiting on its own build  |
-| `running`              | The selected spec is executing                   |
-| `passed`               | The run finished and no test failed              |
-| `failed`               | The run finished with at least one failing test  |
-
-Only `passed` and `failed` are verdicts, and `passed` describes the run rather
-than the tests: an empty spec, or one whose tests were all skipped, finishes
-`passed` without a single test having run. Have your agent read the `results`
-counts alongside the stage when it matters that something actually ran.
-
-In `--json` output, each run carries a
-`startedAt` timestamp from the moment it starts. A poller compares `startedAt`
-before believing a verdict: a `passed` or `failed` status still carrying the
-previous run's `startedAt` describes the run before yours.
-
-```json title="Output"
-{
-  "status": "loading",
-  "pid": 4242,
-  "projectRoot": "/projects/app",
-  "testingType": "e2e",
-  "browserAttached": true,
-  "browserName": "Chrome",
-  "totalSpecs": 2,
-  "spec": "cypress/e2e/checkout.cy.ts",
-  "startedAt": null
-}
 ```
 
 The run failed, so read the spec's reporter overview to find the failing test:
@@ -557,6 +522,15 @@ Checkout
 The ids on the left (`r5`) are how every other command addresses a test. From
 here, debugging is three commands away.
 
+### Polling for a verdict {#polling}
+
+`cypress tap run` returns immediately, so you learn a run's outcome by polling its status. Four things to know before you trust what it reports:
+
+- Only passed and failed are verdicts. Every other stage (loading, running, and so on) means the run isn't done. Keep polling.
+- Verify that `startedAt` changed. A finished run stays readable until the next one starts, so a passed/failed still carrying the previous run's `startedAt` describes the previous run. Record `startedAt` before you rerun, and wait for a verdict whose startedAt differs.
+  0 loading can be terminal. A spec that fails to build sits in loading and never leaves. Give your poller its own timeout.
+- passed doesn't mean tests ran. A spec with no tests, or whose tests were all skipped or pending, finishes passed with results.passed at 0. Read the results counts alongside the stage when it matters that something actually ran.
+
 ### Debug a failing test
 
 Ask for the failing test's full reporter view: the same routes, hooks,
@@ -572,8 +546,10 @@ npx cypress tap reporter --test r5
 TEST BODY · r5
    1  get      .discount-code
    2  -type    SAVE10
-   3  get      .cart-total
-   4  -assert  expected <div> to have text $45.00 ✖
+   3  get      .apply-discount
+   4  -click
+   5  get      .cart-total
+   6  -assert  expected <div> to have text $45.00 ✖
 
 ✖ AssertionError
   Timed out retrying after 4000ms: expected '<div.cart-total>' to have text '$45.00', but the text was '$50.00'
@@ -588,33 +564,27 @@ TEST BODY · r5
 
 The error and code frame often answer the question on their own. Here the
 discount code was entered and applied, but the cart total never changed, so
-the bug is in the application rather than the test. When the error and code
-frame aren't enough on their own, drill into a single Command Log entry. The `command` command shows one
-row's hook section, its pinnable DOM snapshots, and its console properties:
+the bug is in the application rather than the test.
+
+When the error and code frame aren't enough on their own, drill into a single Command Log entry. The `command` command shows one row's hook section, its pinnable DOM snapshots, and its console properties:
 what you'd see in the browser's developer tools console after clicking the
 command in the app.
 
+Look at the `.apply-discount` click, command 3 in test r5:
+
 ```shell title="Command"
-npx cypress tap command --test r2 --command 3
+npx cypress tap command --test-id r5 --command-id 3
 ```
 
 ```css title="Output"
-TEST BODY · r2
-✓  3  -click  #submit  passed
+TEST BODY · r5
+✓  3  -click  .apply-discount  passed
 
 SNAPSHOTS (2)
   #  NAME    TIME
   1  before  14:03:22.481
   2  after   14:03:22.613
-
-CONSOLE PROPS
-  [NO CONSOLE PROPS]
 ```
-
-Deeply nested console properties are summarized past three levels, and a
-section long enough to bury what surrounds it (a header map, say) folds at
-any depth. Open one section with `--path 'Response>headers'`, expand
-everything with `--depth all`, or pass `--json` for the complete payload.
 
 ### Read the app at the moment it broke
 
@@ -623,13 +593,13 @@ at the moment a given command ran, pin that command's DOM snapshot into the
 live app-under-test frame:
 
 ```shell title="Command"
-npx cypress tap pin r3 h2:1 --at after
+npx cypress tap pin --test-id r5 --command-id 3 --at after
 ```
 
 ```css title="Output"
 ⚲ PINNED - (2/2) after
-BEFORE EACH · h2
-   1  task  db:seed
+TEST BODY · r5
+   3  click  .apply-discount
 ```
 
 Pinning from the terminal does the same thing to the Cypress window as
@@ -651,28 +621,28 @@ instead of the app's final state. Inspect the element the failing assertion
 cared about:
 
 ```shell title="Command"
-npx cypress tap inspect "[data-testid=username]"
+npx cypress tap inspect --selector ".cart-total"
 ```
 
 ```css title="Output"
-input  [data-testid=username]  http://localhost:3000
+input  .cart-total  http://localhost:3000
 
 ATTRIBUTES (2)
-  data-testid  username
-  name         username
+  class         cart-total
 
 ACCESSIBILITY
-  role    textbox
-  name    Username
-  states  disabled
+  role    text
+  name    $50.00
 
 BOX
-  x 8   y 40   width 200   height 30
+   x 220   y 480   width 120   height 28
 
 STYLES (2)
   display  block
   color    rgb(0, 0, 0)
 ```
+
+The snapshot confirms it: at the moment the assertion ran, `.cart-total` read `$50.00`, the pre-discount price. The click was logged as passed and the element is present and visible, so nothing swallowed the interaction, the discount simply never applied to the total. That points squarely at the discount logic in the app, not the test.
 
 `dom` returns HTML (whole page or per selector, capped at 30,000 characters by
 default), and `aria` returns the compact role/name/state tree that browser
@@ -719,7 +689,7 @@ Help is always available. It does not need a browser open, and with no Cypress
 session running at all the CLI falls back to the command schema it ships with,
 so an agent can read the surface before asking you to start anything. When a
 session is attached, help is generated from that session's own schema and
-leads with the instance it resolved, so what your agent reads matches the
+leads with the session it resolved, so what your agent reads matches the
 Cypress it is about to drive.
 
 ### Know which JSON fields to rely on
@@ -737,7 +707,7 @@ conditional rather than assuming a fixed shape. In `status`:
 | `totalTests`, `results`                                               | The run has started, so `running` onwards                          |
 | `pinned`                                                              | A pin created by `cypress tap` is active                           |
 
-Elsewhere, `instances` always reports all five of its fields, using `null` for
+Elsewhere, `sessions` always reports all five of its fields, using `null` for
 an absent testing type or browser. `specs` always reports `relativePath` and
 adds `lastModified` only where git history is available. `command` always
 reports `snapshots`, as an empty array when the row has none to pin, and omits
@@ -1057,7 +1027,7 @@ alongside its accessibility node.
 
 ## FAQs
 
-### Tap CLI vs Cloud MCP vs Cloud CLI
+### When to use it?
 
 The `cypress tap` CLI gives you the ability to interact and inspect a local Cypress session while developing or debugging tests.
 
