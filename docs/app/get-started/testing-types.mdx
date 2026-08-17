@@ -229,11 +229,11 @@ To learn more about API testing in Cypress, visit our guide on
 
 ## Testing Type Comparison
 
-| Attributes             |                       E2E                        |                   Component                   |                          API                          |
-| ---------------------- | :----------------------------------------------: | :-------------------------------------------: | :---------------------------------------------------: |
-| What's Tested          |                  All app layers                  |             Individual component              |                    HTTP endpoints                     |
-| Characteristics        | Comprehensive, slower, more susceptible to flake |         Specialized, quick, reliable          |           Fast and precise, no UI coverage            |
-| Used For               |     Verifying app works as a cohesive whole      | Testing functionality of individual component | Verifying the contract between front end and back end |
-| Written By             |            Developers, QA Team, SDETs            |             Developers, Designers             |              Developers, QA Team, SDETs               |
-| CI Infrastructure      |           Often requires complex setup           |                  None needed                  |              Requires a running backend               |
-| Initialization Command |                 `cy.visit(url)`                  |          `cy.mount(<MyComponent />)`          |                   `cy.request(url)`                   |
+| Attributes                 |                       E2E                        |                   Component                   |                          API                          |
+| -------------------------- | :----------------------------------------------: | :-------------------------------------------: | :---------------------------------------------------: |
+| **What's Tested**          |                  All app layers                  |             Individual component              |                    HTTP endpoints                     |
+| **Characteristics**        | Comprehensive, slower, more susceptible to flake |         Specialized, quick, reliable          |           Fast and precise, no UI coverage            |
+| **Used For**               |     Verifying app works as a cohesive whole      | Testing functionality of individual component | Verifying the contract between front end and back end |
+| **Written By**             |            Developers, QA Team, SDETs            |             Developers, Designers             |              Developers, QA Team, SDETs               |
+| **CI Infrastructure**      |           Often requires complex setup           |                  None needed                  |              Requires a running backend               |
+| **Initialization Command** |                 `cy.visit(url)`                  |          `cy.mount(<MyComponent />)`          |                   `cy.request(url)`                   |
