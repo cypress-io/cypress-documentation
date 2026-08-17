@@ -1999,7 +1999,7 @@ intended, especially if attempting steps that are documented as not supported.
 The `cypress tap` CLI commands let you, or an AI coding agent, drive a running
 Cypress session from the terminal. See the
 [cypress tap guide](/app/tooling/cypress-tap) and the
-[command line reference](/app/references/command-line#cypress-tap).
+[command line reference](/app/tooling/cypress-tap#Available-commands).
 
 ### <Icon name="angle-right" /> What is `cypress tap` in Cypress?
 
@@ -2018,7 +2018,7 @@ failure itself instead of asking you to paste results back to it.
 Start Cypress in open mode with `cypress open`, then point your agent at the
 `cypress tap` commands in another terminal. A typical loop is
 `cypress tap run <spec>` to start a Cypress run, `cypress tap status --json` to
-poll until it reports `passed` or `failed`, and `cypress tap reporter --test <id>`
+poll until it reports `passed` or `failed`, and `cypress tap reporter --test-id <test-id>`
 to read the failing test's Command Log, error, and code frame.
 
 Add those steps to the instructions file your agent reads, such as `AGENTS.md`
@@ -2079,7 +2079,7 @@ The commands that read the browser (`reporter`, `command`, `pin`, `dom`,
 session: Chrome, Chromium, Edge, or Electron. Firefox and WebKit are not
 supported for reading the browser.
 
-The session-level commands (`instances`, `status`, `specs`, and `run`) work
+The session-level commands (`sessions`, `status`, `specs`, and `run`) work
 whatever browser the Cypress session has open.
 
 ### <Icon name="angle-right" /> How do I check whether a Cypress session is running from the terminal?
@@ -2090,14 +2090,14 @@ where it is in its run lifecycle: `not connected`, `browser not selected`,
 for any stage it can determine, including `not connected`, so branch on the
 `status` field rather than the exit code.
 
-To list every Cypress session the CLI can reach, run `cypress tap instances`,
-and pass a listed pid to `--instance` to target one.
+To list every Cypress session the CLI can reach, run `cypress tap sessions`,
+and pass a listed pid to `--session` to target one.
 
 ### <Icon name="angle-right" /> Can my AI agent read the DOM of the application under test in Cypress?
 
 Yes. `cypress tap dom` returns the application under test's HTML,
 `cypress tap aria` returns its accessibility tree as a role, name, and state
-tree, and `cypress tap inspect <selector>` returns one element's tag,
+tree, and `cypress tap inspect --selector <selector>` returns one element's tag,
 attributes, computed styles, box model, and accessibility node.
 
 To read the page as it was at an earlier point in the Cypress test rather than
