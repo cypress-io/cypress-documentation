@@ -160,9 +160,9 @@ webhook** button is disabled until you delete an existing webhook.
 
 Currently only one event in the Cypress Cloud lifecycle triggers a webhook:
 
-| Event           | Description                                                                                         |
-| --------------- | --------------------------------------------------------------------------------------------------- |
-| `run.completed` | Sent when a Cypress Cloud run finishes (`passed`, `failed`, `errored`, `timedOut`, or `cancelled`). |
+| Event           | Description                                                                                                                                    |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `run.completed` | Sent when a Cypress Cloud run finished and resolves to one of the following states: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`. |
 
 There is also a special `webhook.ping` event that
 is **only** sent by the [Send a test event](#Send-a-test-event) action. You
@@ -198,45 +198,49 @@ delivery as **at-least-once** and make your handler idempotent by keying on
 
 :::
 
-<details>
-<summary><code>run.completed</code> payload</summary>
+### <code>run.completed</code> payload
 
 The `run.completed` payload (version `1`) is a flat JSON object with the
 following fields:
 
-| Field               | Type           | Description                                                            |
-| ------------------- | -------------- | ---------------------------------------------------------------------- |
-| `runNumber`         | number         | The run's build number in Cypress Cloud.                               |
-| `runUrl`            | string         | Link to the run in Cypress Cloud.                                      |
-| `projectId`         | string         | The project **slug** (not a numeric ID).                               |
-| `projectName`       | string         | The project name.                                                      |
-| `status`            | string         | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`. |
-| `statusReason`      | string         | Human-readable explanation of the status.                              |
-| `createdAt`         | string         | ISO 8601 timestamp when the run started.                               |
-| `completedAt`       | string \| null | ISO 8601 timestamp when the run finished.                              |
-| `totalDuration`     | number \| null | Total run duration in milliseconds.                                    |
-| `totalTests`        | number \| null | Total number of tests.                                                 |
-| `totalPassed`       | number \| null | Number of passed tests.                                                |
-| `totalFailed`       | number \| null | Number of failed tests.                                                |
-| `totalPending`      | number \| null | Number of pending tests.                                               |
-| `totalSkipped`      | number \| null | Number of skipped tests.                                               |
-| `flakyTestCount`    | number \| null | Number of tests identified as flaky.                                   |
-| `totalSpecs`        | number \| null | Number of spec files.                                                  |
-| `commitSha`         | string \| null | The commit SHA the run was recorded against.                           |
-| `commitBranch`      | string \| null | The branch name.                                                       |
-| `commitMessage`     | string \| null | The commit message.                                                    |
-| `commitAuthorName`  | string \| null | The commit author's name.                                              |
-| `commitAuthorEmail` | string \| null | The commit author's email.                                             |
-| `commitUrl`         | string \| null | Link to the commit.                                                    |
-| `ciProvider`        | string \| null | The detected CI provider, for example `circleci`.                      |
-| `ciBuildId`         | string \| null | The CI build ID.                                                       |
-| `ciUrl`             | string \| null | Link to the CI build.                                                  |
-| `ciPullRequestId`   | string \| null | The pull request ID, when available.                                   |
-| `ciPullRequestUrl`  | string \| null | Link to the pull request, when available.                              |
-| `tags`              | string[]       | The tags the run was recorded with (sorted).                           |
-| `groups`            | string[]       | The run groups (sorted).                                               |
+| Field               | Type               | Description                                                                                                    |
+| ------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `runNumber`         | `number`           | The run's number in Cypress Cloud.                                                                             |
+| `runUrl`            | `string`           | Link to the run in Cypress Cloud.                                                                              |
+| `projectId`         | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run.                              |
+| `projectName`       | `string`           | The project name, which can be chosen in your Cypress Cloud settings.                                          |
+| `status`            | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.                                         |
+| `statusReason`      | `string`           | Human-readable explanation of the status.                                                                      |
+| `createdAt`         | `string`           | ISO 8601 timestamp when the run started.                                                                       |
+| `completedAt`       | `string` \| `null` | ISO 8601 timestamp when the run finished.                                                                      |
+| `totalDuration`     | `number` \| `null` | Total run duration in milliseconds.                                                                            |
+| `totalTests`        | `number` \| `null` | Total number of tests.                                                                                         |
+| `totalPassed`       | `number` \| `null` | Number of passed tests.                                                                                        |
+| `totalFailed`       | `number` \| `null` | Number of failed tests.                                                                                        |
+| `totalPending`      | `number` \| `null` | Number of pending tests.                                                                                       |
+| `totalSkipped`      | `number` \| `null` | Number of skipped tests.                                                                                       |
+| `flakyTestCount`    | `number` \| `null` | Number of passing tests that failed at least one attempt and passed using [retries](/app/guides/test-retries). |
+| `totalSpecs`        | `number` \| `null` | Number of spec files.                                                                                          |
+| `commitSha`         | `string` \| `null` | The commit SHA the run was recorded against.                                                                   |
+| `commitBranch`      | `string` \| `null` | The branch name.                                                                                               |
+| `commitMessage`     | `string` \| `null` | The commit message.                                                                                            |
+| `commitAuthorName`  | `string` \| `null` | The commit author's name.                                                                                      |
+| `commitAuthorEmail` | `string` \| `null` | The commit author's email.                                                                                     |
+| `commitUrl`         | `string` \| `null` | Link to the commit.                                                                                            |
+| `ciProvider`        | `string` \| `null` | The detected CI provider, for example `circleci`.                                                              |
+| `ciBuildId`         | `string` \| `null` | The CI build ID.                                                                                               |
+| `ciUrl`             | `string` \| `null` | Link to the CI build.                                                                                          |
+| `ciPullRequestId`   | `string` \| `null` | The pull request ID, when available.                                                                           |
+| `ciPullRequestUrl`  | `string` \| `null` | Link to the pull request, when available.                                                                      |
+| `tags`              | `string[]`         | The tags the run was recorded with (sorted).                                                                   |
+| `groups`            | `string[]`         | The run groups (sorted).                                                                                       |
 
-</details>
+:::caution
+
+**Missing fields**: If you are missing expected commit information or CI details, ensure the related environment variables are present in **the context where Cypress executes**. For example, when executing Cypress in a container, your [CI identifiers](/cloud/features/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider) and related build information may need to be set explicitly.
+
+:::
+
 <details>
 <summary>Example <code>run.completed</code> request body</summary>
 ```json
@@ -273,14 +277,6 @@ following fields:
 }
 ```
 </details>
-
-:::caution
-
-The `projectId` field contains the project **slug** (for example `my-project`),
-not a numeric identifier. Fields that are unavailable for a given run (such as
-CI or commit metadata for a run recorded outside of CI) are sent as `null`.
-
-:::
 
 ## Verify webhook signatures
 
@@ -504,7 +500,9 @@ recognizes it as the same event.
 
 ## Security
 
-Cypress Cloud applies several protections to webhook delivery:
+We recommend that you always use an `https://` Payload URL so payloads are encrypted in transit.
+
+In addition, Cypress Cloud applies several protections to webhook delivery:
 
 - **Endpoint restrictions**: Destination URLs are resolved and validated before
   each delivery. Requests to private, loopback, and link-local addresses are
@@ -516,5 +514,3 @@ Cypress Cloud applies several protections to webhook delivery:
 - **Secret storage**: Signing secrets are encrypted at rest and are never
   returned by the Cypress Cloud API. A secret is shown only once, when you set
   it.
-- **Use HTTPS**: Always use an `https://` Payload URL so payloads are encrypted
-  in transit.
