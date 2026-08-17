@@ -845,11 +845,15 @@ cy.wait('@createUser')
   .should('have.property', 'x-custom-header', 'added by cy.intercept')
 ```
 
-:::caution
+:::info
 
-The request modification cannot be verified by inspecting the browser's network
-traffic (for example, in Chrome DevTools), since the browser logs network
-traffic _before_ Cypress can intercept it.
+In Chrome, Chromium, and Edge the browser sends the modified request, so the
+modification is reflected in the browser's network traffic (for example, in Chrome
+DevTools). On the
+[legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path)
+the browser logs the request before Cypress modifies it, so the modification does
+not appear there — verify it from the Cypress command log, or with an assertion on
+`request.headers` after `cy.wait()`.
 
 :::
 

@@ -346,6 +346,34 @@ cy.intercept('/api/users', (req) => {
 })
 ```
 
+### Your application's certificate is used
+
+Cypress no longer terminates TLS for the application under test, so the browser makes its
+own connection and validates your origin's real certificate. Chrome no longer reports a
+certificate issued by an unknown authority, and Cypress does not generate one.
+
+The browser still reports the page as not secure, because the Cypress app itself is served
+over `http` on `localhost`. That indicator describes the Cypress app, not your application
+loading inside it.
+
+On the legacy network path Cypress acts as its own certificate authority and issues a
+certificate for the origin under test, which the browser reports as untrusted.
+
+### `cy.intercept()` changes are visible in the browser
+
+The browser sends the request and receives the response, so everything an intercept
+changes is what the browser itself records: modified request headers and bodies, stubbed
+or rewritten responses, and overridden status codes all appear in the browser's network
+panel. The `Authorization` header attached by
+[`cy.visit()`](/api/commands/visit#Add-basic-auth-headers) appears there too.
+
+On the legacy network path, request modifications are applied after the browser has
+already logged the request, so they do not appear in the network panel. Response
+modifications do, because the browser only ever sees the response Cypress returns.
+
+Assertions on `request.headers` after `cy.wait()` and the Cypress command log report the
+modified request on both paths.
+
 ## Writing tests that pass in every browser
 
 Assertions that describe your application rather than the transport pass in every browser
