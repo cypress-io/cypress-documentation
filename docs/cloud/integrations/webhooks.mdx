@@ -18,16 +18,28 @@ sidebar_custom_props: { 'new_label': true }
 - Which events trigger a webhook and what each payload looks like
 - How to verify webhook authenticity with a signing secret
 - How to send a test event and review delivery history and retries
+- How to troubleshoot a delayed `run.completed` webhook
 
 :::
 
 Webhooks let Cypress Cloud send a real-time HTTP request to an endpoint you own
-whenever a selected event occurs, for example when a run finishes. Unlike the
-[Slack](/cloud/integrations/slack) and
-[Microsoft Teams](/cloud/integrations/microsoft-teams) integrations, which post
-formatted messages to a chat channel, webhooks deliver a raw JSON payload to your
-own service. This lets you build custom automations: update a dashboard, open a
+whenever a selected event occurs, for example when a run finishes.
+
+## Why Cypress Cloud Webhooks
+
+A webhook lets you build **custom automations**: update a dashboard, open a
 ticket, gate a deployment, or forward results into any internal system.
+
+Following the increased pace of AI-driven development, custom workflows have become more important than ever. You may use the initial "run completed" webhook in multiple ways:
+
+- Triage runs programmatically for certain characteristics that require attention, then dive deeper using tools like Cypress Cloud [CLI](/cloud/integrations/cloud-cli) or [MCP](/cloud/integrations/cloud-mcp) to retrieve specific failures or other details.
+- Automatically feed results into your own custom real-time reporting.
+- Create Jira issues based on failed runs.
+- Deliver customized Slack notifications, or notifications in any platform, based on criteria that are not customizable in Cypress Cloud.
+
+While Cypress Cloud already has many built-in methods of notifications related to run statuses (for example, [Desktop notifications](/app/core-concepts/open-mode#Cloud-run-notifications) and
+[Slack](/cloud/integrations/slack) messages), webhooks deliver a **raw JSON payload** to your
+own service.
 
 :::note
 
@@ -514,3 +526,18 @@ In addition, Cypress Cloud applies several protections to webhook delivery:
 - **Secret storage**: Signing secrets are encrypted at rest and are never
   returned by the Cypress Cloud API. A secret is shown only once, when you set
   it.
+
+## Troubleshooting
+
+### Run completed webhook fires too late
+
+The `run.completed` webhook is delivered when Cypress Cloud marks the run as
+complete. If you record in parallel or with multiple groups, Cypress Cloud waits
+for the [Run Completion Delay](/cloud/account-management/projects#Run-Completion-Delay)
+(60 seconds by default) after the last known group finishes, in case more groups
+still join. That wait is what delays the webhook, because if all tests haven't been recorded yet, the final state of the run is not known.
+
+To complete the run as soon as your expected groups have finished, call the
+[Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API).
+Cypress Cloud then skips the remaining delay, and the webhook is delivered when
+in-progress groups finish.
