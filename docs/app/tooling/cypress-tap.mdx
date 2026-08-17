@@ -67,11 +67,11 @@ Below is the list of the commands `cypress tap` exposes:
 
 Each subcommands exit with `0` on success and `1` on any failure and accepts these options:
 
-| Option            | Description                                                               |
-| ----------------- | ------------------------------------------------------------------------- |
-| `--session <pid>` | Use to target a specific running Cypress instance by its process id (pid) |
-| `--json`          | Prints the raw JSON result instead of the human-readable rendering        |
-| `--help`, `-h`    | Outputs usage information                                                 |
+| Option       | Description                                                               |
+| ------------ | ------------------------------------------------------------------------- |
+| `--session`  | Use to target a specific running Cypress instance by its process id (pid) |
+| `--json`     | Prints the raw JSON result instead of the human-readable rendering        |
+| `--help, -h` | Outputs usage information                                                 |
 
 ### cypress tap sessions {#cypress-tap-sessions}
 
@@ -199,10 +199,10 @@ cypress tap run cypress/e2e/login.cy.ts
 Shows test results on the command line the way the Cypress app shows them in
 its reporter panel.
 
-| Option                    | Description                                                 | Default                 |
-| ------------------------- | ----------------------------------------------------------- | ----------------------- |
-| `-t, --testId <testId>`   | Test id, as listed by the spec overview this command prints | The spec-level overview |
-| `-a, --attempt <attempt>` | 1-based attempt, where attempt 1 is the first run           | The latest attempt      |
+| Option          | Description                                                 | Default                 |
+| --------------- | ----------------------------------------------------------- | ----------------------- |
+| `--test-id, -t` | Test id, as listed by the spec overview this command prints | The spec-level overview |
+| `--attempt, -a` | 1-based attempt, where attempt 1 is the first run           | The latest attempt      |
 
 Without `--testId`, it prints the spec-level report which includes the run's test stats
 and every suite's tests, with the test ids the other commands accept.
@@ -252,12 +252,12 @@ Details one Command Log entry of a test: its reporter row, the DOM snapshots
 pinnable on it, and its console properties: what the browser's developer
 tools console shows after clicking the command in the Cypress app.
 
-| Option                          | Description                                                                                                                                                           | Default            |
-| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `-t, --test-id <test-id>`       | Test id, as listed by the [`reporter`](#cypress-tap-reporter) command                                                                                                 | Required           |
-| `-c, --command-id <command-id>` | Command id, as listed by the `reporter` command: a row number, an e-prefixed event id, or hook-qualified like `h1:3`                                                  | Required           |
-| `-a, --attempt <attempt>`       | 1-based attempt, where attempt 1 is the first run                                                                                                                     | The latest attempt |
-| `-d, --depth <depth>`           | How many levels of nested console properties to expand before summarizing the rest: a number or `all`. A section over 8 rows folds at any depth unless this is passed | `3`                |
+| Option             | Description                                                                                                                                                           | Default            |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `--test-id, -t`    | Test id, as listed by the [`reporter`](#cypress-tap-reporter) command                                                                                                 | Required           |
+| `--command-id, -c` | Command id, as listed by the `reporter` command: a row number, an e-prefixed event id, or hook-qualified like `h1:3`                                                  | Required           |
+| `--attempt, -a`    | 1-based attempt, where attempt 1 is the first run                                                                                                                     | The latest attempt |
+| `--depth, -d`      | How many levels of nested console properties to expand before summarizing the rest: a number or `all`. A section over 8 rows folds at any depth unless this is passed | `3`                |
 
 ```shell title="Command"
 cypress tap command --test r2 --command 3
@@ -306,13 +306,13 @@ manually clicked the command in the Cypress app. This time travel behavior allow
 [`inspect`](#cypress-tap-inspect) commands read the page as it was when that
 command ran.
 
-| Option                          | Description                                                                                                          | Default                                      |
-| ------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| `-t, --test-id <test-id>`       | Test id, as listed by the [`reporter`](#cypress-tap-reporter) command                                                | Required                                     |
-| `-c, --command-id <command-id>` | Command id, as listed by the `reporter` command: a row number, an e-prefixed event id, or hook-qualified like `h1:3` | Required                                     |
-| `--at <at>`                     | Which snapshot to pin, either a name like `before`/`after`, or a 1-based index                                       | The last snapshot, the command's final state |
-| `-a, --attempt <attempt>`       | 1-based attempt, where attempt 1 is the first run                                                                    | The latest attempt                           |
-| `--clear`                       | Release the current pin and restore the app to its pre-pin state                                                     | Off                                          |
+| Option             | Description                                                                                                          | Default                                      |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `--test-id, -t`    | Test id, as listed by the [`reporter`](#cypress-tap-reporter) command                                                | Required                                     |
+| `--command-id, -c` | Command id, as listed by the `reporter` command: a row number, an e-prefixed event id, or hook-qualified like `h1:3` | Required                                     |
+| `--at`             | Which snapshot to pin, either a name like `before`/`after`, or a 1-based index                                       | The last snapshot, the command's final state |
+| `--attempt, -a`    | 1-based attempt, where attempt 1 is the first run                                                                    | The latest attempt                           |
+| `--clear`          | Release the current pin and restore the app to its pre-pin state                                                     | Off                                          |
 
 ```shell title="Command"
 cypress tap pin --test-id r3 --command-id h2:1 --at after
@@ -344,11 +344,11 @@ Reads the app under test's DOM as HTML: the whole page, or the `outerHTML` of
 each element matching a CSS selector (each match includes its full subtree).
 Output is capped so a heavy page never ships megabytes at once. The spec must be complete to use this command.
 
-| Option                        | Description                                                                       | Default |
-| ----------------------------- | --------------------------------------------------------------------------------- | ------- |
-| `-e, --selector <selector>`   | CSS selector matching exactly one element                                         | `body`  |
-| `-m, --max-chars <max-chars>` | Cap on returned HTML characters                                                   | `30000` |
-| `--at <at>`                   | When a selector matches multiple elements, the 0-based index of the match to read | `0`     |
+| Option            | Description                                                                       | Default |
+| ----------------- | --------------------------------------------------------------------------------- | ------- |
+| `--selector, -e`  | CSS selector matching exactly one element                                         | `body`  |
+| `--max-chars, -m` | Cap on returned HTML characters                                                   | `30000` |
+| `--at`            | When a selector matches multiple elements, the 0-based index of the match to read | `0`     |
 
 ```shell title="Command"
 cypress tap dom --selector .todo-list
@@ -396,11 +396,11 @@ Reads the accessibility (ARIA) tree of the app-under-test frame, or the
 subtree rooted at a CSS selector. Structural and text-only roles are dropped,
 leaving the compact role/name/state tree browser developer tools show.
 
-| Option                        | Description                                                                       | Default |
-| ----------------------------- | --------------------------------------------------------------------------------- | ------- |
-| `-e, --selector <selector>`   | CSS selector matching exactly one element                                         | `body`  |
-| `-m, --max-nodes <max-nodes>` | Cap on the number of accessibility nodes returned                                 | `200`   |
-| `--at <at>`                   | When a selector matches multiple elements, the 0-based index of the match to read | `0`     |
+| Option            | Description                                                                       | Default |
+| ----------------- | --------------------------------------------------------------------------------- | ------- |
+| `--selector, -e`  | CSS selector matching exactly one element                                         | `body`  |
+| `--max-nodes, -m` | Cap on the number of accessibility nodes returned                                 | `200`   |
+| `--at`            | When a selector matches multiple elements, the 0-based index of the match to read | `0`     |
 
 ```shell title="Command"
 cypress tap aria
@@ -422,10 +422,10 @@ roughly 350 properties, so `inspect` reports a fixed subset of two dozen that
 answer why an element looks or behaves the way it does, covering layout,
 visibility, text, and the box.
 
-| Option                      | Description                                                                       | Default |
-| --------------------------- | --------------------------------------------------------------------------------- | ------- |
-| `-e, --selector <selector>` | CSS selector matching exactly one element                                         | `body`  |
-| `--at <at>`                 | When a selector matches multiple elements, the 0-based index of the match to read | `0`     |
+| Option           | Description                                                                       | Default |
+| ---------------- | --------------------------------------------------------------------------------- | ------- |
+| `--selector, -e` | CSS selector matching exactly one element                                         | `body`  |
+| `--at`           | When a selector matches multiple elements, the 0-based index of the match to read | `0`     |
 
 ```shell title="Command"
 cypress tap inspect --selector "[data-testid=username]"
@@ -1011,7 +1011,7 @@ ARIA (6)  http://localhost:3000/checkout
 ```
 
 For rules that turn on presentation rather than semantics, such as
-`color-contrast`, use [`inspect`](/app/references/command-line#cypress-tap-inspect)
+`color-contrast`, use [`inspect`](#cypress-tap-inspect)
 instead: it reports the element's resolved `color` and `background-color`
 alongside its accessibility node.
 

@@ -838,7 +838,7 @@ cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --networ
 
 At this point you have the error, the screenshot, the commands that led up to it, and the network and console activity around it, all in your terminal. From here you can fix the test, or hand the JSON to an [agent](#Use-with-AI-agents) and ask it to propose a fix.
 
-**6. Verify the fix before you push.** The best way to confirm the fix is to run the test locally. Start Cypress with `cypress open`, then use [`cypress tap`](/app/tooling/cypress-tap) to start the spec: pass the `specFilepath` returned from [`cy-cloud test list`](#cy-cloud-test-list) to [`cypress tap run`](/app/references/command-line#cypress-tap-run). Then run [`cypress tap status`](/app/references/command-line#cypress-tap-status) to verify the updated test passed; if it isn't, your agent can use `cypress tap` to inspect the full report, dig into the command logs, and inspect the DOM to make corrections before recording to the Cloud.
+**6. Verify the fix before you push.** The best way to confirm the fix is to run the test locally. Start Cypress with `cypress open`, then use [`cypress tap`](/app/tooling/cypress-tap) to start the spec: pass the `specFilepath` returned from [`cy-cloud test list`](#cy-cloud-test-list) to [`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). Then run [`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status) to verify the updated test passed; if it isn't, your agent can use `cypress tap` to inspect the full report, dig into the command logs, and inspect the DOM to make corrections before recording to the Cloud.
 
 ```bash
 npx cypress tap run cypress/e2e/checkout.cy.ts
