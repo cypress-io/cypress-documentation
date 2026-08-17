@@ -23,7 +23,7 @@ Code, GitHub Copilot, Windsurf, and Codex CLI.
 
 :::warning
 
-`cypress tap` is in [beta](/app/references/roadmap#Beta). It is enabled by
+`cypress tap` is in [beta](/app/references/release-stages#Beta). It is enabled by
 default and no longer expected to change in major ways, but its commands and
 output can still change in any release while we gather feedback.
 
@@ -45,7 +45,7 @@ result when passed `--json`. Agents and scripts should prefer `--json`.
 
 - Only works with `cypress open` sessions, not headless `cypres run` sessions.
 - Only supports Chromium-based browsers (Chrome, Chromium, Edge, Electron).
-- Requires Cypress v15.22.0+
+- Requires Cypress v15.21.0+
 - If the `cypress tap` CLI and the session it attaches to are on incompatible versions, the CLI stops and reports the version mismatch.
 
 ## Available commands
@@ -56,7 +56,7 @@ Below is the list of the commands `cypress tap` exposes:
 | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`sessions`](#cypress-tap-sessions) | Lists the running Cypress sessions the CLI can reach.                                                                                                                                          |
 | [`status`](#cypress-tap-status)     | Reports where a session is in its run lifecycle.                                                                                                                                               |
-| [`specs`](p#cypress-tap-specs)      | Lists the specs the session can run.                                                                                                                                                           |
+| [`specs`](#cypress-tap-specs)       | Lists the specs the session can run.                                                                                                                                                           |
 | [`run`](#cypress-tap-run)           | Runs (or reruns) a spec by its project-relative path.                                                                                                                                          |
 | [`reporter`](#cypress-tap-reporter) | Renders the spec report or a specific tests report. The spec report includes what tests ran and their status. A test's reporter view includes routes, hooks, Command Log, and failure details. |
 | [`command`](#cypress-tap-command)   | Prints the details of a specific Command Log entry, including it's time travel snapshots and the captured console properties.                                                                  |
@@ -1065,7 +1065,7 @@ Together these tools provide the availability for you or an AI agent to fully en
 
 ### Pricing & Usage Limits
 
-The `cypress tap` CLI is available for use for all Cypress test authors using Cypress version 15.22.0+ at no cost. Additionally, there are no usage limits.
+The `cypress tap` CLI is available for use for all Cypress test authors using Cypress version 15.21.0+ at no cost. Additionally, there are no usage limits.
 
 ### Security and privacy
 
@@ -1075,7 +1075,7 @@ Cypress does capture telemetry specifically around the usage of the CLI to infor
 
 ### CLI Limitations
 
-- You must be on Cypress v15.22.0+ or higher to use the CLI. You cannot use `cypress tap` to interact with older versions.
+- You must be on Cypress v15.21.0+ or higher to use the CLI. You cannot use `cypress tap` to interact with older versions.
 - `cypress tap` reads the most recent run of the open session. Command details
   and DOM snapshots are kept only for the most recent tests (see
   [`numTestsKeptInMemory`](/app/references/configuration#Global)), so older
