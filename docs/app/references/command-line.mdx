@@ -868,24 +868,24 @@ To get started, start Cypress in open mode (`cypress open`) in your project, the
 
 #### `cypress tap` commands {#cypress-tap-commands}
 
-Below is the list of the commands `cypress tap` exposes. To learn more about these commands and how to use them, review our [guide to driving Cypress with AI agents](/app/tooling/cypress-tap).
+Below is the list of the commands `cypress tap` exposes. To learn full syntax, options, and output of every command and how to use them, review our [guide to driving Cypress with AI agents](/app/tooling/cypress-tap).
 
 ```shell
 cypress tap [command] [args...] [options]
 ```
 
-| `cypress tap` commands                                        | What it does                                                                                                                                                                                   |
-| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`instances`](/app/tooling/cypress-tap#cypress-tap-instances) | Lists the running Cypress sessions the CLI can reach.                                                                                                                                          |
-| [`status`](/app/tooling/cypress-tap#cypress-tap-status)       | Reports where a session is in its run lifecycle.                                                                                                                                               |
-| [`specs`](/app/tooling/cypress-tap#cypress-tap-specs)         | Lists the specs the session can run.                                                                                                                                                           |
-| [`run`](/app/tooling/cypress-tap#cypress-tap-run)             | Runs (or reruns) a spec by its project-relative path.                                                                                                                                          |
-| [`reporter`](/app/tooling/cypress-tap#cypress-tap-reporter)   | Renders the spec report or a specific tests report. The spec report includes what tests ran and their status. A test's reporter view includes routes, hooks, Command Log, and failure details. |
-| [`command`](/app/tooling/cypress-tap#cypress-tap-command)     | Prints the details of a specific Command Log entry, including it's time travel snapshots and the captured console properties.                                                                  |
-| [`pin`](/app/tooling/cypress-tap#cypress-tap-pin)             | Renders a past command's DOM snapshot as the live app under test so the `dom`, `aria`, and `inspect` tap commands can inspect it.                                                              |
-| [`dom`](/app/tooling/cypress-tap#cypress-tap-dom)             | Retrieves the app under test's HTML markup.                                                                                                                                                    |
-| [`aria`](/app/tooling/cypress-tap#cypress-tap-aria)           | Retrieves the accessibility (ARIA) tree of the app under test.                                                                                                                                 |
-| [`inspect`](/app/tooling/cypress-tap#cypress-tap-inspect)     | Retrieves the specified element's tag, attributes, computed styles, and box model.                                                                                                             |
+| `cypress tap` commands                                      | What it does                                                                                                                                                                                   |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`sessions`](/app/tooling/cypress-tap#cypress-tap-sessions) | Lists the running Cypress sessions the CLI can reach.                                                                                                                                          |
+| [`status`](/app/tooling/cypress-tap#cypress-tap-status)     | Reports where a session is in its run lifecycle.                                                                                                                                               |
+| [`specs`](/app/tooling/cypress-tap#cypress-tap-specs)       | Lists the specs the session can run.                                                                                                                                                           |
+| [`run`](/app/tooling/cypress-tap#cypress-tap-run)           | Runs (or reruns) a spec by its project-relative path.                                                                                                                                          |
+| [`reporter`](/app/tooling/cypress-tap#cypress-tap-reporter) | Renders the spec report or a specific tests report. The spec report includes what tests ran and their status. A test's reporter view includes routes, hooks, Command Log, and failure details. |
+| [`command`](/app/tooling/cypress-tap#cypress-tap-command)   | Prints the details of a specific Command Log entry, including it's time travel snapshots and the captured console properties.                                                                  |
+| [`pin`](/app/tooling/cypress-tap#cypress-tap-pin)           | Renders a past command's DOM snapshot as the live app under test so the `dom`, `aria`, and `inspect` tap commands can inspect it.                                                              |
+| [`dom`](/app/tooling/cypress-tap#cypress-tap-dom)           | Retrieves the app under test's HTML markup.                                                                                                                                                    |
+| [`aria`](/app/tooling/cypress-tap#cypress-tap-aria)         | Retrieves the accessibility (ARIA) tree of the app under test.                                                                                                                                 |
+| [`inspect`](/app/tooling/cypress-tap#cypress-tap-inspect)   | Retrieves the specified element's tag, attributes, computed styles, and box model.                                                                                                             |
 
 Commands exit with `0` on success and `1` on any failure.
 
@@ -906,8 +906,6 @@ Prints information about Cypress and the current environment such as:
 - The location where the Cypress binary is cached.
 - Operating system information.
 - System memory including free space.
-
-{/* hack: using css language label to respect decimals in syntax highlighting */}
 
 ```css
 cypress info
@@ -1039,8 +1037,6 @@ In most cases the binary and the package versions will be the same, but they
 could be different if you have installed a different version of the package and
 for some reason failed to install the matching binary version.
 
-{/* hack: using css language label to respect decimals in syntax highlighting */}
-
 ```css
 cypress version
 Cypress package version: 12.0.0
@@ -1050,8 +1046,6 @@ Bundled Node version: 16.16.0
 ```
 
 You can print each individual component's version number also.
-
-{/* hack: using css language label to respect decimals in syntax highlighting */}
 
 ```css
 cypress version --component package
@@ -1086,8 +1080,6 @@ Print all existing installed versions of Cypress. The output will be a table
 with cached versions and the last time the binary was used by the user,
 determined from the file's access time.
 
-{/* hack: using css language label to respect decimals in syntax highlighting */}
-
 ```css
 cypress cache list
 ┌─────────┬──────────────┐
@@ -1102,8 +1094,6 @@ cypress cache list
 You can calculate the size of every Cypress version folder by adding the
 `--size` argument to the command. Note that calculating the disk size can be
 slow.
-
-{/* hack: using css language label to respect decimals in syntax highlighting */}
 
 ```css
 cypress cache list --size
