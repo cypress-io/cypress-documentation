@@ -275,13 +275,17 @@ Read
 
 ### Retry-ability
 
-[Retry-ability](/app/core-concepts/retry-ability) is a property of the chain,
-not of a single command. `cy.wait()` itself is not a query, so an assertion
-chained directly to it is evaluated only once against the interception object
-that `cy.wait()` yielded:
+How you write the chain after `cy.wait()` decides whether your assertions
+[retry](/app/core-concepts/retry-ability), and how long a failing assertion
+takes to fail. Both styles below work, so pick the one that matches what you
+want.
+
+Retry-ability belongs to the chain, not to a single command. `cy.wait()` is not
+a query, so an assertion chained straight onto it gets a single attempt against
+the interception object it yielded:
 
 ```js
-// runs the assertion a single time - no retries
+// one attempt: fails as soon as the status code is wrong
 cy.wait('@getAccount').should(
   'have.nested.property',
   'response.statusCode',
@@ -289,26 +293,29 @@ cy.wait('@getAccount').should(
 )
 ```
 
-Chaining a query such as [`.its()`](/api/commands/its) or
-[`.invoke()`](/api/commands/invoke) after `cy.wait()` starts a new retryable
-chain. The query re-reads the property from the interception object and any
-assertions after it retry for the duration of
+Add a query such as [`.its()`](/api/commands/its) or
+[`.invoke()`](/api/commands/invoke) and you start a new retryable chain. The
+query re-reads the property, and everything after it retries for up to
 [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (`4000` ms by
 default):
 
 ```js
-// the .its() query and the assertion retry for up to 4 seconds
+// retries for up to 4 seconds before passing or failing
 cy.wait('@getAccount').its('response.statusCode').should('eq', 200)
 ```
 
-Because the assertion retries, it does not fail on the first attempt. If the
-value never satisfies the assertion, the test fails only after
-`defaultCommandTimeout` has elapsed.
+What to expect from each:
 
-To opt out of retrying, override the timeout on the query to `0`:
+- **Assertion chained directly to `cy.wait()`:** one attempt, and a wrong value
+  fails the test right away.
+- **Assertion chained after a query:** retries, so a wrong value keeps the test
+  running until `defaultCommandTimeout` runs out.
+
+If you want the retrying version to fail fast instead, set the query's timeout
+to `0`:
 
 ```js
-// asserts synchronously against the value at that moment - no retries
+// checks the value once, at that moment
 cy.wait('@getAccount')
   .its('response.statusCode', { timeout: 0 })
   .should('eq', 200)
