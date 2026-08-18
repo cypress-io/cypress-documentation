@@ -177,7 +177,7 @@ const config = {
         //give id a unique value to get a new announcement bar to appear
         id: 'cypress-tap-beta-aug-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🌟 Give your agent the context the Cypress app shows you. &mdash; <a href="https://www.cypress.io/blog/cypress-app-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cypress-tap-cli">Meet cypress tap</a>`,
+        content: `🌟 Give your agent the context the Cypress app shows you. &mdash; <a href="https://www.cypress.io/blog/cypress-tap-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cypress-tap-cli">Meet cypress tap</a>`,
         isCloseable: true,
       },
       footer: {
