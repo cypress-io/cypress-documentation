@@ -40,6 +40,7 @@ Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-C
 
 **Features:**
 
+- Cypress now supports HTTP/2/3 in Chrome, Chromium, and Edge. Your application is tested over the same protocol it uses in production - multiplexed requests, no six-connection ceiling - so modern apps load faster under test and behave the way your users actually experience them. See [Native network interception](/app/guides/native-network-interception) and the [Migration Guide](/app/references/migration-guide#Chrome-Chromium-and-Edge-use-the-native-browser-network). Addresses [#3708](https://github.com/cypress-io/cypress/issues/3708).
 - `Angular` version 22 is now supported within component testing, including Launchpad project detection and the `@cypress/schematic` Angular CLI integration. Addresses [#33753](https://github.com/cypress-io/cypress/issues/33753). Addressed in [#34043](https://github.com/cypress-io/cypress/pull/34043).
 
 ## 15.20.0
