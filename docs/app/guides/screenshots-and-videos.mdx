@@ -153,6 +153,43 @@ DEBUG=cypress:server:video
 
 :::
 
+### Video chapters
+
+While encoding a video, Cypress embeds chapter markers into the resulting `.mp4`
+file, one for each test attempt in the spec. Video players that support
+chapters, such as VLC, QuickTime, and IINA, use these markers to let you jump to
+a specific test instead of scrubbing through the whole recording. Each chapter is
+titled with the full title of the test, including the titles of the suites it is
+nested in. When a test runs more than once because of
+[test retries](/app/guides/test-retries), each attempt gets its own chapter.
+
+:::caution
+
+Chapters are only written during video compression, and
+[`videoCompression`](/app/references/configuration#Videos) is disabled by
+default. To get chapters, enable both `video` and `videoCompression`.
+
+:::
+
+::::cypress-config-example
+
+```ts
+{
+  video: true,
+  videoCompression: true
+}
+```
+
+::::
+
+Setting `videoCompression` to a CRF value such as `15` also produces chapters.
+Setting it to `false` or `0` skips encoding entirely, so the video contains no
+chapters.
+
+Chapters are independent of [Cypress Cloud](/cloud/get-started/introduction),
+which jumps to a test in a recorded video using timestamps sent with your run
+results, no matter how you configure `videoCompression`.
+
 ### Control which videos to keep and upload to Cypress Cloud
 
 You may want to have more control over which videos you want to keep and upload
