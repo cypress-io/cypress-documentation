@@ -100,8 +100,7 @@ testing).
 
 ### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
 
-Yes. Cypress transparently proxies WebSocket connections, so your application's
-WebSocket traffic will work as expected during tests.
+Yes. Your application's WebSocket traffic will work as expected during tests.
 
 However, **stubbing or mocking individual WebSocket frames/messages** is not
 natively supported. If your tests need to control the messages sent over a
@@ -1140,10 +1139,12 @@ browser.
 
 [Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
 
-### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
+### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate so the page doesn't show up as "not secure"?
 
-No, Cypress modifies network traffic in real time and therefore must sit between
-your server and the browser. There is no other way for us to achieve that.
+No, and it isn't about your site's certificate. The browser's security indicator
+describes the Cypress app's page, which is served over `http` on `localhost`.
+Your application under test loads inside that page, and its own HTTPS connection
+is unaffected.
 
 ### <Icon name="angle-right" /> Is there any way to detect if my app is running under Cypress?
 
@@ -1221,12 +1222,15 @@ There are a few ways.
 ### <Icon name="angle-right" /> When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
 When using Cypress to test an HTTPS site, you might see a browser warning next
-to the browser URL. This is normal. Cypress modifies the traffic between your
-server and the browser. The browser notices this and displays a certificate
-warning. However, this is purely cosmetic and does not alter the way your
-application under test runs in any way, so you can safely ignore this warning.
-The network traffic between Cypress and the backend server still happens via
-HTTPS.
+to the browser URL. This is normal. The indicator describes the Cypress app's
+page, which is served over `http` on `localhost` — not your application, which
+loads inside it with its certificate validated as usual. On the
+[legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path),
+Cypress modifies the traffic between your server and the browser and presents a
+certificate it generates, which the browser reports as untrusted. Either way this
+is purely cosmetic and does not alter the way your application under test runs in
+any way, so you can safely ignore the warning. The network traffic between
+Cypress and the backend server still happens via HTTPS.
 
 See also the [Cross Origin Testing](/app/guides/cross-origin-testing) guide.
 
@@ -1621,7 +1625,7 @@ XState model state library.
 ### <Icon name="angle-right" /> Can Cypress be used for performance testing?
 
 Cypress is not built for performance testing. Because Cypress instruments the
-page under test, proxies the network requests, and tightly controls the test
+page under test, intercepts the network requests, and tightly controls the test
 steps, Cypress adds its own overhead. Thus, the performance numbers you get from
 Cypress tests are slower than "normal" use. Still, you can access the native
 `window.performance` object and grab the page time measurements, see the
