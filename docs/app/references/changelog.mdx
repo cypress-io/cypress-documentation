@@ -43,6 +43,49 @@ Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-C
 - Cypress now supports HTTP/2/3 in Chrome, Chromium, and Edge. Your application is tested over the same protocol it uses in production - multiplexed requests, no six-connection ceiling - so modern apps load faster under test and behave the way your users actually experience them. See [Native network interception](/app/guides/native-network-interception) and the [Migration Guide](/app/references/migration-guide#Chrome-Chromium-and-Edge-use-the-native-browser-network). Addresses [#3708](https://github.com/cypress-io/cypress/issues/3708).
 - `Angular` version 22 is now supported within component testing, including Launchpad project detection and the `@cypress/schematic` Angular CLI integration. Addresses [#33753](https://github.com/cypress-io/cypress/issues/33753). Addressed in [#34043](https://github.com/cypress-io/cypress/pull/34043).
 
+## 15.21.0
+
+_Released Aug 18, 2026_
+
+**Deprecations:**
+
+- [`cy.exec()`](/api/commands/exec) has been deprecated and will be removed in a future major release of Cypress. Use [`cy.task()`](/api/commands/task) instead, which runs in Node without depending on the operating system, shell, or terminal of the machine running Cypress. The [`execTimeout`](/app/references/configuration#Timeouts) configuration option is deprecated alongside it, in favor of [`taskTimeout`](/app/references/configuration#Timeouts). Addresses [#34639](https://github.com/cypress-io/cypress/issues/34639).
+
+**Features:**
+
+- Added the `cypress tap` command, which gives your AI agent direct access to your open-mode Cypress session. It lists the open-mode Cypress sessions running on the machine, starts and reruns a spec, reports a run's status and results, prints a failing test's error and Command Log, and inspects the DOM and accessibility tree of the application under test. Every subcommand prints readable output by default and machine-readable JSON with `--json`. Run `cypress tap --help` for the full list of subcommands. Addresses [#34036](https://github.com/cypress-io/cypress/issues/34036).
+- Added a `CYPRESS_DISABLE_GUEST_TELEMETRY` environment variable, which disables any reporting Cypress sends for non-logged sessions. This includes anonymous usage events within Cypress open-mode and the Cypress CLI. Addressed in [#34540](https://github.com/cypress-io/cypress/pull/34540).
+
+**Bugfixes:**
+
+- Fixed an issue where WebKit runs could hang indefinitely when more parallel requests than the browser's per-host connection pool were intercepted by a [`cy.intercept()`](/api/commands/intercept) route with a request handler. Fixes [#33926](https://github.com/cypress-io/cypress/issues/33926) and addresses [#23807](https://github.com/cypress-io/cypress/issues/23807).
+- Fixed an issue where overriding [`blockHosts`](/app/references/configuration#blockHosts) with test configuration (for example `describe('...', { blockHosts: [...] }, ...)`) had no effect, so requests were still blocked or allowed according to the project-level value. Test-level `blockHosts` overrides now take effect at runtime and are restored between specs. Fixes [#21151](https://github.com/cypress-io/cypress/issues/21151).
+- Fixed an issue where `cypress run` printed the `(Attempt N of M)` line twice for the same attempt when a `beforeEach` and an `afterEach` hook both failed during that attempt. Fixes [#26143](https://github.com/cypress-io/cypress/issues/26143).
+- Fixed an issue where passing an object to the [`have.attr`, `have.css`, or `have.prop` assertions](/app/references/assertions), such as `.should('have.css', { backgroundColor: 'rgb(128, 0, 0)' })`, applied those styles, attributes, or properties to the element and passed instead of asserting on them. These assertions now fail with an error stating that the name must be a string. Fixes [#26451](https://github.com/cypress-io/cypress/issues/26451).
+- Fixed an issue where the console props output for a [`cy.env()`](/api/commands/env) command listed the requested environment variable names under numbered keys instead of a single `Env vars` label. Addressed in [#34615](https://github.com/cypress-io/cypress/pull/34615).
+- Fixed an issue on Windows where adding, renaming, moving or deleting a spec file while `cypress open` was running was not reflected in the specs list, leaving stale specs until Cypress was restarted. Clicking a spec that had been renamed or moved could then fail to run. Projects whose [`specPattern`](/app/references/configuration#e2e) contains a directory, such as the End-to-End Testing default `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}`, were affected. Fixes [#22303](https://github.com/cypress-io/cypress/issues/22303).
+
+**Dependency Updates:**
+
+- Upgraded `@sinonjs/fake-timers` from `11.3.1` to `14.0.0`. While [`cy.clock()`](/api/commands/clock) is active, the faked `performance` object now implements `performance.mark()` and `performance.measure()` (previously no-ops that returned `undefined`) and reports a faked `performance.timeOrigin`. Addressed in [#34377](https://github.com/cypress-io/cypress/pull/34377).
+
+## 15.20.1
+
+_Released Aug 10, 2026_
+
+**Bugfixes:**
+
+- Fixed a regression in [15.20.0](#15-20-0) where the Cypress app sent all Cypress Cloud requests to `http://localhost:3000` instead of Cypress Cloud. Logging in could not complete, and the Runs and Debug pages reported no data. Addressed in [#34536](https://github.com/cypress-io/cypress/pull/34536).
+- Fixed a regression in [15.18.0](#15-18-0) where pinning a command in the Command Log could leave the AUT snapshot permanently blank, with the pin stuck on. Stopping a run in open mode also no longer clears the AUT. Addressed in [#34502](https://github.com/cypress-io/cypress/pull/34502).
+
+**Misc:**
+
+- Fixed an issue where the error reported in CI when the Cypress binary is missing suggested caching and persisting the default binary cache location, ignoring any [`CYPRESS_CACHE_FOLDER`](/app/references/advanced-installation#Binary-cache) override. The suggestions now name the directory Cypress actually looked in. Addresses [#23009](https://github.com/cypress-io/cypress/discussions/23009). Addressed in [#34543](https://github.com/cypress-io/cypress/pull/34543).
+
+**Dependency Updates:**
+
+- Upgraded `tsx` from `4.22.4` to `4.23.12`. Fixes [#34461](https://github.com/cypress-io/cypress/issues/34461).
+
 ## 15.20.0
 
 _Released Aug 4, 2026_
@@ -10278,7 +10321,7 @@ _Released May 17, 2019_
 - Updated [.its()](/api/commands/its) and [.invoke()](/api/commands/invoke) docs
   to better explain how default assertions are handled. Addresses
   [#1643](https://github.com/cypress-io/cypress-documentation/issues/1643).
-- Updated our [Roadmap](/app/references/roadmap) to more closely reflect the
+- Updated our [Roadmap](/app/references/release-stages) to more closely reflect the
   work we are doing. Addressed in
   [#1567](https://github.com/cypress-io/cypress-documentation/pull/1639).
 - Added a section about how to request our new

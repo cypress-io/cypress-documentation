@@ -1,0 +1,13 @@
+:::caution
+
+`cy.env()` logs the key names you ask for and never the values. That protection
+ends at the command boundary. The object `cy.env()` yields is an ordinary
+JavaScript object, and Cypress does not mask, redact, or track the values inside
+it. Assertions, [`.its()`](/api/commands/its),
+[`.invoke()`](/api/commands/invoke), and any chained command that fails can all
+print a value to the [Command Log](/app/core-concepts/open-mode#Command-Log) and
+the [console output](/app/core-concepts/open-mode#Console-output). What happens
+to a value after `cy.env()` yields it is up to you. See
+[Handling the yielded value safely](/api/commands/env#Handling-the-yielded-value-safely).
+
+:::

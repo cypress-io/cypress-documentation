@@ -213,6 +213,14 @@ Action commands like [`.click()`](/api/commands/click) show a red hitbox at the 
 
 Some commands capture multiple snapshots, for example action commands capture both before and after. Use the snapshot menu to switch between them. This is useful when an action triggers a visible change, such as typing into an input.
 
+:::info
+
+**Reading the Command Log from the terminal**
+
+An AI coding agent can read everything on this page without the GUI. The [`cypress tap`](/app/tooling/cypress-tap) CLI attaches to an open mode session and prints the Command Log, pins a command's snapshot the same way clicking it here does, and reads the resulting DOM and accessibility tree.
+
+:::
+
 ### Page events
 
 The Command Log also records application events. These entries appear in gray without a number.

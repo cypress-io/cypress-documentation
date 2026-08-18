@@ -229,9 +229,8 @@ which can be disabled using the instructions
 
 ### <Icon name="angle-right" /> Can I write API tests using Cypress?
 
-Cypress is mainly designed to run end-to-end and component tests, but if you
-need to write a few tests that call the backend API using the
-[`cy.request()`](/api/commands/request) command ... who can stop you?
+Yes. Use [`cy.request()`](/api/commands/request) to call an endpoint directly
+and assert on the response. No page needs to be visited first.
 
 ```js
 it('adds a todo', () => {
@@ -250,12 +249,9 @@ it('adds a todo', () => {
 })
 ```
 
-Take a look at our <Icon name="github" inline="true" contentType="rwa" /> that
-uses quite a few such tests to verify the backend APIs.
-
-You can verify the responses using the built-in assertions and perform multiple
-calls. You can even write E2E tests that combine UI commands with API testing as
-needed:
+Because API calls and UI commands share the same command chain, you can also
+write tests that span both layers, driving the application through its interface
+and then confirming over HTTP that the backend persisted the change:
 
 ```js
 it('adds todos', () => {
@@ -274,10 +270,17 @@ it('adds todos', () => {
 })
 ```
 
+Our <Icon name="github" inline="true" contentType="rwa" /> was built API-first
+and still runs
+[API test suites](https://github.com/cypress-io/cypress-realworld-app/tree/develop/cypress/tests/api)
+alongside its UI tests.
+
 A good strategy for writing targeted API tests is to use them to reach the
 hard-to-test code not covered by other tests. You can find such places in the
-code using the [code coverage](/app/tooling/code-coverage) as a guide. Watch
-the
+code using [code coverage](/app/tooling/code-coverage) as a guide.
+
+For a full walkthrough covering authentication, CRUD workflows, error responses,
+GraphQL, and polling, see [API Testing](/app/guides/api-testing).
 
 ## "How-to" Cypress Questions
 
@@ -724,6 +727,74 @@ modifying browser launch arguments.
 
 Yes. You do it the
 [same way as any other recursive loop](/api/commands/request#Request-Polling).
+See [polling an asynchronous job](/app/guides/api-testing#Poll-an-asynchronous-job)
+for a version with a bounded number of attempts.
+
+### <Icon name="angle-right" /> Why doesn't cy.intercept() match cy.request() calls in Cypress?
+
+[`cy.intercept()`](/api/commands/intercept) matches traffic your application
+makes from the browser, which flows through the Cypress proxy.
+[`cy.request()`](/api/commands/request) is issued from the Cypress Node process
+instead, so it never enters that proxy and cannot be spied on or stubbed.
+
+The two commands answer different questions. Use `cy.request()` to call an
+endpoint and assert on its response. Use `cy.intercept()` to assert on, wait
+for, or stub the requests your app makes. See
+[choose the right tool](/app/guides/api-testing#Choose-the-right-tool).
+
+### <Icon name="angle-right" /> Why don't Cypress cy.request() calls appear in the browser's Network tab?
+
+Cypress makes [`cy.request()`](/api/commands/request) calls from its Node
+process rather than from the browser, so the browser never sees the request and
+has nothing to show in its Network tab.
+
+To inspect one, click the `cy.request()` entry in the
+[Command Log](/app/core-concepts/open-mode#Command-Log) and Cypress prints the
+full request and response to the browser console.
+
+This also works after the fact on a CI run. Open the run in
+[Test Replay](/cloud/features/test-replay), click the `cy.request()` command,
+and the same detail is printed to your console. Open DevTools before clicking,
+since that is where the output goes.
+
+### <Icon name="angle-right" /> How do I send an authentication token with cy.request() in Cypress?
+
+Pass the token in the `headers` option of
+[`cy.request()`](/api/commands/request), and keep the credential itself in an
+[environment variable](/app/guides/environment-variables) rather than in the
+spec file.
+
+```js
+cy.request({
+  url: '/orders',
+  headers: {
+    authorization: `Bearer ${Cypress.env('apiToken')}`,
+  },
+})
+```
+
+When you need to log in to obtain the token first, wrap the login request in
+[`cy.session()`](/api/commands/session) so it is cached and restored instead of
+re-run for every test. See
+[authenticate once and reuse the session](/app/guides/api-testing#Authenticate-once-and-reuse-the-session).
+
+### <Icon name="angle-right" /> How do I test an API endpoint that returns a 4xx or 5xx status code in Cypress?
+
+By default [`cy.request()`](/api/commands/request) fails the test on any
+response outside `2xx` and `3xx`. When the error response is what you are
+testing, set `failOnStatusCode: false` so the response is yielded instead.
+
+```js
+cy.request({
+  method: 'POST',
+  url: '/orders',
+  body: { lineItems: [] },
+  failOnStatusCode: false,
+}).then((response) => {
+  expect(response.status).to.eq(422)
+  expect(response.body.errors[0].field).to.eq('lineItems')
+})
+```
 
 ### <Icon name="angle-right" /> Can I use the Page Object pattern?
 
@@ -1130,12 +1201,9 @@ require JS modules, _but_ only those that work in a browser.
 You can `require` or `import` them as you're accustomed to. We preprocess your
 spec files with webpack and Babel.
 
-We recommend utilizing one of the following to execute code outside of the
-browser.
-
-- [`cy.task()`](/api/commands/task) to run code in Node via the
-  [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function
-- [`cy.exec()`](/api/commands/exec) to execute a shell command
+We recommend using [`cy.task()`](/api/commands/task) to run code in Node via the
+[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function. This
+includes running external commands, which a task can spawn directly from Node.
 
 [Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
 
@@ -1920,3 +1988,135 @@ other techniques are not supported.
 
 Review the steps of your generated tests to confirm they are behaving as
 intended, especially if attempting steps that are documented as not supported.
+
+## cypress tap
+
+The `cypress tap` CLI commands let you, or an AI coding agent, drive a running
+Cypress session from the terminal. See the
+[cypress tap guide](/app/tooling/cypress-tap) and the
+[command line reference](/app/tooling/cypress-tap#Available-commands).
+
+### <Icon name="angle-right" /> What is `cypress tap` in Cypress?
+
+`cypress tap` is a set of Cypress CLI commands that allows you or an agent to interact with a open mode Cypress
+session and read its context from the terminal. You can list the
+specs Cypress can run, start a run, poll its status, read test results the way
+the Cypress Command Log shows them, and inspect the DOM and accessibility tree
+of the application under test.
+
+It is built for AI coding agents. Every command prints stable JSON with
+`--json`, so an agent can run the Cypress test it just changed and read the
+failure itself instead of asking you to paste results back to it.
+
+### <Icon name="angle-right" /> How do I let an AI agent run my Cypress tests and read the results?
+
+Start Cypress in open mode with `cypress open`, then point your agent at the
+`cypress tap` commands in another terminal. A typical loop is
+`cypress tap run <spec>` to start a Cypress run, `cypress tap status --json` to
+poll until it reports `passed` or `failed`, and `cypress tap reporter --test-id <test-id>`
+to read the failing test's Command Log, error, and code frame.
+
+Add those steps to the instructions file your agent reads, such as `AGENTS.md`
+or `CLAUDE.md`. See
+[Use cypress tap with AI agents](/app/tooling/cypress-tap#Use-cypress-tap-with-AI-agents)
+for a snippet you can copy.
+
+### <Icon name="angle-right" /> How do I use Cypress with Cursor, Claude Code, or GitHub Copilot?
+
+Any AI coding tool that can run shell commands can drive Cypress through the
+`cypress tap` CLI. Start Cypress with `cypress open`, then add the
+`cypress tap` workflow to the instructions file your tool reads: `AGENTS.md`
+for Cursor and Codex CLI, `CLAUDE.md` for Claude Code, or
+`.github/copilot-instructions.md` for GitHub Copilot. See
+[Use cypress tap with AI agents](/app/tooling/cypress-tap#Use-cypress-tap-with-AI-agents)
+for a snippet to copy.
+
+To teach the same tools how to write good Cypress tests in the first place,
+see [Cypress AI Skills](/app/tooling/ai-skills). The two work well together:
+the skills cover how to write Cypress tests, and `cypress tap` reports what
+happened when those tests ran.
+
+### <Icon name="angle-right" /> Can an AI agent fix my failing Cypress tests automatically?
+
+It can get much closer than it could without a way to run them. With
+[`cypress tap`](/app/tooling/cypress-tap), an agent can run the Cypress spec
+it just changed, poll for a verdict, read the failing test's Command Log and
+error, inspect the DOM of the application under test, then fix and rerun until
+the spec passes, all without you pasting results back into the conversation.
+
+Review what it changed before you commit it. Cypress reports the run honestly,
+but a passing Cypress test only proves the assertions the agent wrote are
+satisfied, and `passed` on a spec whose tests were all skipped still reports
+`passed`.
+
+### <Icon name="angle-right" /> Does `cypress tap` work with `cypress run` in CI?
+
+No. `cypress tap` attaches to interactive `cypress open` sessions only.
+Headless `cypress run` sessions, including the ones in your CI pipeline, are
+not discoverable. `cypress tap` is a local development tool for tightening the
+loop while you and your agent write code.
+
+To give an agent your Cypress CI results instead, use
+[Cloud MCP](/cloud/integrations/cloud-mcp) or the
+[Cloud CLI](/cloud/integrations/cloud-cli), which read recorded runs from
+Cypress Cloud.
+
+### <Icon name="angle-right" /> Does `cypress tap` require a Cypress Cloud account?
+
+No. `cypress tap` talks only to the Cypress session running on your own
+machine, so it needs no Cypress Cloud account, login, or network access. It
+ships with the `cypress` npm package like every other Cypress CLI command.
+
+### <Icon name="angle-right" /> Which browsers does `cypress tap` support?
+
+The commands that read the browser (`reporter`, `command`, `pin`, `dom`,
+`aria`, and `inspect`) require a Chromium-family browser open in the Cypress
+session: Chrome, Chromium, Edge, or Electron. Firefox and WebKit are not
+supported for reading the browser.
+
+The session-level commands (`sessions`, `status`, `specs`, and `run`) work
+whatever browser the Cypress session has open.
+
+### <Icon name="angle-right" /> How do I check whether a Cypress session is running from the terminal?
+
+Run `cypress tap status`. It finds the Cypress session for you and reports
+where it is in its run lifecycle: `not connected`, `browser not selected`,
+`spec not selected`, `loading`, `running`, `passed`, or `failed`. It exits `0`
+for any stage it can determine, including `not connected`, so branch on the
+`status` field rather than the exit code.
+
+To list every Cypress session the CLI can reach, run `cypress tap sessions`,
+and pass a listed pid to `--session` to target one.
+
+### <Icon name="angle-right" /> Can my AI agent read the DOM of the application under test in Cypress?
+
+Yes. `cypress tap dom` returns the application under test's HTML,
+`cypress tap aria` returns its accessibility tree as a role, name, and state
+tree, and `cypress tap inspect --selector <selector>` returns one element's tag,
+attributes, computed styles, box model, and accessibility node.
+
+To read the page as it was at an earlier point in the Cypress test rather than
+its final state, pin a command's DOM snapshot first with `cypress tap pin`.
+These commands read a completed run, so wait for `status` to report `passed`
+or `failed` before calling them.
+
+### <Icon name="angle-right" /> What is the difference between `cypress tap` and Cypress Cloud MCP?
+
+They cover different halves of the same loop. Cypress
+[Cloud MCP](/cloud/integrations/cloud-mcp) and the
+[Cloud CLI](/cloud/integrations/cloud-cli) give an agent your **recorded**
+Cypress runs from Cypress Cloud, so it can see what failed in CI.
+`cypress tap` gives it the **live** Cypress session on your machine, so it can
+rerun a spec and confirm a fix before you push.
+
+Many teams use both: diagnose a CI failure through Cloud, then verify the fix
+locally with `cypress tap`. See
+[Verify a Cloud failure locally](/app/tooling/cypress-tap#Verify-a-Cloud-failure-locally).
+
+### <Icon name="angle-right" /> Should I use the Cypress window while `cypress tap` is running?
+
+No. `cypress tap` drives the same Cypress session you are looking at, and
+there is no lock between the two. Starting a run from the Cypress app,
+switching spec, or pinning and unpinning commands all change what your agent's
+next command reads. Treat a Cypress session an agent is driving as one you
+watch rather than touch.

@@ -226,22 +226,21 @@ records. You may be familiar with using things such as fixtures or factories.
 To test various page states - like an empty view, or a pagination view, you'd
 need to seed the server so that this state can be tested.
 
-**While there is a lot more to this strategy, you generally have three ways to
+**While there is a lot more to this strategy, you generally have two ways to
 facilitate this with Cypress:**
 
-- [`cy.exec()`](/api/commands/exec) - to run system commands
 - [`cy.task()`](/api/commands/task) - to run code in Node via the
   [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function
 - [`cy.request()`](/api/commands/request) - to make HTTP requests
 
 If you're running `node.js` on your server, you might add a `before` or
-`beforeEach` hook that executes an `npm` task.
+`beforeEach` hook that runs your reset and seed scripts in Node.
 
 ```js
 describe('The Home Page', () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec('npm run db:reset && npm run db:seed')
+    cy.task('resetAndSeedDatabase')
   })
 
   it('successfully loads', () => {
@@ -250,7 +249,27 @@ describe('The Home Page', () => {
 })
 ```
 
-Instead of just executing a system command, you may want more flexibility and
+:::cypress-config-plugin-example
+
+```ts
+import resetDatabase from './scripts/reset-database'
+import seedDatabase from './scripts/seed-database'
+```
+
+```ts
+on('task', {
+  async resetAndSeedDatabase() {
+    await resetDatabase()
+    await seedDatabase()
+
+    return null
+  },
+})
+```
+
+:::
+
+Instead of just running code in Node, you may want more flexibility and
 could expose a series of routes only when running in a test environment.
 
 **For instance, you could compose several requests together to tell your server
@@ -260,7 +279,7 @@ exactly the state you want to create.**
 describe('The Home Page', () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec('npm run db:reset && npm run db:seed')
+    cy.task('resetAndSeedDatabase')
 
     // seed a post in the DB that we control from our tests
     cy.request('POST', '/test/seed/post', {
@@ -372,7 +391,7 @@ Here's an example alongside seeding your database:
 describe('The Login Page', () => {
   beforeEach(() => {
     // reset and seed the database prior to every test
-    cy.exec('npm run db:reset && npm run db:seed')
+    cy.task('resetAndSeedDatabase')
 
     // seed a user in the DB that we can control from our tests
     // assuming it generates a random password for us

@@ -153,6 +153,55 @@ DEBUG=cypress:server:video
 
 :::
 
+### Video chapters
+
+While encoding a video, Cypress embeds chapter markers into the resulting `.mp4`
+file, one for each test attempt in the spec. Video players that support
+chapters, such as VLC, QuickTime, and IINA, use these markers to let you jump to
+a specific test instead of scrubbing through the whole recording. Each chapter is
+titled with the full title of the test, including the titles of the suites it is
+nested in. When a test runs more than once because of
+[test retries](/app/guides/test-retries), each attempt gets its own chapter.
+
+:::caution
+
+Chapters are only written during video compression, and
+[`videoCompression`](/app/references/configuration#Videos) is disabled by
+default. To get chapters, enable both `video` and `videoCompression`.
+
+:::
+
+::::cypress-config-example
+
+```ts
+{
+  video: true,
+  videoCompression: true
+}
+```
+
+::::
+
+Setting `videoCompression` to a CRF value such as `15` also produces chapters.
+Setting it to `false` or `0` skips encoding entirely, so the video contains no
+chapters.
+
+Chapters only help when you open the video file yourself. Record your runs to
+[Cypress Cloud](/cloud/get-started/introduction) and you get this for free:
+every test in the run is listed alongside its video, and selecting one takes you
+straight to that moment, with no chapters to configure and no scrubbing.
+
+:::note
+
+Skip the video and debug the run with
+[Test Replay](/cloud/features/test-replay). Rather than watching a recording,
+you replay the test exactly as it executed in CI, so you can time travel to the
+point of failure and inspect the DOM, network requests, console logs, JavaScript
+errors, and element rendering, giving you the same debugging experience you have
+locally without reproducing the failure on your machine.
+
+:::
+
 ### Control which videos to keep and upload to Cypress Cloud
 
 You may want to have more control over which videos you want to keep and upload
