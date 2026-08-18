@@ -219,7 +219,10 @@ on('task', {
 ### Clean up and verify downloaded files
 
 Tasks are a good fit for file system work, such as emptying the downloads folder
-before a test and then finding the file the test just downloaded.
+between tests and then finding the file the test just downloaded.
+`config.downloadsFolder` is the resolved absolute path, so the task keeps
+working if the project overrides
+[`downloadsFolder`](/app/references/configuration#Downloads).
 
 ```javascript title='downloads.cy.js'
 cy.task('clearDownloads')
@@ -238,7 +241,7 @@ import path from 'path'
 ```
 
 ```ts
-const downloads = path.join(config.projectRoot, 'cypress', 'downloads')
+const downloads = config.downloadsFolder
 
 on('task', {
   clearDownloads() {
@@ -263,6 +266,11 @@ on('task', {
 ```
 
 :::
+
+Cypress already trashes the downloads folder before `cypress run` when
+[`trashAssetsBeforeRuns`](/app/references/configuration#trashAssetsBeforeRuns)
+is enabled, which it is by default. A `clearDownloads` task is for clearing the
+folder between tests within a run.
 
 ### Run an external command or CLI
 
