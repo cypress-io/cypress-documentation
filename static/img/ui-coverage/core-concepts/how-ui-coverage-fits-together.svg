@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" width="920" height="520" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="How UI Coverage fits together: Test Replay snapshots are analyzed by UI Coverage, which detects interactive elements (the total), records which interaction commands marked them tested (the numerator), and flags untested links, all feeding the coverage score and report.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" width="920" height="560" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="How UI Coverage fits together: Test Replay captures DOM snapshots, which UI Coverage analyzes to produce scoring points from every visible interactive element including links (the denominator), to credit interactions and link visits (the numerator), and to list untested elements and untested links separately as coverage gaps, all feeding the coverage score and report.">
   <!-- card background so the diagram reads on light or dark site themes -->
-  <rect x="1" y="1" width="918" height="518" rx="16" fill="#ffffff" stroke="#E2E8F0" stroke-width="2"/>
+  <rect x="1" y="1" width="918" height="558" rx="16" fill="#ffffff" stroke="#E2E8F0" stroke-width="2"/>
 
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -28,42 +28,45 @@
   <line x1="460" y1="230" x2="460" y2="256" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
   <line x1="755" y1="230" x2="755" y2="256" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <!-- Card 1: interactive elements -->
-  <rect x="30" y="258" width="270" height="150" rx="10" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
-  <text x="52" y="292" font-size="15" font-weight="700" fill="#065F46">&#9312; Interactive elements</text>
-  <text x="52" y="320" font-size="12" fill="#334155">Everything a user can touch:</text>
-  <text x="52" y="338" font-size="12" fill="#334155">buttons, inputs, links, ARIA</text>
-  <text x="52" y="356" font-size="12" fill="#334155">roles, and tab-navigable elements.</text>
-  <rect x="52" y="372" width="112" height="22" rx="11" fill="#10B981"/>
-  <text x="108" y="387" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">The total</text>
+  <!-- Card 1: scoring points -->
+  <rect x="30" y="258" width="270" height="172" rx="10" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="52" y="292" font-size="15" font-weight="700" fill="#065F46">&#9312; Scoring points</text>
+  <text x="52" y="320" font-size="12" fill="#334155">Every visible interactive element,</text>
+  <text x="52" y="338" font-size="12" fill="#334155">including links. Grouped elements</text>
+  <text x="52" y="356" font-size="12" fill="#334155">count once, so 50 identical buttons</text>
+  <text x="52" y="374" font-size="12" fill="#334155">are one point, not 50.</text>
+  <rect x="52" y="390" width="128" height="22" rx="11" fill="#10B981"/>
+  <text x="116" y="405" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">The denominator</text>
 
-  <!-- Card 2: interaction commands -->
-  <rect x="325" y="258" width="270" height="150" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
-  <text x="347" y="292" font-size="15" font-weight="700" fill="#1E3A8A">&#9313; Interaction commands</text>
-  <text x="347" y="320" font-size="12" fill="#334155">click, type, check, and more</text>
-  <text x="347" y="338" font-size="12" fill="#334155">mark the elements your tests</text>
-  <text x="347" y="356" font-size="12" fill="#334155">actually exercise as tested.</text>
-  <rect x="347" y="372" width="152" height="22" rx="11" fill="#3B82F6"/>
-  <text x="423" y="387" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Tested (the numerator)</text>
+  <!-- Card 2: interactions and visits -->
+  <rect x="325" y="258" width="270" height="172" rx="10" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="347" y="292" font-size="15" font-weight="700" fill="#1E3A8A">&#9313; Interactions &#38; visits</text>
+  <text x="347" y="320" font-size="12" fill="#334155">click, type, check, and more mark</text>
+  <text x="347" y="338" font-size="12" fill="#334155">an element tested. A link also</text>
+  <text x="347" y="356" font-size="12" fill="#334155">counts as tested when a test</text>
+  <text x="347" y="374" font-size="12" fill="#334155">visits its destination.</text>
+  <rect x="347" y="390" width="152" height="22" rx="11" fill="#3B82F6"/>
+  <text x="423" y="405" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Tested (the numerator)</text>
 
-  <!-- Card 3: untested links -->
-  <rect x="620" y="258" width="270" height="150" rx="10" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
-  <text x="642" y="292" font-size="15" font-weight="700" fill="#991B1B">&#9314; Untested links</text>
-  <text x="642" y="320" font-size="12" fill="#334155">Links to pages your tests</text>
-  <text x="642" y="338" font-size="12" fill="#334155">never visit, surfaced even</text>
-  <text x="642" y="356" font-size="12" fill="#334155">when no view exists for them.</text>
-  <rect x="642" y="372" width="118" height="22" rx="11" fill="#EF4444"/>
-  <text x="701" y="387" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Coverage gaps</text>
+  <!-- Card 3: what the report lists -->
+  <rect x="620" y="258" width="270" height="172" rx="10" fill="#FEF2F2" stroke="#EF4444" stroke-width="1.5"/>
+  <text x="642" y="292" font-size="15" font-weight="700" fill="#991B1B">&#9314; What's left untested</text>
+  <text x="642" y="320" font-size="12" fill="#334155">Untested elements and untested</text>
+  <text x="642" y="338" font-size="12" fill="#334155">links are listed separately so you</text>
+  <text x="642" y="356" font-size="12" fill="#334155">can act on each. Both already</text>
+  <text x="642" y="374" font-size="12" fill="#334155">count against the score.</text>
+  <rect x="642" y="390" width="122" height="22" rx="11" fill="#EF4444"/>
+  <text x="703" y="405" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">Coverage gaps</text>
 
   <!-- cards -> report bus -->
-  <line x1="165" y1="408" x2="165" y2="426" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="460" y1="408" x2="460" y2="426" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="755" y1="408" x2="755" y2="426" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="165" y1="426" x2="755" y2="426" stroke="#94A3B8" stroke-width="2"/>
-  <line x1="460" y1="426" x2="460" y2="446" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="165" y1="430" x2="165" y2="450" stroke="#94A3B8" stroke-width="2"/>
+  <line x1="460" y1="430" x2="460" y2="450" stroke="#94A3B8" stroke-width="2"/>
+  <line x1="755" y1="430" x2="755" y2="450" stroke="#94A3B8" stroke-width="2"/>
+  <line x1="165" y1="450" x2="755" y2="450" stroke="#94A3B8" stroke-width="2"/>
+  <line x1="460" y1="450" x2="460" y2="470" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
 
   <!-- Step C: score and report -->
-  <rect x="240" y="448" width="440" height="60" rx="10" fill="#1E1B4B" stroke="#1E1B4B"/>
-  <text x="460" y="474" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Coverage score and report</text>
-  <text x="460" y="494" text-anchor="middle" font-size="12" fill="#C7D2FE">score = tested &#247; total, with untested links called out</text>
+  <rect x="240" y="472" width="440" height="62" rx="10" fill="#1E1B4B" stroke="#1E1B4B"/>
+  <text x="460" y="498" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Coverage score and report</text>
+  <text x="460" y="519" text-anchor="middle" font-size="12" fill="#C7D2FE">score = tested points &#247; total points</text>
 </svg>

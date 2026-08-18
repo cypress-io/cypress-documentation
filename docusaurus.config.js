@@ -69,9 +69,6 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.scss'),
         },
-        googleAnalytics: {
-          trackingID: 'UA-59606812-1',
-        },
         // googleTagManager is handled by ./plugins/googleTagManager instead, so
         // the container can be skipped under Cypress.
       },
