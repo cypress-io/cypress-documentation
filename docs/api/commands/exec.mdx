@@ -11,41 +11,14 @@ sidebar_custom_props: { 'deprecated_label': true }
 
 <strong>Deprecated</strong>
 
-`cy.exec()` was deprecated in Cypress `15.21.0` and will be removed in a future
-major version. The [`execTimeout`](/app/references/configuration#Timeouts)
-configuration option is deprecated along with it.
+`cy.exec()` is deprecated and will be removed in a future major version. The
+[`execTimeout`](/app/references/configuration#Timeouts) configuration option is
+deprecated along with it.
 
 Use [`cy.task()`](/api/commands/task) instead, which runs in Node without
 depending on the operating system, shell, or terminal of the machine running
-Cypress.
-
-<Badge type="danger">Before</Badge>
-
-```javascript
-cy.exec('npm run db:seed')
-```
-
-<Badge type="success">After</Badge>
-
-```javascript
-// in test
-cy.task('seedDatabase')
-```
-
-```javascript
-// in cypress.config.js
-const seed = require('./scripts/seed-database')
-
-on('task', {
-  async seedDatabase() {
-    await seed()
-
-    return null
-  },
-})
-```
-
-See [Run an external command or CLI](/api/commands/task#Run-an-external-command-or-CLI)
+Cypress. See
+[Run an external command or CLI](/api/commands/task#Run-an-external-command-or-CLI)
 for tasks that shell out to a non-Node tool.
 
 :::
@@ -191,27 +164,6 @@ cy.exec('echo $USERNAME', { env: { USERNAME: 'johndoe' } })
 ```
 
 ## Notes
-
-### Why `cy.exec()` is deprecated
-
-`cy.exec()` runs a command through a shell on the machine running Cypress, so
-its behavior depends on which shell is installed and how that shell is invoked.
-That leads to problems Cypress can't fix without reimplementing the command:
-
-- Path and argument handling differs on Windows depending on which shell is
-  installed.
-- Commands hang indefinitely under some CI executors when no interactive
-  terminal is available.
-- Shell `PATH` resolution inconsistencies produce intermittent
-  `command not found` failures.
-- Chromium can freeze when the Cypress app is launched as a background job.
-- Failures don't always surface the full error output.
-
-[`cy.task()`](/api/commands/task) runs in the Node process that loads your
-Cypress configuration, so there is no shell to discover and no per-platform
-quoting to get right. When a task does need to run an external binary, spawning
-it with [`child_process.execFileSync()`](https://nodejs.org/api/child_process.html#child_processexecfilesynccommand-args-options)
-and an argument array avoids the shell entirely.
 
 ### Commands Must Exit
 

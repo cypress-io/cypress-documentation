@@ -19,18 +19,6 @@ We do not recommend starting a web server using `cy.task()`. Read about
 
 :::
 
-:::tip
-
-`cy.task()` is the recommended replacement for
-[`cy.exec()`](/api/commands/exec), which was deprecated in Cypress `15.21.0`.
-Tasks run in the Node process that loads your Cypress configuration, so they
-don't depend on the operating system, shell, or terminal of the machine running
-Cypress. See
-[Run an external command or CLI](#Run-an-external-command-or-CLI) for tasks that
-need to shell out to a non-Node tool.
-
-:::
-
 ## Syntax
 
 ```javascript
@@ -233,8 +221,7 @@ on('task', {
 Tasks are a good fit for file system work, such as emptying the downloads folder
 before a test and then finding the file the test just downloaded.
 
-```javascript
-// in test
+```javascript title='downloads.cy.js'
 cy.task('clearDownloads')
 
 cy.task('latestDownload').then((filepath) => {
@@ -279,15 +266,14 @@ on('task', {
 
 ### Run an external command or CLI
 
-When setup depends on a tool that isn't a Node module — a Docker container, a
-database CLI, or a cloud provider's command line tool — spawn it from the task
-with
+When setup depends on a tool that isn't a Node module, such as a Docker
+container, a database CLI, or a cloud provider's command line tool, spawn it
+from the task with
 [`child_process.execFileSync()`](https://nodejs.org/api/child_process.html#child_processexecfilesynccommand-args-options).
 Passing the arguments as an array avoids the shell entirely, so quoting and
 `PATH` resolution behave the same way on every platform.
 
-```javascript
-// in test
+```javascript title='database.cy.js'
 cy.task('resetDatabase')
 ```
 
@@ -311,8 +297,7 @@ on('task', {
 
 A task can also return the command's output to the test:
 
-```javascript
-// in test
+```javascript title='bucket.cy.js'
 cy.task('listBucket', 's3://my-test-bucket').should('have.length', 3)
 ```
 
@@ -744,7 +729,6 @@ the following:
 
 ## See also
 
-- [`cy.exec()`](/api/commands/exec) <Badge type="caution">deprecated</Badge>
 - [`cy.fixture()`](/api/commands/fixture)
 - [`cy.readFile()`](/api/commands/readfile)
 - [`cy.request()`](/api/commands/request)
