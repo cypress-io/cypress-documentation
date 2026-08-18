@@ -273,6 +273,47 @@ cy.get(...)
 Read
 [Guide: Introduction to Cypress](/app/core-concepts/introduction-to-cypress#Commands-Run-Serially)
 
+### Retry-ability
+
+[Retry-ability](/app/core-concepts/retry-ability) is a property of the chain,
+not of a single command. `cy.wait()` itself is not a query, so an assertion
+chained directly to it is evaluated only once against the interception object
+that `cy.wait()` yielded:
+
+```js
+// runs the assertion a single time - no retries
+cy.wait('@getAccount').should(
+  'have.nested.property',
+  'response.statusCode',
+  200
+)
+```
+
+Chaining a query such as [`.its()`](/api/commands/its) or
+[`.invoke()`](/api/commands/invoke) after `cy.wait()` starts a new retryable
+chain. The query re-reads the property from the interception object and any
+assertions after it retry for the duration of
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) (`4000` ms by
+default):
+
+```js
+// the .its() query and the assertion retry for up to 4 seconds
+cy.wait('@getAccount').its('response.statusCode').should('eq', 200)
+```
+
+Because the assertion retries, it does not fail on the first attempt. If the
+value never satisfies the assertion, the test fails only after
+`defaultCommandTimeout` has elapsed.
+
+To opt out of retrying, override the timeout on the query to `0`:
+
+```js
+// asserts synchronously against the value at that moment - no retries
+cy.wait('@getAccount')
+  .its('response.statusCode', { timeout: 0 })
+  .should('eq', 200)
+```
+
 ### Timeouts {#Notes-Timeouts}
 
 #### `requestTimeout` and `responseTimeout`
@@ -328,8 +369,11 @@ requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 <HeaderAssertions />
 
-- `cy.wait()` will only run assertions you have chained once, and will not
+- Assertions chained _directly_ to `cy.wait()` run once and will not
   [retry](/app/core-concepts/retry-ability).
+- Assertions chained after a query such as [`.its()`](/api/commands/its) or
+  [`.invoke()`](/api/commands/invoke) _do_ retry, because
+  [retry-ability follows the chain](#Retry-ability), not the command.
 
 <HeaderTimeouts />
 
