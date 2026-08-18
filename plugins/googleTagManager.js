@@ -3,8 +3,11 @@ const skipForAutomation = require('./skipForAutomation')
 // Replaces the bundled @docusaurus/plugin-google-tag-manager so the container can
 // be skipped under Cypress. The container carries Pendo and GA4 G-66E86SXGKY, so
 // leaving it to the bundled plugin means every automated page visit is counted as
-// a real one. Aside from the guards below, the injected markup matches what that
-// plugin emits.
+// a real one.
+//
+// The inline script and noscript iframe are Google's public GTM bootstrap, which
+// has been stable for years. The Docusaurus plugin is a thin wrapper around that
+// same snippet; aside from the guards below, the markup matches what it emits.
 //
 // Two independent skips:
 // - NODE_ENV !== 'production' matches the bundled plugin (and plugins/fullstory.js):
