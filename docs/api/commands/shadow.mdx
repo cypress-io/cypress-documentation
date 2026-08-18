@@ -30,7 +30,7 @@ cy.get('.shadow-host').shadow()
 
 ```javascript
 cy.shadow() // Errors, cannot be chained off 'cy'
-cy.exec('npm start').shadow() // Errors, 'exec' does not yield DOM element
+cy.task('log', 'hello').shadow() // Errors, 'task' does not yield DOM element
 cy.get('.not-a-shadow-host').shadow() // Errors, subject must host a shadow root
 ```
 

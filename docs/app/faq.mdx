@@ -1202,12 +1202,9 @@ require JS modules, _but_ only those that work in a browser.
 You can `require` or `import` them as you're accustomed to. We preprocess your
 spec files with webpack and Babel.
 
-We recommend utilizing one of the following to execute code outside of the
-browser.
-
-- [`cy.task()`](/api/commands/task) to run code in Node via the
-  [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function
-- [`cy.exec()`](/api/commands/exec) to execute a shell command
+We recommend using [`cy.task()`](/api/commands/task) to run code in Node via the
+[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function. This
+includes running external commands, which a task can spawn directly from Node.
 
 [Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
 
