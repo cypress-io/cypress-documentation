@@ -1,10 +1,27 @@
 ---
-title: 'cy.exec()'
-description: Execute a system command in Cypress.
+title: 'cy.exec() [Deprecated]'
+description: 'Deprecated: Execute a system command in Cypress.'
 sidebar_label: exec
+sidebar_custom_props: { 'deprecated_label': true }
 ---
 
 <ProductHeading product="app" />
+
+:::caution
+
+<strong>Deprecated</strong>
+
+`cy.exec()` was deprecated in Cypress `15.21.0` and will be removed in a future
+major version. The [`execTimeout`](/app/references/configuration#Timeouts)
+configuration option is deprecated along with it.
+
+Use [`cy.task()`](/api/commands/task) instead, which runs in Node without
+depending on the operating system, shell, or terminal of the machine running
+Cypress. See
+[Run an external command or CLI](/api/commands/task#Run-an-external-command-or-CLI)
+for tasks that shell out to a non-Node tool.
+
+:::
 
 # exec
 
@@ -239,9 +256,10 @@ the following:
 
 ## History
 
-| Version                                    | Changes                               |
-| ------------------------------------------ | ------------------------------------- |
-| [15.0.0](/app/references/changelog#15-0-0) | Renamed property `code` to `exitCode` |
+| Version                                    | Changes                                          |
+| ------------------------------------------ | ------------------------------------------------ |
+| 15.21.0                                    | `cy.exec()` command and `execTimeout` deprecated |
+| [15.0.0](/app/references/changelog#15-0-0) | Renamed property `code` to `exitCode`            |
 
 ## See also
 
