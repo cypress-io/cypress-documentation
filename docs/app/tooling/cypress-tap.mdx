@@ -90,7 +90,7 @@ SESSIONS (2)
   222  /projects/other  component  —
 ```
 
-`--json` returns the same rows as an array, with `browserAttached` as a boolean, `browserName` as `null` where the text shows `—`, `browserSupported` as a boolean saying whether `cypress tap` can drive that browser, and `rendererResponsive` present only when there's a runner page to probe:
+`--json` returns the same rows as an array, with `browserAttached` as a boolean and `browserName` as `null` where the text shows `—`:
 
 ```json title="Output"
 [
@@ -99,17 +99,14 @@ SESSIONS (2)
     "projectRoot": "/projects/app",
     "testingType": "e2e",
     "browserAttached": true,
-    "browserName": "Chrome",
-    "browserSupported": true,
-    "rendererResponsive": true
+    "browserName": "Chrome"
   },
   {
     "pid": 222,
     "projectRoot": "/projects/other",
     "testingType": "component",
     "browserAttached": false,
-    "browserName": null,
-    "browserSupported": true
+    "browserName": null
   }
 ]
 ```
@@ -353,7 +350,7 @@ Output is capped so a heavy page never ships megabytes at once. The spec must be
 | ----------------- | --------------------------------------------------------------------------------------------------------------------- | ------- |
 | `--selector, -e`  | CSS selector matching exactly one element                                                                             | `body`  |
 | `--max-chars, -m` | Cap on returned HTML characters                                                                                       | `30000` |
-| `--at`            | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous | None    |
+| `--at`            | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous |         |
 
 ```shell title="Command"
 cypress tap dom --selector .todo-list
@@ -405,7 +402,7 @@ leaving the compact role/name/state tree browser developer tools show.
 | ----------------- | --------------------------------------------------------------------------------------------------------------------- | ------- |
 | `--selector, -e`  | CSS selector matching exactly one element                                                                             | `body`  |
 | `--max-nodes, -m` | Cap on the number of accessibility nodes returned                                                                     | `200`   |
-| `--at`            | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous | None    |
+| `--at`            | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous |         |
 
 ```shell title="Command"
 cypress tap aria
@@ -430,7 +427,7 @@ visibility, text, and the box.
 | Option           | Description                                                                                                           | Default  |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------- | -------- |
 | `--selector, -e` | CSS selector matching exactly one element, identifying the element to inspect                                         | Required |
-| `--at`           | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous | None     |
+| `--at`           | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous |          |
 
 ```shell title="Command"
 cypress tap inspect --selector "[data-testid=username]"
@@ -712,10 +709,8 @@ conditional rather than assuming a fixed shape. In `status`:
 | `totalTests`, `results`                                               | The run has started, so `running` onwards                          |
 | `pinned`                                                              | A pin created by `cypress tap` is active                           |
 
-Elsewhere, `sessions` always reports `pid`, `projectRoot`, `testingType`,
-`browserAttached`, `browserName`, and `browserSupported`, using `null` for an
-absent testing type or browser, and adds `rendererResponsive` only when
-there's a runner page to probe. `specs` always reports `relativePath` and
+Elsewhere, `sessions` always reports all five of its fields, using `null` for
+an absent testing type or browser. `specs` always reports `relativePath` and
 adds `lastModified` only where git history is available. `command` always
 reports `snapshots`, as an empty array when the row has none to pin, and omits
 `consoleProps` entirely when the driver has none to give.
@@ -1078,7 +1073,7 @@ The `cypress tap` CLI is available for use for all Cypress test authors using Cy
 
 The data exposed from the `cypress tap` CLI into your terminal is strictly local session. If using the CLI within a AI agent, be mindful to ensure you are using safe test practices, like using [`cy.env()`](/api/commands/env), to prevent leaking sensitive information to your agent.
 
-Cypress does capture telemetry specifically around the usage of the CLI to inform usage patterns. The data collected includes the command name, the flags used (names only, never their values), whether it errored and with which error code, how long the command took, the detected AI agent (if any), and identifiers for the session, user, and machine it ran against. Flag values, selectors, spec paths, and other content you passed in are never collected. To opt-out of this behavior, set `CYPRESS_DISABLE_GUEST_TELEMETRY=0` in your terminal.
+Cypress does capture telemetry specifically around the usage of the CLI to inform usage patterns. The data collected includes the command name, the flags used and whether it errored. To opt-out of this behavior, set `CYPRESS_DISABLE_GUEST_TELEMETRY=0` in your terminal.
 
 ### CLI Limitations
 
