@@ -304,13 +304,6 @@ default):
 cy.wait('@getAccount').its('response.statusCode').should('eq', 200)
 ```
 
-What to expect from each:
-
-- **Assertion chained directly to `cy.wait()`:** one attempt, and a wrong value
-  fails the test right away.
-- **Assertion chained after a query:** retries, so a wrong value keeps the test
-  running until `defaultCommandTimeout` runs out.
-
 If you want the retrying version to fail fast instead, set the query's timeout
 to `0`:
 
