@@ -186,9 +186,17 @@ Setting `videoCompression` to a CRF value such as `15` also produces chapters.
 Setting it to `false` or `0` skips encoding entirely, so the video contains no
 chapters.
 
-Chapters are independent of [Cypress Cloud](/cloud/get-started/introduction),
-which jumps to a test in a recorded video using timestamps sent with your run
-results, no matter how you configure `videoCompression`.
+Chapters only help when you open the video file yourself. Record your runs to
+[Cypress Cloud](/cloud/get-started/introduction) and you get this for free:
+every test in the run is listed alongside its video, and selecting one takes you
+straight to that moment—no chapters to configure and no scrubbing.
+
+Better still, skip the video and debug the run with
+[Test Replay](/cloud/features/test-replay). Rather than watching a recording,
+you replay the test exactly as it executed in CI, so you can time travel to the
+point of failure and inspect the DOM, network requests, console logs, JavaScript
+errors, and element rendering—the same debugging experience you have locally,
+without reproducing the failure on your machine.
 
 ### Control which videos to keep and upload to Cypress Cloud
 
