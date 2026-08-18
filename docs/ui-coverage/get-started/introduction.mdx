@@ -68,7 +68,7 @@ Because the report is generated after the run finishes recording, nothing in you
 
 Open a run's **UI Coverage** tab and the report answers four questions:
 
-- **What's my overall coverage?** The [coverage score](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) is the share of interactive elements your tests exercised: tested ÷ total, where [grouped elements](/ui-coverage/core-concepts/element-grouping) count once.
+- **What's my overall coverage?** The [coverage score](/ui-coverage/faq#How-is-the-UI-Coverage-score-calculated) is the share of interactive elements and links or pages your tests exercised: tested ÷ total.
 - **Which pages need the most attention?** Each [view](/ui-coverage/core-concepts/views) (a page or state of your app) gets its own score, so you can rank pages and weigh each against how critical it is to your users.
 - **What did my tests miss on a page?** Drilling into a view lists its untested [interactive elements](/ui-coverage/core-concepts/interactivity#Interactive-Elements), each with a full-page, inspectable DOM snapshot showing exactly where it is.
 - **Which pages do my tests never reach?** [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) surface pages your tests link to but never visit, so you can see the flows your suite is missing entirely.

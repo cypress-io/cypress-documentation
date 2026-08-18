@@ -53,6 +53,10 @@ When migrating from `Cypress.env()`, you have two options: `cy.env()` and `Cypre
 
 `cy.env()` is read-only and asynchronous.
 
+<CypressEnvYieldedValueCaution />
+
+<CypressEnvAssertDerivedValue />
+
 #### Read one value
 
 <Badge type="danger">Before: Cypress.env()</Badge>
@@ -305,6 +309,7 @@ Many community plugins have already adopted the new API. Update to at least the 
 | [@chromatic-com/cypress](https://github.com/chromaui/chromatic-e2e)                                                  | 0.12.5+ | Move options from `env` to `expose`; requires Cypress 15.10+                             |
 | [@frsource/cypress-plugin-visual-regression-diff](https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff) | 4.1.0+  | Move options from `env` to `expose`                                                      |
 | [@percy/cypress](https://github.com/percy/percy-cypress)                                                             | 3.1.8+  | Move `PERCY_*` values from `env` to `expose` (unexposed still warns)                     |
+| [@simonsmith/cypress-image-snapshot](https://github.com/simonsmith/cypress-image-snapshot)                           | 10.1.1+ | Move options from `env` to `expose` (unexposed still warns)                              |
 | [cypress-data-session](https://github.com/bahmutov/cypress-data-session)                                             | 3.0.0+  | Move options from `env` to `expose`; requires Cypress 15.10+                             |
 | [cypress-fail-fast](https://github.com/javierbrea/cypress-fail-fast)                                                 | 8.0.0+  | Move options from `env` to `expose`; renamed (`FAIL_FAST_STRATEGY` → `failFastStrategy`) |
 | [cypress-firebase](https://github.com/prescottprue/cypress-firebase)                                                 | 4.4.0+  | Set `allowCypressEnv: false` to disable its `Cypress.env()` fallback                     |

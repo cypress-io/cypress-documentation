@@ -44,7 +44,7 @@ The automatic rules consolidate the dynamic URLs that represent the same page in
 - **Query parameters**: Query strings are ignored when grouping, so URLs that differ only by query parameters become a single view, and view names do not include a query string.
 - **Hash routing**: If a URL's hash begins with `#/`, UI Coverage treats your application as using hash-based routing. Each hash route becomes its own view, and the dynamic segment rules also apply within the hash. Hashes that do not begin with `#/` (e.g., `#section-2`) are ignored.
 - **Trailing slashes**: URLs that differ only by a trailing slash are the same view.
-- **Common origins**: When all views share the same protocol, host, and port, view names omit them for readability.
+- **Common origins**: When views share a protocol, host, and port, view names omit them for readability. In runs that span multiple origins, names are shortened wherever it's unambiguous.
 
 ### Examples
 

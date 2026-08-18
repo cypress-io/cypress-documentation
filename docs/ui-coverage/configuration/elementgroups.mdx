@@ -1,7 +1,7 @@
 ---
 title: 'elementGroups: group related elements in UI Coverage'
 description: 'The elementGroups configuration in Cypress UI Coverage groups related elements into a single unit, so testing one element counts as testing them all.'
-sidebar_label: 'Group related elements'
+sidebar_label: 'elementGroups'
 sidebar_position: 60
 ---
 
@@ -82,6 +82,7 @@ Cypress Cloud rejects a configuration when:
 - Two rules have the same `selector` (with the same `documentScope`). Duplicates can never both apply, because the first matching rule wins.
 - Two rules have the same `name`, or one rule's `name` matches another rule's `selector`. Groups are identified by these values, so they must be unique.
 - A `selector` or `documentScope` entry isn't valid CSS selector syntax.
+- `documentScope` is present but empty. Omit the property to match in any document.
 - A rule contains a property other than the four listed above.
 
 ## Examples

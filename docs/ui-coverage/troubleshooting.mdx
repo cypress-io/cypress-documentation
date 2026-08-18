@@ -61,7 +61,7 @@ UI Coverage already ignores the most common unstable values, including UUIDs and
   }
   ```
 
-Patterns in `attributeFilters` match the whole value (they're anchored as `^(...)$`), and JSON requires backslashes to be doubled, so a token like `\d` must be written `\\d`. See [How rules are applied](/ui-coverage/configuration/attributefilters#How-rules-are-applied).
+Patterns in `attributeFilters` match the whole value (they're anchored as `^(...)$`, unless your pattern already starts with `^` or ends with `$`), and JSON requires backslashes to be doubled, so a token like `\d` must be written `\\d`. Note that `attribute` is matched **case-insensitively** while `value` is matched **case-sensitively**. See [How rules are applied](/ui-coverage/configuration/attributefilters#How-rules-are-applied).
 
 ## Distinct elements are reported as one
 
@@ -155,6 +155,8 @@ Controls that do different things are combined into one group, so an interaction
 Your test interacts with an element on every run, but the report still lists it as untested.
 
 **Cause.** UI Coverage marks an element tested only when a recognized [interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) targets it. The built-in set is `blur`, `check`, `clear`, `click`, `dblclick`, `focus`, `rightclick`, `scrollIntoView`, `scrollTo`, `select`, `selectFile`, `submit`, `trigger`, `type`, and `uncheck`. Anything outside that set, including your own custom commands and plugin commands such as `cypress-real-events`' `realClick` and `realHover`, doesn't count until you declare it.
+
+**Cause: you used `scrollIntoView`.** That command credits the element's nearest scrollable ancestor rather than the element you called it on, so it usually marks nothing tested. Use `click`, `focus`, or `trigger` on the element instead.
 
 **Fixes.**
 
