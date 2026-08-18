@@ -19,6 +19,18 @@ We do not recommend starting a web server using `cy.task()`. Read about
 
 :::
 
+:::tip
+
+`cy.task()` is the recommended replacement for
+[`cy.exec()`](/api/commands/exec), which was deprecated in Cypress `15.21.0`.
+Tasks run in the Node process that loads your Cypress configuration, so they
+don't depend on the operating system, shell, or terminal of the machine running
+Cypress. See
+[Run an external command or CLI](#Run-an-external-command-or-CLI) for tasks that
+need to shell out to a non-Node tool.
+
+:::
+
 ## Syntax
 
 ```javascript
@@ -210,6 +222,114 @@ import db from '../../server/src/db'
 on('task', {
   'defaults:db': () => {
     return db.seed('defaults')
+  },
+})
+```
+
+:::
+
+### Clean up and verify downloaded files
+
+Tasks are a good fit for file system work, such as emptying the downloads folder
+before a test and then finding the file the test just downloaded.
+
+```javascript
+// in test
+cy.task('clearDownloads')
+
+cy.task('latestDownload').then((filepath) => {
+  expect(filepath).to.be.a('string')
+  cy.readFile(filepath)
+})
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+```
+
+```ts
+const downloads = path.join(config.projectRoot, 'cypress', 'downloads')
+
+on('task', {
+  clearDownloads() {
+    fs.rmSync(downloads, { recursive: true, force: true })
+    fs.mkdirSync(downloads, { recursive: true })
+
+    return null
+  },
+
+  latestDownload() {
+    const files = fs
+      .readdirSync(downloads)
+      .map((name) => ({
+        name,
+        time: fs.statSync(path.join(downloads, name)).mtimeMs,
+      }))
+      .sort((a, b) => b.time - a.time)
+
+    return files.length ? path.join(downloads, files[0].name) : null
+  },
+})
+```
+
+:::
+
+### Run an external command or CLI
+
+When setup depends on a tool that isn't a Node module — a Docker container, a
+database CLI, or a cloud provider's command line tool — spawn it from the task
+with
+[`child_process.execFileSync()`](https://nodejs.org/api/child_process.html#child_processexecfilesynccommand-args-options).
+Passing the arguments as an array avoids the shell entirely, so quoting and
+`PATH` resolution behave the same way on every platform.
+
+```javascript
+// in test
+cy.task('resetDatabase')
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import { execFileSync } from 'child_process'
+```
+
+```ts
+on('task', {
+  resetDatabase() {
+    execFileSync('docker', ['exec', 'db', 'reset-script'], { stdio: 'pipe' })
+
+    return null
+  },
+})
+```
+
+:::
+
+A task can also return the command's output to the test:
+
+```javascript
+// in test
+cy.task('listBucket', 's3://my-test-bucket').should('have.length', 3)
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import { execFileSync } from 'child_process'
+```
+
+```ts
+on('task', {
+  listBucket(bucket) {
+    const output = execFileSync('aws', ['s3', 'ls', bucket], {
+      encoding: 'utf8',
+    })
+
+    return output.split('\n').filter(Boolean)
   },
 })
 ```
@@ -624,7 +744,7 @@ the following:
 
 ## See also
 
-- [`cy.exec()`](/api/commands/exec)
+- [`cy.exec()`](/api/commands/exec) <Badge type="caution">deprecated</Badge>
 - [`cy.fixture()`](/api/commands/fixture)
 - [`cy.readFile()`](/api/commands/readfile)
 - [`cy.request()`](/api/commands/request)

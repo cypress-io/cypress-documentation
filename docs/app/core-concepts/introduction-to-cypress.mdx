@@ -1425,7 +1425,7 @@ For instance:
 - [`cy.visit()`](/api/commands/visit) loads a remote page and does not resolve
   _until all of the external resources complete their loading phase_. This may
   take awhile, so its default timeout is set to `60000ms`.
-- [`cy.exec()`](/api/commands/exec) runs a system command such as _seeding a
+- [`cy.task()`](/api/commands/task) runs code in Node such as _seeding a
   database_. We expect this to potentially take a long time, and its default
   timeout is set to `60000ms`.
 - [`cy.wait()`](/api/commands/wait) actually uses 2 different timeouts. When
