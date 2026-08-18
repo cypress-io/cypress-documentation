@@ -175,9 +175,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cloud-cli-july-2026',
+        id: 'cypress-tap-beta-aug-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `✨ Read Test Replay data from your terminal and script against it &mdash; <a href="https://docs.cypress.io/cloud/integrations/cloud-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cloud-cli">Learn More</a>`,
+        content: `🌟 Give your agent the context the Cypress app shows you. &mdash; <a href="https://www.cypress.io/blog/cypress-app-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cypress-tap-cli">Meet cypress tap</a>`,
         isCloseable: true,
       },
       footer: {

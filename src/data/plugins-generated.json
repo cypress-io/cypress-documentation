@@ -66,8 +66,8 @@
     },
     "cypress-rspack-dev-server": {
       "npm": "cypress-rspack-dev-server",
-      "version": "2.2.0",
-      "lastPublished": "2026-07-02T04:44:44.332Z",
+      "version": "2.2.1",
+      "lastPublished": "2026-08-17T13:05:00.220Z",
       "cypressVersion": ">=15.17.0"
     },
     "@cypress/vite-dev-server": {
@@ -322,8 +322,8 @@
     },
     "cypress-plugin-api": {
       "npm": "cypress-plugin-api",
-      "version": "2.12.0",
-      "lastPublished": "2026-06-28T21:15:13.336Z",
+      "version": "2.12.1",
+      "lastPublished": "2026-08-17T11:13:15.209Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-plugin-xhr-toggle": {
