@@ -139,6 +139,28 @@ it('adds items', () => {
 This allows you to inspect the web application, the DOM, the network, and any
 storage after each command to make sure everything happens as expected.
 
+## Debug with an AI agent
+
+Everything above puts you in front of the Cypress app. If you are working with
+an AI coding agent, it can read the same information from the terminal with the
+[`cypress tap`](/app/tooling/cypress-tap) CLI: run the spec you just changed,
+poll the run's status, read the failing test's Command Log and error, and
+inspect the DOM of the app under test at the moment a command ran.
+
+That closes the loop without you relaying failures back and forth. Start
+Cypress with `cypress open`, then let your agent drive it from another
+terminal.
+
+```shell
+npx cypress tap run cypress/e2e/checkout.cy.ts
+npx cypress tap status --json
+npx cypress tap reporter --test <id>
+```
+
+See [driving Cypress from the terminal with an AI agent](/app/tooling/cypress-tap)
+for the full workflow and
+a snippet you can drop into your agent's instructions file.
+
 ## Using the Developer Tools
 
 Though Cypress has built out
