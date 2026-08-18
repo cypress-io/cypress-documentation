@@ -3,14 +3,24 @@ const skipForAutomation = require('./skipForAutomation')
 // Replaces the bundled @docusaurus/plugin-google-tag-manager so the container can
 // be skipped under Cypress. The container carries Pendo and GA4 G-66E86SXGKY, so
 // leaving it to the bundled plugin means every automated page visit is counted as
-// a real one. Aside from the guard, the injected markup matches what that plugin
-// emits.
+// a real one. Aside from the guards below, the injected markup matches what that
+// plugin emits.
+//
+// Two independent skips:
+// - NODE_ENV !== 'production' matches the bundled plugin (and plugins/fullstory.js):
+//   `npm start` must not load GTM-KNKBWLD, or local browsing sends real Pendo/GA4.
+// - skipForAutomation covers Cypress against a production build, where NODE_ENV is
+//   already 'production' and a NODE_ENV check cannot help.
 module.exports = async function googleTagManager(context, options) {
   const { containerId } = options
+  const isProd = process.env.NODE_ENV === 'production'
 
   return {
     name: 'docusaurus-plugin-google-tag-manager-guarded',
     injectHtmlTags() {
+      if (!isProd) {
+        return {}
+      }
       return {
         headTags: [
           {
