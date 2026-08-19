@@ -10,13 +10,63 @@ sidebar_label: 'Migration Guide'
 
 ## Migrating to Cypress 16.0
 
-This guide details the code changes needed to migrate to Cypress
-version 16.0.
+<CopyPrompt
+  defaultCollapsed
+  excludeFromLlmExport
+  title="Upgrade to Cypress 16 with your AI assistant"
+  prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-to-cypress-16-0.md and https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-away-from-cypress-env.md, which covers in full the Cypress.env() removal that the 16.0 section only summarizes. Then upgrade this project from Cypress 15 to 16 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 15.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in the 16.0 section (Node.js 22, 24, or 26+, and Angular 21+ / Vite 8+ / Next.js 15.0.4+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency. If I depend on @cypress/angular-zoneless, replace it with @cypress/angular and update the imports.\n\n4. Migrate off Cypress.env(), following the Cypress.env() page rather than guessing. Find every Cypress.env() usage and classify each value as sensitive or public, since that choice decides the replacement. Move sensitive values (keys, tokens, passwords, credentials) to cy.env(), which is asynchronous and yields only the keys you request, and public values (feature flags, API versions, public URLs) to Cypress.expose() with a top-level expose block in my config. Replace any env key in a per-test or per-suite config override with expose. Check for --env CLI flags, for reads inside cy.origin() callbacks, and for plugins that call Cypress.env(), which that page lists with the versions that support the new APIs. Show me the proposed changes before applying them.\n\n5. Fix the remaining breaking changes in the 16.0 section that affect my code and config: delete cy.end() calls, replace experimentalMemoryManagement: false with manageBrowserMemory: false, remove allowCypressEnv, experimentalSourceRewriting, and experimentalFastVisibility, move Cypress.config() calls that set viewportWidth, viewportHeight, or blockHosts during a test into cy.viewport() or a test configuration object, and convert any .coffee specs, support files, or fixtures to JavaScript or TypeScript.\n\n6. Review what changed behavior without changing my code. Flag, but don't rewrite unless a test actually fails: assertions on req.httpVersion, compression headers, or a 304 status inside cy.intercept(); visibility assertions that depended on the legacy algorithm; tests that relied on the implicit 10ms keystrokeDelay; and cookie or storage assertions written inside .then(), which doesn't retry. Don't set forceHttp1 or visibilityStrategy: 'legacy' to make a test pass; both are deprecated escape hatches.\n\n7. Verify. Run npx cypress verify and my Cypress tests, and confirm the run starts with no deprecation or removed-option warnings.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+/>
+
+This guide details the code changes needed to migrate to Cypress version 16.0.
 [See the full changelog for version v16.0](/app/references/changelog#16-0-0).
+
+**What you may need to change**
+
+| Change                                                                                                                                                                        | Action needed                                                                                        |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [Native browser network in Chrome, Chromium, and Edge](#Chrome-Chromium-and-Edge-use-the-native-browser-network)                                                              | Usually none. Update tests that assert on `req.httpVersion`, compression headers, or a `304` status. |
+| [Modern visibility algorithm on by default](#experimentalFastVisibility-replaced-by-visibilityStrategy)                                                                       | Usually none. Update tests that relied on legacy-only visibility semantics.                          |
+| [Browser memory management on by default](#experimentalMemoryManagement-replaced-by-manageBrowserMemory)                                                                      | Only if you set `experimentalMemoryManagement: false`. Replace it with `manageBrowserMemory: false`. |
+| [`keystrokeDelay` default changed from `10` to `0`](#Default-keystrokeDelay-changed-from-10-to-0)                                                                             | Only if a test depended on the implicit delay.                                                       |
+| [Cookie and storage reads are now queries](#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries)                                                                     | Usually none. Move assertions out of `.then()` and onto `.should()` to get retries.                  |
+| [Node.js 20 and 25 dropped](#Nodejs-20-and-25-no-longer-supported)                                                                                                            | Yes, if you run Cypress on either version.                                                           |
+| [`Cypress.env()` removed](#Cypressenv-removed)                                                                                                                                | Yes. Migrate to `cy.env()` or `Cypress.expose()`.                                                    |
+| [`cy.end()` removed](#cyend-removed)                                                                                                                                          | Yes. Delete the `.end()` calls.                                                                      |
+| [`viewportWidth`, `viewportHeight`, and `blockHosts` via `Cypress.config()`](#viewportWidth-and-viewportHeight-can-no-longer-be-set-with-Cypressconfig-during-test-execution) | Yes, if you set them while a test is executing.                                                      |
+| [`experimentalSourceRewriting` removed](#experimentalSourceRewriting-config-option-removed)                                                                                   | Yes. Remove the option, and enable `removeSRIAttributes` if you used it for SRI.                     |
+| [CoffeeScript support removed](#CoffeeScript-support-removed)                                                                                                                 | Yes, if you have `.coffee` specs, support files, or fixtures.                                        |
+| [Angular, Vite, and Next.js minimums raised for component testing](#Angular-18-19-and-20-are-no-longer-supported-for-Component-Testing)                                       | Yes, if you are below Angular 21, Vite 8, or Next.js 15.0.4.                                         |
+| [Electron deprecated as a test browser](#Electron-browser-deprecated)                                                                                                         | Not yet, but plan to switch to an installed browser.                                                 |
 
 ### Node.js 20 and 25 no longer supported
 
 Cypress 16 requires [Node.js](https://nodejs.org/en) **22.x**, **24.x**, or **26.x and above** to install the Cypress binary. Node.js 20 and Node.js 25 are no longer supported. See [system requirements](/app/get-started/install-cypress#Nodejs) and [Node's release schedule](https://github.com/nodejs/Release).
+
+### Chrome, Chromium, and Edge use the native browser network
+
+In Cypress 16, Chrome, Chromium, and Edge intercept test traffic through the native browser network. Your application connects to your server directly and negotiates whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), exactly as it does in production.
+
+Firefox, WebKit, and Electron continue to use the legacy network path and are unaffected.
+
+[`cy.intercept()`](/api/commands/intercept) works as before, and most suites need no edits. A few behaviors differ in Chrome, Chromium, and Edge on the native browser network. See [Native network interception](/app/guides/native-network-interception) for the full list with examples.
+
+Aside from the `cy.intercept()` behaviors above, your suite should not need any changes. Commands, stubbing, waiting, aliases, and assertions all work as they did before, and adopting the native browser network requires no configuration change.
+
+If you need a temporary escape hatch, either while you update those tests or if you hit behavior on the native browser network that the guide does not list, route every browser back through the legacy network path:
+
+:::cypress-config-example
+
+```js
+{
+  forceHttp1: true
+}
+```
+
+:::
+
+If setting `forceHttp1` to `true` allows your suite to pass, and the difference is not one of the documented behaviors, please [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you are experiencing so it can be investigated.
+
+<ForceHttp1Deprecation />
 
 ### Default `keystrokeDelay` changed from `10` to `0`
 
@@ -56,7 +106,7 @@ The experimental `experimentalFastVisibility` boolean flag has been removed. Its
 
 **If you were setting `experimentalFastVisibility: true`:** remove it. The modern algorithm is now the default.
 
-**If you were setting `experimentalFastVisibility: false` (or relying on the 15.x default) and a test now fails:** the modern algorithm intentionally drops some behaviors the legacy algorithm had (ancestor `overflow` clipping, transform-based hiding, and coverage detection for fixed/sticky elements). Prefer rewriting the affected assertions to verify the same user-visible behavior in an algorithm-agnostic way — see [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) for what each algorithm checks and recommended rewrite patterns.
+**If you were setting `experimentalFastVisibility: false` (or relying on the 15.x default) and a test now fails:** the modern algorithm intentionally drops some behaviors the legacy algorithm had (ancestor `overflow` clipping, transform-based hiding, and coverage detection for fixed/sticky elements). Prefer rewriting the affected assertions to verify the same user-visible behavior in an algorithm-agnostic way. See [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) for what each algorithm checks and recommended rewrite patterns.
 
 If you need a temporary escape hatch while you update those tests, opt back into the legacy algorithm:
 
@@ -73,25 +123,6 @@ If you need a temporary escape hatch while you update those tests, opt back into
 :::caution
 
 `visibilityStrategy` is deprecated. Both the `'legacy'` value and the option itself will be removed in a future major version of Cypress. Treat it as a temporary migration aid only.
-
-:::
-
-### `experimentalSourceRewriting` config option removed
-
-The `experimentalSourceRewriting` configuration option has been removed. The default regex-based rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce.
-
-If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
-
-You only need a replacement option if your application pins resources with Subresource Integrity (SRI) `integrity` attributes on `<script>` or `<link>` elements. Because Cypress rewrites those resources, the pinned hash no longer matches and the browser blocks them, reporting an error such as `Failed to find a valid digest in the 'integrity' attribute for resource '…'`. If you were relying on `experimentalSourceRewriting` to avoid this, enable the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead, which strips the `integrity` attribute so the rewritten resources load. If your application does not use SRI, no replacement is required.
-
-:::cypress-config-example
-
-```ts
-{
-  // Remove this line
-  experimentalSourceRewriting: true,
-}
-```
 
 :::
 
@@ -138,6 +169,193 @@ If your Cypress configuration still sets `experimentalMemoryManagement`, Cypress
 ```
 
 See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory) for more information.
+
+### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
+
+[`cy.getCookie()`](/api/commands/getcookie),
+[`cy.getCookies()`](/api/commands/getcookies), and
+[`cy.getAllCookies()`](/api/commands/getallcookies) are now retry-able
+[query commands](/app/core-concepts/retry-ability), just like
+[`cy.get()`](/api/commands/get) and [`cy.contains()`](/api/commands/contains).
+
+Previously they were one-shot commands that resolved a single value and ran any
+chained assertions only once. As of Cypress 16 they retry their built-in and
+chained assertions until they pass or time out.
+
+#### Reads are now retried
+
+A read such as `cy.getCookie('session_id').should('exist')` no longer fails on the first
+missing read. The command re-reads the cookie and retries the assertion until it
+passes or the command times out, so you no longer need to manually wait for a
+cookie to be written before asserting on it.
+
+#### Timeouts now follow `defaultCommandTimeout`
+
+This changes which timeout governs them:
+
+- **Query commands** (`cy.getCookie()`, `cy.getCookies()`, and
+  `cy.getAllCookies()`) are now governed by
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
+  `4000` ms), the same timeout used by every other query.
+- **Cookie action commands** ([`cy.setCookie()`](/api/commands/setcookie),
+  [`cy.clearCookie()`](/api/commands/clearcookie),
+  [`cy.clearCookies()`](/api/commands/clearcookies), and
+  [`cy.clearAllCookies()`](/api/commands/clearallcookies)) are unchanged. They
+  make a single automation round-trip, do not retry assertions, and remain
+  governed by [`responseTimeout`](/app/references/configuration#Timeouts)
+  (default `30000` ms).
+
+The new retry behavior applies only to assertions chained directly onto the
+command. A [`.then()`](/api/commands/then) callback still runs only once, after
+the command settles, and is **not** retried. The cookie (or array of cookies) it
+receives is a single snapshot read at that moment, so an assertion made inside
+`.then()` will not wait for the cookie to be set. To benefit from retries, chain
+[`.should()`](/api/commands/should) assertions directly instead:
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+// Runs once and does not retry, so it fails immediately if the cookie isn't set yet
+cy.getCookie('session_id').then((cookie) => {
+  expect(cookie).to.have.property('value', '189jd09su')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+// Retries, re-reading the cookie, until the assertion passes or times out
+cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
+```
+
+If you specifically want a one-shot check that does **not** retry, for example
+to assert that a cookie does **not** yet exist, perform the assertion inside a
+[`.then()`](/api/commands/then) callback, which runs once and is not retried:
+
+```javascript
+cy.getCookie('session_id').then((cookie) => {
+  expect(cookie).to.be.null
+})
+```
+
+#### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.getCookie()`, `cy.getCookies()`, or
+`cy.getAllCookies()`, update your code to use
+`Cypress.Commands.overwriteQuery('getCookie', function () { ... })` rather than
+`Cypress.Commands.overwrite('getCookie', () => { ... })`. For more details on
+overwriting queries, see
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+Cypress.Commands.overwrite('getCookie', (name, options) => {
+  return cy.getCookie(name, options)
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+Cypress.Commands.overwriteQuery('getCookie', (name, options) => {
+  return cy.getCookie(name, options)
+})
+```
+
+See [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) for more details.
+
+### `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` are now queries
+
+[`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage) and
+[`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) are now
+retry-able [query commands](/app/core-concepts/retry-ability), just like
+[`cy.getCookie()`](/api/commands/getcookie) and
+[`cy.getCookies()`](/api/commands/getcookies).
+
+Previously they read storage once and ran any chained assertions a single time,
+so they could fail on the first read when storage was populated asynchronously.
+As of Cypress 16 they re-read `localStorage` and `sessionStorage` from all
+origins and retry their chained assertions until they pass or time out.
+
+#### Reads are now retried
+
+A read such as
+`cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')`
+no longer fails on the first empty read. The command re-reads storage and retries
+the assertion until it passes or the command times out, so you no longer need to
+manually wait for storage to be written before asserting on it.
+
+#### Timeouts now follow `defaultCommandTimeout`
+
+Both commands are now [`Timeoutable`](/api/commands/getalllocalstorage#Arguments)
+and accept a `timeout` option. They are governed by
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
+`4000` ms), the same timeout used by every other query. When a read times out,
+the error is reported with the standard `Timed out retrying after ...` prefix.
+
+The new retry behavior applies only to assertions chained directly onto the
+command. A [`.then()`](/api/commands/then) callback still runs only once, after
+the command settles, and is **not** retried. The object it receives is a single
+snapshot read at that moment, so an assertion made inside `.then()` will not wait
+for storage to be populated. To benefit from retries, chain
+[`.should()`](/api/commands/should) assertions directly instead:
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+// Runs once and does not retry, so it fails immediately if the origin isn't present
+cy.getAllLocalStorage().then((result) => {
+  expect(result).to.have.property('https://example.cypress.io')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+// Retries, re-reading storage, until the assertion passes or times out
+cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')
+```
+
+If you specifically want a one-shot check that does **not** retry, for example
+to assert that no storage has been written yet, perform the assertion inside a
+[`.then()`](/api/commands/then) callback, which runs once and is not retried:
+
+```javascript
+cy.getAllLocalStorage().then((result) => {
+  expect(result).to.deep.equal({})
+})
+```
+
+#### `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+
+Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
+were previously overwriting `cy.getAllLocalStorage()` or
+`cy.getAllSessionStorage()`, update your code to use
+`Cypress.Commands.overwriteQuery('getAllLocalStorage', function () { ... })`
+rather than
+`Cypress.Commands.overwrite('getAllLocalStorage', () => { ... })`. For more
+details on overwriting queries, see
+[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+Cypress.Commands.overwrite('getAllLocalStorage', (options) => {
+  return cy.getAllLocalStorage(options)
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+Cypress.Commands.overwriteQuery('getAllLocalStorage', (options) => {
+  return cy.getAllLocalStorage(options)
+})
+```
+
+See [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) for more details.
 
 ### `viewportWidth` and `viewportHeight` can no longer be set with `Cypress.config()` during test execution
 
@@ -212,218 +430,170 @@ it(
 
 Setting `blockHosts` in your Cypress configuration, or with `Cypress.config()` outside of test execution (for example at the top level of a support file or spec file), is unchanged.
 
-### Chrome, Chromium, and Edge use the native browser network
+### `experimentalSourceRewriting` config option removed
 
-In Cypress 16, Chrome, Chromium, and Edge intercept test traffic through the native browser network. Your application connects to your server directly and negotiates whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), exactly as it does in production.
+The `experimentalSourceRewriting` configuration option has been removed. The default regex-based rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce.
 
-Firefox, WebKit, and Electron continue to use the legacy network path and are unaffected.
+If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
 
-[`cy.intercept()`](/api/commands/intercept) works as before, and most suites need no edits. A few behaviors differ in Chrome, Chromium, and Edge on the native browser network — see [Native network interception](/app/guides/native-network-interception) for the full list with examples.
-
-Aside from the `cy.intercept()` behaviors above, your suite should not need any changes. Commands, stubbing, waiting, aliases, and assertions all work as they did before, and adopting the native browser network requires no configuration change.
-
-If you need a temporary escape hatch, either while you update those tests or if you hit behavior on the native browser network that the guide does not list, route every browser back through the legacy network path:
+You only need a replacement option if your application pins resources with Subresource Integrity (SRI) `integrity` attributes on `<script>` or `<link>` elements. Because Cypress rewrites those resources, the pinned hash no longer matches and the browser blocks them, reporting an error such as `Failed to find a valid digest in the 'integrity' attribute for resource '…'`. If you were relying on `experimentalSourceRewriting` to avoid this, enable the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead, which strips the `integrity` attribute so the rewritten resources load. If your application does not use SRI, no replacement is required.
 
 :::cypress-config-example
 
-```js
+```ts
 {
-  forceHttp1: true
+  // Remove this line
+  experimentalSourceRewriting: true,
 }
 ```
 
 :::
 
-If setting `forceHttp1` to `true` allows your suite to pass, and the difference is not one of the documented behaviors, please [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you are experiencing so it can be investigated.
+### `cy.end()` removed
 
-<ForceHttp1Deprecation />
+`cy.end()` has been removed. It ended a chain of commands by yielding `null`,
+which was never necessary, because a Cypress chain is already terminated when
+the next `cy.<command>()` starts a new chain.
 
-### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
-
-[`cy.getCookie()`](/api/commands/getcookie),
-[`cy.getCookies()`](/api/commands/getcookies), and
-[`cy.getAllCookies()`](/api/commands/getallcookies) are now retry-able
-[query commands](/app/core-concepts/retry-ability), just like
-[`cy.get()`](/api/commands/get) and [`cy.contains()`](/api/commands/contains).
-
-Previously they were one-shot commands that resolved a single value and ran any
-chained assertions only once. As of Cypress 16 they retry their built-in and
-chained assertions until they pass or time out.
-
-#### Reads are now retried
-
-A read such as `cy.getCookie('session_id').should('exist')` no longer fails on the first
-missing read. The command re-reads the cookie and retries the assertion until it
-passes or the command times out, so you no longer need to manually wait for a
-cookie to be written before asserting on it.
-
-#### Timeouts now follow `defaultCommandTimeout`
-
-This changes which timeout governs them:
-
-- **Query commands** — `cy.getCookie()`, `cy.getCookies()`, and
-  `cy.getAllCookies()` — are now governed by
-  [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
-  `4000` ms), the same timeout used by every other query.
-- **Cookie action commands** — [`cy.setCookie()`](/api/commands/setcookie),
-  [`cy.clearCookie()`](/api/commands/clearcookie),
-  [`cy.clearCookies()`](/api/commands/clearcookies), and
-  [`cy.clearAllCookies()`](/api/commands/clearallcookies) — are unchanged. They
-  make a single automation round-trip, do not retry assertions, and remain
-  governed by [`responseTimeout`](/app/references/configuration#Timeouts)
-  (default `30000` ms).
-
-The new retry behavior applies only to assertions chained directly onto the
-command. A [`.then()`](/api/commands/then) callback still runs only once, after
-the command settles, and is **not** retried — the cookie (or array of cookies) it
-receives is a single snapshot read at that moment, so an assertion made inside
-`.then()` will not wait for the cookie to be set. To benefit from retries, chain
-[`.should()`](/api/commands/should) assertions directly instead:
+There is no replacement. Delete the `.end()` calls.
 
 <Badge type="danger">Before</Badge>
 
 ```javascript
-// Runs once and does not retry — fails immediately if the cookie isn't set yet
-cy.getCookie('session_id').then((cookie) => {
-  expect(cookie).to.have.property('value', '189jd09su')
-})
+cy.get('[data-cy="submit"]').click().end()
+
+cy.get('[data-cy="name"]').type('Jane')
 ```
 
 <Badge type="success">After</Badge>
 
 ```javascript
-// Retries, re-reading the cookie, until the assertion passes or times out
-cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
+cy.get('[data-cy="submit"]').click()
+
+cy.get('[data-cy="name"]').type('Jane')
 ```
 
-If you specifically want a one-shot check that does **not** retry — for example,
-to assert that a cookie does **not** yet exist — perform the assertion inside a
-[`.then()`](/api/commands/then) callback, which runs once and is not retried:
+`cy.end()` was deprecated in Cypress
+[15.16.0](/app/references/changelog#15-16-0) and removed in 16.0.
 
-```javascript
-cy.getCookie('session_id').then((cookie) => {
-  expect(cookie).to.be.null
-})
-```
+### `Cypress.env()` removed
 
-#### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` can no longer be overwritten with `Cypress.Commands.overwrite()`
+`Cypress.env()` has been removed in Cypress 16.0. Use [`cy.env()`](/api/commands/env) for sensitive values (API keys, tokens, secrets) or [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive configuration that needs synchronous browser access.
 
-Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
-were previously overwriting `cy.getCookie()`, `cy.getCookies()`, or
-`cy.getAllCookies()`, update your code to use
-`Cypress.Commands.overwriteQuery('getCookie', function () { ... })` rather than
-`Cypress.Commands.overwrite('getCookie', () => { ... })`. For more details on
-overwriting queries, see
-[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
+See [Migrating away from Cypress.env()](#Migrating-away-from-Cypressenv) below for detailed before/after examples.
+
+### `env` removed from test config overrides
+
+The `env` key is no longer valid in per-test or suite config overrides. Test config overrides run in the browser, so `env` values set there could never be applied server-side. If absolutely necessary, `expose` can be used instead.
 
 <Badge type="danger">Before</Badge>
 
 ```javascript
-Cypress.Commands.overwrite('getCookie', (name, options) => {
-  return cy.getCookie(name, options)
-})
+it(
+  'runs with feature flag',
+  {
+    env: {
+      FEATURE_FLAG: true,
+      API_VERSION: 'v2',
+    },
+  },
+  () => {
+    expect(Cypress.env('FEATURE_FLAG')).to.be.true
+    expect(Cypress.env('API_VERSION')).eq('v2')
+  }
+)
 ```
 
 <Badge type="success">After</Badge>
 
 ```javascript
-Cypress.Commands.overwriteQuery('getCookie', (name, options) => {
-  return cy.getCookie(name, options)
+it(
+  'runs with feature flag',
+  {
+    expose: {
+      FEATURE_FLAG: true,
+      API_VERSION: 'v2',
+    },
+  },
+  () => {
+    expect(Cypress.expose('FEATURE_FLAG')).to.be.true
+    expect(Cypress.expose('API_VERSION')).eq('v2')
+  }
+)
+```
+
+### `allowCypressEnv` config option removed
+
+The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it. There is no behavior change, so just remove the key.
+
+:::cypress-config-example
+
+```ts
+{
+  // Remove this line
+  allowCypressEnv: true,
+}
+```
+
+:::
+
+### CoffeeScript support removed
+
+Built-in CoffeeScript support has been removed. The default
+[`@cypress/webpack-batteries-included-preprocessor`](/api/node-events/preprocessors-api)
+no longer bundles `coffee-loader` or `coffeescript`, and `.coffee` is no longer
+resolved for spec files, support files, or
+[`cy.fixture()`](/api/commands/fixture).
+
+Most projects are unaffected. If your project has no `.coffee` files, there is
+nothing to do, and dropping the CoffeeScript toolchain from the default
+preprocessor means one less thing to bundle on every spec startup.
+
+If you do have `.coffee` files, the recommended path is to convert them to
+JavaScript or TypeScript, both of which Cypress compiles out of the box. If you
+need to keep CoffeeScript, add the loader to your own webpack configuration and
+register it with
+[`@cypress/webpack-preprocessor`](/api/node-events/preprocessors-api#Examples):
+
+```js title="cypress.config.js"
+const { defineConfig } = require('cypress')
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      on(
+        'file:preprocessor',
+        webpackPreprocessor({
+          webpackOptions: {
+            resolve: { extensions: ['.js', '.coffee'] },
+            module: {
+              rules: [{ test: /\.coffee$/, use: ['coffee-loader'] }],
+            },
+          },
+        })
+      )
+
+      return config
+    },
+  },
 })
 ```
 
-See [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) for more details.
+You are responsible for installing `coffee-loader` and `coffeescript` in your
+own project.
 
-### `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` are now queries
+### `cypress info` no longer prints environment variables
 
-[`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage) and
-[`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) are now
-retry-able [query commands](/app/core-concepts/retry-ability), just like
-[`cy.getCookie()`](/api/commands/getcookie) and
-[`cy.getCookies()`](/api/commands/getcookies).
+`cypress info` no longer prints proxy environment variables (`HTTP_PROXY`,
+`HTTPS_PROXY`, `NO_PROXY`) or any `CYPRESS_*` environment variables. Those
+values routinely hold credentials, such as a record key, a proxy password, or an
+API token, and `cypress info` output is most often pasted into a bug report or a
+CI log, so its output is now safe to share.
 
-Previously they read storage once and ran any chained assertions a single time,
-so they could fail on the first read when storage was populated asynchronously.
-As of Cypress 16 they re-read `localStorage` and `sessionStorage` from all
-origins and retry their chained assertions until they pass or time out.
-
-#### Reads are now retried
-
-A read such as
-`cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')`
-no longer fails on the first empty read. The command re-reads storage and retries
-the assertion until it passes or the command times out, so you no longer need to
-manually wait for storage to be written before asserting on it.
-
-#### Timeouts now follow `defaultCommandTimeout`
-
-Both commands are now [`Timeoutable`](/api/commands/getalllocalstorage#Arguments)
-and accept a `timeout` option. They are governed by
-[`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
-`4000` ms), the same timeout used by every other query. When a read times out,
-the error is reported with the standard `Timed out retrying after ...` prefix.
-
-The new retry behavior applies only to assertions chained directly onto the
-command. A [`.then()`](/api/commands/then) callback still runs only once, after
-the command settles, and is **not** retried — the object it receives is a single
-snapshot read at that moment, so an assertion made inside `.then()` will not wait
-for storage to be populated. To benefit from retries, chain
-[`.should()`](/api/commands/should) assertions directly instead:
-
-<Badge type="danger">Before</Badge>
-
-```javascript
-// Runs once and does not retry — fails immediately if the origin isn't present yet
-cy.getAllLocalStorage().then((result) => {
-  expect(result).to.have.property('https://example.cypress.io')
-})
-```
-
-<Badge type="success">After</Badge>
-
-```javascript
-// Retries, re-reading storage, until the assertion passes or times out
-cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')
-```
-
-If you specifically want a one-shot check that does **not** retry — for example,
-to assert that no storage has been written yet — perform the assertion inside a
-[`.then()`](/api/commands/then) callback, which runs once and is not retried:
-
-```javascript
-cy.getAllLocalStorage().then((result) => {
-  expect(result).to.deep.equal({})
-})
-```
-
-#### `cy.getAllLocalStorage()` and `cy.getAllSessionStorage()` can no longer be overwritten with `Cypress.Commands.overwrite()`
-
-Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
-were previously overwriting `cy.getAllLocalStorage()` or
-`cy.getAllSessionStorage()`, update your code to use
-`Cypress.Commands.overwriteQuery('getAllLocalStorage', function () { ... })`
-rather than
-`Cypress.Commands.overwrite('getAllLocalStorage', () => { ... })`. For more
-details on overwriting queries, see
-[Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries).
-
-<Badge type="danger">Before</Badge>
-
-```javascript
-Cypress.Commands.overwrite('getAllLocalStorage', (options) => {
-  return cy.getAllLocalStorage(options)
-})
-```
-
-<Badge type="success">After</Badge>
-
-```javascript
-Cypress.Commands.overwriteQuery('getAllLocalStorage', (options) => {
-  return cy.getAllLocalStorage(options)
-})
-```
-
-See [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) for more details.
+The command still reports the details it is usually run for: detected browsers,
+application data, browser profile and binary cache paths, the Cypress version,
+and system platform and memory.
 
 ### Angular `18`, `19`, and `20` are no longer supported for Component Testing
 
@@ -431,7 +601,7 @@ Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/relea
 
 This allows us to ship the zoneless testing harness as the new default `cypress/angular` test harness in Cypress 16.0.
 
-Additionally, the [`@cypress/angular-zoneless`](https://www.npmjs.com/package/@cypress/angular-zoneless) npm package is deprecated and no longer supported — it has been merged into [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular).
+Additionally, the [`@cypress/angular-zoneless`](https://www.npmjs.com/package/@cypress/angular-zoneless) npm package is deprecated and no longer supported. It has been merged into [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular).
 
 #### To continue using Angular below 21.0.0
 
@@ -520,74 +690,24 @@ export default defineConfig({
 })
 ```
 
-Change `<YOUR_FRAMEWORK>>` to `'react'`, `'vue'`, `'svelte'`, or another [supported framework](/app/component-testing/component-framework-configuration) to match your component testing setup.
+Change `<YOUR_FRAMEWORK>` to `'react'`, `'vue'`, `'svelte'`, or another [supported framework](/app/component-testing/component-framework-configuration) to match your component testing setup.
 
 Note that `@cypress/vite-dev-server@7` is deprecated and no longer supported by Cypress. It is intended as a temporary workaround until you can migrate to Vite `8`. More information on configuring a custom dev server can be found in the [Cypress Vite Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/vite-dev-server-v7.2.1/npm/vite-dev-server/README.md).
+
+### Next.js `14` is no longer supported for Component Testing
+
+As of Cypress `16.0.0`, component testing requires **Next.js `15.0.4` or newer**,
+or **Next.js `16`**. Next.js `14` is no longer supported.
+
+Upgrade Next.js in your project before upgrading Cypress. See the
+[Next.js upgrade guide](https://nextjs.org/docs/app/guides/upgrading) for the
+steps that apply to your application, and
+[Next.js component testing](/app/component-testing/react/overview#Nextjs) for
+the Cypress-side configuration.
 
 ### Electron browser deprecated
 
 The bundled Electron browser is deprecated as a test browser in Cypress 16.0.0 and will be removed in a future major version. If your runs rely on the implicit Electron default, set a [`defaultBrowser`](/app/references/configuration#Browser) (for example, `'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run) to switch to an installed browser. See [Migrating away from the Electron browser](#Migrating-away-from-the-Electron-browser) for the full guide.
-
-### `Cypress.env()` removed
-
-`Cypress.env()` has been removed in Cypress 16.0. Use [`cy.env()`](/api/commands/env) for sensitive values (API keys, tokens, secrets) or [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive configuration that needs synchronous browser access.
-
-See [Migrating away from Cypress.env()](#Migrating-away-from-Cypressenv) below for detailed before/after examples.
-
-### `env` removed from test config overrides
-
-The `env` key is no longer valid in per-test or suite config overrides. Test config overrides run in the browser, so `env` values set there could never be applied server-side. If absolutely necessary, `expose` can be used instead.
-
-<Badge type="danger">Before</Badge>
-
-```javascript
-it(
-  'runs with feature flag',
-  {
-    env: {
-      FEATURE_FLAG: true,
-      API_VERSION: 'v2',
-    },
-  },
-  () => {
-    expect(Cypress.env('FEATURE_FLAG')).to.be.true
-    expect(Cypress.env('API_VERSION')).eq('v2')
-  }
-)
-```
-
-<Badge type="success">After</Badge>
-
-```javascript
-it(
-  'runs with feature flag',
-  {
-    expose: {
-      FEATURE_FLAG: true,
-      API_VERSION: 'v2',
-    },
-  },
-  () => {
-    expect(Cypress.expose('FEATURE_FLAG')).to.be.true
-    expect(Cypress.expose('API_VERSION')).eq('v2')
-  }
-)
-```
-
-### `allowCypressEnv` config option removed
-
-The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it — no behavior change, just remove the key.
-
-:::cypress-config-example
-
-```ts
-{
-  // Remove this line
-  allowCypressEnv: true,
-}
-```
-
-:::
 
 ## Migrating away from Cypress.env()
 
@@ -602,7 +722,7 @@ The `allowCypressEnv` configuration option has been removed. If your `cypress.co
 
 ### Why Cypress.env() was removed
 
-`Cypress.env()` made it easy to accidentally expose more data than intended because Cypress hydrated all configured environment variables into the browser context — including values your test never reads.
+`Cypress.env()` made it easy to accidentally expose more data than intended because Cypress hydrated all configured environment variables into the browser context, including values your test never reads.
 
 Removing it reduces the risk of unintentionally exposing secrets in the browser-accessible state. This enforces safer defaults and prevents accidental exposure of sensitive data.
 
@@ -862,7 +982,7 @@ describe('API tests', () => {
 
 ### Migrate plugins that use Cypress.env()
 
-If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. Starting in Cypress 15.10.0, plugins using `Cypress.env()` would throw errors when `allowCypressEnv: false` was set. In Cypress 16.0, `allowCypressEnv` has been removed and `Cypress.env()` is no longer available — plugins that still call it will always throw errors.
+If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. Starting in Cypress 15.10.0, plugins using `Cypress.env()` would throw errors when `allowCypressEnv: false` was set. In Cypress 16.0, `allowCypressEnv` has been removed and `Cypress.env()` is no longer available, so plugins that still call it will always throw errors.
 
 #### Check for plugin updates
 
@@ -917,7 +1037,7 @@ If a plugin you depend on isn't listed here, search its shipped code for `Cypres
 
 :::info
 
-`allowCypressEnv` was introduced in Cypress 15.10.0 as a migration gate and **removed in Cypress 16.0**. If you are already on Cypress 16.0, skip this step — `Cypress.env()` is gone and `allowCypressEnv` is no longer a valid config option.
+`allowCypressEnv` was introduced in Cypress 15.10.0 as a migration gate and **removed in Cypress 16.0**. If you are already on Cypress 16.0, skip this step. `Cypress.env()` is gone and `allowCypressEnv` is no longer a valid config option.
 
 :::
 
@@ -973,7 +1093,7 @@ environment:
   months and misses recent web-platform features and fixes.
 - **Its behavior diverges from Chrome.** Because it is an embedded Chromium
   rather than the browser your users run, test behavior in Electron can differ
-  from real Chrome — which undermines confidence in the results.
+  from real Chrome, which undermines confidence in the results.
 
 Standardizing on installed browsers means your tests run in the same engines
 your users do, on a predictable, evergreen update cadence.
@@ -982,9 +1102,9 @@ your users do, on a predictable, evergreen update cadence.
 
 Until removal, targeting Electron continues to work but emits a deprecation
 warning in `cypress run` output and in the Cypress app. After Electron is
-removed, runs that target it — whether through `--browser electron`, a
+removed, runs that target it, whether through `--browser electron`, a
 `defaultBrowser: 'electron'` setting, or an implicit fallback to Electron when no
-browser is specified — will fail with an error.
+browser is specified, will fail with an error.
 
 ### Migrate to an installed browser
 
@@ -1022,9 +1142,9 @@ browser is specified — will fail with an error.
    [Docker image](/app/continuous-integration/overview#Cypress-Docker-variants)
    and don't explicitly install a browser, you'll need to switch to
    `cypress/browsers` or install a browser yourself.
-1. **Remove any explicit Electron usage** — `--browser electron`,
+1. **Remove any explicit Electron usage**: `--browser electron`,
    `defaultBrowser: 'electron'`, or `{ browser: 'electron' }` test/suite
-   overrides — and replace it with an installed browser.
+   overrides. Replace it with an installed browser.
 
 ### Migration checklist
 

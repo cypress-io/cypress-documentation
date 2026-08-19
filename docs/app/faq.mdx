@@ -762,14 +762,17 @@ since that is where the output goes.
 Pass the token in the `headers` option of
 [`cy.request()`](/api/commands/request), and keep the credential itself in an
 [environment variable](/app/guides/environment-variables) rather than in the
-spec file.
+spec file. Read it with [`cy.env()`](/api/commands/env), which resolves the
+value in the Node process so the token is never hydrated into the browser.
 
 ```js
-cy.request({
-  url: '/orders',
-  headers: {
-    authorization: `Bearer ${Cypress.env('apiToken')}`,
-  },
+cy.env(['apiToken']).then(({ apiToken }) => {
+  cy.request({
+    url: '/orders',
+    headers: {
+      authorization: `Bearer ${apiToken}`,
+    },
+  })
 })
 ```
 

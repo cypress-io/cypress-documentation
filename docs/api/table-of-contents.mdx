@@ -36,42 +36,45 @@ Queries are Cypress commands that read the state of your application. They
 return a subject for further commands to act or assert on, and retry as needed
 to make sure the DOM element or other data they yield is always up to date.
 
-| Command                                         | Usage                                                                                                      |
-| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| [`.as()`](/api/commands/as)                     | Assign an alias for later use. Reference the alias later within a `cy.get()` query or `cy.wait()` command. |
-| [`.children()`](/api/commands/children)         | Get the children of each element within a set of DOM elements.                                             |
-| [`.closest()`](/api/commands/closest)           | Get the first ancestral element that matches a selector.                                                   |
-| [`.contains()`](/api/commands/contains)         | Select a DOM element by text content.                                                                      |
-| [`.document()`](/api/commands/document)         | Get the `window.document` of the active page.                                                              |
-| [`.eq()`](/api/commands/eq)                     | Select a DOM element by index from a collection.                                                           |
-| [`.filter()`](/api/commands/filter)             | Filter elements with a selector.                                                                           |
-| [`.find()`](/api/commands/find)                 | Find descendent elements with a selector.                                                                  |
-| [`.first()`](/api/commands/first)               | Select the first item in a collection.                                                                     |
-| [`.focused()`](/api/commands/focused)           | Get the DOM element that is currently focused.                                                             |
-| [`.get()`](/api/commands/get)                   | Find DOM elements by selector, or read an alias previously created with the `.as()` command.               |
-| [`.getCookie()`](/api/commands/getcookie)       | Get a browser cookie by its name.                                                                          |
-| [`.getCookies()`](/api/commands/getcookies)     | Get browser cookies for the current domain or a specified domain.                                          |
-| [`.hash()`](/api/commands/hash)                 | Get the URL hash of the active page.                                                                       |
-| [`.invoke()`](/api/commands/invoke)             | Invoke a function on the previously yielded subject.                                                       |
-| [`.its()`](/api/commands/its)                   | Get a property's value on the previously yielded subject.                                                  |
-| [`.last()`](/api/commands/last)                 | Select the last item in a collection.                                                                      |
-| [`.location()`](/api/commands/location)         | Get the `window.location` object of the active page.                                                       |
-| [`.next()`](/api/commands/next)                 | Get the next sibling element.                                                                              |
-| [`.nextAll()`](/api/commands/nextall)           | Get all following sibling elements.                                                                        |
-| [`.nextUntil()`](/api/commands/nextuntil)       | Get all following sibling elements until reaching a selector.                                              |
-| [`.not()`](/api/commands/not)                   | Filter selected elements with a selector.                                                                  |
-| [`.parent()`](/api/commands/parent)             | Get the parent of a DOM element.                                                                           |
-| [`.parents()`](/api/commands/parents)           | Get all parent elements of a DOM element.                                                                  |
-| [`.parentsUntil()`](/api/commands/parentsuntil) | Get all parent elements up to a selector.                                                                  |
-| [`.prev()`](/api/commands/prev)                 | Get the previous sibling element.                                                                          |
-| [`.prevAll()`](/api/commands/prevall)           | Get all previous sibling elements.                                                                         |
-| [`.prevUntil()`](/api/commands/prevuntil)       | Get all following previous sibling elements until reaching a selector.                                     |
-| [`.root()`](/api/commands/root)                 | Get the root DOM element.                                                                                  |
-| [`.shadow()`](/api/commands/shadow)             | Traverse into the shadow DOM of an element.                                                                |
-| [`.siblings()`](/api/commands/siblings)         | Get all sibling elements.                                                                                  |
-| [`.title()`](/api/commands/title)               | Get the `document.title` property of the active page.                                                      |
-| [`.url()`](/api/commands/url)                   | Get the URL of the active page.                                                                            |
-| [`.window()`](/api/commands/window)             | Get the `window` object of the active page.                                                                |
+| Command                                                         | Usage                                                                                                      |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| [`.as()`](/api/commands/as)                                     | Assign an alias for later use. Reference the alias later within a `cy.get()` query or `cy.wait()` command. |
+| [`.children()`](/api/commands/children)                         | Get the children of each element within a set of DOM elements.                                             |
+| [`.closest()`](/api/commands/closest)                           | Get the first ancestral element that matches a selector.                                                   |
+| [`.contains()`](/api/commands/contains)                         | Select a DOM element by text content.                                                                      |
+| [`.document()`](/api/commands/document)                         | Get the `window.document` of the active page.                                                              |
+| [`.eq()`](/api/commands/eq)                                     | Select a DOM element by index from a collection.                                                           |
+| [`.filter()`](/api/commands/filter)                             | Filter elements with a selector.                                                                           |
+| [`.find()`](/api/commands/find)                                 | Find descendent elements with a selector.                                                                  |
+| [`.first()`](/api/commands/first)                               | Select the first item in a collection.                                                                     |
+| [`.focused()`](/api/commands/focused)                           | Get the DOM element that is currently focused.                                                             |
+| [`.get()`](/api/commands/get)                                   | Find DOM elements by selector, or read an alias previously created with the `.as()` command.               |
+| [`.getAllCookies()`](/api/commands/getallcookies)               | Get all browser cookies.                                                                                   |
+| [`.getAllLocalStorage()`](/api/commands/getalllocalstorage)     | Get `localStorage` data for all origins with which the test has interacted.                                |
+| [`.getAllSessionStorage()`](/api/commands/getallsessionstorage) | Get `sessionStorage` data for all origins with which the test has interacted.                              |
+| [`.getCookie()`](/api/commands/getcookie)                       | Get a browser cookie by its name.                                                                          |
+| [`.getCookies()`](/api/commands/getcookies)                     | Get browser cookies for the current domain or a specified domain.                                          |
+| [`.hash()`](/api/commands/hash)                                 | Get the URL hash of the active page.                                                                       |
+| [`.invoke()`](/api/commands/invoke)                             | Invoke a function on the previously yielded subject.                                                       |
+| [`.its()`](/api/commands/its)                                   | Get a property's value on the previously yielded subject.                                                  |
+| [`.last()`](/api/commands/last)                                 | Select the last item in a collection.                                                                      |
+| [`.location()`](/api/commands/location)                         | Get the `window.location` object of the active page.                                                       |
+| [`.next()`](/api/commands/next)                                 | Get the next sibling element.                                                                              |
+| [`.nextAll()`](/api/commands/nextall)                           | Get all following sibling elements.                                                                        |
+| [`.nextUntil()`](/api/commands/nextuntil)                       | Get all following sibling elements until reaching a selector.                                              |
+| [`.not()`](/api/commands/not)                                   | Filter selected elements with a selector.                                                                  |
+| [`.parent()`](/api/commands/parent)                             | Get the parent of a DOM element.                                                                           |
+| [`.parents()`](/api/commands/parents)                           | Get all parent elements of a DOM element.                                                                  |
+| [`.parentsUntil()`](/api/commands/parentsuntil)                 | Get all parent elements up to a selector.                                                                  |
+| [`.prev()`](/api/commands/prev)                                 | Get the previous sibling element.                                                                          |
+| [`.prevAll()`](/api/commands/prevall)                           | Get all previous sibling elements.                                                                         |
+| [`.prevUntil()`](/api/commands/prevuntil)                       | Get all following previous sibling elements until reaching a selector.                                     |
+| [`.root()`](/api/commands/root)                                 | Get the root DOM element.                                                                                  |
+| [`.shadow()`](/api/commands/shadow)                             | Traverse into the shadow DOM of an element.                                                                |
+| [`.siblings()`](/api/commands/siblings)                         | Get all sibling elements.                                                                                  |
+| [`.title()`](/api/commands/title)                               | Get the `document.title` property of the active page.                                                      |
+| [`.url()`](/api/commands/url)                                   | Get the URL of the active page.                                                                            |
+| [`.window()`](/api/commands/window)                             | Get the `window` object of the active page.                                                                |
 
 ### Assertions
 
@@ -129,11 +132,6 @@ Cypress has a variety of additional commands to help write tests.
 | [`.exec()`](/api/commands/exec) <Badge type="caution">deprecated</Badge> | Execute a system command.                                                                                                                                                       |
 | [`.fixture()`](/api/commands/fixture)                                    | Load a fixed set of data from disk.                                                                                                                                             |
 | [`.focus()`](/api/commands/focus)                                        | Focus on a DOM element. Focus is not an action command, because users cannot directly focus an element, but `.focus()` can be used as a testing shortcut.                       |
-| [`.getAllCookies()`](/api/commands/getallcookies)                        | Get all browser cookies.                                                                                                                                                        |
-| [`.getAllLocalStorage()`](/api/commands/getalllocalstorage)              | Get `localStorage` data for all origins with which the test has interacted.                                                                                                     |
-| [`.getAllSessionStorage()`](/api/commands/getallsessionstorage)          | Get `sessionStorage` data for all origins with which the test has interacted.                                                                                                   |
-| [`.getCookie()`](/api/commands/getcookie)                                | Get a browser cookie by its name.                                                                                                                                               |
-| [`.getCookies()`](/api/commands/getcookies)                              | Get browser cookies for the current domain or a specified domain.                                                                                                               |
 | [`.go()`](/api/commands/go)                                              | Navigate back or forward using the browser's history.                                                                                                                           |
 | [`.hover()`](/api/commands/hover)                                        | Cypress does not have a cy.hover() command. See [Issue #10](https://github.com/cypress-io/cypress/issues/10).                                                                   |
 | [`.intercept()`](/api/commands/intercept)                                | Spy and stub network requests and responses.                                                                                                                                    |

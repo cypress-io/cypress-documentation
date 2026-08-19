@@ -19,6 +19,11 @@
       "source": "/api/commands/end",
       "destination": "/api/table-of-contents",
       "permanent": true
+    },
+    {
+      "source": "/api/cypress-api/env",
+      "destination": "/api/commands/env",
+      "permanent": true
     }
   ]
 }
