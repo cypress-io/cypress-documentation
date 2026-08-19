@@ -1,10 +1,26 @@
 {
-  // This file is not used in compilation. It is here just for a nice editor experience.
+  // Used by `npm run typecheck` (and by editors). Docusaurus itself compiles
+  // through webpack/Babel, so nothing here affects the built site.
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    // baseUrl is inherited from @docusaurus/tsconfig, which TypeScript 6
-    // deprecates; silence it until Docusaurus drops the option
+    // `@docusaurus/tsconfig` sets `baseUrl` to its own directory, which sends
+    // the inherited `@site/*` path mapping into node_modules. Re-anchor it
+    // here so `@site/...` imports resolve to this repository.
+    // TypeScript 6 deprecates the option; silence that until Docusaurus drops
+    // it.
+    "baseUrl": ".",
     "ignoreDeprecations": "6.0",
     "strict": true,
+    // Ambient declarations for the `@theme/*` and `@docusaurus/*` modules that
+    // swizzled components import.
+    "types": [
+      "node",
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic",
+    ],
   },
+  // Hand-written source only. `plugins/*` are type checked by their own
+  // `tsc` builds (`npm run build:plugins`), and everything else at the
+  // repository root is JavaScript or build output.
+  "include": ["src/", "cypress/", "cypress.config.ts"],
 }

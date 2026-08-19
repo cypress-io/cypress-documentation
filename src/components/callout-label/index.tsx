@@ -25,7 +25,7 @@ export default function CalloutLabel({
   icon,
   color = '#4BBFD2',
   children,
-}: CalloutLabelProps): JSX.Element {
+}: CalloutLabelProps): React.JSX.Element {
   return (
     <p className="callout-label">
       <Icon name={icon} color={color} /> {children}

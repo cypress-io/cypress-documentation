@@ -37,11 +37,11 @@ export default function LayoutWrapper(props: Props): ReactNode {
       <Head>
         <link rel="alternate" type="application/json" href={fullJsonHref} />
         <link rel="alternate" type="text/markdown" href={markdownHref} />
-        {faqJsonLd && (
+        {faqJsonLd ? (
           <script type="application/ld+json">
             {JSON.stringify(faqJsonLd).replace(/</g, '\\u003c')}
           </script>
-        )}
+        ) : null}
       </Head>
       <Layout {...props} />
     </>

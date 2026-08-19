@@ -541,6 +541,27 @@ that already embed the correct params rather than re-writing the URL.
 - **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
+- **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and
+  `cypress.config.ts`. The `plugins/` sub-packages type check themselves through
+  their own `tsc` builds during `npm run build`. Note that `@docusaurus/tsconfig`
+  points `baseUrl` at its own directory, so the root `tsconfig.json` re-anchors
+  it to the repository and pulls in the `@theme/*` ambient types explicitly;
+  without that, `@site/...` and `@theme/...` imports do not resolve.
+
+## Continuous integration
+
+CircleCI (`.circleci/config.yml`) runs on every pull request:
+
+| Job                                  | Command                               |
+| ------------------------------------ | ------------------------------------- |
+| Build                                | `npm run build`                       |
+| Lint JS/CSS/Markdown                 | `npm run lint`                        |
+| Typecheck                            | `npm run typecheck`                   |
+| Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins` |
+| Run Tests in Parallel                | `cypress run` across 8 containers     |
+
+The lint, typecheck, and unit-test jobs reuse the `node_modules` the build job
+persists to the workspace, so they need no install step of their own.
 
 ## GitHub Actions workflows
 
