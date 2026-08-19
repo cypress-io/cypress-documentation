@@ -48,21 +48,21 @@ This guide details the code changes needed to migrate to Cypress version 16.0.
 
 **What you may need to change**
 
-| Change                                                                                                                                                                        | Action needed                                                                                         |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| [Native browser network in Chrome, Chromium, and Edge](#Chrome-Chromium-and-Edge-use-the-native-browser-network)                                                              | Usually none. Update tests that assert on `req.httpVersion`, compression headers, or a `304` status.  |
-| [Modern visibility algorithm on by default](#experimentalFastVisibility-replaced-by-visibilityStrategy)                                                                       | Usually none. Update tests that relied on legacy-only visibility semantics.                           |
-| [Browser memory management on by default](#experimentalMemoryManagement-replaced-by-manageBrowserMemory)                                                                      | Only if you set `experimentalMemoryManagement: false` — replace it with `manageBrowserMemory: false`. |
-| [`keystrokeDelay` default changed from `10` to `0`](#Default-keystrokeDelay-changed-from-10-to-0)                                                                             | Only if a test depended on the implicit delay.                                                        |
-| [Cookie and storage reads are now queries](#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries)                                                                     | Usually none. Move assertions out of `.then()` and onto `.should()` to get retries.                   |
-| [Node.js 20 and 25 dropped](#Nodejs-20-and-25-no-longer-supported)                                                                                                            | Yes, if you run Cypress on either version.                                                            |
-| [`Cypress.env()` removed](#Cypressenv-removed)                                                                                                                                | Yes — migrate to `cy.env()` or `Cypress.expose()`.                                                    |
-| [`cy.end()` removed](#cyend-removed)                                                                                                                                          | Yes — delete the `.end()` calls.                                                                      |
-| [`viewportWidth`, `viewportHeight`, and `blockHosts` via `Cypress.config()`](#viewportWidth-and-viewportHeight-can-no-longer-be-set-with-Cypressconfig-during-test-execution) | Yes, if you set them while a test is executing.                                                       |
-| [`experimentalSourceRewriting` removed](#experimentalSourceRewriting-config-option-removed)                                                                                   | Yes — remove the option. Enable `removeSRIAttributes` if you used it for SRI.                         |
-| [CoffeeScript support removed](#CoffeeScript-support-removed)                                                                                                                 | Yes, if you have `.coffee` specs, support files, or fixtures.                                         |
-| [Angular, Vite, and Next.js minimums raised for component testing](#Angular-18-19-and-20-are-no-longer-supported-for-Component-Testing)                                       | Yes, if you are below Angular 21, Vite 8, or Next.js 15.0.4.                                          |
-| [Electron deprecated as a test browser](#Electron-browser-deprecated)                                                                                                         | Not yet, but plan to switch to an installed browser.                                                  |
+| Change                                                                                                                                                                        | Action needed                                                                                        |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [Native browser network in Chrome, Chromium, and Edge](#Chrome-Chromium-and-Edge-use-the-native-browser-network)                                                              | Usually none. Update tests that assert on `req.httpVersion`, compression headers, or a `304` status. |
+| [Modern visibility algorithm on by default](#experimentalFastVisibility-replaced-by-visibilityStrategy)                                                                       | Usually none. Update tests that relied on legacy-only visibility semantics.                          |
+| [Browser memory management on by default](#experimentalMemoryManagement-replaced-by-manageBrowserMemory)                                                                      | Only if you set `experimentalMemoryManagement: false`. Replace it with `manageBrowserMemory: false`. |
+| [`keystrokeDelay` default changed from `10` to `0`](#Default-keystrokeDelay-changed-from-10-to-0)                                                                             | Only if a test depended on the implicit delay.                                                       |
+| [Cookie and storage reads are now queries](#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries)                                                                     | Usually none. Move assertions out of `.then()` and onto `.should()` to get retries.                  |
+| [Node.js 20 and 25 dropped](#Nodejs-20-and-25-no-longer-supported)                                                                                                            | Yes, if you run Cypress on either version.                                                           |
+| [`Cypress.env()` removed](#Cypressenv-removed)                                                                                                                                | Yes. Migrate to `cy.env()` or `Cypress.expose()`.                                                    |
+| [`cy.end()` removed](#cyend-removed)                                                                                                                                          | Yes. Delete the `.end()` calls.                                                                      |
+| [`viewportWidth`, `viewportHeight`, and `blockHosts` via `Cypress.config()`](#viewportWidth-and-viewportHeight-can-no-longer-be-set-with-Cypressconfig-during-test-execution) | Yes, if you set them while a test is executing.                                                      |
+| [`experimentalSourceRewriting` removed](#experimentalSourceRewriting-config-option-removed)                                                                                   | Yes. Remove the option, and enable `removeSRIAttributes` if you used it for SRI.                     |
+| [CoffeeScript support removed](#CoffeeScript-support-removed)                                                                                                                 | Yes, if you have `.coffee` specs, support files, or fixtures.                                        |
+| [Angular, Vite, and Next.js minimums raised for component testing](#Angular-18-19-and-20-are-no-longer-supported-for-Component-Testing)                                       | Yes, if you are below Angular 21, Vite 8, or Next.js 15.0.4.                                         |
+| [Electron deprecated as a test browser](#Electron-browser-deprecated)                                                                                                         | Not yet, but plan to switch to an installed browser.                                                 |
 
 ### Node.js 20 and 25 no longer supported
 
@@ -74,7 +74,7 @@ In Cypress 16, Chrome, Chromium, and Edge intercept test traffic through the nat
 
 Firefox, WebKit, and Electron continue to use the legacy network path and are unaffected.
 
-[`cy.intercept()`](/api/commands/intercept) works as before, and most suites need no edits. A few behaviors differ in Chrome, Chromium, and Edge on the native browser network — see [Native network interception](/app/guides/native-network-interception) for the full list with examples.
+[`cy.intercept()`](/api/commands/intercept) works as before, and most suites need no edits. A few behaviors differ in Chrome, Chromium, and Edge on the native browser network. See [Native network interception](/app/guides/native-network-interception) for the full list with examples.
 
 Aside from the `cy.intercept()` behaviors above, your suite should not need any changes. Commands, stubbing, waiting, aliases, and assertions all work as they did before, and adopting the native browser network requires no configuration change.
 
@@ -132,7 +132,7 @@ The experimental `experimentalFastVisibility` boolean flag has been removed. Its
 
 **If you were setting `experimentalFastVisibility: true`:** remove it. The modern algorithm is now the default.
 
-**If you were setting `experimentalFastVisibility: false` (or relying on the 15.x default) and a test now fails:** the modern algorithm intentionally drops some behaviors the legacy algorithm had (ancestor `overflow` clipping, transform-based hiding, and coverage detection for fixed/sticky elements). Prefer rewriting the affected assertions to verify the same user-visible behavior in an algorithm-agnostic way — see [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) for what each algorithm checks and recommended rewrite patterns.
+**If you were setting `experimentalFastVisibility: false` (or relying on the 15.x default) and a test now fails:** the modern algorithm intentionally drops some behaviors the legacy algorithm had (ancestor `overflow` clipping, transform-based hiding, and coverage detection for fixed/sticky elements). Prefer rewriting the affected assertions to verify the same user-visible behavior in an algorithm-agnostic way. See [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) for what each algorithm checks and recommended rewrite patterns.
 
 If you need a temporary escape hatch while you update those tests, opt back into the legacy algorithm:
 
@@ -219,21 +219,21 @@ cookie to be written before asserting on it.
 
 This changes which timeout governs them:
 
-- **Query commands** — `cy.getCookie()`, `cy.getCookies()`, and
-  `cy.getAllCookies()` — are now governed by
+- **Query commands** (`cy.getCookie()`, `cy.getCookies()`, and
+  `cy.getAllCookies()`) are now governed by
   [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
   `4000` ms), the same timeout used by every other query.
-- **Cookie action commands** — [`cy.setCookie()`](/api/commands/setcookie),
+- **Cookie action commands** ([`cy.setCookie()`](/api/commands/setcookie),
   [`cy.clearCookie()`](/api/commands/clearcookie),
   [`cy.clearCookies()`](/api/commands/clearcookies), and
-  [`cy.clearAllCookies()`](/api/commands/clearallcookies) — are unchanged. They
+  [`cy.clearAllCookies()`](/api/commands/clearallcookies)) are unchanged. They
   make a single automation round-trip, do not retry assertions, and remain
   governed by [`responseTimeout`](/app/references/configuration#Timeouts)
   (default `30000` ms).
 
 The new retry behavior applies only to assertions chained directly onto the
 command. A [`.then()`](/api/commands/then) callback still runs only once, after
-the command settles, and is **not** retried — the cookie (or array of cookies) it
+the command settles, and is **not** retried. The cookie (or array of cookies) it
 receives is a single snapshot read at that moment, so an assertion made inside
 `.then()` will not wait for the cookie to be set. To benefit from retries, chain
 [`.should()`](/api/commands/should) assertions directly instead:
@@ -241,7 +241,7 @@ receives is a single snapshot read at that moment, so an assertion made inside
 <Badge type="danger">Before</Badge>
 
 ```javascript
-// Runs once and does not retry — fails immediately if the cookie isn't set yet
+// Runs once and does not retry, so it fails immediately if the cookie isn't set yet
 cy.getCookie('session_id').then((cookie) => {
   expect(cookie).to.have.property('value', '189jd09su')
 })
@@ -254,8 +254,8 @@ cy.getCookie('session_id').then((cookie) => {
 cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
 ```
 
-If you specifically want a one-shot check that does **not** retry — for example,
-to assert that a cookie does **not** yet exist — perform the assertion inside a
+If you specifically want a one-shot check that does **not** retry, for example
+to assert that a cookie does **not** yet exist, perform the assertion inside a
 [`.then()`](/api/commands/then) callback, which runs once and is not retried:
 
 ```javascript
@@ -323,7 +323,7 @@ the error is reported with the standard `Timed out retrying after ...` prefix.
 
 The new retry behavior applies only to assertions chained directly onto the
 command. A [`.then()`](/api/commands/then) callback still runs only once, after
-the command settles, and is **not** retried — the object it receives is a single
+the command settles, and is **not** retried. The object it receives is a single
 snapshot read at that moment, so an assertion made inside `.then()` will not wait
 for storage to be populated. To benefit from retries, chain
 [`.should()`](/api/commands/should) assertions directly instead:
@@ -331,7 +331,7 @@ for storage to be populated. To benefit from retries, chain
 <Badge type="danger">Before</Badge>
 
 ```javascript
-// Runs once and does not retry — fails immediately if the origin isn't present yet
+// Runs once and does not retry, so it fails immediately if the origin isn't present
 cy.getAllLocalStorage().then((result) => {
   expect(result).to.have.property('https://example.cypress.io')
 })
@@ -344,8 +344,8 @@ cy.getAllLocalStorage().then((result) => {
 cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')
 ```
 
-If you specifically want a one-shot check that does **not** retry — for example,
-to assert that no storage has been written yet — perform the assertion inside a
+If you specifically want a one-shot check that does **not** retry, for example
+to assert that no storage has been written yet, perform the assertion inside a
 [`.then()`](/api/commands/then) callback, which runs once and is not retried:
 
 ```javascript
@@ -478,8 +478,8 @@ You only need a replacement option if your application pins resources with Subre
 ### `cy.end()` removed
 
 `cy.end()` has been removed. It ended a chain of commands by yielding `null`,
-which was never necessary — a Cypress chain is already terminated when the next
-`cy.<command>()` starts a new chain.
+which was never necessary, because a Cypress chain is already terminated when
+the next `cy.<command>()` starts a new chain.
 
 There is no replacement. Delete the `.end()` calls.
 
@@ -550,7 +550,7 @@ it(
 
 ### `allowCypressEnv` config option removed
 
-The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it — no behavior change, just remove the key.
+The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it. There is no behavior change, so just remove the key.
 
 :::cypress-config-example
 
@@ -572,7 +572,7 @@ resolved for spec files, support files, or
 [`cy.fixture()`](/api/commands/fixture).
 
 Most projects are unaffected. If your project has no `.coffee` files, there is
-nothing to do — and dropping the CoffeeScript toolchain from the default
+nothing to do, and dropping the CoffeeScript toolchain from the default
 preprocessor means one less thing to bundle on every spec startup.
 
 If you do have `.coffee` files, the recommended path is to convert them to
@@ -613,9 +613,9 @@ own project.
 
 `cypress info` no longer prints proxy environment variables (`HTTP_PROXY`,
 `HTTPS_PROXY`, `NO_PROXY`) or any `CYPRESS_*` environment variables. Those
-values routinely hold credentials — a record key, a proxy password, an API
-token — and `cypress info` output is most often pasted into a bug report or a CI
-log, so its output is now safe to share.
+values routinely hold credentials, such as a record key, a proxy password, or an
+API token, and `cypress info` output is most often pasted into a bug report or a
+CI log, so its output is now safe to share.
 
 The command still reports the details it is usually run for: detected browsers,
 application data, browser profile and binary cache paths, the Cypress version,
@@ -634,7 +634,7 @@ Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/relea
 
 This allows us to ship the zoneless testing harness as the new default `cypress/angular` test harness in Cypress 16.0.
 
-Additionally, the [`@cypress/angular-zoneless`](https://www.npmjs.com/package/@cypress/angular-zoneless) npm package is deprecated and no longer supported — it has been merged into [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular).
+Additionally, the [`@cypress/angular-zoneless`](https://www.npmjs.com/package/@cypress/angular-zoneless) npm package is deprecated and no longer supported. It has been merged into [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular).
 
 #### To continue using Angular below 21.0.0
 
@@ -755,7 +755,7 @@ The bundled Electron browser is deprecated as a test browser in Cypress 16.0.0 a
 
 ### Why Cypress.env() was removed
 
-`Cypress.env()` made it easy to accidentally expose more data than intended because Cypress hydrated all configured environment variables into the browser context — including values your test never reads.
+`Cypress.env()` made it easy to accidentally expose more data than intended because Cypress hydrated all configured environment variables into the browser context, including values your test never reads.
 
 Removing it reduces the risk of unintentionally exposing secrets in the browser-accessible state. This enforces safer defaults and prevents accidental exposure of sensitive data.
 
@@ -1015,7 +1015,7 @@ describe('API tests', () => {
 
 ### Migrate plugins that use Cypress.env()
 
-If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. Starting in Cypress 15.10.0, plugins using `Cypress.env()` would throw errors when `allowCypressEnv: false` was set. In Cypress 16.0, `allowCypressEnv` has been removed and `Cypress.env()` is no longer available — plugins that still call it will always throw errors.
+If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. Starting in Cypress 15.10.0, plugins using `Cypress.env()` would throw errors when `allowCypressEnv: false` was set. In Cypress 16.0, `allowCypressEnv` has been removed and `Cypress.env()` is no longer available, so plugins that still call it will always throw errors.
 
 #### Check for plugin updates
 
@@ -1070,7 +1070,7 @@ If a plugin you depend on isn't listed here, search its shipped code for `Cypres
 
 :::info
 
-`allowCypressEnv` was introduced in Cypress 15.10.0 as a migration gate and **removed in Cypress 16.0**. If you are already on Cypress 16.0, skip this step — `Cypress.env()` is gone and `allowCypressEnv` is no longer a valid config option.
+`allowCypressEnv` was introduced in Cypress 15.10.0 as a migration gate and **removed in Cypress 16.0**. If you are already on Cypress 16.0, skip this step. `Cypress.env()` is gone and `allowCypressEnv` is no longer a valid config option.
 
 :::
 
@@ -1126,7 +1126,7 @@ environment:
   months and misses recent web-platform features and fixes.
 - **Its behavior diverges from Chrome.** Because it is an embedded Chromium
   rather than the browser your users run, test behavior in Electron can differ
-  from real Chrome — which undermines confidence in the results.
+  from real Chrome, which undermines confidence in the results.
 
 Standardizing on installed browsers means your tests run in the same engines
 your users do, on a predictable, evergreen update cadence.
@@ -1135,9 +1135,9 @@ your users do, on a predictable, evergreen update cadence.
 
 Until removal, targeting Electron continues to work but emits a deprecation
 warning in `cypress run` output and in the Cypress app. After Electron is
-removed, runs that target it — whether through `--browser electron`, a
+removed, runs that target it, whether through `--browser electron`, a
 `defaultBrowser: 'electron'` setting, or an implicit fallback to Electron when no
-browser is specified — will fail with an error.
+browser is specified, will fail with an error.
 
 ### Migrate to an installed browser
 
@@ -1175,9 +1175,9 @@ browser is specified — will fail with an error.
    [Docker image](/app/continuous-integration/overview#Cypress-Docker-variants)
    and don't explicitly install a browser, you'll need to switch to
    `cypress/browsers` or install a browser yourself.
-1. **Remove any explicit Electron usage** — `--browser electron`,
+1. **Remove any explicit Electron usage**: `--browser electron`,
    `defaultBrowser: 'electron'`, or `{ browser: 'electron' }` test/suite
-   overrides — and replace it with an installed browser.
+   overrides. Replace it with an installed browser.
 
 ### Migration checklist
 

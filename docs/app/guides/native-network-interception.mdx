@@ -52,8 +52,8 @@ example:
 | [Revalidated responses report `200` instead of `304`](#Revalidated-responses-report-200-instead-of-304)                                | Use [`cy.request()`](/api/commands/request) to assert on caching behavior. |
 | [`responseTimeout` does not apply to response handlers](#responseTimeout-does-not-apply-to-response-handlers)                          | Bound the wait with a `timeout` on [`cy.wait()`](/api/commands/wait).      |
 | [Request `content-length` is not reported](#Request-content-length-is-not-reported)                                                    | Assert on the body you set.                                                |
-| [Your application's certificate is used](#Your-applications-certificate-is-used)                                                       | Nothing — this is the improvement.                                         |
-| [`cy.intercept()` changes are visible in the browser](#cyintercept-changes-are-visible-in-the-browser)                                 | Nothing — this is the improvement.                                         |
+| [Your application's certificate is used](#Your-applications-certificate-is-used)                                                       | Nothing. This is the improvement.                                          |
+| [`cy.intercept()` changes are visible in the browser](#cyintercept-changes-are-visible-in-the-browser)                                 | Nothing. This is the improvement.                                          |
 
 ## Which browsers are affected
 
@@ -294,8 +294,8 @@ path, Cypress made that request itself, so the intercept saw the `304`.
 
 On the native browser network, the browser's cache sits between your server and Cypress.
 The browser sends the conditional request, receives the `304`, merges it with the copy it
-already had, and hands Cypress the complete response. Your server still answers `304` —
-Cypress no longer observes it.
+already had, and hands Cypress the complete response. Your server still answers
+`304`, but Cypress no longer observes it.
 
 ```js
 // Cypress 15 and earlier
