@@ -35,7 +35,18 @@ The Results API offers full flexibility to analyze results and take tailored act
 
 ## Defining policies in the verification step
 
-The [Results API Documentation](/accessibility/results-api) provides detailed guidance on the API's capabilities. Here's a simplified example demonstrating how to enforce a "no new failing accessibility rules" policy:
+The [Results API Documentation](/accessibility/results-api) provides detailed guidance on the API's capabilities. Two rule-level policies cover most teams, and they're mirror images of each other. Both read `results.rules`, which lists only the rules that failed in the run.
+
+| Policy                                                                       | Blocks when                                         | Best for                                                                       |
+| ---------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [Allowlist known failures](#Policy-block-any-rule-that-isnt-already-failing) | Any rule fails that isn't on your known-issues list | Reports that are close to clean, where anything unexpected should stop a merge |
+| [Protect what you've fixed](#Policy-block-regressions-in-rules-youve-fixed)  | A rule you already remediated fails again           | A large backlog you're working through, where most rules still fail            |
+
+For a policy that tracks violations per view rather than per rule, see [comparing against a baseline](#comparing-against-a-baseline).
+
+### Policy: block any rule that isn't already failing {#Policy-block-any-rule-that-isnt-already-failing}
+
+This enforces "no new failing accessibility rules". You keep a list of the rules you already know about, and anything outside it fails the build:
 
 ```js
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
@@ -62,6 +73,44 @@ getAccessibilityResults().then((results) => {
 })
 ```
 
+The list shrinks as you fix things, and every entry you remove raises the standard the build enforces.
+
+### Policy: block regressions in rules you've fixed {#Policy-block-regressions-in-rules-youve-fixed}
+
+This is the inverse, and it suits a project still working through a large backlog. Rather than listing what's broken, you list what you've finished, and only a reappearance of those rules fails the build:
+
+```javascript title="scripts/verifyAccessibilityResults.js"
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+// Rules this team has remediated. Add a rule here the day it reaches zero
+// violations, so any reappearance is treated as a regression.
+const remediatedRules = ['button-name', 'image-alt', 'label']
+
+getAccessibilityResults().then((results) => {
+  const regressions = results.rules.filter((rule) =>
+    remediatedRules.includes(rule.name)
+  )
+
+  if (regressions.length === 0) {
+    console.log(`No regressions in ${remediatedRules.length} remediated rules.`)
+    return
+  }
+
+  console.error('Previously remediated accessibility rules are failing again:')
+  regressions.forEach((rule) => {
+    console.error(
+      `  - ${rule.name} (${rule.severity}): ${rule.accessibilityReportUrl}`
+    )
+  })
+
+  throw new Error(
+    `${regressions.length} remediated rule(s) regressed and must be fixed before merging.`
+  )
+})
+```
+
+Here the list grows as you work. It never blocks a merge for a rule you haven't gotten to yet, which keeps the gate credible while the backlog is still large. See [Fix accessibility violations](/accessibility/guides/improve-accessibility) for how to work through that backlog one rule at a time.
+
 By examining the results and customizing your response, you gain maximum control over how to handle accessibility violations. Leverage CI environment context, such as tags, to fine-tune responses to specific accessibility outcomes.
 
 ## Using Profiles for PR-specific configuration
@@ -72,13 +121,38 @@ You can use [Profiles](/accessibility/configuration/profiles) to apply different
 - Maintain a broader configuration for regression runs that tracks all issues for long-term monitoring
 - Apply team-specific configurations when multiple teams share the same Cypress Cloud project
 
-For example, you might configure a profile named `aq-config-pr` that excludes non-critical pages and focuses only on the most important accessibility rules, while your base configuration includes all pages and rules for comprehensive regression tracking.
+For example, a profile named `aq-config-pr` can narrow pull request reports to a single flow that's under active remediation, while your base configuration keeps every page for regression tracking. The first rule includes the flow and the catch-all `*` rule excludes everything else, because [`viewFilters`](/accessibility/configuration/viewfilters) apply in order and the first match wins:
+
+```json title="App Quality Config"
+{
+  "profiles": [
+    {
+      "name": "aq-config-pr",
+      "comment": "Pull request runs report only on the checkout flow while we remediate it",
+      "config": {
+        "viewFilters": [
+          {
+            "pattern": "/checkout/*",
+            "include": true
+          },
+          {
+            "pattern": "*",
+            "include": false
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+Record pull request runs with the matching tag to select the profile:
 
 ```shell
 cypress run --record --tag "aq-config-pr"
 ```
 
-This approach ensures that PR checks are fast and focused, while still maintaining comprehensive reporting for your full test suite.
+This approach ensures that PR checks are fast and focused, while still maintaining comprehensive reporting for your full test suite. A profile can't change which Axe-Core® rules run, so which rules block a merge stays a decision you make in the verification step above.
 
 ## Comparing against a baseline {#comparing-against-a-baseline}
 
