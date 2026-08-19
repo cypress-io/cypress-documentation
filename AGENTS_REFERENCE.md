@@ -219,6 +219,12 @@ and `docs/app/guides/migration/`.
 - **Format longer prompts** with newlines and bullet/numbered lists in the
   `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
   prompts stay on one line and wrap.
+- **Point the agent at a page's markdown as `<page-url>.md`** when the prompt
+  tells it to read one, e.g.
+  `https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-15-0.md`.
+  Every page is published that way, as is each of its `##` sections, so the
+  agent gets the content without the page chrome. Prefer it over the longer
+  `/llm/markdown/…` path, which serves the same file.
 - **Ships in the LLM export by default** (the prompt is reusable content). Add
   `excludeFromLlmExport` only when the prompt tells the agent to read this same
   page (e.g. the migration guides), so the export does not duplicate the page's
