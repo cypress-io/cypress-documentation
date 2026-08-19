@@ -211,9 +211,42 @@ describe('llms-full.txt', () => {
     expect(fullCorpus).toContain('Source: https://docs.cypress.io/app/get-started/why-cypress.md')
   })
 
-  test('separates pages with a thematic break', () => {
+  test('precedes each page with a thematic break', () => {
     const { fullCorpus } = writeAndRead([entry(), entry({ route: 'app/other' })])
-    expect(fullCorpus.split('\n---\n')).toHaveLength(3)
+    const lines = fullCorpus.split('\n')
+    const markers = lines
+      .map((line, i) => (line.startsWith('Source: ') ? i : -1))
+      .filter((i) => i >= 0)
+    expect(markers).toHaveLength(2)
+    for (const i of markers) {
+      expect(lines[i - 1]).toBe('')
+      expect(lines[i - 2]).toBe('---')
+    }
+  })
+
+  // A page that documents YAML frontmatter inside a fenced example puts a bare
+  // `---` in its body, so the rule between pages cannot be the page boundary.
+  test('stays splittable when a page body contains a bare --- line', () => {
+    const withFrontmatterExample = entry({
+      body: '# Cypress AI Skills\n\n```md\n---\nname: cypress-author\n---\n```\n',
+    })
+    const { fullCorpus } = writeAndRead([
+      withFrontmatterExample,
+      entry({ route: 'app/other' }),
+    ])
+    expect(fullCorpus.match(/^Source: /gm)).toHaveLength(2)
+    expect(fullCorpus).toContain('name: cypress-author')
+  })
+
+  test('fails the build if a body line would read as a page boundary', () => {
+    expect(() =>
+      writeAndRead([
+        entry({
+          route: 'app/sneaky',
+          body: '# Sneaky\n\nSource: https://docs.cypress.io/api/commands/get.md\n',
+        }),
+      ]),
+    ).toThrow(/app\/sneaky line 3 would read as a page boundary/)
   })
 
   test('orders pages the same way the index lists them', () => {

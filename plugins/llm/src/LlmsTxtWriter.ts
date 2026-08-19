@@ -35,6 +35,12 @@ const SECTION_HEADINGS: ReadonlyArray<[string, string]> = [
 const SUMMARY =
   'Cypress is a modern end-to-end testing framework for web applications, designed for developers to write, run, and debug tests easily.'
 
+/** Opens the line that marks where one page starts in `llms-full.txt`. */
+const PAGE_MARKER_PREFIX = 'Source: '
+
+/** A body line that a consumer would mistake for the page boundary above. */
+const FORGED_PAGE_MARKER_RE = new RegExp(`^${PAGE_MARKER_PREFIX}\\S+\\.md$`)
+
 /**
  * Writes the two files the llms.txt convention defines for a site:
  *
@@ -158,24 +164,27 @@ export class LlmsTxtWriter {
         `> ${SUMMARY}`,
         '',
         `This file is the complete Cypress documentation corpus: all ${this.entries.length} pages listed`,
-        `in ${baseUrl}/llms.txt, concatenated in the same order and separated by \`---\`.`,
-        'Each page is preceded by a `Source:` line giving the URL of its markdown; drop',
-        'the `.md` for the HTML page. To fetch one page instead of all of them, read the',
-        `index at ${baseUrl}/llms.txt.`,
+        `in ${baseUrl}/llms.txt, concatenated in the same order. Each page begins with a`,
+        '`Source:` line giving the URL of its markdown; drop the `.md` for the HTML page.',
+        'Split on those lines to separate the pages: the `---` rule before each one is',
+        'only a visual break, and a page body may contain one. To fetch a single page',
+        `instead of all of them, read the index at ${baseUrl}/llms.txt.`,
         '',
       ].join('\n'),
     ]
 
     for (const { heading, entries } of grouped) {
       for (const entry of entries) {
+        const body = entry.body.trim()
+        this.assertNoForgedPageMarker(entry.route, body)
         parts.push(
           [
             '---',
             '',
-            `Source: ${this.markdownUrl(baseUrl, entry.route)}`,
+            `${PAGE_MARKER_PREFIX}${this.markdownUrl(baseUrl, entry.route)}`,
             `Section: ${heading}`,
             '',
-            entry.body.trim(),
+            body,
             '',
           ].join('\n'),
         )
@@ -183,6 +192,26 @@ export class LlmsTxtWriter {
     }
 
     return `${parts.join('\n')}`
+  }
+
+  /**
+   * The page boundary in `llms-full.txt` has to be something a page body cannot
+   * contain, or a consumer splitting the corpus silently gets the wrong pages.
+   * A bare `---` is not that: pages legitimately show YAML frontmatter inside
+   * fenced examples, so the rule between pages is decorative and the `Source:`
+   * line is the marker. Fail the build rather than emit a corpus that splits
+   * wrongly, the same way `CanonicalMarkdownMirror` refuses to publish two
+   * documents to one path.
+   */
+  private assertNoForgedPageMarker(route: string, body: string): void {
+    const lines = body.split('\n')
+    for (let i = 0; i < lines.length; i++) {
+      if (FORGED_PAGE_MARKER_RE.test(lines[i])) {
+        throw new Error(
+          `LLM export: ${route} line ${i + 1} would read as a page boundary in llms-full.txt: ${lines[i]}`,
+        )
+      }
+    }
   }
 
   private link(baseUrl: string, entry: LlmsTxtEntry): string {
