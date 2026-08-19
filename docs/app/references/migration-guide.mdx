@@ -595,13 +595,6 @@ The command still reports the details it is usually run for: detected browsers,
 application data, browser profile and binary cache paths, the Cypress version,
 and system platform and memory.
 
-If you were using `cypress info` to inspect those variables, read them from your
-shell instead:
-
-```shell
-printenv | grep -E '^(HTTP_PROXY|HTTPS_PROXY|NO_PROXY|CYPRESS_)'
-```
-
 ### Angular `18`, `19`, and `20` are no longer supported for Component Testing
 
 Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/releases#actively-supported-versions), and Angular 20 reaches LTS end in November 2026. As a result, the minimum required Angular version for component testing is now `21.0.0`.
