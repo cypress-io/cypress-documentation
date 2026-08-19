@@ -65,7 +65,7 @@ import WhatYoullLearn from '@site/src/components/what-youll-learn'
 import CalloutLabel from '@site/src/components/callout-label'
 import AccordionBlock from '@site/src/components/accordion-block'
 import CloudFreePlan from '@site/docs/partials/_cloud_free_plan.mdx'
-import CloudMcpQuickInstall from '@site/docs/partials/_cloud-mcp-quick-install.mdx'
+import CloudMcpVsCodeInstall from '@site/docs/partials/_cloud-mcp-vscode-install.mdx'
 import CiProviderCloudSteps from '@site/docs/partials/_ci_provider_cloud_steps.mdx'
 import UrlAllowList from '@site/docs/partials/_url_allowlist.mdx'
 import UICovPremiumNote from '@site/docs/partials/_ui-coverage-premium-note.mdx'
@@ -265,7 +265,7 @@ export default {
   OsTabs,
   AccordionBlock,
   CloudFreePlan,
-  CloudMcpQuickInstall,
+  CloudMcpVsCodeInstall,
   CiProviderCloudSteps,
   UrlAllowList,
   UICovPremiumNote,

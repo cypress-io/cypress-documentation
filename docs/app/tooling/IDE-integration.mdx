@@ -401,11 +401,21 @@ at writing and maintaining tests:
 
 ### Add Cloud MCP to your editor
 
-<CloudMcpQuickInstall />
+In VS Code, add the server with one click:
 
-Your organization needs the Cloud MCP integration enabled first. For Cursor,
-Claude Desktop, Antigravity, GitHub Copilot CLI, Codex, and connections that use
-a personal access token instead of OAuth, see
+<CloudMcpVsCodeInstall />
+
+In Claude Code, run:
+
+```bash
+claude mcp add --transport http --scope user cypress-cloud https://mcp.cypress.io/mcp
+```
+
+Both connect over OAuth, so your browser opens to a Cypress Cloud sign-in the
+first time the server is used, and your organization needs the Cloud MCP
+integration enabled first. For Cursor, Claude Desktop, Antigravity, GitHub
+Copilot CLI, Codex, and connections that use a personal access token instead of
+OAuth, see
 [Configure AI Assistant](/cloud/integrations/cloud-mcp#Configure-AI-Assistant).
 
 For an overview of all AI capabilities across the Cypress App and Cloud, see
