@@ -1,0 +1,37 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Cypress",
+  "description": "Documentation for the Cypress App, API, Cypress Cloud, UI Coverage and Cypress Accessibility.",
+  "excludeFolders": [
+    ".circleci",
+    ".cursor",
+    ".github",
+    ".husky",
+    "cypress",
+    "docs/partials",
+    "patches",
+    "plugins",
+    "scripts",
+    "src",
+    "static"
+  ],
+  "excludeFiles": [
+    "AGENTS.md",
+    "AGENTS_REFERENCE.md",
+    "CONTRIBUTING.md",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "rules": [
+    "Select elements with dedicated `data-*` attributes, such as `cy.get('[data-cy=submit]')`. Do not select on `id`, `class`, `tag` or text content, which change as styles and copy change.",
+    "Log in programmatically and wrap it in `cy.session()` so the session is cached and restored between tests. Do not drive the login UI in every test.",
+    "Never use `cy.wait(<number>)` to wait for the application. Alias the network request with `cy.intercept()` and `cy.wait('@alias')`, or assert on the state you expect — Cypress commands already retry.",
+    "Cypress commands are asynchronous and return a chainer, not a value. `const btn = cy.get('button')` does not work; use `.then()`, `cy.wrap()` or an alias with `cy.get('@alias')` instead.",
+    "Keep every test independent. A test must pass when run on its own with `it.only`, and must not depend on state left behind by a previous test.",
+    "Clean up state in `beforeEach` rather than in `after` or `afterEach`. Leaving state behind after a run is intentional — it lets you debug the application in the state the test left it.",
+    "Set `baseUrl` in the Cypress config and use relative paths in `cy.visit()` and `cy.request()`.",
+    "Test only the application you control. Instead of visiting third-party sites or logging in through a social provider's UI, use `cy.request()` or `cy.origin()` where cross-origin interaction is unavoidable.",
+    "Keep secrets out of the spec bundle and out of source control. Read them with `cy.env()`, and supply them via `CYPRESS_*` environment variables in CI.",
+    "Start the web server before running Cypress, as a separate process — do not start it from inside a test with `cy.exec()` or `cy.task()`."
+  ]
+}
