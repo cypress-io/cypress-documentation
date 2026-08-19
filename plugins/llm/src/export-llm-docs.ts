@@ -7,7 +7,7 @@
  * 1. Walk `docs/` for `.md`/`.mdx`, filter by configured sections.
  * 2. Search for corresponding generated HTML file, extract content & remove unwanted elements, translate to markdown, and write flat markdown under `dist/llm/markdown/`. Each page's `##` sections are also written individually to `dist/llm/markdown/<doc-id>/<h2-slug>.md`. Both are mirrored to `dist/<page-route>.md` and `dist/<page-route>/<h2-slug>.md` so appending `.md` to any docs URL serves that page's markdown.
  * 3. Optionally emit JSON under `dist/llm/json/`: chunked per-doc files + chunk index in `json/chunked/`, and full-document structured JSON in `json/full/`.
- * 4. Write `dist/llms.txt` (site manifest) and per-directory `index.md` listings under the markdown export root.
+ * 4. Write `dist/llms.txt` (llmstxt.org-format link index of every page), `dist/llms-full.txt` (the whole corpus in one file), `dist/docs-manifest.json` (project metadata + published formats), and per-directory `index.md` listings under the markdown export root.
  */
 
 import fs from 'fs'
@@ -16,6 +16,7 @@ import { CanonicalMarkdownMirror } from './CanonicalMarkdownMirror'
 import {
   JsonExporter,
 } from './JsonExporter'
+import { LlmsTxtWriter } from './LlmsTxtWriter'
 import { ManifestWriter } from './ManifestWriter'
 import { MarkdownExporter } from './MarkdownExporter'
 import { SectionMarkdownExporter } from './SectionMarkdownExporter'
@@ -31,6 +32,13 @@ import {
 import { writeSitemap } from './sitemap'
 import { writeApiCatalog } from './catalog'
 import { writeSkillsIndex } from './skills'
+
+/** Human-readable file size for the export summary (e.g. `4.7 MB`). */
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+}
 
 export async function runLlmExport(options?: LlmExportRunOptions): Promise<void> {
   console.log('Running LLM export...')
@@ -49,6 +57,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   const sectionExporter = new SectionMarkdownExporter(exportRoot)
   const jsonExporter = new JsonExporter(distRoot, exportRoot)
   const canonicalMirror = new CanonicalMarkdownMirror(distRoot)
+  const llmsTxtWriter = new LlmsTxtWriter(distRoot)
   let sectionCount = 0
 
   const emitJson = Boolean(config.emit?.json)
@@ -92,6 +101,14 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
 
     canonicalMirror.mirror({ route, pageMarkdownPath: mdOutPath, sectionDir })
 
+    llmsTxtWriter.add({
+      route,
+      title: metadata.title,
+      description: metadata.description,
+      section,
+      body: bodyWithHeading,
+    })
+
     if (emitJson) {
       jsonExporter.exportFile({ relFromDocs, metadata, mdOutPath, bodyWithHeading, config })
     }
@@ -106,7 +123,9 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   }
 
   const manifestWriter = new ManifestWriter(distRoot)
-  manifestWriter.write(config)
+  manifestWriter.write(config, generatedAt)
+
+  const llmsTxtMetrics = llmsTxtWriter.write(config)
 
   writeSitemap(config.url, distRoot, fragmentDirs)
 
@@ -127,6 +146,8 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
       `Section markdown files: ${sectionCount}`,
       `Chunks indexed: ${chunkCount}`,
       `Mirrored to <page-route>.md: ${canonicalMetrics.pageCount} pages, ${canonicalMetrics.sectionCount} sections`,
+      `llms.txt: ${llmsTxtMetrics.pageCount} pages indexed, ${formatBytes(llmsTxtMetrics.indexBytes)}`,
+      `llms-full.txt: ${formatBytes(llmsTxtMetrics.fullCorpusBytes)}`,
       `Output files under ${toPosixPath(path.relative(siteDir, exportRoot))}/: ${outTotal} total`,
       `  — ${outMarkdown} markdown (.md)`,
       `  — ${outJson} json (.json)`,
