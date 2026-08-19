@@ -6,7 +6,7 @@ import Button from '@cypress-design/react-button'
 import Icon from '@cypress-design/react-icon'
 import Select, { type SelectItem } from '@cypress-design/react-select'
 import { markdownPathFor } from '@site/src/utils/markdown-url'
-import { copyToClipboard } from '@site/src/utils/copy-to-clipboard'
+import { copyPendingText } from '@site/src/utils/copy-to-clipboard'
 import s from './style.module.css'
 
 /** How long the button keeps showing the result of the last copy. */
@@ -73,24 +73,30 @@ export default function MarkdownActions(): React.JSX.Element {
     resetTimeout.current = setTimeout(() => setCopyState('idle'), RESET_DELAY)
   }
 
-  const copyMarkdown = async () => {
-    try {
-      const response = await fetch(markdownPath, {
-        headers: { Accept: 'text/markdown, text/plain' },
-      })
+  // Not `async`: everything up to `copyPendingText` has to run in the click's
+  // own tick, or the clipboard write lands outside the user activation that
+  // Safari requires. The fetch is started here and handed over still pending.
+  const copyMarkdown = () => {
+    const markdown = fetch(markdownPath, {
+      headers: { Accept: 'text/markdown, text/plain' },
+    }).then((response) => {
       if (!response.ok) {
         throw new Error(`Fetching ${markdownPath} failed: ${response.status}`)
       }
-      const markdown = await response.text()
-      if (!(await copyToClipboard(markdown))) {
-        throw new Error('Writing to the clipboard failed')
-      }
-    } catch {
-      flash('error')
-      return
-    }
-    track('Copied Page Markdown')
-    flash('copied')
+      return response.text()
+    })
+
+    return copyPendingText(markdown).then(
+      (copied) => {
+        if (!copied) {
+          flash('error')
+          return
+        }
+        track('Copied Page Markdown')
+        flash('copied')
+      },
+      () => flash('error')
+    )
   }
 
   const openInNewTab = (url: string) => {
