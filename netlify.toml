@@ -1101,7 +1101,13 @@
 
 [[redirects]]
   from = "/guides/references/release-stages"
-  to = "/app/references/roadmap"
+  to = "/app/references/release-stages"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/app/references/roadmap"
+  to = "/app/references/release-stages"
   status = 301
   force = true
 

@@ -823,8 +823,8 @@ system's current external IP address.
 ```jsx title='cypress/support/commands.js'
 Cypress.Commands.add('loginByAuth0Api', (username, password) => {
   // Useful when rate limited by Auth0
-  cy.exec('curl -4 icanhazip.com')
-    .its('stdout')
+  cy.request('https://ipv4.icanhazip.com')
+    .its('body')
     .then((ip) => {
       cy.env(['AUTH0_MGMT_API_TOKEN']).then(({ token }) => {
         cy.request({
@@ -859,8 +859,8 @@ Cypress.Commands.add(
   'loginByAuth0Api',
   (username: string, password: string) => {
     // Useful when rate limited by Auth0
-    cy.exec('curl -4 icanhazip.com')
-      .its('stdout')
+    cy.request('https://ipv4.icanhazip.com')
+      .its('body')
       .then((ip) => {
         cy.env(['AUTH0_MGMT_API_TOKEN']).then(({ token }) => {
           cy.request({

@@ -3,8 +3,8 @@
   "plugins": {
     "Webpack": {
       "npm": "@cypress/webpack-preprocessor",
-      "version": "7.1.1",
-      "lastPublished": "2026-05-31T22:58:14.124Z"
+      "version": "7.1.2",
+      "lastPublished": "2026-08-10T16:57:22.677Z"
     },
     "@bahmutov/cypress-esbuild-preprocessor": {
       "npm": "@bahmutov/cypress-esbuild-preprocessor",
@@ -66,8 +66,8 @@
     },
     "cypress-rspack-dev-server": {
       "npm": "cypress-rspack-dev-server",
-      "version": "2.2.0",
-      "lastPublished": "2026-07-02T04:44:44.332Z",
+      "version": "2.2.1",
+      "lastPublished": "2026-08-17T13:05:00.220Z",
       "cypressVersion": ">=15.17.0"
     },
     "@cypress/vite-dev-server": {
@@ -78,8 +78,8 @@
     },
     "@cypress/webpack-dev-server": {
       "npm": "@cypress/webpack-dev-server",
-      "version": "5.6.2",
-      "lastPublished": "2026-05-31T22:58:00.259Z",
+      "version": "5.6.3",
+      "lastPublished": "2026-08-10T16:56:00.540Z",
       "cypressVersion": ">=15.0.0"
     },
     "cypress-load-balancer": {
@@ -107,9 +107,9 @@
     },
     "eslint-plugin-cypress": {
       "npm": "eslint-plugin-cypress",
-      "version": "6.4.4",
-      "lastPublished": "2026-08-04T22:47:38.518Z",
-      "cypressVersion": "^15.19.0"
+      "version": "7.0.0",
+      "lastPublished": "2026-08-06T11:49:20.078Z",
+      "cypressVersion": "^15.20.0"
     },
     "cypress-codegen": {
       "npm": "cypress-codegen",
@@ -131,9 +131,9 @@
     },
     "cypress-watch-and-reload": {
       "npm": "cypress-watch-and-reload",
-      "version": "2.1.7",
-      "lastPublished": "2026-08-04T00:27:29.934Z",
-      "cypressVersion": "15.19.0"
+      "version": "2.1.8",
+      "lastPublished": "2026-08-07T20:41:50.248Z",
+      "cypressVersion": "15.20.0"
     },
     "cypress-html-validate": {
       "npm": "cypress-html-validate",
@@ -143,8 +143,8 @@
     },
     "@cypress/grep": {
       "npm": "@cypress/grep",
-      "version": "6.0.2",
-      "lastPublished": "2026-06-03T18:37:53.446Z",
+      "version": "6.0.3",
+      "lastPublished": "2026-08-07T17:26:51.363Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-cli-select": {
@@ -322,8 +322,8 @@
     },
     "cypress-plugin-api": {
       "npm": "cypress-plugin-api",
-      "version": "2.12.0",
-      "lastPublished": "2026-06-28T21:15:13.336Z",
+      "version": "2.12.1",
+      "lastPublished": "2026-08-17T11:13:15.209Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-plugin-xhr-toggle": {
@@ -592,8 +592,8 @@
     },
     "cypress-device-emulate": {
       "npm": "cypress-device-emulate",
-      "version": "0.1.2",
-      "lastPublished": "2026-08-03T05:00:19.831Z",
+      "version": "0.1.3",
+      "lastPublished": "2026-08-05T14:08:54.541Z",
       "cypressVersion": ">=12.0.0"
     },
     "cypress-plugin-tab": {
