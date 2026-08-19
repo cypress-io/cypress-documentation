@@ -23,8 +23,11 @@ npm run test:plugins  # vitest unit tests for plugins/
    hook and CI both enforce Prettier on `*.{md,mdx}`).
 2. `npm run build` — the real safety net for content: `onBrokenLinks` and
    `onBrokenMarkdownLinks` are `throw`, so any bad link or anchor fails the build.
-3. `npm run test:plugins` — only when you touched `plugins/`.
-4. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
+3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`.
+4. `npm run test:plugins` — only when you touched `plugins/`.
+5. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
+
+CI runs all of these, so a miss fails the PR rather than `main`.
 
 ## Pull requests
 

@@ -13,21 +13,50 @@ import pluginsJSON from '@site/src/data/plugins.json'
 import generatedJSON from '@site/src/data/plugins-generated.json'
 import clsx from 'clsx'
 
-function createMarkup(html) {
+/** Metadata generated from npm by `scripts/enrich-plugins.mjs`. */
+type PluginMeta = {
+  npm?: string
+  version?: string
+  lastPublished?: string
+  cypressVersion?: string
+  deprecated?: boolean
+  deprecatedReason?: string
+}
+
+/** A curated entry from `src/data/plugins.json`, merged with its metadata. */
+type Plugin = {
+  name: string
+  description: string
+  link: string
+  keywords?: string[]
+  badge?: string
+  meta?: PluginMeta
+}
+
+type Category = {
+  name: string
+  description?: string
+  plugins: Plugin[]
+}
+
+function createMarkup(html: string) {
   return { __html: html }
 }
 
-const GENERATED = (generatedJSON && generatedJSON.plugins) || {}
+const GENERATED: Record<string, PluginMeta> =
+  (generatedJSON && generatedJSON.plugins) || {}
 
 const BADGE_ORDER = ['official', 'community', 'deprecated']
-const BADGE_RANK = Object.fromEntries(BADGE_ORDER.map((b, i) => [b, i]))
+const BADGE_RANK: Record<string, number> = Object.fromEntries(
+  BADGE_ORDER.map((b, i) => [b, i])
+)
 
 /** Sort by badge tier (official → community → deprecated), then by
  *  most recently published first. Entries without a publish date sort last,
  *  with a stable alphabetical fallback. */
-function comparePlugins(a, b) {
-  const ta = BADGE_RANK[a.badge] ?? BADGE_ORDER.length
-  const tb = BADGE_RANK[b.badge] ?? BADGE_ORDER.length
+function comparePlugins(a: Plugin, b: Plugin) {
+  const ta = (a.badge ? BADGE_RANK[a.badge] : undefined) ?? BADGE_ORDER.length
+  const tb = (b.badge ? BADGE_RANK[b.badge] : undefined) ?? BADGE_ORDER.length
   if (ta !== tb) return ta - tb
   const da = a.meta?.lastPublished
     ? Date.parse(a.meta.lastPublished)
@@ -39,7 +68,7 @@ function comparePlugins(a, b) {
   return a.name.localeCompare(b.name)
 }
 
-const BADGE_INFO = {
+const BADGE_INFO: Record<string, string> = {
   official: 'Built and maintained by the Cypress team.',
   community:
     'Community-owned and not reviewed by Cypress. Evaluate before use.',
@@ -54,14 +83,14 @@ const monthYearFormatter = new Intl.DateTimeFormat('en-US', {
 })
 
 /** Format an ISO date as e.g. "Jun 2026". */
-function formatMonthYear(iso) {
+function formatMonthYear(iso?: string) {
   if (!iso) return null
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return null
   return monthYearFormatter.format(d)
 }
 
-function monthsSince(iso) {
+function monthsSince(iso?: string) {
   if (!iso) return null
   const then = new Date(iso).getTime()
   if (Number.isNaN(then)) return null
@@ -77,13 +106,13 @@ function useMounted() {
 }
 
 /** Merge a plugin's curated entry with its generated metadata. */
-function withMeta(plugin) {
+function withMeta(plugin: Plugin): Plugin {
   const meta = GENERATED[plugin.name] || {}
   const badge = meta.deprecated ? 'deprecated' : plugin.badge
   return { ...plugin, meta, badge }
 }
 
-function Badge({ badge }) {
+function Badge({ badge }: { badge?: string }) {
   if (!badge) return null
   const cls = `badge${badge[0].toUpperCase()}${badge.slice(1)}`
   return (
@@ -96,7 +125,7 @@ function Badge({ badge }) {
   )
 }
 
-function Signals({ meta }) {
+function Signals({ meta }: { meta?: PluginMeta }) {
   // `stale` depends on the current date, so only evaluate it after mount to
   // keep server and client markup identical during hydration.
   const mounted = useMounted()
@@ -152,7 +181,13 @@ function Signals({ meta }) {
   return <div className={s.signals}>{items}</div>
 }
 
-function PluginCard({ plugin, onSelectTag }) {
+function PluginCard({
+  plugin,
+  onSelectTag,
+}: {
+  plugin: Plugin
+  onSelectTag: (tag: string) => void
+}) {
   const { meta } = plugin
   return (
     <li className="card" data-cy={`plugin-${plugin.name}`}>
@@ -208,8 +243,8 @@ export default function PluginsList() {
   const [query, setQuery] = useState('')
   const [badgeFilter, setBadgeFilter] = useState('all')
   const [categoryFilter, setCategoryFilter] = useState('all')
-  const controlsRef = useRef(null)
-  const searchRef = useRef(null)
+  const controlsRef = useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLInputElement>(null)
   // Flips to true once mounted, so tests can wait for hydration before the
   // controls are interactive.
   const hydrated = useMounted()
@@ -224,7 +259,7 @@ export default function PluginsList() {
 
   // Update the search and reflect it in the URL so the current filter is
   // linkable, without triggering a navigation.
-  const applyQuery = (value) => {
+  const applyQuery = (value: string) => {
     setQuery(value)
     if (typeof window === 'undefined') return
     const url = new URL(window.location.href)
@@ -235,16 +270,16 @@ export default function PluginsList() {
 
   // Clicking a keyword tag filters the list by that tag and scrolls back to
   // the controls so the applied search is visible.
-  const selectTag = (tag) => {
+  const selectTag = (tag: string) => {
     applyQuery(tag)
     controlsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
   // Merge metadata, sort plugins within each category, and list the categories
   // themselves alphabetically.
-  const categories = useMemo(
+  const categories: Category[] = useMemo(
     () =>
-      pluginsJSON.plugins
+      (pluginsJSON.plugins as Category[])
         .map((category) => ({
           ...category,
           plugins: category.plugins.map(withMeta).sort(comparePlugins),

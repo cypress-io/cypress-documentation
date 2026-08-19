@@ -13,6 +13,6 @@ import React from 'react'
  */
 export default function ScrollableTable(
   props: React.TableHTMLAttributes<HTMLTableElement>
-): JSX.Element {
+): React.JSX.Element {
   return <table tabIndex={0} {...props} />
 }

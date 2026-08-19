@@ -134,16 +134,19 @@ repo rather than accepting them:
 
 ### 5. Code changes: `plugins/`, `scripts/`, `src/`, `cypress/`
 
-Review these with normal code-review rigor, and note that **CI is thinner than
-it looks**: CircleCI runs the build, Prettier, the frontmatter linter, the
-Algolia/search unit tests, and the e2e specs. It does **not** run
-`npm run typecheck` or `npm run test:plugins`.
+Review these with normal code-review rigor. CircleCI runs the build, Prettier,
+the frontmatter linter, `npm run typecheck`, the unit tests (Algolia/search and
+the plugins), and the e2e specs, so type errors and plugin regressions fail the
+PR rather than reaching `main`. Don't re-report what those catch; look for what
+they can't.
 
-- Type errors and unchecked assumptions in TypeScript under `plugins/` and
-  `src/` will not be caught by CI. Say so when you find one.
+- `npm run typecheck` covers `src/`, `cypress/`, and `cypress.config.ts`;
+  `plugins/*` are type checked by their own `tsc` builds. Casts (`as any`,
+  `as SomeType`) that silence an error rather than fix it are worth flagging,
+  since they pass the gate.
 - A behavior change in `plugins/cypressRemarkPlugins` or `plugins/llm` with no
-  corresponding Vitest change: those tests exist but do not run in CI, so a
-  regression reaches `main` silently. Flag missing test coverage here.
+  corresponding Vitest change: the suites run in CI, so an untested change is
+  green but unguarded. Flag missing test coverage here.
 - Remark/unist visitors: mutating `children` while iterating, assuming a node
   type without checking, and dropping `position` data are the recurring bugs.
 - **Dependencies for `plugins/*` belong in the root `package.json`.** The
