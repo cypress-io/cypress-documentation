@@ -17,32 +17,6 @@ sidebar_label: 'Migration Guide'
   prompt={`Read https://docs.cypress.io/llm/markdown/app/references/migration-guide/migrating-to-cypress-16-0.md, then upgrade this project from Cypress 15 to 16 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 15.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in that section (Node.js 22, 24, or 26+, and Angular 21+ / Vite 8+ / Next.js 15.0.4+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency. If I depend on @cypress/angular-zoneless, replace it with @cypress/angular and update the imports.\n\n4. Fix breaking changes. Fix every breaking change in that section that affects my code and config: delete cy.end() calls, migrate Cypress.env() reads to cy.env() for sensitive values and Cypress.expose() for public ones, replace an env key in a test config override with expose, replace experimentalMemoryManagement: false with manageBrowserMemory: false, remove allowCypressEnv, experimentalSourceRewriting, and experimentalFastVisibility, move Cypress.config() calls that set viewportWidth, viewportHeight, or blockHosts during a test into cy.viewport() or a test configuration object, and convert any .coffee specs, support files, or fixtures to JavaScript or TypeScript.\n\n5. Review what changed behavior without changing my code. Flag, but don't rewrite unless a test actually fails: assertions on req.httpVersion, compression headers, or a 304 status inside cy.intercept(); visibility assertions that depended on the legacy algorithm; tests that relied on the implicit 10ms keystrokeDelay; and cookie or storage assertions written inside .then(), which doesn't retry. Don't set forceHttp1 or visibilityStrategy: 'legacy' to make a test pass; both are deprecated escape hatches.\n\n6. Verify. Run npx cypress verify and my Cypress tests, and confirm the run starts with no deprecation or removed-option warnings.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
-Cypress 16 is about making your tests behave more like production and finish
-faster. Most suites upgrade with no code changes at all.
-
-- **Your application's real network.** In Chrome, Chromium, and Edge your
-  application connects to your server directly and negotiates HTTP/2 or HTTP/3
-  exactly as it does for your users, instead of being downgraded to HTTP/1.1.
-  The browser validates your origin's real certificate, and everything
-  [`cy.intercept()`](/api/commands/intercept) changes now shows up in the
-  browser's own network panel.
-- **Faster by default.** The `checkVisibility()`-based visibility algorithm and
-  browser memory management were opt-in experiments in Cypress 15. Both are on
-  for everyone in 16, and typing no longer pays a 10ms tax per keystroke.
-- **Reads that wait for your application.** [`cy.getCookie()`](/api/commands/getcookie),
-  [`cy.getCookies()`](/api/commands/getcookies),
-  [`cy.getAllCookies()`](/api/commands/getallcookies),
-  [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage), and
-  [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) are now
-  retry-able queries, so `cy.getCookie('token').should('exist')` waits for a
-  cookie written after a login request resolves instead of failing on the first
-  read.
-- **Secrets stay in Node.** `Cypress.env()`, which hydrated every environment
-  variable into the browser, is gone. [`cy.env()`](/api/commands/env) fetches
-  only what a test asks for and keeps it in the Node process, and
-  [`Cypress.expose()`](/api/cypress-api/expose) covers values that genuinely
-  need to be readable in the browser.
-
 This guide details the code changes needed to migrate to Cypress version 16.0.
 [See the full changelog for version v16.0](/app/references/changelog#16-0-0).
 
