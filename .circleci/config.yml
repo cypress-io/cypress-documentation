@@ -73,6 +73,9 @@ jobs:
       - run:
           name: Plugin unit tests
           command: npm run test:plugins
+      - run:
+          name: Script unit tests
+          command: npm run test:scripts
 
   install-and-persist:
     executor:

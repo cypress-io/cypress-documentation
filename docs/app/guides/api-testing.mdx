@@ -158,7 +158,7 @@ cy.request('/users/1').its('body').should('deep.include', {
 Understanding the mechanics prevents most of the surprises people hit.
 
 When you call `cy.request()`, the driver hands the options to the Cypress Node
-process over its websocket connection, and Node makes the HTTP request. The
+process over its WebSocket connection, and Node makes the HTTP request. The
 browser is never asked to make the call.
 
 That single fact explains the behaviors below.

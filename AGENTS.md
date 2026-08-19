@@ -11,20 +11,23 @@ detail behind each rule, read **[`AGENTS_REFERENCE.md`](./AGENTS_REFERENCE.md)**
 npm i                 # install (runs patch-package via postinstall)
 npm run start         # local dev server at http://localhost:3000
 npm run build         # production build into dist/ (also rebuilds plugins)
-npm run lint:fix      # Prettier autofix on **/*.{md,mdx}
+npm run lint:fix      # Prettier, frontmatter, and terminology autofix
 npm run typecheck     # tsc
 npm test              # cypress e2e (needs the dev server running)
 npm run test:plugins  # vitest unit tests for plugins/
+npm run test:scripts  # vitest unit tests for scripts/
 ```
 
 ## Verify ladder (cheap → authoritative)
 
 1. `npm run lint:fix` — **required before every commit** (a Husky/lint-staged
-   hook and CI both enforce Prettier on `*.{md,mdx}`).
+   hook and CI both enforce Prettier on `*.{md,mdx}`; CI also runs the
+   frontmatter and terminology linters, which lint-staged does not).
 2. `npm run build` — the real safety net for content: `onBrokenLinks` and
    `onBrokenMarkdownLinks` are `throw`, so any bad link or anchor fails the build.
 3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`.
-4. `npm run test:plugins` — only when you touched `plugins/`.
+4. `npm run test:plugins` — only when you touched `plugins/`;
+   `npm run test:scripts` — only when you touched `scripts/`.
 5. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
 
 CI runs all of these, so a miss fails the PR rather than `main`.
@@ -106,6 +109,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
   instructions. They undermine a reader who is struggling and add nothing; state
   the step plainly instead.
+- Match house terminology. `npm run lint:terminology` enforces the unambiguous
+  terms; the context-dependent ones it can't check are in
+  [Terminology](./AGENTS_REFERENCE.md#terminology).
 - Describe configuration by what it does and accepts. Don't call out fields or
   features a property lacks (e.g. "there is no `comment` field") unless the
   absence is a documented point of confusion.

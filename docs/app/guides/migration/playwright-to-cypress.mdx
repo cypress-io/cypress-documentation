@@ -1342,7 +1342,7 @@ cy.get('[data-testid="greeting"]').should('have.text', 'Hello, Ada Lovelace!')
 cy.get('@promptDialog').should('have.been.calledWith', 'Enter your name:')
 ```
 
-To simulate the user cancelling the prompt (equivalent to `dialog.dismiss()`
+To simulate the user canceling the prompt (equivalent to `dialog.dismiss()`
 in Playwright), return `null` from the stub:
 
 ```ts

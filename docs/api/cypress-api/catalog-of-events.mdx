@@ -148,7 +148,7 @@ These are all useful to listen to for debugging purposes.
 ### Other Events
 
 There are a myriad of other events Cypress fires to communicate with the Node
-server process, automation servers, mocha, the application, and the reporter.
+server process, automation servers, Mocha, the application, and the reporter.
 They are strictly internal to the way Cypress works and not useful for users.
 
 ## Binding to Events
@@ -396,8 +396,6 @@ it('can modify the window prior to page load on all pages', () => {
 This enables you to test how your application reacts to accepted confirmations
 and rejected confirmations.
 
-{/* textlint-disable */}
-
 ```javascript
 // app code
 $('button').on('click', (e) => {
@@ -478,8 +476,6 @@ it('could also use a stub instead of imperative code', () => {
     })
 })
 ```
-
-{/* textlint-enable */}
 
 ### Window Alert
 

@@ -30,7 +30,7 @@ pure noise:
   spend their time on. Do not suggest rewrites for readability, and do not
   restate a paragraph "more clearly". The hard writing rules below are the only
   prose rules to enforce.
-- **Missing tests for `docs/**` changes.** Content changes are covered by the
+- **Missing tests for `docs/**` changes.\*\* Content changes are covered by the
   e2e specs that visit every page.
 
 ## Flag these
@@ -127,10 +127,14 @@ repo rather than accepting them:
   examples go in `"quotes"`.
 - **Product names.** Cypress App, Cypress Cloud, Cypress Accessibility, UI
   Coverage (no "Cypress" prefix on UI Coverage).
-- **House terminology.** `.textlintrc` holds the term list (Cypress Cloud not
-  "Cypress cloud", `localStorage`, "end-to-end", "retry-ability", American
-  spellings, no "blacklist"/"whitelist"). Nothing runs textlint today, so these
-  are unenforced: flag clear violations in added prose only.
+- **House terminology.** `npm run lint:terminology` enforces the terms that have
+  exactly one correct form (brand casing, "end-to-end", "retry-ability",
+  American spellings, "blocklist"/"allowlist"). CI runs it, so don't re-report
+  what it catches. Do flag the context-dependent ones it deliberately leaves
+  alone, listed in
+  [Terminology](../AGENTS_REFERENCE.md#terminology): "front-end" as a
+  modifier versus "front end" as a noun, lowercase "webpack", "single sign-on"
+  mid-sentence, "local storage" the concept versus the `localStorage` API.
 
 ### 5. Code changes: `plugins/`, `scripts/`, `src/`, `cypress/`
 

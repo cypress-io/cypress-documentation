@@ -155,6 +155,37 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   button in a sample table). This keeps invented example labels visually distinct
   from the real UI the tutorial navigates.
 
+## Terminology
+
+`npm run lint:terminology` (part of `npm run lint`, so CI enforces it) checks
+the terms that have exactly one correct form regardless of where they appear:
+brand casing (`JavaScript`, `TypeScript`, `jQuery`, `GitHub`, `Mocha`,
+`Lodash`, `WebSocket`, `iframe`), `Cypress Cloud`, `end-to-end`,
+`retry-ability`, American spellings (`behavior`, `canceled`, `color`,
+`license`), and `blocklist` / `allowlist`. `npm run lint:terminology:fix`
+applies them. Add a term to `scripts/lint-terminology.js` only when it passes
+that same bar.
+
+The rest of house terminology is a judgement call a regex gets wrong more often
+than right, so it is left to review:
+
+- **Hyphenate as a modifier, not as a noun.** "front-end framework" but "the
+  front end", "end-to-end tests" but "runs end to end".
+- **webpack is lowercase**, including at the start of a sentence. It is not
+  auto-fixed because most occurrences are in headings, and changing a heading
+  changes its anchor and breaks inbound links.
+- **"single sign-on"** is lowercase in prose and title-case only as a real UI
+  label or page title.
+- **"local storage" / "session storage"** stay two plain words when they name
+  the browser concept; `localStorage` and `sessionStorage` are the APIs, in
+  code formatting.
+- **Minimizing words** — "simply", "just", "easy", "obviously" — belong nowhere
+  in instructions.
+
+Quoted UI labels and error messages are exempt from all of the above, and the
+linter skips double-quoted spans for that reason: quoting a label the reader
+will not find on screen is worse than an inconsistent term.
+
 ## Code blocks
 
 - Always tag a fenced block with its language (`ts`, `js`, `jsx`, `shell`,
@@ -552,13 +583,13 @@ that already embed the correct params rather than re-writing the URL.
 
 CircleCI (`.circleci/config.yml`) runs on every pull request:
 
-| Job                                  | Command                               |
-| ------------------------------------ | ------------------------------------- |
-| Build                                | `npm run build`                       |
-| Lint JS/CSS/Markdown                 | `npm run lint`                        |
-| Typecheck                            | `npm run typecheck`                   |
-| Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins` |
-| Run Tests in Parallel                | `cypress run` across 8 containers     |
+| Job                                           | Command                                               |
+| --------------------------------------------- | ----------------------------------------------------- |
+| Build                                         | `npm run build`                                       |
+| Lint JS/CSS/Markdown                          | `npm run lint`                                        |
+| Typecheck                                     | `npm run typecheck`                                   |
+| Unit Tests (Search/Algolia, plugins, scripts) | `npm run test:search`, `test:plugins`, `test:scripts` |
+| Run Tests in Parallel                         | `cypress run` across 8 containers                     |
 
 The lint, typecheck, and unit-test jobs reuse the `node_modules` the build job
 persists to the workspace, so they need no install step of their own.

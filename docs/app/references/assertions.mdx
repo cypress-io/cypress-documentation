@@ -103,8 +103,6 @@ These chainers are available when asserting about a DOM object.
 You will commonly use these chainers after using DOM commands like:
 [`cy.get()`](/api/commands/get), [`cy.contains()`](/api/commands/contains), etc.
 
-{/* textlint-disable */}
-
 | Chainers                | Assertion                                                                                                                    |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | attr(_name_, _[value]_) | `.should('have.attr', 'bar')`<br />`expect($el).to.have.attr('foo', 'bar')`                                                  |
@@ -128,8 +126,6 @@ You will commonly use these chainers after using DOM commands like:
 | match(_selector_)       | `.should('match', ':empty')`<br />`expect($emptyEl).to.match(':empty')`                                                      |
 | contain(_text_)         | `.should('contain', 'text')`<br />`expect($el).to.contain('text')`                                                           |
 | descendants(_selector_) | `.should('have.descendants', 'div')`<br />`expect($el).to.have.descendants('div')`                                           |
-
-{/* textlint-enable */}
 
 ## Sinon-Chai
 
