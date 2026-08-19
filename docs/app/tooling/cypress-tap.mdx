@@ -1048,10 +1048,10 @@ Together these tools provide the availability for you or an AI agent to fully en
   it stays `loading` indefinitely and the build error appears only in the
   Cypress app. Give any poll loop a timeout and check the app when it expires.
 
-- **A verdict looks wrong, or arrives too fast.** Compare `startedAt` against
-  the `previousStartedAt` that `run` returned. A rerun leaves the previous run's
-  verdict readable until the new one starts, and both payloads are otherwise
-  identical.
+- **A verdict looks wrong, or arrives too fast.** Read `status` before you rerun
+  and keep its `startedAt`, then wait for a verdict whose `startedAt` differs. A
+  rerun leaves the previous run's verdict readable until the new one starts, and
+  both payloads are otherwise identical.
 
 - **`passed` with nothing having run.** `passed` means the run finished with no
   failures, so an empty spec, or one whose tests were all skipped, reports
