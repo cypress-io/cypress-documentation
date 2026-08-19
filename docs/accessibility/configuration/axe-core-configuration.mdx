@@ -9,11 +9,31 @@ sidebar_position: 50
 
 # Axe Core® configuration
 
-Cypress Accessibility runs the full [Axe-Core®](https://github.com/dequelabs/axe-core) ruleset against every snapshot captured during your test run, with no setup, assertions, or `cy.` commands to add to your specs. The ruleset is tuned to favor high-confidence results, so the report you get out of the box is already the recommended configuration for most teams.
+Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every snapshot captured during your test run, with no setup, assertions, or `cy.` commands to add to your specs. The ruleset is tuned to favor high-confidence results, so the report you get out of the box is already the recommended configuration for most teams.
 
 Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/results-api), where you have full control over how to parse results and which rules to react to, there is rarely a need to change which rules run in Cypress Cloud. Keeping the ruleset broad means you can still see and understand every accessibility finding, even when only a subset of results is treated as blocking in your pipeline.
 
 When you do need to change how the ruleset behaves for your project, Cypress can tune it for you. This is a guided process handled through your Cypress point of contact rather than a setting in the App Quality editor, so you get results that fit your application without the risk of silently turning off important checks.
+
+## What the default ruleset covers {#what-the-default-ruleset-covers}
+
+Cypress applies no conformance filter of its own, so a run evaluates whatever Axe-Core® enables by default, minus the [three rules Cypress turns off by default](#rules-that-are-off-by-default):
+
+| Axe-Core® rule group        | Runs by default | Notes                                                                                                       |
+| --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------- |
+| WCAG 2.0 Level A and AA     | Yes             | Minus `color-contrast`, `no-autoplay-audio`, and `meta-refresh`, which are WCAG-tagged but off by default   |
+| WCAG 2.1 Level A and AA     | Yes             |                                                                                                             |
+| Best Practices              | Yes             | Deque's own recommendations, such as `region` and `landmark-one-main`. These are not WCAG success criteria. |
+| WCAG 2.2 Level A and AA     | No              | Off by default in Axe-Core® itself. Cypress can enable these for your project.                              |
+| WCAG Level AAA              | No              | Off by default in Axe-Core® itself. Cypress can enable these for your project.                              |
+| Experimental and deprecated | No              | Off by default in Axe-Core® itself.                                                                         |
+
+Two consequences are worth knowing if you're measuring against a formal standard:
+
+- **The default report is broader than any single WCAG level.** Best Practices findings appear alongside WCAG ones, so a violation in your report is not automatically a WCAG failure. Use the **Rules** filter in a report to separate WCAG 2.1 A, WCAG 2.1 AA, and Best Practices results.
+- **The default report is also not complete WCAG coverage.** The three rules that are off by default map to WCAG success criteria (1.4.3, 1.4.2, and 2.2.1), and no automated ruleset can evaluate every success criterion in the first place. See [accessibility automation principles](/accessibility/guides/accessibility-automation) for what conformance requires beyond automation.
+
+To align a project's report with a specific conformance target, ask Cypress to scope the ruleset for you, as described below.
 
 ## How Cypress can tune the ruleset for your project {#how-cypress-can-tune-the-ruleset-for-your-project}
 
@@ -21,7 +41,7 @@ Teams reach out for a few common adjustments. In each case, Cypress applies the 
 
 - **Enable a rule that is off by default.** The most common request is turning on [color contrast checking](#rules-that-are-off-by-default) for a project where you've confirmed it produces reliable results.
 - **Turn off a rule that is a known false positive.** If a specific rule consistently misfires because of a third-party framework you can't change, it can be disabled project-wide so it stops adding noise to your reports.
-- **Scope the report to a conformance target.** Cypress can narrow the ruleset to the standard your team is committed to, such as WCAG 2.1 Level A and AA, so the report reflects exactly the criteria you're measuring against.
+- **Scope the report to a conformance target.** Cypress can narrow the ruleset to the standard your team is committed to, such as WCAG 2.1 Level A and AA, so the report reflects exactly the criteria you're measuring against. This is also how you enable rule groups that Axe-Core® keeps off by default, such as WCAG 2.2 or Level AAA.
 
 We're happy to have a call to dial in your report configuration and make sure you're getting the most useful reports possible.
 
