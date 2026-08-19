@@ -1,0 +1,1104 @@
+---
+title: 'Drive Cypress with AI agents using cypress tap'
+description: 'Let Cursor, Claude Code, or any AI agent run your Cypress tests from the terminal, read the failures, and verify fixes against a live Cypress session.'
+sidebar_label: 'cypress tap'
+sidebar_position: 20
+sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
+---
+
+<ProductHeading product="app" />
+
+# cypress tap: live Cypress app context in your terminal
+
+**Your AI agent can run, watch, and fix Cypress tests as it codes.**
+
+An AI agent can run a Cypress spec and get back pass or fail. What it can't get is everything that makes a failure fixable: the Command Log, the error and code frame, the DOM as it was when the command ran. That detail lives in the Cypress app, where the agent can't reach it.
+
+`cypress tap` is an extension of the cypress CLI that lets you or an agent interact with an open-mode Cypress session and read its context from the terminal. With it, an agent can run a spec and poll its status, then read the failing test's Command Log and error as the Cypress app shows them. It can also inspect the DOM of the application under test at the moment a command ran.
+
+This allows an agent can verify its own work as it codes, catching and fixing failures in the same loop that created them.
+
+Any agent that can run shell commands can use it, including Cursor, Claude
+Code, GitHub Copilot, Windsurf, and Codex CLI.
+
+:::warning
+
+`cypress tap` is in [beta](/app/references/release-stages#Beta). It is enabled by
+default and no longer expected to change in major ways, but its commands and
+output can still change in any release while we gather feedback.
+
+:::
+
+## How it works
+
+Start Cypress in open mode (`cypress open`) in your project, select your testing type and a chromium browser, then run
+`cypress tap` commands from the same project directory in another terminal.
+
+The CLI finds the running Cypress session on its own. If more than one is
+running, it prefers the one whose project matches your current directory. Use
+`--session <pid>` (or `-s`) to target a specific session.
+
+Every command prints a human-readable output by default and a JSON
+result when passed `--json`. Agents and scripts should prefer `--json`.
+
+## Requirements
+
+- Only works with `cypress open` sessions, not headless `cypress run` sessions.
+- Only supports Chromium-based browsers (Chrome, Chromium, Edge, Electron).
+- Requires Cypress v15.21.0+
+- If the `cypress tap` CLI and the session it attaches to are on incompatible versions, the CLI stops and reports the version mismatch.
+
+## Available commands
+
+Below is the list of the commands `cypress tap` exposes:
+
+| Command                             | What it does                                                                                                                                                                                   |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`sessions`](#cypress-tap-sessions) | Lists the running Cypress sessions the CLI can reach.                                                                                                                                          |
+| [`status`](#cypress-tap-status)     | Reports where a session is in its run lifecycle.                                                                                                                                               |
+| [`specs`](#cypress-tap-specs)       | Lists the specs the session can run.                                                                                                                                                           |
+| [`run`](#cypress-tap-run)           | Runs (or reruns) a spec by its project-relative path.                                                                                                                                          |
+| [`reporter`](#cypress-tap-reporter) | Renders the spec report or a specific tests report. The spec report includes what tests ran and their status. A test's reporter view includes routes, hooks, Command Log, and failure details. |
+| [`command`](#cypress-tap-command)   | Prints the details of a specific Command Log entry, including its time travel snapshots and the captured console properties.                                                                   |
+| [`pin`](#cypress-tap-pin)           | Renders a past command's DOM snapshot as the live app under test so the `dom`, `aria`, and `inspect` tap commands can inspect it.                                                              |
+| [`dom`](#cypress-tap-dom)           | Retrieves the app under test's HTML markup.                                                                                                                                                    |
+| [`aria`](#cypress-tap-aria)         | Retrieves the accessibility (ARIA) tree of the app under test.                                                                                                                                 |
+| [`inspect`](#cypress-tap-inspect)   | Retrieves the specified element's tag, attributes, computed styles, and box model.                                                                                                             |
+
+Each subcommand exits with `0` on success and `1` on any failure and accepts these options:
+
+| Option          | Description                                                                                                      | Default |
+| --------------- | ---------------------------------------------------------------------------------------------------------------- | ------- |
+| `--session, -s` | Use to target a specific running Cypress instance by its process id (pid)                                        |         |
+| `--json`        | Prints the raw JSON result instead of the human-readable rendering                                               |         |
+| `--timeout`     | How long to wait on any single call into the Cypress session before treating it as unresponsive, in milliseconds | `30000` |
+| `--help, -h`    | Outputs usage information                                                                                        |         |
+
+### cypress tap sessions {#cypress-tap-sessions}
+
+Lists the running Cypress sessions the CLI can reach. Pass a listed pid to
+`--session` to target that session with another `tap` command.
+
+```shell title="Command"
+cypress tap sessions
+```
+
+```css title="Output"
+SESSIONS (2)
+  PID  PROJECT          TYPE       BROWSER
+  111  /projects/app    e2e        Chrome
+  222  /projects/other  component  —
+```
+
+`--json` returns the same rows as an array, with `browserAttached` as a boolean and `browserName` as `null` where the text shows `—`:
+
+```json title="Output"
+[
+  {
+    "pid": 111,
+    "projectRoot": "/projects/app",
+    "testingType": "e2e",
+    "browserAttached": true,
+    "browserName": "Chrome"
+  },
+  {
+    "pid": 222,
+    "projectRoot": "/projects/other",
+    "testingType": "component",
+    "browserAttached": false,
+    "browserName": null
+  }
+]
+```
+
+### cypress tap status {#cypress-tap-status}
+
+Reports where a running Cypress session is in its lifecycle. It is built for
+polling, see [Polling for a verdict](#polling).
+
+| Stage                  | Meaning                                                                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `not connected`        | No running Cypress session could be found                                                                                 |
+| `browser not selected` | A session is running, but it has no browser open                                                                          |
+| `spec not selected`    | A browser is open, but no spec has been chosen                                                                            |
+| `loading`              | A spec is selected and waiting on its own build. A spec that fails to build stays here, so a poller needs its own timeout |
+| `running`              | The selected spec is executing                                                                                            |
+| `passed`               | The run finished and no test failed                                                                                       |
+| `failed`               | The run finished with at least one failing test                                                                           |
+
+```shell title="Command"
+cypress tap status
+```
+
+```css title="Output"
+PID   PROJECT        TYPE  BROWSER
+4242  /projects/app  e2e   Chrome
+
+● cypress/e2e/login.cy.ts  running
+✓ 1  ✖ 1  ○ 2
+```
+
+With `--json`, the output includes `startedAt` from `loading` onwards: the run's
+start time, or `null` while the spec is still building. Always check
+`startedAt` before trusting a verdict. A rerun leaves the previous run's
+`passed` or `failed` result readable until the new run starts, so a verdict
+carrying the earlier `startedAt` describes the previous run, not yours.
+
+`--json` also adds `totalTests` and per-outcome `results` counts from `running` onwards. A `pinned` object rides along whenever a pin is active.
+
+```json title="Output"
+{
+  "status": "loading",
+  "pid": 4242,
+  "projectRoot": "/projects/app",
+  "testingType": "e2e",
+  "browserAttached": true,
+  "browserName": "Chrome",
+  "totalSpecs": 3,
+  "spec": "cypress/e2e/login.cy.ts",
+  "startedAt": "2026-07-29T10:15:00.000Z",
+  "totalTests": 5,
+  "results": { "passed": 1, "failed": 1, "pending": 2, "skipped": 1 }
+}
+```
+
+### cypress tap specs {#cypress-tap-specs}
+
+Lists the specs the current session can run, ordered by last-modified from available git history. The list reflects the session's current testing type; to see the other type's specs, open a session with that type selected.
+
+```shell title="Command"
+cypress tap specs
+```
+
+```css title="Output"
+SPECS (2)
+  cypress/e2e/a.cy.ts            2 hours ago
+  cypress/e2e/longer-name.cy.ts
+```
+
+`--json` returns the spec paths as an array.
+
+### cypress tap run {#cypress-tap-run}
+
+Runs (or reruns) a spec by its project-relative path, as listed by the
+[`specs`](#cypress-tap-specs). If no browser is open, Cypress launches
+one. The command requests the spec starts and returns immediately, returning does not mean the run started. Poll the
+[`status`](#cypress-tap-status) command for progress; see [Polling for a verdict](#polling).
+
+```shell title="Command"
+cypress tap run cypress/e2e/login.cy.ts
+```
+
+```css title="Output"
+▶ cypress/e2e/login.cy.ts
+
+  testing type  e2e
+  browser       Chrome
+```
+
+### cypress tap reporter {#cypress-tap-reporter}
+
+Shows test results on the command line the way the Cypress app shows them in
+its reporter panel.
+
+| Option          | Description                                                 | Default                 |
+| --------------- | ----------------------------------------------------------- | ----------------------- |
+| `--test-id, -t` | Test id, as listed by the spec overview this command prints | The spec-level overview |
+| `--attempt, -a` | 1-based attempt, where attempt 1 is the first run           | The latest attempt      |
+
+Without `--test-id`, it prints the spec-level report which includes the run's test stats
+and every suite's tests, with the test ids the other commands accept.
+
+```shell title="Command"
+cypress tap reporter
+```
+
+```css title="Output"
+cypress/e2e/login.cy.ts
+✓ 2  ✖ 1  ○ 1   00:17
+
+   r1  ✓ redirects an anonymous visitor  20ms
+
+Login
+   r2  ✓ shows the sign-in form  10ms
+   r4  ○ remembers the last user
+
+Login > Invalid credentials
+   r3  ✖ shows an error banner  30ms  (2 retries)
+         ✖ attempt 1  4.5s
+         ✖ attempt 2  4.4s
+         ✖ attempt 3  30ms
+```
+
+With `--test-id <test-id>`, it renders that test's last attempts details including its network routes, the
+hooks that ran, the complete Command Log, and, when the test failed, the
+error with its code frame. Add `--attempt` to view an earlier retry.
+
+```> cypress tap reporter --test-id r2
+
+✓ Login > shows the sign-in form
+
+BEFORE EACH · h1
+   1  visit  https://example.cypress.io/todo
+
+TEST BODY · r2
+   1  get      .login
+   2  -assert  to be visible
+   3  get      .password
+   4  -assert  to be visible
+```
+
+### cypress tap command {#cypress-tap-command}
+
+Details one Command Log entry of a test: its reporter row, the DOM snapshots
+pinnable on it, and its console properties: what the browser's developer
+tools console shows after clicking the command in the Cypress app.
+
+| Option             | Description                                                                                                                                                           | Default            |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `--test-id, -t`    | Test id, as listed by the [`reporter`](#cypress-tap-reporter) command                                                                                                 | Required           |
+| `--command-id, -c` | Command id, as listed by the `reporter` command: a row number, an e-prefixed event id, or hook-qualified like `h1:3`                                                  | Required           |
+| `--attempt, -a`    | 1-based attempt, where attempt 1 is the first run                                                                                                                     | The latest attempt |
+| `--depth, -d`      | How many levels of nested console properties to expand before summarizing the rest: a number or `all`. A section over 8 rows folds at any depth unless this is passed | `3`                |
+
+```shell title="Command"
+cypress tap command --test-id r2 --command-id 3
+```
+
+```css title="Output"
+TEST BODY · r2
+✓  3  -contains  Submit  passed
+
+SNAPSHOTS (2)
+  #  NAME    TIME
+  1  -      14:03:22.481
+
+CONSOLE PROPS
+  Content     Submit
+  Applied To  <body>
+  Elements    0
+```
+
+When console properties are deeply nested, cypress tap expands them to --depth levels (default 3) and summarizes the rest. A footer lists what it summarized and how to open it:
+
+```shell title="Command"
+cypress tap command --test-id r4 --command-id e1 --depth 0
+```
+
+```css title="Output"
+CONSOLE PROPS
+  Resource Type             xhr
+  Method                    POST
+  URL                       https://jsonplaceholder.cypress.io/comments
+  Matched `cy.intercept()`  {4 keys}
+  Alias                     postComment
+
+1 section collapsed — open all of it with --depth all
+```
+
+A value long enough to bury the rest of the payload, such as a response body,
+is shown as a note of its length instead of being printed to the terminal. You can pass `--json` to get
+every console property if needed.
+
+### cypress tap pin {#cypress-tap-pin}
+
+Pins a command's DOM snapshot into the live app-under-test frame, just like you would see if you
+manually clicked the command in the Cypress app. This time travel behavior allows the
+[`dom`](#cypress-tap-dom), [`aria`](#cypress-tap-aria), and
+[`inspect`](#cypress-tap-inspect) commands read the page as it was when that
+command ran.
+
+| Option             | Description                                                                                                          | Default                                      |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `--test-id, -t`    | Test id, as listed by the [`reporter`](#cypress-tap-reporter) command                                                | Required                                     |
+| `--command-id, -c` | Command id, as listed by the `reporter` command: a row number, an e-prefixed event id, or hook-qualified like `h1:3` | Required                                     |
+| `--at`             | Which snapshot to pin, either a name like `before`/`after`, or a 1-based index                                       | The last snapshot, the command's final state |
+| `--attempt, -a`    | 1-based attempt, where attempt 1 is the first run                                                                    | The latest attempt                           |
+| `--clear`          | Release the current pin and restore the app to its pre-pin state                                                     | Off                                          |
+
+```shell title="Command"
+cypress tap pin --test-id r3 --command-id h2:1 --at after
+```
+
+```css title="Output"
+⚲ PINNED - (2/2) after
+BEFORE EACH · h2
+   1  task  db:seed
+```
+
+Pins can't be created while a spec is running, and snapshots are kept
+only for the most recent tests (see
+[`numTestsKeptInMemory`](/app/references/configuration#Global)). A rerun
+releases the pin, since the snapshot it named belongs to the previous run.
+
+:::caution
+
+Don't touch the Cypress window while cypress tap is driving it. A pin is the same state the app changes when you click a command in the Command Log, so the two step on each other:
+
+- Release the pin in the app and you release the one cypress tap set.
+- Pin a command in the app and you change what dom, aria, and inspect read, while status still reports no pin.
+
+:::
+
+### cypress tap dom {#cypress-tap-dom}
+
+Reads the app under test's DOM as HTML: the whole page, or the `outerHTML` of
+each element matching a CSS selector (each match includes its full subtree).
+Output is capped so a heavy page never ships megabytes at once. The spec must be complete to use this command.
+
+| Option            | Description                                                                                                           | Default |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------- | ------- |
+| `--selector, -e`  | CSS selector matching exactly one element                                                                             | `body`  |
+| `--max-chars, -m` | Cap on returned HTML characters                                                                                       | `30000` |
+| `--at`            | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous |         |
+
+```shell title="Command"
+cypress tap dom --selector .todo-list
+```
+
+```css title="Output"
+<ul class="todo-list"><li data-id="1786936171215" class=""><div class="view"><input class="toggle" type="checkbox"><label>Walk the dog</label><button class="destroy todo-button"></button></div></li></ul>
+```
+
+When the selector provided is not unique, the command reports the ambiguous match instead of reading it, and exits `1`. Use `--at` with an index from the list to select the right element.
+
+```shell title="Command"
+cypress tap dom --selector li
+```
+
+```css title="Output"
+⚠ selector 'li' matched 25 elements but must be unique
+provide --at with an index to select an element from the list or update the selector.
+index selector
+0 '.dropdown'
+1 '.dropdown-menu > :nth-child(1)'
+2 '.dropdown-menu > :nth-child(2)'
+3 '.dropdown-menu > :nth-child(3)'
+4 '.dropdown-menu > :nth-child(4)'
+5 '.dropdown-menu > :nth-child(5)'
+6 '.dropdown-menu > :nth-child(6)'
+7 '.dropdown-menu > :nth-child(7)'
+8 '.dropdown-menu > :nth-child(8)'
+9 '.dropdown-menu > :nth-child(9)'
+
+showing the first 10 of 25 matches — --at takes any index up to 24.
+```
+
+```shell title="Command"
+cypress tap dom --selector li --at 2
+```
+
+```css title="Output"
+<li data-id="1786936171217" class=""><div class="view"><input class="toggle" type="checkbox"><label>Buy groceries</label><button class="destroy todo-button"></button></div></li>
+```
+
+### cypress tap aria {#cypress-tap-aria}
+
+Reads the accessibility (ARIA) tree of the app-under-test frame, or the
+subtree rooted at a CSS selector. Structural and text-only roles are dropped,
+leaving the compact role/name/state tree browser developer tools show.
+
+| Option            | Description                                                                                                           | Default |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------- | ------- |
+| `--selector, -e`  | CSS selector matching exactly one element                                                                             | `body`  |
+| `--max-nodes, -m` | Cap on the number of accessibility nodes returned                                                                     | `200`   |
+| `--at`            | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous |         |
+
+```shell title="Command"
+cypress tap aria
+```
+
+```css title="Output"
+ARIA (4)  http://localhost:3000
+  RootWebArea  Login
+    heading  Sign in
+    textbox  Username = ada  [disabled]
+    button  Submit
+```
+
+### cypress tap inspect {#cypress-tap-inspect}
+
+Inspects the first element matching the selector: its tag, attributes, box
+model, accessibility node, and computed styles. A full computed style runs to
+roughly 350 properties, so `inspect` reports a fixed subset of two dozen that
+answer why an element looks or behaves the way it does, covering layout,
+visibility, text, and the box.
+
+| Option           | Description                                                                                                           | Default  |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- | -------- |
+| `--selector, -e` | CSS selector matching exactly one element, identifying the element to inspect                                         | Required |
+| `--at`           | When a selector matches multiple elements, the 0-based index of the match to read; required if the match is ambiguous |          |
+
+```shell title="Command"
+cypress tap inspect --selector "[data-testid=username]"
+```
+
+```css title="Output"
+input  [data-testid=username]  http://localhost:3000
+
+ATTRIBUTES (2)
+  data-testid  username
+  name         username
+
+ACCESSIBILITY
+  role    textbox
+  name    Username
+  states  disabled
+
+BOX
+  x 8   y 40   width 200   height 30
+
+STYLES (2)
+  display  block
+  color    rgb(0, 0, 0)
+```
+
+## How to use the commands
+
+### Getting Started
+
+Start Cypress in your project and pick a testing type and browser:
+
+```shell title="Command"
+npx cypress open --e2e --browser=chrome
+```
+
+List the specs the session can run:
+
+```shell title="Command"
+npx cypress tap specs
+```
+
+```css title="Output"
+SPECS (2)
+  cypress/e2e/checkout.cy.ts  2 hours ago
+  cypress/e2e/login.cy.ts
+```
+
+Pick a spec to run. The command returns as soon as the run is requested, and does not
+wait for the result:
+
+```shell title="Command"
+npx cypress tap run cypress/e2e/checkout.cy.ts
+```
+
+```css title="Output"
+▶ cypress/e2e/checkout.cy.ts
+
+  testing type  e2e
+  browser       Chrome
+```
+
+Poll `status` until it reports a verdict. `status` always exits 0 for a
+determinable stage, so a poller branches on the output, not the exit code. See [Polling for a verdict](#polling) for the traps (stale verdicts, empty specs that still pass, and builds that never leave loading).
+
+```shell title="Command"
+npx cypress tap status
+```
+
+```css title="Output"
+PID   PROJECT        TYPE  BROWSER
+4242  /projects/app  e2e   Chrome
+
+✖ cypress/e2e/checkout.cy.ts  failed
+✓ 3  ✖ 1  ○ --
+```
+
+The run failed, so read the spec's reporter overview to find the failing test:
+
+```shell title="Command"
+npx cypress tap reporter
+```
+
+```css title="Output"
+cypress/e2e/checkout.cy.ts
+✓ 3  ✖ 1  ○ --  00:12
+
+Checkout
+   r2  ✓ shows the cart summary  1.4s
+   r3  ✓ removes an item from the cart  610ms
+   r4  ✓ shows the shipping estimate  540ms
+   r5  ✖ applies a discount code  4.5s
+```
+
+The ids on the left (`r5`) are how every other command addresses a test. From
+here, debugging is three commands away.
+
+### Polling for a verdict {#polling}
+
+`cypress tap run` returns immediately, so you learn a run's outcome by polling its status. Four things to know before you trust what it reports:
+
+- Only passed and failed are verdicts. Every other stage (loading, running, and so on) means the run isn't done. Keep polling.
+- Verify that `startedAt` changed. A finished run stays readable until the next one starts, so a passed/failed still carrying the previous run's `startedAt` describes the previous run. Record `startedAt` before you rerun, and wait for a verdict whose startedAt differs.
+  0 loading can be terminal. A spec that fails to build sits in loading and never leaves. Give your poller its own timeout.
+- passed doesn't mean tests ran. A spec with no tests, or whose tests were all skipped or pending, finishes passed with results.passed at 0. Read the results counts alongside the stage when it matters that something actually ran.
+
+### Debug a failing test
+
+Ask for the failing test's full reporter view: the same routes, hooks,
+Command Log, and error you'd read in the Cypress app.
+
+```shell title="Command"
+npx cypress tap reporter --test-id r5
+```
+
+```css title="Output"
+✖ Checkout > applies a discount code  failed
+
+TEST BODY · r5
+   1  get      .discount-code
+   2  -type    SAVE10
+   3  get      .apply-discount
+   4  -click
+   5  get      .cart-total
+   6  -assert  expected <div> to have text $45.00 ✖
+
+✖ AssertionError
+  Timed out retrying after 4000ms: expected '<div.cart-total>' to have text '$45.00', but the text was '$50.00'
+
+  cypress/e2e/checkout.cy.ts:42:7
+    40 |     cy.get(".discount-code").type("SAVE10");
+    41 |     cy.get(".apply-discount").click();
+  > 42 |     cy.get(".cart-total").should("have.text", "$45.00");
+       |                          ^
+    43 |   });
+```
+
+The error and code frame often answer the question on their own. Here the
+discount code was entered and applied, but the cart total never changed, so
+the bug is in the application rather than the test.
+
+When the error and code frame aren't enough on their own, drill into a single Command Log entry. The `command` command shows one row's hook section, its pinnable DOM snapshots, and its console properties:
+what you'd see in the browser's developer tools console after clicking the
+command in the app.
+
+Look at the `.apply-discount` click, command 3 in test r5:
+
+```shell title="Command"
+npx cypress tap command --test-id r5 --command-id 3
+```
+
+```css title="Output"
+TEST BODY · r5
+✓  3  -click  .apply-discount  passed
+
+SNAPSHOTS (2)
+  #  NAME    TIME
+  1  before  14:03:22.481
+  2  after   14:03:22.613
+```
+
+### Read the app at the moment it broke
+
+The commands above tell you what Cypress did. To see what the page looked like
+at the moment a given command ran, pin that command's DOM snapshot into the
+live app-under-test frame:
+
+```shell title="Command"
+npx cypress tap pin --test-id r5 --command-id 3 --at after
+```
+
+```css title="Output"
+⚲ PINNED - (2/2) after
+TEST BODY · r5
+   3  click  .apply-discount
+```
+
+Pinning from the terminal does the same thing to the Cypress window as
+clicking that command in the app would: the app-under-test frame switches to
+the historical snapshot, and stays there until the pin is released.
+
+:::caution
+
+Leave the Cypress window alone while `cypress tap` is driving it. Both share
+one app-under-test frame, so clicking in the app changes what the next command
+reads. Releasing a pin in the app releases your agent's, and pinning one
+yourself is invisible to `status`, which only reports pins `cypress tap`
+created.
+
+:::
+
+While a pin is active, `dom`, `aria`, and `inspect` read the pinned snapshot
+instead of the app's final state. Inspect the element the failing assertion
+cared about:
+
+```shell title="Command"
+npx cypress tap inspect --selector ".cart-total"
+```
+
+```css title="Output"
+input  .cart-total  http://localhost:3000
+
+ATTRIBUTES (2)
+  class         cart-total
+
+ACCESSIBILITY
+  role    text
+  name    $50.00
+
+BOX
+   x 220   y 480   width 120   height 28
+
+STYLES (2)
+  display  block
+  color    rgb(0, 0, 0)
+```
+
+The snapshot confirms it: at the moment the assertion ran, `.cart-total` read `$50.00`, the pre-discount price. The click was logged as passed and the element is present and visible, so nothing swallowed the interaction, the discount simply never applied to the total. That points squarely at the discount logic in the app, not the test.
+
+`dom` returns HTML (whole page or per selector, capped at 30,000 characters by
+default), and `aria` returns the compact role/name/state tree that browser
+developer tools show (capped at 200 nodes by default), which is often the
+cheapest way for an agent to understand a page. Release the pin when you're
+done:
+
+```shell title="Command"
+npx cypress tap pin --clear
+```
+
+```css title="Output"
+⚲ PIN CLEARED
+```
+
+Fix the code, `cypress tap run` the spec again, and poll `status` until it
+reports `passed`.
+
+## Use cypress tap with AI agents
+
+`cypress tap` is built to be driven by AI agents:
+
+- **`--json` is the contract.** Every command's JSON output is stable and
+  parseable, and the formatted terminal output is built from it.
+- **Output is bounded.** DOM, accessibility, and console-property payloads are
+  capped by default so a heavy page never floods an agent's context, with
+  explicit options to raise the caps when needed.
+- **The CLI describes itself.** `--help` lists the commands the attached
+  Cypress session advertises, so an agent can discover the surface at runtime
+  instead of relying on documentation that may not match the version you have
+  installed.
+
+### Let your agent discover the commands
+
+`cypress tap --help` prints every command with its arguments and options.
+`cypress tap <command> --help` prints one command in detail.
+
+```shell title="Command"
+npx cypress tap --help
+npx cypress tap pin --help
+```
+
+Help is always available. It does not need a browser open, and with no Cypress
+session running at all the CLI falls back to the command schema it ships with,
+so an agent can read the surface before asking you to start anything. When a
+session is attached, help is generated from that session's own schema and
+leads with the session it resolved, so what your agent reads matches the
+Cypress it is about to drive.
+
+### Know which JSON fields to rely on
+
+Fields arrive as the run progresses, so an agent should treat most of them as
+conditional rather than assuming a fixed shape. In `status`:
+
+| Field                                                                 | Present when                                                       |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `status`                                                              | Always                                                             |
+| `pid`, `projectRoot`, `testingType`, `browserAttached`, `browserName` | A Cypress session was found, so every stage except `not connected` |
+| `totalSpecs`                                                          | A browser is attached, so `spec not selected` onwards              |
+| `spec`                                                                | A spec is selected, so `loading` onwards                           |
+| `startedAt`                                                           | `loading` onwards, and `null` until the run starts                 |
+| `totalTests`, `results`                                               | The run has started, so `running` onwards                          |
+| `pinned`                                                              | A pin created by `cypress tap` is active                           |
+
+Elsewhere, `sessions` always reports all five of its fields, using `null` for
+an absent testing type or browser. `specs` always reports `relativePath` and
+adds `lastModified` only where git history is available. `command` always
+reports `snapshots`, as an empty array when the row has none to pin, and omits
+`consoleProps` entirely when the driver has none to give.
+
+A field that does not apply is absent rather than `null`, except where a
+`null` is meaningful in itself, as with `startedAt` while a spec is still
+building.
+
+### Add cypress tap to your agent's instructions
+
+To make your agent use it, add instructions to the file your agent reads:
+`AGENTS.md` for Cursor, Codex CLI, and most others, `CLAUDE.md` for Claude
+Code, or `.github/copilot-instructions.md` for GitHub Copilot.
+
+```md title="AGENTS.md"
+## Verify changes with Cypress
+
+Verify your work against the live Cypress session using the `cypress tap` CLI.
+Prefer `--json` output.
+
+1. Check for a session with `npx cypress tap status`. If it reports
+   `not connected`, ask me to start one with `npx cypress open`.
+2. List runnable specs with `npx cypress tap specs`.
+3. Run the affected spec: `npx cypress tap run <spec-path>`. It returns
+   immediately. Poll `npx cypress tap status --json` until `status` is
+   `passed` or `failed`, and compare `startedAt` to confirm the verdict
+   belongs to your run, not the previous one. Give the poll a timeout: a spec
+   that fails to compile stays `loading`, so stop and tell me to check the
+   Cypress app rather than polling forever.
+4. Treat `passed` with a `results.passed` of `0` as nothing having run, not as
+   a success, and tell me which tests were skipped.
+5. On failure, run `npx cypress tap reporter` for the spec overview, then
+   `npx cypress tap reporter --test-id <id>` for the failing test's Command Log
+   and error.
+6. Drill into one command with
+   `npx cypress tap command --test-id <id> --command-id <id>`.
+7. To see the DOM at a past command, pin it with
+   `npx cypress tap pin <test> <command>`, read it with `dom`, `aria`, or
+   `inspect <selector>`, then release it with `npx cypress tap pin --clear`.
+8. Do not read the app while a run is in progress; wait for a verdict, then
+   rerun the spec after each fix until it passes.
+9. Before reading the app, check that `status --json` reports the pin you
+   expect. Tell me if it doesn't, rather than reading the page anyway, since
+   it means the Cypress window was touched while you were working.
+```
+
+### Example prompts
+
+With that in place, you can hand your agent a failing test and let it work
+without relaying results back and forth:
+
+<CopyPrompt
+  title="Fix a failing test"
+  subtext="Points your agent at one failing test and lets it run, diagnose, fix, and verify without you relaying results."
+  prompt={`The [test name] test in [spec path] is failing. Use cypress tap to run it, read the failure, find the cause, fix it, and rerun it until it passes.`}
+>
+
+#### Fix a failing test
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Reproduce a flaky test"
+  subtext="Runs one spec repeatedly through cypress tap, since a single green run never proves a flake is gone."
+  prompt={`The [test name] test in [spec path] is flaky. Use cypress tap to run that spec against my open Cypress session at least 10 times, polling cypress tap status --json for a verdict each time and comparing startedAt so you attribute each verdict to your own run. Record how many runs passed and failed. For every failure, capture the command log with cypress tap reporter --test-id <id> and compare the failing runs against the passing ones to identify what differs, such as timing, network responses, or leftover state.`}
+>
+
+#### Reproduce a flaky test
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Verify a test you just wrote"
+  subtext="Has your agent run the test it wrote and confirm it passes for the right reason, rather than because nothing ran."
+  prompt={`You just wrote tests in [spec path]. Use cypress tap to run that spec against my open Cypress session and poll cypress tap status --json until it reports a verdict. Confirm from the results counts that your tests actually ran rather than being skipped, and use cypress tap reporter to show me each test's command log so I can see what it asserted. If anything failed, fix it and rerun.`}
+>
+
+#### Verify a test you just wrote
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Explore an unfamiliar page"
+  subtext="Reads the accessibility tree of the app under test, which is a compact way for an agent to learn a page's structure before writing tests against it."
+  prompt={`Use cypress tap to run [spec path], which ends on the page I want to test. Once it reports a verdict, read the page with cypress tap aria and summarize its structure: the landmarks, headings, forms, and interactive controls, with the accessible name of each. Then suggest the selectors you would use to write tests against it, and tell me which controls have no accessible name to target.`}
+>
+
+#### Explore an unfamiliar page
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Check a refactor changed nothing"
+  subtext="Captures the accessibility tree before and after a change, so an agent can tell you exactly what moved."
+  prompt={`Before I refactor [component or page], use cypress tap to run [spec path] and save the output of cypress tap aria --json. I will tell you when the refactor is done. Then rerun the same spec, read the tree again, and show me a diff of what changed in roles, names, and states, calling out anything that lost an accessible name.`}
+>
+
+#### Check a refactor changed nothing
+
+</CopyPrompt>
+
+`cypress tap` pairs well with
+[Cypress AI Skills](/app/tooling/ai-skills): the skills teach your agent how to
+write good Cypress tests, and `cypress tap` tells it what happened when those
+tests ran.
+
+## Verify a Cloud failure locally
+
+Cypress Cloud tells your agent what broke in CI. `cypress tap` lets it prove
+the fix against a real browser before pushing. Reach Cloud with either
+[Cloud MCP](/cloud/integrations/cloud-mcp), if your agent speaks the Model
+Context Protocol, or the [Cloud CLI](/cloud/integrations/cloud-cli), if it
+runs shell commands.
+
+### With Cloud MCP
+
+1. **Your agent** queries Cypress Cloud through Cloud MCP for the failing or
+   flaky tests in the latest run, and reads each failure's error and stack
+   trace.
+2. **Your agent** changes the test or the application code to address what the
+   failure showed.
+3. **You** start a session with `cypress open` and pick a testing type and
+   browser, so there is something for `cypress tap` to attach to.
+4. **Your agent** runs the same spec with `cypress tap run <spec-path>`, polls
+   `cypress tap status --json` for a verdict, and reads the failure with
+   `cypress tap reporter --test-id <id>` if it is still red.
+5. **Your agent** repeats steps 2 and 4 until the spec passes locally, then
+   you push a change you already know works.
+
+<CopyPrompt
+  title="Fix a CI failure end to end"
+  subtext="Chains Cloud MCP and cypress tap: diagnose from the recorded run, fix, then verify locally before pushing."
+  prompt={`Using Cypress Cloud MCP, find the failing tests in the latest run on this branch. For each failure, read the error and stack trace to work out the cause, then fix the test or the application code. I have Cypress open locally, so after each fix use cypress tap to run that spec against my session and poll cypress tap status --json until it reports a verdict. Keep going until every spec you touched passes locally, then summarize what you changed and why.`}
+>
+
+#### Fix a CI failure end to end
+
+</CopyPrompt>
+
+### With the Cloud CLI
+
+Both tools speak JSON, and the
+[Cloud CLI](/cloud/integrations/cloud-cli) reports each failing test's
+`specFilepath`, which is the same project-relative path `cypress tap run`
+takes. Your agent can hand the path straight from one command to the other.
+
+**1. Find the last failed run on your branch.**
+
+```bash title="Command"
+cy-cloud run list --projectId abc123 --branch main --status failed --limit 1
+```
+
+**2. List its failing tests.** Each result carries the spec path, the test id,
+and the error.
+
+```bash title="Command"
+cy-cloud test list --projectId abc123 --runNumber 4021 --status failed
+```
+
+```json title="Output"
+{
+  "tests": [
+    {
+      "specFilepath": "cypress/e2e/checkout.cy.ts",
+      "testName": ["Checkout", "applies a discount code"],
+      "testId": "7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f",
+      "status": "failed",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "errorName": "AssertionError",
+          "errorMessage": "expected '.cart-total' to have text '$45.00'"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**3. Reconstruct the failure from CI.** Pull the commands, network calls, and
+console logs around the failure, which is the context Test Replay shows in the
+browser.
+
+```bash title="Command"
+cy-cloud replay timeline --testId 7c1e9d20-5a3b-4c8d-9e0f-1a2b3c4d5e6f \
+  --commands --aroundFailure 5 --network --logs
+```
+
+**4. Fix the code, then rerun that spec locally.** `cypress tap` needs a live
+session to attach to, so start one with `cypress open` and pick a testing type
+and browser first. Then feed the `specFilepath` straight to `cypress tap run`.
+
+```shell title="Command"
+npx cypress open
+```
+
+```shell title="Command"
+npx cypress tap run cypress/e2e/checkout.cy.ts
+```
+
+**5. Poll for the verdict.**
+
+```shell title="Command"
+npx cypress tap status
+```
+
+```css title="Output"
+PID   PROJECT        TYPE  BROWSER
+4242  /projects/app  e2e   Chrome
+
+✖ cypress/e2e/checkout.cy.ts  failed
+✓ 4  ✖ 1  ○ --
+```
+
+**6. Read the local failure and compare it to CI.** `reporter --test-id <id>`
+gives you the same command log the replay timeline gave you for the CI run, so
+your agent can see whether the failure it reproduced is the one it set out to
+fix.
+
+```shell title="Command"
+npx cypress tap reporter --test-id r5
+```
+
+Repeat steps 4 to 6 until `status` reports `passed`, then push a change you
+already know works.
+
+<CopyPrompt
+  title="Reproduce a CI failure locally"
+  subtext="Chains the Cloud CLI and cypress tap: pull the failure from CI, rerun that spec against your local session, and iterate until it passes."
+  prompt={`Use the cy-cloud CLI to find the most recent failed run on <branch> for project <projectId> and list its failing tests. For each one, read the error and pull the replay timeline around the failure, then work out the cause and fix the test or the application code. After each fix, run that test's specFilepath with cypress tap run against my local Cypress session, poll cypress tap status --json until it reports a verdict, and read the failure with cypress tap reporter if it is still red. Keep going until every spec you touched passes locally, then summarize what you changed and why.`}
+>
+
+#### Reproduce a CI failure locally
+
+</CopyPrompt>
+
+## Fix an accessibility violation
+
+[Cypress Accessibility](/accessibility/get-started/introduction) reports
+violations against the pages your tests already visit, and
+[Cloud MCP](/cloud/integrations/cloud-mcp) hands your agent the failing
+elements. What it can't tell your agent is what the browser actually computes
+for an element now, which is the thing most accessibility rules turn on.
+
+**1. Get the failing elements.** Cloud MCP's
+`cypress_get_accessibility_rule_failures` returns each failing element's CSS
+selector, its view, and the failure message. Ask for one rule at a time.
+
+> Show me the `button-name` failures from the latest run on this branch.
+
+Say it reports `.cart-item__remove` on the `/checkout` view, with the message
+that the button has no accessible name.
+
+**2. Run a spec that reaches that view.** `aria` reads the app under test as
+the run left it, so run a spec that ends on the page you care about, and wait
+for a verdict.
+
+```shell title="Command"
+npx cypress tap run cypress/e2e/checkout.cy.ts
+```
+
+**3. Read the element's accessibility node.** Pass the selector Cloud gave you.
+
+```shell title="Command"
+npx cypress tap aria --selector ".cart-item__remove"
+```
+
+```css title="Output"
+ARIA (1)  http://localhost:3000/checkout
+  button
+```
+
+A bare role with no name next to it is the violation, made concrete: the
+browser resolves no accessible name for this button at all. An icon-only
+button whose `aria-label` never made it to the DOM looks exactly like this.
+
+**4. Fix it, rerun the spec, and read the node again.**
+
+```css title="Output"
+ARIA (1)  http://localhost:3000/checkout
+  button  Remove item
+```
+
+The name now resolves, so the rule passes for that element. Drop the selector
+to read the whole page's tree instead, which is a cheap way for an agent to
+check that a fix didn't break the structure around it:
+
+```shell title="Command"
+npx cypress tap aria
+```
+
+```css title="Output"
+ARIA (6)  http://localhost:3000/checkout
+  RootWebArea  Checkout
+    heading  Your cart
+    list  Cart items
+      listitem  Blue hoodie
+        button  Remove item
+    button  Place order
+```
+
+For rules that turn on presentation rather than semantics, such as
+`color-contrast`, use [`inspect`](#cypress-tap-inspect)
+instead: it reports the element's resolved `color` and `background-color`
+alongside its accessibility node.
+
+<CopyPrompt
+  title="Verify an accessibility fix"
+  subtext="Pulls failing elements from Cypress Accessibility, then confirms each fix against the accessibility tree the browser actually computes."
+  prompt={`Using Cypress Cloud MCP, get the <rule name> accessibility failures from the latest run on this branch and list the failing elements with their selectors and views. I have Cypress open locally. For each element, run a spec that reaches its view with cypress tap run, wait for cypress tap status to report a verdict, then read the element with cypress tap aria <selector> and tell me what role, name, and states the browser resolves. Where the accessible name is missing or wrong, fix the markup, rerun the spec, and read it again to confirm the name now resolves.`}
+>
+
+### Verify an accessibility fix
+
+</CopyPrompt>
+
+## FAQs
+
+### When to use it?
+
+The `cypress tap` CLI gives you the ability to interact and inspect a local Cypress session while developing or debugging tests.
+
+Both the [Cloud MCP](/cloud/integrations/cloud-mcp) and the [Cloud CLI](/cloud/integrations/cloud-cli) give programmatic access to your Cypress Cloud data.
+
+Together these tools provide the availability for you or an AI agent to fully engage with Cypress and your recorded Cloud data to author, debug and maintain your test suite without leaving your terminal.
+
+### Troubleshooting
+
+- **`status` reports `not connected`.** No Cypress session was found for this
+  directory. Start one with `cypress open`, and remember that headless
+  `cypress run` sessions are never discoverable.
+
+- **`status` stays `loading` and never reaches a verdict.** The selected spec is
+  waiting on its own build. A spec that fails to compile never starts a run, so
+  it stays `loading` indefinitely and the build error appears only in the
+  Cypress app. Give any poll loop a timeout and check the app when it expires.
+
+- **A verdict looks wrong, or arrives too fast.** Read `status` before you rerun
+  and keep its `startedAt`, then wait for a verdict whose `startedAt` differs. A
+  rerun leaves the previous run's verdict readable until the new one starts, and
+  both payloads are otherwise identical.
+
+- **`passed` with nothing having run.** `passed` means the run finished with no
+  failures, so an empty spec, or one whose tests were all skipped, reports
+  `passed`. Read the `results` counts to confirm tests actually ran.
+
+- **Command details or snapshots are missing on an older test.** Cypress keeps
+  them only for the most recent tests. See
+  [`numTestsKeptInMemory`](/app/references/configuration#Global).
+
+- **A read returns something unexpected after you clicked in the Cypress app.**
+  The app and `cypress tap` share one app-under-test frame. Check
+  `status --json` for the pin you expect before reading the page.
+
+### Pricing & Usage Limits
+
+The `cypress tap` CLI is available for use for all Cypress test authors using Cypress version 15.21.0+ at no cost. Additionally, there are no usage limits.
+
+### Security and privacy
+
+The data exposed from the `cypress tap` CLI into your terminal is strictly local session. If using the CLI within a AI agent, be mindful to ensure you are using safe test practices, like using [`cy.env()`](/api/commands/env), to prevent leaking sensitive information to your agent.
+
+Cypress does capture telemetry specifically around the usage of the CLI to inform usage patterns. The data collected includes the command name, the flags used and whether it errored. To opt-out of this behavior, set `CYPRESS_DISABLE_GUEST_TELEMETRY=0` in your terminal.
+
+### CLI Limitations
+
+- You must be on Cypress v15.21.0+ or higher to use the CLI. You cannot use `cypress tap` to interact with older versions.
+- `cypress tap` reads the most recent run of the open session. Command details
+  and DOM snapshots are kept only for the most recent tests (see
+  [`numTestsKeptInMemory`](/app/references/configuration#Global)), so older
+  tests may report that their details are no longer available.
+- `dom`, `aria`, `inspect`, and `pin` work only on a completed run. While a
+  spec is running they fail with `SPEC_IN_PROGRESS` until the run reports a
+  verdict.
+- Firefox and WebKit are not supported. `cypress tap` only supports Chromium-family browsers.
+- `cypress tap` drives the same session you are looking at, and there is no
+  lock between the two. Starting a run from the app, switching spec, or
+  pinning and unpinning commands all change what your agent's next command
+  reads. Treat a session an agent is driving as one you watch rather than
+  touch.
+
+## See also
+
+- [Cypress AI Skills](/app/tooling/ai-skills): teach your agent to write and
+  review Cypress tests
+- [Cloud MCP](/cloud/integrations/cloud-mcp): give your agent access to
+  recorded runs in Cypress Cloud
+- [Cloud CLI](/cloud/integrations/cloud-cli): read runs, failures, and Test
+  Replay timelines from Cypress Cloud in the terminal
+- [Cypress AI](/cloud/features/cypress-ai-features): overview of all AI
+  capabilities across the Cypress app and Cypress Cloud

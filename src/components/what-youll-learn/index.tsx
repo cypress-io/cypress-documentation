@@ -12,7 +12,7 @@ interface WhatYoullLearnProps {
  */
 export default function WhatYoullLearn({
   color = '#4BBFD2',
-}: WhatYoullLearnProps): JSX.Element {
+}: WhatYoullLearnProps): React.JSX.Element {
   return (
     <CalloutLabel icon="question-circle" color={color}>
       What you'll learn

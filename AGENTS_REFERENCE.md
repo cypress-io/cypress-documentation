@@ -14,6 +14,10 @@ This is the **Cypress Documentation** site, built with
 - The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
   content into stripped-down markdown and chunked JSON published under `/llm`,
   with `/llms.txt` as the index (both are build output, not committed files).
+  Every page's markdown is also published at its own route plus `.md`
+  (`/app/get-started/why-cypress.md`), with its `##` sections at
+  `/app/get-started/why-cypress/<h2-slug>.md`, so an agent can reach the
+  markdown by appending `.md` to a docs URL without discovering `/llm` first.
 - The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
   **never installed on their own**: they have no lockfiles and are not npm
   workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
@@ -215,6 +219,12 @@ and `docs/app/guides/migration/`.
 - **Format longer prompts** with newlines and bullet/numbered lists in the
   `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
   prompts stay on one line and wrap.
+- **Point the agent at a page's markdown as `<page-url>.md`** when the prompt
+  tells it to read one, e.g.
+  `https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-15-0.md`.
+  Every page is published that way, as is each of its `##` sections, so the
+  agent gets the content without the page chrome. Prefer it over the longer
+  `/llm/markdown/…` path, which serves the same file.
 - **Ships in the LLM export by default** (the prompt is reusable content). Add
   `excludeFromLlmExport` only when the prompt tells the agent to read this same
   page (e.g. the migration guides), so the export does not duplicate the page's
@@ -531,6 +541,27 @@ that already embed the correct params rather than re-writing the URL.
 - **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
+- **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and
+  `cypress.config.ts`. The `plugins/` sub-packages type check themselves through
+  their own `tsc` builds during `npm run build`. Note that `@docusaurus/tsconfig`
+  points `baseUrl` at its own directory, so the root `tsconfig.json` re-anchors
+  it to the repository and pulls in the `@theme/*` ambient types explicitly;
+  without that, `@site/...` and `@theme/...` imports do not resolve.
+
+## Continuous integration
+
+CircleCI (`.circleci/config.yml`) runs on every pull request:
+
+| Job                                  | Command                               |
+| ------------------------------------ | ------------------------------------- |
+| Build                                | `npm run build`                       |
+| Lint JS/CSS/Markdown                 | `npm run lint`                        |
+| Typecheck                            | `npm run typecheck`                   |
+| Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins` |
+| Run Tests in Parallel                | `cypress run` across 8 containers     |
+
+The lint, typecheck, and unit-test jobs reuse the `node_modules` the build job
+persists to the workspace, so they need no install step of their own.
 
 ## GitHub Actions workflows
 

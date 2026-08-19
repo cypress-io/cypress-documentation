@@ -1042,9 +1042,9 @@ The same practice above can be used for any type of database (PostgreSQL,
 MongoDB, etc.). In this example, a request is sent to a back end API, but you
 could also interact directly with your database with direct queries, custom
 libraries, etc. If you already have non-JavaScript methods of handling or
-interacting with your database, you can use [`cy.exec`](/api/commands/exec),
-instead of [`cy.task`](/api/commands/task), to execute any system command or
-script.
+interacting with your database, you can use [`cy.task`](/api/commands/task) to
+run them from Node, including
+[spawning an external command or CLI](/api/commands/task#Run-an-external-command-or-CLI).
 
 ## <Icon name="angle-right" /> Unnecessary Waiting
 
@@ -1148,7 +1148,7 @@ waste.
 
 <Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
 start a web server from within Cypress scripts with
-[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
+[`cy.task()`](/api/commands/task).
 
 :::
 
@@ -1162,12 +1162,11 @@ prior to running Cypress.
 We do NOT recommend trying to start your back end web server from within
 Cypress.
 
-Any command run by [cy.exec()](/api/commands/exec) or
-[cy.task()](/api/commands/task) has to exit eventually. Otherwise, Cypress will
-not continue running any other commands.
+Any command run by [cy.task()](/api/commands/task) has to exit eventually.
+Otherwise, Cypress will not continue running any other commands.
 
-Trying to start a web server from [cy.exec()](/api/commands/exec) or
-[cy.task()](/api/commands/task) causes all kinds of problems because:
+Trying to start a web server from [cy.task()](/api/commands/task) causes all
+kinds of problems because:
 
 - You have to background the process
 - You lose access to it via terminal
