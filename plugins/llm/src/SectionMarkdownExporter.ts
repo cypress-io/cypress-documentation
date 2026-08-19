@@ -44,11 +44,10 @@ export class SectionMarkdownExporter {
 
   exportFile(params: {
     relFromDocs: string
-    route: string
     metadata: Record<string, string>
     bodyWithHeading: string
   }): { sectionCount: number; sectionDir: string | null } {
-    const { relFromDocs, route, metadata, bodyWithHeading } = params
+    const { relFromDocs, metadata, bodyWithHeading } = params
     const docId = stripMarkdownExtension(relFromDocs)
     const sections = this.splitByH2(bodyWithHeading)
     if (sections.length === 0) {
@@ -58,7 +57,7 @@ export class SectionMarkdownExporter {
     const sectionDir = path.join(this.markdownRoot, docId)
     ensureDir(sectionDir)
     this.fragmentDirs.add(toPosixPath(docId))
-    const pagePath = `/${route}.md`
+    const pagePath = `/llm/markdown/${toPosixPath(docId)}.md`
 
     for (const section of sections) {
       const sectionMetadata = {

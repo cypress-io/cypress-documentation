@@ -29,19 +29,10 @@ const METADATA = {
   updated_at: '2024-01-01T00:00:00.000Z',
 }
 
-function runExport(
-  body: string,
-  relFromDocs = 'app/references/migration-guide.mdx',
-  route = 'app/references/migration-guide',
-) {
+function runExport(body: string, relFromDocs = 'app/references/migration-guide.mdx') {
   const exportRoot = makeTempDir()
   const exporter = new SectionMarkdownExporter(exportRoot)
-  const result = exporter.exportFile({
-    relFromDocs,
-    route,
-    metadata: METADATA,
-    bodyWithHeading: body,
-  })
+  const result = exporter.exportFile({ relFromDocs, metadata: METADATA, bodyWithHeading: body })
   return { exportRoot, exporter, result }
 }
 
@@ -159,19 +150,9 @@ describe('section frontmatter', () => {
     expect(section.data.id).toBe('app/references/migration-guide#migrating-to-cypress-15-0')
     expect(section.data.title).toBe('Migrating to Cypress 15.0')
     expect(section.data.page_title).toBe('Migration Guide')
-    expect(section.data.page).toBe('/app/references/migration-guide.md')
+    expect(section.data.page).toBe('/llm/markdown/app/references/migration-guide.md')
     expect(section.data.section).toBe('app')
     expect(section.data.source_path).toBe('docs/app/references/migration-guide.mdx')
-  })
-
-  test('page points at the route when a slug moves the page off its doc id', () => {
-    const { exportRoot } = runExport(
-      ['# Lodash', '', '## Syntax', '', 'Content.'].join('\n'),
-      'api/utilities/lodash.mdx',
-      'api/utilities/_',
-    )
-    const section = readSection(exportRoot, 'api/utilities/lodash/syntax.md')
-    expect(section.data.page).toBe('/api/utilities/_.md')
   })
 })
 

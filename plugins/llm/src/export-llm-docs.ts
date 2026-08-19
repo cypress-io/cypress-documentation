@@ -83,7 +83,6 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
     if (!fs.existsSync(path.join(docsRoot, stripMarkdownExtension(relFromDocs)))) {
       const sectionResult = sectionExporter.exportFile({
         relFromDocs,
-        route,
         metadata,
         bodyWithHeading,
       })
