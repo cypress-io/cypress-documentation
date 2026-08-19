@@ -1,5 +1,7 @@
 {
   "$schema": "https://context7.com/schema/context7.json",
+  "url": "https://context7.com/cypress-io/cypress-documentation",
+  "public_key": "pk_TbaoWqi7hqtZPkCWRYrNc",
   "projectTitle": "Cypress",
   "description": "Documentation for the Cypress App, API, Cypress Cloud, UI Coverage and Cypress Accessibility.",
   "excludeFolders": [
