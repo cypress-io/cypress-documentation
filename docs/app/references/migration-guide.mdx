@@ -10,13 +10,82 @@ sidebar_label: 'Migration Guide'
 
 ## Migrating to Cypress 16.0
 
-This guide details the code changes needed to migrate to Cypress
-version 16.0.
+Cypress 16 is about making your tests behave more like production and finish
+faster. Most suites upgrade with no code changes at all.
+
+- **Your application's real network.** In Chrome, Chromium, and Edge your
+  application connects to your server directly and negotiates HTTP/2 or HTTP/3
+  exactly as it does for your users, instead of being downgraded to HTTP/1.1.
+  The browser validates your origin's real certificate, and everything
+  [`cy.intercept()`](/api/commands/intercept) changes now shows up in the
+  browser's own network panel.
+- **Faster by default.** The `checkVisibility()`-based visibility algorithm and
+  browser memory management were opt-in experiments in Cypress 15. Both are on
+  for everyone in 16, and typing no longer pays a 10ms tax per keystroke.
+- **Reads that wait for your application.** [`cy.getCookie()`](/api/commands/getcookie),
+  [`cy.getCookies()`](/api/commands/getcookies),
+  [`cy.getAllCookies()`](/api/commands/getallcookies),
+  [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage), and
+  [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) are now
+  retry-able queries, so `cy.getCookie('token').should('exist')` waits for a
+  cookie written after a login request resolves instead of failing on the first
+  read.
+- **Secrets stay in Node.** `Cypress.env()`, which hydrated every environment
+  variable into the browser, is gone. [`cy.env()`](/api/commands/env) fetches
+  only what a test asks for and keeps it in the Node process, and
+  [`Cypress.expose()`](/api/cypress-api/expose) covers values that genuinely
+  need to be readable in the browser.
+
+This guide details the code changes needed to migrate to Cypress version 16.0.
 [See the full changelog for version v16.0](/app/references/changelog#16-0-0).
+
+**What you may need to change**
+
+| Change                                                                                                                                                                        | Action needed                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| [Native browser network in Chrome, Chromium, and Edge](#Chrome-Chromium-and-Edge-use-the-native-browser-network)                                                              | Usually none. Update tests that assert on `req.httpVersion`, compression headers, or a `304` status.  |
+| [Modern visibility algorithm on by default](#experimentalFastVisibility-replaced-by-visibilityStrategy)                                                                       | Usually none. Update tests that relied on legacy-only visibility semantics.                           |
+| [Browser memory management on by default](#experimentalMemoryManagement-replaced-by-manageBrowserMemory)                                                                      | Only if you set `experimentalMemoryManagement: false` — replace it with `manageBrowserMemory: false`. |
+| [`keystrokeDelay` default changed from `10` to `0`](#Default-keystrokeDelay-changed-from-10-to-0)                                                                             | Only if a test depended on the implicit delay.                                                        |
+| [Cookie and storage reads are now queries](#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries)                                                                     | Usually none. Move assertions out of `.then()` and onto `.should()` to get retries.                   |
+| [Node.js 20 and 25 dropped](#Nodejs-20-and-25-no-longer-supported)                                                                                                            | Yes, if you run Cypress on either version.                                                            |
+| [`Cypress.env()` removed](#Cypressenv-removed)                                                                                                                                | Yes — migrate to `cy.env()` or `Cypress.expose()`.                                                    |
+| [`cy.end()` removed](#cyend-removed)                                                                                                                                          | Yes — delete the `.end()` calls.                                                                      |
+| [`viewportWidth`, `viewportHeight`, and `blockHosts` via `Cypress.config()`](#viewportWidth-and-viewportHeight-can-no-longer-be-set-with-Cypressconfig-during-test-execution) | Yes, if you set them while a test is executing.                                                       |
+| [`experimentalSourceRewriting` removed](#experimentalSourceRewriting-config-option-removed)                                                                                   | Yes — remove the option. Enable `removeSRIAttributes` if you used it for SRI.                         |
+| [CoffeeScript support removed](#CoffeeScript-support-removed)                                                                                                                 | Yes, if you have `.coffee` specs, support files, or fixtures.                                         |
+| [Angular, Vite, and Next.js minimums raised for component testing](#Angular-18-19-and-20-are-no-longer-supported-for-Component-Testing)                                       | Yes, if you are below Angular 21, Vite 8, or Next.js 15.0.4.                                          |
+| [Electron deprecated as a test browser](#Electron-browser-deprecated)                                                                                                         | Not yet, but plan to switch to an installed browser.                                                  |
 
 ### Node.js 20 and 25 no longer supported
 
 Cypress 16 requires [Node.js](https://nodejs.org/en) **22.x**, **24.x**, or **26.x and above** to install the Cypress binary. Node.js 20 and Node.js 25 are no longer supported. See [system requirements](/app/get-started/install-cypress#Nodejs) and [Node's release schedule](https://github.com/nodejs/Release).
+
+### Chrome, Chromium, and Edge use the native browser network
+
+In Cypress 16, Chrome, Chromium, and Edge intercept test traffic through the native browser network. Your application connects to your server directly and negotiates whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), exactly as it does in production.
+
+Firefox, WebKit, and Electron continue to use the legacy network path and are unaffected.
+
+[`cy.intercept()`](/api/commands/intercept) works as before, and most suites need no edits. A few behaviors differ in Chrome, Chromium, and Edge on the native browser network — see [Native network interception](/app/guides/native-network-interception) for the full list with examples.
+
+Aside from the `cy.intercept()` behaviors above, your suite should not need any changes. Commands, stubbing, waiting, aliases, and assertions all work as they did before, and adopting the native browser network requires no configuration change.
+
+If you need a temporary escape hatch, either while you update those tests or if you hit behavior on the native browser network that the guide does not list, route every browser back through the legacy network path:
+
+:::cypress-config-example
+
+```js
+{
+  forceHttp1: true
+}
+```
+
+:::
+
+If setting `forceHttp1` to `true` allows your suite to pass, and the difference is not one of the documented behaviors, please [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you are experiencing so it can be investigated.
+
+<ForceHttp1Deprecation />
 
 ### Default `keystrokeDelay` changed from `10` to `0`
 
@@ -76,25 +145,6 @@ If you need a temporary escape hatch while you update those tests, opt back into
 
 :::
 
-### `experimentalSourceRewriting` config option removed
-
-The `experimentalSourceRewriting` configuration option has been removed. The default regex-based rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce.
-
-If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
-
-You only need a replacement option if your application pins resources with Subresource Integrity (SRI) `integrity` attributes on `<script>` or `<link>` elements. Because Cypress rewrites those resources, the pinned hash no longer matches and the browser blocks them, reporting an error such as `Failed to find a valid digest in the 'integrity' attribute for resource '…'`. If you were relying on `experimentalSourceRewriting` to avoid this, enable the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead, which strips the `integrity` attribute so the rewritten resources load. If your application does not use SRI, no replacement is required.
-
-:::cypress-config-example
-
-```ts
-{
-  // Remove this line
-  experimentalSourceRewriting: true,
-}
-```
-
-:::
-
 ### `experimentalMemoryManagement` replaced by `manageBrowserMemory`
 
 The experimental `experimentalMemoryManagement` configuration option has been replaced by the new [`manageBrowserMemory`](/app/references/configuration#manageBrowserMemory) configuration option, which defaults to **`true`**. Browser memory management is now on by default for **all** users running Chromium-based browsers.
@@ -138,105 +188,6 @@ If your Cypress configuration still sets `experimentalMemoryManagement`, Cypress
 ```
 
 See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory) for more information.
-
-### `viewportWidth` and `viewportHeight` can no longer be set with `Cypress.config()` during test execution
-
-[`viewportWidth`](/app/references/configuration#Viewport) and [`viewportHeight`](/app/references/configuration#Viewport) can no longer be set with [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Doing so applied to the _next_ test rather than the current one, and the change was not reflected in Test Replay, so Cypress now throws instead.
-
-Use [`cy.viewport()`](/api/commands/viewport) to change the viewport during a test, or set the values in the [test configuration](/app/references/configuration#Test-specific-Configuration) of a `describe`, `context`, or `it` block.
-
-<Badge type="danger">Before</Badge>
-
-```javascript
-it('does not display the sidebar on small screens', () => {
-  Cypress.config('viewportWidth', 400)
-  Cypress.config('viewportHeight', 1000)
-
-  cy.get('#sidebar').should('not.be.visible')
-})
-```
-
-<Badge type="success">After</Badge>
-
-```javascript
-it('does not display the sidebar on small screens', () => {
-  cy.viewport(400, 1000)
-
-  cy.get('#sidebar').should('not.be.visible')
-})
-```
-
-Or, to apply the viewport to a whole suite or test:
-
-```javascript
-describe(
-  'page display on medium size screen',
-  { viewportWidth: 400, viewportHeight: 1000 },
-  () => {
-    it('does not display the sidebar', () => {
-      cy.get('#sidebar').should('not.be.visible')
-    })
-  }
-)
-```
-
-Setting `viewportWidth` and `viewportHeight` in your Cypress configuration, or with `Cypress.config()` outside of test execution (for example at the top level of a support file or spec file), is unchanged.
-
-### `blockHosts` can no longer be set with `Cypress.config()` during test execution
-
-[`blockHosts`](/app/references/configuration#blockHosts) can no longer be set with [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Doing so applied to the _next_ test rather than the current one, and the value leaked into every test that followed, so Cypress now throws instead.
-
-Set `blockHosts` in the [test configuration](/app/references/configuration#Test-specific-Configuration) of a `describe`, `context`, or `it` block instead, which takes effect for the suite or test where it is set and is restored afterwards.
-
-<Badge type="danger">Before</Badge>
-
-```javascript
-it('does not load analytics', () => {
-  Cypress.config('blockHosts', 'www.google-analytics.com')
-
-  cy.visit('/')
-})
-```
-
-<Badge type="success">After</Badge>
-
-```javascript
-it(
-  'does not load analytics',
-  { blockHosts: 'www.google-analytics.com' },
-  () => {
-    cy.visit('/')
-  }
-)
-```
-
-Setting `blockHosts` in your Cypress configuration, or with `Cypress.config()` outside of test execution (for example at the top level of a support file or spec file), is unchanged.
-
-### Chrome, Chromium, and Edge use the native browser network
-
-In Cypress 16, Chrome, Chromium, and Edge intercept test traffic through the native browser network. Your application connects to your server directly and negotiates whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), exactly as it does in production.
-
-Firefox, WebKit, and Electron continue to use the legacy network path and are unaffected.
-
-[`cy.intercept()`](/api/commands/intercept) works as before, and most suites need no edits. A few behaviors differ in Chrome, Chromium, and Edge on the native browser network — see [Native network interception](/app/guides/native-network-interception) for the full list with examples.
-
-Aside from the `cy.intercept()` behaviors above, your suite should not need any changes. Commands, stubbing, waiting, aliases, and assertions all work as they did before, and adopting the native browser network requires no configuration change.
-
-If you need a temporary escape hatch, either while you update those tests or if you hit behavior on the native browser network that the guide does not list, route every browser back through the legacy network path:
-
-:::cypress-config-example
-
-```js
-{
-  forceHttp1: true
-}
-```
-
-:::
-
-If setting `forceHttp1` to `true` allows your suite to pass, and the difference is not one of the documented behaviors, please [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you are experiencing so it can be investigated.
-
-<ForceHttp1Deprecation />
 
 ### `cy.getCookie()`, `cy.getCookies()`, and `cy.getAllCookies()` are now queries
 
@@ -425,6 +376,251 @@ Cypress.Commands.overwriteQuery('getAllLocalStorage', (options) => {
 
 See [Overwriting Existing Queries](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) for more details.
 
+### `viewportWidth` and `viewportHeight` can no longer be set with `Cypress.config()` during test execution
+
+[`viewportWidth`](/app/references/configuration#Viewport) and [`viewportHeight`](/app/references/configuration#Viewport) can no longer be set with [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Doing so applied to the _next_ test rather than the current one, and the change was not reflected in Test Replay, so Cypress now throws instead.
+
+Use [`cy.viewport()`](/api/commands/viewport) to change the viewport during a test, or set the values in the [test configuration](/app/references/configuration#Test-specific-Configuration) of a `describe`, `context`, or `it` block.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+it('does not display the sidebar on small screens', () => {
+  Cypress.config('viewportWidth', 400)
+  Cypress.config('viewportHeight', 1000)
+
+  cy.get('#sidebar').should('not.be.visible')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+it('does not display the sidebar on small screens', () => {
+  cy.viewport(400, 1000)
+
+  cy.get('#sidebar').should('not.be.visible')
+})
+```
+
+Or, to apply the viewport to a whole suite or test:
+
+```javascript
+describe(
+  'page display on medium size screen',
+  { viewportWidth: 400, viewportHeight: 1000 },
+  () => {
+    it('does not display the sidebar', () => {
+      cy.get('#sidebar').should('not.be.visible')
+    })
+  }
+)
+```
+
+Setting `viewportWidth` and `viewportHeight` in your Cypress configuration, or with `Cypress.config()` outside of test execution (for example at the top level of a support file or spec file), is unchanged.
+
+### `blockHosts` can no longer be set with `Cypress.config()` during test execution
+
+[`blockHosts`](/app/references/configuration#blockHosts) can no longer be set with [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Doing so applied to the _next_ test rather than the current one, and the value leaked into every test that followed, so Cypress now throws instead.
+
+Set `blockHosts` in the [test configuration](/app/references/configuration#Test-specific-Configuration) of a `describe`, `context`, or `it` block instead, which takes effect for the suite or test where it is set and is restored afterwards.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+it('does not load analytics', () => {
+  Cypress.config('blockHosts', 'www.google-analytics.com')
+
+  cy.visit('/')
+})
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+it(
+  'does not load analytics',
+  { blockHosts: 'www.google-analytics.com' },
+  () => {
+    cy.visit('/')
+  }
+)
+```
+
+Setting `blockHosts` in your Cypress configuration, or with `Cypress.config()` outside of test execution (for example at the top level of a support file or spec file), is unchanged.
+
+### `experimentalSourceRewriting` config option removed
+
+The `experimentalSourceRewriting` configuration option has been removed. The default regex-based rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce.
+
+If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
+
+You only need a replacement option if your application pins resources with Subresource Integrity (SRI) `integrity` attributes on `<script>` or `<link>` elements. Because Cypress rewrites those resources, the pinned hash no longer matches and the browser blocks them, reporting an error such as `Failed to find a valid digest in the 'integrity' attribute for resource '…'`. If you were relying on `experimentalSourceRewriting` to avoid this, enable the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead, which strips the `integrity` attribute so the rewritten resources load. If your application does not use SRI, no replacement is required.
+
+:::cypress-config-example
+
+```ts
+{
+  // Remove this line
+  experimentalSourceRewriting: true,
+}
+```
+
+:::
+
+### `cy.end()` removed
+
+`cy.end()` has been removed. It ended a chain of commands by yielding `null`,
+which was never necessary — a Cypress chain is already terminated when the next
+`cy.<command>()` starts a new chain.
+
+There is no replacement. Delete the `.end()` calls.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+cy.get('[data-cy="submit"]').click().end()
+
+cy.get('[data-cy="name"]').type('Jane')
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+cy.get('[data-cy="submit"]').click()
+
+cy.get('[data-cy="name"]').type('Jane')
+```
+
+`cy.end()` was deprecated in Cypress
+[15.16.0](/app/references/changelog#15-16-0) and removed in 16.0.
+
+### `Cypress.env()` removed
+
+`Cypress.env()` has been removed in Cypress 16.0. Use [`cy.env()`](/api/commands/env) for sensitive values (API keys, tokens, secrets) or [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive configuration that needs synchronous browser access.
+
+See [Migrating away from Cypress.env()](#Migrating-away-from-Cypressenv) below for detailed before/after examples.
+
+### `env` removed from test config overrides
+
+The `env` key is no longer valid in per-test or suite config overrides. Test config overrides run in the browser, so `env` values set there could never be applied server-side. If absolutely necessary, `expose` can be used instead.
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+it(
+  'runs with feature flag',
+  {
+    env: {
+      FEATURE_FLAG: true,
+      API_VERSION: 'v2',
+    },
+  },
+  () => {
+    expect(Cypress.env('FEATURE_FLAG')).to.be.true
+    expect(Cypress.env('API_VERSION')).eq('v2')
+  }
+)
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+it(
+  'runs with feature flag',
+  {
+    expose: {
+      FEATURE_FLAG: true,
+      API_VERSION: 'v2',
+    },
+  },
+  () => {
+    expect(Cypress.expose('FEATURE_FLAG')).to.be.true
+    expect(Cypress.expose('API_VERSION')).eq('v2')
+  }
+)
+```
+
+### `allowCypressEnv` config option removed
+
+The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it — no behavior change, just remove the key.
+
+:::cypress-config-example
+
+```ts
+{
+  // Remove this line
+  allowCypressEnv: true,
+}
+```
+
+:::
+
+### CoffeeScript support removed
+
+Built-in CoffeeScript support has been removed. The default
+[`@cypress/webpack-batteries-included-preprocessor`](/api/node-events/preprocessors-api)
+no longer bundles `coffee-loader` or `coffeescript`, and `.coffee` is no longer
+resolved for spec files, support files, or
+[`cy.fixture()`](/api/commands/fixture).
+
+Most projects are unaffected. If your project has no `.coffee` files, there is
+nothing to do — and dropping the CoffeeScript toolchain from the default
+preprocessor means one less thing to bundle on every spec startup.
+
+If you do have `.coffee` files, the recommended path is to convert them to
+JavaScript or TypeScript, both of which Cypress compiles out of the box. If you
+need to keep CoffeeScript, add the loader to your own webpack configuration and
+register it with
+[`@cypress/webpack-preprocessor`](/api/node-events/preprocessors-api#Examples):
+
+```js title="cypress.config.js"
+const { defineConfig } = require('cypress')
+const webpackPreprocessor = require('@cypress/webpack-preprocessor')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      on(
+        'file:preprocessor',
+        webpackPreprocessor({
+          webpackOptions: {
+            resolve: { extensions: ['.js', '.coffee'] },
+            module: {
+              rules: [{ test: /\.coffee$/, use: ['coffee-loader'] }],
+            },
+          },
+        })
+      )
+
+      return config
+    },
+  },
+})
+```
+
+You are responsible for installing `coffee-loader` and `coffeescript` in your
+own project.
+
+### `cypress info` no longer prints environment variables
+
+`cypress info` no longer prints proxy environment variables (`HTTP_PROXY`,
+`HTTPS_PROXY`, `NO_PROXY`) or any `CYPRESS_*` environment variables. Those
+values routinely hold credentials — a record key, a proxy password, an API
+token — and `cypress info` output is most often pasted into a bug report or a CI
+log, so its output is now safe to share.
+
+The command still reports the details it is usually run for: detected browsers,
+application data, browser profile and binary cache paths, the Cypress version,
+and system platform and memory.
+
+If you were using `cypress info` to inspect those variables, read them from your
+shell instead:
+
+```shell
+printenv | grep -E '^(HTTP_PROXY|HTTPS_PROXY|NO_PROXY|CYPRESS_)'
+```
+
 ### Angular `18`, `19`, and `20` are no longer supported for Component Testing
 
 Angular 18 and 19 have reached [end-of-life](https://angular.dev/reference/releases#actively-supported-versions), and Angular 20 reaches LTS end in November 2026. As a result, the minimum required Angular version for component testing is now `21.0.0`.
@@ -520,74 +716,24 @@ export default defineConfig({
 })
 ```
 
-Change `<YOUR_FRAMEWORK>>` to `'react'`, `'vue'`, `'svelte'`, or another [supported framework](/app/component-testing/component-framework-configuration) to match your component testing setup.
+Change `<YOUR_FRAMEWORK>` to `'react'`, `'vue'`, `'svelte'`, or another [supported framework](/app/component-testing/component-framework-configuration) to match your component testing setup.
 
 Note that `@cypress/vite-dev-server@7` is deprecated and no longer supported by Cypress. It is intended as a temporary workaround until you can migrate to Vite `8`. More information on configuring a custom dev server can be found in the [Cypress Vite Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/vite-dev-server-v7.2.1/npm/vite-dev-server/README.md).
+
+### Next.js `14` is no longer supported for Component Testing
+
+As of Cypress `16.0.0`, component testing requires **Next.js `15.0.4` or newer**,
+or **Next.js `16`**. Next.js `14` is no longer supported.
+
+Upgrade Next.js in your project before upgrading Cypress. See the
+[Next.js upgrade guide](https://nextjs.org/docs/app/guides/upgrading) for the
+steps that apply to your application, and
+[Next.js component testing](/app/component-testing/react/overview#Nextjs) for
+the Cypress-side configuration.
 
 ### Electron browser deprecated
 
 The bundled Electron browser is deprecated as a test browser in Cypress 16.0.0 and will be removed in a future major version. If your runs rely on the implicit Electron default, set a [`defaultBrowser`](/app/references/configuration#Browser) (for example, `'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run) to switch to an installed browser. See [Migrating away from the Electron browser](#Migrating-away-from-the-Electron-browser) for the full guide.
-
-### `Cypress.env()` removed
-
-`Cypress.env()` has been removed in Cypress 16.0. Use [`cy.env()`](/api/commands/env) for sensitive values (API keys, tokens, secrets) or [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive configuration that needs synchronous browser access.
-
-See [Migrating away from Cypress.env()](#Migrating-away-from-Cypressenv) below for detailed before/after examples.
-
-### `env` removed from test config overrides
-
-The `env` key is no longer valid in per-test or suite config overrides. Test config overrides run in the browser, so `env` values set there could never be applied server-side. If absolutely necessary, `expose` can be used instead.
-
-<Badge type="danger">Before</Badge>
-
-```javascript
-it(
-  'runs with feature flag',
-  {
-    env: {
-      FEATURE_FLAG: true,
-      API_VERSION: 'v2',
-    },
-  },
-  () => {
-    expect(Cypress.env('FEATURE_FLAG')).to.be.true
-    expect(Cypress.env('API_VERSION')).eq('v2')
-  }
-)
-```
-
-<Badge type="success">After</Badge>
-
-```javascript
-it(
-  'runs with feature flag',
-  {
-    expose: {
-      FEATURE_FLAG: true,
-      API_VERSION: 'v2',
-    },
-  },
-  () => {
-    expect(Cypress.expose('FEATURE_FLAG')).to.be.true
-    expect(Cypress.expose('API_VERSION')).eq('v2')
-  }
-)
-```
-
-### `allowCypressEnv` config option removed
-
-The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it — no behavior change, just remove the key.
-
-:::cypress-config-example
-
-```ts
-{
-  // Remove this line
-  allowCypressEnv: true,
-}
-```
-
-:::
 
 ## Migrating away from Cypress.env()
 

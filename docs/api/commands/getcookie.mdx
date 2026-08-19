@@ -56,8 +56,13 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 - `value`
 
 `cy.getCookie()` is a query, and it is _safe_ to chain further commands. It will
-automatically [retry](/app/core-concepts/retry-ability) until the requested
-cookie exists and all chained assertions have passed, or until it times out.
+automatically [retry](/app/core-concepts/retry-ability) until all chained
+assertions have passed, or until it times out, re-reading the cookie on each
+retry so the yielded value stays up to date. Chained assertions are what drive
+those retries: with no assertions chained, `cy.getCookie()` yields whatever it
+reads on the first attempt, which is `null` if the cookie does not exist yet.
+Chain [`.should('exist')`](/api/commands/should) to wait for a cookie that is
+set asynchronously.
 
 :::caution
 

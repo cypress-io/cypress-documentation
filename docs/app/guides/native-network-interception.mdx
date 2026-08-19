@@ -9,6 +9,27 @@ slug: /app/guides/native-network-interception
 
 # Native Network Interception
 
+Starting in Cypress 16, Chrome, Chromium, and Edge intercept test traffic on the native
+browser network. Your application connects to your server directly and negotiates
+whatever protocol the server supports, exactly as it does in production.
+
+That closes the biggest remaining gap between how your application behaves under test and
+how it behaves for your users:
+
+- **Your production protocol is the one under test.** HTTP/2 and HTTP/3 connections are
+  no longer downgraded to HTTP/1.1, so requests multiplex over a single connection instead
+  of queueing behind the six-connection-per-origin ceiling. Request-heavy pages load
+  faster under test, and protocol-specific behavior is finally reachable from a test.
+- **Your certificate is the one the browser validates.** Cypress no longer terminates TLS
+  for the application under test, acts as its own certificate authority, or generates a
+  certificate for your origin.
+- **What you stub is what the browser sees.** Modified request headers and bodies,
+  stubbed responses, and overridden status codes all appear in the browser's own network
+  panel, because the browser is the one making the request.
+
+[`cy.intercept()`](/api/commands/intercept) works as before. You can match, stub, modify,
+and wait on requests with the same API, and most suites need no edits.
+
 ## What changed
 
 Before Cypress 16, Cypress routed every request your application made through the
@@ -16,15 +37,23 @@ legacy network path. That path is how Cypress observed, stubbed, and recorded ne
 traffic, and it only supported HTTP/1.1. Requests that your server would have served over
 HTTP/2 or HTTP/3 in production were downgraded to HTTP/1.1 during a Cypress run.
 
-Starting in Cypress 16, Chrome, Chromium, and Edge intercept test traffic on the
-native browser network instead. Your application connects to your server directly,
-negotiating whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), exactly
-as it does in production.
+Because Cypress is no longer the connection between your browser and your server, a small
+number of behaviors change. Each one is listed on this page with a before-and-after
+example:
 
-[`cy.intercept()`](/api/commands/intercept) works as before. You can match, stub,
-modify, and wait on requests with the same API. A small number of behaviors change on
-the native browser network because Cypress is no longer the connection between your
-browser and your server, and those are listed on this page.
+| Behavior                                                                                                                               | What to do                                                                 |
+| -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [`content-encoding` is not reported on responses](#Response-headers-do-not-report-content-encoding)                                    | Assert on the decoded body instead of the compression headers.             |
+| [`httpVersion` is not reported](#httpVersion-is-not-reported)                                                                          | Assert on request properties that describe your application.               |
+| [Responses the browser rejects are not observable](#Responses-the-browser-rejects-are-not-observable)                                  | Assert on the error state your application renders.                        |
+| [Responses served without a network request are not cached](#Responses-served-without-a-network-request-are-not-cached-by-the-browser) | Expect the intercept to see the request again on a second navigation.      |
+| [Stubbed bodies are decoded from their declared `content-encoding`](#Stubbed-bodies-are-decoded-from-their-declared-content-encoding)  | Make sure a declared encoding matches the bytes you supply.                |
+| [Compressed documents from insecure origins load](#Compressed-documents-from-insecure-origins-load)                                    | Update tests that expected the visit itself to fail.                       |
+| [Revalidated responses report `200` instead of `304`](#Revalidated-responses-report-200-instead-of-304)                                | Use [`cy.request()`](/api/commands/request) to assert on caching behavior. |
+| [`responseTimeout` does not apply to response handlers](#responseTimeout-does-not-apply-to-response-handlers)                          | Bound the wait with a `timeout` on [`cy.wait()`](/api/commands/wait).      |
+| [Request `content-length` is not reported](#Request-content-length-is-not-reported)                                                    | Assert on the body you set.                                                |
+| [Your application's certificate is used](#Your-applications-certificate-is-used)                                                       | Nothing — this is the improvement.                                         |
+| [`cy.intercept()` changes are visible in the browser](#cyintercept-changes-are-visible-in-the-browser)                                 | Nothing — this is the improvement.                                         |
 
 ## Which browsers are affected
 
@@ -202,8 +231,8 @@ through with the header and body intact, as before.
 
 If the bytes do not actually match the declared encoding, the decode fails inside Cypress
 and the request errors. In Cypress 15, the mismatched pair reached the browser, which
-rejected it there. The underlying mistake is the same in both versions and the error
-surfaces in a different place.
+rejected it there. The underlying mistake is the same in both versions; only the place the
+error surfaces has changed.
 
 ```js
 // Declares gzip, so the body must really be gzip bytes
@@ -386,13 +415,13 @@ legacy network path, and your suite runs Chrome, Chromium, or Edge alongside Fir
 WebKit, or Electron, gate it with [`Cypress.isBrowser()`](/api/cypress-api/isbrowser):
 
 ```js
-const interceptsInBrowser = Cypress.isBrowser({
+const usesNativeBrowserNetwork = Cypress.isBrowser({
   family: 'chromium',
   name: '!electron',
 })
 
 cy.intercept('/api/users', (req) => {
-  if (!interceptsInBrowser) {
+  if (!usesNativeBrowserNetwork) {
     expect(req.httpVersion).to.equal('1.1')
   }
 })
