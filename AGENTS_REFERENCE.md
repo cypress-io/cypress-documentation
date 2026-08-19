@@ -143,7 +143,10 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   instead of reaching for a dash. Keep an em dash only when it is clearly the
   best fit, and rarely more than one per paragraph.
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
-  `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug.
+  `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug. A
+  client-side fallback (`src/clientModules/hashFallback.js`) rewrites inbound
+  hashes that only differ by case to the canonical id. In-repo markdown links
+  must still use the exact casing; the build throws on mismatches.
 - **Bold vs. quotes for UI labels.** Reserve **bold** for real controls the
   reader acts on in a walkthrough or tutorial, meaning actual buttons, links,
   tabs, menu items, and flows in the Cypress Cloud or Cypress App UI (for
