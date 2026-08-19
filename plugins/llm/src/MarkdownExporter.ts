@@ -6,6 +6,98 @@ import TurndownService from 'turndown'
 import { gfm } from 'turndown-plugin-gfm'
 import { normalizeHtml } from './html-normalize'
 
+const TEXT_NODE = 3
+const ELEMENT_NODE = 1
+
+// Tags that end the line they are on when they close.
+const LINE_BREAKING_TAGS = new Set(['DIV', 'P'])
+
+/**
+ * Reads the source text out of a `<code>` element, preserving its line breaks.
+ *
+ * `textContent` cannot be used here: Docusaurus renders each line of a code block as its own
+ * `<div class="token-line">` ending in a `<br>`, and `textContent` reports neither, so every line
+ * of a multi-line example runs together into a single unusable line. Walking the node lets us turn
+ * those element boundaries back into the newlines they stand for.
+ */
+export function readCodeText(node: Node | null | undefined): string {
+  if (!node) return ''
+
+  let text = ''
+
+  for (const child of Array.from(node.childNodes ?? [])) {
+    if (child.nodeType === TEXT_NODE) {
+      text += child.nodeValue ?? ''
+      continue
+    }
+
+    if (child.nodeType !== ELEMENT_NODE) continue
+
+    const tagName = child.nodeName.toUpperCase()
+
+    if (tagName === 'BR') {
+      text += '\n'
+      continue
+    }
+
+    text += readCodeText(child)
+
+    // A line already terminated by its own <br> must not gain a second newline
+    // from the element that wraps it.
+    if (LINE_BREAKING_TAGS.has(tagName) && !text.endsWith('\n')) {
+      text += '\n'
+    }
+  }
+
+  return text
+}
+
+/**
+ * Builds the HTML-to-markdown converter used for the LLM corpus.
+ *
+ * Exported so the conversion rules can be exercised directly in tests.
+ */
+export function createMarkdownProcessor(): TurndownService {
+  const markdownProcessor = new TurndownService({
+    headingStyle: 'atx',
+    codeBlockStyle: 'fenced',
+    fence: '```',
+    emDelimiter: '_',
+  })
+
+  markdownProcessor.use(gfm)
+  markdownProcessor.addRule('fencedCodeBlocks', {
+    filter: (node) =>
+      node.nodeName === 'PRE' &&
+      !!node.querySelector('code'),
+
+    replacement: (content, node) => {
+      const codeNode = node.querySelector('code');
+      const className = codeNode?.className || '';
+
+      const languageMatch = className.match(/language-(\w+)/);
+      const language = languageMatch ? languageMatch[1] : '';
+
+      const code = readCodeText(codeNode)
+        .replace(/\n+$/, '') // trim trailing newlines
+        .replace(/^\n+/, '');
+
+      // A fence has to be longer than the longest run of backticks inside it. Several
+      // pages show fenced markdown as a code sample, and a three-backtick fence around
+      // one of those closes the block early — silently dropping the rest of the page.
+      const longestBacktickRun = Math.max(
+        0,
+        ...(code.match(/`+/g) ?? []).map((run) => run.length)
+      );
+      const fence = '`'.repeat(Math.max(3, longestBacktickRun + 1));
+
+      return `\n\n${fence}${language}\n${code}\n${fence}\n\n`;
+    }
+  });
+
+  return markdownProcessor
+}
+
 export class MarkdownExporter {
   private readonly markdownRoot: string
   private readonly markdownProcessor: TurndownService
@@ -15,32 +107,7 @@ export class MarkdownExporter {
     private readonly exportRoot: string,
   ) {
     this.markdownRoot = path.join(exportRoot, 'markdown')
-    this.markdownProcessor = new TurndownService({
-      headingStyle: 'atx',
-      codeBlockStyle: 'fenced',
-      fence: '```',
-      emDelimiter: '_',
-    })
-    this.markdownProcessor.use(gfm)
-    this.markdownProcessor.addRule('fencedCodeBlocks', {
-      filter: (node) =>
-        node.nodeName === 'PRE' &&
-        !!node.querySelector('code'),
-    
-      replacement: (content, node) => {
-        const codeNode = node.querySelector('code');
-        const className = codeNode?.className || '';
-        
-        const languageMatch = className.match(/language-(\w+)/);
-        const language = languageMatch ? languageMatch[1] : '';
-    
-        const code = (codeNode?.textContent || '')
-          .replace(/\n+$/, '') // trim trailing newlines
-          .replace(/^\n+/, '');
-    
-        return `\n\n\`\`\`${language}\n${code}\n\`\`\`\n\n`;
-      }
-    });
+    this.markdownProcessor = createMarkdownProcessor()
   }
 
   exportFile(params: {
