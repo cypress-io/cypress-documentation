@@ -2001,7 +2001,7 @@ Cypress session from the terminal. See the
 
 ### <Icon name="angle-right" /> What is `cypress tap` in Cypress?
 
-`cypress tap` is a set of Cypress CLI commands that allows you or an agent to interact with a open mode Cypress
+`cypress tap` is a set of Cypress CLI commands that allows you or an agent to interact with an open-mode Cypress
 session and read its context from the terminal. You can list the
 specs Cypress can run, start a run, poll its status, read test results the way
 the Cypress Command Log shows them, and inspect the DOM and accessibility tree
@@ -2072,13 +2072,13 @@ ships with the `cypress` npm package like every other Cypress CLI command.
 
 ### <Icon name="angle-right" /> Which browsers does `cypress tap` support?
 
-The commands that read the browser (`reporter`, `command`, `pin`, `dom`,
-`aria`, and `inspect`) require a Chromium-family browser open in the Cypress
-session: Chrome, Chromium, Edge, or Electron. Firefox and WebKit are not
-supported for reading the browser.
+`sessions` works with any browser the Cypress session has open, since it only
+lists sessions rather than driving one.
 
-The session-level commands (`sessions`, `status`, `specs`, and `run`) work
-whatever browser the Cypress session has open.
+Every other command — `status`, `specs`, `run`, `reporter`, `command`, `pin`,
+`dom`, `aria`, and `inspect` — requires a Chromium-family browser open in the
+Cypress session: Chrome, Chromium, Edge, or Electron. Firefox and WebKit are
+not supported.
 
 ### <Icon name="angle-right" /> How do I check whether a Cypress session is running from the terminal?
 

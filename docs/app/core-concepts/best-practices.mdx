@@ -1148,7 +1148,7 @@ waste.
 
 <Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
 start a web server from within Cypress scripts with
-[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
+[`cy.task()`](/api/commands/task).
 
 :::
 
@@ -1162,12 +1162,11 @@ prior to running Cypress.
 We do NOT recommend trying to start your back end web server from within
 Cypress.
 
-Any command run by [cy.exec()](/api/commands/exec) or
-[cy.task()](/api/commands/task) has to exit eventually. Otherwise, Cypress will
-not continue running any other commands.
+Any command run by [cy.task()](/api/commands/task) has to exit eventually.
+Otherwise, Cypress will not continue running any other commands.
 
-Trying to start a web server from [cy.exec()](/api/commands/exec) or
-[cy.task()](/api/commands/task) causes all kinds of problems because:
+Trying to start a web server from [cy.task()](/api/commands/task) causes all
+kinds of problems because:
 
 - You have to background the process
 - You lose access to it via terminal

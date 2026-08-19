@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Get answers to common questions about Cypress Accessibility, including grouping and naming views, ignoring elements with elementFilters, excluding URLs with viewFilters, the Ignored status, score impact, element identification, component context, configuration scope, reading applied config, which Axe Core® rules run and color contrast, component testing, the Axe Core® version, and per-run profiles for pull request gating and per-team reports.'
+description: 'Common Cypress Accessibility questions: which WCAG rules run, what the score means, fixing and ignoring violations, and configuring views and profiles.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -9,21 +9,51 @@ sidebar_position: 160
 
 # Cypress Accessibility FAQ
 
+## Fixing violations
+
+### <Icon name="angle-right" /> Where do I start when Cypress Accessibility reports hundreds of violations?
+
+Start by narrowing the report to the code you own with [`viewFilters`](/accessibility/configuration/viewfilters) and [`elementFilters`](/accessibility/configuration/elementfilters), so third-party pages and vendor widgets stop competing for attention. Then open the **Rules** list for a run and pick a single rule with a small number of failing elements and a fix that fits in one component, such as `button-name`. Finishing one rule across the application is usually faster than finishing one page, because the fix has the same shape every time. See [Fix accessibility violations](/accessibility/guides/improve-accessibility) for the full process.
+
+### <Icon name="angle-right" /> Should I fix a violation in Cypress Accessibility or ignore it?
+
+Ignore findings you don't own or have decided not to fix, such as a third-party consent banner or an OAuth provider's sign-in page, so your report reflects work you actually intend to do. Fix findings in your own application: filtering one removes the evidence from the report, but the barrier is still there for the people using your product. When you're unsure, leave the finding reported and use the [Results API](/accessibility/results-api) to decide whether it blocks a build, which keeps full visibility into the issue.
+
+### <Icon name="angle-right" /> Why didn't my Cypress Accessibility score change after I fixed some violations?
+
+The [accessibility score](/accessibility/core-concepts/accessibility-score) weighs each failed rule per snapshot, not each failing element. If a rule fails on 10 elements in a snapshot and you fix nine of them, that snapshot's score is unchanged until the last one is fixed and the rule flips to passing. The run score also averages every snapshot in the run, so a rule failing on one page in a large suite barely moves the top-line number. Track failed element counts for the rule you're working on, and the **Resolved elements** section of Branch Review, rather than watching the score during remediation.
+
+### <Icon name="angle-right" /> How do I confirm an accessibility fix worked in Cypress Accessibility?
+
+Compare your branch against a base run in Branch Review. The **Resolved elements** section should list the rule you worked on across every view where it was failing, which confirms the fix reached more than the one element you tested by hand. Check the **New failed elements** section in the same review: accessibility fixes commonly introduce new findings, such as an added `aria-label` that duplicates visible text. See [Compare reports](/accessibility/guides/compare-reports) for how the comparison works.
+
+### <Icon name="angle-right" /> Do I need to add assertions or commands to my tests for Cypress Accessibility?
+
+No. Cypress Accessibility reports are generated in Cypress Cloud from the artifacts your recorded run already uploads, so there is nothing to add to your specs and no impact on how long your tests take. Every page and component your tests visit is checked automatically once the product is enabled for your project. Because the report is produced after the run, nothing in your Cypress pipeline fails from an accessibility violation unless you opt in with the [Results API](/accessibility/results-api).
+
+### <Icon name="angle-right" /> How do I fix Cypress Accessibility violations with an AI agent?
+
+Configure [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so your agent can read results directly from Cypress Cloud with three tools: `cypress_get_accessibility_report` for a run's failing rules and worst views, `cypress_get_accessibility_views` to page through every view, and `cypress_get_accessibility_rule_failures` for the failing elements of a specific rule. Scope each prompt to one rule and ask for a plan before any code changes. Narrowing your report first keeps the agent from triaging findings you were never going to fix, and adding [`components`](/accessibility/configuration/components) attributes to violation selectors helps it locate the source file without crawling your markup.
+
+### <Icon name="angle-right" /> How do I stop a Cypress Accessibility rule I already fixed from regressing?
+
+Keep a list of remediated rules in your CI verification script and fail the build when any of them appear in a run's results, using the [Results API](/accessibility/results-api). This inverts the more common pattern of allowlisting known failures: instead of tracking what's still broken, you lock in each rule the day it reaches zero violations. Add a rule to the list as soon as it passes, and the list becomes a record of the barriers your application no longer has.
+
 ## Ignoring elements
 
 ### <Icon name="angle-right" /> How do I exclude elements from Cypress Accessibility?
 
 Add an [`elementFilters`](/accessibility/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. Their failed and incomplete checks move to the **Ignored** status and stop counting against your views and your [accessibility score](/accessibility/core-concepts/accessibility-score). This is the standard way to handle third-party widgets whose violations you can't fix. To ignore only specific rules for an element, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) instead, and to ignore entire pages, use [`viewFilters`](/accessibility/configuration/viewfilters).
 
-### <Icon name="angle-right" /> Do ignored elements affect my accessibility score?
+### <Icon name="angle-right" /> Do ignored elements affect my Cypress Accessibility score?
 
 No. An element ignored by [`elementFilters`](/accessibility/configuration/elementfilters) doesn't count as a failed or incomplete element, and its results don't affect the score. It stays visible in the report under the **Ignored** status so you can always audit what your configuration ignores.
 
-### <Icon name="angle-right" /> Why didn't my score improve after ignoring an element?
+### <Icon name="angle-right" /> Why didn't my Cypress Accessibility score improve after ignoring an element?
 
 The [accessibility score](/accessibility/core-concepts/accessibility-score) weighs each failed rule per snapshot, not each failing element. If a rule has several failing elements in a snapshot and you ignore only some of them, the rule still counts against that snapshot and the score doesn't change. The rule stops affecting the snapshot's score once all of its failing elements there are ignored.
 
-### <Icon name="angle-right" /> Why is an element still failing after I added an elementFilters rule?
+### <Icon name="angle-right" /> Why is an element still failing in Cypress Accessibility after I added an elementFilters rule?
 
 The most common causes are:
 
@@ -31,7 +61,7 @@ The most common causes are:
 - The rule has a `documentScope` that doesn't match the element's iframe or shadow DOM hosts.
 - The report was processed before you saved the configuration. Regenerate the run to apply the current configuration.
 
-### <Icon name="angle-right" /> Why do ignored elements still appear in my report?
+### <Icon name="angle-right" /> Why do ignored elements still appear in my Cypress Accessibility report?
 
 This is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/guides/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect your score.
 
@@ -45,7 +75,7 @@ Not on its own. Every element is included unless an exclude rule matches it, and
 
 ## Grouping and naming views
 
-### <Icon name="angle-right" /> Why do similar URLs show up as separate views in my accessibility report?
+### <Icon name="angle-right" /> Why do similar URLs show up as separate views in my Cypress Accessibility report?
 
 Automatic grouping only replaces path segments that are numbers or IDs (UUIDs and UUID-like values) with a wildcard. Segments like usernames or slugs aren't recognized as dynamic, so `/users/alice` and `/users/bob` stay separate views, and a violation on that shared template is reported once per URL. Add a [`views`](/accessibility/configuration/views) pattern to group them into one view and triage the issue once.
 
@@ -53,11 +83,11 @@ Automatic grouping only replaces path segments that are numbers or IDs (UUIDs an
 
 No. Query strings are ignored when grouping, so `/dashboard?tab=overview` and `/dashboard?tab=settings` become a single `/dashboard` view. If a query parameter meaningfully changes the page, use a [`views`](/accessibility/configuration/views) pattern with `groupBy` on that parameter to report on each value separately.
 
-### <Icon name="angle-right" /> How do I create a separate accessibility view for each value of a URL parameter?
+### <Icon name="angle-right" /> How do I create a separate Cypress Accessibility view for each value of a URL parameter?
 
 Write a [`views`](/accessibility/configuration/views) pattern that names the parameter, then list that name in `groupBy`. For a pattern like `/analytics/:type/:id`, `groupBy: ["type"]` creates a distinct view for each `type` value (such as `/analytics/performance/:id` and `/analytics/usage/:id`) while still collapsing the dynamic `:id`. `groupBy` accepts a single string or an array of strings, and each name can come from the path, query string, or hash. See [Using groupBy](/accessibility/configuration/views#Using-groupBy).
 
-### <Icon name="angle-right" /> Does grouping URLs into a view change my accessibility score?
+### <Icon name="angle-right" /> Does grouping URLs into a view change my Cypress Accessibility score?
 
 Not your run-level score. The [run score](/accessibility/core-concepts/accessibility-score) averages every snapshot in the run regardless of how snapshots are grouped, so grouping URLs into a view reorganizes the report without moving the top-line number. What changes is the per-view score: the snapshots you group roll up into one view's score instead of several, which makes each page's accessibility easier to read and track over time.
 
@@ -79,7 +109,7 @@ Add a [`viewFilters`](/accessibility/configuration/viewfilters) rule with `inclu
 
 Yes. A `viewFilters` list at the root of your configuration applies to both products, but nesting it under an `accessibility` or `uiCoverage` key applies it to that product only. A nested list completely replaces a root-level one for that product, and the two are not merged. See [Exclude views](/accessibility/configuration/viewfilters#Scope).
 
-### <Icon name="angle-right" /> Why is a URL still in my report after I excluded it with viewFilters?
+### <Icon name="angle-right" /> Why is a URL still in my Cypress Accessibility report after I excluded it with viewFilters?
 
 The most common causes are:
 
@@ -99,7 +129,7 @@ Cypress Accessibility checks a prioritized list of attributes on each element: `
 
 Add the attribute name to [`significantAttributes`](/accessibility/configuration/significantattributes). Attributes you list are checked before the default list, in the order you list them, so an attribute your application already renders, such as `data-component`, can identify elements and appear as the violation target selector in your reports.
 
-### <Icon name="angle-right" /> Does significantAttributes replace the default attribute list?
+### <Icon name="angle-right" /> Does significantAttributes replace the default attribute list in Cypress Accessibility?
 
 No. Your attributes are checked first, and the defaults still apply after them, so an element without any of your attributes is identified exactly as it would be without configuration. Listing a default attribute like `data-qa` promotes it above the other defaults. To stop an attribute from being used at all, use [`attributeFilters`](/accessibility/configuration/attributefilters) instead.
 
@@ -150,11 +180,37 @@ Yes, two ways. In Cypress Cloud, open the run's **Properties** tab to see the ex
 
 Add a `comment` property to the rule. Any rule defined as an object accepts one, and it's the supported place for notes because Cypress Cloud rejects properties it doesn't recognize. Comments live in your Cypress Accessibility configuration only and never appear in reports. See [Comments](/accessibility/configuration/overview#Comments).
 
+## Accessibility standards
+
+### <Icon name="angle-right" /> Does Cypress Accessibility make my application WCAG conformant or ADA compliant?
+
+No automated tool can determine that, and Cypress Accessibility doesn't claim to. What it reports is factual and narrow: which Axe-Core® rules passed, failed, or couldn't be evaluated on the pages and components your tests visited, on a specific run, with a recorded rule configuration and Axe-Core® version.
+
+Determining conformance with the Web Content Accessibility Guidelines (WCAG), published by the W3C, requires human assessment of criteria no scanner can evaluate. Laws and procurement rules in different regions, including the Americans with Disabilities Act (ADA) in the United States, Section 508 for US federal agencies and their suppliers, and the European Accessibility Act (EAA), commonly point to WCAG as the technical reference. How any of those obligations apply to your organization is a legal question for you and your advisors, not an output of a testing tool. See [accessibility automation principles](/accessibility/guides/accessibility-automation) for where automated checks stop.
+
+### <Icon name="angle-right" /> Which WCAG version and level do the Cypress Accessibility rules cover?
+
+By default, a run evaluates Axe-Core®'s default ruleset: rules tagged for WCAG 2.0 and WCAG 2.1 Level A and AA, plus Deque's Best Practices rules. Three WCAG-tagged rules are turned off by default in Cypress Accessibility, and Axe-Core®'s WCAG 2.2, Level AAA, experimental, and deprecated rule groups are off unless Cypress enables them for your project. This means the default report is broader than any single WCAG level in one sense, because Best Practices findings are Deque recommendations rather than WCAG success criteria, and narrower in another, because it doesn't run every WCAG-tagged rule. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
+
+### <Icon name="angle-right" /> Can Cypress Accessibility run WCAG 2.2 or Level AAA rules?
+
+Yes, on request. Axe-Core® ships those rules but keeps them off by default, so they don't run in Cypress Accessibility unless they're enabled for your project. Enabling them is a guided change Cypress applies for you rather than a setting in the App Quality editor, and historical runs can be regenerated so you can see the effect before adopting it. See [How Cypress can tune the ruleset for your project](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project).
+
+### <Icon name="angle-right" /> Can I use Cypress Accessibility results in a VPAT or accessibility conformance report?
+
+You can reference them as one source of evidence, but they don't produce the document. A VPAT or accessibility conformance report is written by people evaluating a product against each criterion, and automated results speak only to the subset of criteria a scanner can check, on the pages and components your tests happened to visit.
+
+What Cypress Accessibility contributes is a durable, dated record: every run permanently stores the rule configuration and Axe-Core® version it was processed with, viewable in the run's **Properties** tab, and the [Results API](/accessibility/results-api) exposes per-rule and per-view results you can archive alongside your own assessment notes.
+
+### <Icon name="angle-right" /> Does a 100% Cypress Accessibility score mean my application is accessible?
+
+No. A 100% score means Axe-Core® detected no violations in the scope your tests covered, with the rules that were enabled for that run. It says nothing about criteria automated checks can't evaluate, such as whether a label is understandable, whether focus order matches the visual layout, or whether the experience works for someone using a screen reader end to end. Automated checks detect around [57% of the issues a manual audit surfaces](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/). Treat a clean report as a solid foundation and a signal that your team is actively managing accessibility, not as a finished state. See [What a 100% score means](/accessibility/core-concepts/accessibility-score#What-a-100-score-means).
+
 ## Axe Core® rules
 
 ### <Icon name="angle-right" /> Which accessibility rules does Cypress Accessibility run?
 
-Cypress Accessibility runs the full [Axe-Core®](https://github.com/dequelabs/axe-core) ruleset against every captured snapshot, plus a few [custom Cypress rules](/accessibility/core-concepts/cypress-rules). A small number of Axe-Core® rules are [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default): `color-contrast`, `no-autoplay-audio`, and `meta-refresh`. You don't add any assertions or `cy.` commands to your tests to run these checks; they run automatically when Cypress Accessibility is enabled.
+Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every captured snapshot, plus a few [custom Cypress rules](/accessibility/core-concepts/cypress-rules). That covers WCAG 2.0 and 2.1 Level A and AA, along with Deque's Best Practices rules, which are recommendations rather than WCAG success criteria. Rule groups that Axe-Core® keeps off by default, including WCAG 2.2, Level AAA, experimental, and deprecated rules, don't run unless Cypress enables them for your project. Three further rules are [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default) in Cypress Accessibility: `color-contrast`, `no-autoplay-audio`, and `meta-refresh`. You don't add any assertions or `cy.` commands to your tests to run these checks; they run automatically when Cypress Accessibility is enabled. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
 
 ### <Icon name="angle-right" /> Can I change which Axe-Core® rules Cypress Accessibility runs?
 
@@ -207,7 +263,7 @@ The most common causes are:
 
 There's no dedicated "skip this run" switch in a profile. To suppress a report for certain runs, point a profile at a deliberately narrow configuration (for example, [`viewFilters`](/accessibility/configuration/viewfilters) that exclude every view) so Cypress Cloud produces an empty or tightly scoped accessibility report for the run instead. See [Why use profiles?](/accessibility/configuration/profiles#Why-use-profiles).
 
-### <Icon name="angle-right" /> How do I make accessibility checks on pull requests faster and more focused than regression runs?
+### <Icon name="angle-right" /> How do I make Cypress Accessibility checks on pull requests faster and more focused than regression runs?
 
 Add a profile (for example, `aq-config-pr`) whose `config` narrows the report to your most critical flows with [`viewFilters`](/accessibility/configuration/viewfilters), then tag pull request runs with `cypress run --record --tag "aq-config-pr"`. The pull request report covers only those flows, so it's small and unambiguous for a developer to act on before merging, while regression runs record without the tag and keep the full base configuration. Combine the profile with the [Results API](/accessibility/results-api) to fail the build when a critical flow regresses. See [Block pull requests](/accessibility/guides/block-pull-requests#Using-Profiles-for-PR-specific-configuration).
 
