@@ -39,6 +39,44 @@ Configure [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so your agent can r
 
 Keep a list of remediated rules in your CI verification script and fail the build when any of them appear in a run's results, using the [Results API](/accessibility/results-api). This inverts the more common pattern of allowlisting known failures: instead of tracking what's still broken, you lock in each rule the day it reaches zero violations. Add a rule to the list as soon as it passes, and the list becomes a record of the barriers your application no longer has.
 
+## Local development
+
+### <Icon name="angle-right" /> Can I get Cypress Accessibility results without waiting for CI?
+
+Yes. Record the specs you're working on from your own machine with `cypress run --record --spec "cypress/e2e/checkout.cy.js"`. Cypress Accessibility is generated in Cypress Cloud from the run's [Test Replay](/cloud/features/test-replay) data, so a run recorded from your laptop is processed exactly like a CI run: same App Quality Config, same Axe Core® version, same element identification. Limiting the run with `--spec` keeps the report to the code you changed and shortens the feedback loop to a couple of minutes. See [Local development](/accessibility/guides/local-development).
+
+### <Icon name="angle-right" /> Does cypress open produce a Cypress Accessibility report?
+
+No. Interactive mode never records a run to Cypress Cloud, and reports are only generated for recorded runs. Use `cypress run --record` to get accessibility results from your machine.
+
+### <Icon name="angle-right" /> Which browser should I use to record a local run for Cypress Accessibility?
+
+Chrome, Edge, Chromium, or Electron. Reports are built from [Test Replay](/cloud/features/test-replay) data, which is only captured in Chromium-based browsers, so a run recorded with `--browser firefox` or `--browser webkit` produces no accessibility report. `cypress run` defaults to Electron, which is supported, so you get a report without passing `--browser` at all. See [No accessibility report was generated for a run](/accessibility/troubleshooting#No-accessibility-report-was-generated-for-a-run) for the other requirements.
+
+### <Icon name="angle-right" /> How do I check an accessibility fix before I push my branch?
+
+Record the same specs twice and compare them in [Branch Review](/accessibility/guides/compare-reports): once from your base branch before you start (or with your changes stashed), then again from your branch after the fix. Set your branch's run as the Changed run and the base branch's run as the Base run. **Resolved elements** confirms the rule you fixed cleared everywhere it was failing, and **New failed elements** catches the violation the fix introduced. Recording the same specs in both runs is what makes the comparison meaningful. See [Local development](/accessibility/guides/local-development).
+
+### <Icon name="angle-right" /> Can I use the Cypress Accessibility Results API on my local machine?
+
+No. `getAccessibilityResults()` identifies which run to report on from the CI environment variables present when the run was recorded, so running it outside CI fails with "It appears you are not running in CI." The Results API is for enforcing a policy in your pipeline. For local feedback, read the report in Cypress Cloud, compare runs in Branch Review, or query results through [Cypress Cloud MCP](/cloud/integrations/cloud-mcp).
+
+### <Icon name="angle-right" /> Is my Cypress Accessibility score from a local run comparable to my CI score?
+
+No, and it isn't meant to be. A run's [accessibility score](/accessibility/core-concepts/accessibility-score) averages every snapshot in that run, so a two-spec local run and a full CI suite have different denominators. Compare rules and failed element counts between two local runs of the same specs, and track the score on your full suite.
+
+### <Icon name="angle-right" /> Why does my local Cypress Accessibility report include pages my CI report excludes?
+
+Your [`viewFilters`](/accessibility/configuration/viewfilters) patterns most likely name a deployed hostname, and hostnames must match exactly, so a rule for `https://app.example.com/*` never matches `http://localhost:3000`. Write path-only patterns like `/auth/*`, which match any protocol, hostname, and port, or add a [`profiles`](/accessibility/configuration/profiles) entry for local runs and tag them with `--tag`. See [Make your configuration match localhost](/accessibility/guides/local-development#Make-your-configuration-match-localhost).
+
+### <Icon name="angle-right" /> Why is my Cypress Accessibility report not ready as soon as the run finishes?
+
+Each spec's data starts processing as it uploads, but the run-level report is assembled only after Cypress Cloud marks the run complete. For grouped and parallelized runs, completion waits out the project's [Run Completion Delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay), a grace period of 60 seconds by default that lets late machines join, and report finalization waits with it. A single run recorded without `--group` or `--parallel` skips that delay and completes as soon as its specs are done, which is why local runs turn around quickly. To speed up a grouped run, shorten the delay in [project settings](/cloud/account-management/projects#Run-Completion-Delay) or close the run with the [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API).
+
+### <Icon name="angle-right" /> How do I keep local runs from cluttering my Cypress Cloud project?
+
+Tag them with `cypress run --record --tag "local"`. Tags appear on the run and are filterable in Cypress Cloud, so everyone can skip past them in the run list. A separate Cypress Cloud project for local runs is possible but costs you the comparison workflow, since Branch Review compares runs within one project and App Quality Config is per project. Note that every recorded run consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan regardless of where it ran, which is another reason to keep local runs scoped with `--spec`.
+
 ## Ignoring elements
 
 ### <Icon name="angle-right" /> How do I exclude elements from Cypress Accessibility?

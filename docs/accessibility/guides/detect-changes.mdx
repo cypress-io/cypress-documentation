@@ -37,13 +37,7 @@ See the main [Accessibility Branch Review docs](/accessibility/guides/compare-re
 
 #### Compare reports during local development (without waiting for CI)
 
-You might expect that every Cypress Accessibility report requires a full standard Cypress test run in your Continuous Integration (CI) pipeline.
-
-A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues.
-
-To get a high-quality comparison for a small set of tests, record the tests locally from your main branch, and then on the branch with changes. In Cypress Cloud, you will be able to compare these two runs knowing they cover exactly the same scope.
-
-This completely sidesteps the usual "push, build, run tests, report" cycle you might be used to, and is great when you need fast feedback.
+Branch Review doesn't require CI runs. Recording a spec or two from your own machine on your base branch and again on your branch gives you the same comparison over a scope you control, which is the fastest way to confirm a fix while you're actively remediating. See [Accessibility feedback during local development](/accessibility/guides/local-development).
 
 #### See what's changing between scheduled runs
 
