@@ -38,8 +38,13 @@ const SUMMARY =
 /** Opens the line that marks where one page starts in `llms-full.txt`. */
 const PAGE_MARKER_PREFIX = 'Source: '
 
-/** A body line that a consumer would mistake for the page boundary above. */
-const FORGED_PAGE_MARKER_RE = new RegExp(`^${PAGE_MARKER_PREFIX}\\S+\\.md$`)
+/**
+ * A body line that a consumer would mistake for the page boundary above. This
+ * is deliberately the whole prefix and not the `<url>.md` the marker carries:
+ * the corpus tells consumers to split on `Source:` lines, so anything they
+ * would split on has to be rejected, not just the lines that look like ours.
+ */
+const FORGED_PAGE_MARKER_RE = new RegExp(`^${PAGE_MARKER_PREFIX}`)
 
 /**
  * Writes the two files the llms.txt convention defines for a site:

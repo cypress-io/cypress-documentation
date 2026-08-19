@@ -249,6 +249,29 @@ describe('llms-full.txt', () => {
     ).toThrow(/app\/sneaky line 3 would read as a page boundary/)
   })
 
+  // Consumers are told to split on `Source:` lines, so the guard has to reject
+  // every line they would split on, not only the ones shaped like our marker.
+  test.each([
+    ['a non-markdown URL', 'Source: https://example.com/article.html'],
+    ['prose rather than a URL', 'Source: the Cypress team'],
+    ['nothing after the prefix', 'Source: '],
+  ])('fails the build for a boundary-shaped line with %s', (_label, line) => {
+    expect(() =>
+      writeAndRead([
+        // The trailing paragraph keeps `body.trim()` from eating the line's own
+        // trailing whitespace, which is the whole point of the third case.
+        entry({ route: 'app/sneaky', body: `# Sneaky\n\n${line}\nMore prose.\n` }),
+      ]),
+    ).toThrow(/app\/sneaky line 3 would read as a page boundary/)
+  })
+
+  test('allows a body line that only resembles the prefix', () => {
+    const { fullCorpus } = writeAndRead([
+      entry({ body: '# Fine\n\nSource:no-space\n\nThe Source: is inline here.\n' }),
+    ])
+    expect(fullCorpus.match(/^Source: /gm)).toHaveLength(1)
+  })
+
   test('orders pages the same way the index lists them', () => {
     const entries = [
       entry({ route: 'api/commands/get', section: 'api', title: 'cy.get()' }),
