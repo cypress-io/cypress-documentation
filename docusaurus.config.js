@@ -69,20 +69,14 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.scss'),
         },
-        // googleTagManager is handled by ./plugins/googleTagManager instead, so
-        // the container can be skipped under Cypress.
+        googleTagManager: {
+          containerId: 'GTM-KNKBWLD',
+        },
       },
     ],
   ],
 
   plugins: [
-    [
-      './plugins/googleTagManager',
-      {
-        id: 'docs-google-tag-manager',
-        containerId: 'GTM-KNKBWLD',
-      },
-    ],
     [
       './plugins/osano',
       {

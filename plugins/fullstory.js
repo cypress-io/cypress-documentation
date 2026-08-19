@@ -1,4 +1,3 @@
-const skipForAutomation = require('./skipForAutomation')
 
 module.exports = async function fullStory({ context, options }) {
   const isProd = process.env.NODE_ENV === 'production'
@@ -12,7 +11,7 @@ module.exports = async function fullStory({ context, options }) {
         headTags: [
           {
             tagName: 'script',
-            innerHTML: skipForAutomation(`
+            innerHTML: `
 window['_fs_host'] = 'fullstory.com';
 window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
 window['_fs_org'] = '${process.env.FULLSTORY_ORG_ID}';
@@ -33,8 +32,8 @@ window['_fs_namespace'] = 'FS';
     g._w={};y='XMLHttpRequest';g._w[y]=m[y];y='fetch';g._w[y]=m[y];
     if(m[y])m[y]=function(){return g._w[y].apply(this,arguments)};
     g._v="1.3.0";
-})(window,document,window['_fs_namespace'],'script','user');
-            `),
+})(window,document,window['_fs_namespace'],'script','user');            
+            `,
           },
         ],
       }
