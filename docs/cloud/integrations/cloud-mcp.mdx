@@ -93,6 +93,12 @@ Configure your agent or AI client to connect to Cloud MCP. Cloud MCP is a remote
 
 The remote URL is: `https://mcp.cypress.io/mcp`. Clients that support OAuth will handle authentication automatically via a browser sign-in. For clients that do not support OAuth, set the authorization header with `Bearer YOUR_MCP_TOKEN` using your personal access token.
 
+#### Quick install
+
+<CloudMcpQuickInstall />
+
+To connect with a personal access token instead, or to set up any other client, follow the steps for your client below.
+
 <AccordionBlock title="Antigravity" icon={<Icon name="hexagon-nodes" />}>
 
 **OAuth (Recommended)**
@@ -187,9 +193,7 @@ Note: `mcp-remote` requires Node.js v20+ in the path to run successfully.
 1. Add the Cloud MCP server:
 
    ```bash
-   claude mcp add cypress-cloud \
-     https://mcp.cypress.io/mcp \
-     --transport http
+   claude mcp add --transport http cypress-cloud https://mcp.cypress.io/mcp
    ```
 
 2. Start claude session `claude`
@@ -201,9 +205,7 @@ Note: `mcp-remote` requires Node.js v20+ in the path to run successfully.
 1. Add the Cloud MCP server with your token:
 
    ```bash
-   claude mcp add cypress-cloud \
-     https://mcp.cypress.io/mcp \
-     --transport http \
+   claude mcp add --transport http cypress-cloud https://mcp.cypress.io/mcp \
      --header "Authorization: Bearer YOUR_MCP_TOKEN"
    ```
 
@@ -268,11 +270,13 @@ You can install the Cloud MCP server in your user profile or a specific workspac
 
 **OAuth (Recommended)**
 
+Use the [Quick install](#Quick-install) button above to add the server in one step, or configure it yourself:
+
 1. Add the following to your `.vscode/mcp.json`:
    ```json
    {
      "servers": {
-       "cypress": {
+       "cypress-cloud": {
          "type": "http",
          "url": "https://mcp.cypress.io/mcp"
        }
@@ -281,13 +285,19 @@ You can install the Cloud MCP server in your user profile or a specific workspac
    ```
 2. VS Code will handle authentication via a browser-based Cypress Cloud sign-in when the server is first used.
 
+You can also add the server to your user profile from the command line:
+
+```bash
+code --add-mcp "{\"name\":\"cypress-cloud\",\"type\":\"http\",\"url\":\"https://mcp.cypress.io/mcp\"}"
+```
+
 **Personal Access Token (Alternative)**
 
 1. Add the following to your `.vscode/mcp.json`:
    ```json
    {
      "servers": {
-       "cypress": {
+       "cypress-cloud": {
          "type": "http",
          "url": "https://mcp.cypress.io/mcp",
          "headers": {

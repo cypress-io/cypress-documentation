@@ -1,0 +1,21 @@
+VS Code and Claude Code can add the Cloud MCP server for you, with no
+configuration file to edit. Both connect over OAuth, so your browser opens to a
+Cypress Cloud sign-in the first time the server is used.
+
+<Btn
+  label="Install in VS Code"
+  variant="indigo-dark"
+  className="!mb-2 mr-1"
+  href="vscode:mcp/install?%7B%22name%22%3A%22cypress-cloud%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.cypress.io%2Fmcp%22%7D"
+/>
+<Btn
+  label="Install in VS Code Insiders"
+  className="!mb-2 mr-1"
+  href="vscode-insiders:mcp/install?%7B%22name%22%3A%22cypress-cloud%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fmcp.cypress.io%2Fmcp%22%7D"
+/>
+
+To add the server to Claude Code, run:
+
+```bash
+claude mcp add --transport http --scope user cypress-cloud https://mcp.cypress.io/mcp
+```
