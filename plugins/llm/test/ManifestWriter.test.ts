@@ -76,19 +76,19 @@ describe('buildManifest: datasets', () => {
     expect(frontmatter.documentation.some((d) => d.type === 'markdown' && d.format === 'markdown')).toBe(true)
   })
 
-  test('has exactly 2 datasets when emit.json is absent', () => {
+  test('has exactly 3 datasets when emit.json is absent', () => {
     const { frontmatter } = writeAndRetrieveManifest({})
-    expect(frontmatter.documentation).toHaveLength(2)
+    expect(frontmatter.documentation).toHaveLength(3)
   })
 
-  test('has exactly 2 datasets when emit.json is false', () => {
+  test('has exactly 3 datasets when emit.json is false', () => {
     const { frontmatter } = writeAndRetrieveManifest({ emit: { json: false } })
-    expect(frontmatter.documentation).toHaveLength(2)
+    expect(frontmatter.documentation).toHaveLength(3)
   })
 
-  test('has 4 datasets when emit.json is true', () => {
+  test('has 5 datasets when emit.json is true', () => {
     const { frontmatter } = writeAndRetrieveManifest({ emit: { json: true } })
-    expect(frontmatter.documentation).toHaveLength(4)
+    expect(frontmatter.documentation).toHaveLength(5)
   })
 
   test('includes chunked JSON index dataset when emit.json is true', () => {
@@ -109,6 +109,13 @@ describe('buildManifest: datasets', () => {
   test('HTML dataset is intended_for human only', () => {
     const { frontmatter } = writeAndRetrieveManifest({})
     expect(frontmatter.documentation.find((d) => d.type === 'primary')?.audience).toEqual('human')
+  })
+
+  test('advertises the per-page markdown URL pattern', () => {
+    const { frontmatter } = writeAndRetrieveManifest({ url: 'https://docs.cypress.io' })
+    const pageMarkdown = frontmatter.documentation.find((d) => d.type === 'markdown_page')
+    expect(pageMarkdown?.url_pattern).toBe('https://docs.cypress.io/<page-path>.md')
+    expect(pageMarkdown?.audience).toEqual(['human', 'llm'])
   })
 
   test('markdown dataset is intended_for both human and llm', () => {

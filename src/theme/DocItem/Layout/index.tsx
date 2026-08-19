@@ -18,7 +18,9 @@ export default function LayoutWrapper(props: Props): ReactNode {
   // since Docusaurus don't support adding route-dynamic tags from inside a plugin
   const normalized = pathname.replace(/\/$/, '').replace(/^\//, '') || 'index'
   const fullJsonHref = `/llm/json/full/${normalized}.json`
-  const markdownHref = `/llm/markdown/${normalized}.md`
+  // Every doc page's markdown is also published at its own route plus `.md`,
+  // so point the alternate at that rather than at the `/llm/markdown/` copy.
+  const markdownHref = `/${normalized}.md`
 
   // FAQPage JSON-LD structured data generated at build time by the
   // docusaurus-faq-structured-data plugin, keyed by route. Injected into the

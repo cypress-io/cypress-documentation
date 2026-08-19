@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { ensureDir, parseHeadingLine, replaceMarkdownExtension, stripMarkdownExtension, toPosixPath } from './utils'
+import { ensureDir, parseHeadingLine, replaceMarkdownExtension, resolveDocRoute, stripMarkdownExtension, toPosixPath } from './utils'
 import matter from 'gray-matter'
 import TurndownService from 'turndown'
 import { gfm } from 'turndown-plugin-gfm'
@@ -61,16 +61,8 @@ export class MarkdownExporter {
     const raw = fs.readFileSync(absPath, 'utf8')
     const mdxSource = matter(raw)
     
-    let htmlPath: string
-    if (mdxSource.data?.slug) {
-      if (mdxSource.data.slug.startsWith('/')) {
-        htmlPath = path.resolve(this.rootDir, `.${mdxSource.data.slug}`, 'index.html')
-      } else {
-        htmlPath = path.resolve(this.rootDir, id, '..', mdxSource.data.slug, 'index.html')
-      }
-    } else {
-      htmlPath = path.join(this.rootDir, id, 'index.html')
-    }
+    const route = resolveDocRoute(id, mdxSource.data?.slug)
+    const htmlPath = path.join(this.rootDir, route, 'index.html')
     const htmlContent = fs.readFileSync(htmlPath, 'utf8')
     const htmlBody = normalizeHtml(htmlContent)
     const normalizedBody = this.markdownProcessor.turndown(htmlBody)
@@ -102,6 +94,7 @@ export class MarkdownExporter {
       bodyWithHeading,
       mdOutPath,
       metadata,
+      route,
     }
   }
 

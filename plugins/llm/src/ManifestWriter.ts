@@ -32,6 +32,12 @@ documentation:
     format: markdown
     audience: [human, llm]
     url: ${config.url}/llm/markdown/index.md
+
+  - type: markdown_page
+    format: markdown
+    audience: [human, llm]
+    url_pattern: ${config.url}/<page-path>.md
+    example: ${config.url}/app/get-started/why-cypress.md
 ${config.emit?.json ? `
   - type: json
     format: json
@@ -44,6 +50,7 @@ ${config.emit?.json ? `
     url: ${config.url}/llm/json/chunked/index.json
 ` : ''}
 llm_guidance:
+  - append .md to any documentation page URL to get that page's markdown
   - use chunked JSON for retrieval and embeddings
   - use full JSON for complete context
   - use markdown for semantic understanding
