@@ -55,7 +55,7 @@ Chrome, Edge, Chromium, or Electron. Reports are built from [Test Replay](/cloud
 
 ### <Icon name="angle-right" /> How do I check an accessibility fix before I push my branch?
 
-Record the same specs twice and compare them in [Branch Review](/accessibility/guides/compare-reports): once from your base branch before you start (or with your changes stashed), then again from your branch after the fix. Set your branch's run as the Changed run and the base branch's run as the Base run. **Resolved elements** confirms the rule you fixed cleared everywhere it was failing, and **New failed elements** catches the violation the fix introduced. Recording the same specs in both runs is what makes the comparison meaningful. See [Local development](/accessibility/guides/local-development).
+Record the same specs twice and compare the two Cypress Accessibility reports in [Branch Review](/accessibility/guides/compare-reports): once from your base branch before you start (or with your changes stashed), then again from your branch after the fix. Set your branch's run as the Changed run and the base branch's run as the Base run. **Resolved elements** confirms the rule you fixed cleared everywhere it was failing, and **New failed elements** catches the violation the fix introduced. Recording the same specs in both runs is what makes the comparison meaningful. See [Local development](/accessibility/guides/local-development).
 
 ### <Icon name="angle-right" /> Can I use the Cypress Accessibility Results API on my local machine?
 
@@ -76,6 +76,56 @@ Each spec's data starts processing as it uploads, but the run-level report is as
 ### <Icon name="angle-right" /> How do I keep local runs from cluttering my Cypress Cloud project?
 
 Tag them with `cypress run --record --tag "local"`. Tags appear on the run and are filterable in Cypress Cloud, so everyone can skip past them in the run list. A separate Cypress Cloud project for local runs is possible but costs you the comparison workflow, since Branch Review compares runs within one project and App Quality Config is per project. Note that every recorded run consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan regardless of where it ran, which is another reason to keep local runs scoped with `--spec`.
+
+## Detecting changes
+
+### <Icon name="angle-right" /> How do I find which pull request introduced a Cypress Accessibility violation?
+
+Open [Branch Review](/accessibility/guides/compare-reports) in Cypress Cloud with the pull request's run as the Changed run and the base branch's run as the Base run. The **New failed elements** section lists only the violations that appear in the Changed run and not in the Base run, grouped by rule and view, with a page snapshot for each. If the violation predates the pull request, keep the Changed run fixed and move the Base run backwards through earlier runs until the violation stops showing as new. See [Catch accessibility regressions](/accessibility/guides/detect-changes).
+
+### <Icon name="angle-right" /> Does Cypress Accessibility fail my build when a new violation appears?
+
+No. Reports are generated in Cypress Cloud after your tests upload, so a Cypress run never fails because of an accessibility violation, and there is no performance cost to your tests. Blocking a build is an opt-in step you add with the [Results API](/accessibility/results-api), which fetches the run's results in CI so you can decide what should fail. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
+
+### <Icon name="angle-right" /> Should I block builds on failing rules or on the Cypress Accessibility score?
+
+Rules are the stricter and more reliable signal in a Cypress Accessibility report: a rule going from zero failures to any failures is a real change in the application, traceable to the build that introduced it. Element counts and the score move on their own as tests reach different states and existing broken components get reused, which makes them better suited to monitoring runs and score thresholds than to gating individual pull requests. Many teams use both, with a rule policy on pull requests and a score threshold on scheduled runs. See [Enforce a standard in CI](/accessibility/guides/detect-changes#enforce-a-standard-in-ci).
+
+### <Icon name="angle-right" /> Can I compare accessibility reports from two different Cypress projects?
+
+No. Branch Review compares two runs within a single project, and App Quality Config is set per project, so cross-project comparisons are not available. If two teams need separate reports for the same application, use [profiles](/accessibility/configuration/profiles) to give each team's runs its own configuration inside one project, which keeps comparisons working.
+
+### <Icon name="angle-right" /> Why does Cypress Accessibility show new failed elements in Branch Review when I didn't change that code?
+
+The most common cause is unstable element identification. Cypress Accessibility matches elements between runs by the identifier described in [element identification](/accessibility/core-concepts/element-identification), so a hashed CSS-in-JS class or a framework-generated ID that changes per build makes one element look like a resolved failure plus a new failure. Exclude those values with [`attributeFilters`](/accessibility/configuration/attributefilters). Views can drift the same way when URLs contain IDs or slugs, which [`views`](/accessibility/configuration/views) rules resolve. See [Make the comparison trustworthy](/accessibility/guides/detect-changes#Make-the-comparison-trustworthy).
+
+### <Icon name="angle-right" /> Why does my Cypress Accessibility comparison show a long list of resolved elements after a small change?
+
+The two runs most likely did not cover the same ground. Cypress Accessibility compares what each run actually saw, so if the Base run recorded the full suite and the Changed run recorded a few specs, everything on the pages that were not visited is reported as resolved. Record the same specs on both sides of the comparison. See [Accessibility feedback during local development](/accessibility/guides/local-development).
+
+### <Icon name="angle-right" /> What are existing failed elements in a Cypress Accessibility comparison?
+
+They are the violations present in both runs, which is everything the change neither introduced nor fixed. Cypress Accessibility keeps them out of the Branch Review diff and links to the full report for the Changed run instead, so new and pre-existing findings are never mixed together in the same list. See [Compare reports](/accessibility/guides/compare-reports).
+
+### <Icon name="angle-right" /> Why does Branch Review say my Cypress Accessibility changes are not ready yet?
+
+At least one of the two runs has not finished processing its report. Reports are assembled after Cypress Cloud marks a run complete, and grouped or parallelized runs also wait out the project's [Run Completion Delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay). Reload once both runs are complete. If a run was canceled, timed out, or re-ran only its failed specs under [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization), its Cypress Accessibility report is marked partial and Branch Review says so, because a diff built on partial data can be misleading.
+
+### <Icon name="angle-right" /> Why did my Cypress Accessibility score change when no application code changed?
+
+Four things move a score without a code change: someone edited the App Quality Config, which is worth checking first because a new filter or view rule changes what is counted; the tests reached different pages or states than usual; content changed in the environment under test, such as a published image without alternative text; or the Axe Core® version was updated. The Results API exposes both `config` and `axeVersion` so you can rule the last two in or out. See [Notice when the report itself changes](/accessibility/guides/detect-changes#Notice-when-the-report-itself-changes).
+
+### <Icon name="angle-right" /> How do I detect accessibility regressions with Cypress on a site that isn't tied to pull requests?
+
+Record the Cypress project on a schedule against staging or production and compare consecutive runs in Branch Review, which works even when every run is on the same branch. This catches the changes no pull request would show, such as published content, a new version of an embedded third-party widget, or a feature flag enabling untested UI. See [Production monitoring](/accessibility/guides/production-monitoring).
+
+### <Icon name="angle-right" /> Can Cypress notify my team when accessibility results change?
+
+Yes, two ways. The [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) integrations include the accessibility score, failed rules by severity, and failed element count in run notifications, and can be filtered by run tag or run group. For conditional alerts, act on the [Results API](/accessibility/results-api) response in CI, which includes deep links per rule and per view so a notification can point at the exact failure.
+
+### <Icon name="angle-right" /> How do I track Cypress Accessibility trends across projects over time?
+
+Use the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) for scores, severity breakdowns, and weekly violation trends, filtered by date range, team, project, and branch. The same data is available through the [Data Extract API](/cloud/integrations/data-extract-api) with the `accessibility-per-project-summary`, `accessibility-per-project-over-time`, and `accessibility-details` reports. See [Track trends over time](/accessibility/guides/detect-changes#track-trends-over-time).
 
 ## Ignoring elements
 
