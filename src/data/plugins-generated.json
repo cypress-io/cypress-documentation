@@ -268,9 +268,9 @@
     },
     "cypress-if": {
       "npm": "cypress-if",
-      "version": "1.16.1",
-      "lastPublished": "2026-05-22T00:18:27.876Z",
-      "cypressVersion": "15.15.0"
+      "version": "1.17.0",
+      "lastPublished": "2026-08-19T01:33:40.744Z",
+      "cypressVersion": "15.19.0"
     },
     "cypress-plugin-steps": {
       "npm": "cypress-plugin-steps",
