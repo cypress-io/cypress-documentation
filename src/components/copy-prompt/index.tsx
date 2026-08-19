@@ -2,6 +2,7 @@ import React, { useEffect, useId, useRef, useState } from 'react'
 import { useColorMode } from '@docusaurus/theme-common'
 import Button from '@cypress-design/react-button'
 import Icon from '@cypress-design/react-icon'
+import { copyToClipboard } from '@site/src/utils/copy-to-clipboard'
 import s from './style.module.css'
 
 interface CopyPromptProps {
@@ -65,28 +66,7 @@ export default function CopyPrompt({
   useEffect(() => () => clearTimeout(resetTimeout.current), [])
 
   const copyPrompt = async () => {
-    let succeeded = false
-    try {
-      await navigator.clipboard.writeText(prompt)
-      succeeded = true
-    } catch {
-      // Clipboard API is unavailable in insecure contexts
-      const textarea = document.createElement('textarea')
-      textarea.value = prompt
-      textarea.setAttribute('readonly', '')
-      textarea.style.position = 'fixed'
-      textarea.style.opacity = '0'
-      document.body.appendChild(textarea)
-      try {
-        textarea.select()
-        succeeded = document.execCommand('copy')
-      } catch {
-        succeeded = false
-      } finally {
-        document.body.removeChild(textarea)
-      }
-    }
-    if (!succeeded) {
+    if (!(await copyToClipboard(prompt))) {
       return
     }
     ;(window as any).FS?.event?.('Copied AI Prompt', { prompt_title: title })
