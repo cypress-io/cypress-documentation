@@ -18,6 +18,15 @@ This is the **Cypress Documentation** site, built with
   (`/app/get-started/why-cypress.md`), with its `##` sections at
   `/app/get-started/why-cypress/<h2-slug>.md`, so an agent can reach the
   markdown by appending `.md` to a docs URL without discovering `/llm` first.
+  Readers reach the same file through `src/components/markdown-actions`, the
+  split button beside every page title: it copies the markdown, opens the raw
+  `.md`, or hands its URL to ChatGPT or Claude. Both it and the
+  `<link rel="alternate" type="text/markdown">` tag in `src/theme/DocItem/Layout`
+  derive the path from `markdownPathFor` in `src/utils/markdown-url.ts`, so
+  neither can drift from the other.
+- Small helpers shared by more than one component live in `src/utils`
+  (`markdown-url.ts`, `copy-to-clipboard.ts`). Anything with UI belongs in
+  `src/components` instead.
 - The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
   **never installed on their own**: they have no lockfiles and are not npm
   workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
@@ -28,7 +37,17 @@ This is the **Cypress Documentation** site, built with
   **root** `package.json` — pins added to a plugin's own `package.json` are
   never installed and just drift stale.
 - Reusable React/MDX components live in `src/components` and are registered in
-  `src/theme/MDXComponents.js`.
+  `src/theme/MDXComponents.js`. Build them from the `@cypress-design/react-*`
+  primitives (`Button`, `Icon`, `Select`, …) rather than hand-rolling a control,
+  and reach for the design system's component before inventing your own; add the
+  package to the root `package.json` when the one you need isn't installed yet.
+- **Interactive chrome must carry `data-sanitize`.** `plugins/llm` strips any
+  element with that attribute from the LLM markdown export, so buttons, menus,
+  and toggles don't reach an agent as text it can't click. Put it on the
+  outermost element that is purely interactive (see `markdown-actions`), or on
+  just the controls when the surrounding content should still ship (see
+  `copy-prompt`). Verify with `npm run build` and a grep over
+  `dist/llm/markdown/`.
 
 ## Adding, moving & removing pages
 
