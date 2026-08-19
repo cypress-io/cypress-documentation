@@ -5,13 +5,14 @@
  *
  * Pipeline:
  * 1. Walk `docs/` for `.md`/`.mdx`, filter by configured sections.
- * 2. Search for corresponding generated HTML file, extract content & remove unwanted elements, translate to markdown, and write flat markdown under `dist/llm/markdown/`. Each page's `##` sections are also written individually to `dist/llm/markdown/<doc-id>/<h2-slug>.md`.
+ * 2. Search for corresponding generated HTML file, extract content & remove unwanted elements, translate to markdown, and write flat markdown under `dist/llm/markdown/`. Each page's `##` sections are also written individually to `dist/llm/markdown/<doc-id>/<h2-slug>.md`. Both are mirrored to `dist/<page-route>.md` and `dist/<page-route>/<h2-slug>.md` so appending `.md` to any docs URL serves that page's markdown.
  * 3. Optionally emit JSON under `dist/llm/json/`: chunked per-doc files + chunk index in `json/chunked/`, and full-document structured JSON in `json/full/`.
  * 4. Write `dist/llms.txt` (site manifest) and per-directory `index.md` listings under the markdown export root.
  */
 
 import fs from 'fs'
 import path from 'path'
+import { CanonicalMarkdownMirror } from './CanonicalMarkdownMirror'
 import {
   JsonExporter,
 } from './JsonExporter'
@@ -47,6 +48,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   const mdExporter = new MarkdownExporter(distRoot, exportRoot)
   const sectionExporter = new SectionMarkdownExporter(exportRoot)
   const jsonExporter = new JsonExporter(distRoot, exportRoot)
+  const canonicalMirror = new CanonicalMarkdownMirror(distRoot)
   let sectionCount = 0
 
   const emitJson = Boolean(config.emit?.json)
@@ -65,7 +67,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
       }
     }
 
-    const { bodyWithHeading, mdOutPath, metadata } = mdExporter.exportFile({
+    const { bodyWithHeading, mdOutPath, metadata, route } = mdExporter.exportFile({
       section,
       siteDir,
       absPath,
@@ -77,13 +79,19 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
     // A page whose doc id names a real docs directory gets no section export:
     // its fragment files would share that directory with nested page exports
     // and could silently overwrite them.
+    let sectionDir: string | null = null
     if (!fs.existsSync(path.join(docsRoot, stripMarkdownExtension(relFromDocs)))) {
-      sectionCount += sectionExporter.exportFile({
+      const sectionResult = sectionExporter.exportFile({
         relFromDocs,
+        route,
         metadata,
         bodyWithHeading,
-      }).sectionCount
+      })
+      sectionCount += sectionResult.sectionCount
+      sectionDir = sectionResult.sectionDir
     }
+
+    canonicalMirror.mirror({ route, pageMarkdownPath: mdOutPath, sectionDir })
 
     if (emitJson) {
       jsonExporter.exportFile({ relFromDocs, metadata, mdOutPath, bodyWithHeading, config })
@@ -111,6 +119,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
   const { markdown: outMarkdown, json: outJson } = countMarkdownAndJsonFiles(exportRoot)
   const outTotal = outMarkdown + outJson
   const { chunkCount } = jsonExporter.getMetrics()
+  const canonicalMetrics = canonicalMirror.getMetrics()
   console.log(
     [
       'LLM Export complete.',
@@ -118,6 +127,7 @@ export async function runLlmExport(options?: LlmExportRunOptions): Promise<void>
       `Source docs scanned: ${files.length}`,
       `Section markdown files: ${sectionCount}`,
       `Chunks indexed: ${chunkCount}`,
+      `Mirrored to <page-route>.md: ${canonicalMetrics.pageCount} pages, ${canonicalMetrics.sectionCount} sections`,
       `Output files under ${toPosixPath(path.relative(siteDir, exportRoot))}/: ${outTotal} total`,
       `  — ${outMarkdown} markdown (.md)`,
       `  — ${outJson} json (.json)`,

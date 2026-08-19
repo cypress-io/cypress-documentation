@@ -44,20 +44,21 @@ export class SectionMarkdownExporter {
 
   exportFile(params: {
     relFromDocs: string
+    route: string
     metadata: Record<string, string>
     bodyWithHeading: string
-  }): { sectionCount: number } {
-    const { relFromDocs, metadata, bodyWithHeading } = params
+  }): { sectionCount: number; sectionDir: string | null } {
+    const { relFromDocs, route, metadata, bodyWithHeading } = params
     const docId = stripMarkdownExtension(relFromDocs)
     const sections = this.splitByH2(bodyWithHeading)
     if (sections.length === 0) {
-      return { sectionCount: 0 }
+      return { sectionCount: 0, sectionDir: null }
     }
 
     const sectionDir = path.join(this.markdownRoot, docId)
     ensureDir(sectionDir)
     this.fragmentDirs.add(toPosixPath(docId))
-    const pagePath = `/llm/markdown/${toPosixPath(docId)}.md`
+    const pagePath = `/${route}.md`
 
     for (const section of sections) {
       const sectionMetadata = {
@@ -74,7 +75,7 @@ export class SectionMarkdownExporter {
       fs.writeFileSync(path.join(sectionDir, `${section.slug}.md`), out, 'utf8')
     }
 
-    return { sectionCount: sections.length }
+    return { sectionCount: sections.length, sectionDir }
   }
 
   /** Mirrors the chunked JSON boundary logic; duplicate slugs get `-2`, `-3`, … suffixes. */

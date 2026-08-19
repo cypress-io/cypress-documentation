@@ -14,6 +14,10 @@ This is the **Cypress Documentation** site, built with
 - The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
   content into stripped-down markdown and chunked JSON published under `/llm`,
   with `/llms.txt` as the index (both are build output, not committed files).
+  Every page's markdown is also published at its own route plus `.md`
+  (`/app/get-started/why-cypress.md`), with its `##` sections at
+  `/app/get-started/why-cypress/<h2-slug>.md`, so an agent can reach the
+  markdown by appending `.md` to a docs URL without discovering `/llm` first.
 - The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
   **never installed on their own**: they have no lockfiles and are not npm
   workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
