@@ -1023,7 +1023,7 @@
 
 [[redirects]]
   from = "/guides/guides/environment-variables"
-  to = "/app/references/environment-variables"
+  to = "/app/guides/environment-variables"
   status = 301
   force = true
 
