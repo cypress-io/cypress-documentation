@@ -12,7 +12,12 @@ and note that it errors out on a complete clone, so don't chain it with `&&`.
 
 The script is resumable. It compares each tag against the remote and pushes only
 what is missing, so re-running after a partial failure picks up where it left
-off.
+off. It cross-checks that count against the manifest and aborts rather than
+report a misleading "nothing to do" if the two disagree.
+
+Both scripts are written for bash 3.2, the version macOS ships. They use no
+shell arrays — associative arrays (`declare -A`) are bash 4 and fail on macOS in
+a way that quietly produces wrong answers.
 
 ### Pushing needs `workflow` scope
 

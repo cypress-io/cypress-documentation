@@ -27,22 +27,27 @@
 #     scripts/release-tags/create-release-tags.sh --push      # SSH; not an OAuth App
 #   a classic PAT with `repo` + `workflow` scopes
 #   a fine-grained PAT with Contents: write and Workflows: write
+#
+# Written for bash 3.2 (the version macOS ships): no associative arrays.
 
-set -uo pipefail
+set -o pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MANIFEST="$DIR/release-tags.tsv"
 REMOTE="${REMOTE:-origin}"
 PUSH=false
-[[ "${1:-}" == "--push" ]] && PUSH=true
+[ "${1:-}" = "--push" ] && PUSH=true
 
-[[ -f "$MANIFEST" ]] || { echo "missing manifest: $MANIFEST" >&2; exit 1; }
+[ -f "$MANIFEST" ] || { echo "missing manifest: $MANIFEST" >&2; exit 1; }
+
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
 
 created=0
-declare -a TAGS=()
+: > "$TMP/desired.tsv"
 
-while IFS=$'\t' read -r tag commit released anchor subject; do
-  [[ "$tag" == \#* || -z "$tag" ]] && continue
+while IFS="$(printf '\t')" read -r tag commit released anchor subject; do
+  case "$tag" in ''|\#*) continue ;; esac
 
   if ! git cat-file -e "$commit^{commit}" 2>/dev/null; then
     echo "SKIP $tag: commit $commit not present locally (run: git fetch --unshallow)" >&2
@@ -81,68 +86,85 @@ documentation reference point."
   GIT_COMMITTER_DATE="$(git log -1 --format=%cI "$commit")" \
     git tag -f -a "$tag" -m "$message" "$commit" >/dev/null
 
-  TAGS+=("$tag:$commit")
+  printf '%s\t%s\n' "$tag" "$commit" >> "$TMP/desired.tsv"
   created=$((created + 1))
 done < "$MANIFEST"
 
 echo "created/updated $created tags locally"
 
-if ! $PUSH; then
+if [ "$PUSH" != true ]; then
   echo "run again with --push to publish them to $REMOTE"
   exit 0
 fi
 
-# Work out what the remote already has, peeling annotated tags to their commit.
-# Tag objects created on a different machine have different SHAs but the same
-# target, so compare targets, not tag object ids.
+# Map every remote tag to the commit it resolves to, peeling annotated tags.
+# Tag objects created on another machine have different object ids but the same
+# target, so compare targets, never tag object ids.
 echo "checking $REMOTE ..."
-declare -A REMOTE_TARGET=()
-while read -r sha ref; do
-  [[ -z "${ref:-}" ]] && continue
-  name="${ref#refs/tags/}"
-  if [[ "$name" == *'^{}' ]]; then
-    REMOTE_TARGET["${name%^\{\}}"]="$sha"
-  elif [[ -z "${REMOTE_TARGET[$name]:-}" ]]; then
-    REMOTE_TARGET["$name"]="$sha"
-  fi
-done < <(git ls-remote --tags "$REMOTE")
+if ! git ls-remote --tags "$REMOTE" > "$TMP/lsremote.txt"; then
+  echo "could not read tags from $REMOTE" >&2
+  exit 1
+fi
 
-declare -a TODO=()
-for entry in "${TAGS[@]}"; do
-  tag="${entry%%:*}"; commit="${entry##*:}"
-  [[ "${REMOTE_TARGET[$tag]:-}" == "$commit" ]] || TODO+=("$tag")
-done
+awk '
+{
+  ref = $2; sub("refs/tags/", "", ref)
+  if (ref ~ /\^\{\}$/) { sub(/\^\{\}$/, "", ref); peel[ref] = $1 }
+  else if (!(ref in direct)) { direct[ref] = $1 }
+}
+END { for (r in direct) print r "\t" ((r in peel) ? peel[r] : direct[r]) }
+' "$TMP/lsremote.txt" > "$TMP/remote.tsv"
 
-already=$(( created - ${#TODO[@]} ))
-echo "$already already correct on $REMOTE, ${#TODO[@]} to push"
-[[ ${#TODO[@]} -eq 0 ]] && { echo "nothing to do"; exit 0; }
+awk -F'\t' -v TODO="$TMP/todo.txt" -v COUNT="$TMP/correct.txt" '
+  NR == FNR { have[$1] = $2; next }
+  { if (($1 in have) && have[$1] == $2) correct++; else print $1 > TODO }
+  END { print correct + 0 > COUNT }
+' "$TMP/remote.tsv" "$TMP/desired.tsv"
+
+[ -f "$TMP/todo.txt" ] || : > "$TMP/todo.txt"
+todo=$(grep -c . < "$TMP/todo.txt")
+correct=$(cat "$TMP/correct.txt")
+
+echo "$correct already correct on $REMOTE, $todo to push"
+
+# A silent "nothing to do" is the dangerous outcome, so make the arithmetic
+# prove itself before trusting it.
+if [ "$((correct + todo))" -ne "$created" ]; then
+  echo "internal error: $correct + $todo != $created — refusing to continue" >&2
+  exit 1
+fi
+
+[ "$todo" -eq 0 ] && { echo "nothing to do"; exit 0; }
 
 pushed=0
-declare -a FAILED=()
-batch=()
+failed=0
+specs=""
+n=0
 
 flush() {
-  [[ ${#batch[@]} -eq 0 ]] && return 0
-  local names=("${batch[@]##*:refs/tags/}")
-  if git push "$REMOTE" "${batch[@]}"; then
-    pushed=$(( pushed + ${#batch[@]} ))
+  [ -z "$specs" ] && return 0
+  if git push "$REMOTE" $specs; then
+    pushed=$((pushed + n))
   else
-    FAILED+=("${names[@]}")
+    failed=$((failed + n))
   fi
-  batch=()
+  specs=""
+  n=0
   return 0
 }
 
-for tag in "${TODO[@]}"; do
-  batch+=("+refs/tags/$tag:refs/tags/$tag")
-  [[ ${#batch[@]} -ge 60 ]] && flush
-done
+while read -r tag; do
+  [ -z "$tag" ] && continue
+  specs="$specs +refs/tags/$tag:refs/tags/$tag"
+  n=$((n + 1))
+  [ "$n" -ge 60 ] && flush
+done < "$TMP/todo.txt"
 flush
 
 echo
-echo "pushed $pushed, failed ${#FAILED[@]}"
+echo "pushed $pushed, failed $failed"
 
-if [[ ${#FAILED[@]} -gt 0 ]]; then
+if [ "$failed" -gt 0 ]; then
   cat >&2 <<'MSG'
 
 Some refs were rejected. If the errors mention `workflow` scope, the credential

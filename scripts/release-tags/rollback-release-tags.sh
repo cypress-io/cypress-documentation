@@ -16,106 +16,129 @@
 # Usage:
 #   scripts/release-tags/rollback-release-tags.sh            # dry run, prints the plan
 #   scripts/release-tags/rollback-release-tags.sh --push     # apply locally and push
+#
+# Written for bash 3.2 (the version macOS ships): no associative arrays.
 
-set -uo pipefail
+set -o pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MANIFEST="$DIR/rollback.tsv"
 REMOTE="${REMOTE:-origin}"
 PUSH=false
-[[ "${1:-}" == "--push" ]] && PUSH=true
+[ "${1:-}" = "--push" ] && PUSH=true
 
-[[ -f "$MANIFEST" ]] || { echo "missing manifest: $MANIFEST" >&2; exit 1; }
+[ -f "$MANIFEST" ] || { echo "missing manifest: $MANIFEST" >&2; exit 1; }
+
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
 
 echo "checking $REMOTE ..."
-declare -A REMOTE_TARGET=()
-while read -r sha ref; do
-  [[ -z "${ref:-}" ]] && continue
-  name="${ref#refs/tags/}"
-  if [[ "$name" == *'^{}' ]]; then
-    REMOTE_TARGET["${name%^\{\}}"]="$sha"
-  elif [[ -z "${REMOTE_TARGET[$name]:-}" ]]; then
-    REMOTE_TARGET["$name"]="$sha"
-  fi
-done < <(git ls-remote --tags "$REMOTE")
-
-declare -a RESTORE=() DELETE=() MISSING=()
-
-while IFS=$'\t' read -r tag action commit; do
-  [[ "$tag" == \#* || -z "$tag" ]] && continue
-  case "$action" in
-    restore)
-      # already back at its original commit? nothing to do
-      [[ "${REMOTE_TARGET[$tag]:-}" == "$commit" ]] && continue
-      if git cat-file -e "$commit^{commit}" 2>/dev/null; then
-        RESTORE+=("$tag:$commit")
-      else
-        MISSING+=("$tag ($commit)")
-      fi
-      ;;
-    delete)
-      # only delete what is actually on the remote
-      [[ -n "${REMOTE_TARGET[$tag]:-}" ]] && DELETE+=("$tag")
-      ;;
-  esac
-done < "$MANIFEST"
-
-echo "restore ${#RESTORE[@]} tags to their original commits"
-echo "delete  ${#DELETE[@]} tags created by create-release-tags.sh"
-
-if [[ ${#MISSING[@]} -gt 0 ]]; then
-  echo
-  echo "WARNING: ${#MISSING[@]} original commits are not in the local object store." >&2
-  echo "Fetch them before rolling back, e.g.:" >&2
-  echo "  git fetch $REMOTE '+refs/*:refs/remotes/all/*'" >&2
-  printf '  %s\n' "${MISSING[@]}" >&2
+if ! git ls-remote --tags "$REMOTE" > "$TMP/lsremote.txt"; then
+  echo "could not read tags from $REMOTE" >&2
+  exit 1
 fi
 
-if [[ ${#RESTORE[@]} -eq 0 && ${#DELETE[@]} -eq 0 ]]; then
+awk '
+{
+  ref = $2; sub("refs/tags/", "", ref)
+  if (ref ~ /\^\{\}$/) { sub(/\^\{\}$/, "", ref); peel[ref] = $1 }
+  else if (!(ref in direct)) { direct[ref] = $1 }
+}
+END { for (r in direct) print r "\t" ((r in peel) ? peel[r] : direct[r]) }
+' "$TMP/lsremote.txt" > "$TMP/remote.tsv"
+
+# restore.tsv: tags whose remote target is not already the original commit
+# delete.txt: tags that exist on the remote and should not
+awk -F'\t' -v RESTORE="$TMP/restore.tsv" -v DELETE="$TMP/delete.txt" '
+  NR == FNR { have[$1] = $2; onremote[$1] = 1; next }
+  $1 ~ /^#/ || $1 == "" { next }
+  $2 == "restore" { if (have[$1] != $3) print $1 "\t" $3 > RESTORE; next }
+  $2 == "delete"  { if ($1 in onremote) print $1 > DELETE }
+' "$TMP/remote.tsv" "$MANIFEST"
+
+: >> "$TMP/restore.tsv"; : >> "$TMP/delete.txt"
+
+# Original commits must be in the local object store to be restorable.
+: > "$TMP/missing.txt"; : > "$TMP/restore_ok.tsv"
+while IFS="$(printf '\t')" read -r tag commit; do
+  [ -z "$tag" ] && continue
+  if git cat-file -e "$commit^{commit}" 2>/dev/null; then
+    printf '%s\t%s\n' "$tag" "$commit" >> "$TMP/restore_ok.tsv"
+  else
+    printf '%s (%s)\n' "$tag" "$commit" >> "$TMP/missing.txt"
+  fi
+done < "$TMP/restore.tsv"
+
+restore=$(grep -c . < "$TMP/restore_ok.tsv")
+delete=$(grep -c . < "$TMP/delete.txt")
+missing=$(grep -c . < "$TMP/missing.txt")
+
+echo "restore $restore tags to their original commits"
+echo "delete  $delete tags created by create-release-tags.sh"
+
+if [ "$missing" -gt 0 ]; then
+  echo
+  echo "WARNING: $missing original commits are not in the local object store." >&2
+  echo "Fetch them before rolling back, e.g.:" >&2
+  echo "  git fetch $REMOTE '+refs/*:refs/remotes/all/*'" >&2
+  sed 's/^/  /' "$TMP/missing.txt" >&2
+fi
+
+if [ "$restore" -eq 0 ] && [ "$delete" -eq 0 ]; then
   echo "nothing to do — remote already matches the pre-existing state"
   exit 0
 fi
 
-if ! $PUSH; then
+if [ "$PUSH" != true ]; then
   echo
   echo "dry run — re-run with --push to apply"
   exit 0
 fi
 
-for entry in "${RESTORE[@]}"; do
-  git tag -f "${entry%%:*}" "${entry##*:}" >/dev/null
-done
+while IFS="$(printf '\t')" read -r tag commit; do
+  [ -z "$tag" ] && continue
+  git tag -f "$tag" "$commit" >/dev/null
+done < "$TMP/restore_ok.tsv"
 
 ok=0
-declare -a FAILED=()
-batch=()
+failed=0
+specs=""
+n=0
 
 flush() {
-  [[ ${#batch[@]} -eq 0 ]] && return 0
-  if git push "$REMOTE" "${batch[@]}"; then
-    ok=$(( ok + ${#batch[@]} ))
+  [ -z "$specs" ] && return 0
+  if git push "$REMOTE" $specs; then
+    ok=$((ok + n))
   else
-    FAILED+=("${batch[@]}")
+    failed=$((failed + n))
   fi
-  batch=()
+  specs=""
+  n=0
   return 0
 }
 
-for entry in "${RESTORE[@]}"; do
-  batch+=("+refs/tags/${entry%%:*}:refs/tags/${entry%%:*}")
-  [[ ${#batch[@]} -ge 60 ]] && flush
-done
+while IFS="$(printf '\t')" read -r tag commit; do
+  [ -z "$tag" ] && continue
+  specs="$specs +refs/tags/$tag:refs/tags/$tag"
+  n=$((n + 1))
+  [ "$n" -ge 60 ] && flush
+done < "$TMP/restore_ok.tsv"
 flush
 
-for tag in "${DELETE[@]}"; do
-  batch+=(":refs/tags/$tag")
-  [[ ${#batch[@]} -ge 60 ]] && flush
-done
+while read -r tag; do
+  [ -z "$tag" ] && continue
+  specs="$specs :refs/tags/$tag"
+  n=$((n + 1))
+  [ "$n" -ge 60 ] && flush
+done < "$TMP/delete.txt"
 flush
 
-for tag in "${DELETE[@]}"; do git tag -d "$tag" >/dev/null 2>&1 || true; done
+while read -r tag; do
+  [ -z "$tag" ] && continue
+  git tag -d "$tag" >/dev/null 2>&1
+done < "$TMP/delete.txt"
 
 echo
-echo "rollback: $ok refs updated, ${#FAILED[@]} failed"
-[[ ${#FAILED[@]} -gt 0 ]] && exit 1
+echo "rollback: $ok refs updated, $failed failed"
+[ "$failed" -gt 0 ] && exit 1
 exit 0
