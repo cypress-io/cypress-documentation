@@ -76,17 +76,95 @@ function assertRevision(name, value) {
 }
 
 function parseArgs(argv) {
-  const args = { dryRun: false }
+  const args = { dryRun: false, probe: false }
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--before') args.before = argv[++i]
     else if (argv[i] === '--after') args.after = argv[++i]
     else if (argv[i] === '--dry-run') args.dryRun = true
+    else if (argv[i] === '--probe') args.probe = true
     else throw new Error(`unknown argument: ${argv[i]}`)
   }
-  if (!args.after) throw new Error('--after is required')
-  assertRevision('--after', args.after)
+  if (!args.probe && !args.after) throw new Error('--after is required')
+  if (args.after) assertRevision('--after', args.after)
   if (args.before) assertRevision('--before', args.before)
   return args
+}
+
+// Answers the one question a dry run cannot: is this credential allowed to
+// create a tag pointing at a commit whose tree contains .github/workflows?
+// GitHub refuses that for tokens without workflow scope, and the refusal only
+// happens server-side, so it has to be tried for real. Creates a throwaway tag
+// and deletes it again — no vX.Y.Z ref is touched.
+async function runProbe(token, repository) {
+  const commit = git('rev-parse', 'HEAD').trim()
+  const name = 'tag-permission-probe'
+  const ref = `refs/tags/${name}`
+
+  const workflows = gitOrNull(
+    'ls-tree',
+    '-r',
+    '--name-only',
+    commit,
+    '--',
+    '.github/workflows'
+  )
+  if (!workflows || !workflows.trim()) {
+    console.log(
+      `WARNING: ${commit.slice(0, 9)} has no .github/workflows files, so this ` +
+        'probe does not exercise the restriction it is meant to test.'
+    )
+  } else {
+    console.log(
+      `probing against ${commit.slice(0, 9)}, which contains ` +
+        `${workflows.trim().split('\n').length} workflow file(s)`
+    )
+  }
+
+  let created = false
+  try {
+    const object = await api(`/repos/${repository}/git/tags`, {
+      method: 'POST',
+      token,
+      body: {
+        tag: name,
+        message: 'Throwaway tag verifying tagging permissions. Safe to delete.',
+        object: commit,
+        type: 'commit',
+      },
+    })
+    await api(`/repos/${repository}/git/refs`, {
+      method: 'POST',
+      token,
+      body: { ref, sha: object.sha },
+    })
+    created = true
+    console.log('\nPASS — this credential can create release tags.')
+  } catch (error) {
+    console.error(`\nFAIL — ${error.message}`)
+    if (/workflow/i.test(error.body || '')) {
+      console.error(
+        '\nRefused because the tagged commit contains .github/workflows files.\n' +
+          'Set RELEASE_TAG_TOKEN to a fine-grained credential limited to this ' +
+          'repository\n(a GitHub App installation token or a fine-grained PAT) ' +
+          'and probe again.'
+      )
+    }
+    process.exitCode = 1
+  } finally {
+    if (created) {
+      try {
+        await api(`/repos/${repository}/git/${ref}`, {
+          method: 'DELETE',
+          token,
+        })
+        console.log(`cleaned up ${name}`)
+      } catch (error) {
+        console.error(
+          `WARNING: could not delete ${name}, remove it by hand: ${error.message}`
+        )
+      }
+    }
+  }
 }
 
 // Attribute each new version to the commit that actually introduced it, rather
@@ -130,6 +208,15 @@ async function api(path, { method = 'GET', body, token } = {}) {
 async function main() {
   const args = parseArgs(process.argv.slice(2))
   const zero = /^0{40}$/
+
+  if (args.probe) {
+    const token = process.env.TAG_TOKEN
+    const repository = process.env.REPO
+    if (!token || !repository) {
+      throw new Error('TAG_TOKEN and REPO are required for --probe')
+    }
+    return runProbe(token, repository)
+  }
 
   // A branch-creation or force-push event gives no usable base. Tagging every
   // version in the file at the current commit would be wrong, so stop.

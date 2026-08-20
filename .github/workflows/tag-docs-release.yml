@@ -23,6 +23,12 @@ on:
         description: 'Print what would be tagged without creating anything'
         type: boolean
         default: true
+      probe:
+        description: >-
+          Check whether the credential may create release tags, by creating a
+          throwaway tag and deleting it. Touches no vX.Y.Z ref.
+        type: boolean
+        default: false
 
 # Nothing ships through this workflow. Docs deploy via Netlify/Vercel and CI
 # runs on CircleCI, and this runs on push to main after the merge, so it is not
@@ -67,6 +73,10 @@ jobs:
       # tags. Keep it that way.
       - name: Tag releases added to the changelog
         run: |
+          if [ -n "$PROBE" ]; then
+            node scripts/tag-docs-release.mjs --probe
+            exit $?
+          fi
           node scripts/tag-docs-release.mjs \
             --before "${BEFORE:-$AFTER~1}" \
             --after "$AFTER" \
@@ -80,6 +90,7 @@ jobs:
           BEFORE: ${{ inputs.before || github.event.before }}
           AFTER: ${{ inputs.after || github.sha }}
           DRY_RUN: ${{ inputs.dry-run && '1' || '' }}
+          PROBE: ${{ inputs.probe && '1' || '' }}
           REPO: ${{ github.repository }}
           # Deliberately NOT named GITHUB_TOKEN: if RELEASE_TAG_TOKEN is ever
           # set, that variable name would be picked up automatically by the gh
@@ -97,7 +108,9 @@ jobs:
 
   report-failure:
     needs: [tag]
-    if: failure()
+    # A failed probe is not a missing tag, and whoever ran it is watching the
+    # output already, so it should not file an issue.
+    if: failure() && !inputs.probe
     runs-on: ubuntu-latest
     permissions:
       # Read to check out the reporting script, issues to file the report. No
