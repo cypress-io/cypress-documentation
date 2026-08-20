@@ -1,0 +1,303 @@
+# tag	commit	released	anchor	commit_subject
+v0.13.7	12aa7da6f813e6698d8552a0543ca228add515fa	2016-01-17	date	Edited Issuing Commands file.
+v0.13.8	7721bb1a461a06d58c56fc9ff171d3ae4d827831	2016-01-24	date	Fixed all inner links on command pages
+v0.13.9	25afaaeb89d05520856c1a9d46661e3b145a2596	2016-01-28	date	js comments
+v0.14.0	cffe66d272af612b7dfa54b763170c743e51d161	2016-03-08	date	fix link
+v0.14.1	ba37c3a4f430c6706476d0b13e2125c5781b0502	2016-03-13	date	added timeout option to cy.then() doc
+v0.14.2	ba37c3a4f430c6706476d0b13e2125c5781b0502	2016-03-14	date	added timeout option to cy.then() doc
+v0.14.3	1802227681146bf20384e5608bea5a730c51a09d	2016-03-20	date	fixed broken links on API mainpage.
+v0.15.0	2d9451261cff2c3b27271ab7897960e5f5093862	2016-03-28	date	rename directory -> folder
+v0.15.1	8ca950ce666e45d9a694e421fad473d6b4ee57a9	2016-04-01	date	Merge branch 'jdm/0.15.1'
+v0.15.2	8ca950ce666e45d9a694e421fad473d6b4ee57a9	2016-04-03	date	Merge branch 'jdm/0.15.1'
+v0.15.3	cefebc67309dae8fb08baded7d99f6c1cfe47101	2016-04-10	date	updated guides icon to be graduation cap
+v0.15.4	ba050897a5b2745371c7e0f2ef29a64667bb298e	2016-04-22	date	typo update
+v0.16.0	0b405b8141bd8763f2815f83340799bcf9cec5a1	2016-05-17	date	clarified
+v0.16.1	5ac70836f465852fd462193c44cf5f9486991eda	2016-05-22	date	updated invoke example to be a more realistic example.
+v0.16.2	1488a71185442ba7508e5ad0a7f919e4237ef917	2016-06-11	date	Revert "update exec docs with shell info"
+v0.16.3	0f604ab56e557d5d69384ba2a693d330ea9e33b0	2016-06-17	date	updated indexes
+v0.16.4	0f604ab56e557d5d69384ba2a693d330ea9e33b0	2016-06-17	date	updated indexes
+v0.16.5	509a4bd86a5cd27c240f76e81c400035e8e0c48f	2016-07-31	date	bump node version
+v0.17.0	2c8bae6b6567cc30388a844a9a0eedbf183c8814	2016-08-30	date	updated commandTimeout to defaultCommandTimeout for 0.17.0
+v0.17.1	bb164a3116b72b489ff0f958908ef43d2dd93e48	2016-08-31	date	bumped node version
+v0.17.2	03b9d7963fff2043c0bb932e2aa21233230854d7	2016-09-06	date	fixed slug in links to readfile / writefile
+v0.17.3	3f64a11c881e7778c9499d93952f3ba9641aaa77	2016-09-11	date	add known issue concerning modifier effects
+v0.17.4	3f64a11c881e7778c9499d93952f3ba9641aaa77	2016-09-12	date	add known issue concerning modifier effects
+v0.17.5	9001f515ddf46427b76b52eaca754c4f54bd96a6	2016-10-02	date	caps
+v0.17.6	599e866be45e0acf7d123a6a788393ea78da9d20	2016-10-04	date	formatting, callouts, folder structure
+v0.17.7	a2f83fdab3e4185ce62583a3e585324cf6f7597d	2016-10-12	date	content
+v0.17.8	2d1787a78d4de1610d4801b68a7f0bbc62afd394	2016-10-13	date	highlight special wording
+v0.17.9	2d1787a78d4de1610d4801b68a7f0bbc62afd394	2016-10-22	date	highlight special wording
+v0.17.10	bf52dc0ee11ac0899e2dad2d3716a7b82385513c	2016-11-07	date	Updated example of fixture data being edited to be passed to route.
+v0.17.11	a2a6b1536b2dbe946c7651b1a3068742c36cdf01	2016-11-16	date	updated link to new section in CI guide
+v0.17.12	9c31c3bd940fc5e6443d1e1ca1638fbc24bb0d24	2016-11-21	date	Merge remote-tracking branch 'origin/master'
+v0.18.0	9c31c3bd940fc5e6443d1e1ca1638fbc24bb0d24	2016-11-27	date	Merge remote-tracking branch 'origin/master'
+v0.18.1	e01c1d32cf5655d5d3e1ce3dfd540f79f036c17f	2016-12-11	date	issue ref, formatting
+v0.18.2	b8864312d2b5a83a6ad7a08c74c4718faadfefae	2016-12-15	date	removed section about removing cookies with option that is deprecated.
+v0.18.3	b8864312d2b5a83a6ad7a08c74c4718faadfefae	2016-12-18	date	removed section about removing cookies with option that is deprecated.
+v0.18.4	267f7fb3e95d8f501f898e6977985127e4909ab4	2016-12-28	date	Merge suggested edits from Bryan Dimas & Tomer Laufer
+v0.18.5	267f7fb3e95d8f501f898e6977985127e4909ab4	2017-01-08	date	Merge suggested edits from Bryan Dimas & Tomer Laufer
+v0.18.6	e9b1f40e98afd983b954b4f1fbc418fcc5bd843d	2017-01-29	date	reference to 3rd party docker container
+v0.18.7	e9b1f40e98afd983b954b4f1fbc418fcc5bd843d	2017-01-30	date	reference to 3rd party docker container
+v0.18.8	171dc6e859b2ea8baa9bf340e7ee374a1029ce91	2017-02-05	date	Merge branch 'CYP-457-sinon-integration'
+v0.19.0	90dce8fce2cf33f8b49e770e768397e8d4a31025	2017-02-11	date	distinguish dates a bit better
+v0.19.1	d9f3aa5bc69efc3f4125d1941b83cc99cf43bb18	2017-03-09	date	improve cy.location docs and usage params
+v0.19.2	590035bfe051d1adeb1955d122690289f45cf599	2017-04-16	date	moved image of aliasing routes to a more appropriate section of the docs.
+v0.19.3	8f3e47c251a6a41c95c1d3f84344c2e1986111fb	2017-06-14	date	Merge pull request #13 from HugoGiraudel/patch-1
+v0.19.4	8f3e47c251a6a41c95c1d3f84344c2e1986111fb	2017-06-18	date	Merge pull request #13 from HugoGiraudel/patch-1
+v0.20.0	ebc44355b8835c92096981585bdb61de22ec8668	2017-09-10	changelog	Merge pull request #58 from cypress-io/develop
+v0.20.1	c471ec666743818b4089e5a4dc23c5bbb92b6563	2017-09-17	changelog	Merge branch 'develop'
+v0.20.2	8c9c89c5f577aa606b1b489e2b7e7612c9cbe164	2017-10-06	changelog	Merge branch 'develop'
+v0.20.3	8c9c89c5f577aa606b1b489e2b7e7612c9cbe164	2017-10-06	changelog	Merge branch 'develop'
+v1.0.0	93c989f006268564da26b8da52bc114f0c0f4dab	2017-10-09	changelog	Merge branch 'develop'
+v1.0.1	a4af8d0dcb2a74b6fdd394629a48487842386b76	2017-10-10	changelog	Merge branch 'develop'
+v1.0.2	bccc234ddeca3adb50009c81855e3918e1b0d57f	2017-10-13	changelog	Merge branch 'develop'
+v1.0.3	382efda060aeb71c630890928e4ea9ab95fa07dd	2017-10-29	changelog	changelog for 1.0.3
+v1.1.0	a69b2a69eddd35ef74b40db217e5522d8d109284	2017-11-19	changelog	Merge branch 'develop'
+v1.1.1	02cfbb97150695f621be39afaf26e7305ce6aea5	2017-11-20	changelog	Merge branch 'develop'
+v1.1.2	f49228d238432120d792295e279377b225a5bede	2017-11-26	changelog	Merge branch 'develop'
+v1.1.3	f4d26067e58fd8fc2325ad16b202511fb4129f62	2017-12-03	changelog	Merge branch 'develop'
+v1.1.4	4b362a353f9e55116879657f5feaf0a147b4d8ef	2017-12-06	changelog	Merge branch 'develop'
+v1.2.0	7c42ad60aee5a7fa85a1a924a9e40572b1cb2d32	2017-12-14	changelog	Merge branch 'develop'
+v1.3.0	ef01f110fb57fb8c19a664bda33c7452a8057794	2017-12-17	changelog	Merge branch 'develop'
+v1.4.0	fc4419bb0920d5410ba4603b558152f7867538eb	2017-12-19	changelog	Merge branch 'develop'
+v1.4.1	0ba1344e6fbb74b6cc23df154f40259e1394556f	2017-12-26	changelog	Merge branch 'develop'
+v1.4.2	f9ca93bb51d521e13ba2cb3e67179c2ab3f71f6a	2018-02-04	changelog	Merge branch 'develop'
+v2.0.0	781c65f0171f500285dd86b293c3158ecc6564f3	2018-02-15	changelog	Merge branch 'develop'
+v2.0.1	ed56c5ed016b17016cceca587f91678900bf366c	2018-02-16	changelog	Merge branch 'develop'
+v2.0.2	9712f426c7295d9c89cddc9f4217a5e99486979d	2018-02-17	changelog	Merge branch 'develop'
+v2.0.3	559f969648a5cdc82199487b7aaf5b40ec9c4f34	2018-02-21	changelog	Merge branch 'develop'
+v2.0.4	c76638698a9232f908a81d1e66c88efe36e3839c	2018-02-25	changelog	Merge branch 'develop'
+v2.1.0	648e6ba1f9c88c63cc8b52131c98f65876ff2af0	2018-03-01	changelog	Merge branch 'develop'
+v3.0.0	9aa8660cc6b380541bdc036bd4eae5b97a9cca97	2018-05-29	changelog	Merge branch 'develop'
+v3.0.1	be3f611c8e482ed191042d81233c34c0430da6cb	2018-05-30	changelog	Merge branch 'develop'
+v3.0.2	5981c11e0b9a6a6961a8f7b7d08af9adb2a771cd	2018-06-28	changelog	Merge branch 'develop'
+v3.0.3	cec4b5c192b6ef4dc87d9a427039ebc8ba2bf48f	2018-07-30	changelog	Merge branch 'develop'
+v3.1.0	cec4b5c192b6ef4dc87d9a427039ebc8ba2bf48f	2018-08-13	changelog	Merge branch 'develop'
+v3.1.1	88a20f27db95ae66ee519e44f85ff8e76e693be0	2018-11-02	changelog	Merge branch 'develop'
+v3.1.2	59b050069ce256249d84551cd4e3134529f5860d	2018-11-18	changelog	Merge branch 'develop'
+v3.1.3	ed424970ccf29cfe75194a91775f962469d895ce	2018-12-03	changelog	Merge branch 'develop'
+v3.1.4	76a367178903e452692b1370aa95d213e8e9c673	2018-12-25	changelog	Merge branch 'develop'
+v3.1.5	bc1444adb67a9b9660a5232f34dca76dd1c9f765	2019-01-30	changelog	Merge branch 'develop'
+v3.2.0	ef269671c86f157763890cfb43a4f0bdad1fcfa7	2019-03-15	changelog	Merge pull request #1493 from cypress-io/develop
+v3.3.0	5cac6795dcbb2586c0a6567ef6f2fc0d6a14a48d	2019-05-17	changelog	Merge branch 'develop'
+v3.3.1	3b5e0dce2e30f63ba434af2b56edeac7314629a9	2019-05-23	changelog	Merge branch 'develop'
+v3.3.2	fad3f72dd7592e280b71ad8ae9116495f3c76ef6	2019-06-27	changelog	Merge branch 'develop'
+v3.4.0	d56a1fff60432d59398d1dd87aab2521264f7fae	2019-07-09	changelog	Develop (#1854)
+v3.4.1	67532558219f21d6a7617a401e3b8792cc0e6bcb	2019-07-29	changelog	Merge branch 'develop'
+v3.5.0	0f0ba5a733c3842f0d74c2234fc685377442b329	2019-10-23	changelog	Develop (#2186)
+v3.6.0	e963088900daee3cd4e879c2c52b7e71677ed8ba	2019-10-31	changelog	Develop (#2214)
+v3.6.1	e584fb90ffc7c73ccf96b1eeb31c48f1c4d1c791	2019-11-08	changelog	Master (#2236)
+v3.7.0	2b57d9aed189678e9f3b3401da8c04d8e609915f	2019-11-27	changelog	Create changelog file (#2269)
+v3.8.0	044603c1462e69371d5d60bf88ee21a8807a53a6	2019-12-12	changelog	3.8.0 release to prod (#2301)
+v3.8.1	35bfcf9642caad3eb2df273a2b6c79dbc5b6bdda	2019-12-26	changelog	Develop (#2331)
+v3.8.2	c994fba66b464c708b819d5b937455f0b3d8679a	2020-01-10	changelog	Merge pull request #2376 from cypress-io/develop
+v3.8.3	ab6fa059abc4daf5e275298746cbbdd9abc9e1c7	2020-01-24	changelog	Merge pull request #2429 from cypress-io/develop
+v4.0.0	833c9832e62387529aecd0c1b44d092eb3fffc39	2020-02-06	changelog	Merge pull request #2474 from cypress-io/develop
+v4.0.1	44756d4d41e2b55c446bbd362de9fa4fcf4e9eb1	2020-02-07	changelog	Merge pull request #2482 from cypress-io/develop
+v4.0.2	e4df9d5154db49d4bd59f7b30b9f6466e1a9fa45	2020-02-14	changelog	develop to master auto PR (#2511)
+v4.1.0	0f9032b16d738430181078aebfd54320eec15360	2020-02-28	changelog	Merge pull request #2556 from cypress-io/develop
+v4.2.0	77bc824dc9d1861969e4500e410d5190ecc368db	2020-03-16	changelog	Merge pull request #2618 from cypress-io/develop
+v4.3.0	732750111194831889a16bede5187818591d5ce4	2020-03-30	changelog	Merge pull request #2684 from cypress-io/develop
+v4.4.0	e37878f4978f536b5353ed46fcb4e48a273665c3	2020-04-13	changelog	Merge pull request #2714 from cypress-io/develop
+v4.4.1	863b89f45f4781b8df3606e076ea6eb93784b75c	2020-04-20	changelog	Merge pull request #2730 from cypress-io/develop
+v4.5.0	fbcdbacf774f0eeeb2902368288e9f1e08b2518e	2020-04-28	changelog	Merge pull request #2756 from cypress-io/develop
+v4.6.0	53a3aeeaaf79e76cf9d2f9da9c4a2c859b4dee9b	2020-05-20	changelog	Merge pull request #2810 from cypress-io/develop
+v4.7.0	acf7159f46a0929f83e9d5af680233706e814b66	2020-05-26	changelog	Merge pull request #2819 from cypress-io/develop
+v4.8.0	3cebe67e62426654a9b99964935b2c1e7960229d	2020-06-08	changelog	Merge pull request #2864 from cypress-io/develop
+v4.9.0	f4a62aaee7544d406a1af4ee6c2b6eff02a37014	2020-06-23	changelog	Merge pull request #2914 from cypress-io/develop
+v4.10.0	ebf15d626b4902b0b82da36107f93a32468ced85	2020-07-07	changelog	Merge pull request #2960 from cypress-io/develop
+v4.11.0	b00bfd42e090f66193356f426e8eb8b3810a84d8	2020-07-21	changelog	Merge pull request #3010 from cypress-io/develop
+v4.12.0	31f2fbfec66c782444d589627e2abdc98a54458c	2020-08-03	changelog	Merge pull request #3049 from cypress-io/develop
+v4.12.1	fa616ad62113b2340248b5c7a412f9e5de770460	2020-08-05	changelog	Merge pull request #3057 from cypress-io/develop
+v5.0.0	1ab2f9afdc520d605cf176329889224ce4354787	2020-08-19	changelog	Merge pull request #3081 from cypress-io/develop
+v5.1.0	4e0acf98505236b9b26a3cbcbd86a907364814fd	2020-09-01	changelog	Merge pull request #3126 from cypress-io/develop
+v5.2.0	509cea19491de8b314e36529819d5b9b0fe00b60	2020-09-15	changelog	Merge pull request #3160 from cypress-io/develop
+v5.3.0	5e8e0e63b2ba244fd85f3df8dd0709f8126bab46	2020-09-28	changelog	Merge pull request #3191 from cypress-io/develop
+v5.4.0	7d6f4f94fa38c94ff4473292d854b4229c359c85	2020-10-14	changelog	Merge pull request #3241 from cypress-io/develop
+v5.5.0	34465593a080019004620c18e7daa11188b50fbe	2020-10-26	changelog	Merge pull request #3287 from cypress-io/develop
+v5.6.0	034ab418c124d30b75a781ee5ec4f98d476dab5a	2020-11-09	changelog	Merge pull request #3314 from cypress-io/develop
+v6.0.0	7b9e86acbd82f78c105cf40141dbc06942015d65	2020-11-23	changelog	Merge pull request #3341 from cypress-io/develop
+v6.0.1	a3635b4883e8c24ecd32ad89a95080987776c75f	2020-11-30	changelog	Merge pull request #3361 from cypress-io/develop
+v6.1.0	07994ecce796380b915c0707c9032347253a31e2	2020-12-07	changelog	Merge pull request #3380 from cypress-io/develop
+v6.2.0	2911347b803100f91fb317f627d0b0881ba824c7	2020-12-21	changelog	Merge pull request #3430 from cypress-io/develop
+v6.2.1	86d7a927c9dc88a323a7f602a90d2889ab8a36b4	2021-01-04	changelog	Merge pull request #3458 from cypress-io/develop
+v6.3.0	884b845cf652edb82d6ef21f5b3c056be6bbb5c8	2021-01-19	changelog	Merge pull request #3497 from cypress-io/develop
+v6.4.0	ad4ce50e39964e39749513ae1b3ca5831d3371ff	2021-02-01	changelog	Merge pull request #3528 from cypress-io/develop
+v6.5.0	998fe56bbabd2ca3ef68f01298d7184536d40bff	2021-02-15	changelog	Merge pull request #3569 from cypress-io/develop
+v6.6.0	f8f8e07aa6a51ccca3c496b89ecd86d9f035a32a	2021-02-18	changelog	Merge pull request #3620 from cypress-io/develop
+v6.7.0	dfb5ce144254dae0dda2f8a6e9bd6a959dca357d	2021-03-15	changelog	develop to master auto PR (#3690)
+v6.7.1	252d91763628ab429042c028277767d82481c9cc	2021-03-15	changelog	develop to master auto PR (#3706)
+v6.8.0	40aa0694d6e60e9b853ab5e7fbe20c08e8958cd9	2021-03-17	changelog	Merge pull request #3719 from cypress-io/develop
+v6.9.0	bb7460f1d1b7dc4d8561dd95656bec906ef9bc69	2021-04-05	changelog	Add changelogs for 6.9.0 and 6.9.1 (#3785)
+v6.9.1	bb7460f1d1b7dc4d8561dd95656bec906ef9bc69	2021-04-05	changelog	Add changelogs for 6.9.0 and 6.9.1 (#3785)
+v7.0.0	6dbacf3ee31bfe797e717d66422fa05fb4b6f241	2021-04-05	changelog	7.0 Release (next docs) (#3613)
+v7.0.1	7ad63f7f8ba83405b0972f40ab8fee9fc87b07cd	2021-04-07	changelog	7.0.1 release (#3800)
+v7.1.0	0ca752997360a06162092a373f55dd263db86b2a	2021-04-12	changelog	7.1.0 Release (#3829)
+v7.2.0	39a3c9bb0aea9855efbae8332502fb9b1b2a0298	2021-04-26	changelog	7.2.0 release (#3878)
+v7.3.0	f08b5e4045629ca14a7016de2bda7059eaac97a5	2021-05-10	changelog	7.3.0 Release (#3893)
+v7.4.0	d3161bfb3d560da2ff47cfa4940c7c9e95cf4845	2021-05-24	changelog	7.4.0 Release (#3928)
+v7.5.0	66f6482adc7057d9da75fdc9efcc0cdff37a5077	2021-06-07	changelog	7.5.0 Release (#3968)
+v7.6.0	2bc4f471493721a735dc2b7827cb9a6e1c822577	2021-06-23	changelog	Merge pull request #3977 from cypress-io/7.6.0-release
+v7.7.0	31fd84c5d94c8a5d1b5c81c4ce3f3a10abcbcb85	2021-07-07	changelog	7.7.0 Release (#4001)
+v8.0.0	26d38c13611964177c24123986014ac5f2a6ff56	2021-07-19	changelog	Merge pull request #4012 from cypress-io/8.0-release
+v8.1.0	6e41dd83c76bccdb5058659a88791a1eb806c4ab	2021-07-29	changelog	8.1.0 Release (#4039)
+v8.2.0	3a176f87be03944536bae24db2f22c1eabc6b521	2021-08-04	changelog	Merge pull request #4049 from cypress-io/8.2.0-release
+v8.3.0	eb625cd46d04a5f4cfef86c5e237414d9a2126e1	2021-08-16	changelog	8.3.0 Release (#4067)
+v8.3.1	31ca6b0bca051a8be1f2c76799f6e79ff6756850	2021-08-27	changelog	8.3.1 Release (#4075)
+v8.4.0	ba674d957e4e7dd96332a1b21954242ec83ac498	2021-09-13	changelog	Merge pull request #4078 from cypress-io/8.4.0-release
+v8.4.1	fed6b518d02b2b5b47d1bcce7585423ae061baf7	2021-09-17	changelog	Merge pull request #4095 from cypress-io/8.4.1-release
+v8.5.0	a5ba65b251847cc208835aa44013d2983b411d10	2021-09-27	changelog	8.5.0 Release (#4108)
+v8.6.0	955682fb2d236735179c398dcb4e913af0016956	2021-10-11	changelog	8.6.0 Release (#4141)
+v8.7.0	d3ea4dee8f47a35ca2e9edd2a2cb64e01a42f702	2021-10-25	changelog	Merge pull request #4174 from cypress-io/8.7.0-release
+v9.0.0	ba417271da9d91b5a3af54e679cc1b28d55fb0a5	2021-11-10	changelog	9.0 Release (#4181)
+v9.1.0	829119962996b73c1189d417b29a7955bdb6fe90	2021-11-22	changelog	9.1.0 Release (#4224)
+v9.1.1	271e6fe48be0933de49145f75900b3828e93b4f1	2021-12-03	changelog	9.1.1 Release (#4254)
+v9.2.0	96847c42a6228ee68addfa2e66297db7abd78db5	2021-12-20	changelog	9.2.0 Release (#4270)
+v9.2.1	d6e92fad8f28523dd7e4d979359fa0f653ca60e0	2022-01-10	changelog	Merge pull request #4307 from cypress-io/9.2.1-release
+v9.3.0	1777848d28dc619a0724e8b60cb977c0bcb609f7	2022-01-18	changelog	9.3.0 Release (#4304)
+v9.3.1	77a4e892c9bf28aab8ea4e64b9bc67cc5d353c6c	2022-01-19	changelog	9.3.1 Release (#4313)
+v9.4.0	fd53d045fe59af6665a485257874c2069e537bab	2022-01-31	changelog	Merge pull request #4330 from cypress-io/9.4.0-release
+v9.4.1	a3bd580a0619552bde50b002fd17bf420345f486	2022-01-31	changelog	docs: 9.4.1 release (#4333)
+v9.5.0	3783a817d0672e2021d9889a50e27b14ea6c302c	2022-02-15	changelog	9.5.0 Release (#4351)
+v9.5.1	a36527636bc5a15d41dfc72df91f702aad230236	2022-02-28	changelog	9.5.1 Release (#4370)
+v9.5.2	e3814ed17aabd31ab423dea00eb8689dac35e4ca	2022-03-14	changelog	Merge pull request #4387 from cypress-io/9.6.0
+v9.5.3	1a3e60724c26392f7bf710073a5ff0fc39e73f9a	2022-03-28	changelog	Merge pull request #4407 from cypress-io/9.5.3-changelog
+v9.5.4	624abab4bc7579362e49c848832d0c3dc7c0ce58	2022-04-11	changelog	Merge pull request #4433 from cypress-io/9.5.4
+v9.6.0	0cf87f412f5772f1d24d426c3189099f7839b9c9	2022-04-25	changelog	Merge pull request #4446 from cypress-io/9.6.0-release
+v9.6.1	559905203a3f8adb8501c0ce3a0aa6e82859c0d0	2022-05-09	changelog	Merge pull request #4471 from cypress-io/9.6.1-release
+v9.7.0	dc7b7b1af42e898ce177e5b11f50771b1d7e3c9b	2022-05-23	changelog	9.7.0 Release (#4489)
+v10.0.0	770dee0b41fe0427d687418d443f2a4af68a6bb0	2022-06-01	changelog	Merge pull request #4186 from cypress-io/unification
+v10.0.1	c72317832556bfa334e115fc0e98c179009e18bb	2022-06-01	changelog	10.0.1 release (#4534)
+v10.0.2	8cc535af18f6e78010e229a4ac3e91a8f6f8cb6a	2022-06-02	changelog	10.0.2 release (#4547)
+v10.0.3	cd4e2cabada3bdbbf1fac95ea83f6c44f383bcfe	2022-06-03	changelog	10.0.3 release (#4551)
+v10.1.0	e9c0223830877a2478fc7002da51be9b72932e7a	2022-06-10	manual	10.0.4 (#4562)
+v10.2.0	8c22d2ffb09ed1f0ed1869771b2b26ffcaa4869c	2022-06-21	changelog	docs: 10.2.0 release (#4575)
+v10.3.0	9acdc156d2f14da8781ce7c31268793483063dcf	2022-06-28	changelog	10.3.0 Release (#4594)
+v10.3.1	14021daec07f2300d015b0b915b5938d1f7d3b91	2022-07-19	changelog	10.3.1 changelog (#4612)
+v10.4.0	0a82f796e86423018d76250f9bd2eac29f4a1e01	2022-08-02	changelog	Merge branch '10.4.0-release'
+v10.5.0	d6c96f61dcf408dc49aa5f76f60571e987ccd561	2022-08-15	changelog	10.5.0 release (#4669)
+v10.6.0	92c44108aeb48caa94cc90dc483fc5f2750e103f	2022-08-16	changelog	10.6.0 Release (#4673)
+v10.7.0	f35f6fe6dcfcf584f61f9af3f68a0d47c7985f1f	2022-08-30	changelog	10.7.0 Release
+v10.8.0	e818dc55051d7bf9c6a7f7088c4224b4c993f43b	2022-09-13	changelog	Release 10.8.0 (#4728)
+v10.9.0	f0fa22dbcfce868dee10d8708454a7800b8e0425	2022-09-27	changelog	10.9.0 Release (#4747)
+v10.10.0	995bf3df0446237449828dde40e2e31b5849a88e	2022-10-11	changelog	Merge pull request #4775 from cypress-io/10.10.0-changelog
+v10.11.0	ca6edab3b2311867545321cb3a739d9f0d1c6783	2022-10-25	changelog	10.11.0 (#4790)
+v11.0.0	6c2f431404fcd6683c96c96d478ec3d11136a583	2022-11-08	changelog	docs: release documentation for 11.0.0 (#4845)
+v11.0.1	b581a5623e4aaa55d5ca49dd28e189906aa2c2c3	2022-11-09	changelog	V11.0.1 change log (#4848)
+v11.1.0	673a2ad75596069ecdd36a73484e2350c4152543	2022-11-14	changelog	11.1.0 Changelog (#4859)
+v11.2.0	4ddb75fd86c19f89d794224bb06b1b377a46945c	2022-11-22	changelog	11.2.0 Changelog (#4868)
+v12.0.0	e7d48cd70d06392e97286a51f6deda4a3752dbb2	2022-12-06	changelog	v12.0.0 Documentation (#4853)
+v12.0.1	706dea0fd982dc4e088e2e8bf8c55123e8b9bb76	2022-12-06	changelog	chore: adding 12.0.1 change log (#4905)
+v12.0.2	7d53a33031c4a44c3f4198967416fa5a6d976a9b	2022-12-08	changelog	12.0.2 change log (#4919)
+v12.1.0	bb7b1d623966352011c7cba9f369a7da45895aa1	2022-12-12	changelog	12.1.0 release (#4920)
+v12.2.0	45d7285e313c3f848e162beddadefe2a6a32fb1d	2022-12-20	changelog	12.2.0 release (#4932)
+v12.3.0	dce37f2a5139c7ab2cb3c370d1c23440e4c23f13	2023-01-03	changelog	12.3.0 Release (#4956)
+v12.4.0	f80da388060935c093665e2fd92e44482896b4e4	2023-01-24	changelog	Release 12.4.0 (#4997)
+v12.4.1	e18cc2a123ae867351d7925e17fd74457a9a88e4	2023-01-27	changelog	Release 12.4.1 (#5005)
+v12.5.0	9c03e9e6b5b6a0fd2a4c5486c04d90eb940797a4	2023-01-31	changelog	12.5.0 Release (#5026)
+v12.5.1	83624705454d5b8f2f64574312c1b9a551d6c62f	2023-02-02	changelog	12.5.1 Release (#5040)
+v12.6.0	ad61bc791f63548c64539f6203ba3e64a9f60542	2023-02-15	changelog	12.6.0 Release (#5063)
+v12.7.0	487be1efd49272b74eccbe733d8a3ac6b8cf8f5b	2023-02-24	changelog	12.7.0 release (#5087)
+v12.8.0	8bf56df73dfd5bfbd739b262667bb7e3c83d10b5	2023-03-14	changelog	12.8.0 release (#5070) (#5116)
+v12.8.1	907da70cc7586a4a96300bdd84c1e9cce70e8336	2023-03-15	changelog	chore: add 12.8.1 CHANGELOG (#5125)
+v12.9.0	b89f9440b4f83ffb73b8d0ece30ba02c239188f9	2023-03-28	changelog	chore: add 12.9.0 changelog (#5146)
+v12.10.0	3a5d84ce0650c0e8a49eee291bef499a4df494e4	2023-04-17	changelog	chore: add changelog for 12.10.0 (#5183)
+v12.11.0	39f150015cbf8d5cb98aaad919d7100546aca666	2023-04-26	changelog	chore: update changelog for 12.11.0 release (#5218)
+v12.12.0	49f9d6b1ea6e48e41b04c7ac29a56cb98f2c4418	2023-05-09	changelog	docs: update changelog for 12.12.0 release (#5236)
+v12.13.0	64a800e6702d99da6dcc779f6a28bc9297b37fa6	2023-05-23	changelog	12.13.0 release (#5272)
+v12.14.0	3317a0dffb070dbd5810196a7e37aebc27792837	2023-06-07	changelog	12.14.0 release (#5285)
+v12.15.0	c8c2a4081c411451610b9330289cc297df04a62a	2023-06-20	changelog	docs: 12.15.0 release (#5330)
+v12.16.0	91636f5028635d838d7d849f790296435e3e361e	2023-06-26	changelog	chore: 12.16.0 release (#5341)
+v12.17.0	646de3fc38335b914d07e6c1ffd7d3bd310aae1f	2023-07-06	changelog	12.17.0 Release (#5352)
+v12.17.1	322cfbaf70292cb4bba15220856f2c393c122866	2023-07-10	changelog	12.17.1 Release (#5371)
+v12.17.2	43bcba09e2b1fcb4668de257e3d4f49a87eb5df3	2023-07-20	changelog	chore: updates changelog for 12.17.2 (#5387)
+v12.17.3	d7ad85765dcf938c7fa7f24317664ad8d027a1ab	2023-08-01	changelog	chore: update changelog for 12.17.3 (#5406)
+v12.17.4	1d2018ebad0b2f4d9a510047837fb8a120e97256	2023-08-15	changelog	chore: update changelog for release 12.17.4 (#5419)
+v13.0.0	deb58d6e3ba4d96fefb1ba836f08e020dc45e41c	2023-08-29	changelog	BREAKING: 13.0 Docs (#5315)
+v13.1.0	225e673e275580c555768c940afad59923723b81	2023-08-31	changelog	chore: add changelog for v13.1.0 (#5455)
+v13.2.0	5587e494236c0a1fa4e75027e3ebb9dd53c85a21	2023-09-12	changelog	chore: add changelog for release 13.2.0 (#5476)
+v13.3.0	0a918df3ab5d9667c8c10dc886e3ecb30a6cb118	2023-09-27	changelog	chore: update changelog for 13.3.0 (#5495)
+v13.3.1	d9636a3a1a0f66d9577a9b4e59c83bcdf0e994aa	2023-10-11	changelog	chore: add changelog for Cypress 13.3.1 (#5534)
+v13.3.2	1a4e2f47e107adc004b16435ca6d276dd21e69b8	2023-10-18	changelog	docs: changelog for 13.3.2 release (#5541)
+v13.3.3	805b2e07c9848f9f764b60fcb9b556c4388a7544	2023-10-24	changelog	docs: changelog for 13.3.2 release (#5544)
+v13.4.0	43f4fc3835afba0fbabe93a4191c2f4ae57eefb2	2023-10-30	changelog	v13.4.0 Release (#5551)
+v13.5.0	733a1cb3eb52e65ebbf7fe480f91a4a4c8731486	2023-11-08	changelog	chore: release 13.5.0 (#5558)
+v13.5.1	6665adb2b1f297feee225242090dc19fd8d7c1b0	2023-11-14	changelog	chore: release 13.5.1 (#5561)
+v13.6.0	400f13691257dd8a7337934d324189dca8bdbe5a	2023-11-21	changelog	chore: release 13.6.0 (#5566)
+v13.6.1	6ab0de9baa51ad606d4fb8d309e257bf8a80ceeb	2023-12-05	changelog	13.6.1 release (#5569)
+v13.6.2	fa4fe6d4610624902f6f10ff44330e89a12d513c	2023-12-26	changelog	chore: release 13.6.2 changelog (#5591)
+v13.6.3	ce476fcae04fee38eff1326457fc625f1ecb5410	2024-01-16	changelog	chore: add changelog from 13.6.3 (#5607)
+v13.6.4	07bb9fa57f01f4a0b2e9cb45bb331b52f02bf891	2024-01-30	changelog	chore: add changelog for release 13.6.4 (#5619)
+v13.6.5	d77b25ab4c9cff2fdd9c6f49961e97b0104c7acd	2024-02-20	changelog	chore: update changelog for 13.6.5 release (#5684)
+v13.6.6	f6caae1771f7d441b18b6be8668a19d64e2e0725	2024-02-22	changelog	chore: add changelog for 13.6.6 release (#5705)
+v13.7.0	49b2d71a3e26fe5ec3f6076bfb26e1cecf998f66	2024-03-13	changelog	chore: release 13.7.0 (#5750)
+v13.7.1	493a846e4eef2709900ffdae5e9d63a126b16a00	2024-03-21	changelog	add changelog for 13.7.1 (#5760)
+v13.7.2	a9f74e5b2cf4b0bf2d7cfc686f272e816f98f47c	2024-04-02	changelog	chore: add release 13.7.2 changelog entries (#5781)
+v13.7.3	0f2b281648f9181b3663ac892f35d5089dfb2c2f	2024-04-11	changelog	chore: add 13.7.3 changelog (#5797)
+v13.8.0	5b1a0075b435c7b6b9f5144bbc5225888cd570d2	2024-04-18	changelog	chore: add changelog for 13.8.0 release (#5810)
+v13.8.1	62936a8326623faeaeac68c2913d1a93a00bda91	2024-04-23	changelog	add changelog for cypress 13.8.1 release (#5812)
+v13.9.0	5bfb41e3724024d7124d3e5b797146bf7877e354	2024-05-07	changelog	chore: add changelong for 13.9.0 (#5823)
+v13.10.0	c43bffba178e6c40a07d1d720ac3c860dc3af0d4	2024-05-21	changelog	chore: cypress v13.10.0 (#5830)
+v13.11.0	1e852ba20db298b490942ad68f7108c023e23c0b	2024-06-04	changelog	v13.11.0 (#5838)
+v13.12.0	3d445f72bf231d73e69aba03b4cf84d8c4c1da72	2024-06-18	changelog	docs: cypress v13.12.0 release (#5843)
+v13.13.0	a00f7fb1290283296fe08c30bc401385d3ad9841	2024-07-02	changelog	chore: Cypress 13.13.0 Release (#5855)
+v13.13.1	2b1e1a151aa7c00d5ff2b9e8246cb293f655b2e3	2024-07-16	changelog	add 13.13.1 changelog (#5874)
+v13.13.2	36ada914c5c228d0cab3088cb0fabeceb475c086	2024-07-31	changelog	chore: add release 13.13.2 changelog (#5885)
+v13.13.3	04b99f007c25f100811583705970a2bb5ec5cd49	2024-08-14	changelog	chore: add release 13.13.3 changelog (#5895)
+v13.14.0	8c5145d3291f83e727089aa193dff84422ae1d9e	2024-08-27	changelog	v13.14.0 Docs (#5898)
+v13.14.1	8b111df546698b37c29877a43c6170acf57ace30	2024-08-29	changelog	chore: release 13.14.1 changelog (#5908)
+v13.14.2	dcdac077f08e8fb2d80c35a668c5cfd0f195c276	2024-09-04	changelog	chore: add release 13.14.2 changelog (#5915)
+v13.15.0	eb918ff2defe7608eb4ef4f7500189a3a9cd49af	2024-09-25	changelog	docs: release 13.15.0 changelog (#5934)
+v13.15.1	1beaabf83a6b1198c41ba2350e3f1245e65a2970	2024-10-24	changelog	chore: add 13.15.1 app release changelog (#5965)
+v13.15.2	3f2c22c481ca2ec71ab3b0ffd639ad874ec3c56b	2024-11-05	changelog	doc: v13.15.2 app changelog (#5984)
+v13.16.0	e7bae3644e45a7a80b2346bb2d51e56d9a02aae7	2024-11-19	changelog	doc: Cypress 13.16.0 changelog (#6006)
+v13.16.1	10c2433421f5d45827bdda61625b3c7d2b36cb1f	2024-12-04	changelog	doc: Cypress 13.16.1 changelog (#6027)
+v13.17.0	d34b90163b9bacd6329c2875a60050d78cfc6b33	2024-12-17	changelog	docs: cypress v13.17.0 release (#6052)
+v14.0.0	639cfea75339dd6b617073e99ea2d5661a4010b6	2025-01-16	changelog	14.0 Docs (#5964)
+v14.0.1	5b1086585cf824d0a70ef9b25bf6103d2c1444a4	2025-01-28	changelog	chore: add 14.0.1 changelog (#6094)
+v14.0.2	5d39d101343f802eadc23cbe846ee598389db3a3	2025-02-05	changelog	chore: add cypress 14.0.2 changelog (#6100)
+v14.0.3	cad464314536b8cf8a19db62a2b88b0ee8894c39	2025-02-11	changelog	chore: add the cypress 14.0.3 changelog (#6101)
+v14.1.0	8c491e903a38f8d31613f3b8daa80a68e2ab562f	2025-02-25	changelog	chore: add Cypress release 14.1.0 documentation (#6112)
+v14.2.0	8ee76ce76eb245379c15d8c2b6d596f3e5c35eaa	2025-03-12	changelog	14.2.0 Release (#6118)
+v14.2.1	ae3985c19ef814d70877e45fe7a6e452868b51a0	2025-03-26	changelog	chore: add Cypress 14.2.1 changelog (#6132)
+v14.3.0	6ff2c736d1348cb5cc39ed8cba219378cdeee878	2025-04-08	changelog	chore: release 14.3.0 documentation (#6144)
+v14.3.1	f254b4bf582583947982a33368fdaacb25d7cb87	2025-04-17	changelog	chore: add 14.3.1 changelog (#6153)
+v14.3.2	d15652c919ac7fd752f074af81c08f12b41fe16a	2025-04-22	changelog	chore: add cypress 14.3.2 changelog (#6160)
+v14.3.3	787c53feb2805f50bff9c9abe7653cc3b5319b3d	2025-05-06	changelog	chore: add 14.3.3 changelog (#6171)
+v14.4.0	e11d097f0171be12b50f620388b364d137b13e92	2025-05-20	manual	chore: add app v14.4.0 changelog (#6190)
+v14.4.1	7875c4ee45493a777e2752e891aa4b6bb3f2e5b6	2025-06-03	changelog	chore: add 14.4.1 changelog (#6200)
+v14.5.0	4c987a21d7d131a536b1a2c629bad7d7a75f9dee	2025-06-17	changelog	chore: add Cypress 14.5.0 changelog (#6209)
+v14.5.1	c323e530db807abf4ed33aba3a63838dee1cf4c0	2025-07-01	changelog	chore: add 14.5.1 changelog (#6216)
+v14.5.2	52c2623e0d10604692b3293c9cb1ce732471574d	2025-07-15	changelog	chore: add 14.5.2 changelog (#6222)
+v14.5.3	c7e05b0bf9f4ad8586c1f3c1c3594ed7d8f21ed1	2025-07-25	changelog	chore: App release 14.5.3 (#6233)
+v14.5.4	60723971bac378487a9b55694eed70a500b8b096	2025-08-07	changelog	chore: add changelog for 14.5.4 (#6241)
+v15.0.0	e3010e37e7cdf454b88b894a15c3886f8a08f4c3	2025-08-20	changelog	docs: Breaking: Cypress 15.0.0 (#6137)
+v15.1.0	223680fb0a8f6d2bae89247503adb0c91bdaf015	2025-09-02	changelog	release: 15.1.0 (#6266)
+v15.2.0	ac1d30440fef769082fca1cb63d4cf41b7da93ad	2025-09-09	changelog	chore: add cypress 15.2.0 docs (#6271)
+v15.3.0	8f6cda62b9af078d579670e0cf708ba2ab7407d5	2025-09-23	changelog	chore: `15.3.0` documentation updates (#6281)
+v15.4.0	b173f5dfce185b2c540e069b1b32054cb3561885	2025-10-07	changelog	15.4.0 Release Docs (#6288)
+v15.5.0	d5e9423cf385907c14ace2677115d38ae6a4492f	2025-10-17	changelog	chore: Cypress `15.5.0` release (#6302)
+v15.6.0	bfc7b3800cfd3adb5193f028a5f52efa34334a1d	2025-11-04	changelog	chore: add 15.6.0 changelog (#6317)
+v15.7.0	a1787525cfdc8ef142d45152f24f8056e5c970f4	2025-11-19	changelog	15.7.0 Release Docs (#6324)
+v15.7.1	45b166ac73a68a25d4662c271422434c90a6b5a3	2025-12-02	changelog	chore: add Cypress 15.7.1 changelog (#6329)
+v15.8.0	b84dd3f178aaf1999d86f2b0a6b405c37ae98938	2025-12-16	changelog	chore: release `15.8.0` documentation (#6330)
+v15.8.1	31f4165b0d31a46ba4ef2e4e8913228ac185759f	2025-12-18	changelog	chore: add changelog for app release 15.8.1 (#6341)
+v15.8.2	bdc7cdcde43b35e692334e0c7be16c98f05a4df6	2026-01-06	changelog	chore: add 15.8.2 changelog entry (#6346)
+v15.9.0	00f77919dde98cca8e5321b8a00189f88f302e43	2026-01-13	changelog	chore: release 15.9.0 documentation (#6347)
+v15.10.0	4e0d8ff1e6ff9deb70c64f317b58b9c5681d1e33	2026-02-03	changelog	chore: Cypress 15.10.0 (#6362)
+v15.11.0	d62fc9126f13126100f12ed8be0945e0a2db2343	2026-02-25	changelog	chore: Cypress 15.11.0 Release (#6374)
+v15.12.0	0c58839936e21d8b2e580987d26a6b0f2cd04d7d	2026-03-13	changelog	chore: release 15.12.0 changelog (#6389)
+v15.13.0	57574c2459b7bced906f628252d0ac9787b9204c	2026-03-24	changelog	chore: release Cypress v15.13.0 (#6395)
+v15.13.1	cdf8af6e580bc448196d92a27eaf12645546ebd7	2026-04-07	changelog	chore: add changelog for Cypress 15.13.1 (#6405)
+v15.14.0	7aa7fbce80ee2ff562597bb1e3aceafc703443b8	2026-04-16	changelog	Cypress 15.14.0 documentation (#6409)
+v15.14.1	fcef970e9e7f8eba3a6da1739e4e4e3deb734bf9	2026-04-21	changelog	chore: add changelog to app version 15.14.1 (#6419)
+v15.14.2	66af3e0867e1514ed76ce550b06248a023c163cc	2026-04-29	changelog	chore: create 15.14.2 changelog (#6429)
+v15.15.0	ebb9f74402a8126b0be1e91b17819f7d2de9e6b9	2026-05-12	changelog	docs: deprecate .end() command and add changelog for `15.15.0` (#6442)
+v15.16.0	8735fe877e6f589486e1059bc9412787edcb413d	2026-05-26	changelog	docs: Cypress 15.16.0 changelog release notes (#6468)
+v15.17.0	e8e7f9bceab232ff57cc6f1a0949a5f7e6ca8ec6	2026-06-09	changelog	docs: cypress `15.17.0` release (#6542)
+v15.18.0	19d38c507785d7ce503f6ed6fedebbf358293a5b	2026-06-23	changelog	Cypress Release v15.18.0 (#6595)
+v15.18.1	796a1879d9bfbb40637ae0a7c96f3825a23ff4c0	2026-07-07	changelog	Cypress Release v15.18.1 (#6678)
+v15.19.0	f34ccd0f7020c81960fdf46482581b53df6955f6	2026-07-21	changelog	docs: cypress 15.19.0 release (#6742)
+v15.20.0	2e3c0ff8e16964fb450a5d31912642ead163a2b7	2026-08-04	changelog	docs: cypress release 15.20.0 (#6784)
+v15.20.1	98d69485962d0f4f64f21e3ebdd05776c6d1b4e2	2026-08-10	changelog	docs: cypress release 15.20.1 (#6794)
+v15.21.0	7099c04bf95a038d66b7fe96971bf843f601bb4a	2026-08-18	changelog	15.21.0 Release (#6816)
