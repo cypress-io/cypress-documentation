@@ -1,105 +1,207 @@
 ---
-title: Inspect accessibility violation details
-description: 'Learn how to inspect the details of an accessibility violation and its severity in Cypress.'
+title: 'Inspect accessibility violation details'
+description: 'Open a failing accessibility rule in Cypress Cloud: pin the failing element in a live DOM snapshot, read the checks it failed, and hand the fix off as a deep link, a Markdown snippet, or a Jira issue.'
 sidebar_label: Inspect violation details
 sidebar_position: 70
 ---
 
 <ProductHeading product="accessibility" />
 
-# Inspecting violation details
+# Inspect violation details
 
-After navigating to a specific Rule of View from a [Run-level report](/accessibility/guides/run-level-reports), you'll land on the Violation Detail view.
+Most accessibility fixes stall on the same three questions: which element is broken, what did the page look like when it broke, and what exactly has to change. The violation detail view answers all three on one screen, because Cypress Cloud stores every finding alongside a live DOM snapshot of the page state it was found in.
 
-<DocsImage
-  src="/img/accessibility/core-concepts/cypress-accessibility-issue-detail-view.png"
-  alt="The detail view of an accessibility issue, containing a Rules area and s Snapshot area for a Buttons must have discernible text violation in the Cypress Realworld App project. Each section is described in detail later in the page."
-/>
-
-This page is divided into two main sections: **Rules** and **Snapshots**.
-
-## Rules
-
-The left-hand side of the detail view lists all Rules that match the current filters for the selected View. If no specific View is selected, the list applies to all Views in the run.
-
-### Rule details
-
-Each Rule can be expanded to reveal related elements and additional information:
-
-- **Description**: Text explaining the rule, its origin, the affected user experiences, and how to fix the issue.
-- **Learn More**: A link to Deque University for in-depth guidance.
-
-### Element details
-
-Clicking on an element in the expanded Rule section provides:
-
-- **Pinned Element**: Highlights the element in the UI for easier identification.
-- **Copy Selector**: A button to copy the CSS selector uniquely identifying the element.
-- **Print to Console**: Logs the element reference to the browser's console for debugging. In Chrome-based browsers, you can right-click the logged element and select "Reveal in elements panel" to navigate directly to the live DOM.
-- **Actions**: Share details of the accessibility problem or create a Jira issue (if the Jira integration is installed).
-- **Solutions**: A list of potential solutions to address the issue.
+You never have to reproduce the violation to triage it. There is no local server to start, no walking a tester back through the steps, and no guessing which of five similar buttons a selector points at. You pin the failing element, see it highlighted in the real markup and styles captured during the run, read the specific checks that failed on it, and hand it to whoever owns the fix as a link, a Markdown snippet, or a Jira issue.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/cypress-accessibility-element-details-on-click.png"
-  alt="Details displayed after clicking on an element in the Rules section of the Cypress Accessibility issue detail view. Options to copy the selector, print to console, share the issue, and solutions are available."
+  src="/img/accessibility/cy-a11y-detail.png"
+  alt="The Cypress Accessibility violation detail view. On the left, a rules list with 'Buttons must have discernible text' expanded to show its description, a Learn more link, and two failing element selectors; the pinned selector expands to a Solutions list of the checks that must be fixed. On the right, a DOM snapshot of a transaction page with the failing button outlined and its size shown in a tooltip, above a footer with the snapshot URL and viewport size."
 />
 
-## Actions
+The view has two panels:
 
-When you click on an element in the expanded Rule section, you can copy details of the accessibility violation to share, or directly create a Jira issue if you have the [Cypress Cloud Jira integration](/cloud/integrations/jira) installed.
+- The **rules list** on the left holds every rule that matches your filters, with its failing elements nested underneath.
+- The **snapshot** on the right is the page state those elements were captured in.
+
+The panels are linked. Selecting an element on the left highlights it on the right and narrows the snapshots you can page through to the ones that element appears in. The divider between them is draggable, so you can widen either panel while you work.
+
+## Open the detail view
+
+Every route into this view starts from a [run-level report](/accessibility/guides/run-level-reports), and each one preselects something different:
+
+- **A view row on the Views tab** opens that view with all of its rules listed, which is the right entry point when you're working through one page or component.
+- **A rule row on the Rules tab** opens **All Views** with that rule expanded, which collects every failing element for the rule across the whole run. This is the fastest way to work a rule-focused backlog.
+- **A failed, inconclusive, or ignored element count** opens the same view with the **Element status** filter preset to the status you clicked, so you land on exactly the elements the number referred to.
+- **New failed elements in [Branch Review](/accessibility/guides/compare-reports)** opens the same detail view scoped to the violations your branch introduced. Elements that are new since the base run carry an **Added** tag.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-a11y-detail-view.png"
+  alt="The violation detail view opened from Branch Review, with a base run and a changed run selected at the top. The rules list is headed 'New Cypress Accessibility Failures' and shows a critical rule, 'Form elements must have labels', expanded to two failing form field selectors that each carry an Added tag. The second selector is pinned and expanded to a Failed result status, a Share issue action, and a Solutions list. The snapshot on the right shows a contact form with the failing name field outlined."
+/>
+
+Everything you select is written to the URL. Copying the address bar is the most direct way to send a teammate the exact thing you're looking at.
+
+## Read the rules list
+
+Rules are grouped by [severity](/accessibility/guides/run-level-reports#Severity) under headings such as **Critical rules** and **Serious rules**, so the most serious findings sit at the top of the list. Each rule row names the rule in plain language and counts the elements it matched under your current filters:
+
+```
+Buttons must have discernible text    2 elements
+```
+
+Expanding a rule reveals:
+
+- **A one-line description** of what the rule checks, taken from the rule definition itself.
+- **A Learn more link** to the rule's documentation: the [Deque University](https://dequeuniversity.com/) page for an Axe Core® rule, or [Cypress accessibility rules](/accessibility/core-concepts/cypress-rules) for the custom rules Cypress adds. Cypress rules are labeled in the list with a **Cypress Rule** tag.
+- **The elements that matched**, listed by their [violation target selector](/accessibility/core-concepts/element-identification).
+
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-rule.png"
+  width="60%"
+  alt="An expanded rule in the Cypress Accessibility rules list. The rule 'Interactive elements should be semantically correct' carries a Cypress Rule tag and a count of two elements, above its description and a Learn more link. Two element selectors are listed below it, the second pinned and expanded to show an Inconclusive result, a Share issue action, and a Solutions explanation."
+/>
+
+Element rows carry two visual signals worth knowing:
+
+- **A status icon** marks each element as failed, inconclusive, or ignored, so a mixed rule is readable at a glance. Statuses are defined in [run-level reports](/accessibility/guides/run-level-reports#Elements).
+- **Dimmed rows** are elements that exist in this view but not in the snapshot currently displayed. They are still selectable, and selecting one moves the snapshot to a page state that contains it.
+
+## Pin an element to inspect it
+
+Selecting an element pins it. The row gets a pin icon, the element is highlighted in the snapshot, and the row expands to show the detail for that element.
+
+<DocsImage
+  src="/img/accessibility/guides/working-with-ai-agents-print-to-console.png"
+  alt="A pinned element row in the Cypress Accessibility rules list, under the rule 'All page content should be contained by landmarks'. The row shows a pin icon beside the selector and two icon buttons at its right, with the Print to Console tooltip visible over the second one. Below the row are a Failed result status, an Actions section containing Share issue, and a Solutions section reading 'This must be fixed: Some page content is not contained by landmarks'."
+/>
+
+The expanded detail has three parts:
+
+- **The result status**, which reads **Failed result**, **Inconclusive result**, or **Ignored result**. This is the same status as the row icon, spelled out.
+- **Actions**, which are [Share issue](#Share-issue) and, when your organization has the Jira integration installed, [Create Jira issue](#Create-Jira-issue).
+- **Solutions**, which lists the specific checks that failed on this element.
+
+Solutions is the part that tells you what to change, and its wording is precise:
+
+- **One of these must be fixed** means the checks are alternatives. Satisfying any one of them clears the violation, for example giving a button inner text _or_ an `aria-label` _or_ an `aria-labelledby` reference.
+- **All of these must be fixed** means every listed check has to pass.
+- **This must be fixed** appears when there is a single check to satisfy.
+- **This element is failing for multiple reasons** introduces more than one group, so read each group's rule before you start.
+
+Two icon buttons sit on the pinned row itself:
+
+- **Copy selector** copies the element's violation target selector to your clipboard, which is what you paste into a search of your codebase, into a ticket, or into a prompt so an [AI agent](/accessibility/work-with-ai-agents) can locate the element in your source.
+- **Print to Console** logs the live element reference to your browser console. In Chromium-based browsers you can then right-click the logged element and choose **Reveal in Elements panel** to jump to it in the DOM tree, which is also the first step in [debugging a violation with your browser's AI assistant](/accessibility/work-with-ai-agents).
+
+## Work with the DOM snapshot
+
+Snapshots are the reason this view can replace reproducing a bug. Each one is a rehydrated copy of the DOM and CSS as they existed at a moment during a recorded test, not a screenshot or a video frame. The markup is real, the styles are real, and it renders in your browser.
+
+That has a few practical consequences:
+
+- **Your browser's DevTools work on it.** You can inspect elements, read computed styles, and open the accessibility pane against the captured page without running the application locally. The snapshot options menu, opened from the icon at the top right of the snapshot, shows the DevTools inspect shortcut for your browser.
+- **Highlights are deliberate, not exhaustive.** The snapshot outlines the element you have pinned, or the element you are hovering in the rules list, and nothing else. This keeps a page with hundreds of failing images readable. The same snapshot options menu has a **Show DOM highlights** toggle that turns the outline off when it covers something you want to see.
+- **The snapshot counter is scoped to your selection.** With nothing pinned, you can page through every snapshot the filtered rules appear in. Pin an element and the counter narrows to the snapshots containing that element, so **6 of 9** means the element you pinned was captured nine times in this run. Clearing the pin from the counter restores the full set.
+- **Hovering an element that isn't on screen tells you so.** The snapshot dims and shows **Element is not in this snapshot**, with a prompt to select it. Selecting the element moves the snapshot to a page state where it exists.
+
+Below the snapshot, the footer shows the URL the snapshot was captured at, with a copy button, and the viewport size it was rendered at. When several URLs collapsed into one snapshot, a **+N URLs** tag expands to list them, which is a useful check that your [views configuration](/accessibility/configuration/views) is grouping URLs the way you expect.
+
+The **Test Replay** button above the snapshot shows how many tests reached this page state, and opens [Test Replay](/cloud/features/test-replay) for any of them. Use it when you need to know how the application got here: which spec, which commands, and what happened just before.
+
+## Filter what the list shows
+
+The filter button in the header of the left panel narrows both the rules list and the elements underneath each rule:
+
+- **Include elements** limits the list to the snapshot currently displayed. By default, elements from every snapshot in the view are shown.
+- **Rule severity** filters to critical, serious, moderate, or minor rules.
+- **Rules** filters by ruleset: WCAG 2.1 A, WCAG 2.1 AA, or Best practices.
+- **Element status** filters to failed, inconclusive, or ignored elements. Failed and inconclusive are on by default; ignored is off, so elements you have excluded through [`elementFilters`](/accessibility/configuration/elementfilters) or [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) stay out of your way until you go looking for them.
+
+Turning on **Ignored** is the fastest audit of what your configuration is hiding, because ignored elements keep their full detail, including their Solutions list.
+
+## Hand off a violation
+
+Whoever fixes a violation is often not the person who found it. Cypress Accessibility gives you three ways to move a finding out of Cypress Cloud without retyping it: share a link, copy a formatted snippet, or create a Jira issue.
+
+### Share a link
+
+The URL of the detail view encodes the view, the expanded rule, the pinned element, the displayed snapshot, and your filters. Copy it into a pull request comment or a chat message and your teammate opens on the same element, in the same page state, with the same filters applied.
 
 ### Share issue
 
-The **Share issue** button allows you to copy a markdown or plain text snippet containing key details and related links for a particular accessibility violation. This makes it easy to share the issue with your team members or add it to tickets in your issue tracking system.
+**Share issue** opens a preview of a ready-to-paste snippet in either **Markdown** or **Plain text**, with a **Copy** button.
 
 <DocsImage
   src="/img/accessibility/core-concepts/cypress-accessibility-element-details-on-click.png"
-  width="60%"
-  alt="The Share issue button visible in the element details panel after clicking on an element in the Rules section."
+  alt="The Share issue dialog for a 'Links must have discernible text' violation, showing the Markdown and Plain text tabs, a Copy button, and a preview containing the issue name, severity, selected element, a link to the Deque University page for the rule, and a deep link back to the violation in Cypress Cloud."
 />
 
-The shared snippet includes:
+The snippet contains:
 
-- The rule name and description
-- The element selector
-- Links back to the violation in Cypress Cloud
-- Context about the violation
+- **Issue:** the rule in plain language, for example "Links must have discernible text".
+- **Severity:** the rule's severity, such as Serious.
+- **Selected view:** the view the element was found in. This line is omitted when you are looking at All Views.
+- **Selected element:** the violation target selector.
+- **References:** a **How to fix this** link to the rule's documentation, and a **View in Cypress Cloud** link back to this exact element and snapshot.
+
+The Markdown form pastes cleanly into GitHub, GitLab, Slack, and most issue trackers. Use plain text where Markdown isn't rendered.
+
+Either form also works as the body of a prompt to an AI coding agent such as Claude Code, Cursor, or GitHub Copilot. The snippet carries everything an agent needs to act without reading your report: the selector that locates the element, the rule and severity that say what is wrong, and a link to the rule's documentation that explains how to fix it. For repetitive work across many elements, [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) is the better route, because the agent reads the findings itself instead of working from one pasted violation at a time.
 
 ### Create Jira issue
 
-You can create Jira issues directly from accessibility violations in the detail view. This allows you to quickly track and prioritize accessibility issues within your existing Jira workflow.
+When your organization has the [Cypress Cloud Jira integration](/cloud/integrations/jira) installed, a **Create Jira issue** button appears beside **Share issue** and creates the ticket without leaving Cypress Cloud.
+
+:::info
+
+**Don't see the Create Jira issue button?** The integration isn't installed for your organization yet. [Install the Jira integration](/cloud/integrations/jira#Install-the-Jira-integration) walks through enabling it from **Integrations → Jira** in Cypress Cloud and installing the Cypress for Jira app on your Jira site.
+
+:::
 
 <DocsImage
   src="/img/accessibility/a11y-jira-create.png"
   width="60%"
-  alt="The Create Jira issue button in the element details panel for an accessibility violation."
+  alt="The Actions section of an expanded element row, with the Create Jira issue button highlighted below the Share issue button."
 />
 
-To create a Jira issue:
-
-1. Click on an element in the expanded Rule section to open the element details.
-2. Click the **Create Jira issue** button to open the Jira issue creation form.
+1. Select the failing element to expand its detail.
+2. Choose **Create Jira issue**.
+3. Pick the Jira project. **Summary** is prefilled with the rule name and **Description** with the Markdown snippet described above, including the link back to the violation in Cypress Cloud. Both are editable, so this is the moment to add the context a triager will want, such as who owns the component or which release the fix should land in.
+4. Choose an issue type, complete any fields your Jira project requires, and submit.
 
 <DocsImage
   src="/img/accessibility/a11y-jira-modal.png"
   width="60%"
-  alt="The Jira issue creation modal form for creating a new issue from an accessibility violation."
+  alt="The Create Jira issue modal, with a Project dropdown set to Product, a Summary field prefilled with the rule name, a Description field prefilled with the Markdown issue snippet including a link back to Cypress Cloud, and an Issue Type dropdown."
 />
 
-3. Complete the form by selecting the Jira project, issue type, assignee, and any additional fields required by your Jira configuration.
-4. Submit the form to create the issue in Jira.
+Cypress Cloud confirms with a link to the new issue key. Because the description carries the deep link, anyone working the ticket lands back on the failing element and its snapshot.
 
-The created Jira issue will include a link back to the accessibility violation in Cypress Cloud, making it easy to navigate between your issue tracker and the detailed violation information.
+## Make selectors readable before you triage
 
-Additional context like related elements or comments for future triage can be added to the issue summary.
+How useful this view is depends heavily on how elements are named in it. A rules list where every failing button reads `.MuiIconButton-colorPrimary` tells you a violation exists but not where it lives, and a Jira ticket built from that selector sends someone hunting through the codebase.
 
-## Snapshots
+Your [App Quality Config](/accessibility/configuration/overview) controls the selectors this view displays. Three options do most of the work:
 
-Snapshots are fully hydrated HTML and CSS representations of your application's state during the test. Unlike screenshots or video, these snapshots allow you to:
+- [`significantAttributes`](/accessibility/configuration/significantattributes) changes which attribute _identifies_ an element, so a selector reads `[data-component="SearchInput"]` instead of a generated class name. Use it when your application already renders an attribute that describes elements better than anything in the default list.
+- [`components`](/accessibility/configuration/components) keeps the existing identifier and _adds_ context around it, so a selector reads `[data-cy="signup"][data-component="IconButton"]` and names both the element and the component responsible for it. Attributes like `data-team` route findings to an owner.
+- [`attributeFilters`](/accessibility/configuration/attributefilters) removes values that change from render to render, so the same control keeps the same identity across snapshots. Cypress already filters the most common ones, including auto-generated IDs and hashed CSS class names, so many projects need no rules here at all.
 
-- Inspect the DOM and accessibility tree without running the application locally.
-- Understand the context of each violation and debug directly from the snapshot.
+You don't have to rerun your tests to see the effect. Save the configuration, then regenerate a past run from its **Properties** tab, and the report is reprocessed with the selectors your current configuration produces.
 
-This area also has the Test Replay button to provide access to any tests where this snapshot appeared, as well as the specific URL of the snapshot displayed at the bottom of the screen.
+## Triage several violations with an AI agent
 
-It's also possible to cycle through the available snapshots to see all the states of the application that were captured, but this is usually not necessary. Think of snapshots more as examples and evidence related to elements that are listed on the left hand side of the screen. The most useful way to browse the report is to move through the elements on the left.
+Once you have inspected a few elements by hand, the rest of a rule usually follows the same pattern. With [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) configured, an agent can read the same element-level data this view displays through `cypress_get_accessibility_rule_failures`, so you can hand off the repetitive part while keeping the judgment calls. Selectors that carry component or team context, as described above, are what let an agent find the source file without crawling your markup. See [work with AI agents](/accessibility/work-with-ai-agents) for prompt patterns.
+
+## See also
+
+- [Run-level reports](/accessibility/guides/run-level-reports) explains every metric and status in a run's accessibility report.
+- [Fix accessibility violations](/accessibility/guides/improve-accessibility) is the end-to-end process for turning a large report into work your team can finish.
+- [Element identification](/accessibility/core-concepts/element-identification) documents how the selectors in this view are built.
+- [`components`](/accessibility/configuration/components) and [`significantAttributes`](/accessibility/configuration/significantattributes) control what those selectors say.
+- [Cypress accessibility rules](/accessibility/core-concepts/cypress-rules) covers the custom rules Cypress adds on top of Axe Core®.
+- [Compare reports](/accessibility/guides/compare-reports) is the Branch Review workflow that uses this same detail view for new and resolved violations.
+- [Test Replay](/cloud/features/test-replay) shows the test run that produced a snapshot.
+- [Jira integration](/cloud/integrations/jira) covers installing the integration that enables Create Jira issue.
+- [Work with AI agents](/accessibility/work-with-ai-agents) has more Cypress Cloud MCP prompts, plus the browser DevTools workflow that starts with Print to Console.
+- [Cypress Accessibility FAQ](/accessibility/faq) answers common questions about inspecting, sharing, and fixing violations.
