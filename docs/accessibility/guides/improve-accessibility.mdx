@@ -72,7 +72,7 @@ When a single rule misfires on an element you otherwise want reported, keep the 
 
 Two things make this safe to do early:
 
-- **Ignoring is visible, not silent.** Ignored elements stay in the report under the **Ignored** [element status](/accessibility/guides/run-level-reports#Elements) instead of disappearing, so you can always audit what your configuration hides. They stop counting as failures and stop affecting your [accessibility score](/accessibility/core-concepts/accessibility-score).
+- **Ignoring is visible, not silent.** Ignored elements stay in the report under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) instead of disappearing, so you can always audit what your configuration hides. They stop counting as failures and stop affecting your [accessibility score](/accessibility/core-concepts/accessibility-score).
 - **You don't have to re-run your tests to see the effect.** Save the configuration, then regenerate a past run from its **Properties** tab in Cypress Cloud. The report is reprocessed with your current configuration in place, so you can iterate on scope in minutes.
 
 <DocsImage
@@ -103,7 +103,7 @@ In a component-driven codebase the leverage is larger than the element count sug
   noBorder={true}
 />
 
-Open the **Rules** list in a run's [accessibility report](/accessibility/guides/run-level-reports#Rules) and read it as three groups. The passing rules are the standard you already meet. The failing rules are your backlog. The failing rules with the fewest failing elements are your next tasks, because they're closest to moving into the first group.
+Open the **Rules** list in a run's [accessibility report](/accessibility/reports/run-level-reports#Rules) and read it as three groups. The passing rules are the standard you already meet. The failing rules are your backlog. The failing rules with the fewest failing elements are your next tasks, because they're closest to moving into the first group.
 
 Expect the first report to include concepts your team hasn't worked with before, such as [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) or [nesting interactive controls inside each other](https://dequeuniversity.com/rules/axe/4.12/nested-interactive). That's a reason to start small, not a reason to wait: every Axe-Core® violation in Cypress Cloud links to a Deque University page explaining the barrier and how to fix it, so the context an engineer or agent needs is one click from the failing element.
 
@@ -220,8 +220,8 @@ When the rules and pages that matter to your business are all passing, your work
 
 ## See also
 
-- [Run-level reports](/accessibility/guides/run-level-reports) explains every metric in a run's accessibility report.
-- [Inspect violation details](/accessibility/guides/inspecting-violation-details) covers the element detail view, DOM snapshots, and creating Jira issues from a violation.
+- [Run-level reports](/accessibility/reports/run-level-reports) explains every metric in a run's accessibility report.
+- [Inspect violation details](/accessibility/reports/element-detail-view) covers the element detail view, DOM snapshots, and creating Jira issues from a violation.
 - [How the accessibility score is calculated](/accessibility/core-concepts/accessibility-score) documents the severity weights behind the score.
 - [Compare reports](/accessibility/guides/compare-reports) is the full guide to Branch Review for Cypress Accessibility.
 - [Configuration overview](/accessibility/configuration/overview) lists every App Quality Config option and how to apply it.

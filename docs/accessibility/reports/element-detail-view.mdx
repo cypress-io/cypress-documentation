@@ -1,8 +1,8 @@
 ---
-title: 'Inspect accessibility violation details'
+title: 'Inspect accessibility results: element details and DOM snapshots'
 description: 'Open a failing accessibility rule in Cypress Cloud: pin the failing element in a live DOM snapshot, read the checks it failed, and hand the fix off as a deep link, a Markdown snippet, or a Jira issue.'
 sidebar_label: Inspect violation details
-sidebar_position: 70
+sidebar_position: 20
 ---
 
 <ProductHeading product="accessibility" />
@@ -27,7 +27,7 @@ The panels are linked. Selecting an element on the left highlights it on the rig
 
 ## Open the detail view
 
-Every route into this view starts from a [run-level report](/accessibility/guides/run-level-reports), and each one preselects something different:
+Every route into this view starts from a [run-level report](/accessibility/reports/run-level-reports), and each one preselects something different:
 
 - **A view row on the Views tab** opens that view with all of its rules listed, which is the right entry point when you're working through one page or component.
 - **A rule row on the Rules tab** opens **All Views** with that rule expanded, which collects every failing element for the rule across the whole run. This is the fastest way to work a rule-focused backlog.
@@ -43,7 +43,7 @@ Everything you select is written to the URL. Copying the address bar is the most
 
 ## Read the rules list
 
-Rules are grouped by [severity](/accessibility/guides/run-level-reports#Severity) under headings such as **Critical rules** and **Serious rules**, so the most serious findings sit at the top of the list. Each rule row names the rule in plain language and counts the elements it matched under your current filters:
+Rules are grouped by [severity](/accessibility/reports/run-level-reports#Severity) under headings such as **Critical rules** and **Serious rules**, so the most serious findings sit at the top of the list. Each rule row names the rule in plain language and counts the elements it matched under your current filters:
 
 ```
 Buttons must have discernible text    2 elements
@@ -63,7 +63,7 @@ Expanding a rule reveals:
 
 Element rows carry two visual signals worth knowing:
 
-- **A status icon** marks each element as failed, inconclusive, or ignored, so a mixed rule is readable at a glance. Statuses are defined in [run-level reports](/accessibility/guides/run-level-reports#Elements).
+- **A status icon** marks each element as failed, inconclusive, or ignored, so a mixed rule is readable at a glance. Statuses are defined in [run-level reports](/accessibility/reports/run-level-reports#Elements).
 - **Dimmed rows** are elements that exist in this view but not in the snapshot currently displayed. They are still selectable, and selecting one moves the snapshot to a page state that contains it.
 
 ## Pin an element to inspect it
@@ -195,7 +195,7 @@ Once you have inspected a few elements by hand, the rest of a rule usually follo
 
 ## See also
 
-- [Run-level reports](/accessibility/guides/run-level-reports) explains every metric and status in a run's accessibility report.
+- [Run-level reports](/accessibility/reports/run-level-reports) explains every metric and status in a run's accessibility report.
 - [Fix accessibility violations](/accessibility/guides/improve-accessibility) is the end-to-end process for turning a large report into work your team can finish.
 - [Element identification](/accessibility/core-concepts/element-identification) documents how the selectors in this view are built.
 - [`components`](/accessibility/configuration/components) and [`significantAttributes`](/accessibility/configuration/significantattributes) control what those selectors say.

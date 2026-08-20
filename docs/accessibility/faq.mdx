@@ -43,11 +43,11 @@ Keep a list of remediated rules in your CI verification script and fail the buil
 
 ### <Icon name="angle-right" /> How do I see which element failed an accessibility rule in Cypress?
 
-Open the rule in a run's [accessibility report](/accessibility/guides/run-level-reports) and it expands into the [violation detail view](/accessibility/guides/inspecting-violation-details), which lists every element the rule matched by its violation target selector. Selecting an element pins it, highlights it in a DOM snapshot of the page state it was captured in, and expands a **Solutions** list of the specific checks that failed on it. Clicking a rule row on the **Rules** tab opens **All Views** scoped to that rule, which collects its failing elements across the entire run.
+Open the rule in a run's [accessibility report](/accessibility/reports/run-level-reports) and it expands into the [violation detail view](/accessibility/reports/element-detail-view), which lists every element the rule matched by its violation target selector. Selecting an element pins it, highlights it in a DOM snapshot of the page state it was captured in, and expands a **Solutions** list of the specific checks that failed on it. Clicking a rule row on the **Rules** tab opens **All Views** scoped to that rule, which collects its failing elements across the entire run.
 
 ### <Icon name="angle-right" /> Can I inspect a Cypress Accessibility violation without running my application locally?
 
-Yes, and this is the main reason the detail view exists. Every finding is stored with a rehydrated DOM and CSS snapshot of the page state it was found in, so the markup and styles render in your browser exactly as they did during the run. You can inspect the element, read computed styles, and open your browser's accessibility pane against the captured page without starting a server or reproducing the steps. See [inspect violation details](/accessibility/guides/inspecting-violation-details#Work-with-the-DOM-snapshot).
+Yes, and this is the main reason the detail view exists. Every finding is stored with a rehydrated DOM and CSS snapshot of the page state it was found in, so the markup and styles render in your browser exactly as they did during the run. You can inspect the element, read computed styles, and open your browser's accessibility pane against the captured page without starting a server or reproducing the steps. See [inspect violation details](/accessibility/reports/element-detail-view#Work-with-the-DOM-snapshot).
 
 ### <Icon name="angle-right" /> Why does a Cypress Accessibility snapshot highlight only one element?
 
@@ -59,11 +59,11 @@ The element failed the rule somewhere in the view, but not in the page state cur
 
 ### <Icon name="angle-right" /> What does "One of these must be fixed" mean in a Cypress Accessibility violation?
 
-It means the listed checks are alternatives, and satisfying any one of them clears the violation. A button failing `button-name`, for example, can be fixed with inner text, an `aria-label`, an `aria-labelledby` reference, or a `title` attribute. **All of these must be fixed** means every listed check has to pass, **This must be fixed** means there is a single check, and **This element is failing for multiple reasons** introduces more than one group, each with its own rule. See [inspect violation details](/accessibility/guides/inspecting-violation-details#Pin-an-element-to-inspect-it).
+It means the listed checks are alternatives, and satisfying any one of them clears the violation. A button failing `button-name`, for example, can be fixed with inner text, an `aria-label`, an `aria-labelledby` reference, or a `title` attribute. **All of these must be fixed** means every listed check has to pass, **This must be fixed** means there is a single check, and **This element is failing for multiple reasons** introduces more than one group, each with its own rule. See [inspect violation details](/accessibility/reports/element-detail-view#Pin-an-element-to-inspect-it).
 
 ### <Icon name="angle-right" /> How do I share a specific accessibility violation with my team?
 
-Three ways, from fastest to most durable. Copy the URL, which encodes the view, rule, pinned element, snapshot, and filters, so a teammate opens on exactly what you're looking at. Use **Share issue** to copy a Markdown or plain text snippet containing the rule, severity, view, element selector, a link to the rule's documentation, and a deep link back into Cypress Cloud. Or use **Create Jira issue** to open a ticket with those details prefilled. See [hand off a violation](/accessibility/guides/inspecting-violation-details#Hand-off-a-violation).
+Three ways, from fastest to most durable. Copy the URL, which encodes the view, rule, pinned element, snapshot, and filters, so a teammate opens on exactly what you're looking at. Use **Share issue** to copy a Markdown or plain text snippet containing the rule, severity, view, element selector, a link to the rule's documentation, and a deep link back into Cypress Cloud. Or use **Create Jira issue** to open a ticket with those details prefilled. See [hand off a violation](/accessibility/reports/element-detail-view#Hand-off-a-violation).
 
 ### <Icon name="angle-right" /> How do I create a Jira issue from a Cypress Accessibility violation?
 
@@ -197,7 +197,7 @@ The most common causes are:
 
 ### <Icon name="angle-right" /> Why do ignored elements still appear in my Cypress Accessibility report?
 
-This is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/guides/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect your score.
+This is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect your score.
 
 ### <Icon name="angle-right" /> Can I ignore elements in Cypress Accessibility without affecting UI Coverage?
 
