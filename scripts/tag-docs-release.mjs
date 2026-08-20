@@ -20,7 +20,10 @@ const CHANGELOG = 'docs/app/references/changelog.mdx'
 const API = process.env.GITHUB_API_URL || 'https://api.github.com'
 
 function git(...args) {
-  return execFileSync('git', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+  return execFileSync('git', args, {
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+  })
 }
 
 function gitOrNull(...args) {
@@ -52,7 +55,10 @@ function versionsIn(sha) {
 function releaseDate(sha, version) {
   const content = gitOrNull('show', `${sha}:${CHANGELOG}`) || ''
   const escaped = version.replace(/\./g, '\\.')
-  const match = new RegExp(`^#{1,3}\\s+${escaped}\\s*\\n\\n_Released ([^_\\n]+)_`, 'm').exec(content)
+  const match = new RegExp(
+    `^#{1,3}\\s+${escaped}\\s*\\n\\n_Released ([^_\\n]+)_`,
+    'm'
+  ).exec(content)
   return match ? match[1].trim() : null
 }
 
@@ -126,11 +132,13 @@ async function main() {
     throw new Error(
       `${CHANGELOG} does not exist at ${after.slice(0, 9)}. If the changelog moved, ` +
         'update CHANGELOG in this script and the paths filter in ' +
-        '.github/workflows/tag-docs-release.yml.',
+        '.github/workflows/tag-docs-release.yml.'
     )
   }
 
-  const added = [...versionsIn(after)].filter((v) => !(before ? versionsIn(before) : new Set()).has(v))
+  const added = [...versionsIn(after)].filter(
+    (v) => !(before ? versionsIn(before) : new Set()).has(v)
+  )
 
   if (added.length === 0) {
     console.log('no new changelog entries in this range — nothing to do')
@@ -148,7 +156,11 @@ async function main() {
       console.log(`${tag}: already exists, skipping`)
       continue
     }
-    work.push({ version, tag, commit: findIntroducingCommit(version, before, after) })
+    work.push({
+      version,
+      tag,
+      commit: findIntroducingCommit(version, before, after),
+    })
   }
 
   if (work.length === 0) {
@@ -159,7 +171,9 @@ async function main() {
   const token = process.env.GITHUB_TOKEN
   const repository = process.env.GITHUB_REPOSITORY
   if (!args.dryRun && (!token || !repository)) {
-    throw new Error('GITHUB_TOKEN and GITHUB_REPOSITORY are required unless --dry-run')
+    throw new Error(
+      'GITHUB_TOKEN and GITHUB_REPOSITORY are required unless --dry-run'
+    )
   }
 
   let failed = 0
@@ -170,7 +184,9 @@ async function main() {
     const message = [
       `Cypress ${version} documentation`,
       '',
-      released ? `Cypress ${version} was released ${released}.` : `Cypress ${version}.`,
+      released
+        ? `Cypress ${version} was released ${released}.`
+        : `Cypress ${version}.`,
       '',
       `This tag marks the commit where the ${version} changelog entry landed in this`,
       `repository, i.e. the state of the documentation when ${version} shipped.`,
@@ -181,7 +197,9 @@ async function main() {
     ].join('\n')
 
     if (args.dryRun) {
-      console.log(`\n--- would create ${tag} -> ${commit.slice(0, 9)} (${subject})`)
+      console.log(
+        `\n--- would create ${tag} -> ${commit.slice(0, 9)} (${subject})`
+      )
       console.log(message.replace(/^/gm, '    '))
       continue
     }
@@ -205,7 +223,7 @@ async function main() {
         console.error(
           '\nThe token was refused because the tagged commit contains ' +
             '.github/workflows files.\nProvide a PAT with `workflow` scope as the ' +
-            'RELEASE_TAG_TOKEN secret and re-run.',
+            'RELEASE_TAG_TOKEN secret and re-run.'
         )
       }
     }
