@@ -8,6 +8,64 @@ sidebar_label: Changelog
 
 # Changelog
 
+## 16.0.0
+
+_Released TBD_
+
+**Summary**
+
+Cypress 16 makes your tests look more like production and run faster while doing it. In Chrome, Chromium, and Edge, your application now talks to your server over the native browser network, so it negotiates HTTP/2 or HTTP/3 exactly as it does for your users instead of being downgraded to HTTP/1.1. Your own TLS certificate is the one the browser validates. Two performance features that used to be opt-in experiments are now on by default for everyone: the `checkVisibility()`-based visibility algorithm and browser memory management. Typing no longer pays a 10ms tax per keystroke. And reads that used to fail on a race, such as `cy.getCookie()` and `cy.getAllLocalStorage()`, are now retry-able queries, so `cy.getCookie('token').should('exist')` waits for the cookie instead of failing on the first look.
+
+**Breaking Changes:**
+
+:::info
+
+Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-Cypress-160) for help migrating your code.
+
+:::
+
+- Chrome, Chromium, and Edge intercept test traffic on the native browser network rather than routing it through Cypress. A small number of `cy.intercept()` behaviors differ as a result. Most notably, `req.httpVersion` is no longer reported, and compression headers are no longer present on an intercepted response. Firefox, WebKit, and Electron continue to use the legacy network path, and [`forceHttp1`](/app/references/configuration#forceHttp1) routes every browser back through it while you migrate. See [Native network interception](/app/guides/native-network-interception) and the [Migration Guide](/app/references/migration-guide#Chrome-Chromium-and-Edge-use-the-native-browser-network). Addresses [#3708](https://github.com/cypress-io/cypress/issues/3708).
+- Removed support for Node.js 20 and Node.js 25. Cypress now requires Node.js 22.x, 24.x, or >=26.x. Addresses [#33705](https://github.com/cypress-io/cypress/issues/33705) and [#33778](https://github.com/cypress-io/cypress/issues/33778).
+- Upgraded the bundled Node.js version from `22.19.0` to `24.15.0`. Addressed in [#33494](https://github.com/cypress-io/cypress/pull/33494).
+- Removed the `cy.end()` command, which ended a chain of commands by yielding `null`. A Cypress chain is already terminated when the next `cy.<command>()` starts a new chain, so existing `.end()` calls can simply be removed. See the [Migration Guide](/app/references/migration-guide#cyend-removed). Addressed in [#33696](https://github.com/cypress-io/cypress/pull/33696).
+- Removed built-in CoffeeScript support. The default `@cypress/webpack-batteries-included-preprocessor` no longer bundles `coffee-loader` or `coffeescript`, and `.coffee` is no longer resolved for specs, support files, or [`cy.fixture()`](/api/commands/fixture). Use JavaScript or TypeScript, or add CoffeeScript to your own webpack config via [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor). See the [Migration Guide](/app/references/migration-guide#CoffeeScript-support-removed). Addressed in [#33654](https://github.com/cypress-io/cypress/pull/33654).
+- The `experimentalMemoryManagement` configuration option has graduated out of experimental status and been replaced by [`manageBrowserMemory`](/app/references/configuration#manageBrowserMemory), which defaults to `true`. Memory management is now enabled by default in Chromium-based browsers. Setting `experimentalMemoryManagement` prints a warning and is otherwise ignored. If you previously set `experimentalMemoryManagement: false` to opt out, you must now set `manageBrowserMemory: false`. See the [Migration Guide](/app/references/migration-guide#experimentalMemoryManagement-replaced-by-manageBrowserMemory). Addresses [#34385](https://github.com/cypress-io/cypress/issues/34385).
+- Removed the `experimentalSourceRewriting` configuration option. The default regex-based source rewriting handles every case the AST-based rewriter did, so default behavior is unchanged and the option can be deleted from your config. If you were using it to work around Subresource Integrity errors, enable [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) instead. See the [Migration Guide](/app/references/migration-guide#experimentalSourceRewriting-config-option-removed). Addresses [#34213](https://github.com/cypress-io/cypress/issues/34213).
+- The `cypress info` command no longer prints proxy environment variables (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`) or `CYPRESS_*` environment variables, so its output is safe to paste into a bug report. The command now reports only Cypress-specific details such as file paths, version, and system information. Addresses [#34103](https://github.com/cypress-io/cypress/issues/34103). Fixed in [#34314](https://github.com/cypress-io/cypress/pull/34314).
+- Removed `Cypress.env()`. Use [`Cypress.expose()`](/api/cypress-api/expose) for non-sensitive values that need to be readable in the browser, and [`cy.env()`](/api/commands/env) for sensitive values that must remain in the Node process. The `env` key is no longer supported in per-test or suite config overrides; use `expose: { KEY: value }` instead if absolutely necessary. The `allowCypressEnv` configuration option has also been removed. See the [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cypressenv). Addresses [#33889](https://github.com/cypress-io/cypress/issues/33889). Addressed in [#33963](https://github.com/cypress-io/cypress/pull/33963).
+- **Component Testing breaking changes:**
+  - Angular
+    - Removed support for Angular 18, 19, and 20. The minimum supported version is now `21.0.0`. Addresses [#33005](https://github.com/cypress-io/cypress/issues/33005), [#33655](https://github.com/cypress-io/cypress/issues/33655), and [#33656](https://github.com/cypress-io/cypress/issues/33656).
+    - `cypress/angular-zoneless` has been merged upstream into `cypress/angular`. In a corresponding change, the `@cypress/angular-zoneless` npm package is deprecated and no longer supported and `cypress/angular-zoneless` is no longer shipped with the Cypress binary. Addresses [#33007](https://github.com/cypress-io/cypress/issues/33007).
+    - The zoneless testing harness is now the default in `cypress/angular`. `zone.js` is no longer required to be installed for your Cypress project.
+    - `@angular/platform-browser-dynamic` has been replaced with `@angular/platform-browser`. Addresses [#33006](https://github.com/cypress-io/cypress/issues/33006).
+    - `autoSpyOutputs` and `autoDetectChanges` have been removed from `cypress/angular`.
+  - Vite
+    - Removed support for Vite 5, Vite 6, and Vite 7 when using the Vite dev server for component testing. The minimum supported Vite version is now `8.0.0`. Upgrade Vite (and any `@vitejs/*` plugins that pin older major versions) before upgrading Cypress. Addresses [#33724](https://github.com/cypress-io/cypress/issues/33724), [#33725](https://github.com/cypress-io/cypress/issues/33725), and [#33726](https://github.com/cypress-io/cypress/issues/33726).
+  - Next.js
+    - Removed support for Next.js 14. Next.js 15.0.4+ or 16+ is now required. Addressed in [#33641](https://github.com/cypress-io/cypress/pull/33641).
+- The default `keystrokeDelay` for [`cy.type()`](/api/commands/type) has been changed from `10` to `0` to improve performance of typing-heavy test runs. Users who relied on the implicit 10ms delay can restore it by setting `keystrokeDelay: 10` in their [Cypress configuration](/app/references/configuration#Keyboard) or via [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api). Addresses [#33523](https://github.com/cypress-io/cypress/issues/33523).
+- The experimental `experimentalFastVisibility` flag has been replaced by a new [`visibilityStrategy`](/app/references/configuration#Actionability) configuration option that accepts `'legacy'` or `'modern'` and defaults to `'modern'`. The modern visibility algorithm (based on the browser's native `Element.checkVisibility()` API) is now the default for all users. `visibilityStrategy` is deprecated, so set `visibilityStrategy: 'legacy'` only as a temporary migration path. See the [Visibility Strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) guide for migration help. Addressed in [#33794](https://github.com/cypress-io/cypress/pull/33794).
+- [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), and [`cy.getAllCookies()`](/api/commands/getallcookies) are now retry-able [query commands](/app/core-concepts/retry-ability). They re-read cookies and retry any chained assertions until they pass or time out, are governed by [`defaultCommandTimeout`](/app/references/configuration#Timeouts), and can no longer be overwritten with [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Use [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) instead. See the [Migration Guide](/app/references/migration-guide#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries).
+- [`viewportWidth`](/app/references/configuration#Viewport) and [`viewportHeight`](/app/references/configuration#Viewport) can no longer be set via [`Cypress.config()`](/api/cypress-api/config) during test execution. Setting them this way affected the _next_ test rather than the current one and was not reflected in Test Replay. Use [`cy.viewport()`](/api/commands/viewport) or set them in the test configuration of a `describe`, `context`, or `it` block instead. See the [Migration Guide](/app/references/migration-guide#viewportWidth-and-viewportHeight-can-no-longer-be-set-with-Cypressconfig-during-test-execution). Addresses [#31592](https://github.com/cypress-io/cypress/issues/31592). Addressed in [#34262](https://github.com/cypress-io/cypress/pull/34262).
+- [`blockHosts`](/app/references/configuration#blockHosts) can no longer be set via [`Cypress.config()`](/api/cypress-api/config) during test execution. Setting it this way affected the _next_ test rather than the current one. Set `blockHosts` in the test configuration of a `describe`, `context`, or `it` block instead. See the [Migration Guide](/app/references/migration-guide#blockHosts-can-no-longer-be-set-with-Cypressconfig-during-test-execution).
+- [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage) and [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) are now retry-able [query commands](/app/core-concepts/retry-ability). They re-read storage from all origins and retry any chained assertions until they pass or time out, accept a `timeout` option governed by [`defaultCommandTimeout`](/app/references/configuration#Timeouts), and can no longer be overwritten with [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Use [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) instead. See the [Migration Guide](/app/references/migration-guide#cygetAllLocalStorage-and-cygetAllSessionStorage-are-now-queries). Addresses [#26422](https://github.com/cypress-io/cypress/issues/26422). Addressed in [#34318](https://github.com/cypress-io/cypress/pull/34318).
+
+**Deprecations:**
+
+- Added the [`forceHttp1`](/app/references/configuration#forceHttp1) configuration option, which routes every browser through the legacy network path. It is deprecated at introduction and prints a warning when set: it exists to give suites time to migrate to the native browser network, and will be removed once that path is supported long term in both Chrome and Firefox. Addresses [#33847](https://github.com/cypress-io/cypress/issues/33847).
+- Deprecated the Electron browser as a test browser. The Electron browser will be removed in a future major version of Cypress; switch to Chrome or another installed browser to avoid a breaking change when you upgrade. See [Migrating away from the Electron browser](/app/references/migration-guide#Migrating-away-from-the-Electron-browser). Addresses [#33560](https://github.com/cypress-io/cypress/issues/33560). Addressed in [#34074](https://github.com/cypress-io/cypress/pull/34074).
+
+**Features:**
+
+- Cypress now supports HTTP/2/3 in Chrome, Chromium, and Edge. Your application is tested over the same protocol it uses in production, with multiplexed requests and no six-connection ceiling, so modern apps load faster under test and behave the way your users actually experience them. Cypress also stops terminating TLS for the application under test, so the browser validates your origin's real certificate instead of one Cypress generates. See [Native network interception](/app/guides/native-network-interception) and the [Migration Guide](/app/references/migration-guide#Chrome-Chromium-and-Edge-use-the-native-browser-network). Addresses [#3708](https://github.com/cypress-io/cypress/issues/3708).
+- `Angular` version 22 is now supported within component testing, including Launchpad project detection and the `@cypress/schematic` Angular CLI integration. Addresses [#33753](https://github.com/cypress-io/cypress/issues/33753). Addressed in [#34043](https://github.com/cypress-io/cypress/pull/34043).
+
+**Dependency Updates:**
+
+- Upgraded `electron` from `37.6.0` to `41.7.0`.
+- Upgraded bundled Chromium version to `146.0.7680.216`.
+
 ## 15.21.0
 
 _Released Aug 18, 2026_
@@ -269,7 +327,7 @@ _Released May 12, 2026_
 
 **Deprecations:**
 
-- The [`cy.end()`](/api/commands/end) command has been deprecated and will be removed in a future release. Instead of using `.end()` to break a chain, start a new chain of commands off of `cy`. Addressed in [#33707](https://github.com/cypress-io/cypress/pull/33707).
+- The `cy.end()` command has been deprecated and will be removed in a future release. Instead of using `.end()` to break a chain, start a new chain of commands off of `cy`. Addressed in [#33707](https://github.com/cypress-io/cypress/pull/33707).
 
 **Bugfixes:**
 
@@ -440,7 +498,7 @@ _Released Feb 03, 2026_
 
 **Deprecations:**
 
-[`Cypress.env()`](/api/cypress-api/env) is now deprecated and will be removed in a future major release of Cypress. To understand why, and how to migrate, please read our [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cypressenv). Addressed in [#33181](https://github.com/cypress-io/cypress/pull/33181).
+`Cypress.env()` is now deprecated and will be removed in a future major release of Cypress. To understand why, and how to migrate, please read our [Migration Guide](https://on.cypress.io/cypress-env-migration). Addressed in [#33181](https://github.com/cypress-io/cypress/pull/33181).
 
 **Features:**
 
@@ -498,7 +556,7 @@ _Released Dec 16, 2025_
 
 **Performance:**
 
-- Introduced a new `experimentalFastVisibility` experiment. Enabling this experiment changes how Cypress performs visibility checks and assertions. Read more about [experimental fast visibility](/app/references/experiments#Experimental-Fast-Visibility). Addresses [#33044](https://github.com/cypress-io/cypress/issues/33044). Addressed in [#32801](https://github.com/cypress-io/cypress/pull/32801).
+- Introduced a new `experimentalFastVisibility` experiment. Enabling this experiment changes how Cypress performs visibility checks and assertions. Read more about the [visibility strategy](/app/core-concepts/interacting-with-elements#Visibility-Strategy) that replaced this experiment in 16.0.0. Addresses [#33044](https://github.com/cypress-io/cypress/issues/33044). Addressed in [#32801](https://github.com/cypress-io/cypress/pull/32801).
 
 **Features:**
 

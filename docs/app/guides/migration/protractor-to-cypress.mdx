@@ -198,7 +198,9 @@ You can also use the following command to start Cypress in `open` mode:
 ng run {your-project-name}:cypress-open
 ```
 
-Both of these commands will launch Cypress in an Electron browser.
+Both of these commands launch Cypress. To run in a specific browser, specify an
+installed browser with `--browser` (for example, `--browser chrome`) or set a
+[`defaultBrowser`](/app/references/configuration#Browser).
 
 You can also launch Cypress via `run` mode, which runs headlessly:
 

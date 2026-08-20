@@ -122,17 +122,16 @@ effect for the remainder of the tests _in the same spec file._
 
 ```ts
 {
-  viewportWidth: 1280,
-  viewportHeight: 720,
+  defaultCommandTimeout: 4000,
 }
 ```
 
 :::
 
 ```javascript
-Cypress.config('viewportWidth', 800)
+Cypress.config('defaultCommandTimeout', 10000)
 
-Cypress.config('viewportWidth') // => 800
+Cypress.config('defaultCommandTimeout') // => 10000
 ```
 
 ### Object
@@ -153,10 +152,10 @@ Cypress.config('viewportWidth') // => 800
 ```javascript
 Cypress.config({
   defaultCommandTimeout: 10000,
-  viewportHeight: 900,
+  pageLoadTimeout: 60000,
 })
 
-Cypress.config() // => {defaultCommandTimeout: 10000, viewportHeight: 900, ...}
+Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 60000, ...}
 ```
 
 ## Notes
@@ -168,6 +167,18 @@ test. Anything that's not directly under Cypress's control - like timeouts or
 environment variables - will be ignored at run-time. Be sure to review the list
 of
 [test configuration options](/app/references/configuration#Test-Configuration).
+
+A few options can be set in a suite or test configuration override, but not with
+`Cypress.config()` while a test is executing, because doing so would affect the
+_next_ test rather than the current one. Starting in Cypress
+[16.0.0](/app/references/changelog#16-0-0), `Cypress.config()` throws for these
+options during test execution:
+
+- `blockHosts`
+- `viewportHeight` - use [`cy.viewport()`](/api/commands/viewport) to change the
+  viewport during a test
+- `viewportWidth` - use [`cy.viewport()`](/api/commands/viewport) to change the
+  viewport during a test
 
 ### Test Configuration vs `Cypress.config()`
 
@@ -216,9 +227,10 @@ and by that time `Cypress.config` was public API.
 
 ## History
 
-| Version | Changes                |
-| ------- | ---------------------- |
-| 0.12.6  | `Cypress.config` added |
+| Version                                    | Changes                                                                                                                 |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | `blockHosts`, `viewportHeight`, and `viewportWidth` can no longer be set with `Cypress.config()` during test execution. |
+| 0.12.6                                     | `Cypress.config` added                                                                                                  |
 
 ## See also
 

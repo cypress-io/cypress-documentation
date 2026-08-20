@@ -125,9 +125,9 @@ workflows:
 
 ### Chrome Example
 
-Cypress uses Electron by default to run your tests. The `install-browsers` flag
-is used to install Chrome, Chrome for Testing, Edge, Firefox and the geckodriver to run your tests.
-This is only needed if you are passing the `--browser` flag in your `cypress-command`.
+The `install-browsers` flag installs Chrome, Chrome for Testing, Edge, Firefox
+and the geckodriver. Use it together with the `--browser` flag in your
+`cypress-command` to run your tests in an installed browser.
 
 ```yaml title=".circleci/config.yml"
 version: 2.1

@@ -103,10 +103,9 @@ time.
 
 :::info
 
-**WebSocket support:** Cypress transparently proxies WebSocket connections, and
-[`cy.intercept()`](/api/commands/intercept) can observe the WebSocket upgrade
-request via `resourceType: 'websocket'`. However, stubbing or mocking
-individual WebSocket **frames/messages** is not natively supported. The
+**WebSocket support:** WebSocket connections work as expected during tests, but
+Cypress does not intercept them, so stubbing or mocking individual WebSocket
+**frames/messages** is not natively supported. The
 strategies described below are the recommended way to test real-time,
 message-driven features.
 

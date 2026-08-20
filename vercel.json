@@ -14,6 +14,16 @@
       "source": "/guides/references/bundled-tools.html",
       "destination": "/app/references/bundled-libraries",
       "permanent": true
+    },
+    {
+      "source": "/api/commands/end",
+      "destination": "/api/table-of-contents",
+      "permanent": true
+    },
+    {
+      "source": "/api/cypress-api/env",
+      "destination": "/api/commands/env",
+      "permanent": true
     }
   ]
 }

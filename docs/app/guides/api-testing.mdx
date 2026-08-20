@@ -318,24 +318,30 @@ Cypress.Commands.add('loginByApi', (username, password) => {
 ```
 
 Keep the credentials themselves in
-[environment variables](/app/guides/environment-variables), never in the spec.
+[environment variables](/app/guides/environment-variables), never in the spec,
+and read them with [`cy.env()`](/api/commands/env) so they stay in the Node
+process instead of being hydrated into the browser.
 
 ```js title="cypress/e2e/api/orders.cy.js"
 describe('GET /orders', () => {
   beforeEach(() => {
-    cy.loginByApi(Cypress.env('username'), Cypress.env('password'))
+    cy.env(['username', 'password']).then(({ username, password }) => {
+      cy.loginByApi(username, password)
+    })
   })
 
   it('returns orders belonging only to the signed-in customer', () => {
-    cy.request({
-      url: '/orders',
-      headers: { authorization: `Bearer ${authToken()}` },
-    })
-      .its('body.orders')
-      .should('have.length.greaterThan', 0)
-      .each((order) => {
-        expect(order.customerId).to.eq(Cypress.env('customerId'))
+    cy.env(['customerId']).then(({ customerId }) => {
+      cy.request({
+        url: '/orders',
+        headers: { authorization: `Bearer ${authToken()}` },
       })
+        .its('body.orders')
+        .should('have.length.greaterThan', 0)
+        .each((order) => {
+          expect(order.customerId).to.eq(customerId)
+        })
+    })
   })
 })
 ```
@@ -603,7 +609,9 @@ the change persisted.
 ```js title="cypress/e2e/checkout.cy.js"
 describe('checkout', () => {
   beforeEach(() => {
-    cy.loginByApi(Cypress.env('username'), Cypress.env('password'))
+    cy.env(['username', 'password']).then(({ username, password }) => {
+      cy.loginByApi(username, password)
+    })
 
     // set up the cart over HTTP instead of clicking through the catalog
     cy.request('POST', '/cart/items', { sku: 'KB-102', quantity: 1 })
@@ -685,14 +693,16 @@ A few conventions keep an API suite readable as it grows:
 
 ```js title="cypress/support/commands.js"
 Cypress.Commands.add('api', (options) => {
-  return cy.request({
-    ...options,
-    url: `/api/v2${options.url}`,
-    headers: {
-      accept: 'application/json',
-      authorization: `Bearer ${Cypress.env('apiToken')}`,
-      ...options.headers,
-    },
+  return cy.env(['apiToken']).then(({ apiToken }) => {
+    return cy.request({
+      ...options,
+      url: `/api/v2${options.url}`,
+      headers: {
+        accept: 'application/json',
+        authorization: `Bearer ${apiToken}`,
+        ...options.headers,
+      },
+    })
   })
 })
 ```
@@ -728,7 +738,9 @@ and [`testIsolation: false`](/app/core-concepts/test-isolation) skips it.
 ```js title="cypress/e2e/api/users.cy.js"
 describe('/users', { testIsolation: false }, () => {
   before(() => {
-    cy.loginByApi(Cypress.env('username'), Cypress.env('password'))
+    cy.env(['username', 'password']).then(({ username, password }) => {
+      cy.loginByApi(username, password)
+    })
   })
 
   it('lists users', () => {

@@ -845,11 +845,15 @@ cy.wait('@createUser')
   .should('have.property', 'x-custom-header', 'added by cy.intercept')
 ```
 
-:::caution
+:::info
 
-The request modification cannot be verified by inspecting the browser's network
-traffic (for example, in Chrome DevTools), since the browser logs network
-traffic _before_ Cypress can intercept it.
+In Chrome, Chromium, and Edge the browser sends the modified request, so the
+modification is reflected in the browser's network traffic (for example, in Chrome
+DevTools). On the
+[legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path)
+the browser logs the request before Cypress modifies it, so the modification does
+not appear there — verify it from the Cypress command log, or with an assertion on
+`request.headers` after `cy.wait()`.
 
 :::
 
@@ -1080,8 +1084,11 @@ The request object (`req`) has several properties from the HTTP request itself:
   query: Record<string, string|number>
   /**
    * The HTTP version used in the request. Read only.
+   * Not reported in Chrome, Chromium, or Edge, where the browser negotiates the
+   * protocol with the origin directly and it is not known when the request is
+   * intercepted. Firefox, WebKit, and Electron still report it.
    */
-  httpVersion: string
+  httpVersion?: string
   /**
    * The resource type of the request. Read only.
    */
@@ -1090,6 +1097,17 @@ The request object (`req`) has several properties from the HTTP request itself:
               | 'manifest' | 'other'
 }
 ```
+
+:::note
+
+`req.httpVersion` is not reported in Chrome, Chromium, or Edge, where Cypress intercepts
+traffic inside the browser and the protocol your application negotiates with your server
+is not known at the point the request is intercepted. Firefox, WebKit, and Electron route
+traffic through the Cypress HTTP/1.1 proxy and still report it. See
+[Native network interception](/app/guides/native-network-interception) for the other
+properties this affects and how to write assertions that pass in every browser.
+
+:::
 
 `req` also has some optional properties which can be set to control
 Cypress-specific behavior:
