@@ -268,8 +268,8 @@
     },
     "cypress-if": {
       "npm": "cypress-if",
-      "version": "1.17.0",
-      "lastPublished": "2026-08-19T01:33:40.744Z",
+      "version": "1.17.1",
+      "lastPublished": "2026-08-19T17:13:02.143Z",
       "cypressVersion": "15.19.0"
     },
     "cypress-plugin-steps": {
@@ -482,8 +482,8 @@
     },
     "@chromatic-com/cypress": {
       "npm": "@chromatic-com/cypress",
-      "version": "0.13.1",
-      "lastPublished": "2026-07-15T07:14:59.258Z",
+      "version": "0.13.2",
+      "lastPublished": "2026-08-19T11:39:06.822Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-ntlm-auth": {
