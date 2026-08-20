@@ -12,18 +12,32 @@ This is the **Cypress Documentation** site, built with
 - Docs content lives in `docs/**/*.mdx`.
 - Custom remark plugins live in `plugins/cypressRemarkPlugins`.
 - The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
-  content into stripped-down markdown and chunked JSON published under `/llm`,
-  with `/llms.txt` as the index (both are build output, not committed files).
-  Every page's markdown is also published at its own route plus `.md`
-  (`/app/get-started/why-cypress.md`), with its `##` sections at
-  `/app/get-started/why-cypress/<h2-slug>.md`, so an agent can reach the
-  markdown by appending `.md` to a docs URL without discovering `/llm` first.
-  Readers reach the same file through `src/components/markdown-actions`, the
-  split button beside every page title: it copies the markdown, opens the raw
-  `.md`, or hands its URL to ChatGPT or Claude. Both it and the
+  content into stripped-down markdown and chunked JSON published under `/llm`
+  (all of it build output, not committed files). Every page's markdown is also
+  published at its own route plus `.md` (`/app/get-started/why-cypress.md`),
+  with its `##` sections at `/app/get-started/why-cypress/<h2-slug>.md`, so an
+  agent can reach the markdown by appending `.md` to a docs URL without
+  discovering `/llm` first. Readers reach the same file through
+  `src/components/markdown-actions`, the split button beside every page title:
+  it copies the markdown, opens the raw `.md`, or hands its URL to ChatGPT or
+  Claude. Both it and the
   `<link rel="alternate" type="text/markdown">` tag in `src/theme/DocItem/Layout`
   derive the path from `markdownPathFor` in `src/utils/markdown-url.ts`, so
-  neither can drift from the other.
+  neither can drift from the other. Three files at the site root index all of
+  that:
+  - `/llms.txt` — the index, in the [llmstxt.org](https://llmstxt.org) format
+    (H1, blockquote, then `##` sections of `- [Title](url): description` links).
+    It links every page's markdown, plus one section listing the other formats.
+    Written by `LlmsTxtWriter`; the link list is generated from the pages the
+    export walks, so it is never hand-maintained.
+  - `/llms-full.txt` — every page's markdown concatenated in index order, for
+    tools that ingest one file. It runs to several megabytes; `LlmsTxtWriter`
+    quotes the current size in the `/llms.txt` entry that links it.
+  - `/docs-manifest.json` — project metadata (name, repository, license, tags)
+    and the machine-readable list of the formats above. Written by
+    `ManifestWriter`. This is the metadata that used to sit in a YAML block at
+    the top of `/llms.txt`, which kept that file out of the format its
+    consumers parse.
 - Small helpers shared by more than one component live in `src/utils`
   (`markdown-url.ts`, `copy-to-clipboard.ts`). Anything with UI belongs in
   `src/components` instead.

@@ -37,7 +37,11 @@ served using any static contents hosting service.
 
 ### LLM Docs
 
-The build process reprocesses the content into both markdown and chunked JSON to be published under `/llm` - these formats strip out unnecessary styling and formatting which can be difficult and/or token-inefficient for use by LLMs. See `/llms.txt` for indexing info.
+The build process reprocesses the content into both markdown and chunked JSON to be published under `/llm` - these formats strip out unnecessary styling and formatting which can be difficult and/or token-inefficient for use by LLMs. Three files at the site root index them:
+
+- `/llms.txt` - a link index of every documentation page, in the [llmstxt.org](https://llmstxt.org) format.
+- `/llms-full.txt` - the whole corpus concatenated into one markdown file.
+- `/docs-manifest.json` - project metadata and the machine-readable list of every format published.
 
 ## Contributing
 
