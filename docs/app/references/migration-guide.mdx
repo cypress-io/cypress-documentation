@@ -430,7 +430,8 @@ To display which version of glibc your Linux system is running, execute `ldd --v
 ### Firefox is automated with WebDriver BiDi only
 
 Support for the [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) (CDP) with Firefox has been removed.
-[Cypress 14.1.0](/app/references/changelog#14-1-0) began automating Firefox 135 and above with [WebDriver BiDi](https://w3c.github.io/webdriver-bidi/) — Firefox's supported automation interface — and fell back to CDP for older versions.
+[WebDriver BiDi](https://w3c.github.io/webdriver-bidi/) is Firefox's supported automation interface.
+[Cypress 14.1.0](/app/references/changelog#14-1-0) began automating Firefox 135 and above with it and fell back to CDP for older versions.
 Cypress 15 drops that fallback, so WebDriver BiDi is the only way Cypress automates Firefox.
 
 Because WebDriver BiDi is only available in newer Firefox releases, this sets a minimum Firefox version.
@@ -439,7 +440,7 @@ Cypress cannot launch a version below the minimum and will fail with an error na
 - Cypress `15.0.0` through `15.18.1` require Firefox `135` or newer.
 - [Cypress 15.19.0](/app/references/changelog#15-19-0) and newer require Firefox `140` or newer, the oldest release line Mozilla still ships.
 
-If you pin a Firefox version — an ESR build, a Docker image tag, or a browser installed by your CI provider — update it before upgrading.
+If you pin a Firefox version, such as an ESR build, a Docker image tag, or a browser installed by your CI provider, update it before upgrading.
 Chrome, Edge, Electron, and experimental WebKit are unaffected, and no test code changes are needed: Cypress commands behave the same in Firefox under WebDriver BiDi.
 
 ### Webpack `4` is no longer supported
