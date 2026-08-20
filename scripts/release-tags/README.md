@@ -68,3 +68,28 @@ there, and are left untouched — the manifest does not list them.
 Note that this means the tag set is not uniform: `v0.3.3`–`v0.13.6` point at
 cypress monorepo commits that are not part of this repository's history, while
 every tag from `v0.13.7` on points at a cypress-documentation commit.
+
+## Undoing it
+
+`rollback-release-tags.sh` restores the remote to exactly the tag state that
+existed before `create-release-tags.sh` ran: it deletes the 222 tags the script
+creates and restores the 80 it force-updates to their original commits, as the
+lightweight tags they were. `rollback.tsv` records those original SHAs, captured
+from the remote before anything was pushed. Run it with no arguments for a dry
+run, `--push` to apply. The round trip has been verified locally: after rollback
+the tag set is byte-identical to the pre-existing remote state, and re-running
+the create script reproduces all 302 tags at the same commits.
+
+Tags are refs, not history — nothing here touches a commit, a file, or the
+default branch, and this repository has no GitHub Releases attached to any tag,
+so none can be lost.
+
+Two caveats:
+
+- The 80 original commits are cypress monorepo commits that are not reachable
+  from `main`. Once the tags stop pointing at them they are unreferenced, and
+  GitHub prunes unreachable objects on no schedule you can rely on. The rollback
+  is guaranteed only while they survive; if you want an indefinite guarantee,
+  push backup refs (`git tag legacy/vX.Y.Z <original-sha>`) before re-pointing.
+- Anyone who fetched in between keeps the stale tags locally. `git fetch --tags
+  --force --prune-tags` reconciles a clone in either direction.
