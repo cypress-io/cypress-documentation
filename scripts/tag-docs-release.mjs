@@ -11,8 +11,11 @@
 //   node scripts/tag-docs-release.mjs --before <sha> --after <sha> [--dry-run]
 //
 // Environment:
-//   GITHUB_TOKEN     required unless --dry-run; needs contents: write
-//   GITHUB_REPOSITORY  owner/repo (set automatically by GitHub Actions)
+//   TAG_TOKEN  required unless --dry-run; needs only contents: write on this
+//              repository. Not named GITHUB_TOKEN on purpose, so that a token
+//              placed here is never picked up automatically by the gh CLI or
+//              other tooling that reads GITHUB_TOKEN from the environment.
+//   REPO       owner/repo
 
 import { execFileSync } from 'node:child_process'
 
@@ -62,6 +65,16 @@ function releaseDate(sha, version) {
   return match ? match[1].trim() : null
 }
 
+// Commands run through execFileSync, never a shell, so there is no shell
+// injection surface. This guards the remaining one: a value beginning with `-`
+// would reach git as an option rather than as a revision.
+function assertRevision(name, value) {
+  if (!/^[0-9A-Za-z][0-9A-Za-z._/~^-]{0,199}$/.test(value)) {
+    throw new Error(`${name} is not a valid revision: ${value}`)
+  }
+  return value
+}
+
 function parseArgs(argv) {
   const args = { dryRun: false }
   for (let i = 0; i < argv.length; i++) {
@@ -71,6 +84,8 @@ function parseArgs(argv) {
     else throw new Error(`unknown argument: ${argv[i]}`)
   }
   if (!args.after) throw new Error('--after is required')
+  assertRevision('--after', args.after)
+  if (args.before) assertRevision('--before', args.before)
   return args
 }
 
@@ -168,12 +183,10 @@ async function main() {
     return
   }
 
-  const token = process.env.GITHUB_TOKEN
-  const repository = process.env.GITHUB_REPOSITORY
+  const token = process.env.TAG_TOKEN
+  const repository = process.env.REPO
   if (!args.dryRun && (!token || !repository)) {
-    throw new Error(
-      'GITHUB_TOKEN and GITHUB_REPOSITORY are required unless --dry-run'
-    )
+    throw new Error('TAG_TOKEN and REPO are required unless --dry-run')
   }
 
   let failed = 0
@@ -222,8 +235,11 @@ async function main() {
       if (/workflow/i.test(error.body || '')) {
         console.error(
           '\nThe token was refused because the tagged commit contains ' +
-            '.github/workflows files.\nProvide a PAT with `workflow` scope as the ' +
-            'RELEASE_TAG_TOKEN secret and re-run.'
+            '.github/workflows files.\nSet the RELEASE_TAG_TOKEN secret to a ' +
+            'fine-grained credential limited to this one repository — a GitHub ' +
+            'App installation token or a fine-grained PAT.\nDo not use a classic ' +
+            'PAT: `repo` scope reaches every repository the granting user can ' +
+            'access, and\n`workflow` scope allows rewriting CI.'
         )
       }
     }

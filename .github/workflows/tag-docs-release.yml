@@ -29,9 +29,11 @@ on:
 # a pull request check. A failure here means a release is missing its tag and
 # nothing else — it cannot block a merge or a deploy. It still opens an issue so
 # the gap gets noticed rather than sitting silently in the Actions tab.
-permissions:
-  contents: write
-  issues: write
+#
+# Grant nothing by default. Each job below asks for only what it needs, so the
+# job that writes tags cannot file issues and the job that files issues cannot
+# write to the repository.
+permissions: {}
 
 concurrency:
   group: tag-docs-release
@@ -41,6 +43,8 @@ jobs:
   tag:
     if: github.repository == 'cypress-io/cypress-documentation'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -49,12 +53,18 @@ jobs:
           # commit that introduced it and skips versions already tagged.
           fetch-depth: 0
           fetch-tags: true
+          # Tags are created through the REST API, never with `git push`, so the
+          # job has no use for git credentials. Leaving them out keeps the token
+          # out of .git/config where any later step could read it.
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version-file: '.node-version'
 
+      # No `npm ci`: nothing from the registry executes in a job that can write
+      # tags. Keep it that way.
       - name: Tag releases added to the changelog
         run: |
           node scripts/tag-docs-release.mjs \
@@ -62,19 +72,46 @@ jobs:
             --after "$AFTER" \
             ${DRY_RUN:+--dry-run}
         env:
+          # Interpolated into env rather than into the run script, so the values
+          # cannot be spliced into the shell command.
+          #
           # On push, github.event.before is the previous head of main. On a
           # manual run there is none, so fall back to the parent of AFTER.
           BEFORE: ${{ inputs.before || github.event.before }}
           AFTER: ${{ inputs.after || github.sha }}
           DRY_RUN: ${{ inputs.dry-run && '1' || '' }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          # Tagged commits contain .github/workflows files. If GITHUB_TOKEN is
-          # refused for that reason, add a RELEASE_TAG_TOKEN secret holding a PAT
-          # with `workflow` scope; the script says so when it hits this.
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TAG_TOKEN || secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          # Deliberately NOT named GITHUB_TOKEN: if RELEASE_TAG_TOKEN is ever
+          # set, that variable name would be picked up automatically by the gh
+          # CLI, actions/checkout and other tooling, silently handing them a
+          # more privileged credential than they need.
+          #
+          # Prefer the built-in GITHUB_TOKEN. Only if it is refused for the
+          # .github/workflows reason the script explains, set RELEASE_TAG_TOKEN
+          # to a *fine-grained* token limited to this single repository — a
+          # GitHub App installation token, or a fine-grained PAT. Never a
+          # classic PAT: classic `repo` scope reaches every repository the
+          # granting user can access, and classic `workflow` scope allows
+          # rewriting CI, which is repository takeover via a single secret.
+          TAG_TOKEN: ${{ secrets.RELEASE_TAG_TOKEN || secrets.GITHUB_TOKEN }}
 
-      - name: Report the failure as an issue
-        if: failure()
+  report-failure:
+    needs: [tag]
+    if: failure()
+    runs-on: ubuntu-latest
+    permissions:
+      # Read to check out the reporting script, issues to file the report. No
+      # write access to the repository contents.
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Open an issue
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
