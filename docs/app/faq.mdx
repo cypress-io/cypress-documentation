@@ -1127,6 +1127,46 @@ test can still pass independently before relying on this approach.
 
 :::
 
+### <Icon name="angle-right" /> Does Cypress clear IndexedDB between tests?
+
+No. Cookies, `localStorage`, and `sessionStorage` are the only browser storage
+mechanisms Cypress clears between tests. Everything your application writes to
+[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) is
+still there in the next test, whether
+[test isolation](/app/core-concepts/test-isolation) is enabled or disabled, and
+whether you are running end-to-end tests or component tests. This also applies
+to libraries that use IndexedDB under the hood, such as offline caches and
+client-side databases.
+
+[`cy.session()`](/api/commands/session) behaves the same way: a session caches
+and restores cookies, `localStorage`, and `sessionStorage` only, so IndexedDB
+data is neither saved with a session nor cleared when one is restored.
+
+If a test depends on IndexedDB being empty, delete the databases yourself in a
+`beforeEach` hook, after visiting the page so a `window` is available:
+
+```javascript title="cypress/support/e2e.js"
+beforeEach(() => {
+  cy.visit('/')
+  cy.window().then((win) => {
+    return new Cypress.Promise((resolve) => {
+      const request = win.indexedDB.deleteDatabase('my-database')
+
+      // resolve on every outcome so a missing or blocked
+      // database does not hang the test
+      request.onsuccess = resolve
+      request.onerror = resolve
+      request.onblocked = resolve
+    })
+  })
+})
+```
+
+See
+[Storage That Is Not Cleared](/app/core-concepts/test-isolation#Storage-That-Is-Not-Cleared)
+for more details, including how to handle databases whose names you do not know
+ahead of time.
+
 ### <Icon name="angle-right" /> Some of my elements animate in; how do I work around that?
 
 Oftentimes you can usually account for animation by asserting

@@ -73,6 +73,10 @@ test by:
   [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
   in all domains
 
+IndexedDB and other browser storage mechanisms are not cleared, even when test
+isolation is enabled. See
+[Storage That Is Not Cleared](#Storage-That-Is-Not-Cleared).
+
 Because the test starts in a fresh browser context, you must re-visit your
 application and perform the series of interactions needed to build the dom and
 browser state for each test.
@@ -115,12 +119,60 @@ each test by:
   [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
   in all domains
 
+## Storage That Is Not Cleared
+
+Cookies, `localStorage`, and `sessionStorage` are the only browser storage
+mechanisms Cypress clears between tests. Every other storage mechanism persists
+for the life of the browser, whether test isolation is enabled or disabled, and
+whether you are running end-to-end tests or component tests.
+
+The one to be most aware of is
+[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
+Data your application writes to IndexedDB, including data written by libraries
+that use it under the hood such as offline caches and client-side databases, is
+still there in the next test. If a test depends on IndexedDB being empty, clear
+it yourself.
+
+The same applies to [`cy.session()`](/api/commands/session): a session caches
+and restores cookies, `localStorage`, and `sessionStorage` only, so IndexedDB
+data is neither saved with a session nor cleared when one is restored.
+
+### Clearing IndexedDB yourself
+
+Delete the databases your application uses in a `beforeEach` hook, after
+visiting the page so a `window` is available:
+
+```javascript title="cypress/support/e2e.js"
+beforeEach(() => {
+  cy.visit('/')
+  cy.window().then((win) => {
+    return new Cypress.Promise((resolve) => {
+      const request = win.indexedDB.deleteDatabase('my-database')
+
+      // resolve on every outcome so a missing or blocked
+      // database does not hang the test
+      request.onsuccess = resolve
+      request.onerror = resolve
+      request.onblocked = resolve
+    })
+  })
+})
+```
+
+If you do not know the database names ahead of time, and you only run your tests
+in Chromium-based browsers or WebKit, you can enumerate them with
+[`indexedDB.databases()`](https://developer.mozilla.org/en-US/docs/Web/API/IDBFactory/databases).
+Firefox does not implement that method, so name each database explicitly if you
+run your tests in Firefox.
+
 ## Preserving Cookies and Storage Across Tests
 
-Because Cypress clears all cookies, localStorage, and sessionStorage before each
-test when test isolation is enabled, any state your application writes to the
-browser is gone by the next test. There are three approaches for keeping specific
-state available across tests.
+Because Cypress clears all cookies, `localStorage`, and `sessionStorage` before
+each test when test isolation is enabled, state your application writes to those
+three mechanisms is gone by the next test. There are three approaches for
+keeping specific state available across tests. State in other storage
+mechanisms, such as IndexedDB, already persists on its own and needs none of
+them.
 
 ### Re-set a known cookie in `beforeEach`
 
