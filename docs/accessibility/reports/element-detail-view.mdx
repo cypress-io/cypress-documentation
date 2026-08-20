@@ -14,8 +14,8 @@ Most accessibility fixes stall on the same three questions: which element is bro
 You never have to reproduce the violation to triage it. There is no local server to start, no walking a tester back through the steps, and no guessing which of five similar buttons a selector points at. You pin the failing element, see it highlighted in the real markup and styles captured during the run, read the specific checks that failed on it, and hand it to whoever owns the fix as a link, a Markdown snippet, or a Jira issue.
 
 <DocsImage
-  src="/img/accessibility/cy-a11y-detail.png"
-  alt="The Cypress Accessibility violation detail view. On the left, a rules list with 'Buttons must have discernible text' expanded to show its description, a Learn more link, and two failing element selectors; the pinned selector expands to a Solutions list of the checks that must be fixed. On the right, a DOM snapshot of a transaction page with the failing button outlined and its size shown in a tooltip, above a footer with the snapshot URL and viewport size."
+  src="/img/accessibility/reports/element-detail-view.png"
+  alt="The violation detail view on the Accessibility tab of a Cypress Cloud run. On the left, rules grouped under a Critical rules heading, with 'Certain ARIA roles must be contained by particular parents' expanded to its description, a Learn more link, and a pinned element selector whose detail shows a Failed result, Share issue and Create Jira issue actions, and a Solutions list. On the right, a DOM snapshot of an analytics page with the failing menu item outlined and its size shown in a tooltip, above a footer with the snapshot URL and a 1400x1000 viewport."
 />
 
 The view has two panels:
@@ -71,8 +71,8 @@ Element rows carry two visual signals worth knowing:
 Selecting an element pins it. The row gets a pin icon, the element is highlighted in the snapshot, and the row expands to show the detail for that element.
 
 <DocsImage
-  src="/img/accessibility/guides/working-with-ai-agents-print-to-console.png"
-  alt="A pinned element row in the Cypress Accessibility rules list, under the rule 'All page content should be contained by landmarks'. The row shows a pin icon beside the selector and two icon buttons at its right, with the Print to Console tooltip visible over the second one. Below the row are a Failed result status, an Actions section containing Share issue, and a Solutions section reading 'This must be fixed: Some page content is not contained by landmarks'."
+  src="/img/accessibility/reports/element-detail-solutions.png"
+  alt="The rule 'Form elements must have labels' expanded to 139 elements, with the element '#email' pinned. The pinned row shows a pin icon and two icon buttons for Copy selector and Print to Console. Below it, a Failed result status, an Actions section with Share issue and Create Jira issue, and a Solutions section headed 'One of these must be fixed:' listing seven alternatives, starting with an implicit or explicit label and an aria-label attribute. On the right, a DOM snapshot of a sign-up form with the email field outlined."
 />
 
 The expanded detail has three parts:
@@ -100,9 +100,22 @@ Snapshots are the reason this view can replace reproducing a bug. Each one is a 
 That has a few practical consequences:
 
 - **Your browser's DevTools work on it.** You can inspect elements, read computed styles, and open the accessibility pane against the captured page without running the application locally. The snapshot options menu, opened from the icon at the top right of the snapshot, shows the DevTools inspect shortcut for your browser.
+
+<DocsImage
+  src="/img/accessibility/reports/element-detail-devtools.png"
+  alt="The violation detail view with Chrome DevTools open beneath it. The Elements panel shows the highlighted markup for the pinned selector, an anchor with role='menuitem' and a data-cy attribute matching the element named in the rules list above, with its computed styles in the Styles pane."
+  caption="The snapshot is real DOM, so DevTools inspects it like any other page. Print to Console followed by Reveal in Elements panel jumps straight to the failing element."
+/>
+
 - **Highlights are deliberate, not exhaustive.** The snapshot outlines the element you have pinned, or the element you are hovering in the rules list, and nothing else. This keeps a page with hundreds of failing images readable. The same snapshot options menu has a **Show DOM highlights** toggle that turns the outline off when it covers something you want to see.
 - **The snapshot counter is scoped to your selection.** With nothing pinned, you can page through every snapshot the filtered rules appear in. Pin an element and the counter narrows to the snapshots containing that element, so **6 of 9** means the element you pinned was captured nine times in this run. Clearing the pin from the counter restores the full set.
-- **Hovering an element that isn't on screen tells you so.** The snapshot dims and shows **Element is not in this snapshot**, with a prompt to select it. Selecting the element moves the snapshot to a page state where it exists.
+- **Hovering an element that isn't on screen tells you so.** The snapshot dims and shows **Element is not in this snapshot**, followed by **Click to change to a snapshot containing this element** and the element's selector. Clicking the row moves the snapshot to a page state where the element exists.
+
+<DocsImage
+  src="/img/accessibility/reports/element-detail-missing-element.png"
+  width="60%"
+  alt="A dimmed DOM snapshot overlaid with the Cypress logo, the heading 'Element is not in this snapshot', the line 'Click to change to a snapshot containing this element.', and a chip naming the hovered element, #password."
+/>
 
 Below the snapshot, the footer shows the URL the snapshot was captured at, with a copy button, and the viewport size it was rendered at. When several URLs collapsed into one snapshot, a **+N URLs** tag expands to list them, which is a useful check that your [views configuration](/accessibility/configuration/views) is grouping URLs the way you expect.
 
@@ -110,9 +123,15 @@ The **Test Replay** button above the snapshot shows how many tests reached this 
 
 ## Filter what the list shows
 
-The filter button in the header of the left panel narrows both the rules list and the elements underneath each rule:
+The filter button in the header of the left panel narrows both the rules list and the elements underneath each rule. Every option carries a count, so you can see what a filter will cost you before you apply it.
 
-- **Include elements** limits the list to the snapshot currently displayed. By default, elements from every snapshot in the view are shown.
+<DocsImage
+  src="/img/accessibility/reports/element-detail-filter-menu.png"
+  width="50%"
+  alt="The filter menu for the violation detail view, with four groups. Include elements holds a single toggle, Only on this snapshot, switched off. Rule severity lists Critical, Serious, Moderate, and Minor, all on. Rules lists WCAG 2.1 A, WCAG 2.1 AA, and Best practices, all on. Element status lists Failed and Inconclusive switched on and Ignored switched off. Each option shows a count beside it."
+/>
+
+- **Include elements** holds one toggle, **Only on this snapshot**, which limits the list to the snapshot currently displayed. It is off by default, so elements from every snapshot in the view are shown.
 - **Rule severity** filters to critical, serious, moderate, or minor rules.
 - **Rules** filters by ruleset: WCAG 2.1 A, WCAG 2.1 AA, or Best practices.
 - **Element status** filters to failed, inconclusive, or ignored elements. Failed and inconclusive are on by default; ignored is off, so elements you have excluded through [`elementFilters`](/accessibility/configuration/elementfilters) or [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) stay out of your way until you go looking for them.
@@ -132,8 +151,8 @@ The URL of the detail view encodes the view, the expanded rule, the pinned eleme
 **Share issue** opens a preview of a ready-to-paste snippet in either **Markdown** or **Plain text**, with a **Copy** button.
 
 <DocsImage
-  src="/img/accessibility/core-concepts/cypress-accessibility-element-details-on-click.png"
-  alt="The Share issue dialog for a 'Links must have discernible text' violation, showing the Markdown and Plain text tabs, a Copy button, and a preview containing the issue name, severity, selected element, a link to the Deque University page for the rule, and a deep link back to the violation in Cypress Cloud."
+  src="/img/accessibility/reports/element-detail-share-issue.png"
+  alt="The Share issue dialog, headed 'Share issue' followed by the pinned element's selector. Markdown and Plain text tabs sit above the snippet with a Copy button to their right. The snippet lists Issue, Severity, Selected view, and Selected element, then References holding a 'How to fix this' link to Deque University and a 'View in Cypress Cloud' link carrying the snapshot, filter, rule, and element parameters."
 />
 
 The snippet contains:
