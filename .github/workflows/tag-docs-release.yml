@@ -24,8 +24,14 @@ on:
         type: boolean
         default: true
 
+# Nothing ships through this workflow. Docs deploy via Netlify/Vercel and CI
+# runs on CircleCI, and this runs on push to main after the merge, so it is not
+# a pull request check. A failure here means a release is missing its tag and
+# nothing else — it cannot block a merge or a deploy. It still opens an issue so
+# the gap gets noticed rather than sitting silently in the Actions tab.
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: tag-docs-release
@@ -66,3 +72,12 @@ jobs:
           # refused for that reason, add a RELEASE_TAG_TOKEN secret holding a PAT
           # with `workflow` scope; the script says so when it hits this.
           GITHUB_TOKEN: ${{ secrets.RELEASE_TAG_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Report the failure as an issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SHA: ${{ github.sha }}
+        run: node scripts/report-tagging-failure.mjs
