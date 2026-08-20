@@ -73,8 +73,8 @@ test by:
   [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
   in all domains
 
-That list is complete: IndexedDB and other browser storage mechanisms are not
-cleared, even when test isolation is enabled. See
+IndexedDB and other browser storage mechanisms are not cleared, even when test
+isolation is enabled. See
 [Storage That Is Not Cleared](#storage-that-is-not-cleared).
 
 Because the test starts in a fresh browser context, you must re-visit your
@@ -102,9 +102,6 @@ current page is not cleared.
 | `true`        | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains | - clears page by visiting `about:blank`<br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains |
 | `false`       | does not alter the current browser context                                                                                                          | <br/>- clears cookies in all domains<br/>- local storage in all domains<br/>- session storage in all domains                                        |
 
-Neither setting clears IndexedDB or any other browser storage mechanism. See
-[Storage That Is Not Cleared](#storage-that-is-not-cleared).
-
 ## Test Isolation in Component Testing
 
 Cypress does not support configuring the test isolation behavior in component
@@ -121,10 +118,6 @@ each test by:
 - clearing
   [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
   in all domains
-
-As in end-to-end testing, Cypress does not clear IndexedDB or any other browser
-storage mechanism between component tests. See
-[Storage That Is Not Cleared](#storage-that-is-not-cleared).
 
 ## Storage That Is Not Cleared
 
@@ -149,7 +142,7 @@ data is neither saved with a session nor cleared when one is restored.
 Delete the databases your application uses in a `beforeEach` hook, after
 visiting the page so a `window` is available:
 
-```javascript
+```javascript title="cypress/support/e2e.js"
 beforeEach(() => {
   cy.visit('/')
   cy.window().then((win) => {
