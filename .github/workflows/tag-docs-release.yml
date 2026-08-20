@@ -1,0 +1,68 @@
+name: Tag docs release
+
+# Creates a `vX.Y.Z` tag whenever a Cypress release's changelog entry lands on
+# main, so every release has a tag marking the documentation as of that release.
+# Release branches are merged to main with the changelog entry in the same push,
+# so the changelog is the trigger.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/app/references/changelog.mdx'
+  workflow_dispatch:
+    inputs:
+      before:
+        description: 'Base commit (exclusive). Defaults to the commit before "after".'
+        required: false
+      after:
+        description: 'Commit to tag from. Defaults to the current main.'
+        required: false
+      dry-run:
+        description: 'Print what would be tagged without creating anything'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tag-docs-release
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    if: github.repository == 'cypress-io/cypress-documentation'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # Full history and tags: the script attributes each new entry to the
+          # commit that introduced it and skips versions already tagged.
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.node-version'
+
+      - name: Tag releases added to the changelog
+        run: |
+          node scripts/tag-docs-release.mjs \
+            --before "${BEFORE:-$AFTER~1}" \
+            --after "$AFTER" \
+            ${DRY_RUN:+--dry-run}
+        env:
+          # On push, github.event.before is the previous head of main. On a
+          # manual run there is none, so fall back to the parent of AFTER.
+          BEFORE: ${{ inputs.before || github.event.before }}
+          AFTER: ${{ inputs.after || github.sha }}
+          DRY_RUN: ${{ inputs.dry-run && '1' || '' }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          # Tagged commits contain .github/workflows files. If GITHUB_TOKEN is
+          # refused for that reason, add a RELEASE_TAG_TOKEN secret holding a PAT
+          # with `workflow` scope; the script says so when it hits this.
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TAG_TOKEN || secrets.GITHUB_TOKEN }}
