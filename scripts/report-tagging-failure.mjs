@@ -39,6 +39,39 @@ async function api(path, { method = 'GET', body } = {}) {
   return text ? JSON.parse(text) : null
 }
 
+// Returns whether LABEL can be used, creating it if the repository does not
+// have it yet. Label writes fall under the issues: write permission the job
+// already holds.
+async function ensureLabel() {
+  try {
+    await api(`/repos/${repo}/labels/${encodeURIComponent(LABEL)}`)
+    return true
+  } catch (error) {
+    if (!/-> 404:/.test(error.message)) {
+      console.log(`could not read the ${LABEL} label: ${error.message}`)
+      return false
+    }
+  }
+
+  try {
+    await api(`/repos/${repo}/labels`, {
+      method: 'POST',
+      body: {
+        name: LABEL,
+        color: 'B60205',
+        description: 'A Cypress release may be missing its documentation tag',
+      },
+    })
+    console.log(`created the ${LABEL} label`)
+    return true
+  } catch (error) {
+    // A concurrent run may have created it in between; that is a success.
+    if (/-> 422:/.test(error.message)) return true
+    console.log(`could not create the ${LABEL} label: ${error.message}`)
+    return false
+  }
+}
+
 async function main() {
   if (!token || !repo) {
     throw new Error('GH_TOKEN and REPO are required')
@@ -59,10 +92,18 @@ async function main() {
     `[Failed run](${runUrl})`,
   ].join('\n')
 
+  // The label has to exist before it can be filtered on or attached. Whether
+  // POST /issues would create it implicitly is not worth depending on, so
+  // create it explicitly and carry on unlabelled if that fails — an issue
+  // nobody labelled still beats no issue at all.
+  const labelled = await ensureLabel()
+
   // List by label rather than the search API, which lags behind by design.
-  const open = await api(
-    `/repos/${repo}/issues?state=open&labels=${encodeURIComponent(LABEL)}&per_page=1`
-  )
+  const open = labelled
+    ? await api(
+        `/repos/${repo}/issues?state=open&labels=${encodeURIComponent(LABEL)}&per_page=1`
+      )
+    : []
 
   if (Array.isArray(open) && open.length > 0) {
     const number = open[0].number
@@ -79,7 +120,7 @@ async function main() {
     body: {
       title: 'Release tagging failed',
       body,
-      labels: [LABEL],
+      ...(labelled ? { labels: [LABEL] } : {}),
     },
   })
   console.log(`opened issue #${issue.number}`)

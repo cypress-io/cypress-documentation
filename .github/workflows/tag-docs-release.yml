@@ -47,7 +47,12 @@ concurrency:
 
 jobs:
   tag:
-    if: github.repository == 'cypress-io/cypress-documentation'
+    # Both guards, matching update-plugins-data.yml. The ref check is not
+    # redundant with the push trigger: workflow_dispatch can be launched from
+    # any ref, and without it a manual run with dry-run unchecked would tag
+    # commits from a feature branch.
+    if: (github.ref == 'refs/heads/main') &&
+      (github.repository == 'cypress-io/cypress-documentation')
     runs-on: ubuntu-latest
     permissions:
       contents: write
