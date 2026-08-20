@@ -81,10 +81,11 @@ lets Cypress rely on stable, modern automation APIs.
 
 :::info
 
-Regardless of the above, Cypress cannot launch **Firefox versions older than 135**.
+Regardless of the above, Cypress cannot launch **Firefox versions older than 140**.
 Cypress automates Firefox through
-[WebDriver BiDi](https://w3c.github.io/webdriver-bidi/), which is only available
-in Firefox 135 and above, so older versions will fail with an error.
+[WebDriver BiDi](https://w3c.github.io/webdriver-bidi/), and Firefox versions
+below 140 implement it incompletely, so older versions will fail with an error.
+Cypress `15.0.0` through `15.18.1` set this floor at Firefox 135.
 
 :::
 

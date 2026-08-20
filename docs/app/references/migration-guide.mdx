@@ -373,7 +373,7 @@ When `allowCypressEnv` is set to `false`:
   defaultCollapsed
   excludeFromLlmExport
   title="Upgrade to Cypress 15 with your AI assistant"
-  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-15-0.md, then upgrade this project from Cypress 14 to 15 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 14.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in that section (Node.js 20, 22, or 24+, a supported Linux distribution, and webpack 5 / Vite 5 / Angular 18+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency.\n\n4. Fix breaking changes. Fix every breaking change in that section that affects my code and config.\n\n5. Verify. Run npx cypress verify and my Cypress tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-15-0.md, then upgrade this project from Cypress 14 to 15 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 14.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in that section (Node.js 20, 22, or 24+, a supported Linux distribution, Firefox 140+ if I run tests in Firefox, and webpack 5 / Vite 5 / Angular 18+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency.\n\n4. Fix breaking changes. Fix every breaking change in that section that affects my code and config.\n\n5. Verify. Run npx cypress verify and my Cypress tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
 This guide details the code changes needed to migrate to Cypress
@@ -426,6 +426,21 @@ This support is in line with Node.js's support for Linux in 20+.
 If you're using a Linux distribution based on glibc `<2.31`, you'll need to
 update your system to a newer version to install Cypress 15+.
 To display which version of glibc your Linux system is running, execute `ldd --version`.
+
+### Firefox is automated with WebDriver BiDi only
+
+Support for the [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) (CDP) with Firefox has been removed.
+[Cypress 14.1.0](/app/references/changelog#14-1-0) began automating Firefox 135 and above with [WebDriver BiDi](https://w3c.github.io/webdriver-bidi/) — Firefox's supported automation interface — and fell back to CDP for older versions.
+Cypress 15 drops that fallback, so WebDriver BiDi is the only way Cypress automates Firefox.
+
+Because WebDriver BiDi is only available in newer Firefox releases, this sets a minimum Firefox version.
+Cypress cannot launch a version below the minimum and will fail with an error naming the version to install.
+
+- Cypress `15.0.0` through `15.18.1` require Firefox `135` or newer.
+- [Cypress 15.19.0](/app/references/changelog#15-19-0) and newer require Firefox `140` or newer, the oldest release line Mozilla still ships.
+
+If you pin a Firefox version — an ESR build, a Docker image tag, or a browser installed by your CI provider — update it before upgrading.
+Chrome, Edge, Electron, and experimental WebKit are unaffected, and no test code changes are needed: Cypress commands behave the same in Firefox under WebDriver BiDi.
 
 ### Webpack `4` is no longer supported
 
