@@ -6,9 +6,38 @@ release — a reference point for "what did the docs say when Cypress X.Y.Z
 shipped?".
 
 Run `./create-release-tags.sh` to create the tags locally, then
-`./create-release-tags.sh --push` to publish them. Pushing needs credentials
-allowed to write `refs/tags/*`. The script needs full repository history
-(`git fetch --unshallow`).
+`./create-release-tags.sh --push` to publish them. The script needs full
+repository history — run `git fetch --unshallow` first if the clone is shallow,
+and note that it errors out on a complete clone, so don't chain it with `&&`.
+
+The script is resumable. It compares each tag against the remote and pushes only
+what is missing, so re-running after a partial failure picks up where it left
+off.
+
+### Pushing needs `workflow` scope
+
+Most of these tags point at commits whose tree contains
+`.github/workflows/*.yml`, and GitHub refuses to let an OAuth App token create
+such a ref without `workflow` scope:
+
+```
+! [remote rejected] v3.7.0 -> v3.7.0 (refusing to allow an OAuth App to create
+  or update workflow `.github/workflows/...` without `workflow` scope)
+```
+
+The cutoff is exactly `v3.7.0`: every tag from there on points at a commit with
+workflow files, every tag before it does not. Use one of:
+
+```sh
+# SSH — not an OAuth App, so the restriction does not apply
+REMOTE=git@github.com:cypress-io/cypress-documentation.git ./create-release-tags.sh --push
+```
+
+- a classic PAT with `repo` + `workflow` scopes, or
+- a fine-grained PAT with Contents: write and Workflows: write.
+
+The rollback script is not affected — none of the commits it restores to contain
+workflow files.
 
 `release-tags.tsv` is the manifest: tag, commit, Cypress release date, how the
 commit was chosen, and that commit's subject line.
