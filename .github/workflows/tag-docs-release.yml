@@ -1,0 +1,138 @@
+name: Tag docs release
+
+# Creates a `vX.Y.Z` tag whenever a Cypress release's changelog entry lands on
+# main, so every release has a tag marking the documentation as of that release.
+# Release branches are merged to main with the changelog entry in the same push,
+# so the changelog is the trigger.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/app/references/changelog.mdx'
+  workflow_dispatch:
+    inputs:
+      before:
+        description: 'Base commit (exclusive). Defaults to the commit before "after".'
+        required: false
+      after:
+        description: 'Commit to tag from. Defaults to the current main.'
+        required: false
+      dry-run:
+        description: 'Print what would be tagged without creating anything'
+        type: boolean
+        default: true
+      probe:
+        description: >-
+          Check whether the credential may create release tags, by creating a
+          throwaway tag and deleting it. Touches no vX.Y.Z ref.
+        type: boolean
+        default: false
+
+# Nothing ships through this workflow. Docs deploy via Netlify/Vercel and CI
+# runs on CircleCI, and this runs on push to main after the merge, so it is not
+# a pull request check. A failure here means a release is missing its tag and
+# nothing else — it cannot block a merge or a deploy. It still opens an issue so
+# the gap gets noticed rather than sitting silently in the Actions tab.
+#
+# Grant nothing by default. Each job below asks for only what it needs, so the
+# job that writes tags cannot file issues and the job that files issues cannot
+# write to the repository.
+permissions: {}
+
+concurrency:
+  group: tag-docs-release
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    # Both guards, matching update-plugins-data.yml. The ref check is not
+    # redundant with the push trigger: workflow_dispatch can be launched from
+    # any ref, and without it a manual run with dry-run unchecked would tag
+    # commits from a feature branch.
+    if: (github.ref == 'refs/heads/main') &&
+      (github.repository == 'cypress-io/cypress-documentation')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # Full history and tags: the script attributes each new entry to the
+          # commit that introduced it and skips versions already tagged.
+          fetch-depth: 0
+          fetch-tags: true
+          # Tags are created through the REST API, never with `git push`, so the
+          # job has no use for git credentials. Leaving them out keeps the token
+          # out of .git/config where any later step could read it.
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.node-version'
+
+      # No `npm ci`: nothing from the registry executes in a job that can write
+      # tags. Keep it that way.
+      - name: Tag releases added to the changelog
+        run: |
+          if [ -n "$PROBE" ]; then
+            node scripts/tag-docs-release.mjs --probe
+            exit $?
+          fi
+          node scripts/tag-docs-release.mjs \
+            --before "${BEFORE:-$AFTER~1}" \
+            --after "$AFTER" \
+            ${DRY_RUN:+--dry-run}
+        env:
+          # Interpolated into env rather than into the run script, so the values
+          # cannot be spliced into the shell command.
+          #
+          # On push, github.event.before is the previous head of main. On a
+          # manual run there is none, so fall back to the parent of AFTER.
+          BEFORE: ${{ inputs.before || github.event.before }}
+          AFTER: ${{ inputs.after || github.sha }}
+          DRY_RUN: ${{ inputs.dry-run && '1' || '' }}
+          PROBE: ${{ inputs.probe && '1' || '' }}
+          REPO: ${{ github.repository }}
+          # Deliberately NOT named GITHUB_TOKEN: if RELEASE_TAG_TOKEN is ever
+          # set, that variable name would be picked up automatically by the gh
+          # CLI, actions/checkout and other tooling, silently handing them a
+          # more privileged credential than they need.
+          #
+          # Prefer the built-in GITHUB_TOKEN. Only if it is refused for the
+          # .github/workflows reason the script explains, set RELEASE_TAG_TOKEN
+          # to a *fine-grained* token limited to this single repository — a
+          # GitHub App installation token, or a fine-grained PAT. Never a
+          # classic PAT: classic `repo` scope reaches every repository the
+          # granting user can access, and classic `workflow` scope allows
+          # rewriting CI, which is repository takeover via a single secret.
+          TAG_TOKEN: ${{ secrets.RELEASE_TAG_TOKEN || secrets.GITHUB_TOKEN }}
+
+  report-failure:
+    needs: [tag]
+    # A failed probe is not a missing tag, and whoever ran it is watching the
+    # output already, so it should not file an issue.
+    if: failure() && !inputs.probe
+    runs-on: ubuntu-latest
+    permissions:
+      # Read to check out the reporting script, issues to file the report. No
+      # write access to the repository contents.
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Open an issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SHA: ${{ github.sha }}
+        run: node scripts/report-tagging-failure.mjs
