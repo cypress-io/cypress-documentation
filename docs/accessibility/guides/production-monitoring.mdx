@@ -1,22 +1,291 @@
 ---
-title: 'Monitor accessibility issues in production'
-description: 'Monitor accessibility issues in production by running scheduled Cypress tests against live environments, capturing dynamic content changes, and generating automated reports for a comprehensive accessibility overview.'
+title: 'Monitor accessibility in production with scheduled Cypress runs'
+description: 'Catch accessibility issues that never appear in a pull request. Schedule recorded Cypress runs against staging or production to check published content, third-party widgets, and feature flags with Cypress Accessibility.'
 sidebar_label: Production monitoring
 sidebar_position: 50
 ---
 
 <ProductHeading product="accessibility" />
 
-# Production monitoring and website crawling
+# Monitor accessibility in production
 
-Cypress is commonly used in CI and local development workflows. It can also be used to monitor production or staging environments through scheduled tests. This approach is particularly useful for environments involving dynamic content, such as those managed by Content Management Systems (CMS), where content changes can impact accessibility.
+Some accessibility barriers never appear in a pull request. A content editor publishes a hero image with no alternative text. A vendor ships a new version of your embedded chat widget. A feature flag turns on a component nobody reviewed. In each case your pull request checks stay green, because no code changed, and the barrier is live for your users anyway.
 
-Dynamic or externally controlled content, such as A/B tests or user-generated content, often makes it challenging to write explicit assertions. For these cases, production smoke tests can serve as high-level health checks, ensuring the accessibility of dynamic UI variations without requiring full test coverage.
+A scheduled Cypress run against your deployed environment closes that gap. It produces the same Cypress Accessibility report as any other recorded run, on the pages as they exist right now, so the content and third-party markup your users actually receive is checked on a schedule you control.
 
-## Using Cypress for production monitoring
+## What a scheduled run catches
 
-Cypress Accessibility enables you to test dynamic content seamlessly. By visiting a production URL within your Cypress tests and performing minimal UI interactions, you can capture the page's accessibility state in reports. This allows teams to detect accessibility issues introduced outside the regular development lifecycle.
+| What changes in production                                                    | Why a pull request check misses it                                                    |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Content published through a CMS: images, headings, link text, embedded markup | The content arrives after the last deploy, so there was never a code change to review |
+| Third-party embeds: consent banners, chat widgets, ad slots, video players    | The vendor updates your live site on their release schedule, not yours                |
+| Feature flags and A/B experiments                                             | The variant real users see is often not the variant your CI environment serves        |
+| Environment-specific UI: localized copy, geo-based routing, cookie banners    | Much of it does not render at all against a local or ephemeral test environment       |
+| Infrastructure changes: a CDN rewrite, a new tag manager script, a rollback   | Nothing in the repository changed, so no pipeline ran                                 |
 
-## Scan every page from a sitemap
+These are also the changes hardest to write explicit assertions for, because you do not control the content. A monitoring run is a health check on markup you did not write: it tells you that a published page still meets the standard, without you having to predict what the page will contain.
+
+## How a monitoring run works
+
+A monitoring run is an ordinary recorded Cypress run pointed at a deployed URL. Cypress Accessibility reports are generated in Cypress Cloud from the [Test Replay](/cloud/features/test-replay) data your run already uploads, so:
+
+- You add no assertions, plugins, or `cy.` commands to get accessibility results, and the checks add no time to the run itself.
+- Every page and component state your tests reach is captured and scanned, including states that only exist after an interaction.
+- The report is produced whether your tests pass or fail, so a broken smoke test still tells you about the accessibility of what it managed to load.
+- Nothing in the run fails because of an accessibility violation. Acting on the results is an explicit step you add, covered in [Alert on what matters](#Alert-on-what-matters).
+
+The requirements are the same as for any recorded run: `cypress run --record` in a Chromium-based or Electron browser, with [Test Replay](/cloud/features/test-replay) enabled. See [No accessibility report was generated for a run](/accessibility/troubleshooting#No-accessibility-report-was-generated-for-a-run) if a run produces no report.
+
+## Set up a scheduled run
+
+### 1. Point Cypress at the deployed environment
+
+Set `baseUrl` through an environment variable in your monitoring job rather than editing your config, so the same specs can run against localhost, staging, and production:
+
+```yaml
+env:
+  CYPRESS_BASE_URL: https://www.example.com
+```
+
+### 2. Tag the run
+
+Tag every monitoring run, and use the same tag every time:
+
+<CypressCommandTabs command='run --record --tag "production"' />
+
+The tag does more work than labeling the run in the run list:
+
+- It selects a [profile](/accessibility/configuration/profiles), so your monitoring runs can use different Cypress Accessibility settings than your pull request runs.
+- It keeps Branch Review's automatic run selection on the previous monitoring run, described in [Compare each run with the one before it](#Compare-each-run-with-the-one-before-it).
+- It filters [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) notifications, so a channel can watch monitoring runs and nothing else.
+- It identifies the run for the [Results API](/accessibility/results-api) when a single CI build records more than one run, such as a job that checks staging and then production.
+
+### 3. Schedule it in CI
+
+Any scheduler works. This GitHub Actions workflow runs on weekday mornings, after overnight publishing, and can also be started by hand when someone wants a check after a content release:
+
+```yaml title=".github/workflows/accessibility-monitoring.yml"
+name: Accessibility monitoring
+
+on:
+  schedule:
+    # 06:00 UTC, Monday through Friday
+    - cron: '0 6 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  monitor-production:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Run monitoring specs against production
+        uses: cypress-io/github-action@v7
+        with:
+          record: true
+          tag: production
+          spec: cypress/e2e/monitoring/**
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_BASE_URL: https://www.example.com
+```
+
+A scheduled workflow is still a CI environment, so the [Results API](/accessibility/results-api) works in this job exactly as it does on a pull request. To add a check that fails the job, see [Alert on what matters](#Alert-on-what-matters).
+
+## Decide what the run should visit
+
+Cypress Accessibility reports on the pages your tests reach. It does not follow links on its own, so a monitoring run covers what you tell it to visit, and nothing else. There are two ways to build that list, and most teams use both.
+
+### Reuse the specs you already have
+
+If you already have end-to-end tests, the fastest monitoring run is a subset of them pointed at production. Choose the specs that read rather than write: a search, a product page, a documentation article, a pricing page. This gets you interaction states, such as an open menu or an expanded accordion, that a page visit alone never reaches. See [Practical considerations for a live environment](#Practical-considerations-for-a-live-environment) for handling specs that create data.
+
+### Drive the run from a list of URLs
 
 <SitemapScanExample product="accessibility" />
+
+Fetching the sitemap at runtime means the run automatically covers pages published since yesterday, which is the point of monitoring a content-driven site. If your sitemap is large, filter it to the sections you own, or split the URLs across several tagged runs so each one stays a reasonable length.
+
+## Tune the report for a live environment
+
+Production reports are noisier than CI reports, because production contains code you did not write. Three settings do most of the cleanup. Each is set in the **App Quality** tab of your project settings in Cypress Cloud, and applies to past runs as soon as you regenerate them from the run's **Properties** tab.
+
+### Keep third-party widgets out of the count
+
+A consent banner or support widget you cannot edit will fail rules on every page it renders on, which is every page. Excluding those elements keeps your report about markup you can act on:
+
+```json title="App Quality Config"
+{
+  "elementFilters": [
+    {
+      "selector": "#onetrust-consent-sdk, #onetrust-consent-sdk *",
+      "include": false,
+      "comment": "Consent banner is vendor-controlled and renders on every page"
+    },
+    {
+      "selector": "#hubspot-messages-iframe-container, #hubspot-messages-iframe-container *",
+      "include": false,
+      "comment": "Support chat widget, raised with the vendor rather than fixed here"
+    }
+  ]
+}
+```
+
+Excluded elements stay visible in the report under the **Ignored** status, so you can always audit what your configuration hides. See [`elementFilters`](/accessibility/configuration/elementfilters), and [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) when you want to ignore one rule on an element rather than the element itself.
+
+### Group content URLs into stable views
+
+Every article, product, and author page is its own URL, so a content site can produce hundreds of views that each report the same template problem once. Numeric IDs and UUIDs are grouped for you; slugs are not. Add [`views`](/accessibility/configuration/views) patterns for the routes your content uses:
+
+```json title="App Quality Config"
+{
+  "views": [
+    {
+      "pattern": "/blog/:slug",
+      "comment": "Article slugs are text, so each post would otherwise be its own view"
+    },
+    {
+      "pattern": "/authors/:name",
+      "comment": "Groups every author page into one view, since they share a template"
+    }
+  ]
+}
+```
+
+Grouping also makes night-to-night comparison readable. A view that exists in only one of two runs is reported as added or removed, so a site that publishes daily produces a long list of view changes until its content routes are grouped.
+
+### Give monitoring runs their own configuration
+
+A [profile](/accessibility/configuration/profiles) lets one project apply different settings to different runs, selected by run tag. This is how a broad monitoring run and a focused pull request run coexist in the same project:
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    { "pattern": "https://app.example.com/*", "include": true },
+    {
+      "pattern": "*",
+      "include": false,
+      "comment": "Pull request runs report on the application only"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "production",
+      "comment": "Nightly monitoring run covers the marketing site and docs as well as the app",
+      "config": {
+        "viewFilters": [
+          { "pattern": "https://www.example.com/*", "include": true },
+          { "pattern": "https://docs.example.com/*", "include": true },
+          { "pattern": "https://app.example.com/*", "include": true },
+          { "pattern": "*", "include": false }
+        ]
+      }
+    }
+  ]
+}
+```
+
+Two behaviors to keep in mind. Tag matching is exact and case-sensitive, so the run tag `production` selects the profile named `production` and nothing else. A profile replaces each setting it defines rather than merging into it, so repeat any base rules the monitoring run still needs. See [How a profile changes your configuration](/accessibility/configuration/profiles#How-a-profile-changes-your-configuration).
+
+:::note
+
+[`viewFilters`](/accessibility/configuration/viewfilters) patterns that name a hostname match that hostname exactly, which is what makes a production profile necessary in the first place. A path-only pattern such as `/admin/*` matches any protocol, hostname, and port, so use one whenever the rule is about a route rather than an environment.
+
+:::
+
+## Compare each run with the one before it
+
+A single monitoring report tells you the state of the site. The comparison between two of them tells you what changed overnight, which is the signal you scheduled the run for.
+
+[Branch Review](/accessibility/guides/compare-reports) compares any two runs in a project, and does not need two branches. Monitoring runs usually all sit on your default branch, so you pick this morning's run as the Changed run and yesterday's as the Base run, and read the **New failed elements** section. Each new violation comes with a fully rendered snapshot of the page state it was found in, so you can inspect the published markup without loading the live site.
+
+Consistent tagging matters here. When Cypress Cloud selects a base run for you, it prefers the most recent earlier run with the same run groups and tags before falling back to the previous run on the branch. A monitoring run tagged `production` is therefore compared against the previous `production` run, rather than against whichever pull request merge happened to record last.
+
+Two other things keep the comparison trustworthy on a live site:
+
+- **Visit the same URLs each night.** Branch Review compares what each run actually saw, so a run that scanned 40 pages compared against one that scanned 400 reports most of the site as resolved. A sitemap-driven run naturally grows as content is published, which is fine, but a run that fails partway through produces a partial report, flagged as such in Branch Review and on `summary.isPartialReport` in the [Results API](/accessibility/results-api).
+- **Watch what else can move a result.** A score change with no content change usually means someone edited the App Quality Config, or the Axe Core® version was updated. Both are recorded on the run's **Properties** tab and exposed as `config` and `axeVersion` in the Results API. See [Notice when the report itself changes](/accessibility/guides/detect-changes#Notice-when-the-report-itself-changes).
+
+## Alert on what matters
+
+Nobody opens a report every morning for long. Send the result somewhere the team already looks.
+
+### Run notifications
+
+The [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) integrations include the accessibility score, failed rules by severity, and the failed element count in each run notification. Filter the integration by your monitoring tag so the channel sees monitoring runs and nothing else. This suits a run where you know what normal looks like, because an unexpected number stands out at a glance.
+
+### A threshold in the monitoring job
+
+For a check that fails loudly, add a [Results API](/accessibility/results-api) step to the scheduled job. A score threshold fits monitoring better than a rule list, because it reacts to an existing broken component appearing on more pages, which is exactly what a content or template change does:
+
+```javascript title="scripts/checkProductionAccessibility.js"
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+// Raise this as the site improves. Every increase locks in the gains.
+const MINIMUM_SCORE = 95
+
+getAccessibilityResults({ runTags: ['production'] }).then((results) => {
+  const { summary, accessibilityReportUrl, runNumber } = results
+
+  if (summary.isPartialReport) {
+    console.warn(
+      `Run #${runNumber} produced a partial report, so its score is not comparable to yesterday's. Skipping the check: ${accessibilityReportUrl}`
+    )
+    return
+  }
+
+  const criticalAndSerious =
+    summary.violationCounts.critical + summary.violationCounts.serious
+
+  if (summary.score >= MINIMUM_SCORE && criticalAndSerious === 0) {
+    console.log(
+      `Production accessibility score is ${summary.score}%, with no critical or serious rules failing.`
+    )
+    return
+  }
+
+  console.error(
+    `Production accessibility score is ${summary.score}% against a ${MINIMUM_SCORE}% standard, with ${criticalAndSerious} critical or serious rules failing across ${summary.failedElements} elements.`
+  )
+  console.error(`Full report: ${accessibilityReportUrl}`)
+
+  throw new Error('Production accessibility standard not met.')
+})
+```
+
+`getAccessibilityResults()` identifies the run recorded by the CI build it is called from, then waits while the report finishes processing, so give the step a generous timeout. Pass `runTags` whenever a single CI build records more than one run, so each check reads the results for the run it belongs to.
+
+Because a monitoring failure usually comes from content or a vendor rather than a developer's branch, decide in advance where the alert goes. A failing scheduled job that nobody owns gets muted within a couple of weeks. Routing per view is one way to give it an owner: see [Route new failures to the team that owns them](/accessibility/guides/detect-changes#Route-new-failures-to-the-team-that-owns-them).
+
+### Ask an agent
+
+With [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) configured, you can read a monitoring result without opening Cypress Cloud.
+
+<CopyPrompt
+  title="Review last night's monitoring run"
+  subtext="Names what changed since the previous monitoring run and which pages are affected."
+  prompt={`Using Cypress Cloud MCP, get the Cypress Accessibility report for the most recent run tagged "production" in this project, and for the run tagged "production" before it. Tell me the change in accessibility score, which rules are failing now that were not failing in the earlier run, and the views affected by each. For anything that looks like published content rather than application code, say so.`}
+/>
+
+## Practical considerations for a live environment
+
+Running tests against a live site raises questions a CI environment never does. Work through these before you schedule the job:
+
+- **Authentication.** Monitoring signed-in pages needs a real account in the live environment. Use a dedicated account with the minimum access it needs, hold its credentials in your CI secret store, and log in through the API with [`cy.session()`](/api/commands/session) rather than the sign-in form where you can.
+- **Test data.** Prefer specs that read. When a signed-in path is worth covering, keep the run to states that leave nothing behind, and if it must write, give it a dedicated account whose data you can reset.
+- **Bot protection and rate limits.** A web application firewall, a bot filter, or a rate limiter can block a run that visits many pages in a short time, or serve it a challenge page. Allowlist your CI runner's addresses, or use a header your infrastructure recognizes, and keep the URL list to a size your site tolerates.
+- **Analytics and third-party scripts.** A monitoring run generates real traffic, including page views, ad impressions, and session recordings. Exclude the run from analytics if that skews your reporting, usually by user agent or a query parameter your tag manager checks.
+- **Billing.** Every recorded run consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan, so a frequent monitoring schedule has a cost. Nightly, with a focused spec list, is a good starting point, and a run started by hand after a content release covers the urgent case.
+- **Color contrast.** The `color-contrast` rule is off by default in Cypress Accessibility. Contrast is a common casualty of a rebrand or a CMS theme change, so if that is what you are monitoring for, ask your Cypress point of contact about enabling it for your project. See [rules that are off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default).
+
+## See also
+
+- [Catch accessibility regressions](/accessibility/guides/detect-changes) covers every channel for finding a change, including analytics trends across projects.
+- [Compare reports](/accessibility/guides/compare-reports) is the full reference for Branch Review with Cypress Accessibility.
+- [Results API](/accessibility/results-api) documents every field, argument, and supported CI provider.
+- [Block pull requests and set policies](/accessibility/guides/block-pull-requests) has complete policy scripts, including baseline comparison.
+- [`profiles`](/accessibility/configuration/profiles) documents run-tag-based configuration overrides in full.
+- [`viewFilters`](/accessibility/configuration/viewfilters) and [`elementFilters`](/accessibility/configuration/elementfilters) cover scoping a report to the code you own.
+- [`views`](/accessibility/configuration/views) explains URL grouping and naming.
+- [Maintain accessibility](/accessibility/guides/maintain-accessibility) is the longer-term practice a monitoring run supports.
+- [Cypress Accessibility FAQ](/accessibility/faq) answers focused questions about scheduled runs, comparisons, and configuration.

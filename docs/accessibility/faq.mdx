@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Common Cypress Accessibility questions: which WCAG rules run, what the score means, inspecting and sharing a violation, fixing and ignoring violations, and configuring views and profiles.'
+description: 'Common Cypress Accessibility questions: which WCAG rules run, what the score means, inspecting and sharing a violation, fixing and ignoring violations, monitoring production, and configuring views and profiles.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -172,6 +172,40 @@ Yes, two ways. The [Slack](/cloud/integrations/slack) and [Microsoft Teams](/clo
 ### <Icon name="angle-right" /> How do I track Cypress Accessibility trends across projects over time?
 
 Use the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) for scores, severity breakdowns, and weekly violation trends, filtered by date range, team, project, and branch. The same data is available through the [Data Extract API](/cloud/integrations/data-extract-api) with the `accessibility-per-project-summary`, `accessibility-per-project-over-time`, and `accessibility-details` reports. See [Track trends over time](/accessibility/guides/detect-changes#track-trends-over-time).
+
+## Production monitoring
+
+### <Icon name="angle-right" /> Can Cypress crawl my website for accessibility issues?
+
+Not on its own. Cypress Accessibility reports on the pages your tests visit, so a scan covers the URLs you give it rather than links it discovers by following them. The usual approach is to fetch your `sitemap.xml` at the start of a spec and visit each URL it lists, which keeps the coverage current as pages are published, or to keep a committed list of URLs and generate one test per page. Both are written out in [Production monitoring](/accessibility/guides/production-monitoring#Decide-what-the-run-should-visit).
+
+### <Icon name="angle-right" /> How do I run an accessibility scan on a schedule against production?
+
+Record a Cypress run against your deployed URL from a scheduled CI job, tagged so you can recognize it later, such as `cypress run --record --tag "production"`. Set `baseUrl` through `CYPRESS_BASE_URL` in the job rather than editing your config, so the same specs run against localhost, staging, and production. The run produces the same Cypress Accessibility report as any other recorded run, and a scheduled job is a CI environment, so the [Results API](/accessibility/results-api) works there too. See [Production monitoring](/accessibility/guides/production-monitoring) for a complete workflow.
+
+### <Icon name="angle-right" /> How do I check the accessibility of content published through a CMS?
+
+Monitor the live environment on a schedule, because content published after your last deploy never passes through a pull request. A scheduled Cypress run checks the pages as they exist right now, which catches a hero image published without alternative text, a heading level skipped in a rich text editor, or link text that reads as "read more" out of context. Group content routes such as `/blog/:slug` with [`views`](/accessibility/configuration/views) so every article does not become its own view in the report.
+
+### <Icon name="angle-right" /> Is it safe to run Cypress tests against my production site?
+
+It is a live environment, so plan for it. Prefer specs that read rather than write, use a dedicated account with the minimum access it needs for any signed-in path, and hold its credentials in your CI secret store. Expect a bot filter, web application firewall, or rate limiter to challenge a run that visits many pages quickly, and allowlist your CI runner. A monitoring run also generates real analytics traffic, which you may want to exclude from your reporting. See [Practical considerations for a live environment](/accessibility/guides/production-monitoring#Practical-considerations-for-a-live-environment).
+
+### <Icon name="angle-right" /> Do I need a separate Cypress project for production monitoring?
+
+No, and a separate project costs you the comparison workflow, since Branch Review compares runs within one project and App Quality Config is set per project. Keep monitoring runs in the same project and give them their own [profile](/accessibility/configuration/profiles), selected by run tag, when they need different settings than your pull request runs.
+
+### <Icon name="angle-right" /> How do I compare last night's accessibility run with the previous one?
+
+Open [Branch Review](/accessibility/guides/compare-reports) and select the two runs. It compares any two runs in a project, so it works when every monitoring run sits on the same branch. Tag your monitoring runs consistently: when Cypress Cloud picks a base run for you, it prefers the most recent earlier run with the same run groups and tags before falling back to the previous run on the branch, so a consistent tag keeps the comparison between monitoring runs rather than against an unrelated merge.
+
+### <Icon name="angle-right" /> Can I get accessibility results for a site that has no Cypress tests?
+
+Yes. Visiting a URL is enough for Cypress Accessibility to capture and scan that page, so a spec that loops over a list of URLs produces a first report without any assertions or `cy.` commands. Start there, then let the workflows your team writes later expand the report to the states and variations those workflows reach. See [Production monitoring](/accessibility/guides/production-monitoring#Decide-what-the-run-should-visit).
+
+### <Icon name="angle-right" /> How do I stop third-party widgets from dominating my production accessibility report?
+
+Exclude them with [`elementFilters`](/accessibility/configuration/elementfilters). A consent banner or support chat widget renders on every page, so a rule it fails is reported everywhere, which buries findings in markup you can act on. Match the container and its descendants, such as `#onetrust-consent-sdk, #onetrust-consent-sdk *`. Excluded elements stay visible under the **Ignored** status, so the report always shows what your configuration hides. To exclude whole pages you do not own, use [`viewFilters`](/accessibility/configuration/viewfilters) instead.
 
 ## Ignoring elements
 
