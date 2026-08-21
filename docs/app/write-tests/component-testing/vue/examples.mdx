@@ -10,10 +10,6 @@ slug: /app/component-testing/vue/examples
 
 # Vue Examples
 
-## Mounting Components
-
-### Using `cy.mount()`
-
 To mount a component with `cy.mount()`, import the component and pass it to the
 method:
 
@@ -25,7 +21,7 @@ it('mounts', () => {
 })
 ```
 
-### Passing Data to a Component
+## Passing Data to a Component
 
 You can pass props and events to a component by setting `props` in the options:
 
@@ -37,7 +33,7 @@ cy.mount(Stepper, {
 })
 ```
 
-### Testing Event Handlers
+## Testing Event Handlers
 
 Pass a Cypress [spy](/app/guides/stubs-spies-and-clocks#Spies) to an event
 prop and validate it was called:
@@ -51,7 +47,7 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-### Using JSX
+## Using JSX
 
 The mount command also supports JSX syntax (provided that you've configured your
 bundler to support transpiling JSX or TSX files). Some might find using JSX

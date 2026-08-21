@@ -10,10 +10,6 @@ slug: /app/component-testing/angular/examples
 
 # Angular Examples
 
-## Mounting Components
-
-### Using `cy.mount()`
-
 To mount a component with `cy.mount()`, import the component and pass it to the
 method:
 
@@ -25,7 +21,7 @@ it('mounts', () => {
 })
 ```
 
-### Passing Data to a Component
+## Passing Data to a Component
 
 You can pass inputs and outputs to a component by setting
 [componentProperties](/app/component-testing/angular/api#MountConfig)
@@ -39,7 +35,7 @@ cy.mount(StepperComponent, {
 })
 ```
 
-### Testing Event Handlers
+## Testing Event Handlers
 
 Pass a Cypress [spy](/app/guides/stubs-spies-and-clocks#Spies) to an event
 prop and validate it was called:
@@ -56,7 +52,7 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-### Imports/Declarations/Providers
+## Imports/Declarations/Providers
 
 If you need to set up any additional `imports`, `declarations`, or `providers`
 for your component to mount successfully, you can set them in the options
@@ -79,7 +75,7 @@ See
 to set up common options in a custom `cy.mount()` command to avoid having to
 repeat this boilerplate for each test.
 
-### Using Standalone
+## Using Standalone
 
 Not only are [Standalone Components](https://angular.io/guide/standalone-components) supported, they are the simplest components to write tests for.
 Standalone Components provide the Angular compiler with everything it needs to compile through its [`@Component()`](https://angular.io/api/core/Component) decorator.
@@ -89,7 +85,7 @@ This means that in most cases a Standalone Component can be mounted without ever
 cy.mount(MyStandaloneComponent)
 ```
 
-### Using Angular Template Syntax
+## Using Angular Template Syntax
 
 The `cy.mount()` method also supports the Angular template syntax when mounting
 a component. Some developers might prefer this approach to the object based
@@ -117,7 +113,7 @@ cy.get('button').click();
 cy.get('@onClickSpy').should('have.been.called');
 ```
 
-### Accessing the Component Instance
+## Accessing the Component Instance
 
 There might be times when you might want to access the component instance
 directly in your tests. To do so, use `.then()`, which enables us to work with
@@ -145,7 +141,7 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-### Working with Legacy @Input() Decorators
+## Working with Legacy @Input() Decorators
 
 With the release of Angular 18, [signals](https://angular.dev/guide/signals) became the preferred way to handle data binding.
 However, legacy components that use `@Input()` and `@Output()` decorators are still supported.
@@ -165,7 +161,7 @@ cy.mount(StepperComponent, { componentProperties: { count: 100 } })
   })
 ```
 
-### Using createOutputSpy()
+## Using createOutputSpy()
 
 To make spying on event emitters easier, there is a utility function called
 `createOutputSpy()` which can be used to automatically create an `EventEmitter`
@@ -187,7 +183,7 @@ it('clicking + fires a change event with the incremented value', () => {
 })
 ```
 
-### Using autoSpyOutputs (deprecated)
+## Using autoSpyOutputs (deprecated)
 
 :::caution
 
@@ -222,7 +218,7 @@ function. It currently does not work with the template syntax.
 
 :::
 
-### Signals
+## Signals
 
 :::info
 
@@ -259,14 +255,14 @@ export class TestComponent {
 </button>
 ```
 
-#### Testing Signals
+### Testing Signals
 
 There are two ways to test signals within Cypress Component Testing:
 
 1. [Inferred Generic Type](#Inferred-Generic-Type)
 2. [Writable Signal](#Writable-Signal)
 
-##### Inferred Generic Type
+#### Inferred Generic Type
 
 In the example below, the `title` prop being passed into our `TestComponent` is a `string`. A `string` is the generic type of our `input()` signal we defined in our `TestComponent`.
 
@@ -310,7 +306,7 @@ cy.mount(TestComponent, {
 cy.get('[data-cy="test-component-count-display"]').should('have.text', '3')
 ```
 
-##### Writable Signal
+#### Writable Signal
 
 Inferred generic types work very well for most test cases. However, they don't allow us to update the prop in the component after the prop is passed in. For this use case, we need to use a writable `signal()`.
 
@@ -362,7 +358,7 @@ cy.then(() => {
 })
 ```
 
-##### Change Spies
+#### Change Spies
 
 Cypress doesn't propagate changes via spy from `input()` signals.
 

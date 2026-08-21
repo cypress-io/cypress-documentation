@@ -11,8 +11,6 @@ e2eSpecific: true
 
 # Cross Origin Testing
 
-## Web Security
-
 Browsers adhere to a strict
 [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 This means that browsers restrict access between `<iframes>` when their origin
@@ -28,7 +26,7 @@ the rules_ of same-origin policy. It's our goal to fully automate the
 application under test without you needing to modify your application's code -
 and we are _mostly_ able to do this.
 
-### What Cypress does under the hood
+## What Cypress does under the hood
 
 - Proxies all HTTP / HTTPS traffic.
 - Changes the hosted URL to match that of the application under test.

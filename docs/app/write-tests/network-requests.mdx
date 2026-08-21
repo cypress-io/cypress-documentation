@@ -10,8 +10,6 @@ slug: /app/guides/network-requests
 
 # Intercepting network requests in Cypress
 
-## Testing Strategies
-
 Cypress helps you test the entire lifecycle of HTTP requests within your
 application. Cypress provides you access to the objects with information about
 the request, enabling you to make assertions about its properties. Additionally
@@ -46,7 +44,7 @@ To call an endpoint _from your test_ and assert on what it returns, see
 
 :::
 
-### Use Server Responses
+## Use Server Responses
 
 Requests that are not stubbed actually reach your server. By _not_ stubbing your
 responses, you are writing true _end-to-end_ tests. This means you are driving
@@ -105,7 +103,7 @@ modern applications that serve JSON can take advantage of stubbing.
 
 :::
 
-### Stub Responses
+## Stub Responses
 
 Stubbing responses enables you to control every aspect of the response,
 including the response `body`, the `status`, `headers`, and even network
@@ -155,7 +153,7 @@ its requests are being stubbed, so there are _no code changes_ needed.
 
 :::info
 
-### <Icon name="graduation-cap" /> Real World Example
+## <Icon name="graduation-cap" /> Real World Example
 
 The Cypress <Icon name="github" inline="true" contentType="rwa" /> end-to-end
 tests predominately rely on server responses, and only stub network responses

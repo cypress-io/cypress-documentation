@@ -10,8 +10,6 @@ slug: /app/tooling/code-coverage
 
 # Measure Code Coverage in Cypress
 
-## Introduction
-
 As you write more and more end-to-end tests, you will find yourself wondering -
 do I need to write more tests? Are there parts of the application still
 untested? Are there parts of the application that perhaps are tested too much?
@@ -21,7 +19,7 @@ Cypress offers a couple of solutions to help answer these questions:
 - **[Code coverage](#Code-Coverage)** - find out which lines of the application's source code were executed
 - **[UI coverage](#UI-Coverage)** - find out which parts of the UI were tested
 
-### Why code coverage matters
+## Why code coverage matters
 
 Every application ships with code that nobody has explicitly tested. Some of it
 is dead code that should be deleted. Some of it is critical logic — conditional
@@ -34,7 +32,7 @@ branches, and functions were executed during your test run. It turns "do we have
 enough tests?" from a matter of opinion into a measurable, trackable signal —
 one you can enforce as a quality gate on every pull request and trend over time.
 
-### How code coverage compares to alternatives
+## How code coverage compares to alternatives
 
 Different quality tools answer different questions. Understanding the tradeoffs
 helps you choose the right combination for your project:
@@ -52,7 +50,7 @@ coverage answers "which source code lines did the tests execute?", while UI
 Coverage answers "which parts of the UI did the tests touch?" — using both
 together gives you a more complete picture of test quality.
 
-### Code Coverage
+## Code Coverage
 
 Code coverage is a metric that helps you understand how much of your application
 code is covered by your tests. If there are important
@@ -65,7 +63,7 @@ through **code coverage**. Code coverage requires inserting additional counters
 into your source code before running it using **instrumentation**.
 This document will be focused on code coverage and the instrumentation required to set it up.
 
-### UI Coverage
+## UI Coverage
 
 UI Coverage is a visual test coverage report based on the interactive elements that make up your application.
 It highlights areas of missed test coverage directly within every page of your application,

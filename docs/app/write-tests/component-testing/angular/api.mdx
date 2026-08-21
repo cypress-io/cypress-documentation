@@ -10,9 +10,9 @@ slug: /app/component-testing/angular/api
 
 # Angular API
 
-## Methods
+The `cypress/angular` module provides the following methods and interfaces for mounting and testing Angular components.
 
-### mount
+## mount
 
 ```js
 // for Angular 20 and 21 using zoneless configuration
@@ -60,7 +60,7 @@ import { mount } from 'cypress/angular'
   </tr>
 </table>
 
-#### Example
+### Example
 
 ```ts
 import { mount } from '@cypress/angular'
@@ -85,7 +85,7 @@ it('mounts with template', () => {
 })
 ```
 
-### createOutputSpy
+## createOutputSpy
 
 ```js
 import { createOutputSpy } from 'cypress/angular'
@@ -120,7 +120,7 @@ import { createOutputSpy } from 'cypress/angular'
   </tr>
 </table>
 
-#### Example
+### Example
 
 ```ts
 import { StepperComponent } from './stepper.component'

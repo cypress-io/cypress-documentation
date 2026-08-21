@@ -10,10 +10,6 @@ slug: /app/component-testing/react/examples
 
 # React Examples
 
-## Mounting Components
-
-### Mounting a Component
-
 The first step in testing a component is to mount it. This renders the component
 into a testbed and enable's the use of the Cypress API to select elements,
 interact with them, and run assertions.
@@ -31,7 +27,7 @@ it('mounts', () => {
 })
 ```
 
-### Passing Data to a Component
+## Passing Data to a Component
 
 You can pass props to a component by setting them on the JSX passed into
 `cy.mount()`:
@@ -44,7 +40,7 @@ it('mounts', () => {
 })
 ```
 
-### Testing Event Handlers
+## Testing Event Handlers
 
 Pass a Cypress [spy](/app/guides/stubs-spies-and-clocks#Spies) to an event
 prop and validate it was called:
