@@ -45,6 +45,7 @@ example:
 | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | [`content-encoding` is not reported on responses](#Response-headers-do-not-report-content-encoding)                                    | Assert on the decoded body instead of the compression headers.             |
 | [`httpVersion` is not reported](#httpVersion-is-not-reported)                                                                          | Assert on request properties that describe your application.               |
+| [`statusMessage` is empty when the protocol has no reason phrase](#statusMessage-is-empty-when-the-protocol-has-no-reason-phrase)      | Assert on `statusCode` instead of the reason phrase.                       |
 | [Responses the browser rejects are not observable](#Responses-the-browser-rejects-are-not-observable)                                  | Assert on the error state your application renders.                        |
 | [Responses served without a network request are not cached](#Responses-served-without-a-network-request-are-not-cached-by-the-browser) | Expect the intercept to see the request again on a second navigation.      |
 | [Stubbed bodies are decoded from their declared `content-encoding`](#Stubbed-bodies-are-decoded-from-their-declared-content-encoding)  | Make sure a declared encoding matches the bytes you supply.                |
@@ -161,6 +162,41 @@ cy.intercept('/api/users', (req) => {
 ```
 
 If a cross-browser suite needs the assertion for browsers on the legacy network path, see
+[Writing tests that pass in every browser](#Writing-tests-that-pass-in-every-browser).
+
+### `statusMessage` is empty when the protocol has no reason phrase
+
+`res.statusMessage` is an empty string for a response your server delivered over HTTP/2 or
+HTTP/3 in Chrome, Chromium, and Edge on the native browser network. A response delivered
+over HTTP/1.1 still reports the phrase your server sent, including a custom one. Firefox,
+WebKit, and Electron use the legacy network path and always report a phrase.
+
+HTTP/2 and HTTP/3 do not carry a reason phrase on the wire, so there is no value for
+Cypress to report. The browser's own `fetch()` reports the same empty string for those
+responses. On the legacy network path, Cypress terminated the connection itself and spoke
+HTTP/1.1 to the browser, so a phrase was always present.
+
+```js
+// Cypress 15 and earlier
+cy.intercept('/api/users', (req) => {
+  req.on('response', (res) => {
+    expect(res.statusMessage).to.equal('OK')
+  })
+})
+```
+
+```js
+// Cypress 16: assert on the status code
+cy.intercept('/api/users', (req) => {
+  req.on('response', (res) => {
+    expect(res.statusCode).to.equal(200)
+  })
+})
+```
+
+The reason phrase for a standard status code carries no information the code does not
+already give you. If a cross-browser suite needs the assertion for browsers on the legacy
+network path, see
 [Writing tests that pass in every browser](#Writing-tests-that-pass-in-every-browser).
 
 ### Responses the browser rejects are not observable

@@ -1337,6 +1337,17 @@ modified:
 | statusCode    | response status code (`number`)                   |
 | statusMessage | response status message (`string`)                |
 
+:::note
+
+`res.statusMessage` is an empty string in Chrome, Chromium, and Edge when your server
+delivered the response over HTTP/2 or HTTP/3, which do not carry a reason phrase on the
+wire. An HTTP/1.1 response still reports the phrase your server sent. Firefox, WebKit, and
+Electron route traffic through the Cypress HTTP/1.1 proxy and always report a phrase. See
+[Native network interception](/app/guides/native-network-interception) for the other
+properties this affects and how to write assertions that pass in every browser.
+
+:::
+
 **Note about `body`:** If the response header contains
 `Content-Type: application/json` and the body contains valid JSON, this will be
 an `object`. And if the body contains binary content, this will be a buffer.
