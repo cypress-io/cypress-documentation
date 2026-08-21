@@ -185,9 +185,9 @@
     },
     "cypress-plugin-grep-boxes": {
       "npm": "cypress-plugin-grep-boxes",
-      "version": "3.0.8",
-      "lastPublished": "2026-08-03T18:26:19.704Z",
-      "cypressVersion": "^15.18.1"
+      "version": "4.0.0",
+      "lastPublished": "2026-08-21T03:37:56.939Z",
+      "cypressVersion": "^15.21.0"
     },
     "cypress-plugin-last-failed": {
       "npm": "cypress-plugin-last-failed",
