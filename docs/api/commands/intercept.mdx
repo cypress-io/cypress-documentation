@@ -1339,12 +1339,11 @@ modified:
 
 :::note
 
-`res.statusMessage` is an empty string in Chrome, Chromium, and Edge when your server
-delivered the response over HTTP/2 or HTTP/3, which do not carry a reason phrase on the
-wire. An HTTP/1.1 response still reports the phrase your server sent. Firefox, WebKit, and
-Electron route traffic through the Cypress HTTP/1.1 proxy and always report a phrase. See
-[Native network interception](/app/guides/native-network-interception) for the other
-properties this affects and how to write assertions that pass in every browser.
+`res.statusMessage` is an empty string when the response reached the browser over a
+protocol that carries no reason phrase. HTTP/2 and HTTP/3 do not carry one, so a response
+your server delivered over either reports `''`. An HTTP/1.1 response reports the phrase
+your server sent, which may itself be empty. Prefer `res.statusCode`, which is always
+reported, and treat the phrase for a standard code as redundant with it.
 
 :::
 
