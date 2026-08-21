@@ -993,7 +993,7 @@ Test Replay data can cover an entire spec, so the CLI downloads the replay once 
 
 Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
 
-:::note
+:::tip
 Some AI agents automatically run inside sandbox environments, which causes them to build a fresh cache for each session. This can slow things down and affect your rate limits. Review your agent's documentation to configure the `CYCLOUD_CACHE_DIR` environment variable to a persistent filesystem location shared across agent invocations.
 :::
 
