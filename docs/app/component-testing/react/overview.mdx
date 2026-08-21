@@ -113,8 +113,29 @@ import customViteConfig from './customConfig'
 
 ### React with Webpack
 
-Cypress Component Testing works with React apps that use Webpack 4+ as the
+Cypress Component Testing works with React apps that use Webpack 5+ as the
 bundler.
+
+#### Required Packages
+
+Install these packages in your project to run React component tests with
+Webpack:
+
+| Package     | Version  | Purpose                                                                                           |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------- |
+| `cypress`   | Latest   | The Cypress App. Ships with the React mount adapter and the Webpack dev server                    |
+| `react`     | 18 or 19 | The React library your components are built with                                                  |
+| `react-dom` | 18 or 19 | Renders your components into the DOM during a test                                                |
+| `webpack`   | 5        | Your app's bundler. Cypress compiles your specs with the Webpack config it detects in the project |
+
+:::info
+
+You do not need to install `@cypress/react`, `@cypress/webpack-dev-server`, or
+`webpack-dev-server` separately. All three ship inside the `cypress` package, so
+`import { mount } from 'cypress/react'` and `bundler: 'webpack'` work as soon as
+Cypress is installed.
+
+:::
 
 #### Webpack Configuration
 
