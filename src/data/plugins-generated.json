@@ -107,9 +107,9 @@
     },
     "eslint-plugin-cypress": {
       "npm": "eslint-plugin-cypress",
-      "version": "7.0.0",
-      "lastPublished": "2026-08-06T11:49:20.078Z",
-      "cypressVersion": "^15.20.0"
+      "version": "7.0.1",
+      "lastPublished": "2026-08-22T20:48:04.001Z",
+      "cypressVersion": "^15.21.0"
     },
     "cypress-codegen": {
       "npm": "cypress-codegen",
