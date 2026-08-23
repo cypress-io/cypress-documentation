@@ -874,6 +874,19 @@
           "link": "https://github.com/reportportal/agent-js-cypress",
           "keywords": ["reporter", "reportportal", "reporting"],
           "badge": "community"
+        },
+        {
+          "name": "@qualflare/cypress",
+          "description": "Native Cypress reporter for Qualflare. Uploads suite/test results, real retry counts, screenshots, and command-log step traces as one Launch per run.",
+          "link": "https://github.com/Qualflare/qualflare-cypress",
+          "keywords": [
+            "reporter",
+            "qualflare",
+            "test-management",
+            "screenshot",
+            "flaky"
+          ],
+          "badge": "community"
         }
       ]
     },
