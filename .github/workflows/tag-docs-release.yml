@@ -10,7 +10,8 @@ on:
     branches:
       - main
     paths:
-      - 'docs/app/references/changelog.mdx'
+      # On a move, update CHANGELOG_PATHS in scripts/tag-docs-release.mjs too.
+      - 'docs/app/releases/changelog.mdx'
   workflow_dispatch:
     inputs:
       before:
