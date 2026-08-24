@@ -9,20 +9,6 @@ sidebar_position: 50
 
 # Branch Review
 
-:::info
-
-<WhatYoullLearn />
-
-- How Branch Review helps you catch regressions before a Pull Request merges
-- How to compare test results between branches in Cypress Cloud
-- How Branch Review surfaces the impact of Pull Requests on your test suite
-- How to compare **any** two runs, if not using a Pull Request workflow
-- Best practices for grouping test runs
-
-:::
-
-## Why Branch Review
-
 Every Pull Request changes your application, and your test suite along with it. The critical question before merging is: **did this change make things better or worse?** Answering it manually means hunting through two separate sets of runs, eyeballing pass/fail counts, and guessing whether a failure is new or pre-existing. It's slow, error-prone, and easy to skip under deadline pressure.
 
 Branch Review answers _what changed_ and _why_ in a single view, so you can:
@@ -40,7 +26,7 @@ These might represent different builds of the application, changes in test code,
   alt="Cypress Branch Review"
 />
 
-### Example: reviewing a Pull Request
+## Example: reviewing a Pull Request
 
 A typical review of an incoming Pull Request looks like this:
 
