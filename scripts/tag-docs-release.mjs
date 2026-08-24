@@ -19,10 +19,8 @@
 
 import { execFileSync } from 'node:child_process'
 
-// This repository has relocated its changelog five times, and a commit range
-// can straddle a move. Newest location first: each commit is read at the first
-// of these that exists there, so `before` and `after` are compared like with
-// like even when the file was renamed between them.
+// Newest first. A range can straddle a move, so each commit is read at
+// whichever of these exists there.
 const CHANGELOG_PATHS = [
   'docs/app/releases/changelog.mdx',
   'docs/app/references/changelog.mdx',
@@ -48,9 +46,7 @@ function gitOrNull(...args) {
   }
 }
 
-// The changelog as it stood at `sha`, or null if none of the known locations
-// exist there — a commit from before the changelog was introduced, or from
-// after a move this script has not been told about yet.
+// Changelog content at `sha`, or null if no known location exists there.
 function changelogAt(sha) {
   for (const path of CHANGELOG_PATHS) {
     const content = gitOrNull('show', `${sha}:${path}`)
@@ -253,8 +249,7 @@ async function main() {
   const before = args.before ? git('rev-parse', args.before).trim() : null
   const after = git('rev-parse', args.after).trim()
 
-  // If the changelog moves again, fail loudly — a silent no-op would stop
-  // tagging releases indefinitely.
+  // Fail loudly on another move; a silent no-op would stop tagging releases.
   if (changelogAt(after) === null) {
     throw new Error(
       `No changelog found at ${after.slice(0, 9)}; looked for ` +
