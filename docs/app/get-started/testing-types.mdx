@@ -1,0 +1,296 @@
+---
+title: 'End-to-end, component, API, and accessibility testing in Cypress'
+description: 'Learn the differences between Cypress end-to-end, component, API, and accessibility tests, the benefits and considerations for each type of test, and common scenarios for each type of test.'
+sidebar_label: Choose a testing type
+sidebar_position: 20
+slug: /app/core-concepts/testing-types
+---
+
+<ProductHeading product="app" />
+
+# Testing Types
+
+One of the first decisions you will need to make on your testing journey is what
+type of test to create. Cypress offers four options: end-to-end, component, API,
+and accessibility tests. There are benefits and considerations for each choice,
+and the decision will depend on the needs of what you are currently trying to
+accomplish. In the end, you will probably have a combination of these types of
+tests for your app, but how do you choose right now?
+
+Let's go over each of these test types, the benefits they bring, things to
+consider, and scenarios for each.
+
+:::tip
+
+Cypress is adaptable to many different types of tests beyond the four covered here, including
+[Visual Testing](/app/tooling/visual-testing), [Unit Testing](/app/references/recipes#Unit-Testing)
+and more. Our [plugins](/app/plugins/plugins-list) provide many more tools to help you extensively test your app.
+
+:::
+
+## What is E2E Testing?
+
+E2E Testing is a technique that tests your app from the web browser through to
+the back end of your application, as well as testing integrations with
+third-party APIs and services. These types of tests are great at making sure
+your entire app is functioning as a cohesive whole.
+
+Cypress runs end-to-end tests the same way users interact with your app by using
+a real browser, visiting URLs, viewing content, clicking on links and buttons,
+etc. Testing this way helps ensure your tests and the user's experience are the
+same.
+
+Writing end-to-end tests in Cypress can be done by developers building the
+application, specialized testing engineers, or a quality assurance team
+responsible for verifying an app is ready for release. Tests are written in code
+with an API that simulates the steps that a real user would take.
+
+End-to-end tests are great at verifying your app runs as intended, from the
+front end to the back end. However, end-to-end tests can be more difficult to
+set up, run, and maintain. There are often infrastructure needs in setting up a
+backend for testing purposes. Your team will need to develop a
+[strategy](/app/end-to-end-testing/testing-your-app#Testing-strategies)
+on how to handle this complexity.
+
+:::tip
+
+### Benefits of end-to-end tests:
+
+- Ensure your app is functioning as a cohesive whole
+- Tests match the user experience
+- Can be written by developers or QA Teams
+- Can be used for integration testing as well
+
+:::
+
+:::info
+
+### Considerations for end-to-end tests:
+
+- More difficult to set up, run, and maintain
+- Provision testing infrastructure in CI
+- Testing certain scenarios require more setup
+
+:::
+
+:::note
+
+### Common scenarios for end-to-end tests:
+
+- Validating critical workflows like authentication and purchasing
+- Ensuring data is persisted and displayed through multiple screens
+- Running Smoke Tests and System Checks before deployment
+
+:::
+
+To learn more about end-to-end testing in Cypress, visit our guide on
+[Writing Your First End-to-end Test](/app/end-to-end-testing/writing-your-first-end-to-end-test).
+
+## What is Component Testing?
+
+Modern web frameworks provide ways to write applications by breaking them into
+smaller logical units called components. Components can range from fairly small
+(like a button) to more complex (like a registration form).
+
+Because of their nature, components tend to be easily testable, which is where
+Cypress Component Testing comes into play.
+
+Component tests differ from end-to-end tests in that instead of visiting a URL
+to pull up an entire app, a component can be "mounted" and tested on its own.
+This allows you to focus on testing only the component's functionality and not
+worrying about other nuances with testing a component as part of the larger
+application.
+
+Typically, a component test is written by the developers working on the
+component. The code for the test lives alongside the component code, and it is
+common for tests to be coded simultaneously with the component, helping
+developers verify the required functionality while building it.
+
+One thing to consider, though, is even if all your component tests pass, it does
+not mean your app is functioning properly. Component tests do nothing to ensure
+that all the layers of your app are working well together. Therefore, a
+well-tested app has a combination of test types, with each set of tests
+specializing in what they do best.
+
+:::tip
+
+### Benefits of component tests:
+
+- Easier to test components in isolation
+- Fast and reliable
+- Easy to set up specific scenarios in tests
+- Don't rely on any external system to run
+
+:::
+
+:::info
+
+### Considerations for component tests:
+
+- Do not ensure overall app quality
+- Do not call into external APIs/Services
+- Usually written by developers working on the component
+
+:::
+
+:::note
+
+### Common scenarios for component tests:
+
+- Testing a date picker works properly for a variety of scenarios
+- That a form shows and hides specific sections based on input
+- Testing components coming out of a design system
+- Testing logic not tied to a component (like unit tests!)
+
+:::
+
+To learn more about component testing in Cypress, visit our guide on
+[Testing Your Components with Cypress](/app/component-testing/get-started).
+
+## What is API Testing?
+
+Not every test needs a page to render. API testing exercises your application's
+HTTP endpoints directly by sending a request and asserting on what comes back:
+the status code, the response body, the headers, and how long the response took.
+
+Cypress does this with [`cy.request()`](/api/commands/request), which sends a
+real HTTP request and yields the response. Because these tests live in the same
+specs, the same configuration, and the same CI job as the rest of your suite,
+adding API coverage does not mean adopting and maintaining a second tool.
+
+API tests sit between the other two types in both speed and scope. They run
+faster than end-to-end tests because there is no page to render and no user
+interaction to simulate, and they reach further than component tests because
+they exercise your real backend, database, and business logic. They are also
+precise about failure: when an API test fails, the contract changed. A failing
+end-to-end test could mean the same thing, or a moved selector, or a race
+condition.
+
+That speed makes them the most efficient way to prepare state for other tests.
+Creating a user or seeding an order over HTTP takes milliseconds, where doing
+the same through a form takes seconds and re-tests code paths you already cover
+elsewhere.
+
+What API tests cannot tell you is whether your interface works. They say nothing
+about rendering, styling, or whether a control is reachable. As with the other
+types, a well-tested app combines them, with each set of tests specializing in
+what it does best.
+
+:::tip
+
+### Benefits of API tests:
+
+- Fast to run, with no rendering or user interaction to simulate
+- Failures point directly at the contract between front end and back end
+- Reach validation errors, permission boundaries, and pagination edges that are
+  hard to trigger through the UI
+- Prepare state for other tests far faster than driving a form
+- Share configuration, reporting, and CI with the rest of your suite
+
+:::
+
+:::info
+
+### Considerations for API tests:
+
+- Do not verify that your interface renders or behaves correctly
+- Require a running backend, so they need infrastructure much like end-to-end
+  tests
+- Assertions on response shape need maintenance as the API evolves
+
+:::
+
+:::note
+
+### Common scenarios for API tests:
+
+- Verifying a full create, read, update, and delete lifecycle
+- Asserting on error responses, permission boundaries, and rate limits
+- Authenticating once over HTTP and reusing the session across tests
+- Seeding application state before an end-to-end test runs
+- Checking that a GraphQL query or mutation returns the expected shape
+
+:::
+
+To learn more about API testing in Cypress, visit our guide on
+[API Testing](/app/guides/api-testing).
+
+## What is Accessibility Testing?
+
+Accessibility testing confirms that your application works for people with
+disabilities. The baseline is the
+[Web Content Accessibility Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/)
+(WCAG), which describe what your users need in order to perceive your content,
+navigate your pages, and complete the actions you offer.
+
+It relates to the three types above differently than they relate to each other.
+Accessibility testing is a layer rather than an alternative: you do not pick it
+instead of end-to-end or component testing, you add it to the tests you already
+have. That is why it fits naturally on top of all three.
+
+Cypress supports it in three ways. Community plugins such as
+[`cypress-axe`](https://www.npmjs.com/package/cypress-axe) run an Axe Core®
+scan inside a test with a single command.
+[Cypress Accessibility](/accessibility/get-started/introduction) moves those
+checks out of the test entirely and runs them in Cypress Cloud as your tests are
+recorded, so no test code changes and no scan time is added to your runs. And
+ordinary Cypress assertions cover what a generic scan cannot know about, such as
+whether a particular button carries the accessible name your users expect.
+
+That last point matters. Automated scans detect violations of a known list of
+rules, which is valuable and also bounded. No scan can prove that an interface
+is fully accessible, so plan to cover the gaps with manual testing and explicit
+assertions of your own.
+
+:::tip
+
+### Benefits of accessibility tests:
+
+- Catch issues during development rather than at a compliance review
+- Add a large number of checks with a single command
+- Layer onto the end-to-end and component tests you already have
+- Detect common failures like poor color contrast, missing labels, and images
+  without alt text
+
+:::
+
+:::info
+
+### Considerations for accessibility tests:
+
+- Automated scans cannot prove an interface is accessible, so manual testing is
+  still needed
+- In-test scans add runtime, which compounds as you scale them up
+- Locating an element by its role does not by itself verify the element is
+  accessible
+- Cypress Accessibility is a paid Cypress Cloud solution
+
+:::
+
+:::note
+
+### Common scenarios for accessibility tests:
+
+- Scanning critical flows like sign-up and checkout for WCAG violations
+- Asserting that images carry the alt text you expect
+- Verifying form fields and buttons have correct, discernible labels
+- Testing keyboard navigation and focus order with
+  [`cy.press()`](/api/commands/press)
+- Covering a component's accessibility once in a component test, rather than
+  repeatedly across end-to-end tests
+
+:::
+
+To learn more about accessibility testing in Cypress, visit our guide on
+[Accessibility Testing](/app/guides/accessibility-testing).
+
+## Testing Type Comparison
+
+| Attributes                 |                       E2E                        |                   Component                   |                          API                          |                          Accessibility                          |
+| -------------------------- | :----------------------------------------------: | :-------------------------------------------: | :---------------------------------------------------: | :-------------------------------------------------------------: |
+| **What's Tested**          |                  All app layers                  |             Individual component              |                    HTTP endpoints                     |      Conformance to WCAG and assistive technology support       |
+| **Characteristics**        | Comprehensive, slower, more susceptible to flake |         Specialized, quick, reliable          |           Fast and precise, no UI coverage            |     Layers onto other tests, scans plus explicit assertions     |
+| **Used For**               |     Verifying app works as a cohesive whole      | Testing functionality of individual component | Verifying the contract between front end and back end |      Confirming the app works for people with disabilities      |
+| **Written By**             |            Developers, QA Team, SDETs            |             Developers, Designers             |              Developers, QA Team, SDETs               |         Developers, QA Team, accessibility specialists          |
+| **CI Infrastructure**      |           Often requires complex setup           |                  None needed                  |              Requires a running backend               |                Same as the tests it layers onto                 |
+| **Initialization Command** |                 `cy.visit(url)`                  |          `cy.mount(<MyComponent />)`          |                   `cy.request(url)`                   | `cy.checkA11y()` via plugin, or none with Cypress Accessibility |

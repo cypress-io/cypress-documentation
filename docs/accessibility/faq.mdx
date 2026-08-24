@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Accessibility FAQ'
-description: 'Common Cypress Accessibility questions: which WCAG rules run, what the score means, fixing and ignoring violations, and configuring views and profiles.'
+description: 'Common Cypress Accessibility questions: which WCAG rules run, what the score means, inspecting and sharing a violation, fixing and ignoring violations, and configuring views and profiles.'
 sidebar_label: FAQ
 sidebar_position: 160
 ---
@@ -39,6 +39,52 @@ Configure [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so your agent can r
 
 Keep a list of remediated rules in your CI verification script and fail the build when any of them appear in a run's results, using the [Results API](/accessibility/results-api). This inverts the more common pattern of allowlisting known failures: instead of tracking what's still broken, you lock in each rule the day it reaches zero violations. Add a rule to the list as soon as it passes, and the list becomes a record of the barriers your application no longer has.
 
+## Inspecting a violation
+
+### <Icon name="angle-right" /> How do I see which element failed an accessibility rule in Cypress?
+
+Open the rule in a run's [accessibility report](/accessibility/reports/run-level-reports) and it expands into the [violation detail view](/accessibility/reports/element-detail-view), which lists every element the rule matched by its violation target selector. Selecting an element pins it, highlights it in a DOM snapshot of the page state it was captured in, and expands a **Solutions** list of the specific checks that failed on it. Clicking a rule row on the **Rules** tab opens **All Views** scoped to that rule, which collects its failing elements across the entire run.
+
+### <Icon name="angle-right" /> Can I inspect a Cypress Accessibility violation without running my application locally?
+
+Yes, and this is the main reason the detail view exists. Every finding is stored with a rehydrated DOM and CSS snapshot of the page state it was found in, so the markup and styles render in your browser exactly as they did during the run. You can inspect the element, read computed styles, and open your browser's accessibility pane against the captured page without starting a server or reproducing the steps. See [inspect violation details](/accessibility/reports/element-detail-view#Work-with-the-DOM-snapshot).
+
+### <Icon name="angle-right" /> Why does a Cypress Accessibility snapshot highlight only one element?
+
+By design. The snapshot outlines the element you have pinned, or the one you are hovering in the rules list, and nothing else, so a page with hundreds of failing elements stays readable. Select a different element to move the highlight, or turn the outline off entirely with the **Show DOM highlights** toggle in the snapshot options menu when it covers something you need to see.
+
+### <Icon name="angle-right" /> Why does Cypress Accessibility say an element is not in this snapshot?
+
+The element failed the rule somewhere in the view, but not in the page state currently displayed. A run captures many snapshots per view as your tests interact with the application, and an element such as a modal's close button only exists in the snapshots where the modal was open. Selecting the element moves the snapshot to a page state that contains it. With an element pinned, the snapshot counter also narrows to only the snapshots that element appears in.
+
+### <Icon name="angle-right" /> What does "One of these must be fixed" mean in a Cypress Accessibility violation?
+
+It means the listed checks are alternatives, and satisfying any one of them clears the violation. A button failing `button-name`, for example, can be fixed with inner text, an `aria-label`, an `aria-labelledby` reference, or a `title` attribute. **All of these must be fixed** means every listed check has to pass, **This must be fixed** means there is a single check, and **This element is failing for multiple reasons** introduces more than one group, each with its own rule. See [inspect violation details](/accessibility/reports/element-detail-view#Pin-an-element-to-inspect-it).
+
+### <Icon name="angle-right" /> How do I share a specific accessibility violation with my team?
+
+Three ways, from fastest to most durable. Copy the URL, which encodes the view, rule, pinned element, snapshot, and filters, so a teammate opens on exactly what you're looking at. Use **Share issue** to copy a Markdown or plain text snippet containing the rule, severity, view, element selector, a link to the rule's documentation, and a deep link back into Cypress Cloud. Or use **Create Jira issue** to open a ticket with those details prefilled. See [hand off a violation](/accessibility/reports/element-detail-view#Hand-off-a-violation).
+
+### <Icon name="angle-right" /> How do I create a Jira issue from a Cypress Accessibility violation?
+
+Select the failing element to expand its detail, choose **Create Jira issue**, and pick a Jira project. **Summary** is prefilled with the rule name and **Description** with the Markdown issue snippet, including a link back to the violation in Cypress Cloud. Both are editable before you submit, so it's the right moment to add context a triager will want. Choose an issue type, complete any fields your Jira project requires, and submit. This requires the [Cypress Cloud Jira integration](/cloud/integrations/jira) to be installed for your organization; without it, the button doesn't appear.
+
+### <Icon name="angle-right" /> Why does my Cypress Accessibility report show generated class names instead of meaningful selectors?
+
+Because nothing more meaningful was available on the element. Cypress Accessibility builds each violation target selector from a prioritized list of attributes, so an element with no test attribute and no useful `id` falls back to whatever identifies it, which in a component library often means a class like `.MuiIconButton-colorPrimary`. Add the attribute your application already renders to [`significantAttributes`](/accessibility/configuration/significantattributes) to make it the identifier, or use [`components`](/accessibility/configuration/components) to append component and team context to the existing one. Regenerate a past run afterward to see the new selectors without rerunning your tests.
+
+### <Icon name="angle-right" /> Why does a Cypress Accessibility rule show only 20 failing elements?
+
+Elements load 20 at a time to keep the rules list responsive on rules with hundreds of findings. A **Load more elements** row at the bottom of the list fetches the next batch. The count beside the rule name is always the full number of matching elements, not the number currently loaded.
+
+### <Icon name="angle-right" /> Why don't ignored elements show up in the violation detail view?
+
+The **Element status** filter defaults to failed and inconclusive elements, with ignored turned off, so findings you have already excluded stay out of your triage list. Turn **Ignored** on in the filter menu to review them. Ignored elements keep their full detail, including the **Solutions** list, which makes this the fastest audit of what your [`elementFilters`](/accessibility/configuration/elementfilters) and [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) rules are hiding.
+
+### <Icon name="angle-right" /> How do I get from an accessibility violation to the test that found it?
+
+Use the **Test Replay** button above the snapshot. It shows how many tests reached that page state and opens [Test Replay](/cloud/features/test-replay) for any of them, so you can see which spec ran, which commands led there, and what the application was doing just before the element was captured.
+
 ## Local development
 
 ### <Icon name="angle-right" /> Can I get Cypress Accessibility results without waiting for CI?
@@ -55,7 +101,7 @@ Chrome, Edge, Chromium, or Electron. Reports are built from [Test Replay](/cloud
 
 ### <Icon name="angle-right" /> How do I check an accessibility fix before I push my branch?
 
-Record the same specs twice and compare them in [Branch Review](/accessibility/guides/compare-reports): once from your base branch before you start (or with your changes stashed), then again from your branch after the fix. Set your branch's run as the Changed run and the base branch's run as the Base run. **Resolved elements** confirms the rule you fixed cleared everywhere it was failing, and **New failed elements** catches the violation the fix introduced. Recording the same specs in both runs is what makes the comparison meaningful. See [Local development](/accessibility/guides/local-development).
+Record the same specs twice and compare the two Cypress Accessibility reports in [Branch Review](/accessibility/guides/compare-reports): once from your base branch before you start (or with your changes stashed), then again from your branch after the fix. Set your branch's run as the Changed run and the base branch's run as the Base run. **Resolved elements** confirms the rule you fixed cleared everywhere it was failing, and **New failed elements** catches the violation the fix introduced. Recording the same specs in both runs is what makes the comparison meaningful. See [Local development](/accessibility/guides/local-development).
 
 ### <Icon name="angle-right" /> Can I use the Cypress Accessibility Results API on my local machine?
 
@@ -76,6 +122,56 @@ Each spec's data starts processing as it uploads, but the run-level report is as
 ### <Icon name="angle-right" /> How do I keep local runs from cluttering my Cypress Cloud project?
 
 Tag them with `cypress run --record --tag "local"`. Tags appear on the run and are filterable in Cypress Cloud, so everyone can skip past them in the run list. A separate Cypress Cloud project for local runs is possible but costs you the comparison workflow, since Branch Review compares runs within one project and App Quality Config is per project. Note that every recorded run consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan regardless of where it ran, which is another reason to keep local runs scoped with `--spec`.
+
+## Detecting changes
+
+### <Icon name="angle-right" /> How do I find which pull request introduced a Cypress Accessibility violation?
+
+Open [Branch Review](/accessibility/guides/compare-reports) in Cypress Cloud with the pull request's run as the Changed run and the base branch's run as the Base run. The **New failed elements** section lists only the violations that appear in the Changed run and not in the Base run, grouped by rule and view, with a page snapshot for each. If the violation predates the pull request, keep the Changed run fixed and move the Base run backwards through earlier runs until the violation stops showing as new. See [Catch accessibility regressions](/accessibility/guides/detect-changes).
+
+### <Icon name="angle-right" /> Does Cypress Accessibility fail my build when a new violation appears?
+
+No. Reports are generated in Cypress Cloud after your tests upload, so a Cypress run never fails because of an accessibility violation, and there is no performance cost to your tests. Blocking a build is an opt-in step you add with the [Results API](/accessibility/results-api), which fetches the run's results in CI so you can decide what should fail. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
+
+### <Icon name="angle-right" /> Should I block builds on failing rules or on the Cypress Accessibility score?
+
+Rules are the stricter and more reliable signal in a Cypress Accessibility report: a rule going from zero failures to any failures is a real change in the application, traceable to the build that introduced it. Element counts and the score move on their own as tests reach different states and existing broken components get reused, which makes them better suited to monitoring runs and score thresholds than to gating individual pull requests. Many teams use both, with a rule policy on pull requests and a score threshold on scheduled runs. See [Enforce a standard in CI](/accessibility/guides/detect-changes#enforce-a-standard-in-ci).
+
+### <Icon name="angle-right" /> Can I compare accessibility reports from two different Cypress projects?
+
+No. Branch Review compares two runs within a single project, and App Quality Config is set per project, so cross-project comparisons are not available. If two teams need separate reports for the same application, use [profiles](/accessibility/configuration/profiles) to give each team's runs its own configuration inside one project, which keeps comparisons working.
+
+### <Icon name="angle-right" /> Why does Cypress Accessibility show new failed elements in Branch Review when I didn't change that code?
+
+The most common cause is unstable element identification. Cypress Accessibility matches elements between runs by the identifier described in [element identification](/accessibility/core-concepts/element-identification), so a hashed CSS-in-JS class or a framework-generated ID that changes per build makes one element look like a resolved failure plus a new failure. Exclude those values with [`attributeFilters`](/accessibility/configuration/attributefilters). Views can drift the same way when URLs contain IDs or slugs, which [`views`](/accessibility/configuration/views) rules resolve. See [Make the comparison trustworthy](/accessibility/guides/detect-changes#Make-the-comparison-trustworthy).
+
+### <Icon name="angle-right" /> Why does my Cypress Accessibility comparison show a long list of resolved elements after a small change?
+
+The two runs most likely did not cover the same ground. Cypress Accessibility compares what each run actually saw, so if the Base run recorded the full suite and the Changed run recorded a few specs, everything on the pages that were not visited is reported as resolved. Record the same specs on both sides of the comparison. See [Accessibility feedback during local development](/accessibility/guides/local-development).
+
+### <Icon name="angle-right" /> What are existing failed elements in a Cypress Accessibility comparison?
+
+They are the violations present in both runs, which is everything the change neither introduced nor fixed. Cypress Accessibility keeps them out of the Branch Review diff and links to the full report for the Changed run instead, so new and pre-existing findings are never mixed together in the same list. See [Compare reports](/accessibility/guides/compare-reports).
+
+### <Icon name="angle-right" /> Why does Branch Review say my Cypress Accessibility changes are not ready yet?
+
+At least one of the two runs has not finished processing its report. Reports are assembled after Cypress Cloud marks a run complete, and grouped or parallelized runs also wait out the project's [Run Completion Delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay). Reload once both runs are complete. If a run was canceled, timed out, or re-ran only its failed specs under [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization), its Cypress Accessibility report is marked partial and Branch Review says so, because a diff built on partial data can be misleading.
+
+### <Icon name="angle-right" /> Why did my Cypress Accessibility score change when no application code changed?
+
+Four things move a score without a code change: someone edited the App Quality Config, which is worth checking first because a new filter or view rule changes what is counted; the tests reached different pages or states than usual; content changed in the environment under test, such as a published image without alternative text; or the Axe Core® version was updated. The Results API exposes both `config` and `axeVersion` so you can rule the last two in or out. See [Notice when the report itself changes](/accessibility/guides/detect-changes#Notice-when-the-report-itself-changes).
+
+### <Icon name="angle-right" /> How do I detect accessibility regressions with Cypress on a site that isn't tied to pull requests?
+
+Record the Cypress project on a schedule against staging or production and compare consecutive runs in Branch Review, which works even when every run is on the same branch. This catches the changes no pull request would show, such as published content, a new version of an embedded third-party widget, or a feature flag enabling untested UI. See [Production monitoring](/accessibility/guides/production-monitoring).
+
+### <Icon name="angle-right" /> Can Cypress notify my team when accessibility results change?
+
+Yes, two ways. The [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) integrations include the accessibility score, failed rules by severity, and failed element count in run notifications, and can be filtered by run tag or run group. For conditional alerts, act on the [Results API](/accessibility/results-api) response in CI, which includes deep links per rule and per view so a notification can point at the exact failure.
+
+### <Icon name="angle-right" /> How do I track Cypress Accessibility trends across projects over time?
+
+Use the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) for scores, severity breakdowns, and weekly violation trends, filtered by date range, team, project, and branch. The same data is available through the [Data Extract API](/cloud/integrations/data-extract-api) with the `accessibility-per-project-summary`, `accessibility-per-project-over-time`, and `accessibility-details` reports. See [Track trends over time](/accessibility/guides/detect-changes#track-trends-over-time).
 
 ## Ignoring elements
 
@@ -101,7 +197,7 @@ The most common causes are:
 
 ### <Icon name="angle-right" /> Why do ignored elements still appear in my Cypress Accessibility report?
 
-This is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/guides/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect your score.
+This is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect your score.
 
 ### <Icon name="angle-right" /> Can I ignore elements in Cypress Accessibility without affecting UI Coverage?
 

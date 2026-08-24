@@ -1,0 +1,42 @@
+---
+title: 'Cypress Plugins: Official & Community Extensions'
+description: 'Browse official and community Cypress plugins that extend and customize your tests, with badges and maintenance signals to help you pick the right one.'
+sidebar_label: Plugin directory
+sidebar_position: 20
+slug: /app/plugins/plugins-list
+hide_table_of_contents: true
+---
+
+<ProductHeading product="app" />
+
+# Cypress Plugins
+
+import PluginsList from '@site/src/components/plugins-list'
+
+Plugins extend and customize how you write, run, and report on your Cypress
+tests. They add capabilities like bundling and preprocessors, custom commands,
+network and API helpers, visual, accessibility, and AI-assisted testing, CI
+integrations, and rich reporters. They're typically published as versioned npm
+modules, so you can adopt and update them independently of Cypress itself.
+
+Built something useful?
+[Submit your own plugin](https://github.com/cypress-io/cypress-documentation/blob/master/CONTRIBUTING.md#adding-plugins).
+
+:::info
+
+Check out our [How to use Plugins](/app/plugins/plugins-guide) or our
+[Node Events Overview](/api/node-events/overview) for writing a plugin.
+
+:::
+
+<PluginsList />
+
+Found something out of date or a plugin that should be added or removed? Please
+[open a pull request or issue](https://github.com/cypress-io/cypress-documentation/blob/master/CONTRIBUTING.md#adding-plugins).
+
+## See also
+
+- [How to use Plugins](/app/plugins/plugins-guide): install a plugin and wire it up
+- [Node Events Overview](/api/node-events/overview): write your own plugin
+- [Preprocessors API](/api/node-events/preprocessors-api): customize how spec files are bundled
+- [Configuration](/app/references/configuration): reference for `setupNodeEvents` and other options

@@ -1,0 +1,1156 @@
+---
+title: 'Command line interface (CLI) commands and options in Cypress'
+description: 'Learn how to run Cypress from the command line using npm, Yarn, or pnpm.'
+sidebar_label: 'Command line (CLI)'
+sidebar_position: 10
+slug: /app/references/command-line
+---
+
+<ProductHeading product="app" />
+
+# Command Line
+
+This guide assumes you've already read our
+[Installing Cypress](/app/get-started/install-cypress) guide and
+installed Cypress as an `npm` module. After installing you'll be able to execute
+all of the commands in this document from your **project root**.
+
+:::info
+
+You can alternatively require and run Cypress as a node module using our
+[Module API](/app/references/module-api).
+
+:::
+
+## How to run commands
+
+You can run Cypress from your **project root** using a command which
+depends on the package manager you are using: npm, Yarn, pnpm or Bun.
+For example, you would prefix the command
+[cypress run](#cypress-run) as shown:
+
+<CypressRunCommands />
+
+Add any required [options](#Options) to the end of the command line.
+As an example, if you want to run tests in headless mode from a single spec file
+and record the results with Cypress Cloud, the command should be:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+npx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bunx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+</Tabs>
+
+:::info
+
+**PowerShell**
+
+When `cypress run` [options](#Options) or `cypress open` [options](#Options-1) are specified with multiple values separated by commas, such as for `--config` or `--env` options, and you are using PowerShell on Windows, you may need to surround the key/value pairs with quotes, for example: `--env "host=api.dev.local,port=4222"`.
+
+:::
+
+## Using scripts
+
+Cypress command strings can be saved as scripts for reuse.
+
+Let's say you often need to run Cypress E2E tests in headless mode using the Chrome browser.
+You can add the corresponding command
+`cypress run --browser chrome` to the `scripts` object in
+your `package.json` file and use the name
+`e2e:chrome` to identify it.
+
+```json
+{
+  "scripts": {
+    "e2e:chrome": "cypress run --browser chrome"
+  }
+}
+```
+
+Running the script `e2e:chrome` as follows will run the command you defined:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+npm run e2e:chrome
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn e2e:chrome
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm e2e:chrome
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bun run e2e:chrome
+```
+
+  </TabItem>
+</Tabs>
+
+:::caution
+
+<strong>Best Practice</strong>
+
+Don't use `cypress` as the exact name of a script, especially if you use Yarn as package manager.
+When running commands on the Cypress binary (e.g. `yarn cypress verify`), Yarn will reference the
+script of the same name instead and Cypress CLI commands may not work as expected.
+
+:::
+
+### Extending script options
+
+You do not have to define a new script for every variation of a command string you need. You can extend a script with additional options.
+
+Let's say that when you ran the full set of tests with the script `e2e:chrome` it showed a failure in one test spec `cypress/e2e/my-spec.cy.js`.
+You corrected the problem and would like to re-run the tests only for the test spec which previously failed.
+
+The option [`--spec`](#cypress-run-spec-lt-spec-gt) allows you to specify which test specs to run, so you can add this to the command after the script name `e2e:chrome`:
+
+<Tabs groupId="package-manager"
+  defaultValue="npm"
+  values={[
+    {label: 'npm', value: 'npm'},
+    {label: 'Yarn', value: 'yarn'},
+    {label: 'pnpm', value: 'pnpm'},
+    {label: 'Bun', value: 'bun'},
+  ]}>
+  <TabItem value="npm">
+
+```shell
+npm run e2e:chrome -- --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="yarn">
+
+```shell
+yarn e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="pnpm">
+
+```shell
+pnpm e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+  <TabItem value="bun">
+
+```shell
+bun run e2e:chrome --spec "cypress/e2e/my-spec.cy.js"
+```
+
+  </TabItem>
+</Tabs>
+
+Refer to each package manager's documentation for full details of command and script usage:
+
+- [npm CLI](https://docs.npmjs.com/cli/)<br />
+  When adding Cypress [options](#Options) after a script name called from `npm`, you need to pass the command's arguments using the `--` string (see
+  [`npm-run-script`](https://docs.npmjs.com/cli/run-script.html)).
+- [Yarn CLI](https://classic.yarnpkg.com/lang/en/docs/cli/)
+- [pnpm CLI](https://pnpm.io/pnpm-cli)
+- [Bun CLI](https://bun.sh/docs/cli/run)
+
+## Commands
+
+:::info
+
+The prefix required to run `cypress` is not shown in the list of commands below.
+You need to add the prefix `npx`, `yarn` or `pnpm` to the command line, corresponding to the package manager you are using. See [How to run commands](#How-to-run-commands).
+
+:::
+
+### `cypress run`
+
+Runs Cypress tests to completion. By default, `cypress run` will run all tests
+headlessly.
+
+```shell
+cypress run [options]
+```
+
+#### Options
+
+| Option                         | Description                                                                                                                                                                                   |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--auto-cancel-after-failures` | [Overrides the Cloud project-level configuration to set the failed test threshold for auto cancellation or to disable auto cancellation when recording to the Cloud](#auto-cancel-after-runs) |
+| `--browser`, `-b`              | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt)    |
+| `--ci-build-id`                | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                             |
+| `--component`                  | [Run component tests](/app/core-concepts/testing-types#What-is-Component-Testing)                                                                                                             |
+| `--config`, `-c`               | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                     |
+| `--config-file`, `-C`          | [Specify configuration file](#cypress-run-config-file-lt-configuration-file-gt)                                                                                                               |
+| `--e2e`                        | Run end to end tests (default)                                                                                                                                                                |
+| `--env`, `-e`                  | [Specify secret environment variables](#cypress-run-env-lt-env-gt)                                                                                                                            |
+| `--expose`, `-x`               | [Specify public configuration values](#cypress-run-expose-lt-expose-gt)                                                                                                                       |
+| `--group`                      | [Group recorded tests together under a single run](#cypress-run-group-lt-name-gt)                                                                                                             |
+| `--headed`                     | [Displays the browser instead of running headlessly](#cypress-run-headed)                                                                                                                     |
+| `--headless`                   | Hide the browser instead of running headed (default during `cypress run`)                                                                                                                     |
+| `--help`, `-h`                 | Output usage information                                                                                                                                                                      |
+| `--key`, `-k`                  | [Specify your secret record key](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
+| `--no-exit`                    | [Keep Cypress open after tests in a spec file run](#cypress-run-no-exit)                                                                                                                      |
+| `--no-runner-ui`               | [Hides the Cypress Runner UI](#cypress-run-no-runner-ui)                                                                                                                                      |
+| `--parallel`                   | [Run recorded specs in parallel across multiple machines](#cypress-run-parallel)                                                                                                              |
+| `--pass-with-no-tests`         | [Exits with success when no spec files are found](#cypress-run-pass-with-no-tests)                                                                                                            |
+| `--port`,`-p`                  | [Override default port](#cypress-run-port-lt-port-gt)                                                                                                                                         |
+| `--posix-exit-codes`           | [Exit with a POSIX-compliant exit code](#cypress-run-posix-exit-codes) rather than the number of failed tests.                                                                                |
+| `--project`, `-P`              | [Path to a specific project](#cypress-run-project-lt-project-path-gt)                                                                                                                         |
+| `--quiet`, `-q`                | [Reduce output to `stdout`](#cypress-run-quiet)                                                                                                                                               |
+| `--record`                     | [Whether to record the test run](#cypress-run-record-key-lt-record-key-gt)                                                                                                                    |
+| `--reporter`, `-r`             | [Specify a Mocha reporter](#cypress-run-reporter-lt-reporter-gt)                                                                                                                              |
+| `--reporter-options`, `-o`     | [Specify Mocha reporter options](#cypress-run-reporter-lt-reporter-gt)                                                                                                                        |
+| `--runner-ui`                  | [Displays the Cypress Runner UI. Useful for when Test Replay is enabled and you would still like the Cypress Runner UI to be displayed for screenshots and video](#cypress-run-runner-ui)     |
+| `--spec`, `-s`                 | [Specify the spec files to run](#cypress-run-spec-lt-spec-gt)                                                                                                                                 |
+| `--tag`, `-t`                  | [Identify a run with a tag or tags](#cypress-run-tag-lt-tag-gt)                                                                                                                               |
+
+#### `cypress run --auto-cancel-after-failures <autoCancelAfterFailures>` {#auto-cancel-after-runs}
+
+The "autoCancelAfterFailures" argument is the number of times tests can fail
+before the run is canceled
+
+```bash
+cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 1
+```
+
+You can also specify `false` for the value to disable Auto Cancellation for the
+run:
+
+```bash
+cypress run --record --key <<your_record_key>> --auto-cancel-after-failures false
+```
+
+#### `cypress run --browser <browser-name-or-path>` {#cypress-run-browser-lt-browser-name-or-path-gt}
+
+```shell
+cypress run --browser chrome
+```
+
+The "browser" argument can be set to `chrome`, `chromium`, `edge`, `electron`,
+`firefox` to launch a browser detected on your system. Cypress will attempt to
+automatically find the installed browser for you.
+
+To launch non-stable browsers, add a colon and the desired release channel. For
+example, to launch Chrome Canary, use `chrome:canary`.
+
+You can also choose a browser by supplying a path:
+
+```shell
+cypress run --browser /usr/bin/chromium
+```
+
+[Having trouble with browser detection? Check out our troubleshooting guide](/app/references/troubleshooting#Launching-browsers)
+
+#### `cypress run --ci-build-id <id>` {#cypress-run-ci-build-id-lt-id-gt}
+
+This value should be automatically detected for most CI providers and is
+unnecessary to define unless Cypress is unable to determine it.
+
+Typically, this is defined as a system environment variable within your CI provider,
+defining a unique "build" or "run".
+
+```shell
+cypress run --ci-build-id BUILD_NUMBER
+```
+
+Only valid when providing a `--group` or `--parallel` flag. Read our
+[parallelization](/cloud/features/smart-orchestration/parallelization)
+documentation to learn more.
+
+#### `cypress run --config <config>` {#cypress-run-config-lt-config-gt}
+
+Set [configuration](/app/references/configuration) values. Separate multiple
+values with commas. The values set here override any values set in your
+configuration file.
+
+```shell
+cypress run --config pageLoadTimeout=100000,watchForFileChanges=false
+```
+
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object surrounded by single quotes.
+
+Here, we're passing in the configuration for component spec files.
+
+```shell
+cypress run --config '{"watchForFileChanges":false,"specPattern":["**/*.cy.js","**/*.cy.ts"]}'
+```
+
+:::info
+
+##### <Icon name="graduation-cap" /> Real World Example
+
+The Cypress <Icon name="github" inline="true" contentType="rwa" /> uses
+`--config` flag to easily specify
+[viewport](/app/references/configuration#Viewport) sizes for responsive
+testing locally and in dedicated CI jobs.
+
+Examples:
+
+<!-- prettier-ignore-start -->
+
+- <Icon
+      name="github"
+      inline="true"
+      callout="npm scripts"
+      url="https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/package.json#L120"
+    /> to run Cypress in mobile viewport.
+  <!-- prettier-ignore-end -->
+
+<!-- prettier-ignore-start -->
+
+- <Icon
+      name="github"
+      inline="true"
+      callout="Circle CI job configuration"
+      url="https://github.com/cypress-io/cypress-realworld-app/blob/07a6483dfe7ee44823380832b0b23a4dacd72504/.circleci/config.yml#L82-L100"
+    /> for running test suites in mobile viewport.
+  :::
+  <!-- prettier-ignore-end -->
+
+#### `cypress run --config-file <configuration-file>` {#cypress-run-config-file-lt-configuration-file-gt}
+
+You can specify a path to a file where
+[Cypress configuration](/app/references/configuration) values are set.
+
+```shell
+cypress run --config-file tests/cypress.config.js
+```
+
+#### `cypress run --env <env>` {#cypress-run-env-lt-env-gt}
+
+:::caution
+
+**Security Warning**
+
+Secrets passed via CLI may appear in CI logs. For production use, prefer setting secrets via your CI/CD platform's secret management system.
+
+:::
+
+Set secret [environment variables](/app/guides/environment-variables) for use in your tests via [`cy.env()`](/api/commands/env). See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
+
+```shell
+cypress run --env apiKey=secret-key-12345
+```
+
+Pass several variables using commas and no spaces. Numbers are automatically
+converted from strings.
+
+```shell
+cypress run --env apiKey=secret-key-12345,apiUrl=https://api.example.com
+```
+
+Pass an object as a JSON in a string.
+
+```shell
+cypress run --env credentials='{"apiKey":"secret-key-12345","dbPassword":"secure-password"}'
+```
+
+#### `cypress run --expose <expose>` {#cypress-run-expose-lt-expose-gt}
+
+Set public configuration values for use in your tests via [`Cypress.expose()`](/api/cypress-api/expose). See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
+
+```shell
+cypress run --expose apiVersion=v2,featureFlag=true
+```
+
+#### `cypress run --group <name>` {#cypress-run-group-lt-name-gt}
+
+Group recorded tests together under a single run.
+
+```shell
+cypress run --group develop-env
+```
+
+You can add multiple groups to the same run by passing a different name. This
+can help distinguish groups of specs from each other.
+
+```shell
+cypress run --group admin-tests --spec 'cypress/e2e/admin/**/*'
+```
+
+```shell
+cypress run --group user-tests --spec 'cypress/e2e/user/**/*'
+```
+
+Specifying the `--ci-build-id` may also be necessary.
+
+[Read more about grouping.](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs)
+
+#### `cypress run --headed` {#cypress-run-headed}
+
+By default, Cypress will run tests headlessly during `cypress run`.
+
+Passing `--headed` will force the browser to be shown. This matches how you run
+any browser via `cypress open`.
+
+```shell
+cypress run --headed
+```
+
+#### `cypress run --no-exit` {#cypress-run-no-exit}
+
+To prevent Cypress from exiting after running tests in a spec file, use
+`--no-exit`.
+
+You can pass `--headed --no-exit` in order to view the **command log** or have
+access to **developer tools** after a `spec` has run.
+
+```shell
+cypress run --headed --no-exit
+```
+
+#### `cypress run --no-runner-ui` {#cypress-run-no-runner-ui}
+
+To prevent Cypress from rendering the Runner UI, use
+`--no-runner-ui`.
+
+```shell
+cypress run --no-runner-ui
+```
+
+#### `cypress run --parallel` {#cypress-run-parallel}
+
+Run recorded specs in
+[parallel](/cloud/features/smart-orchestration/parallelization) across multiple
+machines.
+
+```shell
+cypress run --record --parallel
+```
+
+You can additionally pass a `--group` flag so this shows up as a named
+[group](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs).
+
+```shell
+cypress run --record --parallel --group e2e-staging-specs
+```
+
+Read our [parallelization](/cloud/features/smart-orchestration/parallelization)
+documentation to learn more.
+
+#### `cypress run --pass-with-no-tests` {#cypress-run-pass-with-no-tests}
+
+Exits with a success code when no spec files are found. Useful in CI pipelines where specs may be conditionally generated or filtered out at runtime.
+
+```shell
+cypress run --pass-with-no-tests
+```
+
+#### `cypress run --port <port>` {#cypress-run-port-lt-port-gt}
+
+```shell
+cypress run --port 8080
+```
+
+#### `cypress run --posix-exit-codes` {#cypress-run-posix-exit-codes}
+
+This changes the default behavior of Cypress regarding exit codes. This flag causes Cypress to exit with POSIX exit code of 1 when there are test failures or if Cypress could not run, rather than the number of tests that failed. It can return additional POSIX-compliant exit codes for other scenarios as well. See the [Exit Code section](/app/references/command-line#Exit-code) for a comprehensive reference of Cypress exit codes.
+
+```shell
+cypress run --posix-exit-codes
+```
+
+#### `cypress run --project <project-path>` {#cypress-run-project-lt-project-path-gt}
+
+By default, Cypress expects your `cypress.config.js` (or `cypress.config.ts`) to
+be found in the current working directory. Use `--project` to point Cypress at a
+different directory. This is useful when you have multiple Cypress projects in
+one repository and want to run a specific one without changing your working
+directory.
+
+```shell
+cypress run --project ./some/nested/folder
+```
+
+#### `cypress run --quiet` {#cypress-run-quiet}
+
+To reduce the output from Cypress printed to `stdout`, use
+`--quiet`.
+
+```shell
+cypress run --quiet
+```
+
+If passed, Cypress will only print output to `stdout` from the [built-in](/app/tooling/reporters#Built-in-reporters) default [Mocha spec reporter](https://mochajs.org/#spec), or from any other configured [Mocha reporter](/app/tooling/reporters).
+
+#### `cypress run --record --key <record-key>` {#cypress-run-record-key-lt-record-key-gt}
+
+Record your test results to [Cypress Cloud](/cloud/get-started/introduction). For
+this option to work you must first
+[set up your project to record](/cloud/get-started/setup#Setup), make sure
+your `projectId` is set in your
+[Cypress configuration file](/app/references/configuration),
+and append your **Record Key** to the command.
+
+```shell
+cypress run --record --key <record_key>
+```
+
+If you set the **Record Key** as the environment variable `CYPRESS_RECORD_KEY`,
+you can omit the `--key` flag. You may want to set this environment variable
+when running in
+[Continuous Integration](/app/continuous-integration/overview).
+
+```shell
+export CYPRESS_RECORD_KEY=abc-key-123
+```
+
+Now you can omit the `--key` flag.
+
+```shell
+cypress run --record
+```
+
+<RecordKeyEnvVar />
+
+For more information on recording runs, see the
+[Cypress Cloud setup instructions](/cloud/get-started/setup#Setup). For an
+in-depth explanation of how Cypress uses your record key and `projectId` to save
+your test results to Cypress Cloud, see the
+[Identification section](/cloud/account-management/projects#Project-ID).
+
+#### `cypress run --reporter <reporter>` {#cypress-run-reporter-lt-reporter-gt}
+
+You can tests specifying a specific [Mocha reporter](/app/tooling/reporters).
+
+```shell
+cypress run --reporter json
+```
+
+You can specify reporter options using the
+`--reporter-options <reporter-options>` flag.
+
+```shell
+cypress run --reporter junit --reporter-options mochaFile=result.xml,toConsole=true
+```
+
+#### `cypress run --runner-ui` {#cypress-run-runner-ui}
+
+To force Cypress to render the Runner UI, use `--runner-ui`.
+
+```shell
+cypress run --runner-ui
+```
+
+Useful for when [Test Replay](/cloud/features/test-replay) is enabled and you would still like the Runner UI to be rendered for screenshots and video.
+
+#### `cypress run --spec <spec>` {#cypress-run-spec-lt-spec-gt}
+
+Run tests specifying a single test file to run instead of all tests. The spec
+path should be an absolute path or can be relative to the current working
+directory.
+
+:::caution
+
+`--spec` only runs specs that **also match the configured
+[`specPattern`](/app/references/configuration#e2e)**. Specs located
+outside the configured `specPattern` will not be found. See
+[Test files not found when using `spec` parameter](/app/references/configuration#Test-files-not-found-when-using-spec-parameter)
+for details.
+
+:::
+
+```shell
+cypress run --spec "cypress/e2e/examples/actions.cy.js"
+```
+
+Run tests within the folder matching the glob _(Note: Using double quotes is
+strongly recommended)_.
+
+```shell
+cypress run --spec "cypress/e2e/login/**/*"
+```
+
+Run tests specifying multiple test files to run.
+
+```shell
+cypress run --spec "cypress/e2e/examples/actions.cy.js,cypress/e2e/examples/files.cy.js"
+```
+
+Use in combination with `--project` parameter. Imagine the Cypress tests are in
+a subfolder `tests/e2e` of the current project:
+
+```
+app/
+  node_modules/
+  package.json
+  tests/
+    unit/
+    e2e/
+      cypress/
+        e2e/
+          spec.cy.js
+      cypress.config.js
+```
+
+If we are in the `app` folder, we can run the specs using the following command
+
+```shell
+cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.cy.js
+```
+
+#### `cypress run --tag <tag>` {#cypress-run-tag-lt-tag-gt}
+
+Add a tag or tags to the recorded run. This can be used to help identify
+separate runs when displayed in Cypress Cloud.
+
+```shell
+cypress run  --record --tag "staging"
+```
+
+Give a run multiple tags.
+
+```shell
+cypress run --record --tag "production,nightly"
+```
+
+Cypress Cloud will display any tags sent with the appropriate run.
+
+<DocsImage
+  src="/img/cloud/runs/dashboard-run-with-tags.png"
+  alt="Cypress run in Cypress Cloud displaying flags"
+/>
+
+Tags are also useful for surfacing environment details that Cypress Cloud
+does not record on its own, such as the Node.js version a run used. By tagging
+runs with these values you can easily differentiate runs that were executed
+against different versions in the same matrix. For example, when testing across
+multiple Node.js versions in CI you can include the version in the tags:
+
+```shell
+cypress run --record --tag "node-${nodeVersion}"
+```
+
+This makes runs that use the same spec set but a different Node.js version (or
+any other build/environment detail Cypress Cloud does not capture) easy to tell
+apart in Cypress Cloud.
+
+:::info
+
+**App Quality Profiles**: If you use Cypress Cloud's [accessibility](/accessibility/get-started/introduction) and [UI Coverage reporting](/accessibility/get-started/introduction), a run tag can be mapped to [App Quality Profiles](/accessibility/configuration/profiles) to automatically apply different configuration settings for different types of runs.
+:::
+
+#### Exit code
+
+Cypress supports two different exit code behaviors. The default behavior is similar to that of Mocha, but is not POSIX compliant: reserved exit codes can be returned for certain conditions. As well, the default behavior
+can return a false negative when there are a number of tests that fail in multiples of 256: most terminals will apply modulo 256 to any exit code larger than 255.
+
+POSIX compliant exit codes are available via the `--posix-exit-codes` flag. When this flag is passed, additional conditions can be returned that are not possible with the default behavior, including when Cypress fails due to
+network errors when connections to Cypress Cloud are required, such as in `--record` or `--parallel` runs.
+
+When using POSIX compliant exit codes, the number of failed tests can be determined from the [Module API](/app/references/module-api) or [structured reporter data](/app/tooling/reporters).
+
+| Exit Condition                                                                              | POSIX Exit Code (with `--posix-exit-codes`) | Default Exit Code (without `--posix-exit-codes`) |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------ |
+| All tests pass                                                                              | 0                                           | 0                                                |
+| _n_ tests fail                                                                              | 1                                           | _n_                                              |
+| Cypress could not run due to a network error when connections to Cypress Cloud are required | 112                                         | 1                                                |
+| Cypress could not run for any other reason, including no spec files found                   | 1                                           | 1                                                |
+
+### `cypress open`
+
+Opens Cypress.
+
+```shell
+cypress open [options]
+```
+
+#### Options:
+
+Options passed to `cypress open` will automatically be applied to the project
+you open. These persist on all projects until you quit Cypress. These options
+will also override values in the Cypress configuration file.
+
+By passing `--browser` and `--e2e` or `--component` when launching a project,
+you can open Cypress and launch the browser at the same time. If passing the
+`--browser` flag alone, the browser will launch automatically after being
+guided through project and/or testing type selection. Otherwise, you will
+be guided through selecting a browser, project, and/or testing type.
+
+| Option                | Description                                                                                                                                                                         |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--browser`, `-b`     | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-open-browser-lt-browser-path-gt) |
+| `--component`         | [Open in component testing mode](/app/core-concepts/testing-types#What-is-Component-Testing)                                                                                        |
+| `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                                                                          |
+| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                                                                                    |
+| `--detached`, `-d`    | Open Cypress in detached mode                                                                                                                                                       |
+| `--e2e`               | Open in end to end testing mode (default)                                                                                                                                           |
+| `--env`, `-e`         | [Specify secret environment variables](#cypress-open-env-lt-env-gt)                                                                                                                 |
+| `--expose`, `-x`      | [Specify public configuration values](#cypress-open-expose-lt-expose-gt)                                                                                                            |
+| `--global`            | [Open in global mode](#cypress-open-global)                                                                                                                                         |
+| `--help`, `-h`        | Output usage information                                                                                                                                                            |
+| `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                                                                              |
+| `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                                                                              |
+
+#### `cypress open --browser <browser-path>` {#cypress-open-browser-lt-browser-path-gt}
+
+By default, Cypress will automatically find and allow you to use the browsers
+installed on your system.
+
+The "browser" option allows you to specify the path to a custom browser to use
+with Cypress:
+
+```shell
+cypress open --browser /usr/bin/chromium
+```
+
+If found, the specified browser will be added to the list of available browsers.
+
+Currently, only browsers in the Chrome family (including the new Chromium-based
+Microsoft Edge and Brave) and Firefox are supported.
+
+[Having trouble launching a browser? Check out our troubleshooting guide](/app/references/troubleshooting#Launching-browsers)
+
+#### `cypress open --config <config>` {#cypress-open-config-lt-config-gt}
+
+Set [configuration](/app/references/configuration) values. Separate multiple
+values with a comma. The values set here override any values set in your
+configuration file.
+
+```shell
+cypress open --config pageLoadTimeout=100000,watchForFileChanges=false
+```
+
+For more complex configuration objects, you may want to consider passing a
+[JSON.stringified](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+object.
+
+Here, we're passing in the configuration for component spec files.
+
+```shell
+cypress open --config "{\"watchForFileChanges\":false,\"specPattern\":[\"**/*.cy.js\",\"**/*.cy.ts\"]}"
+```
+
+#### `cypress open --config-file <configuration-file>` {#cypress-open-config-file-lt-configuration-file-gt}
+
+You can specify a path to a file where
+[Cypress configuration](/app/references/configuration) values are set.
+
+```shell
+cypress open --config-file tests/cypress.config.js
+```
+
+#### `cypress open --env <env>` {#cypress-open-env-lt-env-gt}
+
+:::caution
+
+**Security Warning**
+
+Secrets passed via CLI may appear in CI logs. For production use, prefer setting secrets via your CI/CD platform's secret management system.
+
+:::
+
+Set secret [environment variables](/app/guides/environment-variables) for use in your tests via [`cy.env()`](/api/commands/env). See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
+
+```shell
+cypress open --env apiKey=secret-key-12345
+```
+
+Pass several variables using commas and no spaces. Numbers are automatically
+converted from strings.
+
+```shell
+cypress open --env apiKey=secret-key-12345,apiUrl=https://api.example.com
+```
+
+Pass an object as a JSON in a string.
+
+```shell
+cypress open --env credentials='{"apiKey":"secret-key-12345","dbPassword":"secure-password"}'
+```
+
+#### `cypress open --expose <expose>` {#cypress-open-expose-lt-expose-gt}
+
+Set public configuration values for use in your tests via [`Cypress.expose()`](/api/cypress-api/expose). See the [Environment Variables & Secrets](/app/guides/environment-variables) guide for more details.
+
+```shell
+cypress open --expose apiVersion=v2,featureFlag=true
+```
+
+#### `cypress open --global` {#cypress-open-global}
+
+Opening Cypress in global mode is useful if you have multiple nested projects
+but want to share a single global installation of Cypress. In this case you can
+add each nested project to the Cypress in global mode, thus giving you a nice UI
+to switch between them.
+
+```shell
+cypress open --global
+```
+
+#### `cypress open --port <port>` {#cypress-open-port-lt-port-gt}
+
+```shell
+cypress open --port 8080
+```
+
+#### `cypress open --project <project-path>` {#cypress-open-project-lt-project-path-gt}
+
+By default, Cypress looks for your `cypress.config.js` (or `cypress.config.ts`)
+in the current working directory. Use `--project` to open Cypress for a project
+located in a different directory. This is useful when you have multiple Cypress
+projects in one repository and want to open a specific one without changing your
+working directory.
+
+```shell
+cypress open --project ./some/nested/folder
+```
+
+### `cypress tap` :sparkles: {#cypress-tap}
+
+:::warning
+
+`cypress tap` is in [beta](/app/references/release-stages#Beta). Its commands and
+output can still change in any release.
+
+:::
+
+`cypress tap` is a set of Cypress CLI commands that enables you or an agent to interact with an open-mode Cypress
+session and read its context from the terminal. You can list the
+specs Cypress can run, start a run, poll its status, read test results the way
+the Cypress Command Log shows them, and inspect the DOM and accessibility tree
+of the application under test. It is built for you, or for an AI agent working in
+your terminal.
+
+To get started, start Cypress in open mode (`cypress open`) in your project, then use the `cypress tap` commands from the same project directory in another terminal.
+
+#### `cypress tap` commands {#cypress-tap-commands}
+
+Below is the list of the commands `cypress tap` exposes. To learn full syntax, options, and output of every command and how to use them, review our [guide to driving Cypress with AI agents](/app/tooling/cypress-tap).
+
+```shell
+cypress tap [command] [args...] [options]
+```
+
+| `cypress tap` commands                                      | What it does                                                                                                                                                                                   |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`sessions`](/app/tooling/cypress-tap#cypress-tap-sessions) | Lists the running Cypress sessions the CLI can reach.                                                                                                                                          |
+| [`status`](/app/tooling/cypress-tap#cypress-tap-status)     | Reports where a session is in its run lifecycle.                                                                                                                                               |
+| [`specs`](/app/tooling/cypress-tap#cypress-tap-specs)       | Lists the specs the session can run.                                                                                                                                                           |
+| [`run`](/app/tooling/cypress-tap#cypress-tap-run)           | Runs (or reruns) a spec by its project-relative path.                                                                                                                                          |
+| [`reporter`](/app/tooling/cypress-tap#cypress-tap-reporter) | Renders the spec report or a specific tests report. The spec report includes what tests ran and their status. A test's reporter view includes routes, hooks, Command Log, and failure details. |
+| [`command`](/app/tooling/cypress-tap#cypress-tap-command)   | Prints the details of a specific Command Log entry, including its time travel snapshots and the captured console properties.                                                                   |
+| [`pin`](/app/tooling/cypress-tap#cypress-tap-pin)           | Renders a past command's DOM snapshot as the live app under test so the `dom`, `aria`, and `inspect` tap commands can inspect it.                                                              |
+| [`dom`](/app/tooling/cypress-tap#cypress-tap-dom)           | Retrieves the app under test's HTML markup.                                                                                                                                                    |
+| [`aria`](/app/tooling/cypress-tap#cypress-tap-aria)         | Retrieves the accessibility (ARIA) tree of the app under test.                                                                                                                                 |
+| [`inspect`](/app/tooling/cypress-tap#cypress-tap-inspect)   | Retrieves the specified element's tag, attributes, computed styles, and box model.                                                                                                             |
+
+Commands exit with `0` on success and `1` on any failure.
+
+Each subcommand supports a `--help` or `-h` flag to view the options help content in the terminal.
+
+### `cypress info`
+
+Prints information about Cypress and the current environment such as:
+
+- A list of browsers Cypress detected on the machine.
+- Any environment variables that control
+  [proxy configuration](/app/references/proxy-configuration).
+- Any environment variables that start with the `CYPRESS` prefix (with sensitive
+  variables like
+  [record key](/cloud/account-management/projects#Record-key) masked for
+  security).
+- The location where run-time data is stored.
+- The location where the Cypress binary is cached.
+- Operating system information.
+- System memory including free space.
+
+```css
+cypress info
+Displaying Cypress info...
+
+Detected 2 browsers installed:
+
+1. Chrome
+  - Name: chrome
+  - Channel: stable
+  - Version: 79.0.3945.130
+  - Executable: /path/to/google-chrome
+  - Profile: /user/profile/folder/for/google-chrome
+
+2. Firefox Nightly
+  - Name: firefox
+  - Channel: nightly
+  - Version: 74.0a1
+  - Executable: /path/to/firefox
+
+Note: to run these browsers, pass <name>:<channel> to the '--browser' field
+
+Examples:
+- cypress run --browser firefox:nightly
+- cypress run --browser chrome
+
+Learn More: https://on.cypress.io/launching-browsers
+
+Proxy Settings: none detected
+Environment Variables: none detected
+
+Application Data: /path/to/app/data/cypress/cy/development
+Browser Profiles: /path/to/app/data/cypress/cy/development/browsers
+Binary Caches: /user/profile/path/.cache/Cypress
+
+Cypress Version: 4.1.0
+System Platform: darwin (19.2.0)
+System Memory: 17.2 GB free 670 MB
+```
+
+**Tip:** set
+[DEBUG environment variable](/app/references/troubleshooting#Print-DEBUG-logs)
+to `cypress:launcher:*` when running `cypress info` to troubleshoot browser
+detection.
+
+### `cypress install`
+
+Installs the Cypress binary that matches the version of the `cypress` npm
+package into the [global cache](/app/references/advanced-installation#Binary-cache).
+
+<CypressCommandTabs command="install" />
+
+This command normally runs automatically as a `postinstall` step when you add
+`cypress` with your package manager, so you rarely need to run it yourself.
+Running it explicitly is useful when the binary was not downloaded during
+`npm install`, including these scenarios:
+
+- Your package manager blocks lifecycle scripts (for example with
+  `--ignore-scripts`, or because a security policy disallows `postinstall`), so
+  you install the binary yourself at a later stage instead of granting Cypress
+  install-time script access.
+- You want to download and cache the binary on one machine (such as a CI
+  "install" stage), then skip the download on every subsequent machine that
+  reuses that [cache](/app/references/advanced-installation#Binary-cache).
+- The automatic install was skipped on purpose by setting
+  `CYPRESS_INSTALL_BINARY=0`.
+- You want to
+  [troubleshoot the installation](/app/references/advanced-installation#Troubleshoot-installation)
+  by running the download on its own with
+  [debug logging](/app/references/troubleshooting#Print-DEBUG-logs) enabled.
+
+For example, add `cypress` while skipping the binary download, then run the
+install on its own with debug logging enabled:
+
+<PackageManagerTabs install="cypress" dev env="CYPRESS_INSTALL_BINARY=0" />
+
+<CypressCommandTabs command="install" env="DEBUG=cypress:cli*" />
+
+The binary that gets installed, the cache location, and the download source can
+be customized through environment variables. See
+[Advanced Installation](/app/references/advanced-installation) for details.
+
+#### Options
+
+| Option          | Description                                                |
+| --------------- | ---------------------------------------------------------- |
+| `--force`, `-f` | [Force install the Cypress binary](#cypress-install-force) |
+| `--help`, `-h`  | Output usage information                                   |
+
+#### `cypress install --force` {#cypress-install-force}
+
+By default, `cypress install` does nothing when a binary matching the package
+version is already present in the
+[cache](/app/references/advanced-installation#Binary-cache). Pass `--force` to
+download and reinstall the binary anyway, overwriting any existing installation.
+
+<CypressCommandTabs command="install --force" />
+
+### `cypress verify`
+
+Verify that Cypress is installed correctly and is executable.
+
+```shell
+cypress verify
+✔  Verified Cypress! /Users/jane/Library/Caches/Cypress/3.0.0/Cypress.app
+```
+
+To change the default timeout of 30 seconds, you can set the environment
+variable `CYPRESS_VERIFY_TIMEOUT`:
+
+```shell
+export CYPRESS_VERIFY_TIMEOUT=60000 # wait for 60 seconds
+cypress verify
+```
+
+Note that the `cypress verify` command is executed as part of the `cypress open`
+and `cypress run` commands. The `CYPRESS_VERIFY_TIMEOUT` environment variable
+should be provided for those commands if you wish to modify the timeout
+duration.
+
+You can disable verification by setting the `CYPRESS_SKIP_VERIFY` environment variable to `true`.
+
+### `cypress version`
+
+Prints the installed Cypress binary version, the Cypress package version, the
+version of Electron used to build Cypress, and the bundled Node version.
+
+In most cases the binary and the package versions will be the same, but they
+could be different if you have installed a different version of the package and
+for some reason failed to install the matching binary version.
+
+```css
+cypress version
+Cypress package version: 12.0.0
+Cypress binary version: 12.0.0
+Electron version: 21.0.0
+Bundled Node version: 16.16.0
+```
+
+You can print each individual component's version number also.
+
+```css
+cypress version --component package
+12.0.0
+cypress version --component binary
+12.0.0
+cypress version --component electron
+21.0.0
+cypress version --component node
+16.16.0
+```
+
+### `cypress cache [command]`
+
+Commands for managing the global Cypress cache. The Cypress cache applies to all
+installs of Cypress across your machine, global or not.
+
+#### `cypress cache path`
+
+Print the `path` to the Cypress cache folder. You can change the path where the
+Cypress cache is located by following
+[these instructions](/app/references/advanced-installation#Binary-cache).
+
+```shell
+cypress cache path
+/Users/jane/Library/Caches/Cypress
+```
+
+#### `cypress cache list`
+
+Print all existing installed versions of Cypress. The output will be a table
+with cached versions and the last time the binary was used by the user,
+determined from the file's access time.
+
+```css
+cypress cache list
+┌─────────┬──────────────┐
+│ version │ last used    │
+├─────────┼──────────────┤
+│ 3.0.0   │ 3 months ago │
+├─────────┼──────────────┤
+│ 3.0.1   │ 5 days ago   │
+└─────────┴──────────────┘
+```
+
+You can calculate the size of every Cypress version folder by adding the
+`--size` argument to the command. Note that calculating the disk size can be
+slow.
+
+```css
+cypress cache list --size
+┌─────────┬──────────────┬─────────┐
+│ version │ last used    │ size    │
+├─────────┼──────────────┼─────────┤
+│ 5.0.0   │ 3 months ago │ 425.3MB │
+├─────────┼──────────────┼─────────┤
+│ 5.3.0   │ 5 days ago   │ 436.3MB │
+└─────────┴──────────────┴─────────┘
+```
+
+#### `cypress cache clear`
+
+Clear the contents of the Cypress cache. This is useful when you want Cypress to
+clear out all installed versions of Cypress that may be cached on your machine.
+After running this command, you will need to run `cypress install` before
+running Cypress again.
+
+```shell
+cypress cache clear
+```
+
+#### `cypress cache prune`
+
+Deletes all installed Cypress versions from the cache except for the
+currently-installed version.
+
+```shell
+cypress cache prune
+```
+
+## Debugging commands
+
+### Enable Debug Logs
+
+If you are using macOS, Linux or Windows (Git Bash)
+and your package manager is npm, you can run Cypress with debug logs using the following CLI command:
+
+```shell
+DEBUG=cypress:* npx cypress run
+```
+
+See [Troubleshooting](/app/references/troubleshooting#Print-DEBUG-logs) for more detailed instructions on options
+to generate debug logs, also with Yarn and pnpm package managers,
+and with Windows CMD and PowerShell terminal windows.
+
+## History
+
+| Version                                      | Changes                                                               |
+| -------------------------------------------- | --------------------------------------------------------------------- |
+| [15.21.0](/app/references/changelog#15-21-0) | Added the `cypress tap` command                                       |
+| [15.11.0](/app/references/changelog#15-11-0) | Added `--pass-with-no-tests` flag to `cypress run`                    |
+| [15.5.0](/app/references/changelog#15-5-0)   | Added the 112 exit code scenario when using `--posix-exit-codes` flag |
+| [15.4.0](/app/references/changelog#15-4-0)   | Added `--auto-cancel-after-failures` flag to `cypress run`            |
+| [5.4.0](/app/references/changelog)           | Added `prune` subcommand to `cypress cache`                           |
+| [5.4.0](/app/references/changelog)           | Added `--size` flag to `cypress cache list` subcommand                |
+| [4.9.0](/app/references/changelog)           | Added `--quiet` flag to `cypress run`                                 |
