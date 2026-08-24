@@ -1,27 +1,14 @@
 ---
 title: 'Writing and organizing Cypress tests'
 description: Learn how to structure a Cypress project and write reliable tests, covering supported spec files, folder structure, hooks, test isolation, configuration, assertions, and test statuses.
-sidebar_label: Writing and Organizing Tests
-sidebar_position: 30
+sidebar_label: Writing and organizing tests
+sidebar_position: 20
+slug: /app/core-concepts/writing-and-organizing-tests
 ---
 
 <ProductHeading product="app" />
 
 # Writing and Organizing Tests
-
-:::info
-
-<WhatYoullLearn />
-
-- How Cypress organizes your project and why it uses the conventions it does
-- The types of files Cypress works with and the role each one plays
-- How to write tests, including structure, hooks, configuration, and assertions
-- How to read the four test statuses Cypress reports
-- Which files Cypress watches so your tests re-run as you write them
-
-:::
-
-## Project structure
 
 Cypress favors **convention over configuration**. When you add a new project,
 Cypress scaffolds a suggested folder structure so you can start writing tests
@@ -86,7 +73,7 @@ Both:
 </TabItem>
 </Tabs>
 
-### Configuring file locations
+## Configuring file locations
 
 These locations are conventions, not requirements. You can point Cypress at
 different folders for your tests, fixtures, and support files, which is useful
@@ -116,7 +103,7 @@ Additionally, if you are storing sensitive variables in your
 
 :::
 
-### Spec files
+## Spec files
 
 Spec files are where your tests live. For end-to-end testing they're located in
 `cypress/e2e` by default, while component testing specs typically live next to
@@ -145,7 +132,7 @@ Check out our recipe using
 
 :::
 
-#### How Cypress finds your specs
+### How Cypress finds your specs
 
 Cypress doesn't treat every file in your test folder as a spec. It only loads
 files that match the [`specPattern`](/app/references/configuration#e2e) glob,
@@ -194,7 +181,7 @@ it, and `--spec` picks which of the remaining specs to run this time.
 
 :::
 
-### Support file
+## Support file
 
 The support file is your hook into every spec. It runs **before** every single
 spec file, which makes it the natural home for setup and behavior you want
@@ -209,12 +196,12 @@ path. By default it looks for:
 - **E2E:** `cypress/support/e2e.{js,jsx,ts,tsx}`
 - **Component:** `cypress/support/component.{js,jsx,ts,tsx}`
 
-#### Execution
+### Execution
 
 When Cypress runs a spec file via `cypress open` or `cypress run`, it loads the
 support file first and then the spec file.
 
-#### supportFile per testing type
+### supportFile per testing type
 
 `supportFile` is configured separately for each testing type. Set it under the
 `e2e` key for end-to-end testing and under the `component` key for component
@@ -236,7 +223,7 @@ support file locations:
 
 :::
 
-#### Organizing imports
+### Organizing imports
 
 From your support file you can `import` or `require` other files to keep things
 organized as it grows.
@@ -255,7 +242,7 @@ in the test performance guide for examples.
 
 :::
 
-#### Global hooks
+### Global hooks
 
 Because the support file runs first, it's a convenient place to define `before`
 or `beforeEach` behavior that should apply to every spec:
@@ -271,7 +258,7 @@ beforeEach(() => {
   alt="Global hooks for tests"
 />
 
-### Fixtures
+## Fixtures
 
 Fixtures are external pieces of static data your tests can load on demand.
 Think of them as the canned data your tests run against. Keeping this data in
@@ -301,7 +288,7 @@ There are a few ways to use a fixture:
 - [`.selectFile()`](/api/commands/selectfile) attaches a fixture to a file input
   when you're testing uploads.
 
-### Node events (setupNodeEvents)
+## Node events (setupNodeEvents)
 
 Your tests run in the browser, but some things, like touching the file system,
 talking to a database, or controlling how specs are bundled, can only happen in
@@ -320,7 +307,7 @@ via the [browser launch API](/api/node-events/browser-launch-api), and run other
 tasks that need access to the operating system. Read our
 [plugins guide](/app/plugins/plugins-guide) for details and examples.
 
-### Generated assets
+## Generated assets
 
 When a run produces artifacts (files your app downloaded, screenshots, or
 videos), Cypress saves them to dedicated folders so you can inspect what
@@ -335,7 +322,7 @@ cypress/screenshots/
 cypress/videos/
 ```
 
-#### Downloads
+### Downloads
 
 Any files downloaded while testing an application's file download feature will
 be stored in the [`downloadsFolder`](/app/references/configuration#Downloads)
@@ -347,7 +334,7 @@ which is set to `cypress/downloads` by default.
     - records.csv
 ```
 
-#### Screenshots
+### Screenshots
 
 If screenshots were taken via the [cy.screenshot()](/api/commands/screenshot)
 command or automatically when a test fails, the screenshots are stored in the
@@ -364,7 +351,7 @@ to `cypress/screenshots` by default.
 To learn more about screenshots and settings available, see
 [Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots)
 
-#### Videos
+### Videos
 
 Any videos recorded of the run are stored in the
 [`videosFolder`](/app/references/configuration#Videos) which is set to
@@ -376,7 +363,7 @@ Any videos recorded of the run are stored in the
     - app.cy.js.mp4
 ```
 
-#### How asset file paths are generated
+### How asset file paths are generated
 
 Screenshots and videos are saved inside their respective folders
 (`cypress/screenshots`, `cypress/videos`), and Cypress mirrors each spec's
@@ -445,7 +432,7 @@ remove, or filter specs.
 
 :::
 
-#### Storing assets in Cypress Cloud
+### Storing assets in Cypress Cloud
 
 <DocsImage
   src="/img/cloud/features/test-replay/test-replay-ui.png"
