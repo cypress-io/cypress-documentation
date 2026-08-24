@@ -53,16 +53,24 @@ export async function copyPendingText(
   pending: Promise<string>
 ): Promise<boolean> {
   if (typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write) {
+    // Browsers only accept a short list of types here, so the markdown is
+    // rewrapped as `text/plain` rather than passing the response's own
+    // `text/markdown` blob through.
+    const blob = pending.then(
+      (text) => new Blob([text], { type: 'text/plain' })
+    )
+
+    // `write` normally consumes this promise and handles its own rejection.
+    // When it refuses the write first, though — a denied permission, an
+    // unfocused document — nothing is ever attached to it, and a failed fetch
+    // escapes as an unhandled rejection. The failure is still reported below
+    // by re-awaiting `pending`; this handler only keeps it from going
+    // unhandled in the meantime.
+    blob.catch(() => {})
+
     try {
       await navigator.clipboard.write([
-        new ClipboardItem({
-          // Browsers only accept a short list of types here, so the markdown
-          // is rewrapped as `text/plain` rather than passing the response's
-          // own `text/markdown` blob through.
-          'text/plain': pending.then(
-            (text) => new Blob([text], { type: 'text/plain' })
-          ),
-        }),
+        new ClipboardItem({ 'text/plain': blob }),
       ])
       return true
     } catch {
