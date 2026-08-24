@@ -10,7 +10,10 @@ on:
     branches:
       - main
     paths:
-      - 'docs/app/references/changelog.mdx'
+      # Keep in step with CHANGELOG_PATHS in scripts/tag-docs-release.mjs: this
+      # is the current location, the script also reads the older ones so a range
+      # spanning a move still works. If the changelog moves, update both.
+      - 'docs/app/releases/changelog.mdx'
   workflow_dispatch:
     inputs:
       before:

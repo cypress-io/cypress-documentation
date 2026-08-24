@@ -19,7 +19,14 @@
 
 import { execFileSync } from 'node:child_process'
 
-const CHANGELOG = 'docs/app/references/changelog.mdx'
+// This repository has relocated its changelog five times, and a commit range
+// can straddle a move. Newest location first: each commit is read at the first
+// of these that exists there, so `before` and `after` are compared like with
+// like even when the file was renamed between them.
+const CHANGELOG_PATHS = [
+  'docs/app/releases/changelog.mdx',
+  'docs/app/references/changelog.mdx',
+]
 const API = process.env.GITHUB_API_URL || 'https://api.github.com'
 
 function git(...args) {
@@ -41,11 +48,22 @@ function gitOrNull(...args) {
   }
 }
 
+// The changelog as it stood at `sha`, or null if none of the known locations
+// exist there — a commit from before the changelog was introduced, or from
+// after a move this script has not been told about yet.
+function changelogAt(sha) {
+  for (const path of CHANGELOG_PATHS) {
+    const content = gitOrNull('show', `${sha}:${path}`)
+    if (content !== null) return content
+  }
+  return null
+}
+
 // Headings are matched at one to three hashes on purpose: the 14.4.0 entry
 // shipped as `# 14.4.0` and the typo was only fixed the following day. Being
 // strict here would silently skip a release.
 function versionsIn(sha) {
-  const content = gitOrNull('show', `${sha}:${CHANGELOG}`)
+  const content = changelogAt(sha)
   if (content === null) return new Set()
   const versions = new Set()
   for (const line of content.split('\n')) {
@@ -56,7 +74,7 @@ function versionsIn(sha) {
 }
 
 function releaseDate(sha, version) {
-  const content = gitOrNull('show', `${sha}:${CHANGELOG}`) || ''
+  const content = changelogAt(sha) || ''
   const escaped = version.replace(/\./g, '\\.')
   const match = new RegExp(
     `^#{1,3}\\s+${escaped}\\s*\\n\\n_Released ([^_\\n]+)_`,
@@ -172,7 +190,14 @@ async function runProbe(token, repository) {
 // same commit; for a push carrying several commits they are not.
 function findIntroducingCommit(version, before, after) {
   const range = before ? `${before}..${after}` : after
-  const commits = git('log', '--reverse', '--format=%H', range, '--', CHANGELOG)
+  const commits = git(
+    'log',
+    '--reverse',
+    '--format=%H',
+    range,
+    '--',
+    ...CHANGELOG_PATHS
+  )
     .split('\n')
     .filter(Boolean)
 
@@ -228,13 +253,14 @@ async function main() {
   const before = args.before ? git('rev-parse', args.before).trim() : null
   const after = git('rev-parse', args.after).trim()
 
-  // This repository has relocated its changelog four times. If it moves again,
-  // fail loudly — a silent no-op would stop tagging releases indefinitely.
-  if (gitOrNull('cat-file', '-e', `${after}:${CHANGELOG}`) === null) {
+  // If the changelog moves again, fail loudly — a silent no-op would stop
+  // tagging releases indefinitely.
+  if (changelogAt(after) === null) {
     throw new Error(
-      `${CHANGELOG} does not exist at ${after.slice(0, 9)}. If the changelog moved, ` +
-        'update CHANGELOG in this script and the paths filter in ' +
-        '.github/workflows/tag-docs-release.yml.'
+      `No changelog found at ${after.slice(0, 9)}; looked for ` +
+        `${CHANGELOG_PATHS.join(', ')}. If the changelog moved, add its new ` +
+        'location to the front of CHANGELOG_PATHS in this script and update ' +
+        'the paths filter in .github/workflows/tag-docs-release.yml.'
     )
   }
 
