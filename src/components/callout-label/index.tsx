@@ -12,7 +12,7 @@ interface CalloutLabelProps {
 
 /**
  * An icon + text label used at the top of an `:::info` admonition (for
- * example "What you'll learn" or "Examples and use cases").
+ * example "Examples and use cases").
  *
  * These were previously authored as `##### ` (h5) headings placed directly
  * after the page's h1, which skips heading levels and fails the axe-core
