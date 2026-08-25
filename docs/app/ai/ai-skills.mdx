@@ -49,8 +49,7 @@ SOP manual you hand them on day one.
 
 Cypress publishes four skills. They are designed to work together:
 `cypress-author` writes and fixes tests, `cypress-explain` reviews and explains
-them, `cypress-docs` grounds them in official documentation, and `cypress-tap`
-runs and debugs them against a live Cypress session.
+them, `cypress-tap` runs and debugs them against a live Cypress session and `cypress-docs` grounds them in official documentation.
 
 ### `cypress-author`: create, update, and fix tests
 
@@ -108,30 +107,6 @@ Beyond what a generic AI agent knows, this skill:
 - **Keeps explanations concise and practical.** Focused on how things are
   used, not exhaustive API walkthroughs.
 
-### `cypress-docs`: look up accurate documentation
-
-[`cypress-docs`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-docs)
-gives your AI agent reliable access to accurate, up-to-date Cypress
-documentation. Use it to look up commands, APIs, and configuration options, or
-to confirm how a feature works in a specific Cypress version. It also supports
-the other Cypress skills, which consult official documentation while they work.
-
-Beyond what a generic AI agent knows, this skill:
-
-- **Searches official sources first.** It routes queries to the correct
-  section of docs.cypress.io (commands, guides, configuration, error messages)
-  before your model reaches for Cypress knowledge it already has, which may be
-  outdated.
-- **Uses LLM-optimized documentation.** The skill discovers structured
-  Markdown content through the `/llms.txt` index on docs.cypress.io, giving
-  cleaner and more reliable results than scraping HTML.
-- **Grounds answers in docs, not training data.** If a claim can't be verified
-  in official documentation, it says so rather than inventing an API or
-  behavior, reducing the chance of a confident but incorrect answer.
-- **Stays version-aware.** When a Cypress version is detected in your project,
-  it scopes answers to what is available in that version and calls out
-  differences explicitly.
-
 ### `cypress-tap`: run and debug tests against a live session {#cypress-tap}
 
 The [`cypress-tap`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-tap) skill
@@ -142,8 +117,8 @@ test from the terminal. Use it when authoring or debugging tests against a
 live session, so your AI agent can verify its own work rather than reporting a
 bare pass or fail.
 
-The skill requires Cypress `15.21.0` or later, a Chromium-based browser (Chrome,
-Chromium, Edge, or Electron), and a running `cypress open` session to attach to.
+The skill requires a Cypress version with access to cypress tap (`15.21.0` or later) and use of
+a browser supported by cypress tap, and a running `cypress open` session to attach to.
 To run a headless session instead, use `cypress run`.
 
 Beyond what a generic AI agent knows, this skill:
@@ -168,6 +143,30 @@ For the full CLI reference the skill builds on, including every command, its
 options, and end-to-end debugging walkthroughs, see
 [Drive Cypress with AI agents using `cypress tap`](/app/tooling/cypress-tap).
 
+### `cypress-docs`: look up accurate documentation
+
+[`cypress-docs`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-docs)
+gives your AI agent reliable access to accurate, up-to-date Cypress
+documentation. Use it to look up commands, APIs, and configuration options, or
+to confirm how a feature works in a specific Cypress version. It also supports
+the other Cypress skills, which consult official documentation while they work.
+
+Beyond what a generic AI agent knows, this skill:
+
+- **Searches official sources first.** It routes queries to the correct
+  section of docs.cypress.io (commands, guides, configuration, error messages)
+  before your model reaches for Cypress knowledge it already has, which may be
+  outdated.
+- **Uses LLM-optimized documentation.** The skill discovers structured
+  Markdown content through the `/llms.txt` index on docs.cypress.io, giving
+  cleaner and more reliable results than scraping HTML.
+- **Grounds answers in docs, not training data.** If a claim can't be verified
+  in official documentation, it says so rather than inventing an API or
+  behavior, reducing the chance of a confident but incorrect answer.
+- **Stays version-aware.** When a Cypress version is detected in your project,
+  it scopes answers to what is available in that version and calls out
+  differences explicitly.
+
 ## Install Cypress AI Skills
 
 Cypress skills work with any AI coding agent that supports custom instructions,
@@ -187,8 +186,8 @@ Or install each skill individually:
 <PackageManagerTabs
   exec={`skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
 skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
-skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
-skills add https://github.com/cypress-io/ai-toolkit --skill cypress-tap`}
+skills add https://github.com/cypress-io/ai-toolkit --skill cypress-tap
+skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs`}
 />
 
 Skills installed this way don't update automatically. To update your installed
@@ -222,11 +221,11 @@ gh skill install cypress-io/ai-toolkit cypress-explain
 ```
 
 ```bash
-gh skill install cypress-io/ai-toolkit cypress-docs
+gh skill install cypress-io/ai-toolkit cypress-tap
 ```
 
 ```bash
-gh skill install cypress-io/ai-toolkit cypress-tap
+gh skill install cypress-io/ai-toolkit cypress-docs
 ```
 
 ### Install manually
