@@ -1,6 +1,6 @@
 ---
 title: 'Cypress AI Skills'
-description: 'Cypress AI Skills teach AI coding tools like Cursor, Claude Code, and GitHub Copilot to write, review, and explain Cypress tests using best practices.'
+description: 'Cypress AI Skills teach AI coding agents like Cursor, Claude Code, and GitHub Copilot to write, review, explain, and debug Cypress tests using best practices.'
 sidebar_label: Cypress skills for AI
 sidebar_position: 50
 slug: /app/tooling/ai-skills
@@ -10,13 +10,13 @@ slug: /app/tooling/ai-skills
 
 # Cypress AI Skills
 
-Cypress AI Skills teach your AI coding tool to write, review, and explain
-Cypress tests the way an experienced Cypress engineer would. Instead of generic
-test code built on brittle selectors and arbitrary waits, your AI tool produces
+Cypress AI Skills teach your AI coding agent to write, review, explain, and
+debug Cypress tests the way an experienced Cypress engineer would. Instead of generic
+test code built on brittle selectors and arbitrary waits, your AI agent produces
 tests that follow Cypress best practices and match the conventions already in
 your project.
 
-With Cypress AI Skills, your AI tool can:
+With Cypress AI Skills, your AI agent can:
 
 - Generate tests that follow Cypress best practices out of the box
 - Avoid flaky patterns like weak selectors, arbitrary waits, and inter-test
@@ -25,34 +25,37 @@ With Cypress AI Skills, your AI tool can:
   of reinventing them
 - Ground answers in official Cypress documentation rather than outdated
   training data
+- Run, watch, and debug tests against a live Cypress session, then fix failures
+  in the same loop that wrote them
 - Behave consistently across your team, no matter who writes the prompt
 
-Skills work with any AI coding tool that supports agent skills or custom
+Skills work with any AI coding agent that supports skills or custom
 instructions, including Cursor, Claude Code, and GitHub Copilot. They are
 published in the open source
 [Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit).
 
 ## What are AI Skills?
 
-AI Skills are instruction sets that tell your AI tool how to approach a
+AI Skills are instruction sets that tell your AI agent how to approach a
 specific Cypress workflow: what conventions to follow, how to reason about the
 task, and what good output looks like.
 
-Think of a generic AI tool as a brilliant but inexperienced new hire. Without
+Think of a generic AI agent as a brilliant but inexperienced new hire. Without
 guidance, it will do its best, but it won't know your team's standards, your
 project's conventions, or what good Cypress tests look like. A skill is the expert
 SOP manual you hand them on day one.
 
 ## Available Cypress skills
 
-Cypress publishes three skills. They are designed to work together:
+Cypress publishes four skills. They are designed to work together:
 `cypress-author` writes and fixes tests, `cypress-explain` reviews and explains
-them, and `cypress-docs` grounds both in official documentation.
+them, `cypress-docs` grounds them in official documentation, and `cypress-tap`
+runs and debugs them against a live Cypress session.
 
 ### `cypress-author`: create, update, and fix tests
 
 [`cypress-author`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-author)
-improves how AI tools create, update, and fix Cypress end-to-end and component
+improves how AI agents create, update, and fix Cypress end-to-end and component
 tests. Use it when you're writing new tests or fixing broken or flaky ones.
 
 Before writing a single line, the skill reads your project: your Cypress
@@ -87,7 +90,7 @@ helps you understand, describe, and critique existing tests. Use it when
 auditing a suite, onboarding a new team member, or investigating a brittle test
 before rewriting it.
 
-Beyond what a generic AI tool knows, this skill:
+Beyond what a generic AI agent knows, this skill:
 
 - **Classifies your question first.** Whether you're asking about a Cypress
   concept or a specific test, it applies the right approach for each rather
@@ -108,12 +111,12 @@ Beyond what a generic AI tool knows, this skill:
 ### `cypress-docs`: look up accurate documentation
 
 [`cypress-docs`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-docs)
-gives your AI tool reliable access to accurate, up-to-date Cypress
+gives your AI agent reliable access to accurate, up-to-date Cypress
 documentation. Use it to look up commands, APIs, and configuration options, or
 to confirm how a feature works in a specific Cypress version. It also supports
 the other Cypress skills, which consult official documentation while they work.
 
-Beyond what a generic AI tool knows, this skill:
+Beyond what a generic AI agent knows, this skill:
 
 - **Searches official sources first.** It routes queries to the correct
   section of docs.cypress.io (commands, guides, configuration, error messages)
@@ -129,9 +132,45 @@ Beyond what a generic AI tool knows, this skill:
   it scopes answers to what is available in that version and calls out
   differences explicitly.
 
+### `cypress-tap`: run and debug tests against a live session {#cypress-tap}
+
+The [`cypress-tap`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-tap) skill
+instructs your AI agent on how to interact with a running `cypress open` session through the
+[`cypress tap`](/app/tooling/cypress-tap) CLI to run specs, read
+reporter and Command Log output, diagnose failures, and inspect the app under
+test from the terminal. Use it when authoring or debugging tests against a
+live session, so your AI agent can verify its own work rather than reporting a
+bare pass or fail.
+
+The skill requires Cypress `15.21.0` or later, a Chromium-based browser (Chrome,
+Chromium, Edge, or Electron), and a running `cypress open` session to attach to.
+To run a headless session instead, use `cypress run`.
+
+Beyond what a generic AI agent knows, this skill:
+
+- **Reads results the way the Cypress app does.** It pulls the spec overview,
+  each test's Command Log, the error and code frame, and the console properties
+  behind a command, drilling into a single command only when it needs to.
+- **Inspects the app at the moment it broke.** It pins a past command's DOM
+  snapshot and reads the page with `dom`, `aria`, and `inspect`, then clears the
+  pin when it is done.
+- **Keeps its reads small.** It caps the DOM, accessibility tree, and console
+  output it pulls back, so a large page never floods your AI agent's context,
+  and raises the caps only when it needs more.
+- **Waits for the real verdict.** It captures the run's start time, runs a single
+  spec, and polls `status` until a fresh `passed` or `failed` arrives for that
+  spec, so it never trusts a stale result left over from a previous run.
+- **Runs against the right session.** When more than one `cypress open` session
+  is running, it targets the one for your project, or a specific session you
+  name, instead of guessing.
+
+For the full CLI reference the skill builds on, including every command, its
+options, and end-to-end debugging walkthroughs, see
+[Drive Cypress with AI agents using `cypress tap`](/app/tooling/cypress-tap).
+
 ## Install Cypress AI Skills
 
-Cypress skills work with any AI coding tool that supports custom instructions,
+Cypress skills work with any AI coding agent that supports custom instructions,
 including Cursor, Claude Code, GitHub Copilot, and others.
 
 ### Install with the skills CLI
@@ -148,7 +187,8 @@ Or install each skill individually:
 <PackageManagerTabs
   exec={`skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
 skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
-skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs`}
+skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs
+skills add https://github.com/cypress-io/ai-toolkit --skill cypress-tap`}
 />
 
 Skills installed this way don't update automatically. To update your installed
@@ -185,6 +225,10 @@ gh skill install cypress-io/ai-toolkit cypress-explain
 gh skill install cypress-io/ai-toolkit cypress-docs
 ```
 
+```bash
+gh skill install cypress-io/ai-toolkit cypress-tap
+```
+
 ### Install manually
 
 Installation steps vary by tool.
@@ -218,7 +262,7 @@ automatic update notifications, so check back periodically for new releases.
 
 ## How to use Cypress AI Skills
 
-You can invoke a skill explicitly with a slash command, or let your AI tool
+You can invoke a skill explicitly with a slash command, or let your AI agent
 load it automatically when your prompt is relevant:
 
 ```bash
@@ -312,6 +356,18 @@ providers, stubs, and baseline assertions by hand.
 real-time run failures.
 
 :::
+
+### Run and debug a test against a live session
+
+With `cypress open` running in your project, `cypress-tap` can run a spec, read
+the failure the way the Cypress app shows it, and inspect the app at the moment
+it broke, all from your AI agent. See the
+[`cypress tap` documentation](/app/tooling/cypress-tap) for the full command
+reference.
+
+```skill
+/cypress-tap Run cypress/e2e/checkout.cy.ts against my open Cypress session, poll for a verdict, and if it fails, read the failing test's Command Log and error and inspect the app at the failing command to tell me what caused it.
+```
 
 ### Summarize test coverage in plain language
 
