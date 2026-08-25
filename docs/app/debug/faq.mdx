@@ -2059,18 +2059,22 @@ Start Cypress in open mode with `cypress open`, then point your agent at the
 poll until it reports `passed` or `failed`, and `cypress tap reporter --test-id <test-id>`
 to read the failing test's Command Log, error, and code frame.
 
-Add those steps to the instructions file your agent reads, such as `AGENTS.md`
-or `CLAUDE.md`. See
+The easiest way is to install the
+[`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap), which packages this
+loop so your agent runs it correctly. If you'd rather write the steps yourself,
+add them to the instructions file your agent reads, such as `AGENTS.md` or
+`CLAUDE.md`. See
 [Use cypress tap with AI agents](/app/tooling/cypress-tap#Use-cypress-tap-with-AI-agents)
 for a snippet you can copy.
 
 ### <Icon name="angle-right" /> How do I use Cypress with Cursor, Claude Code, or GitHub Copilot?
 
-Any AI coding tool that can run shell commands can drive Cypress through the
-`cypress tap` CLI. Start Cypress with `cypress open`, then add the
-`cypress tap` workflow to the instructions file your tool reads: `AGENTS.md`
-for Cursor and Codex CLI, `CLAUDE.md` for Claude Code, or
-`.github/copilot-instructions.md` for GitHub Copilot. See
+Any AI coding agent that can run shell commands can drive Cypress through the
+`cypress tap` CLI. Start Cypress with `cypress open`, then install the
+[`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) to hand it the
+workflow, or add the `cypress tap` steps yourself to the instructions file your
+agent reads: `AGENTS.md` for Cursor and Codex CLI, `CLAUDE.md` for Claude Code,
+or `.github/copilot-instructions.md` for GitHub Copilot. See
 [Use cypress tap with AI agents](/app/tooling/cypress-tap#Use-cypress-tap-with-AI-agents)
 for a snippet to copy.
 

@@ -22,6 +22,17 @@ This allows an agent can verify its own work as it codes, catching and fixing fa
 Any agent that can run shell commands can use it, including Cursor, Claude
 Code, GitHub Copilot, Windsurf, and Codex CLI.
 
+:::tip
+
+To get the most out of `cypress tap` with an agent, pair it with the
+[`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) from the
+[Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit). It tells your
+agent how to drive these commands correctly, such as polling for a real verdict
+before trusting a pass or fail, so you don't have to write those instructions
+yourself.
+
+:::
+
 :::warning
 
 `cypress tap` is in [beta](/app/references/release-stages#Beta). It is enabled by
@@ -458,6 +469,15 @@ STYLES (2)
 
 ### Getting Started
 
+:::note
+
+The steps below walk through the commands by hand. If you want your agent to run
+this loop for you, install the
+[`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) instead of scripting
+the commands yourself.
+
+:::
+
 Start Cypress in your project and pick a testing type and browser:
 
 ```shell title="Command"
@@ -722,9 +742,26 @@ building.
 
 ### Add cypress tap to your agent's instructions
 
-To make your agent use it, add instructions to the file your agent reads:
+To make your agent use `cypress tap`, the simplest option is to install the
+[`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) from the Cypress AI
+Toolkit. It packages the workflow below, including polling for a real verdict,
+reading results, pinning and inspecting the app, and clearing pins, so your
+agent applies it without you writing the instructions by hand.
+
+Install it with the [`skills`](https://skills.sh/) CLI:
+
+<PackageManagerTabs exec="skills add https://github.com/cypress-io/ai-toolkit --skill cypress-tap" />
+
+or with the [GitHub CLI](https://cli.github.com/manual/gh_skill):
+
+```bash
+gh skill install cypress-io/ai-toolkit cypress-tap
+```
+
+Alternatively, add instructions to the file your agent reads:
 `AGENTS.md` for Cursor, Codex CLI, and most others, `CLAUDE.md` for Claude
-Code, or `.github/copilot-instructions.md` for GitHub Copilot.
+Code, or `.github/copilot-instructions.md` for GitHub Copilot. This allows
+you to write your own instructions and workflows for your agent.
 
 ```md title="AGENTS.md"
 ## Verify changes with Cypress
@@ -814,9 +851,10 @@ without relaying results back and forth:
 </CopyPrompt>
 
 `cypress tap` pairs well with
-[Cypress AI Skills](/app/tooling/ai-skills): the skills teach your agent how to
-write good Cypress tests, and `cypress tap` tells it what happened when those
-tests ran.
+[Cypress AI Skills](/app/tooling/ai-skills): `cypress-author` and
+`cypress-explain` teach your agent how to write and review good Cypress tests,
+and the [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) drives these
+commands for you so your agent knows what happened when those tests ran.
 
 ## Verify a Cloud failure locally
 
