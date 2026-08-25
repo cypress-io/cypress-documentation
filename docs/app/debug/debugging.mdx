@@ -143,9 +143,11 @@ npx cypress tap status --json
 npx cypress tap reporter --test-id <id>
 ```
 
-See [driving Cypress from the terminal with an AI agent](/app/tooling/cypress-tap)
-for the full workflow and
-a snippet you can drop into your agent's instructions file.
+The [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) is the easiest way
+to hand this loop to your agent: it packages these commands so your agent drives
+them correctly, without you writing the steps by hand. For the full workflow, or
+a snippet you can drop into your agent's instructions file yourself, see
+[driving Cypress from the terminal with an AI agent](/app/tooling/cypress-tap).
 
 ## Using the Developer Tools
 

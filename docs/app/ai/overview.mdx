@@ -49,12 +49,14 @@ assertions that do not retry. These capabilities give it better information to
 work from.
 
 - **[Cypress skills for AI agents](/app/tooling/ai-skills)** teach your coding
-  tool to write, review, and explain tests the way an experienced Cypress
+  agent to write, review, and explain tests the way an experienced Cypress
   engineer would. Install them once per project.
 - **[`cypress tap`](/app/tooling/cypress-tap)** attaches your agent to a running
   open mode session from the terminal, so it can run a spec and then read the
   Command Log, the error, and the DOM as the Cypress app shows them. That closes
   the loop: the agent can verify its own fix instead of reporting pass or fail.
+  The [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) packages this
+  workflow so your agent drives it correctly.
 - **[Cloud MCP](/cloud/integrations/cloud-mcp)** connects your agent to Cypress
   Cloud so it can read real run results, failures, and
   [Test Replay](/cloud/features/test-replay) data while you work, rather than
