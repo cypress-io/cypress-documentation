@@ -95,14 +95,18 @@ describe('Plugins list', () => {
 
   it('sorts each category by badge tier', () => {
     cy.get(categoryFilter).select('Component Testing')
-    const rank = { official: 0, community: 1, deprecated: 2 }
+    const rank: Record<string, number> = {
+      official: 0,
+      community: 1,
+      deprecated: 2,
+    }
     cy.get('li.card').then(($cards) => {
       const ranks = [...$cards].map((card) => {
         const badge = card
           .querySelector('[class*="badge"]')
           ?.textContent?.trim()
           .toLowerCase()
-        return rank[badge] ?? 9
+        return (badge ? rank[badge] : undefined) ?? 9
       })
       // Ranks appear in non-decreasing order (official → community → deprecated).
       expect(ranks).to.deep.equal([...ranks].sort((a, b) => a - b))

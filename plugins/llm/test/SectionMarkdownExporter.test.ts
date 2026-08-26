@@ -155,3 +155,17 @@ describe('section frontmatter', () => {
     expect(section.data.source_path).toBe('docs/app/references/migration-guide.mdx')
   })
 })
+
+describe('exportFile return value', () => {
+  test('reports the fragment directory it wrote to', () => {
+    const { exportRoot, result } = runExport(['# T', '', '## One', '', 'Content.'].join('\n'))
+    expect(result.sectionDir).toBe(
+      path.join(exportRoot, 'markdown', 'app/references/migration-guide'),
+    )
+  })
+
+  test('reports no fragment directory for a page without h2 sections', () => {
+    const { result } = runExport(['# Title only', '', 'Body.'].join('\n'))
+    expect(result.sectionDir).toBeNull()
+  })
+})

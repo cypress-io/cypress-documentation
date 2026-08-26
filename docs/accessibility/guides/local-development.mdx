@@ -1,65 +1,153 @@
 ---
-title: 'Feedback during local development'
-description: 'Get precise, fast, and scoped accessibility feedback during local development by recording Cypress tests directly to Cypress Cloud—bypassing CI pipelines and ensuring accurate insights with minimal effort.'
-sidebar_label: Feedback during local development
+title: 'Accessibility feedback during local development'
+description: 'Record one spec from your machine to get a full Cypress Accessibility report without waiting for CI: confirm a fix, catch the violation it introduced, and compare against your base branch before you push.'
+sidebar_label: Local development
 sidebar_position: 40
 ---
 
 <ProductHeading product="accessibility" />
 
-# Feedback during local development
+# Accessibility feedback during local development
 
-For reliable accessibility feedback during local development, the best approach is recording your tests directly to Cypress Cloud. By running tests related to your changes locally, you can bypass build pipelines and CI processes entirely. This can be achieved with a single command:
+Accessibility fixes are easy to get subtly wrong. An `aria-label` added to a button can override the visible text a speech-recognition user says out loud. Correcting one heading level can break the outline further down the page. Reordering a form to fix focus order can strip a label off the field below it. In each case the rule you were working on starts passing and a different one starts failing, and you don't find out until the next CI run.
 
-<Tabs>
-  <TabItem value="npm">
+Recording a spec from your own machine closes that gap. One command produces the same Cypress Accessibility report your CI runs produce, processed in Cypress Cloud with the same App Quality Config and the same Axe Core® version. You can confirm a fix, spot the violation the fix introduced, and iterate before you write the commit message.
 
-```shell
-npx cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
-```
+## Record the specs you're working on
 
-  </TabItem>
-  <TabItem value="yarn">
+Record only the specs that exercise the code you changed:
 
-```shell
-yarn cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
-```
+<CypressCommandTabs command='run --record --key <record_key> --spec "cypress/e2e/checkout.cy.js"' />
 
-  </TabItem>
-  <TabItem value="pnpm">
+Recording is what produces the report, so this has to be `cypress run --record`. Interactive mode (`cypress open`) never records a run to Cypress Cloud, so it never generates accessibility results.
+
+When the run finishes, Cypress prints its URL at the end of the run summary:
 
 ```shell
-pnpm cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
+  ────────────────────────────────────────────────────────────────────────────────
+
+  Recorded Run: https://cloud.cypress.io/projects/7s5okt/runs/1042
 ```
 
-  </TabItem>
-  <TabItem value="bun">
+Open that URL and go to the **Accessibility** tab.
 
-```shell
-bunx cypress run --key <record_key> --record --spec "cypress/e2e/my-spec.cy.js"
+<RecordKeyEnvVar />
+
+Nothing else is required.
+
+The requirements are the same as for any recorded run, with one that catches people locally: reports need a Chromium-based or Electron browser, so a habit of running `--browser firefox` locally produces no report at all. See [No accessibility report was generated for a run](/accessibility/troubleshooting#No-accessibility-report-was-generated-for-a-run) for the full list.
+
+To stay in your editor for the whole loop rather than switching to the browser after each recording, configure [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) and ask your agent for the run's results. See [Work with AI agents](/accessibility/work-with-ai-agents) for prompt patterns.
+
+## When the report is ready
+
+Each spec's data starts processing as soon as that spec finishes uploading, but the run-level report is assembled only once Cypress Cloud marks the run **complete**.
+
+For grouped and parallelized runs, completion waits out the project's [Run Completion Delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay), a grace period (60 seconds by default) that lets late machines join the run before it closes. Report finalization waits with it, so on a CI run the accessibility report can trail the last machine by that much.
+
+A single local run without `--group` or `--parallel` skips the delay entirely. Cypress Cloud completes it as soon as its specs are done, which is why the loop on this page stays fast. You inherit the delay only when you reproduce a CI invocation locally with grouping or parallelization. If you do, shorten the delay in [project settings](/cloud/account-management/projects#Run-Completion-Delay) or close the run yourself with the [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API).
+
+## Compare two local runs to prove a fix landed
+
+Seeing zero violations for the rule you fixed is weaker evidence than seeing that rule move from failing to resolved. [Branch Review](/accessibility/guides/compare-reports) gives you that, and it works just as well with two runs recorded from your own machine. Cypress reads your branch and commit from your local `.git` directory on every recorded run, whether or not it detects a CI provider, so local runs land on the correct branch and can be compared like any other run.
+
+1. Record the specs from your base branch first, before you start work, or by stashing your changes:
+
+   <CypressCommandTabs command='run --record --spec "cypress/e2e/checkout.cy.js"' />
+
+1. Make your fix, then record the same specs again from your branch.
+
+1. In Cypress Cloud, open Branch Review with your branch's run as the Changed run and the base branch's run as the Base run.
+
+   <DocsImage
+     src="/img/cloud/features/branch-review/branch-review-header.png"
+     alt="The Branch Review header in Cypress Cloud, showing the base and feature branch labels with the Cypress Cloud run number selected for each side of the comparison"
+   />
+
+The **Resolved elements** section should list the rule you worked on in every view where it was failing, which is how you confirm the fix reached more than the one element you tested by hand. The **New failed elements** section is the more valuable half: it's where the `aria-label` that duplicates visible text shows up.
+
+Recording the **same specs** in both runs is what makes the comparison trustworthy. Branch Review compares what each run actually saw, so a base run covering the whole suite and a changed run covering one spec produces a long list of "resolved" elements that only means those pages weren't visited.
+
+:::caution
+
+The score for a two-spec local run isn't comparable to the score for a full CI run. A run's [accessibility score](/accessibility/core-concepts/accessibility-score) averages every snapshot in that run, so changing which specs ran changes the denominator. Compare rules and element counts between local runs, and leave score tracking to your full suite.
+
+:::
+
+## Make your configuration match localhost
+
+The one thing that may differ between a local run and a CI run is the URL your tests visit. [`viewFilters`](/accessibility/configuration/viewfilters) patterns that name a hostname match that hostname exactly, so a configuration written for a deployed environment silently stops applying when you run against `http://localhost:3000`. Pages you meant to exclude reappear, and the local report stops matching the one your team sees in CI.
+
+Path-only patterns match any hostname, so they work in both places:
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "/auth/*",
+      "include": false,
+      "comment": "Hosted sign-in provider, out of scope. Path-only so it matches localhost and deployed environments alike"
+    }
+  ]
+}
 ```
 
-  </TabItem>
-</Tabs>
+When a rule has to name a hostname, add a [profile](/accessibility/configuration/profiles) for local runs and override just that setting:
 
-(You can skip the `--key` option by setting `CYPRESS_RECORD_KEY` as an environment variable. Learn more about recording in our [Recorded Runs documentation](/cloud/features/recorded-runs)).
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    { "pattern": "https://app.example.com/*", "include": true },
+    {
+      "pattern": "*",
+      "include": false,
+      "comment": "Report only on our own application"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "aq-config-local",
+      "comment": "Local runs serve the app from localhost, so the hostname rules above never match",
+      "config": {
+        "viewFilters": [
+          { "pattern": "http://localhost:*/*", "include": true },
+          { "pattern": "*", "include": false }
+        ]
+      }
+    }
+  ]
+}
+```
 
-## Key benefits
+Select the profile by tagging the run:
 
-- **Accuracy:** See how Cypress processes your new code changes, taking into account your project's configuration, and using the Cloud's version of Axe Core®. There will be no violation reports for rules, pages, or elements your team has chosen to ignore, for example.
-- **Speed:** With the application already built locally, tests can run immediately without requiring your build pipeline.
-- **Scope:** Execute only the tests you need to focus on your changes, ensuring faster results and excluding unrelated issues.
+<CypressCommandTabs command='run --record --tag "aq-config-local" --spec "cypress/e2e/checkout.cy.js"' />
 
-Recording tests locally offers early feedback, helping you quickly detect if resolving one accessibility issue introduces another. This targeted testing workflow can significantly enhance development efficiency and quality.
+A profile replaces each setting it defines rather than merging with it, so repeat any base rules the local run still needs. See [`profiles`](/accessibility/configuration/profiles) for how selection and overriding work.
 
-## Organizing Local Runs
+## Keep local runs from cluttering the project
 
-If your team frequently records local runs and you're concerned about cluttering your Cypress Cloud project, consider setting up a dedicated Cloud project for "local runs". This keeps your main project organized while supporting local testing workflows.
+Local runs land in the same project as your CI runs, and their reports are just as real. To keep them recognizable, tag them:
 
-## Querying local run results with Cloud MCP
+<CypressCommandTabs command='run --record --tag "local" --spec "cypress/e2e/checkout.cy.js"' />
 
-If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, you can ask your AI agent to summarize the accessibility results from your local run without switching to the browser:
+Tags are shown on the run and are filterable in Cypress Cloud, so a shared `local` tag lets anyone skip past them when scanning the run list.
 
-> "Pull the accessibility report from Cypress Cloud for my latest local run and summarize any critical or serious violations."
+Every recorded run also consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan, whether it came from CI or your laptop. That's an argument for narrow `--spec` runs, which you want anyway.
 
-This keeps the feedback loop inside your editor while you're actively making changes.
+## What a local run can't do
+
+The [Results API](/accessibility/results-api) is a CI tool and doesn't have a local equivalent. `getAccessibilityResults()` identifies the run to report on from the CI environment variables present when the run was recorded, so calling it from your machine fails with "It appears you are not running in CI." Keep policy enforcement in your pipeline and use Cypress Cloud, Branch Review, or Cloud MCP for local feedback.
+
+## See also
+
+- [Compare reports](/accessibility/guides/compare-reports) is the full guide to Branch Review for Cypress Accessibility.
+- [Catch accessibility regressions](/accessibility/guides/detect-changes) covers the other ways to catch one, including scheduled runs, CI policies, and analytics.
+- [Fix accessibility violations](/accessibility/guides/improve-accessibility) is the workflow this page speeds up: pick a rule, fix it, prove it landed.
+- [How Cypress Accessibility works](/accessibility/core-concepts/how-it-works) explains the recording, processing, and reporting stages.
+- [`profiles`](/accessibility/configuration/profiles) documents run-tag-based configuration overrides in full.
+- [`viewFilters`](/accessibility/configuration/viewfilters) covers URL pattern matching, including path-only patterns.
+- [Work with AI agents](/accessibility/work-with-ai-agents) has more Cypress Cloud MCP prompt patterns.
+- [Block pull requests and set policies](/accessibility/guides/block-pull-requests) is where the Results API belongs, once local feedback is in place.
+- [Troubleshooting](/accessibility/troubleshooting) covers reports that are missing or don't match what you expect.
+- [Cypress Accessibility FAQ](/accessibility/faq) answers focused questions about local runs, scoring, and configuration.

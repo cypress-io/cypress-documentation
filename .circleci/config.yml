@@ -51,6 +51,16 @@ jobs:
           at: ~/repo
       - run: npm run lint
 
+  typecheck:
+    <<: *job-defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Typecheck
+          command: npm run typecheck
+
   unit-tests:
     <<: *job-defaults
     steps:
@@ -60,6 +70,9 @@ jobs:
       - run:
           name: Search / Algolia unit tests
           command: npm run test:search
+      - run:
+          name: Plugin unit tests
+          command: npm run test:plugins
 
   install-and-persist:
     executor:
@@ -133,8 +146,12 @@ workflows:
           name: "Lint JS/CSS/Markdown"
           requires:
             - build
+      - typecheck:
+          name: "Typecheck"
+          requires:
+            - build
       - unit-tests:
-          name: "Unit Tests (Search/Algolia)"
+          name: "Unit Tests (Search/Algolia, plugins)"
           requires:
             - build
       - install-and-persist:

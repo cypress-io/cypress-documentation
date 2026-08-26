@@ -1,0 +1,123 @@
+---
+title: 'AI in Cypress: test generation, agent skills, and agentic debugging'
+description: 'A map of every AI capability in Cypress: author tests with Cypress Studio and cy.prompt, give AI coding agents real Cypress context with skills and Cloud MCP, and analyze runs with Cypress AI.'
+sidebar_label: AI in Cypress
+sidebar_position: 10
+slug: /app/ai/overview
+---
+
+<ProductHeading product="app" />
+
+# AI in Cypress
+
+AI shows up in Cypress in two distinct ways, and knowing which one you need is
+the fastest route to the right page.
+
+**AI that writes tests for you.** You are still the author. Cypress Studio and
+[`cy.prompt`](/api/commands/prompt) turn recorded interactions or plain language
+into real Cypress commands, so less of your time goes to boilerplate and
+selector archaeology.
+
+**Cypress made legible to your agents.** Here your AI coding tool is the
+consumer. Skills, `cypress tap`, Cloud MCP, and agent-ready reports give an
+agent accurate Cypress context, so it produces tests that follow your
+conventions instead of generic ones that break in CI.
+
+Most teams end up using both. The rest of this page is a map of what exists in
+each half.
+
+## Write tests with AI
+
+Both options below produce ordinary Cypress code that you can read, edit, and
+commit. Neither is a black box: `cy.prompt` exposes the generated commands in
+the Command Log, and Studio writes directly into your spec file.
+
+- **[Cypress Studio](/app/guides/cypress-studio)** records real interactions in
+  your app and turns them into end-to-end tests. Connected to Cypress Cloud,
+  Studio AI also recommends assertions as you record. Reach for it when you want
+  to author a test by clicking through your app.
+- **[Generate tests with `cy.prompt`](/app/guides/ai-test-generation)** turns
+  natural language steps into executable Cypress commands, and can keep them
+  working as your UI changes. Reach for it when describing a flow is faster than
+  recording one.
+
+## Give agents Cypress context
+
+An AI coding agent that knows nothing about Cypress writes tests that look
+plausible and then fail in CI: brittle selectors, arbitrary waits, and
+assertions that do not retry. These capabilities give it better information to
+work from.
+
+- **[Cypress skills for AI agents](/app/tooling/ai-skills)** teach your coding
+  agent to write, review, and explain tests the way an experienced Cypress
+  engineer would. Install them once per project.
+- **[`cypress tap`](/app/tooling/cypress-tap)** attaches your agent to a running
+  open mode session from the terminal, so it can run a spec and then read the
+  Command Log, the error, and the DOM as the Cypress app shows them. That closes
+  the loop: the agent can verify its own fix instead of reporting pass or fail.
+  The [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) packages this
+  workflow so your agent drives it correctly.
+- **[Cloud MCP](/cloud/integrations/cloud-mcp)** connects your agent to Cypress
+  Cloud so it can read real run results, failures, and
+  [Test Replay](/cloud/features/test-replay) data while you work, rather than
+  guessing at why something failed.
+- **[Cloud CLI](/cloud/integrations/cloud-cli)** is the scriptable counterpart
+  to Cloud MCP: the same Cloud run data as JSON in the terminal, for agents that
+  work through a shell and for your own automation.
+
+## Analyze and debug with AI
+
+- **[Cypress AI](/cloud/features/cypress-ai-features)** explains failures and
+  summarizes test intent across recorded runs in Cypress Cloud.
+- **[Work with AI agents in Cypress Accessibility](/accessibility/work-with-ai-agents)**
+  and **[Work with AI agents in UI Coverage](/ui-coverage/work-with-ai-agents)**
+  cover tuning those reports so an agent can act on them, then prompting it to
+  triage findings and plan the work.
+
+## What each capability needs
+
+**No AI capability in Cypress requires a paid subscription.** Everything below
+works on the free
+[Starter plan](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=ai-overview),
+and some of it never touches Cypress Cloud at all. The exceptions are the
+agent-ready reports at the bottom of the table, which come with the Cypress
+Accessibility and UI Coverage solutions rather than with a Cloud plan.
+
+Paying raises limits rather than unlocking capabilities: a paid plan gets you a
+larger `cy.prompt` execution allowance and higher hourly limits on `cy.prompt`
+and Studio AI. See
+[AI usage limits](/cloud/features/cypress-ai-features#Usage-limits) for the
+numbers.
+
+| Capability                              | Where it runs | Cypress Cloud account |              Paid plan              |
+| --------------------------------------- | :-----------: | :-------------------: | :---------------------------------: |
+| Cypress Studio recording                |  Cypress App  |      Not needed       |                 No                  |
+| Studio AI assertion suggestions         |  Cypress App  |    Free plan works    |                 No                  |
+| `cy.prompt`                             |  Cypress App  |    Free plan works    |                 No                  |
+| Cypress skills for AI agents            |  Your editor  |      Not needed       |                 No                  |
+| `cypress tap`                           | Your terminal |      Not needed       |                 No                  |
+| Cloud MCP                               |  Your editor  |    Free plan works    |                 No                  |
+| Cloud CLI                               | Your terminal |    Free plan works    |                 No                  |
+| Cypress AI failure and intent summaries | Cypress Cloud |    Free plan works    |                 No                  |
+| Agent-ready accessibility reports       | Cypress Cloud |          Yes          | Included with Cypress Accessibility |
+| Agent-ready coverage reports            | Cypress Cloud |          Yes          |      Included with UI Coverage      |
+
+The capabilities that need a Cloud account need one because Cypress Cloud is
+what routes their AI requests securely, applies your organization's controls,
+and tracks usage. See
+[Why do I need a Cloud account?](/cloud/features/cypress-ai-features#Why-do-I-need-a-Cloud-Account)
+
+Organization admins and owners can turn AI capabilities on or off for everyone
+in the organization. See
+[Disabling AI features](/cloud/features/cypress-ai-features#Disabling-AI-features).
+
+## See also
+
+- [`cy.prompt()`](/api/commands/prompt) - the command reference
+- [Cypress Studio](/app/guides/cypress-studio)
+- [Cypress skills for AI agents](/app/tooling/ai-skills)
+- [`cypress tap`](/app/tooling/cypress-tap)
+- [Cloud MCP](/cloud/integrations/cloud-mcp)
+- [Cloud CLI](/cloud/integrations/cloud-cli)
+- [Cypress AI](/cloud/features/cypress-ai-features) - availability, usage limits,
+  and pricing for every AI capability

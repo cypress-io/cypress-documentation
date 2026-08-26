@@ -15,6 +15,7 @@ import {
   replaceMarkdownExtension,
   getGitSha,
   countMarkdownAndJsonFiles,
+  resolveDocRoute,
 } from '../src/utils'
 
 const tempDirs: string[] = []
@@ -384,5 +385,41 @@ describe('countMarkdownAndJsonFiles', () => {
     fs.writeFileSync(path.join(root, 'sub', 'nested.md'), '')
     fs.writeFileSync(path.join(root, 'sub', 'data.json'), '')
     expect(countMarkdownAndJsonFiles(root)).toEqual({ markdown: 2, json: 1 })
+  })
+})
+
+// ---------------------------------------------------------------------------
+// resolveDocRoute
+// ---------------------------------------------------------------------------
+
+describe('resolveDocRoute', () => {
+  test('uses the doc id when the page has no slug', () => {
+    expect(resolveDocRoute('app/get-started/why-cypress')).toBe(
+      'app/get-started/why-cypress',
+    )
+  })
+
+  test('treats an absolute slug as the route', () => {
+    expect(resolveDocRoute('app/references/legacy', '/app/references/bundled-libraries')).toBe(
+      'app/references/bundled-libraries',
+    )
+  })
+
+  test('resolves a relative slug against the doc directory', () => {
+    expect(resolveDocRoute('api/utilities/lodash', '_')).toBe('api/utilities/_')
+  })
+
+  test('resolves a relative slug that walks up a directory', () => {
+    expect(resolveDocRoute('api/utilities/lodash', '../lodash')).toBe('api/lodash')
+  })
+
+  test('strips surrounding slashes so the route stays site-root relative', () => {
+    expect(resolveDocRoute('app/guide', '/app/guide/')).toBe('app/guide')
+  })
+
+  test('normalizes windows separators in the doc id', () => {
+    expect(resolveDocRoute('app\\get-started\\why-cypress')).toBe(
+      'app/get-started/why-cypress',
+    )
   })
 })
