@@ -6,6 +6,7 @@ import Heading from '@theme/Heading';
 import MDXContent from '@theme/MDXContent';
 import E2EOnlyBadge from "@site/src/components/e2e-only-badge"
 import ComponentOnlyBadge from "@site/src/components/component-only-badge"
+import MarkdownActions from "@site/src/components/markdown-actions"
 import s from "./style.module.css";
 
 /**
@@ -33,6 +34,10 @@ export default function DocItemContent({children}: {children: React.ReactNode}) 
 const syntheticTitle = useSyntheticTitle();
 return (
   <div className={clsx(ThemeClassNames.docs.docMarkdown, 'markdown')}>
+      {/* Floats to the top right of the content column, so it reads as part of
+          the title row whether the <h1> comes from the MDX or from the
+          synthetic title below. */}
+      <MarkdownActions />
       {syntheticTitle && (
         <header>
           <div className={s.mainContentHeader}>

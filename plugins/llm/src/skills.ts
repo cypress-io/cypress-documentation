@@ -23,6 +23,13 @@ export function writeSkillsIndex(distRoot: string) {
         'Explains Cypress tests and provides feedback on their quality.',
       url: 'https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-explain',
     },
+    {
+      name: 'cypress-docs',
+      type: 'skill-md',
+      description:
+        'Grounds answers about Cypress in the official documentation.',
+      url: 'https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-docs',
+    },
   ]
 
   const skillsIndex = {

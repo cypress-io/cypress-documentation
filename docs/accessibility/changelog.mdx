@@ -12,7 +12,7 @@ sidebar_position: 200
 ## Week of Apr 13, 2026
 
 - The `accessibility.components` configuration object adds `componentAttributes` and `componentAttributeFilters`. See the [components](/accessibility/configuration/components) guide.
-- Cypress Accessibility analytics have been expanded in [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting), surfacing trends in rule failure counts, severity level of issues, and more. Get all the details in our guide, [Detect and Manage Changes](/accessibility/guides/detect-changes#Analytics).
+- Cypress Accessibility analytics have been expanded in [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting), surfacing trends in rule failure counts, severity level of issues, and more. Get all the details in our guide, [Catch accessibility regressions](/accessibility/guides/detect-changes#track-trends-over-time).
 
 ## Week of Mar 30, 2026
 
@@ -38,7 +38,7 @@ sidebar_position: 200
 
 ## Week of Dec 12, 2025
 
-- You can now create Jira issues directly from accessibility violations in the detail view. This allows you to quickly track and prioritize accessibility issues within your existing Jira workflow. The created Jira issue will include a link back to the accessibility violation in Cypress Cloud. [Learn more about creating Jira issues](/accessibility/guides/inspecting-violation-details#Create-Jira-issue).
+- You can now create Jira issues directly from accessibility violations in the detail view. This allows you to quickly track and prioritize accessibility issues within your existing Jira workflow. The created Jira issue will include a link back to the accessibility violation in Cypress Cloud. [Learn more about creating Jira issues](/accessibility/reports/element-detail-view#Create-Jira-issue).
 
 ## Week of Dec 01, 2025
 
@@ -112,7 +112,7 @@ sidebar_position: 200
 ## Week of Sep 09, 2024
 
 - We have introduced the new "Rules" tab for all users. This allows you to more easily review the outcome of all the rules that were tested for, across the entire run, and see which rules have the most failing elements. This also helps you understand the exact effect of any underlying configuration on rule outcomes.
-- We have introduced new element statuses, beyond just failures. This allows Cypress Accessibility to surface any inconclusive or "manual review" items from Axe Core, as well as track and display elements whose results were explicitly ignored. Learn more in the [run-level reports](/accessibility/guides/run-level-reports) [Elements section](/accessibility/guides/run-level-reports#Elements).
+- We have introduced new element statuses, beyond just failures. This allows Cypress Accessibility to surface any inconclusive or "manual review" items from Axe Core, as well as track and display elements whose results were explicitly ignored. Learn more in the [run-level reports](/accessibility/reports/run-level-reports) [Elements section](/accessibility/reports/run-level-reports#Elements).
 - Elements ignored by configuration will have results captured, but these results will not affect your score. This ensures you can use filters to peek behind the curtain and understand exactly what is being excluded from a given run's results.
 - The Detail View that displays failing elements will now also display inconclusive and (optionally) ignored elements for each rule. Inconclusive and ignored elements have distinct orange and gray icons and highlights respectively.
 

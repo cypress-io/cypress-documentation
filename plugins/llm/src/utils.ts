@@ -91,6 +91,22 @@ export function stripMarkdownExtension(pathStr: string): string {
 }
 
 /**
+ * Resolves the site route a doc is published at, relative to the site root and
+ * without a leading slash (e.g. `app/get-started/why-cypress`). A `slug` in the
+ * page's frontmatter wins over its file path, and is resolved against the doc's
+ * own directory when relative — matching how Docusaurus routes the page.
+ */
+export function resolveDocRoute(docId: string, slug?: string | null): string {
+  const trim = (route: string) => route.replace(/^\/+/, '').replace(/\/+$/, '')
+
+  if (!slug) return trim(toPosixPath(docId))
+  if (slug.startsWith('/')) return trim(toPosixPath(slug))
+
+  const parentDir = path.posix.dirname(toPosixPath(docId))
+  return trim(path.posix.join(parentDir === '.' ? '' : parentDir, slug))
+}
+
+/**
  * Replaces the markdown extension with another (e.g. `.md` or `.json`).
  */
 export function replaceMarkdownExtension(pathStr: string, newExt: string): string {
