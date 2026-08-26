@@ -248,6 +248,34 @@ Read the [cypress tap documentation →](/app/tooling/cypress-tap)
 
 ## FAQs
 
+### Do AI features require a paid subscription?
+
+No. Every AI capability and AI tool listed on this page is available without a
+paid subscription, and several of them run entirely on your machine without a
+Cypress Cloud account at all.
+
+| Capability / Tool                         | What it needs                                                                    |
+| ----------------------------------------- | -------------------------------------------------------------------------------- |
+| AI Skills                                 | Nothing. Install them into your agent.                                           |
+| `cypress tap` CLI                         | Nothing beyond Cypress v15.21.0+ and an open mode session.                       |
+| Cypress Studio recording                  | Nothing. Studio AI recommendations use your Cloud account.                       |
+| cy.prompt()                               | A Cypress Cloud account on any plan, including the free Starter plan.            |
+| Studio AI recommendations                 | A Cypress Cloud account on any plan, including the free Starter plan.            |
+| Test Intent Summaries and Error Summaries | A Cypress Cloud account on any plan, including the free Starter plan.            |
+| Cloud MCP and the Cloud CLI               | A Cypress Cloud account on any plan, including the free Starter plan.            |
+| UI Coverage Test Generation               | A [UI Coverage](/ui-coverage/get-started/introduction) subscription.             |
+| Agent-ready accessibility reports         | A [Cypress Accessibility](/accessibility/get-started/introduction) subscription. |
+
+What a paid plan changes is headroom, not access: a larger `cy.prompt`
+execution allowance and higher hourly limits for `cy.prompt` and Studio AI. See
+[Usage limits](#Usage-limits) below and
+[Cypress Cloud plans](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cypress-ai-features)
+for full plan details.
+
+The two premium solutions in the table, UI Coverage and Cypress Accessibility,
+are products in their own right rather than AI capabilities gated behind a
+paywall. Their AI features come with the solution.
+
 ### Why do I need a Cloud Account?
 
 Cypress AI features use large language models (LLMs) to interpret prompts, analyze DOM state, and generate test code. Cypress Cloud manages those LLM requests securely on your behalf.
@@ -263,7 +291,7 @@ Without a Cloud account, there is no secure channel through which to route those
   href="https://cloud.cypress.io/signup"
 />
 
-Free accounts include a two-week trial of all paid features, including higher AI usage limits.
+Free accounts include a [30-day trial](/cloud/get-started/free-trial) of all paid features, including higher AI usage limits. When the trial ends, your account moves to the free Starter plan and AI features keep working at free plan limits.
 
 ### Usage limits
 
@@ -280,6 +308,7 @@ Some hourly limits apply to all plans. Those are as follows:
 | Test Intent Summaries       | Included               | Included                  |
 | Error Summaries             | Included               | Included                  |
 | AI Skills                   | unlimited              | unlimited                 |
+| `cypress tap` CLI           | unlimited              | unlimited                 |
 | Cloud MCP requests          | 100 per hour, per user | 100 per hour, per user    |
 | Cloud CLI requests          | 100 per hour, per user | 100 per hour, per user    |
 | UI Coverage Test Generation | Not available          | Included with UI Coverage |
@@ -290,9 +319,11 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 ### Pricing
 
-AI Skills are available to all Cypress users.
+AI Skills and the `cypress tap` CLI are available to all Cypress users, with or without a Cypress Cloud account.
 
 Cloud MCP, the Cloud CLI, Test Intent Summaries and Error Summaries are available for free to all Cypress Cloud plans, including the Starter plan.
+
+`cy.prompt` is available on all Cypress Cloud plans, including the Starter plan. Each plan comes with an execution allowance. See [cy.prompt](/cloud/faq#cyprompt) in the Cloud FAQ for what counts as an execution and what happens when you reach your allowance.
 
 UI Coverage Test Generation is included with UI Coverage premium solutions subscriptions.
 
