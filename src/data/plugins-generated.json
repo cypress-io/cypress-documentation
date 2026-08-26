@@ -412,8 +412,8 @@
     },
     "allure-cypress": {
       "npm": "allure-cypress",
-      "version": "3.10.2",
-      "lastPublished": "2026-06-26T14:38:54.601Z",
+      "version": "3.11.0",
+      "lastPublished": "2026-08-25T14:25:04.479Z",
       "cypressVersion": ">=12.17.4"
     },
     "cypress-failed-log": {
