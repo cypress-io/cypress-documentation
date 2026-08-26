@@ -34,9 +34,9 @@ Cypress AI is designed to solve these problems without changing how you already 
 
 ## Getting Started
 
-AI Capabilities are enabled by default for all users in your organization on an applicable plan. Login to your Cypress Cloud account to get started.
+AI Capabilities are enabled by default for all users in your organization on every Cypress Cloud plan, including the free Starter plan. Login to your Cypress Cloud account to get started.
 
-Each AI Tool must be enabled and installed individually. See each tool's documentation for instructions.
+Each AI Tool must be enabled and installed individually. See each tool's documentation for instructions. AI Skills and the `cypress tap` CLI run entirely on your machine, so you can start with those without a Cypress Cloud account at all.
 
 ## How Cypress AI Fits Into the Workflow
 
@@ -244,6 +244,8 @@ Where the Cloud CLI and Cloud MCP give agents your recorded run data in
 Cypress Cloud, `cypress tap` gives your AI agent context to your Cypress session and your application-under-test on your
 machine, while developing and verifying tests before it ever runs in CI.
 
+It is completely free and needs no Cypress Cloud account: it ships with the `cypress` binary and drives the session already running on your machine.
+
 Read the [cypress tap documentation →](/app/tooling/cypress-tap)
 
 ## FAQs
@@ -278,7 +280,9 @@ paywall. Their AI features come with the solution.
 
 ### Why do I need a Cloud Account?
 
-Cypress AI features use large language models (LLMs) to interpret prompts, analyze DOM state, and generate test code. Cypress Cloud manages those LLM requests securely on your behalf.
+This applies to the AI capabilities that call a large language model on your behalf, such as `cy.prompt`, Studio AI recommendations, and the Cloud summaries, along with the tools that read your recorded Cloud data. AI Skills and the `cypress tap` CLI call no LLM of their own and read no Cloud data, so they need no account. See [Do AI features require a paid subscription?](#Do-AI-features-require-a-paid-subscription) above.
+
+The capabilities that do use large language models rely on them to interpret prompts, analyze DOM state, and generate test code. Cypress Cloud manages those LLM requests securely on your behalf.
 
 Without a Cloud account, there is no secure channel through which to route those requests, no organizational controls to apply, and no way to enforce the data handling commitments Cypress makes to its customers.
 

@@ -17,10 +17,12 @@ An AI agent can run a Cypress spec and get back pass or fail. What it can't get 
 
 `cypress tap` is an extension of the cypress CLI that lets you or an agent interact with an open-mode Cypress session and read its context from the terminal. With it, an agent can run a spec and poll its status, then read the failing test's Command Log and error as the Cypress app shows them. It can also inspect the DOM of the application under test at the moment a command ran.
 
-This allows an agent can verify its own work as it codes, catching and fixing failures in the same loop that created them.
+This allows an agent to verify its own work as it codes, catching and fixing failures in the same loop that created them.
 
 Any agent that can run shell commands can use it, including Cursor, Claude
 Code, GitHub Copilot, Windsurf, and Codex CLI.
+
+`cypress tap` is completely free. It ships with the `cypress` binary you already have, so there is no Cypress Cloud account to create, no plan to buy, and nothing extra to install.
 
 :::tip
 
