@@ -149,6 +149,14 @@ them correctly, without you writing the steps by hand. For the full workflow, or
 a snippet you can drop into your agent's instructions file yourself, see
 [driving Cypress from the terminal with an AI agent](/app/tooling/cypress-tap).
 
+When the failure happened in CI rather than locally, and the run was recorded to
+Cypress Cloud, your agent can triage it from the terminal too. The
+[`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) drives the
+[Cloud CLI](/cloud/integrations/cloud-cli) to read the failing run, its tests,
+and their [Test Replay](/cloud/features/test-replay) data, so the agent can find
+the likely cause from the recorded run before reproducing it locally with
+`cypress tap`.
+
 ## Using the Developer Tools
 
 Though Cypress has built out
