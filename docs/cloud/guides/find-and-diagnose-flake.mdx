@@ -1,0 +1,242 @@
+---
+title: Find and diagnose flaky tests in Cypress Cloud
+description: A hands-on workflow for finding and diagnosing flaky Cypress tests in Cypress Cloud. Confirm flake from retry attempts, compare a passing and failing attempt in Test Replay, spot run-wide patterns in the Errors tab, and separate one-off noise from systemic instability.
+sidebar_label: Find and Diagnose Flake
+sidebar_position: 20
+---
+
+<ProductHeading product="cloud" />
+
+# Find and Diagnose Flaky Tests in Cypress Cloud
+
+A [flaky test](/cloud/features/flaky-test-management) fails on one attempt and
+then passes on a retry, with no change to your code. Cypress Cloud captures every
+attempt of every recorded run, so instead of guessing why a test is unstable, you
+can look at exactly what differed between the attempt that failed and the attempt
+that passed.
+
+This guide is a practical playbook for _finding_ flake in Cypress Cloud and
+_diagnosing_ its cause. It complements two other pages:
+
+- [Flaky Test Management](/cloud/features/flaky-test-management) is the feature
+  reference: how detection, scoring, alerting, analytics, and export work.
+- [Debug Failing Tests in CI](/cloud/guides/debug-failing-tests) is the broader
+  workflow for any red CI build, flake included.
+
+Here the focus is narrower: you have flake (or suspect you do), and you want to
+track down what's causing it.
+
+:::info
+
+<strong>Prerequisites</strong>
+
+Flake diagnosis works on runs
+[recorded to Cypress Cloud](/cloud/get-started/setup) with
+[test retries](/app/guides/test-retries#Configure-Test-Retries) enabled. Retries
+are the mechanism that exposes flake: without them, a test that would have passed
+on a second attempt simply fails, and Cypress Cloud never gets to observe the
+recovery that defines flake. Automated detection, scoring, and analytics require
+a [Team Cypress Cloud plan](https://cypress.io/pricing) or higher.
+
+:::
+
+## What "flaky" means in Cypress Cloud
+
+Cypress Cloud marks a test as **flaky** when it **fails on an initial attempt and
+then passes on a retry within the same run**. In the run's test list this shows
+up as a flaky indicator on the test, and opening the test reveals the attempt
+history, for example _Attempt 1 failed, Attempt 2 passed_.
+
+That indicator is your starting signal. It tells you the test recovered on its
+own, which points to one of three underlying causes:
+
+- **Test design** — an assertion runs before the UI reaches a stable state, or
+  tests leak state into one another through order dependence.
+- **Application non-determinism** — the app itself behaves differently run to
+  run, independent of the test.
+- **Environment instability** — a shared QA or dev server, a deploy landing
+  mid-run, a feature-flag change, or a third-party service blip.
+
+Some of this is fixable in the test by waiting for a stable state. Some of it is
+a real product or infrastructure problem the flake is surfacing. The goal of
+diagnosis is to tell those apart.
+
+{/* SCREENSHOT 1: A run's test list with a test showing the flaky indicator (green/red), and the same test expanded to show "Attempt 1 failed, Attempt 2 passed". */}
+
+:::caution
+
+A test can pass after retries and still be flaky. The build goes green, but the
+underlying instability is still there, which is exactly why flake is so easy to
+miss without dedicated tracking. See
+[failure rate vs. flake rate](/cloud/features/flaky-test-management#Failure-rate-vs-flake-rate).
+
+:::
+
+## Step 1: Diagnose a single flaky test with Test Replay
+
+The fastest way to understand a specific flaky failure is to compare the failed
+attempt against the passing retry on the exact same code.
+[**Test Replay**](/cloud/features/test-replay) makes this a direct comparison
+rather than guesswork, because it replays the real run, not a video of it.
+
+From the flaky test's detail sidebar, open a flaky attempt in Test Replay and
+[switch between attempts](/cloud/features/test-replay) to line up what changed:
+
+- **Assertion values** — what the failing attempt saw versus what the passing
+  attempt saw.
+- **UI state** — whether an element was present, visible, or settled at the
+  moment the command ran.
+- **Network** — open the network panel and compare responses across attempts. A
+  slow, missing, or differently-shaped response is one of the most common causes
+  of flake, and it's usually invisible in a screenshot.
+- **Console** — errors or warnings that appeared in one attempt but not the
+  other.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/test-replay-ui.png"
+  alt="Comparing a failing and passing attempt of a flaky test in Test Replay"
+/>
+
+Comparing a passing attempt against a failing one on the same code is often
+enough on its own to pinpoint the race condition, timing issue, or environmental
+dependency behind a single flaky result.
+
+## Step 2: Remember that one run only shows the flake it exposed
+
+A test that passes on its **first** attempt is never marked flaky in that run,
+even if it's genuinely unstable. A single run therefore shows only the flake that
+retries happened to expose that time. Absence of a flaky flag in one run is not
+evidence a test is stable.
+
+To surface more of the flake that's actually there, you can:
+
+- Increase [test retries](/app/guides/test-retries#Configure-Test-Retries) so
+  more intermittent failures get a chance to recover and be recorded as flake.
+- Look across many runs instead of one, using the trend views below.
+
+## Step 3: Review flake trends across recent runs
+
+To tell a one-off blip from a chronically unstable test, widen the lens from a
+single run to the test's recent history. The
+[flaky test analytics](/cloud/features/flaky-test-management#Flaky-test-analytics)
+page and the flaky test details panel show flake over a recent window, so you can
+see whether a test flakes repeatedly.
+
+A high [flake rate](/cloud/features/flaky-test-management#Flake-severity), such as
+flaking on 4 of the last 7 runs, is a strong signal the test is _inherently_
+flaky rather than the victim of a single bad environment moment. Cypress Cloud
+groups tests by **severity** (Low, Medium, High) from this rate so you can
+prioritize the tests disrupting the most builds first.
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/flake-analytics.png"
+  alt="Flaky test analytics showing flake over time and tests grouped by severity"
+/>
+
+You can compare branches and apply filters here to understand whether a test is
+flaky everywhere or only on a specific branch, which itself is a diagnostic clue.
+
+## Step 4: Drill into a recurring flaky test
+
+Open a test with a high flake rate to move from _"this test is flaky"_ to
+_"here's the exact failure pattern."_ The test's details panel collects the
+evidence you need in one place:
+
+- A historical log of its **latest flaky runs**.
+- The **most common errors** across those runs.
+- **Screenshots** and **Test Replay** data for individual occurrences.
+- Plots of **failure rate and flake rate** over time.
+
+<DocsImage
+  src="/img/cloud/features/flaky-test-management/flake-panel.png"
+  alt="Flaky test details panel showing recent flaky runs, common errors, and rates over time"
+/>
+
+If the same error and the same race condition show up across several of the
+recent flaky runs, you're looking at one consistent root cause. If the failures
+scatter across unrelated errors, the instability is more likely environmental.
+
+## Step 5: Look for run-wide patterns in the Errors tab
+
+Diagnosing one test at a time misses the case where several tests are flaking for
+the _same_ underlying reason. The [**Errors tab**](/cloud/features/recorded-runs#Errors-tab)
+on a run aggregates every error thrown during that run, across both flaky tests
+and tests that failed outright.
+
+This matters because **a test that failed all its retries can share the same root
+cause as a test that merely flaked** — the difference is only whether a retry
+happened to recover. Grouping by error surfaces that shared cause.
+
+<DocsImage src="/img/cloud/runs/errors.png" alt="The Errors tab aggregating errors across a run" />
+
+Expand an error to see its full detail, including the stack trace and how many
+test results are associated with it. A single error tied to many results is a
+strong signal you're dealing with a **systemic problem** — a broken shared
+fixture, an unstable dependency, an environment issue — rather than a handful of
+unrelated one-off failures. Fix the shared cause once and multiple flaky and
+failing tests resolve together.
+
+{/* SCREENSHOT 2: An expanded error in the Errors tab showing the stack trace and the count of failed test results associated with that error. */}
+
+## Step 6: Narrow flake to specs, groups, and branches
+
+To find the biggest-impact sources of flake first, look at where it concentrates.
+The [Specs tab](/cloud/features/recorded-runs#Specs-tab) and group-level views
+show which spec files and which
+[groups](/cloud/features/smart-orchestration/parallelization) are carrying the
+flake, and run-level filters (branch, tag, and other metadata) let you narrow the
+search.
+
+Ask, in order:
+
+- **Which spec files are affected?** Flake clustered in one spec often points to
+  a shared `beforeEach`, fixture, or page under test.
+- **Are certain groups flakier than others?** A group that maps to a browser,
+  viewport, or configuration isolates flake to that dimension.
+- **Is it isolated or cross-cutting?** Flake confined to one branch suggests a
+  change on that branch; flake everywhere suggests the application or
+  environment.
+
+## Step 7: Take flake data out of Cypress Cloud for wider triage
+
+When you want to track flake outside Cypress Cloud, snapshot it at a point in
+time, or feed it into another analysis workflow (including handing it to an AI
+assistant), you can pull the data out two ways:
+
+- [**Cloud MCP**](/cloud/integrations/cloud-mcp) connects your AI coding
+  assistant (Claude, Cursor, VS Code Copilot, and others) directly to Cypress
+  Cloud. Ask it to list the flaky tests across recent runs and look for common
+  patterns in the error messages, and it triages without you leaving your editor.
+  Cloud MCP is available on **every Cypress Cloud plan at no additional cost**.
+- The [**Data Extract API**](/cloud/integrations/data-extract-api#Flaky) and
+  [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#Flaky-Tests)
+  export flake metrics as CSV, JSON, or XLSX for your own dashboards. These are
+  [Enterprise plan](https://cypress.io/pricing) features.
+
+## Choose the view that matches your goal
+
+Different questions are answered fastest by different Cypress Cloud views:
+
+| Your goal                                        | Start here                                                                                    |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| Diagnose one specific flaky result               | [Test Replay](/cloud/features/test-replay) — compare the failing and passing attempt          |
+| See a run's whole picture, flaky and failing     | [Errors tab](/cloud/features/recorded-runs#Errors-tab) — group by shared error                |
+| Judge whether a test is _inherently_ flaky       | [Flaky test analytics](/cloud/features/flaky-test-management#Flaky-test-analytics) & severity  |
+| Find where flake concentrates                    | [Specs tab](/cloud/features/recorded-runs#Specs-tab) & group/branch filters                    |
+| Tell a regression from flake on your PR          | [Branch Review](/cloud/features/branch-review)                                                 |
+| Triage flake from your editor or a script        | [Cloud MCP](/cloud/integrations/cloud-mcp) / [Cloud CLI](/cloud/integrations/cloud-cli)        |
+
+## See also
+
+- [Flaky Test Management](/cloud/features/flaky-test-management) — how detection,
+  scoring, alerting, and analytics work
+- [Debug Failing Tests in CI](/cloud/guides/debug-failing-tests) — the full
+  red-build debugging workflow
+- [Test Replay](/cloud/features/test-replay) — replay the exact CI attempt with
+  full debug capability
+- [Recorded Runs](/cloud/features/recorded-runs) — the Errors tab, Specs tab, and
+  test detail sidebar in depth
+- [Branch Review](/cloud/features/branch-review) — separate new flake from
+  pre-existing flake before merging
+- [Test retries](/app/guides/test-retries) — the mechanism that exposes flake
+- [Cypress Cloud FAQ](/cloud/faq#Flaky-Test-Management) — common flake questions

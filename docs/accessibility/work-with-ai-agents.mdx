@@ -11,7 +11,7 @@ sidebar_position: 110
 
 AI coding assistants can speed up accessibility work when they have the right context. This guide outlines patterns that teams are adopting today.
 
-## Cypress Cloud MCP
+## Cypress Cloud MCP {#Cypress-Cloud-MCP}
 
 [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets compatible agents pull run metadata, test results, and accessibility summaries from Cypress Cloud using structured tools instead of copy-pasting from the UI.
 
@@ -48,6 +48,56 @@ Here are some example prompts to try out:
 > Using Cypress Cloud MCP, find the most recent run in this project with failed accessibility results and create an action plan that groups similar problems together and recommends suitable owners.
 >
 > Our team includes these roles developers, QA engineers, designers, product managers, marketers, and accessibility specialists. For each role, determine if they need to be Responsible, Accountable, Consulted, Informed, or not involved.
+
+## Work with a downloaded report {#Work-with-a-downloaded-report}
+
+The [**Download report** button](/accessibility/connect-and-extend/download-reports) on a run's Accessibility report exports the run's violations as a `.csv` or `.json` file. This gives an AI agent a complete, self-contained view of a run's accessibility results that it can read directly from disk—no Cloud connection or MCP setup required.
+
+This pairs well with the [Cypress Cloud MCP](#Cypress-Cloud-MCP) approach rather than replacing it:
+
+- **Cloud MCP** is best for live, interactive querying while you work—asking follow-up questions and drilling into specific rules or views on demand.
+- **A downloaded report** is best when you want the agent to work over the full dataset at once—generating a chart, producing a written summary, or diffing two runs—and when you want a fixed artifact you can re-run the same analysis against later.
+
+Each row in the file is one failed element for one rule on one view, and includes deep links back into the Cloud report. See [what's in the file](/accessibility/connect-and-extend/download-reports#Whats-in-the-file) for the full column list.
+
+### Map violations to your components {#Map-violations-to-your-components}
+
+The **Element** column is where a downloaded report becomes especially efficient for an agent. When you set up your [components configuration](/accessibility/configuration/components), each element's selector reflects a true hierarchy of your components instead of a raw DOM path. An agent can read that structure straight from the file to:
+
+- **Spot patterns and trends** across rules and views—for example, that most `color-contrast` failures live inside a single design-system component, or that one component is responsible for a disproportionate share of a run's violations.
+- **Trace an issue to its origin** in your component tree and source code, without re-parsing full-page HTML or crawling the codebase to locate the element.
+
+Mapping raw DOM selectors back to the component and source file that produced them is normally the expensive part of agent-assisted accessibility work, in both effort and tokens. Carrying that hierarchy in the export up front means the agent spends its budget on analysis and fixes rather than on rediscovering where each element came from.
+
+### Interpret the report
+
+Drop the downloaded file into your project (or attach it to your chat) and ask the agent to summarize it. Because every row carries the rule, impact, element, and view, the agent can bucket and prioritize without any extra context.
+
+> Read this accessibility report file and give me a summary: total violations, a breakdown by impact (critical, serious, moderate, minor), and the five rules with the most failing elements. Then list the three views with the most issues and suggest where I should start.
+
+> Group the failures in this report by likely owner—developers, designers, and content authors—based on the rule and element. For each group, write a short, plain-language description of the work involved.
+
+### Create charts and graphs
+
+Since the export is structured data, an agent with code execution can turn it into visualizations without you writing any plotting code.
+
+> Using this accessibility report, generate a bar chart of failing elements by rule severity, and a second chart of the top 10 rules by number of failing elements. Save them as images.
+
+> Build a small HTML dashboard from this report file: a summary of totals by impact at the top, a table of views sorted by violation count, and a chart of the most common rules. Make it a single self-contained file I can open in a browser.
+
+### Compare different reports
+
+Download a report for each run you want to compare—for example, a `main` branch run and a feature-branch run—and ask the agent to diff them. This is a lightweight, offline complement to the [Branch Review](/accessibility/guides/compare-reports) comparison in Cypress Cloud, useful when you want the difference in writing or as data.
+
+> Here are two accessibility reports, `report-main.json` and `report-branch.json`. Compare them and tell me which violations are new in the branch report, which were resolved, and which are unchanged. Group new issues by rule and view, and include the Element URL for each new issue so I can open it in Cypress Cloud.
+
+> I've downloaded accessibility reports from our last four weekly runs. Chart the total number of failing elements over time, and call out any rule where failures increased week over week.
+
+:::tip
+
+Ask the agent to keep the **Element URL** and **View URL** values in its output. Every row links back to the live snapshot in Cypress Cloud, so a summary, chart annotation, or ticket can point straight to the issue in context.
+
+:::
 
 ## Optimizing Cypress Accessibility for MCP use cases
 
