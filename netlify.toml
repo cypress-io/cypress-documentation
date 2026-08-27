@@ -579,7 +579,7 @@
 
 [[redirects]]
   from = "/api/commands/exec"
-  to = "/api/table-of-contents"
+  to = "/api/commands/task"
   status = 301
   force = true
 
