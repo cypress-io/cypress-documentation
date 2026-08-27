@@ -84,7 +84,7 @@ _Released Aug 18, 2026_
 
 **Deprecations:**
 
-- [`cy.exec()`](/api/commands/exec) has been deprecated and will be removed in a future major release of Cypress. Use [`cy.task()`](/api/commands/task) instead, which runs in Node without depending on the operating system, shell, or terminal of the machine running Cypress. The [`execTimeout`](/app/references/configuration#Timeouts) configuration option is deprecated alongside it, in favor of [`taskTimeout`](/app/references/configuration#Timeouts). Addresses [#34639](https://github.com/cypress-io/cypress/issues/34639).
+- `cy.exec()` has been deprecated and will be removed in a future major release of Cypress. Use [`cy.task()`](/api/commands/task) instead, which runs in Node without depending on the operating system, shell, or terminal of the machine running Cypress. The [`execTimeout`](/app/references/configuration#Timeouts) configuration option is deprecated alongside it, in favor of [`taskTimeout`](/app/references/configuration#Timeouts). Addresses [#34639](https://github.com/cypress-io/cypress/issues/34639).
 
 **Features:**
 
@@ -656,7 +656,7 @@ _Released Nov 04, 2025_
 - WebKit now prefers a cookie's fully qualified `domain` when requesting a cookie value via [`cy.getCookie()`](/api/commands/getcookie). If none are found, the cookie's apex domain will be used as a fallback. Addresses [#29954](https://github.com/cypress-io/cypress/issues/29954), [#29973](https://github.com/cypress-io/cypress/issues/29973) and [#30392](https://github.com/cypress-io/cypress/issues/30392). Addressed in [#32852](https://github.com/cypress-io/cypress/pull/32852).
 - The 'Next' tooltip style was updated. Addressed in [#32866](https://github.com/cypress-io/cypress/pull/32866).
 - Make test name header sticky in studio mode and in the tests list. Addresses [#32591](https://github.com/cypress-io/cypress/issues/32591). Addressed in [#32840](https://github.com/cypress-io/cypress/pull/32840)
-- The [`cy.exec()`](/api/commands/exec) type now reflects the correct yielded response type of `exitCode`. Addresses [#32875](https://github.com/cypress-io/cypress/issues/32875). Addressed in [#32885](https://github.com/cypress-io/cypress/pull/32885).
+- The `cy.exec()` type now reflects the correct yielded response type of `exitCode`. Addresses [#32875](https://github.com/cypress-io/cypress/issues/32875). Addressed in [#32885](https://github.com/cypress-io/cypress/pull/32885).
 
 **Dependency Updates:**
 
@@ -814,7 +814,7 @@ Refer to the [v15 Migration Guide](/app/references/migration-guide#Migrating-to-
 - The application under test's `pagehide` event in Chromium browsers will no longer trigger Cypress's `window:unload` event. Addressed in [#31853](https://github.com/cypress-io/cypress/pull/31853).
 - The `Cypress.SelectorPlayground` API has been renamed to `Cypress.ElementSelector`. This API was renamed to accommodate its use for defining `selectorPriority` in Cypress Studio and our future [`cy.prompt` release](/api/commands/prompt). Additionally, the `getSelector` method and the `onElement` option of `defaults` were removed from this API. Addresses [#31801](https://github.com/cypress-io/cypress/issues/31801). Addressed in [#31889](https://github.com/cypress-io/cypress/pull/31889) and [#32098](https://github.com/cypress-io/cypress/pull/32098).
 - The direct download option for installing Cypress is no longer supported. Users should install via a package manager. Addressed in [#32249](https://github.com/cypress-io/cypress/pull/32249).
-- Updated `execa` from `1.0.0` to `4.1.0`. This changes the `code` property returned by [`cy.exec()`](/api/commands/exec) to `exitCode`. Addressed in [#32238](https://github.com/cypress-io/cypress/pull/32238).
+- Updated `execa` from `1.0.0` to `4.1.0`. This changes the `code` property returned by `cy.exec()` to `exitCode`. Addressed in [#32238](https://github.com/cypress-io/cypress/pull/32238).
 - **Component Testing breaking changes:**
   - Removed support for Angular 17. The minimum supported version is now `18.0.0`. Addresses [#31303](https://github.com/cypress-io/cypress/issues/31303).
   - `@cypress/angular` now requires a minimum of `zone.js` `0.14.0`. Addresses [#31582](https://github.com/cypress-io/cypress/issues/31582).
@@ -12039,7 +12039,7 @@ _Released Dec 19, 2017_
 **Bugfixes:**
 
 - The seeded `example_spec.js` file no longer fails in Windows on the
-  [cy.exec()](/api/commands/exec) test. It now conditionally runs a command
+  `cy.exec()` test. It now conditionally runs a command
   appropriate for Windows. Fixes
   [#1097](https://github.com/cypress-io/cypress/issues/1097).
 - Trying to log in to Cypress no longer causes the app to crash. This area has
@@ -12497,7 +12497,7 @@ _Released Oct 06, 2017_
 
 **Possibly Breaking Changes:**
 
-- [cy.exec()](/api/commands/exec) now trims output by default. That means if you
+- `cy.exec()` now trims output by default. That means if you
   were using an `eq` assertion the output will no longer have a trailing newline
   character `\n`. It's unlikely you are doing this, but it is possible you may
   need to update your assertions to remove this character. Fixes
@@ -12509,7 +12509,7 @@ _Released Oct 06, 2017_
   events happen. Fixes [#705](https://github.com/cypress-io/cypress/issues/705).
 - Basic auth now works _again_. Fixes
   [#573](https://github.com/cypress-io/cypress/issues/573).
-- [cy.exec()](/api/commands/exec) now properly sources each time it is invoked
+- `cy.exec()` now properly sources each time it is invoked
   instead of only once. Fixes
   [#694](https://github.com/cypress-io/cypress/issues/694).
 
@@ -12820,7 +12820,7 @@ _Released Sep 10, 2017_
   type. Fixes [#550](https://github.com/cypress-io/cypress/issues/550).
 - Fixed issue with [.clear()](/api/commands/clear) and `type="number"` inputs.
   Fixes [#490](https://github.com/cypress-io/cypress/issues/490).
-- Fixed issue where [`cy.exec()`](/api/commands/exec) was failing when running
+- Fixed issue where `cy.exec()` was failing when running
   Cypress in Docker. Fixes
   [#517](https://github.com/cypress-io/cypress/issues/517).
 - Cypress CLI no longer requires `git` to install. Fixes
@@ -14251,7 +14251,7 @@ _Released Jun 11, 2016_
 
 **Bugfixes:**
 
-- [`cy.exec()`](/api/commands/exec) now outputs additional `stderr` and `stdout`
+- `cy.exec()` now outputs additional `stderr` and `stdout`
   information. It additionally will automatically `source` your `$SHELL` which
   makes GUI apps behave as if they've been launched from your terminal. Fixes
   [#153](https://github.com/cypress-io/cypress/issues/153) and
@@ -14374,7 +14374,7 @@ _Released May 17, 2016_
 - All the `cy.cookie` commands have been upgraded to take new options and can do
   much more powerful things outside of the JavaScript sandbox.
 - Upgraded the Chromium version running headlessly and in CI from `47` to `49`.
-- There is a new [`cy.exec()`](/api/commands/exec) command that can execute any
+- There is a new `cy.exec()` command that can execute any
   arbitrary system command. Additionally there is a new
   [`execTimeout`](/app/references/configuration#Timeouts) configuration
   option which is set to `60s` by default. Fixes

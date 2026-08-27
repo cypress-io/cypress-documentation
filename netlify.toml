@@ -578,6 +578,12 @@
   force = true
 
 [[redirects]]
+  from = "/api/commands/exec"
+  to = "/api/commands/task"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/cypress-api/env"
   to = "/api/commands/env"
   status = 301

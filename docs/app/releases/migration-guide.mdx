@@ -16,7 +16,7 @@ slug: /app/references/migration-guide
   defaultCollapsed
   excludeFromLlmExport
   title="Upgrade to Cypress 16 with your AI assistant"
-  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-16-0.md and https://docs.cypress.io/app/references/migration-guide/migrating-away-from-cypress-env.md, which covers in full the Cypress.env() removal that the 16.0 section only summarizes. Then upgrade this project from Cypress 15 to 16 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 15.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in the 16.0 section (Node.js 22, 24, or 26+, and Angular 21+ / Vite 8+ / Next.js 15.0.4+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency. If I depend on @cypress/angular-zoneless, replace it with @cypress/angular and update the imports.\n\n4. Migrate off Cypress.env(), following the Cypress.env() page rather than guessing. Find every Cypress.env() usage and classify each value as sensitive or public, since that choice decides the replacement. Move sensitive values (keys, tokens, passwords, credentials) to cy.env(), which is asynchronous and yields only the keys you request, and public values (feature flags, API versions, public URLs) to Cypress.expose() with a top-level expose block in my config. Replace any env key in a per-test or per-suite config override with expose. Check for --env CLI flags, for reads inside cy.origin() callbacks, and for plugins that call Cypress.env(), which that page lists with the versions that support the new APIs. Show me the proposed changes before applying them.\n\n5. Fix the remaining breaking changes in the 16.0 section that affect my code and config: delete cy.end() calls, replace experimentalMemoryManagement: false with manageBrowserMemory: false, remove allowCypressEnv, experimentalSourceRewriting, and experimentalFastVisibility, move Cypress.config() calls that set viewportWidth, viewportHeight, or blockHosts during a test into cy.viewport() or a test configuration object, and convert any .coffee specs, support files, or fixtures to JavaScript or TypeScript.\n\n6. Review what changed behavior without changing my code. Flag, but don't rewrite unless a test actually fails: assertions on req.httpVersion, compression headers, or a 304 status inside cy.intercept(); visibility assertions that depended on the legacy algorithm; tests that relied on the implicit 10ms keystrokeDelay; and cookie or storage assertions written inside .then(), which doesn't retry. Don't set forceHttp1 or visibilityStrategy: 'legacy' to make a test pass; both are deprecated escape hatches.\n\n7. Verify. Run npx cypress verify and my Cypress tests, and confirm the run starts with no deprecation or removed-option warnings.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-16-0.md and https://docs.cypress.io/app/references/migration-guide/migrating-away-from-cypress-env.md, which covers in full the Cypress.env() removal that the 16.0 section only summarizes. Then upgrade this project from Cypress 15 to 16 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 15.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in the 16.0 section (Node.js 22, 24, or 26+, and Angular 21+ / Vite 8+ / Next.js 15.0.4+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency. If I depend on @cypress/angular-zoneless, replace it with @cypress/angular and update the imports.\n\n4. Migrate off Cypress.env(), following the Cypress.env() page rather than guessing. Find every Cypress.env() usage and classify each value as sensitive or public, since that choice decides the replacement. Move sensitive values (keys, tokens, passwords, credentials) to cy.env(), which is asynchronous and yields only the keys you request, and public values (feature flags, API versions, public URLs) to Cypress.expose() with a top-level expose block in my config. Replace any env key in a per-test or per-suite config override with expose. Check for --env CLI flags, for reads inside cy.origin() callbacks, and for plugins that call Cypress.env(), which that page lists with the versions that support the new APIs. Show me the proposed changes before applying them.\n\n5. Fix the remaining breaking changes in the 16.0 section that affect my code and config: delete cy.end() calls, replace cy.exec() calls with cy.task() registered in setupNodeEvents and remove execTimeout, replace experimentalMemoryManagement: false with manageBrowserMemory: false, remove allowCypressEnv, experimentalSourceRewriting, and experimentalFastVisibility, move Cypress.config() calls that set viewportWidth, viewportHeight, or blockHosts during a test into cy.viewport() or a test configuration object, and convert any .coffee specs, support files, or fixtures to JavaScript or TypeScript.\n\n6. Review what changed behavior without changing my code. Flag, but don't rewrite unless a test actually fails: assertions on req.httpVersion, compression headers, or a 304 status inside cy.intercept(); visibility assertions that depended on the legacy algorithm; tests that relied on the implicit 10ms keystrokeDelay; and cookie or storage assertions written inside .then(), which doesn't retry. Don't set forceHttp1 or visibilityStrategy: 'legacy' to make a test pass; both are deprecated escape hatches.\n\n7. Verify. Run npx cypress verify and my Cypress tests, and confirm the run starts with no deprecation or removed-option warnings.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
 This guide details the code changes needed to migrate to Cypress version 16.0.
@@ -34,6 +34,7 @@ This guide details the code changes needed to migrate to Cypress version 16.0.
 | [Node.js 20 and 25 dropped](#Nodejs-20-and-25-no-longer-supported)                                                                                                            | Yes, if you run Cypress on either version.                                                           |
 | [`Cypress.env()` removed](#Cypressenv-removed)                                                                                                                                | Yes. Migrate to `cy.env()` or `Cypress.expose()`.                                                    |
 | [`cy.end()` removed](#cyend-removed)                                                                                                                                          | Yes. Delete the `.end()` calls.                                                                      |
+| [`cy.exec()` removed](#cyexec-removed)                                                                                                                                        | Yes. Replace the calls with `cy.task()`.                                                             |
 | [`viewportWidth`, `viewportHeight`, and `blockHosts` via `Cypress.config()`](#viewportWidth-and-viewportHeight-can-no-longer-be-set-with-Cypressconfig-during-test-execution) | Yes, if you set them while a test is executing.                                                      |
 | [`experimentalSourceRewriting` removed](#experimentalSourceRewriting-config-option-removed)                                                                                   | Yes. Remove the option, and enable `removeSRIAttributes` if you used it for SRI.                     |
 | [CoffeeScript support removed](#CoffeeScript-support-removed)                                                                                                                 | Yes, if you have `.coffee` specs, support files, or fixtures.                                        |
@@ -477,6 +478,103 @@ cy.get('[data-cy="name"]').type('Jane')
 
 `cy.end()` was deprecated in Cypress
 [15.15.0](/app/references/changelog#15-15-0) and removed in 16.0.
+
+### `cy.exec()` removed
+
+`cy.exec()` has been removed. It ran a command through the shell on the machine
+running Cypress, so its behavior depended on the operating system, the shell,
+the login environment, and whether a terminal was attached.
+
+Use [`cy.task()`](/api/commands/task) instead. A task runs in the Node.js
+process that loads your Cypress configuration, so there is no shell resolution,
+no dependence on an attached terminal, and no per-platform quoting rules. It
+also returns real values instead of stdout you have to parse.
+
+Register the task in `setupNodeEvents`:
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+```
+
+```ts
+const downloads = config.downloadsFolder
+
+on('task', {
+  latestDownload() {
+    const files = fs
+      .readdirSync(downloads)
+      .map((name) => ({
+        name,
+        time: fs.statSync(path.join(downloads, name)).mtimeMs,
+      }))
+      .sort((a, b) => b.time - a.time)
+
+    return files.length ? path.join(downloads, files[0].name) : null
+  },
+})
+```
+
+:::
+
+Then call it from your test:
+
+<Badge type="danger">Before</Badge>
+
+```javascript
+cy.exec('ls -t cypress/downloads | head -1')
+  .its('stdout')
+  .then((filename) => {
+    cy.readFile(`cypress/downloads/${filename.trim()}`)
+  })
+```
+
+<Badge type="success">After</Badge>
+
+```javascript
+cy.task('latestDownload').then((filepath) => {
+  cy.readFile(filepath)
+})
+```
+
+If you need to run something that is not Node.js, spawn it from inside the task
+with `execFileSync` and an argument array, which avoids the shell entirely:
+
+:::cypress-config-plugin-example
+
+```ts
+import { execFileSync } from 'child_process'
+```
+
+```ts
+on('task', {
+  resetDatabase() {
+    execFileSync('docker', ['exec', 'db', 'reset-script'], { stdio: 'pipe' })
+
+    return null
+  },
+})
+```
+
+:::
+
+A task must return a value or `null`, and tasks time out after 60 seconds by
+default. Use `taskTimeout` to change that.
+
+The [`cy.task()` examples](/api/commands/task#Examples) cover the patterns
+`cy.exec()` was commonly used for, including
+[cleaning up and verifying downloaded files](/api/commands/task#Clean-up-and-verify-downloaded-files),
+[running an external command or CLI](/api/commands/task#Run-an-external-command-or-CLI),
+and [seeding a database](/api/commands/task#Seed-a-database).
+
+The `execTimeout` configuration option has been removed alongside the command.
+Setting it prints a warning and is otherwise ignored, so you can delete it from
+your configuration.
+
+`cy.exec()` was deprecated in Cypress
+[15.21.0](/app/references/changelog#15-21-0) and removed in 16.0.
 
 ### `Cypress.env()` removed
 
@@ -1177,7 +1275,7 @@ Node.js versions 18 and 23 are no longer supported.
 
 ### cy.exec code property renamed
 
-The `code` property on [`cy.exec()`](/api/commands/exec) has been renamed to `exitCode`.
+The `code` property on `cy.exec()` has been renamed to `exitCode`.
 
 <Badge type="danger">Before</Badge>
 
