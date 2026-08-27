@@ -69,7 +69,7 @@ Values that match a JWT or SAML-response pattern, wherever they appear.
 
 Redacted values appear as `(redacted)` in the Test Replay network log. Everything else is captured as usual, including request timing, status codes, and the structure of each request, so you keep the context you need to debug a request without exposing the values.
 :::info
-Note: When this setting is active, API response bodies that can’t be evaluated for redactions are fully dropped before storing the Test Replay data. For example, response bodies larger than 512 KB, or ones Cypress can't decode to plain text, aren’t captured at all. They show as “unavailable” in the network log.
+**Note**: When this setting is active, API response bodies that can’t be evaluated for redaction are **fully dropped** before storing the Test Replay data. For example, response bodies larger than 512 KB, or ones Cypress can't decode to plain text, aren’t captured at all. They show as “unavailable” in the network log.
 :::
 
 ##### Where redaction happens
