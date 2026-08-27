@@ -428,7 +428,7 @@ function countHeadings(raw, { iconOnly = false } = {}) {
 
 describe('integration with repository FAQ pages', () => {
   const faqFiles = [
-    'docs/app/faq.mdx',
+    'docs/app/debug/faq.mdx',
     'docs/cloud/faq.mdx',
     'docs/ui-coverage/faq.mdx',
     'docs/accessibility/faq.mdx',
@@ -448,7 +448,7 @@ describe('integration with repository FAQ pages', () => {
 })
 
 describe('integration with the Error Messages page', () => {
-  const file = 'docs/app/references/error-messages.mdx'
+  const file = 'docs/app/debug/error-messages.mdx'
   const exists = fs.existsSync(path.join(siteDir, file))
 
   test.runIf(exists)(

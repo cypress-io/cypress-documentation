@@ -34,9 +34,9 @@ Cypress AI is designed to solve these problems without changing how you already 
 
 ## Getting Started
 
-AI Capabilities are enabled by default for all users in your organization on an applicable plan. Login to your Cypress Cloud account to get started.
+AI Capabilities are enabled by default for all users in your organization on every Cypress Cloud plan, including the free Starter plan. Login to your Cypress Cloud account to get started.
 
-Each AI Tool must be enabled and installed individually. See each tool's documentation for instructions.
+Each AI Tool must be enabled and installed individually. See each tool's documentation for instructions. AI Skills and the `cypress tap` CLI run entirely on your machine, so you can start with those without a Cypress Cloud account at all.
 
 ## How Cypress AI Fits Into the Workflow
 
@@ -56,11 +56,11 @@ Cypress AI are easy-to-use capabilities and tools across your testing lifecycle.
 
 | When To Use       | AI Tool                                    | Outcome                                                                                                          |
 | ----------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| Author Tests      | `cypress-author` and `cypress-docs` Skills | Improves how AI tools create, update, and fix Cypress tests.                                                     |
+| Author Tests      | `cypress-author` and `cypress-docs` Skills | Improves how AI agents create, update, and fix Cypress tests.                                                    |
 | Understand Tests  | `cypress-explain` Skill                    | Helps AI describe, and critique existing tests.                                                                  |
 | Analyze & Triage  | Cloud MCP                                  | Gives AI coding assistants and AI agents a direct window into your application's health and stability            |
 | Triage & Automate | Cloud CLI                                  | Brings Cloud data and Test Replay access to the terminal for triage, scripting, CI, and terminal-based AI agents |
-| Run & Debug Tests | `cypress tap` CLI                          | Live Cypress app access for your agent. Drives Cypress and pulls the command log and DOM directly into context.  |
+| Run & Debug Tests | `cypress tap` CLI and `cypress-tap` Skill  | Live Cypress app access for your agent. Drives Cypress and pulls the command log and DOM directly into context.  |
 
 ## Capabilities in detail
 
@@ -193,11 +193,12 @@ This capability is included with UI Coverage and is not available on standard Cl
 **Best for:** teams wanting to providing instructions to improve the output of AI when working with Cypress.
 :::
 
-Use skills when you want your AI tool to:
+Use skills when you want your AI agent to:
 
 - Apply Cypress best practices to generated and reviewed tests
 - Steer away from brittle patterns and weak selectors
 - Produce more Cypress-focused explanations and critiques
+- Run and debug local tests against a live Cypress session with the `cypress-tap` CLI
 - Establish consistent AI behavior across your team and workflows
 
 [Read the AI Skills documentation →](/app/tooling/ai-skills)
@@ -243,13 +244,45 @@ Where the Cloud CLI and Cloud MCP give agents your recorded run data in
 Cypress Cloud, `cypress tap` gives your AI agent context to your Cypress session and your application-under-test on your
 machine, while developing and verifying tests before it ever runs in CI.
 
+It is completely free and needs no Cypress Cloud account: it ships with the Cypress App and drives the session already running on your machine.
+
 Read the [cypress tap documentation →](/app/tooling/cypress-tap)
 
 ## FAQs
 
+### Do AI features require a paid subscription?
+
+No. Every AI capability and AI tool listed on this page is available without a
+paid subscription, and several of them run entirely on your machine without a
+Cypress Cloud account at all.
+
+| Capability / Tool                         | What it needs                                                                    |
+| ----------------------------------------- | -------------------------------------------------------------------------------- |
+| AI Skills                                 | Nothing. Install them into your agent.                                           |
+| `cypress tap` CLI                         | Nothing beyond Cypress v15.21.0+ and an open mode session.                       |
+| Cypress Studio recording                  | Nothing. Studio AI recommendations use your Cloud account.                       |
+| cy.prompt()                               | A Cypress Cloud account on any plan, including the free Starter plan.            |
+| Studio AI recommendations                 | A Cypress Cloud account on any plan, including the free Starter plan.            |
+| Test Intent Summaries and Error Summaries | A Cypress Cloud account on any plan, including the free Starter plan.            |
+| Cloud MCP and the Cloud CLI               | A Cypress Cloud account on any plan, including the free Starter plan.            |
+| UI Coverage Test Generation               | A [UI Coverage](/ui-coverage/get-started/introduction) subscription.             |
+| Agent-ready accessibility reports         | A [Cypress Accessibility](/accessibility/get-started/introduction) subscription. |
+
+What a paid plan changes is headroom, not access: a larger `cy.prompt`
+execution allowance and higher hourly limits for `cy.prompt` and Studio AI. See
+[Usage limits](#Usage-limits) below and
+[Cypress Cloud plans](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cypress-ai-features)
+for full plan details.
+
+The two premium solutions in the table, UI Coverage and Cypress Accessibility,
+are products in their own right rather than AI capabilities gated behind a
+paywall. Their AI features come with the solution.
+
 ### Why do I need a Cloud Account?
 
-Cypress AI features use large language models (LLMs) to interpret prompts, analyze DOM state, and generate test code. Cypress Cloud manages those LLM requests securely on your behalf.
+This applies to the AI capabilities that call a large language model on your behalf, such as `cy.prompt`, Studio AI recommendations, and the Cloud summaries, along with the tools that read your recorded Cloud data. AI Skills and the `cypress tap` CLI call no LLM of their own and read no Cloud data, so they need no account. See [Do AI features require a paid subscription?](#Do-AI-features-require-a-paid-subscription) above.
+
+The capabilities that do use large language models rely on them to interpret prompts, analyze DOM state, and generate test code. Cypress Cloud manages those LLM requests securely on your behalf.
 
 Without a Cloud account, there is no secure channel through which to route those requests, no organizational controls to apply, and no way to enforce the data handling commitments Cypress makes to its customers.
 
@@ -262,7 +295,7 @@ Without a Cloud account, there is no secure channel through which to route those
   href="https://cloud.cypress.io/signup"
 />
 
-Free accounts include a two-week trial of all paid features, including higher AI usage limits.
+Free accounts include a [30-day trial](/cloud/get-started/free-trial) of all paid features, including higher AI usage limits. When the trial ends, your account moves to the free Starter plan and AI features keep working at free plan limits.
 
 ### Usage limits
 
@@ -279,6 +312,7 @@ Some hourly limits apply to all plans. Those are as follows:
 | Test Intent Summaries       | Included               | Included                  |
 | Error Summaries             | Included               | Included                  |
 | AI Skills                   | unlimited              | unlimited                 |
+| `cypress tap` CLI           | unlimited              | unlimited                 |
 | Cloud MCP requests          | 100 per hour, per user | 100 per hour, per user    |
 | Cloud CLI requests          | 100 per hour, per user | 100 per hour, per user    |
 | UI Coverage Test Generation | Not available          | Included with UI Coverage |
@@ -289,9 +323,11 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 ### Pricing
 
-AI Skills are available to all Cypress users.
+AI Skills and the `cypress tap` CLI are available to all Cypress users, with or without a Cypress Cloud account.
 
 Cloud MCP, the Cloud CLI, Test Intent Summaries and Error Summaries are available for free to all Cypress Cloud plans, including the Starter plan.
+
+`cy.prompt` is available on all Cypress Cloud plans, including the Starter plan. Each plan comes with an execution allowance. See [cy.prompt](/cloud/faq#cyprompt) in the Cloud FAQ for what counts as an execution and what happens when you reach your allowance.
 
 UI Coverage Test Generation is included with UI Coverage premium solutions subscriptions.
 
