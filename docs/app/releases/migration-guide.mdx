@@ -53,7 +53,7 @@ Firefox, WebKit, and Electron continue to use the legacy network path and are un
 
 [`cy.intercept()`](/api/commands/intercept) works as before, and most suites need no edits. A few behaviors differ in Chrome, Chromium, and Edge on the native browser network. See [Native network interception](/app/guides/native-network-interception) for the full list with examples.
 
-Aside from the `cy.intercept()` behaviors above, your suite should not need any changes. Commands, stubbing, waiting, aliases, and assertions all work as they did before, and adopting the native browser network requires no configuration change.
+Aside from the `cy.intercept()` behaviors listed in that guide, your suite should not need any changes. Commands, stubbing, waiting, aliases, and assertions all work as they did before, and adopting the native browser network requires no configuration change.
 
 If you need a temporary escape hatch, either while you update those tests or if you hit behavior on the native browser network that the guide does not list, route every browser back through the legacy network path:
 
@@ -477,7 +477,7 @@ cy.get('[data-cy="name"]').type('Jane')
 ```
 
 `cy.end()` was deprecated in Cypress
-[15.16.0](/app/references/changelog#15-16-0) and removed in 16.0.
+[15.15.0](/app/references/changelog#15-15-0) and removed in 16.0.
 
 ### `cy.exec()` removed
 
