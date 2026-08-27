@@ -877,7 +877,7 @@
         },
         {
           "name": "@qualflare/cypress",
-          "description": "Native Cypress reporter for Qualflare. Uploads suite/test results, real retry counts, screenshots, and command-log step traces as one Launch per run.",
+          "description": "Native Cypress reporter for Qualflare. Captures suite/test results, real retry counts, screenshots, videos, and command-log step traces as one Launch per run.",
           "link": "https://github.com/Qualflare/qualflare-cypress",
           "keywords": [
             "reporter",
