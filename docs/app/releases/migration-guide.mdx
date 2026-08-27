@@ -495,6 +495,13 @@ Register the task in `setupNodeEvents`:
 :::cypress-config-plugin-example
 
 ```ts
+import fs from 'fs'
+import path from 'path'
+```
+
+```ts
+const downloads = config.downloadsFolder
+
 on('task', {
   latestDownload() {
     const files = fs
@@ -535,7 +542,13 @@ cy.task('latestDownload').then((filepath) => {
 If you need to run something that is not Node.js, spawn it from inside the task
 with `execFileSync` and an argument array, which avoids the shell entirely:
 
-```javascript
+:::cypress-config-plugin-example
+
+```ts
+import { execFileSync } from 'child_process'
+```
+
+```ts
 on('task', {
   resetDatabase() {
     execFileSync('docker', ['exec', 'db', 'reset-script'], { stdio: 'pipe' })
@@ -544,6 +557,8 @@ on('task', {
   },
 })
 ```
+
+:::
 
 A task must return a value or `null`, and tasks time out after 60 seconds by
 default. Use `taskTimeout` to change that.

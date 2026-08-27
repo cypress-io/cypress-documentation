@@ -12039,7 +12039,7 @@ _Released Dec 19, 2017_
 **Bugfixes:**
 
 - The seeded `example_spec.js` file no longer fails in Windows on the
-  cy.exec() test. It now conditionally runs a command
+  `cy.exec()` test. It now conditionally runs a command
   appropriate for Windows. Fixes
   [#1097](https://github.com/cypress-io/cypress/issues/1097).
 - Trying to log in to Cypress no longer causes the app to crash. This area has
@@ -12497,7 +12497,7 @@ _Released Oct 06, 2017_
 
 **Possibly Breaking Changes:**
 
-- cy.exec() now trims output by default. That means if you
+- `cy.exec()` now trims output by default. That means if you
   were using an `eq` assertion the output will no longer have a trailing newline
   character `\n`. It's unlikely you are doing this, but it is possible you may
   need to update your assertions to remove this character. Fixes
@@ -12509,7 +12509,7 @@ _Released Oct 06, 2017_
   events happen. Fixes [#705](https://github.com/cypress-io/cypress/issues/705).
 - Basic auth now works _again_. Fixes
   [#573](https://github.com/cypress-io/cypress/issues/573).
-- cy.exec() now properly sources each time it is invoked
+- `cy.exec()` now properly sources each time it is invoked
   instead of only once. Fixes
   [#694](https://github.com/cypress-io/cypress/issues/694).
 
