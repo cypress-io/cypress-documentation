@@ -548,6 +548,12 @@ on('task', {
 A task must return a value or `null`, and tasks time out after 60 seconds by
 default. Use `taskTimeout` to change that.
 
+The [`cy.task()` examples](/api/commands/task#Examples) cover the patterns
+`cy.exec()` was commonly used for, including
+[cleaning up and verifying downloaded files](/api/commands/task#Clean-up-and-verify-downloaded-files),
+[running an external command or CLI](/api/commands/task#Run-an-external-command-or-CLI),
+and [seeding a database](/api/commands/task#Seed-a-database).
+
 The `execTimeout` configuration option has been removed alongside the command.
 Setting it prints a warning and is otherwise ignored, so you can delete it from
 your configuration.
