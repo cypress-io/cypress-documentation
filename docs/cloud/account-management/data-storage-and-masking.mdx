@@ -59,6 +59,7 @@ Setting a project to private means that only the users explicitly invited to the
 By default, Cypress automatically redacts sensitive values from your network logs before uploading Test Replay data to Cypress Cloud. Redaction runs in the Cypress app, on your machine.
 
 ##### What gets redacted
+
 Cypress redacts known-sensitive values from captured network requests and responses:
 
 Authentication and token headers, including authorization, proxy-authorization, cookie, set-cookie, and x-api-key.
@@ -70,16 +71,19 @@ Redacted values appear as `(redacted)` in the Test Replay network log. Everythin
 :::info
 Note: When this setting is active, API response bodies that can’t be evaluated for redactions are fully dropped before storing the Test Replay data. For example, response bodies larger than 512 KB, or ones Cypress can't decode to plain text, aren’t captured at all. They show as “unavailable” in the network log.
 :::
+
 ##### Where redaction happens
+
 Redaction runs in the Cypress app while your tests record, before Test Replay data is uploaded.
 
 ##### Who can see Test Replay data
 
 Test Replay data, including the network log, is visible to everyone with access to your project. In a private project, only people invited to your organization with the required team roles can see them. In a public project, any Cloud user can see the runs and the captured data.
 
-Redaction narrows what sits in that Test Replay data. If you are interested in managing access to Test Replay itself, review your project access controls. 
+Redaction narrows what sits in that Test Replay data. If you are interested in managing access to Test Replay itself, review your project access controls.
 
 ##### Turn redaction off
+
 Redaction can be toggled per project, if you don't want or need the data.
 
 - In Cypress Cloud, open your project settings.
