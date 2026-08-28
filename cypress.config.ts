@@ -18,6 +18,14 @@ export default defineConfig({
   e2e: {
     supportFile: "cypress/support/e2e.ts",
     baseUrl: "http://localhost:3000",
+    // The suite visits every docs page against a production build. Block analytics
+    // hosts so those crawls do not mint real Pendo, GA4, or FullStory visitors.
+    blockHosts: [
+      "*googletagmanager.com",
+      "*google-analytics.com",
+      "*fullstory.com",
+      "*pendo.io",
+    ],
     setupNodeEvents(on, config) {
       const path = 'docs';
 
