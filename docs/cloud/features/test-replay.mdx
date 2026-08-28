@@ -178,6 +178,24 @@ This data is then uploaded and stored in Cypress Cloud and replayed for debuggin
 - Shadow DOM
 - Canvas elements
 
+### Network data redaction
+
+By default, Cypress redacts sensitive values from captured network requests and responses before Test Replay data is uploaded to Cypress Cloud. Redaction runs in the Cypress app, on your machine. Redacted values appear as `(redacted)` in the network log.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-network-log-redacted.png"
+  alt="Set-Cookie response header showing (redacted) in the Test Replay network log"
+/>
+
+To turn redaction off, open project settings in Cypress Cloud and look in the **Test Replay** section. Turn off **Prevent capturing sensitive network data**.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-network-redaction-toggle-cloud.png"
+  alt="Test Replay project settings with Prevent capturing sensitive network data turned on"
+/>
+
+For the full list of what is redacted, see [Network data redaction](/cloud/account-management/data-storage-and-masking#Network-data-redaction).
+
 ### What is not captured
 
 Currently Test Replay does not support the following:
@@ -354,6 +372,7 @@ The exact error message can be seen by viewing the spec's output.
 - [Branch Review](/cloud/features/branch-review) - compare test results and Test Replays side by side between branches
 - [Cloud CLI](/cloud/integrations/cloud-cli) - query a test's replay timeline of commands, network requests, and logs from your terminal
 - [Test Replay FAQ](/cloud/faq#Test-Replay)
+- [Data storage and controls](/cloud/account-management/data-storage-and-masking#Network-data-redaction) - network redaction and other data controls
 - [Cypress v13 changelog](/app/references/changelog#13-0-0)
 - [Cypress Default Video Configuration](/app/references/configuration#Videos)
 - [Cypress Video Artifacts](/app/guides/screenshots-and-videos#Videos)
