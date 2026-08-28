@@ -14,9 +14,9 @@
     },
     "Cucumber": {
       "npm": "@badeball/cypress-cucumber-preprocessor",
-      "version": "26.0.0",
-      "lastPublished": "2026-07-04T19:34:14.847Z",
-      "cypressVersion": "^12.0.0 || ^13.0.0 || ^14.0.0 || >=15.0.0 <=15.17.0 || ^15.18.0"
+      "version": "27.0.0",
+      "lastPublished": "2026-08-27T07:54:59.349Z",
+      "cypressVersion": "^12.0.0 || ^13.0.0 || ^14.0.0 || ~15.16.0 || ~15.17.0 || ^15.18.0"
     },
     "cypress-markdown-preprocessor": {
       "npm": "cypress-markdown-preprocessor",
