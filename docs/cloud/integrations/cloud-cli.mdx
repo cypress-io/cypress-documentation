@@ -27,7 +27,8 @@ Getting to the root cause of a CI failure is the slow part. Before you can fix a
 The Cloud CLI removes that round trip. It exposes the same Cloud data you would click through, as commands you can pipe, script, and compose:
 
 - **Stay in your terminal.** List failing runs, drill into failing tests, and read errors and stack traces from the shell.
-- **Replay without a browser.** Query the [Test Replay](/cloud/features/test-replay) timeline for a specific attempt, scoped to the commands, network requests, and logs around the point of failure.
+- **Review what a test did.** Query the [Test Replay](/cloud/features/test-replay) timeline for a specific attempt, scoped to the commands, network requests, and logs around the point of failure.
+- **See what happened.** Use the Test Relay view to see exactly what your app looked like at every moment of your test.
 - **Automate it.** Because output is JSON, you can wire the CLI into scripts, dashboards, and custom tooling.
 - **Hand it to an agent.** The CLI is designed for both humans and AI agents, so your coding assistant can gather the same context you would.
 - **Grab a failure screenshot.** Save the screenshot Cypress captured at the moment a test failed straight to disk.
@@ -218,6 +219,7 @@ Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`,
 | [`cy-cloud test get`](#cy-cloud-test-get)               | Get details for a specific test.                          |
 | [`cy-cloud replay info`](#cy-cloud-replay-info)         | Summarize a test's replay event counts.                   |
 | [`cy-cloud replay timeline`](#cy-cloud-replay-timeline) | Query a test's replay timeline of events.                 |
+| [`cy-cloud replay view`](#cy-cloud-replay-view)         | Open a test replay in the browser to inspect your app.    |
 | [`cy-cloud status`](#cy-cloud-status)                   | Print your authentication state and Cloud status.         |
 | [`cy-cloud version`](#cy-cloud-version)                 | Print the CLI version and whether an upgrade is required. |
 | [`cy-cloud login`](#cy-cloud-login)                     | Sign in to Cypress Cloud.                                 |
@@ -559,7 +561,7 @@ Later queries for the same test read from the [cache](#Test-Replay-Caching) and 
 
 :::note
 
-Because replay data is cached locally after the first download, repeated `replay info` and `replay timeline` queries for the same test run entirely against the local cache and do not count against your [usage limit](#Usage-limits). Only the first query for a test, the one that downloads the replay, makes a request that counts.
+Because replay data is cached locally after the first download, repeated `replay info`, `replay timeline`, and `replay view` queries for the same test run entirely against the local cache and do not count against your [usage limit](#Usage-limits). The first query for a test makes a request that counts. Requests for assets in `replay view` are batched and cached so only the first use makes a request that counts.
 
 :::
 
@@ -645,6 +647,117 @@ Useful `replay timeline` options:
 `--network` accepts standard resource types, including `XHR`, `Fetch`, `Document`, `Script`, `Stylesheet`, `Image`, `Font`, `WebSocket`, and `All`.
 
 If a test's replay data is not available (for example, it is still processing or was not captured), replay commands return an error like `Failed to download replay: Replay "<testId>" not available`. Confirm [Test Replay](/cloud/features/test-replay) was enabled for the run and that it is within your data retention window.
+
+### cy-cloud replay view
+
+Launch test replay in a browser and inspect your application throughout the test lifecycle. Query for specific elements, accessibility tree state, and generate image snapshots.
+
+:::note
+
+Your system must have a Chromium-family browser installed to use `replay view`. The CLI will attempt to locate one automatically; you can target a specific instance by defining a `CHROME_PATH` environment variable.
+
+:::
+
+Launch a test replay, navigate to the moment the test failed, and capture a screenshot:
+
+```bash
+cy-cloud replay view open --testId <testId>
+cy-cloud replay view move --time failure
+cy-cloud replay view snapshot
+```
+
+:::note
+
+You can have multiple replay viewers open at the same time. Identify which to target using the `--testId` or `--testResultUrl` flag. If you don't provide a `testId` commands will be directed to the most-recently-opened viewer. Only one instance of a given `testId` can be open at once - that viewer will be shared by any commands targeting that test.
+
+:::
+
+#### Identifying a target test
+
+All subcommands provide flags to identify the test result you're interested in.
+
+| Flag              | Description                                                                      |
+| ----------------- | -------------------------------------------------------------------------------- |
+| `--testId`        | A Cypress Cloud test UUID (cannot use with `--testResultUrl`)                    |
+| `--testResultUrl` | A Cypress Cloud URL pointing to desired test result (cannot use with `--testId`) |
+| `--headless`      | Launch headed/headless browser (default: false)                                  |
+
+:::note
+
+If no test target is specified all control and query subcommands default to the most-recently-opened replay viewer. If a test target _is_ provided and a viewer is not already open for that test one will automatically be opened.
+
+:::
+
+#### Open and manage viewers
+
+A dedicated `open` subcommand exists to open a viewer as a helpful starting point.
+
+`cy-cloud replay view open --testId <testId>`
+
+You can `list` all open viewers to help with cleanup or quickly identify different tests to target.
+
+`cy-cloud replay view list`
+
+Once you're done with a viewer you can `close` it to release any resources it's consuming.
+
+`cy-cloud replay view close --testId <testId>`
+
+:::tip
+
+Replay viewers take time to launch. It is much faster to open a test once and perform multiple queries than it is to open and close one repeatedly. Conversely, viewers consume memory while they remain open, so it is advisable to close one as soon as you're done with it. A viewer will automatically close after 5 minutes of inactivity, or when the browser tab or process is closed.
+
+:::
+
+#### Control a viewer
+
+You can control a viewer by sending commands via the CLI
+
+| Subcommand | Description                                                              |
+| ---------- | ------------------------------------------------------------------------ |
+| `move`     | Navigate a viewer to a specific moment, or switch to a different attempt |
+
+| Flag        | Description                                                                                                                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--time`    | `start\|end\|failure`, or a numeric timestamp. Cannot combine with `pin`.                                                                                                                   |
+| `--attempt` | Test attempt to navigate to (1=first attempt)                                                                                                                                               |
+| `--pin`     | A command or network request ID to pin in the viewer. Optionally, specify a snapshot (before/after) by suffixing with `\|{snapshot}`. IDs vary by type, use `replay timeline` to find them. |
+
+```bash
+cy-cloud replay view move --time failure
+cy-cloud replay view move --attempt 2 --pc <commandId>
+```
+
+:::tip
+
+The replay viewer is fully interactive in the browser as well. After opening a viewer with the CLI you can navigate manually and use the browser DevTools to perform any manual inspections you'd like.
+
+:::
+
+#### Query a viewer
+
+Once you are at the moment of interest, you can query the replay for information about your app.
+
+| Subcommand | Description                                                                        |
+| ---------- | ---------------------------------------------------------------------------------- |
+| `dom`      | Serialize the HTML markup for an identified element and its descendants.           |
+| `inspect`  | Print detailed information about an element, including its styles and attributes.  |
+| `aria`     | Print a representation of the accessibility (ARIA) tree for an identified element. |
+
+Subcommands that target an element require a `--selector` flag with a valid CSS Selector value. The selector will be evaluated against your app and will return one of three responses:
+
+- A "no items found" response if no matches exist
+- An "ambiguous" response if multiple matches are found. This will include generated unique selectors for the first several matches to assist identifying the specific instance you're interested in.
+- A "match" response if a single match is found, with the requested data
+
+You can also request a visual record
+
+| Subcommand | Description                                                    |
+| ---------- | -------------------------------------------------------------- |
+| `snapshot` | Save a PNG image of the application under test at that moment. |
+
+| Flag     | Description                                                                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--path` | Directory or fully-qualified path to save the image. Optional, defaults to current working directory named with the active viewer timestamp. |
 
 ### cy-cloud status
 
@@ -797,6 +910,16 @@ If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copil
 >
 
 ### Daily failure check
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Identify visual regressions"
+  subtext="Compare visual application state across runs."
+  prompt={`Use cy-cloud to find test <specPath> in the two latest runs and open each in a Test Replay viewer. Move each viewer to the end of the test and capture a screenshot. Compare both screenshots and determine if significant visual changes exist between them.`}
+>
+
+### Diagnose a flaky test
 
 </CopyPrompt>
 
@@ -989,7 +1112,8 @@ Test Replay data can cover an entire spec, so the CLI downloads the replay once 
 
 - The cache lives at `~/.cache/cy-cloud` by default. Override it with the `CYCLOUD_CACHE_DIR` environment variable.
 - Generally, entries expire after **30 days**. The cache is capped at **1 GB** by default and when the cap is exceeded, the oldest entries are removed first.
-- Maintenance runs automatically. The CLI validates cache integrity at most once a day, and prunes expired or oversized entries after commands run.
+- Maintenance runs automatically once per day. The CLI performs cache maintenance when a command is run and prunes expired or oversized entries.
+- You can manually run cache maintenance more frequently using the [`cache cleanup`](#cy-cloud-cache-cleanup) command.
 
 Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
 
@@ -1003,11 +1127,15 @@ The CLI stores configuration and credentials under `~/.config/cy-cloud`. If the 
 
 The following environment variables adjust its behavior:
 
-| Variable                     | Purpose                                                                              |
-| ---------------------------- | ------------------------------------------------------------------------------------ |
-| `CYPRESS_CLOUD_TOKEN`        | Authenticate with a personal access token. Takes precedence over stored credentials. |
-| `CYCLOUD_CACHE_DIR`          | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.               |
-| `CYCLOUD_DISABLE_CACHE_MGMT` | Set to `true` to disable automatic cache validation and cleanup.                     |
+| Variable                      | Purpose                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------ |
+| `CYPRESS_CLOUD_TOKEN`         | Authenticate with a personal access token. Takes precedence over stored credentials. |
+| `CYCLOUD_CACHE_DIR`           | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.               |
+| `CYCLOUD_DISABLE_CACHE_MGMT`  | Set to `true` to disable automatic cache validation and cleanup.                     |
+| `CHROME_PATH`                 | Override the Chromium executable to use for `replay view`                            |
+| `CHROME_PORT`                 | Override the randomly-selected debugging port used in `replay view`                  |
+| `CYCLOUD_VIEWER_TIMEOUT_MS`   | How long to wait for `replay view` commands to complete, in milliseconds             |
+| `CYCLOUD_REPLAY_IDLE_TIMEOUT` | Seconds to wait before terminating an inactive replay viewer (default: 300)          |
 
 ## FAQs
 
