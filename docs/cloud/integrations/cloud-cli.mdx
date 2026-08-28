@@ -838,6 +838,13 @@ cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --networ
 
 At this point you have the error, the screenshot, the commands that led up to it, and the network and console activity around it, all in your terminal. From here you can fix the test, or hand the JSON to an [agent](#Use-with-AI-agents) and ask it to propose a fix.
 
+**6. Verify the fix before you push.** The best way to confirm the fix is to run the test locally. Start Cypress with `cypress open`, then use [`cypress tap`](/app/tooling/cypress-tap) to start the spec: pass the `specFilepath` returned from [`cy-cloud test list`](#cy-cloud-test-list) to [`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). Then run [`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status) to verify the updated test passed; if it isn't, your agent can use `cypress tap` to inspect the full report, dig into the command logs, and inspect the DOM to make corrections before recording to the Cloud.
+
+```bash
+npx cypress tap run cypress/e2e/checkout.cy.ts
+npx cypress tap status
+```
+
 :::tip
 
 Wrap this sequence in a [shell script](#Use-in-a-shell-script) that takes a project ID and branch, and you have a one-command "why did the last build fail" tool for your team.
@@ -986,6 +993,10 @@ Test Replay data can cover an entire spec, so the CLI downloads the replay once 
 
 Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
 
+:::tip
+Some AI agents automatically run inside sandbox environments, which causes them to build a fresh cache for each session. This can slow things down and affect your rate limits. Review your agent's documentation to configure the `CYCLOUD_CACHE_DIR` environment variable to a persistent filesystem location shared across agent invocations.
+:::
+
 ## Configuration
 
 The CLI stores configuration and credentials under `~/.config/cy-cloud`. If the `XDG_CONFIG_HOME` environment variable is set, it uses `$XDG_CONFIG_HOME/cy-cloud` instead. Credentials are written with owner-only permissions.
@@ -1021,6 +1032,7 @@ The Cloud CLI communicates with the Cypress Cloud API at `https://cloud-api.cypr
 ## See also
 
 - [Cloud MCP: Agentic debugging](/cloud/integrations/cloud-mcp)
+- [cypress tap: live Cypress app context in your terminal](/app/tooling/cypress-tap)
 - [Test Replay](/cloud/features/test-replay)
 - [Recording Cloud Runs](/cloud/features/recorded-runs)
 - [Data Extract API](/cloud/integrations/data-extract-api)

@@ -22,7 +22,7 @@ This allows you to review the results within CI and to determine if the results 
 This page focuses on how the Results API works and what kinds of information can be accessed. For examples of how this can be used, see our higher-level guides:
 
 - The [pull requests and policies guide](/accessibility/guides/block-pull-requests) shows what it looks like to use the Results API to set a policy and fail a pull request.
-- The guide for [detecting and managing changes](/accessibility/guides/detect-changes#Results-API) shows some other common use cases.
+- The guide for [catching accessibility regressions](/accessibility/guides/detect-changes#enforce-a-standard-in-ci) shows some other common use cases.
 
 :::
 
@@ -286,6 +286,16 @@ The Accessibility results for the run are returned as an object containing the f
     // The url that deep links the report for this specific rule violation.
     accessibilityReportUrl: 'https://cloud.cypress.io/[...]'
   }]
+
+  // The App Quality configuration the report was processed with.
+  // Useful for detecting configuration changes that alter results
+  // without any application code changing.
+  config?: {
+    // When the configuration was last saved, as an ISO 8601 string
+    updatedAt: string
+    // The configuration values applied to this run
+    value: object
+  }
 
   // This list of views with accessibility violations detected,
   // and details of failed rules on each view

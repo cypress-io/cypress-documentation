@@ -1173,13 +1173,25 @@
 
 [[redirects]]
   from = "/accessibility/core-concepts/run-level-reports"
-  to = "/accessibility/guides/run-level-reports"
+  to = "/accessibility/reports/run-level-reports"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/guides/run-level-reports"
+  to = "/accessibility/reports/run-level-reports"
   status = 301
   force = true
 
 [[redirects]]
   from = "/accessibility/core-concepts/inspecting-violation-details"
-  to = "/accessibility/guides/inspecting-violation-details"
+  to = "/accessibility/reports/element-detail-view"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/guides/inspecting-violation-details"
+  to = "/accessibility/reports/element-detail-view"
   status = 301
   force = true
 

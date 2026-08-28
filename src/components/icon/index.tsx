@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import CypressIcon from "@cypress-design/react-icon";
 
 // Names resolved from the Font Awesome brands pack instead of solid
@@ -30,7 +31,7 @@ export default function Icon({ useCypressIcon, name, color, inline, url, callout
     return <CypressIcon name={name as any} {...customProps} />
   }
 
-  const iconName = BRAND_ICONS.has(name) ? ["fab", name] : name;
+  const iconName = (BRAND_ICONS.has(name) ? ["fab", name] : name) as IconProp;
   const space = inline ? '.25rem' : '0.5rem'
 
   let content;

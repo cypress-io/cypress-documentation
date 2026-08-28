@@ -1,0 +1,111 @@
+---
+title: 'Accessibility run-level reports'
+description: 'Review the main areas to pay attention to when first reviewing an accessibility report for a Cypress run.'
+sidebar_label: Run-level reports
+sidebar_position: 10
+---
+
+<ProductHeading product="accessibility" />
+
+# Run-level reports
+
+This guide highlights the three main areas to focus on when reviewing an accessibility report for a Cypress run. It also explains key terms and definitions used in these reports.
+
+## Run summary
+
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-accessibility-summary-metrics.png"
+  width="60%"
+  alt="A heading reads Cypress Accessibility, above some summary metrics that are describe in detail in this document's text."
+/>
+
+The Run Summary provides top-line metrics for a quick overview of accessibility in the tested run. Clicking any metric navigates to detailed reports, including live DOM snapshots for each issue.
+
+**Key metrics include:**
+
+- **Overall Score**: A combined accessibility score for the entire run.
+- **Failed Elements**: Total elements failing at least one accessibility rule.
+- **Inconclusive Elements**: Elements requiring manual review due to inconclusive accessibility checks.
+- **Ignored Elements**: Elements ignored by your configuration but with failed or inconclusive checks.
+- **Rule Severity Chart**: A mini chart showing the Axe Core® severity levels (critical, serious, moderate, minor) for failed rules.
+- **Total Failed Rules**: The cumulative count of failed rules.
+
+Each term is defined further below for clarity.
+
+## Views
+
+A View represents a collection of snapshots from the tested application, grouped by pages (via URLs) or components (via Component Testing paths). Views are configurable and provide structured insights into the application.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-accessibility-views-dashboard.png"
+  alt="The Cypress Accessibility Views List, in context in Cypress Cloud, reflecting a run of the Cypress Realworld App where violations of accessibility rules were detected on multiple pages."
+/>
+
+### Snapshots
+
+The number of snapshots captured for a View. A Snapshot represents the live HTML and CSS state of the application at a specific moment during a recorded test. Multiple snapshots are captured as tests interact with elements, modify state, or load dynamic content.
+
+### Score
+
+The overall score for a View is a weighted ratio of passed versus failed checks across all snapshots, reflecting the general accessibility level for that segment of the application. This produces a top-line percentage score that indicates a general sense of accessibility for a project. Learn more in the [Accessibility Score section](/accessibility/core-concepts/accessibility-score)..
+
+### Elements
+
+The count of elements in a View categorized as:
+
+- **Failed:** Elements violating at least one rule. These affect your accessibility score.
+- **Inconclusive:** Elements had at least one check marked "incomplete" by Axe Core® during the run. These represent checks that couldn't be completed for technical reasons, or items that need manual review to confirm if there is an accessibility issue. These do not affect your accessibility score.
+- **Ignored:** Elements with failed or incomplete checks that were excluded via CSS selectors in your [configuration](/accessibility/configuration/elementfilters), or through the `data-a11y-ignore` attribute. These elements are still processed in order to support your understanding of what is ignored. They do not affect your accessibility score.
+
+Each of these numbers can be clicked to navigate to a report filtered to just that set of findings.
+
+### Failed rules
+
+Failed rules are displayed with severity charts (critical, serious, moderate, minor) and total counts, enabling quick identification of areas with the most significant issues.
+
+### Severity
+
+Severity levels correspond to Axe Core® impact levels for each rule, providing context on the criticality of detected issues. It's important to note that these levels were created by Deque Systems, the creators of Axe Core, and not a part of the Web Content Accessibility Guidelines themselves. Learn more in the [Axe Core® documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/issue_impact.md).
+
+## Rules
+
+This section lists all Axe Core® rules enabled during the run, detailing their outcomes.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-accessibility-rules-list.png"
+  alt="The Cypress Accessibility rules list showing multiple accessibility rules failing in this run of the Cypress Realworld App."
+/>
+
+Attributes for each rule include:
+
+- **Status Icon**: An icon representing the overall status for the rule, which can be any one of these:
+  - **Passed**: All elements passed checks or were ignored.
+  - **Failed**: At least one element failed.
+  - **Inconclusive**: At least one element was labelled "incomplete" by Axe Core® and requires manual review, but no elements were failed.
+  - **Inapplicable**: No applicable elements detected for this rule.
+  - **Ignored by config**: The rule was excluded at the project level.
+- **Description**: A summary of the rule.
+- **Severity**: The Axe Core® impact level for the rule, or equivalent level for [Cypress rules](/accessibility/core-concepts/cypress-rules).
+- **Counts**: The counts of failed, inconclusive, and ignored elements for the rule.
+
+## Filtering
+
+You can filter Views and Rules in accessibility reports by:
+
+- **Rule severity**: Critical, serious, moderate, or minor.
+- **Rules**: WCAG 2.1 A, WCAG 2.1 AA, or Best Practices.
+- **Element status**: Failed, inconclusive, or other (other includes ignored elements and rules, 100% passing views and rules, and inapplicable rules).
+- **Name**: Search for specific URLs or paths to filter the views or specific names to filter rules.
+
+This allows a full understanding of what Cypress evaluated during the run, while enabling targeted analysis of critical issues.
+
+<DocsImage
+  src="/img/accessibility/core-concepts/cypress-accessibility-filter-views-and-rules.png"
+  alt="The Cypress Accessibility dropdown filter showing rule severity, rules, element state as well as a search bar"
+/>
+
+:::tip
+
+If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, your AI agent can query this same data directly—violation counts, failing rules, page and component details, and element-level failures—without leaving your editor.
+
+:::

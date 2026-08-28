@@ -1,0 +1,54 @@
+/* Floated so the page's <h1> (and the <ProductHeading> above it, both of which
+   are rendered by the MDX content rather than by the theme) flow to its left
+   and the control lands level with the title. */
+.markdownActions {
+  float: right;
+  display: flex;
+  align-items: center;
+  margin: 0 0 0.5rem 1rem;
+}
+
+/* Fuse the copy button and the dropdown trigger into one split control. The
+   selectors are nested to outrank the `rounded-[4px]` utility the design
+   system's Button ships with, whose specificity is otherwise identical. */
+.markdownActions .copyButton {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.markdownActions .menuButton {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  /* collapse the doubled border down the seam */
+  margin-left: -1px;
+}
+
+/* Lift whichever half is focused or hovered so its full border and focus ring
+   are drawn over the other's, instead of being clipped at the seam. */
+.markdownActions .copyButton:is(:hover, :focus-visible),
+.markdownActions .menuButton:is(:hover, :focus-visible) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Below Docusaurus' desktop breakpoint the content column is too narrow to
+   share a line with the title, so the control sits on its own row above it. */
+@media (max-width: 996px) {
+  .markdownActions {
+    float: none;
+    justify-content: flex-end;
+    margin: 0 0 1rem;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
