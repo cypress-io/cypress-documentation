@@ -27,6 +27,8 @@ With Cypress AI Skills, your AI agent can:
   training data
 - Run, watch, and debug tests against a live Cypress session, then fix failures
   in the same loop that wrote them
+- Triage recorded CI failures and flakes from Cypress Cloud without leaving the
+  terminal
 - Behave consistently across your team, no matter who writes the prompt
 
 Skills work with any AI coding agent that supports skills or custom
@@ -51,9 +53,11 @@ SOP manual you hand them on day one.
 
 ## Available Cypress skills
 
-Cypress publishes four skills. They are designed to work together:
+Cypress publishes five skills. They are designed to work together:
 `cypress-author` writes and fixes tests, `cypress-explain` reviews and explains
-them, `cypress-tap` runs and debugs them against a live Cypress session and `cypress-docs` grounds them in official documentation.
+them, and `cypress-tap` runs and debugs them against a live Cypress session.
+`cypress-cloud-cli` triages recorded runs and failures in Cypress Cloud, and
+`cypress-docs` grounds them all in official documentation.
 
 ### `cypress-author`: create, update, and fix tests
 
@@ -147,6 +151,46 @@ For the full CLI reference the skill builds on, including every command, its
 options, and end-to-end debugging walkthroughs, see
 [Drive Cypress with AI agents using `cypress tap`](/app/tooling/cypress-tap).
 
+### `cypress-cloud-cli`: triage recorded runs and failures {#cypress-cloud-cli}
+
+The [`cypress-cloud-cli`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-cloud-cli)
+skill instructs your AI agent on how to investigate recorded Cypress Cloud runs
+through the [Cloud CLI](/cloud/integrations/cloud-cli): organizations, projects,
+runs, specs, tests, failure screenshots, and
+[Test Replay](/cloud/features/test-replay) data, all from the terminal. Use it to
+triage a CI failure or flake from a Cypress Cloud URL or test ID, so your AI
+agent finds the root cause from recorded evidence instead of sending you to the
+Cloud UI.
+
+The skill runs the Cloud CLI from the `@cypress/cloud` package, so it needs
+Node.js `22.21.0` or later, an authenticated CLI, and an organization with the
+Cloud CLI integration enabled. See
+[Configure the Cloud CLI](/cloud/integrations/cloud-cli#Configure-the-Cloud-CLI)
+for the setup.
+
+Beyond what a generic AI agent knows, this skill:
+
+- **Resolves a Cypress Cloud URL directly.** It reads the project, run number,
+  and test ID from a copied Cloud test URL and queries that test straight away,
+  instead of walking the organization and project lists to rediscover them.
+- **Targets the attempt that failed.** It reads a test's attempt history and
+  passes the failed attempt number to every Test Replay query, so a flaky test's
+  final passing retry never hides the failure it is diagnosing.
+- **Reconstructs the failure from Test Replay.** It pulls the commands leading up
+  to the failed command, the XHR and Fetch network events, and the application's
+  console logs, then correlates them to explain what broke.
+- **Distinguishes flake from a reproducible failure.** With no explicit flake
+  field to rely on, it infers flake from the retry history, a failed attempt
+  followed by a passing one, and reports the cause as `unknown` when the attempts
+  are inconclusive.
+- **Grounds every conclusion in evidence.** It reports the run, spec, test, and
+  timeline it inspected, and names the remaining gap when the evidence is
+  incomplete rather than guessing.
+
+For the full CLI reference the skill builds on, including every command, its
+options, and end-to-end triage walkthroughs, see
+[Cloud CLI](/cloud/integrations/cloud-cli).
+
 ### `cypress-docs`: look up accurate documentation
 
 [`cypress-docs`](https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-docs)
@@ -191,6 +235,7 @@ Or install each skill individually:
   exec={`skills add https://github.com/cypress-io/ai-toolkit --skill cypress-author
 skills add https://github.com/cypress-io/ai-toolkit --skill cypress-explain
 skills add https://github.com/cypress-io/ai-toolkit --skill cypress-tap
+skills add https://github.com/cypress-io/ai-toolkit --skill cypress-cloud-cli
 skills add https://github.com/cypress-io/ai-toolkit --skill cypress-docs`}
 />
 
@@ -226,6 +271,10 @@ gh skill install cypress-io/ai-toolkit cypress-explain
 
 ```bash
 gh skill install cypress-io/ai-toolkit cypress-tap
+```
+
+```bash
+gh skill install cypress-io/ai-toolkit cypress-cloud-cli
 ```
 
 ```bash
@@ -372,6 +421,18 @@ reference.
 /cypress-tap Run cypress/e2e/checkout.cy.ts against my open Cypress session, poll for a verdict, and if it fails, read the failing test's Command Log and error and inspect the app at the failing command to tell me what caused it.
 ```
 
+### Triage a recorded Cloud failure
+
+When a test fails in CI and was recorded to Cypress Cloud, `cypress-cloud-cli`
+can pull the run, the failing test, and its Test Replay data from the terminal,
+then work out the most likely cause. See the
+[Cloud CLI documentation](/cloud/integrations/cloud-cli) for the full command
+reference.
+
+```skill
+/cypress-cloud-cli Diagnose why this Cypress Cloud test failed: <test URL>. Inspect its failed attempt and Test Replay timeline, and tell me the most likely root cause.
+```
+
 ### Summarize test coverage in plain language
 
 ```skill
@@ -447,3 +508,6 @@ can extend or complement your agentic workflows:
 - **[Cloud MCP](/cloud/integrations/cloud-mcp)**: Give your AI agent direct
   access to Cypress Cloud test results and failure data to investigate and fix
   issues without leaving your coding environment.
+- **[Cloud CLI](/cloud/integrations/cloud-cli)**: Query Cypress Cloud run results
+  and Test Replay data as JSON from the terminal, the CLI the `cypress-cloud-cli`
+  skill drives for terminal-based agents and your own automation.
