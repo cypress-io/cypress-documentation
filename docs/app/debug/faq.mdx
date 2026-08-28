@@ -23,7 +23,9 @@ to record your test runs in CI.
 
 Additionally, we have premium solutions like [UI Coverage](/ui-coverage/get-started/introduction) and [Cypress Accessibility](/accessibility/get-started/introduction) which have separate pricing.
 
-Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
+Cypress AI is not a paid add-on. No AI capability requires a paid subscription: some, like the [Cypress skills for AI agents](/app/tooling/ai-skills) and the [`cypress tap` CLI](/app/tooling/cypress-tap), need no Cypress Cloud account at all, and the rest work on any Cloud plan, including the free Starter plan. See [Do AI features require a paid plan?](/cloud/faq#Do-AI-features-require-a-paid-plan) for the full breakdown.
+
+Please see our [Pricing Page](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=app-faq) for more details.
 
 ### <Icon name="angle-right" /> What operating systems do you support?
 
@@ -2059,18 +2061,22 @@ Start Cypress in open mode with `cypress open`, then point your agent at the
 poll until it reports `passed` or `failed`, and `cypress tap reporter --test-id <test-id>`
 to read the failing test's Command Log, error, and code frame.
 
-Add those steps to the instructions file your agent reads, such as `AGENTS.md`
-or `CLAUDE.md`. See
+The easiest way is to install the
+[`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap), which packages this
+loop so your agent runs it correctly. If you'd rather write the steps yourself,
+add them to the instructions file your agent reads, such as `AGENTS.md` or
+`CLAUDE.md`. See
 [Use cypress tap with AI agents](/app/tooling/cypress-tap#Use-cypress-tap-with-AI-agents)
 for a snippet you can copy.
 
 ### <Icon name="angle-right" /> How do I use Cypress with Cursor, Claude Code, or GitHub Copilot?
 
-Any AI coding tool that can run shell commands can drive Cypress through the
-`cypress tap` CLI. Start Cypress with `cypress open`, then add the
-`cypress tap` workflow to the instructions file your tool reads: `AGENTS.md`
-for Cursor and Codex CLI, `CLAUDE.md` for Claude Code, or
-`.github/copilot-instructions.md` for GitHub Copilot. See
+Any AI coding agent that can run shell commands can drive Cypress through the
+`cypress tap` CLI. Start Cypress with `cypress open`, then install the
+[`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) to hand it the
+workflow, or add the `cypress tap` steps yourself to the instructions file your
+agent reads: `AGENTS.md` for Cursor and Codex CLI, `CLAUDE.md` for Claude Code,
+or `.github/copilot-instructions.md` for GitHub Copilot. See
 [Use cypress tap with AI agents](/app/tooling/cypress-tap#Use-cypress-tap-with-AI-agents)
 for a snippet to copy.
 
@@ -2102,13 +2108,21 @@ loop while you and your agent write code.
 To give an agent your Cypress CI results instead, use
 [Cloud MCP](/cloud/integrations/cloud-mcp) or the
 [Cloud CLI](/cloud/integrations/cloud-cli), which read recorded runs from
-Cypress Cloud.
+Cypress Cloud. The
+[`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) instructs
+your agent on how to drive the Cloud CLI — finding the failing run, reading its
+errors, and inspecting Test Replay — so it triages recorded failures correctly.
 
-### <Icon name="angle-right" /> Does `cypress tap` require a Cypress Cloud account?
+### <Icon name="angle-right" /> Does `cypress tap` require a Cypress Cloud account or a paid subscription?
 
-No. `cypress tap` talks only to the Cypress session running on your own
+No to both. `cypress tap` talks only to the Cypress session running on your own
 machine, so it needs no Cypress Cloud account, login, or network access. It
-ships with the `cypress` npm package like every other Cypress CLI command.
+ships with the `cypress` npm package like every other Cypress CLI command,
+carries no usage limits, and costs nothing.
+
+The same is true of the [Cypress skills for AI agents](/app/tooling/ai-skills).
+For where every other AI capability stands, see
+[Do AI features require a paid plan?](/cloud/faq#Do-AI-features-require-a-paid-plan)
 
 ### <Icon name="angle-right" /> Which browsers does `cypress tap` support?
 

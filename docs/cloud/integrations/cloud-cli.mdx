@@ -758,6 +758,18 @@ It reports the cache size before and after, and how many entries it removed:
 
 Because every command returns structured JSON and exposes its output schema with `--schema`, the Cloud CLI is a natural tool for AI coding agents. An agent can list failing tests, read errors, and pull Test Replay timelines, then use that context to propose a fix in your editor. The workflows below are written to run by hand or to hand to an agent.
 
+The easiest way to hand this to an agent is the [`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) from the Cypress AI Toolkit. It gives your agent the debugging know-how for `cy-cloud`: which attempt to replay for a flaky test, how to navigate the Test Replay timeline, and how to correlate the failed command with the network and console events around it, so it reaches a root cause instead of restating the error.
+
+Install it with the [`skills`](https://skills.sh/) CLI:
+
+<PackageManagerTabs exec="skills add https://github.com/cypress-io/ai-toolkit --skill cypress-cloud-cli" />
+
+or with the [GitHub CLI](https://cli.github.com/manual/gh_skill):
+
+```bash
+gh skill install cypress-io/ai-toolkit cypress-cloud-cli
+```
+
 If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copilot CLI), point it at `cy-cloud` and describe the goal in plain language. Copy one of the prompts below to get started, replacing the `<projectId>`, `<branch>`, `<runNumber>`, and `<testId>` placeholders with your own values.
 
 <CopyPrompt
@@ -1032,6 +1044,7 @@ The Cloud CLI communicates with the Cypress Cloud API at `https://cloud-api.cypr
 ## See also
 
 - [Cloud MCP: Agentic debugging](/cloud/integrations/cloud-mcp)
+- [Cypress AI Skills](/app/tooling/ai-skills): the `cypress-cloud-cli` skill drives this CLI for your agent
 - [cypress tap: live Cypress app context in your terminal](/app/tooling/cypress-tap)
 - [Test Replay](/cloud/features/test-replay)
 - [Recording Cloud Runs](/cloud/features/recorded-runs)
