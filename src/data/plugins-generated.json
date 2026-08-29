@@ -456,6 +456,12 @@
       "lastPublished": "2026-05-26T15:36:17.688Z",
       "cypressVersion": "^15.1.0"
     },
+    "@qualflare/cypress": {
+      "npm": "@qualflare/cypress",
+      "version": "0.2.0",
+      "lastPublished": "2026-08-27T15:14:54.210Z",
+      "cypressVersion": ">=12.0.0"
+    },
     "Sauce Labs Visual": {
       "npm": "@saucelabs/cypress-visual-plugin",
       "version": "0.10.2",
