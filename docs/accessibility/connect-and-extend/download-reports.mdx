@@ -19,10 +19,10 @@ The download button at the top of a run's Accessibility report exports the run's
 
 The export is a portable snapshot of a single run. Unlike the [Results API](/accessibility/connect-and-extend/results-api) (built for CI assertions) and [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) (built for live querying), a downloaded report needs no Cloud connection to work with after the fact. This makes it a good fit for:
 
-* offline analysis
-* custom spreadsheets and charts
-* sharing with people who don't use Cypress Cloud
-* comparing multiple runs in detail by downloading a file for each. 
+- offline analysis
+- custom spreadsheets and charts
+- sharing with people who don't use Cypress Cloud
+- comparing multiple runs in detail by downloading a file for each.
 
 For other ways to get results out of Cypress Cloud, see the [Connect & extend overview](/accessibility/connect-and-extend/overview).
 
@@ -30,20 +30,20 @@ For other ways to get results out of Cypress Cloud, see the [Connect & extend ov
 
 Each row represents a single failed element for a single rule on a single view. Because an element can fail the same rule on more than one view, that element appears once per view. Both formats contain the same fields:
 
-| Column            | Description                                                                             |
-| ----------------- | --------------------------------------------------------------------------------------- |
-| Rule ID           | The Axe Core® or [Cypress rule](/accessibility/core-concepts/cypress-rules) identifier. |
-| Description       | A summary of what the rule checks.                                                      |
-| Impact            | The severity level: critical, serious, moderate, or minor.                              |
-| Help              | A short description of how to fix the issue.                                            |
-| Help URL          | A link to the rule's documentation.                                                     |
-| Tags              | The standards and categories associated with the rule, such as `wcag2aa`.               |
-| Element           | The selector identifying the failing element.                                           |
-| Element URL       | A deep link into the Cloud report, filtered to this element.                            |
-| Status            | The element's status: `fail`, `incomplete`, or `ignore` (only `fail` is currently supported).                                |
-| Failure Summaries | The specific reasons the element failed, as reported during the run.                    |
-| View              | The name of the page or component where the element was found.                          |
-| View URL          | A deep link into the Cloud report for this view.                                        |
+| Column            | Description                                                                                   |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| Rule ID           | The Axe Core® or [Cypress rule](/accessibility/core-concepts/cypress-rules) identifier.       |
+| Description       | A summary of what the rule checks.                                                            |
+| Impact            | The severity level: critical, serious, moderate, or minor.                                    |
+| Help              | A short description of how to fix the issue.                                                  |
+| Help URL          | A link to the rule's documentation.                                                           |
+| Tags              | The standards and categories associated with the rule, such as `wcag2aa`.                     |
+| Element           | The selector identifying the failing element.                                                 |
+| Element URL       | A deep link into the Cloud report, filtered to this element.                                  |
+| Status            | The element's status: `fail`, `incomplete`, or `ignore` (only `fail` is currently supported). |
+| Failure Summaries | The specific reasons the element failed, as reported during the run.                          |
+| View              | The name of the page or component where the element was found.                                |
+| View URL          | A deep link into the Cloud report for this view.                                              |
 
 The **Element URL** and **View URL** columns link back to the live report in Cypress Cloud, so you (or an agent) can always jump from a row to the full DOM snapshot and context.
 
