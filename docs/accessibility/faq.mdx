@@ -155,7 +155,7 @@ They are the violations present in both runs, which is everything the change nei
 
 ### <Icon name="angle-right" /> Why does Branch Review say my Cypress Accessibility changes are not ready yet?
 
-At least one of the two runs has not finished processing its report. Reports are assembled after Cypress Cloud marks a run complete, and grouped or parallelized runs also wait out the project's [Run Completion Delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay). Reload once both runs are complete. If a run was canceled, timed out, or re-ran only its failed specs under [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization), its Cypress Accessibility report is marked partial and Branch Review says so, because a diff built on partial data can be misleading.
+At least one of the two runs has not finished processing its report. Reports are assembled after Cypress Cloud marks a run complete, and grouped or parallelized runs also wait out the project's [Run Completion Delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay). Reload once both runs are complete. If a run was canceled, timed out, or re-ran only its failed specs or tests under [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization), its Cypress Accessibility report is marked partial and Branch Review says so, because a diff built on partial data can be misleading.
 
 ### <Icon name="angle-right" /> Why did my Cypress Accessibility score change when no application code changed?
 
