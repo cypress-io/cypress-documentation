@@ -202,7 +202,7 @@ Two things make an agent's output more reliable here:
 
 ## Prevent finished rules from regressing {#iterating-towards-success}
 
-A finished rule is only finished if it stays finished. As each rule reaches zero violations, add it to a list your CI pipeline enforces with the [Results API](/accessibility/results-api), so a reappearance fails the build instead of surfacing in next quarter's audit.
+A finished rule is only finished if it stays finished. As each rule reaches zero violations, add it to a list your CI pipeline enforces with the [Results API](/accessibility/connect-and-extend/results-api), so a reappearance fails the build instead of surfacing in next quarter's audit.
 
 While your backlog is still large, keep the list of rules you've **finished** rather than the more common list of rules you know are **failing**. Both are one-line policies in a verification script, but only the first one stays credible on a project with hundreds of open violations, because it never blocks a merge for a rule nobody has gotten to yet. Both policies, with complete scripts, are in [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests#Defining-policies-in-the-verification-step).
 
@@ -225,7 +225,7 @@ When the rules and pages that matter to your business are all passing, your work
 - [How the accessibility score is calculated](/accessibility/core-concepts/accessibility-score) documents the severity weights behind the score.
 - [Compare reports](/accessibility/guides/compare-reports) is the full guide to Branch Review for Cypress Accessibility.
 - [Configuration overview](/accessibility/configuration/overview) lists every App Quality Config option and how to apply it.
-- [Results API](/accessibility/results-api) is how you enforce a standard in CI.
+- [Results API](/accessibility/connect-and-extend/results-api) is how you enforce a standard in CI.
 - [Maximize coverage](/accessibility/guides/maximize-coverage) shows how to turn a fixed violation into an assertion that keeps the specific fix in place.
 - [Accessibility automation principles](/accessibility/guides/accessibility-automation) explains what automated checks can and can't detect.
 - [Maintain accessibility](/accessibility/guides/maintain-accessibility) covers the shift from remediation to prevention.

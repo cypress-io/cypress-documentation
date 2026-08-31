@@ -11,7 +11,7 @@ sidebar_position: 50
 
 Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every snapshot captured during your test run, with no setup, assertions, or `cy.` commands to add to your specs. The ruleset is tuned to favor high-confidence results, so the report you get out of the box is already the recommended configuration for most teams.
 
-Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/results-api), where you have full control over how to parse results and which rules to react to, there is rarely a need to change which rules run in Cypress Cloud. Keeping the ruleset broad means you can still see and understand every accessibility finding, even when only a subset of results is treated as blocking in your pipeline.
+Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/connect-and-extend/results-api), where you have full control over how to parse results and which rules to react to, there is rarely a need to change which rules run in Cypress Cloud. Keeping the ruleset broad means you can still see and understand every accessibility finding, even when only a subset of results is treated as blocking in your pipeline.
 
 When you do need to change how the ruleset behaves for your project, Cypress can tune it for you. This is a guided process handled through your Cypress point of contact rather than a setting in the App Quality editor, so you get results that fit your application without the risk of silently turning off important checks.
 
@@ -51,7 +51,7 @@ Some ways of shaping your results don't require any rule configuration and are f
 
 - To ignore a specific rule for individual elements, add the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
 - To keep a rule enabled but stop a particular element or page from being reported, use [`elementFilters`](/accessibility/configuration/elementfilters) or [`viewFilters`](/accessibility/configuration/viewfilters).
-- To decide which findings block a build in CI, parse your run's results with the [Results API](/accessibility/results-api). Leaving a rule reported but non-blocking is often the best choice, since you keep full visibility into the issue.
+- To decide which findings block a build in CI, parse your run's results with the [Results API](/accessibility/connect-and-extend/results-api). Leaving a rule reported but non-blocking is often the best choice, since you keep full visibility into the issue.
 
 ## Rules that are off by default {#rules-that-are-off-by-default}
 
@@ -79,14 +79,14 @@ The exact set of skipped rules isn't a fixed list Cypress maintains. It's derive
 
 Cypress pins a specific, tested version of the Axe-Core® library. New Axe-Core® versions are released several times a year. While Cypress doesn't commit to updating our internal version within a specific timeframe, we always wait at least 30 days before adopting a new release.
 
-Because some updates introduce new rules or change how existing issues are detected, this buffer gives you time to adjust how you use the [Results API](/accessibility/results-api) if needed. You can track Axe-Core® releases [on GitHub](https://github.com/dequelabs/axe-core/releases).
+Because some updates introduce new rules or change how existing issues are detected, this buffer gives you time to adjust how you use the [Results API](/accessibility/connect-and-extend/results-api) if needed. You can track Axe-Core® releases [on GitHub](https://github.com/dequelabs/axe-core/releases).
 
-The exact Axe-Core® version used for a given run is shown in the **Properties** tab for that run in Cypress Cloud, and is also included as `axeVersion` in the [Results API](/accessibility/results-api) response. To get a heads-up in CI when the version changes, see [how to detect a change in the axe-core version](/accessibility/results-api#how-to-detect-a-change-in-the-axe-core-version).
+The exact Axe-Core® version used for a given run is shown in the **Properties** tab for that run in Cypress Cloud, and is also included as `axeVersion` in the [Results API](/accessibility/connect-and-extend/results-api) response. To get a heads-up in CI when the version changes, see [how to detect a change in the axe-core version](/accessibility/connect-and-extend/results-api#how-to-detect-a-change-in-the-axe-core-version).
 
 ## See also
 
 - [Configuration overview](/accessibility/configuration/overview) lists every App Quality Config option you can set yourself and how to apply and regenerate configuration.
-- [Results API](/accessibility/results-api) is where you decide which rules block a build in CI.
+- [Results API](/accessibility/connect-and-extend/results-api) is where you decide which rules block a build in CI.
 - [Ignore rules per element - `data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) turns off specific rules for individual elements from your application code.
 - [Cypress rules](/accessibility/core-concepts/cypress-rules) documents the custom rules Cypress layers on top of Axe-Core®.
 - [Cypress Accessibility FAQ](/accessibility/faq) answers common questions about rules and configuration.
