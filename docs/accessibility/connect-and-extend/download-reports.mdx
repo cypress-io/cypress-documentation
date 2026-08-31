@@ -17,7 +17,14 @@ The download button at the top of a run's Accessibility report exports the run's
   width="80%"
 />
 
-The export is a portable snapshot of a single run. Unlike the [Results API](/accessibility/connect-and-extend/results-api) (built for CI assertions) and [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) (built for live querying), a downloaded report needs no Cloud connection to work with after the fact—making it a good fit for offline analysis, spreadsheets and charts, sharing with people who don't use Cypress Cloud, and comparing two runs by downloading a file for each. For other ways to get results out of Cypress Cloud, see the [Connect & extend overview](/accessibility/connect-and-extend/overview).
+The export is a portable snapshot of a single run. Unlike the [Results API](/accessibility/connect-and-extend/results-api) (built for CI assertions) and [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) (built for live querying), a downloaded report needs no Cloud connection to work with after the fact. This makes it a good fit for:
+
+* offline analysis
+* custom spreadsheets and charts
+* sharing with people who don't use Cypress Cloud
+* comparing multiple runs in detail by downloading a file for each. 
+
+For other ways to get results out of Cypress Cloud, see the [Connect & extend overview](/accessibility/connect-and-extend/overview).
 
 ## What's in the file {#Whats-in-the-file}
 
@@ -33,7 +40,7 @@ Each row represents a single failed element for a single rule on a single view. 
 | Tags              | The standards and categories associated with the rule, such as `wcag2aa`.               |
 | Element           | The selector identifying the failing element.                                           |
 | Element URL       | A deep link into the Cloud report, filtered to this element.                            |
-| Status            | The element's status: `fail`, `incomplete`, or `ignore`.                                |
+| Status            | The element's status: `fail`, `incomplete`, or `ignore` (only `fail` is currently supported).                                |
 | Failure Summaries | The specific reasons the element failed, as reported during the run.                    |
 | View              | The name of the page or component where the element was found.                          |
 | View URL          | A deep link into the Cloud report for this view.                                        |
@@ -45,16 +52,6 @@ The `.json` export wraps the rows in an object with `rows`, `rowCount`, `truncat
 ### Map the results to your components
 
 If you configure [component identification](/accessibility/configuration/components), the **Element** selector in each row reflects a true hierarchy of your components rather than a raw DOM path. This makes patterns easy to spot—such as one component being responsible for a large share of a run's violations—and lets an AI agent trace an issue to its source without re-parsing full-page HTML or crawling your codebase. See [Work with AI agents](/accessibility/work-with-ai-agents#Map-violations-to-your-components) for how this pays off.
-
-## Access requirements
-
-You must be signed in and a member of the project's organization. On public projects, signed-in non-members can view the report but cannot download it. The run's Accessibility report must also have finished processing.
-
-:::info
-
-The download button is rolling out gradually. If you don't see it on a run that has a finished Accessibility report, reach out to your Cypress representative.
-
-:::
 
 ## Work with the downloaded file
 
