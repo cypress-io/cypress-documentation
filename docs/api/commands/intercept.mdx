@@ -1337,6 +1337,16 @@ modified:
 | statusCode    | response status code (`number`)                   |
 | statusMessage | response status message (`string`)                |
 
+:::note
+
+`res.statusMessage` is an empty string when the response reached the browser over a
+protocol that carries no reason phrase. HTTP/2 and HTTP/3 do not carry one, so a response
+your server delivered over either reports `''`. An HTTP/1.1 response reports the phrase
+your server sent, which may itself be empty. Prefer `res.statusCode`, which is always
+reported, and treat the phrase for a standard code as redundant with it.
+
+:::
+
 **Note about `body`:** If the response header contains
 `Content-Type: application/json` and the body contains valid JSON, this will be
 an `object`. And if the body contains binary content, this will be a buffer.
