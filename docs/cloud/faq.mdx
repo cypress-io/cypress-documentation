@@ -777,6 +777,30 @@ All of the data within Test Replay's Developer Tools in Cypress Cloud (including
 
 Yes. This displays console logs from within the application under test or your spec files. You may need to use `JSON.stringify(Object)` to display deeply nested data.
 
+### <Icon name="angle-right" /> Does Cypress Test Replay network redaction change what I can test?
+
+No, your Cypress tests and assertions are not affected.
+
+### <Icon name="angle-right" /> Does network redaction change what I can debug in Cypress Test Replay?
+
+For most tests, no. You keep request timing, status codes, and the structure of each request. If you will need to inspect the redacted value itself in Cypress Cloud, turn redaction off for that project before recording.
+
+### <Icon name="angle-right" /> Is network redaction in Cypress Test Replay on by default?
+
+Yes. It applies to every project in Cypress Cloud with Test Replay turned on, with no configuration required.
+
+### <Icon name="angle-right" /> Can I redact additional values specific to my application in Cypress Test Replay?
+
+Not today. If you need a value covered that isn't, reach out to your Cypress Cloud account team.
+
+### <Icon name="angle-right" /> Do I need a specific Cypress version to get network redaction in Test Replay?
+
+Redaction isn't tied to a specific Cypress version.
+
+### <Icon name="angle-right" /> What if I don't want Cypress Test Replay network traffic captured at all?
+
+Turn off Test Replay for that project in Cypress Cloud. This stops capture of the DOM, Command Log, network traffic, and browser console logs.
+
 ## Cloud CLI
 
 ### <Icon name="angle-right" /> What is the Cypress Cloud CLI?
