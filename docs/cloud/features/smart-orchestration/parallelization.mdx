@@ -412,27 +412,33 @@ This **delay is 60 seconds by default**, but is
 
 :::caution
 
-This API is **experimental**. Breaking changes are unlikely but may be made if necessary.
+This API is **experimental**. Breaking changes are unlikely, but may be made if necessary.
 
 :::
 
-The Run Completion Delay is a safety buffer. For teams with
-non-deterministic build timing (for example, when running Cypress tests using Nx),
-that buffer often has to be long so that pauses between test groups do not cause the run to complete early.
+The sooner Cypress Cloud marks a run complete, the sooner everything that
+depends on a finished run can proceed:
 
-Without keeping the run open to wait for new groups, a late group
-attempting to join an already-completed Cypress Cloud run would cause an error.
+- [`run.completed` webhooks](/cloud/integrations/webhooks) fire, so automations,
+  deployment gates, and custom notifications receive the payload without waiting
+  for the delay to elapse.
+- Slack, email, and desktop notifications for the run's final status go out
+  sooner.
+- [UI Coverage](/ui-coverage/get-started/introduction) and
+  [Cypress Accessibility](/accessibility/get-started/introduction) reports
+  finalize as soon as the run completes.
 
-A long Run Completion Delay has only one drawback: once all your expected tests have been recorded,
-the delay becomes a needless wait for Cypress Cloud to resolve the run's "completed" status.
-This can slow down notifications and delay the finalization of UI Coverage and Cypress Accessibility reports.
+As described above, the [Run Completion Delay](#Run-Completion-Delay) keeps parallel and grouped runs open after the last-known spec finishes so a late
+group can still join. It is often long on purpose.
+Teams with non-deterministic build timing (for example, when running Cypress
+tests using Nx) rely on that extra wait so pauses between groups do not
+complete the run early and lead to an error.
 
-That's where the **Run Completion API** comes in. It lets you signal to Cypress Cloud,
-in real time during a run, that it **does not need to wait** for more groups. The run
-will complete when all of the currently-active run groups have finished, or immediately if nothing is in progress.
-
-The end result: **no tradeoff needed** between covering potential recording gaps in your CI setup
-and having Cypress Cloud resolve your runs as quickly as possible with correct grouping.
+The Run Completion API removes that tradeoff. You keep a long delay as a
+safety buffer, and you tell Cypress Cloud when no more groups are expected.
+The run then completes as soon as currently active groups finish, or
+immediately if nothing is in progress. Webhook delivery, notifications, and
+report finalization happen without waiting out the remaining delay.
 
 :::info
 

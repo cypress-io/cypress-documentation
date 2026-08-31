@@ -2109,7 +2109,10 @@ loop while you and your agent write code.
 To give an agent your Cypress CI results instead, use
 [Cloud MCP](/cloud/integrations/cloud-mcp) or the
 [Cloud CLI](/cloud/integrations/cloud-cli), which read recorded runs from
-Cypress Cloud.
+Cypress Cloud. The
+[`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) instructs
+your agent on how to drive the Cloud CLI — finding the failing run, reading its
+errors, and inspecting Test Replay — so it triages recorded failures correctly.
 
 ### <Icon name="angle-right" /> Does `cypress tap` require a Cypress Cloud account or a paid subscription?
 

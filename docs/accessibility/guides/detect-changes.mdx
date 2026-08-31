@@ -113,9 +113,9 @@ Configuration changes apply to past runs too. After you save one, regenerate the
 
 ## Enforce a standard in CI with the Results API {#enforce-a-standard-in-ci}
 
-Cypress Accessibility reports are built in Cypress Cloud after your tests upload, so nothing in a Cypress run fails because of an accessibility violation. Blocking a build is an explicit step you add, and the [Results API](/accessibility/results-api) is what makes that step possible: `getAccessibilityResults()` identifies the run your CI build recorded, waits for its report, and hands you the results as data.
+Cypress Accessibility reports are built in Cypress Cloud after your tests upload, so nothing in a Cypress run fails because of an accessibility violation. Blocking a build is an explicit step you add, and the [Results API](/accessibility/connect-and-extend/results-api) is what makes that step possible: `getAccessibilityResults()` identifies the run your CI build recorded, waits for its report, and hands you the results as data.
 
-The full field list lives in the [Results API reference](/accessibility/results-api#Result-Types). The fields below are the ones policies are usually built on:
+The full field list lives in the [Results API reference](/accessibility/connect-and-extend/results-api#Result-Types). The fields below are the ones policies are usually built on:
 
 | Field                     | What it gives you                                                 |
 | ------------------------- | ----------------------------------------------------------------- |
@@ -216,7 +216,7 @@ Every link in the results is a deep link into Cypress Cloud, so whoever receives
 
 Not every change in a report comes from your application. Two inputs to the report can move on their own, and both are exposed so you can watch them:
 
-- **The Axe Core® version.** Cypress updates its internal version periodically, and a new version can add rules or refine how existing ones are detected. Compare `axeVersion` against the version your team calibrated its expectations against, so a jump in violations is explained rather than mysterious. There is a ready-made check in [Detect a change in the Axe Core® version](/accessibility/results-api#how-to-detect-a-change-in-the-axe-core-version), and the update policy is in [Axe Core® library version and updates](/accessibility/configuration/axe-core-configuration#axe-core-library-version-and-updates).
+- **The Axe Core® version.** Cypress updates its internal version periodically, and a new version can add rules or refine how existing ones are detected. Compare `axeVersion` against the version your team calibrated its expectations against, so a jump in violations is explained rather than mysterious. There is a ready-made check in [Detect a change in the Axe Core® version](/accessibility/connect-and-extend/results-api#how-to-detect-a-change-in-the-axe-core-version), and the update policy is in [Axe Core® library version and updates](/accessibility/configuration/axe-core-configuration#axe-core-library-version-and-updates).
 - **Your configuration.** `config.value` is the App Quality Config the run was processed with and `config.updatedAt` is when it was last saved. Anyone with access can edit configuration in Cypress Cloud, and a new `viewFilters` rule can change a score without a line of application code changing. Logging `config.updatedAt` in your verification step gives you the timestamp to correlate against when results shift unexpectedly. See [Viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
 
 ## Get notified when a run finishes {#get-notified-when-a-run-finishes}
@@ -340,7 +340,7 @@ As you work through this, use the **Submit Feedback** button in Cypress Cloud wh
 
 - [Compare reports](/accessibility/guides/compare-reports) is the full reference for Branch Review with Cypress Accessibility, including how each section behaves when there is nothing to report.
 - [Branch Review](/cloud/features/branch-review) covers run selection, pull request integration, and the run grouping practices a good comparison depends on.
-- [Results API](/accessibility/results-api) documents every field, argument, and supported CI provider.
+- [Results API](/accessibility/connect-and-extend/results-api) documents every field, argument, and supported CI provider.
 - [Block pull requests and set policies](/accessibility/guides/block-pull-requests) has complete policy scripts, including baseline comparison at the view level.
 - [Accessibility feedback during local development](/accessibility/guides/local-development) is the same comparison workflow, run from your own machine.
 - [Production monitoring](/accessibility/guides/production-monitoring) covers scheduled runs against live environments.
