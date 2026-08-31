@@ -1,11 +1,6 @@
 {
   "redirects": [
     {
-      "source": "/accessibility/results-api",
-      "destination": "/accessibility/connect-and-extend/results-api",
-      "permanent": true
-    },
-    {
       "source": "/examples/app/references/recipes",
       "destination": "/app/references/recipes",
       "permanent": true

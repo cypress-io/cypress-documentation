@@ -182,7 +182,7 @@ To review the configuration a specific run used, open its **Properties** tab, sh
 
 ### From the Results API
 
-The [Accessibility Results API](/accessibility/connect-and-extend/results-api) exposes the applied configuration on the `config` property of its result, so you can read it in a CI workflow:
+The [Accessibility Results API](/accessibility/results-api) exposes the applied configuration on the `config` property of its result, so you can read it in a CI workflow:
 
 ```js title="read-accessibility-config.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')

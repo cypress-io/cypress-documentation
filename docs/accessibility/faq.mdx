@@ -17,7 +17,7 @@ Start by narrowing the report to the code you own with [`viewFilters`](/accessib
 
 ### <Icon name="angle-right" /> Should I fix a violation in Cypress Accessibility or ignore it?
 
-Ignore findings you don't own or have decided not to fix, such as a third-party consent banner or an OAuth provider's sign-in page, so your report reflects work you actually intend to do. Fix findings in your own application: filtering one removes the evidence from the report, but the barrier is still there for the people using your product. When you're unsure, leave the finding reported and use the [Results API](/accessibility/connect-and-extend/results-api) to decide whether it blocks a build, which keeps full visibility into the issue.
+Ignore findings you don't own or have decided not to fix, such as a third-party consent banner or an OAuth provider's sign-in page, so your report reflects work you actually intend to do. Fix findings in your own application: filtering one removes the evidence from the report, but the barrier is still there for the people using your product. When you're unsure, leave the finding reported and use the [Results API](/accessibility/results-api) to decide whether it blocks a build, which keeps full visibility into the issue.
 
 ### <Icon name="angle-right" /> Why didn't my Cypress Accessibility score change after I fixed some violations?
 
@@ -29,7 +29,7 @@ Compare your branch against a base run in Branch Review. The **Resolved elements
 
 ### <Icon name="angle-right" /> Do I need to add assertions or commands to my tests for Cypress Accessibility?
 
-No. Cypress Accessibility reports are generated in Cypress Cloud from the artifacts your recorded run already uploads, so there is nothing to add to your specs and no impact on how long your tests take. Every page and component your tests visit is checked automatically once the product is enabled for your project. Because the report is produced after the run, nothing in your Cypress pipeline fails from an accessibility violation unless you opt in with the [Results API](/accessibility/connect-and-extend/results-api).
+No. Cypress Accessibility reports are generated in Cypress Cloud from the artifacts your recorded run already uploads, so there is nothing to add to your specs and no impact on how long your tests take. Every page and component your tests visit is checked automatically once the product is enabled for your project. Because the report is produced after the run, nothing in your Cypress pipeline fails from an accessibility violation unless you opt in with the [Results API](/accessibility/results-api).
 
 ### <Icon name="angle-right" /> How do I fix Cypress Accessibility violations with an AI agent?
 
@@ -37,7 +37,7 @@ Configure [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so your agent can r
 
 ### <Icon name="angle-right" /> How do I stop a Cypress Accessibility rule I already fixed from regressing?
 
-Keep a list of remediated rules in your CI verification script and fail the build when any of them appear in a run's results, using the [Results API](/accessibility/connect-and-extend/results-api). This inverts the more common pattern of allowlisting known failures: instead of tracking what's still broken, you lock in each rule the day it reaches zero violations. Add a rule to the list as soon as it passes, and the list becomes a record of the barriers your application no longer has.
+Keep a list of remediated rules in your CI verification script and fail the build when any of them appear in a run's results, using the [Results API](/accessibility/results-api). This inverts the more common pattern of allowlisting known failures: instead of tracking what's still broken, you lock in each rule the day it reaches zero violations. Add a rule to the list as soon as it passes, and the list becomes a record of the barriers your application no longer has.
 
 ## Inspecting a violation
 
@@ -131,7 +131,7 @@ Open [Branch Review](/accessibility/guides/compare-reports) in Cypress Cloud wit
 
 ### <Icon name="angle-right" /> Does Cypress Accessibility fail my build when a new violation appears?
 
-No. Reports are generated in Cypress Cloud after your tests upload, so a Cypress run never fails because of an accessibility violation, and there is no performance cost to your tests. Blocking a build is an opt-in step you add with the [Results API](/accessibility/connect-and-extend/results-api), which fetches the run's results in CI so you can decide what should fail. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
+No. Reports are generated in Cypress Cloud after your tests upload, so a Cypress run never fails because of an accessibility violation, and there is no performance cost to your tests. Blocking a build is an opt-in step you add with the [Results API](/accessibility/results-api), which fetches the run's results in CI so you can decide what should fail. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
 
 ### <Icon name="angle-right" /> Should I block builds on failing rules or on the Cypress Accessibility score?
 
@@ -167,7 +167,7 @@ Record the Cypress project on a schedule against staging or production and compa
 
 ### <Icon name="angle-right" /> Can Cypress notify my team when accessibility results change?
 
-Yes, two ways. The [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) integrations include the accessibility score, failed rules by severity, and failed element count in run notifications, and can be filtered by run tag or run group. For conditional alerts, act on the [Results API](/accessibility/connect-and-extend/results-api) response in CI, which includes deep links per rule and per view so a notification can point at the exact failure.
+Yes, two ways. The [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) integrations include the accessibility score, failed rules by severity, and failed element count in run notifications, and can be filtered by run tag or run group. For conditional alerts, act on the [Results API](/accessibility/results-api) response in CI, which includes deep links per rule and per view so a notification can point at the exact failure.
 
 ### <Icon name="angle-right" /> How do I track Cypress Accessibility trends across projects over time?
 
@@ -308,7 +308,7 @@ Nest the property under an `accessibility` key. `viewFilters`, `elementFilters`,
 
 ### <Icon name="angle-right" /> Can I read the configuration a Cypress Accessibility run was processed with?
 
-Yes, two ways. In Cypress Cloud, open the run's **Properties** tab to see the exact configuration that was applied. In CI, the [Accessibility Results API](/accessibility/connect-and-extend/results-api) exposes it on the `config` property of `getAccessibilityResults()`, where `config.value` is the applied App Quality configuration and `config.updatedAt` is when it was last saved. See [Viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
+Yes, two ways. In Cypress Cloud, open the run's **Properties** tab to see the exact configuration that was applied. In CI, the [Accessibility Results API](/accessibility/results-api) exposes it on the `config` property of `getAccessibilityResults()`, where `config.value` is the applied App Quality configuration and `config.updatedAt` is when it was last saved. See [Viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
 
 ### <Icon name="angle-right" /> How do I add a note explaining a Cypress Accessibility configuration rule?
 
@@ -334,7 +334,7 @@ Yes, on request. Axe-Core® ships those rules but keeps them off by default, so 
 
 You can reference them as one source of evidence, but they don't produce the document. A VPAT or accessibility conformance report is written by people evaluating a product against each criterion, and automated results speak only to the subset of criteria a scanner can check, on the pages and components your tests happened to visit.
 
-What Cypress Accessibility contributes is a durable, dated record: every run permanently stores the rule configuration and Axe-Core® version it was processed with, viewable in the run's **Properties** tab, and the [Results API](/accessibility/connect-and-extend/results-api) exposes per-rule and per-view results you can archive alongside your own assessment notes.
+What Cypress Accessibility contributes is a durable, dated record: every run permanently stores the rule configuration and Axe-Core® version it was processed with, viewable in the run's **Properties** tab, and the [Results API](/accessibility/results-api) exposes per-rule and per-view results you can archive alongside your own assessment notes.
 
 ### <Icon name="angle-right" /> Does a 100% Cypress Accessibility score mean my application is accessible?
 
@@ -356,7 +356,7 @@ Color contrast checking is off by default in Cypress Accessibility because it's 
 
 ### <Icon name="angle-right" /> How do I stop Cypress Accessibility from reporting a rule I can't fix?
 
-You have three options in Cypress Accessibility, from broadest to narrowest. Ask Cypress to disable the rule project-wide, which is a [guided change applied for you](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project); ignore the rule for specific elements yourself with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element); or leave the rule on and control whether it blocks your build in CI with the [Results API](/accessibility/connect-and-extend/results-api). Keeping a rule reported but non-blocking is often the best choice, since you retain visibility into the issue.
+You have three options in Cypress Accessibility, from broadest to narrowest. Ask Cypress to disable the rule project-wide, which is a [guided change applied for you](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project); ignore the rule for specific elements yourself with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element); or leave the rule on and control whether it blocks your build in CI with the [Results API](/accessibility/results-api). Keeping a rule reported but non-blocking is often the best choice, since you retain visibility into the issue.
 
 ### <Icon name="angle-right" /> Does Cypress Accessibility work with component tests?
 
@@ -368,7 +368,7 @@ Cypress Accessibility skips page-level rules such as `region`, `landmark-one-mai
 
 ### <Icon name="angle-right" /> Which version of Axe-Core® does Cypress Accessibility use?
 
-Cypress Accessibility pins a specific, tested version of Axe-Core® and waits at least 30 days before adopting a new release, so new or changed rules don't alter your results without warning. The exact version used for a run is shown in that run's **Properties** tab in Cypress Cloud and in the [Results API](/accessibility/connect-and-extend/results-api) response. See [Axe-Core® library version and updates](/accessibility/configuration/axe-core-configuration#axe-core-library-version-and-updates).
+Cypress Accessibility pins a specific, tested version of Axe-Core® and waits at least 30 days before adopting a new release, so new or changed rules don't alter your results without warning. The exact version used for a run is shown in that run's **Properties** tab in Cypress Cloud and in the [Results API](/accessibility/results-api) response. See [Axe-Core® library version and updates](/accessibility/configuration/axe-core-configuration#axe-core-library-version-and-updates).
 
 ## Profiles
 
@@ -399,7 +399,7 @@ There's no dedicated "skip this run" switch in a profile. To suppress a report f
 
 ### <Icon name="angle-right" /> How do I make Cypress Accessibility checks on pull requests faster and more focused than regression runs?
 
-Add a profile (for example, `aq-config-pr`) whose `config` narrows the report to your most critical flows with [`viewFilters`](/accessibility/configuration/viewfilters), then tag pull request runs with `cypress run --record --tag "aq-config-pr"`. The pull request report covers only those flows, so it's small and unambiguous for a developer to act on before merging, while regression runs record without the tag and keep the full base configuration. Combine the profile with the [Results API](/accessibility/connect-and-extend/results-api) to fail the build when a critical flow regresses. See [Block pull requests](/accessibility/guides/block-pull-requests#Using-Profiles-for-PR-specific-configuration).
+Add a profile (for example, `aq-config-pr`) whose `config` narrows the report to your most critical flows with [`viewFilters`](/accessibility/configuration/viewfilters), then tag pull request runs with `cypress run --record --tag "aq-config-pr"`. The pull request report covers only those flows, so it's small and unambiguous for a developer to act on before merging, while regression runs record without the tag and keep the full base configuration. Combine the profile with the [Results API](/accessibility/results-api) to fail the build when a critical flow regresses. See [Block pull requests](/accessibility/guides/block-pull-requests#Using-Profiles-for-PR-specific-configuration).
 
 ### <Icon name="angle-right" /> Can a Cypress Accessibility profile change which Axe Core® rules run for a specific run?
 

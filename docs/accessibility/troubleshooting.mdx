@@ -84,7 +84,7 @@ A known issue, a false positive, or a third-party defect is failing a rule, and 
 
 - **Ignore a rule on one specific element** with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application markup, which is the most surgical option and keeps the rule active everywhere else.
 - **Turn a rule off or adjust how Axe Core® runs** across the report with [Axe Core® configuration](/accessibility/configuration/axe-core-configuration), when a rule doesn't apply to your application at all.
-- **Keep the rule visible but non-blocking** by handling it in your CI policy instead of in Cypress Cloud. The [Results API](/accessibility/connect-and-extend/results-api) gives you full control over which rules fail a build, so you can allow a known violation while still failing on anything new. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
+- **Keep the rule visible but non-blocking** by handling it in your CI policy instead of in Cypress Cloud. The [Results API](/accessibility/results-api) gives you full control over which rules fail a build, so you can allow a known violation while still failing on anything new. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
 
 ## Third-party or out-of-scope UI is adding noise
 

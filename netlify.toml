@@ -1155,13 +1155,7 @@
 
 [[redirects]]
   from = "/accessibility/guides/results-api"
-  to = "/accessibility/connect-and-extend/results-api"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/accessibility/results-api"
-  to = "/accessibility/connect-and-extend/results-api"
+  to = "/accessibility/results-api"
   status = 301
   force = true
 

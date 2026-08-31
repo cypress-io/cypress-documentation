@@ -51,7 +51,7 @@ Tag pull request runs so they pick up the profile:
 cypress run --record --tag "aq-config-pr"
 ```
 
-`viewFilters` applies the first matching rule, so the two `include: true` rules keep login and checkout while the catch-all excludes everything else. Regression runs record without this tag and use the base configuration, scanning every view. Pair the narrow report with the [Results API](/accessibility/connect-and-extend/results-api) to fail the build when a critical flow regresses.
+`viewFilters` applies the first matching rule, so the two `include: true` rules keep login and checkout while the catch-all excludes everything else. Regression runs record without this tag and use the base configuration, scanning every view. Pair the narrow report with the [Results API](/accessibility/results-api) to fail the build when a critical flow regresses.
 
 ### Re-include a widget for a dedicated audit
 
@@ -187,7 +187,7 @@ The nightly run gets `aq-config-team-checkout`, the first of the two in the arra
 After you tag and record a run, check which configuration was actually applied so you know the profile took effect. Every run permanently records its resolved configuration: your base configuration with any matching profile already merged in.
 
 - **In Cypress Cloud**, open the run's **Properties** tab to see the exact configuration that was applied.
-- **In CI**, read it from the [Accessibility Results API](/accessibility/connect-and-extend/results-api), where `config.value` is the applied App Quality configuration and `config.updatedAt` is when it was last saved.
+- **In CI**, read it from the [Accessibility Results API](/accessibility/results-api), where `config.value` is the applied App Quality configuration and `config.updatedAt` is when it was last saved.
 
 If the applied configuration matches your base rather than the profile you expected, the tag didn't select the profile; see [Troubleshooting](#Troubleshooting). For more on reading a run's configuration, see [Viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
 
