@@ -654,7 +654,7 @@ Launch test replay in a browser and inspect your application throughout the test
 
 :::note
 
-Your system must have a Chromium-family browser installed to use `replay view`. The CLI will attempt to locate one automatically; you can target a specific instance by defining a `CHROME_PATH` environment variable.
+Your system must have a Chromium-family browser installed to use `replay view`. The CLI will attempt to locate one automatically; you can target a specific instance by defining a `CYCLOUD_CHROMIUM_PATH` environment variable.
 
 :::
 
@@ -1132,8 +1132,8 @@ The following environment variables adjust its behavior:
 | `CYPRESS_CLOUD_TOKEN`         | Authenticate with a personal access token. Takes precedence over stored credentials. |
 | `CYCLOUD_CACHE_DIR`           | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.               |
 | `CYCLOUD_DISABLE_CACHE_MGMT`  | Set to `true` to disable automatic cache validation and cleanup.                     |
-| `CHROME_PATH`                 | Override the Chromium executable to use for `replay view`                            |
-| `CHROME_PORT`                 | Override the randomly-selected debugging port used in `replay view`                  |
+| `CYCLOUD_CHROMIUM_PATH`       | Override the Chromium executable to use for `replay view`                            |
+| `CYCLOUD_CHROMIUM_PORT`       | Override the randomly-selected debugging port used in `replay view`                  |
 | `CYCLOUD_VIEWER_TIMEOUT_MS`   | How long to wait for `replay view` commands to complete, in milliseconds             |
 | `CYCLOUD_REPLAY_IDLE_TIMEOUT` | Seconds to wait before terminating an inactive replay viewer (default: 300)          |
 
