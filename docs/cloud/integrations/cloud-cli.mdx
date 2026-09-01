@@ -715,16 +715,23 @@ You can control a viewer by sending commands via the CLI
 | Subcommand | Description                                                              |
 | ---------- | ------------------------------------------------------------------------ |
 | `move`     | Navigate a viewer to a specific moment, or switch to a different attempt |
+| `status`   | Report a viewer's current attempt, time, and pinned command              |
 
-| Flag        | Description                                                                                                                                                                                 |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--time`    | `start\|end\|failure`, or a numeric timestamp. Cannot combine with `pin`.                                                                                                                   |
-| `--attempt` | Test attempt to navigate to (1=first attempt)                                                                                                                                               |
-| `--pin`     | A command or network request ID to pin in the viewer. Optionally, specify a snapshot (before/after) by suffixing with `\|{snapshot}`. IDs vary by type, use `replay timeline` to find them. |
+| Flag        | Description                                                                                                                                                                                                                             |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--time`    | `start\|end\|failure`, or a numeric timestamp. Cannot combine with `pin`.                                                                                                                                                               |
+| `--attempt` | Test attempt to navigate to (1=first attempt)                                                                                                                                                                                           |
+| `--pin`     | A command ID to pin in the viewer. Optionally, specify a snapshot by suffixing with `\|{snapshot}`, where `{snapshot}` is a 0-based index, `before`, or `after`. Cannot combine with `time`. Use `replay timeline` to find command IDs. |
 
 ```bash
 cy-cloud replay view move --time failure
-cy-cloud replay view move --attempt 2 --pc <commandId>
+cy-cloud replay view move --attempt 2 --pin 'c-42|after'
+```
+
+Check where a viewer currently is at any time with `status`:
+
+```bash
+cy-cloud replay view status --testId <testId>
 ```
 
 :::tip
@@ -737,16 +744,16 @@ The replay viewer is fully interactive in the browser as well. After opening a v
 
 Once you are at the moment of interest, you can query the replay for information about your app.
 
-| Subcommand | Description                                                                        |
-| ---------- | ---------------------------------------------------------------------------------- |
-| `dom`      | Serialize the HTML markup for an identified element and its descendants.           |
-| `inspect`  | Print detailed information about an element, including its styles and attributes.  |
-| `aria`     | Print a representation of the accessibility (ARIA) tree for an identified element. |
+| Subcommand | Description                                                                                                                            |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `dom`      | Serialize the HTML markup for an identified element and its descendants.                                                               |
+| `inspect`  | Print detailed information about an element, including its bounding box, computed styles, attributes, and ARIA role, name, and states. |
+| `aria`     | Print a representation of the accessibility (ARIA) tree for an identified element.                                                     |
 
 Subcommands that target an element require a `--selector` flag with a valid CSS Selector value. The selector will be evaluated against your app and will return one of three responses:
 
 - A "no items found" response if no matches exist
-- An "ambiguous" response if multiple matches are found. This will include generated unique selectors for the first several matches to assist identifying the specific instance you're interested in.
+- An "ambiguous" response if multiple matches are found. This will include generated unique selectors for the first 10 matches to assist identifying the specific instance you're interested in.
 - A "match" response if a single match is found, with the requested data
 
 You can also request a visual record
@@ -1019,6 +1026,46 @@ A command that ran slower, a request that returned late, or a value that differe
 
 For flake trends across many runs, such as flake rate and your most flaky tests over time, use [Flaky Test Management](/cloud/features/flaky-test-management) in Cypress Cloud. The CLI is best for inspecting and debugging the flaky tests in a specific run.
 
+## Workflow: find which command broke an element
+
+A test can fail on an assertion far from its actual root cause. The checkout test below fails because `.cart-total` never updates, but the command that broke it ran several steps earlier, silently. Reading the error and stack trace tells you _what_ failed; it does not tell you _which command_ caused it. [`replay view`](#cy-cloud-replay-view) does, by letting you pin the viewer to the exact moment before and after any single command and compare your app's state across it.
+
+**1. Find the failing test's replay timeline.** Look at the commands around the failure to spot a suspect: a command that ran on or near `.cart-total` before the assertion failed.
+
+```bash
+cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5
+```
+
+**2. Open a viewer for the test.**
+
+```bash
+cy-cloud replay view open --testId <testId>
+```
+
+**3. Pin to the suspect command, before it ran, and inspect the element.**
+
+```bash
+cy-cloud replay view move --testId <testId> --pin '<commandId>|before'
+cy-cloud replay view inspect --testId <testId> --selector '[data-cy="cart-total"]'
+```
+
+**4. Pin to the same command, after it ran, and inspect again.**
+
+```bash
+cy-cloud replay view move --testId <testId> --pin '<commandId>|after'
+cy-cloud replay view inspect --testId <testId> --selector '[data-cy="cart-total"]'
+```
+
+**5. Compare the two `inspect` results.** A difference in the `box`, `styles`, or `attributes` between the before and after snapshots pinpoints exactly what that command changed, whether it left the element with a stale value, an unexpected class, or a collapsed layout.
+
+**6. Close the viewer when you're done.**
+
+```bash
+cy-cloud replay view close --testId <testId>
+```
+
+This is a different kind of answer than a failure screenshot or a broad timeline window gives you: instead of a general sense of "sometime around here," you get the state immediately before and after one specific command, so you can point at the exact step that broke your app. Hand the two `inspect` JSON blobs to an [agent](#Use-with-AI-agents) and ask it to explain the difference and propose a fix.
+
 ## Output format and schemas
 
 Every data command prints JSON to standard output, so you can pipe results into other tools. For example, print the run numbers of the last five failed runs on `main` with [`jq`](https://jqlang.github.io/jq/):
@@ -1127,15 +1174,15 @@ The CLI stores configuration and credentials under `~/.config/cy-cloud`. If the 
 
 The following environment variables adjust its behavior:
 
-| Variable                      | Purpose                                                                              |
-| ----------------------------- | ------------------------------------------------------------------------------------ |
-| `CYPRESS_CLOUD_TOKEN`         | Authenticate with a personal access token. Takes precedence over stored credentials. |
-| `CYCLOUD_CACHE_DIR`           | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.               |
-| `CYCLOUD_DISABLE_CACHE_MGMT`  | Set to `true` to disable automatic cache validation and cleanup.                     |
-| `CYCLOUD_CHROMIUM_PATH`       | Override the Chromium executable to use for `replay view`                            |
-| `CYCLOUD_CHROMIUM_PORT`       | Override the randomly-selected debugging port used in `replay view`                  |
-| `CYCLOUD_VIEWER_TIMEOUT_MS`   | How long to wait for `replay view` commands to complete, in milliseconds             |
-| `CYCLOUD_REPLAY_IDLE_TIMEOUT` | Seconds to wait before terminating an inactive replay viewer (default: 300)          |
+| Variable                      | Purpose                                                                                        |
+| ----------------------------- | ---------------------------------------------------------------------------------------------- |
+| `CYPRESS_CLOUD_TOKEN`         | Authenticate with a personal access token. Takes precedence over stored credentials.           |
+| `CYCLOUD_CACHE_DIR`           | Directory for the local replay cache. Defaults to `~/.cache/cy-cloud`.                         |
+| `CYCLOUD_DISABLE_CACHE_MGMT`  | Set to `true` to disable automatic cache validation and cleanup.                               |
+| `CYCLOUD_CHROMIUM_PATH`       | Override the Chromium executable to use for `replay view`                                      |
+| `CYCLOUD_CHROMIUM_PORT`       | Override the randomly-selected debugging port used in `replay view`                            |
+| `CYCLOUD_VIEWER_TIMEOUT_MS`   | How long to wait for `replay view` commands to complete, in milliseconds. Defaults to `30000`. |
+| `CYCLOUD_REPLAY_IDLE_TIMEOUT` | Seconds to wait before terminating an inactive replay viewer (default: 300)                    |
 
 ## FAQs
 
