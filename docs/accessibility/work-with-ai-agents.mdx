@@ -101,15 +101,21 @@ Ask the agent to keep the **Element URL** and **View URL** values in its output.
 
 ## File issues in your issue tracker
 
-Triage usually ends in tickets, and typing them out one at a time is the slowest part of the job. An agent connected to both Cypress Cloud and your issue tracker can read the accessibility report for the latest run on `main`, check what has already been filed, and open only the tickets that are missing. Nothing new has to run in your pipeline, because the data comes from runs Cypress Cloud has already recorded.
+Triage usually ends in tickets, and typing them out one at a time is the slowest part of the job. An agent connected to both Cypress Cloud and your issue tracker can read the accessibility report for the latest run, check what has already been filed, and open only the tickets that are missing. Nothing new has to run in your pipeline, because the data comes from runs Cypress Cloud has already recorded.
 
-Cypress supplies the read side of this workflow. Cloud MCP is read-only, so the write side comes from your tracker's own MCP server or CLI, which Jira, GitHub, and Linear all publish. Connect both to the same agent before you start. For a single violation you are already looking at, the [Create Jira issue](/accessibility/reports/element-detail-view#Create-Jira-issue) button in Cypress Cloud is still faster than any prompt.
+Cypress supplies the read side of this workflow. Cloud MCP is read-only, so the write side comes from your tracker's own MCP server or CLI, which Jira, GitHub, and Linear all publish. Connect both to the same agent before you start.
+
+:::note
+
+For a single violation you are already looking at, the [Create Jira issue](/accessibility/reports/element-detail-view#Create-Jira-issue) button in Cypress Cloud is faster than any prompt. Reach for an agent when you have a report's worth of findings to file at once.
+
+:::
 
 ### Decide what a ticket represents
 
 Agree on this before the agent creates anything. It decides both the size of your backlog and whether next week's refresh can tell an existing ticket from a new one.
 
-**Group by rule and view.** One ticket per rule per view is a good default: "Form elements must have labels on /checkout" is a unit of work someone can pick up and finish. A ticket per failing element buries the team in near-duplicates, and a ticket per rule across the whole application is usually too large to schedule. This matches the rule-by-rule approach in [Fix accessibility violations](/accessibility/guides/improve-accessibility).
+**Group by rule and view.** One ticket per rule per view is a good default: "Form elements must have labels on /checkout" is a unit of work someone can pick up and finish. A ticket per failing element buries the team in near-duplicates, and a ticket per rule across the whole application is usually too large to schedule.
 
 **Give every ticket the same shape.** Ask the agent to follow a fixed convention: a label such as `cypress-accessibility` on everything it opens, a summary pattern such as `[Accessibility] <rule ID> on <view name>`, and a description holding the rule, the severity, the failing selectors, and the link back to the report in Cypress Cloud. The convention is what makes the next refresh cheap, because deduplication becomes a search for a label and a rule ID rather than a judgment call about whether two sentences describe the same problem.
 
@@ -117,17 +123,21 @@ Agree on this before the agent creates anything. It decides both the size of you
 
 ### Plan first, then create
 
-Run this in two passes. The first proposes tickets and checks them against your tracker without writing anything, so you see the batch before it exists. Replace `<branch>` with the branch you track, `<projectId>` with your Cypress project ID, and `<project key>` with the project in your tracker.
+Run this in two passes. The first proposes tickets and checks them against your tracker without writing anything, so you see the batch before it exists. Replace the placeholders in both prompts:
+
+- `<branch>` is the branch you track, such as `main`.
+- `<projectId>` is your Cypress project ID, the `projectId` in your Cypress configuration file.
+- `<tracker project key>` identifies the project in your issue tracker that the tickets are filed into, such as the Jira project key `WEB` or the repository `acme/storefront` in GitHub. This has nothing to do with your Cypress project ID or your Cypress record key.
 
 <CopyPrompt
   title="Plan tickets from the latest report"
   subtext="See which failures are already tracked, which regressed, and which need a new ticket."
   defaultCollapsed
-  prompt={`Refresh our accessibility backlog from Cypress Cloud, without creating anything yet.
+  prompt={`Refresh our accessibility backlog using Cypress Cloud MCP, without creating anything yet.
 
 1. Find the latest completed run on <branch> for project <projectId> and pull its accessibility report.
 2. Group the failures into one proposed ticket per rule per view, sorted by severity. Include the failing element count and the Cypress Cloud link for each.
-3. For each proposed ticket, search <project key> in my issue tracker for a matching issue, open or closed in the last 90 days, matching on rule ID and view name.
+3. For each proposed ticket, search <tracker project key> in my issue tracker for a matching issue, open or closed in the last 90 days, matching on rule ID and view name.
 4. Report three groups: already tracked and open, previously closed but failing again, and not tracked at all.`}
    >
 
@@ -135,13 +145,11 @@ Run this in two passes. The first proposes tickets and checks them against your 
 
 </CopyPrompt>
 
-The three groups matter. A failure that returns after its ticket was closed is a regression, and reopening or linking to that ticket keeps the history in one place instead of starting a fresh thread that loses the earlier investigation.
-
 <CopyPrompt
   title="Create the missing issues"
   subtext="Open tickets for the untracked failures only, in a format you can find again next week."
   defaultCollapsed
-  prompt={`Create issues in <project key> for the untracked failures only. For each one: use the summary pattern [Accessibility] <rule ID> on <view name>, add the label cypress-accessibility, set priority from the rule severity, and put the rule description, the failing selectors, and the Cypress Cloud report link in the description.
+  prompt={`Create issues in <tracker project key> for the untracked failures only. For each one: use the summary pattern [Accessibility] <rule ID> on <view name>, add the label cypress-accessibility, set priority from the rule severity, and put the rule description, the failing selectors, and the Cypress Cloud report link in the description.
 
 Then list the issues you created with their keys, and tell me anything you skipped and why.`}
 
@@ -151,11 +159,7 @@ Then list the issues you created with their keys, and tell me anything you skipp
 
 </CopyPrompt>
 
-Once you trust the sequence, save both prompts as a custom instruction or skill in your AI client so the whole team refreshes the backlog the same way. Keep the approval step between them, and a few habits keep the writes reversible:
-
-- **Cap the first batch.** Ask for the 10 highest severity tickets before you ask for everything. A convention that looks right in a plan sometimes reads badly in your tracker.
-- **Label everything the agent opens.** One label makes a bad batch findable, and bulk-closable, in a single search.
-- **Keep closing in human hands.** Have the agent report regressions and possible duplicates, and let a person decide what gets closed, reopened, or merged.
+Once you trust the sequence, save both prompts as a custom instruction or skill in your AI client so the whole team refreshes the backlog the same way. Keep the approval step between them: creating issues is a write, and reading the plan first is what keeps a batch you did not intend out of your tracker.
 
 For a first sweep through a large backlog, work from a [downloaded report](#Work-with-a-downloaded-report) instead of live queries. Cloud MCP returns rule failures up to 25 at a time within a limit of 100 tool requests per hour, and a run with hundreds of failing elements can spend that budget on pagination alone. The file also carries an **Element URL** for every row, which is the link you want in the ticket body.
 
