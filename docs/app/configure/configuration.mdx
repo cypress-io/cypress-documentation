@@ -136,21 +136,22 @@ default values.
 
 ### Global
 
-| Option                 | Default                               | Description                                                                                                                                                                                                                                                                                                |
-| ---------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `clientCertificates`   | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                           |
-| `allowCypressEnv`      | `true`                                | Whether to allow the use of [`Cypress.env()`](/api/cypress-api/env) in your tests. Please see our [Migration Guide](/app/references/migration-guide#Migrating-away-from-Cypressenv) on migrating from `Cypress.env()` to [`cy.env()`](/api/commands/env) and [`Cypress.expose()`](/api/cypress-api/expose) |
-| `env`                  | `{}`                                  | Any secret values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                 |
-| `expose`               | `{}`                                  | Any public values to be set as [exposed variables](/api/cypress-api/expose).                                                                                                                                                                                                                               |
-| `includeShadowDom`     | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                              |
-| `numTestsKeptInMemory` | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run.  |
-| `port`                 | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                     |
-| `projectId`            | `null`                                | The unique ID used to record test results to [Cypress Cloud](/cloud/get-started/introduction). Set automatically when you [connect your project to Cypress Cloud](/cloud/get-started/setup#Setup).                                                                                                         |
-| `redirectionLimit`     | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                          |
-| `reporter`             | `spec`                                | The [reporter](/app/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                          |
-| `reporterOptions`      | `null`                                | The [reporter options](/app/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                            |
-| `retries`              | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/app/guides/test-retries) for more information.                        |
-| `watchForFileChanges`  | Default based on `run` or `open` mode | Whether Cypress will watch and restart tests on test file changes. `watchForFileChanges` is set to `true` by default during `cypress open` and set to `false` by default during `cypress run`.                                                                                                             |
+| Option                                                | Default                               | Description                                                                                                                                                                                                                                                                                               |
+| ----------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `clientCertificates`                                  | `[]`                                  | An optional array of [client certificates](/app/references/client-certificates).                                                                                                                                                                                                                          |
+| `env`                                                 | `{}`                                  | Any secret values to be set as [environment variables](/app/guides/environment-variables).                                                                                                                                                                                                                |
+| `expose`                                              | `{}`                                  | Any public values to be set as [exposed variables](/api/cypress-api/expose).                                                                                                                                                                                                                              |
+| `forceHttp1` <Badge type="caution">deprecated</Badge> | `false`                               | Whether Cypress routes all browser traffic through the legacy network path instead of using the native browser network in Chrome, Chromium, and Edge. [Please read the notes on using this.](#forceHttp1)                                                                                                 |
+| `includeShadowDom`                                    | `false`                               | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the results of query commands (e.g. [`cy.get()`](/api/commands/get)).                                                                                                                                             |
+| `manageBrowserMemory`                                 | `true`                                | Whether Cypress monitors browser memory and collects garbage when usage crosses a threshold, so memory-heavy suites don't crash the browser. Chromium-based browsers only; no effect in Firefox or WebKit. See [manageBrowserMemory](/app/references/configuration#manageBrowserMemory).                  |
+| `numTestsKeptInMemory`                                | Default based on `run` or `open` mode | The number of tests for which snapshots and command data are kept in memory. `numTestsKeptInMemory` is set to `50` by default during `cypress open` and set to `0` by default during `cypress run`. Reduce this number if you are experiencing high memory consumption in your browser during a test run. |
+| `port`                                                | `null`                                | Port used to host Cypress. Normally this is a randomly generated port.                                                                                                                                                                                                                                    |
+| `projectId`                                           | `null`                                | The unique ID used to record test results to [Cypress Cloud](/cloud/get-started/introduction). Set automatically when you [connect your project to Cypress Cloud](/cloud/get-started/setup#Setup).                                                                                                        |
+| `redirectionLimit`                                    | `20`                                  | The number of times that the application under test can redirect before erroring.                                                                                                                                                                                                                         |
+| `reporter`                                            | `spec`                                | The [reporter](/app/tooling/reporters) used during `cypress run`.                                                                                                                                                                                                                                         |
+| `reporterOptions`                                     | `null`                                | The [reporter options](/app/tooling/reporters#Reporter-Options) used. Supported options depend on the reporter.                                                                                                                                                                                           |
+| `retries`                                             | `{ "runMode": 0, "openMode": 0 }`     | The number of times to retry a failing test. Can be configured to apply to `cypress run` or `cypress open` separately. As of Cypress `13.4.0`, the experimental Flake Detection strategy can also be configured. See [Test Retries](/app/guides/test-retries) for more information.                       |
+| `watchForFileChanges`                                 | Default based on `run` or `open` mode | Whether Cypress will watch and restart tests on test file changes. `watchForFileChanges` is set to `true` by default during `cypress open` and set to `false` by default during `cypress run`.                                                                                                            |
 
 ### Timeouts
 
@@ -163,14 +164,13 @@ you should understand well. The default values listed here are meaningful.
 
 :::
 
-| Option                                                 | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| ------------------------------------------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `defaultCommandTimeout`                                | `4000`  | Time, in milliseconds, to wait until most DOM based commands are considered timed out.                                                                                                                                                                                                                                                                                                                                                                                             |
-| `execTimeout` <Badge type="caution">deprecated</Badge> | `60000` | Time, in milliseconds, to wait for a system command to finish executing during a [`cy.exec()`](/api/commands/exec) command. Deprecated in Cypress `15.21.0` along with `cy.exec()`. Use `taskTimeout` with [`cy.task()`](/api/commands/task) instead.                                                                                                                                                                                                                              |
-| `taskTimeout`                                          | `60000` | Time, in milliseconds, to wait for a task to finish executing during a [`cy.task()`](/api/commands/task) command.                                                                                                                                                                                                                                                                                                                                                                  |
-| `pageLoadTimeout`                                      | `60000` | Time, in milliseconds, to wait for `page transition events` or [`cy.visit()`](/api/commands/visit), [`cy.go()`](/api/commands/go), [`cy.reload()`](/api/commands/reload) commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                                                                                                                            |
-| `requestTimeout`                                       | `5000`  | Time, in milliseconds, to wait for a request to go out in a [`cy.wait()`](/api/commands/wait) command.                                                                                                                                                                                                                                                                                                                                                                             |
-| `responseTimeout`                                      | `30000` | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.getCookie()`](/api/commands/getcookie), [`cy.getCookies()`](/api/commands/getcookies), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands. |
+| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ----------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultCommandTimeout` | `4000`  | Time, in milliseconds, to wait until most DOM based commands are considered timed out.                                                                                                                                                                                                                                                                                                                                                          |
+| `taskTimeout`           | `60000` | Time, in milliseconds, to wait for a task to finish executing during a [`cy.task()`](/api/commands/task) command.                                                                                                                                                                                                                                                                                                                               |
+| `pageLoadTimeout`       | `60000` | Time, in milliseconds, to wait for `page transition events` or [`cy.visit()`](/api/commands/visit), [`cy.go()`](/api/commands/go), [`cy.reload()`](/api/commands/reload) commands to fire their page `load` events. Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                                                                                         |
+| `requestTimeout`        | `5000`  | Time, in milliseconds, to wait for a request to go out in a [`cy.wait()`](/api/commands/wait) command.                                                                                                                                                                                                                                                                                                                                          |
+| `responseTimeout`       | `30000` | Time, in milliseconds, to wait until a response in a [`cy.request()`](/api/commands/request), [`cy.wait()`](/api/commands/wait), [`cy.fixture()`](/api/commands/fixture), [`cy.setCookie()`](/api/commands/setcookie), [`cy.clearCookie()`](/api/commands/clearcookie), [`cy.clearCookies()`](/api/commands/clearcookies), [`cy.clearAllCookies()`](/api/commands/clearallcookies), and [`cy.screenshot()`](/api/commands/screenshot) commands. |
 
 ### Folders / Files
 
@@ -211,15 +211,36 @@ For more options regarding screenshots, view the
 
 ### Browser
 
-| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                            |
-| ----------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `defaultBrowser`        | `null`  | The default browser to launch if the "--browser" command line option is not provided. This option only affects the first browser launch; changing this option after the browser is already launched will have no effect.                                                                                                                               |
-| `chromeWebSecurity`     | `true`  | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                                                                                                             |
-| `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                        |
-| `hosts`                 | `null`  | An Object of hostname patterns to IP addresses. Acts like a Cypress-specific `/etc/hosts` file, letting Cypress resolve custom hostnames within tests. [Please read the notes for examples on using this.](#hosts)                                                                                                                                     |
-| `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                       |
-| `removeSRIAttributes`   | `false` | Whether Cypress will remove [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) `integrity` attributes from `<script>` and `<link>` elements so that proxy-rewritten first-party resources are not blocked. [Please read the notes for more information on this setting.](#removeSRIAttributes) |
-| `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.  |
+| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                                          |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultBrowser`        | `null`  | The default browser to launch if the "--browser" command line option is not provided. This option only affects the first browser launch; changing this option after the browser is already launched will have no effect. Set this to an installed browser (for example, `'chrome'`) to stop relying on the deprecated bundled Electron default — see the note below. |
+| `chromeWebSecurity`     | `true`  | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                                                                                                                           |
+| `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                      |
+| `hosts`                 | `null`  | An Object of hostname patterns to IP addresses. Acts like a Cypress-specific `/etc/hosts` file, letting Cypress resolve custom hostnames within tests. [Please read the notes for examples on using this.](#hosts)                                                                                                                                                   |
+| `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                     |
+| `removeSRIAttributes`   | `false` | Whether Cypress will remove [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) `integrity` attributes from `<script>` and `<link>` elements so that first-party resources rewritten by Cypress are not blocked. [Please read the notes for more information on this setting.](#removeSRIAttributes)          |
+| `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.                |
+
+:::caution
+
+<Icon name="exclamation-triangle" /> **Electron is deprecated as a test
+browser** and will be removed in a future version of Cypress. If you don't pass
+[`--browser`](/app/references/command-line#cypress-run) and have no
+`defaultBrowser` set, Cypress falls back to the bundled Electron browser. Set
+`defaultBrowser` to an installed browser to make your runs explicit and to avoid
+a breaking change when you upgrade:
+
+```js
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  defaultBrowser: 'chrome',
+})
+```
+
+See [Migrating away from the Electron browser](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
+
+:::
 
 ### Viewport
 
@@ -230,28 +251,38 @@ For more options regarding screenshots, view the
 
 ### Actionability
 
-| Option                       | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| ---------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | `5`     | The distance in pixels an element must exceed over time to be considered animating.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `keystrokeDelay`             | `10`    | Time, in milliseconds, between each keystroke when typing with [`cy.type()`](/api/commands/type). Must be a positive number. To disable the delay entirely, use [`Cypress.Keyboard.defaults({ keystrokeDelay: 0 })`](/api/cypress-api/keyboard-api) in a support file.                                                                                                                                                                                                                                                             |
-| `waitForAnimations`          | `true`  | Whether to wait for elements to finish animating before executing commands.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `scrollBehavior`             | `top`   | Viewport position to which an element should be scrolled before executing commands. Accepts a single alignment (`'top'`, `'bottom'`, `'start'`, `'end'`, `'center'`, or `'nearest'`), an object that aligns each axis independently with `block` and `inline` (each set to `'start'`, `'end'`, `'center'`, or `'nearest'`), or `false` to disable scrolling. `'top'` and `'bottom'` align the vertical axis only, while `'start'` and `'end'` align both. See [Scrolling](/app/core-concepts/interacting-with-elements#Scrolling). |
+| Option                       | Default  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | `5`      | The distance in pixels an element must exceed over time to be considered animating.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `waitForAnimations`          | `true`   | Whether to wait for elements to finish animating before executing commands.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `scrollBehavior`             | `top`    | Viewport position to which an element should be scrolled before executing commands. Accepts a single alignment (`'top'`, `'bottom'`, `'start'`, `'end'`, `'center'`, or `'nearest'`), an object that aligns each axis independently with `block` and `inline` (each set to `'start'`, `'end'`, `'center'`, or `'nearest'`), or `false` to disable scrolling. `'top'` and `'bottom'` align the vertical axis only, while `'start'` and `'end'` align both. See [Scrolling](/app/core-concepts/interacting-with-elements#Scrolling). |
+| `visibilityStrategy`         | `modern` | Selects the algorithm Cypress uses to check element visibility. `'modern'` (the default) delegates to the browser's native `Element.checkVisibility()` API. `'legacy'` opts back into the ancestor-walking algorithm from Cypress 15 and earlier. This option is deprecated — the `'legacy'` value and the option itself will be removed in a future major version.                                                                                                                                                                |
 
 For more information, see the docs on
 [actionability](/app/core-concepts/interacting-with-elements#Actionability).
+
+### Keyboard
+
+| Option           | Default | Description                                                                                                                      |
+| ---------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `keystrokeDelay` | `null`  | The delay, in milliseconds, between keystrokes while typing with [`.type()`](/api/commands/type). Must be a non-negative number. |
+
+As of Cypress 16, typing has no keystroke delay unless you ask for one, which makes typing-heavy suites noticeably faster. The resolved `keystrokeDelay` value is read from this configuration first, then [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), and falls back to `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
+
+If you relied on the pre-16 default of `10`, set `keystrokeDelay: 10` here or via [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api) in a support file.
 
 ### System
 
 These values are set by Cypress at startup and are read-only — they cannot be changed in your Cypress configuration file. They can be accessed via [`Cypress.config()`](/api/cypress-api/config). The `browsers` property is an exception: it can also be modified in [`setupNodeEvents`](#setupNodeEvents) to filter or add custom browsers.
 
-| Option                | Default         | Description                                                                                                                                          |
-| --------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `arch`                | `os.arch()`     | The underlying OS CPU architecture. Common values are `x64`, `arm`, and `arm64`.                                                                     |
-| `browsers`            | `[]`            | A list of browsers found on your system. Populated by Cypress at startup. Can be filtered or extended in [`setupNodeEvents`](#setupNodeEvents).      |
-| `isInteractive`       | `true`          | Whether Cypress is running in interactive mode (`cypress open`). Set to `false` during `cypress run`. See [Notes](#isInteractive) for usage.         |
-| `platform`            | `os.platform()` | The underlying OS platform name (e.g. `linux`, `darwin`, `win32`).                                                                                   |
-| `resolvedNodePath`    | `null`          | The path to the Node.js binary used for [`cy.task()`](/api/commands/task) and [`cy.exec()`](/api/commands/exec) commands. Set by Cypress at startup. |
-| `resolvedNodeVersion` | `null`          | The version of Node.js used by Cypress. Set by Cypress at startup.                                                                                   |
+| Option                | Default         | Description                                                                                                                                     |
+| --------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `arch`                | `os.arch()`     | The underlying OS CPU architecture. Common values are `x64`, `arm`, and `arm64`.                                                                |
+| `browsers`            | `[]`            | A list of browsers found on your system. Populated by Cypress at startup. Can be filtered or extended in [`setupNodeEvents`](#setupNodeEvents). |
+| `isInteractive`       | `true`          | Whether Cypress is running in interactive mode (`cypress open`). Set to `false` during `cypress run`. See [Notes](#isInteractive) for usage.    |
+| `platform`            | `os.platform()` | The underlying OS platform name (e.g. `linux`, `darwin`, `win32`).                                                                              |
+| `resolvedNodePath`    | `null`          | The path to the Node.js binary used for [`cy.task()`](/api/commands/task) commands. Set by Cypress at startup.                                  |
+| `resolvedNodeVersion` | `null`          | The version of Node.js used by Cypress. Set by Cypress at startup.                                                                              |
 
 ### Experiments
 
@@ -410,9 +441,9 @@ readonly and cannot be changed at run time.
 
 - `animationDistanceThreshold`
 - `baseUrl`
-- `blockHosts`
+- `blockHosts` - this option cannot be overridden with `Cypress.config()` while a
+  test is executing
 - `defaultCommandTimeout`
-- `execTimeout` <Badge type="caution">deprecated</Badge>
 - `includeShadowDom`
 - `keystrokeDelay`
 - `numTestsKeptInMemory`
@@ -427,8 +458,10 @@ readonly and cannot be changed at run time.
 - `taskTimeout`
 - `testIsolation` - this option can only be overridden at the suite-specific
   override level
-- `viewportHeight`
-- `viewportWidth`
+- `viewportHeight` - this option cannot be overridden with `Cypress.config()`
+  while a test is executing
+- `viewportWidth` - this option cannot be overridden with `Cypress.config()`
+  while a test is executing
 - `waitForAnimations`
 
 ### `Cypress.config()`
@@ -445,6 +478,16 @@ Cypress.config('pageLoadTimeout', 100000)
 
 Cypress.config('pageLoadTimeout') // => 100000
 ```
+
+:::caution
+
+`blockHosts`, `viewportHeight`, and `viewportWidth` cannot be overridden with
+`Cypress.config()` while a test is executing, because doing so would affect the
+_next_ test rather than the current one. Set them in
+[test-specific configuration](#Test-specific-Configuration) instead, or use
+[`cy.viewport()`](/api/commands/viewport) to change the viewport during a test.
+
+:::
 
 ### Test-specific Configuration
 
@@ -611,7 +654,7 @@ matched.
 By passing an object with hostname patterns as keys and IP addresses as values,
 you can resolve custom hostnames to specific IP addresses within Cypress. This
 is the equivalent of adding entries to your machine's `/etc/hosts` file, but
-scoped to Cypress's network proxy — no changes to your OS are required.
+scoped to Cypress — no changes to your OS are required.
 
 To map a hostname:
 
@@ -708,6 +751,37 @@ The `**/node_modules/**` pattern is automatically added to `excludeSpecPattern`
 and does not need to be specified (and can't be overridden). See [`e2e`](#e2e)
 or [`component`](#component) testing-specific options.
 
+### forceHttp1
+
+This option is <Badge type="caution">deprecated</Badge>, and will be removed in a future version of Cypress.
+
+As of [Cypress 16](/app/references/changelog#16-0-0), Cypress intercepts network traffic inside Chrome, Chromium, and Edge on the
+native browser network. Your application connects to your server directly and negotiates
+whatever protocol the server supports (HTTP/1.1, HTTP/2, or HTTP/3), the same way it does
+in production, so requests are no longer always downgraded to HTTP/1.1.
+
+<NativeBrowserNetworkBrowsers />
+
+Set `forceHttp1` to `true` to route every browser through the legacy network path, the way
+Cypress worked before version 16. See
+[Native network interception](/app/guides/native-network-interception) for the full list of
+differences and how to update tests that rely on them. If undocumented behavior is what
+makes your suite pass, [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
+Setting it to `true` restarts the Cypress server when changed, and cannot be set per test
+or per suite.
+
+<ForceHttp1Deprecation />
+
+:::cypress-config-example
+
+```ts
+{
+  forceHttp1: true
+}
+```
+
+:::
+
 ### injectDocumentDomain
 
 This option is <Badge type="caution">deprecated</Badge>, and will be removed in a future version of Cypress.
@@ -772,6 +846,30 @@ if (Cypress.config('isInteractive')) {
 }
 ```
 
+### manageBrowserMemory
+
+In a long-running Cypress test suite, the browser accumulates memory across tests. References to DOM nodes, event listeners, and application state from earlier tests can linger in the browser's heap even after Cypress clears the page. As memory pressure builds, the browser can slow down and in severe cases crash mid-run.
+
+As of Cypress 16, [`manageBrowserMemory`](/app/references/configuration#Global) defaults to `true`, so this is handled for you without any configuration. Cypress samples the browser's memory usage on an interval while your tests run, and forces a garbage collection before the next test only when a sample has crossed a memory threshold.
+
+:::info
+
+`manageBrowserMemory` only applies to Chromium-based browsers (Chrome, Edge). It has no effect in Firefox or WebKit.
+
+:::
+
+This flag is not a blanket speed improvement. Clearing memory between tests takes time, paid on every test transition. If your suite is not under meaningful memory pressure, you can opt out to potentially save the overhead. You should measure the performance impact before and after disabling the flag.
+
+:::cypress-config-example
+
+```js
+{
+  manageBrowserMemory: false
+}
+```
+
+:::
+
 ### modifyObstructiveCode
 
 With this option enabled - Cypress will search through the response streams
@@ -810,7 +908,7 @@ When this option is enabled, Cypress removes
 `integrity` attributes from `<script>` and `<link>` elements as they are served
 to the browser.
 
-Cypress's proxy rewrites obstructive JS and HTML (see
+Cypress rewrites obstructive JS and HTML (see
 [`modifyObstructiveCode`](#modifyObstructiveCode)) before it reaches the browser.
 Rewriting changes the resource's bytes, which invalidates any pinned SRI hash, so
 the browser refuses to execute or apply the resource and reports an error such
@@ -933,10 +1031,20 @@ DEBUG=cypress:cli,cypress:data-context:sources:FileDataSource,cypress:data-conte
 
 | Version                                      | Changes                                                                                                                                                                         |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0)   | Added `forceHttp1` option.                                                                                                                                                      |
+| [16.0.0](/app/references/changelog#16-0-0)   | Updated `blockHosts`, `viewportHeight`, and `viewportWidth` to no longer be settable with `Cypress.config()` during test execution.                                             |
+| [16.0.0](/app/references/changelog#16-0-0)   | Removed `allowCypressEnv` option.                                                                                                                                               |
+| [16.0.0](/app/references/changelog#16-0-0)   | Replaced the `experimentalMemoryManagement` option with `manageBrowserMemory`, which defaults to `true`.                                                                        |
+| [16.0.0](/app/references/changelog#16-0-0)   | Replaced the `experimentalFastVisibility` option with `visibilityStrategy`, which defaults to `'modern'`.                                                                       |
+| [16.0.0](/app/references/changelog#16-0-0)   | Removed `experimentalSourceRewriting` option.                                                                                                                                   |
+| [16.0.0](/app/references/changelog#16-0-0)   | `keystrokeDelay` resolved fallback changed from `10` to `0` when unset in configuration and [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api).                     |
+| [16.0.0](/app/references/changelog#16-0-0)   | Removed `execTimeout` option alongside `cy.exec()`. Use `taskTimeout` with [`cy.task()`](/api/commands/task) instead.                                                           |
+| [15.21.0](/app/references/changelog#15-21-0) | Deprecated `execTimeout` alongside `cy.exec()`. Use `taskTimeout` with [`cy.task()`](/api/commands/task) instead.                                                               |
 | [15.20.0](/app/references/changelog#15-20-0) | Added per-axis `{ block, inline }` values and the `'start'` and `'end'` alignments to `scrollBehavior`, and restored `'top'` and `'bottom'` to aligning the vertical axis only. |
 | [15.18.0](/app/references/changelog#15-18-0) | Added `removeSRIAttributes` option.                                                                                                                                             |
 | [15.17.0](/app/references/changelog#15-17-0) | Cypress config and plugin files now load as ESM or CommonJS using Node.js module semantics (file extension and nearest `package.json` `"type"`), with no cross-format fallback. |
 | [15.17.0](/app/references/changelog#15-17-0) | Added support for overriding [`Cypress.expose()`](/api/cypress-api/expose) values via test configuration.                                                                       |
+| [15.10.0](/app/references/changelog#15-10-0) | Added `allowCypressEnv` option.                                                                                                                                                 |
 | [15.10.0](/app/references/changelog#15-10-0) | Updated `env` to no longer be settable via test configuration.                                                                                                                  |
 | [15.10.0](/app/references/changelog#15-10-0) | Added `expose` option for exposing public configuration values.                                                                                                                 |
 | [14.0.0](/app/references/changelog#14-0-0)   | Added support for re-enabling superdomain navigation with the `injectDocumentDomain` configuration option                                                                       |

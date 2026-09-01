@@ -25,6 +25,7 @@ import DefaultSelectorPriority from '@site/docs/partials/_default-selector-prior
 import DocsImage from '@site/src/components/docs-image'
 import DocsVideo from '@site/src/components/docs-video'
 import DocumentDomainWorkaround from '@site/docs/partials/_document-domain-workaround.mdx'
+import ForceHttp1Deprecation from '@site/docs/partials/_force-http1-deprecation.mdx'
 import E2EOnlyBadge from '@site/src/components/e2e-only-badge'
 import E2EOrCtTabs from '@site/src/components/e2e-or-ct-tabs'
 import VueSyntaxTabs from '@site/src/components/vue-syntax-tabs'
@@ -37,6 +38,7 @@ import Icon from '@site/src/components/icon'
 import ImportMountFunctions from '@site/docs/partials/_import-mount-functions.mdx'
 import IntellisenseCodeCompletion from '@site/docs/partials/_intellisense-code-completion.mdx'
 import InvertedContainsSelection from '@site/docs/partials/_inverted-contains-selection.mdx'
+import NativeBrowserNetworkBrowsers from '@site/docs/partials/_native-browser-network-browsers.mdx'
 import ProductHeading from '@site/src/components/product-heading'
 import AppQualityConfigEditing from '@site/docs/partials/_app-quality-config-editing.mdx'
 import AppQualityConfigWhoCanEdit from '@site/docs/partials/_app-quality-config-who-can-edit.mdx'
@@ -224,6 +226,7 @@ export default {
   DocsImage,
   DocsVideo,
   DocumentDomainWorkaround,
+  ForceHttp1Deprecation,
   E2EOnlyBadge,
   E2EOrCtTabs,
   VueSyntaxTabs,
@@ -236,6 +239,7 @@ export default {
   ImportMountFunctions,
   IntellisenseCodeCompletion,
   InvertedContainsSelection,
+  NativeBrowserNetworkBrowsers,
   ProductHeading,
   AppQualityConfigEditing,
   AppQualityConfigWhoCanEdit,

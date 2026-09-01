@@ -21,14 +21,14 @@ communicate with your remote application at all times. Unfortunately, browsers
 naturally try to prevent Cypress from doing this.
 
 To get around these restrictions, Cypress implements some strategies involving
-JavaScript code, the browser's internal APIs, and network proxying to _play by
-the rules_ of same-origin policy. It's our goal to fully automate the
-application under test without you needing to modify your application's code -
-and we are _mostly_ able to do this.
+JavaScript code and the browser's internal APIs to _play by the rules_ of
+same-origin policy. It's our goal to fully automate the application under test
+without you needing to modify your application's code - and we are _mostly_
+able to do this.
 
 ## What Cypress does under the hood
 
-- Proxies all HTTP / HTTPS traffic.
+- Intercepts and can modify HTTP / HTTPS traffic.
 - Changes the hosted URL to match that of the application under test.
 - Uses the browser's internal APIs for network level traffic.
 
@@ -45,12 +45,19 @@ expected.
 
 <strong>How is HTTPS supported?</strong>
 
-Cypress must assign and manage browser certificates to be able to
-modify the traffic in real time. You'll notice Chrome display a warning that the 'SSL certificate does not
-match'. This is expected behavior. Under the hood we act as our own CA
-authority and issue certificates dynamically in order to intercept requests
-otherwise impossible to access. We only do this for the origin currently
-under test, and bypass other traffic.
+Your application's certificate is used and validated as usual. Because the
+Cypress app itself is served over `http` on `localhost`, the browser reports
+that page as not secure — that indicator describes the Cypress app, not the
+application under test loading inside it.
+
+On the
+[legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path),
+Cypress must assign and manage browser certificates in order to modify the
+traffic in real time. Chrome then warns that the certificate was issued by an
+unknown authority, which is expected behavior. Under the hood we act as our own
+CA authority and issue certificates dynamically in order to intercept requests
+otherwise impossible to access. We only do this for the origin currently under
+test, and bypass other traffic.
 
 Note, that Cypress allows you to optionally specify CA / client certificate
 information for use with HTTPS sites. See

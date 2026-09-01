@@ -572,6 +572,24 @@
   force = true
 
 [[redirects]]
+  from = "/api/commands/end"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/exec"
+  to = "/api/commands/task"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/cypress-api/env"
+  to = "/api/commands/env"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/commands/route"
   to = "/api/commands/intercept"
   status = 301

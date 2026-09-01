@@ -103,8 +103,7 @@ testing).
 
 ### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
 
-Yes. Cypress transparently proxies WebSocket connections, so your application's
-WebSocket traffic will work as expected during tests.
+Yes. Your application's WebSocket traffic will work as expected during tests.
 
 However, **stubbing or mocking individual WebSocket frames/messages** is not
 natively supported. If your tests need to control the messages sent over a
@@ -766,14 +765,17 @@ since that is where the output goes.
 Pass the token in the `headers` option of
 [`cy.request()`](/api/commands/request), and keep the credential itself in an
 [environment variable](/app/guides/environment-variables) rather than in the
-spec file.
+spec file. Read it with [`cy.env()`](/api/commands/env), which resolves the
+value in the Node process so the token is never hydrated into the browser.
 
 ```js
-cy.request({
-  url: '/orders',
-  headers: {
-    authorization: `Bearer ${Cypress.env('apiToken')}`,
-  },
+cy.env(['apiToken']).then(({ apiToken }) => {
+  cy.request({
+    url: '/orders',
+    headers: {
+      authorization: `Bearer ${apiToken}`,
+    },
+  })
 })
 ```
 
@@ -1251,10 +1253,12 @@ includes running external commands, which a task can spawn directly from Node.
 
 [Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
 
-### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
+### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate so the page doesn't show up as "not secure"?
 
-No, Cypress modifies network traffic in real time and therefore must sit between
-your server and the browser. There is no other way for us to achieve that.
+No, and it isn't about your site's certificate. The browser's security indicator
+describes the Cypress app's page, which is served over `http` on `localhost`.
+Your application under test loads inside that page, and its own HTTPS connection
+is unaffected.
 
 ### <Icon name="angle-right" /> Is there any way to detect if my app is running under Cypress?
 
@@ -1332,12 +1336,15 @@ There are a few ways.
 ### <Icon name="angle-right" /> When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
 When using Cypress to test an HTTPS site, you might see a browser warning next
-to the browser URL. This is normal. Cypress modifies the traffic between your
-server and the browser. The browser notices this and displays a certificate
-warning. However, this is purely cosmetic and does not alter the way your
-application under test runs in any way, so you can safely ignore this warning.
-The network traffic between Cypress and the backend server still happens via
-HTTPS.
+to the browser URL. This is normal. The indicator describes the Cypress app's
+page, which is served over `http` on `localhost` — not your application, which
+loads inside it with its certificate validated as usual. On the
+[legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path),
+Cypress modifies the traffic between your server and the browser and presents a
+certificate it generates, which the browser reports as untrusted. Either way this
+is purely cosmetic and does not alter the way your application under test runs in
+any way, so you can safely ignore the warning. The network traffic between
+Cypress and the backend server still happens via HTTPS.
 
 See also the [Cross Origin Testing](/app/guides/cross-origin-testing) guide.
 
@@ -1452,13 +1459,6 @@ It might be because of the 2 different windows in the Cypress App. For
 more information, please check
 [the note here](/api/commands/window#Cypress-uses-2-different-windows).
 
-### <Icon name="angle-right" /> How do I prevent application redirecting to another URL?
-
-Sometimes, your application might redirect the browser to another domain, losing
-the Cypress's control. If the application is using `window.location.replace`
-method to set a _relative_ URL, try using the `experimentalSourceRewriting`
-option described in our [Experiments](/app/references/experiments) page.
-
 ### <Icon name="angle-right" /> Why isn't my application's Content Security Policy (CSP) being enforced during tests? <E2EOnlyBadge />
 
 This is expected. By default Cypress strips both the `Content-Security-Policy`
@@ -1527,8 +1527,9 @@ for the full list and the reason each is removed.
 There are many reasons why tests may fail in CI but pass locally. Some of these
 include:
 
-- There is a problem isolated to the Electron browser (`cypress run` by default
-  runs in the Electron browser)
+- There is a problem isolated to the Electron browser (without a `--browser`
+  flag or a `defaultBrowser` set, `cypress run` falls back to the Electron
+  browser)
 - A test failure in CI could be highlighting a bug in your CI build process
 - Variability in timing when running your application in CI (For example,
   network requests that resolve within the timeout locally may take longer in
@@ -1738,7 +1739,7 @@ XState model state library.
 ### <Icon name="angle-right" /> Can Cypress be used for performance testing?
 
 Cypress is not built for performance testing. Because Cypress instruments the
-page under test, proxies the network requests, and tightly controls the test
+page under test, intercepts the network requests, and tightly controls the test
 steps, Cypress adds its own overhead. Thus, the performance numbers you get from
 Cypress tests are slower than "normal" use. Still, you can access the native
 `window.performance` object and grab the page time measurements, see the

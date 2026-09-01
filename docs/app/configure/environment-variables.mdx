@@ -225,7 +225,7 @@ See the [`Cypress.expose()`](/api/cypress-api/expose) API documentation for comp
 
 ## Migrate from Cypress.env()
 
-If you're using the deprecated `Cypress.env()` API, migrate to the appropriate modern API:
+`Cypress.env()` was removed in Cypress 16.0. If your tests still call it, migrate each value to the appropriate modern API:
 
 - **Sensitive values** → [`cy.env()`](/api/commands/env)
 - **Public configuration** → [`Cypress.expose()`](/api/cypress-api/expose)
