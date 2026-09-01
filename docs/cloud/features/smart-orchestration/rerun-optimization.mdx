@@ -9,26 +9,29 @@ sidebar_position: 60
 
 # Re-run optimization <Badge type="caution">Experimental</Badge>
 
-When a CI run fails, it's common to rerun the job to confirm a fix or clear a
-flaky failure. Normally that rerun executes your entire test suite again,
-including the specs that already passed. **Re-run optimization re-runs only what
-failed and skips what already passed**, so you spend CI time re-testing what
-actually failed instead of re-validating work that was already green.
+When a CI run fails, it's common to re-run the job before investigating the failure deeply, especially if the failure is unexplained or seems like the result of typical flake or some known instability in the CI environment.
+
+That CI rerun usually executes your entire test suite again,
+including the specs that already passed. When re-run optimization is in enabled and you are recording to Cypress Cloud, Cypress will automatically detect when a CI re-run is happening, and avoid re-running what already passed.
+
+This speeds up your CI process and removes redundant testing, and makes your runs more resilient to inherently unstable environments or services.
 
 You choose the granularity in project or organization settings:
 
-- **Run only failed specs** re-executes every spec that contained a failure,
-  including tests in those specs that already passed.
 - **Run only failed tests** re-executes only the tests that did not pass. Specs
   that were fully green are still skipped, and passing tests inside a failing
-  spec are skipped too. This option requires Cypress 15.21.0 or later.
+  spec are skipped too. **This option requires Cypress 15.21.0 or later.** Use this if you are confident that each `it` block is fully independent. If it would work using `.only`, it should work here.
+- **Run only failed specs** re-executes every spec that contained a failure,
+  including tests in those specs that already passed. This reduces redundant re-runs but allows for cases where tests may rely on existing state for other tests.
 
-For example, a 40-spec suite where only 2 specs fail normally re-runs all 40
-specs on a retry. With **Run only failed specs**, the rerun executes just those
-2 specs. If those specs contain 50 tests and 3 of them failed, **Run only failed
-tests** executes those 3 tests, turning a full rerun that might take 30 minutes
-into a couple of minutes, and billing you for 3 tests instead of 40. **The more
-reliable your suite, the bigger the win on each retry.**
+## Example
+
+With no re-run optimization settings, in a 40-spec suite where only 2 specs fail, a CI re-run triggers all 40 specs on a retry. 
+
+With **Run only failed specs**, the re-run executes just those
+2 specs, avoiding 38 specs entirely.
+
+With **Run only failed tests**, the re-run executes only the specific tests within those failed specs. 
 
 Enabling Re-run optimization gives you:
 
@@ -42,7 +45,7 @@ Enabling Re-run optimization gives you:
 :::caution
 
 **Re-run optimization is experimental.** We are shipping an early version to learn
-how it performs across real CI setups, and we expect it to evolve. Request access from your Cypress representative if you don't see this available in your organization or project settings pages.
+how it performs across real CI setups, and we expect it to evolve.
 
 Review the
 [behavior and limitations](#Behavior-and-limitations) before enabling it on
