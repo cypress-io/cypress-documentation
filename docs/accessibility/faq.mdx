@@ -69,6 +69,10 @@ Three ways, from fastest to most durable. Copy the URL, which encodes the view, 
 
 Select the failing element to expand its detail, choose **Create Jira issue**, and pick a Jira project. **Summary** is prefilled with the rule name and **Description** with the Markdown issue snippet, including a link back to the violation in Cypress Cloud. Both are editable before you submit, so it's the right moment to add context a triager will want. Choose an issue type, complete any fields your Jira project requires, and submit. This requires the [Cypress Cloud Jira integration](/cloud/integrations/jira) to be installed for your organization; without it, the button doesn't appear.
 
+### <Icon name="angle-right" /> Can I file issues for a whole accessibility report at once?
+
+Yes, with an AI agent connected to both [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) and your issue tracker. The agent reads the report for the latest run on a branch, checks Jira or another tracker for the issues that already exist, and creates only the ones that are missing, so a weekly refresh doesn't produce duplicates. [File issues in your issue tracker](/accessibility/work-with-ai-agents#File-issues-in-your-issue-tracker) walks through the prompts, how to group violations into tickets, and the guardrails to keep on an agent that can write.
+
 ### <Icon name="angle-right" /> Why does my Cypress Accessibility report show generated class names instead of meaningful selectors?
 
 Because nothing more meaningful was available on the element. Cypress Accessibility builds each violation target selector from a prioritized list of attributes, so an element with no test attribute and no useful `id` falls back to whatever identifies it, which in a component library often means a class like `.MuiIconButton-colorPrimary`. Add the attribute your application already renders to [`significantAttributes`](/accessibility/configuration/significantattributes) to make it the identifier, or use [`components`](/accessibility/configuration/components) to append component and team context to the existing one. Regenerate a past run afterward to see the new selectors without rerunning your tests.
