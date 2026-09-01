@@ -67,7 +67,7 @@ A comparison is only as good as the two runs behind it. Four things matter, in r
 
 **Both runs need complete reports.** While either run is still processing, Branch Review reports that the changes are not ready yet. When a run does not produce a full report, its results are marked partial and Branch Review names the run and the reason:
 
-- The run was a partial re-run. [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) executes only the specs that contained failures, so its report covers those specs rather than the full suite that the run it re-ran covered. Branch Review names the anchor run the re-run came from.
+- The run was a partial re-run. [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) executes only the specs or tests that failed, so its report covers that subset rather than the full suite that the run it re-ran covered. Branch Review names the anchor run the re-run came from.
 - The run was canceled, either manually or by [auto cancellation](/cloud/features/smart-orchestration/run-cancellation), and some specs never ran.
 - The run timed out before some specs ran.
 - [Test Replay](/cloud/features/test-replay) data failed to upload for some specs, so there was nothing to build a report from.
