@@ -30,7 +30,6 @@ _Released Aug 18, 2026_
 **Features:**
 
 - Added the `cypress tap` command, which gives your AI agent direct access to your open-mode Cypress session. It lists the open-mode Cypress sessions running on the machine, starts and reruns a spec, reports a run's status and results, prints a failing test's error and Command Log, and inspects the DOM and accessibility tree of the application under test. Every subcommand prints readable output by default and machine-readable JSON with `--json`. Run `cypress tap --help` for the full list of subcommands. Addresses [#34036](https://github.com/cypress-io/cypress/issues/34036).
-- [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) in Cypress Cloud can now re-run only the tests that failed in a previous recorded run, not just the specs that contained failures. Select **Run only failed tests** in project or organization Smart Orchestration settings. Addressed in [#34594](https://github.com/cypress-io/cypress/pull/34594).
 - Added a `CYPRESS_DISABLE_GUEST_TELEMETRY` environment variable, which disables any reporting Cypress sends for non-logged sessions. This includes anonymous usage events within Cypress open-mode and the Cypress CLI. Addressed in [#34540](https://github.com/cypress-io/cypress/pull/34540).
 
 **Bugfixes:**
