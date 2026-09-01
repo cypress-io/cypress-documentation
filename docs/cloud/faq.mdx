@@ -107,6 +107,13 @@ A [user](/cloud/account-management/users) is anyone with a login to
 Cypress Cloud who has been invited to see and review the test results of your
 organization.
 
+Each plan includes a set number of users. To compare the user seats each plan
+allows, see the
+[pricing page](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cloud-faq).
+To see how many of your seats are in use, check the
+[Billing & Usage](/cloud/account-management/billing-and-usage) page in Cypress
+Cloud.
+
 ### <Icon name="angle-right" /> How much does it cost?
 
 Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
@@ -149,7 +156,8 @@ Downgrading your account will **not** result in loss of access to Cypress Cloud.
 
 However, it will make your Cypress Cloud account subject to the limitations of
 your new plan. For example, downgrading to the _Starter_ plan will limit data
-retention to 30 days and test results to 500 per billing period.
+retention to 30 days, test results to 500 per billing period, and your
+organization to 10 [users](#What-counts-as-a-user).
 
 ### <Icon name="angle-right" /> When does my billing period reset?
 
@@ -776,6 +784,30 @@ All of the data within Test Replay's Developer Tools in Cypress Cloud (including
 ### <Icon name="angle-right" /> Can I `console.log()` data in the console view of the Developer Tools panel?
 
 Yes. This displays console logs from within the application under test or your spec files. You may need to use `JSON.stringify(Object)` to display deeply nested data.
+
+### <Icon name="angle-right" /> Does Cypress Test Replay network redaction change what I can test?
+
+No, your Cypress tests and assertions are not affected.
+
+### <Icon name="angle-right" /> Does network redaction change what I can debug in Cypress Test Replay?
+
+For most tests, no. You keep request timing, status codes, and the structure of each request. If you will need to inspect the redacted value itself in Cypress Cloud, turn redaction off for that project before recording.
+
+### <Icon name="angle-right" /> Is network redaction in Cypress Test Replay on by default?
+
+Yes. It applies to every project in Cypress Cloud with Test Replay turned on, with no configuration required.
+
+### <Icon name="angle-right" /> Can I redact additional values specific to my application in Cypress Test Replay?
+
+Not today. If you need a value covered that isn't, reach out to your Cypress Cloud account team.
+
+### <Icon name="angle-right" /> Do I need a specific Cypress version to get network redaction in Test Replay?
+
+Redaction isn't tied to a specific Cypress version.
+
+### <Icon name="angle-right" /> What if I don't want Cypress Test Replay network traffic captured at all?
+
+Turn off Test Replay for that project in Cypress Cloud. This stops capture of the DOM, Command Log, network traffic, and browser console logs.
 
 ## Cloud CLI
 
