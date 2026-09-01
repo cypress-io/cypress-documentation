@@ -55,9 +55,8 @@ critical pipelines.
 
 ## How it works
 
-1. **You trigger a rerun from your CI provider after a run fails.** For example,
-   "Re-run jobs" or "Re-run failed jobs". Re-run optimization behaves the same way
-   for both.
+1. **You trigger a rerun from your CI provider after a run fails**,
+   using the "Re-run jobs" or "Re-run failed jobs" function in your CI provider. Here's how that looks in Circle CI, as one example:
 
    <DocsImage
      src="/img/cloud/features/smart-orchestration/rerun-failed-tests-in-ci.png"
@@ -72,7 +71,7 @@ critical pipelines.
    [`CYPRESS_RERUN_GROUP_ID`](#Setting-the-rerun-group-ID-manually).
 1. **Cypress Cloud picks the latest completed run in that group as the anchor run.**
    The anchor run is the reference point that determines what still
-   needs to run.
+   needs to execute in the new re-run.
 1. **Only the work that failed in the anchor run is re-executed.**
    - **Run only failed specs:** Cypress skips every spec that already passed, and
      re-runs each spec that contained a failure (including tests in that spec that
@@ -111,7 +110,7 @@ identify reruns at a glance and confirm that Re-run optimization was applied.
 
 Re-run optimization is a _Smart Orchestration_ feature available to users on a
 [Business or Enterprise tier Cypress Cloud plan](https://cypress.io/pricing), as
-well as during a free trial. If you do not see this feature in your settings page during the experimental period, request access from your Cypress representative.
+well as during a free trial.
 
 **Run only failed tests** requires Cypress 15.21.0 or later. If the project's
 setting is **Run only failed tests** but the runner is an earlier version,
@@ -272,7 +271,7 @@ before enabling Re-run optimization on critical pipelines:
 
 :::tip
 
-Pair Re-run optimization with other _Smart Orchestration_ features for compounding
+**Tip**:Pair Re-run optimization with other _Smart Orchestration_ features for compounding
 savings. With
 [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
 failures surface first, with
