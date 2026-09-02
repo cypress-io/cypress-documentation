@@ -712,10 +712,10 @@ Replay viewers take time to launch. It is much faster to open a test once and pe
 
 You can control a viewer by sending commands via the CLI
 
-| Subcommand | Description                                                              |
-| ---------- | ------------------------------------------------------------------------ |
-| `move`     | Navigate a viewer to a specific moment, or switch to a different attempt |
-| `status`   | Report a viewer's current attempt, time, and pinned command              |
+| Subcommand | Description                                                                          |
+| ---------- | ------------------------------------------------------------------------------------ |
+| `move`     | Navigate a viewer to a specific timestamp, command, or switch to a different attempt |
+| `status`   | Report a viewer's current attempt, time, and pinned command                          |
 
 | Flag        | Description                                                                                                                                                                                                                             |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -762,9 +762,27 @@ You can also request a visual record
 | ---------- | -------------------------------------------------------------- |
 | `snapshot` | Save a PNG image of the application under test at that moment. |
 
-| Flag     | Description                                                                                                                                  |
-| -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--path` | Directory or fully-qualified path to save the image. Optional, defaults to current working directory named with the active viewer timestamp. |
+| Flag     | Description                                                                                                         |
+| -------- | ------------------------------------------------------------------------------------------------------------------- |
+| `--path` | Location to save the image. Optional, defaults to current working directory named with the active viewer timestamp. |
+
+:::note
+
+When providing a `path` value it can be defined multiple ways:
+
+- Can be a relative or absolute path
+- Can identify an existing directory or a filepath
+- When identifying a filepath it cannot match an existing file
+- When identifying a directory the generated file will be named using the active timestamp of the viewer
+- Images will be generated in PNG format and should be named accordingly
+
+:::
+
+:::warning
+
+You must have filesystem permissions to the path being written to. If you see `EPERM` errors you may need to adjust where you trying to save the images.
+
+:::
 
 ### cy-cloud status
 
@@ -926,7 +944,7 @@ If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copil
   prompt={`Use cy-cloud to find test <specPath> in the two latest runs and open each in a Test Replay viewer. Move each viewer to the end of the test and capture a screenshot. Compare both screenshots and determine if significant visual changes exist between them.`}
 >
 
-### Diagnose a flaky test
+### Identify visual regressions
 
 </CopyPrompt>
 
