@@ -178,9 +178,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cypress-tap-beta-aug-2026',
+        id: 'cypress-16-release-sep-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🌟 Close the loop on agentic testing with Cypress Tap Beta &mdash; <a href="https://www.cypress.io/blog/cypress-app-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cypress-tap-cli">Read the Announcement</a>`,
+        content: `🚀 Cypress 16 is live: faster tests, starting with HTTP/2 support &mdash; <a href="https://www.cypress.io/blog/cypress-16-faster-tests-starting-with-http2-support?&utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=app_release">Read the Announcement</a>`,
         isCloseable: true,
       },
       footer: {
