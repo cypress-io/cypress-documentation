@@ -572,6 +572,24 @@
   force = true
 
 [[redirects]]
+  from = "/api/commands/end"
+  to = "/api/table-of-contents"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/commands/exec"
+  to = "/api/commands/task"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/api/cypress-api/env"
+  to = "/api/commands/env"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/api/commands/route"
   to = "/api/commands/intercept"
   status = 301
@@ -1095,7 +1113,13 @@
 
 [[redirects]]
   from = "/guides/references/release-stages"
-  to = "/app/references/roadmap"
+  to = "/app/references/release-stages"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/app/references/roadmap"
+  to = "/app/references/release-stages"
   status = 301
   force = true
 
@@ -1149,7 +1173,13 @@
 
 [[redirects]]
   from = "/accessibility/guides/results-api"
-  to = "/accessibility/results-api"
+  to = "/accessibility/connect-and-extend/results-api"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/results-api"
+  to = "/accessibility/connect-and-extend/results-api"
   status = 301
   force = true
 
@@ -1167,13 +1197,25 @@
 
 [[redirects]]
   from = "/accessibility/core-concepts/run-level-reports"
-  to = "/accessibility/guides/run-level-reports"
+  to = "/accessibility/reports/run-level-reports"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/guides/run-level-reports"
+  to = "/accessibility/reports/run-level-reports"
   status = 301
   force = true
 
 [[redirects]]
   from = "/accessibility/core-concepts/inspecting-violation-details"
-  to = "/accessibility/guides/inspecting-violation-details"
+  to = "/accessibility/reports/element-detail-view"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/accessibility/guides/inspecting-violation-details"
+  to = "/accessibility/reports/element-detail-view"
   status = 301
   force = true
 

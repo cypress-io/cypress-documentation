@@ -758,6 +758,18 @@ It reports the cache size before and after, and how many entries it removed:
 
 Because every command returns structured JSON and exposes its output schema with `--schema`, the Cloud CLI is a natural tool for AI coding agents. An agent can list failing tests, read errors, and pull Test Replay timelines, then use that context to propose a fix in your editor. The workflows below are written to run by hand or to hand to an agent.
 
+The easiest way to hand this to an agent is the [`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) from the Cypress AI Toolkit. It gives your agent the debugging know-how for `cy-cloud`: which attempt to replay for a flaky test, how to navigate the Test Replay timeline, and how to correlate the failed command with the network and console events around it, so it reaches a root cause instead of restating the error.
+
+Install it with the [`skills`](https://skills.sh/) CLI:
+
+<PackageManagerTabs exec="skills add https://github.com/cypress-io/ai-toolkit --skill cypress-cloud-cli" />
+
+or with the [GitHub CLI](https://cli.github.com/manual/gh_skill):
+
+```bash
+gh skill install cypress-io/ai-toolkit cypress-cloud-cli
+```
+
 If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copilot CLI), point it at `cy-cloud` and describe the goal in plain language. Copy one of the prompts below to get started, replacing the `<projectId>`, `<branch>`, `<runNumber>`, and `<testId>` placeholders with your own values.
 
 <CopyPrompt
@@ -837,6 +849,13 @@ cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --networ
 ```
 
 At this point you have the error, the screenshot, the commands that led up to it, and the network and console activity around it, all in your terminal. From here you can fix the test, or hand the JSON to an [agent](#Use-with-AI-agents) and ask it to propose a fix.
+
+**6. Verify the fix before you push.** The best way to confirm the fix is to run the test locally. Start Cypress with `cypress open`, then use [`cypress tap`](/app/tooling/cypress-tap) to start the spec: pass the `specFilepath` returned from [`cy-cloud test list`](#cy-cloud-test-list) to [`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). Then run [`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status) to verify the updated test passed; if it isn't, your agent can use `cypress tap` to inspect the full report, dig into the command logs, and inspect the DOM to make corrections before recording to the Cloud.
+
+```bash
+npx cypress tap run cypress/e2e/checkout.cy.ts
+npx cypress tap status
+```
 
 :::tip
 
@@ -986,6 +1005,10 @@ Test Replay data can cover an entire spec, so the CLI downloads the replay once 
 
 Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
 
+:::tip
+Some AI agents automatically run inside sandbox environments, which causes them to build a fresh cache for each session. This can slow things down and affect your rate limits. Review your agent's documentation to configure the `CYCLOUD_CACHE_DIR` environment variable to a persistent filesystem location shared across agent invocations.
+:::
+
 ## Configuration
 
 The CLI stores configuration and credentials under `~/.config/cy-cloud`. If the `XDG_CONFIG_HOME` environment variable is set, it uses `$XDG_CONFIG_HOME/cy-cloud` instead. Credentials are written with owner-only permissions.
@@ -1021,6 +1044,8 @@ The Cloud CLI communicates with the Cypress Cloud API at `https://cloud-api.cypr
 ## See also
 
 - [Cloud MCP: Agentic debugging](/cloud/integrations/cloud-mcp)
+- [Cypress AI Skills](/app/tooling/ai-skills): the `cypress-cloud-cli` skill drives this CLI for your agent
+- [cypress tap: live Cypress app context in your terminal](/app/tooling/cypress-tap)
 - [Test Replay](/cloud/features/test-replay)
 - [Recording Cloud Runs](/cloud/features/recorded-runs)
 - [Data Extract API](/cloud/integrations/data-extract-api)

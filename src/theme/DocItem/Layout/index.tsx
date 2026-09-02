@@ -5,6 +5,7 @@ import type {WrapperProps} from '@docusaurus/types';
 import Head from '@docusaurus/Head';
 import {useLocation} from '@docusaurus/router';
 import {usePluginData} from '@docusaurus/useGlobalData';
+import {markdownPathFor} from '@site/src/utils/markdown-url';
 
 type Props = WrapperProps<typeof LayoutType>;
 
@@ -18,7 +19,10 @@ export default function LayoutWrapper(props: Props): ReactNode {
   // since Docusaurus don't support adding route-dynamic tags from inside a plugin
   const normalized = pathname.replace(/\/$/, '').replace(/^\//, '') || 'index'
   const fullJsonHref = `/llm/json/full/${normalized}.json`
-  const markdownHref = `/llm/markdown/${normalized}.md`
+  // Every doc page's markdown is also published at its own route plus `.md`,
+  // so point the alternate at that rather than at the `/llm/markdown/` copy.
+  // Shared with the reader-facing <MarkdownActions> control on the page.
+  const markdownHref = markdownPathFor(pathname)
 
   // FAQPage JSON-LD structured data generated at build time by the
   // docusaurus-faq-structured-data plugin, keyed by route. Injected into the
@@ -35,11 +39,11 @@ export default function LayoutWrapper(props: Props): ReactNode {
       <Head>
         <link rel="alternate" type="application/json" href={fullJsonHref} />
         <link rel="alternate" type="text/markdown" href={markdownHref} />
-        {faqJsonLd && (
+        {faqJsonLd ? (
           <script type="application/ld+json">
             {JSON.stringify(faqJsonLd).replace(/</g, '\\u003c')}
           </script>
-        )}
+        ) : null}
       </Head>
       <Layout {...props} />
     </>

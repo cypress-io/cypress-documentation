@@ -9,29 +9,15 @@ sidebar_position: 20
 
 # Projects
 
-:::info
-
-<WhatYoullLearn />
-
-- How to set up a project to record test runs
-- How to manage project settings
-- How to transfer ownership of a project
-- Best practices for multi-repo implementation
-- How to integrate with source control providers, issue management, and team communication tools
-
-:::
-
-## Identification
-
 Cypress uses your [projectId](#Project-ID) and [Record Key](#Record-key)
 together to uniquely identify projects.
 
-### Project ID
+## Project ID
 
 Once you set up your project to record, we generate a unique `projectId` for
 your project and automatically insert it into your Cypress configuration file.
 
-#### The `projectId` is a 6 character string in your Cypress configuration
+### The `projectId` is a 6 character string in your Cypress configuration
 
 :::cypress-config-example
 
@@ -57,7 +43,7 @@ for doing so depends on your system but could be something like:
 export CYPRESS_PROJECT_ID={projectId}
 ```
 
-### Record key
+## Record key
 
 The record key is used to authenticate that your project is _allowed_ to record
 tests to Cypress Cloud. As long as your record key stays _private_, no one will
@@ -97,7 +83,7 @@ more [here](/app/continuous-integration/overview#Environment-variables).
 Once you're set up to record test runs, we automatically generate a _Record Key_
 for the project.
 
-#### A record key is a GUID that looks like this
+**A record key is a GUID that looks like this**
 
 ```text
 f4466038-70c2-4688-9ed9-106bf013cd73
@@ -119,7 +105,7 @@ App.
   alt="Record Key in Configuration Tab"
 />
 
-#### Create new record key
+### Create new record key
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
@@ -128,7 +114,7 @@ App.
 5. Click **Create New Key**. A new key will be automatically generated for your
    project.
 
-#### Delete record key
+### Delete record key
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
@@ -136,13 +122,11 @@ App.
 4. Here you will see a **Record Keys** section
 5. Click **Delete** beside the record key you want to delete.
 
-## Project settings
-
-### Access to Runs
+## Access to Runs
 
 Visit your project settings to see who has access to your project's runs.
 
-#### Public vs Private
+### Public vs Private
 
 - **Public** means that anyone can see the recorded test runs for the project.
   It is similar to how public projects on GitHub, Travis CI, or CircleCI are
@@ -155,7 +139,7 @@ Visit your project settings to see who has access to your project's runs.
   recorded runs. Even if someone knows your `projectId`, they will not have
   access to your runs unless you have invited them.
 
-#### Change project access
+### Change project access
 
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
@@ -167,9 +151,9 @@ Visit your project settings to see who has access to your project's runs.
      alt="access-to-runs"
    />
 
-### Smart Orchestration
+## Smart Orchestration
 
-#### Spec Prioritization & Auto Cancellation
+### Spec Prioritization & Auto Cancellation
 
 Toggle Spec Prioritization to reduce feedback time by running previously failed test specs first. Enabling Auto Cancellation to reduce run duration by canceling the run when tests fail. Adjust the number of test failures before auto
 canceling.
@@ -180,16 +164,16 @@ and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) gu
 
 <DocsImage
   src="/img/cloud/features/smart-orchestration/spec-prioritization-active.png"
-  alt="Run completion delay settings"
+  alt="Spec Prioritization and Auto Cancellation settings"
 />
 
-### Parallelization
+## Parallelization
 
-#### Run completion delay
+### Run Completion Delay
 
-Control how long the Cypress Cloud should wait for new groups to join a run before transitioning a run to a _completed_ status with the **Run completion delay** . This gives your test groups a grace period to join an existing run before the run is considered complete.
+Control how long Cypress Cloud should wait for new groups to join a run before transitioning a run to a _completed_ status with the **Run Completion Delay**. This gives your test groups a grace period to join an existing run before the run is considered complete.
 
-Use run completion delay when you have a distributed test setup where test groups might
+Use Run Completion Delay when you have a distributed test setup where test groups might
 not all start simultaneously. For example:
 
 - CI jobs that might start at slightly different times
@@ -199,15 +183,21 @@ not all start simultaneously. For example:
 The default is **60 seconds**. Increasing this value gives your test groups more time to join the run; decreasing it will make runs complete faster when no new groups are joining.
 
 See our
-[Parallelization guide](/cloud/features/smart-orchestration/parallelization#Run-completion-delay)
+[Parallelization guide](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay)
 to learn more.
+
+:::tip
+
+If you set a long run completion delay to allow more time for groups to join, use the **[Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API)** to close the run programmatically to avoid an extra wait at the end.
+
+:::
 
 <DocsImage
   src="/img/cloud/projects/run-completion-delay.jpg"
   alt="Run completion delay settings"
 />
 
-### Run Timeout
+## Run Timeout
 
 **Run timeout** is the number of minutes that Cypress Cloud will
 wait to receive a signal from a run before marking the spec and run as **Timed Out**.
@@ -228,7 +218,7 @@ The default is **90 minutes**. You can shorten this for faster feedback when a r
   alt="Run timeout setting"
 />
 
-#### Run completion delay vs. Run timeout
+### Run completion delay vs. Run timeout
 
 These settings work together to balance giving your tests enough time to complete
 while not waiting indefinitely for runs that have failed or hung:
@@ -238,9 +228,9 @@ while not waiting indefinitely for runs that have failed or hung:
 - **Run timeout** (minutes): How long to wait for any activity from a run before
   marking it timed out. Applies throughout the entire run.
 
-### Transfer ownership
+## Transfer ownership
 
-#### Transfer project to other user or organization
+### Transfer project to other user or organization
 
 You can transfer projects that you own to another
 [organization](/cloud/account-management/organizations) you are a part of
@@ -271,7 +261,7 @@ trial](/cloud/get-started/free-trial).
 
 :::
 
-#### Cancel project transfer
+### Cancel project transfer
 
 Upon transferring, you can cancel the transfer at any time by visiting the
 organization's projects and clicking **Cancel Transfer**.
@@ -281,7 +271,7 @@ organization's projects and clicking **Cancel Transfer**.
   alt="Cancel pending transfer of project"
 />
 
-#### Accept or reject transferred project
+### Accept or reject transferred project
 
 When a project is transferred to you, you will receive an email notifying you.
 You will be able to accept or reject the transferred project by clicking the
@@ -292,7 +282,7 @@ notification in the sidebar and clicking 'Accept' or 'Reject'.
   alt="Accept or reject a transferred project"
 />
 
-### Delete Project
+## Delete Project
 
 You can delete projects you own. This will also delete all of their recorded
 test runs. Deleting projects can only be done from
@@ -310,12 +300,12 @@ test runs. Deleting projects can only be done from
 5. Confirm that you want to delete the project by clicking **Yes, Remove
    Project**.
 
-### README Badges
+## README Badges
 
 README badges allow you to increase visibility of your project's test status and
 test count to other developers viewing your project's README file.
 
-#### Create a README badge
+### Create a README badge
 
 1. In your Cypress Cloud account, select the project for which you'd like to add
    a badge.

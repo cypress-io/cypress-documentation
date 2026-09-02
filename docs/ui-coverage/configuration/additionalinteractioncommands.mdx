@@ -1,7 +1,7 @@
 ---
 title: 'additionalInteractionCommands: count custom commands as coverage in UI Coverage'
 description: 'Make Cypress UI Coverage count your custom Cypress commands and third-party commands, such as cypress-real-events realClick and realType, as interactions so the elements they touch are marked as tested.'
-sidebar_label: 'Track custom commands'
+sidebar_label: 'additionalInteractionCommands'
 sidebar_position: 90
 ---
 
@@ -48,6 +48,10 @@ To add or edit `additionalInteractionCommands`, open the **App Quality** tab in 
 
 Each entry is the name of a Cypress command, such as `"realClick"` or `"selectDate"`, written exactly as it appears in your test code. Entries are command names only: not CSS selectors and not the `cy.` prefix. The property is optional and defaults to an empty list, so the [built-in interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) always apply on their own.
 
+### Validation rules
+
+Cypress Cloud rejects a configuration when the same command name appears twice in the list, or when an entry isn't a plain string.
+
 ## How additional interaction commands are applied
 
 A command you list here counts as an interaction only when it logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that highlights the element it acts on. UI Coverage reads that snapshot to know which element the interaction belongs to, so a command with no subject-referencing snapshot is ignored even when its name is listed. Built-in commands log this snapshot automatically; a custom command must do it explicitly (see [Requirements for a custom command](#Requirements-for-a-custom-command)).
@@ -57,7 +61,7 @@ Keep these behaviors in mind:
 - **Your list is added to the defaults, not a replacement for them.** The built-in commands keep counting; you're extending the set, not overriding it. To _limit_ which commands count for specific elements, use [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands).
 - **Listing a built-in command has no effect.** The [built-in interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) already count on their own. `additionalInteractionCommands` is only for names UI Coverage doesn't already recognize.
 - **Overwriting a built-in command keeps its name.** UI Coverage matches on the name a command logs under, so a built-in interaction command customized with [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands) stays recognized automatically under its original name, without being listed here, as long as your version still logs a snapshot referencing the subject. Only a brand-new command name added with `Cypress.Commands.add` needs to be listed.
-- **Custom command names are matched case-sensitively.** `"realClick"` matches `realClick` but not `realclick`. Copy the name exactly as you registered it with `Cypress.Commands.add`. (The built-in commands are matched case-insensitively; this exact-match rule applies to the names you add here.)
+- **Custom command names are matched case-sensitively.** `"realClick"` matches `realClick` but not `realclick`. Copy the name exactly as you registered it with `Cypress.Commands.add`.
 
 ### Requirements for a custom command
 

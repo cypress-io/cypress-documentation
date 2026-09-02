@@ -874,6 +874,19 @@
           "link": "https://github.com/reportportal/agent-js-cypress",
           "keywords": ["reporter", "reportportal", "reporting"],
           "badge": "community"
+        },
+        {
+          "name": "@qualflare/cypress",
+          "description": "Native Cypress reporter for Qualflare. Captures suite/test results, real retry counts, screenshots, videos, and command-log step traces as one Launch per run.",
+          "link": "https://github.com/Qualflare/qualflare-cypress",
+          "keywords": [
+            "reporter",
+            "qualflare",
+            "test-management",
+            "screenshot",
+            "flaky"
+          ],
+          "badge": "community"
         }
       ]
     },
@@ -1285,6 +1298,13 @@
           "description": "Mobile testing helper for Cypress.",
           "link": "https://gitlab.com/nTopus/cy-mobile-commands#readme",
           "keywords": ["mobile", "swipe", "touch", "commands"],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-device-emulate",
+          "description": "Real mobile device emulation for Cypress — viewport, touch, user agent, device pixel ratio, and live orientation rotation via Chrome DevTools Protocol.",
+          "link": "https://github.com/sekharsdet/cypress-device-emulate",
+          "keywords": ["mobile", "device-emulation", "viewport", "touch", "cdp", "orientation"],
           "badge": "community"
         },
         {

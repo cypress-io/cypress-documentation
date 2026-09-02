@@ -12,8 +12,35 @@ This is the **Cypress Documentation** site, built with
 - Docs content lives in `docs/**/*.mdx`.
 - Custom remark plugins live in `plugins/cypressRemarkPlugins`.
 - The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
-  content into stripped-down markdown and chunked JSON published under `/llm`,
-  with `/llms.txt` as the index (both are build output, not committed files).
+  content into stripped-down markdown and chunked JSON published under `/llm`
+  (all of it build output, not committed files). Every page's markdown is also
+  published at its own route plus `.md` (`/app/get-started/why-cypress.md`),
+  with its `##` sections at `/app/get-started/why-cypress/<h2-slug>.md`, so an
+  agent can reach the markdown by appending `.md` to a docs URL without
+  discovering `/llm` first. Readers reach the same file through
+  `src/components/markdown-actions`, the split button beside every page title:
+  it copies the markdown, opens the raw `.md`, or hands its URL to ChatGPT or
+  Claude. Both it and the
+  `<link rel="alternate" type="text/markdown">` tag in `src/theme/DocItem/Layout`
+  derive the path from `markdownPathFor` in `src/utils/markdown-url.ts`, so
+  neither can drift from the other. Three files at the site root index all of
+  that:
+  - `/llms.txt` — the index, in the [llmstxt.org](https://llmstxt.org) format
+    (H1, blockquote, then `##` sections of `- [Title](url): description` links).
+    It links every page's markdown, plus one section listing the other formats.
+    Written by `LlmsTxtWriter`; the link list is generated from the pages the
+    export walks, so it is never hand-maintained.
+  - `/llms-full.txt` — every page's markdown concatenated in index order, for
+    tools that ingest one file. It runs to several megabytes; `LlmsTxtWriter`
+    quotes the current size in the `/llms.txt` entry that links it.
+  - `/docs-manifest.json` — project metadata (name, repository, license, tags)
+    and the machine-readable list of the formats above. Written by
+    `ManifestWriter`. This is the metadata that used to sit in a YAML block at
+    the top of `/llms.txt`, which kept that file out of the format its
+    consumers parse.
+- Small helpers shared by more than one component live in `src/utils`
+  (`markdown-url.ts`, `copy-to-clipboard.ts`). Anything with UI belongs in
+  `src/components` instead.
 - The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
   **never installed on their own**: they have no lockfiles and are not npm
   workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
@@ -24,7 +51,17 @@ This is the **Cypress Documentation** site, built with
   **root** `package.json` — pins added to a plugin's own `package.json` are
   never installed and just drift stale.
 - Reusable React/MDX components live in `src/components` and are registered in
-  `src/theme/MDXComponents.js`.
+  `src/theme/MDXComponents.js`. Build them from the `@cypress-design/react-*`
+  primitives (`Button`, `Icon`, `Select`, …) rather than hand-rolling a control,
+  and reach for the design system's component before inventing your own; add the
+  package to the root `package.json` when the one you need isn't installed yet.
+- **Interactive chrome must carry `data-sanitize`.** `plugins/llm` strips any
+  element with that attribute from the LLM markdown export, so buttons, menus,
+  and toggles don't reach an agent as text it can't click. Put it on the
+  outermost element that is purely interactive (see `markdown-actions`), or on
+  just the controls when the surrounding content should still ship (see
+  `copy-prompt`). Verify with `npm run build` and a grep over
+  `dist/llm/markdown/`.
 
 ## Adding, moving & removing pages
 
@@ -215,6 +252,12 @@ and `docs/app/guides/migration/`.
 - **Format longer prompts** with newlines and bullet/numbered lists in the
   `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
   prompts stay on one line and wrap.
+- **Point the agent at a page's markdown as `<page-url>.md`** when the prompt
+  tells it to read one, e.g.
+  `https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-15-0.md`.
+  Every page is published that way, as is each of its `##` sections, so the
+  agent gets the content without the page chrome. Prefer it over the longer
+  `/llm/markdown/…` path, which serves the same file.
 - **Ships in the LLM export by default** (the prompt is reusable content). Add
   `excludeFromLlmExport` only when the prompt tells the agent to read this same
   page (e.g. the migration guides), so the export does not duplicate the page's
@@ -531,6 +574,27 @@ that already embed the correct params rather than re-writing the URL.
 - **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
+- **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and
+  `cypress.config.ts`. The `plugins/` sub-packages type check themselves through
+  their own `tsc` builds during `npm run build`. Note that `@docusaurus/tsconfig`
+  points `baseUrl` at its own directory, so the root `tsconfig.json` re-anchors
+  it to the repository and pulls in the `@theme/*` ambient types explicitly;
+  without that, `@site/...` and `@theme/...` imports do not resolve.
+
+## Continuous integration
+
+CircleCI (`.circleci/config.yml`) runs on every pull request:
+
+| Job                                  | Command                               |
+| ------------------------------------ | ------------------------------------- |
+| Build                                | `npm run build`                       |
+| Lint JS/CSS/Markdown                 | `npm run lint`                        |
+| Typecheck                            | `npm run typecheck`                   |
+| Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins` |
+| Run Tests in Parallel                | `cypress run` across 8 containers     |
+
+The lint, typecheck, and unit-test jobs reuse the `node_modules` the build job
+persists to the workspace, so they need no install step of their own.
 
 ## GitHub Actions workflows
 

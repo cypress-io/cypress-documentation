@@ -1,7 +1,7 @@
 ---
 title: 'significantAttributes: identify elements by your attributes in Cypress Accessibility'
 description: 'Make Cypress Accessibility identify elements and build violation target selectors from your own HTML attributes, such as data-component, aria-label, or data-automation-id, by adding them to the priority list of significant attributes.'
-sidebar_label: 'Prioritize identifying attributes'
+sidebar_label: 'significantAttributes'
 sidebar_position: 70
 ---
 
@@ -11,7 +11,7 @@ sidebar_position: 70
 
 The `significantAttributes` configuration adds your own HTML attributes to the priority list Cypress Accessibility uses to identify elements. Attributes you list are checked before the default test attributes, in the order you list them.
 
-Cypress Accessibility [identifies each element](/accessibility/core-concepts/element-identification) with a stable selector, replacing the default Axe-Core® target, so that results for the same element can be deduplicated across the many snapshots captured in a run. That selector is built from a prioritized list of attributes: test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as a `data-component` attribute from your design system or a `data-automation-id` your team maintains. Listing them in `significantAttributes` makes Cypress Accessibility prefer them, so violation targets read in your team's vocabulary when [reviewing violation details](/accessibility/guides/inspecting-violation-details), creating Jira issues, or handing selectors to AI tools, and deduplication is driven by values that stay stable across snapshots.
+Cypress Accessibility [identifies each element](/accessibility/core-concepts/element-identification) with a stable selector, replacing the default Axe-Core® target, so that results for the same element can be deduplicated across the many snapshots captured in a run. That selector is built from a prioritized list of attributes: test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as a `data-component` attribute from your design system or a `data-automation-id` your team maintains. Listing them in `significantAttributes` makes Cypress Accessibility prefer them, so violation targets read in your team's vocabulary when [reviewing violation details](/accessibility/reports/element-detail-view), creating Jira issues, or handing selectors to AI tools, and deduplication is driven by values that stay stable across snapshots.
 
 ## Why use significantAttributes?
 

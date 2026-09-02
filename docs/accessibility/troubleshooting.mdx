@@ -17,9 +17,25 @@ This page maps each symptom to its cause and the configuration that resolves it.
 
 Every run is processed with the configuration that was saved **at that moment**, so edits you make afterward don't change an existing report until you reprocess it. This timing is the single most common reason a rule "doesn't work."
 
-After saving configuration in the **App Quality** tab of your project settings, open a run's **Properties** tab and use its "regenerate" button. The configuration that was used for that run is displayed there, so you can confirm what was applied. Every fix on this page assumes you regenerate the run after changing configuration. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
+After saving configuration in the **App Quality** tab of your project settings, open a run's **Properties** tab and use its "regenerate" button. The configuration that was used for that run is displayed there, so you can confirm what was applied. Every configuration fix on this page assumes you regenerate the run afterward. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
 
 :::
+
+## No accessibility report was generated for a run
+
+The run recorded to Cypress Cloud, but its **Accessibility** tab is empty or absent.
+
+**Cause.** Reports are built in Cypress Cloud from the run's [Test Replay](/cloud/features/test-replay) data. When that data wasn't captured or wasn't uploaded, there is nothing to scan, so no report is produced. This is a different problem from a report that looks wrong, and none of the configuration fixes on this page apply to it.
+
+**Fixes.** A recorded run produces an accessibility report when all of the following are true:
+
+- **Cypress Accessibility is enabled for the project.** It's a paid premium solution, so a project on a plan without it records normally and produces no accessibility report.
+- **The run was recorded** with `cypress run --record` and a valid record key, against a project with a `projectId`. Interactive mode (`cypress open`) never records a run, so it never generates results.
+- **Cypress v13 or later** was used. Test Replay was introduced in Cypress 13.
+- **Test Replay is enabled** in the project's settings in Cypress Cloud. A run recorded while it's turned off uploads no data to process.
+- **The browser was Chromium-based or Electron.** Chrome, Edge, Chromium, and Electron capture Test Replay data. Firefox and WebKit do not, so `--browser firefox` and `--browser webkit` runs produce no accessibility report. `cypress run` defaults to Electron, which is supported.
+
+When a report exists but is missing specific specs, check the terminal output from the run. Cypress prints the Test Replay upload status for every spec, and a spec that reports "Nothing to upload" or a capture failure contributes nothing to the accessibility report.
 
 ## An element you excluded still appears in the report
 
@@ -56,7 +72,7 @@ You removed a failing element with [`elementFilters`](/accessibility/configurati
 **Fixes.**
 
 - **Confirm the element was actually removed** using the section above, then look at whether the same rule still fails elsewhere.
-- **Address the underlying violations** rather than filtering, when the elements are part of your application. See [Improve accessibility](/accessibility/guides/improve-accessibility) and [How the accessibility score is calculated](/accessibility/core-concepts/accessibility-score).
+- **Address the underlying violations** rather than filtering, when the elements are part of your application. See [Fix accessibility violations](/accessibility/guides/improve-accessibility) and [How the accessibility score is calculated](/accessibility/core-concepts/accessibility-score).
 
 ## A rule keeps failing and you can't resolve it yet
 
@@ -68,7 +84,7 @@ A known issue, a false positive, or a third-party defect is failing a rule, and 
 
 - **Ignore a rule on one specific element** with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application markup, which is the most surgical option and keeps the rule active everywhere else.
 - **Turn a rule off or adjust how Axe Core® runs** across the report with [Axe Core® configuration](/accessibility/configuration/axe-core-configuration), when a rule doesn't apply to your application at all.
-- **Keep the rule visible but non-blocking** by handling it in your CI policy instead of in Cypress Cloud. The [Results API](/accessibility/results-api) gives you full control over which rules fail a build, so you can allow a known violation while still failing on anything new. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
+- **Keep the rule visible but non-blocking** by handling it in your CI policy instead of in Cypress Cloud. The [Results API](/accessibility/connect-and-extend/results-api) gives you full control over which rules fail a build, so you can allow a known violation while still failing on anything new. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
 
 ## Third-party or out-of-scope UI is adding noise
 

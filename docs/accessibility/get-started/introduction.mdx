@@ -45,7 +45,7 @@ Looking for a general guide for accessibility testing concepts in Cypress App? G
 
 ## Get Started
 
-You don't need to make any changes to your code or your test setup. If you record test runs to the Cypress Cloud with Test Replay, you're ready to start using Cypress Accessibility.
+You don't need to make any changes to your code or your test setup. If you record test runs to Cypress Cloud with Test Replay, you're ready to start using Cypress Accessibility.
 You'll start your [free trial](https://www.cypress.io/accessibility?utm_medium=intro-cta&utm_source=docs.cypress.io&utm_content=Request%20trial) with personalized support
 from our sales team and your existing test data to instantly see full accessibility reports for all your Cypress projects.
 From there, you can integrate with CI to set your own standards for handling the results.
@@ -63,11 +63,13 @@ From there, you can integrate with CI to set your own standards for handling the
       aria-labelledby="card-title-1"
     >
       <Icon name="chart-line" />
-      <div class="card__title" id="card-title-1">Improve Accessibility</div>
+      <div class="card__title" id="card-title-1">
+        Fix accessibility violations
+      </div>
       <p>
-        Discover how to break down accessibility reports, prioritize fixes, and
-        make impactful progress toward accessible software with Cypress
-        Accessibility.
+        Turn a large accessibility report into work your team can finish: scope
+        the report to the code you own, pick a first rule, fix it, and prove the
+        fix landed before the code merges.
       </p>
     </a>
   </li>
@@ -77,7 +79,7 @@ From there, you can integrate with CI to set your own standards for handling the
       aria-labelledby="card-title-8"
     >
       <Icon name="shield-halved" />
-      <div class="card__title" id="card-title-8">Detect and manage changes</div>
+      <div class="card__title" id="card-title-8">Catch accessibility regressions</div>
       <p>
         Compare reports in detail to review only <i>new</i> accessibility issues, use
         our API to react to runs that don't meet your standards, and spot trends
@@ -156,12 +158,12 @@ Cypress Accessibility delivers detailed, actionable accessibility reports direct
 - **No setup**: Cypress Accessibility utilizes the same capture protocol as [Test Replay](/cloud/features/test-replay) (requires Cypress v13+), so no additional code or configuration is needed.
 - **No test slowdown or flakiness**: Server-side execution ensures no impact on test performance or existing code.
 - **Comprehensive reporting**: During test execution, unique states—defined by distinct DOM structures—are recorded for end-to-end views and components.
-- **DOM snapshots**: Each detected violation is accompanied by a [full-page, inspectable DOM snapshot](/accessibility/guides/inspecting-violation-details), highlighting the exact location and context of the violation.
-- **Report generation**: [Detailed reports](/accessibility/guides/run-level-reports) are generated, offering sortable and filterable views by page, component, or the entire test run. Rule-based summaries for an aggregated view of accessibility outcomes for the entire run are also available.
+- **DOM snapshots**: Each detected violation is accompanied by a [full-page, inspectable DOM snapshot](/accessibility/reports/element-detail-view), highlighting the exact location and context of the violation.
+- **Report generation**: [Detailed reports](/accessibility/reports/run-level-reports) are generated, offering sortable and filterable views by page, component, or the entire test run. Rule-based summaries for an aggregated view of accessibility outcomes for the entire run are also available.
 - **Run comparison**: [Compare the results](/accessibility/guides/compare-reports) from two runs and see only the new issues. Know before you merge if a code change is going to cause new accessibility problems.
-- **Deep linking and sharing**: Easily share whatever you are looking at with your team at any time by copying the link, or using built-in sharing functionality and [Jira issue creation](/accessibility/guides/inspecting-violation-details#Create-Jira-issue).
+- **Deep linking and sharing**: Easily share whatever you are looking at with your team at any time by copying the link, or using built-in sharing functionality and [Jira issue creation](/accessibility/reports/element-detail-view#Create-Jira-issue).
 - **Selective element handling**: Elements marked as "ignored" in tests are excluded from scoring but remain visible for manual review, ensuring flexibility via [configuration](/accessibility/configuration/overview).
-- **Flexible pipeline integration**: The [Results API](/accessibility/results-api) allows you to programmatically control your CI pipeline's behavior based on accessibility outcomes, enabling enforcement of accessibility policies.
+- **Flexible pipeline integration**: The [Results API](/accessibility/connect-and-extend/results-api) allows you to programmatically control your CI pipeline's behavior based on accessibility outcomes, enabling enforcement of accessibility policies.
 - **Run-specific configuration**: Use [Profiles](/accessibility/configuration/profiles) to apply different configuration settings based on run tags, enabling team-specific reporting and optimized settings for pull requests versus regression runs.
 
 Learn more about [how it works](/accessibility/core-concepts/how-it-works).

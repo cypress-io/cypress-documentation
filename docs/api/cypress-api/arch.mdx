@@ -36,9 +36,9 @@ it('has expected CPU architecture', () => {
 ```javascript
 it('does something differently', () => {
   if (Cypress.arch === 'x64') {
-    cy.exec('something')
+    cy.task('something')
   } else {
-    cy.exec('something else')
+    cy.task('something else')
   }
 })
 ```

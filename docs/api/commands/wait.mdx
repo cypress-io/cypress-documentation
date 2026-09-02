@@ -273,6 +273,47 @@ cy.get(...)
 Read
 [Guide: Introduction to Cypress](/app/core-concepts/introduction-to-cypress#Commands-Run-Serially)
 
+### Retry-ability
+
+How you write the chain after `cy.wait()` decides whether your assertions
+[retry](/app/core-concepts/retry-ability), and how long a failing assertion
+takes to fail. Both styles below work, so pick the one that matches what you
+want.
+
+Retry-ability belongs to the chain, not to a single command. `cy.wait()` is not
+a query, so an assertion chained straight onto it gets a single attempt against
+the interception object it yielded:
+
+```js
+// one attempt: fails as soon as the status code is wrong
+cy.wait('@getAccount').should(
+  'have.nested.property',
+  'response.statusCode',
+  200
+)
+```
+
+Add a query such as [`.its()`](/api/commands/its) or
+[`.invoke()`](/api/commands/invoke) and you start a new retryable chain. The
+query re-reads the property, and everything after it retries for up to
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) (`4000` ms by
+default):
+
+```js
+// retries for up to 4 seconds before passing or failing
+cy.wait('@getAccount').its('response.statusCode').should('eq', 200)
+```
+
+If you want the retrying version to fail fast instead, set the query's timeout
+to `0`:
+
+```js
+// checks the value once, at that moment
+cy.wait('@getAccount')
+  .its('response.statusCode', { timeout: 0 })
+  .should('eq', 200)
+```
+
 ### Timeouts {#Notes-Timeouts}
 
 #### `requestTimeout` and `responseTimeout`
@@ -328,8 +369,11 @@ requests to complete within the given `requestTimeout` and `responseTimeout`.
 
 <HeaderAssertions />
 
-- `cy.wait()` will only run assertions you have chained once, and will not
+- Assertions chained _directly_ to `cy.wait()` run once and will not
   [retry](/app/core-concepts/retry-ability).
+- Assertions chained after a query such as [`.its()`](/api/commands/its) or
+  [`.invoke()`](/api/commands/invoke) _do_ retry, because
+  [retry-ability follows the chain](#Retry-ability), not the command.
 
 <HeaderTimeouts />
 

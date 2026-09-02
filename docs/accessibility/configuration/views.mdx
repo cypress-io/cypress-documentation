@@ -1,15 +1,22 @@
 ---
 title: 'views: group URLs with URL patterns in Cypress Accessibility'
 description: 'The views configuration groups related URLs into a single view in Cypress Accessibility using URL patterns, so accessibility reports and scores are organized around the real pages of your application instead of the shape of your test data.'
-sidebar_label: 'Group & name views'
+sidebar_label: 'views'
 sidebar_position: 20
 ---
+
+import { toc as viewsToc } from '@site/docs/partials/_views.mdx'
+
+export const toc = [
+  ...viewsToc,
+  { value: 'See also', id: 'See-also', level: 2 },
+]
 
 <ProductHeading product="accessibility" />
 
 # Group & name views - `views`
 
-Cypress Accessibility organizes every report around **views**, the distinct pages and components of your application. Each view collects the [snapshots](/accessibility/guides/run-level-reports#Snapshots) captured on that page and reports the accessibility violations found there, so you review, score, and track each part of your app as a unit.
+Cypress Accessibility organizes every report around **views**, the distinct pages and components of your application. Each view collects the [snapshots](/accessibility/reports/run-level-reports#Snapshots) captured on that page and reports the accessibility violations found there, so you review, score, and track each part of your app as a unit.
 
 The `views` configuration controls that grouping. Without it, URLs that differ only by a username, slug, or other non-numeric value each become their own view, so a single violation on a shared page template is reported once per URL and one issue is split across many rows. A `views` pattern rolls those URLs into one view, so you triage the violation once for the whole page and your report reflects the structure of your application, not the shape of your test data.
 
@@ -19,7 +26,7 @@ The reference below covers the full `views` syntax, including how URLs are match
 
 ## See also
 
-- [Views in accessibility reports](/accessibility/guides/run-level-reports#Views): how views organize your report and per-view score
+- [Views in accessibility reports](/accessibility/reports/run-level-reports#Views): how views organize your report and per-view score
 - [`viewFilters` configuration](/accessibility/configuration/viewfilters): exclude URLs from your reports instead of grouping them
 - [Configuration overview](/accessibility/configuration/overview): how to set configuration for your project
 - [Cypress Accessibility FAQ](/accessibility/faq#Grouping-and-naming-views): common questions about grouping and naming views

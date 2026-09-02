@@ -15,6 +15,8 @@ import CypressInstallCommands from '@site/docs/partials/_cypress-install-command
 import CypressCacheClearCommands from '@site/docs/partials/_cypress-cache-clear-commands.mdx'
 import CypressInstallBinaryCommands from '@site/docs/partials/_cypress-install-binary-commands.mdx'
 import CypressEnvVsCypressExpose from '@site/docs/partials/_cy-env-vs-cypress-expose.mdx'
+import CypressEnvYieldedValueCaution from '@site/docs/partials/_cy-env-yielded-value-caution.mdx'
+import CypressEnvAssertDerivedValue from '@site/docs/partials/_cy-env-assert-derived-value.mdx'
 import CypressOpenCommands from '@site/docs/partials/_cypress-open-commands.mdx'
 import CypressRunCommands from '@site/docs/partials/_cypress-run-commands.mdx'
 import CypressCommandTabs from '@site/src/components/cypress-command-tabs'
@@ -23,6 +25,7 @@ import DefaultSelectorPriority from '@site/docs/partials/_default-selector-prior
 import DocsImage from '@site/src/components/docs-image'
 import DocsVideo from '@site/src/components/docs-video'
 import DocumentDomainWorkaround from '@site/docs/partials/_document-domain-workaround.mdx'
+import ForceHttp1Deprecation from '@site/docs/partials/_force-http1-deprecation.mdx'
 import E2EOnlyBadge from '@site/src/components/e2e-only-badge'
 import E2EOrCtTabs from '@site/src/components/e2e-or-ct-tabs'
 import VueSyntaxTabs from '@site/src/components/vue-syntax-tabs'
@@ -35,6 +38,7 @@ import Icon from '@site/src/components/icon'
 import ImportMountFunctions from '@site/docs/partials/_import-mount-functions.mdx'
 import IntellisenseCodeCompletion from '@site/docs/partials/_intellisense-code-completion.mdx'
 import InvertedContainsSelection from '@site/docs/partials/_inverted-contains-selection.mdx'
+import NativeBrowserNetworkBrowsers from '@site/docs/partials/_native-browser-network-browsers.mdx'
 import ProductHeading from '@site/src/components/product-heading'
 import AppQualityConfigEditing from '@site/docs/partials/_app-quality-config-editing.mdx'
 import AppQualityConfigWhoCanEdit from '@site/docs/partials/_app-quality-config-who-can-edit.mdx'
@@ -59,7 +63,6 @@ import LineBreak from '@site/src/components/line-break'
 import OsTabs from '@site/src/components/os-tabs'
 import Logo from '@site/src/components/logo'
 import ScrollableTable from '@site/src/components/scrollable-table'
-import WhatYoullLearn from '@site/src/components/what-youll-learn'
 import CalloutLabel from '@site/src/components/callout-label'
 import AccordionBlock from '@site/src/components/accordion-block'
 import CloudFreePlan from '@site/docs/partials/_cloud_free_plan.mdx'
@@ -198,7 +201,6 @@ export default {
   // Make horizontally scrollable tables keyboard-focusable (a11y:
   // scrollable-region-focusable)
   table: ScrollableTable,
-  WhatYoullLearn,
   CalloutLabel,
   AnatomyOfAnError,
   AccessibilityPremiumNote,
@@ -214,6 +216,8 @@ export default {
   CypressCacheClearCommands,
   CypressInstallBinaryCommands,
   CypressEnvVsCypressExpose,
+  CypressEnvYieldedValueCaution,
+  CypressEnvAssertDerivedValue,
   CypressOpenCommands,
   CypressRunCommands,
   CypressCommandTabs,
@@ -222,6 +226,7 @@ export default {
   DocsImage,
   DocsVideo,
   DocumentDomainWorkaround,
+  ForceHttp1Deprecation,
   E2EOnlyBadge,
   E2EOrCtTabs,
   VueSyntaxTabs,
@@ -234,6 +239,7 @@ export default {
   ImportMountFunctions,
   IntellisenseCodeCompletion,
   InvertedContainsSelection,
+  NativeBrowserNetworkBrowsers,
   ProductHeading,
   AppQualityConfigEditing,
   AppQualityConfigWhoCanEdit,

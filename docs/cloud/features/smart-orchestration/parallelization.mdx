@@ -9,17 +9,6 @@ sidebar_position: 20
 
 # Parallelization
 
-:::info
-
-<WhatYoullLearn />
-
-- How Cypress balances spec files across multiple machines
-- How to run tests in parallel across multiple machines
-- How to group test runs and why you might want to
-- How to visualize parallelization and groups in Cypress Cloud
-
-:::
-
 If your project has a large number of tests, it can take a long time for tests
 to complete running serially on one machine. Running tests in parallel across
 many virtual machines can save your team time and money when running tests in
@@ -100,7 +89,7 @@ across available CI machines by the following process:
    are distributed to it. This process repeats until all spec files are
    complete.
 6. Upon completion of all spec files, Cypress
-   [waits for a configurable amount of time](#Run-completion-delay) before
+   [waits for a configurable amount of time](#Run-Completion-Delay) before
    considering the test run as fully complete. This is done to better support
    [grouping of runs](#Grouping-test-runs).
 
@@ -136,14 +125,14 @@ workflows:
     jobs:
       - cypress/run:
           start-command: 'npm run start'
-          cypress-command: 'npx cypress run --record'
+          cypress-command: 'npx cypress run --record --browser chrome'
 ```
 
 Cypress runs all 19 spec files one by one alphabetically. It takes **1:51** to
 complete all of the tests.
 
 ```text
-1x-electron, Machine #1
+1x-chrome, Machine #1
 --------------------------
 -- actions.cy.js (14s)
 -- aliasing.cy.js (1s)
@@ -194,13 +183,13 @@ workflows:
       - cypress/run:
           parallelism: 2
           start-command: 'npm run start'
-          cypress-command: 'npx cypress run --record --parallel'
+          cypress-command: 'npx cypress run --record --parallel --browser chrome'
 ```
 
 It finished in **59 seconds**.
 
 ```text
-2x-electron, Machine #1, 9 specs          2x-electron, Machine #2, 10 specs
+2x-chrome, Machine #1, 9 specs            2x-chrome, Machine #2, 10 specs
 --------------------------------          -----------------------------------
 -- actions.cy.js (14s)                    -- waiting.cy.js (6s)
 -- traversal.cy.js (4s)                   -- navigation.cy.js (3s)
@@ -279,11 +268,10 @@ The second group can be called `Mac/Chrome 70`.
 cypress run --record --group Mac/Chrome-70 --browser chrome
 ```
 
-The third group can be called `Linux/Electron`. _Electron is the default
-browser used in Cypress runs_.
+The third group can be called `Linux/Firefox`.
 
 ```shell
-cypress run --record --group Linux/Electron
+cypress run --record --group Linux/Firefox --browser firefox
 ```
 
 <DocsImage src="/img/app/parallelization/browser.png" alt="browser" />
@@ -292,11 +280,11 @@ cypress run --record --group Linux/Electron
 
 We also have the power of Cypress parallelization with our groups. For the sake
 of demonstration, let's run a group to test against Chrome with 2 machines, a
-group to test against Electron with 4 machines, and another group to test
-against Electron again, but only with one machine:
+group to test against Firefox with 4 machines, and another group to test
+against Firefox again, but only with one machine:
 
 ```shell
-cypress run --record --group 1x-electron
+cypress run --record --group 1x-firefox --browser firefox
 ```
 
 ```shell
@@ -304,7 +292,7 @@ cypress run --record --group 2x-chrome --browser chrome --parallel
 ```
 
 ```shell
-cypress run --record --group 4x-electron --parallel
+cypress run --record --group 4x-firefox --browser firefox --parallel
 ```
 
 The `1x`, `2x`, `4x` group prefix used here is an adopted convention to indicate
@@ -402,23 +390,245 @@ via CLI
 cypress run --record --parallel --ci-build-id $BUILD_TAG
 ```
 
-## Run completion delay
+## Run Completion Delay
 
 During parallelization mode or when grouping runs, Cypress will wait for a
 specified amount of time before completing the test run in case any more
 relevant work remains. This is to compensate for various scenarios where CI
 machines could be backed-up in a queue.
 
-This waiting period is called the **run completion delay** and it begins after
+This waiting period is called the **Run Completion Delay** and it begins after
 the last known CI machine has completed as shown in the diagram below:
 
 <DocsImage
   src="/img/app/parallelization/run-completion-delay.png"
-  alt="Test run completion delay"
+  alt="Test Run Completion Delay"
 />
 
 This **delay is 60 seconds by default**, but is
-[configurable within Cypress Cloud project settings page](/cloud/account-management/projects#Run-completion-delay).
+[configurable in the Cypress Cloud project settings page](/cloud/account-management/projects#Run-Completion-Delay).
+
+## Run Completion API
+
+:::caution
+
+This API is **experimental**. Breaking changes are unlikely, but may be made if necessary.
+
+:::
+
+The sooner Cypress Cloud marks a run complete, the sooner everything that
+depends on a finished run can proceed:
+
+- [`run.completed` webhooks](/cloud/integrations/webhooks) fire, so automations,
+  deployment gates, and custom notifications receive the payload without waiting
+  for the delay to elapse.
+- Slack, email, and desktop notifications for the run's final status go out
+  sooner.
+- [UI Coverage](/ui-coverage/get-started/introduction) and
+  [Cypress Accessibility](/accessibility/get-started/introduction) reports
+  finalize as soon as the run completes.
+
+As described above, the [Run Completion Delay](#Run-Completion-Delay) keeps parallel and grouped runs open after the last-known spec finishes so a late
+group can still join. It is often long on purpose.
+Teams with non-deterministic build timing (for example, when running Cypress
+tests using Nx) rely on that extra wait so pauses between groups do not
+complete the run early and lead to an error.
+
+The Run Completion API removes that tradeoff. You keep a long delay as a
+safety buffer, and you tell Cypress Cloud when no more groups are expected.
+The run then completes as soon as currently active groups finish, or
+immediately if nothing is in progress. Webhook delivery, notifications, and
+report finalization happen without waiting out the remaining delay.
+
+:::info
+
+Using this API sends an imperative signal, not a force. The API never cuts off a run mid-flight.
+If groups are still in progress when you call it, the request is _deferred_ and the
+run completes (with no delay) the instant it stabilizes. See
+[Outcomes](#Outcomes) below.
+
+:::
+
+### Endpoint
+
+```text
+POST https://api.cypress.io/runs/complete
+```
+
+Requests are authenticated with your **project ID** and **record key**, the same
+credentials used to [record the run](/cloud/get-started/setup#Setup).
+
+### Request body
+
+The request body is JSON. `projectId` and `recordKey` are always required, and the
+run is identified by **exactly one** of `runUrl` or `runNumber`.
+
+| Property             | Type     | Required    | Description                                                                                                                                                        |
+| -------------------- | -------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `projectId`          | `string` | Yes         | The [project ID](/cloud/account-management/projects#Project-ID) of the run.                                                                                        |
+| `recordKey`          | `string` | Yes         | A valid [record key](/cloud/account-management/projects#Record-key) for the project.                                                                               |
+| `runUrl`             | `string` | Conditional | The Cypress Cloud run URL (Cypress prints this when a run starts). Provide this **or** `runNumber`.                                                                |
+| `runNumber`          | `number` | Conditional | The run's sequential number within the project. Provide this **or** `runUrl`.                                                                                      |
+| `expectedGroupCount` | `number` | No          | The number of [groups](#Grouping-test-runs) the run is expected to have before it completes. When set, the run only completes once that many groups have finished. |
+
+#### Example: `fetch`
+
+```javascript
+const response = await fetch('https://api.cypress.io/runs/complete', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    projectId: 'abc123',
+    recordKey: 'f858a2bc-b469-4e48-be67-0876339ee7e1',
+    runUrl: 'https://cloud.cypress.io/projects/abc123/runs/42',
+    // runNumber: 42, // optional, in lieu of runUrl
+    // expectedGroupCount: 4, // optional
+  }),
+})
+
+const result = await response.json()
+console.log(result) // e.g. { outcome: 'completed' }
+```
+
+#### Example: `curl`
+
+```shell
+curl -X POST https://api.cypress.io/runs/complete \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "projectId": "abc123",
+    "recordKey": "f858a2bc-b469-4e48-be67-0876339ee7e1",
+    "runUrl": "https://cloud.cypress.io/projects/abc123/runs/42"
+  }'
+```
+
+### Finding the run URL or run number
+
+Both identifiers come from the results Cypress produces when a run is recorded.
+You don't need to construct them yourself.
+
+- **From the [Module API](/app/references/module-api#Results):** the object that
+  `cypress.run()` resolves with includes a `runUrl` field (present whenever the
+  run was recorded).
+
+  ```javascript
+  const cypress = require('cypress')
+
+  const results = await cypress.run({ record: true, key: 'your-record-key' })
+
+  // "https://cloud.cypress.io/projects/abc123/runs/42"
+  const runUrl = results.runUrl
+  ```
+
+- **From the [`after:run`](/api/node-events/after-run-api) Node event:** the
+  `results` argument is the same object resolved by the Module API, so
+  `results.runUrl` is available there as well. See the
+  [example below](#after-run-example) for a full `after:run` handler that calls
+  this API.
+
+Pass that value as `runUrl`. If you'd rather send `runNumber`, it's the trailing
+segment of the run URL: `.../runs/42` corresponds to `runNumber: 42`.
+
+:::info
+
+`runUrl` is only present when the run was recorded (`--record`). Runs that aren't
+recorded aren't tracked by Cypress Cloud and can't be completed through this API.
+
+:::
+
+### Where to call the API in a parallelized run
+
+:::caution
+
+`after:run` fires **once per machine**, so every machine sees the same `runUrl` and would each call the endpoint. Read this section to ensure consistent, expected outcomes in CI.
+
+:::
+
+Calling from inside `after:run` is fine **when you pass a known
+`expectedGroupCount`** with every call. Because the API defers until that many
+groups have finished (and absorbs any still joining), it doesn't matter which machine
+finishes first or how often the API is called from the run.
+The run only completes once all expected groups
+are in. Use this pattern when your group count is fixed and available to the
+handler (for example, injected as an environment variable by CI).
+
+Firing a bare "complete now" request from all of them is different: whichever machine finishes
+its own specs first would ask to complete a run whose other groups may not have joined yet.
+For that reason, if you do not pass `expectedGroupCount`, the most reliable place to make the call is a **dedicated
+post-run step in your CI pipeline** that runs after all parallel jobs have
+finished: one machine, one call, once you truly know the run is done.
+
+#### Example: calling from `after:run` with `expectedGroupCount` {#after-run-example}
+
+:::tip
+
+To try this API without changing your CI pipeline, you can hard-code `expectedGroupCount` in the handler instead of reading it from the environment.
+
+:::
+
+The example below completes the run from inside `after:run`. It's safe to fire
+from every machine **only because** `expectedGroupCount` is supplied from an
+environment variable that CI sets to the run's fixed number of groups.
+
+:::cypress-config-plugin-example
+
+```ts
+on('after:run', async (results) => {
+  // `results` is undefined in `cypress open` mode, and `runUrl` is only
+  // set when the run was recorded. Bail out otherwise.
+  if (!results?.runUrl) {
+    return
+  }
+
+  // The total number of `--group` names in this run, provided by CI.
+  // Passing this is what makes the call safe to fire from every machine.
+  const expectedGroupCount = Number(process.env.EXPECTED_GROUP_COUNT)
+
+  if (!expectedGroupCount) {
+    return
+  }
+
+  await fetch('https://api.cypress.io/runs/complete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      projectId: results.config.projectId,
+      recordKey: process.env.CYPRESS_RECORD_KEY,
+      runUrl: results.runUrl,
+      expectedGroupCount,
+    }),
+  })
+})
+```
+
+:::
+
+### Outcomes
+
+The endpoint always responds with a JSON body containing an `outcome` field. The
+HTTP status reflects whether the run reached a terminal state as a result of the
+request.
+
+| Status | `outcome`          | Meaning                                                                                                                                    |
+| ------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `200`  | `completed`        | The run was ready and has been completed immediately, skipping the completion delay.                                                       |
+| `200`  | `already-complete` | The run had already completed. The request is idempotent: no change was made.                                                              |
+| `202`  | `deferred`         | The run is not ready yet (groups are still in progress). The request was recorded; the run will complete with no delay once it stabilizes. |
+| `202`  | `run-not-active`   | There is no live recording session for the run. It will finalize on its own.                                                               |
+
+When a `deferred` response is returned for a request that included an
+`expectedGroupCount`, the body also echoes the progress toward that target:
+
+```json
+{
+  "outcome": "deferred",
+  "completedGroupCount": 2,
+  "expectedGroupCount": 4
+}
+```
+
+Here, `completedGroupCount` is the number of groups that have actually _finished_
+(not merely registered).
 
 ## Visualizing parallelization and groups in Cypress Cloud
 

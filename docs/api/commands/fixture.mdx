@@ -106,17 +106,16 @@ The example above would resolve in the following order:
 
 1. `cypress/fixtures/admin.json`
 2. `cypress/fixtures/admin.js`
-3. `cypress/fixtures/admin.coffee`
-4. `cypress/fixtures/admin.html`
-5. `cypress/fixtures/admin.txt`
-6. `cypress/fixtures/admin.csv`
-7. `cypress/fixtures/admin.png`
-8. `cypress/fixtures/admin.jpg`
-9. `cypress/fixtures/admin.jpeg`
-10. `cypress/fixtures/admin.gif`
-11. `cypress/fixtures/admin.tif`
-12. `cypress/fixtures/admin.tiff`
-13. `cypress/fixtures/admin.zip`
+3. `cypress/fixtures/admin.html`
+4. `cypress/fixtures/admin.txt`
+5. `cypress/fixtures/admin.csv`
+6. `cypress/fixtures/admin.png`
+7. `cypress/fixtures/admin.jpg`
+8. `cypress/fixtures/admin.jpeg`
+9. `cypress/fixtures/admin.gif`
+10. `cypress/fixtures/admin.tif`
+11. `cypress/fixtures/admin.tiff`
+12. `cypress/fixtures/admin.zip`
 
 #### Use import statement
 
@@ -224,8 +223,8 @@ cy.intercept('GET', '/users/**', { fixture: 'users' })
 
 #### Automated File Validation
 
-Cypress automatically validates your fixtures. If your `.json`, `.js`, or
-`.coffee` files contain syntax errors, they will be shown in the Command Log.
+Cypress automatically validates your fixtures. If your `.json` or `.js` files
+contain syntax errors, they will be shown in the Command Log.
 
 ### Encoding
 
@@ -235,7 +234,6 @@ Cypress automatically determines the encoding for the following file types:
 
 - `.json`
 - `.js`
-- `.coffee`
 - `.html`
 - `.txt`
 - `.csv`

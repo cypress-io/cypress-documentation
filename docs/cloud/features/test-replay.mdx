@@ -9,15 +9,6 @@ sidebar_position: 40
 
 # Test Replay
 
-:::info
-
-<WhatYoullLearn color="#0097A8" />
-
-- How Test Replay captures and replays test commands, network requests, console logs, JavaScript errors, and element rendering
-- How to view and debug tests with Test Replay in Cypress Cloud
-
-:::
-
 Test Replay in Cypress Cloud allows developers to accurately and efficiently debug failed and flaky [continuous integration](/app/continuous-integration/overview) test runs. It captures every test run detail, enabling developers to replay it and inspect the DOM, network requests, console logs, JavaScript errors, and element rendering as they happened during `cypress run`.
 
 <DocsVideo
@@ -187,6 +178,12 @@ This data is then uploaded and stored in Cypress Cloud and replayed for debuggin
 - Shadow DOM
 - Canvas elements
 
+### Network data redaction
+
+By default, Cypress redacts sensitive values from captured network requests and responses before Test Replay data is uploaded to Cypress Cloud. Redaction runs in the Cypress app, on your machine. Redacted values appear as `(redacted)` in the network log.
+
+To learn more about what is redacted and how to change this, see [Network data redaction](/cloud/account-management/data-storage-and-masking#Network-data-redaction).
+
 ### What is not captured
 
 Currently Test Replay does not support the following:
@@ -271,7 +268,7 @@ With Test Replay, Cypress Cloud regenerates the entire UI for viewing the run an
 Additionally, displaying the Cypress command log in videos and screenshots is less valuable for users
 using Test Replay.
 
-So when Test Replay is enabled, the Runner UI does not render during `cypress run`
+So when Test Replay is enabled, the Runner UI does not render during `cypress run`.
 
 If you'd like to render the Runner UI, you can turn on this behavior by passing `--runner-ui` as a CLI flag.
 You may encounter a slower performance when turning this on, especially in lower resourced machines.
@@ -316,7 +313,7 @@ you can report an issue within the Test Replay window in the Cloud by clicking t
 If the Test Replay button is disabled in Cypress Cloud, there are a few things to check:
 
 1. Confirm runs have been recorded to Cypress Cloud using Cypress `v13` or later.
-2. Ensure tests were recorded using a Chromium-based browser (Chrome, Edge, Electron).
+2. Ensure tests were recorded using a Chromium-based browser (Chrome, Edge, or the deprecated Electron browser).
 3. Check that Test Replay is enabled in Cypress Cloud project settings.
 4. Review the standard output of the test run to ensure there was not an [error uploading Test Replay](#Test-Replay-errored-during-upload).
 
@@ -363,6 +360,7 @@ The exact error message can be seen by viewing the spec's output.
 - [Branch Review](/cloud/features/branch-review) - compare test results and Test Replays side by side between branches
 - [Cloud CLI](/cloud/integrations/cloud-cli) - query a test's replay timeline of commands, network requests, and logs from your terminal
 - [Test Replay FAQ](/cloud/faq#Test-Replay)
+- [Data storage and controls](/cloud/account-management/data-storage-and-masking#Network-data-redaction) - network redaction and other data controls
 - [Cypress v13 changelog](/app/references/changelog#13-0-0)
 - [Cypress Default Video Configuration](/app/references/configuration#Videos)
 - [Cypress Video Artifacts](/app/guides/screenshots-and-videos#Videos)

@@ -1,25 +1,12 @@
 ---
 title: 'Why Cypress? End-to-end, component & accessibility testing'
 description: 'Why teams choose Cypress for end-to-end, component, and accessibility testing — its architecture, features, and trade-offs.'
-sidebar_label: Why Cypress?
+sidebar_label: 'Why Cypress?'
 sidebar_position: 10
+slug: /app/get-started/why-cypress
 ---
 
 # Why Cypress?
-
-:::info
-
-<WhatYoullLearn color="#0097A8" />
-
-- What Cypress does, and where it fits as your team grows
-- How Cypress reduces the cost and risk of shipping software
-- The features of Cypress App, Cypress Cloud, UI Coverage, and Cypress Accessibility
-- Our mission and what we believe in
-- Key differences between Cypress and other testing tools
-
-:::
-
-## What is Cypress?
 
 Cypress is a quality platform for teams shipping modern web applications. We bring together end-to-end testing, component testing, accessibility checks, and a clear view of test coverage into a connected workflow that runs locally and in CI, so you can catch problems before your users do.
 
@@ -121,7 +108,7 @@ _The day-to-day cost of testing lives in your local dev loop. The Cypress app is
   extend E2E tests, and let [Studio AI](/app/guides/cypress-studio) recommend
   assertions automatically so you write less and cover more.
 - **Cross Browser Testing:** Run tests within Firefox and Chrome-family browsers
-  (including Edge and Electron) locally and
+  (including Edge) locally and
   [in a Continuous Integration pipeline](/app/guides/cross-browser-testing).
 
 ### Cypress Cloud
@@ -149,8 +136,8 @@ _Cypress Cloud turns CI test results from something you hope to interpret correc
 _Accessibility issues caught during testing are cheap to fix. The same issues caught by a compliance review, a procurement gate, or a user complaint are not._
 
 - **Accessibility Checks:** Maximize the value of your existing Cypress tests by instantly adding thousands of [accessibility checks](/accessibility/get-started/introduction) with no setup, code changes, or performance penalty.
-- **Run-level reports:** Get a detailed report of accessibility issues found in your test runs with [Run-level reports](/accessibility/guides/run-level-reports).
-- **Results where you work:** Use the [Results API](/accessibility/results-api) to integrate results into CI, and [Cloud MCP](/cloud/integrations/cloud-mcp) to surface them in your AI agent for faster diagnosis and iteration.
+- **Run-level reports:** Get a detailed report of accessibility issues found in your test runs with [Run-level reports](/accessibility/reports/run-level-reports).
+- **Results where you work:** Use the [Results API](/accessibility/connect-and-extend/results-api) to integrate results into CI, and [Cloud MCP](/cloud/integrations/cloud-mcp) to surface them in your AI agent for faster diagnosis and iteration.
 - **Branch Review:** Compare any report against a baseline to review only the new violations, without any noise from existing issues.
 
 ### UI Coverage
@@ -348,7 +335,7 @@ Because Cypress is
 it can additionally tap into the operating system for automation tasks. This
 makes performing tasks such as
 [taking screenshots, recording videos](/app/guides/screenshots-and-videos),
-general [file system operations](/api/commands/exec) and
+general [file system operations](/api/commands/task) and
 [network operations](/api/commands/request) possible.
 
 ### Native access

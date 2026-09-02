@@ -1,3 +1,5 @@
+import type * as React from 'react'
+
 export interface DocsImageProps {
   alt: string
   caption: string
@@ -5,6 +7,6 @@ export interface DocsImageProps {
   title: string
   width: number
   noBorder: boolean
-  style: string
+  style: React.CSSProperties
   className: string
 }

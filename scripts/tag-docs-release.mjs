@@ -1,0 +1,362 @@
+#!/usr/bin/env node
+//
+// Create a git tag for every Cypress release whose changelog entry was added to
+// the app changelog in a given commit range.
+//
+// A release's tag (`vX.Y.Z`) points at the commit that introduced its changelog
+// entry, so the tag marks the state of the documentation when that version
+// shipped. This is the same rule the historical tags were backfilled with.
+//
+// Usage:
+//   node scripts/tag-docs-release.mjs --before <sha> --after <sha> [--dry-run]
+//
+// Environment:
+//   TAG_TOKEN  required unless --dry-run; needs only contents: write on this
+//              repository. Not named GITHUB_TOKEN on purpose, so that a token
+//              placed here is never picked up automatically by the gh CLI or
+//              other tooling that reads GITHUB_TOKEN from the environment.
+//   REPO       owner/repo
+
+import { execFileSync } from 'node:child_process'
+
+// Newest first. A range can straddle a move, so each commit is read at
+// whichever of these exists there.
+const CHANGELOG_PATHS = [
+  'docs/app/releases/changelog.mdx',
+  'docs/app/references/changelog.mdx',
+]
+const API = process.env.GITHUB_API_URL || 'https://api.github.com'
+
+function git(...args) {
+  return execFileSync('git', args, {
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+  })
+}
+
+function gitOrNull(...args) {
+  try {
+    return execFileSync('git', args, {
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    })
+  } catch {
+    return null
+  }
+}
+
+// Changelog content at `sha`, or null if no known location exists there.
+function changelogAt(sha) {
+  for (const path of CHANGELOG_PATHS) {
+    const content = gitOrNull('show', `${sha}:${path}`)
+    if (content !== null) return content
+  }
+  return null
+}
+
+// Headings are matched at one to three hashes on purpose: the 14.4.0 entry
+// shipped as `# 14.4.0` and the typo was only fixed the following day. Being
+// strict here would silently skip a release.
+function versionsIn(sha) {
+  const content = changelogAt(sha)
+  if (content === null) return new Set()
+  const versions = new Set()
+  for (const line of content.split('\n')) {
+    const match = /^#{1,3}\s+(\d+\.\d+\.\d+)\s*$/.exec(line)
+    if (match) versions.add(match[1])
+  }
+  return versions
+}
+
+function releaseDate(sha, version) {
+  const content = changelogAt(sha) || ''
+  const escaped = version.replace(/\./g, '\\.')
+  const match = new RegExp(
+    `^#{1,3}\\s+${escaped}\\s*\\n\\n_Released ([^_\\n]+)_`,
+    'm'
+  ).exec(content)
+  return match ? match[1].trim() : null
+}
+
+// Commands run through execFileSync, never a shell, so there is no shell
+// injection surface. This guards the remaining one: a value beginning with `-`
+// would reach git as an option rather than as a revision.
+function assertRevision(name, value) {
+  if (!/^[0-9A-Za-z][0-9A-Za-z._/~^-]{0,199}$/.test(value)) {
+    throw new Error(`${name} is not a valid revision: ${value}`)
+  }
+  return value
+}
+
+function parseArgs(argv) {
+  const args = { dryRun: false, probe: false }
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--before') args.before = argv[++i]
+    else if (argv[i] === '--after') args.after = argv[++i]
+    else if (argv[i] === '--dry-run') args.dryRun = true
+    else if (argv[i] === '--probe') args.probe = true
+    else throw new Error(`unknown argument: ${argv[i]}`)
+  }
+  if (!args.probe && !args.after) throw new Error('--after is required')
+  if (args.after) assertRevision('--after', args.after)
+  if (args.before) assertRevision('--before', args.before)
+  return args
+}
+
+// Answers the one question a dry run cannot: is this credential allowed to
+// create a tag pointing at a commit whose tree contains .github/workflows?
+// GitHub refuses that for tokens without workflow scope, and the refusal only
+// happens server-side, so it has to be tried for real. Creates a throwaway tag
+// and deletes it again — no vX.Y.Z ref is touched.
+async function runProbe(token, repository) {
+  const commit = git('rev-parse', 'HEAD').trim()
+  const name = 'tag-permission-probe'
+  const ref = `refs/tags/${name}`
+
+  const workflows = gitOrNull(
+    'ls-tree',
+    '-r',
+    '--name-only',
+    commit,
+    '--',
+    '.github/workflows'
+  )
+  if (!workflows || !workflows.trim()) {
+    console.log(
+      `WARNING: ${commit.slice(0, 9)} has no .github/workflows files, so this ` +
+        'probe does not exercise the restriction it is meant to test.'
+    )
+  } else {
+    console.log(
+      `probing against ${commit.slice(0, 9)}, which contains ` +
+        `${workflows.trim().split('\n').length} workflow file(s)`
+    )
+  }
+
+  let created = false
+  try {
+    const object = await api(`/repos/${repository}/git/tags`, {
+      method: 'POST',
+      token,
+      body: {
+        tag: name,
+        message: 'Throwaway tag verifying tagging permissions. Safe to delete.',
+        object: commit,
+        type: 'commit',
+      },
+    })
+    await api(`/repos/${repository}/git/refs`, {
+      method: 'POST',
+      token,
+      body: { ref, sha: object.sha },
+    })
+    created = true
+    console.log('\nPASS — this credential can create release tags.')
+  } catch (error) {
+    console.error(`\nFAIL — ${error.message}`)
+    if (/workflow/i.test(error.body || '')) {
+      console.error(
+        '\nRefused because the tagged commit contains .github/workflows files.\n' +
+          'Set RELEASE_TAG_TOKEN to a fine-grained credential limited to this ' +
+          'repository\n(a GitHub App installation token or a fine-grained PAT) ' +
+          'and probe again.'
+      )
+    }
+    process.exitCode = 1
+  } finally {
+    if (created) {
+      try {
+        await api(`/repos/${repository}/git/${ref}`, {
+          method: 'DELETE',
+          token,
+        })
+        console.log(`cleaned up ${name}`)
+      } catch (error) {
+        console.error(
+          `WARNING: could not delete ${name}, remove it by hand: ${error.message}`
+        )
+      }
+    }
+  }
+}
+
+// Attribute each new version to the commit that actually introduced it, rather
+// than to the head of the push. For a single squash-merged PR these are the
+// same commit; for a push carrying several commits they are not.
+function findIntroducingCommit(version, before, after) {
+  const range = before ? `${before}..${after}` : after
+  const commits = git(
+    'log',
+    '--reverse',
+    '--format=%H',
+    range,
+    '--',
+    ...CHANGELOG_PATHS
+  )
+    .split('\n')
+    .filter(Boolean)
+
+  for (const sha of commits) {
+    if (!versionsIn(sha).has(version)) continue
+    const parent = gitOrNull('rev-parse', '--verify', `${sha}^1`)
+    if (!parent || !versionsIn(parent.trim()).has(version)) return sha
+  }
+  return after
+}
+
+async function api(path, { method = 'GET', body, token } = {}) {
+  const response = await fetch(`${API}${path}`, {
+    method,
+    headers: {
+      accept: 'application/vnd.github+json',
+      authorization: `Bearer ${token}`,
+      'x-github-api-version': '2022-11-28',
+      ...(body ? { 'content-type': 'application/json' } : {}),
+    },
+    ...(body ? { body: JSON.stringify(body) } : {}),
+  })
+  const text = await response.text()
+  if (!response.ok) {
+    const error = new Error(`${method} ${path} -> ${response.status}: ${text}`)
+    error.status = response.status
+    error.body = text
+    throw error
+  }
+  return text ? JSON.parse(text) : null
+}
+
+async function main() {
+  const args = parseArgs(process.argv.slice(2))
+  const zero = /^0{40}$/
+
+  if (args.probe) {
+    const token = process.env.TAG_TOKEN
+    const repository = process.env.REPO
+    if (!token || !repository) {
+      throw new Error('TAG_TOKEN and REPO are required for --probe')
+    }
+    return runProbe(token, repository)
+  }
+
+  // A branch-creation or force-push event gives no usable base. Tagging every
+  // version in the file at the current commit would be wrong, so stop.
+  if (args.before && zero.test(args.before)) {
+    console.log('no usable base commit for this push — nothing to do')
+    return
+  }
+
+  const before = args.before ? git('rev-parse', args.before).trim() : null
+  const after = git('rev-parse', args.after).trim()
+
+  // Fail loudly on another move; a silent no-op would stop tagging releases.
+  if (changelogAt(after) === null) {
+    throw new Error(
+      `No changelog found at ${after.slice(0, 9)}; looked for ` +
+        `${CHANGELOG_PATHS.join(', ')}. If the changelog moved, add its new ` +
+        'location to the front of CHANGELOG_PATHS in this script and update ' +
+        'the paths filter in .github/workflows/tag-docs-release.yml.'
+    )
+  }
+
+  const added = [...versionsIn(after)].filter(
+    (v) => !(before ? versionsIn(before) : new Set()).has(v)
+  )
+
+  if (added.length === 0) {
+    console.log('no new changelog entries in this range — nothing to do')
+    return
+  }
+
+  console.log(`new changelog entries: ${added.join(', ')}`)
+
+  const existing = new Set(git('tag', '--list').split('\n').filter(Boolean))
+  const work = []
+
+  for (const version of added) {
+    const tag = `v${version}`
+    if (existing.has(tag)) {
+      console.log(`${tag}: already exists, skipping`)
+      continue
+    }
+    work.push({
+      version,
+      tag,
+      commit: findIntroducingCommit(version, before, after),
+    })
+  }
+
+  if (work.length === 0) {
+    console.log('all versions already tagged — nothing to do')
+    return
+  }
+
+  const token = process.env.TAG_TOKEN
+  const repository = process.env.REPO
+  if (!args.dryRun && (!token || !repository)) {
+    throw new Error('TAG_TOKEN and REPO are required unless --dry-run')
+  }
+
+  let failed = 0
+
+  for (const { version, tag, commit } of work) {
+    const released = releaseDate(after, version)
+    const subject = git('log', '-1', '--format=%s', commit).trim()
+    const message = [
+      `Cypress ${version} documentation`,
+      '',
+      released
+        ? `Cypress ${version} was released ${released}.`
+        : `Cypress ${version}.`,
+      '',
+      `This tag marks the commit where the ${version} changelog entry landed in this`,
+      `repository, i.e. the state of the documentation when ${version} shipped.`,
+      '',
+      `  commit:  ${commit}`,
+      `  subject: ${subject}`,
+      '',
+    ].join('\n')
+
+    if (args.dryRun) {
+      console.log(
+        `\n--- would create ${tag} -> ${commit.slice(0, 9)} (${subject})`
+      )
+      console.log(message.replace(/^/gm, '    '))
+      continue
+    }
+
+    try {
+      const object = await api(`/repos/${repository}/git/tags`, {
+        method: 'POST',
+        token,
+        body: { tag, message, object: commit, type: 'commit' },
+      })
+      await api(`/repos/${repository}/git/refs`, {
+        method: 'POST',
+        token,
+        body: { ref: `refs/tags/${tag}`, sha: object.sha },
+      })
+      console.log(`created ${tag} -> ${commit.slice(0, 9)}`)
+    } catch (error) {
+      failed++
+      console.error(`FAILED to create ${tag}: ${error.message}`)
+      if (/workflow/i.test(error.body || '')) {
+        console.error(
+          '\nThe token was refused because the tagged commit contains ' +
+            '.github/workflows files.\nSet the RELEASE_TAG_TOKEN secret to a ' +
+            'fine-grained credential limited to this one repository — a GitHub ' +
+            'App installation token or a fine-grained PAT.\nDo not use a classic ' +
+            'PAT: `repo` scope reaches every repository the granting user can ' +
+            'access, and\n`workflow` scope allows rewriting CI.'
+        )
+      }
+    }
+  }
+
+  if (failed > 0) process.exit(1)
+}
+
+main().catch((error) => {
+  console.error(error.message)
+  process.exit(1)
+})

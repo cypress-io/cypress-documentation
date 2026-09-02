@@ -1,103 +1,237 @@
 ---
-title: Detect and manage changes in Cypress Accessibility
-description: 'Detect accessibility changes between runs in Cypress so new violations are caught the moment they are introduced.'
-sidebar_label: Detect and manage changes
+title: 'Catch accessibility regressions: compare runs, block builds, track trends'
+description: 'Catch new accessibility violations the moment they appear: compare two Cypress runs in Branch Review, block builds with the Results API, and track trends in analytics.'
+sidebar_label: Catch regressions
 sidebar_position: 90
 ---
 
 <ProductHeading product="accessibility" />
 
-# Detect and manage changes
+# Catch accessibility regressions
 
-Cypress Accessibility supports three main paths to observing and acting on changes in the accessibility report for your projects:
+An accessibility violation is cheapest to fix on the day it is written. The developer who added the icon-only button still has the component open, the fix is one attribute, and nobody has built anything on top of it yet. The same violation found in an audit two quarters later is a ticket, a triage meeting, a regression risk in shared code, and often a conversation with a customer who already hit the barrier.
 
-- Run comparisons with [Branch Review](/accessibility/guides/compare-reports)
-- The [Results API](/accessibility/results-api) to fail builds or trigger alerts when results don't meet your standards
-- [Analytics](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) for high-level trend-spotting and analysis
+Cypress Accessibility produces a full report for every recorded run, so the raw material for catching that violation on day one already exists. What is left is deciding where you want to be told, and what should happen when you are.
 
-In this guide we'll discuss how these work and some common situations where we might use them together.
+## Choose where to catch a change
 
-## Branch Review
+Each channel below answers a different question, and most teams end up using more than one. Start with the row that matches the question your team asks most often.
 
-Branch Review helps you spot new issues quickly by comparing accessibility results from two Cypress runs.
+| Question                                                     | Use                                                           | You find out                                    |
+| ------------------------------------------------------------ | ------------------------------------------------------------- | ----------------------------------------------- |
+| Did this pull request introduce a violation?                 | [Branch Review](#compare-two-runs-in-branch-review)           | Once the pull request run's report is processed |
+| Should this build be allowed to merge?                       | [Results API](#enforce-a-standard-in-ci)                      | In your pipeline, as a build step               |
+| What changed in staging or production overnight?             | [Branch Review](#compare-two-runs-in-branch-review)           | On your scheduled run's report                  |
+| Did anything change while I wasn't looking?                  | [Slack or Microsoft Teams](#get-notified-when-a-run-finishes) | As each run finishes                            |
+| Is the whole organization improving, and which projects lag? | [Analytics](#track-trends-over-time)                          | Weekly and monthly trends, across every project |
+| What changed, without leaving my editor?                     | [Cypress Cloud MCP](#ask-an-agent-what-changed)               | Whenever you ask                                |
 
-- Pinpoint when and where problems have been introduced
-- Understand and debug easily with fully rendered page snapshots
-- Share links to specific new issues with all the context needed to dive in
+## Compare two runs in Branch Review {#compare-two-runs-in-branch-review}
 
-### Branch Review use cases
+[Branch Review](/accessibility/guides/compare-reports) compares the accessibility reports from two runs in the same project and shows you only what moved. Instead of rereading a report with hundreds of existing violations, you read a list of what this run introduced and what it resolved, with fully rendered page snapshots for each new failure.
 
-#### Speed up code reviews and deployments
+An accessibility comparison in Branch Review contains:
 
-Use Branch review when reviewing a pull request made by another developer or before you create one of your own. You can compare the report from your changed branch with the equivalent report on the main branch. The comparison allows you to see any issues that your changes have improved or fixed completely, as well as net-new issues introduced, and any new instances of existing failures.
+- **The score, with its change.** The [accessibility score](/accessibility/core-concepts/accessibility-score) for the Changed run, and how many percentage points it moved against the Base run.
+- **New failed elements.** Elements failing a rule in the Changed run that either did not exist in the Base run, or existed there and were passing. These are grouped by rule and then by [view](/accessibility/configuration/views), so you can open one rule and see every page it broke on.
+- **Resolved elements.** Elements that failed in the Base run and are either gone or passing in the Changed run. This is the half that proves a fix landed everywhere, not just on the one element you tested by hand.
+- **Existing failed elements.** A link out to the full report for the Changed run, for the violations that were already there. They are deliberately kept out of the diff so old and new findings never blend together.
 
-Since this reduces the amount of violations to review to just what was affected by the PR code changes, you won't spend any time looking for what's relevant -- and if there is no difference, you'll know your PR does not affect the accessibility score and is safe to merge.
+Cypress matches elements across runs by the identifier described in [element identification](/accessibility/core-concepts/element-identification), evaluated per rule and per view, and matches views by their URL pattern. Views that appear in only one of the two runs are marked as added or removed rather than being counted as accessibility changes.
 
-See the main [Accessibility Branch Review docs](/accessibility/guides/compare-reports) for a video demo of this workflow.
+### Review a pull request before you approve it
 
-#### Compare reports during local development (without waiting for CI)
+Compare the run from the pull request branch against the run from your base branch. The diff is scoped to what your code touched, so a clean comparison is a genuine signal that the change is safe to merge, and a short list of new failures is a short review.
 
-You might expect that every Cypress Accessibility report requires a full standard Cypress test run in your Continuous Integration (CI) pipeline.
+This is the fastest way to use Branch Review, because there is nothing to configure: if both branches record runs, the comparison exists. See [Compare reports](/accessibility/guides/compare-reports) for a video walkthrough of this review.
 
-A common accessibility workflow is to [create small Cypress Cloud recordings from your local development environment](/accessibility/guides/local-development) to preview the effects of any code changes. This allows for fast analysis of just a single test or two, or as much as you need to have confidence your changes are working -- especially if you are actively remediating accessibility issues.
+### See what changed between scheduled runs
 
-To get a high-quality comparison for a small set of tests, record the tests locally from your main branch, and then on the branch with changes. In Cypress Cloud, you will be able to compare these two runs knowing they cover exactly the same scope.
+Many teams run a Cypress project on a schedule against staging or production. Those runs have no pull request behind them, and often all sit on the same branch, which Branch Review handles fine: you can pick any two runs from the dropdowns.
 
-This completely sidesteps the usual "push, build, run tests, report" cycle you might be used to, and is great when you need fast feedback.
+Comparing this morning's run against yesterday's is how you catch accessibility issues that no code change introduced, such as a content editor publishing an image without alternative text, a vendor shipping a new version of an embedded widget, or a feature flag turning on a component that was never reviewed. See [Production monitoring](/accessibility/guides/production-monitoring) for how to structure those runs.
 
-#### See what's changing between scheduled runs
+### Find the run where a regression started
 
-Many teams have some Cypress projects that run on a schedule and target a QA, staging, or production environment. These runs produce Cypress Accessibility reports but are not connected to specific pull requests with code changes. Branch Review works perfectly in these situations, even if all runs are on the same branch.
+When you learn about a regression late, the dropdowns on each side of the comparison let you move either endpoint. Hold the Changed run steady and walk the Base run backwards through history until the violation stops appearing in the diff. The first run where it appears is the run that introduced it, which gives you a commit, an author, and a date.
 
-Comparing reports on a regular schedule can let you see if accessibility issues have been introduced between this week and last week, for example, and then find the specific run where the changes happened. That "diff report" can can be forwarded to engineering or product teams as the basis of a ticket.
+### Confirm a fix before you push
 
-### Note
+Branch Review does not require CI. Record a spec from your machine on your base branch, make the fix, record the same spec again, and compare the two. See [Accessibility feedback during local development](/accessibility/guides/local-development) for the full loop.
 
-Comparing two runs in detail with Branch Review requires a good understanding of the runs themselves. The comparison is most useful if the runs are testing the same pages and workflows, and if each run fully passed all tests. This means that Cypress saw all the same states and variations of the application in both contexts. Your runs will likely never be 100% perfectly matching, but the closer they are, the better.
+### Make the comparison trustworthy
 
-## Results API
+A comparison is only as good as the two runs behind it. Four things matter, in rough order of how often they cause confusion:
 
-Cypress Accessibility's [Results API](/accessibility/results-api) provides rich data related to the outcome of any accessibility report for a Cypress run. It supports adding a step in CI to block pull requests or trigger other side effects. To use the Results API, you'll need to [add a step in your CI process](/accessibility/results-api#Installation). This comes with a helper function which will automatically match your CI build with the related run in Cypress Cloud.
+**Both runs need to cover the same ground.** Branch Review compares what each run actually saw. If the Base run covered the whole suite and the Changed run covered one spec, most of the report becomes "resolved" elements that only mean those pages were never visited. Compare full suite against full suite, or the same `--spec` selection against itself.
 
-Once you receive the results, you can perform any action you need to. Below are some of the common ones customers have told us about, where the results are compared with expectations.
+**Both runs need complete reports.** While either run is still processing, Branch Review reports that the changes are not ready yet. When a run does not produce a full report, its results are marked partial and Branch Review names the run and the reason:
 
-### Results API use cases
+- The run was a partial re-run. [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) executes only the specs or tests that failed, so its report covers that subset rather than the full suite that the run it re-ran covered. Branch Review names the anchor run the re-run came from.
+- The run was canceled, either manually or by [auto cancellation](/cloud/features/smart-orchestration/run-cancellation), and some specs never ran.
+- The run timed out before some specs ran.
+- [Test Replay](/cloud/features/test-replay) data failed to upload for some specs, so there was nothing to build a report from.
+- Processing failed for some specs.
 
-#### Fail a build based on new failed accessibility rules
+Treat a diff built on a partial report as a hint rather than a verdict. The missing specs make elements look resolved when they were only never visited, which is most misleading in the re-run case: a re-run of two failing specs compared against a full base run reports almost the entire application as resolved. Compare the anchor run instead.
 
-The Results API provides a combined report with all the failing rules included. This means you can easily prepare a list of known, permitted failing rules to compare with the results from any run, and choose to fail only if a previously passing rule has started to fail. This is described in detail in the guide related to [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests).
+**Views need to be stable.** A URL that carries a value generated per run can show up as a new view in one run and a removed view in the next, which buries the real changes. Numeric IDs and UUIDs are grouped for you, so `/products/123` and `/products/456` already report as one `/products/*` view. Other dynamic values, such as slugs, usernames, and order references, are not, so add [`views`](/accessibility/configuration/views) rules for the ones your application uses:
 
-This concept is simple but powerful because it provides extremely high confidence that any failed build is related to a specific recent code, content, or testing change. Especially if there are a high number of existing failures, the actual number of failed elements detected can vary from run-to-run, especially if existing broken components are reused in new ways.
+```json title="App Quality Config"
+{
+  "views": [
+    {
+      "pattern": "/orders/:reference",
+      "comment": "Order references like ORD-8F2K are not numeric, so every order page would otherwise be its own view"
+    },
+    {
+      "pattern": "/teams/*/members",
+      "comment": "Team slugs come from test data and change between environments"
+    }
+  ]
+}
+```
 
-Rules that are fully passing do not have any of these problems, and for an extreme action like failing a pipeline, it's important to have high confidence that a problem is actually a new issues and can be traced to a specific build. With this confidence in place, the existing failed rules can be addressed one by one to get fully passing.
+**Elements need to be stable.** Elements are matched between runs by their identifier, so an attribute that changes on every build splits one element into two: a resolved failure in the Base run and a new failure in the Changed run, with nothing having changed for your users. CSS-in-JS class names are the most common cause. Exclude those values from identification with [`attributeFilters`](/accessibility/configuration/attributefilters):
 
-#### Fail a build based on deviation from a desired score
+```json title="App Quality Config"
+{
+  "attributeFilters": [
+    {
+      "attribute": "class",
+      "value": "css-[a-z0-9]+",
+      "include": false,
+      "comment": "Emotion regenerates hashed class names per build, so the same button looks like a different element in each run"
+    }
+  ]
+}
+```
 
-The Results API includes the specific failed element count and accessibility percentage score for the accessibility report. This makes it easy to set a score threshold and fail a build if the score falls below that expectation. This is especially useful when taking a monitoring approach, or wanting a broader, less specific standard than one based on specific rules.
+You can also go the other way and make identification more meaningful, by naming the attributes that carry real meaning for your team with [`significantAttributes`](/accessibility/configuration/significantattributes). If an element that renders in a random position or only under a slow server response is adding noise, remove it from reporting entirely with [`elementFilters`](/accessibility/configuration/elementfilters).
 
-Changes in percentage score are directly related to changes in the number of elements detected failing accessibility rules throughout the run. Alerting or failing a pipeline for scores going down is a great way to know when you need to jump into Branch Review to understand the underlying causes of the change in score.
+Configuration changes apply to past runs too. After you save one, regenerate the two runs you are comparing from their **Properties** tab, and the diff is rebuilt with the new settings without rerunning any tests.
 
-#### Alert specific teams about failures they own
+## Enforce a standard in CI with the Results API {#enforce-a-standard-in-ci}
 
-In addition to the consolidated accessibility report, accessibility failures are listed per View in the results API. A View is always related to a specific URL pattern or component test, which means in many projects it is possible to connect accessibility issues in the Results API with the team responsible for solving issues in that part of the application.
+Cypress Accessibility reports are built in Cypress Cloud after your tests upload, so nothing in a Cypress run fails because of an accessibility violation. Blocking a build is an explicit step you add, and the [Results API](/accessibility/connect-and-extend/results-api) is what makes that step possible: `getAccessibilityResults()` identifies the run your CI build recorded, waits for its report, and hands you the results as data.
 
-As an example, customers can use this functionality to trigger Slack webhooks that notify a particular channel of the issues in specific areas. The Results API provides direct links to the Views and to each failed rule within that View, making it easy to forward useful links to the correct places, or jump right into debugging from the CI output.
+The full field list lives in the [Results API reference](/accessibility/connect-and-extend/results-api#Result-Types). The fields below are the ones policies are usually built on:
 
-## Analytics
+| Field                     | What it gives you                                                 |
+| ------------------------- | ----------------------------------------------------------------- |
+| `rules`                   | Only the rules that failed, with severity and a deep link to each |
+| `summary.score`           | The accessibility score for the run                               |
+| `summary.failedElements`  | Distinct failed elements across the run                           |
+| `summary.violationCounts` | Failed rule counts, in total and by severity                      |
+| `summary.isPartialReport` | Whether the run produced a complete report                        |
+| `views`                   | Per-view score, failed rules, and report links                    |
+| `axeVersion`              | The Axe Core® version that generated the report                   |
+| `config`                  | The App Quality Config applied, and when it was last saved        |
 
-Analytics live under the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) in Cypress Cloud, alongside other org-wide metrics on the same page.
+### Block a build when a passing rule starts failing
 
-The same aggregates you see in the UI can be pulled programmatically: every chart is backed by data you can [download from Cloud](/cloud/features/analytics/enterprise-reporting#Download-data-from-Cloud) or request through the [Data Extract API](/cloud/integrations/data-extract-api) (see [Retrieve your test data through API](/cloud/features/analytics/enterprise-reporting#Retrieve-your-test-data-through-API) on the Enterprise Reporting page).
+Rules are the most stable thing to gate on. Element counts move around on their own as tests reach different states and shared components get reused, but a rule that goes from zero failures to any failures is a real change in what your application does, traceable to the code in the build.
 
-That API access supports many possible uses, including:
+Keep a list of the rules you already know about and fail on anything outside it. This is the policy most teams start with, and it is written out in full, along with its mirror image for teams working through a large backlog, in [Block pull requests and set policies](/accessibility/guides/block-pull-requests#Defining-policies-in-the-verification-step).
 
-- Integrating Cypress Accessibility data with other quality metrics in your internal dashboards
-- Creating one-off reports about improvements or successes (for example showing the benefits over time that come from the adoption of your design system)
-- AI workflows: react to trends to find specific runs and drill into views, rules, and elements using [Cloud MCP](/cloud/integrations/cloud-mcp) tools and [Work with AI agents](/accessibility/work-with-ai-agents).
+### Block a build when the score drops
 
-### Example accessibility charts
+A score threshold is a broader standard than a rule list, and it suits monitoring runs and applications where existing failures are still numerous. Because the score is driven by how many elements fail, it also reacts to an existing broken component being reused in new places, which a rule list does not catch.
 
-The following screenshots illustrate typical cards on the Cypress Accessibility tab and how you might interpret them.
+```javascript title="scripts/verifyAccessibilityResults.js"
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+// Raise this as the application improves. Every increase locks in the gains.
+const MINIMUM_SCORE = 96
+
+getAccessibilityResults().then((results) => {
+  const { summary, accessibilityReportUrl, runNumber } = results
+
+  if (summary.isPartialReport) {
+    console.warn(
+      `Run #${runNumber} produced a partial accessibility report, so its score is not comparable. Skipping the check: ${accessibilityReportUrl}`
+    )
+    return
+  }
+
+  if (summary.score >= MINIMUM_SCORE) {
+    console.log(
+      `Accessibility score ${summary.score}% meets the ${MINIMUM_SCORE}% standard.`
+    )
+    return
+  }
+
+  console.error(
+    `Accessibility score ${summary.score}% is below the ${MINIMUM_SCORE}% standard, with ${summary.failedElements} failed elements.`
+  )
+  console.error(
+    `Compare this run with your base branch: ${accessibilityReportUrl}`
+  )
+
+  throw new Error('Accessibility score regression.')
+})
+```
+
+The partial report guard matters more than it looks. A canceled or partially re-run build reports on fewer snapshots than usual, which moves the score for reasons that have nothing to do with accessibility. Checking `summary.isPartialReport` first keeps your pipeline from failing on an incomplete measurement.
+
+### Route new failures to the team that owns them
+
+Failures are also listed per view, and a view maps to a URL pattern or a component test, which in most applications maps to an owning team. That makes it possible to notify the team that can act instead of a shared channel everyone mutes.
+
+```javascript title="scripts/notifyViewOwners.js"
+const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
+
+// Keys are view names as they appear in the accessibility report.
+const owners = {
+  '/checkout/*': '#team-payments',
+  '/search': '#team-discovery',
+}
+
+getAccessibilityResults().then((results) => {
+  results.views.forEach((view) => {
+    const channel = owners[view.displayName]
+
+    if (!channel || view.rules.length === 0) {
+      return
+    }
+
+    const critical = view.rules.filter((rule) => rule.severity === 'critical')
+
+    if (critical.length === 0) {
+      return
+    }
+
+    // Post to your own webhook, issue tracker, or notification service.
+    console.log(`Notify ${channel}: ${critical.length} critical rules failing`)
+    critical.forEach((rule) => {
+      console.log(`  ${rule.name}: ${rule.accessibilityReportUrl}`)
+    })
+  })
+})
+```
+
+Every link in the results is a deep link into Cypress Cloud, so whoever receives the notification lands on the exact rule in the exact view, with the snapshot that shows the failing element.
+
+### Notice when the report itself changes
+
+Not every change in a report comes from your application. Two inputs to the report can move on their own, and both are exposed so you can watch them:
+
+- **The Axe Core® version.** Cypress updates its internal version periodically, and a new version can add rules or refine how existing ones are detected. Compare `axeVersion` against the version your team calibrated its expectations against, so a jump in violations is explained rather than mysterious. There is a ready-made check in [Detect a change in the Axe Core® version](/accessibility/connect-and-extend/results-api#how-to-detect-a-change-in-the-axe-core-version), and the update policy is in [Axe Core® library version and updates](/accessibility/configuration/axe-core-configuration#axe-core-library-version-and-updates).
+- **Your configuration.** `config.value` is the App Quality Config the run was processed with and `config.updatedAt` is when it was last saved. Anyone with access can edit configuration in Cypress Cloud, and a new `viewFilters` rule can change a score without a line of application code changing. Logging `config.updatedAt` in your verification step gives you the timestamp to correlate against when results shift unexpectedly. See [Viewing configuration for a run](/accessibility/configuration/overview#Viewing-Configuration-for-a-Run).
+
+## Get notified when a run finishes {#get-notified-when-a-run-finishes}
+
+Both the [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) integrations include Cypress Accessibility results in their run notifications: the score, failed rules broken down by severity, and the failed element count, with a link into the report.
+
+These notifications report a run's results rather than a comparison, which makes them a good fit for runs where you know what normal looks like, such as a nightly production monitoring run. Filter notifications by run tag or run group so the channel that watches accessibility sees the runs it cares about and nothing else.
+
+## Track trends over time with analytics {#track-trends-over-time}
+
+Branch Review and the Results API each answer a question about one change in one project. Analytics answers the questions no single run can: is this application getting better, how fast, and how does it compare with every other project in the organization?
+
+Accessibility analytics live under the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) in Cypress Cloud, alongside your other organization-wide metrics. Filters for date range, team, projects, and branch let you move from an organization-wide view to a single branch. Enterprise Reporting is available on the [Enterprise Cypress Cloud plan](https://cypress.io/pricing).
+
+### What the charts show
 
 #### Overall score, top projects, and score trend
 
@@ -106,7 +240,7 @@ The following screenshots illustrate typical cards on the Cypress Accessibility 
   alt="Enterprise Reporting Cypress Accessibility tab with filters for date range, team, projects, and branch. Widgets show overall accessibility score, horizontal bar chart of projects with highest scores, and a line chart of accessibility score trend by project over time."
 />
 
-This layout gives a north-star percentage for the filtered scope, a quick comparison of which projects score highest, and trends in topline scores over time. Use **Start date**, **End date**, **Team**, **Projects**, and **Branch** filters to zoom from org-wide trends to a single branch.
+A single score for the filtered scope, a comparison of which projects score highest, and how topline scores move over time.
 
 #### Severity breakdown for the selected period
 
@@ -115,7 +249,7 @@ This layout gives a north-star percentage for the filtered scope, a quick compar
   alt="Donut chart titled Total with 39 accessibility issues, with legend: critical 23.08%, serious 46.15%, moderate 23.08%, minor 7.69%."
 />
 
-The **severity breakdown** summarizes failed rule categories across the entire set of runs included in your filters.
+The proportion of failed rules at each severity across every run in your filters, which is a useful check on whether remediation is working on the issues that affect users most.
 
 #### Weekly average violations per run by rule
 
@@ -124,13 +258,7 @@ The **severity breakdown** summarizes failed rule categories across the entire s
   alt="Line chart titled Accessibility - Weekly average violations per run by rule, from February to April 2026, with one line spiking high for the region rule while other rules stay near zero."
 />
 
-Tracking the number of failed elements per rule over time helps separate out permanent changes from brief ones.
-
-If something is merged with new accessibility failures, but the failures are quickly fixed, those are unlikely to appear here - they are blips with little impact.
-
-On the other hand, when a rule has new failures introduced that are not quickly repaired, that will be clear in this chart - as the `region` rules above shows.
-
-Likewise, when a rule's failures are fixed, a downward line here means the fix "stuck" and was picked up consistently in later runs.
+Failed elements per rule over time, which separates lasting changes from brief ones. A violation introduced and fixed within a day barely registers here. One that stays unfixed becomes a line that climbs and holds, as the `region` rule does above. A line that drops and stays down is a fix that held across later runs.
 
 #### Weekly average failed rules per run by impact
 
@@ -139,7 +267,7 @@ Likewise, when a rule's failures are fixed, a downward line here means the fix "
   alt="Stacked bar chart titled Accessibility - Weekly average rule violations per run by impact, February through April 2026, with bars segmented by critical, minor, moderate, and serious impact."
 />
 
-This view emphasizes how many distinct rules fail per run on average, stacked by impact. It complements severity counts by showing whether breadth of rule failures is growing or shrinking week over the time period in question.
+How many distinct rules fail per run on average, stacked by impact. This tracks the breadth of the problem, where the chart above tracks its depth.
 
 #### Weekly average element violations per run by impact
 
@@ -148,32 +276,77 @@ This view emphasizes how many distinct rules fail per run on average, stacked by
   alt="Line chart titled Accessibility - Weekly average element violations per run by impact, February through April 2026, with separate lines for critical, serious, moderate, and minor impact levels."
 />
 
-**Element-level violations by impact** highlight volume and volatility: spikes often indicate widespread markup or content issues.
+Volume and volatility at the element level. Spikes here usually point to a widespread markup or content change rather than a single broken component.
 
-#### Enterprise Reporting
+### Pull the same data through the API
 
-For more context on the Enterprise Reporting product and other tabs, see [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) and the [Analytics](/cloud/features/analytics/overview) overview. For endpoint details and export formats, use the [Data Extract API](/cloud/integrations/data-extract-api) documentation.
+Every chart is backed by data you can [download from Cypress Cloud](/cloud/features/analytics/enterprise-reporting#Download-data-from-Cloud) or request through the [Data Extract API](/cloud/integrations/data-extract-api). Three reports cover Cypress Accessibility:
 
-### Analytics use cases
+| Report ID                             | What it returns                                                                          |
+| ------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `accessibility-per-project-summary`   | Accessibility score per project                                                          |
+| `accessibility-per-project-over-time` | Accessibility score per project, by day and week                                         |
+| `accessibility-details`               | Score per run, with run number, status, branch, commit author, CI build ID, and run tags |
 
-#### Track progress and spot trends
+That last report is the one to reach for when you want to correlate accessibility with something else you track. Common uses include:
 
-This level of reporting is ideal for documenting progress and spotting unexpected trends. When you see a project's score dropping over the long term, you can explore further with Branch Review to understand what changes are driving the score.
+- Placing accessibility next to your other quality metrics in an internal dashboard
+- Reporting on a specific improvement, such as the effect of adopting a design system component
+- Feeding trends into an agent that then drills into specific runs with [Cypress Cloud MCP](/cloud/integrations/cloud-mcp)
+- Setting realistic goals, since historical pace tells you what a team can actually absorb in a quarter
 
-You can compare reports before and after any shifts in scores to determine which accessibility issues were introduced.
+Ranking every project by score is also how you set the numbers your policies use. Seeing where each project sits, and which ones are improving fastest, tells you what threshold a given team can meet today, and which team already found a way of working the rest could copy.
 
-#### Pull high level metrics for AI analysis
+## Ask an agent what changed {#ask-an-agent-what-changed}
 
-You can dive deeper with [Cloud MCP](/cloud/integrations/cloud-mcp) for your AI agents to look into issue ownerships remediation planning, and configuration.
+[Cypress Cloud MCP](/cloud/integrations/cloud-mcp) gives compatible agents structured access to accessibility reports, so you can ask about a change without leaving your editor. There is no comparison tool: the agent fetches each report and compares them itself, which works well for rule and view level questions.
 
-#### Set goals and minimum standards
+The prompts below work in any agent with Cypress Cloud MCP configured. Replace the placeholders in angle brackets with your own values, such as a run URL copied from Cypress Cloud or the name of a view as it appears in the report.
 
-Seeing all projects in one place gives a good sense of each project's relative level and helps inform what values you might want to use for comparison when implementing a policy using the Results API.
+<CopyPrompt
+  title="Find what a change introduced"
+  subtext="Lists the rules and elements failing on your branch that were passing before it."
+  prompt={`Using Cypress Cloud MCP, get the Cypress Accessibility report for the latest run on this branch and for the latest run on <BASE_BRANCH>. Compare them and tell me: the change in accessibility score, the rules failing now that were not failing before, and for each one the views affected and the failing elements. Order the results by impact, most severe first.`}
+/>
 
-This also provides useful planning insights, because you can see your historical pace of improvements. If some projects are improving faster than others, you will be able to recognize this and understand how to replicate that success, or create realistic OKRs on a project basis.
+<CopyPrompt
+  title="Find the run that introduced a violation"
+  subtext="Narrows a regression down to the run and commit that caused it."
+  prompt={`Using Cypress Cloud MCP, the <RULE_NAME> rule is failing in the latest run of this project. List the recent runs on <BRANCH_NAME>, then check the Cypress Accessibility report for each one, working backwards, until you find the earliest run where <RULE_NAME> is failing. Report that run number, its commit SHA, and the views where the rule fails, then use git to tell me who authored that commit and what it changed.`}
+/>
 
-## Combine approaches
+<CopyPrompt
+  title="Fix what the comparison found"
+  subtext="Turns failing elements into a review of the components that render them."
+  prompt={`Using Cypress Cloud MCP, get the failing elements for the <RULE_NAME> rule on the <VIEW_NAME> view of run <RUN_URL>. For each element, find the component in this codebase that renders it and propose a fix. Before proposing anything, tell me whether the finding looks like a genuine barrier given how the component is built, and skip any that do not.`}
+/>
 
-As you can see above, there are times you may want to move between multiple systems to track down an issue. For example, if the Results API signals that a build on a feature branch has failed your accessibility standard, you might click through to the run itself, and then compare it with the main branch in Branch Review. That might be the end of the journey, but if the main branch is _also_ failing your policy, you can use high-level analytics to see when the score originally changed, and find the specific cause by comparing two runs from around that time. This helps detect where code was force merged, or when content served in the application had accessibility regression unrelated to code changes.
+See [Work with AI agents](/accessibility/work-with-ai-agents) for more prompt patterns, and for the identification settings that make an agent's job easier by naming components in violation selectors.
 
-As you use these tools, remember to hit the "Submit Feedback" button any time you see something that could be improved to help you understand what's important and what's changing.
+## Trace a change back to its cause
+
+These channels are most useful together, because each one answers the next question the previous one raises. A regression on a feature branch usually reads like this:
+
+1. **The Results API fails your build** on a pull request, naming `link-name` as a rule that was passing and now is not.
+2. **Branch Review shows you what broke.** Comparing the pull request run against the base branch shows four new failed elements under that rule, all in one view, with a snapshot of each. That is enough to fix it, and often enough to see it was a shared component rather than the page.
+3. **If the base branch is failing too**, the problem predates the pull request. Analytics tells you when the score moved, which narrows the search to a few days.
+4. **Branch Review again**, comparing two runs from either side of that date, gives you the exact run and commit that introduced it.
+
+The same path works from the other direction: a Slack notification showing an unexpected score, or a chart with a step change in it, leads into Branch Review the same way.
+
+As you work through this, use the **Submit Feedback** button in Cypress Cloud whenever something could be clearer. It is read by the team that builds these reports.
+
+## See also
+
+- [Compare reports](/accessibility/guides/compare-reports) is the full reference for Branch Review with Cypress Accessibility, including how each section behaves when there is nothing to report.
+- [Branch Review](/cloud/features/branch-review) covers run selection, pull request integration, and the run grouping practices a good comparison depends on.
+- [Results API](/accessibility/connect-and-extend/results-api) documents every field, argument, and supported CI provider.
+- [Block pull requests and set policies](/accessibility/guides/block-pull-requests) has complete policy scripts, including baseline comparison at the view level.
+- [Accessibility feedback during local development](/accessibility/guides/local-development) is the same comparison workflow, run from your own machine.
+- [Production monitoring](/accessibility/guides/production-monitoring) covers scheduled runs against live environments.
+- [Fix accessibility violations](/accessibility/guides/improve-accessibility) is the workflow for the backlog these tools protect.
+- [Element identification](/accessibility/core-concepts/element-identification) explains how elements are matched between runs.
+- [Accessibility score](/accessibility/core-concepts/accessibility-score) explains what moves the number your thresholds are set against.
+- [Configuration overview](/accessibility/configuration/overview) is where views, filters, identification, and profiles are documented.
+- [Work with AI agents](/accessibility/work-with-ai-agents) has more Cypress Cloud MCP prompt patterns.
+- [Cypress Accessibility FAQ](/accessibility/faq) answers focused questions about comparisons, policies, and analytics.

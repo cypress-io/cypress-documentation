@@ -7,7 +7,8 @@ export function writeSitemap(
     distRoot: string,
     fragmentDirs: ReadonlySet<string> = new Set(),
 ) {
-    // Walk all files under /llm, write all to a `sitemap-llm.xml` file. Also include `llms.txt`.
+    // Walk all files under /llm, write all to a `sitemap-llm.xml` file. Also include `llms.txt`
+    // and `llms-full.txt`.
     // Files in `fragmentDirs` (per-h2 section folders) are excluded to keep the sitemap page-level.
     const markdownPrefix = 'llm/markdown/';
     const llmFiles = walkDir(distRoot, path.join(distRoot, 'llm')).filter((file) => {
@@ -17,7 +18,7 @@ export function writeSitemap(
         const parentDir = path.posix.dirname(file.slice(markdownPrefix.length));
         return !fragmentDirs.has(parentDir);
     });
-    llmFiles.push(toPosixPath(path.relative(distRoot, path.join(distRoot, 'llms.txt'))));
+    llmFiles.push('llms.txt', 'llms-full.txt');
     const llmSitemapUrls = llmFiles.map(file => `<url><loc>${rootUrl}/${file}</loc></url>`).join('\n');
     fs.writeFileSync(
         path.join(distRoot, 'sitemap-llm.xml'),

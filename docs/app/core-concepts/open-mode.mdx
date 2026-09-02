@@ -1,25 +1,14 @@
 ---
 title: 'Open mode in the Cypress app'
 description: Learn how Cypress open mode works, including the Test Runner, Command Log, Cypress Studio for recording interactions and inline edits, and tools for debugging tests in the Cypress app.
-sidebar_label: Open Mode
-sidebar_position: 60
+sidebar_label: Open mode
+sidebar_position: 80
+slug: /app/core-concepts/open-mode
 ---
 
 <ProductHeading product="app" />
 
 # Open Mode
-
-:::info
-
-<WhatYoullLearn />
-
-- The different sections of the Cypress app in open mode
-- The information surfaced in the app's Command Log
-- How to hide HTTP requests in the Command Log
-- How to use Cypress Studio to record interactions and edit tests inline
-- Debugging tools available in the app in open mode
-
-:::
 
 The Cypress app includes an interactive workflow called open mode. In Cypress open mode you can run specs, watch the Command Log update in real time, and inspect the application or component under test. You can [open the app](/app/get-started/open-the-app), use Cypress Studio to record interactions and edit tests inline, and debug with time travel snapshots and console output. Open mode is best for local development, while recorded runs in Cypress Cloud provide history and analytics when needed.
 
@@ -212,6 +201,14 @@ Action commands like [`.click()`](/api/commands/click) show a red hitbox at the 
 #### 3. Snapshot menu
 
 Some commands capture multiple snapshots, for example action commands capture both before and after. Use the snapshot menu to switch between them. This is useful when an action triggers a visible change, such as typing into an input.
+
+:::info
+
+**Reading the Command Log from the terminal**
+
+An AI coding agent can read everything on this page without the GUI. The [`cypress tap`](/app/tooling/cypress-tap) CLI attaches to an open mode session and prints the Command Log, pins a command's snapshot the same way clicking it here does, and reads the resulting DOM and accessibility tree.
+
+:::
 
 ### Page events
 
