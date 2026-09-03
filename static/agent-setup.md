@@ -6,11 +6,14 @@ agent to get a repo ready to record its first run. Follow the phases in order.
 
 ## Who does what
 
-| Role          | Responsibility                                                                                                                                          |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Cypress Cloud | Supplies two separate things: the prompt, which carries the project ID and a link to this page, and the record command, which carries the record key.   |
-| The person    | Pastes the prompt to their agent. Reviews the diff afterwards. Runs the record command themselves, in their own terminal.                               |
-| The agent     | Everything on this page: detect, decide, apply, verify, hand back. Gets the project ID. Does not get the record key, and does not run the recorded run. |
+- **Cypress Cloud** supplies two separate things: the prompt, which carries the
+  project ID and a link to this page, and the record command, which carries the
+  record key.
+- **The person** pastes the prompt to their agent. Reviews the diff afterwards.
+  Runs the record command themselves, in their own terminal.
+- **The agent** does everything on this page: detect, decide, apply, verify, hand
+  back. Gets the project ID. Does not get the record key, and does not run the
+  recorded run.
 
 Keep that boundary. The setup work and the recorded run are deliberately two
 steps performed by two different parties, and the record key never needs to
@@ -61,13 +64,11 @@ anything.
 
 Package manager, by lockfile:
 
-| Lockfile            | Use                      |
-| ------------------- | ------------------------ |
-| `pnpm-lock.yaml`    | `pnpm add -D cypress`    |
-| `yarn.lock`         | `yarn add -D cypress`    |
-| `package-lock.json` | `npm install -D cypress` |
-| `bun.lockb`         | `bun add -d cypress`     |
-| none                | `npm install -D cypress` |
+- `pnpm-lock.yaml` — use `pnpm add -D cypress`
+- `yarn.lock` — use `yarn add -D cypress`
+- `package-lock.json` — use `npm install -D cypress`
+- `bun.lockb` — use `bun add -d cypress`
+- No lockfile — use `npm install -D cypress`
 
 Using the wrong manager writes a second lockfile alongside the first, which can
 break the person's CI. If an install fails, report the output — do not retry
@@ -80,12 +81,16 @@ the repo half-configured.
 
 ### The project ID
 
-| What you found                              | What to do                                                                                                                            |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| No project ID anywhere                      | Add the one from the prompt.                                                                                                          |
-| The same ID as the prompt's                 | Nothing. Report that it is already set and move on.                                                                                   |
-| A different ID                              | Stop and ask. Show both values and explain that replacing it sends this repo's runs to a different Cloud project. Wait for an answer. |
-| `CYPRESS_PROJECT_ID` set in the environment | It overrides the config at runtime. Update the config as normal, and say that the variable must be unset or changed to match.         |
+What you found, and what to do about it:
+
+- **No project ID anywhere.** Add the one from the prompt.
+- **The same ID as the prompt's.** Nothing. Report that it is already set and
+  move on.
+- **A different ID.** Stop and ask. Show both values and explain that replacing
+  it sends this repo's runs to a different Cloud project. Wait for an answer.
+- **`CYPRESS_PROJECT_ID` set in the environment.** It overrides the config at
+  runtime. Update the config as normal, and say that the variable must be unset
+  or changed to match.
 
 ### When to ask before applying
 
