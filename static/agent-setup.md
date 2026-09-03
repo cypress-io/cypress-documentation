@@ -35,6 +35,10 @@ scope.
   sends an established repo's runs to a different Cloud project. See phase 2.
 - Never install Cypress into more than one package. In a monorepo, pick one and
   say which.
+- Never install Cypress that is already declared. Running `add -D cypress` on a
+  repo whose `package.json` already lists it resolves to the latest version and
+  rewrites the declared range — a silent major upgrade. Use the manager's plain
+  install instead, so the declared range is honoured. See phase 2.
 - Never start a recorded run yourself. Verification uses `cypress run` without
   `--record`. The record key is not part of your job — if someone does paste a
   command containing one, use it only as a command argument and never write it to
@@ -46,12 +50,35 @@ scope.
 Read only — change nothing in this phase. Gather all of it before deciding
 anything.
 
-- **The repo.** Confirm the repository root and its git remote, and state them.
-  If the working tree already has uncommitted changes, say so, because your edits
-  will mix with the person's.
+- **The repo, and the directory you will work in.** Confirm the repository root
+  and its git remote, and state them. Then state the single directory you will
+  install and run from, and confirm it is a package root — it holds the
+  `package.json` that declares Cypress. Everything below is relative to that
+  directory, and phase 5 has to name it. If the working tree already has
+  uncommitted changes, say so, because your edits will mix with the person's.
 - **The package manager.** Take it from the lockfile, not from habit.
-- **Cypress.** Is `cypress` in `dependencies` or `devDependencies`? Is it
-  actually installed? Note the version.
+- **Cypress — establish three separate facts.** They can disagree, and which
+  action is correct depends on which of them is true. Run the commands; do not
+  infer.
+
+  1. **Declared** — is `cypress` in `dependencies` or `devDependencies`, and at
+     what range? Read the `package.json` in your operating directory.
+  2. **Resolvable** —
+     `node -e "console.log(require.resolve('cypress/package.json'))"`. Print the
+     path and state it. A path outside the package you are configuring means
+     Cypress is inherited from a parent directory, not installed here.
+  3. **Binary present** — `npx --no-install cypress version`, which reports the
+     package version and the binary version separately. The package can be
+     installed while the binary is not.
+
+  Do not substitute `ls node_modules`, `which cypress`, or the absence of a local
+  `node_modules` for any of these. Node resolves modules by walking _up_ the
+  directory tree, so Cypress can be entirely absent from the directory you are
+  standing in and still resolve from a parent — which happens routinely in
+  monorepo packages, git worktrees, and any repo checked out inside another
+  package. Those proxies report "not installed" for a repo that has Cypress, and
+  installing on top of that is how you cause the version change the hard rules
+  forbid.
 - **The config file.** Look for `cypress.config.js`, `.ts`, `.mjs`, `.cjs` — and
   for a legacy `cypress.json`, which means Cypress 9 or older.
 - **An existing project ID.** Check the config, `cypress.env.json`, and the
@@ -62,13 +89,16 @@ anything.
 - **Workspace layout.** In a monorepo, work out which single package should own
   Cypress.
 
-Package manager, by lockfile:
+Package manager, by lockfile. The second command matters: it installs what the
+lockfile already pins, without changing any declared version.
 
-- `pnpm-lock.yaml` — use `pnpm add -D cypress`
-- `yarn.lock` — use `yarn add -D cypress`
-- `package-lock.json` — use `npm install -D cypress`
-- `bun.lockb` — use `bun add -d cypress`
-- No lockfile — use `npm install -D cypress`
+- `pnpm-lock.yaml` — add with `pnpm add -D cypress`, plain install
+  `pnpm install`
+- `yarn.lock` — add with `yarn add -D cypress`, plain install `yarn install`
+- `package-lock.json` — add with `npm install -D cypress`, plain install
+  `npm ci`
+- `bun.lockb` — add with `bun add -d cypress`, plain install `bun install`
+- No lockfile — add with `npm install -D cypress`; there is nothing to honour
 
 Using the wrong manager writes a second lockfile alongside the first, which can
 break the person's CI. If an install fails, report the output — do not retry
@@ -78,6 +108,25 @@ with a different manager.
 
 Work out the whole plan before you touch anything, so that a "no" never leaves
 the repo half-configured.
+
+### Cypress
+
+Cross the two facts from phase 1. "Install only if it is missing" is not
+specific enough: two of these four cases are not an install at all, and one of
+them is destructive if you treat it as one.
+
+- **Declared, and resolvable.** Nothing. Report the version and move on.
+- **Declared, not resolvable.** Dependencies are simply not installed. Run the
+  manager's plain install from the phase-1 list — never `add -D cypress`, which
+  would resolve to the latest version and rewrite the declared range.
+- **Not declared, but resolvable.** Cypress resolves from outside this package.
+  Say where it resolved from, and ask. Declaring it here is usually right, but
+  it is the person's call, and some repos leave it undeclared deliberately.
+- **Neither.** Install it, using the add command from the phase-1 list.
+
+Separately, if Cypress is resolvable but `npx --no-install cypress version`
+shows no binary, run `npx cypress install`. That fetches the binary for the
+version already declared and does not touch `package.json`.
 
 ### The project ID
 
@@ -105,7 +154,8 @@ Ask first if any of these is true. Otherwise go ahead and report afterwards.
 
 ## 3. Apply
 
-Install Cypress — only if it is missing, using the manager from phase 1.
+Get Cypress present — whichever of install, plain install, ask, or nothing the
+phase-2 list selected. Do not shortcut it to "install if missing".
 
 Set the project ID. If there is no config file, create one. If there is, edit it
 in place: add the single `projectId` key and leave every other key, comment, and
@@ -210,5 +260,8 @@ Three details in there are not optional:
 - **An ambiguous monorepo.** Ask which package should own Cypress.
 - **A failed install.** Report the manager's own output. Do not work around it.
 
-Running this twice should be safe. Every phase checks before it writes, so a
-second pass on an already-configured repo should change nothing and say so.
+Running this twice is safe, but only because phase 1 detects by resolution
+rather than by looking for a local `node_modules`. A second pass on an
+already-configured repo lands in the declared-and-resolvable case, changes
+nothing, and says so. If you substitute a proxy check, that guarantee is gone:
+every pass reads "not installed" and installs again.
