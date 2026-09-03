@@ -837,6 +837,30 @@ describe('my form', () => {
 })
 ```
 
+### Where the balance sits
+
+Grouping assertions has a limit in the other direction. A single test that walks
+an entire checkout flow (browse, add to cart, apply a coupon, enter shipping,
+pay, see the confirmation) reports one failure under one title, and a title like
+"completes checkout" tells the person debugging almost nothing about which part
+of the application broke. They have to open the run to find out.
+
+The most useful way to think about where a test starts and stops is the signal
+its failure sends. Both extremes weaken that signal:
+
+- A test large enough that its title no longer describes what failed hands the
+  diagnosis back to whoever is debugging.
+- Tests small enough that they all lean on the same lengthy setup fail together
+  the moment that setup breaks, and a screen of red tells you only that
+  something upstream went wrong.
+
+Aim for the middle: each test covers a meaningful piece of behavior, its title
+names that behavior, and a failure narrows down where to look. For the checkout
+example, that might be one test for adding an item to the cart, one for applying
+a coupon, and one for completing payment, each getting to its starting point
+[programmatically](#Having-Tests-Rely-On-The-State-Of-Previous-Tests) rather
+than by repeating the steps before it through the UI.
+
 ## <Icon name="angle-right" /> Using `after` Or `afterEach` Hooks
 
 :::danger

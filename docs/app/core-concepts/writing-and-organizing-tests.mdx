@@ -226,9 +226,9 @@ account settings area with profile, billing, and notification sections is three
 features that happen to share a URL, and three specs are usually easier to work
 with, especially when each needs a different account state.
 
-One caveat worth calling out: splitting specs is not the same as splitting
-tests. Inside a spec, keep multiple assertions in a single test instead of
-writing a test per assertion. See
+Splitting specs is not the same as splitting tests. Inside a spec, the question
+becomes how much behavior a single `it()` should cover, which comes down to how
+quickly a failing test tells your team where to look. See
 [Creating "Tiny" Tests With A Single Assertion](/app/core-concepts/best-practices#Creating-Tiny-Tests-With-A-Single-Assertion).
 
 ## Support file
@@ -554,6 +554,12 @@ describe('Account settings', () => {
   })
 })
 ```
+
+How much a single `it()` should cover is a judgment call, and the useful test is
+whether its title would tell a teammate what broke when it fails. See
+[Where the balance sits](/app/core-concepts/best-practices#Where-the-balance-sits)
+in Best Practices, and [How much to put in one spec file](#How-much-to-put-in-one-spec-file)
+for the same decision at the file level.
 
 ### Assertion Styles
 
