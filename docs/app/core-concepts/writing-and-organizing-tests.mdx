@@ -180,6 +180,57 @@ it, and `--spec` picks which of the remaining specs to run this time.
 
 :::
 
+### How much to put in one spec file
+
+Should every page, section, or form get its own spec? Nothing requires your
+specs to mirror your application's structure. A good default is one spec per
+feature or user flow, with `describe()` blocks grouping related scenarios and
+several `it()` tests inside covering them.
+
+Two forces pull in opposite directions, and they're what to weigh when you're
+deciding where to draw the line:
+
+- The spec file is the unit Cypress runs, balances, and reports on. Cypress
+  distributes whole spec files across machines when you
+  [parallelize](/cloud/features/smart-orchestration/parallelization), so one
+  spec that runs far longer than the rest can hold up a run that is otherwise
+  finished.
+- Every spec pays fixed overhead. Cypress reloads the browser, your
+  [support file](#Support-file), and your application for each one. Twenty
+  specs of one test each run noticeably slower than one spec containing the
+  same twenty tests.
+
+Split a spec when:
+
+- It runs longer than a few minutes. See
+  [spec file duration](/app/guides/test-performance#Spec-file-duration) for
+  target ranges.
+- It covers areas that have little to do with each other, so a failure in one
+  says nothing about the others.
+- Its sections need different setup, such as a different seeded user, fixture,
+  or [test configuration](#Test-Configuration) like `viewportWidth` or
+  `browser`.
+- Several teams edit it constantly and collide in it.
+
+Keep tests in the same spec when:
+
+- They share the same `beforeEach`, and splitting them would repeat expensive
+  setup.
+- Each one finishes in seconds, where per-spec overhead would outweigh the
+  tests themselves.
+- The split you're considering is one test per file.
+
+A login page with a single form is one feature, so a `login.cy.js` covering a
+valid login, invalid credentials, and validation messages is right-sized. An
+account settings area with profile, billing, and notification sections is three
+features that happen to share a URL, and three specs are usually easier to work
+with, especially when each needs a different account state.
+
+One caveat worth calling out: splitting specs is not the same as splitting
+tests. Inside a spec, keep multiple assertions in a single test instead of
+writing a test per assertion. See
+[Creating "Tiny" Tests With A Single Assertion](/app/core-concepts/best-practices#Creating-Tiny-Tests-With-A-Single-Assertion).
+
 ## Support file
 
 The support file is your hook into every spec. It runs **before** every single
