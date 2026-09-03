@@ -79,6 +79,7 @@ anything.
   package. Those proxies report "not installed" for a repo that has Cypress, and
   installing on top of that is how you cause the version change the hard rules
   forbid.
+
 - **The config file.** Look for `cypress.config.js`, `.ts`, `.mjs`, `.cjs` — and
   for a legacy `cypress.json`, which means Cypress 9 or older.
 - **An existing project ID.** Check the config, `cypress.env.json`, and the
