@@ -22,9 +22,14 @@ cross into the agent's half.
 ## Hard rules
 
 You are operating in a repository you did not write, which may be someone's
-production codebase. The whole job is three small changes — a dev dependency,
-one config key, and possibly one spec file. Anything beyond that is out of
-scope.
+production codebase. In a repo that already has a JavaScript package, the whole job is three small
+changes — a dev dependency, one config key, and possibly one spec file. Anything
+beyond that is out of scope.
+
+These rules exist to protect work you did not write. A repo with no package at
+all has none to protect, and needs one before Cypress can be installed — see
+"When to stop" for the one case where creating it is in scope, and the check to
+run first.
 
 - Never commit or push. Leave every change in the working tree for the person to
   review.
@@ -316,14 +321,29 @@ Three details in there are not optional:
 
 - **No `package.json`.** Two different situations, and only one of them is a
   stop:
+
   - **An empty or near-empty repo** — often someone creating a fresh one
     specifically to try Cypress Cloud. That is a good candidate, not a dead end.
-    Offer to bootstrap it with `npm init -y`, and say so before you do:
-    creating `package.json` is a bigger change than the three this job is
-    scoped to, so it is the person's call.
+    Bootstrap it with `npm init -y` and carry on; there is no existing work to
+    protect and nothing to weigh up, so do not stop to ask.
+
+    First confirm you are at the repository root and that no `package.json`
+    exists anywhere between you and it. **A `package.json` in a parent
+    directory means you are in the wrong directory, not in an empty repo** —
+    say so and move there. Creating a second, nested one changes module
+    resolution for everything beneath it, which is the same trap as detecting
+    Cypress with `ls node_modules`.
+
+    Then say what you did, and what it implies: `npm init -y` writes no `type`
+    field, so the package is CommonJS and the config follows the CommonJS form
+    above. Mention that adding `"type": "module"` switches both, in case they
+    would rather have ESM. Do not ask which they want — state the default and
+    let them redirect you.
+
   - **A repo built on another stack** — a `go.mod`, `pyproject.toml` or
     `Gemfile` and no JavaScript package. Stop, and point the person at the
     manual setup guide.
+
 - **Cypress 9 or older.** Ask before migrating — see phase 2.
 - **An ambiguous monorepo.** Ask which package should own Cypress.
 - **A failed install.** Report the manager's own output. Do not work around it.
