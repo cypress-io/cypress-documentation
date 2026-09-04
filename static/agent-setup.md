@@ -120,9 +120,15 @@ them is destructive if you treat it as one.
 - **Declared, not resolvable.** Dependencies are simply not installed. Run the
   manager's plain install from the phase-1 list — never `add -D cypress`, which
   would resolve to the latest version and rewrite the declared range.
-- **Not declared, but resolvable.** Cypress resolves from outside this package.
-  Say where it resolved from, and ask. Declaring it here is usually right, but
-  it is the person's call, and some repos leave it undeclared deliberately.
+- **Not declared, but resolvable from inside the repository.** Cypress comes
+  from a parent package or a workspace root. Say where it resolved from, and
+  ask. Declaring it here is usually right, but it is the person's call, and some
+  repos leave it undeclared deliberately.
+- **Not declared, and resolvable only from outside the repository root.** A path
+  like `~/node_modules/cypress` is a stray global install, never a deliberate
+  architecture choice, and asking whether to declare Cypress "here" makes no
+  sense. Treat it as not present, say what you found and where, and install
+  without asking.
 - **Neither.** Install it, using the add command from the phase-1 list.
 
 Separately, if Cypress is resolvable but `npx --no-install cypress version`
@@ -162,10 +168,35 @@ Set the project ID. If there is no config file, create one. If there is, edit it
 in place: add the single `projectId` key and leave every other key, comment, and
 formatting choice alone. Do not reformat the file.
 
+Take the config's extension and module syntax from the package, not from this
+page. Guessing wrong is a `SyntaxError` on the first run, not a warning:
+
+- **TypeScript already in use** — a `typescript` dependency or a `tsconfig.json`
+  — use `cypress.config.ts` with `import` / `export default`.
+- **`"type": "module"` in `package.json`** — use `cypress.config.js` with
+  `import` / `export default`.
+- **No `type` field** — this is the CommonJS default, and what `npm init -y`
+  produces. Use `cypress.config.js` with `require` / `module.exports`.
+
+TypeScript, or ESM:
+
 ```ts title="cypress.config.ts"
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
+  projectId: 'YOUR_PROJECT_ID',
+  e2e: {
+    // leave any existing options untouched
+  },
+})
+```
+
+CommonJS:
+
+```js title="cypress.config.js"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
   projectId: 'YOUR_PROJECT_ID',
   e2e: {
     // leave any existing options untouched
@@ -188,6 +219,20 @@ when no application is running and no `baseUrl` is set, which would make the
 person's very first recorded run a red one. Only write a `cy.visit` test instead
 if `baseUrl` is already configured and you have confirmed the server runs.
 
+Scaffold the support file as well, if nothing matches
+`cypress/support/e2e.{js,jsx,ts,tsx}`. Cypress expects one by default and
+refuses to run without it, and a repo with no specs has no support file either —
+so the greenfield path, which is exactly what this page is for, fails
+verification unless you create it:
+
+```js title="cypress/support/e2e.js"
+// Loaded before every e2e spec. Custom commands and global hooks go here.
+```
+
+If you would rather not add the file, set `supportFile: false` in the config's
+`e2e` block instead. What you must not do is leave it unset with no file
+present.
+
 Ignore Cypress's output. Add these to `.gitignore` if absent:
 
 ```text title=".gitignore"
@@ -196,17 +241,31 @@ cypress/videos/
 cypress/downloads/
 ```
 
+If your install created `node_modules` in a repo that has no `.gitignore` at
+all, add `node_modules/` too. That looks like it conflicts with "never change
+what you did not come to change", so to be explicit: it does not. You created
+that directory, and leaving it untracked means the person's next commit carries
+their whole dependency tree.
+
 ## 4. Verify
 
-Prove the setup works before handing it back. Run the spec locally, without
+Prove the setup works before handing it back. Run one spec locally, without
 recording:
 
 ```shell
 npx cypress run --spec cypress/e2e/cloud-setup.cy.js
 ```
 
-The first run downloads the Cypress binary, which can take a minute. Do not hand
-off a setup that does not pass — fix it, or report the failure with the output.
+Point `--spec` at a spec that actually exists: the one you scaffolded, or — if
+the repo already had specs and you scaffolded nothing — a single existing one.
+`--spec` on a path that is not there fails as "no specs found", which reads like
+a broken setup at the very last step.
+
+Installing Cypress and fetching its binary can take several minutes; seven is
+not unusual on a cold cache. That is not a hang. Do not kill it and retry.
+
+Do not hand off a setup that does not pass — fix it, or report the failure with
+the output.
 
 ## 5. Hand back
 
@@ -255,8 +314,16 @@ Three details in there are not optional:
 
 ## When to stop
 
-- **No `package.json`.** This is not a JavaScript project. Stop and point the
-  person at the manual setup guide.
+- **No `package.json`.** Two different situations, and only one of them is a
+  stop:
+  - **An empty or near-empty repo** — often someone creating a fresh one
+    specifically to try Cypress Cloud. That is a good candidate, not a dead end.
+    Offer to bootstrap it with `npm init -y`, and say so before you do:
+    creating `package.json` is a bigger change than the three this job is
+    scoped to, so it is the person's call.
+  - **A repo built on another stack** — a `go.mod`, `pyproject.toml` or
+    `Gemfile` and no JavaScript package. Stop, and point the person at the
+    manual setup guide.
 - **Cypress 9 or older.** Ask before migrating — see phase 2.
 - **An ambiguous monorepo.** Ask which package should own Cypress.
 - **A failed install.** Report the manager's own output. Do not work around it.
