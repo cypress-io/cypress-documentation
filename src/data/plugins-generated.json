@@ -382,8 +382,8 @@
     },
     "cypress-accessibility-checker": {
       "npm": "cypress-accessibility-checker",
-      "version": "4.0.31",
-      "lastPublished": "2026-08-21T16:12:18.646Z",
+      "version": "4.0.33",
+      "lastPublished": "2026-09-03T15:51:29.572Z",
       "cypressVersion": "^13.2.0 || ^15"
     },
     "cypress-duration-metrics": {
@@ -412,8 +412,8 @@
     },
     "allure-cypress": {
       "npm": "allure-cypress",
-      "version": "3.11.1",
-      "lastPublished": "2026-09-01T10:01:56.199Z",
+      "version": "3.12.0",
+      "lastPublished": "2026-09-03T14:19:48.536Z",
       "cypressVersion": ">=12.17.4"
     },
     "cypress-failed-log": {
@@ -458,8 +458,8 @@
     },
     "@qualflare/cypress": {
       "npm": "@qualflare/cypress",
-      "version": "0.3.0",
-      "lastPublished": "2026-09-01T22:01:04.319Z",
+      "version": "0.5.1",
+      "lastPublished": "2026-09-03T22:39:43.948Z",
       "cypressVersion": ">=12.0.0"
     },
     "Sauce Labs Visual": {
@@ -476,9 +476,9 @@
     },
     "Cypress Image Snapshot": {
       "npm": "@simonsmith/cypress-image-snapshot",
-      "version": "10.1.1",
-      "lastPublished": "2026-08-02T18:36:20.293Z",
-      "cypressVersion": ">13.0.0"
+      "version": "11.0.0",
+      "lastPublished": "2026-09-03T19:51:11.734Z",
+      "cypressVersion": ">=15.10.0"
     },
     "Visual Regression Diff": {
       "npm": "@frsource/cypress-plugin-visual-regression-diff",
