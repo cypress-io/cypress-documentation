@@ -322,8 +322,8 @@
     },
     "cypress-plugin-api": {
       "npm": "cypress-plugin-api",
-      "version": "2.12.2",
-      "lastPublished": "2026-09-01T15:36:04.668Z",
+      "version": "2.12.3",
+      "lastPublished": "2026-09-04T10:55:43.631Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-plugin-xhr-toggle": {
@@ -458,8 +458,8 @@
     },
     "@qualflare/cypress": {
       "npm": "@qualflare/cypress",
-      "version": "0.5.1",
-      "lastPublished": "2026-09-03T22:39:43.948Z",
+      "version": "0.6.1",
+      "lastPublished": "2026-09-04T21:33:47.672Z",
       "cypressVersion": ">=12.0.0"
     },
     "Sauce Labs Visual": {
