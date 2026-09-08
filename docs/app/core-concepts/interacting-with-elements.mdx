@@ -99,7 +99,7 @@ Under the modern algorithm, the assertion passes as soon as the browser consider
 
 Action commands did not change. Before every action, Cypress still scrolls the element into view and checks that it is not hidden, disabled, detached, readonly, animating, or [covered by another element](#Covering). Cypress runs the coverage check under both strategies, so it still refuses to click a covered element under `'modern'`.
 
-When an action follows the assertion, you can remove the assertion. The action command already waits on more conditions than `be.visible` does:
+When an action follows the assertion, and the assertion was there to wait out clipping or coverage, you can remove it. The action command already checks both:
 
 ```javascript title="cypress/e2e/spec.cy.js"
 // Before
@@ -109,6 +109,8 @@ cy.get('#submit').should('be.visible').click()
 cy.get('#submit').click()
 ```
 
+Keep the assertion if you rely on it to wait out a fade-in. Actionability ignores `opacity`, so an element at `opacity: 0` is actionable, as described in the [Opacity](#Default-Behavior) note above. `should('be.visible')` is the only one of the two that waits for the element to become opaque.
+
 Because the assertion passes sooner, the action that follows it starts sooner. If your application replaces the element in that window, the action fails with `we initially found matching element(s), but while waiting for them to become actionable, they disappeared from the page`. The error describes a detached element and never mentions visibility, so the cause is easy to miss.
 
 Removing the redundant `should('be.visible')` does not fix this on its own. Wait on a signal from your application that the element has settled, such as a loading indicator disappearing, a request completing with [`cy.intercept()`](/api/commands/intercept), or a class or attribute your application sets. Then perform the action.
@@ -117,21 +119,34 @@ When you need to assert that a user can see and use an element, combine [`Cypres
 
 ```javascript title="cypress/support/commands.js"
 const isCovered = (el) => {
+  const win = el.ownerDocument.defaultView
   const rect = el.getBoundingClientRect()
   const elAtPoint = el.ownerDocument.elementFromPoint(
     rect.left + rect.width / 2,
     rect.top + rect.height / 2
   )
 
-  return !el.contains(elAtPoint)
+  if (el.contains(elAtPoint)) {
+    return false
+  }
+
+  // `pointer-events: none` makes the hit test fall through to an ancestor,
+  // which the legacy algorithm did not count as coverage
+  const ignoresPointerEvents =
+    win.getComputedStyle(el).pointerEvents === 'none' ||
+    (el.parentElement &&
+      win.getComputedStyle(el.parentElement).pointerEvents === 'none')
+
+  return !(ignoresPointerEvents && elAtPoint && elAtPoint.contains(el))
 }
 
 Cypress.Commands.addQuery('isCovered', function () {
-  return ($el) => isCovered($el[0])
+  return ($el) => Array.from($el).every(isCovered)
 })
 
 Cypress.Commands.addQuery('isVisibleToUser', function () {
-  return ($el) => Cypress.dom.isVisible($el[0]) && !isCovered($el[0])
+  return ($el) =>
+    Array.from($el).every((el) => Cypress.dom.isVisible(el) && !isCovered(el))
 })
 ```
 
@@ -139,13 +154,15 @@ Cypress.Commands.addQuery('isVisibleToUser', function () {
 cy.get('#confirmation-banner').isVisibleToUser().should('be.true')
 ```
 
-Both are queries rather than commands. A query reads state without changing it, and Cypress reruns it on each retry.
+Both are queries rather than commands. A query reads state without changing it, and Cypress reruns it on each retry. Each one checks every matched element, the way `be.visible` and `not.be.visible` do.
 
-##### Elements covered by a `fixed` or `sticky` element
+`isVisibleToUser()` hit tests every element it is given. The legacy algorithm only hit tested `fixed`- and `sticky`-positioned elements, so this query is stricter. Use it where you mean to assert that a user can see something, not as a blanket replacement for `be.visible`.
 
-The legacy algorithm treated a `fixed`- or `sticky`-positioned element as hidden when another element covered its center point. The modern algorithm does not hit test, so it reports the covered element as visible.
+##### `fixed` or `sticky` elements covered by something else
 
-Perform the same hit test the legacy algorithm used, with the `isCovered()` query defined above:
+The legacy algorithm treated a `fixed`- or `sticky`-positioned element as hidden when another element covered its center point. The element doing the covering can be positioned any way at all. The modern algorithm does not hit test, so it reports the covered element as visible.
+
+Run the same hit test with the `isCovered()` query defined above:
 
 ```javascript title="cypress/e2e/spec.cy.js"
 // Before
@@ -203,23 +220,9 @@ cy.get('.card-back').should('not.be.visible')
 cy.get('.card').should('have.attr', 'data-facing', 'front')
 ```
 
-If your component doesn't expose that state, check the sign of the transformed normal on the element that carries the rotation. A positive `m33` means the element faces the viewer. Read the computed style from your application's window, not the spec's:
+Prefer that over a geometric check. In a typical flip, the rotation that hides a face lives on an ancestor, and the face itself carries a static `transform: rotateY(180deg)` that never changes. Reading the computed `transform` off the element alone therefore returns the same value in both states, so the assertion passes whichever face is showing. Reproducing the legacy check means accumulating the transform across every `preserve-3d` ancestor, which is more DOM logic than the assertion is worth.
 
-```javascript title="cypress/support/commands.js"
-Cypress.Commands.addQuery('facesViewer', function () {
-  return ($el) => {
-    const el = $el[0]
-    const { transform } = el.ownerDocument.defaultView.getComputedStyle(el)
-    const { m33 } = new DOMMatrix(transform === 'none' ? undefined : transform)
-
-    return m33 > 0
-  }
-})
-```
-
-```javascript title="cypress/e2e/spec.cy.js"
-cy.get('.card-back').facesViewer().should('be.false')
-```
+If your component exposes no state at all, add an attribute that reflects which face is showing, then assert on it.
 
 ##### Text truncated with `text-overflow: ellipsis`
 
