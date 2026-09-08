@@ -1,4 +1,4 @@
-# Cypress Cloud Agent Setup
+# Set up a repository to record to Cypress Cloud
 
 This page is read by an AI coding agent working inside someone's repository. It
 is linked from the prompt in Cypress Cloud's onboarding guide, which asks an
