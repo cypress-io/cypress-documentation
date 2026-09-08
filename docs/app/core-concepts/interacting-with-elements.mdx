@@ -84,22 +84,22 @@ describe('My Test Suite', { visibilityStrategy: 'legacy' }, () => {
 
 When you encounter a test that fails under the modern algorithm, prefer updating the assertion to verify the same user-visible behavior in an algorithm-agnostic way rather than opting into `'legacy'`.
 
-Two kinds of assertion are affected, and they need different treatment:
+Two kinds of assertion are affected, and each needs a different fix:
 
-- **`should('be.visible')` used as a wait before interacting with an element.** Start with [Waiting for an element before you interact with it](#Waiting-for-an-element-before-you-interact-with-it) below. This is the most common usage, and in most cases the fix is to remove the assertion.
-- **`should('not.be.visible')` used to assert something is hidden.** These fail where the legacy algorithm detected a case the modern algorithm does not. The remaining patterns below cover each of those cases.
+- **`should('be.visible')` used as a wait before an action.** This is the most common usage. See [Waiting for an element before you interact with it](#Waiting-for-an-element-before-you-interact-with-it) below, where the fix is usually to remove the assertion.
+- **`should('not.be.visible')` used to assert that something is hidden.** These fail in the cases the legacy algorithm detected and the modern algorithm does not. The remaining patterns cover each of those cases.
 
-Every pattern below uses [`.should()`](/api/commands/should) rather than [`.then()`](/api/commands/then), so that Cypress retries until the assertion passes or times out. This preserves the retry behavior you had with `should('not.be.visible')`.
+Every pattern below uses [`.should()`](/api/commands/should) rather than [`.then()`](/api/commands/then). Cypress retries `.should()` until it passes or times out, so these patterns keep the retry behavior of the assertion they replace.
 
 ##### Waiting for an element before you interact with it
 
-`cy.get(selector).should('be.visible').click()` is a widespread pattern. Its value was never only the assertion. Under the legacy algorithm, the assertion also kept retrying until the element was no longer clipped or covered.
+`cy.get(selector).should('be.visible').click()` is a common way to wait until an element is ready. Under the legacy algorithm, the assertion kept retrying until the element was no longer clipped or covered.
 
-Under the modern algorithm that assertion resolves as soon as the browser considers the element rendered, so the wait ends earlier than it used to.
+Under the modern algorithm, the assertion passes as soon as the browser considers the element rendered, so the wait ends earlier than it did before.
 
-**Action commands did not change.** Before every action, Cypress still scrolls the element into view and then verifies that it is not hidden, disabled, detached, readonly, animating, or [covered by another element](#Covering). The coverage check runs under both strategies, so `.click()` on a covered element is still refused under `'modern'`.
+Action commands did not change. Before every action, Cypress still scrolls the element into view and checks that it is not hidden, disabled, detached, readonly, animating, or [covered by another element](#Covering). Cypress runs the coverage check under both strategies, so it still refuses to click a covered element under `'modern'`.
 
-That means the assertion was never what made the action wait. When an action follows, remove it. The action command already waits for strictly more conditions than `be.visible` does:
+When an action follows the assertion, you can remove the assertion. The action command already waits on more conditions than `be.visible` does:
 
 ```javascript
 // Before
@@ -115,13 +115,13 @@ cy.get('#submit').click()
   If a `.click()` or `.type()` now fails with "they disappeared from the page"
 </strong>
 
-Because the assertion resolves sooner, a subsequent action starts sooner. If your application replaces the element during that interval, the action fails with `we initially found matching element(s), but while waiting for them to become actionable, they disappeared from the page`. The message describes a detached element and does not mention visibility, which makes the cause easy to miss.
+Because the assertion passes sooner, the action that follows it starts sooner. If your application replaces the element in that window, the action fails with `we initially found matching element(s), but while waiting for them to become actionable, they disappeared from the page`. The error describes a detached element and never mentions visibility, so the cause is easy to miss.
 
-Removing the redundant `should('be.visible')` does not fix this on its own. Wait on an application-level signal that the element is settled, such as a loading indicator disappearing, a request completing via [`cy.intercept()`](/api/commands/intercept), or a state class or attribute your application sets. Then perform the action.
+Removing the redundant `should('be.visible')` does not fix this on its own. Wait on a signal from your application that the element has settled, such as a loading indicator disappearing, a request completing with [`cy.intercept()`](/api/commands/intercept), or a class or attribute your application sets. Then perform the action.
 
 :::
 
-When the assertion itself is the point, and you need it to mean "a user could see and use this", combine the built-in assertion with a coverage check in a single retrying `.should()`:
+When you need to assert that a user can see and use an element, combine the built-in assertion with a coverage check in a single `.should()`:
 
 ```javascript
 cy.get('#confirmation-banner').should(($el) => {
@@ -139,9 +139,9 @@ cy.get('#confirmation-banner').should(($el) => {
 
 ##### Elements covered by a `fixed` or `sticky` element
 
-The legacy algorithm treated a `fixed`- or `sticky`-positioned element as hidden when another element covered its center point. The modern algorithm does no hit testing, so it reports the covered element as visible.
+The legacy algorithm treated a `fixed`- or `sticky`-positioned element as hidden when another element covered its center point. The modern algorithm does not hit test, so it reports the covered element as visible.
 
-Perform the same hit test the legacy algorithm performed, using [`document.elementFromPoint()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/elementFromPoint):
+Perform the same hit test the legacy algorithm used, with [`document.elementFromPoint()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/elementFromPoint):
 
 ```javascript
 // Before
@@ -159,7 +159,7 @@ cy.get('#toolbar-action').should(($el) => {
 })
 ```
 
-`elementFromPoint()` is relative to the viewport and returns `null` for a point outside it, which this assertion also treats as covered. If the element can be scrolled out of view, assert on its geometry instead, as in the next pattern.
+`elementFromPoint()` is relative to the viewport and returns `null` for a point outside it, which this assertion treats as covered. If the element can also scroll out of view, assert on its geometry instead, as in the next pattern.
 
 ##### Scroll-clipped elements
 
@@ -195,9 +195,9 @@ cy.get('.collapsible-content .nested-item')
 
 ##### Elements rotated away with `backface-visibility: hidden`
 
-An element rotated past 90 degrees with `backface-visibility: hidden` presents its back face to the viewer and is not painted, but it keeps a non-zero bounding rect and `checkVisibility()` reports it as visible.
+An element rotated past 90 degrees with `backface-visibility: hidden` turns its back face to the viewer, so the browser does not paint it. It keeps a non-zero bounding rect, and `checkVisibility()` reports it as visible.
 
-Card-flip and carousel components almost always track their own facing state. Assert on that state, which is more readable than the geometry and does not depend on how the flip is implemented:
+Card flip and carousel components usually track which face is showing. Assert on that state, so your test does not depend on how the flip is implemented:
 
 ```javascript
 // Before
@@ -207,7 +207,7 @@ cy.get('.card-back').should('not.be.visible')
 cy.get('.card').should('have.attr', 'data-facing', 'front')
 ```
 
-If no such state is exposed, check the sign of the transformed normal on the element that carries the rotation. A negative `m33` means the element faces away from the viewer. Read the computed style from the application's own window rather than the spec's:
+If your component doesn't expose that state, check the sign of the transformed normal on the element that carries the rotation. A negative `m33` means the element faces away from the viewer. Read the computed style from your application's window, not the spec's:
 
 ```javascript
 cy.get('.card-back').should(($el) => {
@@ -221,7 +221,7 @@ cy.get('.card-back').should(($el) => {
 
 ##### Text truncated with `text-overflow: ellipsis`
 
-Truncated text is rendered with an ellipsis but the underlying text node is still considered visible by the browser. Neither algorithm reports the container as hidden, so this pattern applies whenever you need to assert that text is being clipped.
+The browser renders truncated text with an ellipsis, but still considers the underlying text node visible. Neither algorithm reports the container as hidden, so use this pattern whenever you need to assert that text is clipped.
 
 Assert that the truncating ancestor's `scrollWidth` exceeds its `clientWidth`:
 
