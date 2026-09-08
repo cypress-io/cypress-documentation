@@ -101,7 +101,7 @@ Action commands did not change. Before every action, Cypress still scrolls the e
 
 When an action follows the assertion, you can remove the assertion. The action command already waits on more conditions than `be.visible` does:
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 // Before
 cy.get('#submit').should('be.visible').click()
 
@@ -115,8 +115,7 @@ Removing the redundant `should('be.visible')` does not fix this on its own. Wait
 
 When you need to assert that a user can see and use an element, combine [`Cypress.dom.isVisible()`](/api/cypress-api/dom) with a coverage check. Define both as [custom queries](/api/cypress-api/custom-queries) so you can reuse them across your suite:
 
-```javascript
-// cypress/support/commands.js
+```javascript title="cypress/support/commands.js"
 const isCovered = (el) => {
   const rect = el.getBoundingClientRect()
   const elAtPoint = el.ownerDocument.elementFromPoint(
@@ -136,7 +135,7 @@ Cypress.Commands.addQuery('isVisibleToUser', function () {
 })
 ```
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 cy.get('#confirmation-banner').isVisibleToUser().should('be.true')
 ```
 
@@ -148,7 +147,7 @@ The legacy algorithm treated a `fixed`- or `sticky`-positioned element as hidden
 
 Perform the same hit test the legacy algorithm used, with the `isCovered()` query defined above:
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 // Before
 cy.get('#toolbar-action').should('not.be.visible')
 
@@ -162,7 +161,7 @@ That query calls [`document.elementFromPoint()`](https://developer.mozilla.org/e
 
 The modern algorithm reports elements scrolled out of an `overflow: auto` ancestor as visible (they are technically rendered, just outside the scroll container's visible area). Assert on the geometry directly:
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 // Before
 cy.get('#scroll-container button').should('not.be.visible')
 
@@ -180,7 +179,7 @@ cy.get('#scroll-container button').should(($el) => {
 
 Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden, because `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper, so assert on that instead:
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 // Before
 cy.get('.collapsible-content .nested-item').should('not.be.visible')
 
@@ -196,7 +195,7 @@ An element rotated past 90 degrees with `backface-visibility: hidden` turns its 
 
 Card flip and carousel components usually track which face is showing. Assert on that state, so your test does not depend on how the flip is implemented:
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 // Before
 cy.get('.card-back').should('not.be.visible')
 
@@ -206,8 +205,7 @@ cy.get('.card').should('have.attr', 'data-facing', 'front')
 
 If your component doesn't expose that state, check the sign of the transformed normal on the element that carries the rotation. A positive `m33` means the element faces the viewer. Read the computed style from your application's window, not the spec's:
 
-```javascript
-// cypress/support/commands.js
+```javascript title="cypress/support/commands.js"
 Cypress.Commands.addQuery('facesViewer', function () {
   return ($el) => {
     const el = $el[0]
@@ -219,7 +217,7 @@ Cypress.Commands.addQuery('facesViewer', function () {
 })
 ```
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 cy.get('.card-back').facesViewer().should('be.false')
 ```
 
@@ -229,7 +227,7 @@ The browser renders truncated text with an ellipsis, but still considers the und
 
 Assert that the truncating ancestor's `scrollWidth` exceeds its `clientWidth`:
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 cy.get('.truncate-container').should(($el) => {
   expect($el[0].scrollWidth).to.be.greaterThan($el[0].clientWidth)
 })
