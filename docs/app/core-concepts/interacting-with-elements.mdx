@@ -109,57 +109,54 @@ cy.get('#submit').should('be.visible').click()
 cy.get('#submit').click()
 ```
 
-:::info
-
-<strong>
-  If a `.click()` or `.type()` now fails with "they disappeared from the page"
-</strong>
-
 Because the assertion passes sooner, the action that follows it starts sooner. If your application replaces the element in that window, the action fails with `we initially found matching element(s), but while waiting for them to become actionable, they disappeared from the page`. The error describes a detached element and never mentions visibility, so the cause is easy to miss.
 
 Removing the redundant `should('be.visible')` does not fix this on its own. Wait on a signal from your application that the element has settled, such as a loading indicator disappearing, a request completing with [`cy.intercept()`](/api/commands/intercept), or a class or attribute your application sets. Then perform the action.
 
-:::
-
-When you need to assert that a user can see and use an element, combine the built-in assertion with a coverage check in a single `.should()`:
+When you need to assert that a user can see and use an element, combine [`Cypress.dom.isVisible()`](/api/cypress-api/dom) with a coverage check. Define both as [custom queries](/api/cypress-api/custom-queries) so you can reuse them across your suite:
 
 ```javascript
-cy.get('#confirmation-banner').should(($el) => {
-  expect($el).to.be.visible
-
-  const rect = $el[0].getBoundingClientRect()
-  const elAtPoint = $el[0].ownerDocument.elementFromPoint(
+// cypress/support/commands.js
+const isCovered = (el) => {
+  const rect = el.getBoundingClientRect()
+  const elAtPoint = el.ownerDocument.elementFromPoint(
     rect.left + rect.width / 2,
     rect.top + rect.height / 2
   )
 
-  expect($el[0].contains(elAtPoint), 'element is not covered').to.be.true
+  return !el.contains(elAtPoint)
+}
+
+Cypress.Commands.addQuery('isCovered', function () {
+  return ($el) => isCovered($el[0])
+})
+
+Cypress.Commands.addQuery('isVisibleToUser', function () {
+  return ($el) => Cypress.dom.isVisible($el[0]) && !isCovered($el[0])
 })
 ```
+
+```javascript
+cy.get('#confirmation-banner').isVisibleToUser().should('be.true')
+```
+
+Both are queries rather than commands. A query reads state without changing it, and Cypress reruns it on each retry.
 
 ##### Elements covered by a `fixed` or `sticky` element
 
 The legacy algorithm treated a `fixed`- or `sticky`-positioned element as hidden when another element covered its center point. The modern algorithm does not hit test, so it reports the covered element as visible.
 
-Perform the same hit test the legacy algorithm used, with [`document.elementFromPoint()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/elementFromPoint):
+Perform the same hit test the legacy algorithm used, with the `isCovered()` query defined above:
 
 ```javascript
 // Before
 cy.get('#toolbar-action').should('not.be.visible')
 
 // After
-cy.get('#toolbar-action').should(($el) => {
-  const rect = $el[0].getBoundingClientRect()
-  const elAtPoint = $el[0].ownerDocument.elementFromPoint(
-    rect.left + rect.width / 2,
-    rect.top + rect.height / 2
-  )
-
-  expect($el[0].contains(elAtPoint), 'element is covered').to.be.false
-})
+cy.get('#toolbar-action').isCovered().should('be.true')
 ```
 
-`elementFromPoint()` is relative to the viewport and returns `null` for a point outside it, which this assertion treats as covered. If the element can also scroll out of view, assert on its geometry instead, as in the next pattern.
+That query calls [`document.elementFromPoint()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/elementFromPoint), which is relative to the viewport and returns `null` for a point outside it. The query treats that as covered. If the element can also scroll out of view, assert on its geometry instead, as in the next pattern.
 
 ##### Scroll-clipped elements
 
@@ -207,16 +204,23 @@ cy.get('.card-back').should('not.be.visible')
 cy.get('.card').should('have.attr', 'data-facing', 'front')
 ```
 
-If your component doesn't expose that state, check the sign of the transformed normal on the element that carries the rotation. A negative `m33` means the element faces away from the viewer. Read the computed style from your application's window, not the spec's:
+If your component doesn't expose that state, check the sign of the transformed normal on the element that carries the rotation. A positive `m33` means the element faces the viewer. Read the computed style from your application's window, not the spec's:
 
 ```javascript
-cy.get('.card-back').should(($el) => {
-  const el = $el[0]
-  const { transform } = el.ownerDocument.defaultView.getComputedStyle(el)
-  const { m33 } = new DOMMatrix(transform === 'none' ? undefined : transform)
+// cypress/support/commands.js
+Cypress.Commands.addQuery('facesViewer', function () {
+  return ($el) => {
+    const el = $el[0]
+    const { transform } = el.ownerDocument.defaultView.getComputedStyle(el)
+    const { m33 } = new DOMMatrix(transform === 'none' ? undefined : transform)
 
-  expect(m33, 'element faces away from the viewer').to.be.lessThan(0)
+    return m33 > 0
+  }
 })
+```
+
+```javascript
+cy.get('.card-back').facesViewer().should('be.false')
 ```
 
 ##### Text truncated with `text-overflow: ellipsis`
