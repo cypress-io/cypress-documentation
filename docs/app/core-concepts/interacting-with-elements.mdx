@@ -154,9 +154,17 @@ Cypress.Commands.addQuery('isVisibleToUser', function () {
 cy.get('#confirmation-banner').isVisibleToUser().should('be.true')
 ```
 
-Both are queries rather than commands. A query reads state without changing it, and Cypress reruns it on each retry. Each one checks every matched element, the way `be.visible` and `not.be.visible` do.
+Both are queries rather than commands. A query reads state without changing it, and Cypress reruns it on each retry.
 
-`isVisibleToUser()` hit tests every element it is given. The legacy algorithm only hit tested `fixed`- and `sticky`-positioned elements, so this query is stricter. Use it where you mean to assert that a user can see something, not as a blanket replacement for `be.visible`.
+`isCovered()` requires every matched element to be covered, which is what `not.be.visible` asks for.
+
+`isVisibleToUser()` is stricter than `be.visible` in three ways, so treat it as its own assertion rather than a drop-in replacement:
+
+- It builds on `Cypress.dom.isVisible()`, which follows the configured strategy. Under `'modern'` you get modern visibility plus coverage, so a clipped or scrolled-out element still reports as visible. The patterns below cover those two cases.
+- It hit tests every element. The legacy algorithm only hit tested `fixed`- and `sticky`-positioned elements.
+- It requires every matched element to pass, while `be.visible` is satisfied when any one of them is visible. chai-jQuery implements that assertion as `$el.is(':visible')`, and jQuery's `.is()` matches on any element in the set.
+
+The hit test has one more consequence worth knowing. `elementFromPoint()` returns `null` for a point outside the viewport, which counts as covered, so anything below the fold reports as not visible to the user. The legacy algorithm never met that case, because a `fixed` or `sticky` element is in the viewport by definition. Cypress also scrolls an element into view before acting on it, so an element below the fold is still usable. Reach for `isVisibleToUser()` only where you expect the element to be on screen already.
 
 ##### `fixed` or `sticky` elements covered by something else
 
