@@ -25,7 +25,7 @@ As of Cypress 16, the default visibility algorithm delegates to the browser's na
   - `display: none` on the element or any ancestor.
   - `visibility: hidden` or `visibility: collapse`.
   - `content-visibility: hidden`, or `content-visibility: auto` when not rendered.
-  - `opacity: 0` (when asserting visibility — see Opacity note below).
+  - `opacity: 0` (when asserting visibility, see the Opacity note below).
 
 :::info
 
@@ -93,13 +93,13 @@ Every pattern below uses [`.should()`](/api/commands/should) rather than [`.then
 
 ##### Waiting for an element before you interact with it
 
-`cy.get(selector).should('be.visible').click()` is a widespread pattern. Its value was never only the assertion — under the legacy algorithm, the assertion also kept retrying until the element was no longer clipped or covered.
+`cy.get(selector).should('be.visible').click()` is a widespread pattern. Its value was never only the assertion. Under the legacy algorithm, the assertion also kept retrying until the element was no longer clipped or covered.
 
 Under the modern algorithm that assertion resolves as soon as the browser considers the element rendered, so the wait ends earlier than it used to.
 
 **Action commands did not change.** Before every action, Cypress still scrolls the element into view and then verifies that it is not hidden, disabled, detached, readonly, animating, or [covered by another element](#Covering). The coverage check runs under both strategies, so `.click()` on a covered element is still refused under `'modern'`.
 
-That means the assertion was never what made the action wait. When an action follows, remove it — the action command already waits for strictly more conditions than `be.visible` does:
+That means the assertion was never what made the action wait. When an action follows, remove it. The action command already waits for strictly more conditions than `be.visible` does:
 
 ```javascript
 // Before
@@ -117,7 +117,7 @@ cy.get('#submit').click()
 
 Because the assertion resolves sooner, a subsequent action starts sooner. If your application replaces the element during that interval, the action fails with `we initially found matching element(s), but while waiting for them to become actionable, they disappeared from the page`. The message describes a detached element and does not mention visibility, which makes the cause easy to miss.
 
-Removing the redundant `should('be.visible')` does not fix this on its own. Wait on an application-level signal that the element is settled — a loading indicator disappearing, a request completing via [`cy.intercept()`](/api/commands/intercept), or a state class or attribute your application sets — and then perform the action.
+Removing the redundant `should('be.visible')` does not fix this on its own. Wait on an application-level signal that the element is settled, such as a loading indicator disappearing, a request completing via [`cy.intercept()`](/api/commands/intercept), or a state class or attribute your application sets. Then perform the action.
 
 :::
 
@@ -181,7 +181,7 @@ cy.get('#scroll-container button').should(($el) => {
 
 ##### Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`
 
-Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden — `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper — assert on that instead:
+Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden, because `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper, so assert on that instead:
 
 ```javascript
 // Before
