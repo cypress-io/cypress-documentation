@@ -161,6 +161,8 @@ Ask first if any of these is true. Otherwise go ahead and report afterwards.
 - More than one package could reasonably own Cypress.
 - The repo only has a legacy `cypress.json` — migrating to Cypress 10+ is a
   bigger change than this setup, and the person should choose it deliberately.
+  Point them at
+  <https://docs.cypress.io/app/references/migration-guide#Migrating-to-Cypress-100>.
 - The repo has component tests but no e2e tests. The record command runs e2e by
   default, so the person needs to know it will need `--component`.
 
@@ -172,6 +174,13 @@ phase-2 list selected. Do not shortcut it to "install if missing".
 Set the project ID. If there is no config file, create one. If there is, edit it
 in place: add the single `projectId` key and leave every other key, comment, and
 formatting choice alone. Do not reformat the file.
+
+Use the ID the prompt gave you. `YOUR_PROJECT_ID` in the samples below is a
+placeholder, and it is a plausible-looking one, so it survives a copy without
+looking wrong. If the prompt carries no project ID, or you cannot tell which
+value is the ID, stop and ask for it. Do not invent one, and do not leave the
+placeholder in place: both produce a config that looks finished and cannot
+record.
 
 Take the config's extension and module syntax from the package, not from this
 page. Guessing wrong is a `SyntaxError` on the first run, not a warning:
@@ -209,7 +218,8 @@ module.exports = defineConfig({
 })
 ```
 
-Scaffold a spec — only if the repo has none.
+Scaffold a spec — only if the repo has none, or if phase 4 sends you back here
+because an existing spec failed for reasons of its own.
 
 ```js title="cypress/e2e/cloud-setup.cy.js"
 describe('Cypress Cloud setup', () => {
@@ -266,11 +276,31 @@ the repo already had specs and you scaffolded nothing — a single existing one.
 `--spec` on a path that is not there fails as "no specs found", which reads like
 a broken setup at the very last step.
 
+In a repo with component tests and no e2e tests, add `--component`. Without it,
+Cypress runs e2e by default and fails on a missing e2e configuration rather than
+on anything you did. This is the same fact phase 2 told you to warn the person
+about; it applies to your own verification first.
+
 Installing Cypress and fetching its binary can take several minutes; seven is
 not unusual on a cold cache. That is not a hang. Do not kill it and retry.
 
-Do not hand off a setup that does not pass — fix it, or report the failure with
-the output.
+Do not hand off a setup that does not pass. Which failures are yours to fix,
+though, depends on what failed:
+
+- **The setup failed.** A config that will not parse, a missing support file, a
+  spec that cannot be found, a project ID that did not take. Fix it and run
+  again.
+- **An existing spec failed on its own terms.** No application running, a
+  missing `baseUrl`, absent environment variables, a test that was already red
+  before you arrived. That is not your setup, and repairing it is exactly the
+  kind of change the hard rules forbid. Do not touch the test, the config, or
+  the environment to make it pass.
+
+  Instead, verify against something you control: scaffold the setup spec from
+  phase 3 and run that on its own, even in a repo that already has specs. If it
+  passes, the setup is sound. Say so, and say plainly in the hand-back that an
+  existing spec was already failing, which one, and why — it is useful for the
+  person to know, and it is theirs to decide about.
 
 ## 5. Hand back
 
@@ -279,15 +309,18 @@ whole setup exists for, so be specific: say what you changed, say exactly where
 to get the command, and say which directory to run it from. Do not run it for
 them.
 
-Report it like this, filling in what you actually did:
+Every change you made gets a line. This example is a greenfield repo, so it
+shows the whole set:
 
 ```text
 Cypress is set up to record to Cypress Cloud.
 
+  Package   package.json — created with npm init -y (CommonJS)
   Cypress   installed 15.4.0 (was not present)
-  Config    cypress.config.ts — added projectId "abc123"
+  Config    cypress.config.js — added projectId "abc123"
   Spec      cypress/e2e/cloud-setup.cy.js — created
-  Ignored   cypress/screenshots, cypress/videos, cypress/downloads
+  Support   cypress/support/e2e.js — created
+  Ignored   node_modules, cypress/screenshots, cypress/videos, cypress/downloads
   Verified  1 passing (cypress run, not recorded)
 
 Please review the diff before going further.
@@ -296,7 +329,7 @@ To record your first run:
 
   1. Go back to Cypress Cloud, to the onboarding guide you copied the prompt from.
   2. Under "Paste command into terminal", copy the command.
-  3. Run it from ./apps/web — that is where I installed Cypress.
+  3. Run it from ./ (the repository root) — that is where I installed Cypress.
 
 That command contains your record key. Run it; don't save it in a file. If you
 want it again later, export CYPRESS_RECORD_KEY in your shell session rather
@@ -305,6 +338,15 @@ than committing it anywhere.
 The guide picks the run up on its own and moves you on to reviewing the
 results — you don't need to refresh it.
 ```
+
+Drop the lines that do not apply. An established repo that already had a package
+and a support file gets neither of those lines, and its Cypress line might read
+`already declared 15.4.0, installed dependencies`. What you must not do is leave
+a line out for something you actually did: a change the report does not name is
+a change the person does not look for in the diff, and the package you created,
+the support file, and `node_modules/` in `.gitignore` are the three most often
+forgotten. If phase 4 turned up an existing spec that was already failing, add a
+line for that too.
 
 Three details in there are not optional:
 
@@ -341,10 +383,11 @@ Three details in there are not optional:
     let them redirect you.
 
   - **A repo built on another stack** — a `go.mod`, `pyproject.toml` or
-    `Gemfile` and no JavaScript package. Stop, and point the person at the
-    manual setup guide.
+    `Gemfile` and no JavaScript package. Stop, and point the person at
+    <https://docs.cypress.io/cloud/get-started/setup>.
 
-- **Cypress 9 or older.** Ask before migrating — see phase 2.
+- **Cypress 9 or older.** Ask before migrating — see phase 2, and link them to
+  <https://docs.cypress.io/app/references/migration-guide#Migrating-to-Cypress-100>.
 - **An ambiguous monorepo.** Ask which package should own Cypress.
 - **A failed install.** Report the manager's own output. Do not work around it.
 
