@@ -49,7 +49,6 @@ The legacy algorithm additionally considered elements hidden when they were:
 
 - Clipped by an ancestor's `overflow: hidden`
 - Scrolled out of view of an `overflow: auto`/`overflow: scroll` ancestor
-- Scaled to zero in one axis via a `transform` (e.g. `transform: scale(0)`)
 - Rotated past 90 degrees via `transform` with `backface-visibility: hidden`
 - Covered by another element while positioned `fixed` or `sticky` (legacy only checks coverage for fixed- or sticky-positioned elements via `document.elementFromPoint`)
 
@@ -85,7 +84,84 @@ describe('My Test Suite', { visibilityStrategy: 'legacy' }, () => {
 
 When you encounter a test that fails under the modern algorithm, prefer updating the assertion to verify the same user-visible behavior in an algorithm-agnostic way rather than opting into `'legacy'`.
 
-**Scroll-clipped elements**
+Two kinds of assertion are affected, and they need different treatment:
+
+- **`should('be.visible')` used as a wait before interacting with an element.** Start with [Waiting for an element before you interact with it](#Waiting-for-an-element-before-you-interact-with-it) below. This is the most common usage, and in most cases the fix is to remove the assertion.
+- **`should('not.be.visible')` used to assert something is hidden.** These fail where the legacy algorithm detected a case the modern algorithm does not. The remaining patterns below cover each of those cases.
+
+Every pattern below uses [`.should()`](/api/commands/should) rather than [`.then()`](/api/commands/then), so that Cypress retries until the assertion passes or times out. This preserves the retry behavior you had with `should('not.be.visible')`.
+
+##### Waiting for an element before you interact with it
+
+`cy.get(selector).should('be.visible').click()` is a widespread pattern. Its value was never only the assertion — under the legacy algorithm, the assertion also kept retrying until the element was no longer clipped or covered.
+
+Under the modern algorithm that assertion resolves as soon as the browser considers the element rendered, so the wait ends earlier than it used to.
+
+**Action commands did not change.** Before every action, Cypress still scrolls the element into view and then verifies that it is not hidden, disabled, detached, readonly, animating, or [covered by another element](#Covering). The coverage check runs under both strategies, so `.click()` on a covered element is still refused under `'modern'`.
+
+That means the assertion was never what made the action wait. When an action follows, remove it — the action command already waits for strictly more conditions than `be.visible` does:
+
+```javascript
+// Before
+cy.get('#submit').should('be.visible').click()
+
+// After
+cy.get('#submit').click()
+```
+
+:::info
+
+<strong>
+  If a `.click()` or `.type()` now fails with "they disappeared from the page"
+</strong>
+
+Because the assertion resolves sooner, a subsequent action starts sooner. If your application replaces the element during that interval, the action fails with `we initially found matching element(s), but while waiting for them to become actionable, they disappeared from the page`. The message describes a detached element and does not mention visibility, which makes the cause easy to miss.
+
+Removing the redundant `should('be.visible')` does not fix this on its own. Wait on an application-level signal that the element is settled — a loading indicator disappearing, a request completing via [`cy.intercept()`](/api/commands/intercept), or a state class or attribute your application sets — and then perform the action.
+
+:::
+
+When the assertion itself is the point, and you need it to mean "a user could see and use this", combine the built-in assertion with a coverage check in a single retrying `.should()`:
+
+```javascript
+cy.get('#confirmation-banner').should(($el) => {
+  expect($el).to.be.visible
+
+  const rect = $el[0].getBoundingClientRect()
+  const elAtPoint = $el[0].ownerDocument.elementFromPoint(
+    rect.left + rect.width / 2,
+    rect.top + rect.height / 2
+  )
+
+  expect($el[0].contains(elAtPoint), 'element is not covered').to.be.true
+})
+```
+
+##### Elements covered by a `fixed` or `sticky` element
+
+The legacy algorithm treated a `fixed`- or `sticky`-positioned element as hidden when another element covered its center point. The modern algorithm does no hit testing, so it reports the covered element as visible.
+
+Perform the same hit test the legacy algorithm performed, using [`document.elementFromPoint()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/elementFromPoint):
+
+```javascript
+// Before
+cy.get('#toolbar-action').should('not.be.visible')
+
+// After
+cy.get('#toolbar-action').should(($el) => {
+  const rect = $el[0].getBoundingClientRect()
+  const elAtPoint = $el[0].ownerDocument.elementFromPoint(
+    rect.left + rect.width / 2,
+    rect.top + rect.height / 2
+  )
+
+  expect($el[0].contains(elAtPoint), 'element is covered').to.be.false
+})
+```
+
+`elementFromPoint()` is relative to the viewport and returns `null` for a point outside it, which this assertion also treats as covered. If the element can be scrolled out of view, assert on its geometry instead, as in the next pattern.
+
+##### Scroll-clipped elements
 
 The modern algorithm reports elements scrolled out of an `overflow: auto` ancestor as visible (they are technically rendered, just outside the scroll container's visible area). Assert on the geometry directly:
 
@@ -94,15 +170,16 @@ The modern algorithm reports elements scrolled out of an `overflow: auto` ancest
 cy.get('#scroll-container button').should('not.be.visible')
 
 // After
-cy.get('#scroll-container button').then(($el) => {
+cy.get('#scroll-container button').should(($el) => {
   const container = $el[0].closest('#scroll-container')
+
   expect($el[0].getBoundingClientRect().top).to.be.greaterThan(
     container.getBoundingClientRect().bottom
   )
 })
 ```
 
-**Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`**
+##### Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`
 
 Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden — `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper — assert on that instead:
 
@@ -116,12 +193,40 @@ cy.get('.collapsible-content .nested-item')
   .should('have.attr', 'aria-hidden', 'true')
 ```
 
-**Text truncated with `text-overflow: ellipsis`**
+##### Elements rotated away with `backface-visibility: hidden`
 
-Truncated text is rendered with an ellipsis but the underlying text node is still considered visible by the browser. Assert that the truncating ancestor's `scrollWidth` exceeds its `clientWidth`:
+An element rotated past 90 degrees with `backface-visibility: hidden` presents its back face to the viewer and is not painted, but it keeps a non-zero bounding rect and `checkVisibility()` reports it as visible.
+
+Card-flip and carousel components almost always track their own facing state. Assert on that state, which is more readable than the geometry and does not depend on how the flip is implemented:
 
 ```javascript
-cy.get('.truncate-container').then(($el) => {
+// Before
+cy.get('.card-back').should('not.be.visible')
+
+// After
+cy.get('.card').should('have.attr', 'data-facing', 'front')
+```
+
+If no such state is exposed, check the sign of the transformed normal on the element that carries the rotation. A negative `m33` means the element faces away from the viewer. Read the computed style from the application's own window rather than the spec's:
+
+```javascript
+cy.get('.card-back').should(($el) => {
+  const el = $el[0]
+  const { transform } = el.ownerDocument.defaultView.getComputedStyle(el)
+  const { m33 } = new DOMMatrix(transform === 'none' ? undefined : transform)
+
+  expect(m33, 'element faces away from the viewer').to.be.lessThan(0)
+})
+```
+
+##### Text truncated with `text-overflow: ellipsis`
+
+Truncated text is rendered with an ellipsis but the underlying text node is still considered visible by the browser. Neither algorithm reports the container as hidden, so this pattern applies whenever you need to assert that text is being clipped.
+
+Assert that the truncating ancestor's `scrollWidth` exceeds its `clientWidth`:
+
+```javascript
+cy.get('.truncate-container').should(($el) => {
   expect($el[0].scrollWidth).to.be.greaterThan($el[0].clientWidth)
 })
 ```
