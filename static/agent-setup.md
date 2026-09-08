@@ -15,10 +15,6 @@ agent to get a repo ready to record its first run. Follow the phases in order.
   back. Gets the project ID. Does not get the record key, and does not run the
   recorded run.
 
-Keep that boundary. The setup work and the recorded run are deliberately two
-steps performed by two different parties, and the record key never needs to
-cross into the agent's half.
-
 ## Hard rules
 
 You are operating in a repository you did not write, which may be someone's
