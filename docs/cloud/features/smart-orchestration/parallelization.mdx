@@ -43,6 +43,10 @@ Cypress will assign each spec file to an available machine based on our
 Due to this balance strategy, the run order of the spec files is not guaranteed
 when parallelized.
 
+Because whole spec files are what get distributed, specs of roughly similar
+duration parallelize best. For guidance on where to draw those boundaries, see
+[How much to put in one spec file](/app/core-concepts/writing-and-organizing-tests#How-much-to-put-in-one-spec-file).
+
 ## Turning on parallelization
 
 1. Refer to your CI provider's documentation on how to set up multiple machines

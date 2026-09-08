@@ -52,6 +52,8 @@ A spec file is a single file containing one or more tests. Spec duration matters
 
 Aim for spec files with similar durations so parallel machines finish around the same time. Specs under 10 seconds rarely benefit from further splitting: the fixed per-spec overhead (browser launch, video encoding) often exceeds any time savings.
 
+For where to draw spec boundaries in the first place, and when a page, section, or form deserves its own file, see [How much to put in one spec file](/app/core-concepts/writing-and-organizing-tests#How-much-to-put-in-one-spec-file).
+
 ### Full suite duration
 
 | Suite size    | Target (serial)     | Target (parallel, 4+ machines) |
