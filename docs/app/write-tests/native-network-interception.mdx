@@ -404,6 +404,36 @@ modifications do, because the browser only ever sees the response Cypress return
 Assertions on `request.headers` after `cy.wait()` and the Cypress command log report the
 modified request on both paths.
 
+## TLS certificates and caching
+
+On the native browser network path in Chrome, Chromium, and Edge, Cypress launches the browser with the `--ignore-certificate-errors` flag so that origins with self-signed or private-CA certificates load without manual certificate prompts.
+
+However, Chromium's disk cache intentionally skips storing responses from connections whose certificate errors were merely ignored. For an HTTPS application under test using a self-signed or private-CA certificate, the browser disk cache remained empty, causing asset-heavy test suites to re-download every static asset on each `cy.visit`.
+
+Starting in Cypress 16.1.0, you can declare your server's certificates with the [`trustedCertificates`](/app/references/configuration#trustedCertificates) configuration option:
+
+:::cypress-config-example
+
+```ts
+{
+  trustedCertificates: [
+    { filePath: 'certs/dev-server.crt' },
+  ],
+}
+```
+
+:::
+
+When certificates are declared in `trustedCertificates`, Cypress passes their SubjectPublicKeyInfo (SPKI) fingerprints to Chromium via `--ignore-certificate-errors-spki-list`. Chromium honors this fingerprint list over the blanket ignore flag and treats connections to matching origins as genuinely trusted. Static assets are then cached to disk across navigations as they are in production.
+
+Keep the following details in mind when configuring trusted certificates:
+
+- **Server certificate chain matching**: Chromium matches the fingerprint against any certificate in the chain the server presents during the TLS handshake. If your server presents an intermediate or CA certificate in its chain, declaring either that CA or the leaf certificate works. If your server presents only the leaf certificate without a chain, you must declare the leaf certificate.
+- **Purely additive**: Cypress still passes `--ignore-certificate-errors`, so origins you do not declare in `trustedCertificates` continue to load as before.
+- **Browser scope**: `trustedCertificates` applies to Chrome, Chromium, and Edge on the native browser network path. Firefox, WebKit, Electron, and test runs using [`forceHttp1`](/app/references/configuration#forceHttp1) use the legacy network path and are unaffected.
+- **Supported formats**: Each entry accepts a relative `filePath` to a PEM file, inline `pem` text, or a precomputed base64 SHA-256 `spki` fingerprint. See [`trustedCertificates`](/app/references/configuration#trustedCertificates) for the full configuration reference.
+- **Client certificates vs. trusted certificates**: To configure client certificates for mutual TLS (mTLS) authentication where Cypress presents certificates to an endpoint, use [`clientCertificates`](/app/references/client-certificates) instead.
+
 ## Writing tests that pass in every browser
 
 Assertions that describe your application rather than the transport pass in every browser
@@ -437,6 +467,7 @@ this gate; see [Using the legacy network path](#Using-the-legacy-network-path).
 
 ## See also
 
+- [`trustedCertificates` configuration](/app/references/configuration#trustedCertificates)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`Cypress.browser`](/api/cypress-api/browser)
 - [`Cypress.isBrowser()`](/api/cypress-api/isbrowser)
