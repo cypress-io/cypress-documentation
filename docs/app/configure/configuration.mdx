@@ -1000,8 +1000,6 @@ How the contents are removed depends on the operating system:
 
 An optional array of certificates for the browser to genuinely trust on the native browser network path.
 
-Added in Cypress [16.1.0](/app/references/changelog#16-1-0).
-
 On the native browser network path (Chrome, Chromium, and Edge), Cypress launches the browser with `--ignore-certificate-errors` so that origins with self-signed or private-CA certificates can load under test. However, Chromium treats overridden certificate errors as clicked-through warnings and deliberately does not write responses from those origins to its HTTP disk cache. For an HTTPS application presenting an untrusted certificate, the browser disk cache remained empty, causing asset-heavy test suites to re-download every static asset on each `cy.visit`.
 
 Declaring certificates in `trustedCertificates` passes their SubjectPublicKeyInfo (SPKI) fingerprints to Chromium via the `--ignore-certificate-errors-spki-list` flag. Chromium honors the SPKI list over the blanket ignore flag, treating connections to declared origins as genuinely trusted. As a result, static assets from those origins are written to the browser's HTTP disk cache and served from cache across navigations, matching production behavior.
