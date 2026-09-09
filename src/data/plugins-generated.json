@@ -107,9 +107,9 @@
     },
     "eslint-plugin-cypress": {
       "npm": "eslint-plugin-cypress",
-      "version": "7.0.1",
-      "lastPublished": "2026-08-22T20:48:04.001Z",
-      "cypressVersion": "^15.21.0"
+      "version": "7.0.2",
+      "lastPublished": "2026-09-08T15:09:59.980Z",
+      "cypressVersion": "^16.0.0"
     },
     "cypress-codegen": {
       "npm": "cypress-codegen",
@@ -382,9 +382,9 @@
     },
     "cypress-accessibility-checker": {
       "npm": "cypress-accessibility-checker",
-      "version": "4.0.33",
-      "lastPublished": "2026-09-03T15:51:29.572Z",
-      "cypressVersion": "^13.2.0 || ^15"
+      "version": "4.0.34",
+      "lastPublished": "2026-09-08T16:26:48.687Z",
+      "cypressVersion": "^13.2.0 || ^15 || ^16"
     },
     "cypress-duration-metrics": {
       "npm": "cypress-duration-metrics",
@@ -458,8 +458,8 @@
     },
     "@qualflare/cypress": {
       "npm": "@qualflare/cypress",
-      "version": "0.7.1",
-      "lastPublished": "2026-09-06T21:14:21.620Z",
+      "version": "0.7.2",
+      "lastPublished": "2026-09-08T22:34:26.089Z",
       "cypressVersion": ">=12.0.0"
     },
     "Sauce Labs Visual": {
