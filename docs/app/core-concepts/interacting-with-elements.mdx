@@ -25,7 +25,7 @@ As of Cypress 16, the default visibility algorithm delegates to the browser's na
   - `display: none` on the element or any ancestor.
   - `visibility: hidden` or `visibility: collapse`.
   - `content-visibility: hidden`, or `content-visibility: auto` when not rendered.
-  - `opacity: 0` (when asserting visibility — see Opacity note below).
+  - `opacity: 0` (when asserting visibility, see the Opacity note below).
 
 :::info
 
@@ -49,7 +49,6 @@ The legacy algorithm additionally considered elements hidden when they were:
 
 - Clipped by an ancestor's `overflow: hidden`
 - Scrolled out of view of an `overflow: auto`/`overflow: scroll` ancestor
-- Scaled to zero in one axis via a `transform` (e.g. `transform: scale(0)`)
 - Rotated past 90 degrees via `transform` with `backface-visibility: hidden`
 - Covered by another element while positioned `fixed` or `sticky` (legacy only checks coverage for fixed- or sticky-positioned elements via `document.elementFromPoint`)
 
@@ -85,28 +84,127 @@ describe('My Test Suite', { visibilityStrategy: 'legacy' }, () => {
 
 When you encounter a test that fails under the modern algorithm, prefer updating the assertion to verify the same user-visible behavior in an algorithm-agnostic way rather than opting into `'legacy'`.
 
-**Scroll-clipped elements**
+Two kinds of assertion are affected, and each needs a different fix:
+
+- **`should('be.visible')` used as a wait before an action.** This is the most common usage. See [Waiting for an element before you interact with it](#Waiting-for-an-element-before-you-interact-with-it) below, where the fix is usually to remove the assertion.
+- **`should('not.be.visible')` used to assert that something is hidden.** These fail in the cases the legacy algorithm detected and the modern algorithm does not. The remaining patterns cover each of those cases.
+
+Every pattern below uses [`.should()`](/api/commands/should) rather than [`.then()`](/api/commands/then). Cypress retries `.should()` until it passes or times out, so these patterns keep the retry behavior of the assertion they replace.
+
+##### Waiting for an element before you interact with it
+
+`cy.get(selector).should('be.visible').click()` is a common way to wait until an element is ready. Under the legacy algorithm, the assertion kept retrying until the element was no longer clipped or covered.
+
+Under the modern algorithm, the assertion passes as soon as the browser considers the element rendered, so the wait ends earlier than it did before.
+
+Action commands did not change. Before every action, Cypress still scrolls the element into view and checks that it is not hidden, disabled, detached, readonly, animating, or [covered by another element](#Covering). Cypress runs the coverage check under both strategies, so it still refuses to click a covered element under `'modern'`.
+
+When an action follows the assertion, and the assertion was there to wait out clipping or coverage, you can remove it. The action command already checks both:
+
+```javascript title="cypress/e2e/spec.cy.js"
+// Before
+cy.get('#submit').should('be.visible').click()
+
+// After
+cy.get('#submit').click()
+```
+
+Keep the assertion if you rely on it to wait out a fade-in. Actionability ignores `opacity`, so an element at `opacity: 0` is actionable, as described in the [Opacity](#Default-Behavior) note above. `should('be.visible')` is the only one of the two that waits for the element to become opaque.
+
+Because the assertion passes sooner, the action that follows it starts sooner. If your application replaces the element in that window, the action fails with `we initially found matching element(s), but while waiting for them to become actionable, they disappeared from the page`. The error describes a detached element and never mentions visibility, so the cause is easy to miss.
+
+Removing the redundant `should('be.visible')` does not fix this on its own. Wait on a signal from your application that the element has settled, such as a loading indicator disappearing, a request completing with [`cy.intercept()`](/api/commands/intercept), or a class or attribute your application sets. Then perform the action.
+
+When you need to assert that a user can see and use an element, combine [`Cypress.dom.isVisible()`](/api/cypress-api/dom) with a coverage check. Define both as [custom queries](/api/cypress-api/custom-queries) so you can reuse them across your suite:
+
+```javascript title="cypress/support/commands.js"
+const isCovered = (el) => {
+  const win = el.ownerDocument.defaultView
+  const rect = el.getBoundingClientRect()
+  const elAtPoint = el.ownerDocument.elementFromPoint(
+    rect.left + rect.width / 2,
+    rect.top + rect.height / 2
+  )
+
+  if (el.contains(elAtPoint)) {
+    return false
+  }
+
+  // `pointer-events: none` makes the hit test fall through to an ancestor,
+  // which the legacy algorithm did not count as coverage
+  const ignoresPointerEvents =
+    win.getComputedStyle(el).pointerEvents === 'none' ||
+    (el.parentElement &&
+      win.getComputedStyle(el.parentElement).pointerEvents === 'none')
+
+  return !(ignoresPointerEvents && elAtPoint && elAtPoint.contains(el))
+}
+
+Cypress.Commands.addQuery('isCovered', function () {
+  return ($el) => Array.from($el).every(isCovered)
+})
+
+Cypress.Commands.addQuery('isVisibleToUser', function () {
+  return ($el) =>
+    Array.from($el).every((el) => Cypress.dom.isVisible(el) && !isCovered(el))
+})
+```
+
+```javascript title="cypress/e2e/spec.cy.js"
+cy.get('#confirmation-banner').isVisibleToUser().should('be.true')
+```
+
+Both are queries rather than commands. A query reads state without changing it, and Cypress reruns it on each retry.
+
+`isCovered()` requires every matched element to be covered, which is what `not.be.visible` asks for.
+
+`isVisibleToUser()` is stricter than `be.visible` in three ways, so treat it as its own assertion rather than a drop-in replacement:
+
+- It builds on `Cypress.dom.isVisible()`, which follows the configured strategy. Under `'modern'` you get modern visibility plus coverage, so a clipped or scrolled-out element still reports as visible. The patterns below cover those two cases.
+- It hit tests every element. The legacy algorithm only hit tested `fixed`- and `sticky`-positioned elements.
+- It requires every matched element to pass, while `be.visible` is satisfied when any one of them is visible. chai-jQuery implements that assertion as `$el.is(':visible')`, and jQuery's `.is()` matches on any element in the set.
+
+The hit test has one more consequence worth knowing. `elementFromPoint()` returns `null` for a point outside the viewport, which counts as covered, so anything below the fold reports as not visible to the user. The legacy algorithm never met that case, because a `fixed` or `sticky` element is in the viewport by definition. Cypress also scrolls an element into view before acting on it, so an element below the fold is still usable. Reach for `isVisibleToUser()` only where you expect the element to be on screen already.
+
+##### `fixed` or `sticky` elements covered by something else
+
+The legacy algorithm treated a `fixed`- or `sticky`-positioned element as hidden when another element covered its center point. The element doing the covering can be positioned any way at all. The modern algorithm does not hit test, so it reports the covered element as visible.
+
+Run the same hit test with the `isCovered()` query defined above:
+
+```javascript title="cypress/e2e/spec.cy.js"
+// Before
+cy.get('#toolbar-action').should('not.be.visible')
+
+// After
+cy.get('#toolbar-action').isCovered().should('be.true')
+```
+
+That query calls [`document.elementFromPoint()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/elementFromPoint), which is relative to the viewport and returns `null` for a point outside it. The query treats that as covered. If the element can also scroll out of view, assert on its geometry instead, as in the next pattern.
+
+##### Scroll-clipped elements
 
 The modern algorithm reports elements scrolled out of an `overflow: auto` ancestor as visible (they are technically rendered, just outside the scroll container's visible area). Assert on the geometry directly:
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 // Before
 cy.get('#scroll-container button').should('not.be.visible')
 
 // After
-cy.get('#scroll-container button').then(($el) => {
+cy.get('#scroll-container button').should(($el) => {
   const container = $el[0].closest('#scroll-container')
+
   expect($el[0].getBoundingClientRect().top).to.be.greaterThan(
     container.getBoundingClientRect().bottom
   )
 })
 ```
 
-**Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`**
+##### Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`
 
-Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden — `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper — assert on that instead:
+Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden, because `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper, so assert on that instead:
 
-```javascript
+```javascript title="cypress/e2e/spec.cy.js"
 // Before
 cy.get('.collapsible-content .nested-item').should('not.be.visible')
 
@@ -116,12 +214,32 @@ cy.get('.collapsible-content .nested-item')
   .should('have.attr', 'aria-hidden', 'true')
 ```
 
-**Text truncated with `text-overflow: ellipsis`**
+##### Elements rotated away with `backface-visibility: hidden`
 
-Truncated text is rendered with an ellipsis but the underlying text node is still considered visible by the browser. Assert that the truncating ancestor's `scrollWidth` exceeds its `clientWidth`:
+An element rotated past 90 degrees with `backface-visibility: hidden` turns its back face to the viewer, so the browser does not paint it. It keeps a non-zero bounding rect, and `checkVisibility()` reports it as visible.
 
-```javascript
-cy.get('.truncate-container').then(($el) => {
+Card flip and carousel components usually track which face is showing. Assert on that state, so your test does not depend on how the flip is implemented:
+
+```javascript title="cypress/e2e/spec.cy.js"
+// Before
+cy.get('.card-back').should('not.be.visible')
+
+// After
+cy.get('.card').should('have.attr', 'data-facing', 'front')
+```
+
+Prefer that over a geometric check. In a typical flip, the rotation that hides a face lives on an ancestor, and the face itself carries a static `transform: rotateY(180deg)` that never changes. Reading the computed `transform` off the element alone therefore returns the same value in both states, so the assertion passes whichever face is showing. Reproducing the legacy check means accumulating the transform across every `preserve-3d` ancestor, which is more DOM logic than the assertion is worth.
+
+If your component exposes no state at all, add an attribute that reflects which face is showing, then assert on it.
+
+##### Text truncated with `text-overflow: ellipsis`
+
+The browser renders truncated text with an ellipsis, but still considers the underlying text node visible. Neither algorithm reports the container as hidden, so use this pattern whenever you need to assert that text is clipped.
+
+Assert that the truncating ancestor's `scrollWidth` exceeds its `clientWidth`:
+
+```javascript title="cypress/e2e/spec.cy.js"
+cy.get('.truncate-container').should(($el) => {
   expect($el[0].scrollWidth).to.be.greaterThan($el[0].clientWidth)
 })
 ```
