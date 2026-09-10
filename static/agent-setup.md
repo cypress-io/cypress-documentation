@@ -220,11 +220,6 @@ describe('Cypress Cloud setup', () => {
 })
 ```
 
-This spec deliberately does not visit a URL. A scaffolded `cy.visit('/')` fails
-when no application is running and no `baseUrl` is set, which would make the
-person's very first recorded run a red one. Only write a `cy.visit` test instead
-if `baseUrl` is already configured and you have confirmed the server runs.
-
 Scaffold the support file as well, if nothing matches
 `cypress/support/e2e.{js,jsx,ts,tsx}`. Cypress expects one by default and
 refuses to run without it, and a repo with no specs has no support file either —
