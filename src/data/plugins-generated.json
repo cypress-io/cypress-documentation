@@ -412,8 +412,8 @@
     },
     "allure-cypress": {
       "npm": "allure-cypress",
-      "version": "3.12.0",
-      "lastPublished": "2026-09-03T14:19:48.536Z",
+      "version": "3.12.1",
+      "lastPublished": "2026-09-09T12:44:00.941Z",
       "cypressVersion": ">=12.17.4"
     },
     "cypress-failed-log": {
@@ -563,8 +563,8 @@
     },
     "Nx": {
       "npm": "@nx/cypress",
-      "version": "23.2.0",
-      "lastPublished": "2026-09-02T15:37:26.332Z",
+      "version": "23.2.1",
+      "lastPublished": "2026-09-09T20:45:46.320Z",
       "cypressVersion": ">= 13 < 16"
     },
     "Pact Cypress Adapter": {
