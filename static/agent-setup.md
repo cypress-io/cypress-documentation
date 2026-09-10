@@ -81,12 +81,11 @@ anything.
   installing on top of that is how you cause the version change the hard rules
   forbid.
 
-- **The config file.** Look for `cypress.config.js`, `.ts`, `.mjs`, `.cjs` — and
-  for a legacy `cypress.json`, which means Cypress 9 or older.
+- **The config file.** Look for `cypress.config.js`, `.ts`, `.mjs`, `.cjs`.
 - **An existing project ID.** Check the config, `cypress.env.json`, and the
   `CYPRESS_PROJECT_ID` environment variable.
 - **Existing specs.** Use `specPattern` from the config if it is set; otherwise
-  `cypress/e2e/**`, and `cypress/integration/**` for older layouts.
+  `cypress/e2e/**`.
 - **Testing types.** Note whether the config defines `e2e`, `component`, or both.
 - **Workspace layout.** In a monorepo, work out which single package should own
   Cypress.
@@ -155,10 +154,6 @@ Ask first if any of these is true. Otherwise go ahead and report afterwards.
 
 - An existing project ID differs from the prompt's.
 - More than one package could reasonably own Cypress.
-- The repo only has a legacy `cypress.json` — migrating to Cypress 10+ is a
-  bigger change than this setup, and the person should choose it deliberately.
-  Point them at
-  <https://docs.cypress.io/app/references/migration-guide#Migrating-to-Cypress-100>.
 - The repo has component tests but no e2e tests. The record command runs e2e by
   default, so the person needs to know it will need `--component`.
 
@@ -382,7 +377,9 @@ Three details in there are not optional:
     `Gemfile` and no JavaScript package. Stop, and point the person at
     <https://docs.cypress.io/cloud/get-started/setup>.
 
-- **Cypress 9 or older.** Ask before migrating — see phase 2, and link them to
+- **Cypress 9 or older**, from the version you read in phase 1. This setup
+  targets Cypress 10 and above, and migrating is a far bigger change than the
+  one you came to make. Stop, and point the person at
   <https://docs.cypress.io/app/references/migration-guide#Migrating-to-Cypress-100>.
 - **An ambiguous monorepo.** Ask which package should own Cypress.
 - **A failed install.** Report the manager's own output. Do not work around it.
