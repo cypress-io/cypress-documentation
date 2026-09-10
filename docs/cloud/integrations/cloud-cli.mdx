@@ -650,7 +650,7 @@ If a test's replay data is not available (for example, it is still processing or
 
 ### cy-cloud replay view
 
-Launch Test Replay in a browser and inspect your application throughout the test lifecycle. Query for specific elements, accessibility tree state, and generate image snapshots.
+Launch Test Replay in a browser and inspect your application throughout the test lifecycle. Query for specific elements, accessibility tree state, and generate screenshots.
 
 :::note
 
@@ -663,7 +663,7 @@ Launch a Test Replay, navigate to the moment the test failed, and capture a scre
 ```bash
 cy-cloud replay view open --testId <testId>
 cy-cloud replay view move --time failure
-cy-cloud replay view snapshot
+cy-cloud replay view screenshot
 ```
 
 :::note
@@ -758,9 +758,9 @@ Subcommands that target an element require a `--selector` flag with a valid CSS 
 
 You can also request a visual record
 
-| Subcommand | Description                                                    |
-| ---------- | -------------------------------------------------------------- |
-| `snapshot` | Save a PNG image of the application under test at that moment. |
+| Subcommand   | Description                                                    |
+| ------------ | -------------------------------------------------------------- |
+| `screenshot` | Save a PNG image of the application under test at that moment. |
 
 | Flag     | Description                                                                                                         |
 | -------- | ------------------------------------------------------------------------------------------------------------------- |
