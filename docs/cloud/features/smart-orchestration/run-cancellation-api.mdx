@@ -1,0 +1,148 @@
+---
+title: Cancel a run via API in Cypress Cloud
+description: Cancel a Cypress Cloud run programmatically with the Run Cancellation API, using your project ID and record key, without needing the Cypress Cloud dashboard.
+sidebar_label: Run Cancellation API
+sidebar_position: 55
+---
+
+<ProductHeading product="cloud" />
+
+# Run Cancellation API
+
+:::caution
+
+This API is **experimental**. Breaking changes are unlikely, but may be made if necessary.
+
+:::
+
+Canceling a run today means opening Cypress Cloud and clicking **Cancel** on
+the run, or configuring
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) to
+stop a run automatically once failures cross a threshold. Neither helps when
+the decision to stop a run is made somewhere else entirely, for example:
+
+- A deployment pipeline that cancels in-flight test runs for a commit that has
+  already been superseded by a newer push.
+- A separate CI job or orchestrator that determines the tests are no longer
+  needed and wants to free up CI machines immediately.
+- An internal tool that lets a developer cancel a run without needing
+  Cypress Cloud dashboard access.
+
+The Run Cancellation API lets you cancel a run with a single authenticated
+HTTP request, using the same
+[project ID](/cloud/account-management/projects#Project-ID) and
+[record key](/cloud/account-management/projects#Record-key) credentials you
+already use to [record the run](/cloud/get-started/setup#Setup).
+
+Canceling through the API has the same effect as canceling manually from the
+dashboard: the run is marked **Canceled**,
+[`run.completed` webhooks](/cloud/integrations/webhooks) fire, and any
+in-progress `cypress run --record` calls for the run exit with an error. See
+[What happens when a run is canceled?](/cloud/features/recorded-runs#Run-cancellation)
+for the full list of effects.
+
+:::caution
+
+A canceled run's exit code does not change: any `cypress run --record` process
+still executing specs for that run exits **non-zero** (`1`), the same as it
+would if tests had actually failed. Cypress prints `Exiting with non-zero exit
+code because the run was canceled.` to the console when this happens, but the
+exit code itself doesn't distinguish a cancellation from a real test failure.
+
+If you call this API from a step that runs separately from the test job
+itself, for example the deployment-pipeline and orchestrator cases, the
+**canceled run's own CI job** will report as failed rather than canceled.
+Account for that in the job that ran the canceled specs, so a run you meant to
+cancel doesn't get treated as a broken build.
+
+:::
+
+## Endpoint
+
+```text
+POST https://api.cypress.io/runs/cancel
+```
+
+Requests are authenticated with your **project ID** and **record key**, the
+same credentials used to [record the run](/cloud/get-started/setup#Setup).
+
+## Request body
+
+The request body is JSON. `projectId` and `recordKey` are always required, and
+the run is identified by **exactly one** of `runUrl` or `runNumber`.
+
+| Property    | Type     | Required    | Description                                                                                         |
+| ----------- | -------- | ----------- | --------------------------------------------------------------------------------------------------- |
+| `projectId` | `string` | Yes         | The [project ID](/cloud/account-management/projects#Project-ID) of the run.                         |
+| `recordKey` | `string` | Yes         | A valid [record key](/cloud/account-management/projects#Record-key) for the project.                |
+| `runUrl`    | `string` | Conditional | The Cypress Cloud run URL (Cypress prints this when a run starts). Provide this **or** `runNumber`. |
+| `runNumber` | `number` | Conditional | The run's sequential number within the project. Provide this **or** `runUrl`.                       |
+
+### Example: `fetch`
+
+```javascript
+const response = await fetch('https://api.cypress.io/runs/cancel', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    projectId: 'abc123',
+    recordKey: 'f858a2bc-b469-4e48-be67-0876339ee7e1',
+    runUrl: 'https://cloud.cypress.io/projects/abc123/runs/42',
+    // runNumber: 42, // optional, in lieu of runUrl
+  }),
+})
+
+const result = await response.json()
+console.log(result) // e.g. { runId: 'f858a2bc-b469-4e48-be67-0876339ee7e1', cancelledAt: '2024-01-01T00:00:00.000Z' }
+```
+
+### Example: `curl`
+
+```shell
+curl -X POST https://api.cypress.io/runs/cancel \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "projectId": "abc123",
+    "recordKey": "f858a2bc-b469-4e48-be67-0876339ee7e1",
+    "runUrl": "https://cloud.cypress.io/projects/abc123/runs/42"
+  }'
+```
+
+## Finding the run URL or run number
+
+Both identifiers come from the results Cypress produces when a run is
+recorded. See
+[Finding the run URL or run number](/cloud/features/smart-orchestration/parallelization#Finding-the-run-URL-or-run-number)
+for how to read `runUrl` from the
+[Module API](/app/references/module-api#Results) or the
+[`after:run`](/api/node-events/after-run-api) Node event.
+
+## Responses
+
+A successful cancellation always responds immediately, with no equivalent of
+the [Run Completion API's](/cloud/features/smart-orchestration/parallelization#Run-Completion-API)
+deferred outcomes: there is no completion delay to wait out, and no groups to
+wait on.
+
+| Status | Body                                                                                               | Meaning                                                                                               |
+| ------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `200`  | `{ "runId": "...", "cancelledAt": "..." }`                                                         | The run was canceled.                                                                                 |
+| `409`  | `{ "message": "Run is not currently running and cannot be canceled.", "code": "RUN_NOT_RUNNING" }` | The run is not currently running. It may have already completed, already been canceled, or timed out. |
+
+Malformed or unauthenticated requests are rejected before a cancellation is
+attempted: a missing or invalid
+[record key](/cloud/account-management/projects#Record-key) returns `401`, a
+missing `projectId` or run identifier returns `400`, and a `runUrl` or
+`runNumber` that doesn't resolve to a run in the project returns `404`. Every
+error response is a JSON body of the form `{ "message": "...", "code": "..." }`.
+
+## See also
+
+- [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) -
+  cancel a run automatically once failures cross a threshold
+- [Manually canceling a run](/cloud/features/recorded-runs#Run-cancellation) -
+  cancel a run from the Cypress Cloud dashboard
+- [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API) -
+  mark a run complete early instead of canceling it
+- [`run.completed` webhooks](/cloud/integrations/webhooks) - get notified when
+  a run finishes, including by cancellation
