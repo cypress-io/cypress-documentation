@@ -34,6 +34,10 @@ This document covers how to configure certificate file paths for use in your
 tests. The creation and management of certificate files themselves are outside
 the scope of Cypress documentation.
 
+The `clientCertificates` option on this page is for mutual TLS, where Cypress
+presents a client certificate to the endpoint. To trust a certificate your server
+presents, see [`trustedCertificates`](/app/references/configuration#trustedCertificates).
+
 :::
 
 ## Syntax
@@ -301,3 +305,9 @@ so that private keys are never accidentally committed.
 | -------------------------------------------- | -------------------------------------------------------------------- |
 | [15.16.0](/app/references/changelog#15-16-0) | Added support for ECDSA (EC) keys in PEM and PFX client certificates |
 | [8.0.0](/app/references/changelog#8-0-0)     | Added Client Certificates configuration options                      |
+
+## See also
+
+- [`trustedCertificates` configuration](/app/references/configuration#trustedCertificates)
+- [Native network interception](/app/guides/native-network-interception)
+- [Cypress Configuration](/app/references/configuration)
