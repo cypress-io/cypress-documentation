@@ -50,7 +50,7 @@ code because the run was canceled.` to the console when this happens, but the
 exit code itself doesn't distinguish a cancellation from a real test failure.
 
 If you call this API from a step that runs separately from the test job
-itself, for example the deployment-pipeline and orchestrator cases above, the
+itself, for example the deployment-pipeline and orchestrator cases, the
 **canceled run's own CI job** will report as failed rather than canceled.
 Account for that in the job that ran the canceled specs, so a run you meant to
 cancel doesn't get treated as a broken build.
