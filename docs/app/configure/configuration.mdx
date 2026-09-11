@@ -211,16 +211,16 @@ For more options regarding screenshots, view the
 
 ### Browser
 
-| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                                          |
-| ----------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `defaultBrowser`        | `null`  | The default browser to launch if the "--browser" command line option is not provided. This option only affects the first browser launch; changing this option after the browser is already launched will have no effect. Set this to an installed browser (for example, `'chrome'`) to stop relying on the deprecated bundled Electron default — see the note below. |
-| `chromeWebSecurity`     | `true`  | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                                                                                                                           |
-| `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                      |
-| `hosts`                 | `null`  | An Object of hostname patterns to IP addresses. Acts like a Cypress-specific `/etc/hosts` file, letting Cypress resolve custom hostnames within tests. [Please read the notes for examples on using this.](#hosts)                                                                                                                                                   |
-| `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                     |
-| `removeSRIAttributes`   | `false` | Whether Cypress will remove [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) `integrity` attributes from `<script>` and `<link>` elements so that first-party resources rewritten by Cypress are not blocked. [Please read the notes for more information on this setting.](#removeSRIAttributes)          |
-| `trustedCertificates`   | `[]`    | An optional array of certificates for the browser to genuinely trust on the native network path so origin assets cache across navigations. [Please read the notes for more details.](#trustedCertificates)                                                                                                                                                           |
-| `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.                |
+| Option                  | Default | Description                                                                                                                                                                                                                                                                                                                                                            |
+| ----------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultBrowser`        | `null`  | The default browser to launch if the "--browser" command line option is not provided. This option only affects the first browser launch; changing this option after the browser is already launched will have no effect. Set this to an installed browser (for example, `'chrome'`) to stop relying on the deprecated bundled Electron default — see the note below.   |
+| `chromeWebSecurity`     | `true`  | Whether to enable Chromium-based browser's Web Security for same-origin policy and insecure mixed content.                                                                                                                                                                                                                                                             |
+| `blockHosts`            | `null`  | A String or Array of hosts that you wish to block traffic for. [Please read the notes for examples on using this.](#blockHosts)                                                                                                                                                                                                                                        |
+| `hosts`                 | `null`  | An Object of hostname patterns to IP addresses. Acts like a Cypress-specific `/etc/hosts` file, letting Cypress resolve custom hostnames within tests. [Please read the notes for examples on using this.](#hosts)                                                                                                                                                     |
+| `modifyObstructiveCode` | `true`  | Whether Cypress will search for and replace obstructive JS code in `.js` or `.html` files. [Please read the notes for more information on this setting.](#modifyObstructiveCode)                                                                                                                                                                                       |
+| `removeSRIAttributes`   | `false` | Whether Cypress will remove [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) `integrity` attributes from `<script>` and `<link>` elements so that first-party resources rewritten by Cypress are not blocked. [Please read the notes for more information on this setting.](#removeSRIAttributes)            |
+| `trustedCertificates`   | `[]`    | Certificates your application presents that the browser should trust, such as a self-signed or private-CA certificate. Applies only on the native browser network path (Chrome, Chromium, and Edge with `forceHttp1: false`), where it lets the browser cache that origin's assets across navigations. [Please read the notes for more details.](#trustedCertificates) |
+| `userAgent`             | `null`  | Enables you to override the default user agent the browser sends in all request headers. User agent values are typically used by servers to help identify the operating system, browser, and browser version. See [User-Agent MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent) for example user agent values.                  |
 
 :::caution
 
@@ -998,11 +998,11 @@ How the contents are removed depends on the operating system:
 
 <Icon name="angle-right" /> **trustedCertificates _(Object[])_**
 
-An optional array of certificates for the browser to genuinely trust on the native browser network path.
+An optional array of certificates for the browser to trust on the native browser network path.
 
-On the native browser network path (Chrome, Chromium, and Edge), Cypress launches the browser with `--ignore-certificate-errors` so that origins with self-signed or private-CA certificates can load under test. However, Chromium treats overridden certificate errors as clicked-through warnings and deliberately does not write responses from those origins to its HTTP disk cache. For an HTTPS application presenting an untrusted certificate, the browser disk cache remained empty, causing asset-heavy test suites to re-download every static asset on each `cy.visit`.
+Cypress launches every Chromium-based browser with `--ignore-certificate-errors` so that origins with self-signed or private-CA certificates can load under test. However, Chromium treats overridden certificate errors as clicked-through warnings and deliberately does not write responses from those origins to its HTTP disk cache. For an HTTPS application presenting an untrusted certificate, the browser disk cache remained empty, causing asset-heavy test suites to re-download every static asset on each `cy.visit`.
 
-Declaring certificates in `trustedCertificates` passes their SubjectPublicKeyInfo (SPKI) fingerprints to Chromium via the `--ignore-certificate-errors-spki-list` flag. Chromium honors the SPKI list over the blanket ignore flag, treating connections to declared origins as genuinely trusted. As a result, static assets from those origins are written to the browser's HTTP disk cache and served from cache across navigations, matching production behavior.
+Declaring certificates in `trustedCertificates` adds their SubjectPublicKeyInfo (SPKI) fingerprints to the `--ignore-certificate-errors-spki-list` flag, which Cypress passes only on the native browser network path (Chrome, Chromium, and Edge). Chromium honors the SPKI list over the blanket ignore flag, treating connections to declared origins as genuinely trusted rather than merely tolerated. As a result, static assets from those origins are written to the browser's HTTP disk cache and served from cache across navigations, matching production behavior.
 
 `trustedCertificates` is purely additive. Cypress continues passing the blanket `--ignore-certificate-errors` flag, so origins that you do not declare continue to load exactly as before.
 
@@ -1020,13 +1020,15 @@ Each item in the `trustedCertificates` array must be an object with **exactly on
 
 | Property   | Type     | Description                                                                                                                                                                     |
 | ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `filePath` | `String` | Path to a PEM-encoded certificate file, relative to the project root. Absolute paths are not permitted.                                                                         |
+| `filePath` | `String` | Path to a PEM-encoded certificate file. A relative path resolves against the project root.                                                                                      |
 | `pem`      | `String` | Inline PEM-encoded certificate text.                                                                                                                                            |
 | `spki`     | `String` | Precomputed base64-encoded SHA-256 fingerprint of the certificate's SubjectPublicKeyInfo (SPKI). Must be exactly 44 characters ending in `=` (matching `^[A-Za-z0-9+/]{43}=$`). |
 
-Providing zero keys, multiple keys in one entry, unknown keys, empty strings, an absolute `filePath`, or a malformed `spki` value will cause a configuration validation error.
+Every certificate in a PEM file or inline `pem` string is trusted, so you can declare a bundle that holds a leaf certificate and its issuing CA as a single entry.
 
-Changing `trustedCertificates` restarts the browser on change, but does not restart the Cypress server.
+Providing zero keys, multiple keys in one entry, unknown keys, empty strings, or a malformed `spki` value will cause a configuration validation error. Validation only checks the shape of each entry: a `filePath` that cannot be read, or a PEM that cannot be parsed, fails at browser launch with an error naming the entry.
+
+Changing `trustedCertificates` restarts the browser but not the Cypress server.
 
 #### Certificate matching
 
@@ -1040,12 +1042,14 @@ Chromium matches each SPKI fingerprint against **any certificate in the TLS chai
 To precompute a certificate's SPKI fingerprint for use with the `spki` property, run the following OpenSSL command:
 
 ```shell
-openssl x509 -in cert.pem -pubkey -noout   | openssl pkey -pubin -outform der   | openssl dgst -sha256 -binary | base64
+openssl x509 -in cert.pem -pubkey -noout \
+  | openssl pkey -pubin -outform der \
+  | openssl dgst -sha256 -binary | base64
 ```
 
 #### Examples
 
-Specifying a local certificate file:
+Point at a certificate file on disk with `filePath`:
 
 :::cypress-config-example
 
@@ -1059,20 +1063,33 @@ Specifying a local certificate file:
 
 :::
 
-Using file path, inline PEM, and SPKI fingerprint entries:
+Paste the certificate text inline with `pem`:
 
 :::cypress-config-example
 
 ```ts
 {
   trustedCertificates: [
-    { filePath: 'certs/dev-server.crt' },
     {
       pem: `-----BEGIN CERTIFICATE-----
 MIIDXjCCAkYCFH2GWLVnyyzmK8b9/0pw89/+/pqDMA0GCSqGSIb3DQEBCwUAMHQx
 ...
 -----END CERTIFICATE-----`,
     },
+  ],
+}
+```
+
+:::
+
+Declare a precomputed fingerprint with `spki` when you would rather not ship the
+certificate itself:
+
+:::cypress-config-example
+
+```ts
+{
+  trustedCertificates: [
     { spki: 'YsaxHIp/FAcE7ClDGQW6MmEJry1/BD50ardH3b/NMbo=' },
   ],
 }
