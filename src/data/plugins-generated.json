@@ -167,8 +167,8 @@
     },
     "cypress-fail-fast": {
       "npm": "cypress-fail-fast",
-      "version": "8.1.0",
-      "lastPublished": "2026-03-23T13:43:52.440Z",
+      "version": "8.2.0",
+      "lastPublished": "2026-09-11T08:22:17.535Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-fail-on-console-error": {
