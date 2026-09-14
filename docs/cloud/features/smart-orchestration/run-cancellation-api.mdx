@@ -15,18 +15,23 @@ This API is **experimental**. Breaking changes are unlikely, but may be made if 
 
 :::
 
-Canceling a run today means opening Cypress Cloud and clicking **Cancel** on
+A run can be cancelled manually by opening Cypress Cloud and clicking **Cancel** on
 the run, or configuring
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) to
-stop a run automatically once failures cross a threshold. Neither helps when
-the decision to stop a run is made somewhere else entirely, for example:
+stop a run automatically once failures cross a threshold.
+
+Neither helps when the decision to stop a run is made somewhere else entirely, for example:
 
 - A deployment pipeline that cancels in-flight test runs for a commit that has
   already been superseded by a newer push.
 - A separate CI job or orchestrator that determines the tests are no longer
-  needed and wants to free up CI machines immediately.
+  needed and frees up CI machines immediately.
 - An internal tool that lets a developer cancel a run without needing
   Cypress Cloud dashboard access.
+
+In these cases, your CI process will cancel the jobs that are running Cypress, and the Cypress Cloud run will be left in an in-progress state, awaiting further communication from your CI, until your Project's configured [Run Timeout](/cloud/account-management/projects#Run-Timeout) expires.
+
+## Why use the Run Cancellation API
 
 The Run Cancellation API lets you cancel a run with a single authenticated
 HTTP request, using the same
@@ -40,6 +45,13 @@ dashboard: the run is marked **Canceled**,
 in-progress `cypress run --record` calls for the run exit with an error. See
 [What happens when a run is canceled?](/cloud/features/recorded-runs#Run-cancellation#What-happens-when-a-run-is-canceled)
 for the full list of effects.
+
+This is especially useful when:
+
+- You want to use [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) to execute only the tests that did not pass in a previously cancelled run.
+- You want to trigger [`run.completed` webhooks](/cloud/integrations/webhooks) in a timely manner after your CI has stopped.
+- You want any other end-of-run integrations like [GitHub](cloud/integrations/github) or [Slack](cloud/integrations/slack) to happen at the moment of the CI cancellation, not after the Run Timeout expires.
+- You want Cypress [Cloud MCP](/cloud/integrations/cloud-mcp) and [CLI](/cloud/integrations/cloud-cli) to reflect the intentional cancelled state immediately when working with results, instead of a partial "timing out" state.
 
 :::caution
 
@@ -141,6 +153,7 @@ module.exports = defineConfig({
   },
 })
 ```
+
 :::
 
 ## Responses
