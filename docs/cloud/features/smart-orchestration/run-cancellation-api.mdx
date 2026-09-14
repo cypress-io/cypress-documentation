@@ -15,7 +15,7 @@ This API is **experimental**. Breaking changes are unlikely, but may be made if 
 
 :::
 
-A run can be cancelled manually by opening Cypress Cloud and clicking **Cancel** on
+A run can be canceled manually by opening Cypress Cloud and clicking **Cancel** on
 the run, or configuring
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) to
 stop a run automatically once failures cross a threshold.
@@ -48,10 +48,10 @@ for the full list of effects.
 
 This is especially useful when:
 
-- You want to use [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) to execute only the tests that did not pass in a previously cancelled run.
+- You want to use [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) to execute only the tests that did not pass in a previously canceled run.
 - You want to trigger [`run.completed` webhooks](/cloud/integrations/webhooks) in a timely manner after your CI has stopped.
-- You want any other end-of-run integrations like [GitHub](cloud/integrations/github) or [Slack](cloud/integrations/slack) to happen at the moment of the CI cancellation, not after the Run Timeout expires.
-- You want Cypress [Cloud MCP](/cloud/integrations/cloud-mcp) and [CLI](/cloud/integrations/cloud-cli) to reflect the intentional cancelled state immediately when working with results, instead of a partial "timing out" state.
+- You want any other end-of-run integrations like [GitHub](/cloud/integrations/github) or [Slack](/cloud/integrations/slack) to happen at the moment of the CI cancellation, not after the Run Timeout expires.
+- You want Cypress [Cloud MCP](/cloud/integrations/cloud-mcp) and [CLI](/cloud/integrations/cloud-cli) to reflect the intentional canceled state immediately when working with results, instead of a partial "timing out" state.
 
 :::caution
 
