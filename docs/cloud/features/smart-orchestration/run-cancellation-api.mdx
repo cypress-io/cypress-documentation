@@ -114,9 +114,11 @@ curl -X POST https://api.cypress.io/runs/cancel \
 
 ## Finding the run URL or run number
 
-Use the [`before:run`](/api/node-events/before-run-api) Node event to get Cypress Cloud `runUrl`.
+Use the [`before:run`](/api/node-events/before-run-api) Node event to get the Cypress Cloud `runUrl`. This can be accessed using your cypress config file:
 
-```js
+:::cypress-config-plugin-example
+
+```ts
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
@@ -139,6 +141,7 @@ module.exports = defineConfig({
   },
 })
 ```
+:::
 
 ## Responses
 
