@@ -50,16 +50,16 @@ tests to Cypress Cloud. As long as your record key stays _private_, no one will
 be able to record test runs for your project - even if they have your
 `projectId`.
 
-Think of your record key as the key that enables you to _write and create_ runs.
-However, it has nothing to do with being able to _read or see_ runs once they
-are recorded.
+Think of your record key as the key that enables you to _write, create, and
+cancel_ runs. However, it has nothing to do with being able to _read or see_
+runs once they are recorded.
 
 :::caution
 
 <strong>Exposing a record key</strong>
 
 Anyone that has access to both the `projectId` and the record key of a project
-can record runs to that organization's project in Cypress Cloud.
+can record or cancel runs to that organization's project in Cypress Cloud.
 
 **You would not want people outside of your team running tests because:**
 
@@ -70,6 +70,9 @@ can record runs to that organization's project in Cypress Cloud.
    the test suite so that recorded tests record different things than the
    project's original intent. This could including visiting different websites
    and generating videos of visiting those websites, for example.
+3. **They can cancel your runs.** The record key is also accepted by the
+   [Run Cancellation API](/cloud/features/smart-orchestration/run-cancellation-api),
+   so anyone holding it could cancel in-progress runs and disrupt your CI.
 
 If a record key is exposed you should [delete it](#Delete-record-key) and
 [create a new record key](#Create-new-record-key). Deleted keys will be invalid;
