@@ -38,22 +38,26 @@ Canceling through the API has the same effect as canceling manually from the
 dashboard: the run is marked **Canceled**,
 [`run.completed` webhooks](/cloud/integrations/webhooks) fire, and any
 in-progress `cypress run --record` calls for the run exit with an error. See
-[What happens when a run is canceled?](/cloud/features/recorded-runs#Run-cancellation)
+[What happens when a run is canceled?](/cloud/features/recorded-runs#Run-cancellation#What-happens-when-a-run-is-canceled)
 for the full list of effects.
 
 :::caution
 
-A canceled run's exit code does not change: any `cypress run --record` process
-still executing specs for that run exits **non-zero** (`1`), the same as it
-would if tests had actually failed. Cypress prints `Exiting with non-zero exit
-code because the run was canceled.` to the console when this happens, but the
-exit code itself doesn't distinguish a cancellation from a real test failure.
+**Cypress Run exit code in CI**
 
-If you call this API from a step that runs separately from the test job
-itself, for example the deployment-pipeline and orchestrator cases, the
-**canceled run's own CI job** will report as failed rather than canceled.
-Account for that in the job that ran the canceled specs, so a run you meant to
-cancel doesn't get treated as a broken build.
+Cancellation of a run does not change its exit code. Any `cypress run --record` process
+that's still executing specs for that run exits **non-zero** (`1`), the same as it
+would if tests had actually failed.
+
+Cypress prints `Exiting with non-zero exit code because the run was canceled.`
+to the console when this happens, but the exit code itself doesn't
+distinguish a cancellation from a real test failure.
+
+**Note:** If you call this API from a step that runs separately from the test job
+itself, the **canceled run's own CI job** will report as failed rather than canceled.
+This may happen example in deployment-pipeline and orchestrator use cases.
+You should account for that in the job that ran the canceled specs, so a run you intentionally
+canceled doesn't get treated as a broken build.
 
 :::
 
@@ -110,19 +114,37 @@ curl -X POST https://api.cypress.io/runs/cancel \
 
 ## Finding the run URL or run number
 
-Both identifiers come from the results Cypress produces when a run is
-recorded. See
-[Finding the run URL or run number](/cloud/features/smart-orchestration/parallelization#Finding-the-run-URL-or-run-number)
-for how to read `runUrl` from the
-[Module API](/app/references/module-api#Results) or the
-[`after:run`](/api/node-events/after-run-api) Node event.
+Use the [`before:run`](/api/node-events/before-run-api) Node event to get Cypress Cloud `runUrl`.
+
+```js
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  // setupNodeEvents can be defined in either
+  // the e2e or component configuration
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('before:run', async (details) => {
+        // `results` is undefined in `cypress open` mode, and `runUrl` is only
+        // set when the run was recorded. Bail out otherwise.
+        if (!details?.runUrl) {
+          return
+        }
+
+        console.log(details.runUrl)
+
+        // store the RUN URL where your CI process can access it later for cancellation purposes
+      })
+    },
+  },
+})
+```
 
 ## Responses
 
-A successful cancellation always responds immediately, with no equivalent of
-the [Run Completion API's](/cloud/features/smart-orchestration/parallelization#Run-Completion-API)
-deferred outcomes: there is no completion delay to wait out, and no groups to
-wait on.
+A successful cancellation always responds immediately and will end a Cypress run in progress.
+
+**Note**: If you are looking for a less-immediate signal that allows the queued tests to complete before ending the run, use the [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API) instead.
 
 | Status | Body                                                                                               | Meaning                                                                                               |
 | ------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
