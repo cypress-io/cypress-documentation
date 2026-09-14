@@ -16,7 +16,7 @@ slug: /app/references/migration-guide
   defaultCollapsed
   excludeFromLlmExport
   title="Upgrade to Cypress 16 with your AI assistant"
-  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-16-0.md and https://docs.cypress.io/app/references/migration-guide/migrating-away-from-cypress-env.md, which covers in full the Cypress.env() removal that the 16.0 section only summarizes. Then upgrade this project from Cypress 15 to 16 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 15.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in the 16.0 section (Node.js 22, 24, or 26+, and Angular 21+ / Vite 8+ / Next.js 15.0.4+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency. If I depend on @cypress/angular-zoneless, replace it with @cypress/angular and update the imports. Then update my third-party Cypress plugins to releases that support Cypress 16 — in particular, cypress-real-events must be 1.15.1 or newer, since earlier versions cap their cypress peer dependency at ^15.x.\n\n4. Migrate off Cypress.env(), following the Cypress.env() page rather than guessing. Find every Cypress.env() usage and classify each value as sensitive or public, since that choice decides the replacement. Move sensitive values (keys, tokens, passwords, credentials) to cy.env(), which is asynchronous and yields only the keys you request, and public values (feature flags, API versions, public URLs) to Cypress.expose() with a top-level expose block in my config. Replace any env key in a per-test or per-suite config override with expose. Check for --env CLI flags, for reads inside cy.origin() callbacks, and for plugins that call Cypress.env(), which that page lists with the versions that support the new APIs. Show me the proposed changes before applying them.\n\n5. Fix the remaining breaking changes in the 16.0 section that affect my code and config: delete cy.end() calls, replace cy.exec() calls with cy.task() registered in setupNodeEvents and remove execTimeout, replace experimentalMemoryManagement: false with manageBrowserMemory: false, remove allowCypressEnv, experimentalSourceRewriting, and experimentalFastVisibility, move Cypress.config() calls that set viewportWidth, viewportHeight, or blockHosts during a test into cy.viewport() or a test configuration object, and convert any .coffee specs, support files, or fixtures to JavaScript or TypeScript.\n\n6. Review what changed behavior without changing my code. Flag, but don't rewrite unless a test actually fails: assertions on req.httpVersion, compression headers, or a 304 status inside cy.intercept(); visibility assertions that depended on the legacy algorithm; tests that relied on the implicit 10ms keystrokeDelay; and cookie or storage assertions written inside .then(), which doesn't retry. Don't set forceHttp1 or visibilityStrategy: 'legacy' to make a test pass; both are deprecated escape hatches.\n\n7. Verify. Run npx cypress verify and my Cypress tests, and confirm the run starts with no deprecation or removed-option warnings.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-16-0.md and https://docs.cypress.io/app/references/migration-guide/migrating-away-from-cypress-env.md, which covers in full the Cypress.env() removal that the 16.0 section only summarizes. Then upgrade this project from Cypress 15 to 16 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 15.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in the 16.0 section (Node.js 22, 24, or 26+, and Angular 21+ / Vite 8+ / Next.js 15.0.4+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency. If I depend on @cypress/angular-zoneless, replace it with @cypress/angular and update the imports.\n\n4. Migrate off Cypress.env(), following the Cypress.env() page rather than guessing. Find every Cypress.env() usage and classify each value as sensitive or public, since that choice decides the replacement. Move sensitive values (keys, tokens, passwords, credentials) to cy.env(), which is asynchronous and yields only the keys you request, and public values (feature flags, API versions, public URLs) to Cypress.expose() with a top-level expose block in my config. Replace any env key in a per-test or per-suite config override with expose. Check for --env CLI flags, for reads inside cy.origin() callbacks, and for plugins that call Cypress.env(), which that page lists with the versions that support the new APIs. Show me the proposed changes before applying them.\n\n5. Fix the remaining breaking changes in the 16.0 section that affect my code and config: delete cy.end() calls, replace cy.exec() calls with cy.task() registered in setupNodeEvents and remove execTimeout, replace experimentalMemoryManagement: false with manageBrowserMemory: false, remove allowCypressEnv, experimentalSourceRewriting, and experimentalFastVisibility, move Cypress.config() calls that set viewportWidth, viewportHeight, or blockHosts during a test into cy.viewport() or a test configuration object, and convert any .coffee specs, support files, or fixtures to JavaScript or TypeScript.\n\n6. Review what changed behavior without changing my code. Flag, but don't rewrite unless a test actually fails: assertions on req.httpVersion, compression headers, or a 304 status inside cy.intercept(); visibility assertions that depended on the legacy algorithm; tests that relied on the implicit 10ms keystrokeDelay; and cookie or storage assertions written inside .then(), which doesn't retry. Don't set forceHttp1 or visibilityStrategy: 'legacy' to make a test pass; both are deprecated escape hatches.\n\n7. Verify. Run npx cypress verify and my Cypress tests, and confirm the run starts with no deprecation or removed-option warnings.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
 This guide details the code changes needed to migrate to Cypress version 16.0.
@@ -39,7 +39,6 @@ This guide details the code changes needed to migrate to Cypress version 16.0.
 | [`experimentalSourceRewriting` removed](#experimentalSourceRewriting-config-option-removed)                                                                                   | Yes. Remove the option, and enable `removeSRIAttributes` if you used it for SRI.                     |
 | [CoffeeScript support removed](#CoffeeScript-support-removed)                                                                                                                 | Yes, if you have `.coffee` specs, support files, or fixtures.                                        |
 | [Angular, Vite, and Next.js minimums raised for component testing](#Angular-18-19-and-20-are-no-longer-supported-for-Component-Testing)                                       | Yes, if you are below Angular 21, Vite 8, or Next.js 15.0.4.                                         |
-| [Third-party plugins may need an update](#Third-party-plugins-may-need-an-update)                                                                                             | Yes, if a plugin you use lacks a Cypress 16 release. `cypress-real-events` needs `1.15.1`+.          |
 | [Electron deprecated as a test browser](#Electron-browser-deprecated)                                                                                                         | Not yet, but plan to switch to an installed browser.                                                 |
 
 ### Node.js 20 and 25 no longer supported
@@ -806,30 +805,6 @@ steps that apply to your application, and
 [Next.js component testing](/app/component-testing/react/overview#Nextjs) for
 the Cypress-side configuration.
 
-### Third-party plugins may need an update
-
-Plugins that declare a `cypress` peer dependency, or that reach into the Cypress
-app's internals, often need a new release before they work on Cypress 16. Update
-your plugins alongside Cypress, and check each one's release notes for a version
-that lists Cypress 16 support.
-
-[`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events)
-requires **`1.15.1` or newer**. Versions up to `1.15.0` cap their `cypress` peer
-dependency at `^15.x`, so installing them next to Cypress 16 fails peer
-dependency resolution. `1.15.1` widens that range to include `^16.x`, and also
-looks up the application under test by its `aut-iframe` selector rather than
-taking the first `<iframe>` it finds, which keeps `realClick`, `realType`,
-`realHover`, and the other `real*` commands pointed at the right frame.
-
-```shell
-npm install --save-dev cypress-real-events@^1.15.1
-```
-
-If you use plugins that call `Cypress.env()`, see
-[Migrate plugins that use `Cypress.env()`](#Migrate-plugins-that-use-Cypressenv)
-for the versions that adopted [`cy.env()`](/api/commands/env) and
-[`Cypress.expose()`](/api/cypress-api/expose).
-
 ### Electron browser deprecated
 
 The bundled Electron browser is deprecated as a test browser in Cypress 16.0.0 and will be removed in a future major version. If your runs rely on the implicit Electron default, set a [`defaultBrowser`](/app/references/configuration#Browser) (for example, `'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run) to switch to an installed browser. See [Migrating away from the Electron browser](#Migrating-away-from-the-Electron-browser) for the full guide.
@@ -1112,6 +1087,12 @@ If you're using Cypress plugins that reference `Cypress.env()`, you should check
 #### Check for plugin updates
 
 Review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`.
+
+Some plugins never called `Cypress.env()` but still need a newer release to run on Cypress 16, so check those while you are updating the rest. [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events) requires **`1.15.1` or newer**: versions through `1.15.0` cap their `cypress` peer dependency at `^15.x`, so installing them next to Cypress 16 fails peer dependency resolution. `1.15.1` widens that range to include `^16.x`, and also resolves the application under test by its `aut-iframe` selector instead of the first `<iframe>` on the page, which keeps `realClick`, `realType`, `realHover`, and the other `real*` commands pointed at the right frame.
+
+```shell
+npm install --save-dev cypress-real-events@^1.15.1
+```
 
 #### Plugins requiring migration
 
