@@ -524,7 +524,7 @@ You don't need to construct them yourself.
   const runUrl = results.runUrl
   ```
 
-- **From the [`after:run`](/api/node-events/after-run-api) Node event:** the
+- **From the [`after:run`](/api/node-events/after-run-api) or [`before:run`](/api/node-events/before-run-api) Node event:** the
   `results` argument is the same object resolved by the Module API, so
   `results.runUrl` is available there as well. See the
   [example below](#after-run-example) for a full `after:run` handler that calls
