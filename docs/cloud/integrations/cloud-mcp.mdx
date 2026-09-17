@@ -176,7 +176,7 @@ See [Antigravity's documentation](https://antigravity.google/docs/mcp) for more 
 5. Restart Claude Desktop after saving. You should see a tools indicator in the chat input.
 
 See [Claude's documentation](https://code.claude.com/docs/en/mcp) for more details.
-Note: `mcp-remote` requires Node.js v20+ in the path to run successfully.
+Note: `mcp-remote` requires Node.js v22+ in the path to run successfully.
 
 </AccordionBlock>
 
@@ -392,26 +392,31 @@ Each time the Cloud MCP connection is established, any new tools become immediat
 
 Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These are only available if your organization has subscriptions for the plans and products that would provide the underlying data.
 
-| Tool                                      | Capability                                                                                                                                                                                         | Best Use Case                                                           |
-| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `cypress_get_projects`                    | Lists all projects in your Org.                                                                                                                                                                    | Helping the agent find the correct `projectId` for subsequent queries.  |
-| `cypress_get_runs`                        | Returns run summaries for a project, run URL, or git branch. Summaries include project name, run number, status, run URL, tags, and test status counts.                                            | "Check the status of the last CI run on main"                           |
-| `cypress_get_failed_tests`                | Retrieves attempt details: test name, spec, attempt error and stack trace, and a Test Replay link for quick debugging. Does not return test artifacts.                                             | "Analyze why the checkout test failed in the latest run."               |
-| `cypress_get_flaky_tests`                 | Identifies the flaky tests in a run.                                                                                                                                                               | "Are these failures regressions or known flakiness?"                    |
-| `cypress_get_accessibility_report`        | Returns a high-level accessibility report for a run: violation counts by severity, failing rules with element counts, and the top 5 views sorted by failure count.                                 | "Summarize accessibility violations for the latest run on this branch." |
-| `cypress_get_accessibility_views`         | Returns paginated views from an accessibility report, sorted by number of failing rules. Use to browse all views beyond the top 5 in the report summary.                                           | "Which pages have the most accessibility failures in this run?"         |
-| `cypress_get_accessibility_rule_failures` | Returns paginated failing DOM elements for a specific accessibility rule, with CSS selector, view, and failure message. Optionally scope to a specific view.                                       | "Show me all color-contrast failures on the checkout page."             |
-| `cypress_get_ui_coverage_report`          | Returns a high-level UI Coverage report for a run: overall coverage score, tested and untested element and link counts, and the top 5 riskiest views sorted by most untested interactive elements. | "Summarize UI Coverage for the latest run on this branch."              |
-| `cypress_get_ui_coverage_views`           | Returns paginated views from a UI Coverage report, sorted by most untested elements and links. Use to browse all views beyond the top 5 in the report summary.                                     | "Which pages have the most untested elements in this run?"              |
-| `cypress_get_ui_coverage_elements`        | Returns paginated interactive elements for a run. Filter by tested or untested, and optionally scope to a specific view by name.                                                                   | "Show me the untested elements on the checkout page in this run."       |
-| `submit_mcp_feedback`                     | Shares feedback with Cypress directly from your agentic environment.                                                                                                                               | "Report a bug or request a new MCP feature."                            |
+| Tool                                      | Capability                                                                                                                                                                                                        | Example usage                                                           |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `cypress_get_projects`                    | Lists all projects in your Org.                                                                                                                                                                                   | Helping the agent find the correct `projectId` for subsequent queries.  |
+| `cypress_get_runs`                        | Returns run summaries for a project, run URL, or git branch, and can filter by run status. Summaries include run number, status, run URL, tags, test status counts, the commit author, duration, and CI build ID. | "Check the status of the last CI run on main"                           |
+| `cypress_get_specs`                       | Returns per-spec results for a run, filterable by status, including each spec's duration, group, and test counts.                                                                                                 | "Find my ten slowest specs and tell me which ones to split."            |
+| `cypress_get_tests`                       | Returns per-test results for a run at any status, including skipped and pending, with per-attempt durations and a Test Replay link. Filter by test or spec status.                                                | "List every skipped and pending test in this run, grouped by spec."     |
+| `cypress_get_failed_tests`                | Retrieves attempt details, like the error, stack trace, per-attempt duration, and a Test Replay link for debugging. Does not return test artifacts.                                                               | "Analyze why the checkout test failed in the latest run."               |
+| `cypress_get_flaky_tests`                 | Identifies the flaky tests in a run, with per-attempt durations.                                                                                                                                                  | "Are these failures regressions or known flakiness?"                    |
+| `cypress_get_accessibility_report`        | Returns a high-level accessibility report for a run: violation counts by severity, failing rules with element counts, and the top 5 views sorted by failure count.                                                | "Summarize accessibility violations for the latest run on this branch." |
+| `cypress_get_accessibility_views`         | Returns paginated views from an accessibility report, sorted by number of failing rules.                                                                                                                          | "Which pages have the most accessibility failures in this run?"         |
+| `cypress_get_accessibility_rule_failures` | Returns paginated failing DOM elements for a specific accessibility rule, with CSS selector, view, and failure message. Optionally scope to a specific view.                                                      | "Show me all color-contrast failures on the checkout page."             |
+| `cypress_get_ui_coverage_report`          | Returns a high-level UI Coverage report for a run: overall coverage score, tested and untested element and link counts, and the top 5 riskiest views sorted by most untested interactive elements.                | "Summarize UI Coverage for the latest run on this branch."              |
+| `cypress_get_ui_coverage_views`           | Returns paginated views from a UI Coverage report, sorted by most untested elements and links.                                                                                                                    | "Which pages have the most untested elements in this run?"              |
+| `cypress_get_ui_coverage_elements`        | Returns paginated interactive elements for a run. Filter by tested or untested, and optionally scope to a specific view by name.                                                                                  | "Show me the untested elements on the checkout page in this run."       |
+| `submit_mcp_feedback`                     | Shares feedback with Cypress directly from your agentic environment.                                                                                                                                              | "Report a bug or request a new MCP feature."                            |
+
+By design, these tools return compact responses to keep token usage and context costs low so just the essentials for the question at hand. When your prompt calls for more, the agent pulls the additional detail it needs, so you get depth on demand rather than paying for it on every call.
 
 ## Writing effective prompts
 
-To get the most out of Cloud MCP, follow these three principles:
+To get the most out of Cloud MCP, follow these four principles:
 
 - **Trigger Explicitly:** Use the phrase "Cypress Cloud" to ensure the agent looks for the correct MCP tools.
 - **Provide Context:** Mention "this branch," "this commit," or paste a Run URL directly.
+- **Scope the Ask:** Ask for only what you need — a run status, a branch, a specific run. Narrower prompts return smaller responses and keep the agent's context free for the actual debugging.
 - **Define the Workflow:** Don't just ask what failed; ask the agent to fix it.
 
 ## Example Prompts
@@ -447,6 +452,36 @@ To get the most out of Cloud MCP, follow these three principles:
 >
 
 ### The Flake Audit
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Release Report"
+  subtext="Tie a run back to the change and the person behind it, down to the failing tests."
+  prompt={`For the latest run on main in Cypress Cloud, give me a release report: who authored the commit, what the run status was, which specs ran, and which tests were skipped.`}
+>
+
+### The Release Report
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Suite Time Audit"
+  subtext="Find where your suite time goes, from run to spec to individual test."
+  prompt={`For run [Run URL] in Cypress Cloud, pull spec durations and tell me which specs are the slowest. Then break the slowest one down by test so I know whether to split it.`}
+>
+
+### The Suite Time Audit
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="The Skipped Test Audit"
+  subtext="Catch coverage erosion by listing what a run has stopped testing."
+  prompt={`List every skipped and pending test in run [Run URL] in Cypress Cloud, grouped by spec.`}
+>
+
+### The Skipped Test Audit
 
 </CopyPrompt>
 
