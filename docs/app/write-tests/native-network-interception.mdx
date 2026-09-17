@@ -404,6 +404,32 @@ modifications do, because the browser only ever sees the response Cypress return
 Assertions on `request.headers` after `cy.wait()` and the Cypress command log report the
 modified request on both paths.
 
+## TLS certificates and caching
+
+Cypress launches every Chromium-based browser with the `--ignore-certificate-errors` flag so that origins with self-signed or private-CA certificates load without manual certificate prompts.
+
+However, Chromium's disk cache intentionally skips storing responses from connections whose certificate errors were merely ignored. For an HTTPS application under test using a self-signed or private-CA certificate, the browser disk cache remained empty, causing asset-heavy test suites to re-download every static asset on each `cy.visit`.
+
+Starting in Cypress 16.1.0, you can declare your server's certificates with the [`trustedCertificates`](/app/references/configuration#trustedCertificates) configuration option:
+
+:::cypress-config-example
+
+```ts
+{
+  trustedCertificates: [
+    { filePath: 'certs/dev-server.crt' },
+  ],
+}
+```
+
+:::
+
+When certificates are declared in `trustedCertificates`, Cypress adds their SubjectPublicKeyInfo (SPKI) fingerprints to `--ignore-certificate-errors-spki-list`, which it passes only on the native browser network path. Chromium honors this fingerprint list over the blanket ignore flag and treats connections to matching origins as trusted. Static assets are then cached to disk across navigations as they are in production.
+
+Chromium matches a fingerprint against any certificate in the chain the server presents during the TLS handshake. If your server presents an intermediate or CA certificate in its chain, declaring either that CA or the leaf certificate works. If your server presents only the leaf certificate without a chain, you must declare the leaf certificate.
+
+See [`trustedCertificates`](/app/references/configuration#trustedCertificates) for the full configuration reference.
+
 ## Writing tests that pass in every browser
 
 Assertions that describe your application rather than the transport pass in every browser
@@ -437,6 +463,7 @@ this gate; see [Using the legacy network path](#Using-the-legacy-network-path).
 
 ## See also
 
+- [`trustedCertificates` configuration](/app/references/configuration#trustedCertificates)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`Cypress.browser`](/api/cypress-api/browser)
 - [`Cypress.isBrowser()`](/api/cypress-api/isbrowser)

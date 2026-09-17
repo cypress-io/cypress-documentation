@@ -149,9 +149,9 @@
     },
     "cypress-cli-select": {
       "npm": "cypress-cli-select",
-      "version": "2.0.8",
-      "lastPublished": "2026-08-22T03:02:32.338Z",
-      "cypressVersion": "^15.21.0"
+      "version": "2.1.0",
+      "lastPublished": "2026-09-13T02:20:28.222Z",
+      "cypressVersion": "^15.21.1"
     },
     "cypress-conditional-tags": {
       "npm": "cypress-conditional-tags",
@@ -167,8 +167,8 @@
     },
     "cypress-fail-fast": {
       "npm": "cypress-fail-fast",
-      "version": "8.1.0",
-      "lastPublished": "2026-03-23T13:43:52.440Z",
+      "version": "8.2.0",
+      "lastPublished": "2026-09-11T08:22:17.535Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-fail-on-console-error": {
@@ -185,15 +185,15 @@
     },
     "cypress-plugin-grep-boxes": {
       "npm": "cypress-plugin-grep-boxes",
-      "version": "4.0.1",
-      "lastPublished": "2026-08-22T02:31:17.267Z",
-      "cypressVersion": "^15.21.0"
+      "version": "4.1.0",
+      "lastPublished": "2026-09-13T02:38:38.621Z",
+      "cypressVersion": "^15.21.1"
     },
     "cypress-plugin-last-failed": {
       "npm": "cypress-plugin-last-failed",
-      "version": "4.0.0",
-      "lastPublished": "2026-08-22T02:52:11.945Z",
-      "cypressVersion": "^15.21.0"
+      "version": "4.1.0",
+      "lastPublished": "2026-09-13T02:57:31.479Z",
+      "cypressVersion": "^15.21.1"
     },
     "cypress-each": {
       "npm": "cypress-each",
@@ -412,8 +412,8 @@
     },
     "allure-cypress": {
       "npm": "allure-cypress",
-      "version": "3.12.1",
-      "lastPublished": "2026-09-09T12:44:00.941Z",
+      "version": "3.12.2",
+      "lastPublished": "2026-09-16T11:35:50.248Z",
       "cypressVersion": ">=12.17.4"
     },
     "cypress-failed-log": {
@@ -575,9 +575,9 @@
     },
     "cypress-real-events": {
       "npm": "cypress-real-events",
-      "version": "1.15.0",
-      "lastPublished": "2025-09-05T11:48:36.585Z",
-      "cypressVersion": "^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x || ^15.x"
+      "version": "1.15.1",
+      "lastPublished": "2026-09-12T22:06:26.248Z",
+      "cypressVersion": "^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x || ^14.x || ^15.x || ^16.x"
     },
     "cypress-real-dnd": {
       "npm": "cypress-real-dnd",
