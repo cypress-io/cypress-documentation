@@ -1,21 +1,21 @@
 ---
 title: Automate on run completion with webhooks
 description: Worked examples for turning the Cypress Cloud run.completed webhook into real outcomes with no-code tools, including a zero-to-one walkthrough of a custom Slack message with pass and fail formatting.
-sidebar_label: Webhook Use Cases
+sidebar_label: Build Custom Integrations with Webhooks
 sidebar_position: 20
 ---
 
 <ProductHeading product="cloud" />
 
-# Automate on run completion with webhooks
+# Build custom integrations with webhooks
 
 When a Cypress Cloud run finishes, the
-[`run.completed` webhook](/cloud/integrations/webhooks) delivers a JSON payload
+`run.completed` webhook delivers a JSON payload
 describing the run. This guide shows how to turn that single event into real
 outcomes, such as a message in a channel, a tracking ticket, a deployment, or a
 page to an on-call engineers.
 
-The reference documentation covers the full event, payload, headers, security,
+The [reference documentation](/cloud/integrations/webhooks) covers the full event, payload, headers, security,
 and retry behavior. This guide is the use-case companion: worked examples first,
 then a complete zero-to-one walkthrough of a **custom Slack message** with
 pass and fail formatting.
