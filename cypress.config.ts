@@ -83,8 +83,7 @@ export default defineConfig({
       config.expose = config.expose || {}
       config.expose.URLs = URLs
 
-      // `--expose limitPerSection=N` is a public spot-check knob, so it travels
-      // on `expose` rather than `env`. Normalize it to a number (0 = no limit).
+      // Normalize it to a number (0 = no limit).
       config.expose.limitPerSection = Number(config.expose.limitPerSection) || 0
 
       return config
