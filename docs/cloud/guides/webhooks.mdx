@@ -172,6 +172,25 @@ the run in Cypress Cloud.
 When a run completes, Slack replaces each variable with the value from the
 payload.
 
+The final message looks like this:
+
+<DocsImage
+  src="/img/cloud/guides/webhooks/slack-run-completed-message.png"
+  alt="Slack workflow message for a failed Cypress Cloud run, with status, failure count, and links to the run"
+  title="Custom run completion message"
+  width={800}
+/>
+
+:::tip
+
+**Tip**: Slack workflows give you a huge amount of flexibility in how to set your team up for success, without any custom code.
+
+In the screenshot above, the "Compare to last run", "See failures", and "See errors" buttons are all deep links to Cypress Cloud pages for that specific run, built using the branch and project variables from the webhook payload. This use Slack's **Interactive Buttons** to drive next actions and assign a custom URL.
+
+The Create Issue button uses Slack's **built-in Jira integration** to start a ticket based on that run, but you could use any other next step (for example, PagerDuty) as well.
+
+:::
+
 ### Step 3: Format passing and failing runs differently
 
 The `status` field tells you how the run ended. Use it to make a failing run
