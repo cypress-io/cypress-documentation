@@ -179,9 +179,9 @@ The final message looks like this:
 :::tip
 
 In the screenshot, the **Compare to last run**, **See failures**, and **See
-errors** buttons link to Cypress Cloud pages for that run. Add Slack
-**Interactive Buttons** to the workflow, then build each URL with the branch and
-project variables from the webhook payload.
+errors** buttons link to Cypress Cloud pages for that run. To something like this, add Slack
+**Interactive Buttons** to the workflow, where you can set a URL that includes branch and
+project variables from the webhook payload, to set right to the page you would use the most.
 
 The **Create Issue** button uses Slack's built-in Jira integration to start a
 ticket for the run. You can replace it with another workflow step, such as
@@ -203,6 +203,8 @@ stand out.
   ```text
   ❌ FAILED — Cypress run #{runNumber} for {projectName} on {commitBranch}
   {totalFailed} of {totalTests} tests failed. Investigate: {runUrl}
+
+  ```
 
 - On any plan, skip the branch and put the status directly in the text so the
   outcome is always spelled out in words, never by color alone:
