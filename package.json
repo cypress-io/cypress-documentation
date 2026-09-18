@@ -67,7 +67,7 @@
     "@prettier/sync": "^0.6.1",
     "@types/node": "^25.9.4",
     "@types/turndown": "^5.0.6",
-    "cypress": "^15.18.0",
+    "cypress": "^16.1.0",
     "got": "^15.1.0",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
