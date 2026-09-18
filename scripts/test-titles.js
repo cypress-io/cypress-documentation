@@ -64,7 +64,7 @@ async function main() {
     '--config',
     `baseUrl=${BASE_URL}`,
   ]
-  if (process.env.LIMIT) cypressArgs.push('--env', `limitPerSection=${process.env.LIMIT}`)
+  if (process.env.LIMIT) cypressArgs.push('--expose', `limitPerSection=${process.env.LIMIT}`)
 
   const exitCode = await new Promise((resolve) => {
     const run = spawn('npx', cypressArgs, { cwd: ROOT, stdio: 'inherit', shell: isWin })
