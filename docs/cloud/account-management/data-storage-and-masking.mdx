@@ -107,6 +107,39 @@ You can turn redaction off per project.
   width={600}
 />
 
+#### Sensitive form input masking
+
+By default, Cypress replaces sensitive form input values with asterisks before
+creating Test Replay artifacts. Like network data redaction, masking runs in the
+Cypress App on your machine before Cypress uploads any data to Cypress Cloud.
+
+##### What gets masked in Test Replay
+ 
+Cypress masks values entered into these fields:
+
+- Password fields (`input[type="password"]`)
+- Credit card and payment fields that use standard `autocomplete` attributes
+
+Masked values appear as asterisks in the captured DOM. You can inspect the
+form's structure and behavior without storing the entered values. Cypress
+captures the rest of the page as usual.
+
+##### Update what is masked in Test Replay
+
+Organization Owners and Admins can turn off masking for individual projects:
+
+1. Open your project settings in Cypress Cloud.
+2. Go to the **Test Replay** section.
+3. Turn off **Mask sensitive input values**.
+
+Users without the Owner or Admin role see a locked setting and cannot change it.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-sensitive-input-masking-toggle-cloud.png"
+  alt="Mask sensitive input values setting turned on and locked in the Test Replay project settings"
+  width={600}
+/>
+
 #### Disable Test Replay
 
 You can disable capturing data in Test Replay per project by following [this guide](/cloud/features/test-replay#Opt-out-of-Test-Replay). This means Test Replay will not be available for viewing or debugging in the project. This will prevent Cypress Cloud from capturing the following data:
