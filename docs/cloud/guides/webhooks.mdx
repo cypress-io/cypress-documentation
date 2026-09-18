@@ -1,6 +1,6 @@
 ---
-title: Automate on run completion with webhooks
-description: Worked examples for turning the Cypress Cloud run.completed webhook into real outcomes with no-code tools, including a zero-to-one walkthrough of a custom Slack message with pass and fail formatting.
+title: Build custom integrations with Cypress webhooks
+description: Use the Cypress Cloud run.completed webhook with Slack Workflow Builder and other tools to send messages, create issues, trigger deploys, and more.
 sidebar_label: Build Custom Integrations with Webhooks
 sidebar_position: 20
 ---
@@ -11,55 +11,52 @@ sidebar_position: 20
 
 When a Cypress Cloud run finishes, the
 `run.completed` webhook delivers a JSON payload
-describing the run. This guide shows how to use that event to drive a specific process for you or your team, such as a message in a channel, a tracking ticket, a deployment, or a page to an on-call engineers.
+describing the run. You can use that event to send a message, create a tracking
+ticket, trigger a deployment, or page an on-call engineer.
 
-The [Cloud Webhook documentation](/cloud/integrations/webhooks) covers the full event, payload, headers, security, and retry behavior. This guide is the use-case companion: worked examples first, then a complete zero-to-one walkthrough of a **custom Slack message** with pass and fail formatting.
-
-:::info
-
-**You do not need to run a server.** Every example here points the webhook's
-**Payload URL** at a no-code or low-code tool that receives the delivery for you.
-For the tradeoffs, including signature verification, see
-[Send to a no-code destination](/cloud/integrations/webhooks#Send-to-a-no-code-destination).
-
-:::
+The [Cloud Webhook documentation](/cloud/integrations/webhooks) explains the
+event, payload, headers, security, and retry behavior. This guide provides
+examples and shows you one deep-dive example: how to create a custom Slack message with different
+formatting for passing and failing runs.
 
 ## What you can build
 
 One event, `run.completed`, can drive many downstream actions. Point the
 **Payload URL** at a tool that accepts an inbound webhook, map the
 [payload fields](/cloud/integrations/webhooks#Payload) you care about, and
-filter in the destination if you only want certain runs. Slack Workflow Builder
-(the walkthrough on this page) works this way. Some destinations go through a
-no-code platform or a short script that receives the Cypress POST and performs
-the next action.
+filter in the destination if you only want certain runs.
+[Slack's built-in Workflow Builder](https://slack.com/help/articles/360053571454) works
+this way. Some destinations use a no-code platform or a short script that
+receives the Cypress POST and performs the next action.
 
-| Outcome                       | How to build it                                                                                                                                                                                                                                                                                                                             | Use cases                                                                                                                                                                                                                            |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Custom Slack or Teams message | Point the Payload URL at a [Slack Workflow Builder](https://slack.com/help/articles/360053571454) webhook ([walkthrough below](#Zero-to-one-a-custom-Slack-message)). [Microsoft Teams Workflows](https://support.microsoft.com/office/browse-and-add-workflows-in-microsoft-teams-4998095c-8b72-4b0e-984c-f2ad39e6ba9a) work the same way. | Failed-run alerts with your own wording, alerts to the commit author, conditional logic or formatting that the built-in [Slack](/cloud/integrations/slack) or [Teams](/cloud/integrations/microsoft-teams) integrations do not offer |
-| Custom GitHub status          | Point the Payload URL at [Zapier](https://zapier.com), [Make](https://www.make.com), or [n8n](https://n8n.io), which forwards `commitSha`, `status`, and `runUrl` to GitHub. See [GitHub status checks](#GitHub-status-checks).                                                                                                             | Required checks with your own rules                                                                                                                                                                                                  |
-| Trigger a deploy              | Point the Payload URL at a CD provider's build hook (Netlify, Vercel, and similar).                                                                                                                                                                                                                                                         | Deploy after a passing run                                                                                                                                                                                                           |
-| Create a Jira issue           | [Jira automation](https://support.atlassian.com/cloud-automation/docs/jira-automation-triggers/#Incoming-webhook) receives the delivery on its incoming-webhook trigger and creates an issue.                                                                                                                                               | File a bug when a run fails                                                                                                                                                                                                          |
-| Page an on-call engineer      | [PagerDuty](https://support.pagerduty.com/main/docs/webhooks) receives the event on an integration URL and opens an incident.                                                                                                                                                                                                               | Page when a run fails or times out                                                                                                                                                                                                   |
-| Post to other apps            | [Zapier](https://zapier.com), [Make](https://www.make.com), or [n8n](https://n8n.io) receives the webhook and sends the next action. For Google Chat, an [Apps Script](https://developers.google.com/apps-script/guides/web) web app can post the message.                                                                                  | Discord, Google Chat, a spreadsheet, a warehouse                                                                                                                                                                                     |
+| Outcome                       | How to build it                                                                                                                                                                                                                                                                                                                                          | Use cases                                                                                                                                                                                                                            |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Custom Slack or Teams message | Point the Payload URL at a [Slack Workflow Builder](https://slack.com/help/articles/360053571454) webhook ([walkthrough below](#Create-a-custom-Slack-message-for-a-Cypress-run)). [Microsoft Teams Workflows](https://support.microsoft.com/office/browse-and-add-workflows-in-microsoft-teams-4998095c-8b72-4b0e-984c-f2ad39e6ba9a) work the same way. | Failed-run alerts with your own wording, alerts to the commit author, conditional logic or formatting that the built-in [Slack](/cloud/integrations/slack) or [Teams](/cloud/integrations/microsoft-teams) integrations do not offer |
+| Custom GitHub status          | Point the Payload URL at [Zapier](https://zapier.com), [Make](https://www.make.com), or [n8n](https://n8n.io), which forwards `commitSha`, `status`, and `runUrl` to GitHub. See [GitHub status checks](#GitHub-status-checks).                                                                                                                          | Required checks with your own rules                                                                                                                                                                                                  |
+| Trigger a deploy              | Point the Payload URL at a CD provider's build hook (Netlify, Vercel, and similar).                                                                                                                                                                                                                                                                      | Deploy after a passing run                                                                                                                                                                                                           |
+| Create a Jira issue           | [Jira automation](https://support.atlassian.com/cloud-automation/docs/jira-automation-triggers/#Incoming-webhook) receives the delivery on its incoming-webhook trigger and creates an issue.                                                                                                                                                            | File a bug when a run fails                                                                                                                                                                                                          |
+| Page an on-call engineer      | [PagerDuty](https://support.pagerduty.com/main/docs/webhooks) receives the event on an integration URL and opens an incident.                                                                                                                                                                                                                            | Page when a run fails or times out                                                                                                                                                                                                   |
+| Post to other apps            | [Zapier](https://zapier.com), [Make](https://www.make.com), or [n8n](https://n8n.io) receives the webhook and sends the next action. For Google Chat, an [Apps Script](https://developers.google.com/apps-script/guides/web) web app can post the message.                                                                                               | Discord, Google Chat, a spreadsheet, a warehouse                                                                                                                                                                                     |
 
-### How the examples fit together
+## What you need to set up a Cypress webhook
 
 Each outcome uses the same three moving parts:
 
-1. **A destination URL.** The tool you are integrating with gives you a webhook
-   URL. That URL becomes the **Payload URL** on your Cypress Cloud webhook.
-2. **Field mapping.** The [`run.completed` payload](/cloud/integrations/webhooks#Payload)
-   is a flat JSON object, so fields such as `status`, `projectName`, `runNumber`,
-   `runUrl`, `totalFailed`, and `commitBranch` map directly to variables in your
-   tool.
-3. **A condition (optional).** Most tools let you continue only when a field
-   matches, for example `status` is `failed`, so a ticket or page is created only
-   when it should be.
+1. Get a destination URL from the tool you are integrating with. Use that URL
+   as the **Payload URL** on your Cypress Cloud webhook.
+2. Map fields from the flat
+   [`run.completed` payload](/cloud/integrations/webhooks#Payload) to variables
+   in your tool. These fields can include `status`, `projectName`, `runNumber`,
+   `runUrl`, `totalFailed`, and `commitBranch`.
+3. If needed, add a condition in your tool. For example, check whether `status`
+   is `failed` so the tool creates a ticket or page only for failed runs.
 
-The rest of this guide walks through those three parts in detail for Slack.
+You don't need to run a server for these examples. Each one points the
+**Payload URL** at a no-code or low-code tool that receives the delivery. Review
+[Send to a no-code destination](/cloud/integrations/webhooks#Send-to-a-no-code-destination)
+for details about signature verification and other security considerations.
 
-## Zero to one: a custom Slack message
+## Create a custom Slack message for a Cypress run
 
 Cypress Cloud already has a built-in [Slack integration](/cloud/integrations/slack)
 that posts run results. Reach for a webhook when you want a message Cypress Cloud
@@ -69,13 +66,9 @@ builds one from scratch.
 
 ### What you'll build
 
-A Slack message every time a run completes, posted to a channel or sent to a
-person, that:
-
-- Names the project and links to the run in Cypress Cloud.
-- Shows the test totals, including how many failed.
-- Can format **passing** runs differently from **failing** ones, so a failed
-  run is obvious at a glance.
+This walkthrough posts a Slack message to a channel or person every time a run
+completes. The message names the project, links to the run in Cypress Cloud, and
+shows the test totals. You can also format passing and failing runs differently.
 
 <DocsImage
   src="/img/cloud/guides/webhooks/slack-run-completed-message.png"
@@ -85,20 +78,19 @@ person, that:
 />
 
 You'll use [Slack Workflow Builder](https://slack.com/help/articles/360053571454),
-which can receive a webhook directly and map its JSON into a message, so no
-separate automation account is required. If the
-[Cypress Slack app](/cloud/integrations/slack) is already installed in the
-workspace, linking `runUrl` in the message can unfurl the usual run actions
-(**Compare to last run**, **See failures**, **See errors**, **Create Issue**).
+a tool provided by Slack. It can receive a webhook directly and map its JSON
+into a message, so you don't need a separate automation account. The example
+message also shows optional Slack interactive buttons that link to actions for
+the Cypress Cloud run.
 
 ### Prerequisites
 
-- **Permission to manage webhooks** for the Cypress Cloud project. You must be an
-  **Owner**, **Admin**, or **Team Admin**, or you can request one to add the necessary setting for you.
-- **A Slack plan that includes Workflow Builder**, and permission to create and
+- Permission to manage webhooks for the Cypress Cloud project. You must be an
+  Owner, Admin, or Team Admin, or you can ask a user with one of those roles to
+  add the webhook.
+- A Slack plan that includes Workflow Builder, and permission to create and
   publish a workflow in your workspace. Conditional (if/else) steps require a
   paid Slack plan; a fallback that works on any plan is described below.
-- **The channel or person** you want the message sent to.
 
 ### Step 1: Create a webhook-triggered Slack workflow
 
@@ -132,7 +124,10 @@ workspace, linking `runUrl` in the message can unfurl the usual run actions
 
 :::note
 
-**Note**: Array fields such as `tags` and `groups` don't map cleanly to a Workflow Builder variable. If you need these in Slack, you may want to transform the response in another service, or contact us about updating the payload.
+Array fields such as `tags` and `groups` don't map to a Workflow Builder
+variable. If you need these fields in Slack, transform the response in another
+service. You can also use **Submit feedback** in Cypress Cloud or contact your
+Cypress representative to request support for these fields.
 
 :::
 
@@ -153,7 +148,7 @@ Inside that branch, add a **Send a message to a channel** or **Send a message to
 in the fields you mapped in Step 1. For example:
 
 ```text
-Hey! A {projectName} test run that just finished:
+Hey! A {projectName} test run just finished:
 
 - Status: {status}
 - Failures: {totalFailed} test(s) failed out of {totalTests} tests
@@ -183,11 +178,14 @@ The final message looks like this:
 
 :::tip
 
-**Tip**: Slack workflows give you a huge amount of flexibility in how to set your team up for success, without any custom code.
+In the screenshot, the **Compare to last run**, **See failures**, and **See
+errors** buttons link to Cypress Cloud pages for that run. Add Slack
+**Interactive Buttons** to the workflow, then build each URL with the branch and
+project variables from the webhook payload.
 
-In the screenshot above, the "Compare to last run", "See failures", and "See errors" buttons are all deep links to Cypress Cloud pages for that specific run, built using the branch and project variables from the webhook payload. This use Slack's **Interactive Buttons** to drive next actions and assign a custom URL.
-
-The Create Issue button uses Slack's **built-in Jira integration** to start a ticket based on that run, but you could use any other next step (for example, PagerDuty) as well.
+The **Create Issue** button uses Slack's built-in Jira integration to start a
+ticket for the run. You can replace it with another workflow step, such as
+PagerDuty.
 
 :::
 
@@ -196,22 +194,22 @@ The Create Issue button uses Slack's **built-in Jira integration** to start a ti
 The `status` field tells you how the run ended. Use it to make a failing run
 stand out.
 
-- **On a paid Slack plan**, add a **Branch workflow** step (If/else) before the
+- On a paid Slack plan, add a **Branch workflow** step (If/else) before the
   message step. Set the condition to check whether the `status` variable equals
   `passed`. In the passing path, send a success-styled message; in the other
   path, send a failure-styled one, for example leading with a clear label and the
   failure count:
 
   ```text
-  FAILED — Cypress run #{runNumber} for {projectName} on {commitBranch}
+  ❌ FAILED: Cypress run #{runNumber} for {projectName} on {commitBranch}
   {totalFailed} of {totalTests} tests failed. Investigate: {runUrl}
   ```
 
-- **On any plan**, skip the branch and put the status directly in the text so the
+- On any plan, skip the branch and put the status directly in the text so the
   outcome is always spelled out in words, never by color alone:
 
   ```text
-  [{status}] Cypress run #{runNumber} — {projectName} ({commitBranch})
+  [{status}] Cypress run #{runNumber}: {projectName} ({commitBranch})
   {totalFailed}/{totalTests} failed · {runUrl}
   ```
 
@@ -220,7 +218,7 @@ Because `status` can be `passed`, `failed`, `errored`, `timedOut`, or
 for `failed`. That way an `errored` or `timedOut` run still gets your failure
 formatting.
 
-**Publish the workflow** when the message looks right.
+Click **Publish** when the message looks right.
 
 ### Step 4: Point the Cypress Cloud webhook at Slack
 
@@ -232,7 +230,7 @@ formatting.
 
 :::caution
 
-**Security note**: You cannot use a
+You cannot use a
 [signing secret](/cloud/integrations/webhooks#Verify-webhook-signatures) to
 authenticate the request here. Treat the Slack webhook URL itself as a secret: don't
 share it or commit it, since anyone who has it can post to your channel. For the
@@ -248,12 +246,14 @@ Use **Send test** on the webhook to confirm Cypress Cloud can reach Slack. See
 
 :::note
 
-**The test event is a `webhook.ping`, not a `run.completed`.** Its body is
-`{ "message": "Webhook ping" }`, so it does **not** contain `status`,
+The test event is a `webhook.ping`, not a `run.completed`. Its body is
+`{ "message": "Webhook ping" }`, so it doesn't contain `status`,
 `runNumber`, or the other run fields your message maps. Send test confirms the
 connection and that the workflow fires; it will not render your mapped values.
 
-To confirm the field mapping end to end, **record a Cypress run** so a fresh `run.completed` fires, if your project is not recording runs often enough for you to quickly see activity. You can trigger this run locally with a single test to avoid waiting on your full pipeline.
+To confirm the field mapping end to end, record a Cypress run so a fresh
+`run.completed` fires. You can trigger this run locally with a single test if
+your project doesn't record runs often.
 
 :::
 
@@ -284,31 +284,29 @@ run, use the [Cloud CLI](/cloud/integrations/cloud-cli) or
 
 ## Other options
 
-- **Send to Microsoft Teams instead of Slack.** Microsoft Teams offers
+- To send the message to Microsoft Teams instead of Slack, use
   [Workflows](https://support.microsoft.com/office/browse-and-add-workflows-in-microsoft-teams-4998095c-8b72-4b0e-984c-f2ad39e6ba9a)
-  with an incoming-webhook trigger that works the same way: create the flow, map
-  the payload fields, and use its URL as the Payload URL. Cypress Cloud also has a
-  built-in [Microsoft Teams integration](/cloud/integrations/microsoft-teams) for
-  standard notifications.
-- **Post to Google Chat.** Deploy an
+  with an incoming-webhook trigger. Create the flow, map the payload fields, and
+  use its URL as the Payload URL. Cypress Cloud also has a built-in
+  [Microsoft Teams integration](/cloud/integrations/microsoft-teams) for standard
+  notifications.
+- To post to Google Chat, deploy an
   [Apps Script web app](https://developers.google.com/apps-script/guides/web)
   whose `doPost` reads the Cypress JSON and POSTs a message to a Chat
   [incoming webhook](https://developers.google.com/workspace/chat/quickstart/webhooks).
-- **Filter what you act on.** Since `run.completed` fires for every terminal
-  state, use your tool's filter step to continue only when `status` is not
-  `passed`, or only when `totalFailed` is greater than zero, to cut noise.
-- **Combine outcomes.** A single delivery can fan out: post to a channel, open a
-  Jira ticket, and append a row to a reporting sheet from the same webhook, using
-  a platform like Zapier, Make or n8n.
+- To filter runs, use your tool's filter step to continue only when `status`
+  isn't `passed`, or only when `totalFailed` is greater than zero.
+- A no-code platform such as Zapier, Make, or n8n can use one delivery to post to
+  a channel, open a Jira ticket, and append a row to a reporting sheet.
 
 ## See also
 
-- [Webhooks Integration](/cloud/integrations/webhooks) — the full event, payload, headers, security, and retry reference
-- [`run.completed` payload](/cloud/integrations/webhooks#Payload) — every field, its type, and meaning
-- [Verify webhook signatures](/cloud/integrations/webhooks#Verify-webhook-signatures) — HMAC verification for destinations that support it
-- [Slack integration](/cloud/integrations/slack) — built-in Slack notifications for run results
-- [GitHub integration](/cloud/integrations/github#Status-checks) — built-in commit status checks and pull request comments
-- [Cloud CLI](/cloud/integrations/cloud-cli) — inspect a specific run from the terminal
-- [Cloud MCP](/cloud/integrations/cloud-mcp) — inspect a specific run from an AI client
-- [Microsoft Teams integration](/cloud/integrations/microsoft-teams) — built-in Teams notifications
-- [Jira integration](/cloud/integrations/jira) — connect Cypress Cloud runs to Jira
+- [Webhooks Integration](/cloud/integrations/webhooks) - the full event, payload, headers, security, and retry reference
+- [`run.completed` payload](/cloud/integrations/webhooks#Payload) - every field, its type, and meaning
+- [Verify webhook signatures](/cloud/integrations/webhooks#Verify-webhook-signatures) - HMAC verification for destinations that support it
+- [Slack integration](/cloud/integrations/slack) - built-in Slack notifications for run results
+- [GitHub integration](/cloud/integrations/github#Status-checks) - built-in commit status checks and pull request comments
+- [Cloud CLI](/cloud/integrations/cloud-cli) - inspect a specific run from the terminal
+- [Cloud MCP](/cloud/integrations/cloud-mcp) - inspect a specific run from an AI client
+- [Microsoft Teams integration](/cloud/integrations/microsoft-teams) - built-in Teams notifications
+- [Jira integration](/cloud/integrations/jira) - connect Cypress Cloud runs to Jira
