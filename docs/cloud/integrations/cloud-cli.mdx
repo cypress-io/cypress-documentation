@@ -206,27 +206,27 @@ To revoke a personal access token, find it under **Personal access token** and s
 
 Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`, `test`, `replay`, `cache`), each with subcommands such as `list` and `get`. For example, `cy-cloud run list` lists runs. Each data command returns JSON on standard output.
 
-| Command                                                 | What it does                                              |
-| ------------------------------------------------------- | --------------------------------------------------------- |
-| [`cy-cloud org list`](#cy-cloud-org-list)               | List the organizations you belong to.                     |
-| [`cy-cloud project list`](#cy-cloud-project-list)       | List the projects you can access.                         |
-| [`cy-cloud project get`](#cy-cloud-project-get)         | Get details for a specific project.                       |
-| [`cy-cloud run list`](#cy-cloud-run-list)               | List runs for a project.                                  |
-| [`cy-cloud run get`](#cy-cloud-run-get)                 | Get details for a specific run.                           |
-| [`cy-cloud spec list`](#cy-cloud-spec-list)             | List specs for a run, or by spec ID.                      |
-| [`cy-cloud spec get`](#cy-cloud-spec-get)               | Get details for a specific spec.                          |
-| [`cy-cloud test list`](#cy-cloud-test-list)             | List tests for a run, spec, or test ID.                   |
-| [`cy-cloud test get`](#cy-cloud-test-get)               | Get details for a specific test.                          |
-| [`cy-cloud replay info`](#cy-cloud-replay-info)         | Summarize a test's replay event counts.                   |
-| [`cy-cloud replay timeline`](#cy-cloud-replay-timeline) | Query a test's replay timeline of events.                 |
-| [`cy-cloud replay view`](#cy-cloud-replay-view)         | Open a test replay in the browser to inspect your app.    |
-| [`cy-cloud status`](#cy-cloud-status)                   | Print your authentication state and Cloud status.         |
-| [`cy-cloud version`](#cy-cloud-version)                 | Print the CLI version and whether an upgrade is required. |
-| [`cy-cloud login`](#cy-cloud-login)                     | Sign in to Cypress Cloud.                                 |
-| [`cy-cloud logout`](#cy-cloud-logout)                   | Clear stored credentials.                                 |
-| [`cy-cloud cache info`](#cy-cloud-cache-info)           | Print the local Test Replay cache location and size.      |
-| [`cy-cloud cache clear`](#cy-cloud-cache-clear)         | Remove everything from the cache.                         |
-| [`cy-cloud cache cleanup`](#cy-cloud-cache-cleanup)     | Delete expired and oversized cache entries.               |
+| Command                                                 | What it does                                                                         |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [`cy-cloud org list`](#cy-cloud-org-list)               | List the organizations you belong to.                                                |
+| [`cy-cloud project list`](#cy-cloud-project-list)       | List the projects you can access.                                                    |
+| [`cy-cloud project get`](#cy-cloud-project-get)         | Get details for a specific project.                                                  |
+| [`cy-cloud run list`](#cy-cloud-run-list)               | List runs for a project.                                                             |
+| [`cy-cloud run get`](#cy-cloud-run-get)                 | Get details for a specific run.                                                      |
+| [`cy-cloud spec list`](#cy-cloud-spec-list)             | List specs for a run, or by spec ID.                                                 |
+| [`cy-cloud spec get`](#cy-cloud-spec-get)               | Get details for a specific spec.                                                     |
+| [`cy-cloud test list`](#cy-cloud-test-list)             | List tests for a run, spec, or test ID.                                              |
+| [`cy-cloud test get`](#cy-cloud-test-get)               | Get details for a specific test.                                                     |
+| [`cy-cloud replay info`](#cy-cloud-replay-info)         | Summarize a test's replay event counts.                                              |
+| [`cy-cloud replay timeline`](#cy-cloud-replay-timeline) | Query a test's replay timeline of events.                                            |
+| [`cy-cloud replay view`](#cy-cloud-replay-view)         | Open a test replay in the browser to inspect your app. Requires `cy-cloud` `0.4.0`+. |
+| [`cy-cloud status`](#cy-cloud-status)                   | Print your authentication state and Cloud status.                                    |
+| [`cy-cloud version`](#cy-cloud-version)                 | Print the CLI version and whether an upgrade is required.                            |
+| [`cy-cloud login`](#cy-cloud-login)                     | Sign in to Cypress Cloud.                                                            |
+| [`cy-cloud logout`](#cy-cloud-logout)                   | Clear stored credentials.                                                            |
+| [`cy-cloud cache info`](#cy-cloud-cache-info)           | Print the local Test Replay cache location and size.                                 |
+| [`cy-cloud cache clear`](#cy-cloud-cache-clear)         | Remove everything from the cache.                                                    |
+| [`cy-cloud cache cleanup`](#cy-cloud-cache-cleanup)     | Delete expired and oversized cache entries.                                          |
 
 ### Pagination and filtering
 
@@ -651,6 +651,12 @@ If a test's replay data is not available (for example, it is still processing or
 ### cy-cloud replay view
 
 Launch Test Replay in a browser and inspect your application throughout the test lifecycle. Query for specific elements, accessibility tree state, and generate screenshots.
+
+:::note
+
+`replay view` requires `cy-cloud` version `0.4.0` or later. Check your version with [`cy-cloud version`](#cy-cloud-version) and [upgrade](#Keep-the-CLI-updated) if you are on an older release.
+
+:::
 
 :::note
 
