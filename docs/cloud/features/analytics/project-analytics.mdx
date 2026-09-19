@@ -55,7 +55,7 @@ and errored tests, respective of the filters selected.
 The results may be downloaded as a comma-separated values (CSV) file for further
 analysis.
 
-This can be done via the download icon to the right of the filters.
+This can be done via the **Download** button in the page header.
 
 ### Key Performance Indicators
 
@@ -112,7 +112,7 @@ The average run duration over time is displayed respective of the filters
 selected.
 
 The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+analysis. This can be done via the **Download** button in the page header.
 
 ### Key Performance Indicators
 
@@ -169,7 +169,7 @@ The average test suite size over time is displayed respective of the filters
 selected.
 
 The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+analysis. This can be done via the **Download** button in the page header.
 
 ### Key Performance Indicators
 
@@ -238,7 +238,7 @@ selected.
 The results may be downloaded as a comma-separated values (CSV) file for further
 analysis.
 
-This can be done via the download icon to the right of the filters.
+This can be done via the **Download** button in the page header.
 
 ### Key Performance Indicators
 
@@ -307,7 +307,7 @@ Results may also be filtered by:
 The slowest tests are displayed by duration of time.
 
 The results may be downloaded as a comma-separated values (CSV) file for further
-analysis. This can be done via the download icon to the right of the filters.
+analysis. This can be done via the **Download** button in the page header.
 
 ### Key Performance Indicators
 
@@ -331,9 +331,42 @@ A table of results grouped by median duration and total runs.
 ## Most common errors
 
 This report shows the impact of the most common types of errors across the test
-suite.
+suite, along with when each error was first and last seen.
 
 <DocsImage
   src="/img/cloud/features/analytics/dashboard-analytics-common-errors.png"
-  alt="Cloud Analytics Slowest Tests Table Screenshot"
+  alt="Cloud Analytics Most Common Errors report showing a breakdown of error classes above a table of errors with their first seen and last seen times and impacted test counts"
 />
+
+### Results
+
+Each row in the table shows the error name and message, when the error was
+"First seen" and "Last seen" within the selected time range, and the number of
+impacted tests. Both times are displayed relative to now, for example "3 days
+ago". Hover over a relative time, or move keyboard focus to it, to see the
+exact timestamp in UTC.
+
+Use the "Sort by" control in the table header to change the order of the
+results:
+
+- **Most impacted** (the default) lists errors by the number of tests they
+  impacted, from highest to lowest.
+- **Most recent** lists errors by when they were last seen, newest first. Errors
+  without a recorded time are listed last.
+
+The selected sort is kept in the page URL along with your other filters, so
+reloading the page or sharing the link preserves the order you chose. Selecting
+an error class in the breakdown above the table filters the results and keeps
+the sort you have applied.
+
+The results may be downloaded as a comma-separated values (CSV) file for further
+analysis. This can be done via the **Download** button in the page header. The
+file contains `error_name`, `error_message`, `impacted_tests`, `first_seen`, and
+`last_seen` columns.
+
+### Key Performance Indicators
+
+The main key performance indicators tracked are:
+
+- Impacted tests, the total number of test cases affected by the errors shown
+- Unique errors, the number of distinct errors in the selected time range
