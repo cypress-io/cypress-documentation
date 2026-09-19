@@ -373,6 +373,26 @@ these columns:
 - `last_seen`, when the error was most recently recorded in the selected time
   range
 
+Because every row carries both the impact and the dates, the export answers a
+question the table alone can't: which of these errors are new, and which have
+been failing all along? Attach the file to an AI assistant with the prompt below
+to turn it into a plan.
+
+<CopyPrompt
+  defaultCollapsed
+  title="Triage your most common errors"
+  subtext="Sort a raw export into new regressions, long-standing failures, and errors that have already stopped happening."
+  prompt={`Attached is a CSV export of the most common errors from my Cypress Cloud project analytics. Each row has error_name, error_message, impacted_tests, first_seen, and last_seen.
+
+Group the rows into themes based on what is actually failing, not just the error class, since one root cause often produces several messages. For each theme, tell me:
+
+1. The total number of impacted tests.
+2. Whether it is a new regression (first seen recently), a long-standing failure (first seen early in the range and still occurring), or likely resolved (last seen a while ago).
+3. What to investigate first, and whether the evidence points at the tests or at the application.
+
+Then give me the top three themes to fix in priority order, and explain why each one ranks where it does.`}
+/>
+
 ### Key Performance Indicators
 
 The main key performance indicators tracked are:
