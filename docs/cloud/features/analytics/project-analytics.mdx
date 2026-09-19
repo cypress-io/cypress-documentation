@@ -359,6 +359,13 @@ reloading the page or sharing the link preserves the order you chose. Selecting
 an error class in the breakdown above the table filters the results and keeps
 the sort you have applied.
 
+### Key Performance Indicators
+
+The main key performance indicators tracked are:
+
+- Impacted tests, the total number of test cases affected by the errors shown
+- Unique errors, the number of distinct errors in the selected time range
+
 ### Download most common errors as a CSV
 
 The results may be downloaded as a comma-separated values (CSV) file for further
@@ -373,14 +380,27 @@ these columns:
 - `last_seen`, when the error was most recently recorded in the selected time
   range
 
-Because every row carries both the impact and the dates, the export answers a
-question the table alone can't: which of these errors are new, and which have
-been failing all along? Attach the file to an AI assistant with the prompt below
-to turn it into a plan.
+### Work with AI agents
+
+Deciding what to fix first is the slow part of reading this report, and it is
+work an AI agent is well suited to. There are two ways to hand it the data, and
+they answer different questions:
+
+- **The CSV export** covers the whole project for your selected time range,
+  aggregated by error. Every row carries both the impact and the dates, so an
+  agent can read the file from disk and tell you which errors are new and which
+  have been failing all along. This is the right input for deciding where to
+  start.
+- **[Cypress Cloud MCP](/cloud/integrations/cloud-mcp)** queries a specific run
+  live, returning failing tests with their stack traces and Test Replay links.
+  This is the right follow-up once you know which error you're chasing.
+
+Used together, the export sets your priorities and Cloud MCP supplies the
+evidence for the one you picked.
 
 <CopyPrompt
   defaultCollapsed
-  title="Triage your most common errors"
+  title="Prioritize the export"
   subtext="Sort a raw export into new regressions, long-standing failures, and errors that have already stopped happening."
   prompt={`Attached is a CSV export of the most common errors from my Cypress Cloud project analytics. Each row has error_name, error_message, impacted_tests, first_seen, and last_seen.
 
@@ -391,11 +411,25 @@ Group the rows into themes based on what is actually failing, not just the error
 3. What to investigate first, and whether the evidence points at the tests or at the application.
 
 Then give me the top three themes to fix in priority order, and explain why each one ranks where it does.`}
-/>
 
-### Key Performance Indicators
+>
 
-The main key performance indicators tracked are:
+#### Prioritize the export
 
-- Impacted tests, the total number of test cases affected by the errors shown
-- Unique errors, the number of distinct errors in the selected time range
+</CopyPrompt>
+
+<CopyPrompt
+  defaultCollapsed
+  title="Trace an error to its failing tests"
+  subtext="Turn one prioritized error into stack traces, Test Replay links, and a root cause you can act on."
+  prompt={`Using Cypress Cloud, find the most recent failing run on this branch.
+
+Pull the failing tests whose error matches [paste the error message from the export], and for each one give me the spec, the stack trace, and the Test Replay link.
+
+Then compare those failures against my local code and tell me whether they share a single root cause. If they do, propose a fix and explain which tests it should resolve.`}
+
+>
+
+#### Trace an error to its failing tests
+
+</CopyPrompt>
