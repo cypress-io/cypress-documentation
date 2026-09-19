@@ -359,10 +359,19 @@ reloading the page or sharing the link preserves the order you chose. Selecting
 an error class in the breakdown above the table filters the results and keeps
 the sort you have applied.
 
+### Download most common errors as a CSV
+
 The results may be downloaded as a comma-separated values (CSV) file for further
 analysis. This can be done via the **Download** button in the page header. The
-file contains `error_name`, `error_message`, `impacted_tests`, `first_seen`, and
-`last_seen` columns.
+export reflects the filters you have applied and contains a row per error with
+these columns:
+
+- `error_name`, the error class, such as `AssertionError`
+- `error_message`, the error message recorded with the failure
+- `impacted_tests`, the number of test cases the error affected
+- `first_seen`, when the error was first recorded in the selected time range
+- `last_seen`, when the error was most recently recorded in the selected time
+  range
 
 ### Key Performance Indicators
 
