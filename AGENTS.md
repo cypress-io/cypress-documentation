@@ -5,6 +5,38 @@ Cypress Documentation: a **Docusaurus 3** (TypeScript) docs site. Content is in
 detail behind each rule, read **[`AGENTS_REFERENCE.md`](./AGENTS_REFERENCE.md)**
 (and the section links below).
 
+## Directory guides
+
+Some directories carry their own `AGENTS.md` (plus a `CLAUDE.md` that imports
+it) for conventions that apply only inside them. Read the one for the directory
+you're working in:
+
+| Directory            | Covers                                                        |
+| -------------------- | ------------------------------------------------------------- |
+| `docs/api/`          | reference frontmatter, the page skeleton, `## History` tables |
+| `docs/partials/`     | when a partial is warranted, naming, registration             |
+| `docs/app/releases/` | changelog entry format                                        |
+| `src/`               | component layout, registration, swizzled theme files          |
+| `plugins/`           | the sub-package build and dependency rules                    |
+
+Three conventions hold for every one of them:
+
+1. **Each opens with a pointer back here.** Tools differ on whether they merge a
+   nested file with its ancestors or read only the nearest one, so a nested file
+   never assumes this file was loaded.
+2. **They are additive, never contradictory.** A nested rule that conflicts with
+   a rule in this file is a sign the rule in this file is wrong. Fix it here.
+3. **Keep them short**, under about 60 lines. They are the rules that apply
+   here, not a second reference manual. Detail belongs in
+   `AGENTS_REFERENCE.md`; link its anchor rather than restating it.
+
+Four things walk `docs/` independently, and each skips these two filenames: the
+docs build (`exclude` in `docusaurus.config.js`), the LLM export (`walkDocs` in
+`plugins/llm`), `npm run lint:frontmatter`, and `npm run preview:og`. Because
+they match on filename, adding a nested guide to a **new** directory needs no
+config change. Prettier still formats them, so `npm run lint:fix` applies as
+usual.
+
 ## Commands
 
 ```bash
@@ -55,11 +87,14 @@ Each rule is a hard convention. See the linked section for the how and why.
   `slug`). `title` and `description` are the page's `<title>` and meta
   description, so make them **SEO-friendly**: lead with the key term and
   summarize the page accurately. Match the section's house style — API reference
-  pages are terse (`'name | Cypress Documentation'` + one short sentence); guides
-  are more descriptive. Mirror a sibling file when unsure. Never add a `keywords`
-  field to frontmatter — Docusaurus only emits it as a `<meta name="keywords">`
-  tag that modern search engines ignore and that the site's own search doesn't
-  index, so it adds noise with no benefit.
+  pages are terse (the symbol as written in code, `'cy.click()'`, plus one short
+  sentence); guides are descriptive. Never append `| Cypress Documentation` to a
+  `title`: a per-section suffix is appended at build time from
+  `src/sectionTitles.js`, and `cypress/e2e/page_titles.cy.ts` asserts it. Mirror
+  a sibling file when unsure. Never add a `keywords` field to frontmatter —
+  Docusaurus only emits it as a `<meta name="keywords">` tag that modern search
+  engines ignore and that the site's own search doesn't index, so it adds noise
+  with no benefit.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.

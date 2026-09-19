@@ -32,10 +32,22 @@ const args = process.argv.slice(2)
 const noOpen = args.includes('--no-open')
 const filter = args.find((a) => !a.startsWith('--')) // optional substring filter
 
-/** Recursively collect .md/.mdx docs, skipping partials and `_`-prefixed files. */
+// Agent instructions, not pages. Kept in sync with the docs `exclude` list in
+// `docusaurus.config.js`.
+const AGENT_INSTRUCTION_FILES = new Set(['AGENTS.md', 'CLAUDE.md'])
+
+/**
+ * Recursively collect .md/.mdx docs, skipping partials, `_`-prefixed files, and
+ * agent instructions.
+ */
 function findDocs(dir, acc = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name.startsWith('_') || entry.name === 'partials') continue
+    if (
+      entry.name.startsWith('_') ||
+      entry.name === 'partials' ||
+      AGENT_INSTRUCTION_FILES.has(entry.name)
+    )
+      continue
     const full = path.join(dir, entry.name)
     if (entry.isDirectory()) findDocs(full, acc)
     else if (/\.mdx?$/.test(entry.name)) acc.push(full)

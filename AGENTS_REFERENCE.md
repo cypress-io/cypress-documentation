@@ -78,7 +78,7 @@ This is the **Cypress Documentation** site, built with
 
   ```yaml
   ---
-  title: 'intercept | Cypress Documentation'
+  title: 'cy.intercept()'
   description: Spy and stub network requests and responses.
   sidebar_label: intercept
   slug: /api/commands/intercept
@@ -89,16 +89,22 @@ This is the **Cypress Documentation** site, built with
 
   ```yaml
   ---
-  title: 'Cross Origin Testing: Cypress Guide'
-  description: 'Learn how to test cross-origin content with Cypress.'
-  sidebar_label: Cross Origin Testing
+  title: 'IDE Integration with Cypress: VS Code, JetBrains, and More'
+  description: 'Set up Cypress in your IDE with IntelliSense code completion, extensions for VS Code and JetBrains, ESLint rules, and one-click file opening from the Cypress app.'
+  sidebar_label: Editor and IDE setup
+  slug: /app/tooling/IDE-integration
   ---
   ```
 
   Guidance:
   - `title`: lead with the primary search term, keep it concise (~50–60
-    characters). Keep the ` | Cypress Documentation` suffix on reference pages;
-    guides follow the `: Cypress Guide` convention seen above.
+    characters). On reference pages it is the symbol as a reader writes it in
+    code (`'cy.click()'`, `'Cypress.Promise()'`, `'before:spec event'`); guides
+    use a descriptive phrase, often `Topic: qualifier`. **Never append a site or
+    section suffix.** One is appended per section during the build, mapped in
+    `src/sectionTitles.js` (` | Cypress API Documentation` for `docs/api/`,
+    ` | Cypress Documentation` for anything unmapped) and asserted by
+    `cypress/e2e/page_titles.cy.ts`, so a hand-written suffix is emitted twice.
   - `description`: one natural-language sentence that accurately summarizes the
     page and uses the terms a reader would search for. Reference descriptions are
     a short sentence; guide descriptions can run longer (up to ~150–160
