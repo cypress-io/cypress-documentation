@@ -9,59 +9,38 @@ sync when conventions change.
 This is the **Cypress Documentation** site, built with
 [Docusaurus 3](https://docusaurus.io/) in TypeScript.
 
-- Docs content lives in `docs/**/*.mdx`.
-- Custom remark plugins live in `plugins/cypressRemarkPlugins`.
-- The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
-  content into stripped-down markdown and chunked JSON published under `/llm`
-  (all of it build output, not committed files). Every page's markdown is also
-  published at its own route plus `.md` (`/app/get-started/why-cypress.md`),
-  with its `##` sections at `/app/get-started/why-cypress/<h2-slug>.md`, so an
-  agent can reach the markdown by appending `.md` to a docs URL without
-  discovering `/llm` first. Readers reach the same file through
-  `src/components/markdown-actions`, the split button beside every page title:
-  it copies the markdown, opens the raw `.md`, or hands its URL to ChatGPT or
-  Claude. Both it and the
-  `<link rel="alternate" type="text/markdown">` tag in `src/theme/DocItem/Layout`
-  derive the path from `markdownPathFor` in `src/utils/markdown-url.ts`, so
-  neither can drift from the other. Three files at the site root index all of
-  that:
-  - `/llms.txt` — the index, in the [llmstxt.org](https://llmstxt.org) format
-    (H1, blockquote, then `##` sections of `- [Title](url): description` links).
-    It links every page's markdown, plus one section listing the other formats.
-    Written by `LlmsTxtWriter`; the link list is generated from the pages the
-    export walks, so it is never hand-maintained.
-  - `/llms-full.txt` — every page's markdown concatenated in index order, for
-    tools that ingest one file. It runs to several megabytes; `LlmsTxtWriter`
-    quotes the current size in the `/llms.txt` entry that links it.
-  - `/docs-manifest.json` — project metadata (name, repository, license, tags)
-    and the machine-readable list of the formats above. Written by
-    `ManifestWriter`. This is the metadata that used to sit in a YAML block at
-    the top of `/llms.txt`, which kept that file out of the format its
-    consumers parse.
-- Small helpers shared by more than one component live in `src/utils`
-  (`markdown-url.ts`, `copy-to-clipboard.ts`). Anything with UI belongs in
-  `src/components` instead.
-- The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
-  **never installed on their own**: they have no lockfiles and are not npm
-  workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
-  run their scripts. Everything they use (typescript, prettier, vitest, the
-  remark/unist ecosystem, etc.) resolves from the repository root's
-  `node_modules`, so their `package.json` files intentionally declare **no**
-  `dependencies`/`devDependencies`. Declare any new plugin dependency in the
-  **root** `package.json` — pins added to a plugin's own `package.json` are
-  never installed and just drift stale.
-- Reusable React/MDX components live in `src/components` and are registered in
-  `src/theme/MDXComponents.js`. Build them from the `@cypress-design/react-*`
-  primitives (`Button`, `Icon`, `Select`, …) rather than hand-rolling a control,
-  and reach for the design system's component before inventing your own; add the
-  package to the root `package.json` when the one you need isn't installed yet.
-- **Interactive chrome must carry `data-sanitize`.** `plugins/llm` strips any
-  element with that attribute from the LLM markdown export, so buttons, menus,
-  and toggles don't reach an agent as text it can't click. Put it on the
-  outermost element that is purely interactive (see `markdown-actions`), or on
-  just the controls when the surrounding content should still ship (see
-  `copy-prompt`). Verify with `npm run build` and a grep over
-  `dist/llm/markdown/`.
+- Docs content lives in `docs/**/*.mdx`, with shared fragments in
+  `docs/partials` and API reference under `docs/api`.
+- `src/` is the React side: components, swizzled Docusaurus theme files, and
+  small shared helpers. [`src/AGENTS.md`](./src/AGENTS.md) covers where a file
+  goes, how a component is registered, and the `data-sanitize` attribute that
+  keeps interactive chrome out of the LLM export.
+- `plugins/` holds the custom remark directives (`cypressRemarkPlugins`), the
+  LLM-docs export (`llm`), and a few plain `.js` Docusaurus plugins.
+  [`plugins/AGENTS.md`](./plugins/AGENTS.md) covers the build step and the
+  root-only dependency rule that make the two sub-packages unusual.
+
+### What the LLM export publishes
+
+At build time `plugins/llm` reprocesses content into stripped-down markdown and
+chunked JSON under `/llm` (all of it build output, not committed files). Every
+page's markdown is also published at its own route plus `.md`
+(`/app/get-started/why-cypress.md`), with its `##` sections at
+`/app/get-started/why-cypress/<h2-slug>.md`, so an agent can reach the markdown
+by appending `.md` to a docs URL without discovering `/llm` first. Readers reach
+the same file through the split button beside every page title
+(`src/components/markdown-actions`), which copies the markdown, opens the raw
+`.md`, or hands its URL to ChatGPT or Claude.
+
+Three files at the site root index all of that, and none is hand-maintained:
+
+- `/llms.txt` — the index, in the [llmstxt.org](https://llmstxt.org) format (H1,
+  blockquote, then `##` sections of `- [Title](url): description` links). It
+  links every page's markdown, plus one section listing the other formats.
+- `/llms-full.txt` — every page's markdown concatenated in index order, for
+  tools that ingest one file. It runs to several megabytes.
+- `/docs-manifest.json` — project metadata (name, repository, license, tags) and
+  the machine-readable list of the formats above.
 
 ## Adding, moving & removing pages
 
@@ -71,21 +50,10 @@ This is the **Cypress Documentation** site, built with
 - **Frontmatter** every page needs. `title` and `description` are emitted as the
   page's HTML `<title>` and `<meta name="description">`, so write them for
   **search engines and the LLM docs**, not just internally. **Match the house
-  style of the section you're editing** — there are two:
-
-  API reference pages (`docs/api/...`) are intentionally terse: the bare command
-  name plus the suffix, and a single short sentence.
-
-  ```yaml
-  ---
-  title: 'cy.intercept()'
-  description: Spy and stub network requests and responses.
-  sidebar_label: intercept
-  slug: /api/commands/intercept
-  ---
-  ```
-
-  Guide and concept pages are more descriptive and SEO-shaped:
+  style of the section you're editing.** API reference pages are terse and have
+  their own conventions, covered in
+  [`docs/api/AGENTS.md`](./docs/api/AGENTS.md). Guide and concept pages are more
+  descriptive and SEO-shaped:
 
   ```yaml
   ---
@@ -98,12 +66,9 @@ This is the **Cypress Documentation** site, built with
 
   Guidance:
   - `title`: lead with the primary search term, keep it concise (~50–60
-    characters). On reference pages it is the symbol as a reader writes it in
-    code (`'cy.click()'`, `'Cypress.Promise()'`, `'before:spec event'`); guides
-    use a descriptive phrase, often `Topic: qualifier`. **Never append a site or
-    section suffix.** One is appended per section during the build, mapped in
-    `src/sectionTitles.js` (` | Cypress API Documentation` for `docs/api/`,
-    ` | Cypress Documentation` for anything unmapped) and asserted by
+    characters), and use a descriptive phrase, often `Topic: qualifier`.
+    **Never append a site or section suffix.** One is appended per section at
+    build time, mapped in `src/sectionTitles.js` and asserted by
     `cypress/e2e/page_titles.cy.ts`, so a hand-written suffix is emitted twice.
   - `description`: one natural-language sentence that accurately summarizes the
     page and uses the terms a reader would search for. Reference descriptions are
@@ -152,11 +117,10 @@ Images go in `static/img/...` and are referenced via `/img/...`.
   (e.g. `<CloudFreePlan />`) with no per-file import.
 - **A partial must be rendered in more than one location.** A partial earns its
   indirection only by sharing content across pages; if it's referenced by a
-  single page, inline the content into that page instead. When splitting a
-  shared partial into product-specific pieces, keep genuinely shared sections in
-  the partial and inline the parts that live on only one page. Before removing
-  the last-but-one reference to a partial, inline it and delete the file (and its
-  `MDXComponents.js` registration).
+  single page, inline the content into that page instead.
+
+Writing, naming, registering, and retiring one is covered in
+[`docs/partials/AGENTS.md`](./docs/partials/AGENTS.md).
 
 ## Product heading & naming
 
@@ -577,7 +541,7 @@ that already embed the correct params rather than re-writing the URL.
 - To run them locally, start the site in one terminal (`npm run start`, served at
   `http://localhost:3000`, the configured `baseUrl`) and in another run
   `npm test` (headless) or `npx cypress open` (interactive).
-- **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
+- **Plugin unit tests** (Vitest) cover both sub-packages in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
 - **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and

@@ -86,12 +86,11 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Include the standard frontmatter (`title`, `description`, `sidebar_label`,
   `slug`). `title` and `description` are the page's `<title>` and meta
   description, so make them **SEO-friendly**: lead with the key term and
-  summarize the page accurately. Match the section's house style — API reference
-  pages are terse (the symbol as written in code, `'cy.click()'`, plus one short
-  sentence); guides are descriptive. Never append `| Cypress Documentation` to a
-  `title`: a per-section suffix is appended at build time from
-  `src/sectionTitles.js`, and `cypress/e2e/page_titles.cy.ts` asserts it. Mirror
-  a sibling file when unsure. Never add a `keywords` field to frontmatter —
+  summarize the page accurately. Match the section's house style and mirror a
+  sibling file when unsure. Never append `| Cypress Documentation` to a `title`:
+  a per-section suffix is appended at build time from `src/sectionTitles.js`,
+  and `cypress/e2e/page_titles.cy.ts` asserts it. Never add a `keywords` field to
+  frontmatter —
   Docusaurus only emits it as a `<meta name="keywords">` tag that modern search
   engines ignore and that the site's own search doesn't index, so it adds noise
   with no benefit.
@@ -114,15 +113,13 @@ Each rule is a hard convention. See the linked section for the how and why.
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
   partial for content rendered in **more than one location**. If it's used in a
-  single page, inline it there — don't add a partial (or keep an existing one)
-  that has just one render site.
+  single page, inline it there instead.
 - End related pages with a `## See also` section (sentence-case H2, as the page's
   last section): a short bulleted list of doc-to-doc links to closely related
   pages, command names in backticks, with an optional `- short description` after
-  a link. It's standard on API reference pages (link 2–5 sibling
-  commands/utilities); add it to guides and other pages only when there are
-  genuinely related pages worth surfacing. Don't pad it with tangential links or
-  repeat links already prominent in the page body.
+  a link. It's standard on API reference pages; add it to guides and other pages
+  only when there are genuinely related pages worth surfacing. Don't pad it with
+  tangential links or repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
 - For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
   not a code block; keep example-specific prompts, code, commands, and diagrams in
@@ -177,13 +174,6 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Links to `www.cypress.io` / `on.cypress.io` / `learn.cypress.io` need UTM
   params (`utm_source=docs.cypress.io` + a placement `utm_medium`). Do not add
   them to internal links or `cloud.cypress.io`.
-
-**Plugins** — [details](./AGENTS_REFERENCE.md#project-layout)
-
-- The sub-packages in `plugins/` are never installed on their own; all of their
-  dependencies resolve from the repository root's `node_modules`. Declare new
-  dependencies in the **root** `package.json`, never in a plugin's own
-  `package.json` (pins there are never installed and just drift stale).
 
 **GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
 
