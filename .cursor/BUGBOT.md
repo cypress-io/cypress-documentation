@@ -134,11 +134,11 @@ repo rather than accepting them:
 
 ### 5. Code changes: `plugins/`, `scripts/`, `src/`, `cypress/`
 
-Review these with normal code-review rigor. CircleCI runs the build, Prettier,
-the frontmatter linter, `npm run typecheck`, the unit tests (Algolia/search and
-the plugins), and the e2e specs, so type errors and plugin regressions fail the
-PR rather than reaching `main`. Don't re-report what those catch; look for what
-they can't.
+Review these with normal code-review rigor. The `CI` GitHub Actions workflow
+runs the build, Prettier, the frontmatter linter, `npm run typecheck`, the unit
+tests (Algolia/search and the plugins), and the e2e specs, so type errors and
+plugin regressions fail the PR rather than reaching `main`. Don't re-report what
+those catch; look for what they can't.
 
 - `npm run typecheck` covers `src/`, `cypress/`, and `cypress.config.ts`;
   `plugins/*` are type checked by their own `tsc` builds. Casts (`as any`,

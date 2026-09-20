@@ -583,7 +583,8 @@ that already embed the correct params rather than re-writing the URL.
 
 ## Continuous integration
 
-CircleCI (`.circleci/config.yml`) runs on every pull request:
+The `CI` workflow (`.github/workflows/ci.yml`) runs on every pull request and on
+every push to `main`:
 
 | Job                                  | Command                               |
 | ------------------------------------ | ------------------------------------- |
@@ -591,10 +592,19 @@ CircleCI (`.circleci/config.yml`) runs on every pull request:
 | Lint JS/CSS/Markdown                 | `npm run lint`                        |
 | Typecheck                            | `npm run typecheck`                   |
 | Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins` |
-| Run Tests in Parallel                | `cypress run` across 8 containers     |
+| E2E                                  | `cypress run` across 8 containers     |
+| Run Algolia scraper (`main` only)    | `scrape-and-compare-algolia-index`    |
 
-The lint, typecheck, and unit-test jobs reuse the `node_modules` the build job
-persists to the workspace, so they need no install step of their own.
+Lint, typecheck, and unit tests install their own dependencies (restored from
+the `actions/setup-node` npm cache) and start immediately, without waiting on
+the build. Only the jobs that need the built site wait: the build uploads `dist`
+as an artifact and the E2E containers download it, so the site is built once for
+all eight rather than once per container.
+
+The E2E job splits the suite through Cypress Cloud, which needs
+`CYPRESS_RECORD_KEY`. GitHub withholds secrets from pull requests opened from a
+fork, so those run the `E2E (fork, not recorded)` job instead: the whole suite in
+one container, reporting nothing to the Cloud.
 
 ## GitHub Actions workflows
 
