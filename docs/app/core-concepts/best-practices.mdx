@@ -355,7 +355,7 @@ A rule of thumb is to ask yourself this:
 
 If the content of the element **changed** would you want the test to fail?
 
-- If the answer is yes: then use [`cy.contains()`](/api/commands/contains)
+- If the answer is yes: then use [`cy.contains()`](/api/commands/contains).
 - If the answer is no: then use a data attribute.
 
 **Example:**
@@ -494,7 +494,7 @@ You may want to access 3rd party services in several situations:
 
 If you choose, these situations can be tested with
 [`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
-However, you will only want to utilize these commands for resources in your
+However, you will only want to use these commands for resources in your
 control, either by controlling the domain or hosted instance. These use cases
 are common for:
 
@@ -546,7 +546,7 @@ affect other tests downstream.
    via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
    will not run into the problems listed above, while still being able to
    automate your login flow. You can reduce the amount of authentication
-   requests by utilizing [`cy.session()`](/api/commands/session).
+   requests by using [`cy.session()`](/api/commands/session).
 2. [Stub](/api/commands/stub) out the OAuth provider and bypass it using their
    UI altogether if [`cy.origin()`](/api/commands/origin) is not an option. You
    could trick your application into believing the OAuth provider has passed its
@@ -685,7 +685,7 @@ What's wrong with the above tests? They are all coupled together!
 If you were to change `it` to
 [`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout) on any of the
 last three tests, they would fail. Each test requires the previous to run in a
-specific order in order to pass.
+specific order to pass.
 
 Here's 2 ways we can fix this:
 
@@ -921,7 +921,7 @@ it after a test ends.
 
 If you remove your application's state after each test, then you instantly lose
 the ability to use your application in this mode. Logging out at the end would
-always leave you with the same login page at the end of the test. In order to
+always leave you with the same login page at the end of the test. To
 debug your application or write a partial test, you would always be left
 commenting out your custom `cy.logout()` command.
 
@@ -1185,12 +1185,12 @@ Otherwise, Cypress will not continue running any other commands.
 Trying to start a web server from [cy.task()](/api/commands/task) causes all
 kinds of problems because:
 
-- You have to background the process
-- You lose access to it via terminal
-- You don't have access to its `stdout` or logs
+- You have to background the process.
+- You lose access to it via terminal.
+- You don't have access to its `stdout` or logs.
 - Every time your tests run, you'd have to work out the complexity around
   starting an already running web server.
-- You would likely encounter constant port conflicts
+- You would likely encounter constant port conflicts.
 
 **Why can't I shut down the process in an `after` hook?**
 
@@ -1230,7 +1230,7 @@ commands like [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) that are not fully qualified domain name
 (FQDN) URLs.
 
-This allows you to omit hard-coding fully qualified domain name (FQDN) URLs in
+This removes the need to hard-code fully qualified domain name (FQDN) URLs in
 commands. For example,
 
 ```javascript

@@ -163,7 +163,7 @@ const stub = cy.stub(obj, 'foo').log(false)
 
 You can alias stubs, similar to how [`.as()`](/api/commands/as) works. This can
 make your stubs easier to identify in error messages and Cypress's command log,
-and allows you to assert against them later using `cy.get()`.
+and retrieve them later for assertions using `cy.get()`.
 
 ```javascript
 const obj = {

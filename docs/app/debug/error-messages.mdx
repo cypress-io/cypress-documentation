@@ -80,7 +80,7 @@ it('uses modules', () => {
 #### Use supportFile to load scripts before your test code
 
 It's still useful to load a setup file before your test code. If you are setting
-Cypress defaults or utilizing custom Cypress commands, instead of needing to
+Cypress defaults or using custom Cypress commands, instead of needing to
 import/require those defaults/commands in every test file, you can use the
 [`supportFile`](/app/references/configuration#Testing-Type-Specific-Options)
 configuration option within each testing type's configuration object.
@@ -230,7 +230,7 @@ you must:
 
 - Always start a new chain after each _command_.
 - Use Cypress _queries_ to locate elements on the page, rather than using
-  specific HTML elements as your subject
+  specific HTML elements as your subject.
 
 Queries (`.get()`, `.as()` and`.parent()`, for example) and assertions
 (`.should()`, `.and()`) are safe to chain off of. Commands (such as `.click()`)
@@ -249,8 +249,8 @@ Cypress runs several calculations to ensure an element can _actually_ be
 interacted with like a real user would. If you're seeing this error, you may
 need to _guard_ your commands (due to a timing or an animation issue).
 
-There have been situations where Cypress does not correctly allow you to
-interact with an element that should be interactable. If that's the case,
+There have been situations where Cypress incorrectly blocks interaction with an
+element that should be interactable. If that's the case,
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose).
 
 If you'd like to override these built-in checks, provide the `{force: true}`
@@ -299,8 +299,8 @@ Cypress will continuously attempt to interact with the element until it
 eventually times out. If you'd like to force Cypress to interact with the
 element there are a few options:
 
-- Pass `{force: true}`. This disables _all_ error checking
-- Pass `{waitForAnimations: false}` to disable animation error checking
+- Pass `{force: true}`. This disables _all_ error checking.
+- Pass `{waitForAnimations: false}` to disable animation error checking.
 - Pass `{animationDistanceThreshold: 20}` to decrease the sensitivity of
   detecting if an element is animating. By increasing the threshold this enables
   your element to move farther on the page without causing Cypress to
@@ -522,7 +522,7 @@ And will result in the following error:
   alt="cy.visit() subsequent commands timed out"
 />
 
-In order to fix this, our `cy.get()` command **must** be wrapped with the
+To fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
 
 ```javascript
@@ -710,7 +710,7 @@ You passed the
 [--parallel](/app/references/command-line#cypress-run-parallel) flag but we could
 not automatically determine or generate a `ciBuildId`.
 
-In order to use either of these parameters a `ciBuildId` must be determined.
+To use either of these parameters a `ciBuildId` must be determined.
 
 The `ciBuildId` is automatically detected if you are running Cypress in most
 [CI providers](/app/continuous-integration/overview#CI-Examples). Please
@@ -748,7 +748,7 @@ flag, but we do not parallelize tests across different environments.
 This machine is sending different environment parameters than the first machine
 that started this parallel run.
 
-In order to run in parallel mode each machine must send identical environment
+To run in parallel mode each machine must send identical environment
 parameters such as:
 
 - Specs
@@ -792,7 +792,7 @@ This error is thrown when you are attempting to pass the
 [--parallel](/app/references/command-line#cypress-run-parallel) flag to a run
 that Cypress detected was completed over 24 hours ago.
 
-In order to uniquely identify each run during `cypress run`, Cypress attempts to
+To uniquely identify each run during `cypress run`, Cypress attempts to
 read a unique identifier from your CI provider as described in our
 [parallelization doc](/cloud/features/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider).
 
@@ -981,14 +981,14 @@ exited or crashed before the tests could finish running.
 
 This can happen for a number of reasons, including:
 
-- The browser was exited manually, by clicking the "Quit" button or otherwise
+- The browser was exited manually, by clicking the "Quit" button or otherwise.
 - Your test suite or application under test is starving the browser of
   resources.
-- Cypress is running in a memory-starved environment
-- The browser is testing a memory-heavy application
-- There are problems with the GPU / GPU drivers
-- There is a bug in the browser involving memory management
-- There is a memory leak in Cypress
+- Cypress is running in a memory-starved environment.
+- The browser is testing a memory-heavy application.
+- There are problems with the GPU / GPU drivers.
+- There is a bug in the browser involving memory management.
+- There is a memory leak in Cypress.
 
 For Chromium-based browsers, Cypress manages browser memory by default through
 [manageBrowserMemory](/app/references/configuration#Global), so confirm you

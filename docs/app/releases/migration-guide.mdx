@@ -1270,7 +1270,7 @@ version 15.
 
 ### Node.js 20, 22, and 24+ support
 
-Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypress binary and the supported versions are now Node.js 20, 22, 24, and above.
+Cypress requires [Node.js](https://nodejs.org/en) to install the Cypress binary and the supported versions are now Node.js 20, 22, 24, and above.
 Node.js versions 18 and 23 are no longer supported.
 [See Node's release schedule](https://github.com/nodejs/Release).
 
@@ -1474,7 +1474,7 @@ npm install --save-dev zone.js@^0.14.0
 The `Cypress.SelectorPlayground` API has been renamed to
 [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api). Additionally, the `getSelector` method has been removed, and the `onElement` function has been removed as an option to the `defaults` method.
 
-This change was made in order to reflect its use in features beyond just the Selector Playground - like Cypress Studio.
+This change was made to reflect its use in features beyond just the Selector Playground - like Cypress Studio.
 
 The following code shows how to migrate from the `Cypress.SelectorPlayground` API to the
 [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) API.
@@ -1706,7 +1706,7 @@ Component testing no longer supports Next.js versions 10, 11, 12, and 13. The mi
 
 ### Angular `<17.2.0` CT no longer supported
 
-With [LTS ending](https://angular.dev/reference/releases#actively-supported-versions) for Angular 16, the minimum required Angular version for component testing is now `17.2.0` in order to support [signals](/app/component-testing/angular/examples#Signals) as a first class citizen.
+With [LTS ending](https://angular.dev/reference/releases#actively-supported-versions) for Angular 16, the minimum required Angular version for component testing is now `17.2.0` to support [signals](/app/component-testing/angular/examples#Signals) as a first class citizen.
 
 Now that the minimum version of Angular supported for Component Testing is `17.2.0`, Cypress is able to merge the `cypress/angular-signals` test harness into the main `cypress/angular` test harness. Because of this, the `@cypress/angular-signals` harness is deprecated and no longer shipped with the binary. Support has been moved to `cypress/angular`.
 
@@ -1787,7 +1787,7 @@ If you haven't been able to migrate away from Nuxt 2, the underlying Vue 2 harne
 [create-react-app](https://create-react-app.dev/) is no longer actively maintained or supported (see [CRA issue #13393](https://github.com/facebook/create-react-app/issues/13393)). Your component tests will now need a bundler to run. If still using [create-react-app](https://create-react-app.dev/), you'll either need to:
 
 - [Eject](https://create-react-app.dev/docs/available-scripts/#npm-run-eject) the configuration to bundle with webpack.
-- Leverage [vite](https://vite.dev/guide/) to bundle your component tests (quick setup with [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)).
+- Use [vite](https://vite.dev/guide/) to bundle your component tests (quick setup with [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)).
 
 After selecting a bundler, change the `framework` option in your Cypress config from `create-react-app` to `react`. If ejecting the `create-react-app`, change your cypress config to look something like this:
 
@@ -1812,7 +1812,7 @@ module.exports = defineConfig({
 `@vue/cli-service` is in [maintenance mode](https://cli.vuejs.org/guide/cli-service.html) and is no longer maintained by the Vue core team. Your component tests will now need a bundler to run. If still using [Vue CLI](https://cli.vuejs.org/), you will either need to:
 
 - Migrate to webpack ([see example](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-webpack-ts)).
-- Leverage [vite](https://vite.dev/guide/). The Vue team recommends migrating to using `create-vue` to scaffold a [Vite](https://vite.dev/)-based project.
+- Use [vite](https://vite.dev/guide/). The Vue team recommends migrating to using `create-vue` to scaffold a [Vite](https://vite.dev/)-based project.
 
 After selecting a bundler, change the `framework` option in your Cypress config from `"vue-cli"` to `"vue"`. Your Cypress configuration should change as outlined below.
 
@@ -2011,7 +2011,7 @@ free of issues in the majority of use cases. With releasing this as GA, the
 is enabled by default.
 
 One exception: using `require` and `import` with a callback supplied to
-[`cy.origin()`](/api/commands/origin) is not enabled by default. To leverage
+[`cy.origin()`](/api/commands/origin) is not enabled by default. To use
 external dependencies in `cy.origin()` callbacks, set the
 [`e2e.experimentalOriginDependencies`](/app/references/experiments#End-to-End-Testing)
 configuration option to `true`.
@@ -2206,8 +2206,8 @@ Many of the issues test isolation solved were around cookie management with
 tests trying to save and persist cookies because the page was still available,
 but the cookies on the domain were unexpectedly cleared which broke interactions
 with the application. It wasn’t obvious Cypress was doing a partial browser
-clean up. Explicitly setting test isolation to enabled or disabled allows you to
-choose what is right for your tests.
+clean up. Explicitly setting test isolation to enabled or disabled puts that
+behavior under your control.
 
 ### Behavior Changes in Alias Resolution
 
@@ -3138,9 +3138,9 @@ The `ignoreTestFiles` option is no longer used, and has been replaced with the
 Default values
 
 - `e2e.excludeSpecPattern` default value is `*.hot-update.js` (same as pervious
-  ignore value)
+  ignore value).
 - `component.excludeSpecPattern` default value is
-  `['/snapshots/*', '/image_snapshots/*']` updated from `*.hot-update.js`
+  `['/snapshots/*', '/image_snapshots/*']` updated from `*.hot-update.js`.
 - The `**/node_modules/**` pattern is automatically added to both
   `e2e.specExcludePattern` and `component.specExcludePattern`, and does not need
   to be specified (and can't be overridden).

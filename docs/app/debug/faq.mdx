@@ -137,8 +137,8 @@ full stack code coverage.
 
 ### <Icon name="angle-right" /> Are there driver bindings in my language?
 
-Cypress does _not_ utilize WebDriver for testing, so it does not use or have any
-notion of driver bindings. If your language can be somehow transpiled to
+Cypress does _not_ use WebDriver for testing, so it has no notion of driver
+bindings. If your language can be somehow transpiled to
 JavaScript, then you can configure
 [Cypress webpack preprocessor](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
 or
@@ -153,7 +153,7 @@ The terms _spec_, _test_, and _test suite_ have specific meanings. Here's how th
 
 **<u>Test</u>** An individual test case within a spec file. It represents a specific scenario or behavior that needs to be tested. A test typically consists of a series of actions performed on the application being tested, such as interacting with UI elements, submitting forms, or making assertions to validate the expected outcomes. Cypress provides a rich set of built-in commands and APIs to facilitate writing tests and interacting with the application in a declarative manner.
 
-**<u>Test Suite</u>** A collection of spec files that are grouped together. It allows you to organize your tests based on different criteria, such as functional areas, modules, or specific features. A test suite can include multiple spec files, each containing one or more tests. By grouping related tests together in a test suite, you can organize and manage your tests more effectively. Cypress provides options to run individual spec files, multiple spec files, or the entire test suite during test execution.
+**<u>Test Suite</u>** A collection of spec files that are grouped together. It organizes your tests based on different criteria, such as functional areas, modules, or specific features. A test suite can include multiple spec files, each containing one or more tests. By grouping related tests together in a test suite, you can organize and manage your tests more effectively. Cypress provides options to run individual spec files, multiple spec files, or the entire test suite during test execution.
 
 ### <Icon name="angle-right" /> When should I write a End-to-End tests and when should I write Component Tests?
 
@@ -181,7 +181,7 @@ when to write a unit test and when to write an end-to-end test.
   `jsdom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may
   want to rewrite it as an end-to-end test.
 - If an end-to-end test does _not_ go through the browser and instead calls the
-  code directly, you probably want to rewrite it as a unit test
+  code directly, you probably want to rewrite it as a unit test.
 
 Finally, unit and end-to-end tests are not _that_ different and have common
 features. Good tests:
@@ -1548,7 +1548,7 @@ these strategies:
   application that would result in failing tests.
 - Remove time-sensitive variability in your tests. For example, ensure a network
   request has finished before looking for the DOM element that relies on the
-  data from that network request. You can leverage
+  data from that network request. You can use
   [aliasing](/app/core-concepts/variables-and-aliases#Aliases) for this.
 - Ensure video recording and/or screenshots are enabled for the CI run and
   compare the recording to the Command Log when running the test locally.
@@ -1603,7 +1603,7 @@ Tools open. You can use Cypress [Test Replay](/cloud/features/test-replay) to se
 
 ### <Icon name="angle-right" /> Can I use Cypress to test charts and graphs?
 
-Yes. You can leverage visual testing tools to test that charts and graphs are
+Yes. You can use visual testing tools to test that charts and graphs are
 rendering as expected. For more information, check out the
 [Visual Testing guide](/app/tooling/visual-testing).
 
@@ -1881,9 +1881,9 @@ testing.
 ### <Icon name="angle-right" /> How does Cypress component testing compare to other options?
 
 When Cypress mounts a component, it does so in an actual browser and not a
-simulated environment like jsdom. This allows you to visually see and interact
-with the component as you work on it. You can use the same browser-based
-developer tools that you are used to when building web applications, such as
+simulated environment like jsdom. This renders the real component in front of
+you to see and interact with as you work on it. You can use the same
+browser-based developer tools that you are used to when building web applications, such as
 element inspectors, modifying CSS, and source debugging.
 
 Cypress Component Testing is built around the same tools and APIs that
@@ -1923,9 +1923,9 @@ declare global {
 Cypress.Commands.add('mount', mount)
 ```
 
-This allows you to use `cy.mount()` in any component test without having to
-`import` the framework-specific mount command, as well as customizing it to fit
-your needs. See the examples guide for each framework for info on creating a
+This registers `cy.mount()` for any component test without having to `import`
+the framework-specific mount command, and it can be customized to fit your
+needs. See the examples guide for each framework for info on creating a
 custom `cy.mount()` command.
 
 ### <Icon name="angle-right" /> Why isn't my component rendering as it should?
@@ -2016,8 +2016,8 @@ the creation of new prompt commands.
 ### <Icon name="angle-right" /> How do I migrate from cy.prompt code to regular Cypress code?
 
 If you plan to do this as you write tests, use the **Code** button in the
-Cypress App's command log. It gives you the code for any prompt and allows you to
-save it. This represents an author-only use of `cy.prompt`.
+Cypress App's command log. It gives you the code for any prompt and saves it.
+This represents an author-only use of `cy.prompt`.
 
 If you plan to do this after tests have been recorded, download a full report of
 all the test code and related `cy.prompt` steps, and where they are located in

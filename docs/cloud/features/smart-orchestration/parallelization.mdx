@@ -35,7 +35,7 @@ CI strategies when using parallelization.
 
 ## Splitting up your test suite
 
-Cypress' parallelization strategy is file-based, so in order to utilize
+Cypress' parallelization strategy is file-based, so to use
 parallelization, your tests will need to be split across separate files.
 
 Cypress will assign each spec file to an available machine based on our
@@ -234,7 +234,7 @@ For multiple runs to be grouped into a single run, it is required for CI
 machines to share a common CI build ID environment variable. Typically these CI
 machines will run in parallel or within the same build workflow or pipeline, but
 **it is not required to use Cypress parallelization to group runs**. Grouping of
-runs can be utilized independently of Cypress parallelization.
+runs can be used independently of Cypress parallelization.
 
 :::
 
@@ -676,7 +676,7 @@ test run.
 
 - [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app)
   runs parallelized CI jobs across multiple operating systems, browsers, and
-  viewport sizes.
+  viewport sizes
 - [Continuous Integration Guide](/app/continuous-integration/overview)
 - [Cross Browser Testing Guide](/app/guides/cross-browser-testing)
 - [Blog: Run Your End-to-end Tests 10 Times Faster with Automatic Test Parallelization](https://www.cypress.io/blog/2018/09/05/run-end-to-end-tests-on-ci-faster/?utm_source=docs.cypress.io&utm_medium=parallelization)
