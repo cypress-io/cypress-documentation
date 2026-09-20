@@ -153,8 +153,7 @@ opens, then the mechanical rules a reviewer can check without a judgment call.
 ### Lead with the value
 
 Open a guide with what the feature does for the reader, and what it costs them
-to go without it, before configuration or steps. This is the Cypress Style
-Guide's inverted pyramid applied to a docs page: the reader who stops after the
+to go without it, before configuration or steps. A reader who stops after the
 first paragraph should still come away knowing why the feature exists.
 
 Treat it as a direction, not a template. Many pages land it with a `## Why use X`
