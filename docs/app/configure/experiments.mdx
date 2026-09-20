@@ -142,7 +142,7 @@ The `detect-flake-and-pass-on-threshold` strategy is most like the current imple
 
 Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries will give you ability to set how many passing attempts are required for the test result to be passing. There are two `experimentalOptions` that must be set with this strategy:
 
-- `maxRetries` sets the maximum number of retries that can occur after the first attempt failed
+- `maxRetries` sets the maximum number of retries that can occur after the first attempt failed.
 - `passesRequired` sets the required number of passing attempts for the final test result to be passing. Cannot be greater than `maxRetries`.
   - `passesRequired` also determines how the retries may stop before `maxRetries` is reached; either if the number of passing attempts so far has met the `passesRequired` condition or if the number of failing attempts exceeds the difference between `maxRetries` and `passesRequired` (when it's impossible to achieve the passing result).
 
@@ -196,7 +196,7 @@ Retries stop on attempt 2, and the test is **failing** <Icon name="times" color=
 
 Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries ensures any test with any failed attempt will always end with a failing final result. There are two `experimentalOptions` that must be set in this strategy:
 
-- `maxRetries` sets the maximum number of retries that can occur after the first attempt failed
+- `maxRetries` sets the maximum number of retries that can occur after the first attempt failed.
 - `stopIfAnyPassed` will stop the retries before `maxRetries` is reached when there is any passing attempt.
   - `stopIfAnyPassed` causes retries to exit as soon as any flake is detected (a test that is retrying after a failure only needs to pass once to exhibit flaky behavior). However it may help to see more retry attempts, such as when the failure mode is also non-deterministic and more of these different errors are revealed on more retries, in which case `stopIfAnyPassed: false` may be desirable.
 

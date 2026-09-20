@@ -99,7 +99,7 @@ modified from the plugins file.**
   [configFile](/app/references/module-api) docs for more information on this
   value.
 - `projectRoot`: The absolute path to the root of the project (e.g.
-  `/Users/me/dev/my-project`)
+  `/Users/me/dev/my-project`).
 - `version`: The version number of Cypress. This can be used to handle breaking
   changes.
 
@@ -175,8 +175,8 @@ You can use [`before:spec`](/api/node-events/before-spec-api) to do things like:
 
 You can use [`after:spec`](/api/node-events/after-spec-api) to do things like:
 
-- Finish up reporting set up in `before:spec`
-- Stop the timer for the spec set up in `before:spec`
+- Finish up reporting set up in `before:spec`.
+- Stop the timer for the spec set up in `before:spec`.
 - Delete the video recorded for the spec. This prevents it from taking time and
   computing resources for compressing and uploading the video. You can do this
   conditionally based on the results of the spec, such as if it passes (so

@@ -355,7 +355,7 @@ A rule of thumb is to ask yourself this:
 
 If the content of the element **changed** would you want the test to fail?
 
-- If the answer is yes: then use [`cy.contains()`](/api/commands/contains)
+- If the answer is yes: then use [`cy.contains()`](/api/commands/contains).
 - If the answer is no: then use a data attribute.
 
 **Example:**
@@ -1185,12 +1185,12 @@ Otherwise, Cypress will not continue running any other commands.
 Trying to start a web server from [cy.task()](/api/commands/task) causes all
 kinds of problems because:
 
-- You have to background the process
-- You lose access to it via terminal
-- You don't have access to its `stdout` or logs
+- You have to background the process.
+- You lose access to it via terminal.
+- You don't have access to its `stdout` or logs.
 - Every time your tests run, you'd have to work out the complexity around
   starting an already running web server.
-- You would likely encounter constant port conflicts
+- You would likely encounter constant port conflicts.
 
 **Why can't I shut down the process in an `after` hook?**
 
