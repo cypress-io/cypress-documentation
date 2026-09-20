@@ -606,6 +606,13 @@ The E2E job splits the suite through Cypress Cloud, which needs
 fork, so those run the `E2E (fork, not recorded)` job instead: the whole suite in
 one container, reporting nothing to the Cloud.
 
+One branch this workflow never sees is `automation/update-plugins-data`. GitHub
+raises no workflow run for an event caused by `GITHUB_TOKEN`, so the nightly
+pull request `update-plugins-data.yml` opens triggers nothing. That workflow
+typechecks, builds, and runs `plugins_list.cy.ts` itself before opening the pull
+request. Anything that would newly break on a change to
+`src/data/plugins-generated.json` belongs there, not only here.
+
 ## GitHub Actions workflows
 
 Repo automation lives in `.github/workflows/`. When adding or editing a
