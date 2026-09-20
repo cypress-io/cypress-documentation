@@ -46,7 +46,7 @@ _Released Sep 1, 2026_
 
 _Faster tests, less flake, and a few breaking changes that may require updates._
 
-Most of this release's speed arrives without you editing a single test: requests run over HTTP/2 by default in Chrome, Chromium, and Edge browsers, `cy.type()` drops its 10ms keystroke delay, visibility checks use a faster algorithm, cookie and storage commands now retry the way queries do, and browser memory management is on by default so long runs stop crashing partway through. Read the full [Cypress 16 announcement](https://on.cypress.io/cypress-16-blog) for what changed and why.
+Most of this release's speed arrives without you editing a single test: requests run over HTTP/2 by default in Chrome, Chromium, and Edge browsers, `cy.type()` drops its 10ms keystroke delay, visibility checks use a faster algorithm, cookie and storage commands now retry the way queries do, and browser memory management is on by default so long runs stop crashing partway through. Read the full [Cypress 16 announcement](https://on.cypress.io/cypress-16-blog?utm_source=docs.cypress.io&utm_medium=app-changelog) for what changed and why.
 
 **Breaking Changes:**
 
@@ -830,7 +830,7 @@ _Released Aug 20, 2025_
 
 **Summary**
 
-This release prepares Cypress Studio for the next era of AI-assisted test creation. You can record interactions, add assertions by right-clicking, and now edit tests inline without leaving Cypress. Turn on `experimentalStudio` in your config to try it out and [share your feedback](https://github.com/cypress-io/cypress/discussions/14339). Read more about the foundation for what's next in our [blog post](https://www.cypress.io/blog/cypress-15-the-foundation-for-whats-next).
+This release prepares Cypress Studio for the next era of AI-assisted test creation. You can record interactions, add assertions by right-clicking, and now edit tests inline without leaving Cypress. Turn on `experimentalStudio` in your config to try it out and [share your feedback](https://github.com/cypress-io/cypress/discussions/14339). Read more about the foundation for what's next in our [blog post](https://www.cypress.io/blog/cypress-15-the-foundation-for-whats-next?utm_source=docs.cypress.io&utm_medium=app-changelog).
 
 <DocsVideo
   src="/img/app/cypress-studio/edit-in-studio-button-on-cypress-test.mp4"
@@ -1198,7 +1198,7 @@ Cypress `14.0.0` improves performance of component testing and adds support for 
 [Chrome's deprecation of `document.domain` injection](https://developer.chrome.com/blog/document-domain-setter-deprecation), which should fix issues for some users in recent Chrome versions. Support for older versions of Node.js, Linux distributions, browsers and component testing frameworks and dev servers is removed.
 
 Overall, we don't anticipate this release to be too disruptive for most users. We recommend bumping your version to see if your
-tests still run as expected. As always, open any issues you find [here](https://github.com/cypress-io/cypress/issues/new?assignees=&labels=&projects=&template=1-bug-report.yml).
+tests still run as expected. As always, [open a bug report](https://github.com/cypress-io/cypress/issues/new?assignees=&labels=&projects=&template=1-bug-report.yml) for any issues you find.
 
 **Breaking Changes:**
 
@@ -2014,7 +2014,7 @@ Test Replay is available in all Cypress Cloud plans. To start using Test Replay,
 
 Test Replay now serves as the primary replacement for debugging via video. Video capture and `videoCompression` of captured video are now set to `false` by default and `videoUploadOnPasses` is removed.
 
-Read more about v13.0.0 in [our blog post](https://on.cypress.io/cypress-13-release).
+Read more about v13.0.0 in [our blog post](https://on.cypress.io/cypress-13-release?utm_source=docs.cypress.io&utm_medium=app-changelog).
 
 **Breaking Changes:**
 
@@ -2470,8 +2470,9 @@ _Released Mar 14, 2023_
     and fetches, see the
     [example](/api/commands/intercept#Disabling-logs-for-a-request).
 - It is now possible to control the number of connection attempts to the browser
-  using the `CYPRESS_CONNECT_RETRY_THRESHOLD` Environment Variable. Learn more
-  [here](/app/references/advanced-installation#Environment-variables).
+  using the `CYPRESS_CONNECT_RETRY_THRESHOLD` Environment Variable. Learn
+  more about
+  [Cypress environment variables](/app/references/advanced-installation#Environment-variables).
   Addressed in [#25848](https://github.com/cypress-io/cypress/pull/25848).
 
 **Bugfixes:**
@@ -2531,7 +2532,8 @@ _Released Feb 24, 2023_
   [#17527](https://github.com/cypress-io/cypress/issues/17527).
 - Added a Public API for third party component libraries to define a Framework
   Definition, embedding their library into the Cypress onboarding workflow.
-  Learn more [here](/app/component-testing/custom-frameworks).
+  Learn more about
+  [custom component testing frameworks](/app/component-testing/custom-frameworks).
   Implemented in [#25780](https://github.com/cypress-io/cypress/pull/25780) and
   closes [#25638](https://github.com/cypress-io/cypress/issues/25638).
 - Added a Debug Page tutorial slideshow for projects that are not connected to
@@ -2670,10 +2672,11 @@ _Released Jan 31, 2023_
 **Features:**
 
 - Easily debug failed CI test runs recorded to the Cypress Cloud from your local
-  Cypress app with the new Debug page. Please leave any feedback
-  [here](https://github.com/cypress-io/cypress/discussions/25649). Your feedback
-  will help us make decisions to improve the Debug experience. For more details,
-  see [our blog post](https://on.cypress.io/debug-page-release). Addressed in
+  Cypress app with the new Debug page. Please leave any feedback in the
+  [Debug page discussion](https://github.com/cypress-io/cypress/discussions/25649).
+  Your feedback will help us make decisions to improve the Debug experience.
+  For more details,
+  see [our blog post](https://on.cypress.io/debug-page-release?utm_source=docs.cypress.io&utm_medium=app-changelog). Addressed in
   [#25488](https://github.com/cypress-io/cypress/pull/25488).
 
 **Performance:**
@@ -2729,10 +2732,9 @@ _Released Jan 24, 2023_
   [`experimentalMemoryManagement`](/app/references/experiments#Configuration)
   configuration option to improve memory management in Chromium-based browsers.
   Enable this option with `experimentalMemoryManagement=true` if you have
-  experienced "Out of Memory" issues. Please leave any feedback around
-  `experimentalMemoryManagement`
-  [here](https://github.com/cypress-io/cypress/discussions/25557). Your feedback
-  will help us make decisions to improve memory issues. Addresses
+  experienced "Out of Memory" issues. Please leave any feedback in the
+  [`experimentalMemoryManagement` discussion](https://github.com/cypress-io/cypress/discussions/25557).
+  Your feedback will help us make decisions to improve memory issues. Addresses
   [#23391](https://github.com/cypress-io/cypress/issues/23391).
 - Added new
   `experimentalSkipDomainInjection`
@@ -3029,7 +3031,7 @@ to maintaining stale DOM references. We've updated our
 if you'd like to learn more.
 
 Read more about 12.0 in
-[our blog post](https://on.cypress.io/cypress-12-release).
+[our blog post](https://on.cypress.io/cypress-12-release?utm_source=docs.cypress.io&utm_medium=app-changelog).
 
 **Breaking Changes:**
 
@@ -3204,9 +3206,10 @@ _Released Nov 22, 2022_
   tests sequentially in open mode. This feature had been previously removed in
   Cypress 10.0. Enable 'Run All Specs' with the new experimental flag,
   [`experimentalRunAllSpecs`](/app/references/experiments#End-to-End-Testing).
-  Please leave any feedback around 'Run All Specs'
-  [here](https://github.com/cypress-io/cypress/discussions/21628). Your feedback
-  will help us make product decisions around the future of this feature.
+  Please leave any feedback in the
+  ['Run All Specs' discussion](https://github.com/cypress-io/cypress/discussions/21628).
+  Your feedback will help us make product decisions around the future of this
+  feature.
   Addresses [#24168](https://github.com/cypress-io/cypress/issues/24168)
 - Added messaging after failures in CI to direct people to set up recording to
   the Cypress Cloud if they are not already set up to do so. Addresses
@@ -3293,7 +3296,7 @@ Angular, and Vue!
 Component tests allow you to see and test your application's components in a
 real browser as you work. You can use your favorite Cypress commands and
 features to develop your components without running your whole app. Learn more
-in our [blog](https://on.cypress.io/cypress-11-release) post.
+in our [blog](https://on.cypress.io/cypress-11-release?utm_source=docs.cypress.io&utm_medium=app-changelog) post.
 
 We have also massively improved our startup performance by shipping a snapshot
 of our binary instead of the source files. The performance boost applies to the
@@ -3599,7 +3602,7 @@ _Released Sep 13, 2022_
   installing
   [`playwright-webkit`](https://www.npmjs.com/package/playwright-webkit). For
   more details, read
-  [our blog post](https://www.cypress.io/blog/2022/09/13/cypress-10-8-experimental-run-tests-in-webkit).
+  [our blog post](https://www.cypress.io/blog/2022/09/13/cypress-10-8-experimental-run-tests-in-webkit?utm_source=docs.cypress.io&utm_medium=app-changelog).
   Addresses [#6422](https://github.com/cypress-io/cypress/issues/6422).
 
 **Performance:**
@@ -3714,7 +3717,7 @@ _Released Aug 30, 2022_
   interactions against the application under test. Cypress Studio is available
   only in end-to-end tests, and must be enabled via the `e2e.experimentalStudio`
   flag. For more details, read
-  [our blog post](https://www.cypress.io/blog/2022/08/30/how-to-use-studio-in-cypress-10-7).
+  [our blog post](https://www.cypress.io/blog/2022/08/30/how-to-use-studio-in-cypress-10-7?utm_source=docs.cypress.io&utm_medium=app-changelog).
   Addresses [#23461](https://github.com/cypress-io/cypress/issues/23461).
 - Adds [Svelte](https://svelte.dev/) component testing support. This feature is
   being released as an Alpha, meaning there may be breaking changes in future
@@ -4065,7 +4068,7 @@ _Released Jun 28, 2022_
 
 - Cypress Dashboard test data is now available real-time within Cypress. For
   more details, read
-  [our blog post](https://www.cypress.io/blog/2022/06/28/cypress-10-3-0-speed-up-testing-workflows-with-improved-visibility-into-your-test-results/).
+  [our blog post](https://www.cypress.io/blog/2022/06/28/cypress-10-3-0-speed-up-testing-workflows-with-improved-visibility-into-your-test-results/?utm_source=docs.cypress.io&utm_medium=app-changelog).
   Addressed in [#21250](https://github.com/cypress-io/cypress/issues/21250) and
   [#22497](https://github.com/cypress-io/cypress/issues/22497).
 - Added a new clear button to easily clear the search text when filtering specs
@@ -4109,7 +4112,7 @@ _Released Jun 21, 2022_
 
 - Cypress is now available natively on Apple silicon, including the M1 and M2
   processor families. For more details, read
-  [our blog post](https://www.cypress.io/blog/2022/06/21/cypress-10-2-0-run-tests-up-to-2x-faster-on-apple-silicon-m1/).
+  [our blog post](https://www.cypress.io/blog/2022/06/21/cypress-10-2-0-run-tests-up-to-2x-faster-on-apple-silicon-m1/?utm_source=docs.cypress.io&utm_medium=app-changelog).
   Addresses [#19908](https://github.com/cypress-io/cypress/issues/19908).
 - Cypress is now available natively on ARM64 and AArch64 systems running Linux.
   Addresses [#4478](https://github.com/cypress-io/cypress/issues/4478).
@@ -4358,20 +4361,22 @@ more detail.**
   - The `experimentalStudio` option was removed with the removal of the
     experimental Cypress Studio feature. If this option is configured in your
     project, a warning message will be displayed. Please leave any feedback
-    around Cypress Studio
-    [here](https://github.com/cypress-io/cypress/discussions/21561). Addressed
-    in [#20515](https://github.com/cypress-io/cypress/pull/20515).
+    in the
+    [Cypress Studio discussion](https://github.com/cypress-io/cypress/discussions/21561).
+    Addressed in [#20515](https://github.com/cypress-io/cypress/pull/20515).
 
 - During `cypress open`, the ability to "Run all specs" and "Run filtered specs"
-  has been removed. Please leave feedback around the removal of this feature
-  [here](https://github.com/cypress-io/cypress/discussions/21628). Your feedback
-  will help us make product decisions around the future of this feature.
+  has been removed. Please leave feedback about the removal in the
+  ['Run all specs' discussion](https://github.com/cypress-io/cypress/discussions/21628).
+  Your feedback will help us make product decisions around the future of this
+  feature.
 
 - The experimental Cypress Studio feature has been removed. Please leave
-  feedback around the removal of this feature
-  [here](https://github.com/cypress-io/cypress/discussions/21561). Your feedback
-  will help us make product decisions around the future of this feature.
-  Addressed in [#20515](https://github.com/cypress-io/cypress/pull/20515).
+  feedback about the removal in the
+  [Cypress Studio discussion](https://github.com/cypress-io/cypress/discussions/21561).
+  Your feedback will help us make product decisions around the future of this
+  feature. Addressed in
+  [#20515](https://github.com/cypress-io/cypress/pull/20515).
 - You will no longer be able to run your tests during `cypress run` or
   `cypress open` in
   [browser versions that are not supported by Cypress](/app/references/launching-browsers#Browser-versions-supported).
@@ -6232,7 +6237,7 @@ detail and how to change your code to migrate to Cypress 7.0.**
   [#9545](https://github.com/cypress-io/cypress/issues/9545).
 - The default headless browser window size has been increased to 1920x1080
   pixels to capture
-  [High-definition videos and screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/).
+  [High-definition videos and screenshots](https://www.cypress.io/blog/2021/03/01/generate-high-resolution-videos-and-screenshots/?utm_source=docs.cypress.io&utm_medium=app-changelog).
   Addresses [#15752](https://github.com/cypress-io/cypress/issues/15752),
   [#15730](https://github.com/cypress-io/cypress/issues/15730), and
   [#15481](https://github.com/cypress-io/cypress/issues/15481).
@@ -9691,7 +9696,7 @@ _Released Jul 29, 2019_
   [Cypress Dashboard](https://on.cypress.io/dashboard). You can now get timely
   and useful test run information within pull-requests via status checks and
   pull-request comments. Learn all about it on
-  [our blog](https://www.cypress.io/blog/2019/07/29/github-integration-for-the-cypress-dashboard/).
+  [our blog](https://www.cypress.io/blog/2019/07/29/github-integration-for-the-cypress-dashboard/?utm_source=docs.cypress.io&utm_medium=app-changelog).
   Addresses [#981](https://github.com/cypress-io/cypress/issues/981).
 
 **Bugfixes:**
@@ -10125,7 +10130,7 @@ _Released May 23, 2019_
 **News:**
 
 - We've
-  [written a blog post](https://www.cypress.io/blog/2019/05/22/how-we-improved-network-speed-by-300-in-cypress-3-3-0/)
+  [written a blog post](https://www.cypress.io/blog/2019/05/22/how-we-improved-network-speed-by-300-in-cypress-3-3-0/?utm_source=docs.cypress.io&utm_medium=app-changelog)
   about the 300% increase in proxy performance delivered in
   [3.3.0](#3-3-0).
 
@@ -10178,7 +10183,7 @@ _Released May 17, 2019_
 **News:**
 
 - We've
-  [written a blog post](https://www.cypress.io/blog/2019/05/22/how-we-improved-network-speed-by-300-in-cypress-3-3-0/)
+  [written a blog post](https://www.cypress.io/blog/2019/05/22/how-we-improved-network-speed-by-300-in-cypress-3-3-0/?utm_source=docs.cypress.io&utm_medium=app-changelog)
   about the 300% increase in proxy performance delivered in `3.3.0`.
 
 **Features:**
@@ -14365,7 +14370,7 @@ _Released May 17, 2016_
   these APIs for Chrome, and therefore running on multiple browsers will no
   longer work. This is a temporary setback as we'll be adding driver support for
   all of the other browsers over a period of time. You can read more about our
-  browser management [here](/app/references/launching-browsers).
+  [browser launch options](/app/references/launching-browsers).
 
 **Breaking Changes:**
 
@@ -14398,8 +14403,8 @@ _Released May 17, 2016_
   Canary (depending on what's installed on your OS).
 - Browser sessions are spawned independently of your existing profiles and we've
   disabled things like password saving / prompting, JavaScript popup blocking,
-  and other features which get in the way of testing. Read more
-  [here](/app/references/launching-browsers)
+  and other features which get in the way of testing. Read more about
+  [launching browsers](/app/references/launching-browsers)
 - We automatically spawn Chrome in a **custom theme** so you can visually
   distinguish the difference between browser sessions spawned with Cypress vs
   your normal sessions. We know this may feel a little jarring because you're
