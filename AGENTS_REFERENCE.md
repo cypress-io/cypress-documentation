@@ -9,59 +9,38 @@ sync when conventions change.
 This is the **Cypress Documentation** site, built with
 [Docusaurus 3](https://docusaurus.io/) in TypeScript.
 
-- Docs content lives in `docs/**/*.mdx`.
-- Custom remark plugins live in `plugins/cypressRemarkPlugins`.
-- The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
-  content into stripped-down markdown and chunked JSON published under `/llm`
-  (all of it build output, not committed files). Every page's markdown is also
-  published at its own route plus `.md` (`/app/get-started/why-cypress.md`),
-  with its `##` sections at `/app/get-started/why-cypress/<h2-slug>.md`, so an
-  agent can reach the markdown by appending `.md` to a docs URL without
-  discovering `/llm` first. Readers reach the same file through
-  `src/components/markdown-actions`, the split button beside every page title:
-  it copies the markdown, opens the raw `.md`, or hands its URL to ChatGPT or
-  Claude. Both it and the
-  `<link rel="alternate" type="text/markdown">` tag in `src/theme/DocItem/Layout`
-  derive the path from `markdownPathFor` in `src/utils/markdown-url.ts`, so
-  neither can drift from the other. Three files at the site root index all of
-  that:
-  - `/llms.txt` — the index, in the [llmstxt.org](https://llmstxt.org) format
-    (H1, blockquote, then `##` sections of `- [Title](url): description` links).
-    It links every page's markdown, plus one section listing the other formats.
-    Written by `LlmsTxtWriter`; the link list is generated from the pages the
-    export walks, so it is never hand-maintained.
-  - `/llms-full.txt` — every page's markdown concatenated in index order, for
-    tools that ingest one file. It runs to several megabytes; `LlmsTxtWriter`
-    quotes the current size in the `/llms.txt` entry that links it.
-  - `/docs-manifest.json` — project metadata (name, repository, license, tags)
-    and the machine-readable list of the formats above. Written by
-    `ManifestWriter`. This is the metadata that used to sit in a YAML block at
-    the top of `/llms.txt`, which kept that file out of the format its
-    consumers parse.
-- Small helpers shared by more than one component live in `src/utils`
-  (`markdown-url.ts`, `copy-to-clipboard.ts`). Anything with UI belongs in
-  `src/components` instead.
-- The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
-  **never installed on their own**: they have no lockfiles and are not npm
-  workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
-  run their scripts. Everything they use (typescript, prettier, vitest, the
-  remark/unist ecosystem, etc.) resolves from the repository root's
-  `node_modules`, so their `package.json` files intentionally declare **no**
-  `dependencies`/`devDependencies`. Declare any new plugin dependency in the
-  **root** `package.json` — pins added to a plugin's own `package.json` are
-  never installed and just drift stale.
-- Reusable React/MDX components live in `src/components` and are registered in
-  `src/theme/MDXComponents.js`. Build them from the `@cypress-design/react-*`
-  primitives (`Button`, `Icon`, `Select`, …) rather than hand-rolling a control,
-  and reach for the design system's component before inventing your own; add the
-  package to the root `package.json` when the one you need isn't installed yet.
-- **Interactive chrome must carry `data-sanitize`.** `plugins/llm` strips any
-  element with that attribute from the LLM markdown export, so buttons, menus,
-  and toggles don't reach an agent as text it can't click. Put it on the
-  outermost element that is purely interactive (see `markdown-actions`), or on
-  just the controls when the surrounding content should still ship (see
-  `copy-prompt`). Verify with `npm run build` and a grep over
-  `dist/llm/markdown/`.
+- Docs content lives in `docs/**/*.mdx`, with shared fragments in
+  `docs/partials` and API reference under `docs/api`.
+- `src/` is the React side: components, swizzled Docusaurus theme files, and
+  small shared helpers. [`src/AGENTS.md`](./src/AGENTS.md) covers where a file
+  goes, how a component is registered, and the `data-sanitize` attribute that
+  keeps interactive chrome out of the LLM export.
+- `plugins/` holds the custom remark directives (`cypressRemarkPlugins`), the
+  LLM-docs export (`llm`), and a few plain `.js` Docusaurus plugins.
+  [`plugins/AGENTS.md`](./plugins/AGENTS.md) covers the build step and the
+  root-only dependency rule that make the two sub-packages unusual.
+
+### What the LLM export publishes
+
+At build time `plugins/llm` reprocesses content into stripped-down markdown and
+chunked JSON under `/llm` (all of it build output, not committed files). Every
+page's markdown is also published at its own route plus `.md`
+(`/app/get-started/why-cypress.md`), with its `##` sections at
+`/app/get-started/why-cypress/<h2-slug>.md`, so an agent can reach the markdown
+by appending `.md` to a docs URL without discovering `/llm` first. Readers reach
+the same file through the split button beside every page title
+(`src/components/markdown-actions`), which copies the markdown, opens the raw
+`.md`, or hands its URL to ChatGPT or Claude.
+
+Three files at the site root index all of that, and none is hand-maintained:
+
+- `/llms.txt` — the index, in the [llmstxt.org](https://llmstxt.org) format (H1,
+  blockquote, then `##` sections of `- [Title](url): description` links). It
+  links every page's markdown, plus one section listing the other formats.
+- `/llms-full.txt` — every page's markdown concatenated in index order, for
+  tools that ingest one file. It runs to several megabytes.
+- `/docs-manifest.json` — project metadata (name, repository, license, tags) and
+  the machine-readable list of the formats above.
 
 ## Adding, moving & removing pages
 
@@ -71,34 +50,26 @@ This is the **Cypress Documentation** site, built with
 - **Frontmatter** every page needs. `title` and `description` are emitted as the
   page's HTML `<title>` and `<meta name="description">`, so write them for
   **search engines and the LLM docs**, not just internally. **Match the house
-  style of the section you're editing** — there are two:
-
-  API reference pages (`docs/api/...`) are intentionally terse: the bare command
-  name plus the suffix, and a single short sentence.
-
-  ```yaml
-  ---
-  title: 'intercept | Cypress Documentation'
-  description: Spy and stub network requests and responses.
-  sidebar_label: intercept
-  slug: /api/commands/intercept
-  ---
-  ```
-
-  Guide and concept pages are more descriptive and SEO-shaped:
+  style of the section you're editing.** API reference pages are terse and have
+  their own conventions, covered in
+  [`docs/api/AGENTS.md`](./docs/api/AGENTS.md). Guide and concept pages are more
+  descriptive and SEO-shaped:
 
   ```yaml
   ---
-  title: 'Cross Origin Testing: Cypress Guide'
-  description: 'Learn how to test cross-origin content with Cypress.'
-  sidebar_label: Cross Origin Testing
+  title: 'IDE Integration with Cypress: VS Code, JetBrains, and More'
+  description: 'Set up Cypress in your IDE with IntelliSense code completion, extensions for VS Code and JetBrains, ESLint rules, and one-click file opening from the Cypress app.'
+  sidebar_label: Editor and IDE setup
+  slug: /app/tooling/IDE-integration
   ---
   ```
 
   Guidance:
   - `title`: lead with the primary search term, keep it concise (~50–60
-    characters). Keep the ` | Cypress Documentation` suffix on reference pages;
-    guides follow the `: Cypress Guide` convention seen above.
+    characters), and use a descriptive phrase, often `Topic: qualifier`.
+    **Never append a site or section suffix.** One is appended per section at
+    build time, mapped in `src/sectionTitles.js` and asserted by
+    `cypress/e2e/page_titles.cy.ts`, so a hand-written suffix is emitted twice.
   - `description`: one natural-language sentence that accurately summarizes the
     page and uses the terms a reader would search for. Reference descriptions are
     a short sentence; guide descriptions can run longer (up to ~150–160
@@ -146,11 +117,10 @@ Images go in `static/img/...` and are referenced via `/img/...`.
   (e.g. `<CloudFreePlan />`) with no per-file import.
 - **A partial must be rendered in more than one location.** A partial earns its
   indirection only by sharing content across pages; if it's referenced by a
-  single page, inline the content into that page instead. When splitting a
-  shared partial into product-specific pieces, keep genuinely shared sections in
-  the partial and inline the parts that live on only one page. Before removing
-  the last-but-one reference to a partial, inline it and delete the file (and its
-  `MDXComponents.js` registration).
+  single page, inline the content into that page instead.
+
+Writing, naming, registering, and retiring one is covered in
+[`docs/partials/AGENTS.md`](./docs/partials/AGENTS.md).
 
 ## Product heading & naming
 
@@ -160,7 +130,10 @@ Images go in `static/img/...` and are referenced via `/img/...`.
   `cloud` also takes an optional `plan` (`team` / `business` / `enterprise`).
 - Canonical product names in prose: **Cypress App**, **Cypress Cloud**,
   **Cypress Accessibility**, and **UI Coverage** (UI Coverage has no "Cypress"
-  prefix).
+  prefix). All four keep their capitalization everywhere, including
+  `<ProductHeading>`, which renders "Cypress App".
+- Write "Cypress", never "Cypress.io", and don't precede "Cypress Cloud" with
+  "the".
 
 ## Plugins list
 
@@ -171,13 +144,132 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 
 ## Writing style
 
+Voice and tone are owned by the **Cypress Style Guide**, which covers audience,
+structure, and register for all external-facing content. This section holds what
+applies to `docs/**` specifically: direction on how a guide opens and how its
+headings read, then the mechanical rules a reviewer can check without a judgment
+call.
+
+### Lead with the value
+
+Open a guide with what the feature does for the reader, and what it costs them
+to go without it, before configuration or steps. A reader who stops after the
+first paragraph should still come away knowing why the feature exists.
+
+Treat it as a direction, not a template. Many pages land it with a `## Why use X`
+section as their first H2, others with a couple of sentences under the H1. Either
+is fine. Reference pages are the exception, since they open with the signature.
+
+### Headings
+
+A heading is read without the page around it. Search engines surface it as a
+result, answer engines cite it, and the right-hand contents list shows it beside
+its siblings. So the test is whether it still means something in isolation: a
+heading that could sit on ten different pages needs the context that makes it
+this one's.
+
+- Yes: `Cypress Cloud MCP workflows to try`, `Build a release report of Cypress runs`
+- No: `Workflows to try`, `Build a release report`
+
+Guidance, not arithmetic:
+
+- **Roughly 40 to 60 characters**, about 6 to 9 words. The contents list wraps
+  rather than truncating, so a long heading costs vertical space beside its
+  siblings instead of getting cut off. Most existing headings run shorter than
+  this, averaging 27 characters, which is the habit to push against.
+- **Add the context that disambiguates, not the whole page title.** Writing the
+  product name into every heading reads as keyword stuffing and turns the
+  contents list into a column of near-identical entries.
+- **Lead with the distinctive term**, so the heading survives truncation in a
+  search result and scans quickly in the sidebar.
+- **A question is one good shape, not the required one.** Answer engines do well
+  with `How to build a release report of Cypress runs`, and it is the natural
+  form in FAQ and troubleshooting sections. Forcing `How to` onto a section that
+  answers no question is worse than leaving it short.
+- **Sentence case**, with the fixed API page skeleton (`## Command Log`,
+  `## Syntax`) and product names keeping their own capitalization.
+
+This applies to headings you are writing. Renaming an existing heading costs two
+published URLs, and neither is redirectable:
+
+- **Its anchor.** A URL fragment never reaches the server, so `netlify.toml`
+  cannot redirect it the way it redirects a moved page. Inbound deep links land
+  on the page and fail to scroll.
+- **Its section `.md` file.** The LLM export publishes every `##` section at
+  `<page-route>/<h2-slug>.md`, so renaming an H2 moves that file and the old URL
+  404s. Agents and tools that fetched it lose the link.
+
+So rename an existing heading only when the improvement is worth both, check
+first with a repo-wide search for its anchor, and update in-repo links in the
+same change. `## See also` always stays as it is.
+
+### Person and tense
+
+- **Address the reader as "you".** The docs are overwhelmingly second person
+  already. Reserve "we" for Cypress speaking as a team ("we recommend"), never
+  as a stand-in for the reader ("we then click Save") or for the product.
+- **Present tense.** Describe what the software does, not what it will do.
+  - Yes: "Cypress retries the assertion until it passes or times out."
+  - No: "Cypress will retry the assertion until it will pass."
+- **Active voice.** "The plugin strips the element", not "the element is
+  stripped by the plugin".
+- **Say what something does, not what it lets the reader do.** "Allows you to"
+  almost always hides a simpler sentence.
+  - Yes: "`cy.session()` caches and restores session state between tests."
+  - No: "`cy.session()` allows you to cache and restore session state."
+
+### Word choice
+
+- **Plain over formal.** Not `leverage` (use), not `utilize` (use), not
+  `in order to` (to).
+- **Cut filler.** `please` belongs in a UI prompt, not a doc. `note that` adds
+  nothing a reader cannot see. Drop hedges that carry no information.
+- **No minimizing words** (`simply`, `just`, `easy`, `easily`, `obviously`).
+  They tell a stuck reader the problem is them.
+- **Write "accessibility", not "a11y"**, in prose. The abbreviation stays wherever
+  it is part of a real name rather than a stand-in for the word: the
+  `data-a11y-ignore` attribute, the `checkA11y()` command from `cypress-axe`, a
+  `groupId`, a `utm_content` value, an image filename. Renaming those breaks the
+  thing they name, so only the prose around them changes.
 - **Go easy on em dashes (`—`).** They read as AI-generated when overused.
   Prefer a period, comma, parentheses, or a colon, and rework the sentence
   instead of reaching for a dash. Keep an em dash only when it is clearly the
   best fit, and rarely more than one per paragraph.
+
+### Mechanics
+
+- **Oxford comma**: "commands, queries, and assertions".
+- **US English**, with one exception: every `cancel` form **doubles the `l`**,
+  against the American convention. Write `cancellation`, `cancelled`, and
+  `cancelling`, never `canceled`, `canceling`, or `cancelation`. Cypress Cloud's
+  **Auto Cancellation** is a feature name and is always capitalized.
+
+  The exception to the exception is a **literal you are quoting**, which keeps
+  whatever spelling the source uses. Leave these alone:
+  - Verbatim Cypress Cloud UI strings, such as _"manually canceled"_ or
+    _"Automatically canceled by Smart Orchestration."_, and image `alt` text
+    that transcribes them.
+  - Literal API and CLI output, such as the `RUN_NOT_RUNNING` response body or
+    `Exiting with non-zero exit code because the run was canceled.`
+  - Third-party API values, such as GitLab's native `canceled` pipeline state.
+
+  A find-and-replace over these files gets this wrong in both directions, so
+  read each occurrence in context. The Cypress Cloud run status is `cancelled`
+  while several of its own UI strings say "canceled", and both are correct as
+  quoted.
+
+- **Bullet punctuation**: no terminal punctuation when the bullet is a fragment,
+  a period when it is a full sentence. Pick one per list and stay with it rather
+  than mixing both styles in the same list.
+- **Link text names its destination.** Never `[here]`, `[this link]`, or
+  `[learn more]`. A reader skimming the links alone should still know where each
+  one goes, and a screen reader announces them out of context.
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug.
-- **Bold vs. quotes for UI labels.** Reserve **bold** for real controls the
+
+### UI labels
+
+- Reserve **bold** for real controls the
   reader acts on in a walkthrough or tutorial, meaning actual buttons, links,
   tabs, menu items, and flows in the Cypress Cloud or Cypress App UI (for
   example, "open the **App Quality** tab" or "click **Record run**"). Bolding
@@ -265,12 +357,12 @@ and `docs/app/guides/migration/`.
 
 ```mdx
 <CopyPrompt
-  title="The Health Check"
+  title="Summarize failures in the latest Cypress Cloud run"
   subtext="Get a high-level summary of any failures in the latest run on your branch."
   prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
 >
 
-### The Health Check
+### Summarize failures in the latest Cypress Cloud run
 
 </CopyPrompt>
 ```
@@ -567,17 +659,17 @@ that already embed the correct params rather than re-writing the URL.
 - **End-to-end tests** (`cypress/e2e/`) crawl the built site: `basic_tests.cy.ts`
   checks routing and the main nav, and the `all_*_pages.cy.ts` specs visit every
   page in each section to confirm it loads. So most content changes are exercised
-  simply by the page rendering without errors.
+  by the page rendering without errors.
 - To run them locally, start the site in one terminal (`npm run start`, served at
   `http://localhost:3000`, the configured `baseUrl`) and in another run
   `npm test` (headless) or `npx cypress open` (interactive).
-- **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
+- **Plugin unit tests** (Vitest) cover both sub-packages in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
 - **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and
   `cypress.config.ts`. The `plugins/` sub-packages type check themselves through
-  their own `tsc` builds during `npm run build`. Note that `@docusaurus/tsconfig`
-  points `baseUrl` at its own directory, so the root `tsconfig.json` re-anchors
+  their own `tsc` builds during `npm run build`. `@docusaurus/tsconfig` points
+  `baseUrl` at its own directory, so the root `tsconfig.json` re-anchors
   it to the repository and pulls in the `@theme/*` ambient types explicitly;
   without that, `@site/...` and `@theme/...` imports do not resolve.
 

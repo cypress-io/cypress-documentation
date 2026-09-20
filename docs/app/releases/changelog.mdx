@@ -1894,7 +1894,7 @@ _Released Nov 08, 2023_
 - Fixed an issue where network requests made from tabs, or windows other than the main Cypress tab, would be delayed. Fixes [#28113](https://github.com/cypress-io/cypress/issues/28113).
 - Fixed an issue with 'other' targets (e.g. pdf documents embedded in an object tag) not fully loading. Fixes [#28228](https://github.com/cypress-io/cypress/issues/28228) and [#28162](https://github.com/cypress-io/cypress/issues/28162).
 - Fixed an issue where clicking a link to download a file could cause a page load timeout when the download attribute was missing. Note: download behaviors in experimental WebKit are still an issue. Fixes [#14857](https://github.com/cypress-io/cypress/issues/14857).
-- Fixed an issue to account for canceled and failed downloads to correctly reflect these status in Command log as a download failure where previously it would be pending. Fixed in [#28222](https://github.com/cypress-io/cypress/pull/28222).
+- Fixed an issue to account for cancelled and failed downloads to correctly reflect these status in Command log as a download failure where previously it would be pending. Fixed in [#28222](https://github.com/cypress-io/cypress/pull/28222).
 - Fixed an issue determining visibility when an element is hidden by an ancestor with a shared edge. Fixes [#27514](https://github.com/cypress-io/cypress/issues/27514).
 - We now pass a flag to Chromium browsers to disable Chrome translation, both the manual option and the popup prompt, when a page with a differing language is detected. Fixes [#28225](https://github.com/cypress-io/cypress/issues/28225).
 - Stopped processing CDP events at the end of a spec when Test Isolation is off and Test Replay is enabled. Addressed in [#28213](https://github.com/cypress-io/cypress/pull/28213).
@@ -6395,8 +6395,8 @@ _Released Mar 15, 2021_
   [`before:spec`](/api/node-events/before-spec-api) and
   [`after:spec`](/api/node-events/after-spec-api) docs for more information.
   Addressed in [#15276](https://github.com/cypress-io/cypress/pull/15276).
-- When canceling a run from the Dashboard, previously only parallelized runs
-  would cancel correctly. Now all recorded runs will respect cancelation and
+- When cancelling a run from the Dashboard, previously only parallelized runs
+  would cancel correctly. Now all recorded runs will respect cancellation and
   exit early. Addresses
   [#1691](https://github.com/cypress-io/cypress/issues/1691).
 - [Test configuration](/app/core-concepts/writing-and-organizing-tests#Test-Configuration)
@@ -7850,7 +7850,7 @@ _Released Jul 07, 2020_
 **Bugfixes:**
 
 - HTTP requests taking longer than the default `responseTimeout` will no longer
-  be prematurely canceled by the Cypress proxy layer. Fixes
+  be prematurely cancelled by the Cypress proxy layer. Fixes
   [#6426](https://github.com/cypress-io/cypress/issues/6426).
 - Using Cypress commands to traverse the DOM on an application with a global
   `parent` variable will no longer throw Illegal Invocation errors. Fixes
@@ -10241,7 +10241,7 @@ _Released May 17, 2019_
   now displays its resolved `options` arguments. Addresses
   [#3721](https://github.com/cypress-io/cypress/issues/3721).
 - There's a new 'canceled' XHR status shown on the Command Log to indicate the
-  difference between calling `xhr.abort()` and the browser canceling the request
+  difference between calling `xhr.abort()` and the browser cancelling the request
   due to page navigation. Addresses
   [#3973](https://github.com/cypress-io/cypress/issues/3973).
 - The Electron browser now runs Chrome Version 61. Addresses
@@ -14192,7 +14192,7 @@ _Released Jun 17, 2016_
 **Bugfixes:**
 
 - Fixed regression caused by [0.16.2](#0-16-2) where a failed
-  [`cy.contains()`](/api/commands/contains) would not be canceled and would
+  [`cy.contains()`](/api/commands/contains) would not be cancelled and would
   continue to run and display failed assertions in between test runs (without a
   full page refresh). Fixes
   [#174](https://github.com/cypress-io/cypress/issues/174).
@@ -15558,7 +15558,7 @@ _Released Oct 07, 2015_
 **Bugfixes:**
 
 - Fixed situation where an `Uncaught Error` was not being properly handled.
-  Cypress would incorrectly continue to retry commands instead of canceling
+  Cypress would incorrectly continue to retry commands instead of cancelling
   them, which lead to incorrect errors downstream in other tests.
 - Fixed situation where an error being thrown from an XHR was being improperly
   handled (in a slightly different way than the problem above).
@@ -15654,7 +15654,7 @@ _Released Sep 25, 2015_
 **Bugfixes:**
 
 - Prevented edge case with [`cy.fixture()`](/api/commands/fixture) where it
-  would not be able to be canceled without throwing an unhandled rejection
+  would not be able to be cancelled without throwing an unhandled rejection
   error.
 
 ## 0.11.7
@@ -16711,7 +16711,7 @@ _Released May 23, 2015_
 
 - [`.submit()`](/api/commands/submit) will actually submit the form for real
   now, instead of just firing the submit event. Now it's been upgraded to be
-  able to be canceled or have its returnValue set to false and will not submit
+  able to be cancelled or have its returnValue set to false and will not submit
   the form. Don't ask how I missed this one. I as once a young naive programmer
   who trusted the DOM not to be the abomination it actually is.
 

@@ -157,6 +157,19 @@ describe('walkDocs', () => {
     const root = makeTempDir()
     expect(walkDocs(root)).toEqual([])
   })
+
+  // AGENTS.md / CLAUDE.md are excluded from the Docusaurus build, so no HTML is
+  // emitted for them and the export would throw ENOENT looking for it.
+  test('skips agent instruction files at any depth', () => {
+    const root = makeTempDir()
+    fs.mkdirSync(path.join(root, 'api'))
+    fs.writeFileSync(path.join(root, 'AGENTS.md'), '')
+    fs.writeFileSync(path.join(root, 'api', 'AGENTS.md'), '')
+    fs.writeFileSync(path.join(root, 'api', 'CLAUDE.md'), '')
+    fs.writeFileSync(path.join(root, 'api', 'click.mdx'), '')
+    const files = walkDocs(root)
+    expect(files.map((f) => path.basename(f))).toEqual(['click.mdx'])
+  })
 })
 
 // ---------------------------------------------------------------------------
