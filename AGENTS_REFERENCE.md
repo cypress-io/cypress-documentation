@@ -135,6 +135,11 @@ Writing, naming, registering, and retiring one is covered in
   only where the format demands it, such as a Title Case heading. The other
   product names are always capitalized. Write "Cypress", never "Cypress.io", and
   don't precede "Cypress Cloud" with "the".
+- **`<ProductHeading>` is exempt.** It renders "Cypress App" from a hard-coded
+  string in `src/components/product-heading/index.tsx`, as the page's product
+  label rather than prose. Leave the component alone: changing it would restyle
+  the heading on 300+ pages, which is a design decision and not a copy edit. The
+  lowercase rule governs the prose you write.
 
 ## Plugins list
 

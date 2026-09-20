@@ -110,8 +110,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
-  names: Cypress app (lowercase `app`), Cypress Cloud, Cypress Accessibility,
-  UI Coverage.
+  names in prose: Cypress app (lowercase `app`), Cypress Cloud, Cypress
+  Accessibility, UI Coverage. The `<ProductHeading>` component renders "Cypress
+  App" and is exempt; don't change it.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
   partial for content rendered in **more than one location**. If it's used in a
   single page, inline it there instead.
