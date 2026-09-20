@@ -158,7 +158,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Oxford comma. US English, except that every `cancel` form doubles the `l`:
   **cancellation**, **cancelled**, **cancelling**. Leave a single `l` only where
   it is a literal you are quoting, such as an API value or UI string.
-- Write "accessibility", not "a11y".
+- Write "accessibility", not "a11y", in prose. Keep `a11y` where it is part of an
+  actual name, such as the `data-a11y-ignore` attribute, the `checkA11y()`
+  command, or an identifier like a `groupId` or an image filename.
 - Bullets take no terminal punctuation when they are fragments and a period when
   they are full sentences. Don't mix the two within one list.
 - Use **bold** only for real UI controls the reader acts on in a walkthrough

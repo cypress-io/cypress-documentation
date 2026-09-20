@@ -219,7 +219,11 @@ change. `## See also` always stays as it is.
   nothing a reader cannot see. Drop hedges that carry no information.
 - **No minimizing words** (`simply`, `just`, `easy`, `easily`, `obviously`).
   They tell a stuck reader the problem is them.
-- **Write "accessibility", not "a11y"**, outside code and identifiers.
+- **Write "accessibility", not "a11y"**, in prose. The abbreviation stays wherever
+  it is part of a real name rather than a stand-in for the word: the
+  `data-a11y-ignore` attribute, the `checkA11y()` command from `cypress-axe`, a
+  `groupId`, a `utm_content` value, an image filename. Renaming those breaks the
+  thing they name, so only the prose around them changes.
 - **Go easy on em dashes (`—`).** They read as AI-generated when overused.
   Prefer a period, comma, parentheses, or a colon, and rework the sentence
   instead of reaching for a dash. Keep an em dash only when it is clearly the
