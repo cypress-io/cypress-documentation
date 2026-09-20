@@ -49,6 +49,12 @@ npm test              # cypress e2e (needs the dev server running)
 npm run test:plugins  # vitest unit tests for plugins/
 ```
 
+Install before you lint. With no `node_modules` present, `npm run lint:fix`
+still runs, but on whatever Prettier `npx` fetches rather than the pinned one,
+and a different version reformats files the pinned one leaves alone. For
+content-only work, `CYPRESS_INSTALL_BINARY=0 npm i` skips a 250 MB download and
+is enough for every command above except `npm test`.
+
 ## Verify ladder (cheap → authoritative)
 
 1. `npm run lint:fix` — **required before every commit** (a Husky/lint-staged
@@ -147,7 +153,10 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Cut filler. `please`, `note that`, and hedges that carry no information.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
   instructions. They undermine a reader who is struggling and add nothing; state
-  the step plainly instead.
+  the step plainly instead. Don't tell the reader a feature is easy or fast,
+  either. Show it with a short example and let them draw the conclusion. The
+  rule is the minimizing sense, not the letters: "not just", "just as", and
+  `just-in-time` are other words doing other work.
 - Go easy on em dashes. Overused, they read as AI-generated, so prefer a comma,
   period, colon, or parentheses and rework the sentence rather than reaching for
   a dash. Keep one where it is clearly the best fit, rarely more than one per

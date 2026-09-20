@@ -225,7 +225,23 @@ same change. `## See also` always stays as it is.
 - **Cut filler.** `please` belongs in a UI prompt, not a doc. `note that` adds
   nothing a reader cannot see. Drop hedges that carry no information.
 - **No minimizing words** (`simply`, `just`, `easy`, `easily`, `obviously`).
-  They tell a stuck reader the problem is them.
+  They tell a stuck reader the problem is them. Write the step plainly: "Run
+  `npx cypress open`", not "simply run `npx cypress open`".
+
+  The rule is the minimizing sense, not the letters. These are other words doing
+  other work, and are fine to write:
+  - "not just the file name", meaning "not only"
+  - "just as", "just like", "just before"
+  - restrictive "just": "pass just the path", "re-run just those failures"
+  - the term `just-in-time` and the `justInTimeCompile` option
+  - "easy to miss", "easy to get subtly wrong", which warn the reader instead of
+    dismissing them
+
+- **Don't claim a feature is easy, fast, or simple.** "Cypress makes it easy to
+  run your tests in CI" asks the reader to take your word for it, and a claim
+  the page doesn't back reads as marketing. Show the thing and let a short
+  example carry it. This is the same instinct as saying what something does
+  rather than what it lets the reader do.
 - **Write "accessibility", not "a11y"**, in prose. The abbreviation stays wherever
   it is part of a real name rather than a stand-in for the word: the
   `data-a11y-ignore` attribute, the `checkA11y()` command from `cypress-axe`, a

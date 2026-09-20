@@ -333,7 +333,7 @@ const login = (name, password) => {
 ### Switching sessions inside tests
 
 Because `cy.session()` clears the page and all session data before running
-`setup`, you can use it to easily switch between sessions without first needing
+`setup`, you can use it to switch between sessions without first needing
 to log the previous user out. This allows tests to more accurately represent
 real-world scenarios and helps keep test run times short.
 
@@ -562,8 +562,8 @@ it('should test something on the /other page', () => {
 })
 ```
 
-Tests will obviously be faster if you call `cy.visit()` only when necessary.
-This can be easily realised by
+Tests will be faster if you call `cy.visit()` only when necessary.
+You can do this by
 [organizing tests into suites](/app/core-concepts/writing-and-organizing-tests#Test-Structure)
 and calling `cy.visit()` **after** logging in, inside a
 [`beforeEach`](/app/core-concepts/writing-and-organizing-tests#Hooks) hook.
@@ -610,8 +610,8 @@ describe('other page tests', () => {
 ### Updating a login function that returns a value
 
 If your custom login command returns a value that you use to assert in a test,
-wrapping it with `cy.session()` will break that test. However, it's usually easy
-to solve this by refactoring the login code to assert directly inside `setup`.
+wrapping it with `cy.session()` will break that test. You can usually solve this
+by refactoring the login code to assert directly inside `setup`.
 
 **Before**
 
@@ -720,8 +720,8 @@ it('is a redundant test', () => {
 
 ### Cross-domain sessions
 
-It's possible to switch domains while caching sessions, just be sure to
-explicitly visit the domain in your login command before calling `cy.session()`.
+It's possible to switch domains while caching sessions. Be sure to explicitly
+visit the domain in your login command before calling `cy.session()`.
 
 ```jsx
 const login = (name) => {

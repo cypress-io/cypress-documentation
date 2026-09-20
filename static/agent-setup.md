@@ -116,7 +116,7 @@ specific enough: two of these four cases are not an install at all, and one of
 them is destructive if you treat it as one.
 
 - **Declared, and resolvable.** Nothing. Report the version and move on.
-- **Declared, not resolvable.** Dependencies are simply not installed. Run the
+- **Declared, not resolvable.** Dependencies are not installed. Run the
   manager's plain install from the phase-1 list — never `add -D cypress`, which
   would resolve to the latest version and rewrite the declared range.
 - **Not declared, but resolvable from inside the repository.** Cypress comes

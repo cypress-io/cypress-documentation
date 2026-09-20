@@ -624,7 +624,7 @@ it(
 
 ### `allowCypressEnv` config option removed
 
-The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it. There is no behavior change, so just remove the key.
+The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it. There is no behavior change, so remove the key.
 
 :::cypress-config-example
 
@@ -1709,7 +1709,7 @@ With [LTS ending](https://angular.dev/reference/releases#actively-supported-vers
 
 Now that the minimum version of Angular supported for Component Testing is `17.2.0`, Cypress is able to merge the `cypress/angular-signals` test harness into the main `cypress/angular` test harness. Because of this, the `@cypress/angular-signals` harness is deprecated and no longer shipped with the binary. Support has been moved to `cypress/angular`.
 
-To migrate, just change the test harness from `cypress/angular-signals` to `cypress/angular`.
+To migrate, change the test harness from `cypress/angular-signals` to `cypress/angular`.
 
 <Badge type="danger">Before</Badge>
 
@@ -2115,7 +2115,7 @@ it('securely edits content', () => {
 ```
 
 The just-released `cy.session()` command can be used to setup and cache cookies,
-local storage, and session storage between tests to easily re-establish the
+local storage, and session storage between tests to re-establish the
 previous (or common) browser contexts needed in a suite. This command will run
 setup on its initial execution and will restore the saved browser state on each
 sequential command execution. This command reduces the need for repeated
@@ -2588,7 +2588,7 @@ it('renders some content', () => {
 rationale in
 [Upcoming Changes to Component Testing](https://www.cypress.io/blog/2022/11/04/upcoming-changes-to-component-testing/?utm_source=docs.cypress.io&utm_medium=migration-guide).
 
-We recommend simply replacing it with `mount` and a component.
+We recommend replacing it with `mount` and a component.
 
 Consider the following `useCounter` hook:
 

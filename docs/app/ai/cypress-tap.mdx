@@ -672,7 +672,7 @@ STYLES (2)
   color    rgb(0, 0, 0)
 ```
 
-The snapshot confirms it: at the moment the assertion ran, `.cart-total` read `$50.00`, the pre-discount price. The click was logged as passed and the element is present and visible, so nothing swallowed the interaction, the discount simply never applied to the total. That points squarely at the discount logic in the app, not the test.
+The snapshot confirms it: at the moment the assertion ran, `.cart-total` read `$50.00`, the pre-discount price. The click was logged as passed and the element is present and visible, so nothing swallowed the interaction, the discount never applied to the total. That points squarely at the discount logic in the app, not the test.
 
 `dom` returns HTML (whole page or per selector, capped at 30,000 characters by
 default), and `aria` returns the compact role/name/state tree that browser
