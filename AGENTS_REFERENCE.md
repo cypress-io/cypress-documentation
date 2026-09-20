@@ -737,10 +737,10 @@ read those on GitHub.
 
 ## Testing
 
-- **End-to-end tests** (`cypress/e2e/`) crawl the built site: `basic_tests.cy.ts`
-  checks routing and the main nav, and the `all_*_pages.cy.ts` specs visit every
-  page in each section to confirm it loads. So most content changes are exercised
-  by the page rendering without errors.
+- **End-to-end tests** (`cypress/e2e/`) crawl the built site, so most content
+  changes are exercised by the page rendering without errors. What each spec
+  covers, and why adding a page needs no change to any of them, is in
+  [`cypress/AGENTS.md`](./cypress/AGENTS.md).
 - To run them locally, start the site in one terminal (`npm run start`, served at
   `http://localhost:3000`, the configured `baseUrl`) and in another run
   `npm test` (headless) or `npx cypress open` (interactive).

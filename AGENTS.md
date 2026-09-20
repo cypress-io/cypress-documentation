@@ -18,6 +18,7 @@ you're working in:
 | `docs/app/releases/` | changelog entry format                                      |
 | `src/`               | component layout, registration, swizzled theme files        |
 | `plugins/`           | the sub-package build and dependency rules                  |
+| `cypress/`           | the generated page list, what the crawl specs are for       |
 | `.github/workflows/` | pinning actions, what forks copy, required checks           |
 
 Three conventions hold for every one of them:
