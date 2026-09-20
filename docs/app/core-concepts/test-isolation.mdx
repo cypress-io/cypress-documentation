@@ -81,7 +81,7 @@ standalone or in a randomized order.
 
 When test isolation is disabled, Cypress will not alter the browser context
 before the test starts. The page does not clear between tests and cookies, local
-storage and session storage will be available across tests in that suite.
+storage, and session storage will be available across tests in that suite.
 Additionally, the [`cy.session()`](/api/commands/session) command will only
 clear the current browser context when establishing the browser session - the
 current page is not cleared.

@@ -1420,7 +1420,7 @@ _Released Aug 27, 2024_
   configuration option for component testing. This option will only compile resources directly related to your spec, compiling
   them 'just-in-time' before spec execution. This should result in improved memory management and performance for component
   tests in `cypress open` and `cypress run` modes, in particular for large component testing suites. [`experimentalJustInTimeCompile`](/app/references/experiments#Configuration) is currently supported for [`webpack`](https://www.npmjs.com/package/webpack) and [`vite`](https://www.npmjs.com/package/vite). Addresses [#29244](https://github.com/cypress-io/cypress/issues/29244).
-- `.type({upArrow})` and `.type({downArrow})` now also works for date, month, week, time, datetime-local and range input types. Addresses [#29665](https://github.com/cypress-io/cypress/issues/29665).
+- `.type({upArrow})` and `.type({downArrow})` now also works for date, month, week, time, datetime-local, and range input types. Addresses [#29665](https://github.com/cypress-io/cypress/issues/29665).
 - Added a `CYPRESS_SKIP_VERIFY` flag to enable suppressing Cypress verification checks. Addresses [#22243](https://github.com/cypress-io/cypress/issues/22243).
 - Updated the protocol to allow making Cloud API requests. Addressed in [#30066](https://github.com/cypress-io/cypress/pull/30066).
 - Passing `--browser` flag alone will automatically launch browser after being guided through project and/or testing type selection. Addressed in [#28538](https://github.com/cypress-io/cypress/pull/28538).
@@ -2761,7 +2761,7 @@ _Released Jan 24, 2023_
   [#24495](https://github.com/cypress-io/cypress/issues/24495).
 - Added support for the `data-qa` selector in the
   Selector Playground in addition to
-  `data-cy`, `data-test` and `data-testid`. Addresses
+  `data-cy`, `data-test`, and `data-testid`. Addresses
   [#25305](https://github.com/cypress-io/cypress/issues/25305).
 
 **Bugfixes:**
@@ -3033,7 +3033,7 @@ Read more about 12.0 in
 
 **Breaking Changes:**
 
-- Cypress dropped support for Node.js 12, 15 and 17. Those versions have reached
+- Cypress dropped support for Node.js 12, 15, and 17. Those versions have reached
   end-of-life. Installing Cypress on your system now requires Node.js 14, 16 or
   18+. Addressed in [#24885](https://github.com/cypress-io/cypress/pull/24885).
 - Cypress has always recommended writing tests in a clean context. In Cypress
@@ -4281,7 +4281,7 @@ _Released Jun 01, 2022_
 **Summary:**
 
 Component testing is now beta! We've also reworked the Cypress app from the
-ground up to modernize the interface, streamline workflows and integrate better
+ground up to modernize the interface, streamline workflows, and integrate better
 into your overall development experience. Read more about 10.0 in
 [our blog post](https://cypress.io/blog/2022/06/01/cypress-10-release/).
 
@@ -4447,7 +4447,7 @@ more detail.**
     [`component`](/app/references/configuration#component) configurations.
     This option accepts a glob or an array of globs of the spec files to load.
     This option simplifies the spec discovery by replacing the
-    `componentFolder`, `integrationFolder` and `testFiles` options. Addressed in
+    `componentFolder`, `integrationFolder`, and `testFiles` options. Addressed in
     [#19319](https://github.com/cypress-io/cypress/pull/19319),
     [#20565](https://github.com/cypress-io/cypress/pull/20565) and
     [#20853](https://github.com/cypress-io/cypress/pull/20853).
@@ -4876,7 +4876,7 @@ _Released Mar 14, 2022_
 - Upgraded `url-parse` dependency from `1.5.6` to `1.5.9` to address these NVD
   security vulnerabilities,
   [CVE-2022-0639](https://nvd.nist.gov/vuln/detail/CVE-2022-0639),
-  [CVE-2022-0686](https://nvd.nist.gov/vuln/detail/CVE-2022-0686) and
+  [CVE-2022-0686](https://nvd.nist.gov/vuln/detail/CVE-2022-0686), and
   [CVE-2022-0691](https://nvd.nist.gov/vuln/detail/CVE-2022-0691). Addressed in
   [#20386](https://github.com/cypress-io/cypress/pull/20386) and
   [#20439](https://github.com/cypress-io/cypress/issues/20439).
@@ -5678,7 +5678,7 @@ detail and how to change your code to migrate to Cypress 8.0.**
 - Arguments returned from a chained function will no longer incorrectly be of
   type `jQuery` and instead have an `any` type. Fixes
   [#16669](https://github.com/cypress-io/cypress/issues/16669).
-- The `Cypress.ConfigOptions`, `Cypress.ResolvedConfigOptions` and
+- The `Cypress.ConfigOptions`, `Cypress.ResolvedConfigOptions`, and
   `Cypress.RuntimeConfigOption` types have been updated so that `ConfigOptions`
   match the JSON schema. Addressed in
   [#17251](https://github.com/cypress-io/cypress/pull/17251).
@@ -6892,7 +6892,7 @@ _Released Nov 23, 2020_
 
 Cypress now offers full network stubbing support with the introduction of the
 [cy.intercept()](/api/commands/intercept) command (previously `cy.route2()`).
-With [cy.intercept()](/api/commands/intercept) your tests can intercept, modify
+With [cy.intercept()](/api/commands/intercept) your tests can intercept, modify,
 and wait on any type of HTTP request originating from your app. See our guide on
 [Migrating `cy.route()` to `cy.intercept()`](/app/references/migration-guide).
 
@@ -7730,7 +7730,7 @@ _Released Aug 03, 2020_
 - Cookie command's `expiry` property type is now a Number instead of a String.
   Addresses [#8144](https://github.com/cypress-io/cypress/issues/8144).
 - There are some minor visual improvements to the Test Runner's Command Log when
-  hovering, focusing and clicking on hook titles and pending tests. Addressed in
+  hovering, focusing, and clicking on hook titles and pending tests. Addressed in
   [#8153](https://github.com/cypress-io/cypress/pull/8153).
 
 **Dependency Updates:**
@@ -9768,7 +9768,7 @@ _Released Jul 29, 2019_
   provided literally without any special parsing. Fixes
   [#4287](https://github.com/cypress-io/cypress/issues/4287).
 - You can now zoom in the main Test Runner window and also the Electron browser.
-  Corresponding keyboard shortcuts for Zoom in, Zoom out and Actual Size are
+  Corresponding keyboard shortcuts for Zoom in, Zoom out, and Actual Size are
   also available. Addresses
   [#1231](https://github.com/cypress-io/cypress/issues/1231).
 - When viewing the Test Runner's main window at its smallest size, the header
@@ -12187,7 +12187,7 @@ _Released Dec 06, 2017_
 - Fixed an issue causing `Chrome` to timeout when attempted to be run through
   our Docker containers. Fixes
   [#1031](https://github.com/cypress-io/cypress/issues/1031).
-- Several TypeScript typings were added, updated and fixed. Fixes
+- Several TypeScript typings were added, updated, and fixed. Fixes
   [#1006](https://github.com/cypress-io/cypress/issues/1006).
 - Using a regular `http://` URL now works when using the
   `CYPRESS_BINARY_VERSION` flag to point the binary at an external location.
@@ -13130,7 +13130,7 @@ _Released Mar 09, 2017_
 
 - We now preserve the Test Runner's position and sizing after it's closed +
   reopened. Fixes [#443](https://github.com/cypress-io/cypress/issues/443).
-- We now ignore watching `node_modules`, `bower_components` and a few other
+- We now ignore watching `node_modules`, `bower_components`, and a few other
   folders to reduce the number of watched files. Fixes
   [#437](https://github.com/cypress-io/cypress/issues/437).
 
@@ -13169,7 +13169,7 @@ _Released Feb 11, 2017_
 - There is a new [Dashboard](https://on.cypress.io/dashboard) service that
   displays your recorded runs.
 - The [Dashboard](https://on.cypress.io/dashboard) enables you to view your
-  recorded runs, manage projects, create organizations, invite users and set
+  recorded runs, manage projects, create organizations, invite users, and set
   permissions.
 - Projects are either **public** with their runs being publicly viewable by
   anyone, or **private** which restricts their access to only users you've
@@ -14372,7 +14372,7 @@ _Released May 17, 2016_
 - Running tests in Cypress now requires either Chrome, Chromium, or Canary to be
   installed on your OS environment. We intend to expand support for more
   browsers in the future, but for now, only these 3 are supported.
-- Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set` and
+- Removed support for `Cypress.Cookies.get`, `Cypress.Cookies.set`, and
   `Cypress.Cookies.remove`.
 - Changed return of [`cy.getCookies()`](/api/commands/getcookies) to return an
   array of cookies, each with properties include name, value, etc.
@@ -15116,7 +15116,7 @@ _Released Dec 20, 2015_
 
 **Notes:**
 
-- Docs have been updated for [`cy.wait()`](/api/commands/wait), `cy.route()` and
+- Docs have been updated for [`cy.wait()`](/api/commands/wait), `cy.route()`, and
   `cy.server()` to reflect these changes.
 
 **Features:**
@@ -15310,7 +15310,7 @@ _Released Nov 29, 2015_
   are transparently rewritten which bypasses CORS problems. This is a quick fix
   which should satisfy most of the problems users were having with CORS
   requests. However there is a much bigger change coming in `0.14.0` where the
-  entire proxy layer will be rewritten to accommodate CORS, `window.fetch` and
+  entire proxy layer will be rewritten to accommodate CORS, `window.fetch`, and
   `domain cookies` flawlessly. As it stands Cypress is prone to errors in
   complex setups.
 

@@ -175,6 +175,14 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
   Prefer a period, comma, parentheses, or a colon, and rework the sentence
   instead of reaching for a dash. Keep an em dash only when it is clearly the
   best fit, and rarely more than one per paragraph.
+- **Use the Oxford comma.** In a list of three or more items, put a comma before
+  the final `and` or `or`: "commands, queries, and assertions", not "commands,
+  queries and assertions". It applies to prose anywhere a reader sees it,
+  including headings, frontmatter `title`/`description`, link text, table cells,
+  and image `alt` text. It does not apply inside code blocks, inline code,
+  quoted UI strings, or a literal list of API values, and it does not apply when
+  the last two words are a single unit rather than separate items (for example
+  "the error and code frame" or "failed and flaky tests").
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug.
 - **Bold vs. quotes for UI labels.** Reserve **bold** for real controls the

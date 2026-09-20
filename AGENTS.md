@@ -97,6 +97,10 @@ Each rule is a hard convention. See the linked section for the how and why.
   assistant.
 - Never use em dashes — they read as AI-generated; use commas, periods, or
   parentheses instead.
+- Use the Oxford comma in lists of three or more ("commands, queries, and
+  assertions"), including in headings, frontmatter, link text, and image `alt`
+  text. Skip it inside code, quoted UI strings, and literal API value lists, and
+  when the last two words are one unit ("the error and code frame").
 - Use **bold** only for real UI controls the reader acts on in a walkthrough
   (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
   e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
