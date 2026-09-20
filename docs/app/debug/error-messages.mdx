@@ -230,7 +230,7 @@ you must:
 
 - Always start a new chain after each _command_.
 - Use Cypress _queries_ to locate elements on the page, rather than using
-  specific HTML elements as your subject
+  specific HTML elements as your subject.
 
 Queries (`.get()`, `.as()` and`.parent()`, for example) and assertions
 (`.should()`, `.and()`) are safe to chain off of. Commands (such as `.click()`)
@@ -299,8 +299,8 @@ Cypress will continuously attempt to interact with the element until it
 eventually times out. If you'd like to force Cypress to interact with the
 element there are a few options:
 
-- Pass `{force: true}`. This disables _all_ error checking
-- Pass `{waitForAnimations: false}` to disable animation error checking
+- Pass `{force: true}`. This disables _all_ error checking.
+- Pass `{waitForAnimations: false}` to disable animation error checking.
 - Pass `{animationDistanceThreshold: 20}` to decrease the sensitivity of
   detecting if an element is animating. By increasing the threshold this enables
   your element to move farther on the page without causing Cypress to
@@ -981,14 +981,14 @@ exited or crashed before the tests could finish running.
 
 This can happen for a number of reasons, including:
 
-- The browser was exited manually, by clicking the "Quit" button or otherwise
+- The browser was exited manually, by clicking the "Quit" button or otherwise.
 - Your test suite or application under test is starving the browser of
   resources.
-- Cypress is running in a memory-starved environment
-- The browser is testing a memory-heavy application
-- There are problems with the GPU / GPU drivers
-- There is a bug in the browser involving memory management
-- There is a memory leak in Cypress
+- Cypress is running in a memory-starved environment.
+- The browser is testing a memory-heavy application.
+- There are problems with the GPU / GPU drivers.
+- There is a bug in the browser involving memory management.
+- There is a memory leak in Cypress.
 
 For Chromium-based browsers, Cypress manages browser memory by default through
 [manageBrowserMemory](/app/references/configuration#Global), so confirm you
