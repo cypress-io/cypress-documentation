@@ -263,7 +263,7 @@ if (options === null || !_.isPlainObject(options)) {
 }
 ```
 
-This is a general pattern: when something goes wrong, queries just throw an
+This is a general pattern: when something goes wrong, queries throw an
 error. Cypress will handle displaying the error in the Command Log.
 
 ```javascript
@@ -315,7 +315,7 @@ Cypress' builtin [`Cypress.ensure`](/api/cypress-api/ensure) functions, as
 `.contains()` does:
 `Cypress.ensure.isType(subject, ['optional', 'element', 'window', 'document'], 'contains', cy)`
 
-or you can perform your own validation and simply throw an error:
+or you can perform your own validation and throw an error:
 `if (!_.isString(subject)) { throw new Error('MyCustomCommand only accepts strings as a subject!') }`
 
 If the inner function throws an error, Cypress will retry it after a short delay
@@ -563,7 +563,7 @@ which can be helpful in this regard:
 - `Cypress.ensure.isVisible(subject, commandName)`: Ensure that a DOM element is
   visible on the page.
 
-There's nothing special about these functions - they simply validate their
+There's nothing special about these functions - they validate their
 argument and throw an error if the check fails. You can throw errors of any type
 at any time inside your queries - Cypress will catch and handle it
 appropriately.
@@ -600,8 +600,8 @@ Don't do things like:
 - <Icon name="exclamation-triangle" color="red" /> `cy.getButton()`
 - <Icon name="exclamation-triangle" color="red" /> `.getFirstTableRow()`
 
-Both of these are wrapping `cy.get(selector)`. It's completely unnecessary. Just
-call `.get('button')` or `.get('tr:first')`.
+Both of these are wrapping `cy.get(selector)`. It's completely unnecessary. Call
+`.get('button')` or `.get('tr:first')` instead.
 
 Testing in Cypress is all about **readability** and **simplicity**. You don't
 have to do that much actual programming to get a lot done. You also don't need

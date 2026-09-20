@@ -127,7 +127,7 @@ it('autocompletes search input when pressing Tab', () => {
 
 ### Type a single character
 
-Single character keys are supported, like `a`, `b`, `c`, etc. There is no need to reference `Cypress.Keyboard.Keys` record for these keys, just type them normally as a string:
+Single character keys are supported, like `a`, `b`, `c`, etc. There is no need to reference `Cypress.Keyboard.Keys` record for these keys; type them normally as a string:
 
 ```javascript
 cy.get('input').focus()
@@ -136,7 +136,7 @@ cy.press('a')
 
 ### Type a multi-codepoint UTF-8 character
 
-Multi-codepoint UTF-8 characters are also supported and do not need to be entered as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; just type the entire character as a string.
+Multi-codepoint UTF-8 characters are also supported and do not need to be entered as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; type the entire character as a string.
 
 ```javascript
 // works

@@ -61,7 +61,6 @@ anything.
 - **Cypress — establish three separate facts.** They can disagree, and which
   action is correct depends on which of them is true. Run the commands; do not
   infer.
-
   1. **Declared** — is `cypress` in `dependencies` or `devDependencies`, and at
      what range? Read the `package.json` in your operating directory.
   2. **Resolvable** —
@@ -117,7 +116,7 @@ specific enough: two of these four cases are not an install at all, and one of
 them is destructive if you treat it as one.
 
 - **Declared, and resolvable.** Nothing. Report the version and move on.
-- **Declared, not resolvable.** Dependencies are simply not installed. Run the
+- **Declared, not resolvable.** Dependencies are not installed. Run the
   manager's plain install from the phase-1 list — never `add -D cypress`, which
   would resolve to the latest version and rewrite the declared range.
 - **Not declared, but resolvable from inside the repository.** Cypress comes
@@ -355,7 +354,6 @@ Four details in there are not optional:
 
 - **No `package.json`.** Two different situations, and only one of them is a
   stop:
-
   - **An empty or near-empty repo** — often someone creating a fresh one
     specifically to try Cypress Cloud. That is a good candidate, not a dead end.
     Bootstrap it with `npm init -y` and carry on; there is no existing work to

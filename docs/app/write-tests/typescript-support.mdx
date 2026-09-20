@@ -629,7 +629,7 @@ If you rename or move a declaration file, verify that its path is covered by the
 `include` globs in every `tsconfig.json` that needs to see it. A common mistake
 is placing a `global.d.ts` inside `cypress/support/` while the
 `cypress/tsconfig.json` only includes `**/*.ts` — `.d.ts` files are matched by
-`**/*.ts` only if the glob is `**/*.{ts,d.ts}` or simply `**/*`. Safest
+`**/*.ts` only if the glob is `**/*.{ts,d.ts}` or `**/*`. Safest
 practice: list the file explicitly or use `"include": ["**/*.ts", "**/*.d.ts"]`.
 
 :::

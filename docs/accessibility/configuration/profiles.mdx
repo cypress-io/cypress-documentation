@@ -96,7 +96,7 @@ Your base configuration excludes two third-party widgets with [`elementFilters`]
 cypress run --record --tag "aq-config-support-audit"
 ```
 
-A profile's `elementFilters` replaces the base list rather than adding to it, so the profile repeats the cookie-banner rule it still needs and simply omits the support-chat rule. In Cypress Accessibility an element is scanned unless an `include: false` rule matches it, so dropping the support-chat exclusion is all it takes to bring the widget back into this run's report; you don't add an `include: true` rule. On every other run, both widgets stay excluded.
+A profile's `elementFilters` replaces the base list rather than adding to it, so the profile repeats the cookie-banner rule it still needs and omits the support-chat rule. In Cypress Accessibility an element is scanned unless an `include: false` rule matches it, so dropping the support-chat exclusion is all it takes to bring the widget back into this run's report; you don't add an `include: true` rule. On every other run, both widgets stay excluded.
 
 ### Apply an accessibility-only override for a labels audit
 
