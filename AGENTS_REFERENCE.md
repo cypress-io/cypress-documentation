@@ -128,18 +128,12 @@ Writing, naming, registering, and retiring one is covered in
   pages), e.g. `<ProductHeading product="app" />`.
 - Valid `product` values: `app`, `cloud`, `accessibility`, `ui-coverage`.
   `cloud` also takes an optional `plan` (`team` / `business` / `enterprise`).
-- Canonical product names in prose: **Cypress app**, **Cypress Cloud**,
+- Canonical product names in prose: **Cypress App**, **Cypress Cloud**,
   **Cypress Accessibility**, and **UI Coverage** (UI Coverage has no "Cypress"
-  prefix).
-- `app` stays **lowercase** in prose, per the Cypress Style Guide. Capitalize it
-  only where the format demands it, such as a Title Case heading. The other
-  product names are always capitalized. Write "Cypress", never "Cypress.io", and
-  don't precede "Cypress Cloud" with "the".
-- **`<ProductHeading>` is exempt.** It renders "Cypress App" from a hard-coded
-  string in `src/components/product-heading/index.tsx`, as the page's product
-  label rather than prose. Leave the component alone: changing it would restyle
-  the heading on 300+ pages, which is a design decision and not a copy edit. The
-  lowercase rule governs the prose you write.
+  prefix). All four keep their capitalization everywhere, including
+  `<ProductHeading>`, which renders "Cypress App".
+- Write "Cypress", never "Cypress.io", and don't precede "Cypress Cloud" with
+  "the".
 
 ## Plugins list
 
@@ -277,7 +271,7 @@ same change. `## See also` always stays as it is.
 
 - Reserve **bold** for real controls the
   reader acts on in a walkthrough or tutorial, meaning actual buttons, links,
-  tabs, menu items, and flows in the Cypress Cloud or Cypress app UI (for
+  tabs, menu items, and flows in the Cypress Cloud or Cypress App UI (for
   example, "open the **App Quality** tab" or "click **Record run**"). Bolding
   these makes the clickable target scannable as the reader follows along. When a
   UI label is only a hypothetical example in an illustrative scenario, not a real

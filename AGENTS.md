@@ -110,9 +110,7 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
-  names in prose: Cypress app (lowercase `app`), Cypress Cloud, Cypress
-  Accessibility, UI Coverage. The `<ProductHeading>` component renders "Cypress
-  App" and is exempt; don't change it.
+  names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
   partial for content rendered in **more than one location**. If it's used in a
   single page, inline it there instead.
@@ -165,7 +163,7 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Bullets take no terminal punctuation when they are fragments and a period when
   they are full sentences. Don't mix the two within one list.
 - Use **bold** only for real UI controls the reader acts on in a walkthrough
-  (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress app,
+  (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
   e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
   examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
   so invented examples stay distinct from the real UI a tutorial navigates.
