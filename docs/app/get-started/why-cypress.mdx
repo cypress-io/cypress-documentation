@@ -58,7 +58,7 @@ Less time on test maintenance is more time shipping features.
 
 [Cypress Cloud](/cloud/get-started/introduction) replaces guesswork with evidence:
 
-- **[Test Replay](/cloud/features/test-replay)** allows you to replay the test exactly as it executed during the run for zero-configuration debugging.
+- **[Test Replay](/cloud/features/test-replay)** replays the test exactly as it executed during the run for zero-configuration debugging.
 - **[Flaky test management](/cloud/features/flaky-test-management)** surfaces flake patterns so they get fixed instead of quietly suppressed.
 - **[Branch Review](/cloud/features/branch-review)** gives every pull request a pre-merge picture of the test signal, so "are we good to merge?" has a real answer before code lands on main.
 - **[Smart Orchestration](/cloud/features/smart-orchestration/parallelization)** keeps CI fast as your suite grows by parallelizing specs, prioritizing the ones most likely to fail, and canceling builds that are clearly broken.
@@ -370,8 +370,9 @@ For instance you can:
   your application code to behave differently when under tests in Cypress. You
   can control WebSocket messages from within Cypress, conditionally load 3rd
   party scripts, or call functions directly on your application.
-- For [Component Tests](/app/component-testing/get-started), Cypress is browser-based, allowing you to test not only your component's
-  functionality but also styles and appearance. You can visually see your
+- For [Component Tests](/app/component-testing/get-started), Cypress is
+  browser-based, exercising not only your component's functionality but also its
+  styles and appearance. You can visually see your
   component in action and interact with it in the app.
 
 ### Shortcuts

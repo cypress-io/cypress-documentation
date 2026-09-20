@@ -78,8 +78,8 @@ interactive browser environment in real time. Cypress's
 from your test suite and their assertions. When you
 [click on a command or assertion](/app/core-concepts/open-mode#Command-Log)
 in the command log, a DOM snapshot displays so you can see what the application
-under test looked like at the time of the test's execution. This allows you to
-see the **real rendered UI** and the behavior of the app under **real user
+under test looked like at the time of the test's execution. This shows the
+**real rendered UI** and the behavior of the app under **real user
 interactions.** Since the app is loaded within a real browser, you can also
 manually explore its behavior while it is under the state of a desired test
 scenario.
@@ -99,13 +99,13 @@ app's logic.
 ### Faster feedback loops
 
 When it comes to your end-to-end or component tests, being able to see your tests as they run
-is critical to allowing you to confidently iterate faster. With Cypress, your
+is critical to iterating quickly and with confidence. With Cypress, your
 tests are automatically re-run upon file save as you are iterating on them.
 
 Having your code editor and application under test within a browser side-by-side
 (shown below) while re-running tests on save is a highly productive workflow. It
-provides an instant feedback loop that allows you to iterate faster with
-confidence.
+provides an instant feedback loop that keeps each iteration fast and
+confident.
 
 <DocsVideo
   src="/img/app/migrating-to-cypress/codeframe-ex.webm"
@@ -151,7 +151,7 @@ Cypress assists with debugging in headless mode, in numerous ways:
 End-to-end tests can be complicated because modern web applications are also
 complex. You may find that some features of your web application are challenging
 to test or the tests sporadically fail. We call these tests "flaky." Cypress
-allows you to [retry failed tests](/app/guides/test-retries). Sometimes tests
+[retries failed tests](/app/guides/test-retries). Sometimes tests
 will fail in a CI environment when they otherwise would pass on a developer's
 machine. Enabling test retries in the Cypress configuration can help you to get
 unblocked when unpredictable, flaky tests are occasionally failing.
@@ -794,8 +794,8 @@ before continuing your test.
 
 ### Network Stubbing
 
-Cypress's [intercept API](/api/commands/intercept) also allows you to stub any
-network request for your app under test. You can use the
+Cypress's [intercept API](/api/commands/intercept) also stubs any network
+request for your app under test. You can use the
 [intercept API](/api/commands/intercept) to make assertions based on different
 simulated responses for your network requests. For example, you might want to
 simulate a 3rd-party API outage by forcing a network error and test your app
@@ -932,8 +932,8 @@ like promises, but the
 [Cypress API is not an exact implementation of Promises](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue).
 The modern web is asynchronous, therefore you need to interact with modern web
 apps in an asynchronous fashion. This is why the Cypress API is asynchronous.
-This allows you to write deterministic tests since all of your commands are
-executed serially, enabling your tests to run predictably each time.
+This keeps your tests deterministic since all of your commands are executed
+serially, enabling your tests to run predictably each time.
 
 In comparison, Protractor's WebDriverJS API is based on promises, which is
 managed by a control flow. This
@@ -949,8 +949,8 @@ element(by.css('button')).click()
 element(by.css('input')).sendKeys('my text')
 ```
 
-Protractor's Control Flow can be disabled, allowing you to write your test cases
-as asynchronous functions.
+Protractor's Control Flow can be disabled, so test cases are written as
+asynchronous functions.
 
 ```js
 // Wait for the button to be found and click it
@@ -1097,7 +1097,7 @@ environment.
 
 ## Parallelization
 
-[Cypress Cloud](/cloud/get-started/introduction) allows you to run your test files in
+[Cypress Cloud](/cloud/get-started/introduction) runs your test files in
 parallel across multiple CI machines.
 
 With Cypress, your tests can be

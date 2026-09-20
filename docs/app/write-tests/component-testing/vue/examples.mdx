@@ -421,8 +421,8 @@ Cypress.Commands.add('mount', mount)
 </TabItem>
 </Tabs>
 
-This allows you to use `cy.mount()` in any test without having to import the
-`mount()` function in each and every spec file.
+This registers `cy.mount()` for any test without having to import the `mount()`
+function in each and every spec file.
 
 By default, `cy.mount()` is a simple passthrough to `mount()`, however, you can
 customize `cy.mount()` to fit your needs. For instance, if you are using plugins

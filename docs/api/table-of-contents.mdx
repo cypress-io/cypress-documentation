@@ -151,7 +151,7 @@ Cypress has a variety of additional commands to help write tests.
 | [`.stub()`](/api/commands/stub)                                     | Replace a method, record its usage and control its behavior.                                                                                                                    |
 | [`.submit()`](/api/commands/submit)                                 | Submit a form.                                                                                                                                                                  |
 | [`.task()`](/api/commands/task)                                     | Execute code in Node via the `task` plugin event.                                                                                                                               |
-| [`.then()`](/api/commands/then)                                     | Invoke a callback function with the current subject, allowing you to execute code at specific points during a Cypress test.                                                     |
+| [`.then()`](/api/commands/then)                                     | Invoke a callback function with the current subject to run code at specific points during a Cypress test.                                                                       |
 | [`.tick()`](/api/commands/tick)                                     | Move time after overriding a native time functions with `cy.clock()`.                                                                                                           |
 | [`.viewport()`](/api/commands/viewport)                             | Control the size and orientation of the screen for your application.                                                                                                            |
 | [`.visit()`](/api/commands/visit)                                   | Visit a remote URL. Many tests begin with this command.                                                                                                                         |
@@ -231,7 +231,7 @@ Cypress makes several common libraries available directly on the global
 
 ## Node Events
 
-The Node Events allow you to hook into and extend Cypress behavior. For more
+The Node Events hook into and extend Cypress behavior. For more
 details, see the [How to use a Plugin](/app/plugins/plugins-guide) and
 [Node Events Overview](/api/node-events/overview).
 

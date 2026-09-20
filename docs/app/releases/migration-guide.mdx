@@ -2206,8 +2206,8 @@ Many of the issues test isolation solved were around cookie management with
 tests trying to save and persist cookies because the page was still available,
 but the cookies on the domain were unexpectedly cleared which broke interactions
 with the application. It wasn’t obvious Cypress was doing a partial browser
-clean up. Explicitly setting test isolation to enabled or disabled allows you to
-choose what is right for your tests.
+clean up. Explicitly setting test isolation to enabled or disabled puts that
+behavior under your control.
 
 ### Behavior Changes in Alias Resolution
 

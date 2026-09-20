@@ -1031,7 +1031,7 @@ cy.get('[data-testid="current-time"]').should(
 
 ### Changing the system time mid-test
 
-Both tools allow you to change the current time without triggering timers. In Playwright this is `page.clock.setSystemTime()`. In Cypress it is `clock.setSystemTime()` on the yielded clock object.
+Both tools change the current time without triggering timers. In Playwright this is `page.clock.setSystemTime()`. In Cypress it is `clock.setSystemTime()` on the yielded clock object.
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -1057,7 +1057,7 @@ cy.clock().then((clock) => {
 
 ### Overriding only specific functions
 
-Cypress allows you to limit which native functions the clock replaces. This is useful when you only need to control `Date` without affecting timer behavior, or vice versa.
+Cypress replaces only the native functions you name. This is useful when you only need to control `Date` without affecting timer behavior, or vice versa.
 
 ```ts
 // Override only Date, leave setTimeout and setInterval running normally

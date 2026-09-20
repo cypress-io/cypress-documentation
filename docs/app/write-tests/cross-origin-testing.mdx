@@ -59,7 +59,7 @@ CA authority and issue certificates dynamically in order to intercept requests
 otherwise impossible to access. We only do this for the origin currently under
 test, and bypass other traffic.
 
-Note, that Cypress allows you to optionally specify CA / client certificate
+Note, that Cypress optionally accepts CA / client certificate
 information for use with HTTPS sites. See
 [configuring client certificates](/app/references/client-certificates). If
 the remote server requests a client certificate for a configured URL, Cypress
@@ -518,13 +518,13 @@ browsers that do not support this feature.
 
 ### Set `chromeWebSecurity` to `false`
 
-Setting `chromeWebSecurity` to `false` in Chrome-based browsers allows you to do
-the following:
+Setting `chromeWebSecurity` to `false` in Chrome-based browsers does the
+following:
 
-- Display insecure content
-- Navigate to any origin without cross-origin errors with or without
+- Displays insecure content
+- Navigates to any origin without cross-origin errors with or without
   `cy.origin`
-- Access cross-origin iframes that are embedded in your application
+- Accesses cross-origin iframes that are embedded in your application
 
 Still here? That's cool, let's disable web security!
 

@@ -299,8 +299,8 @@ understanding how they work is helpful!
 
 ### Interacting With Elements
 
-As we saw in the initial example, Cypress allows you to click on and type into
-elements on the page by using [`.click()`](/api/commands/click) and
+As we saw in the initial example, Cypress clicks on and types into elements on
+the page with [`.click()`](/api/commands/click) and
 [`.type()`](/api/commands/type) action commands with a
 [`cy.get()`](/api/commands/get) or [`cy.contains()`](/api/commands/contains)
 query command. This is a great example of chaining in action. Let's see it
@@ -1235,9 +1235,8 @@ subject quickly.
 
 ### Mocha Assertions
 
-Using `expect` allows you to assert on any JavaScript object, not just the
-current subject. This is probably how you're used to seeing assertions written
-in unit tests:
+`expect` asserts on any JavaScript object, not just the current subject. This is
+probably how you're used to seeing assertions written in unit tests:
 
 ```js
 // the explicit subject here is the boolean: true

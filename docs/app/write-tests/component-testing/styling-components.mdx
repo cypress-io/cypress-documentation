@@ -21,9 +21,9 @@ JSDom doesn't have a box model and certain kinds of assertions, such as if a
 parent is covering a child and preventing clicks, are not possible to test
 without a more realistic environment.
 
-On the other hand, browser-based runners like Cypress allow you to render your
-application's styles and components and allow Cypress's Driver to take advantage
-of the real box-model and style rendering engine. Cypress's commands like
+On the other hand, browser-based runners like Cypress render your application's
+styles and components, and Cypress's Driver takes advantage of the real
+box-model and style rendering engine. Cypress's commands like
 `cy.click` and assertions like `should('be.visible')` have business logic that
 makes sure the UI you're trying to assert on and interact with is visible and
 interactible for your end users. This is a benefit unique to browser-based test

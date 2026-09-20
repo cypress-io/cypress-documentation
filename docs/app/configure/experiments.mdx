@@ -47,7 +47,7 @@ Cypress by default strips all CSP headers (`Content-Security-Policy` and
 `Content-Security-Policy-Report-Only`) from the response before it is sent to
 the browser. The `experimentalCspAllowList` option allows for more granular
 control over which CSP directives are stripped from the CSP response headers,
-allowing you to test your application with CSP enabled. Valid values for this
+so your application runs under test with CSP enabled. Valid values for this
 option are `false` (the default), `true`, or an array of CSP directive names.
 
 | Value                                                 | Example                                                 |
