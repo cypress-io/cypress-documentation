@@ -255,6 +255,49 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
+  e2e-status:
+    name: E2E
+    needs: [e2e, e2e-fork]
+    # The single check to require in branch protection. Requiring the two jobs
+    # above directly does not work: exactly one of them runs and the other is
+    # skipped, and GitHub reports a skipped job as Success for branch
+    # protection. Requiring the eight containers would therefore go green on a
+    # fork pull request having run no tests at all, and requiring the fork job
+    # would do the same on every internal one.
+    #
+    # `always()` is load-bearing for that same reason. Without it this job is
+    # itself skipped whenever a dependency is skipped, which is every run, and
+    # a skipped required check passes while verifying nothing.
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require that the e2e suite passed
+        env:
+          RECORDED: ${{ needs.e2e.result }}
+          FORK: ${{ needs.e2e-fork.result }}
+        run: |
+          echo "E2E (parallel, recorded): $RECORDED"
+          echo "E2E (fork, serial):       $FORK"
+
+          # A matrix job aggregates its legs, so one red container out of the
+          # eight leaves RECORDED as `failure`. Cancelled is not a pass either.
+          for result in "$RECORDED" "$FORK"; do
+            if [ "$result" != 'success' ] && [ "$result" != 'skipped' ]; then
+              echo "::error::The e2e suite reported '$result'."
+              exit 1
+            fi
+          done
+
+          # Both skipped means no suite ran at all, which is what happens when
+          # the build fails. Nothing failed, but nothing was verified either.
+          if [ "$RECORDED" != 'success' ] && [ "$FORK" != 'success' ]; then
+            echo '::error::Neither e2e job ran, so nothing was verified.'
+            exit 1
+          fi
+
+          echo 'The e2e suite passed.'
+
   algolia:
     name: Run Algolia scraper
     needs: build

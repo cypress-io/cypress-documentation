@@ -702,6 +702,18 @@ The E2E job splits the suite through Cypress Cloud, which needs
 fork, so those run the `E2E (fork, not recorded)` job instead: the whole suite in
 one container, reporting nothing to the Cloud.
 
+Exactly one of those two runs and the other is skipped, so neither can be a
+required status check: GitHub reports a skipped job as **Success**, and
+requiring the eight containers would go green on a fork pull request that ran no
+tests at all. The `E2E` job (`e2e-status`) exists for that. It runs `always()`,
+reads both results, and fails unless one of them actually succeeded, including
+when both were skipped because the build failed. Require it rather than the jobs
+feeding it, and keep `fail-fast: false` on the matrix so all eight containers
+report and its aggregate result is true.
+
+The branch protection set is `Build`, `Lint JS/CSS/Markdown`, `Typecheck`,
+`Unit Tests (Search/Algolia, plugins)`, and `E2E`.
+
 One branch this workflow never sees is `automation/update-plugins-data`. GitHub
 raises no workflow run for an event caused by `GITHUB_TOKEN`, so the nightly
 pull request `update-plugins-data.yml` opens triggers nothing. That workflow
