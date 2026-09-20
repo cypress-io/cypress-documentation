@@ -83,7 +83,7 @@ getAccessibilityResults().then((results) => {
 
 #### How to assert that only known rules are failing in the run
 
-The Cypress App [repository](https://github.com/cypress-io/cypress) uses the Results API to ensure no new violations have been introduced. You can reference [this script](https://github.com/cypress-io/cypress/blob/develop/scripts/verify-accessibility-results.js) as a real example.
+The Cypress app [repository](https://github.com/cypress-io/cypress) uses the Results API to ensure no new violations have been introduced. You can reference [this script](https://github.com/cypress-io/cypress/blob/develop/scripts/verify-accessibility-results.js) as a real example.
 
 ```javascript title="scripts/verifyAccessibilityResults.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
