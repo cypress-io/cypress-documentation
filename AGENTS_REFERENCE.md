@@ -350,12 +350,12 @@ and `docs/app/guides/migration/`.
 
 ```mdx
 <CopyPrompt
-  title="The Health Check"
+  title="Summarize failures in the latest Cypress Cloud run"
   subtext="Get a high-level summary of any failures in the latest run on your branch."
   prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
 >
 
-### The Health Check
+### Summarize failures in the latest Cypress Cloud run
 
 </CopyPrompt>
 ```

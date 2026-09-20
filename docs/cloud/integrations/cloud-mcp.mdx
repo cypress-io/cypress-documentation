@@ -426,84 +426,84 @@ To get the most out of Cloud MCP, follow these four principles:
 :::
 
 <CopyPrompt
-  title="The Health Check"
+  title="Summarize failures in the latest Cypress Cloud run"
   subtext="Get a high-level summary of any failures in the latest run on your branch."
   prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
 >
 
-### The Health Check
+### Summarize failures in the latest Cypress Cloud run
 
 </CopyPrompt>
 
 <CopyPrompt
-  title="The Deep Debug"
+  title="Investigate failing tests and propose fixes"
   subtext="Investigate each failing test and propose a fix for the regression."
   prompt={`Find the failing tests for [Run URL]. For each failure, look at the stack trace, check my local code, and propose a fix to stop the regression.`}
 >
 
-### The Deep Debug
+### Investigate failing tests and propose fixes
 
 </CopyPrompt>
 
 <CopyPrompt
-  title="The Flake Audit"
+  title="Find flaky tests and patterns across recent runs"
   subtext="Surface flaky tests across recent runs and look for common patterns."
   prompt={`List all flaky tests from the last 5 runs in Cypress Cloud. Are there any common patterns in the error messages?`}
 >
 
-### The Flake Audit
+### Find flaky tests and patterns across recent runs
 
 </CopyPrompt>
 
 <CopyPrompt
-  title="The Release Report"
+  title="Build a release report of Cypress runs"
   subtext="Tie a run back to the change and the person behind it, down to the failing tests."
   prompt={`For the latest run on main in Cypress Cloud, give me a release report: who authored the commit, what the run status was, which specs ran, and which tests were skipped.`}
 >
 
-### The Release Report
+### Build a release report of Cypress runs
 
 </CopyPrompt>
 
 <CopyPrompt
-  title="The Suite Time Audit"
+  title="Find the slowest specs and break one down by test"
   subtext="Find where your suite time goes, from run to spec to individual test."
   prompt={`For run [Run URL] in Cypress Cloud, pull spec durations and tell me which specs are the slowest. Then break the slowest one down by test so I know whether to split it.`}
 >
 
-### The Suite Time Audit
+### Find the slowest specs and break one down by test
 
 </CopyPrompt>
 
 <CopyPrompt
-  title="The Skipped Test Audit"
+  title="Audit skipped and pending tests in a run"
   subtext="Catch coverage erosion by listing what a run has stopped testing."
   prompt={`List every skipped and pending test in run [Run URL] in Cypress Cloud, grouped by spec.`}
 >
 
-### The Skipped Test Audit
+### Audit skipped and pending tests in a run
 
 </CopyPrompt>
 
 <CopyPrompt
-  title="The Accessibility Triage"
+  title="Triage Cypress Accessibility violations by rule and view"
   subtext="Summarize accessibility violations for the latest run, grouped by rule and view."
   prompt={`Pull the Cypress Cloud Accessibility report for the latest run on this branch. List any critical or serious violations grouped by rule, and tell me which views are most impacted.`}
 >
 
-### The Accessibility Triage
+### Triage Cypress Accessibility violations by rule and view
 
 </CopyPrompt>
 
 For a deeper exploration of working with Cloud MCP's accessibility tools, read our guide [Cypress Accessibility - Work with AI agents](/accessibility/work-with-ai-agents).
 
 <CopyPrompt
-  title="The UI Coverage Triage"
+  title="Review UI Coverage and find untested elements"
   subtext="Review UI Coverage for the latest run and drill into the riskiest view."
   prompt={`Using Cypress Cloud, pull the UI Coverage report for the latest run on this branch. Tell me the overall coverage score, list the views with the most untested elements, and show me the specific untested elements on the riskiest view.`}
 >
 
-### The UI Coverage Triage
+### Review UI Coverage and find untested elements
 
 </CopyPrompt>
 
