@@ -27,7 +27,7 @@ jobs:
           ref: main
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.node-version'
           cache: npm
@@ -44,6 +44,55 @@ jobs:
           # checking whether plugin repos are archived.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # The pull request below is opened with GITHUB_TOKEN, and GitHub's
+      # recursion guard means events raised by that token start no workflow
+      # runs — `push` and `pull_request` alike — so ci.yml never sees this
+      # branch. The three steps that follow stand in for it.
+      #
+      # They are scoped to what a change to plugins-generated.json can actually
+      # break, rather than being a copy of ci.yml. `npm run lint` is not among
+      # them: it checks `**/*.{md,mdx}` and this diff is a single JSON file.
+      #
+      # Nothing here runs when the refresh produced no change, which is most
+      # nights: the generated payload carries no timestamp, so it only moves
+      # when a plugin's upstream metadata does.
+      - name: Check whether the data changed
+        id: changed
+        run: |
+          if git diff --quiet -- src/data/plugins-generated.json; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            echo 'No change to plugins-generated.json.'
+          else
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+
+      # src/components/plugins-list/index.tsx imports the generated JSON, so a
+      # shape change surfaces here before it reaches the page.
+      - name: Typecheck
+        if: steps.changed.outputs.changed == 'true'
+        run: npm run typecheck
+
+      - name: Build the site
+        if: steps.changed.outputs.changed == 'true'
+        run: npm run build
+
+      # plugins_list.cy.ts is the spec for the page this data renders. It
+      # asserts the things a bad refresh breaks: that the list is still
+      # populated, that categories and badge tiers are ordered, and that
+      # nothing arrived flagged deprecated. `install: false` because `npm ci`
+      # above already placed the Cypress binary.
+      - name: Test the plugins list page
+        if: steps.changed.outputs.changed == 'true'
+        uses: cypress-io/github-action@v7
+        with:
+          install: false
+          start: npm run serve
+          wait-on: 'http://localhost:3000'
+          spec: cypress/e2e/plugins_list.cy.ts
+
+      # Left ungated: with no change it opens nothing, and it is also what
+      # closes a stale automation pull request when the data returns to what
+      # main already has.
       - name: Open pull request if changed
         uses: peter-evans/create-pull-request@v8
         with:
