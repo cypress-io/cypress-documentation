@@ -49,7 +49,7 @@ any effects in CSS.
 :::
 
 As a workaround, check out the
-[recipe leveraging Chrome remote debugging](/app/references/recipes#Fundamentals) to
+[recipe using Chrome remote debugging](/app/references/recipes#Fundamentals) to
 set pseudo classes like `hover`.
 
 #### Simulating `mouseover` event to get popover to display
@@ -61,7 +61,7 @@ cy.get('.popover').should('be.visible')
 
 ### Invoke
 
-#### Example of showing an element in order to perform action
+#### Example of showing an element to perform action
 
 ```javascript
 cy.get('.hidden').invoke('show').click()

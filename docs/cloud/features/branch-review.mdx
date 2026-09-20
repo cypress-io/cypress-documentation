@@ -82,7 +82,7 @@ Click the **"View all changes introduced in this branch"** link at the bottom of
 
 ## Integrating with Pull Requests
 
-Pull Requests in Branch Review work by leveraging the Cypress Cloud GitHub integration to query the GitHub API for branches with Pull Requests. Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/cloud/integrations/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
+Pull Requests in Branch Review work by using the Cypress Cloud GitHub integration to query the GitHub API for branches with Pull Requests. Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/cloud/integrations/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
 
 When Pull Requests are connected, you'll be able to select runs by the associated PR:
 
@@ -205,7 +205,7 @@ If the required runs for comparison are not available, you can use the manual se
 
 Cypress Cloud allows for [grouping recorded tests](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs) together under a single run. This means multiple `cypress run` calls can be labeled and associated to a single run in Cypress Cloud.
 
-Recording multiple test runs per commit without grouping will cause issues, as Branch Review relies on the _latest_ run. Therefore, recording one run per commit and utilizing grouping is essential to improving effectiveness and ensure an accurate comparison between branches.
+Recording multiple test runs per commit without grouping will cause issues, as Branch Review relies on the _latest_ run. Therefore, recording one run per commit and using grouping is essential to improving effectiveness and ensure an accurate comparison between branches.
 
 ### Missing Runs in Pull Request Comparisons
 

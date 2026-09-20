@@ -133,7 +133,7 @@ If you think ahead, you'll quickly realize that you're going to be typing this
 URL a lot, since every test is going to need to visit some page of your
 application. Luckily, Cypress provides a
 [configuration option](/app/references/configuration) for this. Let's
-leverage that now.
+use that now.
 
 Open up your [configuration file](/app/references/configuration). It starts
 out empty, but let's add the `baseUrl` option.
@@ -437,7 +437,7 @@ They let you add your own functionality to your test suite and then use it with
 the same
 [chainable and asynchronous API](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 as the built-in Cypress commands. Lets make the above login example a custom
-command and add it to `cypress/support/commands.js` so it can be leveraged in
+command and add it to `cypress/support/commands.js` so it can be reused in
 any spec file:
 
 <Tabs>
@@ -651,4 +651,4 @@ From here you may want to explore some more of our guides:
   running tests in CI across Firefox and Chrome-family browsers
 - <Icon name="github" inline="true" contentType="rwa" /> demonstrations of
   Cypress testing practices, configuration, and strategies in a real-world
-  project.
+  project

@@ -336,10 +336,10 @@ This is necessary to identify each unique run and return a corresponding set of 
 **Example**
 
 - Let's imagine that within a single CI build you call `cypress run --record` multiple times because you're running one set of tests against a `staging` environment, followed by a `production` environment.
-- In this scenario, you pass a different `--tag` to each cypress run
+- In this scenario, you pass a different `--tag` to each cypress run.
   - `cypress run --record --tag staging`
   - `cypress run --record --tag production`
-- When calling `getAccessibilityResults` you would then pass these same tags to get the unique set of results for each run
+- When calling `getAccessibilityResults` you would then pass these same tags to get the unique set of results for each run.
   - `getAccessibilityResults({ runTags: ['staging']})`
   - `getAccessibilityResults({ runTags: ['production']})`
 

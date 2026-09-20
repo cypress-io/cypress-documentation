@@ -137,8 +137,8 @@ full stack code coverage.
 
 ### <Icon name="angle-right" /> Are there driver bindings in my language?
 
-Cypress does _not_ utilize WebDriver for testing, so it does not use or have any
-notion of driver bindings. If your language can be somehow transpiled to
+Cypress does _not_ use WebDriver for testing, so it has no notion of driver
+bindings. If your language can be somehow transpiled to
 JavaScript, then you can configure
 [Cypress webpack preprocessor](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
 or
@@ -181,7 +181,7 @@ when to write a unit test and when to write an end-to-end test.
   `jsdom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may
   want to rewrite it as an end-to-end test.
 - If an end-to-end test does _not_ go through the browser and instead calls the
-  code directly, you probably want to rewrite it as a unit test
+  code directly, you probably want to rewrite it as a unit test.
 
 Finally, unit and end-to-end tests are not _that_ different and have common
 features. Good tests:
@@ -1548,7 +1548,7 @@ these strategies:
   application that would result in failing tests.
 - Remove time-sensitive variability in your tests. For example, ensure a network
   request has finished before looking for the DOM element that relies on the
-  data from that network request. You can leverage
+  data from that network request. You can use
   [aliasing](/app/core-concepts/variables-and-aliases#Aliases) for this.
 - Ensure video recording and/or screenshots are enabled for the CI run and
   compare the recording to the Command Log when running the test locally.
@@ -1603,7 +1603,7 @@ Tools open. You can use Cypress [Test Replay](/cloud/features/test-replay) to se
 
 ### <Icon name="angle-right" /> Can I use Cypress to test charts and graphs?
 
-Yes. You can leverage visual testing tools to test that charts and graphs are
+Yes. You can use visual testing tools to test that charts and graphs are
 rendering as expected. For more information, check out the
 [Visual Testing guide](/app/tooling/visual-testing).
 
