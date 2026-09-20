@@ -47,6 +47,7 @@ npm run lint:fix      # Prettier autofix on **/*.{md,mdx}
 npm run typecheck     # tsc
 npm test              # cypress e2e (needs the dev server running)
 npm run test:plugins  # vitest unit tests for plugins/
+npm run api:source -- blur   # locate the Cypress source a /api page documents
 ```
 
 Install before you lint. With no `node_modules` present, `npm run lint:fix`
@@ -133,6 +134,16 @@ Each rule is a hard convention. See the linked section for the how and why.
   characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
+
+**API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
+
+- The behavior an `/api` page describes is implemented in `cypress-io/cypress`,
+  not here. Before writing or changing a behavior claim, read that source:
+  `npm run api:source -- <command>` syncs a pinned, sparse checkout of it into
+  `.cypress-source/` and resolves the command to its implementation, published
+  types, error messages, and driver specs.
+- Where the source contradicts the page, flag the conflict rather than rewriting
+  the page to match. The fix may belong in `cypress-io/cypress`.
 
 **Writing style** — [details](./AGENTS_REFERENCE.md#writing-style)
 

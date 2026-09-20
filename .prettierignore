@@ -12,3 +12,4 @@ node_modules
 .node-version
 .textlintrc
 .claude
+.cypress-source

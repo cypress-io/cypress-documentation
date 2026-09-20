@@ -5,6 +5,17 @@ specific to `docs/api/` (commands, `Cypress.*` APIs, node events, utilities).
 Reasoning and examples live in
 [`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md).
 
+## Source of truth
+
+These pages describe behavior implemented in `cypress-io/cypress`, so read that
+source before writing or changing a behavior claim. `npm run api:source -- blur`
+makes a pinned, sparse checkout of it in `.cypress-source/` and resolves a
+command to the files that define it — implementation, published types, error
+messages, and the driver's own specs. Which page section each of those answers,
+and what to do when the source contradicts the page (flag it, don't quietly
+rewrite), is in
+[`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md#api-source-of-truth).
+
 ## Frontmatter
 
 Reference frontmatter is terse. Mirror the sibling file you're adding next to.
