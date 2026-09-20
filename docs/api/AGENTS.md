@@ -3,7 +3,7 @@
 The root [`AGENTS.md`](../../AGENTS.md) still applies; this file adds the rules
 specific to `docs/api/` (commands, `Cypress.*` APIs, node events, utilities).
 Reasoning and examples live in
-[`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md#api-reference-pages).
+[`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md).
 
 ## Source of truth
 
@@ -15,7 +15,7 @@ from, and why a conflict gets flagged rather than written away, is in
 
 ## Frontmatter
 
-Terse, and mirrors the sibling file you're adding next to:
+Reference frontmatter is terse. Mirror the sibling file you're adding next to.
 
 ```yaml
 ---
@@ -26,11 +26,15 @@ slug: /api/commands/click
 ---
 ```
 
-`title` is the symbol as a reader writes it in code (`'Cypress.Promise()'`,
-`'before:spec event'`) and never carries a suffix. `description` is one sentence
-saying what the command does. `sidebar_label` is the bare name, no `cy.` prefix
-and no parentheses. `slug` appears only where the siblings carry one, so
-`docs/api/cypress-api/` omits it. The H1 is the bare name (`# click`).
+- `title`: the symbol as a reader writes it in code (`'cy.click()'`,
+  `'Cypress.Promise()'`, `'before:spec event'`). Never append a suffix. Every
+  page under `/api` gets ` | Cypress API Documentation` at build time from
+  `src/sectionTitles.js`, asserted by `cypress/e2e/page_titles.cy.ts`.
+- `description`: one sentence saying what the command does.
+- `sidebar_label`: the bare name, no `cy.` prefix, no parentheses.
+- `slug`: only where the siblings carry one. It repeats the file's own route, so
+  `docs/api/cypress-api/` omits it entirely.
+- The H1 is the bare name (`# click`), not the title.
 
 ## Page skeleton
 
@@ -48,12 +52,21 @@ this order, using only the ones the page needs:
 | `## See also`    | 2 to 5 sibling commands                                                                                       |
 
 Never hand-write the `Yields`, `Requirements`, `Assertions`, or `Timeouts`
-headings. The `Header*` partials own them and the anchors other pages link to
-([details](../../AGENTS_REFERENCE.md#the-header-partials)).
+headings. The four `Header*` partials render them,
+`src/theme/MDXComponents.js` registers them globally so they take no import, and
+each carries the anchor other pages link to (`{#Yields}`, `{#Requirements}`,
+`{#Assertions}`, `{#Timeouts}`). Hand-writing one drops its anchor and breaks
+every inbound link to it.
 
 ## History tables
 
-Newest version first, each version linking its changelog anchor
-([format](../../AGENTS_REFERENCE.md#history-tables)). Add a row whenever a
-release changes documented behavior, and add the matching changelog entry in the
-same PR (see `docs/app/releases/AGENTS.md`).
+Newest version first, each version linking its changelog anchor:
+
+```markdown
+| Version                                  | Changes                       |
+| ---------------------------------------- | ----------------------------- |
+| [6.1.0](/app/references/changelog#6-1-0) | Added option `scrollBehavior` |
+```
+
+Add a row whenever a release changes documented behavior, and add the matching
+changelog entry in the same PR (see `docs/app/releases/AGENTS.md`).

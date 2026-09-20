@@ -18,6 +18,7 @@ you're working in:
 | `docs/app/releases/` | changelog entry format                                      |
 | `src/`               | component layout, registration, swizzled theme files        |
 | `plugins/`           | the sub-package build and dependency rules                  |
+| `.github/workflows/` | pinning actions, what forks copy, required checks           |
 
 Three conventions hold for every one of them:
 
@@ -26,16 +27,21 @@ Three conventions hold for every one of them:
    never assumes this file was loaded.
 2. **They are additive, never contradictory.** A nested rule that conflicts with
    a rule in this file is a sign the rule in this file is wrong. Fix it here.
-3. **Keep them short**, under about 60 lines. They are the rules that apply
-   here, not a second reference manual. Detail belongs in
-   `AGENTS_REFERENCE.md`; link its anchor rather than restating it.
+3. **Keep them short**, under about 75 lines. They are the rules that apply
+   here, not a second reference manual. Treat 75 as a ceiling rather than a
+   target: most directories need far less, and a guide that splits one
+   convention across two files to hit a number costs the reader more than the
+   lines saved. Detail belongs in `AGENTS_REFERENCE.md`; link its anchor rather
+   than restating it.
 
 Four things walk `docs/` independently, and each skips these two filenames: the
 docs build (`exclude` in `docusaurus.config.js`), the LLM export (`walkDocs` in
 `plugins/llm`), `npm run lint:frontmatter`, and `npm run preview:og`. Because
 they match on filename, adding a nested guide to a **new** directory needs no
 config change. Prettier still formats them, so `npm run lint:fix` applies as
-usual.
+usual — check `.prettierignore` when adding a guide outside `docs/`, since a
+guide inside an ignored directory is silently skipped and a negation cannot pull
+it back out.
 
 ## Commands
 
