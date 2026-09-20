@@ -13,7 +13,7 @@ Cypress Accessibility reports are generated server-side in Cypress Cloud, based 
 
 ## Using the Results API
 
-The [Cypress Accessibility Results API](/accessibility/connect-and-extend/results-api) allows you to access accessibility results post-test run, enabling workflows like blocking pull requests or triggering alerts based on specific accessibility criteria. This involves adding a dedicated accessibility verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context. Below is an example of how to block a pull request in GitHub Actions if accessibility violations occur:
+The [Cypress Accessibility Results API](/accessibility/connect-and-extend/results-api) returns accessibility results after a test run, enabling workflows like blocking pull requests or triggering alerts based on specific accessibility criteria. This involves adding a dedicated accessibility verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context. Below is an example of how to block a pull request in GitHub Actions if accessibility violations occur:
 
 <DocsImage
   src="/img/accessibility/guides/github-actions-a11y-block.png"
@@ -115,7 +115,7 @@ By examining the results and customizing your response, you gain maximum control
 
 ## Using Profiles for PR-specific configuration
 
-You can use [Profiles](/accessibility/configuration/profiles) to apply different configuration settings for pull request runs versus regression runs. This allows you to:
+You can use [Profiles](/accessibility/configuration/profiles) to apply different configuration settings for pull request runs versus regression runs. This approach supports several patterns:
 
 - Use a narrow, focused configuration for PR runs that blocks merges based on critical accessibility issues
 - Maintain a broader configuration for regression runs that tracks all issues for long-term monitoring
@@ -156,9 +156,9 @@ This approach ensures that PR checks are fast and focused, while still maintaini
 
 ## Comparing against a baseline {#comparing-against-a-baseline}
 
-Comparing current results against a stored baseline allows you to detect only new violations that have been introduced, while ignoring existing known issues. This approach is more sophisticated than simply maintaining a list of known failing rules, as it tracks violations at the view level and can detect both regressions (new violations) and improvements (resolved violations).
+Comparing current results against a stored baseline surfaces only the new violations that have been introduced, while ignoring existing known issues. This approach is more sophisticated than simply maintaining a list of known failing rules, as it tracks violations at the view level and can detect both regressions (new violations) and improvements (resolved violations).
 
-This is particularly useful in CI/CD pipelines where you want to fail builds only when new accessibility violations are introduced, allowing you to address existing issues incrementally without blocking deployments.
+This is particularly useful in CI/CD pipelines where you want to fail builds only when new accessibility violations are introduced, so existing issues can be addressed incrementally without blocking deployments.
 
 ### Baseline structure
 
@@ -354,15 +354,15 @@ A **new failing rule** is a rule that has violations on a View in the current ru
 
 #### Resolved rules
 
-A **resolved rule** is a rule that was present in the baseline but no longer has violations in the current run. These represent improvements in accessibility. The script reports these but does not fail the build, allowing you to track progress, and printing out an updated baseline to copy over when things are fixed.
+A **resolved rule** is a rule that was present in the baseline but no longer has violations in the current run. These represent improvements in accessibility. The script reports these but does not fail the build, tracking your progress and printing out an updated baseline to copy over when things are fixed.
 
 #### Severity filtering
 
-The baseline comparison only tracks rules at the severity levels you specify in `TARGET_SEVERITY_LEVELS`. This allows you to focus on the severity levels that matter most to your team. Rules at other severity levels are ignored during comparison.
+The baseline comparison only tracks rules at the severity levels you specify in `TARGET_SEVERITY_LEVELS`. This keeps the comparison focused on the severity levels that matter most to your team. Rules at other severity levels are ignored during comparison.
 
 #### View-level comparison
 
-Violations are tracked per view (URL pattern or component), allowing you to see exactly which pages or components have regressed or improved. This granular tracking makes it easier to identify the source of changes and assign fixes to the appropriate teams.
+Violations are tracked per view (URL pattern or component), pinpointing exactly which pages or components have regressed or improved. This granular tracking makes it easier to identify the source of changes and assign fixes to the appropriate teams.
 
 ### Best practices
 

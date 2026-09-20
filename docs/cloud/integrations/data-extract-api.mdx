@@ -10,8 +10,8 @@ sidebar_position: 70
 # Data Extract API
 
 Enterprise Reporting data can be downloaded from Cloud using the Cypress Cloud API. The data is returned in file
-formats that allow you to easily incorporate it into your BI reporting platform, as well as a JSON file that can be
-programmatically parsed. This API allows you to retrieve your test data at a variety of levels, including
+formats that drop into your BI reporting platform, as well as a JSON file that can be
+programmatically parsed. This API returns your test data at a variety of levels, including
 all the way down to the individual test result data which includes status, error messages, runs tags and groups,
 Test Replay links, and much more.
 
@@ -190,7 +190,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Project test count and status
 
-This data allows you to extract consolidated run status at the project level.
+This data provides consolidated run status at the project level.
 Data is accumulated from the status of each individual test result. This data is
 reported over time.
 
@@ -426,7 +426,7 @@ All data for these APIs is available near real-time, 30 minutes after the run ha
 
 ### Individual spec results
 
-This data allows you to extract all spec results regardless of spec result status. The maximum number of records
+This data covers all spec results regardless of spec result status. The maximum number of records
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
 
@@ -461,7 +461,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Individual failed test results
 
-This report allows you to extract all test result details for failed tests. The maximum number of records
+This report extracts all test result details for failed tests. The maximum number of records
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
 
@@ -492,7 +492,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Individual test results
 
-This report allows you to extract all test result details regardless of test result status. The maximum number of records
+This report extracts all test result details regardless of test result status. The maximum number of records
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
 
@@ -526,7 +526,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Average run duration over time
 
-This report allows you to retrieve the average, median, min, and max durations of passing runs. This data is reported over time.
+This report returns the average, median, min, and max durations of passing runs. This data is reported over time.
 
 The report_id is: `average-passing-build-duration`
 
@@ -546,7 +546,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Average spec duration over time
 
-This report allows you to retrieve the average, median, min, and max durations of specs. This data is reported over time. The maximum
+This report returns the average, median, min, and max durations of specs. This data is reported over time. The maximum
 number of records returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your
 volume of records will exceed 500k for a single request.
 
@@ -588,7 +588,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Flaky rate per project
 
-This report allows you to understand the flaky _rate_ occurring in your projects, not just the _count_ of flaky tests.
+This report shows the flaky _rate_ occurring in your projects, not just the _count_ of flaky tests.
 Sometimes a high flake count is seen simply because the test runs very frequently, but the % of flake could be lower than in
 other tests that run less often. The flaky rate per project is calculated for the time period requested. Flaky rate is shown
 as a whole number. For example: 1 flaky test over 4 runs has a flaky rate of 25.
@@ -607,7 +607,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Flaky rate per project over time
 
-This report allows you to understand the flaky _rate_ occurring in your projects, not just the _count_ of flaky tests.
+This report shows the flaky _rate_ occurring in your projects, not just the _count_ of flaky tests.
 Sometimes a high flake count is seen simply because the test runs very frequently, but the % of flake could be lower than in
 other tests that run less often. The flaky rate per project is calculated for the time period requested. Flaky rate is shown
 as a whole number. For example: 1 flaky test over 4 runs has a flaky rate of 25.
@@ -628,7 +628,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Flaky test details
 
-This report allows you to extract all test result details of flaky tests. The maximum number of records
+This report extracts all test result details of flaky tests. The maximum number of records
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
 
@@ -657,7 +657,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Top flaky tests per project
 
-This report allows you to understand which tests have the highest flaky count and provides a URL to an example of a recent
+This report identifies which tests have the highest flaky count and provides a URL to an example of a recent
 occurrence of this flake. Enables teams to jump directly to Cypress Cloud for troubleshooting using test replay.
 
 The report_id is: `top-flaky-per-project`
@@ -676,7 +676,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Top failures per project
 
-This report allows you to understand which tests have the highest number of failures and provides a URL to an example of a recent
+This report identifies which tests have the highest number of failures and provides a URL to an example of a recent
 occurrence of this failure. Enables teams to jump directly to Cypress Cloud and understand the full context surrounding the failure.
 Fail rate is shown as a whole number. For example: 1 failed test over 4 runs has a fail rate of 25.
 
@@ -697,7 +697,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Top errors per project
 
-This report allows you to understand which tests have the highest number of errors and provides a URL to an example of a recent
+This report identifies which tests have the highest number of errors and provides a URL to an example of a recent
 occurrence of this error. Data is grouped by the error type and the error message. Enables teams to jump directly to
 Cypress Cloud and understand the full context surrounding the failure.
 
@@ -753,7 +753,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### UI Coverage details
 
-This report allows you to extract the UI Coverage % for each run along with other attributes of the run. The maximum number of records
+This report extracts the UI Coverage % for each run along with other attributes of the run. The maximum number of records
 returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
 exceed 500k for a single request.
 
@@ -813,7 +813,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 ### Accessibility score details
 
-This report allows you to extract Cypress Accessibility scores for each run along with other attributes of the run. The
+This report extracts Cypress Accessibility scores for each run along with other attributes of the run. The
 maximum number of records returned is 500,000. Make multiple requests with different start_date and end_date parameter
 values if your volume of records will exceed 500k for a single request.
 

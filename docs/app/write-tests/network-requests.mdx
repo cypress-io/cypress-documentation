@@ -224,8 +224,7 @@ With Cypress, you can stub network requests and have it respond instantly with
 fixture data.
 
 When stubbing a response, you typically need to manage potentially large and
-complex JSON objects. Cypress allows you to integrate fixture syntax directly
-into responses.
+complex JSON objects. Cypress integrates fixture syntax directly into responses.
 
 ```javascript
 // we set the response to be the activites.json fixture
@@ -444,8 +443,8 @@ to the wrong URL.
 ### Assertions
 
 Another benefit of using [`cy.wait()`](/api/commands/wait) on requests is that
-it allows you to access the actual request object. This is useful when you want
-to make assertions about this object.
+it yields the actual request object. This is useful when you want to make
+assertions about this object.
 
 In our example above we can assert about the request object to verify that it
 sent data as a query string in the URL. Although we're mocking the response, we

@@ -194,9 +194,9 @@ See ["Intercepted requests"][req] and
 
 `cy.intercept` can be used solely for spying: to passively listen for matching
 routes and apply [aliases](#Aliasing-an-intercepted-route) to them without manipulating the
-request or its response in any way. This alone is powerful as it allows you to
-[wait](#Waiting-on-a-request) for these requests, resulting in more reliable
-tests.
+request or its response in any way. This alone is powerful, since those aliases
+support [waiting](#Waiting-on-a-request) on these requests, resulting in more
+reliable tests.
 
 :::
 
@@ -1488,8 +1488,8 @@ From there, each interception has two phases: request and response.
 
 `cy.intercept()` routes are matched in reverse order of definition, except for
 routes which are defined with `{ middleware: true }`, which always run first.
-This allows you to override existing `cy.intercept()` declarations by defining
-an overlapping `cy.intercept()`:
+This overrides existing `cy.intercept()` declarations when you define an
+overlapping `cy.intercept()`:
 
 <DocsImage
   src="/img/api/intercept/middleware-algo.png"

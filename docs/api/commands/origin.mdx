@@ -358,8 +358,8 @@ same session.
 
 However, this is no longer possible, since all session state is now cleared
 between tests. So to avoid this overhead we recommend you use the
-[`cy.session()`](/api/commands/session) command, which allows you to easily
-cache session information and reuse it across tests. So now let's enhance our
+[`cy.session()`](/api/commands/session) command, which caches session
+information and reuses it across tests. So now let's enhance our
 custom login command with `cy.session()` for a complete syndicated login flow
 with session caching and validation. No mocking, no workarounds, no third-party
 plugins!

@@ -111,7 +111,7 @@ modified from the plugins file.**
 
 ### Configuration
 
-Hooking into node events allows you to programmatically alter the resolved configuration and
+Hooking into node events programmatically alters the resolved configuration and
 environment variables that come from the
 [Cypress configuration file](/app/references/configuration),
 [`cypress.env.json`](/app/guides/environment-variables#2-cypressenvjson),
@@ -232,8 +232,8 @@ which describe how to use this event.
 ### cy.task
 
 The event `task` is used in conjunction with the
-[`cy.task()`](/api/commands/task) command. It allows you to write arbitrary code
-in Node to accomplish tasks that aren't possible in the browser.
+[`cy.task()`](/api/commands/task) command. It runs arbitrary code in Node to
+accomplish tasks that aren't possible in the browser.
 
 You can use the `task` event to do things like:
 
