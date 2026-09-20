@@ -29,13 +29,6 @@ While Cypress Cloud already has many built-in methods of notifications related t
 [Slack](/cloud/integrations/slack) messages), webhooks deliver a **raw JSON payload** to your
 own service.
 
-:::note
-
-**Early access**: Webhooks will be available on all paid plans and during trials. The feature is rolling to admins and owners of Cypress Cloud organizations gradually, and may not yet be
-available for every organization. If you do not see webhooks in your project settings but want to try it early, contact your Cypress representative.
-
-:::
-
 ## Getting started
 
 **You need two things to get started:**
@@ -51,6 +44,49 @@ available for every organization. If you do not see webhooks in your project set
 
 Webhooks are configured **per project**. You can create up to **5 webhooks per
 project**.
+
+## Send to a no-code destination
+
+You do not have to build and host your own receiver. The endpoint above can be a
+service you write, but it can just as easily be a URL provided by a tool you
+already use. If you would rather not run a server, point the **Payload URL** at a
+no-code or low-code platform, or at a SaaS tool's native inbound-webhook trigger.
+
+- **No-code and low-code platforms** accept an incoming webhook, let you map the
+  payload fields visually, and connect the result to hundreds of downstream apps:
+  [Zapier](https://zapier.com), [Make](https://www.make.com),
+  [IFTTT](https://ifttt.com), and [n8n](https://n8n.io) are common choices.
+- **Native inbound-webhook triggers** in the tool you want to reach can receive
+  the delivery directly, with no platform in between. Examples include
+  [Jira automation](https://support.atlassian.com/cloud-automation/docs/jira-automation-triggers/#Incoming-webhook),
+  [PagerDuty](https://support.pagerduty.com/main/docs/webhooks), and
+  [Slack Workflow Builder](https://slack.com/help/articles/360053571454), each of
+  which can generate a webhook URL you paste in as the Payload URL.
+
+For step-by-step, worked examples, including a zero-to-one walkthrough of a custom
+Slack message, see the
+[Webhooks use-case guide](/cloud/guides/webhooks).
+
+:::caution
+
+**Signature verification and no-code tools.** We still recommend setting a
+[signing secret](#Verify-webhook-signatures) and verifying the
+`X-Cypress-Signature` header wherever the destination supports custom
+verification logic. Many no-code tools cannot compute an HMAC on the raw request
+body, so they cannot verify the signature. If your destination cannot verify
+signatures, reduce the risk another way:
+
+- **Keep the Payload URL secret.** Treat it like a credential. Anyone who has it
+  can send requests to it, so do not share it or commit it to a repository.
+- **Rely on the destination's own authentication.** Many tools include a hard-to-guess
+  token in the generated URL, or let you require an auth header or shared token
+  on the inbound request. Use those controls when they are available.
+
+A secret Payload URL is weaker than a verified signature, because it proves only
+that the caller knew the URL, not that the request came from Cypress Cloud and
+was not altered. Prefer signature verification when the destination supports it.
+
+:::
 
 ## Create a webhook
 

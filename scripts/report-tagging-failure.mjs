@@ -3,7 +3,7 @@
 // Surface a failed release-tagging run as a GitHub issue.
 //
 // The tagging workflow cannot block anything — it runs after the merge, docs
-// deploy via Netlify/Vercel and CI runs on CircleCI — so a red run on its own
+// deploy via Netlify/Vercel and CI runs in the `ci.yml` workflow — so a red run
 // is easy to miss. This turns it into something assigned to a person.
 //
 // Reuses an existing open issue rather than filing a new one per failure, so a

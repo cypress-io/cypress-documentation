@@ -334,8 +334,14 @@ the support file, and `node_modules/` in `.gitignore` are the three most often
 forgotten. If phase 4 turned up an existing spec that was already failing, add a
 line for that too.
 
-Three details in there are not optional:
+Four details in there are not optional:
 
+- **Send them back to Cypress Cloud for the command.** This is the one that
+  breaks the flow when it is missing. The command in the guide already carries
+  their record key, and the guide is the only place they can get it. An agent
+  that substitutes `npx cypress run --record` sends the person off to find a key
+  that Cloud is already showing them, and away from the page waiting to pick the
+  run up. Name the guide, and name the "Paste command into terminal" section.
 - **Name the directory.** The command has to run where Cypress is installed. In a
   monorepo, the repo root is usually the wrong answer, and `npx cypress run` from
   the wrong directory fails in a way that looks like a broken setup rather than a

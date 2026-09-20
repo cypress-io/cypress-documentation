@@ -4,12 +4,9 @@ import { join } from 'path'
 
 export default defineConfig({
   projectId: 'imown1',
-  allowCypressEnv: false,
   fixturesFolder: false,
   viewportHeight: 800,
   viewportWidth: 1200,
-  experimentalMemoryManagement: true,
-  experimentalFastVisibility: true,
   video: false,
   retries: {
     runMode: 2,
@@ -86,7 +83,8 @@ export default defineConfig({
       config.expose = config.expose || {}
       config.expose.URLs = URLs
 
-      config.expose.limitPerSection = Number(config.env.limitPerSection) || 0
+      // Normalize it to a number (0 = no limit).
+      config.expose.limitPerSection = Number(config.expose.limitPerSection) || 0
 
       return config
     },

@@ -5,6 +5,38 @@ Cypress Documentation: a **Docusaurus 3** (TypeScript) docs site. Content is in
 detail behind each rule, read **[`AGENTS_REFERENCE.md`](./AGENTS_REFERENCE.md)**
 (and the section links below).
 
+## Directory guides
+
+Some directories carry their own `AGENTS.md` (plus a `CLAUDE.md` that imports
+it) for conventions that apply only inside them. Read the one for the directory
+you're working in:
+
+| Directory            | Covers                                                        |
+| -------------------- | ------------------------------------------------------------- |
+| `docs/api/`          | reference frontmatter, the page skeleton, `## History` tables |
+| `docs/partials/`     | when a partial is warranted, naming, registration             |
+| `docs/app/releases/` | changelog entry format                                        |
+| `src/`               | component layout, registration, swizzled theme files          |
+| `plugins/`           | the sub-package build and dependency rules                    |
+
+Three conventions hold for every one of them:
+
+1. **Each opens with a pointer back here.** Tools differ on whether they merge a
+   nested file with its ancestors or read only the nearest one, so a nested file
+   never assumes this file was loaded.
+2. **They are additive, never contradictory.** A nested rule that conflicts with
+   a rule in this file is a sign the rule in this file is wrong. Fix it here.
+3. **Keep them short**, under about 60 lines. They are the rules that apply
+   here, not a second reference manual. Detail belongs in
+   `AGENTS_REFERENCE.md`; link its anchor rather than restating it.
+
+Four things walk `docs/` independently, and each skips these two filenames: the
+docs build (`exclude` in `docusaurus.config.js`), the LLM export (`walkDocs` in
+`plugins/llm`), `npm run lint:frontmatter`, and `npm run preview:og`. Because
+they match on filename, adding a nested guide to a **new** directory needs no
+config change. Prettier still formats them, so `npm run lint:fix` applies as
+usual.
+
 ## Commands
 
 ```bash
@@ -54,12 +86,14 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Include the standard frontmatter (`title`, `description`, `sidebar_label`,
   `slug`). `title` and `description` are the page's `<title>` and meta
   description, so make them **SEO-friendly**: lead with the key term and
-  summarize the page accurately. Match the section's house style — API reference
-  pages are terse (`'name | Cypress Documentation'` + one short sentence); guides
-  are more descriptive. Mirror a sibling file when unsure. Never add a `keywords`
-  field to frontmatter — Docusaurus only emits it as a `<meta name="keywords">`
-  tag that modern search engines ignore and that the site's own search doesn't
-  index, so it adds noise with no benefit.
+  summarize the page accurately. Match the section's house style and mirror a
+  sibling file when unsure. Never append `| Cypress Documentation` to a `title`:
+  a per-section suffix is appended at build time from `src/sectionTitles.js`,
+  and `cypress/e2e/page_titles.cy.ts` asserts it. Never add a `keywords` field to
+  frontmatter —
+  Docusaurus only emits it as a `<meta name="keywords">` tag that modern search
+  engines ignore and that the site's own search doesn't index, so it adds noise
+  with no benefit.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.
@@ -79,15 +113,13 @@ Each rule is a hard convention. See the linked section for the how and why.
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
   partial for content rendered in **more than one location**. If it's used in a
-  single page, inline it there — don't add a partial (or keep an existing one)
-  that has just one render site.
+  single page, inline it there instead.
 - End related pages with a `## See also` section (sentence-case H2, as the page's
   last section): a short bulleted list of doc-to-doc links to closely related
   pages, command names in backticks, with an optional `- short description` after
-  a link. It's standard on API reference pages (link 2–5 sibling
-  commands/utilities); add it to guides and other pages only when there are
-  genuinely related pages worth surfacing. Don't pad it with tangential links or
-  repeat links already prominent in the page body.
+  a link. It's standard on API reference pages; add it to guides and other pages
+  only when there are genuinely related pages worth surfacing. Don't pad it with
+  tangential links or repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
 - For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
   not a code block; keep example-specific prompts, code, commands, and diagrams in
@@ -95,17 +127,46 @@ Each rule is a hard convention. See the linked section for the how and why.
   characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
-- Never use em dashes — they read as AI-generated; use commas, periods, or
-  parentheses instead.
+
+**Writing style** — [details](./AGENTS_REFERENCE.md#writing-style)
+
+- **Lead a guide with the value of the feature**, what it does for the reader,
+  before getting into configuration or steps. How you do that is up to the page.
+- **Write headings that stand on their own**, since search engines and answer
+  engines surface them without the page around them. "Cypress Cloud MCP
+  workflows to try", not "Workflows to try". Add the context that makes the
+  heading this page's, keep it to roughly 40 to 60 characters, and use sentence
+  case. The fixed API page skeleton and `## See also` are exempt.
+- Address the reader as **you**. Reserve "we" for Cypress speaking as a team
+  ("we recommend"), never as a stand-in for the reader.
+- **Present tense, active voice.** "Cypress retries the assertion", not "Cypress
+  will retry the assertion" or "the assertion is retried".
+- **Say what something does**, not what it lets the reader do. "`cy.session()`
+  caches and restores session state", not "allows you to cache…".
+- Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
+- Cut filler. `please`, `note that`, and hedges that carry no information.
+- Don't use minimizing words like "simply", "just", "easy", or "obviously" in
+  instructions. They undermine a reader who is struggling and add nothing; state
+  the step plainly instead.
+- Go easy on em dashes. Overused, they read as AI-generated, so prefer a comma,
+  period, colon, or parentheses and rework the sentence rather than reaching for
+  a dash. Keep one where it is clearly the best fit, rarely more than one per
+  paragraph.
+- **Link text names its destination.** Never `[here]`, `[this link]`, or
+  `[learn more]`.
+- Oxford comma. US English, except that every `cancel` form doubles the `l`:
+  **cancellation**, **cancelled**, **cancelling**. Leave a single `l` only where
+  it is a literal you are quoting, such as an API value or UI string.
+- Write "accessibility", not "a11y", in prose. Keep `a11y` where it is part of an
+  actual name, such as the `data-a11y-ignore` attribute, the `checkA11y()`
+  command, or an identifier like a `groupId` or an image filename.
+- Bullets take no terminal punctuation when they are fragments and a period when
+  they are full sentences. Don't mix the two within one list.
 - Use **bold** only for real UI controls the reader acts on in a walkthrough
   (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
   e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
   examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
-  so invented examples stay distinct from the real UI a tutorial navigates. See
-  [Writing style](./AGENTS_REFERENCE.md#writing-style).
-- Don't use minimizing words like "simply", "just", "easy", or "obviously" in
-  instructions. They undermine a reader who is struggling and add nothing; state
-  the step plainly instead.
+  so invented examples stay distinct from the real UI a tutorial navigates.
 - Describe configuration by what it does and accepts. Don't call out fields or
   features a property lacks (e.g. "there is no `comment` field") unless the
   absence is a documented point of confusion.
@@ -142,13 +203,6 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Links to `www.cypress.io` / `on.cypress.io` / `learn.cypress.io` need UTM
   params (`utm_source=docs.cypress.io` + a placement `utm_medium`). Do not add
   them to internal links or `cloud.cypress.io`.
-
-**Plugins** — [details](./AGENTS_REFERENCE.md#project-layout)
-
-- The sub-packages in `plugins/` are never installed on their own; all of their
-  dependencies resolve from the repository root's `node_modules`. Declare new
-  dependencies in the **root** `package.json`, never in a plugin's own
-  `package.json` (pins there are never installed and just drift stale).
 
 **GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
 

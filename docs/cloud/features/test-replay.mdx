@@ -103,7 +103,7 @@ The left side of the header displays the Cypress Cloud test run ID number (#), w
 
 #### Command Log
 
-The left side of the screen displays the [command log](/app/core-concepts/open-mode#Command-Log) just like in the Cypress app, where you can step through, inspect and [time travel](/app/core-concepts/open-mode#Time-traveling) debug your test.
+The left side of the screen displays the [command log](/app/core-concepts/open-mode#Command-Log) just like in the Cypress app, where you can step through, inspect, and [time travel](/app/core-concepts/open-mode#Time-traveling) debug your test.
 
 <DocsImage
   src="/img/cloud/features/test-replay/command-log.png"
@@ -178,11 +178,20 @@ This data is then uploaded and stored in Cypress Cloud and replayed for debuggin
 - Shadow DOM
 - Canvas elements
 
-### Network data redaction
+### Network data redaction in Test Replay
 
 By default, Cypress redacts sensitive values from captured network requests and responses before Test Replay data is uploaded to Cypress Cloud. Redaction runs in the Cypress app, on your machine. Redacted values appear as `(redacted)` in the network log.
 
 To learn more about what is redacted and how to change this, see [Network data redaction](/cloud/account-management/data-storage-and-masking#Network-data-redaction).
+
+### Sensitive form input masking in Test Replay
+
+By default, Cypress replaces values in password and payment fields with
+asterisks before creating Test Replay artifacts. Masking runs in the Cypress App
+on your machine before Cypress uploads any data to Cypress Cloud.
+
+To learn which fields Cypress masks and how to change this setting, see
+[Sensitive form input masking](/cloud/account-management/data-storage-and-masking#Sensitive-form-input-masking).
 
 ### What is not captured
 
@@ -278,7 +287,7 @@ Learn more about the `--runner-ui` [command line option](/app/references/command
 
 :::caution
 
-Please refer to the [Cypress Cloud Terms of Use](https://cloud.cypress.io/terms-of-use) and our [Security & Compliance](https://www.cypress.io/security/) guide for specifics around reasonable use of Cypress Cloud, data storage and security at Cypress.
+Please refer to the [Cypress Cloud Terms of Use](https://cloud.cypress.io/terms-of-use) and our [Security & Compliance](https://www.cypress.io/security/?utm_source=docs.cypress.io&utm_medium=test-replay) guide for specifics around reasonable use of Cypress Cloud, data storage, and security at Cypress.
 
 Test Replays, including the test data leveraged within your tests, are visible to everyone with access to your project.
 
@@ -360,7 +369,7 @@ The exact error message can be seen by viewing the spec's output.
 - [Branch Review](/cloud/features/branch-review) - compare test results and Test Replays side by side between branches
 - [Cloud CLI](/cloud/integrations/cloud-cli) - query a test's replay timeline of commands, network requests, and logs from your terminal
 - [Test Replay FAQ](/cloud/faq#Test-Replay)
-- [Data storage and controls](/cloud/account-management/data-storage-and-masking#Network-data-redaction) - network redaction and other data controls
+- [Data storage and controls](/cloud/account-management/data-storage-and-masking#Test-Replay-controls) - network redaction, sensitive input masking, and other Test Replay controls
 - [Cypress v13 changelog](/app/references/changelog#13-0-0)
 - [Cypress Default Video Configuration](/app/references/configuration#Videos)
 - [Cypress Video Artifacts](/app/guides/screenshots-and-videos#Videos)
