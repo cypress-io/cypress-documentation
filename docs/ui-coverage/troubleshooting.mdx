@@ -61,7 +61,7 @@ UI Coverage already ignores the most common unstable values, including UUIDs and
   }
   ```
 
-Patterns in `attributeFilters` match the whole value (they're anchored as `^(...)$`, unless your pattern already starts with `^` or ends with `$`), and JSON requires backslashes to be doubled, so a token like `\d` must be written `\\d`. Note that `attribute` is matched **case-insensitively** while `value` is matched **case-sensitively**. See [How rules are applied](/ui-coverage/configuration/attributefilters#How-rules-are-applied).
+Patterns in `attributeFilters` match the whole value (they're anchored as `^(...)$`, unless your pattern already starts with `^` or ends with `$`), and JSON requires backslashes to be doubled, so a token like `\d` must be written `\\d`. `attribute` is matched **case-insensitively** while `value` is matched **case-sensitively**. See [How rules are applied](/ui-coverage/configuration/attributefilters#How-rules-are-applied).
 
 ## Distinct elements are reported as one
 

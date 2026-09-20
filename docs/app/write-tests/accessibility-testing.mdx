@@ -41,7 +41,7 @@ Automated scans are effective because many accessibility issues are caused by in
 :::
 
 :::warning
-Note that while automated scans do a good job at detecting violations of a known list of rules, no automated scan can prove that the interface is **fully** accessible and works well for users with disabilities. It is always necessary to understand the limitations and expected coverage provided by the library you choose, and then make a plan to cover the gaps with manual testing and/or traditional Cypress assertions about additional expected behavior, based on your knowledge of what is needed by your users.
+While automated scans do a good job at detecting violations of a known list of rules, no automated scan can prove that the interface is **fully** accessible and works well for users with disabilities. It is always necessary to understand the limitations and expected coverage provided by the library you choose, and then make a plan to cover the gaps with manual testing and/or traditional Cypress assertions about additional expected behavior, based on your knowledge of what is needed by your users.
 :::
 
 ### In-test plugins
@@ -137,7 +137,7 @@ The use of `data-cy`-style test ID attributes to help with test stability has be
 
 This approach explicitly avoids testing accessibility - which is all about the nature and structure of the content being tested, and how well the implementation in code matches that content, to provide a functional experience in a range of assistive technologies and browser setups.
 
-Testing Library (introduced in 2018 and now widely popular) is sometimes seen as a solution to the fact that explicit Test IDs do not provide any accessibility testing benefit. While Testing Library's helpers can be convenient and useful in their own right, and they keep accessibility top-of-mind for testers, it's important to note that Testing Library locators do **not** guarantee the accessibility of the elements being tested.
+Testing Library (introduced in 2018 and now widely popular) is sometimes seen as a solution to the fact that explicit Test IDs do not provide any accessibility testing benefit. While Testing Library's helpers can be convenient and useful in their own right, and they keep accessibility top-of-mind for testers, Testing Library locators do **not** guarantee the accessibility of the elements being tested.
 
 :::warning
 Whether you primarily use Testing Library element locators, test IDs, or a different approach, testing for accessibility requires making specific assertions about the **implementation and behavior** of your application.

@@ -25,12 +25,12 @@ Additionally, we have premium solutions like [UI Coverage](/ui-coverage/get-star
 
 Cypress AI is not a paid add-on. No AI capability requires a paid subscription: some, like the [Cypress skills for AI agents](/app/tooling/ai-skills) and the [`cypress tap` CLI](/app/tooling/cypress-tap), need no Cypress Cloud account at all, and the rest work on any Cloud plan, including the free Starter plan. See [Do AI features require a paid plan?](/cloud/faq#Do-AI-features-require-a-paid-plan) for the full breakdown.
 
-Please see our [Pricing Page](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=app-faq) for more details.
+See our [Pricing Page](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=app-faq) for more details.
 
 ### <Icon name="angle-right" /> What operating systems do you support?
 
 You can [install Cypress](/app/get-started/install-cypress) on Mac,
-Linux, and Windows. For additional information, please see our
+Linux, and Windows. For additional information, see our
 [System requirements](/app/get-started/install-cypress#System-requirements).
 
 ### <Icon name="angle-right" /> Do you support native mobile apps?
@@ -427,7 +427,7 @@ users believe they have a need to store a value in a `const`, `var`, or `let`.
 Cypress recommends doing this only when dealing with mutable objects (that
 change state).
 
-For examples how to do this, please read our
+For examples how to do this, read our
 [Variables and Aliases guide](/app/core-concepts/variables-and-aliases).
 
 ### <Icon name="angle-right" /> How do I get the native DOM reference of an element found using Cypress?
@@ -445,7 +445,7 @@ cy.get('button').then(($el) => {
 
 What you're asking about is conditional testing and control flow.
 
-Please read our extensive
+Read our extensive
 [Conditional Testing Guide](/app/guides/conditional-testing) which
 explains this in detail.
 
@@ -485,7 +485,7 @@ your DOM element will not be actionable. Cypress gives you a powerful
 [`{force:true}`](/app/core-concepts/interacting-with-elements#Forcing) option
 you can pass to most action commands.
 
-**Please read** our
+**Read** our
 [Core Concepts Introduction to Cypress](/app/core-concepts/introduction-to-cypress).
 This is the single most important guide for understanding how to test with
 Cypress.
@@ -537,7 +537,7 @@ We do not currently offer any options to simulate this during `cypress run`.
 
 ### <Icon name="angle-right" /> Can I use ES7 async / await syntax?
 
-No. The Command API is not designed in a way that makes this possible currently. To understand how Cypress commands work, please read:
+No. The Command API is not designed in a way that makes this possible currently. To understand how Cypress commands work, read:
 
 - Our
   [Introduction to Cypress guide](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous)
@@ -718,7 +718,7 @@ relevant Chromium auth flags, such as `--auth-server-allowlist` and
 Replace `*.example.com` with the domain(s) you want the browser to authenticate
 against.
 
-Note that the machine running Cypress must already have a valid Kerberos ticket
+The machine running Cypress must already have a valid Kerberos ticket
 (for example, the user is logged into the domain, or a ticket has been obtained
 via `kinit`). The browser flags only authorize Chrome to _use_ that ticket for
 the listed origins. They do not obtain one for you.
@@ -1450,13 +1450,13 @@ it('test', () => {
 })
 ```
 
-Note that `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to
+`cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to
 `jQuery`. It only queries DOM. [Learn more about why](/api/utilities/$#Notes)
 
 ### <Icon name="angle-right" /> Why doesn't the `instanceof Event` work?
 
 It might be because of the 2 different windows in the Cypress App. For
-more information, please check
+more information, check
 [the note here](/api/commands/window#Cypress-uses-2-different-windows).
 
 ### <Icon name="angle-right" /> Why isn't my application's Content Security Policy (CSP) being enforced during tests? <E2EOnlyBadge />
@@ -1612,7 +1612,7 @@ rendering as expected. For more information, check out the
 Yes. You can test your extensions by
 [loading them when we launch the browser](/api/node-events/browser-launch-api#Add-browser-extensions).
 
-Note that standard, Chrome-branded browsers version 137 and above can no longer
+Standard, Chrome-branded browsers version 137 and above can no longer
 load extensions this way, because Chrome removed the `--load-extension` flag. To
 keep loading extensions, we recommend using
 [Chrome for Testing](/app/references/launching-browsers#Chrome-Browsers) or

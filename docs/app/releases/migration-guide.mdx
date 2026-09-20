@@ -67,7 +67,7 @@ If you need a temporary escape hatch, either while you update those tests or if 
 
 :::
 
-If setting `forceHttp1` to `true` allows your suite to pass, and the difference is not one of the documented behaviors, please [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you are experiencing so it can be investigated.
+If setting `forceHttp1` to `true` allows your suite to pass, and the difference is not one of the documented behaviors, [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) with what you are experiencing so it can be investigated.
 
 <ForceHttp1Deprecation />
 
@@ -707,7 +707,7 @@ Additionally, the [`@cypress/angular-zoneless`](https://www.npmjs.com/package/@c
 
 If you haven't been able to migrate away from an older Angular version and still need that test harness, it can be installed independently via the [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular) `4.x.x` package from `npm`.
 
-Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v21.0.0+.
+This test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v21.0.0+.
 
 ```sh
 npm install --save-dev @cypress/angular@4
@@ -792,7 +792,7 @@ export default defineConfig({
 
 Change `<YOUR_FRAMEWORK>` to `'react'`, `'vue'`, `'svelte'`, or another [supported framework](/app/component-testing/component-framework-configuration) to match your component testing setup.
 
-Note that `@cypress/vite-dev-server@7` is deprecated and no longer supported by Cypress. It is intended as a temporary workaround until you can migrate to Vite `8`. More information on configuring a custom dev server can be found in the [Cypress Vite Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/vite-dev-server-v7.2.1/npm/vite-dev-server/README.md).
+`@cypress/vite-dev-server@7` is deprecated and no longer supported by Cypress. It is intended as a temporary workaround until you can migrate to Vite `8`. More information on configuring a custom dev server can be found in the [Cypress Vite Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/vite-dev-server-v7.2.1/npm/vite-dev-server/README.md).
 
 ### Next.js `14` is no longer supported for Component Testing
 
@@ -1006,7 +1006,7 @@ See [Cypress.expose()](/api/cypress-api/expose) for more details.
 
 #### Via runtime
 
-You can set exposed values at runtime using `Cypress.expose(key, value)` or `Cypress.expose(object)`. Note that these changes only persist for the remainder of the current spec file:
+You can set exposed values at runtime using `Cypress.expose(key, value)` or `Cypress.expose(object)`. These changes only persist for the remainder of the current spec file:
 
 ```javascript
 // Set a single value
@@ -1366,7 +1366,7 @@ export default defineConfig({
 })
 ```
 
-Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the dev server `v4 `can be found in the [Cypress Webpack Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-dev-server-v4.0.2/npm/webpack-dev-server/README.md) and [Custom Dev Server documentation](/app/component-testing/component-framework-configuration#Fully-Custom-Dev-Server).
+This package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the dev server `v4 `can be found in the [Cypress Webpack Dev Server documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-dev-server-v4.0.2/npm/webpack-dev-server/README.md) and [Custom Dev Server documentation](/app/component-testing/component-framework-configuration#Fully-Custom-Dev-Server).
 
 ##### End-to-End Testing
 
@@ -1391,7 +1391,7 @@ export default defineConfig({
 
 As stated earlier, this is likely unnecessary unless you are already using `@cypress/webpack-preprocessor` as a standalone package. Cypress by default uses the [Webpack Batteries Included Preprocessor](https://github.com/cypress-io/cypress/blob/@cypress/webpack-batteries-included-preprocessor-v3.0.7/npm/webpack-batteries-included-preprocessor/README.md) to process your spec files for end-to-end testing.
 
-Note that this package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the preprocessor can be found in the [Preprocessors API documentation](/api/node-events/preprocessors-api#Usage) and [Webpack Preprocessor documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-preprocessor-v6.0.4/npm/webpack-preprocessor/README.md).
+This package version is deprecated and no longer supported by Cypress and is intended as a workaround until you can migrate to Webpack `5`. More information on how to configure the preprocessor can be found in the [Preprocessors API documentation](/api/node-events/preprocessors-api#Usage) and [Webpack Preprocessor documentation](https://github.com/cypress-io/cypress/blob/@cypress/webpack-preprocessor-v6.0.4/npm/webpack-preprocessor/README.md).
 
 ### `@cypress/webpack-batteries-included-preprocessor` no longer shims all built-ins provided by `webpack` v4
 
@@ -1443,7 +1443,7 @@ With [LTS end](https://angular.dev/reference/releases#actively-supported-version
 
 If you haven't been able to migrate away from an older Angular version and still need that test harness, it can be installed independently via the [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular) `3.x.x` package from `npm`.
 
-Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v18.0.0+.
+This test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v18.0.0+.
 
 <PackageManagerTabs install="@cypress/angular@3" dev />
 
@@ -1581,9 +1581,8 @@ Cypress will warn that this option is deprecated.
 future version of Cypress.
 
 <Icon name="exclamation-triangle" /> Setting `injectDocumentDomain` to `true`
-may cause certain sites to stop working in Cypress. Please read the
-[configuration notes](/app/references/configuration#injectDocumentDomain) before
-use.
+may cause certain sites to stop working in Cypress. Read the [configuration
+notes](/app/references/configuration#injectDocumentDomain) before use.
 
 <Icon name="exclamation-triangle" /> If your test suites require
 `experimentalWebKitSupport`, `injectDocumentDomain` must be set to `true`.
@@ -1604,7 +1603,7 @@ Additionally, the `experimentalSkipDomainInjection` configuration option has bee
 The `resourceType` option on [`cy.intercept`](/api/commands/intercept) has been deprecated in Cypress 14.0.0. We anticipate the types of the `resourceType` to change in the future or be completely removed
 from the API.
 
-Our intention is to replace essential functionality dependent on the `resourceType` within Cypress in a future version (like [hiding network logs that are not fetch/xhr](/api/commands/intercept#Disabling-logs-for-a-request)). If you're using `resourceType` in your tests, please leave feedback on which `resourceType` values are important to you in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
+Our intention is to replace essential functionality dependent on the `resourceType` within Cypress in a future version (like [hiding network logs that are not fetch/xhr](/api/commands/intercept#Disabling-logs-for-a-request)). If you're using `resourceType` in your tests, leave feedback on which `resourceType` values are important to you in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447).
 
 ### `experimentalFetchPolyfill` removed
 
@@ -1682,7 +1681,7 @@ import { mount } from 'cypress/react'
 
 If you haven't been able to migrate away from an older React version and still need that test harness, it can be installed independently via the [`@cypress/react`](https://www.npmjs.com/package/@cypress/react) `8.x.x` package from `npm`.
 
-Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to React v18+.
+This test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to React v18+.
 
 <PackageManagerTabs install="@cypress/react@8" dev />
 
@@ -1728,7 +1727,7 @@ import { mount } from 'cypress/angular'
 
 If you haven't been able to migrate away from an older Angular version and still need that test harness, it can be installed independently via the [`@cypress/angular`](https://www.npmjs.com/package/@cypress/angular) `2.x.x` package from `npm`.
 
-Note that this test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v17.2.0+.
+This test harness version is deprecated and no longer supported by Cypress. This version is intended to serve as a temporary workaround to migrate your project to Angular v17.2.0+.
 
 <PackageManagerTabs install="@cypress/angular@2" dev />
 
@@ -1754,7 +1753,7 @@ import { mount } from '@cypress/angular'
 
 If you haven't been able to migrate away from Vue 2 and still need that test harness, it can be installed independently via the [@cypress/vue2](https://www.npmjs.com/package/@cypress/vue2) package.
 
-Note that this test harness is deprecated and no longer supported by Cypress. This package is intended to serve as a temporary workaround to migrate your project to Vue 3. The Cypress launchpad will warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
+This test harness is deprecated and no longer supported by Cypress. This package is intended to serve as a temporary workaround to migrate your project to Vue 3. The Cypress launchpad will warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
 
 <PackageManagerTabs install="@cypress/vue2" dev />
 
@@ -1780,7 +1779,7 @@ For component testing a Nuxt 3+ app (which is Vue 3 + Vite), see [Using Cypress 
 
 #### To continue using Nuxt 2
 
-If you haven't been able to migrate away from Nuxt 2, the underlying Vue 2 harness can still be installed independently via the [@cypress/vue2](https://www.npmjs.com/package/@cypress/vue2) package, as described in [To continue using Vue 2](#Vue-2-CT-no-longer-supported). Note that this package is deprecated and no longer supported by Cypress, and is intended only as a temporary workaround while you migrate to Nuxt 3+.
+If you haven't been able to migrate away from Nuxt 2, the underlying Vue 2 harness can still be installed independently via the [@cypress/vue2](https://www.npmjs.com/package/@cypress/vue2) package, as described in [To continue using Vue 2](#Vue-2-CT-no-longer-supported). This package is deprecated and no longer supported by Cypress, and is intended only as a temporary workaround while you migrate to Nuxt 3+.
 
 ### Create React App CT no longer supported
 
@@ -1858,7 +1857,7 @@ However, if you have not been able to upgrade Svelte and still need the Cypress 
 
 <PackageManagerTabs install="@cypress/svelte@2" dev />
 
-Note that this version of the test harness is deprecated and no longer actively supported by Cypress and is intended to serve as a temporary work around until you are able to migrate your project to Svelte 5+. The Cypress launchpad will also warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
+This version of the test harness is deprecated and no longer actively supported by Cypress and is intended to serve as a temporary work around until you are able to migrate your project to Svelte 5+. The Cypress launchpad will also warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
 
 To update, inside your support file (ex: `./cypress/support/component.(js|ts)`) or wherever your mount function is imported, change
 
@@ -2133,7 +2132,7 @@ describe('workflow', { testIsolation: false }, () => {
 })
 ```
 
-It is important to note that while disabling test isolation may improve the
+While disabling test isolation may improve the
 overall performance of end-to-end tests, it can cause state to "leak" between
 tests. This can make later tests dependent on the results of earlier tests, and
 potentially cause misleading test failures. It is important to be extremely
@@ -3284,7 +3283,7 @@ The `slowTestThreshold` configuration option is no longer valid at the top level
 of the configuration, and is now a
 [testing-type specific option](/app/references/configuration#Testing-Type-Specific-Options).
 
-Note that the default values are unchanged (`10000` for `e2e` and `250` for
+The default values are unchanged (`10000` for `e2e` and `250` for
 `component`).
 
 :::caution

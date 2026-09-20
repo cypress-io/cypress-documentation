@@ -125,7 +125,7 @@ Each spec's data starts processing as it uploads, but the run-level report is as
 
 ### <Icon name="angle-right" /> How do I keep local runs from cluttering my Cypress Cloud project?
 
-Tag them with `cypress run --record --tag "local"`. Tags appear on the run and are filterable in Cypress Cloud, so everyone can skip past them in the run list. A separate Cypress Cloud project for local runs is possible but costs you the comparison workflow, since Branch Review compares runs within one project and App Quality Config is per project. Note that every recorded run consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan regardless of where it ran, which is another reason to keep local runs scoped with `--spec`.
+Tag them with `cypress run --record --tag "local"`. Tags appear on the run and are filterable in Cypress Cloud, so everyone can skip past them in the run list. A separate Cypress Cloud project for local runs is possible but costs you the comparison workflow, since Branch Review compares runs within one project and App Quality Config is per project. Every recorded run consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan regardless of where it ran, which is another reason to keep local runs scoped with `--spec`.
 
 ## Detecting changes
 

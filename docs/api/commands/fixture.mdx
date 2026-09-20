@@ -340,7 +340,7 @@ cy.task('getFileSize', 'cypress/fixtures/large.zip').then((size) => {
 
 ### Loaded just once
 
-Please keep in mind that fixture files are assumed to be unchanged during the
+Keep in mind that fixture files are assumed to be unchanged during the
 test, and thus Cypress loads them just once. Even if you overwrite the fixture
 file itself, the already loaded fixture data remains the same.
 
