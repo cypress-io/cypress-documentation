@@ -192,7 +192,7 @@ the other time-related functions as they are.
 cy.clock(null, ['setTimeout', 'clearTimeout'])
 ```
 
-Note that you must specify `Date` in order to override the current datetime. The
+You must specify `Date` in order to override the current datetime. The
 example below affects the current datetime without affecting scheduled timers.
 
 ```javascript
@@ -277,7 +277,7 @@ cy.clock().invoke('setSystemTime', 60 * 60 * 1000)
 
 #### iframes not supported
 
-Note that `cy.clock()` only applies to the `top` window on a web page. It will
+`cy.clock()` only applies to the `top` window on a web page. It will
 not override the time functions of any `iframe` embedded on the page.
 
 ### Behavior

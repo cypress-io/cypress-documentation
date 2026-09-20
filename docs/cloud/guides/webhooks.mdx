@@ -98,7 +98,6 @@ the Cypress Cloud run.
 2. For the way the workflow starts, choose **Starts with a webhook**.
 3. Under **Data Variables**, add a key for each payload field you want in the
    message. Slack reads these from the top-level keys of the JSON body. You will likely want to start with fields like this:
-
    - `message` (only present in Cypress Cloud's generic `webhook.ping` test event)
    - `status`
    - `projectName`

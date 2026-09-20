@@ -550,7 +550,7 @@ _Released Feb 03, 2026_
 
 **Deprecations:**
 
-`Cypress.env()` is now deprecated and will be removed in a future major release of Cypress. To understand why, and how to migrate, please read our [Migration Guide](https://on.cypress.io/cypress-env-migration). Addressed in [#33181](https://github.com/cypress-io/cypress/pull/33181).
+`Cypress.env()` is now deprecated and will be removed in a future major release of Cypress. To understand why, and how to migrate, read our [Migration Guide](https://on.cypress.io/cypress-env-migration). Addressed in [#33181](https://github.com/cypress-io/cypress/pull/33181).
 
 **Features:**
 
@@ -849,8 +849,8 @@ Refer to the [v15 Migration Guide](/app/references/migration-guide#Migrating-to-
 - Removed support for Linux distributions with `glibc` older than `2.31`. This support is in-line with Node.js' support for Linux in Node v20+. Addressed in [#31912](https://github.com/cypress-io/cypress/pull/31912).
 - Removed support for [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol) with the [Firefox](https://www.mozilla.org/firefox/) browser. Addresses [#31189](https://github.com/cypress-io/cypress/issues/31189).
 - Removed support of the deprecated 3 argument signature of `cy.stub`. Use `cy.stub(object, name).callsFake(fn)` instead. Addresses [#31346](https://github.com/cypress-io/cypress/issues/31346).
-- `@cypress/webpack-preprocessor` no longer supports `webpack` version 4. Addresses [#31344](https://github.com/cypress-io/cypress/issues/31344). If you still need to use `webpack` version 4, please see our [migration guide](/app/references/migration-guide#Migrating-to-Cypress-150).
-- In order to better align with best practices, `@cypress/webpack-batteries-included-preprocessor` no longer includes certain browser built-ins that were automatically provided by Webpack 4. The removed built-ins are `assert`, `constants`, `crypto`, `domain`, `events`, `http`, `https`, `punycode`, `querystring`, `string_decoder`, `sys`, `timers`, `tty`, `url`, `util`, `vm`, and `zlib`. However, we know that certain built-ins are popular, given that many users have files that are shared between their Cypress tests and node context. Because of this, `@cypress/webpack-batteries-included-preprocessor` will ship with built-in support for `buffer`, `path`, `process`, `os`, and `stream`. If there is a built-in that isn't supported by default and you need to add support, please refer to the Webpack [resolve.fallback](https://webpack.js.org/configuration/resolve/#resolvefallback) documentation and the [`@cypress/webpack-batteries-included-preprocessor` README](https://github.com/cypress-io/cypress/blob/develop/npm/webpack-batteries-included-preprocessor/README.md). Addresses [#31039](https://github.com/cypress-io/cypress/issues/31039).
+- `@cypress/webpack-preprocessor` no longer supports `webpack` version 4. Addresses [#31344](https://github.com/cypress-io/cypress/issues/31344). If you still need to use `webpack` version 4, see our [migration guide](/app/references/migration-guide#Migrating-to-Cypress-150).
+- In order to better align with best practices, `@cypress/webpack-batteries-included-preprocessor` no longer includes certain browser built-ins that were automatically provided by Webpack 4. The removed built-ins are `assert`, `constants`, `crypto`, `domain`, `events`, `http`, `https`, `punycode`, `querystring`, `string_decoder`, `sys`, `timers`, `tty`, `url`, `util`, `vm`, and `zlib`. However, we know that certain built-ins are popular, given that many users have files that are shared between their Cypress tests and node context. Because of this, `@cypress/webpack-batteries-included-preprocessor` will ship with built-in support for `buffer`, `path`, `process`, `os`, and `stream`. If there is a built-in that isn't supported by default and you need to add support, refer to the Webpack [resolve.fallback](https://webpack.js.org/configuration/resolve/#resolvefallback) documentation and the [`@cypress/webpack-batteries-included-preprocessor` README](https://github.com/cypress-io/cypress/blob/develop/npm/webpack-batteries-included-preprocessor/README.md). Addresses [#31039](https://github.com/cypress-io/cypress/issues/31039).
 - The application under test's `pagehide` event in Chromium browsers will no longer trigger Cypress's `window:unload` event. Addressed in [#31853](https://github.com/cypress-io/cypress/pull/31853).
 - The `Cypress.SelectorPlayground` API has been renamed to `Cypress.ElementSelector`. This API was renamed to accommodate its use for defining `selectorPriority` in Cypress Studio and our future [`cy.prompt` release](/api/commands/prompt). Additionally, the `getSelector` method and the `onElement` option of `defaults` were removed from this API. Addresses [#31801](https://github.com/cypress-io/cypress/issues/31801). Addressed in [#31889](https://github.com/cypress-io/cypress/pull/31889) and [#32098](https://github.com/cypress-io/cypress/pull/32098).
 - The direct download option for installing Cypress is no longer supported. Users should install via a package manager. Addressed in [#32249](https://github.com/cypress-io/cypress/pull/32249).
@@ -861,7 +861,7 @@ Refer to the [v15 Migration Guide](/app/references/migration-guide#Migrating-to-
   - The Cypress configuration wizard for Component Testing supports TypeScript 5.0 or greater. Addresses [#31187](https://github.com/cypress-io/cypress/issues/31187).
   - `@cypress/vite-dev-server` is now an ESM only package. You will no longer be able to use this package from a CommonJS context. Addresses [#28373](https://github.com/cypress-io/cypress/issues/28373), [#29557](https://github.com/cypress-io/cypress/issues/29557) and [#31882](https://github.com/cypress-io/cypress/issues/31882).
     - Removed support for Vite 4 inside `@cypress/vite-dev-server`. The minimum Vite version is `5`. Addresses [#32038](https://github.com/cypress-io/cypress/issues/32038).
-  - `@cypress/webpack-dev-server` no longer supports `webpack-dev-server` version 4. Addresses [#31605](https://github.com/cypress-io/cypress/issues/31605). If you still need to use `webpack-dev-server` version 4, please see our [migration guide](/app/references/migration-guide#Migrating-to-Cypress-150).
+  - `@cypress/webpack-dev-server` no longer supports `webpack-dev-server` version 4. Addresses [#31605](https://github.com/cypress-io/cypress/issues/31605). If you still need to use `webpack-dev-server` version 4, see our [migration guide](/app/references/migration-guide#Migrating-to-Cypress-150).
 
 **Features:**
 
@@ -1230,15 +1230,15 @@ Refer to the [v14 Migration Guide](/app/references/migration-guide#Migrating-to-
 - The Cypress configuration wizard for Component Testing supports TypeScript 4.0 or greater. Addresses [#30493](https://github.com/cypress-io/cypress/issues/30493).
 - `@cypress/webpack-dev-server` no longer supports `webpack-dev-server` version 3. Additionally, `@cypress/webpack-dev-server` now ships with `webpack-dev-server` version 5 by default. `webpack-dev-server` version 4 will need to be installed alongside Cypress if you are still using `webpack` version 4. Addresses [#29308](https://github.com/cypress-io/cypress/issues/29308), [#30347](https://github.com/cypress-io/cypress/issues/30347), and [#30141](https://github.com/cypress-io/cypress/issues/30141).
 - `@cypress/vite-dev-server` no longer supports `vite` versions 2 and 3. Addresses [#29377](https://github.com/cypress-io/cypress/issues/29377) and [#29378](https://github.com/cypress-io/cypress/issues/29378).
-- The `delayMs` option of `cy.intercept()` has been removed. This option was deprecated in Cypress [6.4.0](#6-4-0). Please use the `delay` option instead. Addressed in [#30463](https://github.com/cypress-io/cypress/pull/30463).
+- The `delayMs` option of `cy.intercept()` has been removed. This option was deprecated in Cypress [6.4.0](#6-4-0). Use the `delay` option instead. Addressed in [#30463](https://github.com/cypress-io/cypress/pull/30463).
 - The `experimentalFetchPolyfill` configuration option was removed. This option was deprecated in Cypress [6.0.0](#6-0-0). We recommend using `cy.intercept()` for handling fetch requests. Addressed in [#30466](https://github.com/cypress-io/cypress/pull/30466).
 - We removed yielding the second argument of `before:browser:launch` as an array of browser arguments. This behavior has been deprecated since Cypress [4.0.0](#4-0-0). Addressed in [#30460](https://github.com/cypress-io/cypress/pull/30460).
-- The `cypress open-ct` and `cypress run-ct` CLI commands were removed. Please use `cypress open --component` or `cypress run --component` respectively instead. Addressed in [#30456](https://github.com/cypress-io/cypress/pull/30456)
+- The `cypress open-ct` and `cypress run-ct` CLI commands were removed. Use `cypress open --component` or `cypress run --component` respectively instead. Addressed in [#30456](https://github.com/cypress-io/cypress/pull/30456)
 - The undocumented methods `Cypress.backend('firefox:force:gc')` and `Cypress.backend('log:memory:pressure')` were removed. Addresses [#30222](https://github.com/cypress-io/cypress/issues/30222).
 
 **Deprecations:**
 
-- The `resourceType` option on `cy.intercept` has been deprecated. We anticipate the resource types to change or be completely removed in the future. Our intention is to replace essential functionality dependent on the `resourceType` within Cypress in a future version (like hiding network logs that are not fetch/xhr). Please leave feedback on any essential uses of `resourceType`
+- The `resourceType` option on `cy.intercept` has been deprecated. We anticipate the resource types to change or be completely removed in the future. Our intention is to replace essential functionality dependent on the `resourceType` within Cypress in a future version (like hiding network logs that are not fetch/xhr). Leave feedback on any essential uses of `resourceType`
   in this [GitHub issue](https://github.com/cypress-io/cypress/issues/30447). Addresses [#30433](https://github.com/cypress-io/cypress/issues/30433).
 - The new `injectDocumentDomain` configuration option is released as deprecated. It will be removed in a future version of Cypress. Addressed in [#30770](https://github.com/cypress-io/cypress/pull/30770).
 
@@ -2026,7 +2026,7 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 - The [`video`](/app/references/configuration#Videos) configuration option now defaults to `false`. Addresses [#26157](https://github.com/cypress-io/cypress/issues/26157).
 - The [`videoCompression`](/app/references/configuration#Videos) configuration option now defaults to `false`. Addresses [#26160](https://github.com/cypress-io/cypress/issues/26160).
-- The [`videoUploadOnPasses`](/app/references/configuration#Videos) configuration option has been removed. Please see our [screenshots & videos guide](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests) on how to accomplish similar functionality. Addresses [#26899](https://github.com/cypress-io/cypress/issues/26899).
+- The [`videoUploadOnPasses`](/app/references/configuration#Videos) configuration option has been removed. See our [screenshots & videos guide](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests) on how to accomplish similar functionality. Addresses [#26899](https://github.com/cypress-io/cypress/issues/26899).
 - Requests for assets at relative paths for component testing are now correctly forwarded to the dev server. Fixes [#26725](https://github.com/cypress-io/cypress/issues/26725).
 - The [`cy.readFile()`](/api/commands/readfile) command is now retry-able as a [query command](/app/core-concepts/retry-ability). This should not affect any tests using it; the functionality is unchanged. However, it can no longer be overwritten using [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands). Addressed in [#25595](https://github.com/cypress-io/cypress/pull/25595).
 - The deprecated configuration option `nodeVersion` has been removed. Addresses [#27016](https://github.com/cypress-io/cypress/issues/27016).
@@ -2670,7 +2670,7 @@ _Released Jan 31, 2023_
 **Features:**
 
 - Easily debug failed CI test runs recorded to the Cypress Cloud from your local
-  Cypress app with the new Debug page. Please leave any feedback
+  Cypress app with the new Debug page. Leave any feedback
   [here](https://github.com/cypress-io/cypress/discussions/25649). Your feedback
   will help us make decisions to improve the Debug experience. For more details,
   see [our blog post](https://on.cypress.io/debug-page-release). Addressed in
@@ -2729,7 +2729,7 @@ _Released Jan 24, 2023_
   [`experimentalMemoryManagement`](/app/references/experiments#Configuration)
   configuration option to improve memory management in Chromium-based browsers.
   Enable this option with `experimentalMemoryManagement=true` if you have
-  experienced "Out of Memory" issues. Please leave any feedback around
+  experienced "Out of Memory" issues. Leave any feedback around
   `experimentalMemoryManagement`
   [here](https://github.com/cypress-io/cypress/discussions/25557). Your feedback
   will help us make decisions to improve memory issues. Addresses
@@ -2738,7 +2738,7 @@ _Released Jan 24, 2023_
   `experimentalSkipDomainInjection`
   configuration option to disable Cypress from setting `document.domain` on
   injection, allowing users to test Salesforce domains. If you believe you are
-  having `document.domain` issues, please see the
+  having `document.domain` issues, see the
   `experimentalSkipDomainInjection`
   guide. This config option is end-to-end only. Addresses
   [#2367](https://github.com/cypress-io/cypress/issues/2367),
@@ -3042,7 +3042,7 @@ Read more about 12.0 in
   This option is configurable, but is enabled by default. Whether enabled or
   disabled, this changes how Cypress cleans up the browser context before each
   test and you may experience test errors with this upgrade. To better
-  understand the full impact of this change, please review the
+  understand the full impact of this change, review the
   [migration guide](/app/references/migration-guide#Test-Isolation).
   - In Cypress v12, the `testIsolation` configuration values have changed from
     `on` or `off` to `true` or `false`. Addressed in
@@ -3204,7 +3204,7 @@ _Released Nov 22, 2022_
   tests sequentially in open mode. This feature had been previously removed in
   Cypress 10.0. Enable 'Run All Specs' with the new experimental flag,
   [`experimentalRunAllSpecs`](/app/references/experiments#End-to-End-Testing).
-  Please leave any feedback around 'Run All Specs'
+  Leave any feedback around 'Run All Specs'
   [here](https://github.com/cypress-io/cypress/discussions/21628). Your feedback
   will help us make product decisions around the future of this feature.
   Addresses [#24168](https://github.com/cypress-io/cypress/issues/24168)
@@ -4287,7 +4287,7 @@ into your overall development experience. Read more about 10.0 in
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please run `cypress open` to go
+<Icon name="exclamation-triangle" color="red" /> Run `cypress open` to go
 through our interactive migration which will guide you in updating your files
 and configuration options. Read our [Migration
 Guide](/app/references/migration-guide) which explains some breaking changes in
@@ -4317,7 +4317,7 @@ more detail.**
     configuration can no longer be provided via a JSON format.
 - Cypress has made several **configuration option changes** including renaming
   options, removing options, and only allowing some options within a specific
-  testing type. Please run `cypress open` to have our automated migration update
+  testing type. Run `cypress open` to have our automated migration update
   these options for you.
   - Many configuration options are now specific to either end-to-end or
     component testing. The types have also been updated to match the new
@@ -4357,17 +4357,17 @@ more detail.**
     [#19319](https://github.com/cypress-io/cypress/pull/19319).
   - The `experimentalStudio` option was removed with the removal of the
     experimental Cypress Studio feature. If this option is configured in your
-    project, a warning message will be displayed. Please leave any feedback
+    project, a warning message will be displayed. Leave any feedback
     around Cypress Studio
     [here](https://github.com/cypress-io/cypress/discussions/21561). Addressed
     in [#20515](https://github.com/cypress-io/cypress/pull/20515).
 
 - During `cypress open`, the ability to "Run all specs" and "Run filtered specs"
-  has been removed. Please leave feedback around the removal of this feature
+  has been removed. Leave feedback around the removal of this feature
   [here](https://github.com/cypress-io/cypress/discussions/21628). Your feedback
   will help us make product decisions around the future of this feature.
 
-- The experimental Cypress Studio feature has been removed. Please leave
+- The experimental Cypress Studio feature has been removed. Leave
   feedback around the removal of this feature
   [here](https://github.com/cypress-io/cypress/discussions/21561). Your feedback
   will help us make product decisions around the future of this feature.
@@ -4453,7 +4453,7 @@ more detail.**
     [#20853](https://github.com/cypress-io/cypress/pull/20853).
     - The [`e2e.specPattern`](/app/references/configuration#e2e) default
       value for new projects is `cypress/e2e/**.cy.{js,jsx,ts,tsx}`. For
-      existing projects, please run `cypress open` to have your spec files
+      existing projects, run `cypress open` to have your spec files
       automatically migrated to match this `specPattern`. Addressed in
       [#21193](https://github.com/cypress-io/cypress/pull/21193).
     - The [`component.specPattern`](/app/references/configuration#component)
@@ -4689,9 +4689,9 @@ _Released Apr 25, 2022_
     option enables support for [`cy.session()`](/api/commands/session) and
     [`cy.origin()`](/api/commands/origin) for end-to-end testing.
   - The `experimentalSessionSupport` configuration option has been removed and
-    replaced by the `experimentalSessionAndOrigin` configuration option. Please
-    update your configuration to use the new `experimentalSessionAndOrigin`
-    option to continue to opt-in to this experimental feature.
+    replaced by the `experimentalSessionAndOrigin` configuration option. Update
+    your configuration to use the new `experimentalSessionAndOrigin` option to
+    continue to opt-in to this experimental feature.
   - When `experimentalSessionAndOrigin` is enabled, cross-origin requests will
     no longer immediately fail, but instead, time out based on the
     [`pageLoadTimeout`](/app/references/configuration#Timeouts)
@@ -5348,7 +5348,7 @@ _Released Oct 25, 2021_
 **Dependency Updates:**
 
 - Pinned resolution of `ua-parser-js` to `0.7.24` to avoid dependency resolution
-  to the compromised package versions. Please read the
+  to the compromised package versions. Read the
   [security advisory](https://github.com/advisories/GHSA-pjwm-rvh2-c87w) and
   take actions advised as soon as possible. Addressed in
   [#18611](https://github.com/cypress-io/cypress/pull/18611)
@@ -5655,7 +5655,7 @@ of 1, and a screen size of 1280x720 by default.
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+<Icon name="exclamation-triangle" color="red" /> Read our [Migration
 Guide](/app/references/migration-guide) which explains the changes in more
 detail and how to change your code to migrate to Cypress 8.0.**
 
@@ -6151,7 +6151,7 @@ components using your favorite developer tools. Read our
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+<Icon name="exclamation-triangle" color="red" /> Read our [Migration
 Guide](/app/references/migration-guide) which explains the changes in more
 detail and how to change your code to migrate to Cypress 7.0.**
 
@@ -6183,7 +6183,7 @@ detail and how to change your code to migrate to Cypress 7.0.**
     `res.setThrottle()`, respectively. Addresses
     [#15700](https://github.com/cypress-io/cypress/issues/15700).
   - `cy.route2()` was previously aliased to `cy.intercept()`. Now the alias
-    `cy.route2()` has been removed. Please update usage of `cy.route2()` to
+    `cy.route2()` has been removed. Update usage of `cy.route2()` to
     `cy.intercept()`. Addressed in
     [#14709](https://github.com/cypress-io/cypress/pull/14709).
 - Component tests have been migrated to use a dedicated test runner and are
@@ -6218,7 +6218,7 @@ detail and how to change your code to migrate to Cypress 7.0.**
   by default in the Electron browser. You can override this option if needed
   within the `before:browser:launch` API. Addressed in
   [#15493](https://github.com/cypress-io/cypress/pull/15493).
-- `Cypress.moment()` has been removed. Please migrate to a different datetime
+- `Cypress.moment()` has been removed. Migrate to a different datetime
   formatter. See
   [our recipe](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__dayjs)
   for example replacements. Addresses
@@ -6898,7 +6898,7 @@ and wait on any type of HTTP request originating from your app. See our guide on
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+<Icon name="exclamation-triangle" color="red" /> Read our [Migration
 Guide](/app/references/migration-guide) which explains the changes in more
 detail and how to change your code to migrate to Cypress 6.0.**
 
@@ -7481,7 +7481,7 @@ failed test prior to marking it as failed. Read our new guide on
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+<Icon name="exclamation-triangle" color="red" /> Read our [Migration
 Guide](/app/references/migration-guide) which explains the changes in more
 detail and how to change your code to migrate to Cypress 5.0.**
 
@@ -8731,7 +8731,7 @@ bring new powerful features.
 
 **Breaking Changes:**
 
-<Icon name="exclamation-triangle" color="red" /> Please read our [Migration
+<Icon name="exclamation-triangle" color="red" /> Read our [Migration
 Guide](/app/references/migration-guide) which explains the changes in more
 detail and how to change your code to migrate to Cypress 4.0.**
 
@@ -9661,7 +9661,7 @@ _Released Oct 23, 2019_
 - Updated our Dashboard docs to include screenshots containing our new Dashboard
   navigation design.
 - We have some newly translated documentation in Portuguese. If you'd like to
-  help in translating more, please open a pull request in our
+  help in translating more, open a pull request in our
   [documentation repo](https://github.com/cypress-io/cypress-documentation).
 
 **Dependency Updates**
@@ -10168,7 +10168,7 @@ _Released May 23, 2019_
 
 - We have some newly translated documentation in
   [Chinese](http://on.cypress.io/zh-cn) and [Japanese](http://on.cypress.io/ja).
-  If you'd like to help in translating more, please open a pull request in our
+  If you'd like to help in translating more, open a pull request in our
   [documentation repo](https://github.com/cypress-io/cypress-documentation).
 
 ## 3.3.0
@@ -10187,7 +10187,7 @@ _Released May 17, 2019_
   `HTTPS_PROXY`, and `NO_PROXY` environment variables and proxies traffic
   accordingly through Cypress based on these values. This includes network
   traffic within your application under test, when downloading Cypress, and when
-  accessing 'Runs' within the Test Runner. Please read our new
+  accessing 'Runs' within the Test Runner. Read our new
   [Proxy Configuration](/app/references/proxy-configuration) doc to
   understand more about proxy configuration in Cypress. Fixes
   [#672](https://github.com/cypress-io/cypress/issues/672),
@@ -12112,7 +12112,7 @@ _Released Dec 17, 2017_
   the generated Cypress command to your clipboard or output the generated
   selector to your console. This feature is in beta. It only works in Chrome
   (not in Electron). We are aware of some bugs in it, but it is good enough for
-  use and feedback. Please check out issue
+  use and feedback. Check out issue
   [#917](https://github.com/cypress-io/cypress/issues/917), watch an animated
   gif demonstration, and leave any feedback you have there. Fixes
   [#917](https://github.com/cypress-io/cypress/issues/917).
@@ -12151,10 +12151,9 @@ _Released Dec 14, 2017_
 **Bugfixes:**
 
 - Updated TypeScript definitions to more accurately match the current Cypress
-  API. Fixes [#1050](https://github.com/cypress-io/cypress/issues/1050). Also
-  note that if you were extending Cypress in TypeScript the `Chainer` interface
-  changed. Please read issue #1048 to understand
-  what you will need to update.
+  API. Fixes [#1050](https://github.com/cypress-io/cypress/issues/1050). If you
+  were extending Cypress in TypeScript, the `Chainer` interface changed. Read
+  issue #1048 to understand what you will need to update.
 
 **Misc:**
 
@@ -12824,7 +12823,7 @@ _Released Sep 10, 2017_
   been deprecated. Fixes
   [#316](https://github.com/cypress-io/cypress/issues/316).
 - The interface for writing custom commands has been deprecated.
-  [Please read our docs on the new custom commands interface](/api/cypress-api/custom-commands).
+  [Read our docs on the new custom commands interface](/api/cypress-api/custom-commands).
   Fixes [#436](https://github.com/cypress-io/cypress/issues/436) and
   [#465](https://github.com/cypress-io/cypress/issues/465).
 - There are no more global, in-app updates. Versioning should be primarily
@@ -13932,7 +13931,7 @@ _Released Sep 06, 2016_
   know_ by [opening an issue](https://github.com/cypress-io/cypress/issues/new).
   We will screen-share with you to diagnose the issue. We're no longer aware of
   any situation where this should happen, so if you're experiencing these bugs,
-  please help us track them down.
+  help us track them down.
 
 **Features:**
 
@@ -14348,7 +14347,7 @@ _Released May 17, 2016_
 
 **Notes:**
 
-- Updating through the Desktop App in **Linux** does not work. To update please
+- Updating through the Desktop App in **Linux** does not work. To update,
   run [cypress install](/app/references/command-line) from the command line.
 - We are still updating the docs to reflect all of these changes.
 - All users must _LOG IN AGAIN_ and re-add their projects. Sorry, we've changed
@@ -14545,7 +14544,7 @@ _Released Apr 10, 2016_
   configuration keys (such as `pageLoadTimeout` or `watchForFileChanges`) now
   override their values. So, if you
   `export CYPRESS_WATCH_FOR_FILE_CHANGES=false` it will turn off this
-  configuration option. Also note that we'll automatically normalize environment
+  configuration option. We'll also automatically normalize environment
   keys so: `CYPRESS_pageLoadTimeout=100000` and
   `CYPRESS_PAGE_LOAD_TIMEOUT=100000` will both be correctly handled. We'll also
   coerce values into `Boolean` or `Number` correctly.
@@ -15924,7 +15923,7 @@ _Released Sep 13, 2015_
 - Cypress is currently seeking to raise a Series A. This will enable us to grow
   the team and speed up development but seeking it has come at a cost for current
   development speed. If you have any VC connections
-  [please send them our way](mailto:support@cypress.io).
+  [send them our way](mailto:support@cypress.io).
 
 ## 0.10.8
 

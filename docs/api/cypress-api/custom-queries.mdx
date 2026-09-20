@@ -287,7 +287,7 @@ additional details when the inner function executes.
 this.set('timeout', options.timeout)
 ```
 
-When defining `focused2()`, it's important to note that we used `function`,
+When defining `focused2()`, we used `function`,
 rather than an arrow function. This gives us access to `this`, where we can set
 the `timeout`. If you don't call `this.set('timeout')`, or call it with `null`
 or `undefined`, your query will use the

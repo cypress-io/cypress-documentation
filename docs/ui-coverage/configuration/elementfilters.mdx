@@ -414,7 +414,7 @@ A wildcard selector combined with `documentScope` excludes all elements within a
 
 Because the first matching rule wins, an `include: true` rule placed before a broader exclude rule keeps its elements in the report. [Include only elements in a specific container](#Include-only-elements-in-a-specific-container) above uses this with a catch-all exclude rule, and the same protection works with narrower exclude rules.
 
-Note that this protection is specific to UI Coverage. When a root-level `elementFilters` list is shared with Cypress Accessibility, that product treats include rules as inert, so the same list can behave differently per product.
+This protection is specific to UI Coverage. When a root-level `elementFilters` list is shared with Cypress Accessibility, that product treats include rules as inert, so the same list can behave differently per product.
 
 #### Config
 

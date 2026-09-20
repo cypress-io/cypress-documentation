@@ -367,7 +367,7 @@ cy.get('form').should('have.class', 'form-horizontal')
 cy.get('input').should('not.have.value', 'US')
 ```
 
-In each of these examples, it's important to note that Cypress will
+In each of these examples, Cypress will
 automatically _wait_ until these assertions pass. This prevents you from having
 to know or care about the precise moment your elements eventually do reach this
 state.
@@ -895,7 +895,7 @@ randomly fail. This would lead to flaky, inconsistent results.
 
 While Cypress does have a [`.then()`](/api/commands/then) command, Cypress
 commands are not Promises and cannot be `await`ed. If you'd like to learn more
-about handling asynchronous Cypress Commands please read our
+about handling asynchronous Cypress Commands, read our
 [Variables and Aliases Guide](/app/core-concepts/variables-and-aliases).
 
 :::
@@ -1388,7 +1388,7 @@ wait _up to 10 seconds total_ for all of them to pass.
 
 :::danger
 
-Note that you _never_ change the timeout inside the assertion. The `timeout`
+You _never_ change the timeout inside the assertion. The `timeout`
 parameter **always** goes inside the command.
 
 ```js
