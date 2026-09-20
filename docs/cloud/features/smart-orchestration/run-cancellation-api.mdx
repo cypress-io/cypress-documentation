@@ -15,7 +15,7 @@ This API is **experimental**. Breaking changes are unlikely, but may be made if 
 
 :::
 
-A run can be canceled manually by opening Cypress Cloud and clicking **Cancel** on
+A run can be cancelled manually by opening Cypress Cloud and clicking **Cancel** on
 the run, or configuring
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) to
 stop a run automatically once failures cross a threshold.
@@ -39,19 +39,19 @@ HTTP request, using the same
 [record key](/cloud/account-management/projects#Record-key) credentials you
 already use to [record the run](/cloud/get-started/setup#Setup).
 
-Canceling through the API has the same effect as canceling manually from the
+Cancelling through the API has the same effect as cancelling manually from the
 dashboard: the run is marked **Canceled**,
 [`run.completed` webhooks](/cloud/integrations/webhooks) fire, and any
 in-progress `cypress run --record` calls for the run exit with an error. See
-[What happens when a run is canceled?](/cloud/features/recorded-runs#What-happens-when-a-run-is-canceled)
+[What happens when a run is cancelled?](/cloud/features/recorded-runs#What-happens-when-a-run-is-cancelled)
 for the full list of effects.
 
 This is especially useful when:
 
-- You want to use [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) to execute only the tests that did not pass in a previously canceled run.
+- You want to use [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) to execute only the tests that did not pass in a previously cancelled run.
 - You want to trigger [`run.completed` webhooks](/cloud/integrations/webhooks) in a timely manner after your CI has stopped.
 - You want any other end-of-run integrations like [GitHub](/cloud/integrations/github) or [Slack](/cloud/integrations/slack) to happen at the moment of the CI cancellation, not after the Run Timeout expires.
-- You want Cypress [Cloud MCP](/cloud/integrations/cloud-mcp) and [CLI](/cloud/integrations/cloud-cli) to reflect the intentional canceled state immediately when working with results, instead of a partial "timing out" state.
+- You want Cypress [Cloud MCP](/cloud/integrations/cloud-mcp) and [CLI](/cloud/integrations/cloud-cli) to reflect the intentional cancelled state immediately when working with results, instead of a partial "timing out" state.
 
 :::caution
 
@@ -66,10 +66,10 @@ to the console when this happens, but the exit code itself doesn't
 distinguish a cancellation from a real test failure.
 
 **Note:** If you call this API from a step that runs separately from the test job
-itself, the **canceled run's own CI job** will report as failed rather than canceled.
+itself, the **cancelled run's own CI job** will report as failed rather than cancelled.
 This may happen example in deployment-pipeline and orchestrator use cases.
-You should account for that in the job that ran the canceled specs, so a run you intentionally
-canceled doesn't get treated as a broken build.
+You should account for that in the job that ran the cancelled specs, so a run you intentionally
+cancelled doesn't get treated as a broken build.
 
 :::
 
@@ -162,10 +162,10 @@ A successful cancellation always responds immediately and will end a Cypress run
 
 **Note**: If you are looking for a less-immediate signal that allows the queued tests to complete before ending the run, use the [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API) instead.
 
-| Status | Body                                                                                               | Meaning                                                                                               |
-| ------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `200`  | `{ "runId": "...", "cancelledAt": "..." }`                                                         | The run was canceled.                                                                                 |
-| `409`  | `{ "message": "Run is not currently running and cannot be canceled.", "code": "RUN_NOT_RUNNING" }` | The run is not currently running. It may have already completed, already been canceled, or timed out. |
+| Status | Body                                                                                               | Meaning                                                                                                |
+| ------ | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `200`  | `{ "runId": "...", "cancelledAt": "..." }`                                                         | The run was cancelled.                                                                                 |
+| `409`  | `{ "message": "Run is not currently running and cannot be canceled.", "code": "RUN_NOT_RUNNING" }` | The run is not currently running. It may have already completed, already been cancelled, or timed out. |
 
 Malformed or unauthenticated requests are rejected before a cancellation is
 attempted: a missing or invalid
@@ -178,9 +178,9 @@ error response is a JSON body of the form `{ "message": "...", "code": "..." }`.
 
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) -
   cancel a run automatically once failures cross a threshold
-- [Manually canceling a run](/cloud/features/recorded-runs#Run-cancellation) -
+- [Manually cancelling a run](/cloud/features/recorded-runs#Run-cancellation) -
   cancel a run from the Cypress Cloud dashboard
 - [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API) -
-  mark a run complete early instead of canceling it
+  mark a run complete early instead of cancelling it
 - [`run.completed` webhooks](/cloud/integrations/webhooks) - get notified when
   a run finishes, including by cancellation

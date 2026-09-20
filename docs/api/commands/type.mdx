@@ -502,7 +502,7 @@ cause the actual value or text to change will fire those events.
 The following rules have been implemented that match real browser behavior (and
 the spec):
 
-1. Cypress respects not firing subsequent events if previous ones were canceled.
+1. Cypress respects not firing subsequent events if previous ones were cancelled.
 2. Cypress will fire `keypress` _only_ if that key is supposed to actually fire
    `keypress`.
 3. Cypress will fire `textInput` _only_ if typing that key would have inserted
@@ -512,11 +512,11 @@ the spec):
 
 #### Event Cancellation
 
-Cypress respects all default browser behavior when events are canceled.
+Cypress respects all default browser behavior when events are cancelled.
 
 ```javascript
 // prevent the characters from being inserted
-// by canceling keydown, keypress, or textInput
+// by cancelling keydown, keypress, or textInput
 $('#username').on('keydown', (e) => {
   e.preventDefault()
 })
@@ -543,7 +543,7 @@ will contain the `which` character code and the events that happened as a result
 of that key press.
 
 Events that were `defaultPrevented` may prevent other events from firing and
-those will show up as empty. For instance, canceling `keydown` will not fire
+those will show up as empty. For instance, cancelling `keydown` will not fire
 `keypress` or `textInput` or `input`, but will fire `keyup` (which matches the
 spec).
 
