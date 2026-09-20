@@ -394,7 +394,7 @@ On its own, Spec Prioritization changes the _order_ specs run in, not the total
 duration, so it surfaces failures earlier without shortening the run. To turn
 that earlier feedback into shorter runs and lower CI costs, pair it with
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation): when
-the prioritized failures reappear at the start of a run, the run is canceled
+the prioritized failures reappear at the start of a run, the run is cancelled
 right away, avoiding wasted compute on specs you already know will need another
 pass.
 
@@ -433,7 +433,7 @@ prioritize.
 Cypress Cloud [Smart Orchestration](/cloud/features/smart-orchestration/overview)
 feature that automatically cancels a recorded run once the number of failed
 tests reaches a threshold you configure. It stops Cypress from handing out new
-specs, marks the run as canceled, and reports how much CI time was saved, so you
+specs, marks the run as cancelled, and reports how much CI time was saved, so you
 don't pay for tests that run after a run has already failed. It is available on
 the Business and Enterprise plans.
 
@@ -452,7 +452,7 @@ No. Specs that are already in progress when the threshold is reached finish
 running so you still get their complete results. Cypress only stops handing out
 _new_ specs. In a parallelized run, this means machines can keep running the
 specs they had already started at the moment of cancellation, but none of them
-will pick up a new spec once the run is canceled.
+will pick up a new spec once the run is cancelled.
 
 ### <Icon name="angle-right" /> How do I disable Auto Cancellation for a single run?
 
@@ -482,7 +482,7 @@ pre-filtered to the failures, or to use the
 [Tests for Review](/cloud/features/recorded-runs#Tests-for-Review) panel, which
 orders results by failures first. Open a failed test's
 [detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) and
-[Test Replay](/cloud/features/test-replay) to debug it. Note that a canceled run
+[Test Replay](/cloud/features/test-replay) to debug it. Note that a cancelled run
 only includes results for specs that had already started, so it may not contain
 every failure the full suite would have produced.
 
