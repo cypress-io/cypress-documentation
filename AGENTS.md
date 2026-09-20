@@ -149,8 +149,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - **Link text names its destination.** Never `[here]`, `[this link]`, or
   `[learn more]`.
 - Sentence case for headings, except the fixed API page skeleton and product
-  names. Oxford comma. US English, with **cancellation** (two `l`s) as the one
-  exception, alongside US `canceled`.
+  names. Oxford comma. US English, except that every `cancel` form doubles the
+  `l`: **cancellation**, **cancelled**, **cancelling**. Leave a single `l` only
+  where it is a literal you are quoting, such as an API value or UI string.
 - Write "accessibility", not "a11y".
 - Bullets take no terminal punctuation when they are fragments and a period when
   they are full sentences. Don't mix the two within one list.

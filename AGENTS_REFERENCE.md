@@ -185,10 +185,25 @@ check without a judgment call.
   (`## Command Log`, `## Syntax`) and product names, which keep their own
   capitalization.
 - **Oxford comma**: "commands, queries, and assertions".
-- **US English**, with one exception: **cancellation** keeps two `l`s. The verb
-  forms stay American (`canceled`, `canceling`), which is the standard pairing
-  and what the docs already use. Cypress Cloud's **Auto Cancellation** is a
-  feature name and is always capitalized.
+- **US English**, with one exception: every `cancel` form **doubles the `l`**,
+  against the American convention. Write `cancellation`, `cancelled`, and
+  `cancelling`, never `canceled`, `canceling`, or `cancelation`. Cypress Cloud's
+  **Auto Cancellation** is a feature name and is always capitalized.
+
+  The exception to the exception is a **literal you are quoting**, which keeps
+  whatever spelling the source uses. Leave these alone:
+  - Verbatim Cypress Cloud UI strings, such as _"manually canceled"_ or
+    _"Automatically canceled by Smart Orchestration."_, and image `alt` text
+    that transcribes them.
+  - Literal API and CLI output, such as the `RUN_NOT_RUNNING` response body or
+    `Exiting with non-zero exit code because the run was canceled.`
+  - Third-party API values, such as GitLab's native `canceled` pipeline state.
+
+  A find-and-replace over these files gets this wrong in both directions, so
+  read each occurrence in context. The Cypress Cloud run status is `cancelled`
+  while several of its own UI strings say "canceled", and both are correct as
+  quoted.
+
 - **Bullet punctuation**: no terminal punctuation when the bullet is a fragment,
   a period when it is a full sentence. Pick one per list and stay with it rather
   than mixing both styles in the same list.
