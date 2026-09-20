@@ -1268,9 +1268,9 @@ This guide details the code changes needed to migrate to Cypress
 version 15.
 [See the full changelog for version v15.0](/app/references/changelog#15-0-0).
 
-### Node.js 20, 22 and 24+ support
+### Node.js 20, 22, and 24+ support
 
-Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypress binary and the supported versions are now Node.js 20, 22, 24 and above.
+Cypress requires [Node.js](https://nodejs.org/en) in order to install the Cypress binary and the supported versions are now Node.js 20, 22, 24, and above.
 Node.js versions 18 and 23 are no longer supported.
 [See Node's release schedule](https://github.com/nodejs/Release).
 
@@ -1936,7 +1936,7 @@ If you want to prevent a passing test from uploading to the Cloud, we recommend 
 
 #### `videoCompression` is set to `false` by default
 
-Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is now turned off. This results in a reduced run time by removing the time to compress the video, a larger video file size and better video quality.
+Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is now turned off. This results in a reduced run time by removing the time to compress the video, a larger video file size, and better video quality.
 
 You can enable this with the `videoCompression` [configuration](/app/references/configuration#Videos) option if you'd like to reduce the video file size for any reason. This will also reduce the video quality and take slightly longer to process and complete the run.
 
@@ -2116,12 +2116,12 @@ it('securely edits content', () => {
 ```
 
 The just-released `cy.session()` command can be used to setup and cache cookies,
-local storage and session storage between tests to easily re-establish the
+local storage, and session storage between tests to easily re-establish the
 previous (or common) browser contexts needed in a suite. This command will run
 setup on its initial execution and will restore the saved browser state on each
 sequential command execution. This command reduces the need for repeated
 application logins, while users also benefit from the test isolation guardrails
-to write independent, reliable and deterministic tests from the start.
+to write independent, reliable, and deterministic tests from the start.
 
 If for whatever reason you still need to persist the dom and browser context
 between tests, you can disable test isolation by setting `testIsolation=false`
@@ -2183,10 +2183,10 @@ hybrid of both `testIsolation` enabled and disabled. All local storage and
 cookies on the current domain were cleared, but Cypress did not clear session
 storage and the page always persisted.
 
-In Cypress 12+ when `testIsolation` is enabled, local storage, session storage
+In Cypress 12+ when `testIsolation` is enabled, local storage, session storage,
 and cookies in **all** domains are cleared and the page is cleared. When
 `testIsolation` is disabled, nothing is cleared before the next test so all
-local storage, session storage and cookies & the page persists.
+local storage, session storage, and cookies & the page persists.
 
 If you wanted to match pre-Cypress 12 behavior, you need to disable
 `testIsolation`, then run `cy.clearLocalStorage()` and `cy.clearCookies()` in a

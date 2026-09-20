@@ -22,7 +22,7 @@ fails, check out our guide on [Test Retries](/app/guides/test-retries).
 
 :::
 
-## Commands, Queries and Assertions
+## Commands, Queries, and Assertions
 
 While all methods you chain off of `cy` in your Cypress tests are commands, it's
 important to understand the different rules by which they operate.
@@ -551,7 +551,7 @@ queries - nothing before it (such as fetching the text of the element) re-runs.
 #### <Icon name="check-circle" color="green" /> Correctly waiting for values
 
 We need to retry getting the element, invoking the `text()` method, calling the
-`parseFloat` function and running the `gte` and `lte` assertions. We can achieve
+`parseFloat` function, and running the `gte` and `lte` assertions. We can achieve
 this using the `.should(callbackFn)`.
 
 ```javascript

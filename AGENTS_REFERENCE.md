@@ -238,7 +238,11 @@ same change. `## See also` always stays as it is.
 
 ### Mechanics
 
-- **Oxford comma**: "commands, queries, and assertions".
+- **Oxford comma**: "commands, queries, and assertions". It applies to prose
+  anywhere a reader sees it, including headings, frontmatter
+  `title`/`description`, link text, table cells, and image `alt` text, but not
+  inside code blocks, inline code, quoted UI strings, or a literal list of API
+  values.
 - **US English**, with one exception: every `cancel` form **doubles the `l`**,
   against the American convention. Write `cancellation`, `cancelled`, and
   `cancelling`, never `canceled`, `canceling`, or `cancelation`. Cypress Cloud's
