@@ -144,7 +144,7 @@ binary download happens outside your application code (in npm's `postinstall`),
 Cypress reads the proxy settings npm and the OS already use, so you usually don't
 have to configure anything Cypress-specific.
 
-System [proxy properties](/app/references/proxy-configuration) `http_proxy`, `https_proxy` and `no_proxy` are respected
+System [proxy properties](/app/references/proxy-configuration) `http_proxy`, `https_proxy`, and `no_proxy` are respected
 for the download of the Cypress binary.
 You can also use the npm properties
 `npm_config_proxy` and `npm_config_https_proxy`.
@@ -695,7 +695,7 @@ one it would normally resolve from the cache. This is useful when you've unzippe
 a binary to a known location and want to run it directly.
 
 `CYPRESS_RUN_BINARY` should be a path to an already unzipped Cypress binary executable.
-The Cypress commands [open](/app/references/command-line#cypress-open), [run](/app/references/command-line#cypress-run) and [verify](command-line#cypress-verify)
+The Cypress commands [open](/app/references/command-line#cypress-open), [run](/app/references/command-line#cypress-run), and [verify](command-line#cypress-verify)
 will then launch the provided binary.
 
 The following example [cypress run](/app/references/command-line#cypress-run) commands assume that you have first
