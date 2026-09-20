@@ -23,7 +23,11 @@ concurrency:
   # One in-flight run per pull request, superseding the last — the auto-cancel
   # CircleCI did on a re-push. Runs on main are never cancelled, so every commit
   # that lands keeps a result of its own.
-  group: ci-${{ github.head_ref || github.ref }}
+  #
+  # Keyed on the pull request number rather than the branch name: head refs are
+  # only unique within a repository, so two forks that both push `patch-1` would
+  # otherwise share a group and cancel each other.
+  group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -58,6 +62,10 @@ jobs:
         with:
           name: dist
           path: dist
+          # `dist/.well-known/` holds the agent-skills manifest and the API
+          # catalog. It is a hidden path, which upload-artifact drops unless
+          # asked otherwise, and the e2e suite serves what this uploads.
+          include-hidden-files: true
           retention-days: 1
 
   lint:
@@ -139,10 +147,13 @@ jobs:
     name: E2E (${{ matrix.container }}/8)
     needs: build
     # Splitting the suite across containers is Cypress Cloud load balancing, so
-    # it needs CYPRESS_RECORD_KEY — and GitHub withholds secrets from a pull
-    # request opened from a fork. Those run `e2e-fork` below instead.
-    if: github.event_name != 'pull_request' ||
-      github.event.pull_request.head.repo.full_name == github.repository
+    # it needs CYPRESS_RECORD_KEY. That secret exists only in this repository,
+    # and GitHub withholds it even here from a pull request opened from a fork.
+    # Both cases run `e2e-fork` below instead, whose condition is the exact
+    # negation of this one.
+    if: (github.repository == 'cypress-io/cypress-documentation') &&
+      (github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
@@ -154,6 +165,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -178,6 +191,10 @@ jobs:
           record: true
           parallel: true
           group: 'Docs e2e'
+          # The run attempt is what makes this unique. Without it a re-run
+          # reuses the finished run's ID and Cypress Cloud cancels the
+          # containers with "Build already finished" rather than retesting.
+          ci-build-id: ${{ github.run_id }}-${{ github.run_attempt }}
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -186,11 +203,14 @@ jobs:
   e2e-fork:
     name: E2E (fork, not recorded)
     needs: build
-    # The counterpart to `e2e`: a pull request from a fork has no record key, so
-    # the suite runs unsplit in a single container and reports nothing to
-    # Cypress Cloud. Slower, but it still gives an outside contributor a result.
-    if: github.event_name == 'pull_request' &&
-      github.event.pull_request.head.repo.full_name != github.repository
+    # The counterpart to `e2e`: with no record key there is nothing to load
+    # balance, so the suite runs unsplit in a single container and reports
+    # nothing to Cypress Cloud. Slower, but it still gives an outside
+    # contributor a result. Covers both keyless cases — a pull request from a
+    # fork, and any run inside a fork of this repository.
+    if: (github.repository != 'cypress-io/cypress-documentation') ||
+      (github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name != github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
