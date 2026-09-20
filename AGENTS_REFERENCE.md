@@ -147,8 +147,9 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 
 Voice and tone are owned by the **Cypress Style Guide**, which covers audience,
 structure, and register for all external-facing content. This section holds what
-applies to `docs/**` specifically: one piece of direction about how a guide
-opens, then the mechanical rules a reviewer can check without a judgment call.
+applies to `docs/**` specifically: direction on how a guide opens and how its
+headings read, then the mechanical rules a reviewer can check without a judgment
+call.
 
 ### Lead with the value
 
@@ -159,6 +160,41 @@ first paragraph should still come away knowing why the feature exists.
 Treat it as a direction, not a template. Many pages land it with a `## Why use X`
 section as their first H2, others with a couple of sentences under the H1. Either
 is fine. Reference pages are the exception, since they open with the signature.
+
+### Headings
+
+A heading is read without the page around it. Search engines surface it as a
+result, answer engines cite it, and the right-hand contents list shows it beside
+its siblings. So the test is whether it still means something in isolation: a
+heading that could sit on ten different pages needs the context that makes it
+this one's.
+
+- Yes: `Cypress Cloud MCP workflows to try`, `Build a release report of Cypress runs`
+- No: `Workflows to try`, `Build a release report`
+
+Guidance, not arithmetic:
+
+- **Roughly 40 to 60 characters**, about 6 to 9 words. The contents list wraps
+  rather than truncating, so a long heading costs vertical space beside its
+  siblings instead of getting cut off. Most existing headings run shorter than
+  this, averaging 27 characters, which is the habit to push against.
+- **Add the context that disambiguates, not the whole page title.** Writing the
+  product name into every heading reads as keyword stuffing and turns the
+  contents list into a column of near-identical entries.
+- **Lead with the distinctive term**, so the heading survives truncation in a
+  search result and scans quickly in the sidebar.
+- **A question is one good shape, not the required one.** Answer engines do well
+  with `How to build a release report of Cypress runs`, and it is the natural
+  form in FAQ and troubleshooting sections. Forcing `How to` onto a section that
+  answers no question is worse than leaving it short.
+- **Sentence case**, with the fixed API page skeleton (`## Command Log`,
+  `## Syntax`) and product names keeping their own capitalization.
+
+This applies to headings you are writing. Renaming an existing heading changes
+its anchor, and a URL fragment cannot be redirected from `netlify.toml` the way
+a moved page can, so every inbound deep link to it breaks silently. Rename one
+only when the improvement is worth that, and update in-repo links in the same
+change. `## See also` always stays as it is.
 
 ### Person and tense
 
@@ -191,9 +227,6 @@ is fine. Reference pages are the exception, since they open with the signature.
 
 ### Mechanics
 
-- **Sentence case for headings.** The exceptions are the fixed API page skeleton
-  (`## Command Log`, `## Syntax`) and product names, which keep their own
-  capitalization.
 - **Oxford comma**: "commands, queries, and assertions".
 - **US English**, with one exception: every `cancel` form **doubles the `l`**,
   against the American convention. Write `cancellation`, `cancelled`, and
@@ -615,7 +648,7 @@ that already embed the correct params rather than re-writing the URL.
 - **End-to-end tests** (`cypress/e2e/`) crawl the built site: `basic_tests.cy.ts`
   checks routing and the main nav, and the `all_*_pages.cy.ts` specs visit every
   page in each section to confirm it loads. So most content changes are exercised
-  simply by the page rendering without errors.
+  by the page rendering without errors.
 - To run them locally, start the site in one terminal (`npm run start`, served at
   `http://localhost:3000`, the configured `baseUrl`) and in another run
   `npm test` (headless) or `npx cypress open` (interactive).

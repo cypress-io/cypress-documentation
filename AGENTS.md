@@ -133,6 +133,11 @@ Each rule is a hard convention. See the linked section for the how and why.
 
 - **Lead a guide with the value of the feature**, what it does for the reader,
   before getting into configuration or steps. How you do that is up to the page.
+- **Write headings that stand on their own**, since search engines and answer
+  engines surface them without the page around them. "Cypress Cloud MCP
+  workflows to try", not "Workflows to try". Add the context that makes the
+  heading this page's, keep it to roughly 40 to 60 characters, and use sentence
+  case. The fixed API page skeleton and `## See also` are exempt.
 - Address the reader as **you**. Reserve "we" for Cypress speaking as a team
   ("we recommend"), never as a stand-in for the reader.
 - **Present tense, active voice.** "Cypress retries the assertion", not "Cypress
@@ -150,10 +155,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   paragraph.
 - **Link text names its destination.** Never `[here]`, `[this link]`, or
   `[learn more]`.
-- Sentence case for headings, except the fixed API page skeleton and product
-  names. Oxford comma. US English, except that every `cancel` form doubles the
-  `l`: **cancellation**, **cancelled**, **cancelling**. Leave a single `l` only
-  where it is a literal you are quoting, such as an API value or UI string.
+- Oxford comma. US English, except that every `cancel` form doubles the `l`:
+  **cancellation**, **cancelled**, **cancelling**. Leave a single `l` only where
+  it is a literal you are quoting, such as an API value or UI string.
 - Write "accessibility", not "a11y".
 - Bullets take no terminal punctuation when they are fragments and a period when
   they are full sentences. Don't mix the two within one list.
