@@ -190,11 +190,19 @@ Guidance, not arithmetic:
 - **Sentence case**, with the fixed API page skeleton (`## Command Log`,
   `## Syntax`) and product names keeping their own capitalization.
 
-This applies to headings you are writing. Renaming an existing heading changes
-its anchor, and a URL fragment cannot be redirected from `netlify.toml` the way
-a moved page can, so every inbound deep link to it breaks silently. Rename one
-only when the improvement is worth that, and update in-repo links in the same
-change. `## See also` always stays as it is.
+This applies to headings you are writing. Renaming an existing heading costs two
+published URLs, and neither is redirectable:
+
+- **Its anchor.** A URL fragment never reaches the server, so `netlify.toml`
+  cannot redirect it the way it redirects a moved page. Inbound deep links land
+  on the page and fail to scroll.
+- **Its section `.md` file.** The LLM export publishes every `##` section at
+  `<page-route>/<h2-slug>.md`, so renaming an H2 moves that file and the old URL
+  404s. Agents and tools that fetched it lose the link.
+
+So rename an existing heading only when the improvement is worth both, check
+first with a repo-wide search for its anchor, and update in-repo links in the
+same change. `## See also` always stays as it is.
 
 ### Person and tense
 

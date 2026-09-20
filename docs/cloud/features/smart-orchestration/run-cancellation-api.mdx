@@ -40,7 +40,7 @@ HTTP request, using the same
 already use to [record the run](/cloud/get-started/setup#Setup).
 
 Cancelling through the API has the same effect as cancelling manually from the
-dashboard: the run is marked **Cancelled**,
+dashboard: the run is marked **Canceled**,
 [`run.completed` webhooks](/cloud/integrations/webhooks) fire, and any
 in-progress `cypress run --record` calls for the run exit with an error. See
 [What happens when a run is cancelled?](/cloud/features/recorded-runs#What-happens-when-a-run-is-cancelled)
@@ -162,10 +162,10 @@ A successful cancellation always responds immediately and will end a Cypress run
 
 **Note**: If you are looking for a less-immediate signal that allows the queued tests to complete before ending the run, use the [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API) instead.
 
-| Status | Body                                                                                               | Meaning                                                                                               |
-| ------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `200`  | `{ "runId": "...", "cancelledAt": "..." }`                                                         | The run was cancelled.                                                                                |
-| `409`  | `{ "message": "Run is not currently running and cannot be canceled.", "code": "RUN_NOT_RUNNING" }` | The run is not currently running. It may have already completed, already been canceled, or timed out. |
+| Status | Body                                                                                               | Meaning                                                                                                |
+| ------ | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `200`  | `{ "runId": "...", "cancelledAt": "..." }`                                                         | The run was cancelled.                                                                                 |
+| `409`  | `{ "message": "Run is not currently running and cannot be canceled.", "code": "RUN_NOT_RUNNING" }` | The run is not currently running. It may have already completed, already been cancelled, or timed out. |
 
 Malformed or unauthenticated requests are rejected before a cancellation is
 attempted: a missing or invalid
