@@ -250,7 +250,7 @@ batch:
             - 'UI-Firefox-Mobile|firefox|cypress/tests/ui/*|viewportWidth=375,viewportHeight=667'
 ```
 
-During the install phase, we utilize shell scripting with the
+During the install phase, we use shell scripting with the
 [cut command](<https://en.wikipedia.org/wiki/Cut_(Unix)>) to assign values from
 the delimited `CY_GROUP_SPEC` passed to the worker into shell variables that
 will be used in the `build` phase when running `cypress run`.
@@ -350,7 +350,7 @@ If you are still facing issues,
 :::
 
 In the AWS CodeBuild configuration we have defined in the previous section, we
-are leveraging three useful features of
+are using three useful features of
 [Cypress Cloud](/cloud/get-started/introduction):
 
 <CiProviderCloudSteps />

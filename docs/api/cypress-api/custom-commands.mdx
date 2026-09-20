@@ -16,7 +16,7 @@ defined below.
 There are two API available for adding custom commands:
 
 - [`Cypress.Commands.add()`](#Syntax) - use to add a custom command to use when
-  writing tests
+  writing tests.
 - [`Cypress.Commands.overwrite()`](#Overwrite-Existing-Commands) - use to
   override an existing built-in Cypress command or reserved internal function.
   **Caution:** this overrides it for Cypress as well and could impact how
@@ -963,7 +963,7 @@ cy.get('#password').type('superSecret123')
 You may want to mask some values passed to the [.type()](/api/commands/type)
 command so that sensitive data does not display in screenshots or videos of your
 test run. This example overwrites the [.type()](/api/commands/type) command to
-allow you to mask sensitive data in the Cypress Command Log.
+mask sensitive data in the Cypress Command Log.
 
 <Tabs>
 <TabItem value="cypress/support/commands.js">

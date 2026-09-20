@@ -156,7 +156,7 @@ You do not have to define a new script for every variation of a command string y
 Let's say that when you ran the full set of tests with the script `e2e:chrome` it showed a failure in one test spec `cypress/e2e/my-spec.cy.js`.
 You corrected the problem and would like to re-run the tests only for the test spec which previously failed.
 
-The option [`--spec`](#cypress-run-spec-lt-spec-gt) allows you to specify which test specs to run, so you can add this to the command after the script name `e2e:chrome`:
+The option [`--spec`](#cypress-run-spec-lt-spec-gt) specifies which test specs to run, so you can add this to the command after the script name `e2e:chrome`:
 
 <Tabs groupId="package-manager"
   defaultValue="npm"
@@ -449,7 +449,7 @@ cypress run --headed
 To prevent Cypress from exiting after running tests in a spec file, use
 `--no-exit`.
 
-You can pass `--headed --no-exit` in order to view the **command log** or have
+You can pass `--headed --no-exit` to view the **command log** or have
 access to **developer tools** after a `spec` has run.
 
 ```shell
@@ -741,11 +741,10 @@ be guided through selecting a browser, project, and/or testing type.
 
 #### `cypress open --browser <browser-path>` {#cypress-open-browser-lt-browser-path-gt}
 
-By default, Cypress will automatically find and allow you to use the browsers
-installed on your system.
+By default, Cypress automatically finds the browsers installed on your system
+and makes them available.
 
-The "browser" option allows you to specify the path to a custom browser to use
-with Cypress:
+The "browser" option specifies the path to a custom browser to use with Cypress:
 
 ```shell
 cypress open --browser /usr/bin/chromium

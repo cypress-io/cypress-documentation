@@ -122,8 +122,8 @@ it('adds items', () => {
 })
 ```
 
-This allows you to inspect the web application, the DOM, the network, and any
-storage after each command to make sure everything happens as expected.
+This pauses after each command, so you can inspect the web application, the DOM,
+the network, and any storage to make sure everything happens as expected.
 
 ## Debug with an AI agent
 
@@ -164,7 +164,7 @@ Though Cypress has built out
 understand what is happening in your application and your tests, there's no
 replacing all the amazing work browser teams have done on their built-in
 development tools. Once again, we see that Cypress goes _with_ the flow of the
-modern ecosystem, opting to leverage these tools wherever possible.
+modern ecosystem, opting to use these tools wherever possible.
 
 :::info
 
@@ -226,7 +226,7 @@ do experience flake, particularly when running in CI versus locally.
 
 :::tip
 To debug flake in your recorded tests in CI, try out [Test Replay](/cloud/features/test-replay) in Cypress Cloud.
-It allows you to replay the test exactly as it ran in CI.
+It replays the test exactly as it ran in CI.
 :::
 
 Most often
@@ -248,7 +248,7 @@ locally but fail in CI.
   application that would result in failing tests.
 - Remove time-sensitive variability in your tests. For example, ensure a network
   request has finished before looking for the DOM element that relies on the
-  data from that network request. You can leverage
+  data from that network request. You can use
   [aliasing](/app/core-concepts/variables-and-aliases#Aliases) for this.
 
 Cypress Cloud also offers [Analytics](/cloud/features/analytics/overview) that illustrate

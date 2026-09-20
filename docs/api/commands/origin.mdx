@@ -357,9 +357,9 @@ in the first test of your file, then performing subsequent tests reusing the
 same session.
 
 However, this is no longer possible, since all session state is now cleared
-between tests. So to avoid this overhead we recommend you leverage the
-[`cy.session()`](/api/commands/session) command, which allows you to easily
-cache session information and reuse it across tests. So now let's enhance our
+between tests. So to avoid this overhead we recommend you use the
+[`cy.session()`](/api/commands/session) command, which caches session
+information and reuses it across tests. So now let's enhance our
 custom login command with `cy.session()` for a complete syndicated login flow
 with session caching and validation. No mocking, no workarounds, no third-party
 plugins!
@@ -494,7 +494,7 @@ into the callback.
 ### Dependencies / Sharing Code
 
 Within the `cy.origin()` callback,
-[`Cypress.require()`](/api/cypress-api/require) can be utilized to include
+[`Cypress.require()`](/api/cypress-api/require) can be used to include
 [npm](https://www.npmjs.com/) packages and other files. It is functionally the
 same as using
 [CommonJS `require()`](https://nodejs.org/api/modules.html#requireid)
@@ -602,7 +602,7 @@ it('tests cypress.io', () => {
 #### Shared execution context
 
 The JavaScript execution context is persisted between `cy.origin()` callbacks
-that share the same origin. This can be utilized to share code between
+that share the same origin. This can be used to share code between
 successive `cy.origin()` calls.
 
 ```js

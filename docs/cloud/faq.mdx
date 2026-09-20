@@ -141,7 +141,7 @@ begins. The usage cycle resets at the start of each billing period, which is
 monthly on most plans, though some annual plans use an annual test results
 allowance.
 
-In order to avoid any interruption in service, we recommend that you review your
+To avoid any interruption in service, we recommend that you review your
 usage and select a plan that satisfies your usage requirements. You can do this
 by:
 
@@ -733,7 +733,7 @@ work automatically, with no changes to your test code.
 
 ### <Icon name="angle-right" /> What is Test Replay?
 
-[Test Replay](/cloud/features/test-replay) enables you and your team to troubleshoot and debug failed tests faster. After updating to Cypress `v13`, the new feature will automatically record all browser events and allow you to “replay” what your application under test looked like.
+[Test Replay](/cloud/features/test-replay) enables you and your team to troubleshoot and debug failed tests faster. After updating to Cypress `v13`, the new feature will automatically record all browser events and “replay” what your application under test looked like.
 
 Wind back the clock to any point in an application's test execution and directly interact with tests as they happened in CI. Debug complex problems as if you were there when they first happened. You can:
 
@@ -751,7 +751,7 @@ Wind back the clock to any point in an application's test execution and directly
 
 There is an important distinction between _session_ replay services (LogRocket, FullStory, DataDog, etc) and Cypress Test Replay. In session replay, user actions are captured as the application is used and delivered back in a replay-able format, usually video or stitched DOM snapshots. These are valuable tools for gathering product insight such as user behavior, per session.
 
-Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and leverage [time travel debugging](/app/core-concepts/open-mode#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. This is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
+Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and use [time travel debugging](/app/core-concepts/open-mode#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. This is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
 
 ### <Icon name="angle-right" /> How much does Test Replay cost?
 
@@ -761,7 +761,7 @@ Nothing. It's free and included in all Cypress Cloud plans.
 
 ### <Icon name="angle-right" /> Can I use Test Replay for tests recorded in different browsers?
 
-Test Replay leverages [Chrome DevTools Protocol(CDP)](https://chromedevtools.github.io/devtools-protocol/), so currently supports Chromium-based browsers (Chrome, Edge, and the deprecated Electron browser) only.
+Test Replay uses [Chrome DevTools Protocol(CDP)](https://chromedevtools.github.io/devtools-protocol/), so currently supports Chromium-based browsers (Chrome, Edge, and the deprecated Electron browser) only.
 
 Test Replay would be disabled, with a message that it's only available on Chromium, for tests run in Firefox or WebKit (Safari). You can still record and capture test [artifacts](/cloud/features/recorded-runs#Artifacts) (screenshots, videos, and CI logs) via other browsers in separate [run groups](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs).
 

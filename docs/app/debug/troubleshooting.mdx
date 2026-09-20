@@ -24,11 +24,11 @@ resolved.
 
 Check these support resources for Cypress App issues:
 
-- Connect with our community in [Discord](https://on.cypress.io/discord)
-- Search existing [GitHub issues](https://github.com/cypress-io/cypress/issues)
-- Search this documentation (search is in the top right) 😉
+- Connect with our community in [Discord](https://on.cypress.io/discord).
+- Search existing [GitHub issues](https://github.com/cypress-io/cypress/issues).
+- Search this documentation (search is in the top right). 😉
 - Search [Stack Overflow](https://stackoverflow.com/questions/tagged/cypress)
-  for relevant answers
+  for relevant answers.
 - If you still haven't found a solution,
   [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) _with
   a reproducible example_.
@@ -71,7 +71,7 @@ running Cypress again.
 
 ### Allow the Cypress Chrome extension
 
-Cypress utilizes a Chrome extension in order to run properly. If you or your
+Cypress uses a Chrome extension to run properly. If you or your
 company block specific Chrome extensions, this may cause problems with running
 Cypress. You will want to ask your administrator to allow the Cypress extension
 ID below:
@@ -102,7 +102,7 @@ access to some URLs.
 
 ### Clear App Data
 
-Cypress maintains some local application data in order to save user preferences
+Cypress maintains some local application data to save user preferences
 and more quickly start up. Sometimes this data can become corrupted. You may fix
 an issue you have by clearing this app data.
 
@@ -130,7 +130,7 @@ an issue you have by clearing this app data.
 
 ### Print DEBUG logs
 
-Cypress utilizes the [debug](https://github.com/debug-js/debug) module.
+Cypress uses the [debug](https://github.com/debug-js/debug) module.
 That means you can receive helpful debugging output by running Cypress with a system-level environment variable `DEBUG` set to `cypress:*` prior to running `cypress run` or `cypress open`.
 
 :::tip
@@ -222,7 +222,7 @@ DEBUG=cypress:server* ...
 DEBUG=cypress:server:project ...
 ```
 
-This allows you to isolate the problem a little better
+This isolates the problem a little better
 
 #### Log sources
 
@@ -363,7 +363,7 @@ responsible for displaying test commands, assertions, and statuses in the
 Cypress Test Runner, may cause performance issues resulting in slower tests or
 the browser crashing.
 
-In order to isolate these issues, you can hide the Command Log by passing the
+To isolate these issues, you can hide the Command Log by passing the
 environment variable below during `cypress open` or `cypress run`.
 
 ```shell

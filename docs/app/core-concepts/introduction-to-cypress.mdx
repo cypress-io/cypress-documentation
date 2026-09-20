@@ -101,7 +101,7 @@ cy.get('#main-content').find('.article').children('img[src^="/static"]').first()
 
 <strong>Core Concept</strong>
 
-Cypress leverages jQuery's powerful selector engine to help make tests familiar
+Cypress uses jQuery's powerful selector engine to help make tests familiar
 and readable for modern web developers.
 
 Interested in the best practices for selecting elements?
@@ -299,8 +299,8 @@ understanding how they work is helpful!
 
 ### Interacting With Elements
 
-As we saw in the initial example, Cypress allows you to click on and type into
-elements on the page by using [`.click()`](/api/commands/click) and
+As we saw in the initial example, Cypress clicks on and types into elements on
+the page with [`.click()`](/api/commands/click) and
 [`.type()`](/api/commands/type) action commands with a
 [`cy.get()`](/api/commands/get) or [`cy.contains()`](/api/commands/contains)
 query command. This is a great example of chaining in action. Let's see it
@@ -591,7 +591,7 @@ it('does not work as we expect', () => {
 
 <Icon name="check-circle" color="green" /> **Correct usage**
 
-Below is one way the code above could be rewritten in order to ensure the
+Below is one way the code above could be rewritten to ensure the
 commands run as expected.
 
 ```js
@@ -656,7 +656,7 @@ it('test', () => {
 
 <Icon name="check-circle" color="green" /> **Correct usage**
 
-Below is one way the code above could be rewritten in order to ensure the
+Below is one way the code above could be rewritten to ensure the
 commands run as expected.
 
 ```js
@@ -931,7 +931,7 @@ A lot of Cypress commands _mutate_ the state of the browser in some way.
 
 None of the above commands are _idempotent_; they all cause side effects. Racing
 commands is not possible because commands must be run in a controlled, serial
-manner in order to create consistency. Because integration and e2e tests
+manner to create consistency. Because integration and e2e tests
 primarily mimic the actions of a real user, Cypress models its command execution
 model after a real user working step by step.
 
@@ -1235,9 +1235,8 @@ subject quickly.
 
 ### Mocha Assertions
 
-Using `expect` allows you to assert on any JavaScript object, not just the
-current subject. This is probably how you're used to seeing assertions written
-in unit tests:
+`expect` asserts on any JavaScript object, not just the current subject. This is
+probably how you're used to seeing assertions written in unit tests:
 
 ```js
 // the explicit subject here is the boolean: true

@@ -1,6 +1,6 @@
 ---
 title: 'cy.session()'
-description: Cache and restore cookies, localStorage, and sessionStorage in order to recreate a consistent browser context between tests in Cypress.
+description: Cache and restore cookies, localStorage, and sessionStorage to recreate a consistent browser context between tests in Cypress.
 sidebar_label: session
 e2eSpecific: true
 ---
@@ -13,7 +13,7 @@ Cache and restore [cookies](/api/cypress-api/cookies),
 [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
 and
 [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-(i.e. session data) in order to recreate a consistent browser context between
+(i.e. session data) to recreate a consistent browser context between
 tests.
 
 The `cy.session()` command will inherit the
@@ -79,7 +79,7 @@ cy.url().should('contain', '/login-successful')
 <Icon name="angle-right" /> **id _(String, Array, Object)_**
 
 A unique identifier that will be used to cache and restore a given session. In
-simple cases, a `String` value is sufficient. In order to simplify generation of
+simple cases, a `String` value is sufficient. To simplify generation of
 more complex ids, if you pass an `Array` or `Object`, Cypress will generate an
 id for you by deterministically stringifying the value you pass in. For example,
 if you pass `['Jane', '123', 'admin']`, an id of `["Jane","123","admin"]` will
@@ -422,7 +422,7 @@ cy.session('user', () => {
 
 If you want to use the same session across multiple specs in the same Cypress
 run on the same machine, add `cacheAcrossSpecs=true` to the session options to
-leverage the session through the run.
+reuse the session through the run.
 
 ```js
 const login = (name = 'user1') => {
@@ -767,7 +767,7 @@ The page is cleared and cookies, local storage, and session storage (session
 data) in all domains are cleared automatically when `cy.session()` runs and test
 isolation is enabled with `testIsolation=true`, This
 guarantees consistent behavior whether a session is being created or restored
-and allows you to switch sessions without first having to explicitly log out.
+and switches sessions without first having to explicitly log out.
 
 | When cleared?              |            Page cleared (test)             |            Session data cleared            |
 | -------------------------- | :----------------------------------------: | :----------------------------------------: |
@@ -804,7 +804,7 @@ Once created, a session for a given `id` is cached for the duration of the spec
 file. You can't modify a stored session after it has been cached, but you can
 always create a new session with a different `id`.
 
-In order to reduce development time, when running Cypress in "open" mode,
+To reduce development time, when running Cypress in "open" mode,
 sessions will be cached _for spec file reruns_.
 
 To persist a session across multiple specs, use the option
@@ -881,7 +881,7 @@ const login = (name, email) => {
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 If you have custom `login` code that uses multiple parameters (in this example,
-a name, a token, and a password), in order to be able to log in many different
+a name, a token, and a password), to be able to log in many different
 users, but the `id` only included one of them (in this example, `name`):
 
 ```js

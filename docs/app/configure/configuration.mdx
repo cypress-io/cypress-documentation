@@ -18,7 +18,7 @@ store any configuration specific to Cypress.
 
 Cypress additionally supports config files with `.mjs` and `.cjs` extensions.
 
-Using a `.mjs` file will allow you to use
+A `.mjs` file supports
 [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
 syntax in your config without the need of a transpiler step.
 
@@ -331,7 +331,7 @@ object:
 | Option                         | Default                                   | Description                                                                                                                                                                                                                                                                                         |
 | ------------------------------ | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `devServer`                    | `null`                                    | Required option used to configure the component testing dev server. [Read the notes for examples on using this.](#devServer)                                                                                                                                                                        |
-| `indexHtmlFile`                | `cypress/support/component-index.html`    | This is where Cypress renders your components and allows you to add in global assets, such as styles, fonts, and external scripts.                                                                                                                                                                  |
+| `indexHtmlFile`                | `cypress/support/component-index.html`    | This is where Cypress renders your components and where you add global assets, such as styles, fonts, and external scripts.                                                                                                                                                                         |
 | `justInTimeCompile`            | `true`                                    | Compile resources directly related to your spec for webpack, compiling them 'just-in-time' before spec execution.                                                                                                                                                                                   |
 | `setupNodeEvents`              | `null`                                    | Function in which node events can be registered and config can be modified. Takes the place of the (removed) plugins file. [Read the notes for examples on using this.](#setupNodeEvents)                                                                                                           |
 | `supportFile`                  | `cypress/support/component.js`            | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                                                                           |
@@ -691,7 +691,7 @@ editing your system hosts file.
 ### devServer
 
 The `devServer` option is required for [`component`](#component) testing, and
-allows you to register a component testing dev server.
+registers a component testing dev server.
 
 Typically, you will specify a `framework` and `bundler` options in `devServer`
 for your framework and UI library like so:
@@ -944,7 +944,7 @@ resources, enable it only for applications under test.
 
 ### setupNodeEvents
 
-The `setupNodeEvents` function allows you to tap into, modify, or extend the
+The `setupNodeEvents` function taps into, modifies, or extends the
 internal behavior of Cypress using the [`on`](/api/node-events/overview#on)
 and [`config`](/api/node-events/overview#config) arguments, and is valid as
 an [`e2e`](#e2e) or [`component`](#component) testing specific option.

@@ -9,7 +9,7 @@ sidebar_position: 80
 
 # Compare reports
 
-Accessibility reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Get-started) area of Cypress Cloud. This allows you to instantly see if any new issues have been introduced, and drill in to see full-page HTML and CSS snapshots showing only the new issues.
+Accessibility reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Get-started) area of Cypress Cloud. The comparison instantly surfaces any new issues that have been introduced, and drills in to full-page HTML and CSS snapshots showing only those new issues.
 
 See the video below for an example of using Branch Review in a Pull Request:
 
@@ -85,7 +85,7 @@ Either path will take you to the detailed report, either for a single View or fo
 
 Each rule has an "All Views" comparison as the first item, and then lists individual Views below that. Depending on the level of detail you are looking for, you can drill into a specific page or component and see the changes in accessibility there, or just look at the combined report.
 
-The combined "All Views" report for a single rule is especially useful if violations tend to move around between pages over time. For example, if there is a popup with an accessibility problem that appears on a random page in every run, it may appear "new" for a View in the Changed run, and "resolved" for the View where it was in the Base run, but in reality your accessibility score is the same and the problem is the same. "All Views" allows you to sidestep any noise of this kind if needed.
+The combined "All Views" report for a single rule is especially useful if violations tend to move around between pages over time. For example, if there is a popup with an accessibility problem that appears on a random page in every run, it may appear "new" for a View in the Changed run, and "resolved" for the View where it was in the Base run, but in reality your accessibility score is the same and the problem is the same. "All Views" sidesteps noise of this kind.
 
 ### Resolved elements
 
@@ -117,7 +117,7 @@ The easiest subjects to compare are **passing runs** that ran **similar tests** 
 
 That said, it still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
 
-In order to see unified changes for your entire test suite, you need to group all the tests together under a single Cypress run, for each report. Learn more about this in the [Branch Review Best Practices documentation](/cloud/features/branch-review#Best-Practices).
+To see unified changes for your entire test suite, you need to group all the tests together under a single Cypress run, for each report. Learn more about this in the [Branch Review Best Practices documentation](/cloud/features/branch-review#Best-Practices).
 
 ### Stabilizing the comparison
 
