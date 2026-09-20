@@ -146,9 +146,20 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 ## Writing style
 
 Voice and tone are owned by the **Cypress Style Guide**, which covers audience,
-structure, and register for all external-facing content. This section holds the
-mechanical rules that apply to `docs/**` specifically, the ones a reviewer can
-check without a judgment call.
+structure, and register for all external-facing content. This section holds what
+applies to `docs/**` specifically: one piece of direction about how a guide
+opens, then the mechanical rules a reviewer can check without a judgment call.
+
+### Lead with the value
+
+Open a guide with what the feature does for the reader, and what it costs them
+to go without it, before configuration or steps. This is the Cypress Style
+Guide's inverted pyramid applied to a docs page: the reader who stops after the
+first paragraph should still come away knowing why the feature exists.
+
+Treat it as a direction, not a template. Many pages land it with a `## Why use X`
+section as their first H2, others with a couple of sentences under the H1. Either
+is fine. Reference pages are the exception, since they open with the signature.
 
 ### Person and tense
 

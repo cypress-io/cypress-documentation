@@ -131,6 +131,8 @@ Each rule is a hard convention. See the linked section for the how and why.
 
 **Writing style** — [details](./AGENTS_REFERENCE.md#writing-style)
 
+- **Lead a guide with the value of the feature**, what it does for the reader,
+  before getting into configuration or steps. How you do that is up to the page.
 - Address the reader as **you**. Reserve "we" for Cypress speaking as a team
   ("we recommend"), never as a stand-in for the reader.
 - **Present tense, active voice.** "Cypress retries the assertion", not "Cypress
