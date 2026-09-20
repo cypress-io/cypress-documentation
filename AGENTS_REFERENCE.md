@@ -128,9 +128,13 @@ Writing, naming, registering, and retiring one is covered in
   pages), e.g. `<ProductHeading product="app" />`.
 - Valid `product` values: `app`, `cloud`, `accessibility`, `ui-coverage`.
   `cloud` also takes an optional `plan` (`team` / `business` / `enterprise`).
-- Canonical product names in prose: **Cypress App**, **Cypress Cloud**,
+- Canonical product names in prose: **Cypress app**, **Cypress Cloud**,
   **Cypress Accessibility**, and **UI Coverage** (UI Coverage has no "Cypress"
   prefix).
+- `app` stays **lowercase** in prose, per the Cypress Style Guide. Capitalize it
+  only where the format demands it, such as a Title Case heading. The other
+  product names are always capitalized. Write "Cypress", never "Cypress.io", and
+  don't precede "Cypress Cloud" with "the".
 
 ## Plugins list
 
@@ -141,15 +145,64 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 
 ## Writing style
 
+Voice and tone are owned by the **Cypress Style Guide**, which covers audience,
+structure, and register for all external-facing content. This section holds the
+mechanical rules that apply to `docs/**` specifically, the ones a reviewer can
+check without a judgment call.
+
+### Person and tense
+
+- **Address the reader as "you".** The docs are overwhelmingly second person
+  already. Reserve "we" for Cypress speaking as a team ("we recommend"), never
+  as a stand-in for the reader ("we then click Save") or for the product.
+- **Present tense.** Describe what the software does, not what it will do.
+  - Yes: "Cypress retries the assertion until it passes or times out."
+  - No: "Cypress will retry the assertion until it will pass."
+- **Active voice.** "The plugin strips the element", not "the element is
+  stripped by the plugin".
+- **Say what something does, not what it lets the reader do.** "Allows you to"
+  almost always hides a simpler sentence.
+  - Yes: "`cy.session()` caches and restores session state between tests."
+  - No: "`cy.session()` allows you to cache and restore session state."
+
+### Word choice
+
+- **Plain over formal.** Not `leverage` (use), not `utilize` (use), not
+  `in order to` (to).
+- **Cut filler.** `please` belongs in a UI prompt, not a doc. `note that` adds
+  nothing a reader cannot see. Drop hedges that carry no information.
+- **No minimizing words** (`simply`, `just`, `easy`, `easily`, `obviously`).
+  They tell a stuck reader the problem is them.
+- **Write "accessibility", not "a11y"**, outside code and identifiers.
 - **Go easy on em dashes (`—`).** They read as AI-generated when overused.
   Prefer a period, comma, parentheses, or a colon, and rework the sentence
   instead of reaching for a dash. Keep an em dash only when it is clearly the
   best fit, and rarely more than one per paragraph.
+
+### Mechanics
+
+- **Sentence case for headings.** The exceptions are the fixed API page skeleton
+  (`## Command Log`, `## Syntax`) and product names, which keep their own
+  capitalization.
+- **Oxford comma**: "commands, queries, and assertions".
+- **US English**, with one exception: **cancellation** keeps two `l`s. The verb
+  forms stay American (`canceled`, `canceling`), which is the standard pairing
+  and what the docs already use. Cypress Cloud's **Auto Cancellation** is a
+  feature name and is always capitalized.
+- **Bullet punctuation**: no terminal punctuation when the bullet is a fragment,
+  a period when it is a full sentence. Pick one per list and stay with it rather
+  than mixing both styles in the same list.
+- **Link text names its destination.** Never `[here]`, `[this link]`, or
+  `[learn more]`. A reader skimming the links alone should still know where each
+  one goes, and a screen reader announces them out of context.
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug.
-- **Bold vs. quotes for UI labels.** Reserve **bold** for real controls the
+
+### UI labels
+
+- Reserve **bold** for real controls the
   reader acts on in a walkthrough or tutorial, meaning actual buttons, links,
-  tabs, menu items, and flows in the Cypress Cloud or Cypress App UI (for
+  tabs, menu items, and flows in the Cypress Cloud or Cypress app UI (for
   example, "open the **App Quality** tab" or "click **Record run**"). Bolding
   these makes the clickable target scannable as the reader follows along. When a
   UI label is only a hypothetical example in an illustrative scenario, not a real
@@ -546,8 +599,8 @@ that already embed the correct params rather than re-writing the URL.
   `plugins/`.
 - **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and
   `cypress.config.ts`. The `plugins/` sub-packages type check themselves through
-  their own `tsc` builds during `npm run build`. Note that `@docusaurus/tsconfig`
-  points `baseUrl` at its own directory, so the root `tsconfig.json` re-anchors
+  their own `tsc` builds during `npm run build`. `@docusaurus/tsconfig` points
+  `baseUrl` at its own directory, so the root `tsconfig.json` re-anchors
   it to the repository and pulls in the `@theme/*` ambient types explicitly;
   without that, `@site/...` and `@theme/...` imports do not resolve.
 

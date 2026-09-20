@@ -1,4 +1,4 @@
-# Agent rules: Cypress App release docs
+# Agent rules: Cypress app release docs
 
 The root [`AGENTS.md`](../../../AGENTS.md) still applies; this file adds the
 rules specific to `docs/app/releases/`. Three pages live here, and each sets a

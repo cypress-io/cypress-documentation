@@ -110,7 +110,8 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
-  names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
+  names: Cypress app (lowercase `app`), Cypress Cloud, Cypress Accessibility,
+  UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
   partial for content rendered in **more than one location**. If it's used in a
   single page, inline it there instead.
@@ -127,17 +128,37 @@ Each rule is a hard convention. See the linked section for the how and why.
   characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
-- Never use em dashes — they read as AI-generated; use commas, periods, or
-  parentheses instead.
-- Use **bold** only for real UI controls the reader acts on in a walkthrough
-  (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
-  e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
-  examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
-  so invented examples stay distinct from the real UI a tutorial navigates. See
-  [Writing style](./AGENTS_REFERENCE.md#writing-style).
+
+**Writing style** — [details](./AGENTS_REFERENCE.md#writing-style)
+
+- Address the reader as **you**. Reserve "we" for Cypress speaking as a team
+  ("we recommend"), never as a stand-in for the reader.
+- **Present tense, active voice.** "Cypress retries the assertion", not "Cypress
+  will retry the assertion" or "the assertion is retried".
+- **Say what something does**, not what it lets the reader do. "`cy.session()`
+  caches and restores session state", not "allows you to cache…".
+- Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
+- Cut filler. `please`, `note that`, and hedges that carry no information.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
   instructions. They undermine a reader who is struggling and add nothing; state
   the step plainly instead.
+- Go easy on em dashes. Overused, they read as AI-generated, so prefer a comma,
+  period, colon, or parentheses and rework the sentence rather than reaching for
+  a dash. Keep one where it is clearly the best fit, rarely more than one per
+  paragraph.
+- **Link text names its destination.** Never `[here]`, `[this link]`, or
+  `[learn more]`.
+- Sentence case for headings, except the fixed API page skeleton and product
+  names. Oxford comma. US English, with **cancellation** (two `l`s) as the one
+  exception, alongside US `canceled`.
+- Write "accessibility", not "a11y".
+- Bullets take no terminal punctuation when they are fragments and a period when
+  they are full sentences. Don't mix the two within one list.
+- Use **bold** only for real UI controls the reader acts on in a walkthrough
+  (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress app,
+  e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
+  examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
+  so invented examples stay distinct from the real UI a tutorial navigates.
 - Describe configuration by what it does and accepts. Don't call out fields or
   features a property lacks (e.g. "there is no `comment` field") unless the
   absence is a documented point of confusion.

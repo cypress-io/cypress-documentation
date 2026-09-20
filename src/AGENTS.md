@@ -44,7 +44,7 @@ These are **swizzled** copies of Docusaurus components, ejected from
 `@docusaurus/theme-classic`. Two consequences worth keeping in mind:
 
 - A Docusaurus upgrade can change the original out from under a copy, so diff
-  against upstream before assuming a file is simply ours.
+  against upstream before assuming a file is ours alone.
 - Keep each one close to the original. Swizzled files are for the smallest
   change that achieves the goal, not a place to refactor.
 
