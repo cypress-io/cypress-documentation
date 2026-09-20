@@ -31,6 +31,7 @@ import path from 'node:path'
 
 const REPO = 'https://github.com/cypress-io/cypress.git'
 const SOURCE_DIR = process.env.CYPRESS_SOURCE_DIR || '.cypress-source'
+const SHOWN_HITS = 3
 
 // Only the directories the API reference pages describe. Everything else in the
 // monorepo is build tooling, the app UI, and the server — none of which a
@@ -59,12 +60,33 @@ const query = args.filter((a, i) => !a.startsWith('--') && (refIndex === -1 || i
 const git = (cwd, ...gitArgs) =>
   execFileSync('git', gitArgs, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim()
 
+const markerPath = () => path.join(SOURCE_DIR, '.synced-ref')
+
+const syncedRef = () =>
+  fs.existsSync(markerPath()) ? fs.readFileSync(markerPath(), 'utf8').trim() : undefined
+
 function latestReleaseTag() {
-  const output = execFileSync(
-    'git',
-    ['ls-remote', '--tags', '--sort=-v:refname', REPO, 'v*'],
-    { encoding: 'utf8' }
-  )
+  let output
+
+  try {
+    output = execFileSync(
+      'git',
+      ['ls-remote', '--tags', '--sort=-v:refname', REPO, 'v*'],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }
+    )
+  } catch {
+    // A synced checkout answers every lookup on its own, so losing the network
+    // should cost the newest tag, not the tool.
+    const fallback = syncedRef()
+
+    if (fallback) {
+      console.error(`Cannot reach ${REPO}; reading the checkout at ${fallback}.`)
+
+      return fallback
+    }
+
+    throw new Error(`cannot reach ${REPO} and ${SOURCE_DIR}/ is empty — check your network`)
+  }
 
   for (const line of output.split('\n')) {
     const match = line.match(/refs\/tags\/(v\d+\.\d+\.\d+)$/)
@@ -77,12 +99,12 @@ function latestReleaseTag() {
 
 function sync(ref) {
   const exists = fs.existsSync(path.join(SOURCE_DIR, '.git'))
-  const marker = path.join(SOURCE_DIR, '.synced-ref')
+  const marker = markerPath()
 
   // Re-fetching costs far more than every lookup that follows it, so a checkout
   // already sitting on this ref is left alone. A branch moves under us, so only
   // an immutable tag is trusted to still be what the marker says.
-  if (exists && fs.existsSync(marker) && fs.readFileSync(marker, 'utf8') === ref && /^v\d/.test(ref)) {
+  if (exists && syncedRef() === ref && /^v\d/.test(ref)) {
     return
   }
 
@@ -101,8 +123,9 @@ function sync(ref) {
   }
 
   // A blobless clone fetches file contents on demand, so switching refs costs
-  // only the blobs that actually changed.
-  git(SOURCE_DIR, 'fetch', '--depth', '1', '--tags', REPO, ref)
+  // only the blobs that actually changed. Fetch the one ref asked for: `--tags`
+  // would pull every tag Cypress has ever published, which costs 20 seconds.
+  git(SOURCE_DIR, 'fetch', '--depth', '1', REPO, ref)
   git(SOURCE_DIR, 'sparse-checkout', 'set', '--no-cone', ...SPARSE_PATHS)
   git(SOURCE_DIR, 'checkout', '--force', 'FETCH_HEAD')
   fs.writeFileSync(marker, ref)
@@ -118,24 +141,38 @@ function walk(dir) {
   })
 }
 
-function search(files, patterns) {
+// `patterns` is ordered strongest first: an explicit registration is near
+// certain, a bare object method is a guess. Hits come back in that order, so the
+// first one printed is the best candidate rather than whichever file sorted
+// first — the difference between sending a reader to `querying.ts` and sending
+// them to a `get` accessor in `selectFile.ts`.
+function search(name, files, patterns) {
   const hits = []
 
   for (const file of files) {
     const lines = fs.readFileSync(file, 'utf8').split('\n')
 
     lines.forEach((line, index) => {
-      if (patterns.some((pattern) => pattern.test(line))) {
-        hits.push({
-          file: path.relative(SOURCE_DIR, file).split(path.sep).join('/'),
-          line: index + 1,
-          text: line.trim(),
-        })
-      }
+      const rank = patterns.findIndex((pattern) => pattern.test(line))
+
+      if (rank === -1) return
+
+      hits.push({
+        rank,
+        // Within a tier, a file named after the command wins. `.type()` and
+        // `cy.assertions` both expose a `type` method; only one of them lives
+        // in `actions/type.ts`.
+        named: path.basename(file).replace(/\.(cy\.)?[jt]s$/, '') === name ? 0 : 1,
+        file: path.relative(SOURCE_DIR, file).split(path.sep).join('/'),
+        line: index + 1,
+        text: line.trim(),
+      })
     })
   }
 
   return hits
+    .sort((a, b) => a.rank - b.rank || a.named - b.named)
+    .map(({ rank, named, ...hit }) => hit)
 }
 
 const escape = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -158,16 +195,22 @@ function resolve(name) {
     // Commands reach the registry four ways: `Commands.add('name', fn)`,
     // `Commands.addQuery('name', fn)`, an object literal of methods passed to
     // `Commands.addAll`, and a named function collected into that object.
-    implementation: search(commandFiles, [
+    implementation: search(name, commandFiles, [
       new RegExp(`Commands\\.add(?:Query|All|AllSync|Sync)?\\(\\s*(?:\\{[^}]*\\},\\s*)?['"]${n}['"]`),
-      new RegExp(`Commands\\.add(?:All|AllSync)?\\(\\s*\\{[^)]*\\b${n}\\b`),
+      // `Commands.addAll({ intercept })`. The trailing `,` or `}` is what keeps
+      // this off an options object, where the same word appears with a value:
+      // `Commands.addAll({ type: 'assertion' }, ...)` does not register `.type()`.
+      new RegExp(`Commands\\.add(?:All|AllSync)?\\(\\s*\\{[^)]*\\b${n}\\b\\s*[,}]`),
+      // A function declaration carrying the command's own name is the body that
+      // registration collects — `function type (...)`, `function intercept (...)`.
+      // It outranks a bare object method, which any unrelated object can have.
+      new RegExp(`^\\s*(?:export )?(?:async )?function ${n} ?\\(`),
       new RegExp(`^\\s{2,}'?${n}'?(?:<[^>]*>)? ?\\(`),
       new RegExp(`^\\s{2,}'?${n}'?: ?(?:function|async)`),
-      new RegExp(`^\\s*(?:export )?(?:async )?function ${n} ?\\(`),
     ]),
     // The published signature and its options interface — what a reader's
     // editor autocompletes, and the authority for the Arguments table.
-    types: search(typeFiles(), [
+    types: search(name, typeFiles(), [
       new RegExp(`^\\s+${n}(?:<[^>]*>)?\\(`),
       new RegExp(`^\\s+${n}: [A-Z]`),
       new RegExp(`interface ${escape(capitalized)}Options\\b`),
@@ -175,12 +218,13 @@ function resolve(name) {
     // Every message the command can throw, which is what the Requirements
     // bullets are really describing. Some commands nest a level deeper, under
     // the subsystem that owns them (`net_stubbing.intercept`).
-    errors: search([path.join(SOURCE_DIR, 'packages/driver/src/cypress/error_messages.ts')], [
+    errors: search(name, [path.join(SOURCE_DIR, 'packages/driver/src/cypress/error_messages.ts')], [
       new RegExp(`^\\s{2,6}'?${n}'?: \\{`),
     ]),
     // The executable specification: the driver's own tests for the command.
     // Their describe blocks name the command half a dozen ways.
     tests: search(
+      name,
       walk(path.join(SOURCE_DIR, 'packages/driver/cypress/e2e')).filter((f) => /\.(ts|js)$/.test(f)),
       [new RegExp(`^\\s*(?:context|describe)\\(\\s*['"](?:#|\\.|cy\\.)?${n}(?:\\(\\))?['"]`)]
     ),
@@ -206,11 +250,18 @@ function report(name, ref, found) {
       continue
     }
 
-    hits.forEach((hit, index) => {
+    // A common word like `get` or `type` matches in a dozen places. Show enough
+    // candidates to pick from and say how many were held back, rather than
+    // burying the first — which is usually the right one — in the rest.
+    hits.slice(0, SHOWN_HITS).forEach((hit, index) => {
       console.log(`${(index === 0 ? label : '').padEnd(16)}${SOURCE_DIR}/${hit.file}:${hit.line}`)
       console.log(`${''.padEnd(16)}  ${hit.text.slice(0, 96)}`)
       console.log(`${''.padEnd(16)}  ${permalink(hit)}`)
     })
+
+    if (hits.length > SHOWN_HITS) {
+      console.log(`${''.padEnd(16)}+ ${hits.length - SHOWN_HITS} more — re-run with --json for all of them`)
+    }
   }
 
   console.log(`\n${'Changelog'.padEnd(16)}${SOURCE_DIR}/cli/CHANGELOG.md`)

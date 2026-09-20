@@ -11,13 +11,13 @@ Some directories carry their own `AGENTS.md` (plus a `CLAUDE.md` that imports
 it) for conventions that apply only inside them. Read the one for the directory
 you're working in:
 
-| Directory            | Covers                                                        |
-| -------------------- | ------------------------------------------------------------- |
-| `docs/api/`          | reference frontmatter, the page skeleton, `## History` tables |
-| `docs/partials/`     | when a partial is warranted, naming, registration             |
-| `docs/app/releases/` | changelog entry format                                        |
-| `src/`               | component layout, registration, swizzled theme files          |
-| `plugins/`           | the sub-package build and dependency rules                    |
+| Directory            | Covers                                                      |
+| -------------------- | ----------------------------------------------------------- |
+| `docs/api/`          | the Cypress source behind a page, frontmatter, the skeleton |
+| `docs/partials/`     | when a partial is warranted, naming, registration           |
+| `docs/app/releases/` | changelog entry format                                      |
+| `src/`               | component layout, registration, swizzled theme files        |
+| `plugins/`           | the sub-package build and dependency rules                  |
 
 Three conventions hold for every one of them:
 

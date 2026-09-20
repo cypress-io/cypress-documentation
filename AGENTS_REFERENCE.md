@@ -706,7 +706,7 @@ packages. Guessing the path wastes a search; the resolver hands you the line.
 
 | Page section             | Source of truth                                                                                          |
 | ------------------------ | -------------------------------------------------------------------------------------------------------- |
-| `## Syntax`              | the command's declaration in `cli/types/cypress.d.ts` (the signature a reader autocompletes)             |
+| `## Syntax`              | the command's declaration in the type definitions — the signature a reader autocompletes                 |
 | Usage, correct           | `prevSubject` in the `Commands.addAll` call — it lists every subject the command accepts                 |
 | `### Arguments`          | the options interface in the type definitions, plus the `_.defaults({...})` call that sets each default  |
 | `<HeaderYields />`       | what the command function returns, and whether it is registered with `addQuery` (retried) or `add` (not) |

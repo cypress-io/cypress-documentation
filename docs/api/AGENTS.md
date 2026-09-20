@@ -9,11 +9,8 @@ Reasoning and examples live in
 
 These pages describe behavior implemented in `cypress-io/cypress`, so read that
 source before writing or changing a behavior claim. `npm run api:source -- blur`
-makes a pinned, sparse checkout of it in `.cypress-source/` and resolves a
-command to the files that define it — implementation, published types, error
-messages, and the driver's own specs. Which page section each of those answers,
-and what to do when the source contradicts the page (flag it, don't quietly
-rewrite), is in
+resolves a command to the files that define it. Which page section each answers,
+and why a conflict gets flagged rather than written away, is in
 [`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md#api-source-of-truth).
 
 ## Frontmatter
