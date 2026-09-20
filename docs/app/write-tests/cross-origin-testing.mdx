@@ -52,10 +52,10 @@ application under test loading inside it.
 
 On the
 [legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path),
-Cypress must assign and manage browser certificates in order to modify the
+Cypress must assign and manage browser certificates to modify the
 traffic in real time. Chrome then warns that the certificate was issued by an
 unknown authority, which is expected behavior. Under the hood we act as our own
-CA authority and issue certificates dynamically in order to intercept requests
+CA authority and issue certificates dynamically to intercept requests
 otherwise impossible to access. We only do this for the origin currently under
 test, and bypass other traffic.
 
@@ -417,7 +417,7 @@ cy.origin('cypress.io', () => {
 cy.get('#user-name-welcome').should('equal', 'Welcome, User1!')
 ```
 
-If for any reason you can't leverage `cy.origin`, programmatic authentication
+If for any reason you can't use `cy.origin`, programmatic authentication
 is still an option. In this situation you may `POST` to a different server and
 are redirected elsewhere (typically with the session token in the URL). If
 that's the case, you can still test this behavior with
