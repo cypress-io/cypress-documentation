@@ -112,7 +112,7 @@ session data.
 The page is cleared before `setup` when `testIsolation` is enabled and is not
 cleared when `testIsolation` is disabled.
 
-Cookies, local storage and session storage in all domains are always cleared
+Cookies, local storage, and session storage in all domains are always cleared
 before `setup` runs, regardless of the `testIsolation` configuration.
 
 <Icon name="angle-right" /> **options _(Object)_**
@@ -763,7 +763,7 @@ it('t3', () => {
 
 ### Test Isolation Enabled
 
-The page is cleared and cookies, local storage and session storage (session
+The page is cleared and cookies, local storage, and session storage (session
 data) in all domains are cleared automatically when `cy.session()` runs and test
 isolation is enabled with `testIsolation=true`, This
 guarantees consistent behavior whether a session is being created or restored
@@ -920,7 +920,7 @@ values may collide and create unexpected results.
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 In this example, setting the `id` to `[name, uniqueKey]` guarantees that calling
-`login()` with different `name`, `token` and `password` values will create and
+`login()` with different `name`, `token`, and `password` values will create and
 cache unique sessions.
 
 ```js

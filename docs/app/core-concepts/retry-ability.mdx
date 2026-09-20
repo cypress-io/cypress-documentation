@@ -22,7 +22,7 @@ fails, check out our guide on [Test Retries](/app/guides/test-retries).
 
 :::
 
-## Commands, Queries and Assertions
+## Commands, Queries, and Assertions
 
 While all methods you chain off of `cy` in your Cypress tests are commands, it's
 important to understand the different rules by which they operate.
@@ -423,7 +423,7 @@ case like that where the event listeners are attached to a modal popup only
 after a delay, thus causing default events fired during `.click()` to not
 register. In this special case you may want to "keep clicking" until the event
 registers, and the dialog disappears. Read about it in the
-[When Can the Test Click?](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/)
+[When Can the Test Click?](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/?utm_source=docs.cypress.io&utm_medium=retry-ability)
 blog post.
 
 Because of the implicit assertions built into every command, and action commands
@@ -551,7 +551,7 @@ queries - nothing before it (such as fetching the text of the element) re-runs.
 #### <Icon name="check-circle" color="green" /> Correctly waiting for values
 
 We need to retry getting the element, invoking the `text()` method, calling the
-`parseFloat` function and running the `gte` and `lte` assertions. We can achieve
+`parseFloat` function, and running the `gte` and `lte` assertions. We can achieve
 this using the `.should(callbackFn)`.
 
 ```javascript
