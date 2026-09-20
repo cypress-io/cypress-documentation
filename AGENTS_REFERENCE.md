@@ -674,6 +674,35 @@ sign-up/login links, or to non-Cypress third-party links. For repeated CTAs,
 prefer the shared partials (e.g. `docs/partials/_ui-coverage-premium-note.mdx`)
 that already embed the correct params rather than re-writing the URL.
 
+## API reference pages
+
+Frontmatter, the page skeleton, and the rest of the conventions for `docs/api/**`
+are in [`docs/api/AGENTS.md`](./docs/api/AGENTS.md). Two of them need more than a
+rule.
+
+### The Header partials
+
+`<HeaderYields />`, `<HeaderRequirements />`, `<HeaderAssertions />`, and
+`<HeaderTimeouts />` render the fixed `Yields`, `Requirements`, `Assertions`, and
+`Timeouts` headings. `src/theme/MDXComponents.js` registers them globally, so
+they take no import, and each carries the anchor other pages link to
+(`{#Yields}`, `{#Requirements}`, `{#Assertions}`, `{#Timeouts}`). Hand-writing
+one of those headings drops its anchor and breaks every inbound link to it.
+
+### History tables
+
+Newest version first, each version linking its changelog anchor:
+
+```markdown
+| Version                                  | Changes                       |
+| ---------------------------------------- | ----------------------------- |
+| [6.1.0](/app/references/changelog#6-1-0) | Added option `scrollBehavior` |
+```
+
+Add a row whenever a release changes documented behavior, and add the matching
+changelog entry in the same PR, per
+[`docs/app/releases/AGENTS.md`](./docs/app/releases/AGENTS.md).
+
 ## API source of truth
 
 An API reference page describes behavior that lives in a different repository:
