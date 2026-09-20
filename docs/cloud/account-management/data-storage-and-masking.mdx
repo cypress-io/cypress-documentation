@@ -11,7 +11,7 @@ sidebar_position: 80
 
 :::caution
 
-Please refer to the [Cypress Cloud Terms of Use](https://cypress.io/terms-of-use) and our [Security & Compliance](https://on.cypress.io/security/) guide for more specifics around reasonable use of Cypress Cloud, data storage and security at Cypress.
+Please refer to the [Cypress Cloud Terms of Use](https://cypress.io/terms-of-use) and our [Security & Compliance](https://on.cypress.io/security?utm_source=docs.cypress.io&utm_medium=data-storage-and-masking) guide for more specifics around reasonable use of Cypress Cloud, data storage, and security at Cypress.
 
 :::
 
@@ -104,6 +104,40 @@ You can turn redaction off per project.
 <DocsImage
   src="/img/cloud/features/test-replay/cypress-test-replay-network-redaction-toggle-cloud.png"
   alt="Test Replay project settings with Prevent capturing sensitive network data turned on"
+  width={600}
+/>
+
+#### Sensitive form input masking
+
+By default, Cypress replaces sensitive form input values with asterisks before
+creating Test Replay artifacts. Like network data redaction, masking runs in the
+Cypress App on your machine before Cypress uploads any data to Cypress Cloud.
+
+##### What gets masked in Test Replay
+
+Cypress masks values entered into these fields:
+
+- Password fields (`input[type="password"]`)
+- Hidden fields (`input[type="hidden"]`)
+- Credit card and payment fields that use standard `autocomplete` attributes
+
+Masked values appear as asterisks in the captured DOM. You can inspect the
+form's structure and behavior without storing the entered values. Cypress
+captures the rest of the page as usual.
+
+##### Update what is masked in Test Replay
+
+Organization Owners and Admins can turn off masking for individual projects:
+
+1. Open your project settings in Cypress Cloud.
+2. Go to the **Test Replay** section.
+3. Turn off **Mask sensitive input values**.
+
+Users without the Owner or Admin role see a locked setting and cannot change it.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-sensitive-input-masking-toggle-cloud.png"
+  alt="Mask sensitive input values setting turned on and locked in the Test Replay project settings"
   width={600}
 />
 

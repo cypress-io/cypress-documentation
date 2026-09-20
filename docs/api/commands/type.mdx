@@ -502,7 +502,7 @@ cause the actual value or text to change will fire those events.
 The following rules have been implemented that match real browser behavior (and
 the spec):
 
-1. Cypress respects not firing subsequent events if previous ones were canceled.
+1. Cypress respects not firing subsequent events if previous ones were cancelled.
 2. Cypress will fire `keypress` _only_ if that key is supposed to actually fire
    `keypress`.
 3. Cypress will fire `textInput` _only_ if typing that key would have inserted
@@ -512,11 +512,11 @@ the spec):
 
 #### Event Cancellation
 
-Cypress respects all default browser behavior when events are canceled.
+Cypress respects all default browser behavior when events are cancelled.
 
 ```javascript
 // prevent the characters from being inserted
-// by canceling keydown, keypress, or textInput
+// by cancelling keydown, keypress, or textInput
 $('#username').on('keydown', (e) => {
   e.preventDefault()
 })
@@ -543,7 +543,7 @@ will contain the `which` character code and the events that happened as a result
 of that key press.
 
 Events that were `defaultPrevented` may prevent other events from firing and
-those will show up as empty. For instance, canceling `keydown` will not fire
+those will show up as empty. For instance, cancelling `keydown` will not fire
 `keypress` or `textInput` or `input`, but will fire `keyup` (which matches the
 spec).
 
@@ -714,25 +714,25 @@ following:
 
 ## History
 
-| Version                                      | Changes                                                                                                                                |
-| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| [16.0.0](/app/references/changelog#16-0-0)   | Changed default `delay` from `10` to `0`                                                                                               |
-| [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments                     |
-| [13.14.0](/app/references/changelog#13-14-0) | Added support for `.type({upArrow})` and `.type({downArrow})` to work on date, month, week, time, datetime-local and range input types |
-| [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                                          |
-| [5.6.0](/app/references/changelog#5-6-0)     | Support single key combination syntax                                                                                                  |
-| [5.5.0](/app/references/changelog#5-5-0)     | Support `beforeinput` event                                                                                                            |
-| [3.4.1](/app/references/changelog#3-4-1)     | Added `parseSpecialCharSequences` option                                                                                               |
-| [3.3.0](/app/references/changelog#3-3-0)     | Added `{insert}`, `{pageup}` and `{pagedown}` character sequences                                                                      |
-| [3.2.0](/app/references/changelog#3-2-0)     | Added `{home}` and `{end}` character sequences                                                                                         |
-| [0.20.0](/app/references/changelog#0-20-0)   | Supports for typing in inputs of type `date`, `time`, `month`, and `week`                                                              |
-| [0.17.1](/app/references/changelog#0-17-1)   | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers                                                                             |
-| [0.16.3](/app/references/changelog#0-16-3)   | Supports for typing in elements with `tabindex` attribute                                                                              |
-| [0.16.2](/app/references/changelog#0-16-2)   | Added `{downarrow}` and `{uparrow}` character sequences                                                                                |
-| [0.8.0](/app/references/changelog#0-8-0)     | Outputs Key Events Table to console on click                                                                                           |
-| [0.8.0](/app/references/changelog#0-8-0)     | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences              |
-| [0.8.0](/app/references/changelog#0-8-0)     | Added small delay (10ms) between each keystroke during `cy.type()`                                                                     |
-| [0.6.12](/app/references/changelog#0-6-12)   | Added option `force`                                                                                                                   |
+| Version                                      | Changes                                                                                                                                 |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0)   | Changed default `delay` from `10` to `0`                                                                                                |
+| [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments                      |
+| [13.14.0](/app/references/changelog#13-14-0) | Added support for `.type({upArrow})` and `.type({downArrow})` to work on date, month, week, time, datetime-local, and range input types |
+| [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                                           |
+| [5.6.0](/app/references/changelog#5-6-0)     | Support single key combination syntax                                                                                                   |
+| [5.5.0](/app/references/changelog#5-5-0)     | Support `beforeinput` event                                                                                                             |
+| [3.4.1](/app/references/changelog#3-4-1)     | Added `parseSpecialCharSequences` option                                                                                                |
+| [3.3.0](/app/references/changelog#3-3-0)     | Added `{insert}`, `{pageup}`, and `{pagedown}` character sequences                                                                      |
+| [3.2.0](/app/references/changelog#3-2-0)     | Added `{home}` and `{end}` character sequences                                                                                          |
+| [0.20.0](/app/references/changelog#0-20-0)   | Supports for typing in inputs of type `date`, `time`, `month`, and `week`                                                               |
+| [0.17.1](/app/references/changelog#0-17-1)   | Added `ctrl`, `cmd`, `shift`, and `alt` keyboard modifiers                                                                              |
+| [0.16.3](/app/references/changelog#0-16-3)   | Supports for typing in elements with `tabindex` attribute                                                                               |
+| [0.16.2](/app/references/changelog#0-16-2)   | Added `{downarrow}` and `{uparrow}` character sequences                                                                                 |
+| [0.8.0](/app/references/changelog#0-8-0)     | Outputs Key Events Table to console on click                                                                                            |
+| [0.8.0](/app/references/changelog#0-8-0)     | Added `{selectall}`, `{del}`, `{backspace}`, `{esc}`, `{{}`, `{enter}`, `{leftarrow}`, `{rightarrow}` character sequences               |
+| [0.8.0](/app/references/changelog#0-8-0)     | Added small delay (10ms) between each keystroke during `cy.type()`                                                                      |
+| [0.6.12](/app/references/changelog#0-6-12)   | Added option `force`                                                                                                                    |
 
 ## See also
 

@@ -1,7 +1,6 @@
 dist
 .husky
 .vscode
-.circleci
 .github
 assets
 node_modules

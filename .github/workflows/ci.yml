@@ -1,0 +1,338 @@
+name: CI
+
+# The build-and-test pipeline for every pull request and every commit on main:
+# a production build, lint, typecheck, unit tests, the Cypress suite, and the
+# Algolia reindex. This replaces the CircleCI `build-and-test` workflow that
+# `.circleci/config.yml` used to define.
+#
+# The build is the safety net for content, not a formality: `onBrokenLinks` and
+# `onBrokenMarkdownLinks` are `throw`, so a bad link or anchor fails here.
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+# Read-only by default. No job here writes to the repository; each one that
+# needs more asks for it itself.
+permissions:
+  contents: read
+
+concurrency:
+  # One in-flight run per pull request, superseding the last — the auto-cancel
+  # CircleCI did on a re-push.
+  #
+  # Keyed on the pull request number rather than the branch name: head refs are
+  # only unique within a repository, so two forks that both push `patch-1` would
+  # otherwise share a group and cancel each other.
+  #
+  # A push falls back to its own SHA, giving every commit a group to itself.
+  # Grouping them under the branch would serialize main, and a queued run is
+  # displaced by the next one to arrive whatever `cancel-in-progress` says: a
+  # third merge landing quickly would cancel the second commit's run outright,
+  # leaving that commit with no checks and no Algolia reindex. CircleCI built
+  # every push to main, and so does this.
+  group: ci-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          HUSKY: 0
+
+      - name: Build the site
+        run: npm run build
+
+      # The e2e job serves this build rather than repeating it, so one build
+      # feeds all eight containers — what CircleCI's persisted workspace did.
+      - name: Upload the production build
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist
+          # `dist/.well-known/` holds the agent-skills manifest and the API
+          # catalog. It is a hidden path, which upload-artifact drops unless
+          # asked otherwise, and the e2e suite serves what this uploads.
+          include-hidden-files: true
+          retention-days: 1
+
+  lint:
+    name: Lint JS/CSS/Markdown
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          HUSKY: 0
+
+      - name: Lint
+        run: npm run lint
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          HUSKY: 0
+
+      - name: Typecheck
+        run: npm run typecheck
+
+  unit-tests:
+    name: Unit Tests (Search/Algolia, plugins)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          HUSKY: 0
+
+      - name: Search / Algolia unit tests
+        run: npm run test:search
+
+      - name: Plugin unit tests
+        run: npm run test:plugins
+
+  e2e:
+    name: E2E (${{ matrix.container }}/8)
+    needs: build
+    # Splitting the suite across containers is Cypress Cloud load balancing, so
+    # it needs CYPRESS_RECORD_KEY. That secret exists only in this repository,
+    # and GitHub withholds it even here from a pull request opened from a fork.
+    # Both cases run `e2e-fork` below instead, whose condition is the exact
+    # negation of this one.
+    if: (github.repository == 'cypress-io/cypress-documentation') &&
+      (github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      # One container failing must not cancel the other seven: Cypress Cloud
+      # keeps the run open until every container it is balancing has reported.
+      fail-fast: false
+      matrix:
+        container: [1, 2, 3, 4, 5, 6, 7, 8]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+          cache: npm
+
+      - name: Download the production build
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+
+      # Installs dependencies, restores the cached Cypress binary, serves the
+      # build downloaded above, and runs the suite. No `build` input: the build
+      # job already produced what `npm run serve` serves.
+      - name: Run Cypress
+        uses: cypress-io/github-action@v7
+        with:
+          start: npm run serve
+          wait-on: 'http://localhost:3000'
+          record: true
+          parallel: true
+          group: 'Docs e2e'
+          # The run attempt is what makes this unique. Without it a re-run
+          # reuses the finished run's ID and Cypress Cloud cancels the
+          # containers with "Build already finished" rather than retesting.
+          ci-build-id: ${{ github.run_id }}-${{ github.run_attempt }}
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HUSKY: 0
+
+  e2e-fork:
+    name: E2E (fork, not recorded)
+    needs: build
+    # The counterpart to `e2e`: with no record key there is nothing to load
+    # balance, so the suite runs unsplit in a single container and reports
+    # nothing to Cypress Cloud. Slower, but it still gives an outside
+    # contributor a result. Covers both keyless cases — a pull request from a
+    # fork, and any run inside a fork of this repository.
+    if: (github.repository != 'cypress-io/cypress-documentation') ||
+      (github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name != github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+          cache: npm
+
+      - name: Download the production build
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+
+      - name: Run Cypress
+        uses: cypress-io/github-action@v7
+        with:
+          start: npm run serve
+          wait-on: 'http://localhost:3000'
+        env:
+          HUSKY: 0
+
+      # Screenshots are the only way to see what failed without a Cloud run.
+      - name: Upload screenshots from failures
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 7
+
+  e2e-status:
+    name: E2E
+    needs: [e2e, e2e-fork]
+    # The single check to require in branch protection. Requiring the two jobs
+    # above directly does not work: exactly one of them runs and the other is
+    # skipped, and GitHub reports a skipped job as Success for branch
+    # protection. Requiring the eight containers would therefore go green on a
+    # fork pull request having run no tests at all, and requiring the fork job
+    # would do the same on every internal one.
+    #
+    # `always()` is load-bearing for that same reason. Without it this job is
+    # itself skipped whenever a dependency is skipped, which is every run, and
+    # a skipped required check passes while verifying nothing.
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require that the e2e suite passed
+        env:
+          RECORDED: ${{ needs.e2e.result }}
+          FORK: ${{ needs.e2e-fork.result }}
+        run: |
+          echo "E2E (parallel, recorded): $RECORDED"
+          echo "E2E (fork, serial):       $FORK"
+
+          # A matrix job aggregates its legs, so one red container out of the
+          # eight leaves RECORDED as `failure`. Cancelled is not a pass either.
+          for result in "$RECORDED" "$FORK"; do
+            if [ "$result" != 'success' ] && [ "$result" != 'skipped' ]; then
+              echo "::error::The e2e suite reported '$result'."
+              exit 1
+            fi
+          done
+
+          # Both skipped means no suite ran at all, which is what happens when
+          # the build fails. Nothing failed, but nothing was verified either.
+          if [ "$RECORDED" != 'success' ] && [ "$FORK" != 'success' ]; then
+            echo '::error::Neither e2e job ran, so nothing was verified.'
+            exit 1
+          fi
+
+          echo 'The e2e suite passed.'
+
+  algolia:
+    name: Run Algolia scraper
+    needs: build
+    # Reindexes the live docs.cypress.io, so it belongs to a commit that has
+    # landed rather than to a pull request, and the Algolia write key is a
+    # repository secret a fork does not have. `needs: build` keeps a broken
+    # build from triggering a reindex.
+    if: github.event_name == 'push' &&
+      (github.ref == 'refs/heads/main') &&
+      (github.repository == 'cypress-io/cypress-documentation')
+    runs-on: ubuntu-latest
+    # The scraper pulls a Docker image, crawls the whole site, and then waits
+    # two minutes for Algolia to finish accepting the upload.
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          HUSKY: 0
+
+      # Docker is preinstalled on GitHub-hosted runners, so the scraper's
+      # `docker run` needs no setup step of its own.
+      - name: Scrape and compare the Algolia index
+        run: node ./scripts/search/scrape-and-compare-algolia-index.mjs
+        env:
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
+          ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
