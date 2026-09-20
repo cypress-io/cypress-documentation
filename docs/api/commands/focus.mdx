@@ -26,13 +26,14 @@ chain further commands that rely on the subject after `.focus()`.
 
 ```javascript
 cy.get('input').first().focus() // Focus on the first input
+cy.window().focus() // Focus on the window
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.focus('#search') // Errors, cannot be chained off 'cy'
-cy.window().focus() // Errors, 'window' does not yield DOM element
+cy.get('div:first').focus() // Errors, a plain div is not focusable
 ```
 
 ### Arguments
@@ -102,7 +103,10 @@ If there is currently a different DOM element with focus, Cypress issues a
 #### Can only be called on a valid focusable element
 
 Ensure the element you are trying to call `.focus()` on is a
-[focusable element](https://www.w3.org/TR/html5/editing.html#focusable).
+[focusable element](https://www.w3.org/TR/html5/editing.html#focusable). The
+window and the `body` are the two exceptions, so `cy.window().focus()` fires a
+`focus` event on the window. Focus itself does not move: whichever element held
+it still does, and `document.activeElement` is unchanged.
 
 ### Timeouts {#Notes-Timeouts}
 
@@ -121,8 +125,11 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 
 <HeaderRequirements />
 
-- `.focus()` requires being chained off a command that yields DOM element(s).
-- `.focus()` requires the element to be able to receive focus.
+- `.focus()` requires being chained off a command that yields a DOM element or
+  the window.
+- `.focus()` requires the subject to contain a single element.
+- `.focus()` requires the element to be able to receive focus. The window and
+  the `body` are exempt.
 
 <HeaderAssertions />
 
