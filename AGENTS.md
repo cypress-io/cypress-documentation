@@ -52,7 +52,7 @@ npm run start         # local dev server at http://localhost:3000
 npm run build         # production build into dist/ (also rebuilds plugins)
 npm run lint:fix      # Prettier autofix on **/*.{md,mdx}
 npm run typecheck     # tsc
-npm test              # cypress e2e (needs the dev server running)
+npm test              # cypress e2e (needs `npm run serve`, not the dev server)
 npm run test:plugins  # vitest unit tests for plugins/
 npm run api:source -- blur   # locate the Cypress source a /api page documents
 ```
@@ -71,7 +71,10 @@ is enough for every command above except `npm test`.
    `onBrokenMarkdownLinks` are `throw`, so any bad link or anchor fails the build.
 3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`.
 4. `npm run test:plugins` — only when you touched `plugins/`.
-5. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
+5. `npm test` — for nav/routing or broad changes. Serve a production build
+   first (`npm run build`, then `npm run serve`), which is what CI does. The dev
+   server injects page titles during hydration, so the specs that assert on
+   server-rendered HTML fail against it.
 
 CI runs all of these, so a miss fails the PR rather than `main`.
 

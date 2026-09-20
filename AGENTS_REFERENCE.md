@@ -741,9 +741,12 @@ read those on GitHub.
   changes are exercised by the page rendering without errors. What each spec
   covers, and why adding a page needs no change to any of them, is in
   [`cypress/AGENTS.md`](./cypress/AGENTS.md).
-- To run them locally, start the site in one terminal (`npm run start`, served at
-  `http://localhost:3000`, the configured `baseUrl`) and in another run
-  `npm test` (headless) or `npx cypress open` (interactive).
+- To run them locally, serve a production build in one terminal (`npm run build`,
+  then `npm run serve` at `http://localhost:3000`, the configured `baseUrl`) and
+  in another run `npm test` (headless) or `npx cypress open` (interactive). CI
+  serves the same build. The dev server is not interchangeable here: it returns
+  one shell title for every route and fills the real one in during hydration, so
+  the `page_titles.cy.ts` checks that read server-rendered HTML fail against it.
 - **Plugin unit tests** (Vitest) cover both sub-packages in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.

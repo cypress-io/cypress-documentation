@@ -33,9 +33,9 @@ than assert much per page.
 
 The numbered files (`all_api_pages_1` through `_3`) are one section split into
 chunks so Cloud can load-balance them across containers: `visitAllPages('api',
-0, 3)` takes every third URL. The split is about run time, not coverage. Adding
-a **new top-level docs section** means adding a spec file; nothing else here
-does.
+0, 3)` takes every third URL. The split is about run time, not coverage. A new
+top-level docs section is the one thing that needs a spec added here, and only
+so the crawl reaches it; every other spec picks the section up on its own.
 
 ## Page titles
 
@@ -44,14 +44,22 @@ does.
 frontmatter rule that a `title` never carries one: hand-write a suffix and the
 page ships with it twice.
 
+It checks twice over, which is why it needs a build. One pass reads the
+server-rendered HTML with `cy.request` (what a crawler sees, every page), and a
+second visits one page per suffix and reads `cy.title()` after hydration (what a
+reader sees).
+
 ## Writing and running specs
 
 - TypeScript, named `*.cy.ts`. Take the page list from `Cypress.expose('URLs')`
   rather than hardcoding one that will go stale.
-- Specs run against the site at `http://localhost:3000`, so start it first (see
-  the root guide's verify ladder). Because they crawl real pages, `blockHosts`
-  in the config keeps Pendo, GA4, and FullStory from minting visitors on every
-  run.
+- Serve a **production build** at `http://localhost:3000` before running them
+  (`npm run build`, then `npm run serve`), which is what CI does. The dev server
+  is not a substitute: it returns one shell title for every route and fills the
+  real one in during hydration, so the `page_titles.cy.ts` checks built on
+  `cy.request` fail against it while the `cy.visit` ones pass.
+- Because the specs crawl real pages, `blockHosts` in the config keeps Pendo,
+  GA4, and FullStory from minting visitors on every run.
 - `cypress run --expose limitPerSection=2` spot-checks a couple of pages per
   section instead of all of them. Use it while iterating; CI runs the lot.
 - [`support/e2e.ts`](./support/e2e.ts) stubs the Osano consent script for every
