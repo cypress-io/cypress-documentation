@@ -48,6 +48,19 @@ const config = {
           editUrl:
             'https://github.com/cypress-io/cypress-documentation/tree/main/',
           routeBasePath: '/',
+          // `exclude` replaces Docusaurus's own defaults rather than extending
+          // them, so the first four patterns are those defaults, copied as-is.
+          // The last two keep the per-directory agent instructions out of the
+          // built site: `AGENTS.md`/`CLAUDE.md` are guidance for coding agents,
+          // not pages, and without this they would be published with the docs.
+          exclude: [
+            '**/_*.{js,jsx,ts,tsx,md,mdx}',
+            '**/_*/**',
+            '**/*.test.{js,jsx,ts,tsx}',
+            '**/__tests__/**',
+            '**/AGENTS.md',
+            '**/CLAUDE.md',
+          ],
           remarkPlugins: [
             remarkDirective,
             cypressConfigExample,
