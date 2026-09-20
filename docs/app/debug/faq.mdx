@@ -577,16 +577,15 @@ to either:
 - Debug the error instance itself
 - Prevent Cypress from failing the test
 
-This is documented in detail on the
-[Catalog Of Events](/api/cypress-api/catalog-of-events) page and the recipe
-[Handling errors](/app/references/recipes#Fundamentals).
+The
+[Uncaught Exceptions examples](/api/cypress-api/catalog-of-events#Uncaught-Exceptions)
+on the Catalog of Events page document this in detail.
 
 ### <Icon name="angle-right" /> Will Cypress fail the test when an application has unhandled rejected promise?
 
 By default no, Cypress does not listen to the unhandled promise rejection event
-in your application, and thus does not fail the test. You can set up your own
-listener though and fail the test, see our recipe
-[Handling errors](/app/references/recipes#Fundamentals):
+in your application, and thus does not fail the test. Register your own listener
+to fail the test instead:
 
 ```js
 // register listener during cy.visit
@@ -1251,7 +1250,8 @@ We recommend using [`cy.task()`](/api/commands/task) to run code in Node via the
 [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function. This
 includes running external commands, which a task can spawn directly from Node.
 
-[Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
+[Spec files](/app/core-concepts/writing-and-organizing-tests#Spec-files) shows an
+example spec that imports an npm package and a local module.
 
 ### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate so the page doesn't show up as "not secure"?
 

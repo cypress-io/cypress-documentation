@@ -122,14 +122,29 @@ Cypress also supports `ES2015` out of the box. You can use either
 `require` both **npm packages** and **local relative modules** to share code
 across specs.
 
-:::info
+```javascript title="cypress/e2e/modules.cy.js"
+// an npm package from your package.json
+import { upperFirst } from 'lodash'
 
-<strong>Example Recipe</strong>
+// a local module holding reusable helpers
+import getSelector from '../support/utils/get_selector'
 
-Check out our recipe using
-[ES2015 and CommonJS modules](/app/references/recipes#Fundamentals).
+// CommonJS `require` works the same way
+const appendKey = require('../support/utils/append_key')
 
-:::
+describe('modules', () => {
+  it('uses code imported from both', () => {
+    expect(upperFirst('jane')).to.eq('Jane')
+    expect(getSelector('checkbox')).to.eq('.my-app-checkbox')
+    expect(appendKey({ id: 1 })).to.have.property('key')
+  })
+})
+```
+
+The [default preprocessor](#The-default-preprocessor) bundles these imports for
+you, so this works with no extra setup. That bundle runs in the browser, which
+means a module that depends on Node.js APIs like `fs` won't load in a spec. Run
+that code in [`cy.task()`](/api/commands/task) instead.
 
 ### How Cypress finds your specs
 
