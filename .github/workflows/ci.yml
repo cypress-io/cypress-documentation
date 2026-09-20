@@ -21,13 +21,19 @@ permissions:
 
 concurrency:
   # One in-flight run per pull request, superseding the last — the auto-cancel
-  # CircleCI did on a re-push. Runs on main are never cancelled, so every commit
-  # that lands keeps a result of its own.
+  # CircleCI did on a re-push.
   #
   # Keyed on the pull request number rather than the branch name: head refs are
   # only unique within a repository, so two forks that both push `patch-1` would
   # otherwise share a group and cancel each other.
-  group: ci-${{ github.event.pull_request.number || github.ref }}
+  #
+  # A push falls back to its own SHA, giving every commit a group to itself.
+  # Grouping them under the branch would serialize main, and a queued run is
+  # displaced by the next one to arrive whatever `cancel-in-progress` says: a
+  # third merge landing quickly would cancel the second commit's run outright,
+  # leaving that commit with no checks and no Algolia reindex. CircleCI built
+  # every push to main, and so does this.
+  group: ci-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
