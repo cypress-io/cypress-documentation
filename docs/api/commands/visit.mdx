@@ -155,9 +155,11 @@ cy.visit('https://wile:coyote@example.cypress.io')
 
 :::info
 
-Cypress will automatically attach this header at the network proxy level,
-outside of the browser. Therefore you **will not** see this header in the Dev
-Tools.
+Cypress attaches the `Authorization` header for you on requests to the origin
+you visited. Other origins do not receive it. On the
+[legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path)
+the header is attached outside of the browser, so it does **not** appear in the
+Dev Tools.
 
 :::
 
@@ -188,7 +190,7 @@ Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
 #### Provide an `onLoad` callback function
 
 `onLoad` is called once your page has fired its `load` event. All of the
-scripts, stylesheets, html and other resources are guaranteed to be available at
+scripts, stylesheets, html, and other resources are guaranteed to be available at
 this point.
 
 ```javascript

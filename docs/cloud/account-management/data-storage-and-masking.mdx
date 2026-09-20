@@ -11,7 +11,7 @@ sidebar_position: 80
 
 :::caution
 
-Please refer to the [Cypress Cloud Terms of Use](https://cypress.io/terms-of-use) and our [Security & Compliance](https://on.cypress.io/security/) guide for more specifics around reasonable use of Cypress Cloud, data storage and security at Cypress.
+Please refer to the [Cypress Cloud Terms of Use](https://cypress.io/terms-of-use) and our [Security & Compliance](https://on.cypress.io/security?utm_source=docs.cypress.io&utm_medium=data-storage-and-masking) guide for more specifics around reasonable use of Cypress Cloud, data storage, and security at Cypress.
 
 :::
 
@@ -53,6 +53,93 @@ Cypress Cloud offers controls around the visibility of a project. You can set a 
 Setting a project to private means that only the users explicitly invited to the organization will have visibility into the project, its runs, and any data captured by Cypress.
 
 ### Test Replay controls
+
+#### Network data redaction
+
+By default, Cypress automatically redacts sensitive values from your network logs before uploading Test Replay data to Cypress Cloud. Redaction runs in the Cypress app, on your machine.
+
+##### What gets redacted
+
+Cypress redacts known-sensitive values from captured network requests and responses:
+
+- Authentication and token headers, including `authorization`, `proxy-authorization`, `cookie`, `set-cookie`, and `x-api-key`
+- Credential fields in request and response bodies, including `password`, `client_secret`, `access_token`, `refresh_token`, and `id_token`
+- Access tokens passed as URL parameters, including `access_token`, `id_token`, `code`, and `token`
+- Values that match a JWT or SAML-response pattern, wherever they appear
+
+Redacted values appear as `(redacted)` in the Test Replay network log. Everything else is captured as usual, including request timing, status codes, and the structure of each request, so you keep the context you need to debug a request without exposing the values.
+
+Here's how a redacted value looks, next to an un-redacted one:
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-network-log-redacted.png"
+  alt="Set-Cookie response header showing (redacted) in the Test Replay network log"
+  width={300}
+/>
+
+:::info
+
+**Note**: When this setting is active, API response bodies that can't be evaluated for redaction are **fully dropped** before storing the Test Replay data. For example, response bodies larger than 512 KB, or ones Cypress can't decode to plain text, aren't captured at all. They show as "unavailable" in the network log.
+
+:::
+
+##### Where redaction happens
+
+Redaction runs in the Cypress app while your tests record, before Test Replay data is uploaded.
+
+##### Who can see Test Replay data
+
+Test Replay data, including the network log, is visible to everyone with access to your project. In a private project, only people invited to your organization with the required team roles can see them. In a public project, any Cloud user can see the runs and the captured data.
+
+Redaction narrows what sits in that Test Replay data. If you are interested in managing access to Test Replay itself, review your project access controls.
+
+##### Turn redaction off
+
+You can turn redaction off per project.
+
+1. Open your project settings in Cypress Cloud.
+2. Go to the **Test Replay** section.
+3. Turn off **Prevent capturing sensitive network data**.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-network-redaction-toggle-cloud.png"
+  alt="Test Replay project settings with Prevent capturing sensitive network data turned on"
+  width={600}
+/>
+
+#### Sensitive form input masking
+
+By default, Cypress replaces sensitive form input values with asterisks before
+creating Test Replay artifacts. Like network data redaction, masking runs in the
+Cypress App on your machine before Cypress uploads any data to Cypress Cloud.
+
+##### What gets masked in Test Replay
+
+Cypress masks values entered into these fields:
+
+- Password fields (`input[type="password"]`)
+- Hidden fields (`input[type="hidden"]`)
+- Credit card and payment fields that use standard `autocomplete` attributes
+
+Masked values appear as asterisks in the captured DOM. You can inspect the
+form's structure and behavior without storing the entered values. Cypress
+captures the rest of the page as usual.
+
+##### Update what is masked in Test Replay
+
+Organization Owners and Admins can turn off masking for individual projects:
+
+1. Open your project settings in Cypress Cloud.
+2. Go to the **Test Replay** section.
+3. Turn off **Mask sensitive input values**.
+
+Users without the Owner or Admin role see a locked setting and cannot change it.
+
+<DocsImage
+  src="/img/cloud/features/test-replay/cypress-test-replay-sensitive-input-masking-toggle-cloud.png"
+  alt="Mask sensitive input values setting turned on and locked in the Test Replay project settings"
+  width={600}
+/>
 
 #### Disable Test Replay
 
@@ -151,7 +238,7 @@ beforeEach(() => {
 
 ##### Mask Cypress commands in the Cypress Command Log
 
-Users can mask passwords in the Cypress Command Log by using a custom command like the code below. [See our guide on masking the contents of the `.type()` command.](/api/cypress-api/custom-commands#Overwrite-type-command)
+Users can mask passwords in the Cypress Command Log by using a custom command. [See our guide on masking the contents of the `.type()` command](/api/cypress-api/custom-commands#Overwrite-type-command) for a code example to accomplish this.
 
 <DocsImage
   src="/img/api/custom-commands/custom-command-type-masked-password.png"

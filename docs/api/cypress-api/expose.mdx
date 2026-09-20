@@ -262,7 +262,7 @@ if (pluginConfig === 'enabled') {
 
 If you're migrating a plugin from `Cypress.env()` to `Cypress.expose()`, the API is similar:
 
-**Before (using deprecated `Cypress.env()`):**
+**Before (using `Cypress.env()`, removed in Cypress 16.0):**
 
 ```javascript
 const config = Cypress.env('PLUGIN_CONFIG')
@@ -320,7 +320,6 @@ See [`cy.env()`](/api/commands/env) for more details.
 ## See also
 
 - [`cy.env()`](/api/commands/env)
-- [`Cypress.env()`](/api/cypress-api/env) - Deprecated API
 - [Migration Guide to `cy.env()`](/app/references/migration-guide#Migrating-away-from-Cypressenv) - Guide for migrating from `Cypress.env()`
 - [Configuration options](/app/references/configuration)
 - [Test Configuration](/app/references/configuration#Test-Configuration)

@@ -14,7 +14,7 @@ slug: /app/faq
 
 ### <Icon name="angle-right" /> Is Cypress free and open source?
 
-The [Cypress App](/app/get-started/why-cypress) is a free, downloadable and open
+The [Cypress App](/app/get-started/why-cypress) is a free, downloadable, and open
 source (MIT license) application. This is always free to use.
 
 [Cypress Cloud](/cloud/get-started/introduction) is a web application that offers a
@@ -45,8 +45,8 @@ Currently you can control the viewport with the
 views in a website or web application. You can also mimic certain behaviors like
 swiping using [custom commands](/api/cypress-api/custom-commands).
 
-You can read about testing mobile applications with Ionic and Cypress
-[here](https://www.cypress.io/blog/2020/07/08/end-to-end-testing-mobile-apps-with-ionic-and-cypress/)
+You can read our blog post on
+[end-to-end testing mobile apps with Ionic and Cypress](https://www.cypress.io/blog/2020/07/08/end-to-end-testing-mobile-apps-with-ionic-and-cypress/?utm_source=docs.cypress.io&utm_medium=app-faq)
 and see how we manage testing the mobile viewport in the
 [Cypress Real World App](https://github.com/cypress-io/cypress-realworld-app).
 
@@ -86,7 +86,7 @@ add new assertions, which then work in both `expect()` and
 ### <Icon name="angle-right" /> Do you support X language or X framework?
 
 Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything
-that runs in the context of a browser. It is back end, front end, language and
+that runs in the context of a browser. It is back end, front end, language, and
 framework agnostic.
 
 You'll write your tests in JavaScript or TypeScript, but beyond that Cypress works everywhere.
@@ -103,8 +103,7 @@ testing).
 
 ### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
 
-Yes. Cypress transparently proxies WebSocket connections, so your application's
-WebSocket traffic will work as expected during tests.
+Yes. Your application's WebSocket traffic will work as expected during tests.
 
 However, **stubbing or mocking individual WebSocket frames/messages** is not
 natively supported. If your tests need to control the messages sent over a
@@ -129,7 +128,7 @@ application, it helps you write your tests.
 
 ### <Icon name="angle-right" /> Is there code coverage?
 
-There is a plugin and detailed documentation on how to get end-to-end, unit and
+There is a plugin and detailed documentation on how to get end-to-end, unit, and
 full stack code coverage.
 
 - Read our [Code Coverage guide](/app/tooling/code-coverage)
@@ -228,8 +227,8 @@ patch as soon as possible.
 ### <Icon name="angle-right" /> What information is captured or transmitted when using the Cypress App?
 
 The Cypress App runs locally so no data is sent to Cypress aside from exception data,
-which can be disabled using the instructions
-[here](/app/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
+which you can disable by following
+[Opt out of sending exception data to Cypress](/app/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
 
 ### <Icon name="angle-right" /> Can I write API tests using Cypress?
 
@@ -638,7 +637,7 @@ it('fails on unhandled rejection', () => {
 ### <Icon name="angle-right" /> Can I override environment variables or create configuration for different environments?
 
 Yes, you can pass configuration to Cypress via environment variables, CLI
-arguments and other means.
+arguments, and other means.
 
 [Read the Environment Variables & Secrets guide.](/app/guides/environment-variables)
 
@@ -766,14 +765,17 @@ since that is where the output goes.
 Pass the token in the `headers` option of
 [`cy.request()`](/api/commands/request), and keep the credential itself in an
 [environment variable](/app/guides/environment-variables) rather than in the
-spec file.
+spec file. Read it with [`cy.env()`](/api/commands/env), which resolves the
+value in the Node process so the token is never hydrated into the browser.
 
 ```js
-cy.request({
-  url: '/orders',
-  headers: {
-    authorization: `Bearer ${Cypress.env('apiToken')}`,
-  },
+cy.env(['apiToken']).then(({ apiToken }) => {
+  cy.request({
+    url: '/orders',
+    headers: {
+      authorization: `Bearer ${apiToken}`,
+    },
+  })
 })
 ```
 
@@ -913,12 +915,12 @@ party APIs or talk directly to your server. Read about this
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
    running inside Cypress. Read the blog post
-   ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
+   ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/?utm_source=docs.cypress.io&utm_medium=app-faq)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
    the SMTP requests, you can use a test email inbox with an API access. Read
    the blog post
-   ["Full Testing of HTML Emails using SendGrid and Ethereal Accounts"](https://www.cypress.io/blog/2021/05/24/full-testing-of-html-emails-using-ethereal-accounts/)
+   ["Full Testing of HTML Emails using SendGrid and Ethereal Accounts"](https://www.cypress.io/blog/2021/05/24/full-testing-of-html-emails-using-ethereal-accounts/?utm_source=docs.cypress.io&utm_medium=app-faq)
    for details.
 
 Cypress can even load the received HTML email in its browser to verify the
@@ -1059,7 +1061,7 @@ still be a convenient shorthand if you interact with many iframes.
 ### <Icon name="angle-right" /> How do I preserve cookies / localStorage in between my tests?
 
 By default, Cypress automatically
-[clears all cookies, local storage and session **before** each test](/app/core-concepts/test-isolation)
+[clears all cookies, local storage, and session **before** each test](/app/core-concepts/test-isolation)
 to prevent state from leaking between tests.
 
 There are three common approaches, depending on your use case:
@@ -1251,10 +1253,12 @@ includes running external commands, which a task can spawn directly from Node.
 
 [Check out the "Node Modules" example recipe.](/app/references/recipes#Fundamentals)
 
-### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate to your proxy so the page doesn't show up as "not secure"?
+### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate so the page doesn't show up as "not secure"?
 
-No, Cypress modifies network traffic in real time and therefore must sit between
-your server and the browser. There is no other way for us to achieve that.
+No, and it isn't about your site's certificate. The browser's security indicator
+describes the Cypress app's page, which is served over `http` on `localhost`.
+Your application under test loads inside that page, and its own HTTPS connection
+is unaffected.
 
 ### <Icon name="angle-right" /> Is there any way to detect if my app is running under Cypress?
 
@@ -1325,19 +1329,22 @@ There are a few ways.
 
 - The easiest way is probably to check our
   [changelog](/app/references/changelog).
-- You can also check the latest version
-  [here](https://download.cypress.io/desktop.json).
+- You can also check the
+  [latest released version](https://download.cypress.io/desktop.json).
 - It's also always in our [repo](https://github.com/cypress-io/cypress).
 
 ### <Icon name="angle-right" /> When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
 When using Cypress to test an HTTPS site, you might see a browser warning next
-to the browser URL. This is normal. Cypress modifies the traffic between your
-server and the browser. The browser notices this and displays a certificate
-warning. However, this is purely cosmetic and does not alter the way your
-application under test runs in any way, so you can safely ignore this warning.
-The network traffic between Cypress and the backend server still happens via
-HTTPS.
+to the browser URL. This is normal. The indicator describes the Cypress app's
+page, which is served over `http` on `localhost` — not your application, which
+loads inside it with its certificate validated as usual. On the
+[legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path),
+Cypress modifies the traffic between your server and the browser and presents a
+certificate it generates, which the browser reports as untrusted. Either way this
+is purely cosmetic and does not alter the way your application under test runs in
+any way, so you can safely ignore the warning. The network traffic between
+Cypress and the backend server still happens via HTTPS.
 
 See also the [Cross Origin Testing](/app/guides/cross-origin-testing) guide.
 
@@ -1376,7 +1383,7 @@ application's code, you can allow the tests to make assertions about the data
 store, and even drive the application via Redux actions.
 
 - see
-  [Testing Redux Store](https://www.cypress.io/blog/2018/11/14/testing-redux-store/)
+  [Testing Redux Store](https://www.cypress.io/blog/2018/11/14/testing-redux-store/?utm_source=docs.cypress.io&utm_medium=app-faq)
   blog post and [Redux Testing](/app/references/recipes#Blogs) recipe.
 - see [Vue + Vuex + REST Testing](/app/references/recipes#Blogs) recipe.
 
@@ -1452,13 +1459,6 @@ It might be because of the 2 different windows in the Cypress App. For
 more information, please check
 [the note here](/api/commands/window#Cypress-uses-2-different-windows).
 
-### <Icon name="angle-right" /> How do I prevent application redirecting to another URL?
-
-Sometimes, your application might redirect the browser to another domain, losing
-the Cypress's control. If the application is using `window.location.replace`
-method to set a _relative_ URL, try using the `experimentalSourceRewriting`
-option described in our [Experiments](/app/references/experiments) page.
-
 ### <Icon name="angle-right" /> Why isn't my application's Content Security Policy (CSP) being enforced during tests? <E2EOnlyBadge />
 
 This is expected. By default Cypress strips both the `Content-Security-Policy`
@@ -1527,8 +1527,9 @@ for the full list and the reason each is removed.
 There are many reasons why tests may fail in CI but pass locally. Some of these
 include:
 
-- There is a problem isolated to the Electron browser (`cypress run` by default
-  runs in the Electron browser)
+- There is a problem isolated to the Electron browser (without a `--browser`
+  flag or a `defaultBrowser` set, `cypress run` falls back to the Electron
+  browser)
 - A test failure in CI could be highlighting a bug in your CI build process
 - Variability in timing when running your application in CI (For example,
   network requests that resolve within the timeout locally may take longer in
@@ -1576,12 +1577,12 @@ one minute each.
 
 You can further split individual long-running tests. For example, you can verify
 parts of the longer user feature in the separate tests as described in
-[Split a very long Cypress test into shorter ones using App Actions](https://www.cypress.io/blog/2019/10/29/split-a-very-long-cypress-test-into-shorter-ones-using-app-actions/).
+[Split a very long Cypress test into shorter ones using App Actions](https://www.cypress.io/blog/2019/10/29/split-a-very-long-cypress-test-into-shorter-ones-using-app-actions/?utm_source=docs.cypress.io&utm_medium=app-faq).
 
 ### <Icon name="angle-right" /> How can I parallelize my runs?
 
-You can read more about parallelization
-[here](/cloud/features/smart-orchestration/parallelization).
+You can read more about
+[parallelizing test runs in Cypress Cloud](/cloud/features/smart-orchestration/parallelization).
 
 ### <Icon name="angle-right" /> I tried to install Cypress in my CI, but I get the error: `EACCES: permission denied`.
 
@@ -1623,9 +1624,9 @@ Testing your Electron app will not 'just work', as Cypress is designed to test
 anything that runs in a browser and Electron is a browser + Node.
 
 That being said, we use Cypress to test our own Desktop app's front end - by
-stubbing events from Electron. These tests are open source so you can check them
-out
-[here](https://github.com/cypress-io/cypress/tree/develop/packages/launchpad/cypress/e2e).
+stubbing events from Electron. These tests are open source so you can check
+out the
+[Launchpad end-to-end tests](https://github.com/cypress-io/cypress/tree/develop/packages/launchpad/cypress/e2e).
 
 ### <Icon name="angle-right" /> Can I test the HTML `<head>` element?
 
@@ -1738,7 +1739,7 @@ XState model state library.
 ### <Icon name="angle-right" /> Can Cypress be used for performance testing?
 
 Cypress is not built for performance testing. Because Cypress instruments the
-page under test, proxies the network requests, and tightly controls the test
+page under test, intercepts the network requests, and tightly controls the test
 steps, Cypress adds its own overhead. Thus, the performance numbers you get from
 Cypress tests are slower than "normal" use. Still, you can access the native
 `window.performance` object and grab the page time measurements, see the
@@ -1766,7 +1767,7 @@ for more info.
 
 While there is no built-in `snapshot` command in Cypress, you can make your own
 snapshot assertion command. Read how to do so in our blog post
-[End-to-End Snapshot Testing](https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/).
+[End-to-End Snapshot Testing](https://www.cypress.io/blog/2018/01/16/end-to-end-snapshot-testing/?utm_source=docs.cypress.io&utm_medium=app-faq).
 We recommend using the 3rd-party module
 [cypress-plugin-snapshots](https://github.com/meinaart/cypress-plugin-snapshots).
 For other snapshot plugins, search the [Plugins](/app/plugins/plugins-list) page.
@@ -1889,7 +1890,7 @@ Cypress Component Testing is built around the same tools and APIs that
 end-to-end testing uses. Anyone familiar with Cypress can immediately hop in and
 feel productive writing component tests without a large learning curve.
 Component tests can also use the vast Cypress ecosystem, plugins, and services
-(like [Cypress Cloud](https://www.cypress.io/cloud)) already available to
+(like [Cypress Cloud](https://www.cypress.io/cloud?utm_source=docs.cypress.io&utm_medium=app-faq)) already available to
 complement your component tests.
 
 ### <Icon name="angle-right" /> What is the Mount Function?

@@ -29,7 +29,7 @@ written any tests.
 
 This message means that Cypress encountered an error when compiling and/or
 bundling your test file. Cypress automatically compiles and bundles your test
-code so you can use ES2015, CoffeeScript, modules, etc.
+code so you can use ES2015, modules, etc.
 
 #### You'll typically receive this message due to:
 
@@ -94,8 +94,8 @@ in an error when Cypress loads.
 
 Just like with your test files, the
 [`supportFile`](/app/references/configuration#Testing-Type-Specific-Options)
-can use ES2015+, [TypeScript](/app/tooling/typescript-support) or
-CoffeeScript and modules, so you can import/require other files as needed.
+can use ES2015+, [TypeScript](/app/tooling/typescript-support) and modules, so
+you can import/require other files as needed.
 
 ## Command Errors
 
@@ -480,9 +480,8 @@ multiple domains in a single test.
 
 Two URLs have the same origin if the `protocol`, `port` (if specified), and
 `host` are the same for both. You can only visit domains that are of the
-same-origin within a single test. You can read more about same-origin policy in
-general
-[here](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+same-origin within a single test. You can read more about the
+[same-origin policy on MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
 You can visit urls that are of different origin across different tests, so you
 may consider splitting your `cy.visit()` of different origin domains into
@@ -803,8 +802,8 @@ You cannot run tests on a run that has been complete for that long. You can
 see the CI Build ID that is detected for each completed run by looking at the
 details section at the top of your run in
 [Cypress Cloud](https://on.cypress.io/cloud). You can generate and pass in
-your own unique CI Build ID per run as described
-[here](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt).
+your own unique CI Build ID per run as described in
+[`cypress run --ci-build-id <id>`](/app/references/command-line#cypress-run-ci-build-id-lt-id-gt).
 
 Please also review our
 [parallelization](/cloud/features/smart-orchestration/parallelization)
@@ -991,8 +990,9 @@ This can happen for a number of reasons, including:
 - There is a bug in the browser involving memory management
 - There is a memory leak in Cypress
 
-For Chromium-based browsers, you can try enabling
-[experimentalMemoryManagement](/app/references/experiments).
+For Chromium-based browsers, Cypress manages browser memory by default through
+[manageBrowserMemory](/app/references/configuration#Global), so confirm you
+haven't set it to `false`.
 
 If you are running in `open` mode, you can also try lowering
 [numTestsKeptInMemory](/app/references/configuration#Global).

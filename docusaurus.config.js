@@ -48,6 +48,19 @@ const config = {
           editUrl:
             'https://github.com/cypress-io/cypress-documentation/tree/main/',
           routeBasePath: '/',
+          // `exclude` replaces Docusaurus's own defaults rather than extending
+          // them, so the first four patterns are those defaults, copied as-is.
+          // The last two keep the per-directory agent instructions out of the
+          // built site: `AGENTS.md`/`CLAUDE.md` are guidance for coding agents,
+          // not pages, and without this they would be published with the docs.
+          exclude: [
+            '**/_*.{js,jsx,ts,tsx,md,mdx}',
+            '**/_*/**',
+            '**/*.test.{js,jsx,ts,tsx}',
+            '**/__tests__/**',
+            '**/AGENTS.md',
+            '**/CLAUDE.md',
+          ],
           remarkPlugins: [
             remarkDirective,
             cypressConfigExample,
@@ -175,9 +188,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cypress-tap-beta-aug-2026',
+        id: 'cypress-16-release-sep-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🌟 Give your agent the context the Cypress app shows you. &mdash; <a href="https://www.cypress.io/blog/cypress-tap-cli?utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=cypress-tap-cli">Meet cypress tap</a>`,
+        content: `🚀 Cypress 16 is live: faster tests, starting with HTTP/2 support &mdash; <a href="https://www.cypress.io/blog/cypress-16-faster-tests-starting-with-http2-support?&utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=app_release">Read the Announcement</a>`,
         isCloseable: true,
       },
       footer: {

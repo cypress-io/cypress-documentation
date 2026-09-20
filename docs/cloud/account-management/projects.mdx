@@ -50,16 +50,16 @@ tests to Cypress Cloud. As long as your record key stays _private_, no one will
 be able to record test runs for your project - even if they have your
 `projectId`.
 
-Think of your record key as the key that enables you to _write and create_ runs.
-However, it has nothing to do with being able to _read or see_ runs once they
-are recorded.
+Think of your record key as the key that enables you to _write, create, and
+cancel_ runs. However, it has nothing to do with being able to _read or see_
+runs once they are recorded.
 
 :::caution
 
 <strong>Exposing a record key</strong>
 
 Anyone that has access to both the `projectId` and the record key of a project
-can record runs to that organization's project in Cypress Cloud.
+can record or cancel runs to that organization's project in Cypress Cloud.
 
 **You would not want people outside of your team running tests because:**
 
@@ -70,13 +70,17 @@ can record runs to that organization's project in Cypress Cloud.
    the test suite so that recorded tests record different things than the
    project's original intent. This could including visiting different websites
    and generating videos of visiting those websites, for example.
+3. **They can cancel your runs.** The record key is also accepted by the
+   [Run Cancellation API](/cloud/features/smart-orchestration/run-cancellation-api),
+   so anyone holding it could cancel in-progress runs and disrupt your CI.
 
 If a record key is exposed you should [delete it](#Delete-record-key) and
 [create a new record key](#Create-new-record-key). Deleted keys will be invalid;
 If a project is run with a deleted key it will not be able to record.
 
-You can set your record key as an environment variable to help protect it. Learn
-more [here](/app/continuous-integration/overview#Environment-variables).
+You can set your record key as an environment variable to help protect it.
+Learn more about
+[environment variables in CI](/app/continuous-integration/overview#Environment-variables).
 
 :::
 
@@ -155,8 +159,8 @@ Visit your project settings to see who has access to your project's runs.
 
 ### Spec Prioritization & Auto Cancellation
 
-Toggle Spec Prioritization to reduce feedback time by running previously failed test specs first. Enabling Auto Cancellation to reduce run duration by canceling the run when tests fail. Adjust the number of test failures before auto
-canceling.
+Toggle Spec Prioritization to reduce feedback time by running previously failed test specs first. Enabling Auto Cancellation to reduce run duration by cancelling the run when tests fail. Adjust the number of test failures before auto
+cancelling.
 
 These settings can significantly improve developer resolution time, reduce your monthly CI bill and free up CI resources. See our
 [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization)
@@ -342,7 +346,7 @@ test count to other developers viewing your project's README file.
     />
 
 See also
-[Highlight your project's test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/)
+[Highlight your project's test status with Cypress README badges](https://www.cypress.io/blog/2020/09/02/highlight-your-projects-test-status-with-cypress-readme-badges/?utm_source=docs.cypress.io&utm_medium=cloud-projects)
 announcement.
 
 ## Best Practices

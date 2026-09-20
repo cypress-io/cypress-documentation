@@ -2,7 +2,7 @@
 title: 'Frequently asked questions (FAQ) in Cypress Cloud'
 description: 'Get answers to common questions about Cypress Cloud.'
 sidebar_label: FAQ
-sidebar_position: 200
+sidebar_position: 220
 ---
 
 <ProductHeading product="cloud" />
@@ -24,7 +24,8 @@ recorded - typically when running Cypress tests from your
 [CI provider](/app/continuous-integration/overview) - and provides you
 insight into what happened during your tests run.
 
-You can read more [here](/cloud/get-started/introduction).
+You can read more in the
+[introduction to Cypress Cloud](/cloud/get-started/introduction).
 
 ### <Icon name="angle-right" /> What does Cypress record?
 
@@ -83,7 +84,7 @@ the problem was.
 
 ### <Icon name="angle-right" /> What counts as a test result?
 
-Which [pricing tier](https://www.cypress.io/pricing) is best for you depends on
+Which [pricing tier](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cloud-faq) is best for you depends on
 the number of tests you record each month in your organization.
 
 Tests are recorded when [cypress run](/app/references/command-line#cypress-run)
@@ -107,9 +108,16 @@ A [user](/cloud/account-management/users) is anyone with a login to
 Cypress Cloud who has been invited to see and review the test results of your
 organization.
 
+Each plan includes a set number of users. To compare the user seats each plan
+allows, see the
+[pricing page](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cloud-faq).
+To see how many of your seats are in use, check the
+[Billing & Usage](/cloud/account-management/billing-and-usage) page in Cypress
+Cloud.
+
 ### <Icon name="angle-right" /> How much does it cost?
 
-Please see our [Pricing Page](https://www.cypress.io/pricing) for more details.
+Please see our [Pricing Page](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cloud-faq) for more details.
 
 ### <Icon name="angle-right" /> What is the difference between public and private projects?
 
@@ -149,7 +157,8 @@ Downgrading your account will **not** result in loss of access to Cypress Cloud.
 
 However, it will make your Cypress Cloud account subject to the limitations of
 your new plan. For example, downgrading to the _Starter_ plan will limit data
-retention to 30 days and test results to 500 per billing period.
+retention to 30 days, test results to 500 per billing period, and your
+organization to 10 [users](#What-counts-as-a-user).
 
 ### <Icon name="angle-right" /> When does my billing period reset?
 
@@ -187,7 +196,7 @@ For more ways to trim and streamline your suite, see the
 [Optimizing test performance](/app/guides/test-performance) guide.
 
 If your usage consistently exceeds your plan, compare options on the
-[pricing page](https://www.cypress.io/pricing); moving to a larger plan is
+[pricing page](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=cloud-faq); moving to a larger plan is
 often more cost-effective than purchasing additional test results. You can also
 **schedule a demo** from the pricing page to talk through the plan that best
 fits your usage.
@@ -323,9 +332,10 @@ it might be good enough for the job.
 Yes, depending on where you are running tests:
 
 - **In CI**, [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization)
-  re-runs only the spec files that contained failures when you trigger a rerun of a
-  recorded build. It operates at the **spec** level: if any test in a spec failed,
-  the whole spec is re-executed.
+  re-runs only the specs or tests that failed when you trigger a rerun of a
+  recorded build. Choose **Run only failed specs** to re-execute each spec that
+  contained a failure, or **Run only failed tests** (Cypress 15.21.0 or later) to
+  re-execute only the tests that did not pass.
 - **In the Cypress app**, the [Debug page](/app/core-concepts/open-mode#Debug) lets
   you rerun only the failed tests from a recorded CI run on your current branch.
 - **During a single run**, [test retries](/app/guides/test-retries) automatically
@@ -337,18 +347,18 @@ They solve different problems. [Test retries](/app/guides/test-retries)
 automatically retries a failed _individual test_ within a single run, in real time,
 to absorb flake before the run finishes. **Re-run optimization** changes what
 happens when you re-run an _entire CI build_ after it has completed, re-executing
-only the spec files that contained failures. You can use both together: test
+only the specs or tests that failed. You can use both together: test
 retries reduce flake within a run, and Re-run optimization speeds up the reruns you still need.
 
 ### <Icon name="angle-right" /> Does Re-run optimization carry forward my passing test results?
 
-No, not currently. A rerun-optimized run shows only the specs that were re-executed. Specs that
-passed in the anchor run are skipped and do not appear in the rerun's results.
+No, not currently. A rerun-optimized run shows only the specs and tests that were re-executed. Work that
+passed in the anchor run is skipped and does not appear in the rerun's results.
 
 ### <Icon name="angle-right" /> Why does my CI report show fewer tests after a rerun?
 
 Reporter output (JUnit/XML and custom reporters) reflects only the re-executed
-specs, so a rerun-optimized run reports fewer specs and tests than a full run.
+specs and tests, so a rerun-optimized run reports fewer specs and tests than a full run.
 Adjust any CI guardrails that assert on fixed test counts.
 
 ### <Icon name="angle-right" /> Does Re-run optimization require recording to Cypress Cloud?
@@ -356,15 +366,17 @@ Adjust any CI guardrails that assert on fixed test counts.
 Yes. Runs must be recorded to Cypress Cloud with the `--record` flag, and the
 feature is available on Business or Enterprise plans, or during a free trial.
 
-### <Icon name="angle-right" /> What happens if the rerun has no failed specs?
+### <Icon name="angle-right" /> What happens if the rerun has no failed specs or tests?
 
-If the anchor run contained no failing specs, there is nothing to re-execute and
+If the anchor run contained no failing specs (or, for **Run only failed tests**,
+no tests that still need to run), there is nothing to re-execute and
 the optimized rerun completes without running any specs.
 
 ### <Icon name="angle-right" /> How do I know Re-run optimization was applied?
 
 The Cypress App prints a notice in the CLI output naming the run it is retrying
-from, and the run is labeled with a **Re-run** tag in Cypress Cloud.
+from. **Run only failed specs** mentions failed specs; **Run only failed tests**
+mentions tests that did not pass. The run is labeled with a **Re-run** tag in Cypress Cloud.
 
 ## Spec Prioritization
 
@@ -383,7 +395,7 @@ On its own, Spec Prioritization changes the _order_ specs run in, not the total
 duration, so it surfaces failures earlier without shortening the run. To turn
 that earlier feedback into shorter runs and lower CI costs, pair it with
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation): when
-the prioritized failures reappear at the start of a run, the run is canceled
+the prioritized failures reappear at the start of a run, the run is cancelled
 right away, avoiding wasted compute on specs you already know will need another
 pass.
 
@@ -422,7 +434,7 @@ prioritize.
 Cypress Cloud [Smart Orchestration](/cloud/features/smart-orchestration/overview)
 feature that automatically cancels a recorded run once the number of failed
 tests reaches a threshold you configure. It stops Cypress from handing out new
-specs, marks the run as canceled, and reports how much CI time was saved, so you
+specs, marks the run as cancelled, and reports how much CI time was saved, so you
 don't pay for tests that run after a run has already failed. It is available on
 the Business and Enterprise plans.
 
@@ -441,7 +453,7 @@ No. Specs that are already in progress when the threshold is reached finish
 running so you still get their complete results. Cypress only stops handing out
 _new_ specs. In a parallelized run, this means machines can keep running the
 specs they had already started at the moment of cancellation, but none of them
-will pick up a new spec once the run is canceled.
+will pick up a new spec once the run is cancelled.
 
 ### <Icon name="angle-right" /> How do I disable Auto Cancellation for a single run?
 
@@ -471,7 +483,7 @@ pre-filtered to the failures, or to use the
 [Tests for Review](/cloud/features/recorded-runs#Tests-for-Review) panel, which
 orders results by failures first. Open a failed test's
 [detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) and
-[Test Replay](/cloud/features/test-replay) to debug it. Note that a canceled run
+[Test Replay](/cloud/features/test-replay) to debug it. Note that a cancelled run
 only includes results for specs that had already started, so it may not contain
 every failure the full suite would have produced.
 
@@ -749,9 +761,9 @@ Nothing. It's free and included in all Cypress Cloud plans.
 
 ### <Icon name="angle-right" /> Can I use Test Replay for tests recorded in different browsers?
 
-Test Replay leverages [Chrome DevTools Protocol(CDP)](https://chromedevtools.github.io/devtools-protocol/), so currently supports Chromium-based browsers (Chrome, Edge, and Electron) only.
+Test Replay leverages [Chrome DevTools Protocol(CDP)](https://chromedevtools.github.io/devtools-protocol/), so currently supports Chromium-based browsers (Chrome, Edge, and the deprecated Electron browser) only.
 
-Test Replay would be disabled, with a message that it's only available on Chromium, for tests run in Firefox or WebKit (Safari). You can still record and capture test [artifacts](/cloud/features/recorded-runs#Artifacts) (screenshots, videos and CI logs) via other browsers in separate [run groups](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs).
+Test Replay would be disabled, with a message that it's only available on Chromium, for tests run in Firefox or WebKit (Safari). You can still record and capture test [artifacts](/cloud/features/recorded-runs#Artifacts) (screenshots, videos, and CI logs) via other browsers in separate [run groups](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs).
 
 ### <Icon name="angle-right" /> Can I replay tests from historical Cypress Cloud runs?
 
@@ -776,6 +788,30 @@ All of the data within Test Replay's Developer Tools in Cypress Cloud (including
 ### <Icon name="angle-right" /> Can I `console.log()` data in the console view of the Developer Tools panel?
 
 Yes. This displays console logs from within the application under test or your spec files. You may need to use `JSON.stringify(Object)` to display deeply nested data.
+
+### <Icon name="angle-right" /> Does Cypress Test Replay network redaction change what I can test?
+
+No, your Cypress tests and assertions are not affected.
+
+### <Icon name="angle-right" /> Does network redaction change what I can debug in Cypress Test Replay?
+
+For most tests, no. You keep request timing, status codes, and the structure of each request. If you will need to inspect the redacted value itself in Cypress Cloud, turn redaction off for that project before recording.
+
+### <Icon name="angle-right" /> Is network redaction in Cypress Test Replay on by default?
+
+Yes. It applies to every project in Cypress Cloud with Test Replay turned on, with no configuration required.
+
+### <Icon name="angle-right" /> Can I redact additional values specific to my application in Cypress Test Replay?
+
+Not today. If you need a value covered that isn't, reach out to your Cypress Cloud account team.
+
+### <Icon name="angle-right" /> Do I need a specific Cypress version to get network redaction in Test Replay?
+
+Redaction isn't tied to a specific Cypress version.
+
+### <Icon name="angle-right" /> What if I don't want Cypress Test Replay network traffic captured at all?
+
+Turn off Test Replay for that project in Cypress Cloud. This stops capture of the DOM, Command Log, network traffic, and browser console logs.
 
 ## Cloud CLI
 

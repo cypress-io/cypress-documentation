@@ -366,6 +366,12 @@ div[class^='codeBlockTitle'] {
 }
 
 .tabs-container {
+  // Infima `.alert` (used by Docusaurus `<details>`) redefines these to the
+  // alert foreground, which is dark text on our dark tab bar. Pin them here
+  // so tab labels stay light regardless of parent.
+  --ifm-tabs-color: var(--ifm-color-gray-300);
+  --ifm-tabs-color-active: var(--ifm-color-primary);
+  --ifm-tabs-color-active-border: var(--ifm-color-primary);
   background-color: var(--ifm-code-background-color);
   border-radius: var(--ifm-code-border-radius);
 }
@@ -386,6 +392,14 @@ div[class^='codeBlockTitle'] {
   margin: 0;
   padding: 0.75rem 1rem;
   font-size: 1.05rem;
+  // Set color on the item (not only `.tabs`) so labels stay light on the dark
+  // tab bar when nested in `<details>`, where markdown list rules otherwise
+  // inherit body text.
+  color: var(--ifm-tabs-color);
+}
+
+.tabs-container .tabs__item--active {
+  color: var(--ifm-tabs-color-active);
 }
 
 .tabs-container .tabs__item:hover {

@@ -1,6 +1,6 @@
 ---
 title: Work with AI agents in Cypress Accessibility
-description: 'Use AI assistants alongside Cypress Accessibility: query Cloud results with Cypress Cloud MCP, align reports with component identification settings, and explore local browser LLM workflows.'
+description: 'Use AI assistants alongside Cypress Accessibility: query Cloud results with Cypress Cloud MCP, file violations into Jira or another issue tracker without duplicates, align reports with component identification settings, and explore local browser LLM workflows.'
 sidebar_label: Work with AI agents
 sidebar_position: 110
 ---
@@ -11,7 +11,7 @@ sidebar_position: 110
 
 AI coding assistants can speed up accessibility work when they have the right context. This guide outlines patterns that teams are adopting today.
 
-## Cypress Cloud MCP
+## Cypress Cloud MCP {#Cypress-Cloud-MCP}
 
 [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) lets compatible agents pull run metadata, test results, and accessibility summaries from Cypress Cloud using structured tools instead of copy-pasting from the UI.
 
@@ -48,6 +48,122 @@ Here are some example prompts to try out:
 > Using Cypress Cloud MCP, find the most recent run in this project with failed accessibility results and create an action plan that groups similar problems together and recommends suitable owners.
 >
 > Our team includes these roles developers, QA engineers, designers, product managers, marketers, and accessibility specialists. For each role, determine if they need to be Responsible, Accountable, Consulted, Informed, or not involved.
+
+## Work with a downloaded report {#Work-with-a-downloaded-report}
+
+The [**Download report** button](/accessibility/connect-and-extend/download-reports) on a run's Accessibility report exports the run's violations as a `.csv` or `.json` file. This gives an AI agent a complete, self-contained view of a run's accessibility results that it can read directly from disk—no Cloud connection or MCP setup required.
+
+This pairs well with the [Cypress Cloud MCP](#Cypress-Cloud-MCP) approach rather than replacing it:
+
+- **Cloud MCP** is best for live, interactive querying while you work—asking follow-up questions and drilling into specific rules or views on demand.
+- **A downloaded report** is best when you want the agent to work over the full dataset at once—generating a chart, producing a written summary, or diffing two runs—and when you want a fixed artifact you can re-run the same analysis against later.
+
+Each row in the file is one failed element for one rule on one view, and includes deep links back into the Cloud report. See [what's in the file](/accessibility/connect-and-extend/download-reports#Whats-in-the-file) for the full column list.
+
+### Map violations to your components {#Map-violations-to-your-components}
+
+The **Element** column is where a downloaded report becomes especially efficient for an agent. When you set up your [components configuration](/accessibility/configuration/components), each element's selector reflects a true hierarchy of your components instead of a raw DOM path. An agent can read that structure straight from the file to:
+
+- **Spot patterns and trends** across rules and views—for example, that most `color-contrast` failures live inside a single design-system component, or that one component is responsible for a disproportionate share of a run's violations.
+- **Trace an issue to its origin** in your component tree and source code, without re-parsing full-page HTML or crawling the codebase to locate the element.
+
+Mapping raw DOM selectors back to the component and source file that produced them is normally the expensive part of agent-assisted accessibility work, in both effort and tokens. Carrying that hierarchy in the export up front means the agent spends its budget on analysis and fixes rather than on rediscovering where each element came from.
+
+### Interpret the report
+
+Drop the downloaded file into your project (or attach it to your chat) and ask the agent to summarize it. Because every row carries the rule, impact, element, and view, the agent can bucket and prioritize without any extra context.
+
+> Read this accessibility report file and give me a summary: total violations, a breakdown by impact (critical, serious, moderate, minor), and the five rules with the most failing elements. Then list the three views with the most issues and suggest where I should start.
+
+> Group the failures in this report by likely owner—developers, designers, and content authors—based on the rule and element. For each group, write a short, plain-language description of the work involved.
+
+### Create charts and graphs
+
+Since the export is structured data, an agent with code execution can turn it into visualizations without you writing any plotting code.
+
+> Using this accessibility report, generate a bar chart of failing elements by rule severity, and a second chart of the top 10 rules by number of failing elements. Save them as images.
+
+> Build a small HTML dashboard from this report file: a summary of totals by impact at the top, a table of views sorted by violation count, and a chart of the most common rules. Make it a single self-contained file I can open in a browser.
+
+### Compare different reports
+
+Download a report for each run you want to compare—for example, a `main` branch run and a feature-branch run—and ask the agent to diff them. This is a lightweight, offline complement to the [Branch Review](/accessibility/guides/compare-reports) comparison in Cypress Cloud, useful when you want the difference in writing or as data.
+
+> Here are two accessibility reports, `report-main.json` and `report-branch.json`. Compare them and tell me which violations are new in the branch report, which were resolved, and which are unchanged. Group new issues by rule and view, and include the Element URL for each new issue so I can open it in Cypress Cloud.
+
+> I've downloaded accessibility reports from our last four weekly runs. Chart the total number of failing elements over time, and call out any rule where failures increased week over week.
+
+:::tip
+
+Ask the agent to keep the **Element URL** and **View URL** values in its output. Every row links back to the live snapshot in Cypress Cloud, so a summary, chart annotation, or ticket can point straight to the issue in context.
+
+:::
+
+## File issues in your issue tracker
+
+Triage usually ends in tickets, and typing them out one at a time is the slowest part of the job. An agent connected to both Cypress Cloud and your issue tracker can read the accessibility report for the latest run, check what has already been filed, and open only the tickets that are missing. Nothing new has to run in your pipeline, because the data comes from runs Cypress Cloud has already recorded.
+
+Cypress supplies the read side of this workflow. Cloud MCP is read-only, so the write side comes from your tracker's own MCP server or CLI, which Jira, GitHub, and Linear all publish. Connect both to the same agent before you start.
+
+:::note
+
+For a single violation you are already looking at, the [Create Jira issue](/accessibility/reports/element-detail-view#Create-Jira-issue) button in Cypress Cloud is faster than any prompt. Reach for an agent when you have a report's worth of findings to file at once.
+
+:::
+
+### Decide what a ticket represents
+
+Agree on this before the agent creates anything. It decides both the size of your backlog and whether next week's refresh can tell an existing ticket from a new one.
+
+**Group by rule and view.** One ticket per rule per view is a good default: "Form elements must have labels on /checkout" is a unit of work someone can pick up and finish. A ticket per failing element buries the team in near-duplicates, and a ticket per rule across the whole application is usually too large to schedule.
+
+**Give every ticket the same shape.** Ask the agent to follow a fixed convention: a label such as `cypress-accessibility` on everything it opens, a summary pattern such as `[Accessibility] <rule ID> on <view name>`, and a description holding the rule, the severity, the failing selectors, and the link back to the report in Cypress Cloud. The convention is what makes the next refresh cheap, because deduplication becomes a search for a label and a rule ID rather than a judgment call about whether two sentences describe the same problem.
+
+**Group by component where it helps.** If your selectors carry [component names](#Map-violations-to-your-components), an agent can spot that one design-system component is behind failures on 15 views. That is one ticket for the component team rather than 15 for the page owners, so tell the agent which grouping you want.
+
+### Plan first, then create
+
+Run this in two passes. The first proposes tickets and checks them against your tracker without writing anything, so you see the batch before it exists. Replace the placeholders in both prompts:
+
+- `<branch>` is the branch you track, such as `main`.
+- `<projectId>` is your Cypress project ID, the `projectId` in your Cypress configuration file.
+- `<tracker project key>` identifies the project in your issue tracker that the tickets are filed into, such as the Jira project key `WEB` or the repository `acme/storefront` in GitHub.
+
+<CopyPrompt
+  title="Plan tickets from the latest report"
+  subtext="See which failures are already tracked, which regressed, and which need a new ticket."
+  defaultCollapsed
+  prompt={`Refresh our accessibility backlog using Cypress Cloud MCP, without creating anything yet.
+
+1. Find the latest completed run on <branch> for project <projectId> and pull its accessibility report.
+2. Group the failures into one proposed ticket per rule per view, sorted by severity. Include the failing element count and the Cypress Cloud link for each.
+3. For each proposed ticket, search <tracker project key> in my issue tracker for a matching issue, open or closed in the last 90 days, matching on rule ID and view name.
+4. Report three groups: already tracked and open, previously closed but failing again, and not tracked at all.`}
+   >
+
+### Plan tickets from the latest report
+
+</CopyPrompt>
+
+<CopyPrompt
+  title="Create the missing issues"
+  subtext="Open tickets for the untracked failures only, in a format you can find again next week."
+  defaultCollapsed
+  prompt={`Create issues in <tracker project key> for the untracked failures only. For each one: use the summary pattern [Accessibility] <rule ID> on <view name>, add the label cypress-accessibility, set priority from the rule severity, and put the rule description, the failing selectors, and the Cypress Cloud report link in the description.
+
+Then list the issues you created with their keys, and tell me anything you skipped and why.`}
+
+>
+
+### Create the missing issues
+
+</CopyPrompt>
+
+Once you trust the sequence, save both prompts as a custom instruction or skill in your AI client so the whole team refreshes the backlog the same way. Keep the approval step between them: creating issues is a write, and reading the plan first is what keeps a batch you did not intend out of your tracker.
+
+For a first sweep through a large backlog, work from a [downloaded report](#Work-with-a-downloaded-report) instead of live queries. Cloud MCP returns rule failures up to 25 at a time within a limit of 100 tool requests per hour, and a run with hundreds of failing elements can spend that budget on pagination alone. The file also carries an **Element URL** for every row, which is the link you want in the ticket body.
+
+Refresh on a cadence that matches how fast the report changes, such as weekly against the latest `main` run. This workflow is for the backlog on your main branch: catching a violation a pull request is about to introduce is a different job, and a faster one, because nobody has to file anything. See [Catch accessibility regressions](/accessibility/guides/detect-changes) and [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
 
 ## Optimizing Cypress Accessibility for MCP use cases
 
