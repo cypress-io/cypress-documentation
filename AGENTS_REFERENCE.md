@@ -243,14 +243,6 @@ same change. `## See also` always stays as it is.
   `title`/`description`, link text, table cells, and image `alt` text, but not
   inside code blocks, inline code, quoted UI strings, or a literal list of API
   values.
-
-  A find-and-replace gets this wrong, because `x, y and z` also matches a
-  sentence whose last two words are **one unit rather than two items**. "Pulls
-  the spec overview, the error and code frame, and the console properties" is
-  already correct, because "the error and code frame" is a single thing. So is
-  "real run data, including failed and flaky tests". Read each occurrence in
-  context before adding the comma.
-
 - **US English**, with one exception: every `cancel` form **doubles the `l`**,
   against the American convention. Write `cancellation`, `cancelled`, and
   `cancelling`, never `canceled`, `canceling`, or `cancelation`. Cypress Cloud's
