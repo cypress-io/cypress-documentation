@@ -30,7 +30,7 @@ pure noise:
   spend their time on. Do not suggest rewrites for readability, and do not
   restate a paragraph "more clearly". The hard writing rules below are the only
   prose rules to enforce.
-- **Missing tests for `docs/**` changes.** Content changes are covered by the
+- **Missing tests for `docs/**` changes.\*\* Content changes are covered by the
   e2e specs that visit every page.
 
 ## Flag these
