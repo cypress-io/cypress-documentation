@@ -850,7 +850,7 @@ Refer to the [v15 Migration Guide](/app/references/migration-guide#Migrating-to-
 - Removed support for [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol) with the [Firefox](https://www.mozilla.org/firefox/) browser. Addresses [#31189](https://github.com/cypress-io/cypress/issues/31189).
 - Removed support of the deprecated 3 argument signature of `cy.stub`. Use `cy.stub(object, name).callsFake(fn)` instead. Addresses [#31346](https://github.com/cypress-io/cypress/issues/31346).
 - `@cypress/webpack-preprocessor` no longer supports `webpack` version 4. Addresses [#31344](https://github.com/cypress-io/cypress/issues/31344). If you still need to use `webpack` version 4, please see our [migration guide](/app/references/migration-guide#Migrating-to-Cypress-150).
-- In order to better align with best practices, `@cypress/webpack-batteries-included-preprocessor` no longer includes certain browser built-ins that were automatically provided by Webpack 4. The removed built-ins are `assert`, `constants`, `crypto`, `domain`, `events`, `http`, `https`, `punycode`, `querystring`, `string_decoder`, `sys`, `timers`, `tty`, `url`, `util`, `vm`, and `zlib`. However, we know that certain built-ins are popular, given that many users have files that are shared between their Cypress tests and node context. Because of this, `@cypress/webpack-batteries-included-preprocessor` will ship with built-in support for `buffer`, `path`, `process`, `os`, and `stream`. If there is a built-in that isn't supported by default and you need to add support, please refer to the Webpack [resolve.fallback](https://webpack.js.org/configuration/resolve/#resolvefallback) documentation and the [`@cypress/webpack-batteries-included-preprocessor` README](https://github.com/cypress-io/cypress/blob/develop/npm/webpack-batteries-included-preprocessor/README.md). Addresses [#31039](https://github.com/cypress-io/cypress/issues/31039).
+- To better align with best practices, `@cypress/webpack-batteries-included-preprocessor` no longer includes certain browser built-ins that were automatically provided by Webpack 4. The removed built-ins are `assert`, `constants`, `crypto`, `domain`, `events`, `http`, `https`, `punycode`, `querystring`, `string_decoder`, `sys`, `timers`, `tty`, `url`, `util`, `vm`, and `zlib`. However, we know that certain built-ins are popular, given that many users have files that are shared between their Cypress tests and node context. Because of this, `@cypress/webpack-batteries-included-preprocessor` will ship with built-in support for `buffer`, `path`, `process`, `os`, and `stream`. If there is a built-in that isn't supported by default and you need to add support, please refer to the Webpack [resolve.fallback](https://webpack.js.org/configuration/resolve/#resolvefallback) documentation and the [`@cypress/webpack-batteries-included-preprocessor` README](https://github.com/cypress-io/cypress/blob/develop/npm/webpack-batteries-included-preprocessor/README.md). Addresses [#31039](https://github.com/cypress-io/cypress/issues/31039).
 - The application under test's `pagehide` event in Chromium browsers will no longer trigger Cypress's `window:unload` event. Addressed in [#31853](https://github.com/cypress-io/cypress/pull/31853).
 - The `Cypress.SelectorPlayground` API has been renamed to `Cypress.ElementSelector`. This API was renamed to accommodate its use for defining `selectorPriority` in Cypress Studio and our future [`cy.prompt` release](/api/commands/prompt). Additionally, the `getSelector` method and the `onElement` option of `defaults` were removed from this API. Addresses [#31801](https://github.com/cypress-io/cypress/issues/31801). Addressed in [#31889](https://github.com/cypress-io/cypress/pull/31889) and [#32098](https://github.com/cypress-io/cypress/pull/32098).
 - The direct download option for installing Cypress is no longer supported. Users should install via a package manager. Addressed in [#32249](https://github.com/cypress-io/cypress/pull/32249).
@@ -905,7 +905,7 @@ _Released Aug 07, 2025_
 
 **Dependency Updates:**
 
-- Upgraded `tar-fs` to `2.1.3` and `3.1.0` in places we can control, to resolve [CVE-2024-12905](https://github.com/advisories/GHSA-pq67-2wwv-3xjx). `@puppeteer/browsers` still references `3.0.4`, but it is only used to download browsers which is not a feature of `puppeteer` that we utilize. Addressed in [#32160](https://github.com/cypress-io/cypress/pull/32160).
+- Upgraded `tar-fs` to `2.1.3` and `3.1.0` in places we can control, to resolve [CVE-2024-12905](https://github.com/advisories/GHSA-pq67-2wwv-3xjx). `@puppeteer/browsers` still references `3.0.4`, but it is only used to download browsers which is not a feature of `puppeteer` that we use. Addressed in [#32160](https://github.com/cypress-io/cypress/pull/32160).
 
 ## 14.5.3
 
@@ -1212,14 +1212,14 @@ Refer to the [v14 Migration Guide](/app/references/migration-guide#Migrating-to-
 - Upgraded bundled Node.js version from `18.17.0` to `20.18.1`. Addresses [#29547](https://github.com/cypress-io/cypress/issues/29547).
 - Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.28`, for example: Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2. Addresses [#29601](https://github.com/cypress-io/cypress/issues/29601).
 - Cypress now only officially supports the latest 3 major versions of Chrome, Firefox, and Edge - older browser versions may still work, but we recommend keeping your browsers up to date to ensure compatibility with Cypress. A warning will no longer be displayed on browser selection in the Launchpad for any 'unsupported' browser versions. Additionally, the undocumented `minSupportedVersion` property has been removed from `Cypress.browser`. Addressed in [#30462](https://github.com/cypress-io/cypress/pull/30462).
-- The `cy.origin()` command must now be used when navigating between subdomains. Because this is a fairly disruptive change for users who frequently navigate between subdomains, a new configuration option is being introduced. `injectDocumentDomain` can be set to `true` in order to re-enable the injection of `document.domain` setters in Cypress. This configuration option is marked as deprecated and you'll receive a warning when Cypress is launched with this option set to `true`. It will be removed in a future version of Cypress. Addressed in [#30770](https://github.com/cypress-io/cypress/pull/30770).
+- The `cy.origin()` command must now be used when navigating between subdomains. Because this is a fairly disruptive change for users who frequently navigate between subdomains, a new configuration option is being introduced. `injectDocumentDomain` can be set to `true` to re-enable the injection of `document.domain` setters in Cypress. This configuration option is marked as deprecated and you'll receive a warning when Cypress is launched with this option set to `true`. It will be removed in a future version of Cypress. Addressed in [#30770](https://github.com/cypress-io/cypress/pull/30770).
 - The `experimentalSkipDomainInjection` configuration has been removed and replaced with an `injectDocumentDomain` configuration. Addressed in [#30770](https://github.com/cypress-io/cypress/pull/30770).
 - It is no longer possible to make a `fetch` or `XMLHttpRequest` request from the `about:blank` page in Electron (i.e. `cy.window().then((win) => win.fetch('<some-url>'))`). You must use `cy.request` instead or perform some form of initial navigation via `cy.visit()`. Addressed in [#30394](https://github.com/cypress-io/cypress/pull/30394).
 - The `experimentalJustInTimeCompile` configuration option for component testing has been replaced with a `justInTimeCompile` option that is `true` by default. This option will only compile resources directly related to your spec, compiling them 'just-in-time' before spec execution. This should result in improved memory management and performance for component tests in `cypress open` and `cypress run` modes, in particular for large component testing suites. `justInTimeCompile` is now only supported for [`webpack`](https://www.npmjs.com/package/webpack). Addresses [#30234](https://github.com/cypress-io/cypress/issues/30234). Addressed in [#30641](https://github.com/cypress-io/cypress/pull/30641).
 - Cypress Component Testing no longer supports:
   - `create-react-app`. Addresses [#30028](https://github.com/cypress-io/cypress/issues/30028).
   - `@vue/cli-service`. Addresses [#30481](https://github.com/cypress-io/cypress/issues/30481).
-  - `Angular` versions 13, 14, 15, and 16. The minimum supported version is now `17.2.0` in order to fully support Angular [signals](https://angular.dev/guide/signals). Addresses [#29582](https://github.com/cypress-io/cypress/issues/29582). Addressed in [#30539](https://github.com/cypress-io/cypress/pull/30539).
+  - `Angular` versions 13, 14, 15, and 16. The minimum supported version is now `17.2.0` to fully support Angular [signals](https://angular.dev/guide/signals). Addresses [#29582](https://github.com/cypress-io/cypress/issues/29582). Addressed in [#30539](https://github.com/cypress-io/cypress/pull/30539).
   - `Next.js` versions 10, 11, 12, and 13. Addresses [#29583](https://github.com/cypress-io/cypress/issues/29583).
   - `Nuxt.js` version 2. Addresses [#30468](https://github.com/cypress-io/cypress/issues/30468).
   - `React` versions 16 and 17. Addresses [#29607](https://github.com/cypress-io/cypress/issues/29607).
@@ -1244,7 +1244,7 @@ Refer to the [v14 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 **Features:**
 
-- `injectDocumentDomain`, a new configuration option, can be set to `true` in order to re-enable the injection of `document.domain` setters in Cypress. Addressed in [#30770](https://github.com/cypress-io/cypress/pull/30770).
+- `injectDocumentDomain`, a new configuration option, can be set to `true` to re-enable the injection of `document.domain` setters in Cypress. Addressed in [#30770](https://github.com/cypress-io/cypress/pull/30770).
 - Cypress Component Testing now supports:
   - `React` version 19. Addresses [#29470](https://github.com/cypress-io/cypress/issues/29470).
   - `Angular` version 19. Addresses [#30175](https://github.com/cypress-io/cypress/issues/30175).
@@ -1698,7 +1698,7 @@ _Released Mar 13, 2024_
 
 **Features:**
 
-- Added shadow DOM snapshot support within Test Replay in order to highlight elements correctly within the Cypress reporter. Addressed in [#28823](https://github.com/cypress-io/cypress/pull/28823).
+- Added shadow DOM snapshot support within Test Replay to highlight elements correctly within the Cypress reporter. Addressed in [#28823](https://github.com/cypress-io/cypress/pull/28823).
 - Added TypeScript support for [Vue 2.7+](https://github.com/vuejs/vue/blob/main/CHANGELOG.md#270-2022-07-01). Addresses [#28591](https://github.com/cypress-io/cypress/issues/28591).
 - Adds additional context to error messages displayed when Test Replay artifacts fail to upload. Addressed in [#28986](https://github.com/cypress-io/cypress/pull/28986).
 
@@ -1787,7 +1787,7 @@ _Released Jan 16, 2024_
 - Updated display of assertions and commands with a URL argument to escape markdown formatting so that values are displayed as is and assertion values display as bold. Fixes [#24960](https://github.com/cypress-io/cypress/issues/24960) and [#28100](https://github.com/cypress-io/cypress/issues/28100).
 - When generating assertions via Cypress Studio, the preview of the generated assertions now correctly displays the past tense of 'expected' instead of 'expect'. Fixed in [#28593](https://github.com/cypress-io/cypress/pull/28593).
 - Fixed a regression in [13.6.2](#13-6-2) where the `body` element was not highlighted correctly in Test Replay. Fixed in [#28627](https://github.com/cypress-io/cypress/pull/28627).
-- Correctly sync `Cypress.currentRetry` with secondary origin so test retries that leverage [`cy.origin()`](/api/commands/origin) render logs as expected. Fixes [#28574](https://github.com/cypress-io/cypress/issues/28574).
+- Correctly sync `Cypress.currentRetry` with secondary origin so test retries that use [`cy.origin()`](/api/commands/origin) render logs as expected. Fixes [#28574](https://github.com/cypress-io/cypress/issues/28574).
 - Fixed an issue where some cross-origin logs, like assertions or cy.clock(), were getting too many dom snapshots. Fixes [#28609](https://github.com/cypress-io/cypress/issues/28609).
 - Fixed asset capture for Test Replay for requests that are routed through service workers. This addresses an issue where styles were not being applied properly in Test Replay and [`cy.intercept()`](/api/commands/intercept) was not working properly for requests in this scenario. Fixes [#28516](https://github.com/cypress-io/cypress/issues/28516).
 - Fixed an issue where visiting an `http://` site would result in an infinite reload/redirect loop in Chrome 114+. Fixes [#25891](https://github.com/cypress-io/cypress/issues/25891).
@@ -2047,7 +2047,7 @@ Refer to the [v13 Migration Guide](/app/references/migration-guide#Migrating-to-
 
 - Fixed an issue where Cypress's internal `tsconfig` would conflict with properties set in the user's `tsconfig.json` such as `module` and `moduleResolution`. Fixes [#26308](https://github.com/cypress-io/cypress/issues/26308) and [#27448](https://github.com/cypress-io/cypress/issues/27448).
 - Clarified Svelte 4 works correctly with Component Testing and updated dependencies checks to reflect this. It was incorrectly flagged as not supported. Fixes [#27465](https://github.com/cypress-io/cypress/issues/27465).
-- Resolve the `process/browser` global inside `@cypress/webpack-batteries-included-preprocessor` to resolve to `process/browser.js` in order to explicitly provide the file extension. File resolution must include the extension for `.mjs` and `.js` files inside ESM packages in order to resolve correctly. Fixes [#27599](https://github.com/cypress-io/cypress/issues/27599).
+- Resolve the `process/browser` global inside `@cypress/webpack-batteries-included-preprocessor` to resolve to `process/browser.js` to explicitly provide the file extension. File resolution must include the extension for `.mjs` and `.js` files inside ESM packages to resolve correctly. Fixes [#27599](https://github.com/cypress-io/cypress/issues/27599).
 - Fixed an issue where the correct `pnp` process was not being discovered. Fixes [#27562](https://github.com/cypress-io/cypress/issues/27562).
 - Fixed incorrect type declarations for Cypress and Chai globals that asserted them to be local variables of the global scope rather than properties on the global object. Fixes [#27539](https://github.com/cypress-io/cypress/issues/27539). Fixed in [#27540](https://github.com/cypress-io/cypress/pull/27540).
 - Dev Servers will now respect and use the `port` configuration option if present. Fixes [#27675](https://github.com/cypress-io/cypress/issues/27675).
@@ -2755,7 +2755,7 @@ _Released Jan 24, 2023_
   is used. Addresses
   [#24964](https://github.com/cypress-io/cypress/issues/24964).
 - [`component.specPattern`](/app/references/configuration#component) now
-  utilizes a JSX/TSX file extension when generating a new empty spec file if
+  uses a JSX/TSX file extension when generating a new empty spec file if
   project contains at least one file with those extensions. This applies only to
   component testing and is skipped if
   [`component.specPattern`](/app/references/configuration#component) has been
@@ -3052,7 +3052,7 @@ Read more about 12.0 in
 - The `experimentalSessionAndOrigin` configuration option has been removed and
   all functionality associated with this experiment is now enabled by default,
   with the exception of using `require` and `import` with callback supplied to
-  the [`cy.origin()`](/api/commands/origin) command. To leverage external
+  the [`cy.origin()`](/api/commands/origin) command. To use external
   dependencies in `cy.origin()` callbacks, set the new
   [`e2e.experimentalOriginDependencies`](/app/references/experiments#End-to-End-Testing)
   configuration option to `true`. Addresses
@@ -3118,7 +3118,7 @@ Read more about 12.0 in
   [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
   and
   [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
-  in order to recreate a consistent browser context between tests. Addresses
+  to recreate a consistent browser context between tests. Addresses
   [#20977](https://github.com/cypress-io/cypress/issues/20977).
 - Added a new Cypress command,
   [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage), to get
@@ -3393,7 +3393,7 @@ which explains the breaking changes in more detail.**
   [#24506](https://github.com/cypress-io/cypress/issues/24506).
 - `cy.pause()` now functions correctly when called within the `cy.origin()`
   callback. Fixes [#21495](https://github.com/cypress-io/cypress/issues/21495).
-- When utilizing dependencies within the `cy.origin()` callback, errors now show
+- When using dependencies within the `cy.origin()` callback, errors now show
   the correct code frame. Fixes
   [#23365](https://github.com/cypress-io/cypress/issues/23365).
 - The select dropdown (in Front-end Framework, Bundler, Organization, Project,
@@ -4315,7 +4315,7 @@ more detail.**
     when a configuration file doesn't exist. Instead, you can run `cypress open`
     and set up your project with a specific testing type to have this file
     generated. This allows you to customize the configuration setup by
-    testing-type for the language and dependencies leveraged in your project.
+    testing-type for the language and dependencies used in your project.
   - The configuration file's JSON schema is no longer supported since the
     configuration can no longer be provided via a JSON format.
 - Cypress has made several **configuration option changes** including renaming
@@ -4601,7 +4601,7 @@ more detail.**
 - The Plugins concept in Cypress still exists with the intent to tap into,
   modify or extend the internal behavior(s) of Cypress. It however is expected
   to be used in conjunction with our new `setupNodesEvents` configuration
-  option, which was named to reflect that Plugins leverage Cypress's node
+  option, which was named to reflect that Plugins use Cypress's node
   events.
 
 ## 9.7.0
@@ -4819,7 +4819,7 @@ _Released Mar 28, 2022_
   [#20222](https://github.com/cypress-io/cypress/issues/20222).
 - Updates were made to correctly escape dollar signs in the
   `CYPRESS_DOWNLOAD_PATH_TEMPLATE` environment variable. Issues were seen
-  utilizing this template when the env was provided from a package manager file.
+  using this template when the env was provided from a package manager file.
   Fixed [#19914](https://github.com/cypress-io/cypress/issues/19914).
 - Fix the `Cypress.Buffer` TypeScript type to reference the static constructor
   of `Buffer`, instead of incorrectly referencing the `Buffer` instance which
@@ -4900,7 +4900,7 @@ _Released Feb 28, 2022_
     spinner.
   - This enables support for node's experimental `--loader` flag for plugins.
 - Made a change to the DNS lookup to improve test performances and reliability
-  on MacOS machines that leverage the VMWare CBCloud SaaS solution. Before this
+  on MacOS machines that use the VMWare CBCloud SaaS solution. Before this
   change, random test failures were observed, as well as hanging tests and
   initially pending HTTP and HTTPS responses. Fixed in
   [#20062](https://github.com/cypress-io/cypress/issues/20062).
@@ -5570,7 +5570,7 @@ _Released Aug 04, 2021_
   [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
   and
   [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
-  in order to reduce test setup times by using
+  to reduce test setup times by using
   [`cy.session()`](/api/commands/session). The `session` API is experimental and
   can be enabled by setting the
   [`experimentalSessionSupport`](/app/references/experiments) flag to `true`
@@ -6269,7 +6269,7 @@ detail and how to change your code to migrate to Cypress 7.0.**
 - [`cy.visit()`](/api/commands/visit) can now visit pages with
   `application/xhtml*` content-type. Addresses
   [#15738](https://github.com/cypress-io/cypress/issues/15738).
-- You can now pass runner specific configuration in order to pass different
+- You can now pass runner specific configuration to pass different
   configuration values to `component` tests versus `e2e` tests. Addressed in
   [#15526](https://github.com/cypress-io/cypress/pull/15526).
 - There's a new keyboard shortcut (`ctrl/cmd + f`) to search spec files in the
@@ -7526,7 +7526,7 @@ detail and how to change your code to migrate to Cypress 5.0.**
   marks. Addressed in [#7982](https://github.com/cypress-io/cypress/pull/7982).
 - For TypeScript compilation of spec, support, and plugins files, the
   `esModuleInterop` option is no longer coerced to `true`. If you need to
-  utilize `esModuleInterop`, set it in your `tsconfig.json`. Addresses
+  use `esModuleInterop`, set it in your `tsconfig.json`. Addresses
   [#7575](https://github.com/cypress-io/cypress/issues/7575).
 - Cypress now requires TypeScript 3.4+. Addressed in
   [#7856](https://github.com/cypress-io/cypress/issues/7856).
@@ -8122,7 +8122,7 @@ _Released May 20, 2020_
   [preferred file opener](/app/tooling/IDE-integration#File-Opener-Preference)
   and highlight the line and column in editors that support it. Addresses
   [#3762](https://github.com/cypress-io/cypress/issues/3762).
-- Cypress now utilizes [source maps](/app/guides/debugging#Source-maps) to
+- Cypress now uses [source maps](/app/guides/debugging#Source-maps) to
   enhance the error experience. Stack traces are translated so that your source
   files are shown instead of the generated file that is loaded by the browser.
   Cypress will include an inline source map in your spec file. If you
@@ -8514,7 +8514,7 @@ _Released Mar 16, 2020_
   when running the plugins file process. Fixes
   [#6570](https://github.com/cypress-io/cypress/issues/6570).
 - We now more thoroughly ensure the parent of an element exists when recursively
-  calling actionability checks in order to prevent some maximum call stack
+  calling actionability checks to prevent some maximum call stack
   errors. Fixes [#6707](https://github.com/cypress-io/cypress/issues/6707).
 - Specfiles containing `&` or `%` characters now correctly run instead of
   erroring. Fixes [#4210](https://github.com/cypress-io/cypress/issues/4210).
@@ -8610,7 +8610,7 @@ _Released Feb 28, 2020_
   throw a "WebSocket is not open: readyState 3" error under certain conditions.
   Fixes [#5685](https://github.com/cypress-io/cypress/issues/5685).
 - We now more thoroughly ensure the parent of an element exists when recursively
-  calling visibility and existence checks in order to prevent some maximum call
+  calling visibility and existence checks to prevent some maximum call
   stack errors. Fixes
   [#4373](https://github.com/cypress-io/cypress/issues/4373).
 - We fixed an issue where a maximum call stack error would throw in some
@@ -8747,7 +8747,7 @@ detail and how to change your code to migrate to Cypress 4.0.**
   [#2866](https://github.com/cypress-io/cypress/issues/2866).
 - During `before:browser:launch`, we no longer yield the second argument as an
   array of browser arguments and instead yield an `options` object with an
-  `args` property in order to support more advanced browser launch options.
+  `args` property to support more advanced browser launch options.
   Addresses [#6306](https://github.com/cypress-io/cypress/issues/6306).
 - We updated the [Cypress browser objects](/api/node-events/browser-launch-api) of
   all Chromium-based browsers, including Electron, to have `chromium` set as
@@ -8761,7 +8761,7 @@ detail and how to change your code to migrate to Cypress 4.0.**
 - [.contains()](/api/commands/contains) now ignores leading, trailing, duplicate
   whitespaces. Addresses [#92](https://github.com/cypress-io/cypress/issues/92).
 - [cy.writeFile()](/api/commands/writefile) now yields `null` instead of the
-  contents written to the file in order to more align with the behavior of `fs`.
+  contents written to the file to more align with the behavior of `fs`.
   Addresses [#2466](https://github.com/cypress-io/cypress/issues/2466).
 - Installing Cypress on your system now requires Node.js 8+. Addresses
   [#5632](https://github.com/cypress-io/cypress/issues/5632).
@@ -9146,7 +9146,7 @@ _Released Nov 27, 2019_
   under Settings in the Test Runner. Addresses
   [#5067](https://github.com/cypress-io/cypress/issues/5067).
 - Environment variables within GitHub Actions are now detected and passed to the
-  Dashboard in order to display the proper
+  Dashboard to display the proper
   [git information](/app/continuous-integration/overview#Git-information)
   for recorded runs. Addresses
   [#5609](https://github.com/cypress-io/cypress/issues/5609).
@@ -10737,7 +10737,7 @@ _Released Jan 30, 2019_
   [#2376](https://github.com/cypress-io/cypress/issues/2376).
 - We now pass the Chromium command line switches
   `--use-fake-ui-for-media-stream` and `--use-fake-device-for-media-stream` to
-  Chrome by default in order to better support testing webcam functionality.
+  Chrome by default to better support testing webcam functionality.
   Fixes [#2704](https://github.com/cypress-io/cypress/issues/2704).
 - Updated filenames allowed for screenshots to allow more characters that are
   valid. Fixes [#3052](https://github.com/cypress-io/cypress/issues/3052).
@@ -10785,7 +10785,7 @@ _Released Jan 30, 2019_
 
 **Dependency Updates**
 
-- We've begun automating our dependency update process in order to avoid
+- We've begun automating our dependency update process to avoid
   accidental dependency updates. Addresses
   [#2990](https://github.com/cypress-io/cypress/issues/2990) and
   [#3025](https://github.com/cypress-io/cypress/issues/3025).
@@ -10828,7 +10828,7 @@ Merry Christmas everyone!
 
 **Misc:**
 
-- Removed the word 'already' from the Cypress install message in order to be
+- Removed the word 'already' from the Cypress install message to be
   less confusing. Addresses
   [#2754](https://github.com/cypress-io/cypress/issues/2754).
 - Fixed incomplete type definitions for [cy.request](/api/commands/request).
@@ -11228,7 +11228,7 @@ _Released Jul 30, 2018_
   correctly. This is especially useful when using `mocha-multi-reporters`. In
   addition to fixing the [Module API](/app/references/module-api), we are now
   also properly handling nested arguments from the
-  [Command Line](/app/references/command-line). In order to pass nested objects
+  [Command Line](/app/references/command-line). To pass nested objects
   within CLI params you must pass stringified JSON. This is useful for
   properties such as `blacklistHosts`. Fixes
   [#1348](https://github.com/cypress-io/cypress/issues/1348) and
@@ -11949,7 +11949,7 @@ _Released Feb 15, 2018_
 - [blacklistHosts](/app/references/configuration#Browser) is now correctly
   accepted via the `--config` CLI flag.
 - Spies and Stubs created with [cy.stub()](/api/commands/stub) and
-  [cy.spy()](/api/commands/spy) will now retry their assertions when utilized
+  [cy.spy()](/api/commands/spy) will now retry their assertions when used
   from an [alias](/api/commands/as). Fixes
   [#1156](https://github.com/cypress-io/cypress/issues/1156).
 - Basic auth is working again in Chrome 63 and Chrome 64. We "for real" fixed it
@@ -13523,7 +13523,7 @@ _Released Nov 27, 2016_
   details are yet to come.
   [See this issue](https://github.com/cypress-io/cypress/issues/318).
 - You can now use your regularly installed `node_modules` in your project to do
-  things like utilizing [`lodash`](https://lodash.com/) for utility functions or
+  things like using [`lodash`](https://lodash.com/) for utility functions or
   extending [`chai`](http://www.chaijs.com/) with assertion plugins.
 - Because we're now processing the spec files prior to handing them off to the
   browser, this means we will display problems like syntax errors when something
@@ -15802,7 +15802,7 @@ _Released Sep 14, 2015_
 
 **Bugfixes:**
 
-- Utilizing `cy.server()` across multiple tests before a
+- Using `cy.server()` across multiple tests before a
   [`cy.visit()`](/api/commands/visit) now works correctly. As a side effect now
   Cypress will rebind both the `server` and all `routes` **whenever** the remote
   window is reloaded (for whatever reason) - even during a test itself. This
@@ -17215,7 +17215,7 @@ _Released Apr 08, 2015_
 
 **Features:**
 
-- `javascripts` files can now utilize `snockets`, `browserify`, or `requirejs`.
+- `javascripts` files can now use `snockets`, `browserify`, or `requirejs`.
 
 **Bugfixes:**
 

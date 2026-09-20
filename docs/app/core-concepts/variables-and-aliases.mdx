@@ -11,7 +11,7 @@ slug: /app/core-concepts/variables-and-aliases
 # Variables and Aliases
 
 New users to Cypress may initially find it challenging to work with the
-asynchronous nature of our APIs. There are many ways to reference, compare, and utilize the objects that Cypress
+asynchronous nature of our APIs. There are many ways to reference, compare, and use the objects that Cypress
 commands yield you. Once you get the hang of async code you'll realize you can do everything you
 could do synchronously, without your code doing any backflips.
 
@@ -255,7 +255,7 @@ it('has access to text', function () {
 })
 ```
 
-Under the hood, aliasing basic objects and primitives utilizes Mocha's shared
+Under the hood, aliasing basic objects and primitives uses Mocha's shared
 [`context`](https://github.com/mochajs/mocha/wiki/Shared-Behaviours) object:
 that is, aliases are available as `this.*`.
 
@@ -294,7 +294,7 @@ describe('parent', () => {
 The most common use case for sharing context is when dealing with
 [`cy.fixture()`](/api/commands/fixture).
 
-Often times you may load a fixture in a `beforeEach` hook but want to utilize
+Often times you may load a fixture in a `beforeEach` hook but want to use
 the values in your tests.
 
 ```js

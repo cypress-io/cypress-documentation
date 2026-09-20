@@ -80,7 +80,7 @@ it('uses modules', () => {
 #### Use supportFile to load scripts before your test code
 
 It's still useful to load a setup file before your test code. If you are setting
-Cypress defaults or utilizing custom Cypress commands, instead of needing to
+Cypress defaults or using custom Cypress commands, instead of needing to
 import/require those defaults/commands in every test file, you can use the
 [`supportFile`](/app/references/configuration#Testing-Type-Specific-Options)
 configuration option within each testing type's configuration object.
@@ -522,7 +522,7 @@ And will result in the following error:
   alt="cy.visit() subsequent commands timed out"
 />
 
-In order to fix this, our `cy.get()` command **must** be wrapped with the
+To fix this, our `cy.get()` command **must** be wrapped with the
 [`cy.origin()`](/api/commands/origin) command, like so:
 
 ```javascript
@@ -710,7 +710,7 @@ You passed the
 [--parallel](/app/references/command-line#cypress-run-parallel) flag but we could
 not automatically determine or generate a `ciBuildId`.
 
-In order to use either of these parameters a `ciBuildId` must be determined.
+To use either of these parameters a `ciBuildId` must be determined.
 
 The `ciBuildId` is automatically detected if you are running Cypress in most
 [CI providers](/app/continuous-integration/overview#CI-Examples). Please
@@ -748,7 +748,7 @@ flag, but we do not parallelize tests across different environments.
 This machine is sending different environment parameters than the first machine
 that started this parallel run.
 
-In order to run in parallel mode each machine must send identical environment
+To run in parallel mode each machine must send identical environment
 parameters such as:
 
 - Specs
@@ -792,7 +792,7 @@ This error is thrown when you are attempting to pass the
 [--parallel](/app/references/command-line#cypress-run-parallel) flag to a run
 that Cypress detected was completed over 24 hours ago.
 
-In order to uniquely identify each run during `cypress run`, Cypress attempts to
+To uniquely identify each run during `cypress run`, Cypress attempts to
 read a unique identifier from your CI provider as described in our
 [parallelization doc](/cloud/features/smart-orchestration/parallelization#CI-Build-ID-environment-variables-by-provider).
 

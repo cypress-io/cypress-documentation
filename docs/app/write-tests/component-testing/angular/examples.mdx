@@ -147,7 +147,7 @@ With the release of Angular 18, [signals](https://angular.dev/guide/signals) bec
 However, legacy components that use `@Input()` and `@Output()` decorators are still supported.
 
 Interacting with legacy `@Input()` decorators is a bit different than working with signals.
-In order to update the `@Input()` value, you need to use the `componentRef.setInput` method so Angular change detection runs properly.
+To update the `@Input()` value, you need to use the `componentRef.setInput` method so Angular change detection runs properly.
 Otherwise, you may see errors.
 
 ```ts
@@ -405,7 +405,7 @@ it('routes render errors to the ErrorHandler', () => {
 
 By default, `cy.mount()` is a simple passthrough to `mount()`, however, you can
 customize `cy.mount()` to fit your needs. For instance, you may find yourself
-doing repetitive work during mounting. In order to reduce boilerplate you may
+doing repetitive work during mounting. To reduce boilerplate you may
 find it useful to create a custom mount command.
 
 ### Default Declarations, Providers, or Imports

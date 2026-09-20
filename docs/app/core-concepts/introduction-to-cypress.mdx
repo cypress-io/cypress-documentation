@@ -101,7 +101,7 @@ cy.get('#main-content').find('.article').children('img[src^="/static"]').first()
 
 <strong>Core Concept</strong>
 
-Cypress leverages jQuery's powerful selector engine to help make tests familiar
+Cypress uses jQuery's powerful selector engine to help make tests familiar
 and readable for modern web developers.
 
 Interested in the best practices for selecting elements?
@@ -591,7 +591,7 @@ it('does not work as we expect', () => {
 
 <Icon name="check-circle" color="green" /> **Correct usage**
 
-Below is one way the code above could be rewritten in order to ensure the
+Below is one way the code above could be rewritten to ensure the
 commands run as expected.
 
 ```js
@@ -656,7 +656,7 @@ it('test', () => {
 
 <Icon name="check-circle" color="green" /> **Correct usage**
 
-Below is one way the code above could be rewritten in order to ensure the
+Below is one way the code above could be rewritten to ensure the
 commands run as expected.
 
 ```js
@@ -931,7 +931,7 @@ A lot of Cypress commands _mutate_ the state of the browser in some way.
 
 None of the above commands are _idempotent_; they all cause side effects. Racing
 commands is not possible because commands must be run in a controlled, serial
-manner in order to create consistency. Because integration and e2e tests
+manner to create consistency. Because integration and e2e tests
 primarily mimic the actions of a real user, Cypress models its command execution
 model after a real user working step by step.
 
