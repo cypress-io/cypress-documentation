@@ -132,11 +132,11 @@ cy.get('ul').children('.active')
 
 ### Shadow DOM boundaries and `.children()`
 
-`.children()` matches the light DOM. Called on a shadow host, it yields that
-host's light DOM children, not the elements inside its shadow root. This holds
-whether or not [`includeShadowDom`](/app/references/configuration#Global) is
-enabled, since that option applies to
-[`cy.get()`](/api/commands/get#Arguments),
+`.children()` stops at a shadow boundary. Called on a shadow host, it yields
+the children written inside that host in the page's markup, not the elements
+inside its shadow root. This holds whether or not
+[`includeShadowDom`](/app/references/configuration#Global) is enabled, since
+that option applies to [`cy.get()`](/api/commands/get#Arguments),
 [`.find()`](/api/commands/find#Arguments), and
 [`cy.contains()`](/api/commands/contains#Arguments). To query inside a shadow
 root, traverse into it with [`.shadow()`](/api/commands/shadow) first.
@@ -174,7 +174,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/children/children-elements-shown-in-command-log.png"
-  alt="Command Log showing a GET for .left-nav>.nav, a CHILDREN entry with a count of 8, and a passing assertion that the li elements have a length of 8"
+  alt="Command Log where the children entry reports a count of 8 and the length assertion passes"
 />
 
 When clicking on the `children` command within the command log, the console
@@ -182,14 +182,14 @@ outputs the following:
 
 <DocsImage
   src="/img/api/children/children-yielded-in-console.png"
-  alt="Browser console showing the children command applied to ul.nav and the 8 li elements it yielded"
+  alt="Console output for children, listing the 8 li elements found under ul.nav"
 />
 
 ## History
 
-| Version                                    | Changes                                                                                           |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| [12.0.0](/app/references/changelog#12-0-0) | `.children()` is now a query and can no longer be overwritten with `Cypress.Commands.overwrite()` |
+| Version                                    | Changes                                                                                                                                                                                         |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.children()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
 
 ## See also
 
