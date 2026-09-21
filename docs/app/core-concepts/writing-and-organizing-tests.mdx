@@ -123,20 +123,16 @@ Cypress also supports `ES2015` out of the box. You can use either
 across specs.
 
 ```javascript title="cypress/e2e/modules.cy.js"
-// an npm package from your package.json
-import { upperFirst } from 'lodash'
-
-// a local module holding reusable helpers
+// ES2015 `import` of a local module
 import getSelector from '../support/utils/get_selector'
 
-// CommonJS `require` works the same way
-const appendKey = require('../support/utils/append_key')
+// CommonJS `require` of an npm package from your package.json
+const { upperFirst } = require('lodash')
 
 describe('modules', () => {
-  it('uses code imported from both', () => {
-    expect(upperFirst('jane')).to.eq('Jane')
+  it('uses code from both', () => {
     expect(getSelector('checkbox')).to.eq('.my-app-checkbox')
-    expect(appendKey({ id: 1 })).to.have.property('key')
+    expect(upperFirst('jane')).to.eq('Jane')
   })
 })
 ```
