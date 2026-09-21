@@ -11,13 +11,15 @@ Some directories carry their own `AGENTS.md` (plus a `CLAUDE.md` that imports
 it) for conventions that apply only inside them. Read the one for the directory
 you're working in:
 
-| Directory            | Covers                                                        |
-| -------------------- | ------------------------------------------------------------- |
-| `docs/api/`          | reference frontmatter, the page skeleton, `## History` tables |
-| `docs/partials/`     | when a partial is warranted, naming, registration             |
-| `docs/app/releases/` | changelog entry format                                        |
-| `src/`               | component layout, registration, swizzled theme files          |
-| `plugins/`           | the sub-package build and dependency rules                    |
+| Directory            | Covers                                                      |
+| -------------------- | ----------------------------------------------------------- |
+| `docs/api/`          | the Cypress source behind a page, frontmatter, the skeleton |
+| `docs/partials/`     | when a partial is warranted, naming, registration           |
+| `docs/app/releases/` | changelog entry format                                      |
+| `src/`               | component layout, registration, swizzled theme files        |
+| `plugins/`           | the sub-package build and dependency rules                  |
+| `cypress/`           | the generated page list, what the crawl specs are for       |
+| `.github/workflows/` | pinning actions, what forks copy, required checks           |
 
 Three conventions hold for every one of them:
 
@@ -26,16 +28,21 @@ Three conventions hold for every one of them:
    never assumes this file was loaded.
 2. **They are additive, never contradictory.** A nested rule that conflicts with
    a rule in this file is a sign the rule in this file is wrong. Fix it here.
-3. **Keep them short**, under about 60 lines. They are the rules that apply
-   here, not a second reference manual. Detail belongs in
-   `AGENTS_REFERENCE.md`; link its anchor rather than restating it.
+3. **Keep them short**, under about 75 lines. They are the rules that apply
+   here, not a second reference manual. Treat 75 as a ceiling rather than a
+   target: most directories need far less, and a guide that splits one
+   convention across two files to hit a number costs the reader more than the
+   lines saved. Detail belongs in `AGENTS_REFERENCE.md`; link its anchor rather
+   than restating it.
 
 Four things walk `docs/` independently, and each skips these two filenames: the
 docs build (`exclude` in `docusaurus.config.js`), the LLM export (`walkDocs` in
 `plugins/llm`), `npm run lint:frontmatter`, and `npm run preview:og`. Because
 they match on filename, adding a nested guide to a **new** directory needs no
 config change. Prettier still formats them, so `npm run lint:fix` applies as
-usual.
+usual — check `.prettierignore` when adding a guide outside `docs/`, since a
+guide inside an ignored directory is silently skipped and a negation cannot pull
+it back out.
 
 ## Commands
 
@@ -45,8 +52,9 @@ npm run start         # local dev server at http://localhost:3000
 npm run build         # production build into dist/ (also rebuilds plugins)
 npm run lint:fix      # Prettier autofix on **/*.{md,mdx}
 npm run typecheck     # tsc
-npm test              # cypress e2e (needs the dev server running)
+npm test              # cypress e2e (needs `npm run serve`, not the dev server)
 npm run test:plugins  # vitest unit tests for plugins/
+npm run api:source -- blur   # locate the Cypress source a /api page documents
 ```
 
 Install before you lint. With no `node_modules` present, `npm run lint:fix`
@@ -63,7 +71,10 @@ is enough for every command above except `npm test`.
    `onBrokenMarkdownLinks` are `throw`, so any bad link or anchor fails the build.
 3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`.
 4. `npm run test:plugins` — only when you touched `plugins/`.
-5. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
+5. `npm test` — for nav/routing or broad changes. Serve a production build
+   first (`npm run build`, then `npm run serve`), which is what CI does. The dev
+   server injects page titles during hydration, so the specs that assert on
+   server-rendered HTML fail against it.
 
 CI runs all of these, so a miss fails the PR rather than `main`.
 
@@ -133,6 +144,16 @@ Each rule is a hard convention. See the linked section for the how and why.
   characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
+
+**API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
+
+- The behavior an `/api` page describes is implemented in `cypress-io/cypress`,
+  not here. Before writing or changing a behavior claim, read that source:
+  `npm run api:source -- <command>` syncs a pinned, sparse checkout of it into
+  `.cypress-source/` and resolves the command to its implementation, published
+  types, error messages, and driver specs.
+- Where the source contradicts the page, flag the conflict rather than rewriting
+  the page to match. The fix may belong in `cypress-io/cypress`.
 
 **Writing style** — [details](./AGENTS_REFERENCE.md#writing-style)
 
@@ -213,13 +234,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   params (`utm_source=docs.cypress.io` + a placement `utm_medium`). Do not add
   them to internal links or `cloud.cypress.io`.
 
-**GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
+**GitHub Actions workflows** — [details](./.github/workflows/AGENTS.md)
 
-- When adding or editing a workflow in `.github/workflows/`, look up each
-  action's latest major release on its GitHub repository at the time of
-  writing and pin that major tag.
-- Workflows are copied into forks, where they run with reduced permissions
-  (Actions cannot create or approve pull requests there). Guard any job that
-  pushes commits, creates pull requests, or uses repo secrets with a job-level
-  `if` restricting it to the `main` branch of
-  `cypress-io/cypress-documentation`.
+- Read that guide before adding or editing a workflow. Every file in
+  `.github/workflows/` is copied into each fork and runs there with reduced
+  permissions, so an unguarded job that pushes commits, opens pull requests, or
+  reads secrets fails in somebody else's repository.

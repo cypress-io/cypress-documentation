@@ -1,7 +1,12 @@
 dist
 .husky
 .vscode
-.github
+# The PR templates only, not all of .github: the agent guides under it are
+# prose like every other one, so Prettier formats them.
+.github/pull_request_template.md
+.github/PULL_REQUEST_TEMPLATE
+.github/ISSUE_TEMPLATE
+.github/pr-assets
 assets
 node_modules
 .eslintignore
@@ -12,3 +17,4 @@ node_modules
 .node-version
 .textlintrc
 .claude
+.cypress-source

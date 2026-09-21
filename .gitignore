@@ -38,3 +38,6 @@ db.json
 
 # OG card preview output
 .og-preview
+
+# Pinned checkout of cypress-io/cypress source (npm run api:source)
+.cypress-source

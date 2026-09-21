@@ -5,6 +5,14 @@ specific to `docs/api/` (commands, `Cypress.*` APIs, node events, utilities).
 Reasoning and examples live in
 [`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md).
 
+## Source of truth
+
+These pages describe behavior implemented in `cypress-io/cypress`. Read that
+source before writing or changing a behavior claim: `npm run api:source -- blur`
+resolves a command to the files that define it. What each section is answerable
+from, and why a conflict gets flagged rather than written away, is in
+[`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md#api-source-of-truth).
+
 ## Frontmatter
 
 Reference frontmatter is terse. Mirror the sibling file you're adding next to.
@@ -43,10 +51,12 @@ this order, using only the ones the page needs:
 | `## History`     | version table, newest first                                                                                   |
 | `## See also`    | 2 to 5 sibling commands                                                                                       |
 
-The four `Header*` partials are registered globally in
-`src/theme/MDXComponents.js`, so use them with no import. They carry the
-`{#Yields}`, `{#Requirements}`, `{#Assertions}`, and `{#Timeouts}` anchors that
-other pages link to, which is why those headings are never hand-written.
+Never hand-write the `Yields`, `Requirements`, `Assertions`, or `Timeouts`
+headings. The four `Header*` partials render them,
+`src/theme/MDXComponents.js` registers them globally so they take no import, and
+each carries the anchor other pages link to (`{#Yields}`, `{#Requirements}`,
+`{#Assertions}`, `{#Timeouts}`). Hand-writing one drops its anchor and breaks
+every inbound link to it.
 
 ## History tables
 

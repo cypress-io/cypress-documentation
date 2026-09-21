@@ -674,15 +674,79 @@ sign-up/login links, or to non-Cypress third-party links. For repeated CTAs,
 prefer the shared partials (e.g. `docs/partials/_ui-coverage-premium-note.mdx`)
 that already embed the correct params rather than re-writing the URL.
 
+## API source of truth
+
+An API reference page describes behavior that lives in a different repository:
+`cypress-io/cypress`. Nothing in this repository can confirm what `.blur()`
+actually does, so a page written from the surrounding docs alone inherits
+whatever those docs already got wrong. Read the implementation instead.
+
+### Getting the source
+
+```bash
+npm run api:source              # sync .cypress-source/ to the latest release tag
+npm run api:source -- blur      # resolve a command to the files that define it
+npm run api:source -- blur --ref develop
+```
+
+The first call makes a shallow, blobless, sparse checkout of `cypress-io/cypress`
+in `.cypress-source/` (gitignored): a few seconds, a few megabytes, and only the
+directories the reference pages describe. It is pinned to a release tag, so it
+holds the source as it shipped rather than as `develop` currently has it — pass
+`--ref develop` when you are documenting something unreleased. After the first
+sync the checkout is reused, so lookups are instant. Then read and grep it like
+any other source.
+
+The lookup is the part worth having. A command's file is usually not named after
+the command: `.blur()` lives in `actions/focus.ts`, `cy.intercept()` in
+`net-stubbing/add-command.ts`, and their published types are in two different
+packages. Guessing the path wastes a search; the resolver hands you the line.
+
+### What each page section is answerable from
+
+| Page section             | Source of truth                                                                                          |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `## Syntax`              | the command's declaration in the type definitions — the signature a reader autocompletes                 |
+| Usage, correct           | `prevSubject` in the `Commands.addAll` call — it lists every subject the command accepts                 |
+| `### Arguments`          | the options interface in the type definitions, plus the `_.defaults({...})` call that sets each default  |
+| `<HeaderYields />`       | what the command function returns, and whether it is registered with `addQuery` (retried) or `add` (not) |
+| `<HeaderRequirements />` | every `throwErrByPath` call in the command, resolved against `error_messages.ts`                         |
+| `## Notes`               | the comments and special cases in the implementation                                                     |
+| `## History`             | `cli/CHANGELOG.md`                                                                                       |
+| Behavior in general      | the driver's own specs under `packages/driver/cypress/e2e/commands/` — the executable spec               |
+
+Commands are one surface of three. `Cypress.*` APIs are implemented in
+`packages/driver/src/cypress/` (`cookies.ts`, `screenshot.ts`, `clock.ts`, and
+siblings), and configuration is defined in `packages/config/src/`. Node events
+live in `packages/server/lib/plugins/`, which the checkout does not include —
+read those on GitHub.
+
+### Using what you find
+
+- **Cite the source in the pull request**, not in the page. A permalink at a
+  pinned ref (the resolver prints one per hit) lets a reviewer check a behavior
+  claim without re-deriving it.
+- **A driver test beats a reading of the implementation.** If a spec asserts the
+  behavior, that is settled; if you are inferring from code alone, say so.
+- **When the page and the source disagree, flag it — do not quietly rewrite the
+  page.** The docs may be describing intended behavior against a bug, and the fix
+  may belong in `cypress-io/cypress`. Surface the conflict and let a human pick.
+- **Options tables are the most common place drift hides.** Check every row
+  against the options interface and the defaults, including rows the source no
+  longer has.
+
 ## Testing
 
-- **End-to-end tests** (`cypress/e2e/`) crawl the built site: `basic_tests.cy.ts`
-  checks routing and the main nav, and the `all_*_pages.cy.ts` specs visit every
-  page in each section to confirm it loads. So most content changes are exercised
-  by the page rendering without errors.
-- To run them locally, start the site in one terminal (`npm run start`, served at
-  `http://localhost:3000`, the configured `baseUrl`) and in another run
-  `npm test` (headless) or `npx cypress open` (interactive).
+- **End-to-end tests** (`cypress/e2e/`) crawl the built site, so most content
+  changes are exercised by the page rendering without errors. What each spec
+  covers, and why adding a page needs no change to any of them, is in
+  [`cypress/AGENTS.md`](./cypress/AGENTS.md).
+- To run them locally, serve a production build in one terminal (`npm run build`,
+  then `npm run serve` at `http://localhost:3000`, the configured `baseUrl`) and
+  in another run `npm test` (headless) or `npx cypress open` (interactive). CI
+  serves the same build. The dev server is not interchangeable here: it returns
+  one shell title for every route and fills the real one in during hydration, so
+  the `page_titles.cy.ts` checks that read server-rendered HTML fail against it.
 - **Plugin unit tests** (Vitest) cover both sub-packages in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
@@ -736,30 +800,3 @@ pull request `update-plugins-data.yml` opens triggers nothing. That workflow
 typechecks, builds, and runs `plugins_list.cy.ts` itself before opening the pull
 request. Anything that would newly break on a change to
 `src/data/plugins-generated.json` belongs there, not only here.
-
-## GitHub Actions workflows
-
-Repo automation lives in `.github/workflows/`. When adding or editing a
-workflow:
-
-- **Look up the current major version of every action you use.** Check the
-  action's own GitHub repository (its releases or tags page) at the time you
-  write the workflow, and use the latest major version published there.
-- Pin each action to its latest major tag (`uses: <owner>/<action>@v<major>`),
-  matching this repo's existing style. Pinning to a commit SHA is not required
-  here.
-- After a new or changed workflow runs, read its logs and bump any action the
-  runner flags with a deprecation warning.
-- This repository is frequently forked, and workflows (including scheduled
-  `cron` jobs) are copied into every fork, where they run with reduced
-  permissions: GitHub Actions cannot create or approve pull requests in a fork
-  by default, so an unguarded job fails with a fatal error. Guard any job that
-  pushes commits, creates pull requests, or uses repo secrets with a job-level
-  condition so it only runs on the default branch of the parent repository:
-
-  ```yml
-  jobs:
-    my-job:
-      if: (github.ref == 'refs/heads/main') &&
-        (github.repository == 'cypress-io/cypress-documentation')
-  ```
