@@ -1,6 +1,6 @@
 ---
 title: 'cy.as()'
-description: Assign an alias in Cypress so you can reference a DOM element, intercept, spy, stub, or value later with an @ prefix.
+description: Assign an alias to a DOM element, intercept, spy, stub, or value in Cypress and reference it later with an @ prefix.
 sidebar_label: as
 slug: /api/commands/as
 ---
@@ -52,8 +52,9 @@ cy.get('.main-nav').as('@firstNav') // Errors, an alias name cannot start with '
 
 The name of the alias to be referenced later within a
 [`cy.get()`](/api/commands/get), [`cy.wait()`](/api/commands/wait), or
-[`.selectFile()`](/api/commands/selectfile) command using an `@` prefix, or on
-`this` inside a test written with the standard `function` syntax.
+[`.selectFile()`](/api/commands/selectfile) command using an `@` prefix. An
+alias is also available as `this.aliasName` inside a test written with the
+standard `function` syntax, where it holds the value captured when `.as()` ran.
 
 The name must be a non-empty string that does not start with `@`. See
 [Alias naming rules and reserved words](#Alias-naming-rules-and-reserved-words)
@@ -137,9 +138,9 @@ of `this`.
 ### Static value
 
 A `query` alias, the default, re-runs the queries leading up to it every time
-you read it, so it reflects the current state of the application. Pass
-`{ type: 'static' }` to capture the value at the moment the alias is created
-instead.
+you read it with `cy.get('@aliasName')`, so it reflects the current state of the
+application. Pass `{ type: 'static' }` to capture the value at the moment the
+alias is created instead.
 
 ```javascript
 cy.get('#total').invoke('text').as('startingTotal', { type: 'static' })
@@ -152,6 +153,11 @@ cy.get('@startingTotal').should('equal', '$0.00')
 
 The Command Log marks these aliases `@startingTotal (static)` so you can tell
 them apart from query aliases.
+
+Reading an alias as `this.aliasName` returns the value captured when `.as()` ran
+whatever the `type`, since the Mocha context is assigned once. The
+[Sharing Context](/app/core-concepts/variables-and-aliases#Sharing-Context)
+section of the aliases guide covers the tradeoff between the two.
 
 ## Notes
 
