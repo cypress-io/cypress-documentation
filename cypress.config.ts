@@ -4,6 +4,12 @@ import { join } from 'path'
 
 export default defineConfig({
   projectId: 'imown1',
+  // Chrome for Testing rather than the deprecated bundled Electron. It is
+  // pinned to a version and never updates itself, so a run stays reproducible,
+  // and the enterprise Chrome policies that can block remote debugging do not
+  // apply to it. Install it with `npx @puppeteer/browsers install chrome@stable`
+  // or pass `--browser` to override this for a one-off run.
+  defaultBrowser: 'chrome-for-testing',
   fixturesFolder: false,
   viewportHeight: 800,
   viewportWidth: 1200,

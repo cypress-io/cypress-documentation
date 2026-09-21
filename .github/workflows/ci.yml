@@ -186,6 +186,14 @@ jobs:
           name: dist
           path: dist
 
+      # The runner ships branded Chrome, which auto-updates and can change
+      # behavior between runs. This installs Chrome for Testing instead, onto
+      # `PATH` as `chrome`, which is where Cypress auto-detects it on Linux.
+      - name: Install Chrome for Testing
+        uses: browser-actions/setup-chrome@v2
+        with:
+          install-dependencies: true
+
       # Installs dependencies, restores the cached Cypress binary, serves the
       # build downloaded above, and runs the suite. No `build` input: the build
       # job already produced what `npm run serve` serves.
@@ -194,6 +202,10 @@ jobs:
         with:
           start: npm run serve
           wait-on: 'http://localhost:3000'
+          # Matches `defaultBrowser` in cypress.config.ts. Named here too so a
+          # run that reaches a different browser fails outright rather than
+          # quietly recording results from one.
+          browser: chrome-for-testing
           record: true
           parallel: true
           group: 'Docs e2e'
@@ -237,11 +249,18 @@ jobs:
           name: dist
           path: dist
 
+      # Same browser as the recorded job above, for the same reasons.
+      - name: Install Chrome for Testing
+        uses: browser-actions/setup-chrome@v2
+        with:
+          install-dependencies: true
+
       - name: Run Cypress
         uses: cypress-io/github-action@v7
         with:
           start: npm run serve
           wait-on: 'http://localhost:3000'
+          browser: chrome-for-testing
         env:
           HUSKY: 0
 
