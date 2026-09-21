@@ -190,7 +190,7 @@ are left untouched, and a value that matches nothing is dropped without an
 error.
 
 ```javascript
-// Checks and yields only the checkbox with the value 'blue'
+// If no checkbox has the value 'purple', this checks and yields only 'blue'
 cy.get('[type="checkbox"]').check(['blue', 'purple'])
 ```
 

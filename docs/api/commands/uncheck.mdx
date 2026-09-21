@@ -38,7 +38,7 @@ cy.get('[type="checkbox"]').uncheck() // Unchecks checkbox element
 ```javascript
 cy.uncheck('[type="checkbox"]') // Errors, cannot be chained off 'cy'
 cy.get('p:first').uncheck() // Errors, '.get()' does not yield checkbox
-cy.get('[type="radio"]').uncheck() // Errors, radios cannot be unchecked
+cy.get('[type="radio"]').uncheck() // Errors, '.uncheck()' only accepts checkboxes
 ```
 
 ### Arguments
@@ -123,8 +123,8 @@ match are left untouched, and a value that matches nothing is dropped without an
 error.
 
 ```javascript
-// Unchecks and yields only the checkbox with the value 'ga'
-cy.get('[type="checkbox"]').uncheck(['ga', 'nowhere'])
+// If no checkbox has the value 'tx', this unchecks and yields only 'ga'
+cy.get('[type="checkbox"]').uncheck(['ga', 'tx'])
 ```
 
 A checkbox with no `value` attribute reports a value of `on`, so passing `'on'`
