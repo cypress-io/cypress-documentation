@@ -482,8 +482,8 @@
     },
     "Visual Regression Diff": {
       "npm": "@frsource/cypress-plugin-visual-regression-diff",
-      "version": "4.1.1",
-      "lastPublished": "2026-07-05T23:35:01.444Z",
+      "version": "4.2.0",
+      "lastPublished": "2026-09-20T23:12:44.988Z",
       "cypressVersion": ">=13.0.0"
     },
     "@chromatic-com/cypress": {
