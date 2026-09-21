@@ -18,3 +18,20 @@ cy.get('.list')
 Split the chain into separate statements so each one re-queries from the top.
 [Assertions as retry boundaries](/app/core-concepts/retry-ability#Assertions-as-retry-boundaries)
 covers the pattern in full.
+
+#### An action command locks in the element it acted on
+
+An action command such as [`.click()`](/api/commands/click) locks in its subject
+the same way, so an assertion chained after it re-checks that element without
+re-querying for it. This is why asserting on a class the click toggles works,
+while asserting on an element the click replaces fails with
+`The subject is no longer attached to the DOM`.
+
+```javascript
+// the click toggles classes on the same element
+cy.get('button').click().should('have.class', 'active')
+
+// if the click re-renders the button, alias it and query again
+cy.get('button').as('btn').click()
+cy.get('@btn').should('have.class', 'active')
+```

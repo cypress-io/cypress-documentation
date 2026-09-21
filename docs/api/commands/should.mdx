@@ -203,14 +203,16 @@ cy.get('p').should(($p) => {
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
+// run the command after the assertion
 cy.get('p')
   .should(($p) => {
     // ...
   })
-  .log()
+  .then(($p) => {
+    cy.log($p)
+  })
 
-// or
-
+// or use .then() instead, which does not retry
 cy.get('p').then(($p) => {
   // ...
   cy.log($p)
