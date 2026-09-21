@@ -29,6 +29,7 @@ import ForceHttp1Deprecation from '@site/docs/partials/_force-http1-deprecation.
 import E2EOnlyBadge from '@site/src/components/e2e-only-badge'
 import E2EOrCtTabs from '@site/src/components/e2e-or-ct-tabs'
 import VueSyntaxTabs from '@site/src/components/vue-syntax-tabs'
+import AssertionRetryBoundaries from '@site/docs/partials/_assertion-retry-boundaries.mdx'
 import HeaderAssertions from '@site/docs/partials/_header-assertions.mdx'
 import InterceptAliasIndex from '@site/docs/partials/_intercept-alias-index.mdx'
 import HeaderRequirements from '@site/docs/partials/_header-requirements.mdx'
@@ -230,6 +231,7 @@ export default {
   E2EOnlyBadge,
   E2EOrCtTabs,
   VueSyntaxTabs,
+  AssertionRetryBoundaries,
   HeaderAssertions,
   InterceptAliasIndex,
   HeaderRequirements,
