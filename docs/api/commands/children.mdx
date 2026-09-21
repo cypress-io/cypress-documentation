@@ -1,6 +1,6 @@
 ---
 title: 'cy.children()'
-description: Get the children of each DOM element within a set of DOM elements in Cypress.
+description: Get the direct children of each DOM element within a set of DOM elements in Cypress.
 sidebar_label: children
 slug: /api/commands/children
 ---
@@ -11,10 +11,13 @@ slug: /api/commands/children
 
 Get the children of each DOM element within a set of DOM elements.
 
+`.children()` travels a single level down the DOM tree, as opposed to
+[`.find()`](/api/commands/find), which searches every descendant.
+
 :::info
 
 The querying behavior of this command matches exactly how
-[`.children()`](http://api.jquery.com/children) works in jQuery.
+[`.children()`](https://api.jquery.com/children) works in jQuery.
 
 :::
 
@@ -33,6 +36,7 @@ The querying behavior of this command matches exactly how
 
 ```javascript
 cy.get('nav').children() // Yield children of nav
+cy.get('nav').children('.active') // Yield children of nav with class '.active'
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
@@ -94,10 +98,15 @@ Pass in an options object to change the default behavior of `.children()`.
 // yields [
 //  <li class="services-1">Web Design</li>,
 //  <li class="services-2">Logo Design</li>,
-//  <li class="services-3">Print Design</li>
+//  <li class="services-3">Print Design<ul class="tertiary-nav">…</ul></li>
 // ]
 cy.get('ul.secondary-nav').children()
 ```
+
+The three `<li>` elements inside `ul.tertiary-nav` are descendants of
+`ul.secondary-nav`, not children of it, so they are not part of the result. The
+`<li class="services-3">` that contains them is yielded whole, nested list and
+all.
 
 ### Selector
 
@@ -119,11 +128,25 @@ cy.get('ul.secondary-nav').children()
 cy.get('ul').children('.active')
 ```
 
+## Notes
+
+### Shadow DOM boundaries and `.children()`
+
+`.children()` matches the light DOM. Called on a shadow host, it yields that
+host's light DOM children, not the elements inside its shadow root. This holds
+whether or not [`includeShadowDom`](/app/references/configuration#Global) is
+enabled, since that option applies to
+[`cy.get()`](/api/commands/get#Arguments),
+[`.find()`](/api/commands/find#Arguments), and
+[`cy.contains()`](/api/commands/contains#Arguments). To query inside a shadow
+root, traverse into it with [`.shadow()`](/api/commands/shadow) first.
+
 ## Rules
 
 <HeaderRequirements />
 
-- `.children()` requires being chained off a command that yields DOM element(s).
+- `.children()` requires being chained off a command that yields DOM element(s)
+  or a document.
 
 <HeaderAssertions />
 
@@ -151,7 +174,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/children/children-elements-shown-in-command-log.png"
-  alt="Command log for children"
+  alt="Command Log showing a GET for .left-nav>.nav, a CHILDREN entry with a count of 8, and a passing assertion that the li elements have a length of 8"
 />
 
 When clicking on the `children` command within the command log, the console
@@ -159,11 +182,18 @@ outputs the following:
 
 <DocsImage
   src="/img/api/children/children-yielded-in-console.png"
-  alt="console.log for children"
+  alt="Browser console showing the children command applied to ul.nav and the 8 li elements it yielded"
 />
+
+## History
+
+| Version                                    | Changes                                                                                           |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.children()` is now a query and can no longer be overwritten with `Cypress.Commands.overwrite()` |
 
 ## See also
 
+- [`.find()`](/api/commands/find)
 - [`.next()`](/api/commands/next)
 - [`.parent()`](/api/commands/parent)
 - [`.parents()`](/api/commands/parents)
