@@ -47,7 +47,11 @@ cy.wrap({ foo: 'bar' }).its('foo').should('eq', 'bar') // Assert the 'foo' prope
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
-cy.should('eq', '42') // Should not be chained off 'cy'
+cy.should('eq', '42') // Can not be chained off 'cy'
+
+cy.get('p').should(($p) => {
+  cy.log($p) // Can not invoke a Cypress command inside the callback
+})
 ```
 
 ### Arguments
@@ -93,7 +97,9 @@ cy.get('nav') // yields <nav>
 ```
 
 `.should()` is an assertion, and it is _safe_ to chain further commands that use
-the subject.
+the subject. Queries chained after it do retry from the subject it locks in
+rather than from the top of the chain, which matters when the DOM re-renders.
+See [Retry boundaries](#Retry-boundaries).
 
 ## Examples
 
@@ -197,14 +203,16 @@ cy.get('p').should(($p) => {
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
+// run the command after the assertion
 cy.get('p')
   .should(($p) => {
     // ...
   })
-  .log()
+  .then(($p) => {
+    cy.log($p)
+  })
 
-// or
-
+// or use .then() instead, which does not retry
 cy.get('p').then(($p) => {
   // ...
   cy.log($p)
@@ -388,10 +396,8 @@ cy.get('.company-details')
 
 #### Chaining multiple assertions
 
-Cypress makes it easier to chain assertions together.
-
-In this example we use [`.and()`](/api/commands/and) which is identical to
-`.should()`.
+Chain assertions together with [`.and()`](/api/commands/and), which is identical
+to `.should()`.
 
 ```javascript
 // our subject is not changed by our first assertion,
@@ -401,7 +407,7 @@ cy.get('option:first').should('be.selected').and('have.value', 'Metallica')
 
 ### Wait until the assertions pass
 
-Cypress won't resolve your commands until all of its assertions pass.
+Cypress doesn't resolve your commands until all of its assertions pass.
 
 ```javascript
 // Application Code
@@ -449,6 +455,10 @@ cy.get('button')
   })
 ```
 
+### Retry boundaries
+
+<AssertionRetryBoundaries />
+
 ### Differences
 
 <ThenShouldAndDifference />
@@ -461,8 +471,8 @@ cy.get('button')
 
 <HeaderTimeouts />
 
-- `.should()` will continue to [retry](/app/core-concepts/retry-ability) its
-  specified assertions until it times out.
+- `.should()` [retries](/app/core-concepts/retry-ability) its specified
+  assertions until they pass or it times out.
 
 ```javascript
 // timeout here will be passed down to the '.should()'
@@ -475,7 +485,7 @@ cy.get('input', { timeout: 10000 }).should('have.value', '10')
 // unless an assertion throws earlier,
 // ALL of the assertions will retry for up to 10 secs
 cy.get('input', { timeout: 10000 }).should(($input) => {
-  expect($input).to.not.be('disabled')
+  expect($input).to.not.be.disabled
   expect($input).to.not.have.class('error')
   expect($input).to.have.value('US')
 })

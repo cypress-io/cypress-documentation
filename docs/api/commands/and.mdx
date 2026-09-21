@@ -1,6 +1,6 @@
 ---
 title: 'cy.and()'
-description: 'Create an assertion. Assertions are automatically retried as part of the previous command until they pass or time out.'
+description: 'Create an assertion in Cypress, chained off a previous command and retried until it passes or times out.'
 sidebar_label: and
 slug: /api/commands/and
 ---
@@ -53,8 +53,9 @@ cy.wrap({ foo: 'bar' })
 ```javascript
 cy.and('eq', '42') // Can not be chained off 'cy'
 
-cy.get('button').click().and('be.focused') // Should not be chained off
-// action commands that may update the DOM
+cy.get('p').and(($p) => {
+  cy.log($p) // Can not invoke a Cypress command inside the callback
+})
 ```
 
 ### Arguments
@@ -82,7 +83,9 @@ Whatever was passed to the function is what is yielded.
 
 - In most cases, `.and()` yields the same subject it was given.
 - `.and()` is an assertion, and it is _safe_ to chain further commands that use
-  the subject.
+  the subject. Queries chained after it do retry from the subject it locks in
+  rather than from the top of the chain, which matters when the DOM re-renders.
+  See [Retry boundaries](#Retry-boundaries).
 
 ```javascript
 cy.get('nav') // yields <nav>
@@ -144,16 +147,47 @@ cy.get('#header a')
 
 ### Function
 
-#### Verify length, content, and classes from multiple `<p>`
-
 Passing a function to `.and()` enables you to assert on the yielded subject.
 This gives you the opportunity to _massage_ what you'd like to assert.
 
 Be sure _not_ to include any code that has side effects in your callback
-function.
+function. Cypress retries the callback until no assertions within it throw.
 
-The callback function will be retried over and over again until no assertions
-within it throw.
+You cannot invoke Cypress commands inside of an `.and()` callback function. Use
+Cypress commands before or after `.and()` instead.
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.get('p')
+  .should('not.be.empty')
+  .and(($p) => {
+    cy.log($p)
+    // ...
+  })
+```
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```javascript
+// run the command after the assertion
+cy.get('p')
+  .should('not.be.empty')
+  .and(($p) => {
+    // ...
+  })
+  .then(($p) => {
+    cy.log($p)
+  })
+
+// or use .then() instead, which does not retry
+cy.get('p').then(($p) => {
+  // ...
+  cy.log($p)
+})
+```
+
+#### Verify length, content, and classes from multiple `<p>`
 
 ```html
 <div>
@@ -227,7 +261,7 @@ command's yield (which in the example below is `<button>`)
 
 ```javascript
 cy.get('button')
-  .should('be.active')
+  .should('be.visible')
   .and(($button) => {
     expect({ foo: 'bar' }).to.deep.eq({ foo: 'bar' })
 
@@ -237,6 +271,10 @@ cy.get('button')
     // do anything we want with <button>
   })
 ```
+
+### Retry boundaries
+
+<AssertionRetryBoundaries />
 
 ### Differences
 
@@ -250,8 +288,8 @@ cy.get('button')
 
 <HeaderTimeouts />
 
-- `.and()` will continue to [retry](/app/core-concepts/retry-ability) its
-  specified assertions until it times out.
+- `.and()` [retries](/app/core-concepts/retry-ability) its specified assertions
+  until they pass or it times out.
 
 ```javascript
 // timeout here will be passed down to the '.and()'
@@ -268,7 +306,7 @@ cy.get('input', { timeout: 10000 })
 cy.get('input', { timeout: 10000 })
   .should('have.value', 'US')
   .and(($input) => {
-    expect($input).to.not.be('disabled')
+    expect($input).to.not.be.disabled
     expect($input).to.not.have.class('error')
   })
 ```
@@ -299,8 +337,17 @@ following:
   alt="console.log for assertions"
 />
 
+## History
+
+| Version                                    | Changes                                         |
+| ------------------------------------------ | ----------------------------------------------- |
+| [11.0.0](/app/references/changelog#11-0-0) | Throw error if Cypress command used in callback |
+| [0.11.4](/app/references/changelog#0-11-4) | Allows callback function argument               |
+| [0.5.4](/app/references/changelog#0-5-4)   | `.and()` repurposed as an alias of `.should()`  |
+
 ## See also
 
 - [`.should()`](/api/commands/should)
 - [Guide: Introduction to Cypress](/app/core-concepts/introduction-to-cypress#Assertions)
 - [Reference: List of Assertions](/app/references/assertions)
+- [cypress-example-kitchensink Assertions](https://example.cypress.io/commands/assertions)

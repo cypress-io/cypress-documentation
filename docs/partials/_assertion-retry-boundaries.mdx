@@ -1,0 +1,37 @@
+#### An assertion in the middle of a chain locks in the subject
+
+`.should()` and `.and()` retry as part of the command that precedes them. Once
+every assertion in the chain passes, Cypress locks in the subject at that point,
+so queries that come after it retry from that subject rather than from the top
+of the chain. If your application re-renders the DOM in that window, those later
+queries run against a detached element.
+
+```javascript
+cy.get('.list')
+  .find('li')
+  .eq(2)
+  .should('contain', 'Header')
+  .and('be.visible') // once these pass, the li element is locked in
+  .children('.child') // if the DOM re-renders, this li may be detached
+```
+
+Split the chain into separate statements so each one re-queries from the top.
+[Assertions as retry boundaries](/app/core-concepts/retry-ability#Assertions-as-retry-boundaries)
+covers the pattern in full.
+
+#### An action command locks in the element it acted on
+
+An action command such as [`.click()`](/api/commands/click) locks in its subject
+the same way, so an assertion chained after it re-checks that element without
+re-querying for it. This is why asserting on a class the click toggles works,
+while asserting on an element the click replaces fails with
+`The subject is no longer attached to the DOM`.
+
+```javascript
+// the click toggles classes on the same element
+cy.get('button').click().should('have.class', 'active')
+
+// if the click re-renders the button, alias it and query again
+cy.get('button').as('btn').click()
+cy.get('@btn').should('have.class', 'active')
+```
