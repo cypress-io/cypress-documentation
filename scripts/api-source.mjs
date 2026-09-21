@@ -125,7 +125,21 @@ function sync(ref) {
   // A blobless clone fetches file contents on demand, so switching refs costs
   // only the blobs that actually changed. Fetch the one ref asked for: `--tags`
   // would pull every tag Cypress has ever published, which costs 20 seconds.
-  git(SOURCE_DIR, 'fetch', '--depth', '1', REPO, ref)
+  try {
+    git(SOURCE_DIR, 'fetch', '--depth', '1', REPO, ref)
+  } catch (err) {
+    // A branch is re-fetched every run because it moves, which otherwise makes
+    // an unreachable remote fatal for a checkout already sitting on that ref.
+    // Losing the network should cost the newest commits, not the lookup.
+    if (syncedRef() === ref) {
+      console.error(`Cannot reach ${REPO}; keeping ${SOURCE_DIR}/ at ${ref} without fetching.`)
+
+      return
+    }
+
+    throw err
+  }
+
   git(SOURCE_DIR, 'sparse-checkout', 'set', '--no-cone', ...SPARSE_PATHS)
   git(SOURCE_DIR, 'checkout', '--force', 'FETCH_HEAD')
   fs.writeFileSync(marker, ref)
