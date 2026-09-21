@@ -747,6 +747,16 @@ read those on GitHub.
   serves the same build. The dev server is not interchangeable here: it returns
   one shell title for every route and fills the real one in during hydration, so
   the `page_titles.cy.ts` checks that read server-rendered HTML fail against it.
+- They run in **Chrome for Testing**, which `cypress.config.ts` sets as the
+  `defaultBrowser`. It is pinned to a version and never updates itself, so a run
+  is reproducible, and the enterprise Chrome policies that can block remote
+  debugging do not apply to it. Install it
+  with `npx @puppeteer/browsers install chrome@stable` and put the binary where
+  Cypress auto-detects it, which on Linux is `chrome` on `PATH`. Both E2E jobs
+  install it with `browser-actions/setup-chrome` and pass
+  `--browser chrome-for-testing` through the Cypress action, and so does the
+  nightly `update-plugins-data` workflow, which runs `plugins_list.cy.ts` on its
+  own.
 - **Plugin unit tests** (Vitest) cover both sub-packages in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
@@ -762,14 +772,14 @@ read those on GitHub.
 The `CI` workflow (`.github/workflows/ci.yml`) runs on every pull request and on
 every push to `main`:
 
-| Job                                  | Command                               |
-| ------------------------------------ | ------------------------------------- |
-| Build                                | `npm run build`                       |
-| Lint JS/CSS/Markdown                 | `npm run lint`                        |
-| Typecheck                            | `npm run typecheck`                   |
-| Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins` |
-| E2E                                  | `cypress run` across 8 containers     |
-| Run Algolia scraper (`main` only)    | `scrape-and-compare-algolia-index`    |
+| Job                                  | Command                                                  |
+| ------------------------------------ | -------------------------------------------------------- |
+| Build                                | `npm run build`                                          |
+| Lint JS/CSS/Markdown                 | `npm run lint`                                           |
+| Typecheck                            | `npm run typecheck`                                      |
+| Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins`                    |
+| E2E                                  | `cypress run` in Chrome for Testing, across 8 containers |
+| Run Algolia scraper (`main` only)    | `scrape-and-compare-algolia-index`                       |
 
 Lint, typecheck, and unit tests install their own dependencies (restored from
 the `actions/setup-node` npm cache) and start immediately, without waiting on

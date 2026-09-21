@@ -4,6 +4,8 @@ import { join } from 'path'
 
 export default defineConfig({
   projectId: 'imown1',
+  // Pinned to a version and never self-updating, so a run is reproducible.
+  defaultBrowser: 'chrome-for-testing',
   fixturesFolder: false,
   viewportHeight: 800,
   viewportWidth: 1200,

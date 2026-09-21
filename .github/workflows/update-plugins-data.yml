@@ -76,6 +76,12 @@ jobs:
         if: steps.changed.outputs.changed == 'true'
         run: npm run build
 
+      - name: Install Chrome for Testing
+        if: steps.changed.outputs.changed == 'true'
+        uses: browser-actions/setup-chrome@v2
+        with:
+          install-dependencies: true
+
       # plugins_list.cy.ts is the spec for the page this data renders. It
       # asserts the things a bad refresh breaks: that the list is still
       # populated, that categories and badge tiers are ordered, and that
@@ -88,6 +94,7 @@ jobs:
           install: false
           start: npm run serve
           wait-on: 'http://localhost:3000'
+          browser: chrome-for-testing
           spec: cypress/e2e/plugins_list.cy.ts
 
       # Left ungated: with no change it opens nothing, and it is also what
