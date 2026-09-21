@@ -186,8 +186,7 @@ jobs:
           name: dist
           path: dist
 
-      # The runner ships branded Chrome, which auto-updates. This lands Chrome
-      # for Testing on `PATH` as `chrome`, where Cypress detects it on Linux.
+      # The Chrome the runner ships auto-updates; this one is pinned.
       - name: Install Chrome for Testing
         uses: browser-actions/setup-chrome@v2
         with:

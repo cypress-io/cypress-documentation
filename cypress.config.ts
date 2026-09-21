@@ -5,8 +5,6 @@ import { join } from 'path'
 export default defineConfig({
   projectId: 'imown1',
   // Pinned to a version and never self-updating, so a run is reproducible.
-  // Install it with `npx @puppeteer/browsers install chrome@stable`;
-  // `--browser` overrides it for a one-off run.
   defaultBrowser: 'chrome-for-testing',
   fixturesFolder: false,
   viewportHeight: 800,

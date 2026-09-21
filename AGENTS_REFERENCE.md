@@ -748,9 +748,9 @@ read those on GitHub.
   one shell title for every route and fills the real one in during hydration, so
   the `page_titles.cy.ts` checks that read server-rendered HTML fail against it.
 - They run in **Chrome for Testing**, which `cypress.config.ts` sets as the
-  `defaultBrowser` in place of the deprecated bundled Electron. It is pinned to a
-  version and never updates itself, so a run is reproducible, and the enterprise
-  Chrome policies that can block remote debugging do not apply to it. Install it
+  `defaultBrowser`. It is pinned to a version and never updates itself, so a run
+  is reproducible, and the enterprise Chrome policies that can block remote
+  debugging do not apply to it. Install it
   with `npx @puppeteer/browsers install chrome@stable` and put the binary where
   Cypress auto-detects it, which on Linux is `chrome` on `PATH`. Both E2E jobs
   install it with `browser-actions/setup-chrome` and pass

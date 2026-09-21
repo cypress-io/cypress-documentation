@@ -59,10 +59,10 @@ reader sees).
   real one in during hydration, so the `page_titles.cy.ts` checks built on
   `cy.request` fail against it while the `cy.visit` ones pass.
 - The suite runs in **Chrome for Testing**, set as `defaultBrowser` in the
-  config, rather than the deprecated bundled Electron. Install it before running
-  the specs (`npx @puppeteer/browsers install chrome@stable`) and put the binary
-  where Cypress auto-detects it. On Linux that is `chrome` on `PATH`. CI
-  installs it with `browser-actions/setup-chrome`.
+  config. Install it before running the specs with
+  `npx @puppeteer/browsers install chrome@stable`, and put the binary where
+  Cypress auto-detects it. On Linux that is `chrome` on `PATH`. CI installs it
+  with `browser-actions/setup-chrome`.
 - Because the specs crawl real pages, `blockHosts` in the config keeps Pendo,
   GA4, and FullStory from minting visitors on every run.
 - `cypress run --expose limitPerSection=2` spot-checks a couple of pages per
