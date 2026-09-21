@@ -1,6 +1,6 @@
 ---
 title: 'cy.as()'
-description: Assign an alias for later use in Cypress. Reference the alias later within a cy.get() query or cy.wait() command with an `@` prefix.
+description: Assign an alias to a DOM element, intercept, spy, stub, or value in Cypress and reference it later with an @ prefix.
 sidebar_label: as
 slug: /api/commands/as
 ---
@@ -43,6 +43,7 @@ cy.spy(win, 'fetch').as('winFetch') // Alias spy as @winFetch
 
 ```javascript
 cy.as('foo') // Errors, cannot be chained off 'cy'
+cy.get('.main-nav').as('@firstNav') // Errors, an alias name cannot start with '@'
 ```
 
 ### Arguments
@@ -50,8 +51,14 @@ cy.as('foo') // Errors, cannot be chained off 'cy'
 <Icon name="angle-right" /> **aliasName _(String)_**
 
 The name of the alias to be referenced later within a
-[`cy.get()`](/api/commands/get) or [`cy.wait()`](/api/commands/wait) command
-using an `@` prefix.
+[`cy.get()`](/api/commands/get), [`cy.wait()`](/api/commands/wait), or
+[`.selectFile()`](/api/commands/selectfile) command using an `@` prefix. An
+alias is also available as `this.aliasName` inside a test written with the
+standard `function` syntax, where it holds the value captured when `.as()` ran.
+
+The name must be a non-empty string that does not start with `@`. See
+[Alias naming rules and reserved words](#Alias-naming-rules-and-reserved-words)
+for the strings Cypress reserves.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -63,8 +70,8 @@ Pass in an options object to change the default behavior of `.as()`.
 
 <HeaderYields />
 
-- `.as()` yields the same subject it was given.
-- It is _safe_ to chain further commands after `.as()`.
+- `.as()` yields the same subject it was given from the previous command.
+- `.as()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
@@ -95,8 +102,9 @@ cy.intercept('PUT', '/users', { fixture: 'user' }).as('editUser')
 cy.get('form').submit()
 
 // once a response comes back from the `editUser`
-// this `wait` will resolve with the subject containing `url`
-cy.wait('@editUser').its('url').should('contain', 'users')
+// this `wait` resolves with the interception, whose
+// `request` holds the url
+cy.wait('@editUser').its('request.url').should('contain', 'users')
 ```
 
 More examples of aliasing routes can be found in
@@ -109,7 +117,7 @@ access it via the alias.
 
 ```javascript
 beforeEach(() => {
-  cy.fixture('users-admins.json').as('admins')
+  cy.fixture('admin-users.json').as('admins')
 })
 
 it('the users fixture is bound to this.admins', function () {
@@ -127,26 +135,52 @@ of `this`.
 
 :::
 
+### Static value
+
+A `query` alias, the default, re-runs the queries leading up to it every time
+you read it with `cy.get('@aliasName')`, so it reflects the current state of the
+application. Pass `{ type: 'static' }` to capture the value at the moment the
+alias is created instead.
+
+```javascript
+cy.get('#total').invoke('text').as('startingTotal', { type: 'static' })
+
+cy.get('#add-item').click()
+
+// still the text captured before the click
+cy.get('@startingTotal').should('equal', '$0.00')
+```
+
+The Command Log marks these aliases `@startingTotal (static)` so you can tell
+them apart from query aliases.
+
+Reading an alias as `this.aliasName` returns the value captured when `.as()` ran
+whatever the `type`, since the Mocha context is assigned once. The
+[Sharing Context](/app/core-concepts/variables-and-aliases#Sharing-Context)
+section of the aliases guide covers the tradeoff between the two.
+
 ## Notes
 
-### Aliases are reset
+### Aliases are reset before each test
 
 :::caution
 
-**Note:** all aliases are reset before each test. See the
+All aliases are reset before each test. See the
 [aliases guide](/app/core-concepts/variables-and-aliases) for details.
 
 :::
 
-### Reserved words
+### Alias naming rules and reserved words
 
-#### Alias names cannot match some reserved words.
+An alias name is a non-empty string that does not start with `@`. The `@` is how
+you reference an alias, so `.as('@firstNav')` fails and points you at
+`firstNav`. The symbol is fine anywhere else in the name, as are dots:
+`.as('my@Alias')` and `.as('body.foo')` both work.
 
-Some strings are not allowed as alias names since they are reserved words in
-Cypress. These words include: `test`, `runnable`, `timeout`, `slow`, `skip`, and
-`inspect`.
+These six strings are reserved words in Cypress and cannot be used as alias
+names: `test`, `runnable`, `timeout`, `slow`, `skip`, and `inspect`.
 
-### `as` is asynchronous
+### `.as()` is asynchronous
 
 Remember that **Cypress commands are async**, including `.as()`.
 
@@ -215,18 +249,19 @@ cy.intercept(/users\/\d+/).as('userGet')
 cy.intercept('PUT', /^\/users\/\d+/).as('userPut')
 ```
 
-Aliases of routes display in the routes instrument panel:
+Aliases of routes display in the routes instrument panel, which lists each
+route's method, matcher, stubbed status, alias, and number of matched requests:
 
 <DocsImage
   src="/img/api/as/routes-table-in-command-log.png"
-  alt="Command log for route"
+  alt="Routes panel listing five intercepted routes alongside their companyGet, rolesGet, teamsGet, userGet, and userPut aliases"
 />
 
 ## History
 
 | Version                                    | Changes                                                       |
 | ------------------------------------------ | ------------------------------------------------------------- |
-| [12.3.0](/app/references/changelog#12-3-0) | Added option `type` to opt into the pre-12.0.0 behavior.      |
+| [12.4.0](/app/references/changelog#12-4-0) | Added option `type` to opt into the pre-12.0.0 behavior.      |
 | [12.0.0](/app/references/changelog#12-0-0) | All aliases now re-run queries leading up to them by default. |
 
 ## See also
