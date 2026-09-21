@@ -142,8 +142,10 @@ cy.get('form input').check(['subscribe', 'accept'])
 
 #### Check an invisible checkbox
 
-Setting `force` to `true` skips the actionability checks that require the
-element to be visible, clickable, and not disabled.
+Setting `force` to `true` skips the
+[actionability](/app/core-concepts/interacting-with-elements) checks, so Cypress
+clicks the element without first requiring it to be visible, enabled, and
+unobstructed.
 
 ```javascript
 cy.get('.action-checkboxes')
@@ -178,7 +180,7 @@ cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 `.check()` is an "action command" that follows all the rules of
 [Actionability](/app/core-concepts/interacting-with-elements).
 
-### Values
+### Value matching
 
 #### A value argument filters the subject
 
