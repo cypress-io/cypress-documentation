@@ -370,7 +370,7 @@ List the failing specs in a run:
 cy-cloud spec list --projectId <projectId> --runNumber <runNumber> --status failed
 ```
 
-Each spec includes its id, status, and file path:
+Each spec includes its id, status, filepath, and whether Cypress Cloud has flagged it as flaky:
 
 ```json
 {
@@ -378,6 +378,7 @@ Each spec includes its id, status, and file path:
     {
       "id": "3f9a2b1c-4d5e-6f7a-8b9c-0d1e2f3a4b5c",
       "status": "failed",
+      "flaky": false,
       "path": "cypress/e2e/checkout.cy.ts"
     }
   ]
@@ -385,6 +386,12 @@ Each spec includes its id, status, and file path:
 ```
 
 `--status` accepts `passed`, `failed`, `running`, `errored`, `timedOut`, `cancelled`, and `noTests` (comma-separate to combine).
+
+Filter to only flaky specs with `--onlyFlaky`. This requires a Cypress Cloud plan with [Flaky Test Management](/cloud/features/flaky-test-management); without one, the command returns an error.
+
+```bash
+cy-cloud spec list --projectId <projectId> --runNumber <runNumber> --onlyFlaky
+```
 
 Or look up specific specs by ID:
 
@@ -423,7 +430,7 @@ List the failing tests in a run:
 cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status failed
 ```
 
-Each test includes its title parts, spec, status, a Test Replay URL (when available), and, for failures, the error and stack trace per attempt:
+Each test includes its title parts, spec, status, whether Cypress Cloud has flagged it as flaky, a Test Replay URL (when available), and, for failures, the error and stack trace per attempt:
 
 ```json
 {
@@ -438,6 +445,7 @@ Each test includes its title parts, spec, status, a Test Replay URL (when availa
       "testReplayUrl": "https://cloud.cypress.io/projects/abc123/runs/4021/overview/7c1e9d20",
       "browserName": "Chrome",
       "status": "failed",
+      "flaky": false,
       "attempts": [
         {
           "attemptNumber": 1,
@@ -458,6 +466,12 @@ cy-cloud test list --specId <specId>
 ```
 
 `--status` accepts `passed`, `failed`, `pending`, `skipped`, `running`, `errored`, `timedOut`, and `cancelled` (comma-separate to combine).
+
+Filter to only flaky tests with `--onlyFlaky`. This requires a Cypress Cloud plan with [Flaky Test Management](/cloud/features/flaky-test-management); without one, the command returns an error.
+
+```bash
+cy-cloud test list --projectId <projectId> --runNumber <runNumber> --onlyFlaky
+```
 
 ### cy-cloud test get
 
@@ -1019,9 +1033,15 @@ Wrap this sequence in a [shell script](#Use-in-a-shell-script) that takes a proj
 
 ## Workflow: debug a flaky test
 
-A [flaky test](/cloud/features/flaky-test-management) failed and then passed on retry, so its status is `passed` but it has more than one attempt. There is no `--status flaky` filter, so you spot them by attempt count. This requires [test retries](/app/guides/test-retries).
+A [flaky test](/cloud/features/flaky-test-management) failed and then passed on retry, so its status is `passed` but it has more than one attempt. This requires [test retries](/app/guides/test-retries).
 
-**1. Find the flaky tests in a run.** List the passed tests and keep only those with more than one attempt:
+**1. Find the flaky tests in a run.** If your plan includes Flaky Test Management, list only the tests Cypress Cloud has flagged as flaky with `--onlyFlaky`:
+
+```bash
+cy-cloud test list --projectId <projectId> --runNumber <runNumber> --onlyFlaky
+```
+
+Without that plan, spot them by attempt count instead: list the passed tests and keep only those with more than one attempt:
 
 ```bash
 cy-cloud test list --projectId <projectId> --runNumber <runNumber> --status passed \
