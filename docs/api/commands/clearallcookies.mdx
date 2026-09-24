@@ -78,6 +78,49 @@ cy.clearAllCookies()
 cy.getAllCookies().should('be.empty')
 ```
 
+#### Log out in the middle of a test <E2EOnlyBadge />
+
+Clearing every cookie removes your app's session cookie along with any cookies
+the identity provider set, so the next request arrives logged out. In this
+example, the app redirects unauthenticated visitors to its login page.
+
+```javascript
+cy.visit('/dashboard')
+cy.clearAllCookies()
+cy.reload()
+cy.url().should('include', 'login')
+```
+
+#### Clear cookies before each test when test isolation is off
+
+With [test isolation](/app/core-concepts/test-isolation) turned off, cookies
+from one test carry over to the next. Call `cy.clearAllCookies()` in a
+`beforeEach` hook to start every test in the suite without cookies.
+
+```javascript
+describe('Account settings', { testIsolation: false }, () => {
+  beforeEach(() => {
+    cy.clearAllCookies()
+  })
+
+  it('shows the login prompt', () => {
+    // no cookies from earlier tests are present
+  })
+})
+```
+
+### Options
+
+#### Clear cookies without logging to the Command Log
+
+Pass `{ log: false }` to keep `cy.clearAllCookies()` out of the
+[Command Log](/app/core-concepts/open-mode#Command-Log), which is useful when it
+runs in a hook before every test.
+
+```javascript
+cy.clearAllCookies({ log: false })
+```
+
 ## Rules
 
 <HeaderRequirements />
