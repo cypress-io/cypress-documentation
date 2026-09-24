@@ -1,6 +1,6 @@
 ---
 title: 'cy.clear()'
-description: Clear the value of an input or textarea in Cypress.
+description: Clear the value of an input, textarea, or contenteditable element in Cypress.
 sidebar_label: clear
 slug: /api/commands/clear
 ---
@@ -9,14 +9,16 @@ slug: /api/commands/clear
 
 # clear
 
-Clear the value of an `input` or `textarea`.
+Clear the value of an `input`, `textarea`, or `contenteditable` element.
 
 It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.clear()`.
 
 :::info
 
-An alias for [`.type('{selectall}{del}')`](/api/commands/type)
+An alias for [`.type('{selectall}{del}')`](/api/commands/type), except that
+`.clear()` clears every element in its subject, while `.type()` requires a
+single element.
 
 :::
 
@@ -36,13 +38,16 @@ cy.get('[type="text"]').clear() // Clear text input
 cy.get('textarea').type('Hi!')
 cy.get('textarea').clear() // Clear textarea
 cy.focused().clear() // Clear focused input/textarea
+cy.get('[contenteditable]').clear() // Clear contenteditable element
+cy.get('form input[type="text"]').clear() // Clear every text input in a form
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.clear() // Errors, cannot be chained off 'cy'
-cy.get('nav').clear() // Errors, 'get' doesn't yield input or textarea
+cy.get('nav').clear() // Errors, 'get' doesn't yield a clearable element
+cy.get('[type="checkbox"]').clear() // Errors, checkboxes aren't clearable
 cy.clock().clear() // Errors, 'clock' does not yield DOM elements
 ```
 
@@ -78,6 +83,17 @@ cy.get('textarea').clear()
 cy.get('textarea').type('Hello, World')
 ```
 
+### Multiple elements
+
+#### Clear every text input in a form
+
+`.clear()` clears each element in the subject in order, then yields them all.
+
+```javascript
+cy.get('#signup-form input[type="text"]').clear()
+cy.get('#signup-form input[type="text"]').should('have.value', '')
+```
+
 ## Notes
 
 ### Actionability
@@ -90,7 +106,7 @@ cy.get('textarea').type('Hello, World')
 ### Documentation
 
 `.clear()` is an alias for
-[`.type({selectall}{del})`](/api/commands/type).
+[`.type('{selectall}{del}')`](/api/commands/type).
 
 Read the [`.type()`](/api/commands/type) documentation for more details.
 
@@ -99,13 +115,19 @@ Read the [`.type()`](/api/commands/type) documentation for more details.
 <HeaderRequirements />
 
 - `.clear()` requires being chained off a command that yields DOM element(s).
-- `.clear()` requires the element to be an `input` or `textarea`.
+- `.clear()` requires every element in the subject to be one of the following:
+  - a `textarea`
+  - an `input` of type `text`, `password`, `email`, `number`, `search`, `tel`,
+    `url`, `date`, `datetime`, `datetime-local`, `month`, `week`, or `time`
+    (an `input` with no `type` attribute counts as `text`)
+  - an element whose content is editable, such as one with a
+    `contenteditable` attribute
 
 <HeaderAssertions />
 
-- `.clear()` will automatically wait for the element to reach an
+- `.clear()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements)
-- `.clear()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.clear()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
 <HeaderTimeouts />
