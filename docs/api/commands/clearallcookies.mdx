@@ -1,6 +1,6 @@
 ---
 title: 'cy.clearAllCookies()'
-description: Clear all browser cookies in Cypress.
+description: Clear all browser cookies across every domain in Cypress.
 sidebar_label: clearAllCookies
 ---
 
@@ -8,7 +8,13 @@ sidebar_label: clearAllCookies
 
 # clearAllCookies
 
-Clear all browser cookies.
+Clear all browser cookies across every domain.
+
+Where [`cy.clearCookies()`](/api/commands/clearcookies) clears the cookies for a
+single domain, `cy.clearAllCookies()` clears every cookie in the browser,
+whatever domain set it. It doesn't read the current URL, so it works without
+[`cy.origin()`](/api/commands/origin) even after your app navigates to another
+origin.
 
 :::caution
 
@@ -51,6 +57,28 @@ Pass in an options object to change the default behavior of
 
 - `cy.clearAllCookies()` yields `null`.
 
+## Examples
+
+### No Args
+
+#### Clear cookies set by multiple domains <E2EOnlyBadge />
+
+In this example, logging in through an identity provider sets cookies on both
+the identity provider's domain and your app's domain. `cy.clearAllCookies()`
+clears the cookies from both in one command.
+
+```javascript
+cy.contains('Log in').click()
+cy.origin('https://example.cypress.io', () => {
+  cy.get('[type=password]').type('*****')
+  cy.contains('Log in').click()
+})
+cy.url().should('include', 'profile')
+cy.getAllCookies().should('have.length', 2)
+cy.clearAllCookies()
+cy.getAllCookies().should('be.empty')
+```
+
 ## Rules
 
 <HeaderRequirements />
@@ -73,9 +101,16 @@ for practical purposes it should never happen.
 
 :::
 
+## History
+
+| Version                                    | Changes                              |
+| ------------------------------------------ | ------------------------------------ |
+| [12.1.0](/app/references/changelog#12-1-0) | `cy.clearAllCookies()` command added |
+
 ## See also
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
+- [`cy.clearCookies()`](/api/commands/clearcookies)
 - [`cy.getAllCookies()`](/api/commands/getallcookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)
