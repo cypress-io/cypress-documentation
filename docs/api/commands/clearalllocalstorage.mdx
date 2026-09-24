@@ -60,7 +60,10 @@ Pass in an options object to change the default behavior of
 
 <HeaderAssertions />
 
-- `cy.clearAllLocalStorage()` cannot have any assertions chained.
+- `cy.clearAllLocalStorage()` yields `null`, so there's nothing to assert on. To
+  confirm local storage is cleared, assert on
+  [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage) afterward, for
+  example `cy.getAllLocalStorage().should('be.empty')`.
 
 <HeaderTimeouts />
 

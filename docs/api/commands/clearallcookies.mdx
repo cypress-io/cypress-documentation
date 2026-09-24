@@ -1,6 +1,6 @@
 ---
 title: 'cy.clearAllCookies()'
-description: Clear all browser cookies in Cypress.
+description: Clear all browser cookies across every domain in Cypress.
 sidebar_label: clearAllCookies
 ---
 
@@ -8,7 +8,12 @@ sidebar_label: clearAllCookies
 
 # clearAllCookies
 
-Clear all browser cookies.
+Clear all browser cookies across every domain.
+
+While [`cy.clearCookies()`](/api/commands/clearcookies) clears cookies for a
+single domain, `cy.clearAllCookies()` doesn't read the current URL, so it works
+without [`cy.origin()`](/api/commands/origin) even after your app navigates to
+another origin.
 
 :::caution
 
@@ -51,6 +56,71 @@ Pass in an options object to change the default behavior of
 
 - `cy.clearAllCookies()` yields `null`.
 
+## Examples
+
+### No Args
+
+#### Clear cookies set by multiple domains <E2EOnlyBadge />
+
+In this example, logging in through an identity provider sets cookies on both
+the identity provider's domain and your app's domain. `cy.clearAllCookies()`
+clears the cookies from both in one command.
+
+```javascript
+cy.contains('Log in').click()
+cy.origin('https://example.cypress.io', () => {
+  cy.get('[type=password]').type('*****')
+  cy.contains('Log in').click()
+})
+cy.url().should('include', 'profile')
+cy.getAllCookies().should('have.length', 2)
+cy.clearAllCookies()
+cy.getAllCookies().should('be.empty')
+```
+
+#### Log out in the middle of a test <E2EOnlyBadge />
+
+Clearing every cookie removes your app's session cookie along with any cookies
+the identity provider set, so the next request arrives logged out. In this
+example, the app redirects unauthenticated visitors to its login page.
+
+```javascript
+cy.visit('/dashboard')
+cy.clearAllCookies()
+cy.reload()
+cy.url().should('include', 'login')
+```
+
+#### Clear cookies before each test when test isolation is off
+
+With [test isolation](/app/core-concepts/test-isolation) turned off, cookies
+from one test carry over to the next. Call `cy.clearAllCookies()` in a
+`beforeEach` hook to start every test in the suite without cookies.
+
+```javascript
+describe('Account settings', { testIsolation: false }, () => {
+  beforeEach(() => {
+    cy.clearAllCookies()
+  })
+
+  it('shows the login prompt', () => {
+    // no cookies from earlier tests are present
+  })
+})
+```
+
+### Options
+
+#### Clear cookies without logging to the Command Log
+
+Pass `{ log: false }` to keep `cy.clearAllCookies()` out of the
+[Command Log](/app/core-concepts/open-mode#Command-Log), which is useful when it
+runs in a hook before every test.
+
+```javascript
+cy.clearAllCookies({ log: false })
+```
+
 ## Rules
 
 <HeaderRequirements />
@@ -59,7 +129,10 @@ Pass in an options object to change the default behavior of
 
 <HeaderAssertions />
 
-- `cy.clearAllCookies()` cannot have any assertions chained.
+- `cy.clearAllCookies()` yields `null`, so there's nothing to assert on. To
+  confirm the cookies are cleared, assert on
+  [`cy.getAllCookies()`](/api/commands/getallcookies) afterward, for example
+  `cy.getAllCookies().should('be.empty')`.
 
 <HeaderTimeouts />
 
@@ -73,9 +146,16 @@ for practical purposes it should never happen.
 
 :::
 
+## History
+
+| Version                                    | Changes                              |
+| ------------------------------------------ | ------------------------------------ |
+| [12.1.0](/app/references/changelog#12-1-0) | `cy.clearAllCookies()` command added |
+
 ## See also
 
 - [`cy.clearCookie()`](/api/commands/clearcookie)
+- [`cy.clearCookies()`](/api/commands/clearcookies)
 - [`cy.getAllCookies()`](/api/commands/getallcookies)
 - [`cy.getCookie()`](/api/commands/getcookie)
 - [`cy.getCookies()`](/api/commands/getcookies)

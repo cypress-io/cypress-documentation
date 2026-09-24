@@ -78,7 +78,10 @@ cy.url().should('include', 'login')
 
 <HeaderAssertions />
 
-- `cy.clearCookies()` cannot have any assertions chained.
+- `cy.clearCookies()` yields `null`, so there's nothing to assert on. To confirm
+  the cookies are cleared, assert on
+  [`cy.getCookies()`](/api/commands/getcookies) afterward, for example
+  `cy.getCookies().should('be.empty')`.
 
 <HeaderTimeouts />
 
