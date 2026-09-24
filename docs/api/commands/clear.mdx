@@ -83,6 +83,15 @@ cy.get('textarea').clear()
 cy.get('textarea').type('Hello, World')
 ```
 
+#### Clear an input and confirm it's empty
+
+Chain an assertion directly off `.clear()`. `.clear()` retries the assertion
+until it passes, so this is the reliable way to check the result.
+
+```javascript
+cy.get('input[name="email"]').clear().should('have.value', '')
+```
+
 ### Multiple elements
 
 #### Clear every text input in a form
@@ -99,6 +108,22 @@ cy.get('#signup-form input[type="text"]').each(($input) => {
 A `have.value` assertion on several elements checks only the first one's value,
 so assert on each element to confirm they're all empty.
 
+### Contenteditable elements
+
+#### Clear a rich text editor
+
+Target the element that carries the `contenteditable` attribute, then type new
+content into it.
+
+```javascript
+cy.get('[contenteditable]').clear()
+cy.get('[contenteditable]').type('A fresh start')
+```
+
+Rich text editors often manage their own selection and DOM. The
+[`.type()` notes on contenteditable elements](/api/commands/type#Contenteditable-Elements)
+cover how to work with them.
+
 ## Notes
 
 ### Actionability
@@ -107,6 +132,20 @@ so assert on each element to confirm they're all empty.
 
 `.clear()` is an "action command" that follows all the rules of
 [Actionability](/app/core-concepts/interacting-with-elements).
+
+### Events
+
+#### `.clear()` doesn't fire `change` until the element loses focus
+
+`.clear()` fires the same keyboard and `input` events a user's keystrokes do.
+Browsers fire `change` only when an edited field loses focus, so `.clear()`
+alone doesn't trigger it. If your app validates or saves on `change`, follow
+`.clear()` with [`.blur()`](/api/commands/blur):
+
+```javascript
+cy.get('input[name="email"]').clear().blur()
+cy.contains('Email is required').should('be.visible')
+```
 
 ### Documentation
 
