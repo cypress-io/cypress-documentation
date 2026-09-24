@@ -60,7 +60,10 @@ Pass in an options object to change the default behavior of
 
 <HeaderAssertions />
 
-`cy.clearAllSessionStorage()` yields `null`, so there's nothing to assert on. To confirm session storage is cleared, assert on [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) afterward, for example `cy.getAllSessionStorage().should('be.empty')`.
+- `cy.clearAllSessionStorage()` yields `null`, so there's nothing to assert on.
+  To confirm session storage is cleared, assert on
+  [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) afterward,
+  for example `cy.getAllSessionStorage().should('be.empty')`.
 
 <HeaderTimeouts />
 

@@ -10,11 +10,10 @@ sidebar_label: clearAllCookies
 
 Clear all browser cookies across every domain.
 
-Where [`cy.clearCookies()`](/api/commands/clearcookies) clears the cookies for a
-single domain, `cy.clearAllCookies()` clears every cookie in the browser,
-whatever domain set it. It doesn't read the current URL, so it works without
-[`cy.origin()`](/api/commands/origin) even after your app navigates to another
-origin.
+While [`cy.clearCookies()`](/api/commands/clearcookies) clears cookies for a
+single domain, `cy.clearAllCookies()` doesn't read the current URL, so it works
+without [`cy.origin()`](/api/commands/origin) even after your app navigates to
+another origin.
 
 :::caution
 
@@ -87,7 +86,10 @@ cy.getAllCookies().should('be.empty')
 
 <HeaderAssertions />
 
-- `cy.clearAllCookies()` yields `null`, so there's nothing to assert on. To confirm the cookies are cleared, assert on [`cy.getAllCookies()`](/api/commands/getallcookies) afterward, for example `cy.getAllCookies().should('be.empty')`.
+- `cy.clearAllCookies()` yields `null`, so there's nothing to assert on. To
+  confirm the cookies are cleared, assert on
+  [`cy.getAllCookies()`](/api/commands/getallcookies) afterward, for example
+  `cy.getAllCookies().should('be.empty')`.
 
 <HeaderTimeouts />
 

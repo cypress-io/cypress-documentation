@@ -83,7 +83,9 @@ cy.url().should('include', 'login')
 
 <HeaderAssertions />
 
-- `cy.clearCookie()` yields `null`, so there's nothing to assert on. To confirm the cookie is cleared, assert on [`cy.getCookie()`](/api/commands/getcookie) afterward, for example `cy.getCookie('session_id').should('be.null')`.
+- `cy.clearCookie()` yields `null`, so there's nothing to assert on. To confirm
+  the cookie is cleared, assert on [`cy.getCookie()`](/api/commands/getcookie)
+  afterward, for example `cy.getCookie('session_id').should('be.null')`.
 
 <HeaderTimeouts />
 
