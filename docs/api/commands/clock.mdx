@@ -123,6 +123,47 @@ cy.tick(1000)
 cy.get('#seconds-elapsed').should('have.text', '2 seconds')
 ```
 
+#### Test a debounced search input
+
+A debounced input waits for the user to stop typing before it acts. With
+`cy.clock()`, you control exactly when that wait ends, so you can assert both
+that nothing happens too early and that the request fires on time.
+
+```javascript
+// your app code
+let debounceTimer
+
+$('#search').on('input', (e) => {
+  clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    fetch(`/api/search?q=${e.target.value}`)
+  }, 300)
+})
+```
+
+```javascript
+cy.intercept('GET', '/api/search*').as('search')
+cy.clock()
+cy.visit('/products')
+cy.get('#search').type('shoes')
+// the debounce hasn't elapsed, so no request has been sent
+cy.get('@search.all').should('have.length', 0)
+cy.tick(300)
+cy.wait('@search')
+```
+
+#### Test an inactivity timeout without waiting for it
+
+Session expiry warnings and automatic logouts often wait many minutes before
+they trigger. Move the clock forward instead of waiting in real time.
+
+```javascript
+cy.clock()
+cy.visit('/dashboard')
+cy.tick(15 * 60 * 1000) // 15 minutes
+cy.contains('Your session has expired').should('be.visible')
+```
+
 #### Access the clock object to synchronously move time
 
 In most cases, it's easier to use [`cy.tick()`](/api/commands/tick) to move
@@ -201,6 +242,33 @@ cy.get('#date').should('have.value', '04/14/2021')
 
 :::
 
+#### Start every test on the same date
+
+Call `cy.clock()` in a `beforeEach()` hook so every test sees the same current
+date. Cypress restores the clock automatically after each test, so each test
+starts with a fresh clock set to the same `now`.
+
+```javascript
+beforeEach(() => {
+  cy.clock(Date.UTC(2026, 0, 15))
+  cy.visit('/reports')
+})
+```
+
+#### Test a date rollover at midnight
+
+Combine a `now` value with [`cy.tick()`](/api/commands/tick) to test what
+happens when time crosses a boundary, such as midnight. This example assumes
+the app updates its displayed date on a timer.
+
+```javascript
+cy.clock(new Date(2026, 0, 31, 23, 59, 59)) // one second before midnight
+cy.visit('/calendar')
+cy.get('#today').should('contain', 'January 31')
+cy.tick(1000)
+cy.get('#today').should('contain', 'February 1')
+```
+
 ### Function names
 
 #### Specify which functions to override
@@ -217,6 +285,18 @@ example below affects the current datetime without affecting scheduled timers.
 
 ```javascript
 cy.clock(Date.UTC(2018, 10, 30), ['Date'])
+```
+
+#### Keep animations running while freezing the date
+
+By default, `cy.clock()` also overrides `requestAnimationFrame`, so JavaScript
+animations and any rendering that relies on animation frames only advance when
+you call [`cy.tick()`](/api/commands/tick). To freeze the date and control
+timeouts while leaving animation frames running in real time, list only the
+functions you want to override.
+
+```javascript
+cy.clock(Date.UTC(2026, 0, 1), ['Date', 'setTimeout', 'clearTimeout'])
 ```
 
 #### `Using cy.clock()` with `cy.tick()`
@@ -302,6 +382,12 @@ cy.clock().invoke('setSystemTime', 60 * 60 * 1000)
 not override the time functions of any `iframe` embedded on the page.
 
 ### Behavior
+
+#### CSS animations and transitions
+
+`cy.clock()` overrides JavaScript time functions only. CSS animations and CSS
+transitions run on the browser's own clock, so they keep playing in real time
+and [`cy.tick()`](/api/commands/tick) doesn't move them forward.
 
 #### clock behavior before `cy.mount()`
 
