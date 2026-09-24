@@ -85,12 +85,19 @@ cy.get('textarea').type('Hello, World')
 
 #### Clear an input and confirm it's empty
 
-Chain an assertion directly off `.clear()`. `.clear()` retries the assertion
-until it passes, so this is the reliable way to check the result.
+End the chain at `.clear()`, then start a new chain for the assertion. The new
+[`cy.get()`](/api/commands/get) re-queries the input, so the assertion still
+passes if your app re-renders it after the clear.
 
 ```javascript
-cy.get('input[name="email"]').clear().should('have.value', '')
+cy.get('input[name="email"]').clear()
+cy.get('input[name="email"]').should('have.value', '')
 ```
+
+Chaining the assertion directly off `.clear()` retries only against the element
+`.clear()` acted on. If that element is replaced in the DOM, the assertion keeps
+checking the detached copy. See
+[Actions should be at the end of chains](/app/core-concepts/retry-ability#Actions-should-be-at-the-end-of-chains-not-the-middle).
 
 ### Multiple elements
 
@@ -100,13 +107,17 @@ cy.get('input[name="email"]').clear().should('have.value', '')
 
 ```javascript
 cy.get('#signup-form input[type="text"]').clear()
-cy.get('#signup-form input[type="text"]').each(($input) => {
-  cy.wrap($input).should('have.value', '')
+cy.get('#signup-form input[type="text"]').should(($inputs) => {
+  $inputs.each((i, input) => {
+    expect(input).to.have.value('')
+  })
 })
 ```
 
 A `have.value` assertion on several elements checks only the first one's value,
-so assert on each element to confirm they're all empty.
+so check each element inside a `.should()` callback. Cypress retries the
+callback and re-runs the `cy.get()` query, so it always checks the inputs
+currently on the page.
 
 ### Contenteditable elements
 
