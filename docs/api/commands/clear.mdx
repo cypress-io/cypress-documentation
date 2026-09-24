@@ -138,12 +138,14 @@ cover how to work with them.
 #### `.clear()` doesn't fire `change` until the element loses focus
 
 `.clear()` fires the same keyboard and `input` events a user's keystrokes do.
-Browsers fire `change` only when an edited field loses focus, so `.clear()`
-alone doesn't trigger it. If your app validates or saves on `change`, follow
-`.clear()` with [`.blur()`](/api/commands/blur):
+An `input` or `textarea` fires `change` when it loses focus after its value
+changes, so `.clear()` alone doesn't trigger it. If your app validates or saves
+on `change`, follow `.clear()` with [`.blur()`](/api/commands/blur), or with any
+command that moves focus elsewhere, such as clicking another element:
 
 ```javascript
-cy.get('input[name="email"]').clear().blur()
+cy.get('input[name="email"]').clear()
+cy.get('input[name="email"]').blur()
 cy.contains('Email is required').should('be.visible')
 ```
 
