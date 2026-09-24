@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of
 
 <HeaderAssertions />
 
-`cy.clearAllSessionStorage()` runs once, and any assertions you chain run against the `null` it yields. Cypress doesn't re-run `cy.clearAllSessionStorage()` to make an assertion pass.
+`cy.clearAllSessionStorage()` yields `null`, so there's nothing to assert on. To confirm session storage is cleared, assert on [`cy.getAllSessionStorage()`](/api/commands/getallsessionstorage) afterward, for example `cy.getAllSessionStorage().should('be.empty')`.
 
 <HeaderTimeouts />
 

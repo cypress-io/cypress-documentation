@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of
 
 <HeaderAssertions />
 
-- `cy.clearAllLocalStorage()` runs once, and any assertions you chain run against the `null` it yields. Cypress doesn't re-run `cy.clearAllLocalStorage()` to make an assertion pass.
+- `cy.clearAllLocalStorage()` yields `null`, so there's nothing to assert on. To confirm local storage is cleared, assert on [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage) afterward, for example `cy.getAllLocalStorage().should('be.empty')`.
 
 <HeaderTimeouts />
 

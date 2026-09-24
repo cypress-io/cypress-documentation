@@ -289,7 +289,7 @@ describe(
 
 <HeaderAssertions />
 
-- `cy.viewport()` runs once, and any assertions you chain run against the `null` it yields. Cypress doesn't re-run `cy.viewport()` to make an assertion pass.
+- `cy.viewport()` yields `null`, so there's nothing to assert on.
 
 <HeaderTimeouts />
 

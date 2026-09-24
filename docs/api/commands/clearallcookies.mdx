@@ -87,7 +87,7 @@ cy.getAllCookies().should('be.empty')
 
 <HeaderAssertions />
 
-- `cy.clearAllCookies()` runs once, and any assertions you chain run against the `null` it yields. Cypress doesn't re-run `cy.clearAllCookies()` to make an assertion pass.
+- `cy.clearAllCookies()` yields `null`, so there's nothing to assert on. To confirm the cookies are cleared, assert on [`cy.getAllCookies()`](/api/commands/getallcookies) afterward, for example `cy.getAllCookies().should('be.empty')`.
 
 <HeaderTimeouts />
 
