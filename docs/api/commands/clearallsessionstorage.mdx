@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of
 
 <HeaderAssertions />
 
-`cy.clearAllSessionStorage()` cannot have any assertions chained.
+`cy.clearAllSessionStorage()` runs once, and any assertions you chain run against the `null` it yields. Cypress doesn't re-run `cy.clearAllSessionStorage()` to make an assertion pass.
 
 <HeaderTimeouts />
 

@@ -83,7 +83,7 @@ cy.url().should('include', 'login')
 
 <HeaderAssertions />
 
-- `cy.clearCookie()` cannot have any assertions chained.
+- `cy.clearCookie()` runs once, and any assertions you chain run against the `null` it yields. Cypress doesn't re-run `cy.clearCookie()` to make an assertion pass.
 
 <HeaderTimeouts />
 

@@ -69,7 +69,7 @@ cy.log('events triggered', events)
 
 <HeaderAssertions />
 
-- `cy.log()` cannot have any assertions chained.
+- `cy.log()` runs once, and any assertions you chain run against the `null` it yields. Cypress doesn't re-run `cy.log()` to make an assertion pass.
 
 <HeaderTimeouts />
 
