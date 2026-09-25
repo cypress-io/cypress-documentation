@@ -111,8 +111,8 @@ cy.get('img').click('topRight')
 
 #### Specify explicit coordinates relative to the top left corner
 
-The click below will be issued inside of the element (15px from the left and
-40px from the top).
+The click below is issued inside of the element (15px from the left and 40px
+from the top).
 
 ```javascript
 cy.get('#top-banner').click(15, 40)
@@ -124,7 +124,7 @@ cy.get('#top-banner').click(15, 40)
 
 Forcing a click overrides the
 [actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
-Cypress applies and will automatically fire the events.
+Cypress applies and fires the events.
 
 ```javascript
 cy.get('.close').as('closeBtn')
@@ -145,10 +145,10 @@ cy.get('#footer .next').click(5, 60, { force: true })
 
 #### Click all elements with id starting with 'btn'
 
-By default, Cypress will error if you're trying to click multiple elements. By
-passing `{ multiple: true }` Cypress will iteratively apply the click to each
-element and will also log to the
-[Command Log](/app/core-concepts/open-mode#Command-Log) multiple times.
+By default, Cypress errors if you try to click multiple elements. When you pass
+`{ multiple: true }`, Cypress clicks each element in turn, gives each click its
+own full timeout, and logs each click to the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
 
 ```javascript
 cy.get('[id^=btn]').click({ multiple: true })
@@ -201,30 +201,38 @@ cy.get('li:first').click({
 For example, clicking a `<span>` inside of a `<button>` gives the focus to the
 button, since that's what would happen in a real user scenario.
 
-However, Cypress additionally handles situations where a child descendent is
-clicked inside of a focusable parent, but actually isn't visually inside the
-parent (per the CSS Object Model). In those cases if no focusable parent is
-found the window is given focus instead (which matches real browser behavior).
+Cypress starts from the element at the click coordinates, which can differ from
+the subject when a descendant is positioned outside of its parent (per the CSS
+Object Model), and walks up its ancestors to find a focusable element. If none
+is focusable, Cypress blurs the currently focused element instead, which matches
+real browser behavior.
 
 ### Cancellation
 
-#### Mousedown cancellation will not cause focus
+#### Pointerdown or mousedown cancellation prevents focus
 
-If the mousedown event has its default action prevented ( `e.preventDefault()` )
-then the element will not receive focus as per the spec.
+If the `pointerdown` or `mousedown` event has its default action prevented
+(`e.preventDefault()`), the element does not receive focus, as per the spec.
+
+When `pointerdown` is cancelled, Cypress also skips the `mousedown` and
+`mouseup` events, following the Pointer Events spec. It still sends `pointerup`
+and `click`.
 
 ## Rules
 
 <HeaderRequirements />
 
 - `.click()` requires being chained off a command that yields DOM element(s).
+- `.click()` requires a single element unless you pass `{ multiple: true }`.
+- `.click()` cannot be called on a `<select>` element. Use
+  [`.select()`](/api/commands/select) to change its value.
 
 <HeaderAssertions />
 
-- `.click()` will automatically wait for the element to reach an
+- `.click()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.click()` itself will not be retried — it fires once when the element is
-  actionable. Assertions chained after `.click()` will be retried until they
+- `.click()` itself is not retried. It fires once when the element is
+  actionable. Assertions chained after `.click()` are retried until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
