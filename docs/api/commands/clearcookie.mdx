@@ -141,6 +141,7 @@ describe('Onboarding tour', { testIsolation: false }, () => {
     cy.get('[data-cy="username"]').type('user')
     cy.get('[data-cy="password"]').type('*****')
     cy.get('[data-cy="submit"]').click()
+    cy.url().should('include', '/dashboard') // wait for the login to finish
   })
 
   beforeEach(() => {
