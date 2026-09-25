@@ -22,8 +22,8 @@ be controlled synchronously via [`cy.tick()`](/api/commands/tick) or the yielded
   passed
 
 The clock starts at the unix epoch (timestamp of 0) unless you pass a `now`
-value. This means that when you instantiate `new Date` in your application, it
-will have a time of `January 1st, 1970`.
+value. Without a `now` value, `new Date` in your application returns a time of
+`January 1st, 1970`.
 
 ## Syntax
 
@@ -48,8 +48,8 @@ cy.clock()
 
 <Icon name="angle-right" /> **now _(number, Date)_**
 
-A timestamp or `Date` object specifying where the clock should start. Pass
-`null` to start at the unix epoch while still passing `functionNames`.
+A timestamp or `Date` object specifying where the clock should start. Pass `0`
+(or `null`) to start at the unix epoch while still passing `functionNames`.
 
 <Icon name="angle-right" /> **functionNames _(Array)_**
 
@@ -122,7 +122,7 @@ cy.tick(1000)
 cy.get('#seconds-elapsed').should('have.text', '2 seconds')
 ```
 
-#### Test a debounced search input
+#### Test a debounced search input with `cy.clock()`
 
 A debounced input waits for the user to stop typing before it acts. With
 `cy.clock()`, you control exactly when that wait ends, so you can assert both
@@ -150,7 +150,7 @@ cy.tick(300)
 cy.wait('@search')
 ```
 
-#### Test an inactivity timeout without waiting for it
+#### Test an inactivity timeout with `cy.clock()`
 
 Session expiry warnings and automatic logouts often wait many minutes before
 they trigger. Move the clock forward instead of waiting in real time.
@@ -240,7 +240,7 @@ cy.get('#date').should('have.value', '04/14/2021')
 
 :::
 
-#### Start every test on the same date
+#### Start every test on the same date with `cy.clock()`
 
 Call `cy.clock()` in a `beforeEach()` hook so every test sees the same current
 date. Cypress restores the clock automatically after each test, so each test
@@ -253,7 +253,7 @@ beforeEach(() => {
 })
 ```
 
-#### Test a date rollover at midnight
+#### Test a midnight date rollover with `cy.clock()`
 
 Combine a `now` value with [`cy.tick()`](/api/commands/tick) to test what
 happens when time crosses a boundary, such as midnight. This example assumes
@@ -285,7 +285,7 @@ example below affects the current datetime without affecting scheduled timers.
 cy.clock(Date.UTC(2018, 10, 30), ['Date'])
 ```
 
-#### Keep animations running while freezing the date
+#### Freeze the date and keep animations running with `cy.clock()`
 
 By default, `cy.clock()` also overrides `requestAnimationFrame`, so JavaScript
 animations and any rendering that relies on animation frames only advance when
@@ -357,9 +357,10 @@ cy.clock().then((clock) => {
   clock.setSystemTime(60 * 60 * 1000 - 60)
   // setSystemTime doesn't trigger any timers, so we run the last frame
   // with tick to trigger a callback to update the timer.
-  clock.tick(60);
+  clock.tick(60)
 })
-cy.get('#timer').should(...) // assert that it fits within the screen etc.
+// the timer shows an hour has passed
+cy.get('#timer').should('contain', '1:00:00')
 // more test code here
 ```
 
@@ -381,7 +382,7 @@ not override the time functions of any `iframe` embedded on the page.
 
 ### Behavior
 
-#### CSS animations and transitions
+#### CSS animations and transitions ignore `cy.clock()`
 
 `cy.clock()` overrides JavaScript time functions only. CSS animations and CSS
 transitions run on the browser's own clock, so they keep playing in real time
