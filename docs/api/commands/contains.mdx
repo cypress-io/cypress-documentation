@@ -158,6 +158,31 @@ cy.contains(4)
 cy.contains(/^b\w+/)
 ```
 
+#### Match the exact text instead of a substring
+
+A string matches any element whose text _includes_ it, so `'Save'` also matches
+"Save draft". Anchor a regular expression to match the whole text.
+
+```html
+<button>Save draft</button> <button>Save</button>
+```
+
+```javascript
+// yields <button>Save draft</button>
+cy.contains('button', 'Save')
+
+// yields <button>Save</button>
+cy.contains('button', /^Save$/).click()
+```
+
+Cypress collapses whitespace to a single space but does not trim it, so markup
+with whitespace around the text, such as `<button> Save </button>`, has the text
+`" Save "`. Allow for it in the expression:
+
+```javascript
+cy.contains('button', /^\s*Save\s*$/).click()
+```
+
 ### Selector
 
 #### Specify a selector to return a specific element
@@ -213,6 +238,46 @@ Without the explicit selector the subject would change to be the `<button>`.
 Using the explicit selector ensures that chained commands will have the `<form>`
 as the subject.
 
+#### Act on the table row containing some text
+
+Pass `'tr'` as the selector to find the row for a record, then chain a second
+`.contains()` to find the control inside that row. Both are queries, so Cypress
+retries the whole chain until the button exists, and `.click()` ends the chain.
+
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>Jane Lane</td>
+      <td><button>Edit</button></td>
+    </tr>
+    <tr>
+      <td>Jamal</td>
+      <td><button>Edit</button></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+```javascript
+// clicks the Edit button in Jane Lane's row
+cy.contains('tr', 'Jane Lane').contains('button', 'Edit').click()
+```
+
+#### Match any of several element types
+
+A comma-separated selector searches for each one, which helps when the same
+control renders as a link on one page and a button on another.
+
+```html
+<a href="/login">Sign in</a>
+```
+
+```javascript
+// yields the <a>, and would yield a <button> containing "Sign in" too
+cy.contains('a, button', 'Sign in').click()
+```
+
 ### Case Sensitivity
 
 Here's an example using the `matchCase` option to ignore case sensitivity.
@@ -234,6 +299,89 @@ with `matchCase: true` throws an error, since the two conflict.
 cy.contains(/capital sentence/, { matchCase: false }) // pass
 cy.contains(/capital sentence/i) // pass
 cy.contains(/capital sentence/i, { matchCase: true }) // error
+```
+
+### Timeout
+
+#### Wait longer for content that loads slowly
+
+The `timeout` option applies to this `.contains()` and to the assertions chained
+after it, without changing
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) for the rest
+of the test.
+
+```javascript
+cy.contains('Report ready', { timeout: 15000 }).should('be.visible')
+```
+
+### Shadow DOM
+
+#### Find content inside a shadow root
+
+By default, `.contains()` does not search inside shadow roots. Pass
+`includeShadowDom: true` to search them, or set the
+[`includeShadowDom` configuration option](/app/references/configuration#Global)
+to search them in every query.
+
+```html
+<checkout-panel>
+  #shadow-root
+  <button>Checkout</button>
+</checkout-panel>
+```
+
+```javascript
+cy.contains('button', 'Checkout', { includeShadowDom: true }).click()
+```
+
+To search one shadow root only, chain `.contains()` off of
+[`.shadow()`](/api/commands/shadow):
+
+```javascript
+cy.get('checkout-panel').shadow().contains('button', 'Checkout').click()
+```
+
+### Common workflows
+
+Each of these examples ends a chain at an action, such as `.click()`, and starts
+the next step from `cy`. That way every step queries the page again, so a
+re-render between steps does not leave a test holding a detached element. Read
+[Actions should be at the end of chains](/app/core-concepts/retry-ability#Actions-should-be-at-the-end-of-chains-not-the-middle)
+for why.
+
+#### Wait for text to disappear
+
+Assert `should('not.exist')` to wait for a loading message, toast, or spinner
+label to go away.
+
+```javascript
+cy.contains('button', 'Save').click()
+cy.contains('Saving').should('not.exist')
+```
+
+#### Confirm the element is visible
+
+`.contains()` yields hidden elements, such as one styled with `display: none`.
+When the test depends on the user seeing the text, assert on visibility.
+
+```javascript
+cy.contains('Welcome back').should('be.visible')
+```
+
+#### Act inside a dialog with `.within()`
+
+Inside a [`.within()`](/api/commands/within) callback, `cy.contains()` searches
+only the `.within()` subject, so a "Yes, Delete!" button elsewhere on the page
+never matches.
+
+```javascript
+cy.contains('button', 'Delete User').click()
+
+cy.get('[data-cy="confirm-dialog"]').within(() => {
+  cy.contains('button', 'Yes, Delete!').click()
+})
+
+cy.get('[data-cy="confirm-dialog"]').should('not.exist')
 ```
 
 ## Notes
