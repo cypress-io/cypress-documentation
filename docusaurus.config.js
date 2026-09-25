@@ -119,7 +119,6 @@ const config = {
     require.resolve('docusaurus-plugin-image-zoom'),
     require.resolve('./plugins/llm'),
     require.resolve('./plugins/faq-structured-data'),
-    require.resolve('./plugins/video-structured-data'),
     require.resolve('./plugins/og-image-cards'),
     // ....
     function docusaurusTailwindcssPlugin(context, options) {

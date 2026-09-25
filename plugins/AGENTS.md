@@ -6,10 +6,9 @@ specific to `plugins/`. Reasoning lives in
 
 Two kinds of thing live here, and they behave differently:
 
-- **Loose `.js` files** (`faq-structured-data.js`, `video-structured-data.js`,
-  `og-image-cards.js`, `osano.js`, `fav-icon.js`, `fullstory.js`) are plain
-  Docusaurus plugins, loaded straight from `docusaurus.config.js`. No build
-  step.
+- **Loose `.js` files** (`faq-structured-data.js`, `og-image-cards.js`,
+  `osano.js`, `fav-icon.js`, `fullstory.js`) are plain Docusaurus plugins,
+  loaded straight from `docusaurus.config.js`. No build step.
 - **`cypressRemarkPlugins/` and `llm/`** are TypeScript sub-packages that
   compile to a gitignored `dist/`. Everything below is about these two.
 
@@ -39,7 +38,8 @@ npm run build:plugins   # tsc for both sub-packages
 ## Verifying a change
 
 - `npm run test:plugins` runs the vitest suites in both sub-packages plus the
-  FAQ and video structured-data plugin tests.
+  FAQ plugin test and the video structured-data test in
+  `src/components/video-youtube/`.
 - `npm run build` is the real check for `cypressRemarkPlugins`: it backs the
   `:::cypress-config-example`, `:::cypress-config-plugin-example`, and
   `:::visit-mount-example` directives and the `copyTsToJs` code-block flag, so a

@@ -13,10 +13,6 @@ type FaqStructuredData = {
   byRoute: Record<string, unknown>;
 };
 
-type VideoStructuredData = {
-  byRoute: Record<string, string[]>;
-};
-
 export default function LayoutWrapper(props: Props): ReactNode {
   const { pathname } = useLocation();
   // Add LLM alternate links to all pages - using this swizzled layout wrapper is a workaround
@@ -38,14 +34,6 @@ export default function LayoutWrapper(props: Props): ReactNode {
   const route = pathname.replace(/\/$/, '') || '/';
   const faqJsonLd = faqData?.byRoute?.[route];
 
-  // VideoObject JSON-LD for each YouTube <DocsVideo> on the page, generated at
-  // build time by the docusaurus-video-structured-data plugin. Each entry is
-  // already serialized and escaped.
-  const videoData = usePluginData('docusaurus-video-structured-data') as
-    | VideoStructuredData
-    | undefined;
-  const videoJsonLd = videoData?.byRoute?.[route] ?? [];
-
   return (
     <>
       <Head>
@@ -56,11 +44,6 @@ export default function LayoutWrapper(props: Props): ReactNode {
             {JSON.stringify(faqJsonLd).replace(/</g, '\\u003c')}
           </script>
         ) : null}
-        {videoJsonLd.map((json, index) => (
-          <script key={index} type="application/ld+json">
-            {json}
-          </script>
-        ))}
       </Head>
       <Layout {...props} />
     </>
