@@ -11,7 +11,7 @@ slug: /api/commands/contains
 
 Get the DOM element containing the text. DOM elements can contain _more_ than
 the desired text and still match. Additionally, Cypress
-[prefers some DOM elements](#Notes) over the deepest element found.
+[prefers some DOM elements](#Preferences) over the deepest element found.
 
 ## Syntax
 
@@ -53,10 +53,12 @@ Get the DOM element containing the content.
 
 <Icon name="angle-right" /> **selector _(String selector)_**
 
-Specify a selector to filter DOM elements containing the text. Cypress will
-_ignore_ its [default preference order](#Notes) for the specified selector.
-A selector returns more _shallow_ elements (higher in the tree) that contain the
-specific text.
+Specify a selector to filter DOM elements containing the text. Only elements
+matching the selector are candidates, so you can yield an element higher in the
+tree than the deepest one containing the text. Cypress yields the deepest
+matching element, and applies its [element preference order](#Preferences) only
+when the selector itself matches one of those elements. A comma-separated
+selector, such as `'a, button'`, searches for every listed selector.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -71,7 +73,8 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 <HeaderYields />
 
-- `.contains()` yields the new DOM element it found.
+- `.contains()` yields the new DOM element it found. It yields at most one
+  element, so asserting a `length` greater than `1` throws an error.
 - `.contains()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -159,13 +162,13 @@ cy.contains(/^b\w+/)
 
 #### Specify a selector to return a specific element
 
-Technically the `<html>`, `<body>`, `<ul>`, and first `<li>` in the example
-below all contain "apples".
+Technically the `<ul>` and first `<li>` in the example below both contain
+"apples".
 
 Normally Cypress would return the first `<li>` since that is the _deepest_
 element that contains "apples".
 
-To override the element that is yielded we can pass 'ul' as the selector.
+To override the element that is yielded, pass `'ul'` as the selector.
 
 ```html
 <html>
@@ -223,6 +226,16 @@ cy.get('div').contains('capital sentence') // fail
 cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 ```
 
+`matchCase: false` also applies to a regular expression, which then matches as
+if it had the `i` flag. Passing a regular expression with the `i` flag together
+with `matchCase: true` throws an error, since the two conflict.
+
+```js
+cy.contains(/capital sentence/, { matchCase: false }) // pass
+cy.contains(/capital sentence/i) // pass
+cy.contains(/capital sentence/i, { matchCase: true }) // error
+```
+
 ## Notes
 
 ### Inverting `cy.contains()`
@@ -234,9 +247,12 @@ cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 `.contains()` acts differently whether it's starting a series of commands or
 being chained off an existing series.
 
-#### When starting a series of commands:
+#### When starting a series of commands
 
-This queries the entire `document` for the content.
+This queries the `<body>` element for the content, so elements in the
+`<head>`, such as `<title>`, never match. Inside a
+[`.within()`](/api/commands/within) callback, it queries the `.within()` subject
+instead.
 
 ```javascript
 cy.contains('Log In')
@@ -244,11 +260,15 @@ cy.contains('Log In')
 
 #### When chained to an existing series of commands
 
-This will query inside of the `<#checkout-container>` element.
+This queries inside of the `#checkout-container` element.
 
 ```javascript
 cy.get('#checkout-container').contains('Buy Now')
 ```
+
+When no descendant of the subject contains the content, `.contains()` checks the
+subject itself, and yields it if it matches. When the subject holds several
+elements, `.contains()` searches all of them and yields the first match.
 
 #### Be wary of chaining multiple contains
 
@@ -263,8 +283,8 @@ cy.contains('Delete User').click().contains('Yes, Delete!').click()
 Because the second `.contains()` is chained off of a command that yielded the
 `<button>`, Cypress will look inside of the `<button>` for the new content.
 
-In other words, Cypress will look inside of the `<button>` containing "Delete
-User" for the content: "Yes, Delete!", which is not what we intended.
+In other words, Cypress looks inside of the `<button>` containing "Delete User"
+for the content "Yes, Delete!", which is not what you intended.
 
 What you want to do is call `cy` again, which automatically creates a new chain
 scoped to the `document`.
@@ -295,7 +315,9 @@ Rendered result:
   alt="The result of pre tag"
 />
 
-To reflect this behavior, Cypress also doesn't ignore them.
+To reflect this behavior, Cypress collapses each run of whitespace in an
+element's text to a single space before matching, except in a `<pre>` element,
+where it matches the text as written. The content you pass is not collapsed.
 
 ```js
 // test result for above code
@@ -361,24 +383,25 @@ cy.get('#main').contains('Jane Lane')
 ### Default `<input type="submit">` labels
 
 When the `value` attribute is omitted from an `<input type="submit">`, the
-default label is used and can be locale-dependent.
-[More info at MDN.](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute)
+default label is used and can be locale-dependent. See
+[omitting the value attribute on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute).
 
-When this happens, the `value` is an empty string, and there is no programmatic
-way for Cypress to filter elements by the label displayed by the user agent.
-This can cause unexpected failures when using `cy.contains()` with submit
-buttons.
+`cy.contains()` matches an `<input type="submit">` by its `value` attribute.
+When the attribute is omitted, the `value` is an empty string, and there is no
+programmatic way for Cypress to filter elements by the label displayed by the
+user agent. This can cause unexpected failures when using `cy.contains()` with
+submit buttons.
 
-The solution in this case is to:
+If possible, set the `value` attribute:
+
+```html
+<input type="submit" value="Submit" />
+```
+
+Otherwise, select the input another way and assert on the empty string:
 
 ```js
- // assert the empty string
- cy.get('input').should('have.value', '')
-
- // ---or---
-
- // if possible, set the `value` attribute
- <input type=submit value="Submit" />
+cy.get('input[type="submit"]').should('have.value', '')
 ```
 
 ### Preferences
@@ -392,8 +415,9 @@ The solution in this case is to:
 - `a`
 - `label`
 
-Cypress will ignore this element preference order if you pass a selector
-argument to `.contains()`.
+When you pass a selector argument to `.contains()`, only elements matching that
+selector are candidates, so this preference order applies only if the selector
+matches one of these elements.
 
 #### Favor of `<button>` over other deeper elements
 
@@ -470,7 +494,7 @@ cy.contains('Age').find('input').type('29')
 - `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.contains()`will automatically [retry](/app/core-concepts/retry-ability)
+- `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
