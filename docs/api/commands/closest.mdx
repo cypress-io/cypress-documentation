@@ -12,10 +12,16 @@ slug: /api/commands/closest
 Get the first DOM element that matches the selector (whether it be itself or one
 of its ancestors).
 
+`.closest()` tests the element itself first, then travels up the DOM tree
+through its ancestors, as opposed to [`.parents()`](/api/commands/parents),
+which starts at the parent and collects every matching ancestor.
+
 :::info
 
-The querying behavior of this command matches exactly how
-[`.closest()`](https://api.jquery.com/closest) works in jQuery.
+The querying behavior of this command matches how
+[`.closest()`](https://api.jquery.com/closest) works in jQuery, except that
+`.closest()` continues past shadow DOM boundaries. See
+[Shadow DOM boundaries and `.closest()`](#Shadow-DOM-boundaries-and-closest).
 
 :::
 
@@ -31,7 +37,7 @@ The querying behavior of this command matches exactly how
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.get('td').closest('.filled') // Yield closest el with class '.filled'
+cy.get('td').closest('.filled') // Yield closest el with class 'filled'
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
@@ -45,7 +51,7 @@ cy.clock().closest() // Errors, 'clock' does not yield DOM elements
 
 <Icon name="angle-right" /> **selector _(String selector)_**
 
-A selector used to filter matching DOM elements.
+A selector the element itself or one of its ancestors must match.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -58,17 +64,65 @@ Pass in an options object to change the default behavior of `.closest()`.
 
 <HeaderYields />
 
-- `.closest()` yields the new DOM element(s) it found.
+- `.closest()` yields the new DOM element(s) it found. When the subject holds
+  more than one element, it yields the closest match for each one, with
+  duplicates removed.
 - `.closest()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
 ### Selector
 
-#### Find the closest element of the `.error` with the class 'banner'
+#### Find the closest ancestor of `p.error` with class `banner`
+
+```html
+<div class="banner">
+  <div class="content">
+    <p class="error">Payment failed</p>
+  </div>
+</div>
+```
 
 ```javascript
+// yields <div class="banner">…</div>
 cy.get('p.error').closest('.banner')
+```
+
+#### Yield the subject itself when it matches
+
+```html
+<ul class="nav">
+  <li class="active">Home</li>
+</ul>
+```
+
+```javascript
+// yields <li class="active">Home</li>, since the subject
+// matches the selector before any ancestor is tested
+cy.get('li.active').closest('li')
+```
+
+#### Find the row of a table cell
+
+```javascript
+cy.contains('td', 'Pending').closest('tr').find('button').click()
+```
+
+## Notes
+
+### Shadow DOM boundaries and `.closest()`
+
+When the subject is inside a shadow root, `.closest()` crosses the shadow
+boundary. If nothing inside the shadow root matches, it continues from the
+shadow host, testing the host itself and then the host's ancestors, until it
+finds a match or reaches the document. This happens whether or not
+[`includeShadowDom`](/app/references/configuration#Global) is enabled.
+
+```javascript
+// Yield the element that hosts the shadow root containing the button
+cy.get('my-component')
+  .find('button', { includeShadowDom: true })
+  .closest('my-component')
 ```
 
 ## Rules
@@ -104,7 +158,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/closest/find-closest-nav-element-in-test.png"
-  alt="Command Log closest"
+  alt="Command Log showing a get entry for li.active followed by a closest entry for .nav"
 />
 
 When clicking on the `closest` command within the command log, the console
@@ -112,8 +166,14 @@ outputs the following:
 
 <DocsImage
   src="/img/api/closest/closest-console-logs-elements-found.png"
-  alt="console.log closest"
+  alt="Console output for closest, showing the .nav selector applied to li.active and the ul.nav element found"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                                                                                        |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.closest()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
 
 ## See also
 
