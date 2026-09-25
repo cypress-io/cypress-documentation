@@ -43,7 +43,7 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 | Option    | Default                                                     | Description                                                                         |
 | --------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `domain`  | Hostname of the current URL                                 | Clears the cookies from the specified domain                                        |
+| `domain`  | Hostname of the application under test                      | Clears the cookies from the specified domain                                        |
 | `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.clearCookies()` to resolve before [timing out](#Timeouts)      |
 
@@ -57,18 +57,24 @@ Pass in an options object to change the default behavior of `cy.clearCookies()`.
 
 #### Clear cookies after logging in <E2EOnlyBadge />
 
-In this example, on first login our server sends us back a session cookie. After
-invoking `cy.clearCookies()` this clears the session cookie, and upon navigating
-to an unauthorized page, our server should have redirected us back to login.
+In this example, your server sends back a session cookie on login.
+`cy.clearCookies()` removes that cookie, so when you visit a page that requires
+authentication, the server redirects you back to the login page.
 
 ```javascript
-// assume we just logged in
+// assume the user just logged in
 cy.contains('Login').click()
 cy.url().should('include', 'profile')
 cy.clearCookies()
-cy.visit('/dashboard') // we should be redirected back to login
+cy.visit('/dashboard') // redirected back to login
 cy.url().should('include', 'login')
 ```
+
+## Notes
+
+### Default cookie domain before visiting a page
+
+<CookieDefaultDomain />
 
 ## Rules
 
@@ -85,15 +91,9 @@ cy.url().should('include', 'login')
 
 <HeaderTimeouts />
 
-- `cy.clearCookies()` should never time out.
-
-:::caution
-
-Because `cy.clearCookies()` is asynchronous it is technically possible for there
-to be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-:::
+- `cy.clearCookies()` can time out waiting for the browser to clear the cookies.
+  It waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
+  (or the `timeout` option, when passed) before failing.
 
 ## Command Log
 
@@ -105,7 +105,7 @@ cy.clearCookies()
 cy.getCookies().should('be.empty')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/clearcookies/clear-all-cookies-in-cypress-tests.png"

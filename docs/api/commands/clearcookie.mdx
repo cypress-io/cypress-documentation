@@ -102,13 +102,9 @@ cy.getCookie('session_id', { domain: 'auth.example.com' }).should('be.null')
 yields `null`, and the console output for the command notes that no cookie with
 that name was found or removed.
 
-### Default domain before visiting a page
+### Default cookie domain before visiting a page
 
-The `domain` option defaults to the hostname of the application under test.
-Before [`cy.visit()`](/api/commands/visit) loads a page, the application under
-test is on `about:blank`, so `cy.clearCookie()` uses the hostname Cypress
-serves the spec from instead (usually `localhost`). Pass `domain` explicitly to
-clear a cookie on another domain before visiting.
+<CookieDefaultDomain />
 
 ## Rules
 
