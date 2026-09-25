@@ -336,9 +336,9 @@ Yes, on request. Axe-Core® ships those rules but keeps them off by default, so 
 
 ### <Icon name="angle-right" /> Can I use Cypress Accessibility results in a VPAT or accessibility conformance report?
 
-You can reference them as one source of evidence, but they don't produce the document. A VPAT or accessibility conformance report is written by people evaluating a product against each criterion, and automated results speak only to the subset of criteria a scanner can check, on the pages and components your tests happened to visit.
+You can reference them as one source of evidence, but they don't produce the document. A VPAT or accessibility conformance report is written by people evaluating a product against each WCAG Success Criterion, and automated results speak only to the subset of criteria a scanner can check, on the pages and components your tests happened to visit.
 
-What Cypress Accessibility contributes is a durable, dated record: every run permanently stores the rule configuration and Axe-Core® version it was processed with, viewable in the run's **Properties** tab, and the [Results API](/accessibility/connect-and-extend/results-api) exposes per-rule and per-view results you can archive alongside your own assessment notes.
+What Cypress Accessibility contributes is a durable, dated record: every run permanently stores the rule configuration and Axe-Core® version it was processed with, viewable in the run's **Properties** tab, and the [Results API](/accessibility/connect-and-extend/results-api) exposes per-rule and per-view results you can archive alongside your own assessment notes. For how to map a downloaded report to success criteria and write Remarks from it, see [Use results to inform a VPAT](/accessibility/guides/inform-a-vpat).
 
 ### <Icon name="angle-right" /> Does a 100% Cypress Accessibility score mean my application is accessible?
 

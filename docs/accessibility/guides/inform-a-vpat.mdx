@@ -1,0 +1,109 @@
+---
+title: 'Use results in a VPAT/ACR'
+description: 'Map a downloaded Cypress Accessibility report to WCAG success criteria for a VPAT or accessibility conformance report, write evidence-backed Remarks, and plan the manual testing automation cannot replace.'
+sidebar_label: Inform a VPAT
+sidebar_position: 60
+---
+
+<ProductHeading product="accessibility" />
+
+# Use results to inform a VPAT
+
+A [VPAT®](https://www.itic.org/policy/accessibility/vpat) (Voluntary Product Accessibility Template) and the accessibility conformance report (ACR) it produces record how a product measures up against each success criterion in a standard such as WCAG 2.1, Section 508, or EN 301 549. The author gives each criterion a conformance level (_Supports_, _Partially Supports_, _Does Not Support_, or _Not Applicable_) and explains it in the Remarks column. The template allows _Not Evaluated_ only for WCAG Level AAA criteria.
+
+A downloaded Cypress Accessibility report supplies evidence for **part** of that work. Automated results confirm failures, so they show which criteria can't be marked _Supports_ and provide the specifics your Remarks need. They can't confirm the absence of a problem, so they never establish _Supports_ on their own.
+
+This guide covers how to turn the download into evidence for the criteria it fails, and how to plan the manual testing that covers the rest. For teams that are writing their own VPAT and don't have internal accessibility experts, this can help you get started and surface the right questions.
+
+For the short version of this boundary, see [Can I use Cypress Accessibility results in a VPAT?](/accessibility/faq#Can-I-use-Cypress-Accessibility-results-in-a-VPAT-or-accessibility-conformance-report) in the FAQ.
+
+## Download the Cypress Accessibility report for your VPAT
+
+Export the run's violations with the **Download report** button at the top of the Accessibility report and choose `.csv` or `.json`. See [Download reports](/accessibility/connect-and-extend/download-reports) for access requirements and the full file contents.
+
+Each row is one failed element, for one rule, on one view. The file lists failures only, so inconclusive and ignored results aren't in it. Two columns carry most of the VPAT evidence:
+
+- **Tags**: the standards mapping for the rule. Tags such as `wcag111` or `wcag412` name a specific success criterion, while tags such as `wcag2a` or `wcag21aa` name a WCAG version and level.
+- **Failure Summaries**: the specific reason the element failed, which becomes source material for your Remarks.
+
+The **Element URL** and **View URL** columns deep-link back into Cypress Cloud, so anyone reviewing the ACR can open the exact failing element in context.
+
+## Map violations to WCAG success criteria in your ACR
+
+A confirmed violation of a rule tagged for a WCAG success criterion is evidence that the product doesn't fully meet that criterion. [False positives can still occur](/accessibility/guides/accessibility-automation#False-positives), so open the violation to confirm before citing it.
+
+The process over the downloaded file has three steps:
+
+1. **Group rows by success criterion.** Collect violations under the criterion each **Tags** entry names, such as `wcag111` for 1.1.1 Non-text Content or `wcag412` for 4.1.2 Name, Role, Value. Level tags such as `wcag21aa` don't name a criterion, and a rule tagged for more than one criterion belongs in each group.
+2. **Choose a conformance level for each failing criterion.** The evidence rules out _Supports_. Use _Partially Supports_ when some product functionality fails the criterion and _Does Not Support_ when the majority does. That's a judgment about the whole product, including parts your tests didn't visit.
+3. **Write Remarks from the data.** Name the failing rule, the affected elements and views, and a representative **Failure Summaries** entry, with an **Element URL** a reviewer can open.
+
+The prompt below runs this process over your download with an AI agent and leaves the judgment calls to you.
+
+<CopyPrompt
+  title="Draft VPAT evidence from a Cypress Accessibility report"
+  subtext="Get a per-criterion evidence table with draft Remarks, ready for you to verify and assign conformance levels."
+  defaultCollapsed
+  prompt={`Read the Cypress Accessibility report at <path to .csv or .json download> and draft evidence for the WCAG 2.1 Level A and AA tables of a VPAT. Each row in the file is one failed element, for one rule, on one view.
+
+1. Group rows by WCAG success criterion using the Tags column. Tags such as wcag111, wcag131, wcag244, and wcag412 name a criterion (1.1.1 Non-text Content, 1.3.1 Info and Relationships, 2.4.4 Link Purpose (In Context), 4.1.2 Name, Role, Value). Ignore level tags such as wcag2a, wcag2aa, and wcag21aa, which don't name a criterion. If a row names more than one criterion, include it under each one.
+2. Put rows tagged best-practice, and any row with no criterion tag, in a separate "Best Practices (not WCAG)" section. Never count them against a WCAG criterion.
+3. For each criterion with violations, report:
+   - The criterion number, name, and level
+   - Each failing rule ID, with the number of failed elements and the number of distinct views
+   - The views involved, by View URL
+   - One representative Failure Summaries entry, quoted
+   - One Element URL a reviewer can open to verify the finding
+4. Draft a Remarks entry for each criterion in one or two plain sentences that identify the affected features and how they fall short.
+5. Suggest Partially Supports or Does Not Support for each criterion, with your reasoning, and mark every suggestion as needing my review. Base it on how widespread the failures are across the views in the file.
+
+Rules for the output:
+
+- Never mark any criterion as Supports. The report lists failures only, so a criterion with no rows is not evaluated, not passing.
+- List the Level A and AA criteria that have no rows in the file separately, as "Needs manual evaluation".
+- Don't invent failures, counts, or URLs. Use only what's in the file.`}
+  />
+
+The web content criteria in Section 508 (WCAG 2.0) and EN 301 549 (WCAG 2.1) incorporate WCAG success criteria, so the same grouping fills those tables for the criteria each standard includes.
+
+Because the report tells you _which_ criteria fail and _why_, you don't have to hunt for the negative findings page by page.
+
+:::caution
+Only map rows whose **Tags** include a criterion tag to a WCAG success criterion. Axe-Core® also ships Best Practices rules (tagged `best-practice`, such as `region` or `heading-order`) that are Deque recommendations, not WCAG criteria. They're worth fixing, but recording them as WCAG failures overstates the finding. Keep them in a separate section of your evidence. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
+:::
+
+## What an accessibility report download can't tell you
+
+The download establishes failures. It doesn't establish conformance, and treating a quiet result as a pass is the most common way an automated-only ACR goes wrong.
+
+- Absence of a violation isn't _Supports_. Automated checks detect around [57% of the issues a manual audit surfaces](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/), and most WCAG success criteria have no automated rule at all. Leave any Level A or AA criterion the scan doesn't fail open until a person evaluates it.
+- The scan only sees what your tests visited. Results cover the views, states, and components your Cypress run rendered, so states your tests didn't reach (modals, validation and error states, menus behind an interaction) were never scanned.
+- Some rules don't run by default. `color-contrast` is [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default), so a report without contrast violations usually says nothing about 1.4.3 Contrast (Minimum). The run's **Properties** tab shows the configuration it was processed with.
+- Items that need manual review aren't in the file. Inconclusive results appear in the [Cloud report](/accessibility/reports/run-level-reports#Elements) but not the download, so a criterion with open review items looks the same in the file as one that was never checked.
+- Automation doesn't judge meaning. A rule can confirm that an accessible name _exists_, but not whether it's _correct_ or _understandable_, and that a heading _is present_, but not whether it describes the section.
+
+## Plan manual testing for criteria automation can't reach
+
+The criteria automation can't reach decide whether people can use the product. Budget review time for questions a scanner can't answer:
+
+- Can everything done with a mouse be done with a keyboard, in a sensible order, with no traps and a visible focus indicator? (WCAG 2.1.1, 2.1.2, 2.4.3, 2.4.7)
+- Do primary flows make sense end to end with a screen reader, with names and roles announced usefully? (WCAG 1.3.1, 4.1.2)
+- Are labels, instructions, and error messages understandable and specific? (WCAG 2.4.6, 3.3.1–3.3.3)
+- Does contrast hold across dynamic and overlaid states, and does the layout work at 400% zoom and 320px width? (WCAG 1.4.3, 1.4.10, 1.4.11)
+
+When enabled for your project, the [Cypress rule](/accessibility/core-concepts/cypress-rules) `cy-semantic-html-warning` lists custom elements your tests interacted with that lack the semantics of a real control. That list is a good starting point for the keyboard and screen reader checks.
+
+## Cite Cypress test assertions as evidence in Remarks
+
+The scan records what Axe-Core® found. Your own Cypress tests record what you deliberately verified. An assertion that a flow completes with the keyboard, or that a control exposes the right name and state after an interaction, is a repeatable check tied to a specific success criterion, and you can cite it in Remarks alongside the scan. [Maximize coverage](/accessibility/guides/maximize-coverage) shows how to turn a fixed violation into that kind of assertion.
+
+## Record the Cypress run details behind your ACR
+
+The VPAT template asks for the evaluation methods used. Every run permanently stores the rule configuration and Axe-Core® version it was processed with, viewable in the run's **Properties** tab. Note the run, its date, and that Axe-Core® version under Evaluation Methods Used, so a reviewer knows exactly what was tested and with which rules. To archive per-rule and per-view results alongside your assessment notes, use the [Results API](/accessibility/connect-and-extend/results-api).
+
+## See also
+
+- [Accessibility automation principles](/accessibility/guides/accessibility-automation) explains where automated checks stop and human assessment takes over.
+- [What a 100% score means](/accessibility/core-concepts/accessibility-score#What-a-100-score-means) covers why a clean report isn't a conformance claim.
+- [Work with a downloaded report](/accessibility/work-with-ai-agents#Work-with-a-downloaded-report) has prompts for summarizing and grouping the file with an AI agent.
+- [Cypress Accessibility FAQ](/accessibility/faq#Accessibility-standards) answers common questions about WCAG versions, levels, and conformance.
