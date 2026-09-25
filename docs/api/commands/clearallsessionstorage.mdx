@@ -1,6 +1,6 @@
 ---
 title: 'cy.clearAllSessionStorage()'
-description: Clear all session storage data in Cypress.
+description: Clear sessionStorage for every origin your Cypress test has visited.
 sidebar_label: clearAllSessionStorage
 ---
 
@@ -52,6 +52,58 @@ Pass in an options object to change the default behavior of
 
 - `cy.clearAllSessionStorage()` yields `null`.
 
+## Examples
+
+### Clear session storage in the middle of a test
+
+```javascript
+cy.visit('/signup')
+cy.get('[data-cy="next-step"]').click()
+
+cy.clearAllSessionStorage()
+cy.getAllSessionStorage().should('be.empty')
+```
+
+### Clear session storage when test isolation is disabled
+
+With test isolation disabled, session storage carries over from one test to the
+next. Clear it in a `beforeEach()` hook to start each test from a clean slate.
+
+```javascript
+describe('checkout', { testIsolation: false }, () => {
+  beforeEach(() => {
+    cy.clearAllSessionStorage()
+  })
+
+  // ...
+})
+```
+
+## Notes
+
+### Origins that `cy.clearAllSessionStorage()` clears
+
+Cypress keeps track of every origin that loads an HTML page in the browser, and
+`cy.clearAllSessionStorage()` clears session storage for each of those origins
+along with the current one. With test isolation enabled, Cypress resets this
+list before each test. With test isolation disabled, the list keeps growing
+across tests, so the command also reaches origins that earlier tests visited.
+
+Cypress clears storage on other origins by loading a hidden iframe for each one.
+Keep these behaviors in mind:
+
+- When the test runs on an `https` origin, Cypress skips `http` origins, since
+  a secure page can't reach storage on an insecure one.
+- If an origin doesn't respond within 2 seconds, Cypress logs a warning in the
+  Command Log and moves on instead of failing the test.
+
+### Clearing other kinds of browser storage
+
+`cy.clearAllSessionStorage()` only clears `sessionStorage`. To clear
+`localStorage` for all origins, use
+[`cy.clearAllLocalStorage()`](/api/commands/clearalllocalstorage). To clear
+cookies, use [`cy.clearAllCookies()`](/api/commands/clearallcookies).
+
 ## Rules
 
 <HeaderRequirements />
@@ -67,7 +119,14 @@ Pass in an options object to change the default behavior of
 
 <HeaderTimeouts />
 
-- `cy.clearAllSessionStorage()` cannot time out.
+- `cy.clearAllSessionStorage()` should never time out. When an origin doesn't
+  respond, the command logs a warning after 2 seconds rather than failing.
+
+## History
+
+| Version                                    | Changes                                         |
+| ------------------------------------------ | ----------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | Added the `cy.clearAllSessionStorage()` command |
 
 ## See also
 
