@@ -7,7 +7,7 @@
     "postinstall": "patch-package",
     "prestart": "node ./scripts/checkRemarkPluginsBuild.js",
     "start": "docusaurus start",
-    "prebuild": "rm -rf dist && npm run build:plugins",
+    "prebuild": "rm -rf dist && npm run build:plugins && cypress-favicon static --quiet",
     "build": "docusaurus build --out-dir dist",
     "build:plugins": "npm --prefix ./plugins/cypressRemarkPlugins run build && npm --prefix ./plugins/llm run build",
     "lint": "npm run lint:markdown && npm run lint:frontmatter",
@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@cypress-design/css": "^1.3.0",
+    "@cypress-design/favicon": "^1.0.0",
     "@cypress-design/react-accordion": "^1.1.0",
     "@cypress-design/react-button": "^1.0.1",
     "@cypress-design/react-docmenu": "^1.0.2",
