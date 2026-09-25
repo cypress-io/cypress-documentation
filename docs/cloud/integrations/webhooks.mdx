@@ -119,7 +119,7 @@ In the **Add webhook** dialog, configure the following:
   again**. If you lose it, you can rotate it later by editing the webhook. See
   [Verify webhook signatures](#Verify-webhook-signatures).
 - **Events that will trigger webhook**: Select which events should be delivered
-  to this endpoint. At least one event is required. **Currently, only the `run.completed` event is available**, so it is preselected by default and cannot be removed.
+  to this endpoint. At least one event is required.
 - **Enable this webhook**: Whether the webhook is active. Enabled by default;
   disabled webhooks not called when.
 
@@ -134,28 +134,25 @@ events to your endpoint.
 
 ## Send a test event
 
-To confirm your endpoint is reachable and your verification logic works, use
-**Send test** on an enabled webhook. This delivers a synthetic `webhook.ping`
-event through the same signing and delivery pipeline as real events, so it
-exercises your signature verification exactly as a `run.completed` event would.
-
-The `webhook.ping` request body is:
-
-```json
-{
-  "message": "Webhook ping"
-}
-```
+To confirm your endpoint is reachable and your verification logic works, click
+**Send test** on an enabled webhook and choose an event type from the menu.
+Cypress Cloud delivers a synthetic sample payload for that event type through
+the same signing and delivery pipeline as a real event, so it exercises your
+signature verification and parsing exactly as the real thing would. You can
+send a test for any event type, even one this webhook isn't currently
+subscribed to, so you can preview its payload before turning it on.
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/webhook-send-test.png"
-  alt="Sending a test event from a webhook row and viewing its delivery status"
+  alt="Choosing an event type from a webhook row's Send test menu"
   width={800}
 />
 
-Test events are delivered once and are **not** retried, regardless of the
-outcome. The resulting delivery appears in the webhook's delivery history like
-any other.
+A test send uses realistic but fabricated data, not your project's actual
+latest run. See [Payload](#Payload) for each event type's example request
+body. Test events are delivered once and are **not** retried, regardless of
+the outcome. The resulting delivery appears in the webhook's delivery history
+like any other.
 
 ## Manage webhooks
 
@@ -194,15 +191,16 @@ webhook** button is disabled until you delete an existing webhook.
 
 ## Events
 
-Currently only one event in the Cypress Cloud lifecycle triggers a webhook:
+Select one or more of the following events when creating or editing a webhook:
 
-| Event           | Description                                                                                                                                    |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `run.completed` | Sent when a Cypress Cloud run finished and resolves to one of the following states: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`. |
+| Event                         | Description                                                                                                                                    |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `run.completed`               | Sent when a Cypress Cloud run finished and resolves to one of the following states: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`. |
+| `run.accessibility.completed` | Sent when a run's Accessibility report finishes processing.                                                                                    |
+| `run.uiCoverage.completed`    | Sent when a run's UI Coverage report finishes processing.                                                                                      |
 
-There is also a special `webhook.ping` event that
-is **only** sent by the [Send a test event](#Send-a-test-event) action. You
-cannot subscribe to it directly.
+More events are coming soon. See [Payload](#Payload) for each event type's
+fields and an example request body.
 
 ## Payload
 
@@ -234,7 +232,8 @@ delivery as **at-least-once** and make your handler idempotent by keying on
 
 :::
 
-### <code>run.completed</code> payload
+<details>
+<summary><code>run.completed</code> payload</summary>
 
 The `run.completed` payload (version `1`) is a flat JSON object with the
 following fields:
@@ -312,6 +311,161 @@ following fields:
   "groups": ["chrome", "firefox"]
 }
 ```
+</details>
+
+</details>
+
+<details>
+<summary><code>run.accessibility.completed</code> payload</summary>
+
+Sent when a run's Accessibility report finishes processing. The payload
+(version `1`) shares its top-level run fields with `run.completed`, plus a
+nested `accessibility` object with the product's own results:
+
+| Field          | Type               | Description                                                                       |
+| -------------- | ------------------ | --------------------------------------------------------------------------------- |
+| `runNumber`    | `number`           | The run's number in Cypress Cloud.                                                |
+| `runUrl`       | `string`           | Link to the run in Cypress Cloud.                                                 |
+| `projectId`    | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run. |
+| `projectName`  | `string`           | The project name, which can be chosen in your Cypress Cloud settings.             |
+| `status`       | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.            |
+| `createdAt`    | `string`           | ISO 8601 timestamp when the run started.                                          |
+| `completedAt`  | `string` \| `null` | ISO 8601 timestamp when the run finished.                                         |
+| `commitSha`    | `string` \| `null` | The commit SHA the run was recorded against.                                      |
+| `commitBranch` | `string` \| `null` | The branch name.                                                                  |
+
+`accessibility` object:
+
+| Field                     | Type               | Description                                                                                                  |
+| ------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `status`                  | `string`           | Accessibility processing status: `processing`, `processing_failed`, `processed`, or `processed_with_errors`. |
+| `reportUrl`               | `string`           | Link to the Accessibility report in Cypress Cloud.                                                           |
+| `isPartialReport`         | `boolean`          | `true` if the report is missing data for some specs.                                                         |
+| `isReprocessedReport`     | `boolean`          | `true` once the report has been regenerated at least once.                                                   |
+| `score`                   | `number` \| `null` | Accessibility score. `null` when there's no readable report (for example a processing failure).              |
+| `violationCount`          | `number` \| `null` | Total number of violations.                                                                                  |
+| `violationCountsByImpact` | `object` \| `null` | Violation counts broken down by impact: `critical`, `serious`, `moderate`, `minor`.                          |
+| `elementCountsByStatus`   | `object` \| `null` | Element counts broken down by status: `fail`, `incomplete`, `ignore`.                                        |
+| `axeVersion`              | `string` \| `null` | The axe-core version used to generate the report.                                                            |
+
+:::caution
+
+`status` at the top level is the **run's** status; `accessibility.status` is
+the Accessibility **product's** own processing status, and can differ (for
+example a passed run whose Accessibility report `processing_failed`).
+
+:::
+
+<details>
+<summary>Example <code>run.accessibility.completed</code> request body</summary>
+```json
+{
+  "runNumber": 42,
+  "runUrl": "https://cloud.cypress.io/projects/abc123/runs/42",
+  "projectId": "abc123",
+  "projectName": "Example Project",
+  "status": "passed",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "completedAt": "2026-01-01T00:01:36.000Z",
+  "commitSha": "c5b1b1b6f5e2f6e2a1e6b1b1b6f5e2f6e2a1e6b1",
+  "commitBranch": "main",
+  "accessibility": {
+    "status": "processed",
+    "reportUrl": "https://cloud.cypress.io/projects/abc123/runs/42/accessibility",
+    "isPartialReport": false,
+    "isReprocessedReport": false,
+    "score": 92,
+    "violationCount": 6,
+    "violationCountsByImpact": {
+      "critical": 0,
+      "serious": 2,
+      "moderate": 3,
+      "minor": 1
+    },
+    "elementCountsByStatus": {
+      "fail": 6,
+      "incomplete": 2,
+      "ignore": 4
+    },
+    "axeVersion": "4.10.0"
+  }
+}
+```
+</details>
+
+</details>
+
+<details>
+<summary><code>run.uiCoverage.completed</code> payload</summary>
+
+Sent when a run's UI Coverage report finishes processing. The payload
+(version `1`) shares its top-level run fields with `run.completed`, plus a
+nested `uiCoverage` object with the product's own results:
+
+| Field          | Type               | Description                                                                       |
+| -------------- | ------------------ | --------------------------------------------------------------------------------- |
+| `runNumber`    | `number`           | The run's number in Cypress Cloud.                                                |
+| `runUrl`       | `string`           | Link to the run in Cypress Cloud.                                                 |
+| `projectId`    | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run. |
+| `projectName`  | `string`           | The project name, which can be chosen in your Cypress Cloud settings.             |
+| `status`       | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.            |
+| `createdAt`    | `string`           | ISO 8601 timestamp when the run started.                                          |
+| `completedAt`  | `string` \| `null` | ISO 8601 timestamp when the run finished.                                         |
+| `commitSha`    | `string` \| `null` | The commit SHA the run was recorded against.                                      |
+| `commitBranch` | `string` \| `null` | The branch name.                                                                  |
+
+`uiCoverage` object:
+
+| Field                   | Type               | Description                                                                                                |
+| ----------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| `status`                | `string`           | UI Coverage processing status: `processing`, `processing_failed`, `processed`, or `processed_with_errors`. |
+| `reportUrl`             | `string`           | Link to the UI Coverage report in Cypress Cloud.                                                           |
+| `isPartialReport`       | `boolean`          | `true` if the report is missing data for some specs.                                                       |
+| `isReprocessedReport`   | `boolean`          | `true` once the report has been regenerated at least once.                                                 |
+| `coverage`              | `number` \| `null` | UI Coverage score. `null` when there's no readable report (for example a processing failure).              |
+| `testedElementsCount`   | `number` \| `null` | Number of interactive elements exercised by the run.                                                       |
+| `untestedElementsCount` | `number` \| `null` | Number of interactive elements not exercised by the run.                                                   |
+| `testedLinksCount`      | `number` \| `null` | Number of links exercised by the run.                                                                      |
+| `untestedLinksCount`    | `number` \| `null` | Number of links not exercised by the run.                                                                  |
+| `viewCount`             | `number` \| `null` | Number of distinct views (pages) covered.                                                                  |
+
+:::caution
+
+`status` at the top level is the **run's** status; `uiCoverage.status` is the
+UI Coverage **product's** own processing status, and can differ (for example a
+passed run whose UI Coverage report `processing_failed`).
+
+:::
+
+<details>
+<summary>Example <code>run.uiCoverage.completed</code> request body</summary>
+```json
+{
+  "runNumber": 42,
+  "runUrl": "https://cloud.cypress.io/projects/abc123/runs/42",
+  "projectId": "abc123",
+  "projectName": "Example Project",
+  "status": "passed",
+  "createdAt": "2026-01-01T00:00:00.000Z",
+  "completedAt": "2026-01-01T00:01:36.000Z",
+  "commitSha": "c5b1b1b6f5e2f6e2a1e6b1b1b6f5e2f6e2a1e6b1",
+  "commitBranch": "main",
+  "uiCoverage": {
+    "status": "processed",
+    "reportUrl": "https://cloud.cypress.io/projects/abc123/runs/42/ui-coverage",
+    "isPartialReport": false,
+    "isReprocessedReport": false,
+    "coverage": 78,
+    "testedElementsCount": 156,
+    "untestedElementsCount": 44,
+    "testedLinksCount": 32,
+    "untestedLinksCount": 8,
+    "viewCount": 12
+  }
+}
+```
+</details>
+
 </details>
 
 ## Verify webhook signatures
@@ -500,8 +654,8 @@ Delivery statuses:
 - **Retrying**: An attempt failed and another is scheduled.
 - **Failed. No more retries.**: The delivery failed and will not be retried.
   Automatic retries are exhausted, the failure is not retryable (for example a
-  `3xx` or a `4xx` other than `408` or `429`), or the event was a test
-  (`webhook.ping`).
+  `3xx` or a `4xx` other than `408` or `429`), or the delivery was a
+  [test send](#Send-a-test-event).
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/webhook-delivery-detail.png"
@@ -523,7 +677,7 @@ total attempts** (the first attempt plus up to 9 retries), using an exponential
 backoff schedule with jitter. Cypress Cloud retries on network/transport errors
 and on HTTP `408`, `429`, and `5xx` responses. Other completed responses (`3xx`
 and other `4xx`) and blocked destinations are treated as permanent failures and
-are **not** retried. Test (`webhook.ping`) events are never retried.
+are **not** retried. [Test sends](#Send-a-test-event) are never retried.
 
 Each attempt is listed under that delivery in **Recent deliveries**. Expand the
 delivery to see **Attempt 1**, **Attempt 2**, and so on. Automatic retries are
