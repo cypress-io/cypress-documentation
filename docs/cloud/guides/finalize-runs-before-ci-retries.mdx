@@ -1,0 +1,346 @@
+---
+title: Make CI retries consistent by finalizing the previous run
+description: Finalize a stuck in-progress Cypress Cloud run before an automatic or manual CI retry in CircleCI and GitHub Actions, so Re-run optimization, webhooks, and notifications behave consistently on the retry.
+sidebar_label: Finalize Runs Before CI Retries
+sidebar_position: 30
+---
+
+<ProductHeading product="cloud" />
+
+# Make CI retries consistent by finalizing the previous run
+
+When a CI job retries Cypress on the same commit, the retry can start _before_
+Cypress Cloud has finished the previous attempt's run. The earlier run is left
+**in progress**, and everything that keys off a finished run, most importantly
+[Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization),
+can behave inconsistently on the retry, depending on how soon the retry is started.
+
+This guide shows how to **finalize the previous attempt's run** at the start of
+the next attempt, in [CircleCI](/app/continuous-integration/circleci) and
+[GitHub Actions](/app/continuous-integration/github-actions), so automatic and
+manual retries behave the way you expect.
+
+:::info
+
+Both APIs used here are **experimental**. Breaking changes are unlikely, but
+possible. See the
+[Run Cancellation API](/cloud/features/smart-orchestration/run-cancellation-api)
+and
+[Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API)
+references for the current contract.
+
+:::
+
+## The problem
+
+A recorded Cypress run does not always move to a terminal state the instant the
+test process ends:
+
+- **Parallelized and grouped runs stay open** for the
+  [Run Completion Delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay)
+  (60 seconds by default) after the last known machine finishes, so a late group
+  can still join.
+- **A killed or superseded run stays open** until the project's
+  [Run Timeout](/cloud/account-management/projects#Run-Timeout) expires. This is
+  what happens when CI terminates the Cypress process mid-flight, which is
+  exactly what an automatic retry does to the attempt it is replacing.
+
+If your retry begins during that window, the previous run is still in progress
+when the new run is created. The most visible consequence is on
+**Re-run optimization**, which selects the **latest _completed_ run** in the
+rerun group as its
+[anchor](/cloud/features/smart-orchestration/rerun-optimization#How-it-works).
+A previous attempt that is stuck in progress is not a valid anchor, so the retry
+can skip the optimization or anchor against an older, wrong run, and re-run the
+wrong set of specs.
+
+The same lingering run also delays
+[`run.completed` webhooks](/cloud/integrations/webhooks), Slack and email
+notifications, and [UI Coverage](/ui-coverage/get-started/introduction) and
+[Cypress Accessibility](/accessibility/get-started/introduction) report
+finalization, none of which fire until the previous run is truly done.
+
+## The fix
+
+**Before the next attempt records anything, finalize the previous attempt's
+run.** A run that has reached a terminal state, including a **Canceled** state,
+_is_ a valid Re-run optimization anchor, so the retry optimizes correctly and
+every downstream integration fires on time.
+
+There are two building blocks:
+
+1. **Capture the run URL of each attempt** as it starts, using the
+   [`before:run`](/api/node-events/before-run-api) Node event, and write it
+   somewhere the _next_ attempt can read.
+2. **At the start of each attempt, check for a previous attempt's run URL.** If
+   one exists, finalize that run through the API before starting Cypress.
+
+### Which API to call
+
+| API                                                                                          | Effect                                                                                         | Use it when                                                                                                          |
+| -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| [Run Cancellation API](/cloud/features/smart-orchestration/run-cancellation-api)             | **Ends the run immediately** and marks it **Canceled**, even if the recording process is gone. | The previous attempt was **killed** by the retry. This is the default choice for the retry-safety pattern.           |
+| [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API) | **Gracefully completes** the run, letting any genuinely in-progress groups finish first.       | The previous attempt **finished its specs** and you only want to skip the completion delay, rather than hard-cancel. |
+
+For a killed attempt, prefer the **Cancellation API**: it always responds
+immediately and ends the run regardless of whether a live recording session
+still exists. The Completion API returns `run-not-active` for a run whose session
+is already gone, which leaves it to finalize on its own at the Run Timeout, which
+is the delay you are trying to avoid.
+
+Both calls authenticate with your
+[project ID](/cloud/account-management/projects#Project-ID) and
+[record key](/cloud/account-management/projects#Record-key), the same
+credentials you already use to
+[record runs](/cloud/get-started/setup#Setup). Both are safe to call more than
+once: canceling an already-terminal run returns a `409` you can ignore, and
+completing an already-complete run is idempotent.
+
+:::caution
+
+Your **record key can cancel runs**, so treat it as a secret. Store it as a CI
+secret (`CYPRESS_RECORD_KEY`), never in the config you commit. See
+[Record key](/cloud/account-management/projects#Record-key).
+
+:::
+
+### Step 1: capture each attempt's run URL
+
+Write the current run's URL to a file at the start of every run. The next
+attempt reads it to know which run to finalize.
+
+:::cypress-config-plugin-example
+
+```ts
+const { defineConfig } = require('cypress')
+const fs = require('fs')
+
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+      on('before:run', async (details) => {
+        // `runUrl` is only set for recorded runs, and is undefined in
+        // `cypress open` mode. Bail out otherwise.
+        if (!details?.runUrl) {
+          return
+        }
+
+        // Persist the run URL so the *next* attempt can finalize this run.
+        fs.writeFileSync('./.cypress-run-url', details.runUrl)
+      })
+    },
+  },
+})
+```
+
+:::
+
+### Step 2: finalize the previous run before each attempt
+
+The next attempt reads that file, and if it finds a URL, cancels that run before
+starting Cypress. This snippet is the reusable core the CI examples below wrap:
+
+```shell
+RUN_URL_FILE="./.cypress-run-url"
+
+# A file from a previous attempt means an earlier run may still be open.
+if [ -f "$RUN_URL_FILE" ]; then
+  PREVIOUS_RUN_URL=$(cat "$RUN_URL_FILE")
+  echo "Finalizing previous Cypress run: $PREVIOUS_RUN_URL"
+  # A 409 (already terminal) is fine here, so do not fail the build on it.
+  curl -sS -X POST https://api.cypress.io/runs/cancel \
+    -H 'Content-Type: application/json' \
+    -d "{
+      \"projectId\": \"$CYPRESS_PROJECT_ID\",
+      \"recordKey\": \"$CYPRESS_RECORD_KEY\",
+      \"runUrl\": \"$PREVIOUS_RUN_URL\"
+    }" || true
+  rm -f "$RUN_URL_FILE"
+fi
+
+# Now run Cypress. `before:run` rewrites the file with this attempt's run URL.
+npx cypress run --record
+```
+
+`CYPRESS_PROJECT_ID` is your public
+[project ID](/cloud/account-management/projects#Project-ID) and can come from
+your Cypress config or a plain environment variable. `CYPRESS_RECORD_KEY` is the
+secret [record key](/cloud/account-management/projects#Record-key).
+
+:::info
+
+Ordering matters. Finalize the previous run **before** `cypress run` creates the
+new run, so Re-run optimization sees a terminal previous run when it selects the
+anchor for the retry.
+
+:::
+
+## CircleCI
+
+CircleCI
+[automatic step reruns](https://circleci.com/docs/guides/orchestrate/automatic-reruns/)
+retry the same `run` step **on the same executor**, so a file written to the
+working directory persists from one attempt to the next. There is no per-attempt
+"reset" hook, so put the finalize logic at the top of the retried command, where
+it runs on every attempt.
+
+```yaml
+version: 2.1
+
+jobs:
+  cypress-run:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - run: npm ci
+      - run:
+          name: Cypress run with retry-safe finalization
+          command: |
+            RUN_URL_FILE="./.cypress-run-url"
+
+            # If a previous attempt left a run URL, finalize that run first.
+            if [ -f "$RUN_URL_FILE" ]; then
+              PREVIOUS_RUN_URL=$(cat "$RUN_URL_FILE")
+              echo "Finalizing previous Cypress run: $PREVIOUS_RUN_URL"
+              curl -sS -X POST https://api.cypress.io/runs/cancel \
+                -H 'Content-Type: application/json' \
+                -d "{
+                  \"projectId\": \"$CYPRESS_PROJECT_ID\",
+                  \"recordKey\": \"$CYPRESS_RECORD_KEY\",
+                  \"runUrl\": \"$PREVIOUS_RUN_URL\"
+                }" || true
+              rm -f "$RUN_URL_FILE"
+            fi
+
+            # `before:run` writes the new run's URL to $RUN_URL_FILE.
+            npx cypress run --record
+          # Retry the whole step, on the same executor, up to 3 times.
+          max_auto_reruns: 3
+          auto_rerun_delay: 30s
+```
+
+:::caution
+
+This pattern relies on **automatic _step_ reruns**, which reuse the same
+executor and filesystem. Automatic **workflow** reruns and manual
+**"Rerun failed jobs"** start a fresh executor, where the working-directory file
+does not survive. See
+[Retries across a fresh runner](#Retries-across-a-fresh-runner) for that case.
+
+:::
+
+The `auto_rerun_delay` also gives Cypress Cloud a short buffer to settle between
+attempts.
+
+## GitHub Actions
+
+GitHub Actions has no built-in automatic retry, so teams script one, typically a
+shell loop or a retry action, **within a single job**. That keeps every attempt
+on the **same runner**, so a file in the workspace persists across attempts, just
+like the CircleCI executor.
+
+```yaml
+name: Cypress tests
+on: push
+jobs:
+  cypress-run:
+    runs-on: ubuntu-24.04
+    env:
+      CYPRESS_PROJECT_ID: ${{ vars.CYPRESS_PROJECT_ID }}
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: current
+      - run: npm ci
+
+      - name: Cypress run with retry-safe finalization
+        run: |
+          RUN_URL_FILE="./.cypress-run-url"
+          MAX_ATTEMPTS=3
+          attempt=1
+
+          while [ "$attempt" -le "$MAX_ATTEMPTS" ]; do
+            echo "Attempt $attempt of $MAX_ATTEMPTS"
+
+            # Finalize the previous attempt's run, if there was one.
+            if [ -f "$RUN_URL_FILE" ]; then
+              PREVIOUS_RUN_URL=$(cat "$RUN_URL_FILE")
+              echo "Finalizing previous Cypress run: $PREVIOUS_RUN_URL"
+              curl -sS -X POST https://api.cypress.io/runs/cancel \
+                -H 'Content-Type: application/json' \
+                -d "{
+                  \"projectId\": \"$CYPRESS_PROJECT_ID\",
+                  \"recordKey\": \"$CYPRESS_RECORD_KEY\",
+                  \"runUrl\": \"$PREVIOUS_RUN_URL\"
+                }" || true
+              rm -f "$RUN_URL_FILE"
+            fi
+
+            # `before:run` writes this attempt's run URL to $RUN_URL_FILE.
+            if npx cypress run --record; then
+              exit 0
+            fi
+
+            attempt=$((attempt + 1))
+            sleep 30
+          done
+
+          echo "Cypress failed after $MAX_ATTEMPTS attempts"
+          exit 1
+```
+
+:::note
+
+The [Cypress GitHub Action](/app/continuous-integration/github-actions#Cypress-GitHub-Action)
+(`cypress-io/github-action`) is the usual way to run Cypress here. The example
+above uses `npx cypress run` directly because the retry loop needs shell control
+around the command. You can still install dependencies with the action's caching,
+then drive the retry loop in a separate step.
+
+:::
+
+## Retries across a fresh runner
+
+Manual **"Re-run failed jobs"** in GitHub Actions, automatic **workflow** reruns
+in CircleCI, and any retry that lands on a **new machine** cannot read a
+working-directory file from the previous attempt, because that filesystem is
+gone.
+
+For these cases, persist the run URL to a **store that outlives the runner**, and
+key it so the retry can find the right prior run:
+
+- **GitHub Actions:** the run id is stable across attempts of the same run
+  (`github.run_id`), while `github.run_attempt` increments. Use it as the cache or
+  artifact key so a re-run of the same job can locate the previous attempt's run
+  URL.
+- **CircleCI:** persist the file with
+  [`persist_to_workspace`](https://circleci.com/docs/guides/orchestrate/workspaces/)
+  or the [cache](https://circleci.com/docs/guides/optimize/caching/), keyed on a
+  build identifier that survives the rerun.
+
+The finalization logic is identical once you have the previous run URL: `POST`
+to the Cancellation API before the new run starts.
+
+:::tip
+
+If you only care about **manual** retries and are on a Business or Enterprise
+plan,
+[Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) on
+[supported CI providers](/cloud/features/smart-orchestration/rerun-optimization#CI-provider-support)
+already links a re-run to its original run automatically. Finalizing the previous
+run is what makes that link resolve to a completed anchor promptly, instead of
+waiting out the Run Timeout.
+
+:::
+
+## See also
+
+- [Run Cancellation API](/cloud/features/smart-orchestration/run-cancellation-api)
+- [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API)
+- [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization)
+- [What happens when a run is cancelled?](/cloud/features/recorded-runs#What-happens-when-a-run-is-cancelled)
+- [`before:run` Node event](/api/node-events/before-run-api)
+- [Automate on run completion with webhooks](/cloud/guides/webhooks)
