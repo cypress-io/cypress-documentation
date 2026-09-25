@@ -1,0 +1,102 @@
+{
+  "96Yn_IiQUJI": {
+    "uploadDate": "2021-06-07",
+    "description": "In this video, we introduce how to scale testing within GitHub Actions via parallelization. As your application, and therefore your test suite, grows in size and complexity, it becomes important that your tests run as quickly and efficiently as possible. The way you accomplish this is to have multiple workers running your tests in parallel. Parallelization allows large test suites to execute in a fraction of the time when compared to running your tests synchronously.",
+    "duration": ""
+  },
+  "9Eq_gIshK0o": {
+    "uploadDate": "2020-05-05",
+    "description": "",
+    "duration": ""
+  },
+  "AAl4HmJ3YuM": {
+    "uploadDate": "2020-05-04",
+    "description": "",
+    "duration": ""
+  },
+  "bNVRxb-MKGo": {
+    "uploadDate": "2020-05-02",
+    "description": "",
+    "duration": ""
+  },
+  "C8g5X4vCZJA": {
+    "uploadDate": "2019-07-31",
+    "description": "As you write more and more end-to-end tests, you probably find yourself wondering - do I need to write more tests? Are there parts of the application still untested? Are you running redundant tests that are wasting resources and time?",
+    "duration": ""
+  },
+  "DlceMpRpbAw": {
+    "uploadDate": "2020-04-26",
+    "description": "",
+    "duration": ""
+  },
+  "edgeQZ8UpD0": {
+    "uploadDate": "2020-04-25",
+    "description": "",
+    "duration": ""
+  },
+  "Fohrq5GZSD8": {
+    "uploadDate": "2022-04-25",
+    "description": "In this video, we look at how to test multiple domains within your Cypress tests using the new origin and session APIs.",
+    "duration": ""
+  },
+  "hnDPz7dognY": {
+    "uploadDate": "2020-06-02",
+    "description": "Introducing the Cypress Slack Integration: a high-quality Slack App that provides real-time results for your Cypress tests, all in one place.",
+    "duration": ""
+  },
+  "hX9Br8QSYgc": {
+    "uploadDate": "2023-08-03",
+    "description": "An Exclusive Webinar with Cypress Co-Founder Brian Mann introducing Test Replay. The highly anticipated feature that enables you to understand the root cause of failures like never before. Interact with the DOM at the exact point of failure, and inspect network events, console logs, and JavaScript errors, without having to reproduce the issue locally in CI!",
+    "duration": ""
+  },
+  "k3vq57O4P4M": {
+    "uploadDate": "2025-02-24",
+    "description": "",
+    "duration": ""
+  },
+  "mIqKNhLlPcU": {
+    "uploadDate": "2022-06-01",
+    "description": "In this video, we discuss how to migrate your existing Cypress projects to v10.",
+    "duration": ""
+  },
+  "N0TOFWy1Xvg": {
+    "uploadDate": "2021-06-07",
+    "description": "In this video, we explain GitHub Actions & Workflows. We highlight actions created by the community (GitHub Checkout & Cache actions) and the Official GitHub Cypress Action (maintained by the Cypress team).",
+    "duration": ""
+  },
+  "Oqq-_QZWzhg": {
+    "uploadDate": "2021-06-07",
+    "description": "In this video, we go over how to integrate GitHub Actions with the Cypress Dashboard. The Cypress dashboard provides all kinds of useful features like screenshots, videos and contextual information which helps us debug our failed tests quickly. We also discuss how to setup secret keys in GitHub, which we can then use as environment variables in our workflow config file.",
+    "duration": ""
+  },
+  "saYovXS9Llk": {
+    "uploadDate": "2019-09-23",
+    "description": "",
+    "duration": ""
+  },
+  "TD0u9ayqXXE": {
+    "uploadDate": "2026-09-24",
+    "description": "Most AI agents can write a test in seconds. The problem is what happens next: they hand you code they've never run, against a page they can't see, and leave you going back and forth to get something shippable.",
+    "duration": ""
+  },
+  "USX6AntcPyg": {
+    "uploadDate": "2021-06-07",
+    "description": "In this video, we explain continuous integration (CI), why you should use it and the benefits of running your Cypress tests within CI.",
+    "duration": ""
+  },
+  "vFLShoCM8pA": {
+    "uploadDate": "2023-08-29",
+    "description": "Test Replay is here in Cypress 13!",
+    "duration": ""
+  },
+  "vVr7DXDdUks": {
+    "uploadDate": "2021-06-07",
+    "description": "In this video, we discuss in detail, the GitHub workflow config file included within the TodoMVC repo. By the end of the video you should have a solid understanding of how GitHub workflow config files work so that you can begin creating your own.",
+    "duration": ""
+  },
+  "y8StkffYra0": {
+    "uploadDate": "2020-04-25",
+    "description": "",
+    "duration": ""
+  }
+}
