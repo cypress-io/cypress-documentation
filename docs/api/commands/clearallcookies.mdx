@@ -91,7 +91,7 @@ cy.reload()
 cy.url().should('include', 'login')
 ```
 
-#### Clear cookies before each test when test isolation is off
+#### Clear cookies before each test when test isolation is off <E2EOnlyBadge />
 
 With [test isolation](/app/core-concepts/test-isolation) turned off, cookies
 from one test carry over to the next. Call `cy.clearAllCookies()` in a

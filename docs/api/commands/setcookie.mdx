@@ -153,6 +153,12 @@ full browser context (cookies, localStorage, and sessionStorage) across tests.
 - `cy.setCookie()` can time out waiting for the browser to set the cookie.
   It waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
   (or the `timeout` option, when passed) before failing.
+- If the application under test is on a different origin, `cy.setCookie()`
+  retries for up to the
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (or the
+  `timeout` option, when passed) and then fails with a cross-origin error. Run
+  it inside [`cy.origin()`](/api/commands/origin) to work with cookies on that
+  origin.
 
 ## Command Log
 
