@@ -73,13 +73,31 @@ function findYouTubeEmbeds(content) {
 
 /**
  * Find YouTube <DocsVideo> embeds whose src has no valid 11-character video
- * ID, such as a truncated ID. Returns [{ line, src }]. Used by
- * `npm run lint:videos` to fail CI before a broken embed ships.
+ * ID, such as a truncated ID. Returns [{ line, src }].
  */
 function findInvalidYouTubeEmbeds(content) {
   return scanYouTubeEmbeds(content)
     .filter(({ src }) => !extractYouTubeId(src))
     .map(({ line, src }) => ({ line, src }))
+}
+
+/**
+ * Build the error thrown when any file has an invalid YouTube embed, listing
+ * each one as `file:line`. Returns null when there are none. `problems` is
+ * [{ file, line, src }].
+ */
+function invalidEmbedsError(problems) {
+  if (!problems.length) return null
+  const list = problems
+    .map(({ file, line, src }) => `  ${file}:${line}: "${src}"`)
+    .join('\n')
+  return new Error(
+    `${LOG_PREFIX} Found ${problems.length} YouTube <DocsVideo> embed(s) ` +
+      `without a valid video ID:\n${list}\n` +
+      'Use https://www.youtube.com/embed/<id> or https://youtube.com/embed/<id>, ' +
+      'where <id> is the 11-character ID from the watch URL ' +
+      '(youtube.com/watch?v=<id>).'
+  )
 }
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}(?:T[\d:.]+(?:Z|[+-]\d{2}:\d{2})?)?$/
@@ -168,6 +186,10 @@ function toRouteKey(permalink) {
  * JSON-LD strings per page, so the escaping is unit tested here. The swizzled
  * DocItem/Layout injects one <script type="application/ld+json"> per video
  * into <head>.
+ *
+ * A YouTube embed without a valid video ID fails the build (and the dev
+ * server), since the video won't play. A missing uploadDate only warns, so a
+ * video can be embedded before its metadata is in hand.
  */
 module.exports = async function videoStructuredDataPlugin(context) {
   return {
@@ -181,12 +203,26 @@ module.exports = async function videoStructuredDataPlugin(context) {
       const partialMap = loadPartialMap(siteDir)
       const docsContent = allContent['docusaurus-plugin-content-docs'] || {}
 
+      const invalid = []
+      const checkEmbeds = (file, content) => {
+        for (const { line, src } of findInvalidYouTubeEmbeds(content)) {
+          invalid.push({ file, line, src })
+        }
+      }
+      // Partials are checked as their own files so the reported lines match.
+      for (const partialPath of new Set(Object.values(partialMap))) {
+        if (!fs.existsSync(partialPath)) continue
+        const file = path.relative(siteDir, partialPath)
+        checkEmbeds(file, fs.readFileSync(partialPath, 'utf8'))
+      }
+
       const byRoute = {}
       for (const pluginContent of Object.values(docsContent)) {
         for (const version of pluginContent.loadedVersions || []) {
           for (const doc of version.docs) {
             const file = doc.source.replace(/^@site\//, '')
             const raw = fs.readFileSync(path.join(siteDir, file), 'utf8')
+            checkEmbeds(file, raw)
             const content = inlinePartials(raw, partialMap)
             if (!content.includes('youtube')) continue
             const videoObjects = buildPageVideoObjects(content, videoData, {
@@ -200,6 +236,8 @@ module.exports = async function videoStructuredDataPlugin(context) {
           }
         }
       }
+      const error = invalidEmbedsError(invalid)
+      if (error) throw error
       actions.setGlobalData({ byRoute })
     },
   }
@@ -209,6 +247,7 @@ module.exports = async function videoStructuredDataPlugin(context) {
 module.exports.extractYouTubeId = extractYouTubeId
 module.exports.findYouTubeEmbeds = findYouTubeEmbeds
 module.exports.findInvalidYouTubeEmbeds = findInvalidYouTubeEmbeds
+module.exports.invalidEmbedsError = invalidEmbedsError
 module.exports.buildVideoObject = buildVideoObject
 module.exports.buildPageVideoObjects = buildPageVideoObjects
 module.exports.serializeJsonLd = serializeJsonLd

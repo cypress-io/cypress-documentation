@@ -5,6 +5,7 @@ const {
   extractYouTubeId,
   findYouTubeEmbeds,
   findInvalidYouTubeEmbeds,
+  invalidEmbedsError,
   buildVideoObject,
   buildPageVideoObjects,
   serializeJsonLd,
@@ -179,6 +180,39 @@ describe('findInvalidYouTubeEmbeds', () => {
     expect(findInvalidYouTubeEmbeds(mdx)).toEqual([
       { line: 5, src: 'https://youtube.com/embed/bad' },
     ])
+  })
+})
+
+// ---------------------------------------------------------------------------
+// invalidEmbedsError
+// ---------------------------------------------------------------------------
+
+describe('invalidEmbedsError', () => {
+  test('returns null when every embed is valid', () => {
+    expect(invalidEmbedsError([])).toBeNull()
+  })
+
+  test('lists every invalid embed as file:line', () => {
+    const error = invalidEmbedsError([
+      {
+        file: 'docs/app/run-tests/code-coverage.mdx',
+        line: 891,
+        src: 'https://youtube.com/embed/dwU5gUG2',
+      },
+      {
+        file: 'docs/partials/_video.mdx',
+        line: 3,
+        src: 'https://www.youtube.com/watch?v=dwU5gUG2-EM',
+      },
+    ])
+    expect(error).toBeInstanceOf(Error)
+    expect(error.message).toContain('Found 2 YouTube <DocsVideo> embed(s)')
+    expect(error.message).toContain(
+      'docs/app/run-tests/code-coverage.mdx:891: "https://youtube.com/embed/dwU5gUG2"'
+    )
+    expect(error.message).toContain(
+      'docs/partials/_video.mdx:3: "https://www.youtube.com/watch?v=dwU5gUG2-EM"'
+    )
   })
 })
 
