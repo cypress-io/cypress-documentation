@@ -52,6 +52,45 @@ Pass in an options object to change the default behavior of
 
 - `cy.clearAllLocalStorage()` yields `null`.
 
+## Examples
+
+### Clear local storage for every origin
+
+```javascript
+cy.visit('https://example.cypress.io')
+cy.origin('https://www.example.com', () => {
+  cy.visit('/')
+})
+cy.clearAllLocalStorage()
+cy.getAllLocalStorage().should('be.empty')
+```
+
+### Clear local storage without logging
+
+```javascript
+cy.clearAllLocalStorage({ log: false })
+```
+
+## Notes
+
+### Origins cleared by cy.clearAllLocalStorage()
+
+Cypress tracks every origin that serves an HTML page during the test, and
+`cy.clearAllLocalStorage()` clears `localStorage` for each of them. Cypress
+resets that list at the start of each test when test isolation is enabled.
+
+To clear keys on the current origin only, use
+[`cy.clearLocalStorage()`](/api/commands/clearlocalstorage) instead. It also
+accepts specific keys to clear.
+
+### HTTPS and unresponsive origins
+
+- When your app runs on an HTTPS origin, Cypress can't reach `localStorage` on
+  HTTP origins, so it skips them.
+- Cypress clears other origins through a hidden iframe on each one. If an origin
+  doesn't respond within 2 seconds, Cypress logs a warning naming it and the
+  command continues without failing.
+
 ## Rules
 
 <HeaderRequirements />
@@ -68,6 +107,12 @@ Pass in an options object to change the default behavior of
 <HeaderTimeouts />
 
 - `cy.clearAllLocalStorage()` cannot time out.
+
+## History
+
+| Version                                    | Changes                                   |
+| ------------------------------------------ | ----------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `cy.clearAllLocalStorage()` command added |
 
 ## See also
 
