@@ -81,6 +81,71 @@ cy.visit('/dashboard') // redirected back to login
 cy.url().should('include', 'login')
 ```
 
+#### Clear an HttpOnly session cookie to test expiry <E2EOnlyBadge />
+
+Your application's own JavaScript can't read or remove an `HttpOnly` cookie
+through `document.cookie`. `cy.clearCookie()` clears cookies through the
+browser's automation layer, so it removes `HttpOnly` cookies too. Clear the
+session cookie, then confirm the API rejects the next request.
+
+```javascript
+// session_id is HttpOnly, so document.cookie can't remove it
+cy.clearCookie('session_id')
+cy.request({ url: '/api/profile', failOnStatusCode: false })
+  .its('status')
+  .should('eq', 401)
+```
+
+#### Show a cookie consent banner again <E2EOnlyBadge />
+
+Clear a single cookie and reload to test a first-visit flow, such as a cookie
+consent banner, without logging out. Every other cookie stays in place.
+
+```javascript
+cy.clearCookie('cookie_consent')
+cy.reload()
+cy.get('[data-cy="consent-banner"]').should('be.visible')
+```
+
+#### Clear a cookie set during a cy.origin() login <E2EOnlyBadge />
+
+When you log in through another origin with [`cy.origin()`](/api/commands/origin),
+the login cookie is set for your application's domain. Once `cy.origin()`
+returns, `cy.clearCookie()` clears it from the application under test.
+
+```javascript
+cy.visit('/')
+cy.get('[data-cy="login"]').click()
+cy.origin('https://auth.example.com', () => {
+  cy.get('[data-cy="username"]').type('user')
+  cy.get('[data-cy="password"]').type('*****')
+  cy.get('[data-cy="submit"]').click()
+})
+cy.clearCookie('user')
+cy.reload() // the app shows the logged-out state
+```
+
+#### Clear one cookie before each test with test isolation off
+
+With [test isolation](/app/core-concepts/test-isolation) turned off, cookies
+from one test carry over to the next. Call `cy.clearCookie()` in a `beforeEach`
+hook to reset only the cookie you care about while keeping the rest, such as a
+login session you want to reuse across the suite.
+
+```javascript
+describe('Onboarding tour', { testIsolation: false }, () => {
+  beforeEach(() => {
+    // keep the session cookie, but start each test before the tour is dismissed
+    cy.clearCookie('tour_dismissed')
+  })
+
+  it('shows the tour on the dashboard', () => {
+    cy.visit('/dashboard')
+    cy.get('[data-cy="tour"]').should('be.visible')
+  })
+})
+```
+
 ### Name and options
 
 #### Clear a cookie on a specific domain <E2EOnlyBadge />
