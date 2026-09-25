@@ -4,6 +4,7 @@ import videoPlugin from './video-structured-data.js'
 const {
   extractYouTubeId,
   findYouTubeEmbeds,
+  findInvalidYouTubeEmbeds,
   buildVideoObject,
   buildPageVideoObjects,
   serializeJsonLd,
@@ -116,6 +117,68 @@ describe('findYouTubeEmbeds', () => {
       '```',
     ].join('\n')
     expect(findYouTubeEmbeds(mdx)).toEqual([])
+  })
+})
+
+// ---------------------------------------------------------------------------
+// findInvalidYouTubeEmbeds
+// ---------------------------------------------------------------------------
+
+describe('findInvalidYouTubeEmbeds', () => {
+  test('reports a truncated ID with the line its tag starts on', () => {
+    const mdx = [
+      '# Videos',
+      '',
+      '<DocsVideo',
+      '  src="https://youtube.com/embed/dwU5gUG2"',
+      '  title="Check code coverage"',
+      '/>',
+    ].join('\n')
+    expect(findInvalidYouTubeEmbeds(mdx)).toEqual([
+      { line: 3, src: 'https://youtube.com/embed/dwU5gUG2' },
+    ])
+  })
+
+  test('reports IDs that are too long or not embed URLs', () => {
+    const mdx = [
+      '<DocsVideo src="https://youtube.com/embed/dwU5gUG2-EMx" title="Long" />',
+      '<DocsVideo src="https://www.youtube.com/watch?v=dwU5gUG2-EM" title="Watch" />',
+    ].join('\n')
+    expect(findInvalidYouTubeEmbeds(mdx)).toEqual([
+      { line: 1, src: 'https://youtube.com/embed/dwU5gUG2-EMx' },
+      { line: 2, src: 'https://www.youtube.com/watch?v=dwU5gUG2-EM' },
+    ])
+  })
+
+  test('passes valid IDs in both URL forms, with or without a query string', () => {
+    const mdx = [
+      '<DocsVideo src="https://youtube.com/embed/dwU5gUG2-EM" title="A" />',
+      '<DocsVideo src="https://www.youtube.com/embed/hnDPz7dognY?si=x" title="B" />',
+    ].join('\n')
+    expect(findInvalidYouTubeEmbeds(mdx)).toEqual([])
+  })
+
+  test('ignores local and Vimeo videos and fenced code examples', () => {
+    const mdx = [
+      '<DocsVideo src="/img/app/demo.mp4" title="Local" />',
+      '```jsx',
+      '<DocsVideo src="https://youtube.com/embed/bad" title="Example" />',
+      '```',
+    ].join('\n')
+    expect(findInvalidYouTubeEmbeds(mdx)).toEqual([])
+  })
+
+  test('keeps line numbers accurate after a fenced code block', () => {
+    const mdx = [
+      '```js',
+      'const a = 1',
+      '```',
+      '',
+      '<DocsVideo src="https://youtube.com/embed/bad" title="After code" />',
+    ].join('\n')
+    expect(findInvalidYouTubeEmbeds(mdx)).toEqual([
+      { line: 5, src: 'https://youtube.com/embed/bad' },
+    ])
   })
 })
 

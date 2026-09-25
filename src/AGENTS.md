@@ -24,7 +24,8 @@ Embedding a new YouTube video with `<DocsVideo>`? Add its ID to
 `data/youtube-videos.json` with the `uploadDate` from YouTube (plus the
 `description` and `duration` when you have them). Without an `uploadDate`,
 `plugins/video-structured-data.js` skips the video's `VideoObject` JSON-LD and
-logs a build warning.
+logs a build warning. `npm run lint:videos` (part of `npm run lint`, which CI
+runs) fails on a `src` without a valid 11-character video ID.
 
 `sectionTitles.js` maps a section to its `<title>` suffix. Page frontmatter
 never repeats that suffix, and `cypress/e2e/page_titles.cy.ts` asserts it.

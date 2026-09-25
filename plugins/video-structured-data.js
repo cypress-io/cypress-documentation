@@ -25,9 +25,14 @@ function extractYouTubeId(src) {
   return match ? match[1] : null
 }
 
-/** Blank out fenced code blocks so example markup in them isn't scanned. */
+/**
+ * Blank out fenced code blocks so example markup in them isn't scanned. Their
+ * newlines are kept, so line numbers still match the source file.
+ */
 function stripFencedCode(content) {
-  return content.replace(/^\s*```[\s\S]*?^\s*```/gm, '')
+  return content.replace(/^\s*```[\s\S]*?^\s*```/gm, (block) =>
+    block.replace(/[^\n]/g, '')
+  )
 }
 
 /** Read the string-valued attributes of a JSX tag's attribute source. */
@@ -43,19 +48,38 @@ function parseAttributes(source) {
 }
 
 /**
- * Find every YouTube <DocsVideo> embed in MDX content, in page order.
- * Returns [{ src, title }]; Vimeo and local video embeds are ignored.
+ * Scan MDX content for YouTube <DocsVideo> embeds, in page order, with the
+ * 1-based line each tag starts on. Vimeo and local video embeds are ignored.
  */
-function findYouTubeEmbeds(content) {
+function scanYouTubeEmbeds(content) {
   const embeds = []
   const scannable = stripFencedCode(content)
   const tagRe = /<DocsVideo\b([^>]*?)\/?>/g
   let match
   while ((match = tagRe.exec(scannable))) {
     const { src, title } = parseAttributes(match[1])
-    if (src && src.includes('youtube')) embeds.push({ src, title })
+    if (src && src.includes('youtube')) {
+      const line = scannable.slice(0, match.index).split('\n').length
+      embeds.push({ src, title, line })
+    }
   }
   return embeds
+}
+
+/** Find every YouTube <DocsVideo> embed in MDX content: [{ src, title }]. */
+function findYouTubeEmbeds(content) {
+  return scanYouTubeEmbeds(content).map(({ src, title }) => ({ src, title }))
+}
+
+/**
+ * Find YouTube <DocsVideo> embeds whose src has no valid 11-character video
+ * ID, such as a truncated ID. Returns [{ line, src }]. Used by
+ * `npm run lint:videos` to fail CI before a broken embed ships.
+ */
+function findInvalidYouTubeEmbeds(content) {
+  return scanYouTubeEmbeds(content)
+    .filter(({ src }) => !extractYouTubeId(src))
+    .map(({ line, src }) => ({ line, src }))
 }
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}(?:T[\d:.]+(?:Z|[+-]\d{2}:\d{2})?)?$/
@@ -184,6 +208,7 @@ module.exports = async function videoStructuredDataPlugin(context) {
 // Exported for standalone testing.
 module.exports.extractYouTubeId = extractYouTubeId
 module.exports.findYouTubeEmbeds = findYouTubeEmbeds
+module.exports.findInvalidYouTubeEmbeds = findInvalidYouTubeEmbeds
 module.exports.buildVideoObject = buildVideoObject
 module.exports.buildPageVideoObjects = buildPageVideoObjects
 module.exports.serializeJsonLd = serializeJsonLd
