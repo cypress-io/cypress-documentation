@@ -35,7 +35,7 @@ cy.contains(selector, content, options)
 
 ```javascript
 cy.contains('.nav a', 'About') // Yield anchor in .nav containing 'About'
-cy.contains('Hello') // Yield first el in document containing 'Hello'
+cy.contains('Hello') // Yield first el on the page containing 'Hello'
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
@@ -57,8 +57,9 @@ Specify a selector to filter DOM elements containing the text. Only elements
 matching the selector are candidates, so you can yield an element higher in the
 tree than the deepest one containing the text. Cypress yields the deepest
 matching element, and applies its [element preference order](#Preferences) only
-when the selector itself matches one of those elements. A comma-separated
-selector, such as `'a, button'`, searches for every listed selector.
+when the selector itself matches a `button`, `a`, `label`, or
+`input[type='submit']` element. A comma-separated selector, such as
+`'a, button'`, searches for every listed selector.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -164,7 +165,10 @@ A string matches any element whose text _includes_ it, so `'Save'` also matches
 "Save draft". Anchor a regular expression to match the whole text.
 
 ```html
-<button>Save draft</button> <button>Save</button>
+<div>
+  <button>Save draft</button>
+  <button>Save</button>
+</div>
 ```
 
 ```javascript
@@ -343,20 +347,32 @@ cy.get('checkout-panel').shadow().contains('button', 'Checkout').click()
 
 ### Common workflows
 
-Each of these examples ends a chain at an action, such as `.click()`, and starts
-the next step from `cy`. That way every step queries the page again, so a
-re-render between steps does not leave a test holding a detached element. Read
+Where one of these examples takes an action, such as `.click()`, the action ends
+the chain and the next step starts from `cy`. That way every step queries the
+page again, so a re-render between steps does not leave a test holding a
+detached element. Read
 [Actions should be at the end of chains](/app/core-concepts/retry-ability#Actions-should-be-at-the-end-of-chains-not-the-middle)
 for why.
 
 #### Wait for text to disappear
 
 Assert `should('not.exist')` to wait for a loading message, toast, or spinner
-label to go away.
+label to go away. Confirm the message appears first: `not.exist` passes
+immediately when the message hasn't rendered yet, so the test would move on
+before the save even starts.
 
 ```javascript
 cy.contains('button', 'Save').click()
+cy.contains('Saving').should('be.visible')
 cy.contains('Saving').should('not.exist')
+```
+
+When the message can come and go too quickly to catch, assert on the end state
+instead:
+
+```javascript
+cy.contains('button', 'Save').click()
+cy.contains('Saved').should('be.visible')
 ```
 
 #### Confirm the element is visible
@@ -435,7 +451,7 @@ In other words, Cypress looks inside of the `<button>` containing "Delete User"
 for the content "Yes, Delete!", which is not what you intended.
 
 What you want to do is call `cy` again, which automatically creates a new chain
-scoped to the `document`.
+scoped to the `<body>`.
 
 ```javascript
 cy.contains('Delete User').click()
