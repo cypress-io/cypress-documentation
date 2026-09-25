@@ -129,8 +129,7 @@ A debounced input waits for the user to stop typing before it acts. With
 `cy.clock()`, you control exactly when that wait ends, so you can assert both
 that nothing happens too early and that the request fires on time.
 
-```javascript
-// your app code
+```javascript title="src/search.js"
 let debounceTimer
 
 $('#search').on('input', (e) => {
@@ -141,7 +140,7 @@ $('#search').on('input', (e) => {
 })
 ```
 
-```javascript
+```javascript title="cypress/e2e/search.cy.js"
 cy.intercept('GET', '/api/search*').as('search')
 cy.clock()
 cy.visit('/products')
