@@ -58,14 +58,20 @@ Pass in an options object to change the default behavior of
 
 ```javascript
 cy.visit('https://example.cypress.io')
-cy.origin('https://www.example.com', () => {
+cy.origin('https://www.cypress-dx.com', () => {
   cy.visit('/')
 })
 cy.clearAllLocalStorage()
 cy.getAllLocalStorage().should('be.empty')
 ```
 
-### Clear local storage without logging
+### Options
+
+#### Clear local storage without logging to the Command Log
+
+Pass `{ log: false }` to keep `cy.clearAllLocalStorage()` out of the
+[Command Log](/app/core-concepts/open-mode#Command-Log), which is useful when it
+runs in a hook before every test and would otherwise repeat in every test's log.
 
 ```javascript
 cy.clearAllLocalStorage({ log: false })
@@ -77,19 +83,20 @@ cy.clearAllLocalStorage({ log: false })
 
 Cypress tracks every origin that serves an HTML page during the test, and
 `cy.clearAllLocalStorage()` clears `localStorage` for each of them. Cypress
-resets that list at the start of each test when test isolation is enabled.
+resets that list at the start of each test when
+[test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled.
 
 To clear keys on the current origin only, use
 [`cy.clearLocalStorage()`](/api/commands/clearlocalstorage) instead. It also
 accepts specific keys to clear.
 
-### HTTPS and unresponsive origins
+### HTTP origins in an HTTPS test
 
-- When your app runs on an HTTPS origin, Cypress can't reach `localStorage` on
-  HTTP origins, so it skips them.
-- Cypress clears other origins through a hidden iframe on each one. If an origin
-  doesn't respond within 2 seconds, Cypress logs a warning naming it and the
-  command continues without failing.
+When your app runs on HTTPS, `cy.clearAllLocalStorage()` clears only the HTTPS
+origins and leaves `localStorage` on any HTTP origins in place. Browsers block
+an HTTPS page from reaching an HTTP origin's storage. If every origin your test
+visits uses the same protocol, this doesn't affect you.
 
 ## Rules
 
