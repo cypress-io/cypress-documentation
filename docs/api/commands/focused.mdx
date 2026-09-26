@@ -66,12 +66,31 @@ cy.focused().blur()
 cy.focused().should('have.attr', 'name', 'username')
 ```
 
+#### Assert that no element has focus
+
+```javascript
+cy.focused().should('not.exist')
+```
+
+## Notes
+
+### Nothing focused
+
+When no element has focus, the browser reports the document's `<body>` as the
+active element. `cy.focused()` doesn't treat `<body>` as focused, so it yields
+nothing and retries until an element receives focus or the command times out.
+To assert that nothing has focus, chain `.should('not.exist')`.
+
+### Shadow DOM
+
+When the focused element is inside an open shadow root, `cy.focused()` yields
+that element rather than its shadow host.
+
 ## Rules
 
 <HeaderRequirements />
 
-- `cy.focused()` requires being chained off a command that yields DOM
-  element(s).
+- `cy.focused()` requires being chained off of `cy`.
 
 <HeaderAssertions />
 
@@ -99,15 +118,16 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/focused/make-assertion-about-focused-element.png"
-  alt="Command Log focused"
+  alt="Command Log showing the focused command followed by its assertions"
 />
 
 When clicking on the `focused` command within the command log, the console
-outputs the following:
+outputs the element it yielded (`Yielded`) and how many elements it found
+(`Elements`):
 
 <DocsImage
   src="/img/api/focused/currently-focused-element-in-an-input.png"
-  alt="console focused"
+  alt="Browser console showing the input element yielded by cy.focused()"
 />
 
 ## See also
