@@ -65,6 +65,58 @@ cy.clearAllLocalStorage()
 cy.getAllLocalStorage().should('be.empty')
 ```
 
+### Reset storage between tests with test isolation off
+
+When
+[test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is off, `localStorage` carries over from one test to the next. Clear it in a
+`beforeEach()` hook so each test starts from the same state. Pair it with
+[`cy.clearAllCookies()`](/api/commands/clearallcookies) and
+[`cy.clearAllSessionStorage()`](/api/commands/clearallsessionstorage) for a full
+reset.
+
+```javascript
+describe('checkout', { testIsolation: false }, () => {
+  beforeEach(() => {
+    cy.clearAllCookies()
+    cy.clearAllLocalStorage()
+    cy.clearAllSessionStorage()
+  })
+
+  // tests
+})
+```
+
+### Test a first-visit experience partway through a test
+
+Apps often save a flag in `localStorage` once a user dismisses a welcome banner
+or consent prompt. Clear local storage and reload the page to check that the
+prompt returns when the flag is gone.
+
+```javascript
+cy.visit('/')
+cy.get('[data-cy="dismiss-welcome"]').click()
+cy.get('[data-cy="welcome-banner"]').should('not.exist')
+
+cy.clearAllLocalStorage()
+cy.reload()
+cy.get('[data-cy="welcome-banner"]').should('be.visible')
+```
+
+### Compare with cy.clearLocalStorage()
+
+[`cy.clearLocalStorage()`](/api/commands/clearlocalstorage) clears the current
+origin and can target specific keys. `cy.clearAllLocalStorage()` clears every
+key on every origin the test has loaded a page from.
+
+```javascript
+// Clear one key on the current origin
+cy.clearLocalStorage('authToken')
+
+// Clear every key on every origin
+cy.clearAllLocalStorage()
+```
+
 ### Options
 
 #### Clear local storage without logging to the Command Log
@@ -86,10 +138,6 @@ Cypress tracks every origin that serves an HTML page during the test, and
 resets that list at the start of each test when
 [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 is enabled.
-
-To clear keys on the current origin only, use
-[`cy.clearLocalStorage()`](/api/commands/clearlocalstorage) instead. It also
-accepts specific keys to clear.
 
 ### HTTP origins in an HTTPS test
 
