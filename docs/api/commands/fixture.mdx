@@ -137,6 +137,57 @@ it('loads the same object', () => {
 })
 ```
 
+#### Generate a test for each record in a fixture
+
+To create one test per fixture record, `import` the fixture. `cy.fixture()`
+runs after Mocha has already collected the tests in the spec, so a loop inside
+its callback can't add new `it()` blocks.
+
+```js
+// cypress/e2e/users.cy.js
+import users from '../fixtures/users.json'
+
+describe('User profiles', () => {
+  users.forEach((user) => {
+    it(`shows the profile for ${user.name}`, () => {
+      cy.visit(`/users/${user.id}`)
+      cy.contains('h1', user.name)
+    })
+  })
+})
+```
+
+#### Type fixture data in TypeScript
+
+`cy.fixture()` accepts a type argument that describes the yielded contents.
+Cypress doesn't check the file against the type, so keep the two in sync.
+
+```typescript
+type User = {
+  id: number
+  name: string
+  email: string
+}
+
+cy.fixture<User[]>('users').then((users) => {
+  // users is typed as User[]
+  cy.get('[data-cy="user-email"]').first().should('have.text', users[0].email)
+})
+```
+
+#### Read a JSON fixture as raw text
+
+Pass an encoding to yield the file's contents as a string instead of the parsed
+object. This helps when you want the exact text of the file, such as to compare
+it with a raw request body.
+
+```javascript
+cy.fixture('users.json', 'utf8').then((raw) => {
+  expect(raw).to.be.a('string')
+  expect(raw).to.include('"email"')
+})
+```
+
 ### Images
 
 #### Image fixtures are sent as `base64` by default
@@ -160,7 +211,22 @@ cy.fixture('images/logo.png', null).then((logo) => {
 })
 ```
 
-### Playing MP3 file
+### File uploads
+
+#### Upload a fixture with `.selectFile()`
+
+Load the fixture with a `null` encoding so it yields a `Cypress.Buffer`, alias
+it, and pass the alias to [`.selectFile()`](/api/commands/selectfile). Cypress
+keeps the fixture's file name, so the upload arrives as `avatar.png`.
+
+```javascript
+cy.fixture('images/avatar.png', null).as('avatar')
+cy.get('input[type="file"]').selectFile('@avatar')
+```
+
+### Audio
+
+#### Play an MP3 fixture in the browser
 
 ```javascript
 cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
@@ -178,6 +244,27 @@ cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
 ```javascript
 cy.fixture('users').then((json) => {
   cy.intercept('GET', '/users/**', json)
+})
+```
+
+#### Load a fixture in `beforeEach()` and read it with `cy.get()`
+
+Aliases are cleared between tests, so load the fixture in a `beforeEach()` hook
+and read the alias back with [`cy.get()`](/api/commands/get#Alias). This works
+with arrow functions, unlike the [`this` context](#this-context).
+
+```javascript
+describe('User list', () => {
+  beforeEach(() => {
+    cy.fixture('users').as('users')
+  })
+
+  it('shows a row for every user', () => {
+    cy.visit('/users')
+    cy.get('@users').then((users) => {
+      cy.get('[data-cy="user-row"]').should('have.length', users.length)
+    })
+  })
 })
 ```
 
@@ -222,6 +309,14 @@ by using the special property `fixture` on the
 
 ```javascript
 cy.intercept('GET', '/users/**', { fixture: 'users' })
+```
+
+To read the file with an encoding other than the
+[default for its file type](#Default-Encoding), add the encoding after a comma.
+Use `null` to serve binary files, such as images, byte for byte:
+
+```javascript
+cy.intercept('GET', '/images/logo.png', { fixture: 'images/logo.png,null' })
 ```
 
 ### Validation
