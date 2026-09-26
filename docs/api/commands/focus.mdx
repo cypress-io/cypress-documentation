@@ -63,12 +63,64 @@ Pass in an options object to change the default behavior of `.focus()`.
 cy.get('input[name="email"]').focus()
 ```
 
-#### Focus, type, and blur a textarea
+#### Confirm that focus landed
 
 ```javascript
-cy.get('textarea').focus()
-cy.get('textarea').type('Nice Product!')
-cy.get('textarea').blur()
+cy.get('input[name="email"]').focus().should('have.focus')
+```
+
+To check which element has focus without a reference to it, use
+[`cy.focused()`](/api/commands/focused).
+
+#### Focus one element from several matches
+
+`.focus()` works on a single element, so narrow the subject first when your
+selector matches more than one:
+
+```javascript
+cy.get('input').first().focus()
+cy.get('button').eq(2).focus()
+```
+
+#### Focus an element made focusable with `tabindex`
+
+Custom widgets such as dialogs and menus often use `tabindex` to become
+focusable:
+
+```javascript
+cy.get('[role="dialog"][tabindex="-1"]').focus()
+```
+
+### Focus workflows
+
+#### Validate a field when it loses focus
+
+```javascript
+cy.get('input[name="email"]').focus().blur()
+cy.get('.error').should('contain', 'Email is required')
+```
+
+You don't need `.focus()` before [`.type()`](/api/commands/type), since
+`.type()` focuses the element first. Reach for `.focus()` when you need focus
+without typing.
+
+#### Open UI that appears on focus
+
+```javascript
+cy.get('input[name="search"]').focus()
+cy.get('[role="listbox"]').should('be.visible')
+```
+
+#### Test keyboard tab order
+
+Set the starting point with `.focus()`, move focus with
+[`cy.press()`](/api/commands/press), and check where it went with
+[`cy.focused()`](/api/commands/focused):
+
+```javascript
+cy.get('input[name="first-name"]').focus()
+cy.press(Cypress.Keyboard.Keys.TAB)
+cy.focused().should('have.attr', 'name', 'last-name')
 ```
 
 ## Notes
