@@ -9,7 +9,7 @@ slug: /api/commands/eq
 
 # eq
 
-Get A DOM element at a specific index in an array of elements.
+Get a DOM element at a specific index in an array of elements.
 
 :::info
 
@@ -48,12 +48,12 @@ cy.getCookies().eq(4) // Errors, 'getCookies' does not yield DOM element
 <Icon name="angle-right" /> **index _(Number)_**
 
 A number indicating the index to find the element at within an array of
-elements. Starts with 0.
+elements. Starts with `0`.
 
 <Icon name="angle-right" /> **indexFromEnd _(Number)_**
 
 A negative number indicating the index position from the end to find the element
-at within an array of elements.
+at within an array of elements. `-1` is the last element.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -66,7 +66,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 
 <HeaderYields />
 
-- `.eq()` yields the new DOM element it found.
+- `.eq()` yields the DOM element at the given index, wrapped in a jQuery object.
 - `.eq()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -113,7 +113,7 @@ cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
 
 ```javascript
-cy.get('tr').eq(2).should('contain', 'Canada') //true
+cy.get('tr').eq(2).should('contain', 'Canada') // true
 ```
 
 ### Index From End
@@ -132,6 +132,26 @@ cy.get('tr').eq(2).should('contain', 'Canada') //true
 
 ```javascript
 cy.get('li').eq(-2).should('contain', 'sphynx') // true
+```
+
+## Notes
+
+### Using `.eq()` with an out-of-range index
+
+If the index points past either end of the array, `.eq()` finds no element.
+Because `.eq()` is a query, Cypress keeps retrying it until an element exists at
+that index, and fails with an error like
+`Expected to find element: 5, but never found it` once the command times out.
+
+```javascript
+// Only 5 'li' elements exist, so this retries and then fails
+cy.get('li').eq(5)
+```
+
+To assert that no element exists at an index, chain `.should('not.exist')`.
+
+```javascript
+cy.get('li').eq(5).should('not.exist')
 ```
 
 ## Rules
