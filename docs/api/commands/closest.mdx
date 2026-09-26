@@ -13,14 +13,13 @@ Get the first DOM element that matches the selector (whether it be itself or one
 of its ancestors).
 
 `.closest()` tests the element itself first, then travels up the DOM tree
-through its ancestors, as opposed to [`.parents()`](/api/commands/parents),
-which starts at the parent and collects every matching ancestor.
+through its ancestors.
 
 :::info
 
 The querying behavior of this command matches how
 [`.closest()`](https://api.jquery.com/closest) works in jQuery, except that
-`.closest()` continues past shadow DOM boundaries. See
+Cypress continues past shadow DOM boundaries. See
 [Shadow DOM boundaries and `.closest()`](#Shadow-DOM-boundaries-and-closest).
 
 :::
@@ -180,13 +179,27 @@ When the subject is inside a shadow root, `.closest()` crosses the shadow
 boundary. If nothing inside the shadow root matches, it continues from the
 shadow host, testing the host itself and then the host's ancestors, until it
 finds a match or reaches the document. This happens whether or not
-[`includeShadowDom`](/app/references/configuration#Global) is enabled.
+[`includeShadowDom`](/app/references/configuration#Global) is enabled. The
+option controls whether queries like [`.find()`](/api/commands/find) reach
+into a shadow root, not whether `.closest()` climbs back out of one.
+
+```html
+<form id="checkout">
+  <payment-panel>
+    <template shadowrootmode="open">
+      <button>Pay now</button>
+    </template>
+  </payment-panel>
+</form>
+```
 
 ```javascript
-// Yield the element that hosts the shadow root containing the button
-cy.get('my-component')
+// .find() needs includeShadowDom to reach the button;
+// .closest() crosses back out of the shadow root on its own
+// yields <form id="checkout">
+cy.get('payment-panel')
   .find('button', { includeShadowDom: true })
-  .closest('my-component')
+  .closest('form')
 ```
 
 ## Rules
