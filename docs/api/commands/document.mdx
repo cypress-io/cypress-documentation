@@ -39,7 +39,7 @@ Pass in an options object to change the default behavior of `cy.document()`.
 
 <HeaderYields />
 
-- `cy.document()` 'yields the `window.document` object.
+- `cy.document()` yields the `window.document` object.
 - `cy.document()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -60,6 +60,25 @@ cy.document().then((doc) => {
 cy.document().its('contentType').should('eq', 'text/html')
 ```
 
+## Notes
+
+### Using `cy.document()` across origins
+
+`cy.document()` reads the document of the application under test, so the test
+must be able to reach that page. When your application has navigated to an
+origin the test can't access, `cy.document()` fails right away with an error
+suggesting [`cy.origin()`](/api/commands/origin). Wrap the command in
+`cy.origin()` to get the document of that page:
+
+```javascript
+cy.visit('/')
+cy.get('a[href="https://docs.example.com"]').click()
+
+cy.origin('https://docs.example.com', () => {
+  cy.document().its('contentType').should('eq', 'text/html')
+})
+```
+
 ## Rules
 
 <HeaderRequirements />
@@ -74,6 +93,8 @@ cy.document().its('contentType').should('eq', 'text/html')
 
 <HeaderTimeouts />
 
+- `cy.document()` can time out waiting for the application's `document` to be
+  available.
 - `cy.document()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
@@ -99,6 +120,17 @@ following:
   alt="console.log document"
 />
 
+## History
+
+| Version                                    | Changes                                                                                         |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0) | Errors when used outside [`cy.origin()`](/api/commands/origin) after navigating to a new origin |
+| [12.0.0](/app/references/changelog#12-0-0) | `cy.document()` became a query                                                                  |
+| [0.11.6](/app/references/changelog#0-11-6) | `cy.document()` logs to the Command Log and retries upcoming assertions                         |
+| [0.6.14](/app/references/changelog#0-6-14) | Yields the raw `document` object instead of a jQuery-wrapped document                           |
+
 ## See also
 
+- [`cy.origin()`](/api/commands/origin)
+- [`cy.title()`](/api/commands/title)
 - [`cy.window()`](/api/commands/window)
