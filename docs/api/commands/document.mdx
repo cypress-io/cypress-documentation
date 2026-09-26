@@ -47,18 +47,94 @@ Pass in an options object to change the default behavior of `cy.document()`.
 
 ### No Args
 
-#### Get document and do some work
+#### Get the document and work with it
 
-```javascript
+:::visit-mount-example
+
+```js
+-{cy.visit('http://localhost:8080/app')::cy.mount(<MyComponent />)}-
 cy.document().then((doc) => {
-  // work with document element
+  // doc is the document of the application under test
 })
 ```
+
+:::
 
 #### Make an assertion about the document
 
 ```javascript
 cy.document().its('contentType').should('eq', 'text/html')
+```
+
+### Wait for the page to finish loading
+
+`cy.document()` retries until its chained assertions pass, so you can wait for
+the document's `readyState` before moving on:
+
+```javascript
+cy.visit('/dashboard')
+cy.document().its('readyState').should('eq', 'complete')
+```
+
+### Document properties and elements in the document
+
+Use `cy.document()` for properties of the document itself, and
+[`cy.get()`](/api/commands/get) for elements inside it, including elements in
+the `<head>`:
+
+```javascript
+// properties of the document
+cy.document().its('documentElement.lang').should('eq', 'en')
+cy.document().its('characterSet').should('eq', 'UTF-8')
+
+// elements inside the document
+cy.get('head meta[name="description"]').should('have.attr', 'content')
+```
+
+### Trigger a document-level event
+
+Global keyboard shortcuts and "close on Escape" handlers often listen on
+`document` rather than on an element. [`.trigger()`](/api/commands/trigger)
+accepts the document as its subject:
+
+```javascript
+cy.get('[data-cy="modal"]').should('be.visible')
+cy.document().trigger('keydown', { key: 'Escape' })
+cy.get('[data-cy="modal"]').should('not.exist')
+```
+
+### Spy on a document API
+
+Reach into the document to spy on the APIs your application calls. This test
+confirms that changing a color input sets a CSS custom property on the root
+element:
+
+```javascript
+cy.document()
+  .its('documentElement.style')
+  .then((style) => {
+    cy.spy(style, 'setProperty').as('setColor')
+  })
+
+cy.get('input[type=color]').invoke('val', '#ff0000').trigger('change')
+
+cy.get('@setColor').should(
+  'have.been.calledWith',
+  Cypress.sinon.match.string,
+  '#ff0000'
+)
+```
+
+[`Cypress.sinon`](/api/utilities/sinon) walks through this example in more
+detail.
+
+### Drop a file on the document
+
+Pass the document to [`.selectFile()`](/api/commands/selectfile) to simulate
+dragging a file onto the page:
+
+```javascript
+cy.document().selectFile('file.json', { action: 'drag-drop' })
 ```
 
 ## Notes
@@ -117,8 +193,18 @@ following:
   alt="console.log document"
 />
 
+## History
+
+| Version                                    | Changes                                                                                                                          |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0) | `cy.document()` errors when used outside [`cy.origin()`](/api/commands/origin) after the application navigates to another origin |
+| [8.3.1](/app/references/changelog#8-3-1)   | `cy.document()` typings accept the `timeout` option                                                                              |
+| [0.11.6](/app/references/changelog#0-11-6) | `cy.document()` logs to the Command Log and verifies upcoming assertions                                                         |
+| [0.6.14](/app/references/changelog#0-6-14) | `cy.document()` yields the raw `document` object instead of a jQuery-wrapped one                                                 |
+
 ## See also
 
+- [`cy.get()`](/api/commands/get)
 - [`cy.origin()`](/api/commands/origin)
 - [`cy.title()`](/api/commands/title)
 - [`cy.window()`](/api/commands/window)
