@@ -55,11 +55,13 @@ Get the DOM element containing the content.
 
 Specify a selector to filter DOM elements containing the text. Only elements
 matching the selector are candidates, so you can yield an element higher in the
-tree than the deepest one containing the text. Cypress yields the deepest
-matching element, and applies its [element preference order](#Preferences) only
-when the selector itself matches a `button`, `a`, `label`, or
-`input[type='submit']` element. A comma-separated selector, such as
-`'a, button'`, searches for every listed selector.
+tree than the deepest one containing the text.
+
+- Cypress yields the deepest matching element.
+- The [element preference order](#Preferences) applies only when the selector
+  matches a `button`, `a`, `label`, or `input[type='submit']` element.
+- A comma-separated selector, such as `'a, button'`, searches for every listed
+  selector.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -252,7 +254,7 @@ retries the whole chain until the button exists, and `.click()` ends the chain.
 <table>
   <tbody>
     <tr>
-      <td>Jane Lane</td>
+      <td>Jane</td>
       <td><button>Edit</button></td>
     </tr>
     <tr>
@@ -264,8 +266,8 @@ retries the whole chain until the button exists, and `.click()` ends the chain.
 ```
 
 ```javascript
-// clicks the Edit button in Jane Lane's row
-cy.contains('tr', 'Jane Lane').contains('button', 'Edit').click()
+// clicks the Edit button in Jane's row
+cy.contains('tr', 'Jane').contains('button', 'Edit').click()
 ```
 
 #### Match any of several element types
@@ -346,13 +348,6 @@ cy.get('checkout-panel').shadow().contains('button', 'Checkout').click()
 ```
 
 ### Common `cy.contains()` workflows
-
-Where one of these examples takes an action, such as `.click()`, the action ends
-the chain and the next step starts from `cy`. That way every step queries the
-page again, so a re-render between steps does not leave a test holding a
-detached element. Read
-[Actions should be at the end of chains](/app/core-concepts/retry-ability#Actions-should-be-at-the-end-of-chains-not-the-middle)
-for why.
 
 #### Wait for text to disappear
 
@@ -551,10 +546,6 @@ default label is used and can be locale-dependent. See
 [omitting the value attribute on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute).
 
 `cy.contains()` matches an `<input type="submit">` by its `value` attribute.
-When the attribute is omitted, the `value` is an empty string, and there is no
-programmatic way for Cypress to filter elements by the label displayed by the
-user agent. This can cause unexpected failures when using `cy.contains()` with
-submit buttons.
 
 If possible, set the `value` attribute:
 
