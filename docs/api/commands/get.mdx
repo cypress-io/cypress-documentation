@@ -15,7 +15,7 @@ Get one or more DOM elements by selector or
 :::info
 
 The querying behavior of this command is similar to how
-[`$(...)`](http://api.jquery.com/jQuery/) works in jQuery.
+[`$(...)`](https://api.jquery.com/jQuery/) works in jQuery.
 
 :::
 
@@ -47,11 +47,14 @@ A selector used to filter matching DOM elements.
 An alias as defined using the [`.as()`](/api/commands/as) command and referenced
 with the `@` character and the name of the alias.
 
-You can use `cy.get()` for aliases of primitives, regular objects, or even DOM
-elements.
+You can use `cy.get()` for aliases of DOM elements, primitives, regular objects,
+intercepts, spies, and stubs.
 
-When using aliases with DOM elements, Cypress will query the DOM again if the
-previously aliased DOM element has gone stale.
+By default, each time you request an alias, Cypress re-runs the queries leading
+up to it, so an alias of DOM elements yields the elements currently in the DOM.
+To keep the value from the moment the alias was created, alias it with
+`.as(aliasName, { type: 'static' })`. See [`.as()`](/api/commands/as#Arguments)
+for details.
 
 :::info
 
@@ -69,13 +72,15 @@ Pass in an options object to change the default behavior of `cy.get()`.
 | ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
 | `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                          |
 | `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)                                        |
-| `withinSubject`    | null                                                                           | Element to search for children in. If null, search begins from root-level DOM element                        |
+| `withinSubject`    | The [`.within()`](/api/commands/within) subject, otherwise `null`              | Element to search for children in. If `null`, the search begins from the root-level DOM element.             |
 | `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
 <HeaderYields />
 
 - `cy.get()` yields the DOM element(s) it found, or the results of the alias
-  lookup.
+  lookup. For an intercept alias, that is an
+  [interception object](/api/commands/intercept#Using-the-yielded-object), or
+  an array of them for `@alias.all`.
 - `cy.get()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -88,7 +93,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 cy.get('input').should('be.disabled')
 ```
 
-#### Find the first `li` descendent within a `ul`
+#### Find the first `li` descendant within a `ul`
 
 ```javascript
 cy.get('ul li:first').should('have.class', 'active')
@@ -139,8 +144,9 @@ cy.get('#id\\.\\.\\.1234') // escape the character with \\
 ### `cy.get()` in the [`.within()`](/api/commands/within) command
 
 Since `cy.get()` is chained off of `cy`, it always looks for the selector within
-the entire `document`. The only exception is when used inside a
-[.within()](/api/commands/within) command.
+the entire `document`. The exceptions are when it is used inside a
+[.within()](/api/commands/within) command, or when you pass the `withinSubject`
+option.
 
 ```javascript
 cy.get('form').within(() => {
@@ -203,7 +209,7 @@ beforeEach(() => {
 })
 
 it('disables on click', () => {
-  cy.get('@submitBtn').should('be.disabled')
+  cy.get('@submitBtn').click().should('be.disabled')
 })
 ```
 
@@ -214,7 +220,7 @@ beforeEach(() => {
   cy.fixture('users.json').as('users')
 })
 
-it('disables on click', () => {
+it('shows the first user in the header', () => {
   // access the array of users
   cy.get('@users').then((users) => {
     // get the first user
@@ -234,11 +240,27 @@ alias name. This returns an array of
 
 <InterceptAliasIndex />
 
+## Notes
+
+### `cy.get()` alias lookups ignore scoping options
+
+When you pass an alias, `cy.get()` replays the aliased value as it was defined.
+It does not apply the `withinSubject` or `includeShadowDom` options, or the
+scope of an enclosing [`.within()`](/api/commands/within) command.
+
+### `cy.get()` errors that fail without retrying
+
+`cy.get()` fails immediately, without waiting for the timeout, when:
+
+- The selector has invalid syntax.
+- The alias has not been defined with [`.as()`](/api/commands/as).
+- The options argument is not a plain object, or `timeout` is not a number.
+
 ## Rules
 
 <HeaderRequirements />
 
-- `cy.get()` requires being chained off a command that yields DOM element(s).
+- `cy.get()` requires being chained off of `cy`.
 
 <HeaderAssertions />
 
