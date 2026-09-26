@@ -63,6 +63,29 @@ Pass in an options object to change the default behavior of `.debug()`.
 cy.get('a').debug().should('have.attr', 'href')
 ```
 
+## Notes
+
+### What `.debug()` logs to the console
+
+When `.debug()` runs, it prints a "Debug Info" block to the browser console
+with the previous command's name, its arguments, and the current subject. When
+you call `cy.debug()` off of `cy` as the first command in a test, there is no
+previous command or subject, so each value logs as `undefined`.
+
+### Inspect the subject at the breakpoint
+
+When the `debugger` statement pauses execution, the current subject is in scope
+as the variable `subject`. Type `subject` in the Developer Tools console to
+interact with it.
+
+### `.debug()` pauses once per call
+
+`.debug()` is a query, so Cypress retries it along with the queries before it
+while any chained assertions are failing. It only logs and hits the breakpoint
+the first time it runs. The "Debug Info" block shows the subject from that
+first run, which may differ from the subject Cypress yields once the assertions
+pass.
+
 ## Rules
 
 <HeaderRequirements />
@@ -71,8 +94,7 @@ cy.get('a').debug().should('have.attr', 'href')
 
 <HeaderAssertions />
 
-- `.debug()` is a utility command.
-- `.debug()` will not run assertions. Assertions will pass through as if this
+- `.debug()` will not run assertions. Assertions pass through as if this
   command did not exist.
 
 <HeaderTimeouts />
@@ -91,20 +113,25 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/debug/how-debug-displays-in-command-log.png"
-  alt="Command Log debug"
+  alt="Command Log showing a debug command pinned after the get and click commands"
 />
 
-When clicking on the `debug` command within the command log, the console outputs
-the following:
+When `.debug()` runs, the console outputs the following:
 
 <DocsImage
   src="/img/api/debug/console-gives-all-debug-info-for-command.png"
-  alt="console.log debug"
+  alt="Browser console showing the Debug Info block with the command name, command arguments, and current subject"
 />
+
+## History
+
+| Version                                    | Changes                                                                                        |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.debug()` became a query and can no longer be overwritten with `Cypress.Commands.overwrite()` |
 
 ## See also
 
-- [Cypress Cloud](https://on.cypress.io/cloud)
+- [Debugging](/app/guides/debugging)
 - [`.pause()`](/api/commands/pause)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)
