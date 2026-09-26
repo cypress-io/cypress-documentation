@@ -47,11 +47,13 @@ A selector used to filter matching DOM elements.
 An alias as defined using the [`.as()`](/api/commands/as) command and referenced
 with the `@` character and the name of the alias.
 
-You can use `cy.get()` for aliases of primitives, regular objects, or even DOM
-elements.
+You can use `cy.get()` for aliases of DOM elements, primitives, objects,
+intercepts, spies, and stubs.
 
-When using aliases with DOM elements, Cypress will query the DOM again if the
-previously aliased DOM element has gone stale.
+By default, an alias re-runs the queries leading up to it each time you request
+it, so an aliased DOM element reflects the current state of the page. An alias
+created with `{ type: 'static' }` yields the value captured when the alias was
+created. See [`.as()`](/api/commands/as) for details.
 
 :::info
 
@@ -68,14 +70,16 @@ Pass in an options object to change the default behavior of `cy.get()`.
 | Option             | Default                                                                        | Description                                                                                                  |
 | ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
 | `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                          |
-| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time to wait for `cy.get()` to resolve before [timing out](#Timeouts)                                        |
-| `withinSubject`    | null                                                                           | Element to search for children in. If null, search begins from root-level DOM element                        |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time, in milliseconds, to wait for `cy.get()` to resolve before [timing out](#Timeouts). Must be a number.   |
+| `withinSubject`    | the [`.within()`](/api/commands/within) subject, if any                        | Element to search within. Pass `null` to search from the document.                                           |
 | `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
 <HeaderYields />
 
 - `cy.get()` yields the DOM element(s) it found, or the results of the alias
   lookup.
+- For an intercept alias, `cy.get()` yields the most recent interception, or
+  `null` if no request has matched yet.
 - `cy.get()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -214,7 +218,7 @@ beforeEach(() => {
   cy.fixture('users.json').as('users')
 })
 
-it('disables on click', () => {
+it('shows the first user in the header', () => {
   // access the array of users
   cy.get('@users').then((users) => {
     // get the first user
@@ -238,15 +242,16 @@ alias name. This returns an array of
 
 <HeaderRequirements />
 
-- `cy.get()` requires being chained off a command that yields DOM element(s).
+- `cy.get()` requires being chained off of `cy`. When chained off another
+  command, it ignores that command's subject.
 
 <HeaderAssertions />
 
-- `cy.get()` will automatically [retry](/app/core-concepts/retry-ability)
-  until the element(s)
+- `cy.get()` automatically [retries](/app/core-concepts/retry-ability) until
+  the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `cy.get()` will automatically [retry](/app/core-concepts/retry-ability)
-  until all chained assertions have passed.
+- `cy.get()` automatically [retries](/app/core-concepts/retry-ability) until
+  all chained assertions have passed.
 
 <HeaderTimeouts />
 
@@ -279,9 +284,11 @@ the following:
 
 ## History
 
-| Version                                  | Changes                          |
-| ---------------------------------------- | -------------------------------- |
-| [5.2.0](/app/references/changelog#5-2-0) | Added `includeShadowDom` option. |
+| Version                                      | Changes                                                                                      |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [15.17.0](/app/references/changelog#15-17-0) | `@`-prefixed aliases are typed as `Chainable<S>` instead of `Chainable<JQuery<HTMLElement>>` |
+| [12.0.0](/app/references/changelog#12-0-0)   | Aliases re-run the queries leading up to them by default                                     |
+| [5.2.0](/app/references/changelog#5-2-0)     | Added `includeShadowDom` option                                                              |
 
 ## See also
 
