@@ -126,20 +126,22 @@ cy.document().then((doc) => {
 })
 ```
 
-### Spies and stubs
+### Spy on document methods
 
-#### Confirm the application copies text to the clipboard
+#### Confirm the application listens for keyboard events
 
-Stub a document method with [`cy.stub()`](/api/commands/stub) to confirm your
-application calls it.
+Spy on a document method with [`cy.spy()`](/api/commands/spy) to confirm your
+application calls it. Set up the spy before the action that triggers the call.
+Unlike a stub, a spy keeps the original method working, so the listener is
+still registered.
 
 ```javascript
 cy.document().then((doc) => {
-  cy.stub(doc, 'execCommand').returns(true).as('execCommand')
+  cy.spy(doc, 'addEventListener').as('addEventListener')
 })
 
-cy.get('[data-cy="copy"]').click()
-cy.get('@execCommand').should('have.been.calledWith', 'copy')
+cy.get('[data-cy="open-modal"]').click()
+cy.get('@addEventListener').should('have.been.calledWith', 'keydown')
 ```
 
 ## Notes
@@ -167,7 +169,7 @@ cy.get('[data-cy="banner"]').should('exist')
 
 Use `.then()` for work that only needs to happen once, such as the examples
 under [Modify the document](#Modify-the-document) and
-[Spies and stubs](#Spies-and-stubs). See
+[Spy on document methods](#Spy-on-document-methods). See
 [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried)
 for more detail.
 
