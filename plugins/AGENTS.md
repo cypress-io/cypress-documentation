@@ -38,7 +38,8 @@ npm run build:plugins   # tsc for both sub-packages
 ## Verifying a change
 
 - `npm run test:plugins` runs the vitest suites in both sub-packages plus the
-  FAQ plugin test.
+  FAQ plugin test and the video structured-data test in
+  `src/components/video-youtube/`.
 - `npm run build` is the real check for `cypressRemarkPlugins`: it backs the
   `:::cypress-config-example`, `:::cypress-config-plugin-example`, and
   `:::visit-mount-example` directives and the `copyTsToJs` code-block flag, so a
