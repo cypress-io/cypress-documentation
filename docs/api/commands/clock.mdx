@@ -76,7 +76,7 @@ ignores any arguments passed to it.
 - **`clock.tick(milliseconds)`**
 
   Move the clock the specified number of `milliseconds`. Any timers within the
-  affected range of time will be called.
+  affected range of time are called.
 
 - **`clock.restore()`**
 
@@ -91,8 +91,8 @@ ignores any arguments passed to it.
 - **`clock.setSystemTime(now)`**
 
   Change the system time to the new `now`. Now can be a timestamp, date object,
-  or not passed in which defaults to 0. No timers will be called, nor will the
-  time left before they trigger change.
+  or not passed in which defaults to 0. It doesn't call any timers or change the
+  time left before they trigger.
 
 You can also access the `clock` object via `this.clock` in a
 [`.then()`](/api/commands/then) callback, as long as the test is written with a
@@ -271,7 +271,7 @@ cy.get('#today').should('contain', 'February 1')
 
 #### Specify which functions to override
 
-This example below will only override `setTimeout` and `clearTimeout` and leave
+This example overrides only `setTimeout` and `clearTimeout` and leaves
 the other time-related functions as they are.
 
 ```javascript
@@ -346,9 +346,9 @@ cy.clock().invoke('restore')
 
 ### Change current system time
 
-Here we test that a timer still looks good if it has run for an hour, without
-triggering an hours worth of setInterval or requestAnimationFrame timers and
-overloading our CPU.
+This example tests that a timer still displays correctly after it has run for
+an hour, without triggering an hour's worth of `setInterval` or
+`requestAnimationFrame` callbacks and overloading your CPU.
 
 ```javascript
 cy.clock(0)
@@ -359,8 +359,8 @@ cy.clock().then((clock) => {
   // with tick to trigger a callback to update the timer.
   clock.tick(60)
 })
-// the timer shows an hour has passed
-cy.get('#timer').should('contain', '1:00:00')
+// the timer shows an hour has passed and still fits on the page
+cy.get('#timer').should('contain', '1:00:00').and('be.visible')
 // more test code here
 ```
 
@@ -377,8 +377,8 @@ cy.clock().invoke('setSystemTime', 60 * 60 * 1000)
 
 #### iframes not supported
 
-`cy.clock()` only applies to the `top` window on a web page. It will
-not override the time functions of any `iframe` embedded on the page.
+`cy.clock()` only applies to the `top` window on a web page. It doesn't override
+the time functions of any `iframe` embedded on the page.
 
 ### Behavior
 
@@ -391,15 +391,15 @@ and [`cy.tick()`](/api/commands/tick) doesn't move them forward.
 #### clock behavior before `cy.mount()`
 
 Using the [`cy.mount()`](/api/commands/mount) command in a Cypress Component
-Test will render your component but does not affect the behavior of the page or
+Test renders your component but doesn't affect the behavior of the page or
 window object. This means you can `mount` directly after calling `cy.clock()` to
 test the component against any changes you've made to the yielded clock object.
 
 #### clock behavior before `cy.visit()`
 
 If you call `cy.clock()` before visiting a page with
-[`cy.visit()`](/api/commands/visit), the page's native global functions will be
-overridden on window load, before any of your app code runs. So even if
+[`cy.visit()`](/api/commands/visit), Cypress overrides the page's native global
+functions on window load, before any of your app code runs. So even if
 `setTimeout`, for example, is called on page load, it can still be controlled
 via [`cy.tick()`](/api/commands/tick). This also applies if, during the course
 of a test, the page under test is reloaded or changed.
@@ -433,7 +433,7 @@ cy.clock()
 cy.tick(1000)
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <DocsImage
   src="/img/api/clock/clock-displays-in-command-log.png"
