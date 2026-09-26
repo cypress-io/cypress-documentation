@@ -46,7 +46,7 @@ Pass in an options object to change the default behavior of
 
 | Option | Default | Description                                                                         |
 | ------ | ------- | ----------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| `log`  | `true`  | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log) |
 
 <HeaderYields />
 
@@ -54,18 +54,41 @@ Pass in an options object to change the default behavior of
 
 ## Examples
 
-### Clear local storage for every origin
+### No Args
+
+#### Clear local storage for every origin <E2EOnlyBadge />
+
+`cy.clearAllLocalStorage()` clears `localStorage` on every origin the test has
+loaded a page from, including origins visited inside
+[`cy.origin()`](/api/commands/origin).
 
 ```javascript
 cy.visit('https://example.cypress.io')
+cy.window().then((win) => win.localStorage.setItem('theme', 'dark'))
 cy.origin('https://www.cypress-dx.com', () => {
   cy.visit('/')
+  cy.window().then((win) => win.localStorage.setItem('theme', 'light'))
 })
+cy.getAllLocalStorage().should('not.be.empty')
 cy.clearAllLocalStorage()
 cy.getAllLocalStorage().should('be.empty')
 ```
 
-### Reset storage between tests with test isolation off
+### Options
+
+#### Clear local storage without logging to the Command Log
+
+Pass `{ log: false }` to keep `cy.clearAllLocalStorage()` out of the
+[Command Log](/app/core-concepts/open-mode#Command-Log), which is useful when it
+runs in a hook before every test and would otherwise repeat in every test's log.
+
+```javascript
+cy.clearAllLocalStorage({ log: false })
+```
+
+### Common workflows
+
+#### Reset local storage between tests with test isolation off
 
 When
 [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
@@ -87,57 +110,55 @@ describe('checkout', { testIsolation: false }, () => {
 })
 ```
 
-### Test a first-visit experience partway through a test
+#### Forget a remembered user on a sign-in origin <E2EOnlyBadge />
 
-Apps often save a flag in `localStorage` once a user dismisses a welcome banner
-or consent prompt. Clear local storage and reload the page to check that the
-prompt returns when the flag is gone.
+When your app signs users in on a separate origin, that sign-in page can
+remember the user in its own `localStorage`.
+[`cy.clearLocalStorage()`](/api/commands/clearlocalstorage) reaches only the
+current origin, so use `cy.clearAllLocalStorage()` to forget the user on every
+origin and test the signed-out experience.
 
 ```javascript
 cy.visit('/')
-cy.get('[data-cy="dismiss-welcome"]').click()
-cy.get('[data-cy="welcome-banner"]').should('not.exist')
+cy.origin('https://www.cypress-dx.com', () => {
+  cy.visit('/login')
+  cy.get('[data-cy="email"]').type('user@example.com')
+  cy.get('[data-cy="remember-me"]').check()
+  cy.get('[data-cy="login"]').click()
+})
 
 cy.clearAllLocalStorage()
-cy.reload()
-cy.get('[data-cy="welcome-banner"]').should('be.visible')
+
+cy.origin('https://www.cypress-dx.com', () => {
+  cy.visit('/login')
+  cy.get('[data-cy="email"]').should('have.value', '')
+})
 ```
 
-### Compare with cy.clearLocalStorage()
+#### Choose between cy.clearLocalStorage() and cy.clearAllLocalStorage()
 
 [`cy.clearLocalStorage()`](/api/commands/clearlocalstorage) clears the current
 origin and can target specific keys. `cy.clearAllLocalStorage()` clears every
-key on every origin the test has loaded a page from.
+key on every tracked origin.
 
 ```javascript
 // Clear one key on the current origin
 cy.clearLocalStorage('authToken')
 
-// Clear every key on every origin
+// Clear every key on every tracked origin
 cy.clearAllLocalStorage()
-```
-
-### Options
-
-#### Clear local storage without logging to the Command Log
-
-Pass `{ log: false }` to keep `cy.clearAllLocalStorage()` out of the
-[Command Log](/app/core-concepts/open-mode#Command-Log), which is useful when it
-runs in a hook before every test and would otherwise repeat in every test's log.
-
-```javascript
-cy.clearAllLocalStorage({ log: false })
 ```
 
 ## Notes
 
 ### Origins cleared by cy.clearAllLocalStorage()
 
-Cypress tracks every origin that serves an HTML page during the test, and
-`cy.clearAllLocalStorage()` clears `localStorage` for each of them. Cypress
-resets that list at the start of each test when
+Cypress tracks every origin that serves an HTML page, and
+`cy.clearAllLocalStorage()` clears `localStorage` for each of them. When
 [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
-is enabled.
+is enabled, Cypress resets that list at the start of each test. When it's off,
+the list carries over between the tests in a spec file, so the command also
+clears origins that earlier tests in the spec loaded.
 
 ### HTTP origins in an HTTPS test
 
