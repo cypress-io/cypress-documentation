@@ -97,6 +97,55 @@ Pass in an options object to change the default behavior of `.click()`.
 cy.get('.nav > a').click()
 ```
 
+#### Assert on the result of a click
+
+Chaining further commands off the subject of `.click()` is unsafe, since the
+click can re-render or remove the element. Start a new chain from `cy` and
+assert on what the click changed.
+
+```javascript
+cy.get('[data-cy=open-modal]').click()
+cy.get('[data-cy=modal]').should('be.visible')
+```
+
+#### Wait for the request a click sends
+
+Register an [`cy.intercept()`](/api/commands/intercept) before the click, then
+[`cy.wait()`](/api/commands/wait) on its alias so the test continues only after
+the request completes.
+
+```javascript
+cy.intercept('POST', '/api/todos').as('createTodo')
+cy.get('[data-cy=save]').click()
+cy.wait('@createTodo').its('response.statusCode').should('eq', 201)
+```
+
+#### Click a button that starts out disabled
+
+`.click()` retries its
+[actionability checks](/app/core-concepts/interacting-with-elements#Disability),
+including the check that the element is not disabled, until the command times
+out. You don't need to assert that the button is enabled before clicking it.
+
+```javascript
+cy.get('[data-cy=email]').type('user@example.com')
+// waits until the submit button is no longer disabled
+cy.get('[data-cy=submit]').click()
+```
+
+#### Click one element out of several matches
+
+When a query matches more than one element, narrow it to the one you want
+instead of passing `{ multiple: true }`. Use [`.first()`](/api/commands/first),
+[`.eq()`](/api/commands/eq), or [`cy.contains()`](/api/commands/contains) with a
+selector and text.
+
+```javascript
+cy.get('[data-cy=todo] .delete').first().click()
+cy.get('[data-cy=todo]').eq(2).find('.delete').click()
+cy.contains('button', 'Submit').click()
+```
+
 ### Position
 
 #### Specify a corner of the element to click
@@ -105,6 +154,17 @@ Click the top right corner of the button.
 
 ```javascript
 cy.get('img').click('topRight')
+```
+
+#### Click outside an element to dismiss it
+
+Close a dropdown or popover the way a user would, by clicking an empty area of
+the page.
+
+```javascript
+cy.get('[data-cy=menu-toggle]').click()
+cy.get('body').click('topLeft')
+cy.get('[data-cy=menu]').should('not.exist')
 ```
 
 ### Coordinates
@@ -119,6 +179,32 @@ cy.get('#top-banner').click(15, 40)
 ```
 
 ### Options
+
+#### Keep a sticky header from covering the element
+
+Cypress scrolls the element into view before clicking it. With the default
+`scrollBehavior` of `top`, a sticky header can end up covering the element and
+fail the [covering check](/app/core-concepts/interacting-with-elements#Covering).
+Scroll the element to the center of the viewport instead, or set each axis
+separately with a `{ block, inline }` object.
+
+```javascript
+cy.get('[data-cy=row-42] button').click({ scrollBehavior: 'center' })
+cy.get('[data-cy=carousel-item]').click({
+  scrollBehavior: { block: 'center', inline: 'nearest' },
+})
+```
+
+#### Dismiss what covers an element before forcing a click
+
+When another element covers the one you want to click, deal with it the way a
+user would before reaching for `{ force: true }`. Forcing skips the checks that
+would catch a real bug, such as a banner that blocks users from checking out.
+
+```javascript
+cy.get('[data-cy=cookie-banner] button').click()
+cy.get('[data-cy=checkout]').click()
+```
 
 #### Force a click regardless of its actionable state
 
@@ -183,6 +269,21 @@ The following keys can be combined with `.click()` through the `options`.
 cy.get('li:first').click({
   shiftKey: true,
 })
+```
+
+#### Ctrl or Cmd click to select several items
+
+Many apps check the control key on Windows and Linux and the command key on
+macOS. Use [`Cypress.platform`](/api/cypress-api/platform) to hold the key the
+app expects.
+
+```javascript
+const modifier =
+  Cypress.platform === 'darwin' ? { metaKey: true } : { ctrlKey: true }
+
+cy.get('[data-cy=file]').eq(0).click()
+cy.get('[data-cy=file]').eq(2).click(modifier)
+cy.get('[data-cy=file].selected').should('have.length', 2)
 ```
 
 ## Notes
