@@ -77,9 +77,14 @@ Pass in an options object to change the default behavior of `cy.fixture()`.
 
 <HeaderYields />
 
-- `cy.fixture()` yields the contents of the file. Formatting is determined by
-  its file extension.
-- The yielded subject is **not** updated if the contents change on disk.
+- `cy.fixture()` yields the contents of the file. Without an `encoding`
+  argument, formatting is determined by its file extension. With an `encoding`
+  argument, the raw file contents are yielded. See
+  [Default Encoding](#Default-Encoding).
+- Each call yields a fresh copy of the data, so mutating the yielded value does
+  not affect later `cy.fixture()` calls.
+- The yielded subject is cached. See [Fixture caching](#Fixture-caching) for
+  when changes on disk are picked up.
 
 ## Examples
 
@@ -93,10 +98,11 @@ cy.fixture('users.json').as('usersData')
 
 #### Omit the fixture file's extension
 
-When no extension is passed to `cy.fixture()`, Cypress will search for files
+When no extension is passed to `cy.fixture()`, Cypress first looks for a file
+that matches the path exactly. If there isn't one, Cypress searches for files
 with the specified name within the
 [`fixturesFolder`](/app/references/configuration#Folders--Files) (which
-defaults to `cypress/fixtures`) and resolve the first one.
+defaults to `cypress/fixtures`) and resolves the first one.
 
 ```javascript
 cy.fixture('admin').as('adminJSON')
@@ -198,8 +204,8 @@ cy.fixture('user').then((user) => {
 })
 
 -{cy.visit('/users')::cy.mount(<Users />)}-
-cy.wait('@getUser').then(({ request }) => {
-  expect(request.body.firstName).to.eq('Jane')
+cy.wait('@getUser').then(({ response }) => {
+  expect(response.body.firstName).to.eq('Jane')
 })
 ```
 
@@ -223,32 +229,34 @@ cy.intercept('GET', '/users/**', { fixture: 'users' })
 
 #### Automated File Validation
 
-Cypress automatically validates your fixtures. If your `.json` or `.js` files
-contain syntax errors, they will be shown in the Command Log.
+Cypress automatically validates your fixtures. If a `.json` or `.js` fixture
+contains a syntax error, `cy.fixture()` fails the test with an error that names
+the file and describes the problem.
+
+A `.js` fixture holds a single JavaScript expression, such as an object literal
+(`{ id: 1, name: 'Jane' }`), and `cy.fixture()` yields the value it evaluates
+to.
 
 ### Encoding
 
 #### Default Encoding
 
-Cypress automatically determines the encoding for the following file types:
+When you don't pass an `encoding`, Cypress reads the file based on its
+extension:
 
-- `.json`
-- `.js`
-- `.html`
-- `.txt`
-- `.csv`
-- `.png`
-- `.jpg`
-- `.jpeg`
-- `.gif`
-- `.tif`
-- `.tiff`
-- `.zip`
+| Extension                                                    | Yields                                 |
+| ------------------------------------------------------------ | -------------------------------------- |
+| `.json`                                                      | The parsed JSON value                  |
+| `.js`                                                        | The value of the evaluated expression  |
+| `.html`                                                      | The file contents as a `utf8` string   |
+| `.png`, `.jpg`, `.jpeg`, `.gif`, `.tif`, `.tiff`, and `.zip` | The file contents as a `base64` string |
+| Any other extension, including `.txt` and `.csv`             | The file contents as a `utf8` string   |
 
-For other types of files, they will be read as `utf8` by default, unless
-specified in the second argument of `cy.fixture()`. You can specify `null` as
-the encoding to read the file as a
-[`Cypress.Buffer`](/api/utilities/buffer) instance instead.
+When you pass an `encoding`, Cypress skips this parsing and yields the raw file
+contents in that encoding. For example, `cy.fixture('users.json', 'utf8')`
+yields the JSON as a string rather than a parsed object. Pass `null` as the
+encoding to read the file as a [`Cypress.Buffer`](/api/utilities/buffer)
+instance.
 
 ### `this` context
 
@@ -281,14 +289,15 @@ describe('User page', () => {
 `cy.fixture()` reads the **entire file into memory** and transfers its contents
 from the Cypress Node.js server process to the browser test runner over an
 internal WebSocket connection. There is no explicit file size limit in Cypress
-itself, but large files — especially binary files like `.zip` archives — can
-cause Cypress to crash or become unresponsive due to:
+itself, but large files, especially binary files like `.zip` archives, can cause
+Cypress to crash or become unresponsive due to:
 
-- **Memory pressure**: The complete file must fit in available RAM and is held
-  in the fixture cache for the duration of the test run.
+- **Memory pressure**: The complete file must fit in available RAM, and the
+  browser keeps a copy in the [fixture cache](#Fixture-caching). Binary files
+  yielded as `base64` strings take up about a third more memory than the file
+  on disk.
 - **WebSocket message size**: File contents are sent as a single message over
-  the internal socket. Payloads that approach or exceed 100 MB can exceed
-  socket-level buffer limits.
+  the internal socket, so the whole payload is serialized in memory at once.
 
 As a practical guideline, avoid using `cy.fixture()` with files larger than a
 few megabytes. Smaller test fixtures (representative subsets of production data)
@@ -338,17 +347,33 @@ cy.task('getFileSize', 'cypress/fixtures/large.zip').then((size) => {
 })
 ```
 
-### Loaded just once
+### Fixture caching
 
-Keep in mind that fixture files are assumed to be unchanged during the
-test, and thus Cypress loads them just once. Even if you overwrite the fixture
-file itself, the already loaded fixture data remains the same.
+Cypress caches the contents of each fixture the first time `cy.fixture()` loads
+it, keyed by the file path and encoding. Later calls with the same path and
+encoding yield a copy of the cached data instead of reading the file again.
 
-If you wish to dynamically change the contents of a file during your tests,
-consider [`cy.readFile()`](/api/commands/readfile) instead.
+When you overwrite a file inside the
+[`fixturesFolder`](/app/references/configuration#Folders--Files) with
+[`cy.writeFile()`](/api/commands/writefile), Cypress clears the cached entry
+for that file, and the next `cy.fixture()` call reads the new contents:
 
-For example, if you want to reply to a network request with different object,
-the following **will not work**:
+```js
+cy.writeFile('cypress/fixtures/todo.json', { title: 'New data' })
+cy.fixture('todo').its('title').should('eq', 'New data')
+```
+
+Changes made any other way, such as from [`cy.task()`](/api/commands/task) or
+an editor while tests run, don't clear the cache. If a file changes outside of
+`cy.writeFile()` during your tests, use [`cy.readFile()`](/api/commands/readfile)
+to read it, since `cy.readFile()` doesn't cache.
+
+#### Intercepts read the fixture when they are defined
+
+The `fixture` property of a [`cy.intercept()`](/api/commands/intercept)
+`StaticResponse` is read once, when the intercept is defined. Rewriting the
+file afterward doesn't change the response of that intercept, so the following
+**will not work**:
 
 ```js
 // 🚨 DOES NOT WORK
@@ -357,15 +382,15 @@ cy.intercept('GET', '/todos/1', { fixture: 'todo' }).as('todo')
 // the intercept replies with the object from todo.json file
 
 cy.wait('@todo').then(() => {
-  cy.writeFile('/cypress/fixtures/todo.json', { title: 'New data' })
+  cy.writeFile('cypress/fixtures/todo.json', { title: 'New data' })
 })
 // application requests the /todos/1 resource again
 // the intercept replies with the originally loaded object
 // from the todo.json file and NOT { "title": "New data" }
 ```
 
-In this situation, avoid using the fixture file and instead respond to the
-network request with the object
+In this situation, respond to the network request with the object and define a
+new intercept when the data changes:
 
 ```js
 // ✅ RESPOND WITH OBJECT
@@ -388,6 +413,11 @@ cy.fixture('todo.json').then((todo) => {
 <HeaderRequirements />
 
 - `cy.fixture()` requires being chained off of `cy`.
+- `cy.fixture()` requires the
+  [`fixturesFolder`](/app/references/configuration#Folders--Files) not to be
+  set to `false`.
+- `cy.fixture()` requires the file to exist. When no file matches, the error
+  lists the extensions Cypress tried.
 
 <HeaderAssertions />
 
@@ -396,27 +426,29 @@ cy.fixture('todo.json').then((todo) => {
 
 <HeaderTimeouts />
 
-- `cy.fixture()` should never time out.
-
-:::caution
-
-Because `cy.fixture()` is asynchronous it is technically possible for there to
-be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-:::
+- `cy.fixture()` can time out waiting for the server to send the fixture. The
+  timeout defaults to
+  [`responseTimeout`](/app/references/configuration#Timeouts), and you can
+  change it with the `timeout` option.
 
 ## Command Log
 
 - `cy.fixture()` does _not_ log in the Command Log
+
+## History
+
+| Version                                    | Changes                                                                                                                                            |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | `.coffee` files are no longer resolved when the extension is omitted                                                                               |
+| [15.0.0](/app/references/changelog#15-0-0) | `cy.writeFile()` clears the cached fixture it overwrites. Passing an `encoding` always yields raw contents, and each encoding is cached separately |
 
 ## See also
 
 - [Guide: Variables and Aliases](/app/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
-- [`.readFile()`](/api/commands/readfile) for a similar command without caching
-  and with builtin retryability
+- [`cy.readFile()`](/api/commands/readfile) for a similar command without
+  caching and with builtin retryability
 - [`.selectFile()`](/api/commands/selectfile) for simulating file uploads,
   including with large files
 - [`cy.task()`](/api/commands/task) for keeping large file operations in the
