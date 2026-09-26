@@ -11,10 +11,15 @@ slug: /api/commands/find
 
 Get the descendent DOM elements of a specific selector.
 
+`.find()` searches every level below the subject, as opposed to
+[`.children()`](/api/commands/children), which travels a single level down the
+DOM tree.
+
 :::info
 
-The querying behavior of this command matches exactly how
-[`.find()`](http://api.jquery.com/find) works in jQuery.
+With [`includeShadowDom`](#Searching-shadow-DOM-with-find) disabled, the
+querying behavior of this command matches exactly how
+[`.find()`](https://api.jquery.com/find) works in jQuery.
 
 :::
 
@@ -37,14 +42,15 @@ cy.get('.article').find('footer') // Yield 'footer' within '.article'
 
 ```javascript
 cy.find('.progress') // Errors, cannot be chained off 'cy'
-cy.task('log', 'hello').find() // Errors, 'task' does not yield DOM element
+cy.task('log', 'hello').find('li') // Errors, 'task' does not yield DOM element
 ```
 
 ### Arguments
 
 <Icon name="angle-right" /> **selector _(String selector)_**
 
-A selector used to filter matching descendent DOM elements.
+A selector used to match descendent DOM elements. A selector can start with a
+combinator, such as `'> li'`, to match relative to the subject.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -77,6 +83,37 @@ Pass in an options object to change the default behavior of `.find()`.
 ```javascript
 // yields [<li class="first"></li>, <li class="second"></li>]
 cy.get('#parent').find('li')
+```
+
+## Notes
+
+### Searching shadow DOM with `.find()`
+
+When `includeShadowDom` is enabled, `.find()` also searches the shadow root of
+every element within the subject, including shadow roots nested inside other
+shadow roots.
+
+```javascript
+cy.get('my-component').find('button', { includeShadowDom: true })
+```
+
+The `includeShadowDom` option passed to `.find()` takes precedence over the
+[`includeShadowDom` configuration](/app/references/configuration#Global),
+whether you set that globally, for a suite or test, or with
+[`Cypress.config()`](/api/cypress-api/config).
+
+The selector is matched within one tree at a time, so a single selector can't
+span a shadow boundary. To reach an element inside a shadow root, chain `.find()`
+off the shadow host with a selector written for the inside of that root, or step
+into the root with [`.shadow()`](/api/commands/shadow) first.
+
+```javascript
+// Does not match a .inner element inside my-component's shadow root
+cy.get('body').find('my-component .inner', { includeShadowDom: true })
+
+// Matches it
+cy.get('my-component').find('.inner', { includeShadowDom: true })
+cy.get('my-component').shadow().find('.inner')
 ```
 
 ## Rules
@@ -112,7 +149,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/find/find-li-of-uls-in-test.png"
-  alt="Command Log find"
+  alt="Command Log showing a find command for >li nested under the get command, with a count of 8"
 />
 
 When clicking on the `find` command within the command log, the console outputs
@@ -120,16 +157,20 @@ the following:
 
 <DocsImage
   src="/img/api/find/find-in-console-shows-list-and-yields.png"
-  alt="console.log find"
+  alt="Console output for find, listing the selector, the ul it was applied to, and the 8 li elements found"
 />
 
 ## History
 
-| Version                                  | Changes                          |
-| ---------------------------------------- | -------------------------------- |
-| [5.2.0](/app/references/changelog#5-2-0) | Added `includeShadowDom` option. |
+| Version                                    | Changes                                                                                                                                                                                     |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.find()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
+| [5.2.0](/app/references/changelog#5-2-0)   | Added `includeShadowDom` option.                                                                                                                                                            |
 
 ## See also
 
+- [`.children()`](/api/commands/children)
 - [`cy.get()`](/api/commands/get)
+- [`.shadow()`](/api/commands/shadow)
+- [`.within()`](/api/commands/within)
 - [Retry-ability](/app/core-concepts/retry-ability)
