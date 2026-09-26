@@ -15,6 +15,7 @@ property).
 
 ```javascript
 .each(callbackFn)
+.each(options, callbackFn)
 ```
 
 ### Usage
@@ -39,13 +40,23 @@ cy.clock().each(() => {...})    // Errors, 'clock' does not yield an array
 
 Pass a function that is invoked with the following arguments:
 
-- `value` - the current item in the collection
+- `value` - the current item in the collection. DOM elements are passed
+  wrapped in jQuery, not as raw elements.
 - `index` - the 0-based index of the current item in the collection
 - `collection` - the original collection being iterated over
 
+<Icon name="angle-right" /> **options _(Object)_**
+
+Pass in an options object to change the default behavior of `.each()`.
+
+| Option    | Default                                                           | Description                                                                                 |
+| --------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for each callback's returned promise to resolve before [timing out](#Timeouts) |
+
 <HeaderYields />
 
-- `.each()` yields the same subject it was given.
+- `.each()` yields the same subject it was given, even if the callback returns
+  a value or runs other Cypress commands.
 - Because `.each()` is not a
   [query](/app/core-concepts/retry-ability#Only-queries-are-retried), it is
   unsafe to chain further commands that act or assert on DOM elements after
@@ -74,8 +85,8 @@ cy.get('ul>li').each(($el, index, $list) => {
 
 **The original array is always yielded**
 
-No matter what is returned in the callback function, `.each()` will always yield
-the original array.
+No matter what the callback function returns, `.each()` always yields the
+original array.
 
 ```javascript
 cy.get('li')
@@ -97,8 +108,8 @@ than reusing the subject yielded by `.each()`.
 
 **Promises are awaited**
 
-If your callback function returns a `Promise`, it will be awaited before
-iterating over the next element in the collection.
+If your callback function returns a `Promise`, `.each()` waits for it to resolve
+before iterating over the next element in the collection.
 
 ```javascript
 cy.wrap([1, 2, 3]).each((num, i, array) => {
@@ -110,20 +121,55 @@ cy.wrap([1, 2, 3]).each((num, i, array) => {
 })
 ```
 
+### Options
+
+**Wait longer for each promise to resolve**
+
+The `timeout` applies to each iteration separately. Here, every returned
+promise has up to 10 seconds to resolve.
+
+```javascript
+cy.get('ul>li').each({ timeout: 10000 }, ($li) => {
+  return new Cypress.Promise((resolve) => {
+    setTimeout(resolve, 5000)
+  })
+})
+```
+
 ## Notes
 
 ### Return early
 
 **Stop `each` prematurely**
 
-You can stop the `.each()` loop early by returning `false` in the callback
-function.
+Return `false` from the callback function to stop the `.each()` loop early. The
+callback is not invoked for any remaining items, and `.each()` still yields the
+original collection.
+
+```javascript
+cy.wrap([1, 2, 3, 4]).each((num) => {
+  if (num === 3) {
+    return false // 1 and 2 are logged, then the loop stops
+  }
+
+  cy.log(`Processing ${num}`)
+})
+```
+
+`.each()` only checks the value the callback returns directly. A `Promise` that
+resolves to `false` does not stop the loop.
+
+### Empty collections
+
+If the subject has a `length` of `0`, `.each()` never invokes the callback and
+yields the empty subject.
 
 ## Rules
 
 <HeaderRequirements />
 
 - `.each()` requires being chained off a previous command.
+- `.each()` requires its subject to be array-like, with a `length` property.
 
 <HeaderAssertions />
 
@@ -132,7 +178,8 @@ function.
 
 <HeaderTimeouts />
 
-- `.each()` can time out waiting for a promise you've returned to resolve.
+- `.each()` can time out waiting for a promise you've returned to resolve. The
+  timeout applies to each iteration separately.
 
 ## Command Log
 
