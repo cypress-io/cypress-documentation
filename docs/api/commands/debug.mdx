@@ -63,6 +63,69 @@ Pass in an options object to change the default behavior of `.debug()`.
 cy.get('a').debug().should('have.attr', 'href')
 ```
 
+#### Confirm the element before acting on it
+
+Place `.debug()` before an action to check which element the action will
+receive.
+
+```javascript
+cy.get('form').find('input[name="email"]').debug().type('user@example.com')
+```
+
+#### Inspect a subject that isn't a DOM element
+
+`.debug()` works on any subject, such as a response object or your application's
+state.
+
+```javascript
+cy.request('/api/users').debug() // inspect the full response object
+cy.window().its('store').invoke('getState').debug() // inspect app state
+```
+
+### Network requests
+
+#### Inspect an intercepted request
+
+After [`cy.wait()`](/api/commands/wait) on an alias, the subject is the
+interception, so you can expand `subject.request.body` and `subject.response` at
+the breakpoint.
+
+```javascript
+cy.intercept('POST', '/api/login').as('login')
+cy.get('form').submit()
+cy.wait('@login').debug()
+```
+
+### Assertions
+
+#### See why an assertion keeps retrying
+
+The "Debug Info" block shows the subject from the first time `.debug()` runs.
+Here, it may log fewer than three items even though `.should()` passes once the
+list finishes rendering. See
+[`.debug()` pauses once per call](#debug-pauses-once-per-call).
+
+```javascript
+cy.get('.todo-item').debug().should('have.length', 3)
+```
+
+### Debugger statement
+
+#### Pause with your test's variables in scope
+
+`.debug()` gives you `subject` at the breakpoint. To also reach variables from
+your test, put a `debugger` statement inside [`.then()`](/api/commands/then). A
+`debugger` written directly in the test body pauses before any Cypress commands
+run. The [Debugging guide](/app/guides/debugging) explains why.
+
+```javascript
+const expected = 'Welcome back'
+
+cy.get('h1').then(($h1) => {
+  debugger // both $h1 and expected are in scope here
+})
+```
+
 ## Notes
 
 ### What `.debug()` logs to the console
