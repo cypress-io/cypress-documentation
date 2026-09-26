@@ -14,7 +14,7 @@ Get the first DOM element within a set of DOM elements.
 :::info
 
 The querying behavior of this command matches exactly how
-[`.first()`](http://api.jquery.com/first) works in jQuery.
+[`.first()`](https://api.jquery.com/first/) works in jQuery.
 
 :::
 
@@ -53,7 +53,7 @@ Pass in an options object to change the default behavior of `.first()`.
 
 <HeaderYields />
 
-- `.first()` yields the new DOM element it found.
+- `.first()` yields the first DOM element in the previous subject.
 - `.first()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -109,7 +109,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/first/get-the-first-in-list-of-elements.png"
-  alt="Command Log first"
+  alt="Command Log showing get form, then find input matching 17 elements, then first"
 />
 
 When clicking on `first` within the command log, the console outputs the
@@ -117,8 +117,14 @@ following:
 
 <DocsImage
   src="/img/api/first/console-log-the-first-element.png"
-  alt="console.log first"
+  alt="Console output for first, listing the inputs it was applied to and the single input#firstName element it yielded"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                                                                                      |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.first()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
 
 ## See also
 
