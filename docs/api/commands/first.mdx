@@ -76,7 +76,76 @@ Pass in an options object to change the default behavior of `.first()`.
 cy.get('li').first()
 ```
 
+#### Get the first element across several lists
+
+`.first()` yields one element for the whole set, however many parents the
+elements share. The `:first-child` selector yields the first child of every
+parent instead.
+
+```html
+<ul class="fruits">
+  <li>Apple</li>
+  <li>Banana</li>
+</ul>
+<ul class="vegetables">
+  <li>Carrot</li>
+  <li>Daikon</li>
+</ul>
+```
+
+```javascript
+// yields <li>Apple</li>
+cy.get('ul li').first()
+
+// yields [<li>Apple</li>, <li>Carrot</li>]
+cy.get('ul li:first-child')
+```
+
+### Workflows
+
+#### Scope `.within()` to the first matching element
+
+[`.within()`](/api/commands/within) throws an error when its subject contains
+more than one element. Narrow the set with `.first()` before calling it.
+
+```javascript
+cy.get('tr')
+  .first()
+  .within(() => {
+    cy.contains('Edit').click()
+  })
+```
+
+#### Click the first result after the list finishes loading
+
+An action such as [`.click()`](/api/commands/click) is not an assertion, so
+`cy.get('[data-cy=result]').first().click()` acts on the first element that
+exists at that moment. If the list renders placeholder rows before the real
+results, that can be a placeholder. Assert on the finished list before calling
+`.first()`, and Cypress retries the query until the assertion passes.
+
+```javascript
+cy.get('[data-cy=result]').should('have.length', 10).first().click()
+```
+
+#### Assert on the first element while the list re-renders
+
+`cy.get()` and `.first()` are both queries, so Cypress re-runs them together
+until the chained assertion passes. If the list re-renders and a new element
+takes the first position, the assertion checks the new element rather than the
+one that was first when the query started.
+
+```javascript
+cy.get('[data-cy=todo]').first().should('have.text', 'Buy milk')
+```
+
 ## Notes
+
+### `.first()` and `.eq(0)`
+
+`.first()` yields the same element as [`.eq(0)`](/api/commands/eq). jQuery
+implements `.first()` as `.eq(0)`. Use `.eq()` to get an element at any other
+index, including negative indexes counted back from the end of the set.
 
 ### Selecting the first element that matches a selector
 
