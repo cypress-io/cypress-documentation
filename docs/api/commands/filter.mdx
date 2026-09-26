@@ -9,7 +9,7 @@ slug: /api/commands/filter
 
 # filter
 
-Get the DOM elements that match a specific selector.
+Get the DOM elements that match a specific selector or pass a test function.
 
 :::info
 
@@ -20,7 +20,7 @@ Opposite of [`.not()`](/api/commands/not)
 :::info
 
 The querying behavior of this command matches exactly how
-[`.filter()`](http://api.jquery.com/filter) works in jQuery.
+[`.filter()`](https://api.jquery.com/filter/) works in jQuery.
 
 :::
 
@@ -29,6 +29,8 @@ The querying behavior of this command matches exactly how
 ```javascript
 .filter(selector)
 .filter(selector, options)
+.filter(fn)
+.filter(fn, options)
 ```
 
 ### Usage
@@ -51,6 +53,12 @@ cy.clock().filter() // Errors, 'clock' does not yield DOM elements
 <Icon name="angle-right" /> **selector _(String selector)_**
 
 A selector used to filter matching DOM elements.
+
+<Icon name="angle-right" /> **fn _(Function)_**
+
+A function called once for each element in the subject, with the element's
+index and the element itself as arguments: `(index, element)`. `.filter()`
+yields the elements for which the function returns a truthy value.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -87,6 +95,32 @@ Pass in an options object to change the default behavior of `.filter()`.
 cy.get('ul').find('>li').filter('.active')
 ```
 
+### Function
+
+#### Filter the current subject with a test function
+
+```html
+<ul>
+  <li>Home</li>
+  <li class="active">About</li>
+  <li>Services</li>
+</ul>
+```
+
+```javascript
+// yields <li>Home</li> and <li>Services</li>
+cy.get('li').filter((index, el) => !el.classList.contains('active'))
+```
+
+```javascript
+// yields the even-indexed <li> elements: Home and Services
+cy.get('li').filter((index) => index % 2 === 0)
+```
+
+Because `.filter()` is a query, Cypress calls the function again on every
+[retry](/app/core-concepts/retry-ability). Keep it synchronous and free of side
+effects, and don't call other Cypress commands inside it.
+
 ### Contains
 
 #### Filter by text
@@ -104,7 +138,7 @@ selector to perform a case-sensitive text substring match.
 </ul>
 ```
 
-Let's find both list items that contain the work "Services"
+Find both list items that contain the word "Services":
 
 ```javascript
 cy.get('li').filter(':contains("Services")').should('have.length', 2)
