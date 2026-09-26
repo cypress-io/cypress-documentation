@@ -102,10 +102,74 @@ cy.get('p.error').closest('.banner')
 cy.get('li.active').closest('li')
 ```
 
-#### Find the row of a table cell
+#### Act on one card in a repeated list
+
+Find something unique inside a repeated component, climb to the component with
+`.closest()`, then query inside it.
+
+```html
+<div data-cy="product-card">
+  <h3>Trail Runner</h3>
+  <button>Add to cart</button>
+</div>
+<div data-cy="product-card">
+  <h3>Road Racer</h3>
+  <button>Add to cart</button>
+</div>
+```
 
 ```javascript
-cy.contains('td', 'Pending').closest('tr').find('button').click()
+// clicks the "Add to cart" button in the Road Racer card only
+cy.contains('h3', 'Road Racer')
+  .closest('[data-cy="product-card"]')
+  .find('button')
+  .click()
+```
+
+#### Assert on a form field's wrapper
+
+Validation state often lives on a wrapper element rather than on the input.
+
+```html
+<div class="form-group has-error">
+  <label for="email">Email</label>
+  <input id="email" type="email" />
+</div>
+```
+
+```javascript
+cy.get('#email').closest('.form-group').should('have.class', 'has-error')
+```
+
+#### Compare `.closest()` with `.parents()`
+
+`.closest()` stops at the first match. [`.parents()`](/api/commands/parents)
+collects every matching ancestor.
+
+```html
+<section class="panel outer">
+  <section class="panel inner">
+    <button>Save</button>
+  </section>
+</section>
+```
+
+```javascript
+// yields <section class="panel inner">
+cy.get('button').closest('.panel')
+
+// yields <section class="panel inner"> and <section class="panel outer">
+cy.get('button').parents('.panel')
+```
+
+#### Assert that an element is not inside a container
+
+When no ancestor matches, `.closest()` yields an empty result, so
+`.should('not.exist')` passes.
+
+```javascript
+// passes when the checkout button is not inside a modal
+cy.get('[data-cy="checkout"]').closest('.modal').should('not.exist')
 ```
 
 ## Notes
