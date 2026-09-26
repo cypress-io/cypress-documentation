@@ -63,6 +63,23 @@ Pass in an options object to change the default behavior of `.debug()`.
 cy.get('a').debug().should('have.attr', 'href')
 ```
 
+## Notes
+
+### Debug output in the browser console
+
+When `.debug()` runs, it logs a `Debug Info` block to the browser console with
+the name and arguments of the previous command and the subject it yielded, then
+hits a `debugger` statement.
+
+When `.debug()` is chained off of `cy`, there is no previous command, so the
+command name and current subject are logged as `undefined`.
+
+### `.debug()` pauses once per call
+
+`.debug()` is a query, so Cypress can retry it along with the rest of its query
+chain while an assertion waits to pass. It hits the `debugger` statement and
+logs the debug info only the first time it runs, not on each retry.
+
 ## Rules
 
 <HeaderRequirements />
@@ -94,17 +111,22 @@ The commands above will display in the Command Log as:
   alt="Command Log debug"
 />
 
-When clicking on the `debug` command within the command log, the console outputs
-the following:
+When `.debug()` runs, the browser console outputs the following:
 
 <DocsImage
   src="/img/api/debug/console-gives-all-debug-info-for-command.png"
   alt="console.log debug"
 />
 
+## History
+
+| Version                                    | Changes                                                                                                                                                                                      |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.debug()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
+
 ## See also
 
-- [Cypress Cloud](https://on.cypress.io/cloud)
+- [Debugging](/app/guides/debugging)
 - [`.pause()`](/api/commands/pause)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)
