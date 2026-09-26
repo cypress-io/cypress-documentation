@@ -91,12 +91,13 @@ focusable:
 cy.get('[role="dialog"][tabindex="-1"]').focus()
 ```
 
-### Focus workflows
+### Focus workflows for forms and keyboard testing
 
 #### Validate a field when it loses focus
 
 ```javascript
-cy.get('input[name="email"]').focus().blur()
+cy.get('input[name="email"]').focus()
+cy.get('input[name="email"]').blur()
 cy.get('.error').should('contain', 'Email is required')
 ```
 
