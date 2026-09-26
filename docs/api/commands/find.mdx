@@ -84,7 +84,63 @@ Pass in an options object to change the default behavior of `.find()`.
 cy.get('#parent').find('li')
 ```
 
+#### Find direct children with a leading combinator
+
+Start the selector with `>` to match only direct children of the subject. The
+result is the same as [`.children('li')`](/api/commands/children).
+
+```html
+<ul class="nav">
+  <li>Home</li>
+  <li>
+    Docs
+    <ul>
+      <li>API</li>
+    </ul>
+  </li>
+</ul>
+```
+
+```javascript
+// yields [<li>Home</li>, <li>Docs<ul>…</ul></li>]
+cy.get('.nav').find('> li')
+
+// yields all 3 li elements, including the nested one
+cy.get('.nav').find('li')
+```
+
+### Assertions
+
+#### Assert on the number of elements found
+
+When `.find()` is chained off another query such as
+[`cy.get()`](/api/commands/get), Cypress reruns the whole chain until the
+assertion passes, so the count stays current as the page updates.
+
+```javascript
+cy.get('[data-cy=cart]').find('[data-cy=cart-item]').should('have.length', 3)
+```
+
+#### Assert that an element no longer exists
+
+Chain `.should('not.exist')` to wait for an element, such as a loading spinner,
+to leave the subject.
+
+```javascript
+cy.get('[data-cy=results]').find('.spinner').should('not.exist')
+```
+
 ### Options
+
+#### Wait longer for slow content
+
+Pass `timeout` to give `.find()` more time than
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) to locate its
+elements.
+
+```javascript
+cy.get('[data-cy=report]').find('table', { timeout: 10000 })
+```
 
 #### Find elements inside a shadow root
 
@@ -106,6 +162,76 @@ cy.get('checkout-panel').find('button', { includeShadowDom: true })
 ```
 
 ## Notes
+
+### `.find()` only searches below the subject
+
+`.find()` matches descendants of the subject, never the subject itself. An
+element that matches the selector is left out of the result when it is the
+subject.
+
+```html
+<div class="card">
+  <div class="card">Nested</div>
+</div>
+```
+
+```javascript
+// yields [<div class="card">Nested</div>], not the outer .card
+cy.get('.card').first().find('.card')
+```
+
+### Subjects with multiple elements
+
+When the subject holds more than one element, `.find()` searches inside each
+one and yields a single set, in document order, with any duplicates removed.
+
+```html
+<ul>
+  <li><a href="/home">Home</a></li>
+  <li><a href="/docs">Docs</a></li>
+</ul>
+```
+
+```javascript
+// yields [<a href="/home">Home</a>, <a href="/docs">Docs</a>]
+cy.get('li').find('a')
+```
+
+### `.find()` compared to `.within()`
+
+Chain `.find()` when you run one query inside an element.
+[`.within()`](/api/commands/within) scopes every command in its callback to the
+subject, which reads better when you run several commands against the same
+region.
+
+```javascript
+// One query
+cy.get('[data-cy=login-form]').find('[data-cy=submit]').click()
+
+// Several commands in the same region
+cy.get('[data-cy=login-form]').within(() => {
+  cy.get('[data-cy=email]').type('user@example.com')
+  cy.get('[data-cy=password]').type('secret')
+  cy.get('[data-cy=submit]').click()
+})
+```
+
+### Reading a `.find()` timeout error
+
+When `.find()` times out without finding its elements, the error names the
+selector and lists the query chain it ran from. The chain shows whether the
+problem is the `.find()` selector or an earlier query that yielded a different
+element than you expected.
+
+```javascript
+cy.get('[data-cy=cart]').find('.total')
+```
+
+```text
+Expected to find element: `.total`, but never found it. Queried from:
+
+  > cy.get([data-cy=cart]).find(.total)
+```
 
 ### Shadow DOM boundaries and `.find()`
 
