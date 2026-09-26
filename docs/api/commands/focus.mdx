@@ -172,19 +172,6 @@ Calling `.focus()` on anything else fails with an error. The window and the
   `body` doesn't receive focus. The exception is a `contenteditable` body, which
   Cypress focuses like any other element.
 
-### Browser window focus
-
-#### Keep the browser window focused while tests run
-
-When the browser window isn't focused, for example because you're working in
-DevTools or another window, the browser may not fire `focus` and `blur` events.
-Cypress detects this and simulates the `focus`, `focusin`, `blur`, and
-`focusout` events itself, so `.focus()` still completes.
-
-The browser behaves differently in other ways while it's out of focus, though.
-For instance, it may throttle async events. For the most reliable results, keep
-the Cypress browser window focused while a test runs.
-
 ## Rules
 
 <HeaderRequirements />
