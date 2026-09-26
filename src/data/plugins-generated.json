@@ -488,8 +488,8 @@
     },
     "@chromatic-com/cypress": {
       "npm": "@chromatic-com/cypress",
-      "version": "0.14.0",
-      "lastPublished": "2026-09-21T07:47:32.576Z",
+      "version": "1.0.0",
+      "lastPublished": "2026-09-25T09:40:38.606Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-ntlm-auth": {
