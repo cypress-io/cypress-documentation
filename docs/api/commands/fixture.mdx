@@ -383,11 +383,11 @@ cause Cypress to crash or become unresponsive due to:
 
 - **Memory pressure**: The complete file must fit in available RAM. Cypress
   keeps the contents in the fixture cache and yields a separate copy, so each
-  loaded fixture takes up memory more than once.
+  loaded fixture takes up memory more than once. By default, binary files such
+  as images and `.zip` archives are also converted to a `base64` string in the
+  browser, which is about a third larger than the file itself.
 - **Single-message transfer**: File contents are sent as a single message over
-  the internal socket, so the whole payload is buffered at once. Binary files
-  such as images and `.zip` archives are also converted to a `base64` string by
-  default, which is about a third larger than the file itself.
+  the internal socket, so the whole payload is buffered at once.
 
 As a practical guideline, avoid using `cy.fixture()` with files larger than a
 few megabytes. Smaller test fixtures (representative subsets of production data)
