@@ -10,6 +10,7 @@ import ComponentOnlyBadge from '@site/src/components/component-only-badge'
 import ComponentTestingErrorStates from '@site/docs/partials/_component-testing-error-states.mdx'
 import CopyPrompt from '@site/src/components/copy-prompt'
 import TestReplayInfo from '@site/docs/partials/_test-replay-info.mdx'
+import CookieDefaultDomain from '@site/docs/partials/_cookie-default-domain.mdx'
 import CypressConfigFileTabs from '@site/src/components/cypress-config-file-tabs'
 import CypressInstallCommands from '@site/docs/partials/_cypress-install-commands.mdx'
 import CypressCacheClearCommands from '@site/docs/partials/_cypress-cache-clear-commands.mdx'
@@ -211,6 +212,7 @@ export default {
   Btn,
   ComponentOnlyBadge,
   ComponentTestingErrorStates,
+  CookieDefaultDomain,
   CopyPrompt,
   CypressConfigFileTabs,
   CypressInstallCommands,

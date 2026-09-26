@@ -44,7 +44,7 @@ this order, using only the ones the page needs:
 | Section          | Contents                                                                                                      |
 | ---------------- | ------------------------------------------------------------------------------------------------------------- |
 | `## Syntax`      | signatures in a `javascript` block, then `### Usage` (correct/incorrect), `### Arguments`, `<HeaderYields />` |
-| `## Examples`    | grouped under `###` by argument shape                                                                         |
+| `## Examples`    | grouped under `###` headings, usually by argument shape; option or workflow groups are fine where they help   |
 | `## Notes`       | behavior worth calling out                                                                                    |
 | `## Rules`       | `<HeaderRequirements />`, `<HeaderAssertions />`, `<HeaderTimeouts />`, each followed by bullets              |
 | `## Command Log` | a snippet, the rendered log as `<DocsImage>`, then the console output                                         |

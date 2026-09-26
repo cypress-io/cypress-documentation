@@ -33,7 +33,7 @@ Pass in an options object to change the default behavior of `cy.getCookies()`.
 
 | Option    | Default                                                           | Description                                                                         |
 | --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `domain`  | Hostname of the current URL                                       | Retrieves the cookies from the specified domain                                     |
+| `domain`  | Hostname of the application under test                            | Retrieves the cookies from the specified domain                                     |
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.getCookies()` to resolve before [timing out](#Timeouts)        |
 
@@ -83,10 +83,10 @@ the assertion, looping until it passes or the command times out.
 
 #### Get cookies after logging in
 
-In this example, on first login our server sends us back a session cookie.
+In this example, your server sends back a session cookie on login.
 
 ```javascript
-// assume we just logged in
+// assume the user just logged in
 cy.contains('Login').click()
 cy.url().should('include', 'profile')
 cy.getCookies()
@@ -124,6 +124,12 @@ cy.getCookies().then((cookies) => {
 })
 ```
 
+## Notes
+
+### Default cookie domain before visiting a page
+
+<CookieDefaultDomain />
+
 ## Rules
 
 <HeaderRequirements />
@@ -156,7 +162,7 @@ cy.getCookies()
   })
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/getcookies/get-browser-cookies-and-inspect-all-properties.png"

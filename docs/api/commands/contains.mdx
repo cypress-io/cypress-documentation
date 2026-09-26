@@ -11,7 +11,7 @@ slug: /api/commands/contains
 
 Get the DOM element containing the text. DOM elements can contain _more_ than
 the desired text and still match. Additionally, Cypress
-[prefers some DOM elements](#Notes) over the deepest element found.
+[prefers some DOM elements](#Preferences) over the deepest element found.
 
 ## Syntax
 
@@ -35,7 +35,7 @@ cy.contains(selector, content, options)
 
 ```javascript
 cy.contains('.nav a', 'About') // Yield anchor in .nav containing 'About'
-cy.contains('Hello') // Yield first el in document containing 'Hello'
+cy.contains('Hello') // Yield first el on the page containing 'Hello'
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
@@ -53,10 +53,15 @@ Get the DOM element containing the content.
 
 <Icon name="angle-right" /> **selector _(String selector)_**
 
-Specify a selector to filter DOM elements containing the text. Cypress will
-_ignore_ its [default preference order](#Notes) for the specified selector.
-A selector returns more _shallow_ elements (higher in the tree) that contain the
-specific text.
+Specify a selector to filter DOM elements containing the text. Only elements
+matching the selector are candidates, so you can yield an element higher in the
+tree than the deepest one containing the text.
+
+- Cypress yields the deepest matching element.
+- The [element preference order](#Preferences) applies only when the selector
+  matches a `button`, `a`, `label`, or `input[type='submit']` element.
+- A comma-separated selector, such as `'a, button'`, searches for every listed
+  selector.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -71,7 +76,8 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 <HeaderYields />
 
-- `.contains()` yields the new DOM element it found.
+- `.contains()` yields the new DOM element it found. It yields at most one
+  element, so asserting a `length` greater than `1` throws an error.
 - `.contains()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -155,17 +161,45 @@ cy.contains(4)
 cy.contains(/^b\w+/)
 ```
 
+#### Match the exact text instead of a substring
+
+A string matches any element whose text _includes_ it, so `'Save'` also matches
+"Save draft". Anchor a regular expression to match the whole text.
+
+```html
+<div>
+  <button>Save draft</button>
+  <button>Save</button>
+</div>
+```
+
+```javascript
+// yields <button>Save draft</button>
+cy.contains('button', 'Save')
+
+// yields <button>Save</button>
+cy.contains('button', /^Save$/).click()
+```
+
+Cypress collapses whitespace to a single space but does not trim it, so markup
+with whitespace around the text, such as `<button> Save </button>`, has the text
+`" Save "`. Allow for it in the expression:
+
+```javascript
+cy.contains('button', /^\s*Save\s*$/).click()
+```
+
 ### Selector
 
 #### Specify a selector to return a specific element
 
-Technically the `<html>`, `<body>`, `<ul>`, and first `<li>` in the example
-below all contain "apples".
+Technically the `<ul>` and first `<li>` in the example below both contain
+"apples".
 
 Normally Cypress would return the first `<li>` since that is the _deepest_
 element that contains "apples".
 
-To override the element that is yielded we can pass 'ul' as the selector.
+To override the element that is yielded, pass `'ul'` as the selector.
 
 ```html
 <html>
@@ -210,6 +244,46 @@ Without the explicit selector the subject would change to be the `<button>`.
 Using the explicit selector ensures that chained commands will have the `<form>`
 as the subject.
 
+#### Act on the table row containing some text
+
+Pass `'tr'` as the selector to find the row for a record, then chain a second
+`.contains()` to find the control inside that row. Both are queries, so Cypress
+retries the whole chain until the button exists, and `.click()` ends the chain.
+
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>Jane</td>
+      <td><button>Edit</button></td>
+    </tr>
+    <tr>
+      <td>Jamal</td>
+      <td><button>Edit</button></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+```javascript
+// clicks the Edit button in Jane's row
+cy.contains('tr', 'Jane').contains('button', 'Edit').click()
+```
+
+#### Match any of several element types
+
+A comma-separated selector searches for each one, which helps when the same
+control renders as a link on one page and a button on another.
+
+```html
+<a href="/login">Sign in</a>
+```
+
+```javascript
+// yields the <a>, and would yield a <button> containing "Sign in" too
+cy.contains('a, button', 'Sign in').click()
+```
+
 ### Case Sensitivity
 
 Here's an example using the `matchCase` option to ignore case sensitivity.
@@ -223,6 +297,104 @@ cy.get('div').contains('capital sentence') // fail
 cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 ```
 
+`matchCase: false` also applies to a regular expression, which then matches as
+if it had the `i` flag. Passing a regular expression with the `i` flag together
+with `matchCase: true` throws an error, since the two conflict.
+
+```js
+cy.contains(/capital sentence/, { matchCase: false }) // pass
+cy.contains(/capital sentence/i) // pass
+cy.contains(/capital sentence/i, { matchCase: true }) // error
+```
+
+### Timeout
+
+#### Wait longer for content that loads slowly
+
+The `timeout` option applies to this `.contains()` and to the assertions chained
+after it, without changing
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) for the rest
+of the test.
+
+```javascript
+cy.contains('Report ready', { timeout: 15000 }).should('be.visible')
+```
+
+### Shadow DOM
+
+#### Find content inside a shadow root
+
+By default, `.contains()` does not search inside shadow roots. Pass
+`includeShadowDom: true` to search them, or set the
+[`includeShadowDom` configuration option](/app/references/configuration#Global)
+to search them in every query.
+
+```html
+<checkout-panel>
+  #shadow-root
+  <button>Checkout</button>
+</checkout-panel>
+```
+
+```javascript
+cy.contains('button', 'Checkout', { includeShadowDom: true }).click()
+```
+
+To search one shadow root only, chain `.contains()` off of
+[`.shadow()`](/api/commands/shadow):
+
+```javascript
+cy.get('checkout-panel').shadow().contains('button', 'Checkout').click()
+```
+
+### Common `cy.contains()` workflows
+
+#### Wait for text to disappear
+
+Assert `should('not.exist')` to wait for a loading message, toast, or spinner
+label to go away. Confirm the message appears first: `not.exist` passes
+immediately when the message hasn't rendered yet, so the test would move on
+before the save even starts.
+
+```javascript
+cy.contains('button', 'Save').click()
+cy.contains('Saving').should('be.visible')
+cy.contains('Saving').should('not.exist')
+```
+
+When the message can come and go too quickly to catch, assert on the end state
+instead:
+
+```javascript
+cy.contains('button', 'Save').click()
+cy.contains('Saved').should('be.visible')
+```
+
+#### Confirm the element is visible
+
+`.contains()` yields hidden elements, such as one styled with `display: none`.
+When the test depends on the user seeing the text, assert on visibility.
+
+```javascript
+cy.contains('Welcome back').should('be.visible')
+```
+
+#### Act inside a dialog with `.within()`
+
+Inside a [`.within()`](/api/commands/within) callback, `cy.contains()` searches
+only the `.within()` subject, so a "Yes, Delete!" button elsewhere on the page
+never matches.
+
+```javascript
+cy.contains('button', 'Delete User').click()
+
+cy.get('[data-cy="confirm-dialog"]').within(() => {
+  cy.contains('button', 'Yes, Delete!').click()
+})
+
+cy.get('[data-cy="confirm-dialog"]').should('not.exist')
+```
+
 ## Notes
 
 ### Inverting `cy.contains()`
@@ -234,9 +406,12 @@ cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 `.contains()` acts differently whether it's starting a series of commands or
 being chained off an existing series.
 
-#### When starting a series of commands:
+#### When starting a series of commands
 
-This queries the entire `document` for the content.
+This queries the `<body>` element for the content, so elements in the
+`<head>`, such as `<title>`, never match. Inside a
+[`.within()`](/api/commands/within) callback, it queries the `.within()` subject
+instead.
 
 ```javascript
 cy.contains('Log In')
@@ -244,11 +419,15 @@ cy.contains('Log In')
 
 #### When chained to an existing series of commands
 
-This will query inside of the `<#checkout-container>` element.
+This queries inside of the `#checkout-container` element.
 
 ```javascript
 cy.get('#checkout-container').contains('Buy Now')
 ```
+
+When no descendant of the subject contains the content, `.contains()` checks the
+subject itself, and yields it if it matches. When the subject holds several
+elements, `.contains()` searches all of them and yields the first match.
 
 #### Be wary of chaining multiple contains
 
@@ -263,11 +442,11 @@ cy.contains('Delete User').click().contains('Yes, Delete!').click()
 Because the second `.contains()` is chained off of a command that yielded the
 `<button>`, Cypress will look inside of the `<button>` for the new content.
 
-In other words, Cypress will look inside of the `<button>` containing "Delete
-User" for the content: "Yes, Delete!", which is not what we intended.
+In other words, Cypress looks inside of the `<button>` containing "Delete User"
+for the content "Yes, Delete!", which is not what you intended.
 
 What you want to do is call `cy` again, which automatically creates a new chain
-scoped to the `document`.
+scoped to the `<body>`.
 
 ```javascript
 cy.contains('Delete User').click()
@@ -295,7 +474,9 @@ Rendered result:
   alt="The result of pre tag"
 />
 
-To reflect this behavior, Cypress also doesn't ignore them.
+To reflect this behavior, Cypress collapses each run of whitespace in an
+element's text to a single space before matching, except in a `<pre>` element,
+where it matches the text as written. The content you pass is not collapsed.
 
 ```js
 // test result for above code
@@ -361,24 +542,21 @@ cy.get('#main').contains('Jane Lane')
 ### Default `<input type="submit">` labels
 
 When the `value` attribute is omitted from an `<input type="submit">`, the
-default label is used and can be locale-dependent.
-[More info at MDN.](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute)
+default label is used and can be locale-dependent. See
+[omitting the value attribute on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute).
 
-When this happens, the `value` is an empty string, and there is no programmatic
-way for Cypress to filter elements by the label displayed by the user agent.
-This can cause unexpected failures when using `cy.contains()` with submit
-buttons.
+`cy.contains()` matches an `<input type="submit">` by its `value` attribute.
 
-The solution in this case is to:
+If possible, set the `value` attribute:
+
+```html
+<input type="submit" value="Submit" />
+```
+
+Otherwise, select the input another way and assert on the empty string:
 
 ```js
- // assert the empty string
- cy.get('input').should('have.value', '')
-
- // ---or---
-
- // if possible, set the `value` attribute
- <input type=submit value="Submit" />
+cy.get('input[type="submit"]').should('have.value', '')
 ```
 
 ### Preferences
@@ -392,8 +570,9 @@ The solution in this case is to:
 - `a`
 - `label`
 
-Cypress will ignore this element preference order if you pass a selector
-argument to `.contains()`.
+When you pass a selector argument to `.contains()`, only elements matching that
+selector are candidates, so this preference order applies only if the selector
+matches one of these elements.
 
 #### Favor of `<button>` over other deeper elements
 
@@ -470,7 +649,7 @@ cy.contains('Age').find('input').type('29')
 - `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.contains()`will automatically [retry](/app/core-concepts/retry-ability)
+- `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
