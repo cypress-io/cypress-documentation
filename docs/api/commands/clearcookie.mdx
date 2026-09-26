@@ -35,11 +35,18 @@ cy.clearCookie(name, options)
 cy.clearCookie('authId') // clear the 'authId' cookie
 ```
 
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.clearCookie() // Errors, a cookie name is required
+cy.clearCookie({ domain: 'example.com' }) // Errors, name must be a string
+```
+
 ### Arguments
 
 <Icon name="angle-right" /> **name _(String)_**
 
-The name of the cookie to be cleared.
+The name of the cookie to clear. Required, and must be a string.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -47,7 +54,7 @@ Pass in an options object to change the default behavior of `cy.clearCookie()`.
 
 | Option    | Default                                                     | Description                                                                         |
 | --------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `domain`  | Hostname of the current URL                                 | Clears the cookie from the specified domain                                         |
+| `domain`  | Hostname of the application under test                      | Clears the cookie from the specified domain                                         |
 | `log`     | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.clearCookie()` to resolve before [timing out](#Timeouts)       |
 
@@ -57,23 +64,122 @@ Pass in an options object to change the default behavior of `cy.clearCookie()`.
 
 ## Examples
 
-### No Args
+### Name
 
 #### Clear a cookie after logging in <E2EOnlyBadge />
 
-In this example, on first login, our server sends us back a session cookie.
-After invoking `cy.clearCookie('session_id')`, this clears the session cookie.
-Then upon navigating to an unauthorized page, we asset that our server has
-redirected us back to login.
+In this example, your server sends back a session cookie on login.
+`cy.clearCookie('session_id')` removes that cookie, so when you visit a page
+that requires authentication, the server redirects you back to the login page.
 
 ```javascript
-// assume we just logged in
+// assume the user just logged in
 cy.contains('Login').click()
 cy.url().should('include', 'profile')
 cy.clearCookie('session_id')
-cy.visit('/dashboard') // we should be redirected back to login
+cy.visit('/dashboard') // redirected back to login
 cy.url().should('include', 'login')
 ```
+
+#### Clear an HttpOnly session cookie and check the API <E2EOnlyBadge />
+
+Your application's own JavaScript can't read or remove an `HttpOnly` cookie
+through `document.cookie`. `cy.clearCookie()` clears cookies through the
+browser's automation layer, so it removes `HttpOnly` cookies too. Clear the
+session cookie, then confirm the API rejects the next request.
+
+```javascript
+// session_id is HttpOnly, so document.cookie can't remove it
+cy.clearCookie('session_id')
+cy.request({ url: '/api/profile', failOnStatusCode: false })
+  .its('status')
+  .should('eq', 401)
+```
+
+#### Show a cookie consent banner again <E2EOnlyBadge />
+
+Clear a single cookie and reload to test a first-visit flow, such as a cookie
+consent banner, without logging out. Every other cookie stays in place.
+
+```javascript
+cy.clearCookie('cookie_consent')
+cy.reload()
+cy.get('[data-cy="consent-banner"]').should('be.visible')
+```
+
+#### Clear a cookie set during a cy.origin() login <E2EOnlyBadge />
+
+When you log in through another origin with [`cy.origin()`](/api/commands/origin),
+the identity provider often redirects back to your application, which then sets
+its own session cookie. Once `cy.origin()` returns, `cy.clearCookie()` clears
+that cookie from the application under test.
+
+```javascript
+cy.visit('/')
+cy.get('[data-cy="login"]').click()
+cy.origin('https://auth.example.com', () => {
+  cy.get('[data-cy="username"]').type('user')
+  cy.get('[data-cy="password"]').type('*****')
+  cy.get('[data-cy="submit"]').click()
+})
+cy.clearCookie('user')
+cy.reload() // the app shows the logged-out state
+```
+
+#### Clear one cookie before each test with test isolation off <E2EOnlyBadge />
+
+With [test isolation](/app/core-concepts/test-isolation) turned off, cookies
+from one test carry over to the next. Call `cy.clearCookie()` in a `beforeEach`
+hook to reset only the cookie you care about while keeping the rest, such as a
+login session you want to reuse across the suite.
+
+```javascript
+describe('Onboarding tour', { testIsolation: false }, () => {
+  before(() => {
+    // log in once; the session cookie carries over between tests
+    cy.visit('/login')
+    cy.get('[data-cy="username"]').type('user')
+    cy.get('[data-cy="password"]').type('*****')
+    cy.get('[data-cy="submit"]').click()
+    cy.url().should('include', '/dashboard') // wait for the login to finish
+  })
+
+  beforeEach(() => {
+    // keep the session cookie, but start each test before the tour is dismissed
+    cy.clearCookie('tour_dismissed')
+  })
+
+  it('shows the tour on the dashboard', () => {
+    cy.visit('/dashboard')
+    cy.get('[data-cy="tour"]').should('be.visible')
+  })
+})
+```
+
+### Name and options
+
+#### Clear a cookie on a specific domain <E2EOnlyBadge />
+
+By default, `cy.clearCookie()` clears the cookie from the hostname of the
+application under test. Pass `domain` to clear a cookie set on a different
+domain.
+
+```javascript
+cy.clearCookie('session_id', { domain: 'auth.example.com' })
+cy.getCookie('session_id', { domain: 'auth.example.com' }).should('be.null')
+```
+
+## Notes
+
+### Clearing a cookie that doesn't exist
+
+`cy.clearCookie()` doesn't fail when no cookie matches the name. It still
+yields `null`, and the console output for the command notes that no cookie with
+that name was found or removed.
+
+### Default cookie domain before visiting a page
+
+<CookieDefaultDomain />
 
 ## Rules
 
@@ -89,15 +195,15 @@ cy.url().should('include', 'login')
 
 <HeaderTimeouts />
 
-- `cy.clearCookie()` should never time out.
-
-:::caution
-
-Because `cy.clearCookie()` is asynchronous it is technically possible for there
-to be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-:::
+- `cy.clearCookie()` can time out waiting for the browser to clear the cookie.
+  It waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
+  (or the `timeout` option, when passed) before failing.
+- If the application under test is on a different origin, `cy.clearCookie()`
+  retries for up to the
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (or the
+  `timeout` option, when passed) and then fails with a cross-origin error. Run
+  it inside [`cy.origin()`](/api/commands/origin) to work with cookies on that
+  origin.
 
 ## Command Log
 
@@ -109,20 +215,27 @@ cy.clearCookie('foo')
 cy.getCookie('foo').should('be.null')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/clearcookie/clear-cookie-in-browser-tests.png"
-  alt="Command Log for clearcookie"
+  alt="Command Log showing setCookie, clearCookie, and getCookie commands for the foo cookie"
 />
 
-When clicking on `clearCookie` within the command log, the console outputs the
+When you click `clearCookie` in the Command Log, the console outputs the
 following:
 
 <DocsImage
   src="/img/api/clearcookie/cleared-cookie-shown-in-console.png"
-  alt="console.log for clearcookie"
+  alt="Console output for clearCookie showing the yielded null and the cleared cookie"
 />
+
+## History
+
+| Version                                    | Changes                           |
+| ------------------------------------------ | --------------------------------- |
+| [11.0.0](/app/references/changelog#11-0-0) | Added `domain` option.            |
+| [0.6.8](/app/references/changelog#0-6-8)   | `cy.clearCookie()` command added. |
 
 ## See also
 
