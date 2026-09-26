@@ -60,7 +60,116 @@ cy.document().then((doc) => {
 cy.document().its('contentType').should('eq', 'text/html')
 ```
 
+### Document properties
+
+#### Check the page language
+
+Chain [`.its()`](/api/commands/its) to read a property of the document. Cypress
+retries the whole chain until the assertion passes or the command times out.
+
+```javascript
+cy.document().its('documentElement.lang').should('eq', 'en')
+```
+
+#### Wait for the page to finish loading
+
+```javascript
+cy.document().its('readyState').should('eq', 'complete')
+```
+
+#### Wait for web fonts before a screenshot
+
+Text rendered before its web font loads can shift the layout. Wait for
+`document.fonts` to report that every font has loaded before you take a
+screenshot or run a visual check.
+
+```javascript
+cy.document().its('fonts.status').should('eq', 'loaded')
+cy.get('.hero').screenshot()
+```
+
+### Events
+
+#### Close a modal with the Escape key
+
+[`.trigger()`](/api/commands/trigger) accepts the document as its subject, so
+you can dispatch events that your application listens for at the document
+level.
+
+```javascript
+cy.get('[data-cy="open-modal"]').click()
+cy.document().trigger('keydown', { key: 'Escape' })
+cy.get('[data-cy="modal"]').should('not.exist')
+```
+
+To drop a file onto the page, see
+[Dropping a file on the document](/api/commands/selectfile#Dropping-a-file-on-the-document)
+in `.selectFile()`.
+
+### Modify the document
+
+#### Disable CSS animations and transitions
+
+Inject a stylesheet so animations don't slow down or destabilize your tests.
+
+```javascript
+cy.document().then((doc) => {
+  const style = doc.createElement('style')
+
+  style.textContent = `
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  `
+  doc.head.appendChild(style)
+})
+```
+
+### Spies and stubs
+
+#### Confirm the application copies text to the clipboard
+
+Stub a document method with [`cy.stub()`](/api/commands/stub) to confirm your
+application calls it.
+
+```javascript
+cy.document().then((doc) => {
+  cy.stub(doc, 'execCommand').returns(true).as('execCommand')
+})
+
+cy.get('[data-cy="copy"]').click()
+cy.get('@execCommand').should('have.been.calledWith', 'copy')
+```
+
 ## Notes
+
+### Retrying `cy.document()` with `.its()` versus `.then()`
+
+`cy.document()` and `.its()` are queries, so Cypress retries them together until
+any chained assertions pass. The callback you pass to
+[`.then()`](/api/commands/then) runs once and is not retried. If you search the
+document inside `.then()`, an element that renders late is missed:
+
+<Icon name="exclamation-triangle" color="red" /> **Runs once, without retrying**
+
+```javascript
+cy.document().then((doc) => {
+  expect(doc.querySelector('[data-cy="banner"]')).to.exist
+})
+```
+
+<Icon name="check-circle" color="green" /> **Retries until the element appears**
+
+```javascript
+cy.get('[data-cy="banner"]').should('exist')
+```
+
+Use `.then()` for work that only needs to happen once, such as the examples
+under [Modify the document](#Modify-the-document) and
+[Spies and stubs](#Spies-and-stubs). See
+[Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried)
+for more detail.
 
 ### Using `cy.document()` across origins
 
@@ -133,4 +242,5 @@ following:
 
 - [`cy.origin()`](/api/commands/origin)
 - [`cy.title()`](/api/commands/title)
+- [`.trigger()`](/api/commands/trigger)
 - [`cy.window()`](/api/commands/window)
