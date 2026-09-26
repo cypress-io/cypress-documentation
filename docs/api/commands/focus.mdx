@@ -60,7 +60,7 @@ Pass in an options object to change the default behavior of `.focus()`.
 #### Focus on an input
 
 ```javascript
-cy.get('[type="input"]').focus()
+cy.get('input[name="email"]').focus()
 ```
 
 #### Focus, type, and blur a textarea
@@ -93,33 +93,49 @@ you should use a different command like [`.click()`](/api/commands/click).
 
 ### Blur Events
 
-#### Cypress blurs other focused elements first
+#### Focusing an element blurs the previously focused element
 
-If there is currently a different DOM element with focus, Cypress issues a
-`blur` event to that element before running the `.focus()` command.
+When a different DOM element already has focus, `.focus()` moves focus away
+from it, so that element receives `blur` and `focusout` events. The focused
+element then receives `focus` and `focusin` events.
+
+Focusing the window or the `body` does not blur the element that currently has
+focus.
 
 ### Focusable
 
 #### Can only be called on a valid focusable element
 
-Ensure the element you are trying to call `.focus()` on is a
-[focusable element](https://www.w3.org/TR/html5/editing.html#focusable). The
-window and the `body` are the two exceptions, so `cy.window().focus()` fires a
-`focus` event on the window. Focus itself does not move: whichever element held
-it still does, and `document.activeElement` is unchanged.
+`.focus()` accepts an element that matches one of these selectors:
 
-### Timeouts {#Notes-Timeouts}
+- `a[href]` or `area[href]`
+- `input`, `select`, `textarea`, or `button` without the `disabled` attribute
+- `iframe`
+- any element with a `tabindex` or `contenteditable` attribute
 
-#### Can time out because your browser did not receive any focus events
+Any other element, such as a plain `div`, fails the command.
 
-If you see this error, you may want to ensure that the main browser window is
-currently focused. This means not being focused in debugger or any other window
-when the command is run.
+The window and the `body` are the two exceptions, and focusing either one leaves
+focus where it is: whichever element held it still does, and
+`document.activeElement` is unchanged.
 
-Internally Cypress does account for this, and will polyfill the blur events when
-necessary to replicate what the browser does. Unfortunately the browser will
-still behave differently when not in focus - for instance it may throttle async
-events. Your best bet here is to keep Cypress focused when working on a test.
+- `cy.window().focus()` fires a `focus` event on the window.
+- `cy.get('body').focus()` fires no events, unless the `body` is
+  `contenteditable`.
+
+### Browser Focus {#Notes-Browser-Focus}
+
+#### Cypress fires focus events when the browser does not
+
+A browser that is not in focus, for example because you are working in the
+developer tools or another window, may not fire focus events when an element is
+focused. When this happens, Cypress fires the `focus` and `focusin` events
+itself, along with `blur` and `focusout` on the previously focused element, so
+your application receives the same events either way.
+
+A browser that is not in focus can still behave differently in other ways, such
+as throttling timers. Keep the Cypress browser window focused while a test runs
+for the most consistent results.
 
 ## Rules
 
