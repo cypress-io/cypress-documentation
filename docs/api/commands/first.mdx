@@ -14,7 +14,7 @@ Get the first DOM element within a set of DOM elements.
 :::info
 
 The querying behavior of this command matches exactly how
-[`.first()`](http://api.jquery.com/first) works in jQuery.
+[`.first()`](https://api.jquery.com/first) works in jQuery.
 
 :::
 
@@ -53,7 +53,7 @@ Pass in an options object to change the default behavior of `.first()`.
 
 <HeaderYields />
 
-- `.first()` yields the new DOM element it found.
+- `.first()` yields the first DOM element within the set it was given.
 - `.first()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -74,6 +74,20 @@ Pass in an options object to change the default behavior of `.first()`.
 ```javascript
 // yields <li class="one">Knick knack on my thumb</li>
 cy.get('li').first()
+```
+
+## Notes
+
+### Selecting the first element that matches a selector
+
+`.first()` takes no selector. Cypress passes the call straight to jQuery's
+`.first()`, which ignores any arguments, so `cy.get('li').first('.active')`
+yields the first `<li>` whether or not it has the class `active`. To get the
+first element that matches a selector, narrow the set with
+[`.filter()`](/api/commands/filter) before calling `.first()`.
+
+```javascript
+cy.get('li').filter('.active').first()
 ```
 
 ## Rules
@@ -109,18 +123,25 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/first/get-the-first-in-list-of-elements.png"
-  alt="Command Log first"
+  alt="Command Log showing first chained after get form and find input"
 />
 
-When clicking on `first` within the command log, the console outputs the
-following:
+When clicking on the `first` command within the command log, the console
+outputs the following:
 
 <DocsImage
   src="/img/api/first/console-log-the-first-element.png"
-  alt="console.log first"
+  alt="Console output for first, with the matched inputs under Applied To and the first input yielded"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                                                                                      |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.first()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
 
 ## See also
 
 - [`.eq()`](/api/commands/eq)
+- [`.filter()`](/api/commands/filter)
 - [`.last()`](/api/commands/last)
