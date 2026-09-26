@@ -69,17 +69,72 @@ Pass a function that is invoked with the following arguments:
 
 **Iterate over an array of DOM elements**
 
+Each element arrives in the callback wrapped in jQuery, so you can read its
+state with jQuery methods. Wrap it with [`cy.wrap()`](/api/commands/wrap) to
+run Cypress commands on it.
+
 ```javascript
-cy.get('ul>li').each(($el, index, $list) => {
-  // $el is a wrapped jQuery element
-  if ($el.someMethod() === 'something') {
-    // wrap this element so we can
-    // use cypress commands on it
-    cy.wrap($el).click()
+cy.get('[data-cy="product-card"]').each(($card) => {
+  if ($card.find('[data-cy="sold-out"]').length) {
+    cy.wrap($card).find('button').should('be.disabled')
   } else {
-    // do something else
+    cy.wrap($card).find('button').should('be.enabled')
   }
 })
+```
+
+**Assert the length before iterating**
+
+`.each()` does not retry, and it skips the callback when the collection is
+empty. Assert on the length first so the test waits for the elements to render
+and fails if none appear.
+
+```javascript
+cy.get('[data-cy="result"]')
+  .should('have.length.greaterThan', 0)
+  .each(($result) => {
+    cy.wrap($result).should('contain', 'Cypress')
+  })
+```
+
+**Scope commands to each element with `.within()`**
+
+```javascript
+cy.get('table tbody tr').each(($row) => {
+  cy.wrap($row).within(() => {
+    cy.get('td').eq(2).should('not.be.empty')
+  })
+})
+```
+
+**Re-query by index when an action changes the page**
+
+If an action in the callback navigates away or re-renders the list, the
+elements `.each()` passes in are detached from the DOM. Use `index` to query a
+fresh element on every iteration instead.
+
+```javascript
+cy.get('nav a').each(($link, index) => {
+  cy.get('nav a').eq(index).click()
+  cy.go('back')
+})
+```
+
+**Collect values, then assert once**
+
+Gather values in the callback and assert on all of them in a
+[`.then()`](/api/commands/then) that runs after the loop finishes.
+
+```javascript
+const prices = []
+
+cy.get('[data-cy="price"]')
+  .each(($price) => {
+    prices.push(Number($price.text().replace('$', '')))
+  })
+  .then(() => {
+    expect(prices).to.deep.equal([...prices].sort((a, b) => a - b))
+  })
 ```
 
 **The original collection is always yielded**
@@ -102,6 +157,20 @@ Here the `.then()` callback only _reads_ the yielded array, which is safe. If
 instead you needed to act or assert on DOM elements that your application may
 have re-rendered during iteration, re-query them with a Cypress query rather
 than reusing the subject yielded by `.each()`.
+
+### Arrays
+
+**Iterate over fixture data**
+
+`.each()` works on any array, not only DOM elements. Cypress commands you call
+in the callback run in order, one item at a time.
+
+```javascript
+// users.json contains an array of user objects
+cy.fixture('users.json').each((user) => {
+  cy.request('POST', '/api/users', user).its('status').should('eq', 201)
+})
+```
 
 ### Promises
 
@@ -137,6 +206,29 @@ cy.getCookies().each({ timeout: 10000 }, (cookie) => {
 ```
 
 ## Notes
+
+### Prefer `.should()` for assertions on every element
+
+**Use a `.should()` callback when you only need to assert**
+
+`.each()` runs its callback once and does not
+[retry](/app/core-concepts/retry-ability). When all you need is an assertion
+about every element, a [`.should()` callback](/api/commands/should#Function)
+reruns until the assertions pass or time out, so it tolerates elements that are
+still rendering or updating.
+
+```javascript
+cy.get('[data-cy="result"]').should(($results) => {
+  expect($results).to.have.length.greaterThan(0)
+
+  $results.each((index, result) => {
+    expect(result.textContent).to.contain('Cypress')
+  })
+})
+```
+
+Keep `.each()` for work that needs Cypress commands per item, such as clicking,
+typing, or making requests.
 
 ### Return early
 
