@@ -124,7 +124,7 @@ cy.get('button').dblclick(30, 10)
 
 Forcing a double click overrides the
 [actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
-Cypress applies and will automatically fire the events.
+Cypress applies and fires the events.
 
 ```javascript
 cy.get('button').dblclick({ force: true })
@@ -142,16 +142,24 @@ cy.get('button').dblclick('topRight', { force: true })
 cy.get('button').dblclick(60, 60, { force: true })
 ```
 
-#### Double click all buttons found on the page
+#### Double click every element that matches a selector
 
-By default, Cypress will iteratively apply the double click to each element and
-will also log to the
-[Command Log](/app/core-concepts/open-mode#Command-Log) multiple times.
-
-You can turn this off by passing `multiple: false` to `.dblclick()`.
+Unlike [`.click()`](/api/commands/click), `.dblclick()` defaults to
+`{ multiple: true }`. When the subject contains several elements, Cypress
+double clicks each one in turn, gives each double click its own full timeout,
+and logs each one to the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
 
 ```javascript
-cy.get('button').dblclick({ multiple: false })
+cy.get('[data-cy=todo-label]').dblclick() // double clicks every label
+```
+
+Pass `{ multiple: false }` to require a single element. `.dblclick()` then
+errors when the subject contains more than one element, rather than double
+clicking only the first.
+
+```javascript
+cy.get('[data-cy=todo-label]').first().dblclick({ multiple: false })
 ```
 
 #### Double click with key combinations
@@ -168,7 +176,7 @@ offers options to hold down keys across multiple commands. See
 
 :::
 
-The following modifiers can be combined with `.dblclick()`.
+The following keys can be combined with `.dblclick()` through the `options`.
 
 | Option     | Notes                                                                                         |
 | ---------- | --------------------------------------------------------------------------------------------- |
@@ -195,18 +203,37 @@ cy.get('li:first').dblclick({
 `.dblclick()` is an "action command" that follows all the rules of
 [Actionability](/app/core-concepts/interacting-with-elements).
 
+### Events
+
+#### A double click fires two clicks, then a dblclick
+
+Cypress fires the full [`.click()`](/api/commands/click) event sequence twice,
+then a `dblclick` event, matching what a browser sends for a real double click.
+The mouse events in the first click have a `detail` of `1`, those in the second
+click and the `dblclick` event have a `detail` of `2`. Pointer events always
+have a `detail` of `0`.
+
+Because each click follows the `.click()` rules, the
+[focus](/api/commands/click#Focus) and
+[cancellation](/api/commands/click#Cancellation) behavior of `.click()` applies
+to both clicks.
+
 ## Rules
 
 <HeaderRequirements />
 
 - `.dblclick()` requires being chained off a command that yields DOM element(s).
+- `.dblclick()` cannot be called on a `<select>` element. Use
+  [`.select()`](/api/commands/select) to change its value.
 
 <HeaderAssertions />
 
-- `.dblclick()` will automatically wait for the element to reach an
+- `.dblclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.dblclick()` will automatically [retry](/app/core-concepts/retry-ability)
-  until all chained assertions have passed.
+- `.dblclick()` itself is not retried. It fires once when the element is
+  actionable. Assertions chained after `.dblclick()` are retried until they
+  pass or time out. See
+  [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 <HeaderTimeouts />
 
@@ -243,6 +270,8 @@ following:
 | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments      |
 | [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                           |
+| [5.0.0](/app/references/changelog#5-0-0)     | Added options `altKey`, `ctrlKey`, `metaKey`, and `shiftKey`                                                            |
+| [3.5.0](/app/references/changelog#3-5-0)     | `.dblclick()` now follows the same actionability checks as `.click()`                                                   |
 | [3.5.0](/app/references/changelog#3-5-0)     | Added support for options `force` and `multiple`.                                                                       |
 | [3.5.0](/app/references/changelog#3-5-0)     | Added support for `position`, `x`, and `y` arguments.                                                                   |
 | [3.5.0](/app/references/changelog#3-5-0)     | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.dblclick()`. |
@@ -251,3 +280,4 @@ following:
 
 - [`.click()`](/api/commands/click)
 - [`.rightclick()`](/api/commands/rightclick)
+- [`.select()`](/api/commands/select)
