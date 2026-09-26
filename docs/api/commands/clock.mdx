@@ -10,16 +10,19 @@ sidebar_label: clock
 
 `cy.clock()` overrides native global functions related to time allowing them to
 be controlled synchronously via [`cy.tick()`](/api/commands/tick) or the yielded
-`clock` object. This includes controlling:
+`clock` object. By default, this includes controlling:
 
-- `setTimeout`
-- `clearTimeout`
-- `setInterval`
-- `clearInterval`
-- `Date` Objects
+- `setTimeout` and `clearTimeout`
+- `setInterval` and `clearInterval`
+- `requestAnimationFrame` and `cancelAnimationFrame`
+- `requestIdleCallback`
+- `Date` objects
+- `performance`, such as `performance.now()`
+- `Intl.DateTimeFormat`, which formats the faked current time when no date is
+  passed
 
-The clock starts at the unix epoch (timestamp of 0). This means that when you
-instantiate `new Date` in your application, it will have a time of
+The clock starts at the unix epoch (timestamp of 0) unless you pass a `now`
+value. Without a `now` value, `new Date` in your application returns a time of
 `January 1st, 1970`.
 
 ## Syntax
@@ -43,13 +46,18 @@ cy.clock()
 
 ### Arguments
 
-<Icon name="angle-right" /> **now _(number)_**
+<Icon name="angle-right" /> **now _(number, Date)_**
 
-A timestamp specifying where the clock should start.
+A timestamp or `Date` object specifying where the clock should start. Pass `0`
+(or `null`) to start at the unix epoch while still passing `functionNames`.
 
 <Icon name="angle-right" /> **functionNames _(Array)_**
 
-Name of native functions that clock should override.
+Names of the native functions the clock should override. When omitted, or when
+passed an empty array, `cy.clock()` overrides the default set listed above.
+Valid names are `setTimeout`, `clearTimeout`, `setInterval`, `clearInterval`,
+`Date`, `requestAnimationFrame`, `cancelAnimationFrame`, `requestIdleCallback`,
+`cancelIdleCallback`, `performance`, and `Intl`.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -61,12 +69,14 @@ Pass in an options object to change the default behavior of `cy.clock()`.
 
 <HeaderYields />
 
-`cy.clock()` yields a `clock` object with the following methods:
+`cy.clock()` yields a `clock` object with the following methods. If a clock
+already exists in the current test, `cy.clock()` yields that existing clock and
+ignores any arguments passed to it.
 
 - **`clock.tick(milliseconds)`**
 
   Move the clock the specified number of `milliseconds`. Any timers within the
-  affected range of time will be called.
+  affected range of time are called.
 
 - **`clock.restore()`**
 
@@ -74,18 +84,20 @@ Pass in an options object to change the default behavior of `cy.clock()`.
   tests, so should not generally be needed.
 
   `clock.restore()` returns native timer APIs (`setTimeout`, `setInterval`, etc.)
-  to the `window`. New timers created _after_ `restore()` will run in real time.
-  However, any intervals or timeouts registered before or during the fake clock's
-  lifetime are discarded — they will not resume automatically.
+  to the `window`. New timers created _after_ `restore()` run in real time.
+  Timers registered while the fake clock was active are discarded and don't
+  resume automatically.
 
 - **`clock.setSystemTime(now)`**
 
   Change the system time to the new `now`. Now can be a timestamp, date object,
-  or not passed in which defaults to 0. No timers will be called, nor will the
-  time left before they trigger change.
+  or not passed in which defaults to 0. It doesn't call any timers or change the
+  time left before they trigger.
 
 You can also access the `clock` object via `this.clock` in a
-[`.then()`](/api/commands/then) callback.
+[`.then()`](/api/commands/then) callback, as long as the test is written with a
+`function () {}` callback rather than an arrow function, so `this` refers to the
+test context.
 
 ## Examples
 
@@ -93,8 +105,7 @@ You can also access the `clock` object via `this.clock` in a
 
 #### Create a clock and use it to trigger a `setInterval`
 
-```javascript
-// your app code
+```javascript title="src/timer.js"
 let seconds = 0
 
 setInterval(() => {
@@ -102,13 +113,53 @@ setInterval(() => {
 }, 1000)
 ```
 
-```javascript
+```javascript title="cypress/e2e/timer.cy.js"
 cy.clock()
 cy.visit('/index.html')
 cy.tick(1000)
 cy.get('#seconds-elapsed').should('have.text', '1 seconds')
 cy.tick(1000)
 cy.get('#seconds-elapsed').should('have.text', '2 seconds')
+```
+
+#### Test a debounced search input with `cy.clock()`
+
+A debounced input waits for the user to stop typing before it acts. With
+`cy.clock()`, you control exactly when that wait ends, so you can assert both
+that nothing happens too early and that the request fires on time.
+
+```javascript title="src/search.js"
+let debounceTimer
+
+$('#search').on('input', (e) => {
+  clearTimeout(debounceTimer)
+  debounceTimer = setTimeout(() => {
+    fetch(`/api/search?q=${e.target.value}`)
+  }, 300)
+})
+```
+
+```javascript title="cypress/e2e/search.cy.js"
+cy.intercept('GET', '/api/search*').as('search')
+cy.clock()
+cy.visit('/products')
+cy.get('#search').type('shoes')
+// the debounce hasn't elapsed, so no request has been sent
+cy.get('@search.all').should('have.length', 0)
+cy.tick(300)
+cy.wait('@search')
+```
+
+#### Test an inactivity timeout with `cy.clock()`
+
+Session expiry warnings and automatic logouts often wait many minutes before
+they trigger. Move the clock forward instead of waiting in real time.
+
+```javascript
+cy.clock()
+cy.visit('/dashboard')
+cy.tick(15 * 60 * 1000) // 15 minutes
+cy.contains('Your session has expired').should('be.visible')
 ```
 
 #### Access the clock object to synchronously move time
@@ -123,6 +174,9 @@ cy.clock().then((clock) => {
 ```
 
 You can call `cy.clock()` again for this purpose later in a chain if necessary.
+It yields the clock that already exists and ignores any arguments, so it can't
+change `now` or `functionNames`. Use `clock.setSystemTime()` to change the
+current time.
 
 ```javascript
 cy.clock()
@@ -133,13 +187,16 @@ cy.clock().then((clock) => {
 ```
 
 The clock object is also available via `this.clock` in any
-[`.then()`](/api/commands/then) callback.
+[`.then()`](/api/commands/then) callback. Use a `function () {}` test callback
+so `this` refers to the test context.
 
 ```javascript
-cy.clock()
-cy.get('form').then(($form) => {
-  this.clock.tick(1000)
-  // do something with $form ...
+it('ticks the clock', function () {
+  cy.clock()
+  cy.get('form').then(($form) => {
+    this.clock.tick(1000)
+    // do something with $form ...
+  })
 })
 ```
 
@@ -158,10 +215,12 @@ cy.clock().then((clock) => {
 Or via `this.clock`:
 
 ```javascript
-cy.clock()
-cy.get('.timer').then(($timer) => {
-  this.clock.restore()
-  // do something with $timer ...
+it('restores the clock', function () {
+  cy.clock()
+  cy.get('.timer').then(($timer) => {
+    this.clock.restore()
+    // do something with $timer ...
+  })
 })
 ```
 
@@ -181,11 +240,38 @@ cy.get('#date').should('have.value', '04/14/2021')
 
 :::
 
+#### Start every test on the same date with `cy.clock()`
+
+Call `cy.clock()` in a `beforeEach()` hook so every test sees the same current
+date. Cypress restores the clock automatically after each test, so each test
+starts with a fresh clock set to the same `now`.
+
+```javascript
+beforeEach(() => {
+  cy.clock(Date.UTC(2026, 0, 15))
+  cy.visit('/reports')
+})
+```
+
+#### Test a midnight date rollover with `cy.clock()`
+
+Combine a `now` value with [`cy.tick()`](/api/commands/tick) to test what
+happens when time crosses a boundary, such as midnight. This example assumes
+the app updates its displayed date on a timer.
+
+```javascript
+cy.clock(new Date(2026, 0, 31, 23, 59, 59)) // one second before midnight
+cy.visit('/calendar')
+cy.get('#today').should('contain', 'January 31')
+cy.tick(1000)
+cy.get('#today').should('contain', 'February 1')
+```
+
 ### Function names
 
 #### Specify which functions to override
 
-This example below will only override `setTimeout` and `clearTimeout` and leave
+This example overrides only `setTimeout` and `clearTimeout` and leaves
 the other time-related functions as they are.
 
 ```javascript
@@ -197,6 +283,18 @@ example below affects the current datetime without affecting scheduled timers.
 
 ```javascript
 cy.clock(Date.UTC(2018, 10, 30), ['Date'])
+```
+
+#### Freeze the date and keep animations running with `cy.clock()`
+
+By default, `cy.clock()` also overrides `requestAnimationFrame`, so JavaScript
+animations and any rendering that relies on animation frames only advance when
+you call [`cy.tick()`](/api/commands/tick). To freeze the date and control
+timeouts while leaving animation frames running in real time, list only the
+functions you want to override.
+
+```javascript
+cy.clock(Date.UTC(2026, 0, 1), ['Date', 'setTimeout', 'clearTimeout'])
 ```
 
 #### `Using cy.clock()` with `cy.tick()`
@@ -216,11 +314,12 @@ called between tests.
 :::caution
 
 `clock.restore()` returns native timer APIs (`setTimeout`, `setInterval`, etc.)
-to the `window`. New timers created _after_ `restore()` will run in real time.
-However, any intervals or timeouts that were registered before or during the
-fake clock's lifetime are discarded — they will not resume automatically. If
-your application code needs to keep running after `restore()`, it must
-re-register those timers itself.
+to the `window`. New timers created _after_ `restore()` run in real time.
+Timers registered while the fake clock was active are discarded and don't
+resume automatically. If your application code needs to keep running after
+`restore()`, it must re-register those timers itself. Timers your application
+registered before `cy.clock()` was called were never faked, so they keep running
+in real time.
 
 :::
 
@@ -247,20 +346,21 @@ cy.clock().invoke('restore')
 
 ### Change current system time
 
-Here we test that a timer still looks good if it has run for an hour, without
-triggering an hours worth of setInterval or requestAnimationFrame timers and
-overloading our CPU.
+This example tests that a timer still displays correctly after it has run for
+an hour, without triggering an hour's worth of `setInterval` or
+`requestAnimationFrame` callbacks and overloading your CPU.
 
 ```javascript
 cy.clock(0)
 cy.visit('http://localhost:3333')
 cy.clock().then((clock) => {
-  clock.setSystemTime(60 * 60 * 1000 - 60);
+  clock.setSystemTime(60 * 60 * 1000 - 60)
   // setSystemTime doesn't trigger any timers, so we run the last frame
   // with tick to trigger a callback to update the timer.
-  clock.tick(60);
+  clock.tick(60)
 })
-cy.get('#timer').should(...) // assert that it fits within the screen etc.
+// the timer shows an hour has passed and still fits on the page
+cy.get('#timer').should('contain', '1:00:00').and('be.visible')
 // more test code here
 ```
 
@@ -277,26 +377,36 @@ cy.clock().invoke('setSystemTime', 60 * 60 * 1000)
 
 #### iframes not supported
 
-`cy.clock()` only applies to the `top` window on a web page. It will
-not override the time functions of any `iframe` embedded on the page.
+`cy.clock()` only applies to the `top` window on a web page. It doesn't override
+the time functions of any `iframe` embedded on the page.
 
 ### Behavior
+
+#### CSS animations and transitions ignore `cy.clock()`
+
+`cy.clock()` overrides JavaScript time functions only. CSS animations and CSS
+transitions run on the browser's own clock, so they keep playing in real time
+and [`cy.tick()`](/api/commands/tick) doesn't move them forward.
 
 #### clock behavior before `cy.mount()`
 
 Using the [`cy.mount()`](/api/commands/mount) command in a Cypress Component
-Test will render your component but does not affect the behavior of the page or
+Test renders your component but doesn't affect the behavior of the page or
 window object. This means you can `mount` directly after calling `cy.clock()` to
 test the component against any changes you've made to the yielded clock object.
 
 #### clock behavior before `cy.visit()`
 
 If you call `cy.clock()` before visiting a page with
-[`cy.visit()`](/api/commands/visit), the page's native global functions will be
-overridden on window load, before any of your app code runs. So even if
+[`cy.visit()`](/api/commands/visit), Cypress overrides the page's native global
+functions on window load, before any of your app code runs. So even if
 `setTimeout`, for example, is called on page load, it can still be controlled
 via [`cy.tick()`](/api/commands/tick). This also applies if, during the course
 of a test, the page under test is reloaded or changed.
+
+Each new page gets a fresh fake clock that starts again at the original `now`
+value (or the unix epoch). Time you advanced with `cy.tick()` on the previous
+page and timers it registered don't carry over to the new page.
 
 ## Rules
 
@@ -323,7 +433,7 @@ cy.clock()
 cy.tick(1000)
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <DocsImage
   src="/img/api/clock/clock-displays-in-command-log.png"
