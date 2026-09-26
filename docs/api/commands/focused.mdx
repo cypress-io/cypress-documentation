@@ -39,7 +39,9 @@ Pass in an options object to change the default behavior of `cy.focused()`.
 
 <HeaderYields />
 
-- `cy.focused()` yields the DOM element it found.
+- `cy.focused()` yields the DOM element that currently has focus.
+- When no element has focus and it's chained with `.should('not.exist')`,
+  `cy.focused()` yields `null`.
 - `cy.focused()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -66,24 +68,47 @@ cy.focused().blur()
 cy.focused().should('have.attr', 'name', 'username')
 ```
 
+#### Assert that no element has focus
+
+```javascript
+cy.focused().should('not.exist')
+```
+
+## Notes
+
+### Focus on the document body
+
+When the page's `<body>` is the document's active element, which is the
+browser's default when nothing else has focus, `cy.focused()` treats the page
+as having no focused element. Without a
+[`.should('not.exist')`](#Assert-that-no-element-has-focus) assertion, the
+command retries and then fails with
+``Expected to find element: `focused`, but never found it.``
+
+### Focus inside a shadow root
+
+When the focused element is inside an open shadow root, `cy.focused()` yields
+that element rather than its shadow host. It follows nested open shadow roots
+to the innermost focused element, whether or not
+[`includeShadowDom`](/app/references/configuration#Global) is enabled.
+
 ## Rules
 
 <HeaderRequirements />
 
-- `cy.focused()` requires being chained off a command that yields DOM
-  element(s).
+- `cy.focused()` requires being chained off of `cy`.
 
 <HeaderAssertions />
 
 - `cy.focused()` will automatically [retry](/app/core-concepts/retry-ability)
-  until the element(s)
-  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+  until a focused element
+  [exists in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `cy.focused()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
 
-- `cy.focused()` can time out waiting for the element(s) to
+- `cy.focused()` can time out waiting for a focused element to
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 - `cy.focused()` can time out waiting for assertions you've added to pass.
 
