@@ -207,6 +207,7 @@ beforeEach(() => {
 })
 
 it('disables on click', () => {
+  cy.get('@submitBtn').click()
   cy.get('@submitBtn').should('be.disabled')
 })
 ```
