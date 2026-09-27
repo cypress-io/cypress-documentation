@@ -127,8 +127,7 @@ The example above would resolve in the following order:
 If you are loading a JSON fixture, you can use the `import` statement and
 let the bundler load it:
 
-```js
-// cypress/e2e/spec.cy.js
+```js title="cypress/e2e/spec.cy.js"
 import user from '../fixtures/user.json'
 it('loads the same object', () => {
   cy.fixture('user').then((userFixture) => {
@@ -143,8 +142,7 @@ To create one test per fixture record, `import` the fixture. `cy.fixture()`
 runs after Mocha has already collected the tests in the spec, so a loop inside
 its callback can't add new `it()` blocks.
 
-```js
-// cypress/e2e/users.cy.js
+```js title="cypress/e2e/users.cy.js"
 import users from '../fixtures/users.json'
 
 describe('User profiles', () => {
