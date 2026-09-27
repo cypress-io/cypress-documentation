@@ -32,9 +32,10 @@ cy.go('back')
 
 The direction to navigate.
 
-You can use `back` or `forward` to go one step back or forward. You could also
-navigate to a specific history position (`-1` goes back one page, `1` goes
-forward one page, etc).
+Pass `'back'` or `'forward'` to go one step back or forward. Pass a number to
+move relative to the current page in the browser's history: `-1` goes back one
+page, `1` goes forward one page, `-2` goes back two pages, and so on. `0` is not
+accepted.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -83,22 +84,24 @@ cy.go(1) // equivalent to clicking forward button
 
 ## Notes
 
-### Refreshing and loading the page
+### Waiting for the page to load
 
-If going forward or back causes a full page refresh, Cypress will wait for the
-new page to load before moving on to new commands.
+If going forward or back unloads the current page, `cy.go()` waits for the new
+page to fire its `load` event before moving on to the next command.
 
-Cypress additionally handles situations where a page load was not caused (such
-as hash routing) and will resolve immediately.
+When the navigation does not unload the page, such as a hash change or a
+history entry added with `history.pushState()` in a single-page app, `cy.go()`
+resolves without waiting for a `load` event.
 
 ## Rules
 
 <HeaderRequirements />
 
 - `cy.go()` requires being chained off of `cy`.
-- `cy.go()` requires the response to be `content-type: text/html`.
-- `cy.go()` requires the response code to be `2xx` after following redirects.
-- `cy.go()` requires the load `load` event to eventually fire.
+- `cy.go()` requires a direction of `'back'`, `'forward'`, or a number other
+  than `0`.
+- `cy.go()` requires the `load` event to eventually fire when the navigation
+  unloads the page.
 
 <HeaderAssertions />
 
@@ -106,7 +109,8 @@ as hash routing) and will resolve immediately.
 
 <HeaderTimeouts />
 
-- `cy.go()` can time out waiting for the page to fire its `load` event.
+- `cy.go()` can time out waiting for the page to fire its `load` event when
+  the navigation unloads the page.
 - `cy.go()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
@@ -131,6 +135,12 @@ the following:
   src="/img/api/go/window-is-logged-when-go-back-in-browser-history.png"
   alt="console Log go"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                               |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.0.0](/app/references/changelog#15-0-0) | Navigates history through the automation client (CDP in Chromium-based browsers, WebDriver BiDi in Firefox) instead of the AUT window |
 
 ## See also
 
