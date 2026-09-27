@@ -77,7 +77,9 @@ is enough for every command above except `npm test`.
    server injects page titles during hydration, so the specs that assert on
    server-rendered HTML fail against it.
 
-CI runs all of these, so a miss fails the PR rather than `main`.
+CI runs all of these, so a miss fails the PR rather than `main`. None of them
+executes the code inside a code block, so an added or rewritten example also
+needs [running it yourself](./AGENTS_REFERENCE.md#verifying-code-examples).
 
 ## Pull requests
 
@@ -148,6 +150,22 @@ Each rule is a hard convention. See the linked section for the how and why.
   characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
+
+**Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples)
+
+- Run every code example you add or rewrite before committing it: typecheck and
+  run it in the throwaway `.example-check/` harness, pasted in verbatim, with an
+  assertion for each claim the prose makes. `npm run build` never executes the
+  code inside a block, so this is the only check it gets.
+- Report every result in the thread, passes included. For each failure, give the
+  error as Cypress printed it, the cause, and a fix with a worked code example
+  you ran and watched pass. Never commit an example that failed.
+- An example you can't run locally (a record key, a Cloud or third-party
+  service) gets reported as not run, with the reason. Being short is not a
+  reason.
+- In Claude Code, the first `git commit` after examples change stops once with
+  a reminder listing them. Run them and report (or say in your report why one
+  doesn't need a run), then commit again. The judgment is yours.
 
 **API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
 
