@@ -368,7 +368,9 @@ In `cypress run`, clicking or hovering a row draws no highlight.
 
    It pins the last matching row (`--nth 2` picks the second), moves the mouse
    off the rows, and clips from the sidebar's right edge down to the lower of
-   the Command Log and the banner. Running it again leaves the pin in place.
+   the Command Log and the banner. It moves the pin from any other row, such as
+   one you pinned by hand, and leaves it in place when that row is already
+   pinned.
 
 Check the image before copying it into `static/img/`: the pinned row shows a
 pin icon, and the highlighted element is the one the page text names.

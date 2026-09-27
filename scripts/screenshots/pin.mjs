@@ -33,17 +33,25 @@ const row = must(
   `No row ${args.nth} of ${rows.length} matching ${command}`
 )
 
-// A click toggles the pin, so only click when nothing is pinned yet
-const banner = () =>
-  page.evaluate(() => {
+// Clicking the pinned row unpins it, and clicking any other row moves the pin
+// there, so click only when this row isn't the pinned one
+const isPinned = () =>
+  row.evaluate((el) => el.classList.contains('command-is-pinned'))
+if (!(await isPinned())) {
+  await row.click()
+  // The click flashes "Printed output to your console" for 1500ms
+  await sleep(2000)
+}
+must((await isPinned()) || null, 'The row never pinned')
+const pinned = must(
+  await page.evaluate(() => {
     const el = [...document.querySelectorAll('[data-cy=aut-panel] *')]
       .filter((e) => /^Pinned/.test(e.textContent?.trim() ?? ''))
       .find((e) => e.textContent?.includes('Highlights'))
     return el ? el.getBoundingClientRect().toJSON() : null
-  })
-if (!(await banner())) await row.click()
-await sleep(1000)
-const pinned = must(await banner(), 'The snapshot never pinned')
+  }),
+  'No Pinned banner in the app preview'
+)
 await page.mouse.move(0, 0) // no hover styles or tooltips on the rows
 await sleep(300)
 
