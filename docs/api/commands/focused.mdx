@@ -108,6 +108,15 @@ cy.press(Cypress.Keyboard.Keys.TAB)
 cy.focused().should('have.attr', 'id', 'email')
 ```
 
+Click a `focused` row in the Command Log to pin its snapshot. Cypress
+highlights the element that had focus at that step, which shows where each Tab
+press moved focus:
+
+<DocsImage
+  src="/img/api/focused/command-log-focused-tab-snapshot.png"
+  alt="Command Log with the second focused command pinned and the Email input highlighted in the app preview"
+/>
+
 #### Check that a skip link receives focus first
 
 ```javascript
