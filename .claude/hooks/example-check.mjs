@@ -23,13 +23,20 @@ const root = execFileSync('git', ['rev-parse', '--show-toplevel'], { cwd, encodi
 const gitDir = execFileSync('git', ['rev-parse', '--absolute-git-dir'], { cwd: root, encoding: 'utf8' }).trim()
 const remindedPath = join(gitDir, 'example-check-reminded')
 
-function git(args) {
-  return execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+function git(args, stderr = 'inherit') {
+  return execFileSync('git', args, {
+    cwd: root,
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+    stdio: ['ignore', 'pipe', stderr],
+  })
 }
 
+// A file's content at a revision, or '' when it has none there (a new file).
+// Git's "exists on disk, but not in 'HEAD'" message is expected, so it's muted.
 function show(spec) {
   try {
-    return git(['show', spec])
+    return git(['show', spec], 'ignore')
   } catch {
     return ''
   }
@@ -62,19 +69,27 @@ function codeBlocks(source) {
   return blocks
 }
 
-// Blocks added or changed from HEAD, in the index or the working tree.
+// Blocks added or changed from HEAD: in the index, in the working tree, or in
+// a new file git doesn't track yet. Untracked files count because an agent can
+// create a page and commit it in one command (`git add page.mdx && git commit`),
+// and the hook runs before the `git add`.
 function changedBlocks() {
   const docs = ['--', 'docs/**/*.md', 'docs/**/*.mdx']
   const files = new Map() // path -> path at HEAD
-  for (const args of [['diff', '--cached'], ['diff', 'HEAD']]) {
-    for (const row of git([...args, '-M', '--name-status', '--diff-filter=AMR', ...docs]).split('\n')) {
-      if (!row) continue
-      const parts = row.split('\t')
-      const path = parts[parts.length - 1]
-      // The nested agent guides document conventions; they aren't docs pages.
-      if (/(^|\/)(AGENTS|CLAUDE)\.md$/.test(path)) continue
-      files.set(path, parts[0].startsWith('R') ? parts[1] : path)
-    }
+  const rows = [
+    ...git(['diff', '--cached', '-M', '--name-status', '--diff-filter=AMR', ...docs]).split('\n'),
+    ...git(['diff', 'HEAD', '-M', '--name-status', '--diff-filter=AMR', ...docs]).split('\n'),
+    ...git(['ls-files', '--others', '--exclude-standard', ...docs])
+      .split('\n')
+      .map((path) => path && `A\t${path}`),
+  ]
+  for (const row of rows) {
+    if (!row) continue
+    const parts = row.split('\t')
+    const path = parts[parts.length - 1]
+    // The nested agent guides document conventions; they aren't docs pages.
+    if (/(^|\/)(AGENTS|CLAUDE)\.md$/.test(path)) continue
+    files.set(path, parts[0].startsWith('R') ? parts[1] : path)
   }
   const seen = new Set()
   const changed = []

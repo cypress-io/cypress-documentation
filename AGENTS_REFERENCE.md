@@ -338,14 +338,19 @@ a plain `git diff origin/main` also shows examples that other merged pull
 requests changed, and you would end up checking, or reverting, work that isn't
 yours.
 
-The commit reminder's `list` mode prints every added or changed code block
-under `docs/`, staged or not, with its file and line. It is the same list the
-reminder shows before a commit (see
-[Step 10](#step-10-commit-and-clean-up)):
+The diff leaves out new pages git doesn't track yet. For your uncommitted work,
+the commit reminder's `list` mode fills that gap: it prints each added or
+changed code block under `docs/` with its file and line, staged, unstaged, or in
+a new untracked page. It is the list the reminder shows before a commit (see
+[Step 10](#step-10-commit-and-clean-up)).
 
 ```shell
 node .claude/hooks/example-check.mjs list
 ```
+
+`list` compares against `HEAD`, so it leaves out examples you already committed
+on this branch. Use both: the diff for everything since the merge base, and
+`list` for new pages.
 
 Sort each one into a bucket. The bucket decides how you verify it:
 
@@ -613,8 +618,9 @@ checks. Keep these behaviors in mind:
 
 - **It fires once per set of changes.** Editing a block afterward brings it back
   once, since that is a new example to decide about. Editing prose doesn't.
-- **It counts every changed example, however you commit.** Staged, unstaged,
-  `git commit -a`, or a path on the command line all see the same list.
+- **It counts every changed example, however you commit.** Staged, unstaged, a
+  new page git doesn't track yet, `git commit -a`, or a path on the command line
+  all see the same list.
 - **Deleted blocks** don't trigger it, and neither do the nested `AGENTS.md` and
   `CLAUDE.md` guides under `docs/`, which document conventions rather than
   features.
