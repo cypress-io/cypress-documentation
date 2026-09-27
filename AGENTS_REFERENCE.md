@@ -631,8 +631,9 @@ screenshots need a signed-in account and are out of scope.
 Each approach has limits:
 
 - `cy.screenshot()` captures only the page, and DevTools isn't part of the page.
-- `cy.screenshot()` runs mid-test. Its own Command Log row shows a spinner, the
-  test title shows a spinner, and the pass/fail counts are empty (`--`).
+- `cy.screenshot()` runs mid-test, so the test title shows a spinner and the
+  pass/fail counts are empty (`--`). Pass `log: false` so the command doesn't
+  add its own row, with a spinner, below the rows you're capturing.
 - A test can't set the Command Log's width.
 
 All three approaches share one config. `--force-device-scale-factor=2` gives 2x
@@ -667,8 +668,10 @@ them by file name.
 Prefer this approach whenever the rows fit. It runs headlessly, with no Xvfb,
 `--no-exit`, or CDP.
 
-1. Add `cy.screenshot('<name>', { capture: 'runner' })` as the last line of the
-   spec, after the page's snippet.
+1. Add `cy.screenshot('<name>', { capture: 'runner', log: false })` as the last
+   line of the spec, after the page's snippet. With `log: false`, the Command
+   Log ends at the snippet's last row and its bottom border, so nothing below
+   the target rows needs cropping around.
 2. Run it:
 
    ```shell
@@ -680,12 +683,14 @@ Prefer this approach whenever the rows fit. It runs headlessly, with no Xvfb,
    above it's 2560×1266, a 1280×633 capture at 2x.
 
 3. Open that full capture and find the target rows. Divide the pixel positions
-   by 2 to get CSS pixels.
+   by 2 to get CSS pixels. If the image needs a collapsed panel open, such as
+   **Routes**, expand it first and measure after the click (see
+   [Expanding a collapsed Command Log panel](#expanding-a-collapsed-command-log-panel)).
 4. Add a `clip` in **CSS pixels**. Cypress scales the saved PNG by the device
    factor, so a 414×57 clip saves as 828×114. Crop to the rows the page's
-   snippet produces, leaving out the screenshot command's own row and the
-   running-test header. Earlier rows, such as `visit` as row 1, push the row
-   numbers up. That's fine. At the default panel width the rows are about 414
+   snippet produces, leaving out the running-test header. Earlier rows, such
+   as `visit` as row 1, push the row numbers up. That's fine. At the default
+   panel width the rows are about 414
    CSS px wide, narrower than the 940 px CDP crops. When the image must match a
    940 px neighbor on the same page, use the CDP approach.
 5. Run the spec again and copy the PNG over the docs image right away. The
@@ -697,10 +702,59 @@ it('focus', () => {
   cy.get('[name="comment"]').focus() // the page's snippet, word for word
   cy.screenshot('get-input-then-focus', {
     capture: 'runner',
+    log: false,
     clip: { x: 19, y: 239, width: 414, height: 57 }, // CSS px: rows 2 and 3
   })
 })
 ```
+
+### Expanding a collapsed Command Log panel
+
+The panels above the test body, such as **Routes** for `cy.intercept()`, start
+collapsed. When the image needs a panel's contents, like the Routes table's
+**Stubbed** column, expand it with a real click in the runner before the
+screenshot. Supporting code like this stays in the capture spec, never in the
+docs snippet.
+
+The Command Log renders in an `about:blank` iframe of the top window. Click the
+panel's `.collapsible-header` from a `cy.then()`, which adds no Command Log row,
+then give the panel a moment to render:
+
+```javascript title="cypress/e2e/fixture-intercept.cy.js"
+// Expands the Command Log's Routes panel with a real click in the runner
+const expandRoutes = () => {
+  const top = window.top
+  for (let i = 0; i < top.frames.length; i++) {
+    try {
+      const header = [
+        ...top.frames[i].document.querySelectorAll('.collapsible-header'),
+      ].find((h) => /^Routes/.test(h.textContent.trim()))
+      if (header) return header.click()
+    } catch (e) {}
+  }
+}
+
+it('fixture intercept', () => {
+  cy.intercept('GET', '/users/**', { fixture: 'users' }) // the page's snippet
+  cy.visit('users.html')
+  cy.contains('Alan Turing')
+  cy.then(expandRoutes)
+  cy.then(() => new Cypress.Promise((resolve) => setTimeout(resolve, 300)))
+  cy.screenshot('command-log-fixture-stubbed-route', {
+    capture: 'runner',
+    log: false,
+    clip: { x: 10, y: 172, width: 431, height: 236 }, // CSS px: Routes through the fetch row
+  })
+})
+```
+
+Expanding a panel pushes every row below it down, so measure the crop after
+the click. To find the positions, run a separate probe spec that expands the
+panel and writes each element's bounding rect (plus the iframe's offset, which
+is `0, 0` at the default layout) to a file with `cy.writeFile()`. Command Log
+rows are `.command` elements, and a panel is the `.collapsible` around its
+header. Keep that measuring out of the capture spec, and never report it with
+`Cypress.log()`: that adds a row to the Command Log, and it lands in the image.
 
 ### Command Log over CDP
 
