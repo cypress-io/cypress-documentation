@@ -621,20 +621,26 @@ screenshots need a signed-in account and are out of scope.
 
 ### Pick the approach
 
-| What you're capturing                                                      | Approach                                                            |
-| -------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Command Log rows that fit on one line at the default panel width           | [`cy.screenshot()`](#command-log-with-cyscreenshot)                 |
-| Command Log rows that wrap at the default width                            | [CDP, widening the panel first](#command-log-over-cdp)              |
-| The runner showing a finished, passing test (title check mark, pass count) | [CDP](#command-log-over-cdp)                                        |
-| DevTools console output from clicking a command                            | [`cypress open` plus a DevTools frontend](#devtools-console-output) |
+| What you're capturing                                                      | Approach                                                                      |
+| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Command Log rows that fit on one line at the default panel width           | [`cy.screenshot()`](#command-log-with-cyscreenshot)                           |
+| Command Log rows that wrap at the default width                            | [`cy.screenshot()`, widening the panel first](#widening-the-command-log)      |
+| The runner showing a finished, passing test (title check mark, pass count) | [`cy.screenshot()` from a following test](#capturing-a-finished-passing-test) |
+| DevTools console output from clicking a command                            | [`cypress open` plus a DevTools frontend](#devtools-console-output)           |
 
 Each approach has limits:
 
 - `cy.screenshot()` captures only the page, and DevTools isn't part of the page.
 - `cy.screenshot()` runs mid-test, so the test title shows a spinner and the
   pass/fail counts are empty (`--`). Pass `log: false` so the command doesn't
-  add its own row, with a spinner, below the rows you're capturing.
-- A test can't set the Command Log's width.
+  add its own row, with a spinner, below the rows you're capturing. To show a
+  finished test, take the screenshot from the test after it.
+
+The Command Log and its resize handle run in the same browser tab as the spec,
+so the spec can widen the panel, expand a collapsed section, and pin a test open
+with ordinary DOM events. The subsections below show how. The
+[CDP approach](#command-log-over-cdp) drives the same UI from outside the
+browser and stays available as a fallback.
 
 All three approaches share one config. `--force-device-scale-factor=2` gives 2x
 output for the first two approaches; the CDP approach also needs
@@ -691,8 +697,8 @@ Prefer this approach whenever the rows fit. It runs headlessly, with no Xvfb,
    snippet produces, leaving out the running-test header. Earlier rows, such
    as `visit` as row 1, push the row numbers up. That's fine. At the default
    panel width the rows are about 414
-   CSS px wide, narrower than the 940 px CDP crops. When the image must match a
-   940 px neighbor on the same page, use the CDP approach.
+   CSS px wide. To match a wider neighbor on the same page, such as a 940 px
+   CDP crop, [widen the panel](#widening-the-command-log) first.
 5. Run the spec again and copy the PNG over the docs image right away. The
    next `cypress run` clears `cypress/screenshots/`.
 
@@ -718,27 +724,29 @@ docs snippet.
 
 The Command Log renders in an `about:blank` iframe of the top window. Click the
 panel's `.collapsible-header` from a `cy.then()`, which adds no Command Log row,
-then give the panel a moment to render:
+then give the panel a moment to render. Match the header by the start of its
+text, since a header holds more than its label:
 
 ```javascript title="cypress/e2e/fixture-intercept.cy.js"
-// Expands the Command Log's Routes panel with a real click in the runner
-const expandRoutes = () => {
+// Clicks a Command Log header, such as the Routes panel or a test title
+const clickCommandLogHeader = (pattern) => {
   const top = window.top
   for (let i = 0; i < top.frames.length; i++) {
     try {
       const header = [
         ...top.frames[i].document.querySelectorAll('.collapsible-header'),
-      ].find((h) => /^Routes/.test(h.textContent.trim()))
+      ].find((h) => pattern.test(h.textContent.trim()))
       if (header) return header.click()
     } catch (e) {}
   }
+  throw new Error(`no Command Log header matches ${pattern}`)
 }
 
 it('fixture intercept', () => {
   cy.intercept('GET', '/users/**', { fixture: 'users' }) // the page's snippet
   cy.visit('users.html')
   cy.contains('Alan Turing')
-  cy.then(expandRoutes)
+  cy.then(() => clickCommandLogHeader(/^Routes/))
   cy.then(() => new Cypress.Promise((resolve) => setTimeout(resolve, 300)))
   cy.screenshot('command-log-fixture-stubbed-route', {
     capture: 'runner',
@@ -756,10 +764,93 @@ rows are `.command` elements, and a panel is the `.collapsible` around its
 header. Keep that measuring out of the capture spec, and never report it with
 `Cypress.log()`: that adds a row to the Command Log, and it lands in the image.
 
+### Widening the Command Log
+
+When a row wraps at the default width, widen the panel from the spec before the
+screenshot. The resize handle, `[data-cy=panel2ResizeHandle]`, lives in the top
+window and responds to plain mouse events, so dispatch a drag on it. The drag
+sets the panel's right edge to `toX`, in CSS px from the left of the window:
+
+```javascript title="cypress/e2e/get-then-assert.cy.js"
+// Drags the Command Log's resize handle so long rows don't wrap
+const widenCommandLog = (toX = 700) => {
+  const handle = window.top.document.querySelector(
+    '[data-cy=panel2ResizeHandle]'
+  )
+  const { x, y, height } = handle.getBoundingClientRect()
+  const at = (clientX) => ({
+    bubbles: true,
+    clientX,
+    clientY: y + height / 2,
+    button: 0,
+  })
+  handle.dispatchEvent(new MouseEvent('mousedown', at(x + 2)))
+  handle.dispatchEvent(new MouseEvent('mousemove', at(toX)))
+  handle.dispatchEvent(new MouseEvent('mouseup', at(toX)))
+}
+
+it('get then assert', () => {
+  cy.visit('list.html')
+  cy.get('li').should('have.length', 3) // the page's snippet
+  cy.then(() => widenCommandLog())
+  cy.then(() => new Cypress.Promise((resolve) => setTimeout(resolve, 300)))
+  cy.screenshot('get-then-assert-length', {
+    capture: 'runner',
+    log: false,
+    clip: { x: 19, y: 241, width: 663, height: 56 }, // CSS px: rows 2 and 3
+  })
+})
+```
+
+At `toX` 700 the rows are 663 CSS px wide, so clip to that width rather than a
+narrower one that cuts off the row's end. The wider panel carries over to
+later tests in the same spec, and each new `cypress run` starts at the default
+width.
+
+### Capturing a finished, passing test
+
+A screenshot inside a test always shows that test running, and an `after()`
+hook doesn't help, because the reporter marks the test finished only after its
+hooks. Take the screenshot from the **next** test instead. By then the first
+test shows its check mark and the pass count reads 1.
+
+In `cypress run`, the reporter clears a finished test's rows unless the test is
+open when it finishes. A running test only looks open, so pin it: click its
+title twice at the end of the test, once to close it and once to open it again.
+The same `clickCommandLogHeader()` helper does this. When the image also shows
+the page under test, add `testIsolation: false` to the suite, or Cypress clears
+the page to `about:blank` before the next test starts:
+
+```javascript title="cypress/e2e/shows-the-user.cy.js"
+describe('user list', { testIsolation: false }, () => {
+  it('shows the user', () => {
+    cy.visit('list.html')
+    cy.contains('Alan Turing') // the page's snippet
+    // Pin the test open so the reporter keeps its rows after it passes
+    cy.then(() => clickCommandLogHeader(/^shows the user/))
+    cy.then(() => clickCommandLogHeader(/^shows the user/))
+  })
+
+  it('capture', () => {
+    cy.screenshot('shows-the-user-passed', {
+      capture: 'runner',
+      log: false,
+      clip: { x: 5, y: 75, width: 440, height: 241 }, // CSS px: pass count through the test
+    })
+  })
+})
+```
+
+Clip above the capturing test, which sits below the finished one with its own
+spinner. Define `clickCommandLogHeader()` in the spec as shown in
+[Expanding a collapsed Command Log panel](#expanding-a-collapsed-command-log-panel).
+
 ### Command Log over CDP
 
-Use this approach when a row wraps at the default width, or when the image must
-show a finished test. It leaves the runner open and drives it from outside.
+This approach drives the runner from outside the browser, leaving it open
+after the run. The `cy.screenshot()` techniques above now cover wrapped rows and
+finished tests, so prefer them. Keep this one as a fallback, for instance when a
+capture can't be driven from inside the spec.
 
 1. Start the run under an Xvfb screen large enough for 2x. `--no-exit` keeps the
    runner open after the test finishes:
