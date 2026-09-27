@@ -11,15 +11,16 @@ Some directories carry their own `AGENTS.md` (plus a `CLAUDE.md` that imports
 it) for conventions that apply only inside them. Read the one for the directory
 you're working in:
 
-| Directory            | Covers                                                      |
-| -------------------- | ----------------------------------------------------------- |
-| `docs/api/`          | the Cypress source behind a page, frontmatter, the skeleton |
-| `docs/partials/`     | when a partial is warranted, naming, registration           |
-| `docs/app/releases/` | changelog entry format                                      |
-| `src/`               | component layout, registration, swizzled theme files        |
-| `plugins/`           | the sub-package build and dependency rules                  |
-| `cypress/`           | the generated page list, what the crawl specs are for       |
-| `.github/workflows/` | pinning actions, what forks copy, required checks           |
+| Directory              | Covers                                                      |
+| ---------------------- | ----------------------------------------------------------- |
+| `docs/api/`            | the Cypress source behind a page, frontmatter, the skeleton |
+| `docs/partials/`       | when a partial is warranted, naming, registration           |
+| `docs/app/releases/`   | changelog entry format                                      |
+| `src/`                 | component layout, registration, swizzled theme files        |
+| `plugins/`             | the sub-package build and dependency rules                  |
+| `cypress/`             | the generated page list, what the crawl specs are for       |
+| `.github/workflows/`   | pinning actions, what forks copy, required checks           |
+| `scripts/screenshots/` | editing the Puppeteer capture scripts                       |
 
 Three conventions hold for every one of them:
 
@@ -69,14 +70,17 @@ is enough for every command above except `npm test`.
    hook and CI both enforce Prettier on `*.{md,mdx}`).
 2. `npm run build` — the real safety net for content: `onBrokenLinks` and
    `onBrokenMarkdownLinks` are `throw`, so any bad link or anchor fails the build.
-3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`.
+3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`, or
+   a script in `scripts/screenshots/`.
 4. `npm run test:plugins` — only when you touched `plugins/`.
 5. `npm test` — for nav/routing or broad changes. Serve a production build
    first (`npm run build`, then `npm run serve`), which is what CI does. The dev
    server injects page titles during hydration, so the specs that assert on
    server-rendered HTML fail against it.
 
-CI runs all of these, so a miss fails the PR rather than `main`.
+CI runs all of these, so a miss fails the PR rather than `main`. None of them
+executes the code inside a code block, so an added or rewritten example also
+needs [running it yourself](./AGENTS_REFERENCE.md#verifying-code-examples).
 
 ## Pull requests
 
@@ -122,10 +126,13 @@ Each rule is a hard convention. See the linked section for the how and why.
 [naming](./AGENTS_REFERENCE.md#product-heading--naming),
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
 [AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
-[alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text)
+[alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text),
+[screenshots](./scripts/screenshots/README.md)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
+- Capture Cypress App screenshots from a real run of the page's own snippet, never
+  a mock-up: follow the [capture procedure](./scripts/screenshots/README.md).
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
@@ -138,12 +145,31 @@ Each rule is a hard convention. See the linked section for the how and why.
   only when there are genuinely related pages worth surfacing. Don't pad it with
   tangential links or repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
+  When an example pairs test code with the app code it runs against (markup,
+  source, a fixture), title every block in the pair with its filename, such as
+  `index.html` and `spec.cy.js`, so the reader tells them apart at a glance.
 - For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
   not a code block; keep example-specific prompts, code, commands, and diagrams in
   code blocks. Prompts are expanded by default; add `defaultCollapsed` past 350
   characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
+
+**Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples)
+
+- Run every code example you add or rewrite before committing it: typecheck and
+  run it in the throwaway `.example-check/` harness, pasted in verbatim, with an
+  assertion for each claim the prose makes. `npm run build` never executes the
+  code inside a block, so this is the only check it gets.
+- Report every result in the thread, passes included. For each failure, give the
+  error as Cypress printed it, the cause, and a fix with a worked code example
+  you ran and watched pass. Never commit an example that failed.
+- An example you can't run locally (a record key, a Cloud or third-party
+  service) gets reported as not run, with the reason. Being short is not a
+  reason.
+- In Claude Code, the first `git commit` after examples change stops once with
+  a reminder listing them. Run them and report (or say in your report why one
+  doesn't need a run), then commit again. The judgment is yours.
 
 **API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
 

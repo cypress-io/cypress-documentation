@@ -30,7 +30,7 @@ chain further commands that rely on the subject after `.click()`.
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.get('.btn').click() // Click on button
+cy.get('[data-cy=submit]').click() // Click on button
 cy.focused().click() // Click on el with focus
 cy.contains('Welcome').click() // Click on first el containing 'Welcome'
 ```
@@ -38,7 +38,7 @@ cy.contains('Welcome').click() // Click on first el containing 'Welcome'
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
-cy.click('.btn') // Errors, cannot be chained off 'cy'
+cy.click('[data-cy=submit]') // Errors, cannot be chained off 'cy'
 cy.window().click() // Errors, 'window' does not yield DOM element
 ```
 
@@ -94,7 +94,77 @@ Pass in an options object to change the default behavior of `.click()`.
 #### Click a link in a nav
 
 ```javascript
-cy.get('.nav > a').click()
+cy.get('[data-cy=nav] a').click()
+```
+
+#### Assert on the result of a click
+
+Chaining further commands off the subject of `.click()` is unsafe, since the
+click can re-render or remove the element. Start a new chain from `cy` and
+assert on what the click changed.
+
+```javascript
+cy.get('[data-cy=open-modal]').click()
+cy.get('[data-cy=modal]').should('be.visible')
+```
+
+#### Wait for the request a click sends
+
+Register a [`cy.intercept()`](/api/commands/intercept) before the click, then
+[`cy.wait()`](/api/commands/wait) on its alias so the test continues only after
+the request completes.
+
+```javascript
+cy.intercept('POST', '/api/todos').as('createTodo')
+cy.get('[data-cy=save]').click()
+cy.wait('@createTodo').its('response.statusCode').should('eq', 201)
+```
+
+#### Click a button that starts out disabled
+
+`.click()` retries its
+[actionability checks](/app/core-concepts/interacting-with-elements#Disability),
+including the check that the element is not disabled, until the command times
+out. You don't need to assert that the button is enabled before clicking it.
+
+This check reads the element's `disabled` property. A button marked only with
+`aria-disabled="true"` is not disabled to Cypress, so `.click()` fires on it
+right away. For those buttons, assert on the attribute before clicking.
+
+```javascript
+cy.get('[data-cy=email]').type('user@example.com')
+// waits until the submit button is no longer disabled
+cy.get('[data-cy=submit]').click()
+
+// a button disabled with aria-disabled instead
+cy.get('[data-cy=next]').should('not.have.attr', 'aria-disabled', 'true')
+cy.get('[data-cy=next]').click()
+```
+
+#### Click one element out of several matches
+
+When a query matches more than one element, narrow it to the one you want
+instead of passing `{ multiple: true }`. Use [`.first()`](/api/commands/first),
+[`.eq()`](/api/commands/eq), or [`cy.contains()`](/api/commands/contains) with a
+selector and text.
+
+```javascript
+cy.get('[data-cy=todo] [data-cy=delete]').first().click()
+cy.get('[data-cy=todo]').eq(2).find('[data-cy=delete]').click()
+cy.contains('button', 'Submit').click()
+```
+
+#### Dismiss what covers an element before clicking it
+
+When another element covers the one you want to click, deal with it the way a
+user would before reaching for
+[`{ force: true }`](#Force-a-click-regardless-of-its-actionable-state). Forcing
+skips the checks that would catch a real bug, such as a banner that blocks users
+from checking out.
+
+```javascript
+cy.get('[data-cy=cookie-banner] [data-cy=accept]').click()
+cy.get('[data-cy=checkout]').click()
 ```
 
 ### Position
@@ -104,54 +174,87 @@ cy.get('.nav > a').click()
 Click the top right corner of the button.
 
 ```javascript
-cy.get('img').click('topRight')
+cy.get('[data-cy=submit]').click('topRight')
+```
+
+#### Click outside an element to dismiss it
+
+Close a dropdown or popover the way a user would, by clicking an empty area of
+the page. Cypress clicks whatever element is at the position you choose, so
+target an element and position that are empty in your app. Avoid the top left
+corner of `body`, which in many layouts holds a logo or navigation link that
+navigates away.
+
+```javascript
+cy.get('[data-cy=menu-toggle]').click()
+cy.get('[data-cy=main-content]').click('topRight')
+cy.get('[data-cy=menu]').should('not.exist')
 ```
 
 ### Coordinates
 
 #### Specify explicit coordinates relative to the top left corner
 
-The click below will be issued inside of the element (15px from the left and
-40px from the top).
+The click below is issued inside of the element (15px from the left and 40px
+from the top).
 
 ```javascript
-cy.get('#top-banner').click(15, 40)
+cy.get('[data-cy=top-banner]').click(15, 40)
 ```
 
 ### Options
+
+#### Control where Cypress scrolls the element before clicking
+
+Cypress scrolls the element into view before clicking it, aligning it to the top
+of its scrollable container by default. If a `position: fixed` or
+`position: sticky` element such as a header then covers it, Cypress
+[scrolls past the covering element](/app/core-concepts/interacting-with-elements#Scrolling)
+until the element is clear.
+
+When that isn't enough, or when you want the element in a predictable spot, pass
+`scrollBehavior`. Center the element in the viewport, or set each axis
+separately with a `{ block, inline }` object.
+
+```javascript
+cy.get('[data-cy=row-42] button').click({ scrollBehavior: 'center' })
+cy.get('[data-cy=carousel-item]').click({
+  scrollBehavior: { block: 'center', inline: 'nearest' },
+})
+```
 
 #### Force a click regardless of its actionable state
 
 Forcing a click overrides the
 [actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
-Cypress applies and will automatically fire the events.
+Cypress applies and fires the events.
 
 ```javascript
-cy.get('.close').as('closeBtn')
+cy.get('[data-cy=close]').as('closeBtn')
 cy.get('@closeBtn').click({ force: true })
 ```
 
 #### Force a click with position argument
 
 ```javascript
-cy.get('#collapse-sidebar').click('bottomLeft', { force: true })
+cy.get('[data-cy=collapse-sidebar]').click('bottomLeft', { force: true })
 ```
 
 #### Force a click with relative coordinates
 
 ```javascript
-cy.get('#footer .next').click(5, 60, { force: true })
+cy.get('[data-cy=footer] [data-cy=next]').click(5, 60, { force: true })
 ```
 
-#### Click all elements with id starting with 'btn'
+#### Click every element that matches a selector
 
-By default, Cypress will error if you're trying to click multiple elements. By
-passing `{ multiple: true }` Cypress will iteratively apply the click to each
-element and will also log to the
-[Command Log](/app/core-concepts/open-mode#Command-Log) multiple times.
+By default, Cypress errors if you try to click multiple elements. When you pass
+`{ multiple: true }`, Cypress clicks each element in turn, gives each click its
+own full timeout, and logs each click to the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
 
 ```javascript
-cy.get('[id^=btn]').click({ multiple: true })
+cy.get('[data-cy=expand-section]').click({ multiple: true })
 ```
 
 #### Click with key combinations
@@ -179,10 +282,25 @@ The following keys can be combined with `.click()` through the `options`.
 #### Shift click
 
 ```js
-// execute a SHIFT + click on the first <li>
-cy.get('li:first').click({
+// execute a SHIFT + click on the first file
+cy.get('[data-cy=file]').first().click({
   shiftKey: true,
 })
+```
+
+#### Ctrl or Cmd click to select several items
+
+Many apps check the control key on Windows and Linux and the command key on
+macOS. Use [`Cypress.platform`](/api/cypress-api/platform) to hold the key the
+app expects.
+
+```javascript
+const modifier =
+  Cypress.platform === 'darwin' ? { metaKey: true } : { ctrlKey: true }
+
+cy.get('[data-cy=file]').eq(0).click()
+cy.get('[data-cy=file]').eq(2).click(modifier)
+cy.get('[data-cy=file].selected').should('have.length', 2)
 ```
 
 ## Notes
@@ -201,30 +319,38 @@ cy.get('li:first').click({
 For example, clicking a `<span>` inside of a `<button>` gives the focus to the
 button, since that's what would happen in a real user scenario.
 
-However, Cypress additionally handles situations where a child descendent is
-clicked inside of a focusable parent, but actually isn't visually inside the
-parent (per the CSS Object Model). In those cases if no focusable parent is
-found the window is given focus instead (which matches real browser behavior).
+Cypress starts from the element at the click coordinates and walks up its
+ancestors to find a focusable element. That element can differ from the subject,
+for example when a descendant is positioned outside of its parent (per the CSS
+Object Model). If no ancestor is focusable, Cypress blurs the currently focused
+element instead, which matches real browser behavior.
 
 ### Cancellation
 
-#### Mousedown cancellation will not cause focus
+#### Pointerdown or mousedown cancellation prevents focus
 
-If the mousedown event has its default action prevented ( `e.preventDefault()` )
-then the element will not receive focus as per the spec.
+If the `pointerdown` or `mousedown` event has its default action prevented
+(`e.preventDefault()`), Cypress does not give the element focus.
+
+When `pointerdown` is cancelled, Cypress also skips the `mousedown` and
+`mouseup` events, following the Pointer Events spec. It still sends `pointerup`
+and `click`.
 
 ## Rules
 
 <HeaderRequirements />
 
 - `.click()` requires being chained off a command that yields DOM element(s).
+- `.click()` requires a single element unless you pass `{ multiple: true }`.
+- `.click()` cannot be called on a `<select>` element. Use
+  [`.select()`](/api/commands/select) to change its value.
 
 <HeaderAssertions />
 
-- `.click()` will automatically wait for the element to reach an
+- `.click()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.click()` itself will not be retried — it fires once when the element is
-  actionable. Assertions chained after `.click()` will be retried until they
+- `.click()` itself is not retried. It fires once when the element is
+  actionable. Assertions chained after `.click()` are retried until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 

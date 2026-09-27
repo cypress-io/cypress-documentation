@@ -91,7 +91,7 @@ cy.reload()
 cy.url().should('include', 'login')
 ```
 
-#### Clear cookies before each test when test isolation is off
+#### Clear cookies before each test when test isolation is off <E2EOnlyBadge />
 
 With [test isolation](/app/core-concepts/test-isolation) turned off, cookies
 from one test carry over to the next. Call `cy.clearAllCookies()` in a
@@ -136,15 +136,9 @@ cy.clearAllCookies({ log: false })
 
 <HeaderTimeouts />
 
-- `cy.clearAllCookies()` should never time out.
-
-:::caution
-
-Because `cy.clearAllCookies()` is asynchronous it is technically possible for
-there to be a timeout while talking to the internal Cypress automation APIs. But
-for practical purposes it should never happen.
-
-:::
+- `cy.clearAllCookies()` can time out waiting for the browser to clear the cookies.
+  It waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
+  (or the `timeout` option, when passed) before failing.
 
 ## History
 

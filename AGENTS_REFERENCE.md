@@ -307,10 +307,371 @@ same change. `## See also` always stays as it is.
 - Add a `title="..."` to show a filename header when the snippet represents a
   file, e.g. ` ```ts title="cypress/support/commands.ts" `. Spec examples
   commonly use `title="test.cy.ts"` / `title="spec.cy.js"`.
+- Title the blocks when an example mixes files. An example that shows test code
+  next to the app code it runs against (HTML markup, a component or source file,
+  a fixture) reads faster when each block names its file, because the reader
+  sees which block goes in the app and which goes in the spec before reading
+  either. Title every block in the pair, not only one, and keep the names
+  consistent across a page: `index.html` for markup, `spec.cy.js` for spec code,
+  or the real path (`src/search.js`, `cypress/e2e/search.cy.js`) when the
+  example depends on where the file lives.
+
+  ````mdx
+  ```html title="index.html"
+  <ul>
+    <li class="active">About</li>
+  </ul>
+  ```
+
+  ```javascript title="spec.cy.js"
+  cy.get('li').filter('.active')
+  ```
+  ````
+
+  Leave titles off where they add nothing: a standalone test snippet with no
+  app code beside it, and `## Syntax` and `### Usage` blocks, which show call
+  shapes rather than files.
+
 - For Cypress config snippets use the
   [`:::cypress-config-example`](#cypress-config-examples) directive, and for
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
+
+## Verifying code examples
+
+A reader copies an example into their own project and expects it to work. An
+example that reads correctly but fails when it runs costs them more time than no
+example at all, and nothing in `npm run build` executes the code inside a fenced
+block. So every example you add or rewrite gets run before you commit it.
+
+This applies to every code block you add, and to every existing block whose code
+you change. A block whose only change is formatting, such as Prettier rewrapping
+it, is exempt.
+
+### Step 1: list the examples in your change
+
+Diff against the point your branch started from and write down each added or
+changed code block: its file, its heading, and its language.
+
+```shell
+git fetch origin main
+git diff $(git merge-base origin/main HEAD) -- 'docs/**/*.mdx' 'docs/**/*.md'
+```
+
+Diff against the merge base, not `origin/main` itself. Once `main` moves ahead,
+a plain `git diff origin/main` also shows examples that other merged pull
+requests changed, and you would end up checking, or reverting, work that isn't
+yours.
+
+The diff leaves out new pages git doesn't track yet. For your uncommitted work,
+the commit reminder's `list` mode fills that gap: it prints each added or
+changed code block under `docs/` with its file and line, staged, unstaged, or in
+a new untracked page. It is the list the reminder shows before a commit (see
+[Step 10](#step-10-commit-and-clean-up)).
+
+```shell
+node .claude/hooks/example-check.mjs list
+```
+
+`list` compares against `HEAD`, so it leaves out examples you already committed
+on this branch. Use both: the diff for everything since the merge base, and
+`list` for new pages.
+
+Sort each one into a bucket. The bucket decides how you verify it:
+
+| Bucket               | Examples                                                                                 | Verify by                               |
+| -------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------- |
+| Cypress test code    | spec bodies, custom commands, support files, `Cypress.*` calls, `:::visit-mount-example` | typecheck, then run it in the harness   |
+| Cypress config       | `:::cypress-config-example`, `:::cypress-config-plugin-example`, `setupNodeEvents`       | typecheck, then launch the harness      |
+| Shell commands       | `cypress run` flags, `<PackageManagerTabs>`, `<CypressCommandTabs>`                      | run it from inside the harness          |
+| Component tests      | the `cy.mount()` side of an example                                                      | typecheck; run it if the framework runs |
+| Not runnable locally | CI YAML, `--record` runs, Cloud or third-party APIs, console output                      | say so in the report, with the reason   |
+
+A block belongs in the last row only when running it needs something the
+session doesn't have, such as a record key or a paid service. "It's short" or
+"it's obviously right" is not a reason, and neither is being a fragment: a
+fragment runs once you wrap it in the scaffolding from Step 5.
+
+### Step 2: check for Cypress, and install it only if it's missing
+
+Check first:
+
+```shell
+npx --no-install cypress verify
+```
+
+If it prints `Verified Cypress!`, skip to Step 3. In Claude Code on the web, the
+`SessionStart` hook in `.claude/settings.json` has usually done the install
+already, so this is the common case.
+
+Two details keep the check honest:
+
+- **Use `verify`, not `version`.** `cypress version` exits successfully even
+  when the binary is missing; it prints `Cypress binary version: not installed`
+  and carries on. `verify` launches the binary and fails if it can't.
+- **Keep `--no-install`.** Without it, `npx` can download a different Cypress
+  from the registry when the repository's copy isn't installed, and you would
+  verify the wrong version.
+
+If `verify` fails, install the dependencies and the binary, then verify again:
+
+```shell
+npm i
+env -u CYPRESS_INSTALL_BINARY npx cypress install
+npx --no-install cypress verify
+```
+
+`env -u` clears `CYPRESS_INSTALL_BINARY` for that one command. With it set to
+`0`, as the content-only install in `AGENTS.md` does, `cypress install` prints a
+note and installs nothing.
+
+### Step 3: create the harness
+
+The harness template is committed in `scripts/example-check/`. Copy it to
+`.example-check/` at the repository root and move into the copy. The `rm`
+clears a harness left over from an earlier run; without it, `cp -r` would nest
+the template inside the old folder instead of replacing it.
+
+```shell
+rm -rf .example-check && cp -r scripts/example-check .example-check
+mkdir -p .example-check/cypress/e2e .example-check/app
+cd .example-check
+```
+
+`.example-check/` is gitignored, so nothing in it reaches a commit, and the root
+`npm run typecheck` doesn't include it. It sits inside the repository so
+`cypress` and `typescript` resolve from the root `node_modules`.
+
+Run every command from here on inside `.example-check/`. It is the harness's
+project root, the same place a reader runs commands from in their own project,
+so relative paths such as `cypress/e2e/login.cy.ts` resolve the way the docs
+expect.
+
+The template holds three files:
+
+- **`package.json`** makes the harness its own project root. Without it, npm
+  walks up to the repository's `package.json`, and an install command from an
+  example rewrites `package.json` and `package-lock.json` at the root. With it,
+  installs land in `.example-check/`, and `npx cypress` still finds the
+  repository's copy.
+- **`cypress.config.ts`** holds the harness settings in a `base` object, with
+  `retries: 0` so a flaky example fails instead of passing on a retry. A config
+  example goes in the `example` slot and merges over `base`, so an example that
+  sets its own `e2e` doesn't collide with it.
+- **`tsconfig.json`** typechecks the config and specs, `.ts` and `.tsx`,
+  strictly against the Cypress types, so a misspelled option or a wrong value
+  type is an error.
+
+Edit the copy, never the template. Change the template only when the harness
+itself needs to change, and when you do, copy it fresh and run a passing example
+through Steps 6 and 7 before you commit the change.
+
+### Step 4: write the page the example expects
+
+Examples assume markup: a `#email` input, a `"Submit"` button, a list that loads
+from `/api/users`. Write the smallest HTML page that has exactly what the
+example selects and nothing it doesn't, and save it under `.example-check/app/`.
+
+```html title=".example-check/app/index.html"
+<!doctype html>
+<html>
+  <body>
+    <form>
+      <input id="email" type="email" />
+      <button id="submit">Submit</button>
+    </form>
+  </body>
+</html>
+```
+
+Visit it with `cy.visit('app/index.html')`. Cypress serves the project folder
+itself, so no server or `baseUrl` is needed, and a `fetch('/api/users')` in the
+page reaches Cypress's server, where `cy.intercept()` can stub it.
+
+An example that loads a fixture needs the file too. Save it under
+`cypress/fixtures/`, where `cy.fixture('user.json')` looks for it, the same as
+in a reader's project.
+
+### Step 5: paste the example in verbatim
+
+Create one spec per page under `.example-check/cypress/e2e/`. Copy each example
+in exactly as it appears in the `.mdx`, and mark where it starts and ends.
+
+```ts title=".example-check/cypress/e2e/focus.cy.ts"
+describe('.focus() examples', () => {
+  beforeEach(() => {
+    cy.visit('app/index.html')
+  })
+
+  it('focuses the email input', () => {
+    // --- example (verbatim) ---
+    cy.get('#email').focus()
+    // --- end example ---
+
+    // Proves the page's claim about what .focus() does.
+    cy.focused().should('have.id', 'email')
+  })
+})
+```
+
+The rules for this step:
+
+- **Never edit the lines between the markers.** Scaffolding goes around them:
+  the `describe`/`it`, the `cy.visit()`, a stub the example depends on. If the
+  example only works after you change a line inside it, the example is broken,
+  and that is a finding.
+- **Add an assertion for every claim the prose makes.** An example with no
+  assertion passes as long as it doesn't throw. If the page says the command
+  yields the element, assert what it yields; if it says a request is waited on,
+  `cy.wait()` on it.
+- **Examples documented to fail get tested failing.** When the page shows an
+  error, assert that error with `cy.on('fail', ...)` and check its message.
+- **Config examples** replace the `{}` between the markers in
+  `cypress.config.ts`. Imports from a two-block example go at the top of the
+  file. A `:::cypress-config-plugin-example` block goes inside
+  `setupNodeEvents(on, config) { ... }` under `e2e` in the example object.
+  Then add a spec that asserts the setting took effect, such as
+  `expect(Cypress.config('viewportWidth')).to.eq(1000)`, or that calls the
+  task the example registers.
+- **`copyTsToJs` blocks**: run the TypeScript source. The JavaScript tab is
+  generated from it.
+- **`:::visit-mount-example`**: run the `cy.visit()` variant here, and
+  typecheck the `cy.mount()` variant. Run the mount side too if the
+  framework's dependencies are installed.
+
+### Step 6: typecheck the harness
+
+```shell
+npx tsc -p .
+```
+
+This catches misspelled options, wrong argument types, and signatures that no
+longer exist before anything runs. Treat every error as a finding, even when
+the test would pass at runtime, because the reader's editor shows the same red
+underline.
+
+### Step 7: run the harness
+
+Run the spec from inside `.example-check/` with the bundled Electron browser,
+which needs no install.
+
+```shell
+npx cypress run --browser electron --spec cypress/e2e/focus.cy.ts
+```
+
+A pass is the whole spec green on the first run. The config sets `retries: 0`
+on purpose, so a flaky example shows up as a failure instead of hiding
+behind a retry.
+
+For a shell command, run it exactly as written from inside `.example-check/`.
+Create any spec or file it names first, at the path it names, so
+`npx cypress run --spec cypress/e2e/login.cy.ts` finds
+`cypress/e2e/login.cy.ts` in the harness. An install command installs into the
+harness's own `package.json`. Skip `--record` and anything else that publishes,
+and put it in the not-runnable bucket instead.
+
+### Step 8: fix, then run it again
+
+When an example fails, find out whether the example or the prose is wrong
+before you change either:
+
+1. Read the failure verbatim. Cypress prints the command, the error, and the
+   line in your spec.
+2. For an `/api` page, check the behavior against the Cypress source (see
+   [API source of truth](#api-source-of-truth)). If the source agrees with the
+   page and the example still fails, the problem may be a Cypress bug. Flag it
+   and leave the page alone.
+3. Otherwise, write the corrected example, paste it back between the markers,
+   and repeat Steps 6 and 7 until they pass.
+4. Put the corrected version in the `.mdx` only after it passes.
+
+### Step 9: report the results in the thread
+
+Report in the conversation or pull request thread you're working in, not in a
+file. List every example you touched, including the ones that passed, so a
+reviewer can see nothing was skipped.
+
+For each failure, give the reader everything they need to act without rerunning
+anything: where the example is, the command you ran, the error as Cypress
+printed it, the cause, and a fix with a worked code example that you ran and
+watched pass. Use this shape:
+
+````markdown
+## Code example verification
+
+| Example                                                        | Result     | Notes                 |
+| -------------------------------------------------------------- | ---------- | --------------------- |
+| `docs/api/commands/focus.mdx`, "Focus an input"                | ✅ Passed  |                       |
+| `docs/api/commands/type.mdx`, "Type in a form"                 | ❌ Failed  | Fixed below, verified |
+| `docs/app/run-tests/continuous-integration/github-actions.mdx` | ⚠️ Not run | Needs a record key    |
+
+### ❌ `docs/api/commands/type.mdx`, "Type in a form"
+
+**Ran:** `npx cypress run --browser electron --spec cypress/e2e/type.cy.ts`
+
+**Error:**
+
+```text
+CypressError: `cy.type()` failed because it requires a valid typeable element.
+
+The element typed into was:
+
+  > `<button id="submit">Submit</button>`
+```
+
+**Cause:** the example types into the submit button, which isn't typeable. The
+prose says it fills in the email field.
+
+**Fix (verified, passes):**
+
+```js
+cy.get('#email').type('hello@example.com')
+cy.get('#email').should('have.value', 'hello@example.com')
+```
+````
+
+A failure you couldn't resolve still gets a row and a section. Say what you
+tried, what you believe the fix is, and whether it belongs in this repository
+or in `cypress-io/cypress`.
+
+### Step 10: commit and clean up
+
+In Claude Code, a `PreToolUse` hook reminds you of this procedure at commit
+time. The first `git commit` after any code block under `docs/` changes, staged
+or not, is stopped once with a list of the changed examples. When you've run
+them and reported, or judged that one doesn't need a run and said why in your
+report, run the same commit again and it goes through.
+
+The judgment is yours. The reminder makes sure the question gets asked; it
+doesn't check your answer. The results table in the thread is what a reviewer
+checks. Keep these behaviors in mind:
+
+- **It fires once per example.** It remembers each example it has listed and
+  fires again only for one it hasn't. Editing a block afterward brings it back
+  for that block, since that is a new example to decide about. Editing prose, or
+  committing some of the listed examples first, doesn't.
+- **It lists every changed example, not only the staged ones.** Unstaged
+  edits and new pages git doesn't track yet count too, so `git commit -a` or a
+  path on the command line sees the same list as a plain commit.
+- **Moved examples don't count as changed.** A block that appears word for word
+  in a page you deleted or renamed, including with a plain `mv`, counts as
+  moved. Deleted blocks don't trigger it either, and neither do the nested
+  `AGENTS.md` and `CLAUDE.md` guides under `docs/`, which document conventions
+  rather than features.
+- **It recognizes the usual ways of running `git commit`, not every one.** A
+  command in front of `git`, such as `env` or `time`, can get past it. It is a
+  nudge, not a guarantee: the report in the thread is the real check, so don't
+  rely on the reminder to tell you examples changed.
+
+Then delete the harness:
+
+```shell
+cd .. && rm -rf .example-check
+```
+
+It's gitignored, so nothing breaks if you forget, but a stale harness can
+mislead the next run. Summarize the results table in the pull request
+description too, so the record outlives the thread.
 
 ## AI prompts: `<CopyPrompt>` vs a code block
 
@@ -588,6 +949,15 @@ load, so write it to convey the image's _purpose_, not just its existence.
   title="Inspecting a failed command"
 />
 ```
+
+## Capturing Cypress App screenshots
+
+Screenshots of the Command Log and the DevTools console go stale as the Cypress
+App's UI changes, so recapture them from a real run of the page's own snippet,
+never a mock-up. The full procedure (the principles, which approach to use, and
+worked examples for each) is in
+[`scripts/screenshots/README.md`](./scripts/screenshots/README.md), next to the
+scripts it uses.
 
 ## Linking
 

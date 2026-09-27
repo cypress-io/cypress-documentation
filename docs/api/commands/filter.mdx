@@ -9,7 +9,7 @@ slug: /api/commands/filter
 
 # filter
 
-Get the DOM elements that match a specific selector.
+Get the DOM elements that match a specific selector or pass a test function.
 
 :::info
 
@@ -20,7 +20,7 @@ Opposite of [`.not()`](/api/commands/not)
 :::info
 
 The querying behavior of this command matches exactly how
-[`.filter()`](http://api.jquery.com/filter) works in jQuery.
+[`.filter()`](https://api.jquery.com/filter/) works in jQuery.
 
 :::
 
@@ -29,6 +29,8 @@ The querying behavior of this command matches exactly how
 ```javascript
 .filter(selector)
 .filter(selector, options)
+.filter(fn)
+.filter(fn, options)
 ```
 
 ### Usage
@@ -52,6 +54,12 @@ cy.clock().filter() // Errors, 'clock' does not yield DOM elements
 
 A selector used to filter matching DOM elements.
 
+<Icon name="angle-right" /> **fn _(Function)_**
+
+A function called once for each element in the subject, with the element's
+index and the element itself as arguments: `(index, element)`. `.filter()`
+yields the elements for which the function returns a truthy value.
+
 <Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.filter()`.
@@ -70,9 +78,9 @@ Pass in an options object to change the default behavior of `.filter()`.
 
 ### Selector
 
-#### Filter the current subject to the elements with the class 'active'
+#### Filter list items by class name with `.filter()`
 
-```html
+```html title="index.html"
 <ul>
   <li>Home</li>
   <li class="active">About</li>
@@ -82,19 +90,148 @@ Pass in an options object to change the default behavior of `.filter()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>About</li>
 cy.get('ul').find('>li').filter('.active')
 ```
 
+#### Filter elements by attribute value with `.filter()`
+
+```html title="index.html"
+<table>
+  <tr data-cy="order-row" data-status="shipped">
+    <td>#1001</td>
+  </tr>
+  <tr data-cy="order-row" data-status="pending">
+    <td>#1002</td>
+  </tr>
+  <tr data-cy="order-row" data-status="shipped">
+    <td>#1003</td>
+  </tr>
+</table>
+```
+
+```javascript title="spec.cy.js"
+// yields the rows for orders #1001 and #1003
+cy.get('[data-cy="order-row"]')
+  .filter('[data-status="shipped"]')
+  .should('have.length', 2)
+```
+
+#### Filter form controls by checked or disabled state
+
+Standard CSS pseudo-classes such as `:checked`, `:disabled`, and `:enabled`
+narrow form controls by their current state.
+
+```html title="index.html"
+<input type="checkbox" name="email" checked />
+<input type="checkbox" name="sms" />
+<input type="checkbox" name="push" checked />
+```
+
+```javascript title="spec.cy.js"
+cy.get('input[type="checkbox"]').filter(':checked').should('have.length', 2)
+```
+
+#### Filter to visible elements with the `:visible` selector
+
+Cypress replaces jQuery's `:visible` and `:hidden` selectors with its own
+[visibility rules](/app/core-concepts/interacting-with-elements#Visibility), so
+`.filter(':visible')` keeps exactly the elements that `.should('be.visible')`
+treats as visible. Cypress also adds a `:focused` selector that matches the
+focused element.
+
+```html title="index.html"
+<ul class="menu">
+  <li>Dashboard</li>
+  <li>Reports</li>
+  <li style="display: none">Admin</li>
+  <li>Settings</li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+cy.get('.menu li').filter(':visible').should('have.length', 3)
+```
+
+### Function
+
+#### Filter elements with a test function in `.filter()`
+
+```html title="index.html"
+<ul>
+  <li>Home</li>
+  <li class="active">About</li>
+  <li>Services</li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+// yields <li>Home</li> and <li>Services</li>
+cy.get('li').filter((index, el) => !el.classList.contains('active'))
+```
+
+```javascript title="spec.cy.js"
+// yields the even-indexed <li> elements: Home and Services
+cy.get('li').filter((index) => index % 2 === 0)
+```
+
+Because `.filter()` is a query, Cypress calls the function again on every
+[retry](/app/core-concepts/retry-ability). Keep it synchronous and free of side
+effects, and don't call other Cypress commands inside it.
+
+Read the element from the function's second argument rather than from `this`.
+Arrow functions don't bind `this`, so `el` works in every function style.
+
+#### Filter elements by a numeric value with a function
+
+A selector can't compare numbers, but a function can.
+
+```html title="index.html"
+<ul>
+  <li class="price">$45.00</li>
+  <li class="price">$120.00</li>
+  <li class="price">$310.50</li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+// yields the $120.00 and $310.50 prices
+cy.get('.price')
+  .filter((index, el) => parseFloat(el.textContent.replace('$', '')) > 100)
+  .should('have.length', 2)
+```
+
+#### Filter elements by text without matching case
+
+The `:contains` selector is case-sensitive. Compare lowercased text in a
+function to match regardless of case.
+
+```html title="index.html"
+<ul>
+  <li>Services</li>
+  <li>Advanced services</li>
+  <li>Pricing</li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+cy.get('li')
+  .filter((index, el) => el.textContent.toLowerCase().includes('services'))
+  .should('have.length', 2)
+```
+
+To get a single element by text regardless of case, use
+[`.contains()`](/api/commands/contains) with the `matchCase: false` option.
+
 ### Contains
 
-#### Filter by text
+#### Filter elements by text with the `:contains` selector
 
 You can use the [jQuery :contains](https://api.jquery.com/contains-selector/)
 selector to perform a case-sensitive text substring match.
 
-```html
+```html title="index.html"
 <ul>
   <li>Home</li>
   <li>Services</li>
@@ -104,13 +241,43 @@ selector to perform a case-sensitive text substring match.
 </ul>
 ```
 
-Let's find both list items that contain the work "Services"
+Find both list items that contain the word "Services":
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('li').filter(':contains("Services")').should('have.length', 2)
 ```
 
-#### Non-breaking space
+#### Filter table rows by a cell's text with `:has()`
+
+Combine the [jQuery :has](https://api.jquery.com/has-selector/) selector with
+`:contains` to keep only the rows with a matching cell, then act on something
+inside that row.
+
+```html title="index.html"
+<table>
+  <tbody>
+    <tr>
+      <td>Ana</td>
+      <td>Admin</td>
+      <td><button class="edit">Edit</button></td>
+    </tr>
+    <tr>
+      <td>Ben</td>
+      <td>Viewer</td>
+      <td><button class="edit">Edit</button></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+```javascript title="spec.cy.js"
+cy.get('tbody tr')
+  .filter(':has(td:contains("Admin"))')
+  .find('button.edit')
+  .click()
+```
+
+#### Match a non-breaking space with `:contains` in `.filter()`
 
 If the HTML contains a
 [non-breaking space](https://en.wikipedia.org/wiki/Non-breaking_space) entity
@@ -118,14 +285,77 @@ If the HTML contains a
 [jQuery :contains](https://api.jquery.com/contains-selector/) selector, then the
 test needs to use the Unicode value `\u00a0` instead of `&nbsp;`.
 
-```html
+```html title="index.html"
 <div data-testid="testattr">
   <span>Hello&nbsp;world</span>
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('[data-testid="testattr"]').filter(':contains("Hello\u00a0world")')
+```
+
+### Actions and assertions
+
+#### Click one element from a `.filter()` result
+
+`.filter()` can yield several elements, and action commands such as
+[`.click()`](/api/commands/click) fail on more than one element unless you pass
+`{ multiple: true }`. Narrow the result to a single element first with
+[`.first()`](/api/commands/first), [`.last()`](/api/commands/last), or
+[`.eq()`](/api/commands/eq).
+
+```html title="index.html"
+<ul>
+  <li><button class="delete">Delete</button> Draft 1</li>
+  <li><button class="delete" disabled>Delete</button> Published post</li>
+  <li><button class="delete">Delete</button> Draft 2</li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+// clicks the Delete button for Draft 1
+cy.get('button.delete').filter(':enabled').first().click()
+```
+
+#### Assert that no elements match a `.filter()` selector
+
+```html title="index.html"
+<ul>
+  <li class="notification info">Saved</li>
+  <li class="notification info">Synced</li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+// passes once no notification has the 'error' class
+cy.get('.notification').filter('.error').should('not.exist')
+```
+
+## Notes
+
+### Choosing between `.filter()`, `.find()`, and `.contains()`
+
+These three commands narrow a selection in different ways:
+
+- `.filter()` keeps the elements in the current subject that match. It never
+  looks inside them.
+- [`.find()`](/api/commands/find) searches the descendants of the current
+  subject.
+- [`.contains()`](/api/commands/contains) matches by text and yields the deepest
+  element that contains it.
+
+```html title="index.html"
+<ul>
+  <li class="active">About <span class="badge">New</span></li>
+  <li>Services</li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+cy.get('li').filter('.active') // yields <li class="active">
+cy.get('li').find('.badge') // yields <span class="badge">
+cy.get('ul').contains('Services') // yields <li>Services</li>
 ```
 
 ## Rules
@@ -157,21 +387,32 @@ cy.get('[data-testid="testattr"]').filter(':contains("Hello\u00a0world")')
 cy.get('.left-nav>.nav').find('>li').filter('.active')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/filter/filter-el-by-selector.png"
-  alt="Command Log filter"
+  alt="Command Log showing get .left-nav>.nav, then find >li matching 8 elements, then filter .active"
 />
 
-When clicking on the `filter` command within the command log, the console
-outputs the following:
+Clicking the `filter` command in the Command Log outputs the following to the
+console:
 
 <DocsImage
   src="/img/api/filter/console-shows-list-and-filtered-element.png"
-  alt="console.log filter"
+  alt="DevTools console output for the filter command, showing its selector, the 8 list items it was applied to, the yielded li.active element, and an element count of 1"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                                                                                       |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.filter()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
+| [3.2.0](/app/references/changelog#3-2-0)   | `.filter()` reads `options` when its first argument is a function.                                                                                                                            |
+| [3.0.0](/app/references/changelog#3-0-0)   | The type definition accepts a function argument.                                                                                                                                              |
 
 ## See also
 
 - [`.not()`](/api/commands/not)
+- [`.find()`](/api/commands/find)
+- [`.contains()`](/api/commands/contains)
+- [`.first()`](/api/commands/first)

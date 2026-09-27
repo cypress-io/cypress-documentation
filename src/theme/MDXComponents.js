@@ -10,6 +10,7 @@ import ComponentOnlyBadge from '@site/src/components/component-only-badge'
 import ComponentTestingErrorStates from '@site/docs/partials/_component-testing-error-states.mdx'
 import CopyPrompt from '@site/src/components/copy-prompt'
 import TestReplayInfo from '@site/docs/partials/_test-replay-info.mdx'
+import CookieDefaultDomain from '@site/docs/partials/_cookie-default-domain.mdx'
 import CypressConfigFileTabs from '@site/src/components/cypress-config-file-tabs'
 import CypressInstallCommands from '@site/docs/partials/_cypress-install-commands.mdx'
 import CypressCacheClearCommands from '@site/docs/partials/_cypress-cache-clear-commands.mdx'
@@ -71,6 +72,7 @@ import CiProviderCloudSteps from '@site/docs/partials/_ci_provider_cloud_steps.m
 import UrlAllowList from '@site/docs/partials/_url_allowlist.mdx'
 import UICovPremiumNote from '@site/docs/partials/_ui-coverage-premium-note.mdx'
 import ResultsApiEnvVars from '@site/docs/partials/_results-api-env-vars.mdx'
+import FixtureVsReadFile from '@site/docs/partials/_fixture-vs-readfile.mdx'
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -211,6 +213,7 @@ export default {
   Btn,
   ComponentOnlyBadge,
   ComponentTestingErrorStates,
+  CookieDefaultDomain,
   CopyPrompt,
   CypressConfigFileTabs,
   CypressInstallCommands,
@@ -272,4 +275,5 @@ export default {
   UrlAllowList,
   UICovPremiumNote,
   ResultsApiEnvVars,
+  FixtureVsReadFile,
 }

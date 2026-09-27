@@ -16,11 +16,12 @@
     "types": [
       "node",
       "@docusaurus/module-type-aliases",
-      "@docusaurus/theme-classic",
-    ],
+      "@docusaurus/theme-classic"
+    ]
   },
   // Hand-written source only. `plugins/*` are type checked by their own
   // `tsc` builds (`npm run build:plugins`), and everything else at the
-  // repository root is JavaScript or build output.
-  "include": ["src/", "cypress/", "cypress.config.ts"],
+  // repository root is JavaScript or build output. The screenshot scripts are
+  // JavaScript checked through `// @ts-check`, against puppeteer-core's types.
+  "include": ["src/", "cypress/", "cypress.config.ts", "scripts/screenshots/"]
 }

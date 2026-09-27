@@ -63,6 +63,122 @@ Pass in an options object to change the default behavior of `.debug()`.
 cy.get('a').debug().should('have.attr', 'href')
 ```
 
+#### Confirm the element before acting on it
+
+Place `.debug()` before an action to check which element the action
+receives.
+
+```javascript
+cy.get('form').find('input[name="email"]').debug().type('user@example.com')
+```
+
+#### Inspect a subject that isn't a DOM element
+
+`.debug()` works on any subject, such as a response object or your application's
+state.
+
+```javascript
+cy.request('/api/users').debug() // inspect the full response object
+cy.window().its('store').invoke('getState').debug() // inspect app state
+```
+
+### Network requests
+
+#### Inspect an intercepted request
+
+After [`cy.wait()`](/api/commands/wait) on an alias, the subject is the
+interception, so you can expand `subject.request.body` and `subject.response` at
+the breakpoint.
+
+```javascript
+cy.intercept('POST', '/api/login').as('login')
+cy.get('form').submit()
+cy.wait('@login').debug()
+```
+
+### Assertions
+
+#### See the first-run subject while an assertion retries
+
+The "Debug Info" block shows the subject from the first time `.debug()` runs.
+Here, it may log fewer than three items even though `.should()` passes once the
+list finishes rendering. See
+[`.debug()` pauses once per call](#debug-pauses-once-per-call).
+
+```javascript
+cy.get('.todo-item').debug().should('have.length', 3)
+```
+
+The Command Log shows the assertion passing with three items:
+
+<DocsImage
+  src="/img/api/debug/command-log-debug-assertion-retries.png"
+  alt="Command Log showing get .todo-item, debug, and a passing assertion that the list has a length of 3"
+/>
+
+The "Debug Info" block, logged on the first run, shows the subject before the
+list finished rendering:
+
+<DocsImage
+  src="/img/api/debug/console-debug-info-first-run-subject.png"
+  alt="Browser console showing the Debug Info block for get .todo-item with a current subject of length 1"
+/>
+
+### Debugger statement
+
+#### Pause with your test's variables in scope
+
+`.debug()` gives you `subject` at the breakpoint. To also reach variables from
+your test, put a `debugger` statement inside [`.then()`](/api/commands/then). A
+`debugger` written directly in the test body pauses before any Cypress commands
+run. The [Debugging guide](/app/guides/debugging) explains why.
+
+The breakpoint only sees a test variable that the `.then()` callback uses. The
+browser leaves out outer variables the callback never references, so reference
+each one you want to inspect.
+
+```javascript
+const expected = 'Welcome back'
+
+cy.get('h1').then(($h1) => {
+  const matches = $h1.text() === expected
+
+  debugger // $h1, expected, and matches are in scope here
+})
+```
+
+## Notes
+
+### What `.debug()` logs to the console
+
+When `.debug()` runs, it prints a "Debug Info" block to the browser console
+with the previous command's name, its arguments, and the current subject. When
+you call `cy.debug()` off of `cy` as the first command in a test, there is no
+previous command or subject, so each value logs as `undefined`.
+
+### Inspect the subject at the breakpoint
+
+When the `debugger` statement pauses execution, the current subject is in scope
+as the variable `subject`. Type `subject` in the Developer Tools console to
+interact with it.
+
+The breakpoint is in Cypress's own `cypress_runner.js`, not in your test file.
+Look for the "HOVER OVER TO INSPECT THE CURRENT SUBJECT" comment above the
+paused line, and for `subject` under "Local" in the "Scope" pane:
+
+<DocsImage
+  src="/img/api/debug/devtools-paused-at-debug-breakpoint.png"
+  alt="Developer Tools Sources panel paused on the debugger statement inside .debug(), with the subject's value shown inline and under Local in the Scope pane"
+/>
+
+### `.debug()` pauses once per call
+
+`.debug()` is a query, so Cypress retries it along with the queries before it
+while any chained assertions are failing. It only logs and hits the breakpoint
+the first time it runs. The "Debug Info" block shows the subject from that
+first run, which may differ from the subject Cypress yields once the assertions
+pass.
+
 ## Rules
 
 <HeaderRequirements />
@@ -71,8 +187,7 @@ cy.get('a').debug().should('have.attr', 'href')
 
 <HeaderAssertions />
 
-- `.debug()` is a utility command.
-- `.debug()` will not run assertions. Assertions will pass through as if this
+- `.debug()` does not run assertions. Assertions pass through as if this
   command did not exist.
 
 <HeaderTimeouts />
@@ -87,24 +202,29 @@ cy.get('a').debug().should('have.attr', 'href')
 cy.get('.ls-btn').click({ force: true }).debug()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/debug/how-debug-displays-in-command-log.png"
-  alt="Command Log debug"
+  alt="Command Log showing get, click with force: true, and debug as consecutive rows"
 />
 
-When clicking on the `debug` command within the command log, the console outputs
-the following:
+When `.debug()` runs, the console outputs the following:
 
 <DocsImage
   src="/img/api/debug/console-gives-all-debug-info-for-command.png"
-  alt="console.log debug"
+  alt="Browser console showing the Debug Info block with the command name, command arguments, and current subject"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                                                                              |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [12.0.0](/app/references/changelog#12-0-0) | `.debug()` became a query and can no longer be overwritten with `Cypress.Commands.overwrite()`. See the [migration guide](/app/references/migration-guide#CypressCommandsoverwrite). |
 
 ## See also
 
-- [Cypress Cloud](https://on.cypress.io/cloud)
+- [Debugging](/app/guides/debugging)
 - [`.pause()`](/api/commands/pause)
 - [`cy.log()`](/api/commands/log)
 - [`cy.screenshot()`](/api/commands/screenshot)
