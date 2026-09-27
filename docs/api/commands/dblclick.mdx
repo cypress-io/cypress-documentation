@@ -97,6 +97,63 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 cy.get('a#nav1').dblclick() // yields the <a>
 ```
 
+#### Double click to edit an item inline
+
+Many apps turn a label, table cell, or file name into an input when you double
+click it. The double click usually replaces the element, so start a new chain
+from `cy` to reach the input instead of chaining off `.dblclick()`.
+
+```javascript
+cy.get('[data-cy=todo-label]').first().dblclick()
+cy.get('[data-cy=todo-edit]').clear().type('Buy oat milk{enter}')
+cy.get('[data-cy=todo-label]').first().should('have.text', 'Buy oat milk')
+```
+
+#### Double click one element out of several matches
+
+`.dblclick()` double clicks
+[every element in its subject](#Double-click-every-element-that-matches-a-selector)
+by default, so a selector that matches several rows puts all of them into edit
+mode without an error. Narrow the query to the element you want with
+[`.eq()`](/api/commands/eq), [`.first()`](/api/commands/first), or
+[`cy.contains()`](/api/commands/contains) with a selector and text.
+
+```javascript
+cy.get('[data-cy=row]').eq(2).dblclick()
+cy.contains('[data-cy=file]', 'report.pdf').dblclick()
+```
+
+#### Wait for the request a double click sends
+
+Register a [`cy.intercept()`](/api/commands/intercept) before the double click,
+then [`cy.wait()`](/api/commands/wait) on its alias so the test continues only
+after the request completes.
+
+```javascript
+cy.intercept('GET', '/api/files/*').as('openFile')
+cy.contains('[data-cy=file]', 'report.pdf').dblclick()
+cy.wait('@openFile')
+cy.get('[data-cy=preview]').should('be.visible')
+```
+
+#### Test an element that handles both click and double click
+
+Cypress sends two `click` events before the `dblclick` event (see
+[Events](#Events)), so a click handler runs twice. Apps that respond to both
+often wait briefly after a click to see whether a second one follows. If yours
+uses a timer like that, freeze it with [`cy.clock()`](/api/commands/clock) and
+advance it with [`cy.tick()`](/api/commands/tick). The check that the
+single-click action didn't happen then runs after the timer would have fired,
+instead of passing before it fires.
+
+```javascript
+cy.clock()
+cy.get('[data-cy=photo]').dblclick()
+cy.tick(300)
+cy.get('[data-cy=lightbox]').should('be.visible')
+cy.get('[data-cy=photo]').should('not.have.class', 'selected')
+```
+
 ### Position
 
 #### Specify a position of the element to double click
@@ -116,6 +173,16 @@ and 10px from the top).
 
 ```javascript
 cy.get('button').dblclick(30, 10)
+```
+
+#### Double click a spot on a map or canvas
+
+Coordinates matter when the double click position changes the result, such as
+zooming a map in on the point under the cursor.
+
+```javascript
+cy.get('[data-cy=map]').dblclick(200, 150)
+cy.get('[data-cy=zoom-level]').should('have.text', '4')
 ```
 
 ### Options
@@ -217,6 +284,19 @@ Because each click follows the `.click()` rules, the
 [focus](/api/commands/click#Focus) and
 [cancellation](/api/commands/click#Cancellation) behavior of `.click()` applies
 to both clicks.
+
+### Text selection
+
+#### A double click does not select text
+
+In a browser, double clicking a word selects it. Cypress fires the double click
+as simulated events, which don't trigger the browser's native text selection, so
+`.dblclick()` leaves no text selected in the page or in an input. To select the
+text in an input or textarea, use [`.type('{selectall}')`](/api/commands/type).
+
+```javascript
+cy.get('[data-cy=title]').type('{selectall}')
+```
 
 ## Rules
 
