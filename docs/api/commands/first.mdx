@@ -121,8 +121,9 @@ cy.get('tr')
 An action such as [`.click()`](/api/commands/click) is not an assertion, so
 `cy.get('[data-cy=result]').first().click()` acts on the first element that
 exists at that moment. If the list renders placeholder rows before the real
-results, the element it clicks can be a placeholder. Assert on the finished list before calling
-`.first()`, and Cypress retries the query until the assertion passes.
+results, the element it clicks can be a placeholder. Assert on the finished list
+before calling `.first()`, and Cypress retries the query until the assertion
+passes.
 
 ```javascript
 cy.get('[data-cy=result]').should('have.length', 10).first().click()
@@ -152,10 +153,9 @@ from the end of the set.
 `.first()` takes no selector. `cy.get('li').first('.active')` yields the first
 `<li>` whether or not it has the class `active`. The Command Log still shows
 `.active` as the command's message, which can make it look as though the
-selector was applied. TypeScript flags the call as an error, since the published
-types for `.first()` accept only an options object. To get the first element
-that matches a selector, narrow the set with [`.filter()`](/api/commands/filter)
-before calling `.first()`.
+selector was applied. TypeScript flags the call as an error. To get the first
+element that matches a selector, narrow the set with
+[`.filter()`](/api/commands/filter) before calling `.first()`.
 
 ```javascript
 cy.get('li').filter('.active').first()
