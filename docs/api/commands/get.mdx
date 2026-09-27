@@ -425,15 +425,6 @@ this one. The time in the message is the command's timeout:
 Timed out retrying after 4000ms: Expected to find element: `[data-cy=todo-item]`, but never found it.
 ```
 
-### Invalid selectors fail right away
-
-A selector with a syntax error can never match, so `cy.get()` fails immediately
-instead of retrying until the timeout.
-
-```javascript
-cy.get('[data-cy=') // fails with a syntax error
-```
-
 ### `cy.get()` doesn't search inside iframes
 
 `cy.get()` searches the document of the application under test and doesn't
