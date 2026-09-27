@@ -143,20 +143,19 @@ cy.get('[data-cy=todo]').first().should('have.text', 'Buy milk')
 
 ### How `.first()` compares to `.eq(0)`
 
-`.first()` yields the same element as [`.eq(0)`](/api/commands/eq). jQuery
-implements `.first()` as `.eq(0)`. Use `.eq()` to get an element at any other
-index, including negative indexes counted back from the end of the set.
+`.first()` yields the same element as [`.eq(0)`](/api/commands/eq). Use `.eq()`
+to get an element at any other index, including negative indexes counted back
+from the end of the set.
 
 ### Selecting the first element that matches a selector
 
-`.first()` takes no selector. Cypress passes the call straight to jQuery's
-`.first()`, which ignores any arguments, so `cy.get('li').first('.active')`
-yields the first `<li>` whether or not it has the class `active`. The Command
-Log still shows `.active` as the command's message, which can make it look as
-though the selector was applied. TypeScript flags the call as an error, since
-the published types for `.first()` accept only an options object. To get the
-first element that matches a selector, narrow the set with
-[`.filter()`](/api/commands/filter) before calling `.first()`.
+`.first()` takes no selector. `cy.get('li').first('.active')` yields the first
+`<li>` whether or not it has the class `active`. The Command Log still shows
+`.active` as the command's message, which can make it look as though the
+selector was applied. TypeScript flags the call as an error, since the published
+types for `.first()` accept only an options object. To get the first element
+that matches a selector, narrow the set with [`.filter()`](/api/commands/filter)
+before calling `.first()`.
 
 ```javascript
 cy.get('li').filter('.active').first()

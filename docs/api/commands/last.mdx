@@ -80,21 +80,19 @@ cy.get('li').last()
 
 ### How `.last()` compares to `.eq(-1)`
 
-`.last()` yields the same element as [`.eq(-1)`](/api/commands/eq). jQuery
-implements `.last()` as `.eq(-1)`. Use `.eq()` to get an element at any other
-index, counting from the start of the set or, with a negative index, back from
-the end.
+`.last()` yields the same element as [`.eq(-1)`](/api/commands/eq). Use `.eq()`
+to get an element at any other index, counting from the start of the set or,
+with a negative index, back from the end.
 
 ### Selecting the last element that matches a selector
 
-`.last()` takes no selector. Cypress passes the call straight to jQuery's
-`.last()`, which ignores any arguments, so `cy.get('li').last('.active')`
-yields the last `<li>` whether or not it has the class `active`. The Command
-Log still shows `.active` as the command's message, which can make it look as
-though the selector was applied. TypeScript flags the call as an error, since
-the published types for `.last()` accept only an options object. To get the
-last element that matches a selector, narrow the set with
-[`.filter()`](/api/commands/filter) before calling `.last()`.
+`.last()` takes no selector. `cy.get('li').last('.active')` yields the last
+`<li>` whether or not it has the class `active`. The Command Log still shows
+`.active` as the command's message, which can make it look as though the
+selector was applied. TypeScript flags the call as an error, since the published
+types for `.last()` accept only an options object. To get the last element that
+matches a selector, narrow the set with [`.filter()`](/api/commands/filter)
+before calling `.last()`.
 
 ```javascript
 cy.get('li').filter('.active').last()
