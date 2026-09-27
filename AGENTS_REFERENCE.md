@@ -589,6 +589,251 @@ load, so write it to convey the image's _purpose_, not just its existence.
 />
 ```
 
+## Capturing Cypress App screenshots
+
+Screenshots of the Command Log and the DevTools console go stale as the Cypress
+App's UI changes. Recapture them from a real run so the image shows what a reader
+sees today. This section covers the Cypress App UI only. Cypress Cloud
+screenshots need a signed-in account and are out of scope.
+
+### Screenshot principles
+
+- **Capture from the Cypress version the docs describe.** `npm run api:source`
+  prints the pinned version (`cypress-io/cypress @ vX.Y.Z`). Install that exact
+  version.
+- **Run the page's own snippet word for word**, against a minimal fixture HTML
+  page with only the elements the snippet needs (matching ids, names, and text).
+  Never hand-edit or mock up a screenshot.
+- **Overwrite the existing file** under `static/img/` so the image path in the
+  page doesn't change. Then update the `<DocsImage>` `alt` if it no longer
+  describes the image (see [alt text](#accessible-image-alt-text)).
+- **Check the image against the page text before committing.** Open it and
+  confirm that anything the page quotes appears in it, such as the console
+  labels (`Yielded:`, `Elements:`).
+- **Work in the session scratchpad, never inside the repo:**
+  `npm init -y && npm i cypress@<version>`. If the Cypress binary download
+  fails its size check, run the install again.
+- **Run the scripts from the scratch project.** The CDP and DevTools approaches
+  use the scripts in `scripts/screenshots/`, which load `puppeteer-core` from
+  this repository, so run `npm i` here first. The commands below call them as
+  `node "$REPO/scripts/screenshots/<script>.mjs"`, with `REPO` set to this
+  repository's root. Each writes its PNG to the current directory.
+
+### Pick the approach
+
+| What you're capturing                                                      | Approach                                                            |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Command Log rows that fit on one line at the default panel width           | [`cy.screenshot()`](#command-log-with-cyscreenshot)                 |
+| Command Log rows that wrap at the default width                            | [CDP, widening the panel first](#command-log-over-cdp)              |
+| The runner showing a finished, passing test (title check mark, pass count) | [CDP](#command-log-over-cdp)                                        |
+| DevTools console output from clicking a command                            | [`cypress open` plus a DevTools frontend](#devtools-console-output) |
+
+Each approach has limits:
+
+- `cy.screenshot()` captures only the page, and DevTools isn't part of the page.
+- `cy.screenshot()` runs mid-test. Its own Command Log row shows a spinner, the
+  test title shows a spinner, and the pass/fail counts are empty (`--`).
+- A test can't set the Command Log's width.
+
+All three approaches share one config. `--force-device-scale-factor=2` gives 2x
+output for the first two approaches; the CDP approach also needs
+`--remote-allow-origins=*`. The hook skips Electron, which the DevTools approach
+configures through an environment variable instead.
+
+```javascript title="cypress.config.js"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  e2e: {
+    supportFile: false,
+    setupNodeEvents(on) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          launchOptions.args.push('--force-device-scale-factor=2')
+          launchOptions.args.push('--remote-allow-origins=*') // CDP approach
+        }
+        return launchOptions
+      })
+    },
+  },
+})
+```
+
+Put fixture pages at the project root, next to the config, so `cy.visit()` finds
+them by file name.
+
+### Command Log with cy.screenshot
+
+Prefer this approach whenever the rows fit. It runs headlessly, with no Xvfb,
+`--no-exit`, or CDP.
+
+1. Add `cy.screenshot('<name>', { capture: 'runner' })` as the last line of the
+   spec, after the page's snippet.
+2. Run it:
+
+   ```shell
+   npx cypress run --browser "$PLAYWRIGHT_BROWSERS_PATH/chromium" \
+     --config-file cypress.config.js --spec cypress/e2e/focus.cy.js
+   ```
+
+   The file lands in `cypress/screenshots/<spec>/<name>.png`. With the config
+   above it's 2560×1266, a 1280×633 capture at 2x.
+
+3. Open that full capture and find the target rows. Divide the pixel positions
+   by 2 to get CSS pixels.
+4. Add a `clip` in **CSS pixels**. Cypress scales the saved PNG by the device
+   factor, so a 414×57 clip saves as 828×114. Crop to the rows the page's
+   snippet produces, leaving out the screenshot command's own row and the
+   running-test header. Earlier rows, such as `visit` as row 1, push the row
+   numbers up. That's fine. At the default panel width the rows are about 414
+   CSS px wide, narrower than the 940 px CDP crops. When the image must match a
+   940 px neighbor on the same page, use the CDP approach.
+5. Run the spec again and copy the PNG over the docs image right away. The
+   next `cypress run` clears `cypress/screenshots/`.
+
+```javascript title="cypress/e2e/focus.cy.js"
+it('focus', () => {
+  cy.visit('focus.html')
+  cy.get('[name="comment"]').focus() // the page's snippet, word for word
+  cy.screenshot('get-input-then-focus', {
+    capture: 'runner',
+    clip: { x: 19, y: 239, width: 414, height: 57 }, // CSS px: rows 2 and 3
+  })
+})
+```
+
+### Command Log over CDP
+
+Use this approach when a row wraps at the default width, or when the image must
+show a finished test. It leaves the runner open and drives it from outside.
+
+1. Start the run under an Xvfb screen large enough for 2x. `--no-exit` keeps the
+   runner open after the test finishes:
+
+   ```shell
+   xvfb-run -a -s "-screen 0 3200x2000x24" npx cypress run --headed --no-exit \
+     --config-file cypress.config.js \
+     --browser "$PLAYWRIGHT_BROWSERS_PATH/chromium" \
+     --spec cypress/e2e/focused.cy.js > run.log 2>&1 &
+   timeout 180 bash -c 'until grep -q "not exiting due to options.exit being false" run.log; do sleep 2; done'
+   ```
+
+2. Read the browser's CDP port from its command line:
+
+   ```shell
+   PORT=$(pgrep -a chrome | grep -o 'remote-debugging-port=[0-9]\+' | head -1 | cut -d= -f2)
+   ```
+
+3. Run the crop script, naming the rows to keep and the output file:
+
+   ```shell
+   node "$REPO/scripts/screenshots/crop.mjs" --port "$PORT" \
+     --rows '.command-name-focused, .command-name-assert' \
+     --out make-assertion-about-focused-element.png
+   ```
+
+   Rows are `.command.command-name-<command>`, such as `.command-name-focused`
+   or `.command-name-assert`. The script:
+   - attaches to the browser and picks the runner page, the one whose URL
+     contains `/__/`
+   - widens the Command Log by dragging its resize handle
+     (`[data-cy=panel2ResizeHandle]`, at about x=451 by default) out to x=700
+     (`--panel`). It drags only once: on an already wide panel, the drag
+     selects text instead.
+   - clears any selection in the page and the frame, and moves the mouse away
+     so no hover styles show
+   - finds the about:blank iframe that holds the Command Log rows
+   - clips a screenshot of the runner page to the union of the rows' bounding
+     rects, offset by the frame's position: 470 CSS px wide (`--width`, 940 px
+     in the PNG), with 4 px of padding above and below
+
+Get 2x from the launch flag, not from CDP's `Emulation.setDeviceMetricsOverride`,
+which didn't change the screenshot scale in testing.
+
+### DevTools console output
+
+Clicking a command prints its details (`Command:`, `Yielded:`, `Elements:`, and
+so on) only in interactive mode. In a `cypress run --no-exit` run, the click only
+clears the console, so this approach needs `cypress open`.
+
+1. Start `cypress open` with a CDP port on Electron, and wait for the Launchpad:
+
+   ```shell
+   ELECTRON_EXTRA_LAUNCH_ARGS="--remote-debugging-port=9333 --remote-allow-origins=*" \
+     xvfb-run -a -s "-screen 0 3200x2000x24" \
+     npx cypress open --e2e --config-file cypress.config.js > open.log 2>&1 &
+   timeout 120 bash -c 'until curl -s 127.0.0.1:9333/json/list | grep -q __launchpad; do sleep 2; done'
+   ```
+
+2. Open the spec, naming the command you'll click so the script waits until
+   the test has run:
+
+   ```shell
+   node "$REPO/scripts/screenshots/open-spec.mjs" --spec focused.cy.js \
+     --command .command-name-focused
+   ```
+
+   It dismisses the "What's New" dialog (its "Continue" button), clicks "Start
+   E2E Testing in Electron", and clicks the spec in the specs list. The runner opens in its own window, a separate page
+   from the Launchpad. Electron is the only browser offered with a custom
+   `--browser` path, and it's fine because it's Chromium. Click the spec rather
+   than changing the URL hash, which closes the runner window.
+
+3. Capture the console:
+
+   ```shell
+   node "$REPO/scripts/screenshots/console.mjs" --command .command-name-focused \
+     --out currently-focused-element-in-an-input.png
+   ```
+
+   DevTools can't be docked in a headless session, so the script opens the
+   DevTools frontend that Electron itself serves, in a separate headless
+   Chromium:
+   - It builds the inspector URL from the runner's target id in
+     `http://127.0.0.1:9333/json/list`. Don't use the `devtoolsFrontendUrl` that
+     list returns, because it points to appspot.
+   - It turns off the screencast panel first: it loads `inspector.html` once and
+     sets `screencast-enabled` to `false` in localStorage. Older DevTools read
+     `screencastEnabled`, so it sets both.
+   - It attaches the frontend before clicking the command, because the frontend
+     only shows messages logged after it connects.
+   - Clicking a command toggles its pinned state (`command-is-pinned` on
+     `.command-wrapper`). If it was already pinned, the first click unpins it,
+     so the script clicks again.
+   - It captures an 820×200 CSS px viewport at deviceScaleFactor 2 (a 1640×400
+     PNG), tall enough that the first console line stays in view.
+
+The capture includes the "Console was cleared" line and the `runner-*.js` source
+links. The existing console screenshots show them too, so leave them in.
+
+### Editing the screenshot scripts
+
+The scripts in `scripts/screenshots/` are JavaScript checked with `// @ts-check`
+against puppeteer-core's types, so run `npm run typecheck` after changing one.
+Shared helpers live in `runner.mjs`. Keep these Puppeteer behaviors in mind:
+
+- Pass `defaultViewport: null` to `puppeteer.connect()`. Otherwise Puppeteer
+  resizes every page it touches to 800×600, runner included.
+- End with `browser.disconnect()`, not `browser.close()`. On a connected
+  browser, `close()` quits it, and Cypress with it.
+- A browser Puppeteer launches itself, like the DevTools viewer in
+  `console.mjs`, needs `--no-sandbox` when the session runs as root, as it does
+  in a cloud container.
+- `console.mjs` reads the viewer's Chromium from `$PLAYWRIGHT_BROWSERS_PATH`,
+  so puppeteer-core never downloads a browser.
+
+### Shell gotchas when capturing screenshots
+
+- `pkill -f <pattern>` can match the agent's own shell command and kill it (exit
+  144). Match the process name instead: `pkill -x Cypress`, `pkill -x chrome`,
+  `pkill -x Xvfb`, `pkill -x xvfb-run`.
+- Never leave a bare `cat`, or anything else that reads stdin, in a command. It
+  hangs until the tool times out.
+- Wait for conditions with `timeout N bash -c 'until <check>; do sleep 2; done'`,
+  not chained sleeps.
+- Stop every Cypress, Chrome, and Xvfb process when you're done, then confirm
+  with `pgrep -l 'Cypress|chrome|Xvfb'`. They can take a few seconds to exit.
+
 ## Linking
 
 `onBrokenLinks` and `onBrokenMarkdownLinks` are both set to `throw`, so a broken
