@@ -48,6 +48,7 @@ Then capture it with the approach below that fits.
 | Rows that wrap at the default width                     | [`cy.screenshot()`, widening the panel first](#widening-the-command-log)      |
 | A finished, passing test (title check mark, pass count) | [`cy.screenshot()` from a following test](#capturing-a-finished-passing-test) |
 | DevTools console output from clicking a command         | [`cypress open` plus a DevTools frontend](#devtools-console-output)           |
+| A pinned snapshot highlighting an element in the app    | [`cypress open`, then pin the command](#pinned-snapshot-with-highlights)      |
 
 `cy.screenshot()` limits:
 
@@ -335,6 +336,47 @@ them too. The "Console was cleared" line is optional: keep it when the capture
 includes it, and don't recapture to add it when it doesn't. What matters is
 that every field the page quotes, such as `Yielded:` or `Elements:`, is in the
 image.
+
+## Pinned snapshot with highlights
+
+Clicking a command pins its DOM snapshot and highlights the element it yielded
+in the app preview, with a **Pinned** / **Highlights** banner. Use this when the
+highlight is the point, such as showing where focus landed.
+
+This needs `cypress open`, like [DevTools console output](#devtools-console-output).
+In `cypress run`, clicking or hovering a row draws no highlight.
+
+1. Shrink the viewport so the app preview isn't scaled down to unreadable text.
+   Size it to the fixture, for example `viewportWidth: 400` and
+   `viewportHeight: 200` in the config's `e2e` block. Leave
+   `numTestsKeptInMemory` above `0`, or there are no snapshots to pin.
+2. Start `cypress open` at 2x. The config's `before:browser:launch` hook skips
+   Electron, so pass the scale factor with the CDP flags:
+
+   ```shell
+   ELECTRON_EXTRA_LAUNCH_ARGS="--remote-debugging-port=9333 --remote-allow-origins=* --force-device-scale-factor=2" \
+     xvfb-run -a -s "-screen 0 3200x2000x24" \
+     npx cypress open --e2e --config-file cypress.config.js > open.log 2>&1 &
+   timeout 120 bash -c 'until curl -s 127.0.0.1:9333/json/list | grep -q __launchpad; do sleep 2; done'
+   ```
+
+3. Open the spec with `open-spec.mjs`, as in step 2 of
+   [DevTools console output](#devtools-console-output).
+4. Pin the command and capture:
+
+   ```shell
+   node "$REPO/scripts/screenshots/pin.mjs" --command .command-name-focused \
+     --out command-log-focused-tab-snapshot.png
+   ```
+
+   It pins the last matching row (`--nth 2` picks the second), moves the mouse
+   off the rows, and clips from the sidebar's right edge down to the lower of
+   the Command Log and the banner. It moves the pin from any other row, such as
+   one you pinned by hand, and leaves it in place when that row is already
+   pinned.
+
+Check the image before copying it into `static/img/`: the pinned row shows a
+pin icon, and the highlighted element is the one the page text names.
 
 ## Shell gotchas
 
