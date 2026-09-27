@@ -54,14 +54,14 @@ Pass in an options object to change the default behavior of `.shadow()`.
 
 ### Find and click on a button inside the shadow DOM
 
-```html
+```html title="index.html"
 <div class="shadow-host">
   #shadow-root
   <button class="my-button">Click me</button>
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [#shadow-root (open)]
 cy.get('.shadow-host').shadow().find('.my-button').click()
 ```

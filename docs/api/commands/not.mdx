@@ -72,7 +72,7 @@ Pass in an options object to change the default behavior of `.not()`.
 
 #### Yield the elements that do not have class `active`
 
-```html
+```html title="index.html"
 <ul>
   <li>Home</li>
   <li class="active">About</li>
@@ -82,7 +82,7 @@ Pass in an options object to change the default behavior of `.not()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('ul>li').not('.active').should('have.length', 4) // true
 ```
 

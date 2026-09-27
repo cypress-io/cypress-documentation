@@ -68,7 +68,7 @@ Pass in an options object to change the default behavior of `.prev()`.
 
 #### Find the previous element of the element with class of `active`
 
-```html
+```html title="index.html"
 <ul>
   <li>Cockatiels</li>
   <li>Lorikeets</li>
@@ -78,7 +78,7 @@ Pass in an options object to change the default behavior of `.prev()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>Lorikeets</li>
 cy.get('.active').prev()
 ```
@@ -87,7 +87,7 @@ cy.get('.active').prev()
 
 #### Find the previous element with a class of `active`
 
-```html
+```html title="index.html"
 <ul>
   <li>Cockatiels</li>
   <li>Lorikeets</li>
@@ -97,7 +97,7 @@ cy.get('.active').prev()
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>Cockatoos</li>
 cy.get('li').prev('.active')
 ```

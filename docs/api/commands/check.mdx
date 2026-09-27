@@ -108,7 +108,7 @@ cy.get('#saveUserName').check()
 
 #### Select the radio with the value of 'US'
 
-```html
+```html title="index.html"
 <form>
   <input type="radio" id="ca-country" value="CA" />
   <label for="ca-country">Canada</label>
@@ -117,7 +117,7 @@ cy.get('#saveUserName').check()
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('[type="radio"]').check('US')
 ```
 
@@ -125,7 +125,7 @@ cy.get('[type="radio"]').check('US')
 
 #### Check the checkboxes with the values 'subscribe' and 'accept'
 
-```html
+```html title="index.html"
 <form>
   <input type="checkbox" id="subscribe" value="subscribe" />
   <label for="subscribe">Subscribe to newsletter?</label>
@@ -134,7 +134,7 @@ cy.get('[type="radio"]').check('US')
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('form input').check(['subscribe', 'accept'])
 ```
 
@@ -159,7 +159,7 @@ cy.get('.action-checkboxes')
 You can get the currently checked option using jQuery's
 [:checked selector](https://api.jquery.com/checked-selector/).
 
-```html
+```html title="index.html"
 <form id="pick-fruit">
   <input type="radio" name="fruit" value="orange" id="orange" />
   <input type="radio" name="fruit" value="apple" id="apple" checked="checked" />
@@ -167,7 +167,7 @@ You can get the currently checked option using jQuery's
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#pick-fruit :checked').should('be.checked').and('have.value', 'apple')
 ```
 

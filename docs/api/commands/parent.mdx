@@ -71,7 +71,7 @@ Pass in an options object to change the default behavior of `.parent()`.
 
 #### Get the parent of the active `li`
 
-```html
+```html title="index.html"
 <ul class="main-nav">
   <li>Overview</li>
   <li>
@@ -85,7 +85,7 @@ Pass in an options object to change the default behavior of `.parent()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields .sub-nav
 cy.get('li.active').parent()
 ```
@@ -94,7 +94,7 @@ cy.get('li.active').parent()
 
 #### Get the parent with class `sub-nav` of all `li` elements
 
-```html
+```html title="index.html"
 <ul class="main-nav">
   <li>Overview</li>
   <li>
@@ -108,7 +108,7 @@ cy.get('li.active').parent()
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields .sub-nav
 cy.get('li').parent('.sub-nav')
 ```

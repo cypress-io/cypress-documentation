@@ -72,7 +72,7 @@ Pass in an options object to change the default behavior of `.children()`.
 
 #### Get the children of the `.secondary-nav`
 
-```html
+```html title="index.html"
 <ul>
   <li>About</li>
   <li>
@@ -94,7 +94,7 @@ Pass in an options object to change the default behavior of `.children()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [
 //  <li class="services-1">Web Design</li>,
 //  <li class="services-2">Logo Design</li>,
@@ -112,7 +112,7 @@ all.
 
 #### Get the children with class `active`
 
-```html
+```html title="index.html"
 <div>
   <ul>
     <li class="active">Unit Testing</li>
@@ -121,7 +121,7 @@ all.
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [
 //  <li class="active">Unit Testing</li>
 // ]

@@ -221,7 +221,7 @@ cy.get('p').then(($p) => {
 
 #### Verify length, content, and classes from multiple `<p>`
 
-```html
+```html title="index.html"
 <div>
   <p class="text-primary">Hello World</p>
   <p class="text-danger">You have an error</p>
@@ -229,7 +229,7 @@ cy.get('p').then(($p) => {
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('p').should(($p) => {
   // should have found 3 elements
   expect($p).to.have.length(3)
@@ -256,7 +256,7 @@ cy.get('p').should(($p) => {
 from a `.should()` callback function will be ignored. The original subject will
 be yielded to the next command.
 
-```js
+```js title="spec.cy.js"
 cy.get('p')
   .should(($p) => {
     expect($p).to.have.length(3)
@@ -270,13 +270,13 @@ cy.get('p')
 
 #### Assert class name contains `heading-`
 
-```html
+```html title="index.html"
 <div class="docs-header">
   <div class="main-abc123 heading-xyz987">Introduction</div>
 </div>
 ```
 
-```js
+```js title="spec.cy.js"
 cy.get('.docs-header')
   .find('div')
   // .should(cb) callback function will be retried
@@ -296,7 +296,7 @@ cy.get('.docs-header')
 
 You can even throw your own errors from the callback function.
 
-```js
+```js title="spec.cy.js"
 cy.get('.docs-header')
   .find('div')
   .should(($div) => {
@@ -318,7 +318,7 @@ cy.get('.docs-header')
 Example below first asserts that there are 3 elements, and then checks the text
 content of each one.
 
-```html
+```html title="index.html"
 <ul class="connectors-list">
   <li>Walk the dog</li>
   <li>Feed the cat</li>
@@ -326,7 +326,7 @@ content of each one.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('.connectors-list > li').should(($lis) => {
   expect($lis).to.have.length(3)
   expect($lis.eq(0)).to.contain('Walk the dog')
@@ -338,7 +338,7 @@ cy.get('.connectors-list > li').should(($lis) => {
 For clarity you can pass a string message as a second argument to any `expect`
 assertion, see [Chai#expect](https://www.chaijs.com/guide/styles/#expect).
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('.connectors-list > li').should(($lis) => {
   expect($lis, '3 items').to.have.length(3)
   expect($lis.eq(0), 'first item').to.contain('Walk the dog')
@@ -361,14 +361,14 @@ The example below gets the text contained within one element and saves it in a
 closure variable. Then the test gets the text in another element and asserts
 that the two text values are the same after normalizing.
 
-```html
+```html title="index.html"
 <div class="company-details">
   <div class="title">Acme Developers</div>
   <div class="identifier">ACMEDEVELOPERS</div>
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
 
 // will keep text from title element

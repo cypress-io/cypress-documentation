@@ -68,7 +68,7 @@ Pass in an options object to change the default behavior of `.nextAll()`.
 
 #### Find all of the element's siblings following `.second`
 
-```html
+```html title="index.html"
 <ul>
   <li>apples</li>
   <li class="second">oranges</li>
@@ -78,7 +78,7 @@ Pass in an options object to change the default behavior of `.nextAll()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<li>bananas</li>, <li>pineapples</li>, <li>grapes</li>]
 cy.get('.second').nextAll()
 ```
@@ -87,7 +87,7 @@ cy.get('.second').nextAll()
 
 #### Find all of the following siblings of each li. Keep only the ones with a class `selected`
 
-```html
+```html title="index.html"
 <ul>
   <li>apples</li>
   <li>oranges</li>
@@ -97,7 +97,7 @@ cy.get('.second').nextAll()
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>pineapples</li>
 cy.get('li').nextAll('.selected')
 ```

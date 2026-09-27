@@ -69,7 +69,7 @@ Pass in an options object to change the default behavior of `.next()`.
 
 #### Find the element next to `.second`
 
-```html
+```html title="index.html"
 <ul>
   <li>apples</li>
   <li class="second">oranges</li>
@@ -77,14 +77,14 @@ Pass in an options object to change the default behavior of `.next()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>bananas</li>
 cy.get('.second').next()
 ```
 
 #### Testing a datalist
 
-```html
+```html title="index.html"
 <input list="fruit" />
 <datalist id="fruit">
   <option>Apple</option>
@@ -93,7 +93,7 @@ cy.get('.second').next()
 </datalist>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#fruit option')
   .first()
   .should('have.text', 'Apple')
@@ -107,7 +107,7 @@ cy.get('#fruit option')
 
 #### Find the very next sibling of each li. Keep only the ones with a class `selected`
 
-```html
+```html title="index.html"
 <ul>
   <li>apples</li>
   <li>oranges</li>
@@ -116,7 +116,7 @@ cy.get('#fruit option')
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>pineapples</li>
 cy.get('li').next('.selected')
 ```

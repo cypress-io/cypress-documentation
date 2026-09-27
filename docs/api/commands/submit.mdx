@@ -65,14 +65,14 @@ Pass in an options object to change the default behavior of `.submit()`.
 
 #### Submit can only be called on a single form
 
-```html
+```html title="index.html"
 <form id="contact">
   <input type="text" name="message" />
   <button type="submit">Send</button>
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#contact').submit()
 ```
 

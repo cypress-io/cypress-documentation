@@ -75,7 +75,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 
 #### Find the 2nd element within the elements
 
-```html
+```html title="index.html"
 <ul>
   <li>tabby</li>
   <li>siamese</li>
@@ -85,13 +85,13 @@ Pass in an options object to change the default behavior of `.eq()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
 
 #### Make an assertion on the 3rd row of a table
 
-```html
+```html title="index.html"
 <table>
   <tr>
     <th>Breed</th>
@@ -112,7 +112,7 @@ cy.get('li').eq(1).should('contain', 'siamese') // true
 </table>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('tr').eq(2).should('contain', 'Canada') //true
 ```
 
@@ -120,7 +120,7 @@ cy.get('tr').eq(2).should('contain', 'Canada') //true
 
 #### Find the 2nd from the last element within the elements
 
-```html
+```html title="index.html"
 <ul>
   <li>tabby</li>
   <li>siamese</li>
@@ -130,7 +130,7 @@ cy.get('tr').eq(2).should('contain', 'Canada') //true
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('li').eq(-2).should('contain', 'sphynx') // true
 ```
 

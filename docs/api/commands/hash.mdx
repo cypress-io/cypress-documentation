@@ -67,7 +67,7 @@ cy.hash().should('eq', '#/users/1') // => true
 
 #### Assert that the hash matches via RegExp
 
-```html
+```html title="index.html"
 <ul id="users">
   <li>
     <a href="#/users/8fc45b67-d2e5-465a-b822-b281d9c8e4d1">Fred</a>
@@ -75,7 +75,7 @@ cy.hash().should('eq', '#/users/1') // => true
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#users li').find('a').click()
 cy.hash().should('match', /users\/.+$/) // => true
 ```

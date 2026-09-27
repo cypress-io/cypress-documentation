@@ -118,7 +118,7 @@ cy.get('button').should('have.class', 'active').and('not.be.disabled')
 
 #### Chain assertions when yield changes
 
-```html
+```html title="index.html"
 {/* App Code */}
 <ul>
   <li>
@@ -127,7 +127,7 @@ cy.get('button').should('have.class', 'active').and('not.be.disabled')
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('a')
   .should('contain', 'Edit User') // yields <a>
   .and('have.attr', 'href') // yields string value of href
@@ -189,7 +189,7 @@ cy.get('p').then(($p) => {
 
 #### Verify length, content, and classes from multiple `<p>`
 
-```html
+```html title="index.html"
 <div>
   <p class="text-primary">Hello World</p>
   <p class="text-danger">You have an error</p>
@@ -197,7 +197,7 @@ cy.get('p').then(($p) => {
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('p')
   .should('not.be.empty')
   .and(($p) => {

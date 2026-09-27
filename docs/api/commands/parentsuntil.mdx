@@ -79,7 +79,7 @@ Pass in an options object to change the default behavior of `.parentsUntil()`.
 
 #### Find all of the `.active` element's ancestors until `.nav`
 
-```html
+```html title="index.html"
 <ul class="nav">
   <li>
     <a href="#">Clothes</a>
@@ -95,7 +95,7 @@ Pass in an options object to change the default behavior of `.parentsUntil()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [ul.menu, li]
 cy.get('.active').parentsUntil('.nav')
 ```

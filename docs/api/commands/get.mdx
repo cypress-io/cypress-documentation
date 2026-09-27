@@ -157,14 +157,14 @@ The `cy.get` command always starts its search from the
 command. The [.find](/api/commands/find) command starts its search from
 the current subject.
 
-```html
+```html title="index.html"
 <div class="test-title">cy.get vs .find</div>
 <section id="comparison">
   <div class="feature">Both are querying commands</div>
 </section>
 ```
 
-```js
+```js title="spec.cy.js"
 cy.get('#comparison')
   .get('div')
   // finds the div.test-title outside the #comparison

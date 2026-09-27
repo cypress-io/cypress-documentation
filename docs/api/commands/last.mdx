@@ -62,7 +62,7 @@ Pass in an options object to change the default behavior of `.last()`.
 
 #### Get the last list item in a list
 
-```html
+```html title="index.html"
 <ul>
   <li class="one">Knick knack on my thumb</li>
   <li class="two">Knick knack on my shoe</li>
@@ -71,7 +71,7 @@ Pass in an options object to change the default behavior of `.last()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li class="four">Knick knack on my door</li>
 cy.get('li').last()
 ```

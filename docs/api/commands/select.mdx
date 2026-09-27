@@ -71,7 +71,7 @@ Pass in an options object to change the default behavior of `.select()`.
 
 #### Select the `option` with the text `apples`
 
-```html
+```html title="index.html"
 <select>
   <option value="456">apples</option>
   <option value="457">oranges</option>
@@ -79,7 +79,7 @@ Pass in an options object to change the default behavior of `.select()`.
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <option value="456">apples</option>
 cy.get('select').select('apples')
 cy.get('select').should('have.value', '456')
@@ -89,7 +89,7 @@ cy.get('select').should('have.value', '456')
 
 #### Select the `option` with the value "456"
 
-```html
+```html title="index.html"
 <select>
   <option value="456">apples</option>
   <option value="457">oranges</option>
@@ -97,7 +97,7 @@ cy.get('select').should('have.value', '456')
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <option value="456">apples</option>
 cy.get('select').select('456')
 cy.get('select').should('have.value', '456')
@@ -107,7 +107,7 @@ cy.get('select').should('have.value', '456')
 
 #### Select the `option` with index 0
 
-```html
+```html title="index.html"
 <select>
   <option value="456">apples</option>
   <option value="457">oranges</option>
@@ -115,7 +115,7 @@ cy.get('select').should('have.value', '456')
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <option value="456">apples</option>
 cy.get('select').select(0)
 cy.get('select').should('have.value', '456')
@@ -125,7 +125,7 @@ cy.get('select').should('have.value', '456')
 
 #### Select the options with the texts "apples" and "bananas"
 
-```html
+```html title="index.html"
 <select multiple>
   <option value="456">apples</option>
   <option value="457">oranges</option>
@@ -133,7 +133,7 @@ cy.get('select').should('have.value', '456')
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('select')
   .select(['apples', 'bananas'])
   .invoke('val')
@@ -142,7 +142,7 @@ cy.get('select')
 
 #### Select the options with the values "456" and "457"
 
-```html
+```html title="index.html"
 <select multiple>
   <option value="456">apples</option>
   <option value="457">oranges</option>
@@ -150,7 +150,7 @@ cy.get('select')
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('select')
   .select(['456', '457'])
   .invoke('val')
@@ -159,7 +159,7 @@ cy.get('select')
 
 #### Select the options with the indexes 0 and 1
 
-```html
+```html title="index.html"
 <select multiple>
   <option value="456">apples</option>
   <option value="457">oranges</option>
@@ -167,7 +167,7 @@ cy.get('select')
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('select')
   .select([0, 1])
   .invoke('val')
@@ -187,7 +187,7 @@ an empty array will clear selections on all options.
 
 #### Force select a hidden `<select>`
 
-```html
+```html title="index.html"
 <select style="display: none;">
   <optgroup label="Fruits">
     <option value="banana">Banana</option>
@@ -198,7 +198,7 @@ an empty array will clear selections on all options.
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('select')
   .select('banana', { force: true })
   .invoke('val')
@@ -213,7 +213,7 @@ actionability checks for selecting a disabled `<option>` or an option within a
 disabled `<optgroup>`. See
 [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
 
-```html
+```html title="index.html"
 <select disabled>
   <optgroup label="Veggies">
     <option value="okra">Okra</option>
@@ -224,7 +224,7 @@ disabled `<optgroup>`. See
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('select')
   .select('okra', { force: true })
   .invoke('val')
@@ -236,7 +236,7 @@ cy.get('select')
 You can get the currently selected option using the jQuery's
 [:selected selector](https://api.jquery.com/selected-selector/).
 
-```html
+```html title="index.html"
 <select id="name">
   <option>Joe</option>
   <option>Mary</option>
@@ -244,7 +244,7 @@ You can get the currently selected option using the jQuery's
 </select>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('select#name option:selected').should('have.text', 'Peter')
 ```
 

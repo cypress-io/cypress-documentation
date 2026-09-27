@@ -67,14 +67,14 @@ Pass in an options object to change the default behavior of `.find()`.
 
 #### Get li's within parent
 
-```html
+```html title="index.html"
 <ul id="parent">
   <li class="first"></li>
   <li class="second"></li>
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<li class="first"></li>, <li class="second"></li>]
 cy.get('#parent').find('li')
 ```

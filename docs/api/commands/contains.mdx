@@ -86,7 +86,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 #### Find the first element containing some text
 
-```html
+```html title="index.html"
 <ul>
   <li>apples</li>
   <li>oranges</li>
@@ -94,7 +94,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>apples</li>
 cy.contains('apples')
 ```
@@ -104,7 +104,7 @@ cy.contains('apples')
 Get the form element and search in its descendants for the content "submit the
 form!"
 
-```html
+```html title="index.html"
 <div id="main">
   <form>
     <div>
@@ -120,7 +120,7 @@ form!"
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields input[type='submit'] element then clicks it
 cy.get('form').contains('submit the form!').click()
 ```
@@ -133,13 +133,13 @@ Even though the `<span>` is the deepest element that contains a "4", Cypress
 automatically yields `<button>` elements over spans because of its
 [preferred element order](#Preferences).
 
-```html
+```html title="index.html"
 <button class="btn btn-primary" type="button">
   Messages <span class="badge">4</span>
 </button>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <button>
 cy.contains(4)
 ```
@@ -148,7 +148,7 @@ cy.contains(4)
 
 #### Find the first element with text matching the regular expression
 
-```html
+```html title="index.html"
 <ul>
   <li>apples</li>
   <li>oranges</li>
@@ -156,7 +156,7 @@ cy.contains(4)
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>bananas</li>
 cy.contains(/^b\w+/)
 ```
@@ -166,14 +166,14 @@ cy.contains(/^b\w+/)
 A string matches any element whose text _includes_ it, so `'Save'` also matches
 "Save draft". Anchor a regular expression to match the whole text.
 
-```html
+```html title="index.html"
 <div>
   <button>Save draft</button>
   <button>Save</button>
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <button>Save draft</button>
 cy.contains('button', 'Save')
 
@@ -185,7 +185,7 @@ Cypress collapses whitespace to a single space but does not trim it, so markup
 with whitespace around the text, such as `<button> Save </button>`, has the text
 `" Save "`. Allow for it in the expression:
 
-```javascript
+```javascript title="spec.cy.js"
 cy.contains('button', /^\s*Save\s*$/).click()
 ```
 
@@ -201,7 +201,7 @@ element that contains "apples".
 
 To override the element that is yielded, pass `'ul'` as the selector.
 
-```html
+```html title="index.html"
 <html>
   <body>
     <ul>
@@ -213,7 +213,7 @@ To override the element that is yielded, pass `'ul'` as the selector.
 </html>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <ul>...</ul>
 cy.contains('ul', 'apples')
 ```
@@ -224,7 +224,7 @@ Here's an example that uses the selector to ensure that the `<form>` remains the
 [subject](/app/core-concepts/introduction-to-cypress#Subject-Management) for
 future chaining.
 
-```html
+```html title="index.html"
 <form>
   <div>
     <label>name</label>
@@ -234,7 +234,7 @@ future chaining.
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('form') // yields <form>...</form>
   .contains('form', 'Proceed') // yields <form>...</form>
   .submit() // yields <form>...</form>
@@ -250,7 +250,7 @@ Pass `'tr'` as the selector to find the row for a record, then chain a second
 `.contains()` to find the control inside that row. Both are queries, so Cypress
 retries the whole chain until the button exists, and `.click()` ends the chain.
 
-```html
+```html title="index.html"
 <table>
   <tbody>
     <tr>
@@ -265,7 +265,7 @@ retries the whole chain until the button exists, and `.click()` ends the chain.
 </table>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // clicks the Edit button in Jane's row
 cy.contains('tr', 'Jane').contains('button', 'Edit').click()
 ```
@@ -275,11 +275,11 @@ cy.contains('tr', 'Jane').contains('button', 'Edit').click()
 A comma-separated selector searches for each one, which helps when the same
 control renders as a link on one page and a button on another.
 
-```html
+```html title="index.html"
 <a href="/login">Sign in</a>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields the <a>, and would yield a <button> containing "Sign in" too
 cy.contains('a, button', 'Sign in').click()
 ```
@@ -288,11 +288,11 @@ cy.contains('a, button', 'Sign in').click()
 
 Here's an example using the `matchCase` option to ignore case sensitivity.
 
-```html
+```html title="index.html"
 <div>Capital Sentence</div>
 ```
 
-```js
+```js title="spec.cy.js"
 cy.get('div').contains('capital sentence') // fail
 cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 ```
@@ -301,7 +301,7 @@ cy.get('div').contains('capital sentence', { matchCase: false }) // pass
 if it had the `i` flag. Passing a regular expression with the `i` flag together
 with `matchCase: true` throws an error, since the two conflict.
 
-```js
+```js title="spec.cy.js"
 cy.contains(/capital sentence/, { matchCase: false }) // pass
 cy.contains(/capital sentence/i) // pass
 cy.contains(/capital sentence/i, { matchCase: true }) // error
@@ -329,21 +329,21 @@ By default, `.contains()` does not search inside shadow roots. Pass
 [`includeShadowDom` configuration option](/app/references/configuration#Global)
 to search them in every query.
 
-```html
+```html title="index.html"
 <checkout-panel>
   #shadow-root
   <button>Checkout</button>
 </checkout-panel>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.contains('button', 'Checkout', { includeShadowDom: true }).click()
 ```
 
 To search one shadow root only, chain `.contains()` off of
 [`.shadow()`](/api/commands/shadow):
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('checkout-panel').shadow().contains('button', 'Checkout').click()
 ```
 
@@ -458,7 +458,7 @@ cy.contains('Yes, Delete!').click()
 Unlike other tags, `<pre>` doesn't ignore leading, trailing, or duplicate
 whitespaces as shown below:
 
-```html
+```html title="index.html"
 <!--Code for test-->
 <h2>Other tags</h2>
 <p>Hello, World !</p>
@@ -478,7 +478,7 @@ To reflect this behavior, Cypress collapses each run of whitespace in an
 element's text to a single space before matching, except in a `<pre>` element,
 where it matches the text as written. The content you pass is not collapsed.
 
-```js
+```js title="spec.cy.js"
 // test result for above code
 
 cy.get('p').contains('Hello, World !') // pass
@@ -493,11 +493,11 @@ cy.get('pre').contains('                 Hello,           World      !') // pass
 You can use a space character in `cy.contains()` to match text in the HTML that
 uses a non-breaking space entity `&nbsp;`.
 
-```html
+```html title="index.html"
 <span>Hello&nbsp;world</span>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // finds the span element
 cy.contains('Hello world')
 ```
@@ -510,7 +510,7 @@ in
 
 #### Only the _first_ matched element will be returned
 
-```html
+```html title="index.html"
 <ul id="header">
   <li>Welcome, Jane Lane</li>
 </ul>
@@ -526,7 +526,7 @@ in
 The below example will return the `<li>` in the `#header` since that is the
 _first_ element that contains the text "Jane Lane".
 
-```javascript
+```javascript title="spec.cy.js"
 // yields #header li
 cy.contains('Jane Lane')
 ```
@@ -534,7 +534,7 @@ cy.contains('Jane Lane')
 If you wanted to select the `<span>` instead, you could narrow the elements
 yielded before the `.contains()`.
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <span>
 cy.get('#main').contains('Jane Lane')
 ```
@@ -549,13 +549,13 @@ default label is used and can be locale-dependent. See
 
 If possible, set the `value` attribute:
 
-```html
+```html title="index.html"
 <input type="submit" value="Submit" />
 ```
 
 Otherwise, select the input another way and assert on the empty string:
 
-```js
+```js title="spec.cy.js"
 cy.get('input[type="submit"]').should('have.value', '')
 ```
 
@@ -579,7 +579,7 @@ matches one of these elements.
 Even though the `<span>` is the deepest element that contains "Search", Cypress
 yields `<button>` elements over spans.
 
-```html
+```html title="index.html"
 <form>
   <button>
     <i class="fa fa-search"></i>
@@ -588,7 +588,7 @@ yields `<button>` elements over spans.
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <button>
 cy.contains('Search').children('i').should('have.class', 'fa-search')
 ```
@@ -598,7 +598,7 @@ cy.contains('Search').children('i').should('have.class', 'fa-search')
 Even though the `<span>` is the deepest element that contains "Sign Out",
 Cypress yields anchor elements over spans.
 
-```html
+```html title="index.html"
 <nav>
   <a href="/users">
     <span>Users</span>
@@ -609,7 +609,7 @@ Cypress yields anchor elements over spans.
 </nav>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <a>
 cy.get('nav').contains('Sign Out').should('have.attr', 'href', '/signout')
 ```
@@ -619,7 +619,7 @@ cy.get('nav').contains('Sign Out').should('have.attr', 'href', '/signout')
 Even though the `<span>` is the deepest element that contains "Age", Cypress
 yields `<label>` elements over `<span>`.
 
-```html
+```html title="index.html"
 <form>
   <label>
     <span>Name:</span>
@@ -632,7 +632,7 @@ yields `<label>` elements over `<span>`.
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields label
 cy.contains('Age').find('input').type('29')
 ```

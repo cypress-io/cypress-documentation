@@ -62,7 +62,7 @@ Pass in an options object to change the default behavior of `.siblings()`.
 
 #### Get the siblings of each `li`
 
-```html
+```html title="index.html"
 <ul>
   <li>Home</li>
   <li>Contact</li>
@@ -71,7 +71,7 @@ Pass in an options object to change the default behavior of `.siblings()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields all other li's in list
 cy.get('.active').siblings()
 ```

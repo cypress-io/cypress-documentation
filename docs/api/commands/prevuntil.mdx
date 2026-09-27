@@ -79,7 +79,7 @@ Pass in an options object to change the default behavior of `.prevUntil()`.
 
 #### Find all of the element's siblings before `#nuts` until `#veggies`
 
-```html
+```html title="index.html"
 <ul>
   <li id="fruits" class="header">Fruits</li>
   <li>apples</li>
@@ -96,7 +96,7 @@ Pass in an options object to change the default behavior of `.prevUntil()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<li>cucumbers</li>, <li>carrots</li>, <li>corn</li>]
 cy.get('#nuts').prevUntil('#veggies')
 ```

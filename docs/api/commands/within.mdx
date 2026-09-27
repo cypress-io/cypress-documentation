@@ -61,14 +61,14 @@ Pass in an options object to change the default behavior of `.within()`.
 
 Trying to return a different element the `.within` callback have no effect:
 
-```html
+```html title="index.html"
 <div id="within-yields">
   The parent div
   <div class="some-child">Child element</div>
 </div>
 ```
 
-```js
+```js title="spec.cy.js"
 cy.get('#within-yields')
   .within(() => {
     // we are trying to return something
@@ -83,14 +83,14 @@ Similarly, trying to change the subject by using the
 [cy.wrap](/api/commands/wrap) command inside the `.within` callback have no
 effect:
 
-```html
+```html title="index.html"
 <div id="wrap-inside-within">
   The parent div
   <div class="some-child">Child element</div>
 </div>
 ```
 
-```js
+```js title="spec.cy.js"
 cy.get('#wrap-inside-within')
   .within(() => {
     // returning cy.wrap(...) has no effect on the yielded value
@@ -106,7 +106,7 @@ cy.get('#wrap-inside-within')
 
 #### Get inputs within a form and submit the form
 
-```html
+```html title="index.html"
 <form>
   <input name="email" type="email" />
   <input name="password" type="password" />
@@ -114,7 +114,7 @@ cy.get('#wrap-inside-within')
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('form').within(($form) => {
   // you have access to the found form via
   // the jQuery object $form if you need it
@@ -131,7 +131,7 @@ cy.get('form').within(($form) => {
 
 #### Find row with specific cell and confirm other cells in the row
 
-```html
+```html title="index.html"
 <table>
   <tr>
     <td>My first client</td>
@@ -143,7 +143,7 @@ cy.get('form').within(($form) => {
 </table>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.contains('My first client')
   .parent('tr')
   .within(() => {
@@ -164,7 +164,7 @@ Inside a `.within()` block, `cy.root()` yields the scoped element (here, the
 traverses _up_ from that element to a shared ancestor outside the scope, from
 which you can query elements that live outside the `.within()` context.
 
-```html
+```html title="index.html"
 <section class="example">
   {/* note the input field outside the form */}
   <input id="name" type="text" />
@@ -176,7 +176,7 @@ which you can query elements that live outside the `.within()` context.
 </section>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('form').within(($form) => {
   // temporarily escape the .within context: cy.root() is the <form>, and
   // .closest('.example') walks up to the ancestor outside it

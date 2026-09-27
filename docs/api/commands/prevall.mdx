@@ -68,7 +68,7 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 
 #### Find all of the element's siblings before `.third`
 
-```html
+```html title="index.html"
 <ul>
   <li>apples</li>
   <li>oranges</li>
@@ -78,7 +78,7 @@ Pass in an options object to change the default behavior of `.prevAll()`.
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<li>apples</li>, <li>oranges</li>]
 cy.get('.third').prevAll()
 ```
@@ -87,7 +87,7 @@ cy.get('.third').prevAll()
 
 #### Find all of the previous siblings of each `li`. Keep only the ones with a class `selected`
 
-```html
+```html title="index.html"
 <ul>
   <li>apples</li>
   <li>oranges</li>
@@ -97,7 +97,7 @@ cy.get('.third').prevAll()
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li>pineapples</li>
 cy.get('li').prevAll('.selected')
 ```

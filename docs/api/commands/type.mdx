@@ -144,7 +144,7 @@ cy.get('[contenteditable]').type('some text!', { delay: 10 })
 
 For 'selecting' an option, type it into the input.
 
-```html
+```html title="index.html"
 <input list="fruit" />
 <datalist id="fruit">
   <option>Apple</option>
@@ -153,7 +153,7 @@ For 'selecting' an option, type it into the input.
 </datalist>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('input').type('Apple')
 ```
 
@@ -161,13 +161,13 @@ cy.get('input').type('Apple')
 
 #### Type into a non-input or non-textarea element with `tabindex`
 
-```html
+```html title="index.html"
 <body>
   <div id="el" tabindex="1">This div can receive focus!</div>
 </body>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#el').type('supercalifragilisticexpialidocious')
 ```
 
@@ -638,7 +638,7 @@ This behavior is defined here:
 
 For instance the following will submit the form.
 
-```html
+```html title="index.html"
 <form action="/login">
   <input id="username" />
   <input id="password" />
@@ -646,7 +646,7 @@ For instance the following will submit the form.
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#username').type('bob@burgers.com')
 cy.get('#password').type('password123{enter}')
 ```
