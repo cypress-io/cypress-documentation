@@ -330,8 +330,11 @@ them only when `isInteractive` is true and tests are kept in memory.
    frontend in a separate headless Chromium and captures 820×200 CSS px at 2x
    (1640×400). Its comments explain each step.
 
-Leave in the "Console was cleared" line and the `runner-*.js` source links; the
-existing console screenshots show them too.
+Leave in the `runner-*.js` source links; the existing console screenshots show
+them too. The "Console was cleared" line is optional: keep it when the capture
+includes it, and don't recapture to add it when it doesn't. What matters is
+that every field the page quotes, such as `Yielded:` or `Elements:`, is in the
+image.
 
 ## Shell gotchas
 
