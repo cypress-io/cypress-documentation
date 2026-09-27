@@ -358,6 +358,13 @@ cy.get('@liveTotal').should('eq', '$5.00') // re-runs the queries
 cy.get('@startTotal').should('eq', '$0.00') // value captured earlier
 ```
 
+In the Command Log, the static alias is labeled `(static)` where it's created:
+
+<DocsImage
+  src="/img/api/get/command-log-query-and-static-aliases.png"
+  alt="Command Log showing the liveTotal alias without a label and the startTotal alias labeled static, then each alias retrieved with cy.get and asserted to equal $5.00 and $0.00"
+/>
+
 #### Assert an aliased element no longer exists
 
 Because the alias re-runs its query, you can assert that the element is gone.
@@ -406,6 +413,17 @@ cy.get<{ name: string }>('@user').its('name').should('eq', 'Jane')
 ```
 
 ## Notes
+
+### What a `cy.get()` timeout error looks like
+
+When no element matches before the timeout, `cy.get()` fails with an error like
+this one. The time in the message is the command's timeout:
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts), or the
+`timeout` option when you pass one.
+
+```text
+Timed out retrying after 4000ms: Expected to find element: `[data-cy=todo-item]`, but never found it.
+```
 
 ### Invalid selectors fail right away
 
