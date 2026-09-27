@@ -74,7 +74,7 @@ Pass in an options object to change the default behavior of `.closest()`.
 
 #### Find the closest ancestor of `p.error` with class `banner`
 
-```html
+```html title="index.html"
 <div class="banner">
   <div class="content">
     <p class="error">Payment failed</p>
@@ -82,20 +82,20 @@ Pass in an options object to change the default behavior of `.closest()`.
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <div class="banner">…</div>
 cy.get('p.error').closest('.banner')
 ```
 
 #### Yield the subject itself when it matches
 
-```html
+```html title="index.html"
 <ul class="nav">
   <li class="active">Home</li>
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <li class="active">Home</li>, since the subject
 // matches the selector before any ancestor is tested
 cy.get('li.active').closest('li')
@@ -106,7 +106,7 @@ cy.get('li.active').closest('li')
 Find something unique inside a repeated component, climb to the component with
 `.closest()`, then query inside it.
 
-```html
+```html title="index.html"
 <div data-cy="product-card">
   <h3>Trail Runner</h3>
   <button>Add to cart</button>
@@ -117,7 +117,7 @@ Find something unique inside a repeated component, climb to the component with
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // clicks the "Add to cart" button in the Road Racer card only
 cy.contains('h3', 'Road Racer')
   .closest('[data-cy="product-card"]')
@@ -129,14 +129,14 @@ cy.contains('h3', 'Road Racer')
 
 Validation state often lives on a wrapper element rather than on the input.
 
-```html
+```html title="index.html"
 <div class="form-group has-error">
   <label for="email">Email</label>
   <input id="email" type="email" />
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#email').closest('.form-group').should('have.class', 'has-error')
 ```
 
@@ -145,7 +145,7 @@ cy.get('#email').closest('.form-group').should('have.class', 'has-error')
 `.closest()` stops at the first match. [`.parents()`](/api/commands/parents)
 collects every matching ancestor.
 
-```html
+```html title="index.html"
 <section class="panel outer">
   <section class="panel inner">
     <button>Save</button>
@@ -153,7 +153,7 @@ collects every matching ancestor.
 </section>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields <section class="panel inner">
 cy.get('button').closest('.panel')
 
@@ -183,7 +183,7 @@ finds a match or reaches the document. This happens whether or not
 option controls whether queries like [`.find()`](/api/commands/find) reach
 into a shadow root, not whether `.closest()` climbs back out of one.
 
-```html
+```html title="index.html"
 <form id="checkout">
   <payment-panel>
     <template shadowrootmode="open">
@@ -193,7 +193,7 @@ into a shadow root, not whether `.closest()` climbs back out of one.
 </form>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // .find() needs includeShadowDom to reach the button;
 // .closest() crosses back out of the shadow root on its own
 // yields <form id="checkout">
