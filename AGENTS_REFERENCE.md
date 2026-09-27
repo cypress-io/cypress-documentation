@@ -338,6 +338,14 @@ a plain `git diff origin/main` also shows examples that other merged pull
 requests changed, and you would end up checking, or reverting, work that isn't
 yours.
 
+Once your changes are staged, the commit gate's `list` mode prints every added or
+changed code block with its file and line. It is the same list the gate checks
+before a commit (see [Step 10](#step-10-record-the-verification-and-clean-up)):
+
+```shell
+node .claude/hooks/example-check.mjs list
+```
+
 Sort each one into a bucket. The bucket decides how you verify it:
 
 | Bucket               | Examples                                                                                 | Verify by                               |
@@ -363,7 +371,9 @@ npm i
 npx cypress verify
 ```
 
-If `verify` reports the binary is missing, run `npx cypress install`.
+If `verify` reports the binary is missing, run `npx cypress install`. In
+Claude Code on the web, the `SessionStart` hook in `.claude/settings.json` runs
+these for you, including when the environment sets `CYPRESS_INSTALL_BINARY=0`.
 
 ### Step 3: create the harness
 
@@ -606,7 +616,33 @@ A failure you couldn't resolve still gets a row and a section. Say what you
 tried, what you believe the fix is, and whether it belongs in this repository
 or in `cypress-io/cypress`.
 
-### Step 10: clean up
+### Step 10: record the verification and clean up
+
+In Claude Code, a `PreToolUse` hook gates `git commit`. When the commit adds or
+changes a code block under `docs/`, the hook blocks it until you record that the
+blocks were verified. After you report in Step 9, stage your changes and record
+it from the repository root:
+
+```shell
+node .claude/hooks/example-check.mjs stamp
+```
+
+The stamp holds a fingerprint of the changed blocks. Editing prose afterward
+leaves it valid; editing a block invalidates it, and the gate asks you to verify
+again. Keep these behaviors in mind:
+
+- **Formatting-only changes** still count as changed blocks. When Prettier
+  rewrapped a block and its code is otherwise the same, record that with a
+  reason, and say so in your report:
+  `node .claude/hooks/example-check.mjs stamp --formatting-only "Prettier rewrapped the block"`
+- **Deleted blocks** don't need verifying, so a commit that only removes
+  examples passes.
+- **The nested `AGENTS.md` and `CLAUDE.md` guides** under `docs/` are skipped.
+  They document conventions, not features.
+- **The stamp is a record, not proof.** It says you ran the examples; the
+  results table in the thread is what a reviewer checks.
+
+Then delete the harness:
 
 ```shell
 cd .. && rm -rf .example-check

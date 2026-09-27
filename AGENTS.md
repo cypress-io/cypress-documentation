@@ -159,6 +159,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - An example you can't run locally (a record key, a Cloud or third-party
   service) gets reported as not run, with the reason. Being short is not a
   reason.
+- In Claude Code, a hook blocks `git commit` when changed examples have no
+  verification stamp. Record one with
+  `node .claude/hooks/example-check.mjs stamp` after you report, never before.
 
 **API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
 
