@@ -117,6 +117,17 @@ press moved focus:
   alt="Command Log with the second focused command pinned and the Email input highlighted in the app preview"
 />
 
+#### Move focus with the arrow keys
+
+Tabs, menus, and toolbars often move focus with the arrow keys instead of Tab.
+Assert where focus lands after each key press.
+
+```javascript
+cy.get('[role="tab"]').first().focus()
+cy.press(Cypress.Keyboard.Keys.RIGHT)
+cy.focused().should('have.attr', 'aria-controls', 'panel-2')
+```
+
 #### Check that a skip link receives focus first
 
 ```javascript
@@ -129,8 +140,19 @@ cy.focused().should('contain', 'Skip to main content')
 
 ```javascript
 cy.get('[data-cy="open-settings"]').click()
-cy.get('[role="dialog"]').contains('button', 'Close').click()
+cy.press(Cypress.Keyboard.Keys.ESC)
 cy.focused().should('have.attr', 'data-cy', 'open-settings')
+```
+
+#### Keep focus inside a dialog
+
+A modal dialog traps focus, so pressing Tab on its last control wraps back to
+its first control instead of reaching the page behind it.
+
+```javascript
+cy.get('[role="dialog"]').find('button').last().focus()
+cy.press(Cypress.Keyboard.Keys.TAB)
+cy.focused().should('have.attr', 'data-cy', 'dialog-first-field')
 ```
 
 #### Move focus to the first invalid field
