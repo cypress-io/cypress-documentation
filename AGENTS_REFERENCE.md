@@ -312,6 +312,261 @@ same change. `## See also` always stays as it is.
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
 
+## Verifying code examples
+
+A reader copies an example into their own project and expects it to work. An
+example that reads correctly but fails when it runs costs them more time than no
+example at all, and nothing in `npm run build` executes the code inside a fenced
+block. So every example you add or rewrite gets run before you commit it.
+
+This applies to every code block you add, and to every existing block whose code
+you change. A block whose only change is formatting, such as Prettier rewrapping
+it, is exempt.
+
+### Step 1: list the examples in your change
+
+Diff against the base branch and write down each added or changed code block:
+its file, its heading, and its language.
+
+```shell
+git diff origin/main -- 'docs/**/*.mdx' 'docs/**/*.md'
+```
+
+Sort each one into a bucket. The bucket decides how you verify it:
+
+| Bucket               | Examples                                                                                 | Verify by                               |
+| -------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------- |
+| Cypress test code    | spec bodies, custom commands, support files, `Cypress.*` calls, `:::visit-mount-example` | typecheck, then run it in the harness   |
+| Cypress config       | `:::cypress-config-example`, `:::cypress-config-plugin-example`, `setupNodeEvents`       | typecheck, then launch the harness      |
+| Shell commands       | `cypress run` flags, `<PackageManagerTabs>`, `<CypressCommandTabs>`                      | run it against the harness              |
+| Component tests      | the `cy.mount()` side of an example                                                      | typecheck; run it if the framework runs |
+| Not runnable locally | CI YAML, `--record` runs, Cloud or third-party APIs, console output                      | say so in the report, with the reason   |
+
+A block belongs in the last row only when running it needs something the
+session doesn't have, such as a record key or a paid service. "It's short" or
+"it's obviously right" is not a reason, and neither is being a fragment: a
+fragment runs once you wrap it in the scaffolding from Step 5.
+
+### Step 2: install Cypress with its binary
+
+The harness runs real Cypress, so it needs the binary that
+`CYPRESS_INSTALL_BINARY=0` skips.
+
+```shell
+npm i
+npx cypress verify
+```
+
+If `verify` reports the binary is missing, run `npx cypress install`.
+
+### Step 3: create the harness
+
+Build it in `.example-check/` at the repository root. It sits inside the repo so
+`cypress` and `typescript` resolve from the root `node_modules`, and it is
+gitignored, so it never reaches a commit. The root `npm run typecheck` does not
+include it.
+
+```shell
+mkdir -p .example-check/cypress/e2e .example-check/app
+```
+
+```ts title=".example-check/cypress.config.ts"
+import { defineConfig } from 'cypress'
+
+export default defineConfig({
+  video: false,
+  screenshotOnRunFailure: false,
+  fixturesFolder: false,
+  retries: 0,
+  e2e: {
+    supportFile: false,
+  },
+})
+```
+
+```json title=".example-check/tsconfig.json"
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["es2020", "dom"],
+    "module": "commonjs",
+    "types": ["cypress", "node"],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  },
+  "include": ["cypress.config.ts", "cypress/**/*.ts"]
+}
+```
+
+### Step 4: write the page the example expects
+
+Examples assume markup: a `#email` input, a `"Submit"` button, a list that loads
+from `/api/users`. Write the smallest HTML page that has exactly what the
+example selects and nothing it doesn't, and save it under `.example-check/app/`.
+
+```html title=".example-check/app/index.html"
+<!doctype html>
+<html>
+  <body>
+    <form>
+      <input id="email" type="email" />
+      <button id="submit">Submit</button>
+    </form>
+  </body>
+</html>
+```
+
+Visit it with `cy.visit('app/index.html')`. Cypress serves the project folder
+itself, so no server or `baseUrl` is needed, and a `fetch('/api/users')` in the
+page reaches Cypress's server, where `cy.intercept()` can stub it.
+
+### Step 5: paste the example in verbatim
+
+Create one spec per page under `.example-check/cypress/e2e/`. Copy each example
+in exactly as it appears in the `.mdx`, and mark where it starts and ends.
+
+```ts title=".example-check/cypress/e2e/focus.cy.ts"
+describe('.focus() examples', () => {
+  beforeEach(() => {
+    cy.visit('app/index.html')
+  })
+
+  it('focuses the email input', () => {
+    // --- example (verbatim) ---
+    cy.get('#email').focus()
+    // --- end example ---
+
+    // Proves the page's claim about what .focus() does.
+    cy.focused().should('have.id', 'email')
+  })
+})
+```
+
+The rules for this step:
+
+- **Never edit the lines between the markers.** Scaffolding goes around them:
+  the `describe`/`it`, the `cy.visit()`, a stub the example depends on. If the
+  example only works after you change a line inside it, the example is broken,
+  and that is a finding.
+- **Add an assertion for every claim the prose makes.** An example with no
+  assertion passes as long as it doesn't throw. If the page says the command
+  yields the element, assert what it yields; if it says a request is waited on,
+  `cy.wait()` on it.
+- **Examples documented to fail get tested failing.** When the page shows an
+  error, assert that error with `cy.on('fail', ...)` and check its message.
+- **Config examples** go between the markers inside `.example-check/cypress.config.ts`
+  instead, with a one-line spec such as `it('launches', () => {})` so Cypress
+  has something to run.
+- **`copyTsToJs` blocks**: run the TypeScript source. The JavaScript tab is
+  generated from it.
+- **`:::visit-mount-example`**: run the `cy.visit()` variant here, and
+  typecheck the `cy.mount()` variant. Run the mount side too if the
+  framework's dependencies are installed.
+
+### Step 6: typecheck the harness
+
+```shell
+npx tsc -p .example-check
+```
+
+This catches misspelled options, wrong argument types, and signatures that no
+longer exist before anything runs. Treat every error as a finding, even when
+the test would pass at runtime, because the reader's editor shows the same red
+underline.
+
+### Step 7: run the harness
+
+Run the spec from the repository root. Pass the spec path relative to the root
+and use the bundled Electron browser, which needs no install.
+
+```shell
+npx cypress run --project .example-check --browser electron --spec .example-check/cypress/e2e/focus.cy.ts
+```
+
+A pass is the whole spec green on the first run. The config sets `retries: 0`
+on purpose, so a flaky example shows up as a failure instead of hiding
+behind a retry.
+
+For a shell command, run it as written against the harness, replacing only
+`--project` so it points at `.example-check`. Skip `--record` and anything else
+that publishes, and put it in the not-runnable bucket instead.
+
+### Step 8: fix, then run it again
+
+When an example fails, find out whether the example or the prose is wrong
+before you change either:
+
+1. Read the failure verbatim. Cypress prints the command, the error, and the
+   line in your spec.
+2. For an `/api` page, check the behavior against the Cypress source (see
+   [API source of truth](#api-source-of-truth)). If the source agrees with the
+   page and the example still fails, the problem may be a Cypress bug. Flag it
+   and leave the page alone.
+3. Otherwise, write the corrected example, paste it back between the markers,
+   and repeat Steps 6 and 7 until they pass.
+4. Put the corrected version in the `.mdx` only after it passes.
+
+### Step 9: report the results in the thread
+
+Report in the conversation or pull request thread you're working in, not in a
+file. List every example you touched, including the ones that passed, so a
+reviewer can see nothing was skipped.
+
+For each failure, give the reader everything they need to act without rerunning
+anything: where the example is, the command you ran, the error as Cypress
+printed it, the cause, and a fix with a worked code example that you ran and
+watched pass. Use this shape:
+
+````markdown
+## Code example verification
+
+| Example                                                        | Result     | Notes                 |
+| -------------------------------------------------------------- | ---------- | --------------------- |
+| `docs/api/commands/focus.mdx`, "Focus an input"                | ✅ Passed  |                       |
+| `docs/api/commands/type.mdx`, "Type in a form"                 | ❌ Failed  | Fixed below, verified |
+| `docs/app/run-tests/continuous-integration/github-actions.mdx` | ⚠️ Not run | Needs a record key    |
+
+### ❌ `docs/api/commands/type.mdx`, "Type in a form"
+
+**Ran:** `npx cypress run --project .example-check --browser electron --spec .example-check/cypress/e2e/type.cy.ts`
+
+**Error:**
+
+```text
+CypressError: `cy.type()` failed because it requires a valid typeable element.
+
+The element typed into was:
+
+  > `<button id="submit">Submit</button>`
+```
+
+**Cause:** the example types into the submit button, which isn't typeable. The
+prose says it fills in the email field.
+
+**Fix (verified, passes):**
+
+```js
+cy.get('#email').type('hello@example.com')
+cy.get('#email').should('have.value', 'hello@example.com')
+```
+````
+
+A failure you couldn't resolve still gets a row and a section. Say what you
+tried, what you believe the fix is, and whether it belongs in this repository
+or in `cypress-io/cypress`.
+
+### Step 10: clean up
+
+```shell
+rm -rf .example-check
+```
+
+It's gitignored, so nothing breaks if you forget, but a stale harness can
+mislead the next run. Summarize the results table in the pull request
+description too, so the record outlives the thread.
+
 ## AI prompts: `<CopyPrompt>` vs a code block
 
 Pick by whether the reader would **copy the text into an AI agent and get value
