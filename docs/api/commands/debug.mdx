@@ -65,8 +65,8 @@ cy.get('a').debug().should('have.attr', 'href')
 
 #### Confirm the element before acting on it
 
-Place `.debug()` before an action to check which element the action will
-receive.
+Place `.debug()` before an action to check which element the action
+receives.
 
 ```javascript
 cy.get('form').find('input[name="email"]').debug().type('user@example.com')
@@ -98,7 +98,7 @@ cy.wait('@login').debug()
 
 ### Assertions
 
-#### See why an assertion keeps retrying
+#### See the first-run subject while an assertion retries
 
 The "Debug Info" block shows the subject from the first time `.debug()` runs.
 Here, it may log fewer than three items even though `.should()` passes once the
@@ -164,7 +164,7 @@ interact with it.
 
 The breakpoint is in Cypress's own `cypress_runner.js`, not in your test file.
 Look for the "HOVER OVER TO INSPECT THE CURRENT SUBJECT" comment above the
-paused line, and for `subject` under **Local** in the **Scope** pane:
+paused line, and for `subject` under "Local" in the "Scope" pane:
 
 <DocsImage
   src="/img/api/debug/devtools-paused-at-debug-breakpoint.png"
@@ -187,7 +187,7 @@ pass.
 
 <HeaderAssertions />
 
-- `.debug()` will not run assertions. Assertions pass through as if this
+- `.debug()` does not run assertions. Assertions pass through as if this
   command did not exist.
 
 <HeaderTimeouts />
@@ -202,7 +202,7 @@ pass.
 cy.get('.ls-btn').click({ force: true }).debug()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/debug/how-debug-displays-in-command-log.png"
@@ -218,9 +218,9 @@ When `.debug()` runs, the console outputs the following:
 
 ## History
 
-| Version                                    | Changes                                                                                        |
-| ------------------------------------------ | ---------------------------------------------------------------------------------------------- |
-| [12.0.0](/app/references/changelog#12-0-0) | `.debug()` became a query and can no longer be overwritten with `Cypress.Commands.overwrite()` |
+| Version                                    | Changes                                                                                                                                                                              |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [12.0.0](/app/references/changelog#12-0-0) | `.debug()` became a query and can no longer be overwritten with `Cypress.Commands.overwrite()`. See the [migration guide](/app/references/migration-guide#CypressCommandsoverwrite). |
 
 ## See also
 
