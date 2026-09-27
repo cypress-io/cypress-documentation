@@ -11,15 +11,16 @@ Some directories carry their own `AGENTS.md` (plus a `CLAUDE.md` that imports
 it) for conventions that apply only inside them. Read the one for the directory
 you're working in:
 
-| Directory            | Covers                                                      |
-| -------------------- | ----------------------------------------------------------- |
-| `docs/api/`          | the Cypress source behind a page, frontmatter, the skeleton |
-| `docs/partials/`     | when a partial is warranted, naming, registration           |
-| `docs/app/releases/` | changelog entry format                                      |
-| `src/`               | component layout, registration, swizzled theme files        |
-| `plugins/`           | the sub-package build and dependency rules                  |
-| `cypress/`           | the generated page list, what the crawl specs are for       |
-| `.github/workflows/` | pinning actions, what forks copy, required checks           |
+| Directory              | Covers                                                      |
+| ---------------------- | ----------------------------------------------------------- |
+| `docs/api/`            | the Cypress source behind a page, frontmatter, the skeleton |
+| `docs/partials/`       | when a partial is warranted, naming, registration           |
+| `docs/app/releases/`   | changelog entry format                                      |
+| `src/`                 | component layout, registration, swizzled theme files        |
+| `plugins/`             | the sub-package build and dependency rules                  |
+| `cypress/`             | the generated page list, what the crawl specs are for       |
+| `.github/workflows/`   | pinning actions, what forks copy, required checks           |
+| `scripts/screenshots/` | editing the Puppeteer capture scripts                       |
 
 Three conventions hold for every one of them:
 
@@ -124,12 +125,12 @@ Each rule is a hard convention. See the linked section for the how and why.
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
 [AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
 [alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text),
-[screenshots](./AGENTS_REFERENCE.md#capturing-cypress-app-screenshots)
+[screenshots](./scripts/screenshots/README.md)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
 - Capture Cypress App screenshots from a real run of the page's own snippet, never
-  a mock-up: follow the [capture procedure](./AGENTS_REFERENCE.md#capturing-cypress-app-screenshots).
+  a mock-up: follow the [capture procedure](./scripts/screenshots/README.md).
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
