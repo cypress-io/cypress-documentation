@@ -120,6 +120,16 @@ cy.get('ul li:first').should('have.length', 1) // Apple only
 cy.get('ul li:first-child').should('have.length', 2) // Apple and Carrot
 ```
 
+#### Find the first or nth element with `.first()` and `.eq()`
+
+Chaining [`.first()`](/api/commands/first) or [`.eq()`](/api/commands/eq) onto
+`cy.get()` reads more clearly than a `:first` or `:eq()` selector.
+
+```javascript
+cy.get('[data-cy=todo-item]').first().should('contain', 'Buy milk')
+cy.get('[data-cy=todo-item]').eq(1).should('contain', 'Walk dog')
+```
+
 #### Find the dropdown-menu and click it
 
 ```javascript
@@ -128,8 +138,20 @@ cy.get('.dropdown-menu').click()
 
 #### Find 5 elements with the given data attribute
 
+Dedicated `data-*` attributes such as `data-cy` keep selectors stable when your
+styles or text change. See
+[best practices for selecting elements](/app/core-concepts/best-practices#Selecting-Elements).
+
 ```javascript
-cy.get('[data-test-id="test-example"]').should('have.length', 5)
+cy.get('[data-cy="todo-item"]').should('have.length', 5)
+```
+
+#### Find elements matching any of several selectors
+
+Separate selectors with commas to yield every element that matches any of them.
+
+```javascript
+cy.get('input, textarea, select').should('have.length', 3)
 ```
 
 #### Find the link with an href attribute containing the word "questions" and click it
@@ -160,6 +182,74 @@ cy.get('[id^=local-][id$=-remote]')
 
 ```javascript
 cy.get('#id\\.\\.\\.1234') // escape the character with \\
+```
+
+#### Find an element by an ID built at runtime
+
+When the ID comes from a variable, escape it with
+[`CSS.escape()`](https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape_static)
+instead of adding backslashes by hand.
+
+```javascript
+const userId = 'user:42'
+
+cy.get(`#${CSS.escape(userId)}`).should('have.text', 'Jane')
+```
+
+### Waiting for elements
+
+#### Wait for a list to finish loading
+
+`cy.get()` retries until the assertion chained to it passes, so it waits for
+all three items to appear.
+
+```javascript
+cy.get('[data-cy=todo-item]').should('have.length', 3)
+```
+
+An assertion inside [`.then()`](/api/commands/then) runs only once. `cy.get()`
+waits only until at least one item exists, so this fails if the list is still
+filling in:
+
+```javascript
+// Runs once: fails if the list is still loading
+cy.get('[data-cy=todo-item]').then(($items) => {
+  expect($items).to.have.length(3)
+})
+```
+
+#### Assert an element doesn't exist
+
+`cy.get()` retries a negative assertion too, until the element is gone.
+
+```javascript
+cy.get('[data-cy=loading-spinner]').should('not.exist')
+```
+
+### Options
+
+#### Wait longer for a slow element with `timeout`
+
+```javascript
+cy.get('[data-cy=search-results]', { timeout: 10000 }).should('be.visible')
+```
+
+#### Find elements inside shadow DOM with `includeShadowDom`
+
+```javascript
+cy.get('.shadow-button', { includeShadowDom: true }).click()
+```
+
+To search shadow DOM in every query, set the
+[`includeShadowDom` configuration option](/app/references/configuration#Global)
+instead.
+
+#### Hide a query from the Command Log with `log`
+
+The `get` row is hidden, but the assertion still appears in the Command Log.
+
+```javascript
+cy.get('[data-cy=toast]', { log: false }).should('be.visible')
 ```
 
 ### `cy.get()` in the [`.within()`](/api/commands/within) command
@@ -252,6 +342,43 @@ it('shows the first user in the header', () => {
 })
 ```
 
+#### Re-run an alias or capture a static value
+
+By default, an alias re-runs its queries each time you request it. Pass
+`{ type: 'static' }` to [`.as()`](/api/commands/as) to keep the value from the
+moment you created the alias.
+
+```javascript
+cy.get('[data-cy=total]').invoke('text').as('liveTotal')
+cy.get('[data-cy=total]').invoke('text').as('startTotal', { type: 'static' })
+
+cy.get('[data-cy=add-item]').click()
+
+cy.get('@liveTotal').should('eq', '$5.00') // re-runs the queries
+cy.get('@startTotal').should('eq', '$0.00') // value captured earlier
+```
+
+#### Assert an aliased element no longer exists
+
+Because the alias re-runs its query, you can assert that the element is gone.
+
+```javascript
+cy.get('[data-cy=toast]').as('toast')
+cy.get('[data-cy=dismiss]').click()
+cy.get('@toast').should('not.exist')
+```
+
+#### Get an aliased spy or stub
+
+```javascript
+cy.window().then((win) => {
+  cy.spy(win.console, 'error').as('consoleError')
+})
+
+cy.get('[data-cy=save]').click()
+cy.get('@consoleError').should('not.have.been.called')
+```
+
 #### Get all aliased intercepts
 
 When using [`cy.intercept()`](/api/commands/intercept) with an alias, you can
@@ -260,6 +387,40 @@ alias name. This returns an array of
 [interception objects](/api/commands/intercept#Using-the-yielded-object).
 
 <InterceptAliasIndex />
+
+### TypeScript
+
+#### Type the yielded element or an aliased value
+
+Pass a type argument to type what `cy.get()` yields. For a selector, it's the
+element type. For an alias, it's the type of the aliased value.
+
+```typescript
+cy.get<HTMLInputElement>('[data-cy=email]').then(($input) => {
+  // $input is typed as JQuery<HTMLInputElement>
+  expect($input[0].value).to.eq('jane@example.com')
+})
+
+cy.wrap({ name: 'Jane' }).as('user')
+cy.get<{ name: string }>('@user').its('name').should('eq', 'Jane')
+```
+
+## Notes
+
+### Invalid selectors fail right away
+
+A selector with a syntax error can never match, so `cy.get()` fails immediately
+instead of retrying until the timeout.
+
+```javascript
+cy.get('[data-cy=') // fails with a syntax error
+```
+
+### `cy.get()` doesn't search inside iframes
+
+`cy.get()` searches the document of the application under test and doesn't
+descend into `<iframe>` elements. To query inside a same-origin iframe, see
+[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
 
 ## Rules
 
