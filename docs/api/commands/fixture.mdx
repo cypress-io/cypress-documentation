@@ -306,8 +306,8 @@ cy.fixture('user').then((user) => {
 })
 
 -{cy.visit('/users')::cy.mount(<Users />)}-
-cy.wait('@getUser').then(({ request }) => {
-  expect(request.body.firstName).to.eq('Jane')
+cy.wait('@getUser').then(({ response }) => {
+  expect(response.body.firstName).to.eq('Jane')
 })
 ```
 
@@ -325,16 +325,16 @@ now?" Use `cy.fixture()` for known data that stays the same during the run, and
 reach for a static `import` or [`cy.task()`](/api/commands/task) instead, see
 [Choosing how to load test data in Cypress](/app/core-concepts/writing-and-organizing-tests#Choosing-how-to-load-test-data-in-Cypress).
 
-|                               | `cy.fixture()`                    | `cy.readFile()`                             |
-| ----------------------------- | --------------------------------- | ------------------------------------------- |
-| Path is relative to           | `fixturesFolder`                  | The project root                            |
-| File extension                | Optional                          | Required                                    |
-| Reads from disk               | Once, then yields the cached copy | On every call                               |
-| Retries until assertions pass | No                                | Yes, reading the file again on each retry   |
-| Images by default             | A `base64` string                 | A `utf8` string                             |
-| Default timeout               | `responseTimeout`                 | `defaultCommandTimeout`                     |
-| Command Log                   | Not logged                        | Logged                                      |
-| Missing file                  | Always fails                      | Can be asserted with `.should('not.exist')` |
+|                               | `cy.fixture()`                                          | `cy.readFile()`                             |
+| ----------------------------- | ------------------------------------------------------- | ------------------------------------------- |
+| Path is relative to           | `fixturesFolder`                                        | The project root                            |
+| File extension                | Optional                                                | Required                                    |
+| Reads from disk               | Once per path and encoding, then yields the cached copy | On every call                               |
+| Retries until assertions pass | No                                                      | Yes, reading the file again on each retry   |
+| Images by default             | A `base64` string                                       | A `utf8` string                             |
+| Default timeout               | `responseTimeout`                                       | `defaultCommandTimeout`                     |
+| Command Log                   | Not logged                                              | Logged                                      |
+| Missing file                  | Always fails                                            | Can be asserted with `.should('not.exist')` |
 
 ### Serve a fixture directly from `cy.intercept()`
 
@@ -346,13 +346,16 @@ by using the special property `fixture` on the
 cy.intercept('GET', '/users/**', { fixture: 'users' })
 ```
 
-To read the file with an encoding other than the
-[default for its file type](#How-Cypress-chooses-a-fixtures-encoding), add the encoding after a comma.
-Use `null` to serve binary files, such as images, byte for byte:
+`cy.intercept()` serves image and `.zip` fixtures as raw bytes. Other binary
+files, such as `.mp4` or `.pdf`, are read as `utf8` text by default, which
+corrupts them. To serve one of those byte for byte, add `null` as the encoding
+after a comma:
 
 ```javascript
-cy.intercept('GET', '/images/logo.png', { fixture: 'images/logo.png,null' })
+cy.intercept('GET', '/media/intro.mp4', { fixture: 'media/intro.mp4,null' })
 ```
+
+You can pass any other supported encoding the same way.
 
 ### How Cypress validates JSON and JavaScript fixtures
 
@@ -377,6 +380,10 @@ When you don't pass an encoding, Cypress reads the file based on its extension:
 To read a file differently, pass an encoding as the second argument of
 `cy.fixture()`. You can specify `null` as the encoding to read the file as a
 [`Cypress.Buffer`](/api/utilities/buffer) instance instead.
+
+These defaults describe what `cy.fixture()` yields. When you serve a fixture
+from [`cy.intercept()`](#Serve-a-fixture-directly-from-cyintercept), image and
+`.zip` fixtures are sent as raw bytes instead of `base64`.
 
 ### Sharing fixture data through the `this` context
 
@@ -470,9 +477,12 @@ cy.task('getFileSize', 'cypress/fixtures/large.zip').then((size) => {
 
 ### How Cypress caches fixture data
 
-Cypress reads each fixture file from disk once and caches the contents. Later
-`cy.fixture()` calls for the same file and encoding yield the cached contents,
-even if the file has changed on disk.
+The first time you load a fixture, Cypress caches its contents, keyed on the
+path exactly as you wrote it and the encoding. Later `cy.fixture()` calls with
+the same path and encoding yield the cached contents, even if the file has
+changed on disk. Because the key is the path as written, `cy.fixture('users')`
+and `cy.fixture('users.json')` are cached separately, so use one form
+consistently to read the file only once.
 
 When you write to a file inside the
 [`fixturesFolder`](/app/references/configuration#Folders--Files) with
@@ -563,14 +573,11 @@ cy.fixture('todo.json').then((todo) => {
 
 ## See also
 
-- [Guide: Choosing how to load test data](/app/core-concepts/writing-and-organizing-tests#Choosing-how-to-load-test-data-in-Cypress)
 - [Guide: Variables and Aliases](/app/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
-- [`.then()`](/api/commands/then)
 - [`cy.readFile()`](/api/commands/readfile) for a similar command without
   caching and with built-in retryability
 - [`.selectFile()`](/api/commands/selectfile) for simulating file uploads,
   including with large files
 - [`cy.task()`](/api/commands/task) for keeping large file operations in the
   Node.js context
-- [Recipe: Bootstrapping App Test Data](/app/references/recipes#Server-Communication)

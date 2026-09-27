@@ -367,10 +367,10 @@ browser.
 
 Fixtures are data you control and check in alongside your tests: the API
 response you stub, the user you log in as, the image you upload. They don't
-change while the tests run, and `cy.fixture()` is built around that. It reads
-each file once and caches it, so a fixture shared by many tests isn't read from
+change while the tests run, and `cy.fixture()` is built around that. It caches
+each fixture after the first read, so a fixture shared by many tests isn't read from
 disk every time. Paths start at the `fixturesFolder` and the extension is
-optional, and images arrive as `base64` strings, ready for a stubbed response.
+optional. Images arrive as `base64` strings, ready to use in a `data:` URI.
 
 ```javascript
 cy.fixture('users').then((users) => {
