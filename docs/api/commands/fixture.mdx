@@ -449,24 +449,28 @@ their full contents to the browser (for example, verifying file metadata or
 invoking a server-side operation), use [`cy.task()`](/api/commands/task) to
 keep the operation in the Node.js context:
 
-```javascript
-// cypress.config.js
-const { defineConfig } = require('cypress')
-const fs = require('fs')
+:::cypress-config-example
 
-module.exports = defineConfig({
+```ts
+import { statSync } from 'fs'
+```
+
+```ts
+{
   e2e: {
     setupNodeEvents(on, config) {
       on('task', {
-        getFileSize(filePath) {
-          const { size } = fs.statSync(filePath)
+        getFileSize(filePath: string) {
+          const { size } = statSync(filePath)
           return size
         },
       })
     },
   },
-})
+}
 ```
+
+:::
 
 ```javascript
 // in your test
