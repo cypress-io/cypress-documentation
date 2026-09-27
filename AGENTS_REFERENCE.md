@@ -901,6 +901,13 @@ Clicking a command prints its details (`Command:`, `Yielded:`, `Elements:`, and
 so on) only in interactive mode. In a `cypress run --no-exit` run, the click only
 clears the console, so this approach needs `cypress open`.
 
+`cy.screenshot()` can't stand in here, even with DevTools open. The Chromium
+flag `--auto-open-devtools-for-tabs` does open DevTools in a headed run, but it
+docks beside the page rather than inside it, so the capture leaves it out and
+the runner gets squeezed into the remaining width. The console details are also
+missing in `cypress run`: the driver keeps a command's console output only when
+`isInteractive` is true and tests are kept in memory.
+
 1. Start `cypress open` with a CDP port on Electron, and wait for the Launchpad:
 
    ```shell
