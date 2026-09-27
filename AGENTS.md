@@ -69,7 +69,8 @@ is enough for every command above except `npm test`.
    hook and CI both enforce Prettier on `*.{md,mdx}`).
 2. `npm run build` — the real safety net for content: `onBrokenLinks` and
    `onBrokenMarkdownLinks` are `throw`, so any bad link or anchor fails the build.
-3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`.
+3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`, or
+   a script in `scripts/screenshots/`.
 4. `npm run test:plugins` — only when you touched `plugins/`.
 5. `npm test` — for nav/routing or broad changes. Serve a production build
    first (`npm run build`, then `npm run serve`), which is what CI does. The dev
@@ -122,10 +123,13 @@ Each rule is a hard convention. See the linked section for the how and why.
 [naming](./AGENTS_REFERENCE.md#product-heading--naming),
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
 [AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
-[alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text)
+[alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text),
+[screenshots](./AGENTS_REFERENCE.md#capturing-cypress-app-screenshots)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
+- Capture Cypress App screenshots from a real run of the page's own snippet, never
+  a mock-up: follow the [capture procedure](./AGENTS_REFERENCE.md#capturing-cypress-app-screenshots).
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
