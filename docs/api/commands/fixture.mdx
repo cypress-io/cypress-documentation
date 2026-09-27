@@ -10,6 +10,24 @@ sidebar_label: fixture
 
 Load a fixed set of data located in a file.
 
+Tests are easiest to trust when every run starts from the same data.
+`cy.fixture()` loads known test data, such as JSON records, images, and CSV
+files, from your [`fixturesFolder`](/app/references/configuration#Folders--Files).
+That keeps the data out of your spec code, lets many tests share it, and means a
+test fails because your app changed, not because the data did.
+
+Reach for `cy.fixture()` when you need to:
+
+- Stub network responses with [`cy.intercept()`](/api/commands/intercept), so
+  your tests don't depend on a live backend or on data that changes between runs
+- Fill in forms or check the page against the same known records every time
+- Upload a sample file through a file input with
+  [`.selectFile()`](/api/commands/selectfile)
+
+To read a file that changes while your tests run, or a file your app produces,
+use [`cy.readFile()`](/api/commands/readfile) instead. See
+[Choosing between `cy.fixture()` and `cy.readFile()`](#Choosing-between-cyfixture-and-cyreadFile).
+
 ## Syntax
 
 ```javascript
@@ -296,6 +314,61 @@ cy.wait('@getUser').then(({ request }) => {
 :::
 
 ## Notes
+
+### Choosing between `cy.fixture()` and `cy.readFile()`
+
+Both commands read a file from disk, but they answer different questions.
+`cy.fixture()` answers "what data should this test start with?" while
+[`cy.readFile()`](/api/commands/readfile) answers "what's in this file right
+now?"
+
+#### Use `cy.fixture()` for test inputs that stay the same
+
+Fixtures are data you control and check in alongside your tests: the API
+response you stub, the user you log in as, the image you upload. They don't
+change while the tests run, and `cy.fixture()` is built around that:
+
+- It reads each file once and caches it, so a fixture shared by dozens of tests
+  isn't read from disk dozens of times.
+- Paths are short. They start at the `fixturesFolder`, and the extension is
+  optional, so `cy.fixture('users')` finds `cypress/fixtures/users.json`.
+- Images and other binary files arrive as `base64` strings, ready to use in a
+  stubbed response or a `data:` URI.
+
+```javascript
+cy.fixture('users').then((users) => {
+  cy.intercept('GET', '/api/users', users)
+})
+```
+
+#### Use `cy.readFile()` for files that change or that your app creates
+
+When the file is something your test is waiting on or checking, such as a report
+your app exports, a file a task writes, or a config file outside the fixtures
+folder, the cache works against you. `cy.readFile()` reads the file on every
+call and keeps reading it until your assertions pass, so it can wait for a file
+to appear or to finish changing:
+
+```javascript
+cy.get('[data-cy="export-csv"]').click()
+cy.readFile('cypress/downloads/report.csv').should('contain', 'Total')
+```
+
+It can also confirm that a file was removed, with
+`cy.readFile('path/to/file').should('not.exist')`.
+
+#### Behavior differences at a glance
+
+|                               | `cy.fixture()`                    | `cy.readFile()`                             |
+| ----------------------------- | --------------------------------- | ------------------------------------------- |
+| Path is relative to           | `fixturesFolder`                  | The project root                            |
+| File extension                | Optional                          | Required                                    |
+| Reads from disk               | Once, then yields the cached copy | On every call                               |
+| Retries until assertions pass | No                                | Yes, reading the file again on each retry   |
+| Images by default             | A `base64` string                 | A `utf8` string                             |
+| Default timeout               | `responseTimeout`                 | `defaultCommandTimeout`                     |
+| Command Log                   | Not logged                        | Logged                                      |
+| Missing file                  | Always fails                      | Can be asserted with `.should('not.exist')` |
 
 ### Shortcuts
 
