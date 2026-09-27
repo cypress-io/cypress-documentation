@@ -27,7 +27,8 @@ const browser = await connect(args.port)
 const page = must(await runnerPage(browser), 'No runner page (URL with /__/)')
 const frame = must(await frameWith(page, command), `No rows match ${command}`)
 
-const rows = await frame.$$(`${command} .command-wrapper`)
+// Direct children only: a command's child commands render inside its <li>
+const rows = await frame.$$(`${command} > .command-wrapper`)
 const row = must(
   rows[args.nth ? Number(args.nth) - 1 : rows.length - 1],
   `No row ${args.nth} of ${rows.length} matching ${command}`
