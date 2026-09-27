@@ -78,8 +78,8 @@ cy.get('li').first()
 
 #### Get the first element across several lists
 
-`.first()` yields one element for the whole set, however many parents the
-elements share. The `:first-child` selector yields the first child of every
+`.first()` yields one element for the whole set, even when the elements sit in
+different parents. The `:first-child` selector yields the first child of every
 parent instead.
 
 ```html
@@ -101,7 +101,7 @@ cy.get('ul li').first()
 cy.get('ul li:first-child')
 ```
 
-### Workflows
+### Common workflows with `.first()`
 
 #### Scope `.within()` to the first matching element
 
@@ -121,7 +121,7 @@ cy.get('tr')
 An action such as [`.click()`](/api/commands/click) is not an assertion, so
 `cy.get('[data-cy=result]').first().click()` acts on the first element that
 exists at that moment. If the list renders placeholder rows before the real
-results, that can be a placeholder. Assert on the finished list before calling
+results, the element it clicks can be a placeholder. Assert on the finished list before calling
 `.first()`, and Cypress retries the query until the assertion passes.
 
 ```javascript
@@ -141,7 +141,7 @@ cy.get('[data-cy=todo]').first().should('have.text', 'Buy milk')
 
 ## Notes
 
-### `.first()` and `.eq(0)`
+### How `.first()` compares to `.eq(0)`
 
 `.first()` yields the same element as [`.eq(0)`](/api/commands/eq). jQuery
 implements `.first()` as `.eq(0)`. Use `.eq()` to get an element at any other
@@ -151,7 +151,10 @@ index, including negative indexes counted back from the end of the set.
 
 `.first()` takes no selector. Cypress passes the call straight to jQuery's
 `.first()`, which ignores any arguments, so `cy.get('li').first('.active')`
-yields the first `<li>` whether or not it has the class `active`. To get the
+yields the first `<li>` whether or not it has the class `active`. The Command
+Log still shows `.active` as the command's message, which can make it look as
+though the selector was applied. TypeScript flags the call as an error, since
+the published types for `.first()` accept only an options object. To get the
 first element that matches a selector, narrow the set with
 [`.filter()`](/api/commands/filter) before calling `.first()`.
 
@@ -188,15 +191,15 @@ cy.get('li').filter('.active').first()
 cy.get('form').find('input').first()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/first/get-the-first-in-list-of-elements.png"
   alt="Command Log showing first chained after get form and find input"
 />
 
-When clicking on the `first` command within the command log, the console
-outputs the following:
+Click the `first` command in the Command Log to print the following to the
+console:
 
 <DocsImage
   src="/img/api/first/console-log-the-first-element.png"
