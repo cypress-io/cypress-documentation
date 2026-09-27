@@ -325,12 +325,18 @@ it, is exempt.
 
 ### Step 1: list the examples in your change
 
-Diff against the base branch and write down each added or changed code block:
-its file, its heading, and its language.
+Diff against the point your branch started from and write down each added or
+changed code block: its file, its heading, and its language.
 
 ```shell
-git diff origin/main -- 'docs/**/*.mdx' 'docs/**/*.md'
+git fetch origin main
+git diff $(git merge-base origin/main HEAD) -- 'docs/**/*.mdx' 'docs/**/*.md'
 ```
+
+Diff against the merge base, not `origin/main` itself. Once `main` moves ahead,
+a plain `git diff origin/main` also shows examples that other merged pull
+requests changed, and you would end up checking, or reverting, work that isn't
+yours.
 
 Sort each one into a bucket. The bucket decides how you verify it:
 
@@ -338,7 +344,7 @@ Sort each one into a bucket. The bucket decides how you verify it:
 | -------------------- | ---------------------------------------------------------------------------------------- | --------------------------------------- |
 | Cypress test code    | spec bodies, custom commands, support files, `Cypress.*` calls, `:::visit-mount-example` | typecheck, then run it in the harness   |
 | Cypress config       | `:::cypress-config-example`, `:::cypress-config-plugin-example`, `setupNodeEvents`       | typecheck, then launch the harness      |
-| Shell commands       | `cypress run` flags, `<PackageManagerTabs>`, `<CypressCommandTabs>`                      | run it against the harness              |
+| Shell commands       | `cypress run` flags, `<PackageManagerTabs>`, `<CypressCommandTabs>`                      | run it from inside the harness          |
 | Component tests      | the `cy.mount()` side of an example                                                      | typecheck; run it if the framework runs |
 | Not runnable locally | CI YAML, `--record` runs, Cloud or third-party APIs, console output                      | say so in the report, with the reason   |
 
@@ -368,12 +374,37 @@ include it.
 
 ```shell
 mkdir -p .example-check/cypress/e2e .example-check/app
+cd .example-check
+```
+
+Run every command from here on inside `.example-check/`. It is the harness's
+project root, the same place a reader runs commands from in their own project,
+so relative paths such as `cypress/e2e/login.cy.ts` resolve the way the docs
+expect.
+
+Give it its own `package.json` first. Without one, npm walks up to the
+repository's `package.json`, and an install command from an example rewrites
+`package.json` and `package-lock.json` at the root, where a later commit can
+pick up the change. With one, installs land in `.example-check/`, and
+`npx cypress` still finds the repository's copy.
+
+```json title=".example-check/package.json"
+{
+  "name": "example-check",
+  "private": true
+}
 ```
 
 ```ts title=".example-check/cypress.config.ts"
 import { defineConfig } from 'cypress'
 
-export default defineConfig({
+// A config example from the docs replaces the empty object. See Step 5.
+const example: Cypress.ConfigOptions =
+  // --- example (verbatim) ---
+  {}
+// --- end example ---
+
+const base: Cypress.ConfigOptions = {
   video: false,
   screenshotOnRunFailure: false,
   fixturesFolder: false,
@@ -381,8 +412,19 @@ export default defineConfig({
   e2e: {
     supportFile: false,
   },
+}
+
+export default defineConfig({
+  ...base,
+  ...example,
+  e2e: { ...base.e2e, ...example.e2e },
 })
 ```
+
+The harness settings live in `base`, apart from the example, so an example that
+sets its own `e2e` merges with them instead of colliding. The
+`Cypress.ConfigOptions` type on `example` keeps the typecheck strict: a
+misspelled option or a wrong value type in the example is still an error.
 
 ```json title=".example-check/tsconfig.json"
 {
@@ -456,9 +498,13 @@ The rules for this step:
   `cy.wait()` on it.
 - **Examples documented to fail get tested failing.** When the page shows an
   error, assert that error with `cy.on('fail', ...)` and check its message.
-- **Config examples** go between the markers inside `.example-check/cypress.config.ts`
-  instead, with a one-line spec such as `it('launches', () => {})` so Cypress
-  has something to run.
+- **Config examples** replace the `{}` between the markers in
+  `cypress.config.ts`. Imports from a two-block example go at the top of the
+  file. A `:::cypress-config-plugin-example` block goes inside
+  `setupNodeEvents(on, config) { ... }` under `e2e` in the example object.
+  Then add a spec that asserts the setting took effect, such as
+  `expect(Cypress.config('viewportWidth')).to.eq(1000)`, or that calls the
+  task the example registers.
 - **`copyTsToJs` blocks**: run the TypeScript source. The JavaScript tab is
   generated from it.
 - **`:::visit-mount-example`**: run the `cy.visit()` variant here, and
@@ -468,7 +514,7 @@ The rules for this step:
 ### Step 6: typecheck the harness
 
 ```shell
-npx tsc -p .example-check
+npx tsc -p .
 ```
 
 This catches misspelled options, wrong argument types, and signatures that no
@@ -478,20 +524,23 @@ underline.
 
 ### Step 7: run the harness
 
-Run the spec from the repository root. Pass the spec path relative to the root
-and use the bundled Electron browser, which needs no install.
+Run the spec from inside `.example-check/` with the bundled Electron browser,
+which needs no install.
 
 ```shell
-npx cypress run --project .example-check --browser electron --spec .example-check/cypress/e2e/focus.cy.ts
+npx cypress run --browser electron --spec cypress/e2e/focus.cy.ts
 ```
 
 A pass is the whole spec green on the first run. The config sets `retries: 0`
 on purpose, so a flaky example shows up as a failure instead of hiding
 behind a retry.
 
-For a shell command, run it as written against the harness, replacing only
-`--project` so it points at `.example-check`. Skip `--record` and anything else
-that publishes, and put it in the not-runnable bucket instead.
+For a shell command, run it exactly as written from inside `.example-check/`.
+Create any spec or file it names first, at the path it names, so
+`npx cypress run --spec cypress/e2e/login.cy.ts` finds
+`cypress/e2e/login.cy.ts` in the harness. An install command installs into the
+harness's own `package.json`. Skip `--record` and anything else that publishes,
+and put it in the not-runnable bucket instead.
 
 ### Step 8: fix, then run it again
 
@@ -530,7 +579,7 @@ watched pass. Use this shape:
 
 ### ❌ `docs/api/commands/type.mdx`, "Type in a form"
 
-**Ran:** `npx cypress run --project .example-check --browser electron --spec .example-check/cypress/e2e/type.cy.ts`
+**Ran:** `npx cypress run --browser electron --spec cypress/e2e/type.cy.ts`
 
 **Error:**
 
@@ -560,7 +609,7 @@ or in `cypress-io/cypress`.
 ### Step 10: clean up
 
 ```shell
-rm -rf .example-check
+cd .. && rm -rf .example-check
 ```
 
 It's gitignored, so nothing breaks if you forget, but a stale harness can
