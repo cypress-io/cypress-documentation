@@ -121,22 +121,34 @@ cy.get('nav a').each(($link, index) => {
 })
 ```
 
-**Collect values, then assert once**
+**Collect results from Cypress commands, then assert once**
 
-Gather values in the callback and assert on all of them in a
-[`.then()`](/api/commands/then) that runs after the loop finishes.
+When each item needs a Cypress command, such as a request, gather the results
+in the callback and assert on all of them in a [`.then()`](/api/commands/then)
+that runs after the loop finishes. This test reports every broken link at once
+instead of stopping at the first one.
 
 ```javascript
-const prices = []
+const broken = []
 
-cy.get('[data-cy="price"]')
-  .each(($price) => {
-    prices.push(Number($price.text().replace('$', '')))
+cy.get('footer a')
+  .each(($link) => {
+    const href = $link.prop('href')
+
+    cy.request({ url: href, failOnStatusCode: false }).then((response) => {
+      if (response.status >= 400) {
+        broken.push(`${href} (${response.status})`)
+      }
+    })
   })
   .then(() => {
-    expect(prices).to.deep.equal([...prices].sort((a, b) => a - b))
+    // list the links in the message, since Chai shortens long arrays
+    expect(broken, `broken links: ${broken.join(', ')}`).to.be.empty
   })
 ```
+
+If you only need to read values from the elements, such as their text, use a
+[`.should()` callback](#Prefer-should-for-assertions-on-every-element) instead.
 
 **The original collection is always yielded**
 
@@ -227,6 +239,23 @@ cy.get('[data-cy="result"]').should(($results) => {
   })
 })
 ```
+
+Because the whole callback reruns, the same pattern works for checks on the list
+as a whole, such as sort order after your application applies a sort.
+
+```javascript
+cy.get('[data-cy="price"]').should(($prices) => {
+  const prices = [...$prices].map((price) =>
+    Number(price.textContent.replace('$', ''))
+  )
+
+  expect(prices).to.deep.equal([...prices].sort((a, b) => a - b))
+})
+```
+
+Chaining `.should()` after `.each()` does not give you this retry. `.should()`
+reruns only its own callback, not `.each()`, so it keeps checking values
+collected from the list as it was when `.each()` ran.
 
 Keep `.each()` for work that needs Cypress commands per item, such as clicking,
 typing, or making requests.
