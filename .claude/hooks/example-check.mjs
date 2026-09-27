@@ -9,9 +9,10 @@
 //
 // The judgment about what to run, and how, is the agent's; this only makes
 // sure the question gets asked. "Changed" means changed from HEAD, staged or
-// not, so it doesn't depend on how the commit is made. The reminder is keyed
-// to a fingerprint of the changed blocks: editing a block brings it back once,
-// while prose edits don't.
+// not, so it doesn't depend on how the commit is made. The reminder remembers
+// each block it has mentioned, and fires again only for a block it hasn't: an
+// edited block is a new one, while prose edits and committing some of the
+// listed blocks don't bring it back.
 
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
@@ -118,9 +119,8 @@ function changedBlocks() {
   return changed
 }
 
-function fingerprint(blocks) {
-  const keys = blocks.map((b) => `${b.path}\0${b.body}`).sort()
-  return createHash('sha256').update(keys.join('\0\0')).digest('hex')
+function key(block) {
+  return createHash('sha256').update(`${block.path}\0${block.body}`).digest('hex')
 }
 
 function describe(blocks) {
@@ -145,25 +145,30 @@ if (mode === 'list') {
   }
   // `git commit` at the start of a command or after a shell separator, with
   // any of git's global options in between (`--no-pager`, `-P`, `-C <dir>`,
-  // `-c <key=value>`). A mention inside a quoted string or message doesn't count.
+  // `-c <key=value>`). It doesn't parse shell quoting, so a quoted string that
+  // contains a separator and `git commit` (`echo "a; git commit"`) also matches.
+  // That's accepted: it's a reminder, not a guarantee, and the report in the
+  // thread is the real check.
   const commits =
     /(?:^|[;&|(\n]|\bthen\b|\bdo\b)\s*(?:\w+=\S*\s+)*git(?:\s+(?:-[cC]\s+\S+|-\S+))*\s+commit(?![\w-])/
   if (input.tool_name !== 'Bash' || !commits.test(input.tool_input?.command ?? '')) process.exit(0)
   const blocks = changedBlocks()
   if (!blocks.length) process.exit(0)
-  const current = fingerprint(blocks)
-  if (existsSync(remindedPath) && readFileSync(remindedPath, 'utf8').trim() === current) process.exit(0)
-  writeFileSync(remindedPath, `${current}\n`)
+  const reminded = new Set(existsSync(remindedPath) ? readFileSync(remindedPath, 'utf8').split('\n') : [])
+  const unmentioned = blocks.filter((b) => !reminded.has(key(b)))
+  if (!unmentioned.length) process.exit(0)
+  // Keep only blocks that are still changed, so the file doesn't grow forever.
+  writeFileSync(remindedPath, `${blocks.map(key).join('\n')}\n`)
   process.stderr.write(
     `Reminder: these code examples changed since the last commit.
 
-${describe(blocks)}
+${describe(unmentioned)}
 
 Before committing, run each one in the .example-check/ harness and report the results in the thread,
 following AGENTS_REFERENCE.md#verifying-code-examples. If you judge that one doesn't need a run (for
 example, Prettier only rewrapped it), say so and why in your report.
 
-This reminder shows once for these changes. When you've handled them, run the same commit again.
+This reminder shows once for each changed example. When you've handled them, run the same commit again.
 `
   )
   process.exit(2)

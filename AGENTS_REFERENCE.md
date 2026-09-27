@@ -433,8 +433,9 @@ The template holds three files:
   `retries: 0` so a flaky example fails instead of passing on a retry. A config
   example goes in the `example` slot and merges over `base`, so an example that
   sets its own `e2e` doesn't collide with it.
-- **`tsconfig.json`** typechecks the config and specs strictly against the
-  Cypress types, so a misspelled option or a wrong value type is an error.
+- **`tsconfig.json`** typechecks the config and specs, `.ts` and `.tsx`,
+  strictly against the Cypress types, so a misspelled option or a wrong value
+  type is an error.
 
 Edit the copy, never the template. Change the template only when the harness
 itself needs to change, and when you do, copy it fresh and run a passing example
@@ -461,6 +462,10 @@ example selects and nothing it doesn't, and save it under `.example-check/app/`.
 Visit it with `cy.visit('app/index.html')`. Cypress serves the project folder
 itself, so no server or `baseUrl` is needed, and a `fetch('/api/users')` in the
 page reaches Cypress's server, where `cy.intercept()` can stub it.
+
+An example that loads a fixture needs the file too. Save it under
+`cypress/fixtures/`, where `cy.fixture('user.json')` looks for it, the same as
+in a reader's project.
 
 ### Step 5: paste the example in verbatim
 
@@ -616,8 +621,10 @@ The judgment is yours. The reminder makes sure the question gets asked; it
 doesn't check your answer. The results table in the thread is what a reviewer
 checks. Keep these behaviors in mind:
 
-- **It fires once per set of changes.** Editing a block afterward brings it back
-  once, since that is a new example to decide about. Editing prose doesn't.
+- **It fires once per example.** It remembers each example it has listed and
+  fires again only for one it hasn't. Editing a block afterward brings it back
+  for that block, since that is a new example to decide about. Editing prose, or
+  committing some of the listed examples first, doesn't.
 - **It lists every changed example, not only the staged ones.** Unstaged
   edits and new pages git doesn't track yet count too, so `git commit -a` or a
   path on the command line sees the same list as a plain commit.

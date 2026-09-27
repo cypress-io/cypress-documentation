@@ -4,10 +4,11 @@
     "lib": ["es2020", "dom"],
     "module": "commonjs",
     "types": ["cypress", "node"],
+    "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
     "esModuleInterop": true
   },
-  "include": ["cypress.config.ts", "cypress/**/*.ts"]
+  "include": ["cypress.config.ts", "cypress/**/*.ts", "cypress/**/*.tsx"]
 }

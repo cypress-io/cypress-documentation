@@ -14,7 +14,6 @@ const example: Cypress.ConfigOptions =
 const base: Cypress.ConfigOptions = {
   video: false,
   screenshotOnRunFailure: false,
-  fixturesFolder: false,
   // Off so a flaky example fails instead of passing on a retry.
   retries: 0,
   e2e: {
