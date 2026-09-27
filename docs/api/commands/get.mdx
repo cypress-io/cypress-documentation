@@ -71,7 +71,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 | ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
 | `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                          |
 | `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time, in milliseconds, to wait for `cy.get()` to resolve before [timing out](#Timeouts). Must be a number.   |
-| `withinSubject`    | the [`.within()`](/api/commands/within) subject, if any                        | Element to search within. Pass `null` to search from the document.                                           |
+| `withinSubject`    | the [`.within()`](/api/commands/within) subject, otherwise the document        | Element to search within. Pass `null` to search from the document.                                           |
 | `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results. |
 
 <HeaderYields />
@@ -92,7 +92,7 @@ Pass in an options object to change the default behavior of `cy.get()`.
 cy.get('input').should('be.disabled')
 ```
 
-#### Find the first `li` descendent within a `ul`
+#### Find the first `li` descendant within a `ul`
 
 ```javascript
 cy.get('ul li:first').should('have.class', 'active')
@@ -120,16 +120,6 @@ cy.get('ul li:first').should('have.length', 1) // Apple only
 cy.get('ul li:first-child').should('have.length', 2) // Apple and Carrot
 ```
 
-#### Find the first or nth element with `.first()` and `.eq()`
-
-Chaining [`.first()`](/api/commands/first) or [`.eq()`](/api/commands/eq) onto
-`cy.get()` reads more clearly than a `:first` or `:eq()` selector.
-
-```javascript
-cy.get('[data-cy=todo-item]').first().should('contain', 'Buy milk')
-cy.get('[data-cy=todo-item]').eq(1).should('contain', 'Walk dog')
-```
-
 #### Find the dropdown-menu and click it
 
 ```javascript
@@ -143,7 +133,17 @@ styles or text change. See
 [best practices for selecting elements](/app/core-concepts/best-practices#Selecting-Elements).
 
 ```javascript
-cy.get('[data-cy="todo-item"]').should('have.length', 5)
+cy.get('[data-cy=todo-item]').should('have.length', 5)
+```
+
+#### Find the first or nth element with `.first()` and `.eq()`
+
+Chaining [`.first()`](/api/commands/first) or [`.eq()`](/api/commands/eq) onto
+`cy.get()` reads more clearly than a `:first` or `:eq()` selector.
+
+```javascript
+cy.get('[data-cy=todo-item]').first().should('contain', 'Buy milk')
+cy.get('[data-cy=todo-item]').eq(1).should('contain', 'Walk dog')
 ```
 
 #### Find elements matching any of several selectors
@@ -178,7 +178,7 @@ cy.get('[id$=-remote]')
 cy.get('[id^=local-][id$=-remote]')
 ```
 
-#### Find the element with id that has characters used in CSS like ".", ":".
+#### Find the element with id that has characters used in CSS like ".", ":"
 
 ```javascript
 cy.get('#id\\.\\.\\.1234') // escape the character with \\
@@ -194,6 +194,49 @@ instead of adding backslashes by hand.
 const userId = 'user:42'
 
 cy.get(`#${CSS.escape(userId)}`).should('have.text', 'Jane')
+```
+
+### `cy.get()` in the [`.within()`](/api/commands/within) command
+
+Since `cy.get()` is chained off of `cy`, it always looks for the selector within
+the entire `document`. The only exception is when used inside a
+[.within()](/api/commands/within) command.
+
+```javascript
+cy.get('form').within(() => {
+  cy.get('input').type('Pamela') // Only yield inputs within form
+  cy.get('textarea').type('is a developer') // Only yield textareas within form
+})
+```
+
+### Get vs Find
+
+The `cy.get` command always starts its search from the
+[cy.root](/api/commands/root) element. In most cases, it is the
+`document` element, unless used inside the [.within()](/api/commands/within)
+command. The [.find](/api/commands/find) command starts its search from
+the current subject.
+
+```html
+<div class="test-title">cy.get vs .find</div>
+<section id="comparison">
+  <div class="feature">Both are querying commands</div>
+</section>
+```
+
+```js
+cy.get('#comparison')
+  .get('div')
+  // finds the div.test-title outside the #comparison
+  // and the div.feature inside
+  .should('have.class', 'test-title')
+  .and('have.class', 'feature')
+cy.get('#comparison')
+  .find('div')
+  // the search is limited to the tree at #comparison element
+  // so it finds div.feature only
+  .should('have.length', 1)
+  .and('have.class', 'feature')
 ```
 
 ### Waiting for elements
@@ -250,49 +293,6 @@ The `get` row is hidden, but the assertion still appears in the Command Log.
 
 ```javascript
 cy.get('[data-cy=toast]', { log: false }).should('be.visible')
-```
-
-### `cy.get()` in the [`.within()`](/api/commands/within) command
-
-Since `cy.get()` is chained off of `cy`, it always looks for the selector within
-the entire `document`. The only exception is when used inside a
-[.within()](/api/commands/within) command.
-
-```javascript
-cy.get('form').within(() => {
-  cy.get('input').type('Pamela') // Only yield inputs within form
-  cy.get('textarea').type('is a developer') // Only yield textareas within form
-})
-```
-
-### Get vs Find
-
-The `cy.get` command always starts its search from the
-[cy.root](/api/commands/root) element. In most cases, it is the
-`document` element, unless used inside the [.within()](/api/commands/within)
-command. The [.find](/api/commands/find) command starts its search from
-the current subject.
-
-```html
-<div class="test-title">cy.get vs .find</div>
-<section id="comparison">
-  <div class="feature">Both are querying commands</div>
-</section>
-```
-
-```js
-cy.get('#comparison')
-  .get('div')
-  // finds the div.test-title outside the #comparison
-  // and the div.feature inside
-  .should('have.class', 'test-title')
-  .and('have.class', 'feature')
-cy.get('#comparison')
-  .find('div')
-  // the search is limited to the tree at #comparison element
-  // so it finds div.feature only
-  .should('have.length', 1)
-  .and('have.class', 'feature')
 ```
 
 ### Alias
@@ -438,14 +438,14 @@ cy.get('[data-cy=') // fails with a syntax error
 
 `cy.get()` searches the document of the application under test and doesn't
 descend into `<iframe>` elements. To query inside a same-origin iframe, see
-[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
+[How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe).
 
 ## Rules
 
 <HeaderRequirements />
 
-- `cy.get()` requires being chained off of `cy`. When chained off another
-  command, it ignores that command's subject.
+- `cy.get()` is chained off of `cy`. When chained off another command, it
+  ignores that command's subject.
 
 <HeaderAssertions />
 
