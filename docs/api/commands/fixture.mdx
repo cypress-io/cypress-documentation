@@ -26,7 +26,7 @@ Reach for `cy.fixture()` when you need to:
 
 To read a file that changes while your tests run, or a file your app produces,
 use [`cy.readFile()`](/api/commands/readfile) instead. See
-[Choosing between `cy.fixture()` and `cy.readFile()`](#Choosing-between-cyfixture-and-cyreadFile).
+[How `cy.fixture()` differs from `cy.readFile()`](#How-cyfixture-differs-from-cyreadFile).
 
 ## Syntax
 
@@ -315,49 +315,15 @@ cy.wait('@getUser').then(({ request }) => {
 
 ## Notes
 
-### Choosing between `cy.fixture()` and `cy.readFile()`
+### How `cy.fixture()` differs from `cy.readFile()`
 
 Both commands read a file from disk, but they answer different questions.
 `cy.fixture()` answers "what data should this test start with?" while
 [`cy.readFile()`](/api/commands/readfile) answers "what's in this file right
-now?"
-
-#### Use `cy.fixture()` for test inputs that stay the same
-
-Fixtures are data you control and check in alongside your tests: the API
-response you stub, the user you log in as, the image you upload. They don't
-change while the tests run, and `cy.fixture()` is built around that:
-
-- It reads each file once and caches it, so a fixture shared by dozens of tests
-  isn't read from disk dozens of times.
-- Paths are short. They start at the `fixturesFolder`, and the extension is
-  optional, so `cy.fixture('users')` finds `cypress/fixtures/users.json`.
-- Images and other binary files arrive as `base64` strings, ready to use in a
-  stubbed response or a `data:` URI.
-
-```javascript
-cy.fixture('users').then((users) => {
-  cy.intercept('GET', '/api/users', users)
-})
-```
-
-#### Use `cy.readFile()` for files that change or that your app creates
-
-When the file is something your test is waiting on or checking, such as a report
-your app exports, a file a task writes, or a config file outside the fixtures
-folder, the cache works against you. `cy.readFile()` reads the file on every
-call and keeps reading it until your assertions pass, so it can wait for a file
-to appear or to finish changing:
-
-```javascript
-cy.get('[data-cy="export-csv"]').click()
-cy.readFile('cypress/downloads/report.csv').should('contain', 'Total')
-```
-
-It can also confirm that a file was removed, with
-`cy.readFile('path/to/file').should('not.exist')`.
-
-#### Behavior differences at a glance
+now?" Use `cy.fixture()` for known data that stays the same during the run, and
+`cy.readFile()` for files that change or that your app creates. For when to
+reach for a static `import` or [`cy.task()`](/api/commands/task) instead, see
+[Choosing how to load test data in Cypress](/app/core-concepts/writing-and-organizing-tests#Choosing-how-to-load-test-data-in-Cypress).
 
 |                               | `cy.fixture()`                    | `cy.readFile()`                             |
 | ----------------------------- | --------------------------------- | ------------------------------------------- |
@@ -603,6 +569,7 @@ cy.fixture('todo.json').then((todo) => {
 
 ## See also
 
+- [Guide: Choosing how to load test data](/app/core-concepts/writing-and-organizing-tests#Choosing-how-to-load-test-data-in-Cypress)
 - [Guide: Variables and Aliases](/app/core-concepts/variables-and-aliases)
 - [`cy.intercept()`](/api/commands/intercept)
 - [`.then()`](/api/commands/then)
