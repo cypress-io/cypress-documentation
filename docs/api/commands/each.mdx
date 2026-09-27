@@ -83,15 +83,16 @@ cy.get('[data-cy="product-card"]').each(($card) => {
 })
 ```
 
-**Assert the length before iterating**
+**Assert the expected length before iterating**
 
-`.each()` does not retry, and it skips the callback when the collection is
-empty. Assert on the length first so the test waits for the elements to render
-and fails if none appear.
+[`cy.get()`](/api/commands/get) resolves as soon as it finds at least one
+matching element, and `.each()` does not retry. If your application renders a
+list in stages, `.each()` iterates only the items that exist at that moment.
+Assert on the expected length first so the test waits for every item.
 
 ```javascript
 cy.get('[data-cy="result"]')
-  .should('have.length.greaterThan', 0)
+  .should('have.length', 2)
   .each(($result) => {
     cy.wrap($result).should('contain', 'Cypress')
   })
@@ -254,13 +255,20 @@ cy.get('ul>li').each(($li) => {
 When the subject has a `length` of `0`, `.each()` skips the callback entirely
 and yields the empty subject. It does not fail or wait for items to appear.
 
+A DOM query such as [`cy.get()`](/api/commands/get) fails when no elements
+match, so an empty subject usually comes from non-DOM data, such as
+`cy.wrap([])`, [`cy.fixture()`](/api/commands/fixture), or
+[`cy.getCookies()`](/api/commands/getcookies). Assert on the length first when
+the data should never be empty.
+
 ### Callback return values
 
 **Don't mix Cypress commands with a synchronous return value**
 
 The callback follows the same rules as a [`.then()`](/api/commands/then)
 callback. If it calls Cypress commands **and** returns a truthy synchronous
-value (anything other than a falsy value or a `Promise`), Cypress throws an
+value (anything other than a falsy value or a `Promise`-like object with a
+`.then()` method), Cypress throws an
 error because you are mixing up async and sync code. Whatever the callback
 returns, `.each()` still yields the original collection.
 
