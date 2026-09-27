@@ -11,8 +11,8 @@ a signed-in account). Rules for editing these scripts: [`AGENTS.md`](./AGENTS.md
 - **Run the page's snippet word for word** against a minimal fixture page with
   only the elements it needs (matching ids, names, text). Never hand-edit or
   mock up an image.
-- **Overwrite the existing file** under `static/img/` so the path doesn't change.
-  Update the `<DocsImage>` `alt` if it no longer fits
+- **Recapturing: overwrite the existing file** under `static/img/` so the path
+  doesn't change. Update the `<DocsImage>` `alt` if it no longer fits
   ([alt text](../../AGENTS_REFERENCE.md#accessible-image-alt-text)).
 - **Check the image against the page text.** Anything the page quotes, such as
   `Yielded:` or `Elements:`, must appear in it.
@@ -23,6 +23,22 @@ a signed-in account). Rules for editing these scripts: [`AGENTS.md`](./AGENTS.md
   repo, so run `npm i` here first. Call them as
   `node "$REPO/scripts/screenshots/<script>.mjs"` (`REPO` = repo root) from the
   scratch project. Each writes its PNG to the current directory.
+
+## Adding a new screenshot
+
+- **Add one only when it shows what text can't**, such as a stubbed route in
+  the Routes panel. A command that doesn't log has no Command Log image to add.
+- **Path:** `static/img/<section>/<page>/<what-it-shows>.png`, kebab-case, such
+  as `static/img/api/fixture/command-log-fixture-stubbed-route.png`. Create the
+  page's folder if it has none. Reference it as `/img/...`.
+- **Placement:** on an `/api` page, the command's own Command Log image goes in
+  `## Command Log` ([skeleton](../../docs/api/AGENTS.md#page-skeleton)); anything
+  else goes next to the text it illustrates. Lead in with a sentence naming what to look at.
+- **Markup:** `<DocsImage src="/img/..." alt="..." />`, with `alt` that states
+  what the image shows
+  ([alt text](../../AGENTS_REFERENCE.md#accessible-image-alt-text)).
+
+Then capture it with the approach below that fits.
 
 ## Pick the approach
 

@@ -157,8 +157,8 @@ it('loads the same object', () => {
 #### Generate a test for each record in a fixture
 
 To create one test per fixture record, `import` the fixture. `cy.fixture()`
-runs after Mocha has already collected the tests in the spec, so a loop inside
-its callback can't add new `it()` blocks.
+supplies data inside a test, but a loop inside its callback can't add new `it()`
+blocks.
 
 ```js title="cypress/e2e/users.cy.js"
 import users from '../fixtures/users.json'
@@ -579,9 +579,10 @@ cy.fixture('todo.json').then((todo) => {
 
 ## History
 
-| Version                                    | Changes                                                                                                            |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| [15.0.0](/app/references/changelog#15-0-0) | `cy.writeFile()` clears the cache for a fixture it writes. An explicit `encoding` always yields raw file contents. |
+| Version                                      | Changes                                                                                                            |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [15.18.0](/app/references/changelog#15-18-0) | An aliased fixture keeps its file name for `.selectFile()` when a later test loads the same fixture.               |
+| [15.0.0](/app/references/changelog#15-0-0)   | `cy.writeFile()` clears the cache for a fixture it writes. An explicit `encoding` always yields raw file contents. |
 
 ## See also
 

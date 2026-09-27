@@ -380,10 +380,8 @@ cy.fixture('users').then((users) => {
 
 #### Generate tests from data with a static `import`
 
-Mocha builds the list of tests when the spec loads, before any Cypress command
-runs. That means `cy.fixture()` can supply data inside a test, but it can't
-create `it()` blocks. To generate one test per record, `import` the data so it's
-available when the spec loads. See
+To generate one test per record, `import` the data. `cy.fixture()` supplies
+data inside a test, but it can't create `it()` blocks. See
 [Driving tests from external data](#Driving-tests-from-external-data) for JSON,
 CSV, and Excel examples.
 

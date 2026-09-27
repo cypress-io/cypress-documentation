@@ -2,7 +2,7 @@
 //
 // Shared helpers for the Cypress App screenshot scripts in this directory.
 // They attach to a browser that Cypress launched, so they never close it: see
-// "Capturing Cypress App screenshots" in AGENTS_REFERENCE.md.
+// AGENTS.md in this directory. README.md covers how to capture.
 
 import puppeteer from 'puppeteer-core'
 
