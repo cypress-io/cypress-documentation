@@ -40,7 +40,7 @@ cy.get('input[type=file]').selectFile({
 })
 
 cy.get('input[type=file]').selectFile('file.json', { action: 'drag-drop' })
-cy.document().selectFile('file.json', { action: 'drag-drop' })
+cy.get('body').selectFile('file.json', { action: 'drag-drop' })
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
@@ -120,7 +120,8 @@ to an input (either with its `for` attribute or by containing the input).
 Setting the action to `drag-drop` changes the behavior of the command to instead
 mimic a user dragging files from the operating system into the browser, and
 dropping them over the selected subject. In this mode, the subject can be any
-DOM element or the `document` as a whole.
+DOM element. To drop a file on the page as a whole, use `body` as the subject:
+the drop events bubble up to listeners on `document`.
 
 ## Examples
 
@@ -238,10 +239,13 @@ cy.get('input[type=file][multiple]')
   })
 ```
 
-### Dropping a file on the document
+### Dropping a file on the page
+
+Use `body` as the subject to drop a file on the page as a whole. The drop events
+bubble up, so drop handlers attached to `document` receive them too.
 
 ```javascript
-cy.document().selectFile('file.json', { action: 'drag-drop' })
+cy.get('body').selectFile('file.json', { action: 'drag-drop' })
 ```
 
 ## Notes

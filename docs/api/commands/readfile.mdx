@@ -211,6 +211,17 @@ the file until all chained commands of any type pass, not just assertions.
 cy.readFile('users.json').its('users.123.name').should('eq', 'John Doe')
 ```
 
+### How `cy.readFile()` differs from `cy.fixture()`
+
+`cy.readFile()` reads the file on every call and retries until your assertions
+pass, so it suits files that change during a test or that your app creates. For
+known test data that stays the same, [`cy.fixture()`](/api/commands/fixture)
+reads the file once and caches it. For when to reach for a static `import` or
+[`cy.task()`](/api/commands/task) instead, see
+[Choosing how to load test data in Cypress](/app/core-concepts/writing-and-organizing-tests#Choosing-how-to-load-test-data-in-Cypress).
+
+<FixtureVsReadFile />
+
 ## Rules
 
 <HeaderRequirements />
