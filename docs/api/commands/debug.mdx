@@ -109,6 +109,21 @@ list finishes rendering. See
 cy.get('.todo-item').debug().should('have.length', 3)
 ```
 
+The Command Log shows the assertion passing with three items:
+
+<DocsImage
+  src="/img/api/debug/command-log-debug-assertion-retries.png"
+  alt="Command Log showing get .todo-item, debug, and a passing assertion that the list has a length of 3"
+/>
+
+The "Debug Info" block, logged on the first run, shows the subject before the
+list finished rendering:
+
+<DocsImage
+  src="/img/api/debug/console-debug-info-first-run-subject.png"
+  alt="Browser console showing the Debug Info block for get .todo-item with a current subject of length 1"
+/>
+
 ### Debugger statement
 
 #### Pause with your test's variables in scope
@@ -146,6 +161,15 @@ previous command or subject, so each value logs as `undefined`.
 When the `debugger` statement pauses execution, the current subject is in scope
 as the variable `subject`. Type `subject` in the Developer Tools console to
 interact with it.
+
+The breakpoint is in Cypress's own `cypress_runner.js`, not in your test file.
+Look for the "HOVER OVER TO INSPECT THE CURRENT SUBJECT" comment above the
+paused line, and for `subject` under **Local** in the **Scope** pane:
+
+<DocsImage
+  src="/img/api/debug/devtools-paused-at-debug-breakpoint.png"
+  alt="Developer Tools Sources panel paused on the debugger statement inside .debug(), with the subject's value shown inline and under Local in the Scope pane"
+/>
 
 ### `.debug()` pauses once per call
 
