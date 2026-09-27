@@ -70,7 +70,10 @@ function codeBlocks(source) {
 }
 
 // Blocks added or changed from HEAD: in the index, in the working tree, or in
-// a new file git doesn't track yet. Untracked files count because an agent can
+// a new file git doesn't track yet. A block that exists word for word in a docs
+// file that was deleted or renamed counts as moved, not changed, so moving or
+// splitting a page doesn't flag its examples, even with a plain `mv` that git
+// can't yet see as a rename. Untracked files count because an agent can
 // create a page and commit it in one command (`git add page.mdx && git commit`),
 // and the hook runs before the `git add`.
 function changedBlocks() {
@@ -91,6 +94,14 @@ function changedBlocks() {
     if (/(^|\/)(AGENTS|CLAUDE)\.md$/.test(path)) continue
     files.set(path, parts[0].startsWith('R') ? parts[1] : path)
   }
+  const moved = new Set()
+  const gone = [
+    ...git(['diff', '--cached', '--no-renames', '--name-only', '--diff-filter=D', ...docs]).split('\n'),
+    ...git(['diff', 'HEAD', '--no-renames', '--name-only', '--diff-filter=D', ...docs]).split('\n'),
+  ]
+  for (const path of new Set(gone.filter(Boolean))) {
+    for (const block of codeBlocks(show(`HEAD:${path}`))) moved.add(block.body)
+  }
   const seen = new Set()
   const changed = []
   for (const [path, headPath] of [...files].sort()) {
@@ -98,7 +109,7 @@ function changedBlocks() {
     for (const source of [show(`:${path}`), read(path)]) {
       for (const block of codeBlocks(source)) {
         const key = `${path}\0${block.body}`
-        if (before.has(block.body) || seen.has(key)) continue
+        if (before.has(block.body) || moved.has(block.body) || seen.has(key)) continue
         seen.add(key)
         changed.push({ path, ...block })
       }

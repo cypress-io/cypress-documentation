@@ -618,12 +618,18 @@ checks. Keep these behaviors in mind:
 
 - **It fires once per set of changes.** Editing a block afterward brings it back
   once, since that is a new example to decide about. Editing prose doesn't.
-- **It counts every changed example, however you commit.** Staged, unstaged, a
-  new page git doesn't track yet, `git commit -a`, or a path on the command line
-  all see the same list.
-- **Deleted blocks** don't trigger it, and neither do the nested `AGENTS.md` and
-  `CLAUDE.md` guides under `docs/`, which document conventions rather than
-  features.
+- **It lists every changed example, not only the staged ones.** Unstaged
+  edits and new pages git doesn't track yet count too, so `git commit -a` or a
+  path on the command line sees the same list as a plain commit.
+- **Moved examples don't count as changed.** A block that appears word for word
+  in a page you deleted or renamed, including with a plain `mv`, counts as
+  moved. Deleted blocks don't trigger it either, and neither do the nested
+  `AGENTS.md` and `CLAUDE.md` guides under `docs/`, which document conventions
+  rather than features.
+- **It recognizes the usual ways of running `git commit`, not every one.** A
+  command in front of `git`, such as `env` or `time`, can get past it. It is a
+  nudge, not a guarantee: the report in the thread is the real check, so don't
+  rely on the reminder to tell you examples changed.
 
 Then delete the harness:
 
