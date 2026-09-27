@@ -118,11 +118,17 @@ your test, put a `debugger` statement inside [`.then()`](/api/commands/then). A
 `debugger` written directly in the test body pauses before any Cypress commands
 run. The [Debugging guide](/app/guides/debugging) explains why.
 
+The breakpoint only sees a test variable that the `.then()` callback uses. The
+browser leaves out outer variables the callback never references, so reference
+each one you want to inspect.
+
 ```javascript
 const expected = 'Welcome back'
 
 cy.get('h1').then(($h1) => {
-  debugger // both $h1 and expected are in scope here
+  const matches = $h1.text() === expected
+
+  debugger // $h1, expected, and matches are in scope here
 })
 ```
 
