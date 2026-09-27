@@ -1,22 +1,17 @@
 #!/usr/bin/env node
-// Commit gate for AGENTS_REFERENCE.md#verifying-code-examples.
+// Commit reminder for AGENTS_REFERENCE.md#verifying-code-examples.
 //
 //   node .claude/hooks/example-check.mjs list
 //       Print every code block you've added or changed under docs/.
-//   node .claude/hooks/example-check.mjs stamp
-//       Record that those blocks were verified and reported in the thread.
-//   node .claude/hooks/example-check.mjs stamp --skip "<reason>"
-//       Record your judgment that they didn't need a run, and why.
 //   node .claude/hooks/example-check.mjs gate
-//       PreToolUse hook: blocks a `git commit` while any changed block has no
-//       matching stamp.
+//       PreToolUse hook: the first `git commit` after code examples change is
+//       stopped once with a reminder to run them. Trying again goes through.
 //
-// The judgment about what to test, and how, is the agent's. This hook asks only
-// whether a decision was recorded for every changed block. It doesn't try to
-// work out which changes a particular commit includes: "changed" means changed
-// from HEAD, staged or not, so `list`, `stamp`, and `gate` always see the same
-// set. The stamp fingerprints that set, so editing a block after stamping asks
-// for a fresh decision, while prose edits leave the stamp valid.
+// The judgment about what to run, and how, is the agent's; this only makes
+// sure the question gets asked. "Changed" means changed from HEAD, staged or
+// not, so it doesn't depend on how the commit is made. The reminder is keyed
+// to a fingerprint of the changed blocks: editing a block brings it back once,
+// while prose edits don't.
 
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
@@ -26,7 +21,7 @@ import { join } from 'node:path'
 const cwd = process.env.CLAUDE_PROJECT_DIR || process.cwd()
 const root = execFileSync('git', ['rev-parse', '--show-toplevel'], { cwd, encoding: 'utf8' }).trim()
 const gitDir = execFileSync('git', ['rev-parse', '--absolute-git-dir'], { cwd: root, encoding: 'utf8' }).trim()
-const stampPath = join(gitDir, 'example-check-verified')
+const remindedPath = join(gitDir, 'example-check-reminded')
 
 function git(args) {
   return execFileSync('git', args, { cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
@@ -106,7 +101,7 @@ function describe(blocks) {
   return blocks.map((b) => `  ${b.path}:${b.line}  ${b.info || '(no language)'}`).join('\n')
 }
 
-const [mode, ...rest] = process.argv.slice(2)
+const [mode] = process.argv.slice(2)
 
 if (mode === 'list') {
   const blocks = changedBlocks()
@@ -115,33 +110,6 @@ if (mode === 'list') {
       ? `Code blocks added or changed under docs/:\n${describe(blocks)}`
       : 'No code blocks added or changed under docs/.'
   )
-} else if (mode === 'stamp') {
-  const skip = rest[0] === '--skip'
-  const reason = skip ? rest.slice(1).join(' ').trim() : ''
-  if (skip && !reason) {
-    console.error('--skip needs a reason, such as "Prettier rewrapped the block". Put the same reason in your report.')
-    process.exit(1)
-  }
-  const blocks = changedBlocks()
-  if (!blocks.length) {
-    console.log('No code blocks added or changed under docs/, so there is nothing to stamp.')
-    process.exit(0)
-  }
-  writeFileSync(
-    stampPath,
-    JSON.stringify(
-      {
-        fingerprint: fingerprint(blocks),
-        kind: skip ? 'skipped' : 'verified',
-        reason,
-        blocks: blocks.map((b) => `${b.path}:${b.line}`),
-        at: new Date().toISOString(),
-      },
-      null,
-      2
-    )
-  )
-  console.log(`Stamped ${blocks.length} code block(s) as ${skip ? `skipped (${reason})` : 'verified'}:\n${describe(blocks)}`)
 } else if (mode === 'gate') {
   let input = {}
   try {
@@ -157,31 +125,23 @@ if (mode === 'list') {
   if (input.tool_name !== 'Bash' || !commits.test(input.tool_input?.command ?? '')) process.exit(0)
   const blocks = changedBlocks()
   if (!blocks.length) process.exit(0)
-  let stamp = null
-  try {
-    if (existsSync(stampPath)) stamp = JSON.parse(readFileSync(stampPath, 'utf8'))
-  } catch {}
-  if (stamp?.fingerprint === fingerprint(blocks)) process.exit(0)
+  const current = fingerprint(blocks)
+  if (existsSync(remindedPath) && readFileSync(remindedPath, 'utf8').trim() === current) process.exit(0)
+  writeFileSync(remindedPath, `${current}\n`)
   process.stderr.write(
-    `Commit blocked: these code examples changed, and no decision about running them is recorded${
-      stamp ? ' (a stamp exists, but the examples changed after it)' : ''
-    }.
+    `Reminder: these code examples changed since the last commit.
 
 ${describe(blocks)}
 
-This counts every changed example, staged or not, whichever way you commit.
-Follow AGENTS_REFERENCE.md#verifying-code-examples, report the results in the thread, then record it:
+Before committing, run each one in the .example-check/ harness and report the results in the thread,
+following AGENTS_REFERENCE.md#verifying-code-examples. If you judge that one doesn't need a run (for
+example, Prettier only rewrapped it), say so and why in your report.
 
-  node .claude/hooks/example-check.mjs stamp
-
-If you judge that none of them needs a run (for example, Prettier only rewrapped them), record why
-instead, and give the same reason in your report:
-
-  node .claude/hooks/example-check.mjs stamp --skip "<reason>"
+This reminder shows once for these changes. When you've handled them, run the same commit again.
 `
   )
   process.exit(2)
 } else {
-  console.error('Usage: example-check.mjs <list | stamp [--skip "<reason>"] | gate>')
+  console.error('Usage: example-check.mjs <list | gate>')
   process.exit(1)
 }

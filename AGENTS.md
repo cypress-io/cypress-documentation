@@ -159,10 +159,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - An example you can't run locally (a record key, a Cloud or third-party
   service) gets reported as not run, with the reason. Being short is not a
   reason.
-- In Claude Code, a hook blocks `git commit` until you record a decision for
-  every changed example: `node .claude/hooks/example-check.mjs stamp` after you
-  report, or `stamp --skip "<reason>"` when you judge a run unnecessary. The
-  judgment is yours; the reason goes in your report.
+- In Claude Code, the first `git commit` after examples change stops once with
+  a reminder listing them. Run them and report (or say in your report why one
+  doesn't need a run), then commit again. The judgment is yours.
 
 **API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
 

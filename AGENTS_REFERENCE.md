@@ -338,10 +338,10 @@ a plain `git diff origin/main` also shows examples that other merged pull
 requests changed, and you would end up checking, or reverting, work that isn't
 yours.
 
-The commit gate's `list` mode prints every added or changed code block under
-`docs/`, staged or not, with its file and line. It is the same list the gate
-checks before a commit (see
-[Step 10](#step-10-record-the-verification-and-clean-up)):
+The commit reminder's `list` mode prints every added or changed code block
+under `docs/`, staged or not, with its file and line. It is the same list the
+reminder shows before a commit (see
+[Step 10](#step-10-commit-and-clean-up)):
 
 ```shell
 node .claude/hooks/example-check.mjs list
@@ -599,42 +599,25 @@ A failure you couldn't resolve still gets a row and a section. Say what you
 tried, what you believe the fix is, and whether it belongs in this repository
 or in `cypress-io/cypress`.
 
-### Step 10: record the verification and clean up
+### Step 10: commit and clean up
 
-In Claude Code, a `PreToolUse` hook gates `git commit`. The judgment about what
-to run and how is yours; the hook checks only that you recorded a decision for
-every changed example. While any code block under `docs/` differs from `HEAD`,
-staged or not, it blocks the commit until you record one. After you report in
-Step 9, run this from the repository root:
+In Claude Code, a `PreToolUse` hook reminds you of this procedure at commit
+time. The first `git commit` after any code block under `docs/` changes, staged
+or not, is stopped once with a list of the changed examples. When you've run
+them and reported, or judged that one doesn't need a run and said why in your
+report, run the same commit again and it goes through.
 
-```shell
-node .claude/hooks/example-check.mjs stamp
-```
+The judgment is yours. The reminder makes sure the question gets asked; it
+doesn't check your answer. The results table in the thread is what a reviewer
+checks. Keep these behaviors in mind:
 
-When you judge that the changed examples don't need a run, record that decision
-and the reason instead, and give the same reason in your report:
-
-```shell
-node .claude/hooks/example-check.mjs stamp --skip "Prettier rewrapped the block"
-```
-
-A reviewer reads the reason, so make it one they can check. "Prettier
-rewrapped the block" or "the block is sample console output, not code" qualify.
-"It's short" does not, for the reasons in Step 1.
-
-Keep these behaviors in mind:
-
-- **The stamp covers the changed examples, not a particular commit.** Every
-  changed block counts, staged or not, however you commit. An example you edited
-  but don't plan to commit still needs a decision, or a `git restore`.
-- **Editing a block after stamping asks for a fresh decision.** Editing prose
-  leaves the stamp valid.
-- **Deleted blocks** need no decision, so a change that only removes examples
-  passes.
-- **The nested `AGENTS.md` and `CLAUDE.md` guides** under `docs/` are skipped.
-  They document conventions, not features.
-- **The stamp is a record, not proof.** The results table in the thread is what
-  a reviewer checks.
+- **It fires once per set of changes.** Editing a block afterward brings it back
+  once, since that is a new example to decide about. Editing prose doesn't.
+- **It counts every changed example, however you commit.** Staged, unstaged,
+  `git commit -a`, or a path on the command line all see the same list.
+- **Deleted blocks** don't trigger it, and neither do the nested `AGENTS.md` and
+  `CLAUDE.md` guides under `docs/`, which document conventions rather than
+  features.
 
 Then delete the harness:
 
