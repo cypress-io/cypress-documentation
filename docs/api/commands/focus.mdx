@@ -57,13 +57,7 @@ Pass in an options object to change the default behavior of `.focus()`.
 
 ### No Args
 
-#### Focus on an input
-
-```javascript
-cy.get('input[name="email"]').focus()
-```
-
-#### Confirm that focus landed
+#### Focus an input and confirm it has focus
 
 ```javascript
 cy.get('input[name="email"]').focus().should('have.focus')
