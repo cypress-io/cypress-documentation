@@ -7,13 +7,15 @@ interface VueSyntaxTabsProps {
 }
 
 const VueSyntaxTabs: React.FC<VueSyntaxTabsProps> = ({children}) => {
+  // JSX syntax is authored first, VTU syntax second.
+  const blocks = children as React.ReactNode[]
   return (
     <Tabs groupId="vue-syntax-tabs">
       <TabItem value="vuejsx" label="JSX Syntax">
-        {children[0]}
+        {blocks[0]}
       </TabItem>
       <TabItem value="vuevtu" label="VTU Syntax">
-        {children[1]}
+        {blocks[1]}
       </TabItem>
     </Tabs>
   )

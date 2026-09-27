@@ -874,6 +874,19 @@
           "link": "https://github.com/reportportal/agent-js-cypress",
           "keywords": ["reporter", "reportportal", "reporting"],
           "badge": "community"
+        },
+        {
+          "name": "@qualflare/cypress",
+          "description": "Native Cypress reporter for Qualflare. Captures suite/test results, real retry counts, screenshots, videos, and command-log step traces as one Launch per run.",
+          "link": "https://github.com/Qualflare/qualflare-cypress",
+          "keywords": [
+            "reporter",
+            "qualflare",
+            "test-management",
+            "screenshot",
+            "flaky"
+          ],
+          "badge": "community"
         }
       ]
     },
@@ -1119,6 +1132,13 @@
           "description": "A collection of useful Cypress commands for testing Emails utilizing the Mailpit RestAPI. Comes with TypeScript support",
           "link": "https://github.com/pushpak1300/cypress-mailpit",
           "keywords": ["mailpit", "email", "test", "commands"],
+          "badge": "community"
+        },
+        {
+          "name": "@mailsac/cypress",
+          "description": "Test email flows with Mailsac: wait for matching messages and extract verification links or codes.",
+          "link": "https://github.com/mailsac/cypress-mailsac",
+          "keywords": ["email", "mailsac", "test", "commands"],
           "badge": "community"
         },
         {

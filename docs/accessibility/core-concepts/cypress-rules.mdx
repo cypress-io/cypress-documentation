@@ -9,8 +9,6 @@ sidebar_position: 40
 
 # Cypress rules
 
-## What are Cypress rules?
-
 In addition to running the default ruleset of the Axe-Core® library, Cypress develops custom rules that take advantage of the additional layer of information available in a test automation context. These rules are identified by a "Cypress Rule" badge, to distinguish them from the main Axe-Core® rule set.
 
 The first custom rule that we have implemented is called "Interactive elements should be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass if no issues are found, or return an inconclusive state.
@@ -65,7 +63,7 @@ After you have updated to a suitable HTML solution, elements will then be able t
 
 ### Why this matters
 
-In the Web Content Accessibility Guidelines (WCAG), interactive elements are required to meet a wide range of Success Criteria (SCs) in order to follow the POUR principles, which stands for Perceivable, Operable, Understandable, and Robust.
+In the Web Content Accessibility Guidelines (WCAG), interactive elements are required to meet a wide range of Success Criteria (SCs) to follow the POUR principles, which stands for Perceivable, Operable, Understandable, and Robust.
 
 Interactive elements that are not semantically correct often don't appear in automated scans, but do appear in manual testing, because they are usually not operable with a keyboard or correctly understandable when described by a screen reader.
 
@@ -99,8 +97,8 @@ For each run, this rule can be in one of four states. Most importantly, it will 
 
 ### False positives
 
-Please use the "Submit Feedback" button in the product to let us know if you see something that you think is a false positive. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives, so we will make adjustments for specific situations that are not already known as we learn about them.
+Use the "Submit Feedback" button in the product to let us know if you see something that you think is a false positive. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives, so we will make adjustments for specific situations that are not already known as we learn about them.
 
 #### Shadow DOM false positives
 
-There is a known issue related to interactions that take place within some shadow DOM nodes and how they are reported in this rule. If this issue affects your reports, please reach out to your Cypress point-of-contact.
+There is a known issue related to interactions that take place within some shadow DOM nodes and how they are reported in this rule. If this issue affects your reports, reach out to your Cypress point-of-contact.

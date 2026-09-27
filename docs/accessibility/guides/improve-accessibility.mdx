@@ -1,90 +1,233 @@
 ---
-title: 'Improve accessibility'
-description: 'Discover how to break down accessibility reports, prioritize fixes, and make impactful progress toward accessible software with Cypress Accessibility.'
-sidebar_label: Improve accessibility
+title: 'Fix accessibility violations: prioritize and work through a backlog'
+description: 'Turn a large Cypress Accessibility report into work your team can finish: scope the report to the code you own, pick a first rule, fix it, and prove the fix landed before the code merges.'
+sidebar_label: Fix violations
 sidebar_position: 20
 ---
 
 <ProductHeading product="accessibility" />
 
-# Improve accessibility
+# Fix accessibility violations
 
-This guide explains how to break down accessibility reports and create a focused plan for remediation using Cypress Accessibility.
+Your first Cypress Accessibility report covers every page and component your existing Cypress tests already visit, with no assertions or `cy.` commands added to your specs. On an application that has never been checked, that usually means hundreds or thousands of findings across dozens of rules, which is more than any team can act on at once.
+
+This guide turns that report into work your team can finish. You'll narrow the report to the code you own, pick one rule you can complete in a single cycle, fix it, and confirm in Branch Review that the fix landed before the code merges. Then you repeat with a wider scope.
+
+## Agree on the scope before you start
+
+Remediation almost always crosses team boundaries: engineering changes markup, design decides the colors, and content authors write the text that ends up in labels and headings. Before you triage the first rule, get agreement on a few things that decide what "finished" means:
+
+- **Your target.** The conformance level you're working toward, such as WCAG 2.1 Level AA, and the parts of the application it applies to first.
+- **Your timeline and capacity.** How much of each cycle the team can spend on remediation.
+- **Your risk.** The cost of leaving specific flows inaccessible, which is usually highest on sign-up, sign-in, checkout, and account management.
+- **Your roadmap.** Areas of the codebase that are about to be rewritten are often worth deferring, because the rewrite is the cheaper place to fix them.
+
+You don't need to settle all of this to start. You do need enough agreement that nobody has to relitigate the plan halfway through the first rule.
+
+## Narrow the report to the code you own
+
+A report full of findings nobody intends to act on makes prioritization harder and hides real regressions. Before you triage, remove what isn't yours to fix, so that everything left in the report is either work you plan to do or a genuine new problem.
+
+Cypress Accessibility gives you three levers, from broadest to narrowest:
+
+| What you want to remove                                   | Use                                                                                     | Where you set it        |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------------------- |
+| A whole page or URL, such as a third-party sign-in screen | [`viewFilters`](/accessibility/configuration/viewfilters)                               | App Quality Config      |
+| Every finding on an element, such as a vendor widget      | [`elementFilters`](/accessibility/configuration/elementfilters)                         | App Quality Config      |
+| One rule on one element, such as a known false positive   | [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) attribute | Your application markup |
+
+A configuration that removes an OAuth provider's sign-in page, a cookie consent banner, and a vendor chat widget might look like this:
+
+```json title="App Quality Config"
+{
+  "viewFilters": [
+    {
+      "pattern": "https://accounts.google.com/*",
+      "include": false,
+      "comment": "OAuth provider our sign-in tests pass through, not our markup"
+    }
+  ],
+  "elementFilters": [
+    {
+      "selector": "#onetrust-consent-sdk, #onetrust-consent-sdk *",
+      "include": false,
+      "comment": "OneTrust consent banner, violations reported upstream to the vendor"
+    },
+    {
+      "selector": "#hubspot-messages-iframe-container, #hubspot-messages-iframe-container *",
+      "include": false,
+      "comment": "Support chat widget rendered by HubSpot"
+    }
+  ]
+}
+```
+
+Both selectors repeat themselves with a descendant form, such as `#onetrust-consent-sdk *`, because an `elementFilters` selector matches the element that has the finding, not its container.
+
+When a single rule misfires on an element you otherwise want reported, keep the element and ignore just that rule from your application code:
+
+```html
+<div role="grid" data-a11y-ignore="aria-required-children">…</div>
+```
+
+Two things make this safe to do early:
+
+- **Ignoring is visible, not silent.** Ignored elements stay in the report under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) instead of disappearing, so you can always audit what your configuration hides. They stop counting as failures and stop affecting your [accessibility score](/accessibility/core-concepts/accessibility-score).
+- **You don't have to re-run your tests to see the effect.** Save the configuration, then regenerate a past run from its **Properties** tab in Cypress Cloud. The report is reprocessed with your current configuration in place, so you can iterate on scope in minutes.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
+  alt="The Properties tab of a run in Cypress Cloud, showing the App Quality configuration the run was processed with and the regenerate button that reprocesses the run against the configuration currently saved."
+/>
+
+### Inconclusive elements are not part of the backlog
+
+Some checks come back **Inconclusive** rather than passed or failed. Axe-Core® either couldn't complete them for technical reasons, or the answer depends on judgment an automated scanner can't make. They don't count as failures, they don't affect your [accessibility score](/accessibility/core-concepts/accessibility-score), and they never keep a rule from reaching zero violations.
+
+Treat them as a separate review queue rather than remediation work. They make a poor first goal precisely because "done" isn't something the report can confirm for you, so pick a rule with clear failures first and come back to the inconclusive list once your team has the accessibility experience to judge them.
+
+## Choose a first goal you can finish
+
+A goal with a finish line is worth more than a broad one, because reaching it tells your team the process works. Effective first goals take one of two shapes:
+
+- **Rule focused.** Resolve every violation of one rule across the application, such as every failing `button-name` element.
+- **View focused.** Resolve every violation on one page or component, such as the checkout flow.
+
+Rule-focused goals tend to be the better first choice. The fix is the same shape every time, so the second element takes a fraction of the time the first one did, and whoever picks up the work only has to learn one accessibility concept to finish it.
+
+In a component-driven codebase the leverage is larger than the element count suggests. One shared button, form field, or dialog can be responsible for a rule's failures across dozens of views, so a single file can clear the rule everywhere at once. This cuts both ways when you're sizing the work: check whether the failing elements trace back to one component before you estimate, because 200 failing elements and 200 places to edit are rarely the same number. Adding [`components`](/accessibility/configuration/components) attributes to your violation selectors makes that grouping visible in the report itself.
 
 <DocsImage
   src="/img/accessibility/guides/a11y-standards.png"
-  alt="A list of accessibility rules where some are passing and failing. Two major sections are identified - the passing rules as 'Your current standard', and the failing rules as 'Your issues to address'. Within the failing rules list, 2 rules are called out as 'Your next tasks' because they have the smallest count of elements failing the rule."
+  alt="The rules list from an accessibility report, annotated into three groups: the passing rules marked 'Your current standard', the failing rules marked 'Your issues to address', and the two failing rules with the fewest failing elements marked 'Your next tasks'."
   noBorder={true}
 />
 
-## Starting from Scratch
+Open the **Rules** list in a run's [accessibility report](/accessibility/reports/run-level-reports#Rules) and read it as three groups. The passing rules are the standard you already meet. The failing rules are your backlog. The failing rules with the fewest failing elements are your next tasks, because they're closest to moving into the first group.
 
-If you're beginning with a legacy application that has many accessibility issues, Cypress Accessibility provides actionable insights to help you prioritize fixes. Use the [Accessibility tab for a run](/accessibility/guides/run-level-reports) to identify violations across pages and components. Although the volume of issues might seem overwhelming, focusing on key factors can guide your approach:
+Expect the first report to include concepts your team hasn't worked with before, such as [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) or [nesting interactive controls inside each other](https://dequeuniversity.com/rules/axe/4.12/nested-interactive). That's a reason to start small, not a reason to wait: every Axe-Core® violation in Cypress Cloud links to a Deque University page explaining the barrier and how to fix it, so the context an engineer or agent needs is one click from the failing element.
 
-- **Goals**: Define your accessibility objectives.
-- **Timeline**: Establish a realistic timeline for improvements.
-- **Resources**: Assess the resources available for remediation.
-- **Future Code Changes**: Focus on areas of the codebase likely to evolve.
-- **Risk Assessment**: Consider the risks and costs of remaining inaccessible.
+### What makes a good first rule
 
-Effective remediation often requires collaboration across departments, emphasizing the importance of an organization-wide commitment to accessibility, so understanding your organization's stance on accessibility and who needs to be in the conversation is also helpful.
+Look for a rule where the fix is local, unambiguous, and easy to confirm:
 
-If your organization or team is newer to accessibility, you're likely to find plenty of issues reported by Axe Core® in Cypress Accessibility. Many of the issues in your first report may relate to concepts that are new, such as [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) or [invalid nesting of interactive controls](https://dequeuniversity.com/rules/axe/4.2/nested-interactive). Since it will be impossible to fix all issues overnight, we recommend finding some low-hanging fruit as a starting point. This can help your team build confidence by getting some wins on the board, and teach them the overall idea of how accessibility problems get fixed.
+- It appears often enough that finishing it visibly changes the report.
+- Axe-Core® flags it as critical or serious, so the work is defensible.
+- The fix is contained in one component or file, with no design or content decision blocking it.
+- You can confirm the fix by hand, with a screen reader or the browser's accessibility inspector.
 
-If you are use Claude, Cursor, or other AI agents in your development process, this is a good time to consider using the [Cypress Cloud MCP's accessibility tools](#Fixing-violations-with-your-AI-agent) to help triage your accessibility findings and develop action plans based on the source of each issue.
+Rules that support [WCAG SC 4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html) usually fit all four. They cover whether interactive controls expose a name and a role to assistive technology, they're common in component-driven interfaces, and they directly change whether a screen reader user can tell what a control does.
 
-## Good low-hanging fruit
+### Example: buttons must have discernible text
 
-Some accessibility issues are easier to address but have a significant impact. Consider issues related to [WCAG SC 4.2.1 \- Name, role, value](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html), which ensures interactive controls are appropriately labeled. Violations in this category often:
+Icon-only buttons with no text label are one of the most common findings in a first report, and the [`button-name` rule](https://dequeuniversity.com/rules/axe/4.12/button-name) is a good first target:
 
-- Appear frequently in applications.
-- Are flagged as Critical or Serious by Axe Core®.
-- Directly impact usability for screen reader users.
+- The fix is usually one attribute or one piece of visually hidden text.
+- A screen reader user goes from hearing "button" to hearing something meaningful, for example "Delete invoice".
+- It rarely needs a decision from outside the team, as long as the correct label is obvious from the surrounding UI.
+- New code is easy to hold to the same standard, because "what does this control announce?" is a question a designer or product manager can answer during the ticket, not after the pull request.
 
-### Example: "Buttons Must Have Discernible Text"
+:::note
 
-A common issue in modern interfaces is unlabeled icons used as buttons. The [button-name rule](https://dequeuniversity.com/rules/axe/4.7/button-name), which ensures buttons have descriptive text, is an ideal starting point because:
+**Passing the rule isn't the same as choosing a good label.** Axe-Core® checks that a control exposes an accessible name, not that the name is understandable, so `aria-label="button"` passes `button-name` exactly as `aria-label="Delete invoice"` does. When you settle on a label, write it into a test assertion so the choice is specified rather than incidental, and a later refactor can't quietly replace it with something that still passes. [Maximize coverage](/accessibility/guides/maximize-coverage) shows what that assertion looks like.
 
-- Adding a label is a simple code update.
-- Proper labels improve usability for all users.
-- Fixes typically don't require cross-team involvement.
-- Straightforward to validate with a screen reader.
+:::
 
-Existing code failing the button-name rule can usually be remediated pretty quickly, as long as it is clear what the correct text label is for a given control. And when it comes to new code, this text label content is also easy to add to discussions in the design and requirements stages of the development cycle, shifting the accessibility conversation left.
+If `button-name` isn't in your report, choose another rule with the same properties. The point of the first rule is to build the workflow and the team's confidence, not to pick the perfect rule.
 
-Since every violation in Cypress is linked to a Deque University page with details about the nature of the problem and how to fix it, all the needed context is available, even to engineers who may be new to the topic of accessibility.
+## How fixes move your accessibility score
 
-Even if your first rule is not "Buttons must have discernible text", we suggest finding one with a similarly small amount of coordination or understanding needed to fix, so the team can experience success as quickly as possible.
+The [accessibility score](/accessibility/core-concepts/accessibility-score) is a useful trend line, but it's a poor progress bar for a single rule. Two behaviors surprise teams that watch it during remediation.
 
-## Check your changes in Branch Review
+**A rule counts once per snapshot, however many elements fail it.** Each snapshot's score is a weighted ratio of passing to failing rules, and severity sets the weight. So if `button-name` fails on 10 buttons in one snapshot and you fix nine of them, that snapshot's score doesn't move at all. It moves when the last failing element is fixed and the rule flips to passing.
 
-One of the most frustrating experiences in accessibility is fixing one issue, only to discover you introduced some other issue in the process. Especially if the feedback cycles are long, it can reduce everybody's confidence in the remediation process. When making changes to improve accessibility, you can use [Branch Review](/cloud/features/branch-review#Get-started) to see the effect of your solutions - including seeing any increase in issues that might be related to your code changes.
+**The run score averages every snapshot in the run.** A rule that fails on one page in a suite that captures hundreds of snapshots barely registers, even though the barrier on that page might be severe.
 
-## Setting achievable goals
+Track the counts that respond to your work instead, and treat the score as the long-term trend:
 
-Define a clear objective for each effort, such as fixing all violations of a specific rule within a defined scope. For example:
+- **Failed elements** for the rule you're working on, which drop with every element you fix.
+- **Failing rules per view**, which tells you which pages are close to clean.
+- The **Resolved elements** section of [Branch Review](/accessibility/guides/compare-reports#Resolved-elements), which attributes the improvement to your change.
 
-- **View Focused**: Address all rule violations on a single page or component.
-- **Rule Focused**: Resolve a single rule violation across multiple pages or the entire application.
+## Prove the fix landed in Branch Review
 
-Achieving these milestones provides a clear finish line for you and your team. It also provides time to assess the impact of the changes. Often, fixing one issue can cascade changes across your application, especially in componentized architectures: it's fine for these first goals to be small at first. In fact, it's preferable.
+The most expensive outcome in accessibility work is fixing one issue and introducing another without noticing, because the new issue is found later, by someone else, at a point where the change is no longer fresh. [Branch Review](/cloud/features/branch-review#Get-started) compares the accessibility report for your branch against a base run, so you can see the effect of a change while you still have the context to act on it.
 
-## Iterating towards success {#iterating-towards-success}
+When you review your remediation branch, check both directions:
 
-Incremental progress is key to long-term accessibility improvements. By focusing on manageable goals, your team can:
+- **Resolved elements** should list the rule you worked on, with the elements you fixed counted against the views they appear on. This is your evidence that the fix reached everywhere the rule was failing, not only the example you tested by hand.
+- **New failed elements** should be empty. Accessibility fixes commonly introduce new findings, such as an added `aria-label` that duplicates visible text or a new landmark that leaves other content outside it.
 
-- Gain expertise in specific accessibility rules.
-- Build workflows for preventing future regressions.
-- Gradually raise the accessibility standard across your projects.
+<DocsImage
+  src="/img/accessibility/core-concepts/branch-review-a11y-resolved-elements.png"
+  alt="The Resolved elements section of a Branch Review accessibility report, listing each rule that had failures in the base run which are no longer detected in the changed run, with the number of resolved elements beside each rule."
+/>
 
-With support from Deque University's "Learn More" links in the reports, even teams new to accessibility can learn the related context and confidently address violations.
+Comparisons are cleanest when both runs execute a similar test suite against similar content. If dynamic URLs or generated class names make unchanged elements look new, stabilize the comparison with [`views`](/accessibility/configuration/views), [`attributeFilters`](/accessibility/configuration/attributefilters), and [`significantAttributes`](/accessibility/configuration/significantattributes). See [comparing accessibility reports](/accessibility/guides/compare-reports#Stabilizing-the-comparison) for the full process.
 
-For guidance on preventing regressions and enforcing accessibility policies, explore our [Blocking Pull Requests Section](/accessibility/guides/block-pull-requests).
+## Work through repeated violations with an AI agent
 
-## Fixing violations with your AI agent
+Once you've fixed the first few elements of a rule by hand, the remaining ones follow the same pattern. That's the point where handing the work to an agent pays off.
 
-If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, you can ask your agent to pull violation details from Cypress Cloud and work through fixes. Here's an example prompt that focuses on a specific rule and asks the agent to create a plan:
+With [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) configured, an agent reads your accessibility results directly from Cypress Cloud through three tools: `cypress_get_accessibility_report` for a run's failing rules and worst views, `cypress_get_accessibility_views` to page through every view, and `cypress_get_accessibility_rule_failures` for the failing elements of one rule, optionally scoped to a single view.
 
-> "Pull all `button-name` failures from the latest Cypress Cloud run. For each failing element: verify whether it's actually a problem given how the code is constructed. If it's valid, summarize the fix in markdown for my code review and propose a plan — wait for my approval before making any changes. If it's not a real issue, note it and move on. If you need more context to solve it, tell me what's missing — and if it's something only Cypress Cloud would have, submit feedback to the Cypress team."
+This prompt scopes the work to a single rule and asks for a plan before any edits. It works as written on any project with Cypress Cloud MCP configured: name a rule if you have one in mind, or let the agent pick the rule with the most failing elements.
 
-This works especially well for rules that appear across many elements, where the pattern of the fix is consistent once you've seen the first example.
+<CopyPrompt
+  title="Work through one accessibility rule"
+  subtext="Pulls every failing element for one rule from your latest Cypress Cloud run, then proposes a fix plan before touching any code."
+  prompt={`Using Cypress Cloud MCP, get the Cypress Accessibility report for the latest run on this project. List the failing rules with their severity and failing element counts.
+
+Then pick one rule to work on: use the rule I name below if there is one, and otherwise the failing rule with the most failing elements. Tell me which rule you picked and why.
+
+RULE (optional):
+
+For that rule, get every failing element, including the view each one was found on. For each element, find the component in this codebase that renders it and decide whether the finding is a real problem given how the code is constructed.
+
+Then give me:
+
+1. A markdown summary of the proposed fixes that I can paste into a pull request description.
+2. Any findings you believe are not real issues, with a one-line reason each.
+3. Anything you could not determine from the code or the report, and what you would need.
+
+Propose a plan and wait for my approval before changing any code.`}
+/>
+
+Two things make an agent's output more reliable here:
+
+- **Narrow the report first.** An agent triaging a vendor widget you were never going to fix costs tokens and produces work you'll reject. The scoping step above pays for itself immediately.
+- **Give elements names your codebase uses.** [`components`](/accessibility/configuration/components) adds attributes such as `data-component` or `data-team` to violation target selectors, so a failing element reads as `[data-cy="signup"][data-component="IconButton"]` instead of a generated selector, and the agent can find the source file without crawling your markup.
+
+[Work with AI agents](/accessibility/work-with-ai-agents) has more prompts for Cypress Accessibility, such as grouping violations by owner across the roles on your team, or [filing the backlog into your issue tracker](/accessibility/work-with-ai-agents#File-issues-in-your-issue-tracker) without creating duplicates of tickets you already have.
+
+## Prevent finished rules from regressing {#iterating-towards-success}
+
+A finished rule is only finished if it stays finished. As each rule reaches zero violations, add it to a list your CI pipeline enforces with the [Results API](/accessibility/connect-and-extend/results-api), so a reappearance fails the build instead of surfacing in next quarter's audit.
+
+While your backlog is still large, keep the list of rules you've **finished** rather than the more common list of rules you know are **failing**. Both are one-line policies in a verification script, but only the first one stays credible on a project with hundreds of open violations, because it never blocks a merge for a rule nobody has gotten to yet. Both policies, with complete scripts, are in [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests#Defining-policies-in-the-verification-step).
+
+That list grows as you work, and it's the clearest measure of progress you have: every rule on it is a barrier your application no longer has.
+
+While a single flow is under active remediation, you can also shrink what pull request runs report on, using a [profile](/accessibility/configuration/profiles) selected by a run tag. Pull request reports stay narrow while regression runs keep full coverage. See [using profiles for pull request configuration](/accessibility/guides/block-pull-requests#Using-Profiles-for-PR-specific-configuration).
+
+## Widen the scope and repeat
+
+Each completed rule leaves your team with something durable: expertise in a specific rule, a workflow for catching regressions, and a higher baseline that new code has to meet. Pick the next rule from the same list, or move from a rule-focused goal to a view-focused one and finish a whole page.
+
+Keep the ceiling in view while you do it. Automated checks detect around [57% of the issues a manual audit surfaces](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/), so a clean Cypress Accessibility report means Axe-Core® found nothing in the tested scope, not that your application works for everyone. Whether a label is meaningful, whether focus order follows the visual layout, and whether an error message is announced are all judgments a scanner can't make. Plan for people to check those, and turn what they find into assertions you can run every build: [accessibility automation principles](/accessibility/guides/accessibility-automation) covers where automation stops, and [maximize coverage](/accessibility/guides/maximize-coverage) covers writing the tests that pick up from there.
+
+When the rules and pages that matter to your business are all passing, your work shifts from remediation to prevention. See [maintaining accessibility](/accessibility/guides/maintain-accessibility) for what that looks like, and [blocking pull requests and setting policies](/accessibility/guides/block-pull-requests) for enforcing the standard you've reached.
+
+## See also
+
+- [Run-level reports](/accessibility/reports/run-level-reports) explains every metric in a run's accessibility report.
+- [Inspect violation details](/accessibility/reports/element-detail-view) covers the element detail view, DOM snapshots, and creating Jira issues from a violation.
+- [How the accessibility score is calculated](/accessibility/core-concepts/accessibility-score) documents the severity weights behind the score.
+- [Compare reports](/accessibility/guides/compare-reports) is the full guide to Branch Review for Cypress Accessibility.
+- [Configuration overview](/accessibility/configuration/overview) lists every App Quality Config option and how to apply it.
+- [Results API](/accessibility/connect-and-extend/results-api) is how you enforce a standard in CI.
+- [Maximize coverage](/accessibility/guides/maximize-coverage) shows how to turn a fixed violation into an assertion that keeps the specific fix in place.
+- [Accessibility automation principles](/accessibility/guides/accessibility-automation) explains what automated checks can and can't detect.
+- [Maintain accessibility](/accessibility/guides/maintain-accessibility) covers the shift from remediation to prevention.
+- [Work with AI agents](/accessibility/work-with-ai-agents) has more Cypress Cloud MCP prompt patterns.
+- [Cypress Accessibility FAQ](/accessibility/faq) answers common questions about scoping, scoring, and fixing violations.

@@ -1,0 +1,5 @@
+:::caution
+
+[`forceHttp1`](/app/references/configuration#forceHttp1) is both introduced and deprecated in Cypress 16. It exists only to give suites time to migrate, or as a temporary escape hatch while an issue you have filed is fixed, and it will be removed once the native browser network is supported long term. Do not set it to `true` only to avoid updating tests for the native browser network, such as skipping `Cypress.isBrowser()` gates. Treat it as a temporary aid, not a permanent setting.
+
+:::

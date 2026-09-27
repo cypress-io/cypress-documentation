@@ -9,7 +9,7 @@ describe('Migration guide copy prompts', () => {
     cards()
       .first()
       .within(() => {
-        cy.contains('Read https://docs.cypress.io/llm/markdown/').should(
+        cy.contains('Read https://docs.cypress.io/app/references/migration-guide/').should(
           'not.be.visible'
         )
         cy.contains('button', 'Show prompt')
@@ -20,11 +20,11 @@ describe('Migration guide copy prompts', () => {
           'aria-expanded',
           'true'
         )
-        cy.contains('Read https://docs.cypress.io/llm/markdown/').should(
+        cy.contains('Read https://docs.cypress.io/app/references/migration-guide/').should(
           'be.visible'
         )
         cy.contains('button', 'Hide prompt').click()
-        cy.contains('Read https://docs.cypress.io/llm/markdown/').should(
+        cy.contains('Read https://docs.cypress.io/app/references/migration-guide/').should(
           'not.be.visible'
         )
       })
@@ -45,7 +45,7 @@ describe('Migration guide copy prompts', () => {
       .its('firstCall.args.0')
       .should(
         'match',
-        /^Read https:\/\/docs\.cypress\.io\/llm\/markdown\/app\/references\/migration-guide\//
+        /^Read https:\/\/docs\.cypress\.io\/app\/references\/migration-guide\//
       )
   })
 

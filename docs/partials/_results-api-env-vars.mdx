@@ -31,9 +31,9 @@ References: [GitLab CI/CD pipelines](https://docs.gitlab.com/ee/ci/pipelines/) |
 
 **Essential environment variables**
 
-- `GITLAB_CI` - Presence identifies the environment as a GitLab CI environment
+- `GITLAB_CI` - Presence identifies the environment as a GitLab CI environment.
 - `CI_PIPELINE_ID` - Value uniquely identifies a GitLab pipeline workflow. This value does not change as jobs in the pipeline are retried.
-- `CI_JOB_NAME` - Value uniquely identifies a single job name within a pipeline. Ex. `run-e2e`
+- `CI_JOB_NAME` - Value uniquely identifies a single job name within a pipeline. Ex. `run-e2e`.
 - `CI_JOB_ID` - Value uniquely identifies an execution instance of a job. This value will change each time a job is executed/re-executed.
 
 </AccordionBlock>
@@ -48,7 +48,7 @@ We have implemented Jenkins support within this module using the broadest set of
 
 **Essential environment variables**
 
-- `JENKINS_HOME` - Presence identifies the environment as a Jenkins environment
+- `JENKINS_HOME` - Presence identifies the environment as a Jenkins environment.
 - `BUILD_URL` - Value uniquely identifies a Jenkins job execution, including name and id characteristics.
 
 </AccordionBlock>
@@ -76,7 +76,7 @@ References: [About CircleCI](https://circleci.com/docs/about-circleci/) | [Circl
 
 **Essential environment variables**
 
-- `CIRCLECI` - Presence identifies the environment as a CircleCI environment
+- `CIRCLECI` - Presence identifies the environment as a CircleCI environment.
 - `CIRCLE_PIPELINE_ID` - Value uniquely identifies a CircleCI pipeline, created on push or manually triggered through the UI. This value does not change as workflows within the pipeline are re-executed.
 - `CIRCLE_WORKFLOW_ID` - Value uniquely identifies an instance of a workflow's execution within a pipeline. This value will be updated upon each workflow execution; in other words, retrying a workflow from failure from the Circle UI will create a new workflow with a new `CIRCLE_WORKFLOW_ID` value available to the jobs executed within it.
 - `CIRCLE_WORKFLOW_JOB_ID` - Value uniquely identifies an execution instance of a named job within a workflow instance.

@@ -90,18 +90,18 @@ Pass in an options object to `Cypress.log()`.
 particularly useful when `autoEnd: false` is set and you need to manually
 control the log lifecycle.
 
-| Method                        | Description                                                                                                                                                                                                 |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log.end()`                   | Marks the log as passed and complete. Use this when `autoEnd: false` to signal that the command succeeded. Returns the `Log` object.                                                                        |
-| `log.error(error)`            | Marks the log as failed and associates the given `Error` object with it. Returns the `Log` object.                                                                                                          |
-| `log.finish()`                | Finalizes the log automatically: takes a final snapshot (unless disabled) then calls `end()`. This is called internally by Cypress on command completion; prefer `end()` in custom commands.                |
-| `log.get()`                   | Returns all of the log's current attributes as an object.                                                                                                                                                   |
-| `log.get(attr)`               | Returns the value of a single attribute by name (e.g. `log.get('consoleProps')`).                                                                                                                           |
-| `log.set(key, value)`         | Updates a single log attribute by name. Returns the `Log` object.                                                                                                                                           |
-| `log.set(options)`            | Updates multiple log attributes at once by passing an object. Useful for updating `consoleProps` with data available only after an async operation. Returns the `Log` object.                               |
-| `log.snapshot()`              | Captures the current state of the DOM and associates it with this log entry for time-travel debugging.                                                                                                      |
-| `log.snapshot(name)`          | Captures a named snapshot (e.g. `'before'` or `'after'`). Named snapshots appear as labeled tabs in the Command Log when the entry is pinned, allowing you to compare DOM state before and after an action. |
-| `log.snapshot(name, options)` | Captures a named snapshot with additional options. `options.at` specifies the index at which to insert the snapshot; `options.next` sets the name for the next snapshot to be taken.                        |
+| Method                        | Description                                                                                                                                                                                  |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log.end()`                   | Marks the log as passed and complete. Use this when `autoEnd: false` to signal that the command succeeded. Returns the `Log` object.                                                         |
+| `log.error(error)`            | Marks the log as failed and associates the given `Error` object with it. Returns the `Log` object.                                                                                           |
+| `log.finish()`                | Finalizes the log automatically: takes a final snapshot (unless disabled) then calls `end()`. This is called internally by Cypress on command completion; prefer `end()` in custom commands. |
+| `log.get()`                   | Returns all of the log's current attributes as an object.                                                                                                                                    |
+| `log.get(attr)`               | Returns the value of a single attribute by name (e.g. `log.get('consoleProps')`).                                                                                                            |
+| `log.set(key, value)`         | Updates a single log attribute by name. Returns the `Log` object.                                                                                                                            |
+| `log.set(options)`            | Updates multiple log attributes at once by passing an object. Useful for updating `consoleProps` with data available only after an async operation. Returns the `Log` object.                |
+| `log.snapshot()`              | Captures the current state of the DOM and associates it with this log entry for time-travel debugging.                                                                                       |
+| `log.snapshot(name)`          | Captures a named snapshot (e.g. `'before'` or `'after'`). Named snapshots appear as labeled tabs in the Command Log when the entry is pinned, showing DOM state before and after an action.  |
+| `log.snapshot(name, options)` | Captures a named snapshot with additional options. `options.at` specifies the index at which to insert the snapshot; `options.next` sets the name for the next snapshot to be taken.         |
 
 ## Examples
 

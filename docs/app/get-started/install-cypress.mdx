@@ -3,26 +3,15 @@ title: 'Install using npm, Yarn, pnpm, or Bun'
 description: 'The fastest way to get Cypress running. Check requirements, install it in your project, and start testing today.'
 sidebar_label: Install Cypress
 sidebar_position: 30
+slug: /app/get-started/install-cypress
 ---
 
 <ProductHeading product="app" />
 
 # Installation
 
-:::info
-
-<WhatYoullLearn />
-
-- How to install Cypress using npm, Yarn, pnpm, or Bun
-- What you need before installing
-- Advanced installation options
-
-:::
-
-## Install & Run
-
 1. **Check Requirements:** make sure you meet the [system requirements](#System-requirements) including
-   operating system, installation of Node.js and a supported package manager.
+   operating system, installation of Node.js, and a supported package manager.
 2. **Run in your project root:** This will install Cypress locally as a dev dependency for your project.
 
 <CypressInstallCommands />
@@ -41,27 +30,27 @@ Cypress supports running under these operating systems:
 
 - **macOS** >=13.5 _(Intel or Apple Silicon 64-bit (x64 or arm64))_
 - **Linux** _(x64 or arm64)_ see also [Linux Prerequisites](#Linux-Prerequisites) down below
-  - Ubuntu >=22.04
-  - Debian >=11
+  - Ubuntu >=22.04 _(arm64 requires Ubuntu >=24.04)_
+  - Debian >=12 _(arm64 requires Debian >=13)_
   - Fedora >=43
 - **Windows** 10 & 11 _(x64)_
 - **Windows** 11 25H2 _(arm64, runs in [x64 emulation](https://learn.microsoft.com/en-us/windows/arm/apps-on-arm-x86-emulation) mode, minimum Cypress [14.5.0](/app/references/changelog#14-5-0) required)_ - preview status
-- **Windows Server** 2019, 2022 and 2025 _(x64)_
+- **Windows Server** 2019, 2022, and 2025 _(x64)_
 
 ### Node.js
 
-- **Node.js** 20.x, 22.x, >=24.x
+- **Node.js** 22.x, 24.x, >=26.x
 
 Follow the instructions on [Download Node.js](https://nodejs.org/en/download/) to download and install [Node.js](https://nodejs.org/).
 
 :::caution
 
-Note that the [Node.js Snap for Linux](https://github.com/nodejs/snap) version manager is not recommended for use with Cypress.
+The [Node.js Snap for Linux](https://github.com/nodejs/snap) version manager is not recommended for use with Cypress.
 Attempting to use it as a non-root user may result in permissions errors.
 
 :::
 
-If you're using a [Cypress Docker image](../continuous-integration/overview#Cypress-Docker-variants), you'll find a fixed version of Node.js is pre-installed in the image. You select the Node.js version using the Docker image tag.
+If you're using a [Cypress Docker image](/app/continuous-integration/overview#Cypress-Docker-variants), you'll find a fixed version of Node.js is pre-installed in the image. You select the Node.js version using the Docker image tag.
 
 ### Package Manager
 
@@ -186,14 +175,28 @@ Refer to [Advanced Installation](/app/references/advanced-installation#Troublesh
 
 ### Browsers
 
-Each Cypress release includes the Electron-bundled Chromium [browser](/app/references/launching-browsers#Electron-Browser).
-
-The latest 3 major versions of the following browsers are also supported:
+Cypress supports the latest 3 major versions of the following:
 
 - [Google Chrome](/app/references/launching-browsers#Chrome-Browsers)
 - [Microsoft Edge](/app/references/launching-browsers#Edge-Browsers)
 - [Mozilla Firefox](/app/references/launching-browsers#Firefox-Browsers) (_Firefox >=[141.0](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/141) requires Cypress >=[14.1.0](https://docs.cypress.io/app/references/changelog#14-1-0)_)
 - [WebKit](https://docs.cypress.io/app/references/launching-browsers#WebKit-Experimental) support is experimental
+
+Each Cypress release also includes a bundled, Electron-based Chromium
+[browser](/app/references/launching-browsers#Electron-Browser).
+
+:::caution
+
+<Icon name="exclamation-triangle" /> **Electron is deprecated as a test
+browser** and will be removed in a future version of Cypress. Switch to Chrome
+or another installed browser to avoid a breaking change when you upgrade. Set a
+[`defaultBrowser`](/app/references/configuration#Browser) (for example,
+`'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run)
+so your runs don't rely on the bundled Electron default. See [Migrating away
+from the Electron
+browser](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
+
+:::
 
 ### Hardware
 
@@ -238,14 +241,14 @@ dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib
 
 ### Docker Prerequisites
 
-[Cypress Docker images](../continuous-integration/overview#Cypress-Docker-variants) are available from
+[Cypress Docker images](/app/continuous-integration/overview#Cypress-Docker-variants) are available from
 [Docker Hub](https://hub.docker.com/u/cypress) and the
 [Amazon ECR (Elastic Container Registry) Public Gallery](https://gallery.ecr.aws/cypress-io).
 These images, which are Linux (Debian) based, include all of the required dependencies pre-installed.
 
 If you need Node.js, browser or Cypress version combinations which are not covered by the published Cypress Docker images,
 then the [cypress/factory](https://github.com/cypress-io/cypress-docker-images/tree/master/factory) image
-allows you to generate your own customized Docker image easily.
+generates your own customized Docker image.
 
 If you are not using a Cypress Docker image, make sure that your base operating system is a Linux system listed in the supported
 [Operating Systems](#Operating-System) above and that Node.js is installed in the image.
@@ -260,7 +263,7 @@ You can also find instructions to [uninstall Cypress](/app/references/advanced-i
 
 ## <Icon name="sync-alt" /> Continuous integration
 
-Please read our
+Read our
 [Continuous Integration](/app/continuous-integration/overview) docs for
 help installing Cypress in CI. When running in Linux you may need to install some
 [system dependencies](#Linux-Prerequisites)

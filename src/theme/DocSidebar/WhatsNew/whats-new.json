@@ -1,16 +1,16 @@
 {
   "app": [
     {
-      "label": "Cypress Studio AI",
-      "href": "/app/guides/cypress-studio",
-      "description": "Smart recommendations while building tests.",
+      "label": "Tap CLI",
+      "href": "/app/tooling/cypress-tap",
+      "description": "Live Cypress app context in your terminal.",
       "showAISparkle": true,
       "isNew": true
     },
     {
-      "label": "AI Skills",
-      "href": "/app/tooling/ai-skills",
-      "description": "Instructions to guide your AI agents.",
+      "label": "Cypress Studio AI",
+      "href": "/app/guides/cypress-studio",
+      "description": "Smart recommendations while building tests.",
       "showAISparkle": true,
       "isNew": true
     }

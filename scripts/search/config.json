@@ -8,6 +8,8 @@
   "stop_urls": [
     "https://docs.cypress.io/llm/",
     "https://docs.cypress.io/llms.txt",
+    "https://docs.cypress.io/llms-full.txt",
+    "https://docs.cypress.io/docs-manifest.json",
     "https://docs.cypress.io/search",
     "https://docs.cypress.io/404",
     "https://docs.cypress.io/.well-known/"

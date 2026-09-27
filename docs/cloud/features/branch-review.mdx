@@ -9,20 +9,6 @@ sidebar_position: 50
 
 # Branch Review
 
-:::info
-
-<WhatYoullLearn />
-
-- How Branch Review helps you catch regressions before a Pull Request merges
-- How to compare test results between branches in Cypress Cloud
-- How Branch Review surfaces the impact of Pull Requests on your test suite
-- How to compare **any** two runs, if not using a Pull Request workflow
-- Best practices for grouping test runs
-
-:::
-
-## Why Branch Review
-
 Every Pull Request changes your application, and your test suite along with it. The critical question before merging is: **did this change make things better or worse?** Answering it manually means hunting through two separate sets of runs, eyeballing pass/fail counts, and guessing whether a failure is new or pre-existing. It's slow, error-prone, and easy to skip under deadline pressure.
 
 Branch Review answers _what changed_ and _why_ in a single view, so you can:
@@ -32,7 +18,7 @@ Branch Review answers _what changed_ and _why_ in a single view, so you can:
 - **Confirm coverage moved in the right direction.** See tests that were added or modified, and (if enabled) how [UI Coverage](/ui-coverage/get-started/introduction) and [Cypress Accessibility](/accessibility/get-started/introduction) shifted between the two branches.
 - **Review with confidence.** Give reviewers and authors a shared, objective picture of a PR's impact, turning "looks fine to me" into a verifiable comparison.
 
-Branch Review is valuable even if you don't have a Pull Request workflow, because it allows you to compare **any** two runs of your choice.
+Branch Review is valuable even if you don't have a Pull Request workflow, because it compares **any** two runs of your choice.
 These might represent different builds of the application, changes in test code, or results from nightly runs.
 
 <DocsImage
@@ -40,7 +26,7 @@ These might represent different builds of the application, changes in test code,
   alt="Cypress Branch Review"
 />
 
-### Example: reviewing a Pull Request
+## Example: reviewing a Pull Request
 
 A typical review of an incoming Pull Request looks like this:
 
@@ -96,7 +82,7 @@ Click the **"View all changes introduced in this branch"** link at the bottom of
 
 ## Integrating with Pull Requests
 
-Pull Requests in Branch Review work by leveraging the Cypress Cloud GitHub integration to query the GitHub API for branches with Pull Requests. Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/cloud/integrations/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
+Pull Requests in Branch Review work by using the Cypress Cloud GitHub integration to query the GitHub API for branches with Pull Requests. Your project will first need to be connected to a GitHub repository. If you haven't already, follow the steps in [Install the Cypress GitHub app](/cloud/integrations/github#Install-the-Cypress-GitHub-app) to connect your project to GitHub.
 
 When Pull Requests are connected, you'll be able to select runs by the associated PR:
 
@@ -152,14 +138,14 @@ When on the review screen, you will see the Failures, Flaky, Pending, Added, and
 
 The numbered callouts above correspond to:
 
-| #   | Description                                                                                                                                |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| 1   | Details of which branches and runs are compared. If a Pull Request is detected, Pull Request details will be here.                         |
-| 2   | Links to key differences in test information like new failures and flaky tests. Note that all numbers and scores refer to the Changed run. |
-| 3   | [UI Coverage](/ui-coverage/get-started/introduction) changes.                                                                              |
-| 4   | [Cypress Accessibility](/accessibility/get-started/introduction) changes.                                                                  |
-| 5   | What has changed in the status you have opened, shown with the count indicators below.                                                     |
-| 6   | The test state (failed, flaky, pending) at the spec level, described below.                                                                |
+| #   | Description                                                                                                                      |
+| --- | -------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Details of which branches and runs are compared. If a Pull Request is detected, Pull Request details will be here.               |
+| 2   | Links to key differences in test information like new failures and flaky tests. All numbers and scores refer to the Changed run. |
+| 3   | [UI Coverage](/ui-coverage/get-started/introduction) changes.                                                                    |
+| 4   | [Cypress Accessibility](/accessibility/get-started/introduction) changes.                                                        |
+| 5   | What has changed in the status you have opened, shown with the count indicators below.                                           |
+| 6   | The test state (failed, flaky, pending) at the spec level, described below.                                                      |
 
 **Count indicators** show how a status shifted in your branch:
 
@@ -219,7 +205,7 @@ If the required runs for comparison are not available, you can use the manual se
 
 Cypress Cloud allows for [grouping recorded tests](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs) together under a single run. This means multiple `cypress run` calls can be labeled and associated to a single run in Cypress Cloud.
 
-Recording multiple test runs per commit without grouping will cause issues, as Branch Review relies on the _latest_ run. Therefore, recording one run per commit and utilizing grouping is essential to improving effectiveness and ensure an accurate comparison between branches.
+Recording multiple test runs per commit without grouping will cause issues, as Branch Review relies on the _latest_ run. Therefore, recording one run per commit and using grouping is essential to improving effectiveness and ensure an accurate comparison between branches.
 
 ### Missing Runs in Pull Request Comparisons
 

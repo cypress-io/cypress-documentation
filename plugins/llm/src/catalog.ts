@@ -18,6 +18,14 @@ export function writeApiCatalog(url: string, distRoot: string) {
             type: 'text/html',
           },
           {
+            href: `${normalizedUrl}/llms.txt`,
+            type: 'text/markdown',
+          },
+          {
+            href: `${normalizedUrl}/llms-full.txt`,
+            type: 'text/markdown',
+          },
+          {
             href: `${normalizedUrl}/llm/markdown/index.md`,
             type: 'text/markdown',
           },
@@ -27,6 +35,10 @@ export function writeApiCatalog(url: string, distRoot: string) {
           },
           {
             href: `${normalizedUrl}/llm/json/full/index.json`,
+            type: 'application/json',
+          },
+          {
+            href: `${normalizedUrl}/docs-manifest.json`,
             type: 'application/json',
           },
         ],

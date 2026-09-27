@@ -9,7 +9,7 @@ sidebar_position: 80
 
 # Compare reports
 
-Accessibility reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Get-started) area of Cypress Cloud. This allows you to instantly see if any new issues have been introduced, and drill in to see full-page HTML and CSS snapshots showing only the new issues.
+Accessibility reports from different runs can be compared in the [Branch Review](/cloud/features/branch-review#Get-started) area of Cypress Cloud. The comparison instantly surfaces any new issues that have been introduced, and drills in to full-page HTML and CSS snapshots showing only those new issues.
 
 See the video below for an example of using Branch Review in a Pull Request:
 
@@ -25,7 +25,7 @@ Comparing two accessibility reports manually is usually a challenge:
 - many different pages or components are tested and may have changes
 - elements might be identified differently in each run
 
-Branch Review for Cypress Accessibility is set up to help you easily browse this nested set of changes and find what's important. You can review any accessibility violation increases found for specific rules, and drill into the Views where those changes happened.
+Branch Review for Cypress Accessibility is set up to help you browse this nested set of changes and find what's important. You can review any accessibility violation increases found for specific rules, and drill into the Views where those changes happened.
 
 ## Use cases
 
@@ -37,7 +37,7 @@ Comparing the results from different runs is useful in multiple scenarios.
 - **Monitoring changes**: Compare nightly monitoring runs and track down the introduction of new problems caused by underlying changes in the application.
 - **Detecting content issues**: Sometimes content editors can introduce accessibility issues unrelated to code changes. Seeing the example issues presented visually, in context, helps you quickly triage whether you are dealing with a recent code change issue, or a content authorship problem.
 - **Reviewing AI-generated code changes**: The increased use of AI to generate and/or review front-end code creates some increased risks of accessibility regressions making it to production. The increase or decrease of accessibility issues when reviewing a pull request helps you understand the impact of the change.
-- **Tracing the introduction of issues**: With dropdowns for each run, it's easy to rapidly compare different A and B runs to find the exact commit that introduced a problem.
+- **Tracing the introduction of issues**: With dropdowns for each run, you can rapidly compare different A and B runs to find the exact commit that introduced a problem.
 - **Demonstrating the resolution of issues**: Confirm the effect of your improvements, and share the overview with your team to more quickly review code changes.
 
 ## Content of the report
@@ -85,7 +85,7 @@ Either path will take you to the detailed report, either for a single View or fo
 
 Each rule has an "All Views" comparison as the first item, and then lists individual Views below that. Depending on the level of detail you are looking for, you can drill into a specific page or component and see the changes in accessibility there, or just look at the combined report.
 
-The combined "All Views" report for a single rule is especially useful if violations tend to move around between pages over time. For example, if there is a popup with an accessibility problem that appears on a random page in every run, it may appear "new" for a View in the Changed run, and "resolved" for the View where it was in the Base run, but in reality your accessibility score is the same and the problem is the same. "All Views" allows you to sidestep any noise of this kind if needed.
+The combined "All Views" report for a single rule is especially useful if violations tend to move around between pages over time. For example, if there is a popup with an accessibility problem that appears on a random page in every run, it may appear "new" for a View in the Changed run, and "resolved" for the View where it was in the Base run, but in reality your accessibility score is the same and the problem is the same. "All Views" sidesteps noise of this kind.
 
 ### Resolved elements
 
@@ -98,7 +98,7 @@ A **resolved element** is an element that had a failed accessibility rule in the
 
 Resolved elements are calculated for every rule and View, but are not displayed individually. This is because, as far as the Changed report is concerned, the failures do not exists, so there is not a guarantee the element is still present in the "new" report.
 
-If you have a use case for seeing the specific elements that are no longer detected to have failures, please reach out to your Cypress representative for further discussion. For the time being the focus of Branch Review is on **new problems** - we avoid mixing old and new data in the same report to minimize the chances of confusion.
+If you have a use case for seeing the specific elements that are no longer detected to have failures, reach out to your Cypress representative for further discussion. For the time being the focus of Branch Review is on **new problems** - we avoid mixing old and new data in the same report to minimize the chances of confusion.
 
 ### What if there are no changes?
 
@@ -117,7 +117,7 @@ The easiest subjects to compare are **passing runs** that ran **similar tests** 
 
 That said, it still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
 
-In order to see unified changes for your entire test suite, you need to group all the tests together under a single Cypress run, for each report. Learn more about this in the [Branch Review Best Practices documentation](/cloud/features/branch-review#Best-Practices).
+To see unified changes for your entire test suite, you need to group all the tests together under a single Cypress run, for each report. Learn more about this in the [Branch Review Best Practices documentation](/cloud/features/branch-review#Best-Practices).
 
 ### Stabilizing the comparison
 
@@ -175,6 +175,6 @@ If your application is unstable between runs in terms of content, pages, or diff
 
 When everything is dialled in correctly, the Branch Review diff will be 100% clean, unless something has actually changed in an area you didn't already know about. This gives you the highest confidence that if an issue is blocking a merge, it is genuinely a new problem introduced by the incoming Pull Request.
 
-If the team is not already familiar with accessibility, it's useful to consider which rules to start with. See the [starting from scratch guide](/accessibility/guides/improve-accessibility) for suggestions about this.
+If the team is not already familiar with accessibility, it's useful to consider which rules to start with. See [Fix accessibility violations](/accessibility/guides/improve-accessibility) for how to choose a first rule and scope the report around it.
 
 If multiple teams are working on the same project and need accessibility results to be isolated from each other, consider splitting runs into dedicated Cypress projects or using [configuration profiles](/accessibility/configuration/profiles) so that each team can have a customized report for the areas they are responsible for.

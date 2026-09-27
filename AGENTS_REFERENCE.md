@@ -9,22 +9,38 @@ sync when conventions change.
 This is the **Cypress Documentation** site, built with
 [Docusaurus 3](https://docusaurus.io/) in TypeScript.
 
-- Docs content lives in `docs/**/*.mdx`.
-- Custom remark plugins live in `plugins/cypressRemarkPlugins`.
-- The LLM-docs pipeline lives in `plugins/llm`. At build time it reprocesses
-  content into stripped-down markdown and chunked JSON published under `/llm`,
-  with `/llms.txt` as the index (both are build output, not committed files).
-- The plugin sub-packages (`plugins/cypressRemarkPlugins`, `plugins/llm`) are
-  **never installed on their own**: they have no lockfiles and are not npm
-  workspaces, and the root's `npm --prefix … run build`/`run test` scripts only
-  run their scripts. Everything they use (typescript, prettier, vitest, the
-  remark/unist ecosystem, etc.) resolves from the repository root's
-  `node_modules`, so their `package.json` files intentionally declare **no**
-  `dependencies`/`devDependencies`. Declare any new plugin dependency in the
-  **root** `package.json` — pins added to a plugin's own `package.json` are
-  never installed and just drift stale.
-- Reusable React/MDX components live in `src/components` and are registered in
-  `src/theme/MDXComponents.js`.
+- Docs content lives in `docs/**/*.mdx`, with shared fragments in
+  `docs/partials` and API reference under `docs/api`.
+- `src/` is the React side: components, swizzled Docusaurus theme files, and
+  small shared helpers. [`src/AGENTS.md`](./src/AGENTS.md) covers where a file
+  goes, how a component is registered, and the `data-sanitize` attribute that
+  keeps interactive chrome out of the LLM export.
+- `plugins/` holds the custom remark directives (`cypressRemarkPlugins`), the
+  LLM-docs export (`llm`), and a few plain `.js` Docusaurus plugins.
+  [`plugins/AGENTS.md`](./plugins/AGENTS.md) covers the build step and the
+  root-only dependency rule that make the two sub-packages unusual.
+
+### What the LLM export publishes
+
+At build time `plugins/llm` reprocesses content into stripped-down markdown and
+chunked JSON under `/llm` (all of it build output, not committed files). Every
+page's markdown is also published at its own route plus `.md`
+(`/app/get-started/why-cypress.md`), with its `##` sections at
+`/app/get-started/why-cypress/<h2-slug>.md`, so an agent can reach the markdown
+by appending `.md` to a docs URL without discovering `/llm` first. Readers reach
+the same file through the split button beside every page title
+(`src/components/markdown-actions`), which copies the markdown, opens the raw
+`.md`, or hands its URL to ChatGPT or Claude.
+
+Three files at the site root index all of that, and none is hand-maintained:
+
+- `/llms.txt` — the index, in the [llmstxt.org](https://llmstxt.org) format (H1,
+  blockquote, then `##` sections of `- [Title](url): description` links). It
+  links every page's markdown, plus one section listing the other formats.
+- `/llms-full.txt` — every page's markdown concatenated in index order, for
+  tools that ingest one file. It runs to several megabytes.
+- `/docs-manifest.json` — project metadata (name, repository, license, tags) and
+  the machine-readable list of the formats above.
 
 ## Adding, moving & removing pages
 
@@ -34,34 +50,26 @@ This is the **Cypress Documentation** site, built with
 - **Frontmatter** every page needs. `title` and `description` are emitted as the
   page's HTML `<title>` and `<meta name="description">`, so write them for
   **search engines and the LLM docs**, not just internally. **Match the house
-  style of the section you're editing** — there are two:
-
-  API reference pages (`docs/api/...`) are intentionally terse: the bare command
-  name plus the suffix, and a single short sentence.
-
-  ```yaml
-  ---
-  title: 'intercept | Cypress Documentation'
-  description: Spy and stub network requests and responses.
-  sidebar_label: intercept
-  slug: /api/commands/intercept
-  ---
-  ```
-
-  Guide and concept pages are more descriptive and SEO-shaped:
+  style of the section you're editing.** API reference pages are terse and have
+  their own conventions, covered in
+  [`docs/api/AGENTS.md`](./docs/api/AGENTS.md). Guide and concept pages are more
+  descriptive and SEO-shaped:
 
   ```yaml
   ---
-  title: 'Cross Origin Testing: Cypress Guide'
-  description: 'Learn how to test cross-origin content with Cypress.'
-  sidebar_label: Cross Origin Testing
+  title: 'IDE Integration with Cypress: VS Code, JetBrains, and More'
+  description: 'Set up Cypress in your IDE with IntelliSense code completion, extensions for VS Code and JetBrains, ESLint rules, and one-click file opening from the Cypress app.'
+  sidebar_label: Editor and IDE setup
+  slug: /app/tooling/IDE-integration
   ---
   ```
 
   Guidance:
   - `title`: lead with the primary search term, keep it concise (~50–60
-    characters). Keep the ` | Cypress Documentation` suffix on reference pages;
-    guides follow the `: Cypress Guide` convention seen above.
+    characters), and use a descriptive phrase, often `Topic: qualifier`.
+    **Never append a site or section suffix.** One is appended per section at
+    build time, mapped in `src/sectionTitles.js` and asserted by
+    `cypress/e2e/page_titles.cy.ts`, so a hand-written suffix is emitted twice.
   - `description`: one natural-language sentence that accurately summarizes the
     page and uses the terms a reader would search for. Reference descriptions are
     a short sentence; guide descriptions can run longer (up to ~150–160
@@ -109,11 +117,10 @@ Images go in `static/img/...` and are referenced via `/img/...`.
   (e.g. `<CloudFreePlan />`) with no per-file import.
 - **A partial must be rendered in more than one location.** A partial earns its
   indirection only by sharing content across pages; if it's referenced by a
-  single page, inline the content into that page instead. When splitting a
-  shared partial into product-specific pieces, keep genuinely shared sections in
-  the partial and inline the parts that live on only one page. Before removing
-  the last-but-one reference to a partial, inline it and delete the file (and its
-  `MDXComponents.js` registration).
+  single page, inline the content into that page instead.
+
+Writing, naming, registering, and retiring one is covered in
+[`docs/partials/AGENTS.md`](./docs/partials/AGENTS.md).
 
 ## Product heading & naming
 
@@ -123,7 +130,10 @@ Images go in `static/img/...` and are referenced via `/img/...`.
   `cloud` also takes an optional `plan` (`team` / `business` / `enterprise`).
 - Canonical product names in prose: **Cypress App**, **Cypress Cloud**,
   **Cypress Accessibility**, and **UI Coverage** (UI Coverage has no "Cypress"
-  prefix).
+  prefix). All four keep their capitalization everywhere, including
+  `<ProductHeading>`, which renders "Cypress App".
+- Write "Cypress", never "Cypress.io", and don't precede "Cypress Cloud" with
+  "the".
 
 ## Plugins list
 
@@ -134,16 +144,155 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 
 ## Writing style
 
+Voice and tone are owned by the **Cypress Style Guide**, which covers audience,
+structure, and register for all external-facing content. This section holds what
+applies to `docs/**` specifically: direction on how a guide opens and how its
+headings read, then the mechanical rules a reviewer can check without a judgment
+call.
+
+### Lead with the value
+
+Open a guide with what the feature does for the reader, and what it costs them
+to go without it, before configuration or steps. A reader who stops after the
+first paragraph should still come away knowing why the feature exists.
+
+Treat it as a direction, not a template. Many pages land it with a `## Why use X`
+section as their first H2, others with a couple of sentences under the H1. Either
+is fine. Reference pages are the exception, since they open with the signature.
+
+### Headings
+
+A heading is read without the page around it. Search engines surface it as a
+result, answer engines cite it, and the right-hand contents list shows it beside
+its siblings. So the test is whether it still means something in isolation: a
+heading that could sit on ten different pages needs the context that makes it
+this one's.
+
+- Yes: `Cypress Cloud MCP workflows to try`, `Build a release report of Cypress runs`
+- No: `Workflows to try`, `Build a release report`
+
+Guidance, not arithmetic:
+
+- **Roughly 40 to 60 characters**, about 6 to 9 words. The contents list wraps
+  rather than truncating, so a long heading costs vertical space beside its
+  siblings instead of getting cut off. Most existing headings run shorter than
+  this, averaging 27 characters, which is the habit to push against.
+- **Add the context that disambiguates, not the whole page title.** Writing the
+  product name into every heading reads as keyword stuffing and turns the
+  contents list into a column of near-identical entries.
+- **Lead with the distinctive term**, so the heading survives truncation in a
+  search result and scans quickly in the sidebar.
+- **A question is one good shape, not the required one.** Answer engines do well
+  with `How to build a release report of Cypress runs`, and it is the natural
+  form in FAQ and troubleshooting sections. Forcing `How to` onto a section that
+  answers no question is worse than leaving it short.
+- **Sentence case**, with the fixed API page skeleton (`## Command Log`,
+  `## Syntax`) and product names keeping their own capitalization.
+
+This applies to headings you are writing. Renaming an existing heading costs two
+published URLs, and neither is redirectable:
+
+- **Its anchor.** A URL fragment never reaches the server, so `netlify.toml`
+  cannot redirect it the way it redirects a moved page. Inbound deep links land
+  on the page and fail to scroll.
+- **Its section `.md` file.** The LLM export publishes every `##` section at
+  `<page-route>/<h2-slug>.md`, so renaming an H2 moves that file and the old URL
+  404s. Agents and tools that fetched it lose the link.
+
+So rename an existing heading only when the improvement is worth both, check
+first with a repo-wide search for its anchor, and update in-repo links in the
+same change. `## See also` always stays as it is.
+
+### Person and tense
+
+- **Address the reader as "you".** The docs are overwhelmingly second person
+  already. Reserve "we" for Cypress speaking as a team ("we recommend"), never
+  as a stand-in for the reader ("we then click Save") or for the product.
+- **Present tense.** Describe what the software does, not what it will do.
+  - Yes: "Cypress retries the assertion until it passes or times out."
+  - No: "Cypress will retry the assertion until it will pass."
+- **Active voice.** "The plugin strips the element", not "the element is
+  stripped by the plugin".
+- **Say what something does, not what it lets the reader do.** "Allows you to"
+  almost always hides a simpler sentence.
+  - Yes: "`cy.session()` caches and restores session state between tests."
+  - No: "`cy.session()` allows you to cache and restore session state."
+
+### Word choice
+
+- **Plain over formal.** Not `leverage` (use), not `utilize` (use), not
+  `in order to` (to).
+- **Cut filler.** `please` belongs in a UI prompt, not a doc. `note that` adds
+  nothing a reader cannot see. Drop hedges that carry no information.
+- **No minimizing words** (`simply`, `just`, `easy`, `easily`, `obviously`).
+  They tell a stuck reader the problem is them. Write the step plainly: "Run
+  `npx cypress open`", not "simply run `npx cypress open`".
+
+  The rule is the minimizing sense, not the letters. These are other words doing
+  other work, and are fine to write:
+  - "not just the file name", meaning "not only"
+  - "just as", "just like", "just before"
+  - restrictive "just": "pass just the path", "re-run just those failures"
+  - the term `just-in-time` and the `justInTimeCompile` option
+  - "easy to miss", "easy to get subtly wrong", which warn the reader instead of
+    dismissing them
+
+- **Don't claim a feature is easy, fast, or simple.** "Cypress makes it easy to
+  run your tests in CI" asks the reader to take your word for it, and a claim
+  the page doesn't back reads as marketing. Show the thing and let a short
+  example carry it. This is the same instinct as saying what something does
+  rather than what it lets the reader do.
+- **Write "accessibility", not "a11y"**, in prose. The abbreviation stays wherever
+  it is part of a real name rather than a stand-in for the word: the
+  `data-a11y-ignore` attribute, the `checkA11y()` command from `cypress-axe`, a
+  `groupId`, a `utm_content` value, an image filename. Renaming those breaks the
+  thing they name, so only the prose around them changes.
 - **Go easy on em dashes (`—`).** They read as AI-generated when overused.
   Prefer a period, comma, parentheses, or a colon, and rework the sentence
   instead of reaching for a dash. Keep an em dash only when it is clearly the
   best fit, and rarely more than one per paragraph.
+
+### Mechanics
+
+- **Oxford comma**: "commands, queries, and assertions". It applies to prose
+  anywhere a reader sees it, including headings, frontmatter
+  `title`/`description`, link text, table cells, and image `alt` text, but not
+  inside code blocks, inline code, quoted UI strings, or a literal list of API
+  values.
+- **US English**, with one exception: every `cancel` form **doubles the `l`**,
+  against the American convention. Write `cancellation`, `cancelled`, and
+  `cancelling`, never `canceled`, `canceling`, or `cancelation`. Cypress Cloud's
+  **Auto Cancellation** is a feature name and is always capitalized.
+
+  The exception to the exception is a **literal you are quoting**, which keeps
+  whatever spelling the source uses. Leave these alone:
+  - Verbatim Cypress Cloud UI strings, such as _"manually canceled"_ or
+    _"Automatically canceled by Smart Orchestration."_, and image `alt` text
+    that transcribes them.
+  - Literal API and CLI output, such as the `RUN_NOT_RUNNING` response body or
+    `Exiting with non-zero exit code because the run was canceled.`
+  - Third-party API values, such as GitLab's native `canceled` pipeline state.
+
+  A find-and-replace over these files gets this wrong in both directions, so
+  read each occurrence in context. The Cypress Cloud run status is `cancelled`
+  while several of its own UI strings say "canceled", and both are correct as
+  quoted.
+
+- **Bullet punctuation**: no terminal punctuation when the bullet is a fragment,
+  a period when it is a full sentence. Pick one per list and stay with it rather
+  than mixing both styles in the same list.
+- **Link text names its destination.** Never `[here]`, `[this link]`, or
+  `[learn more]`. A reader skimming the links alone should still know where each
+  one goes, and a screen reader announces them out of context.
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
   `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug. A
   client-side fallback (`src/clientModules/hashFallback.js`) rewrites inbound
   hashes that only differ by case to the canonical id. In-repo markdown links
   must still use the exact casing; the build throws on mismatches.
-- **Bold vs. quotes for UI labels.** Reserve **bold** for real controls the
+
+### UI labels
+
+- Reserve **bold** for real controls the
   reader acts on in a walkthrough or tutorial, meaning actual buttons, links,
   tabs, menu items, and flows in the Cypress Cloud or Cypress App UI (for
   example, "open the **App Quality** tab" or "click **Record run**"). Bolding
@@ -218,6 +367,12 @@ and `docs/app/guides/migration/`.
 - **Format longer prompts** with newlines and bullet/numbered lists in the
   `prompt` string — line breaks are preserved (`white-space: pre-wrap`). Short
   prompts stay on one line and wrap.
+- **Point the agent at a page's markdown as `<page-url>.md`** when the prompt
+  tells it to read one, e.g.
+  `https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-15-0.md`.
+  Every page is published that way, as is each of its `##` sections, so the
+  agent gets the content without the page chrome. Prefer it over the longer
+  `/llm/markdown/…` path, which serves the same file.
 - **Ships in the LLM export by default** (the prompt is reusable content). Add
   `excludeFromLlmExport` only when the prompt tells the agent to read this same
   page (e.g. the migration guides), so the export does not duplicate the page's
@@ -225,12 +380,12 @@ and `docs/app/guides/migration/`.
 
 ```mdx
 <CopyPrompt
-  title="The Health Check"
+  title="Summarize failures in the latest Cypress Cloud run"
   subtext="Get a high-level summary of any failures in the latest run on your branch."
   prompt={`Check Cypress Cloud for the latest run on this branch. Give me a high-level summary of any failures.`}
 >
 
-### The Health Check
+### Summarize failures in the latest Cypress Cloud run
 
 </CopyPrompt>
 ```
@@ -437,6 +592,251 @@ load, so write it to convey the image's _purpose_, not just its existence.
 />
 ```
 
+## Capturing Cypress App screenshots
+
+Screenshots of the Command Log and the DevTools console go stale as the Cypress
+App's UI changes. Recapture them from a real run so the image shows what a reader
+sees today. This section covers the Cypress App UI only. Cypress Cloud
+screenshots need a signed-in account and are out of scope.
+
+### Screenshot principles
+
+- **Capture from the Cypress version the docs describe.** `npm run api:source`
+  prints the pinned version (`cypress-io/cypress @ vX.Y.Z`). Install that exact
+  version.
+- **Run the page's own snippet word for word**, against a minimal fixture HTML
+  page with only the elements the snippet needs (matching ids, names, and text).
+  Never hand-edit or mock up a screenshot.
+- **Overwrite the existing file** under `static/img/` so the image path in the
+  page doesn't change. Then update the `<DocsImage>` `alt` if it no longer
+  describes the image (see [alt text](#accessible-image-alt-text)).
+- **Check the image against the page text before committing.** Open it and
+  confirm that anything the page quotes appears in it, such as the console
+  labels (`Yielded:`, `Elements:`).
+- **Work in the session scratchpad, never inside the repo:**
+  `npm init -y && npm i cypress@<version>`. If the Cypress binary download
+  fails its size check, run the install again.
+- **Run the scripts from the scratch project.** The CDP and DevTools approaches
+  use the scripts in `scripts/screenshots/`, which load `puppeteer-core` from
+  this repository, so run `npm i` here first. The commands below call them as
+  `node "$REPO/scripts/screenshots/<script>.mjs"`, with `REPO` set to this
+  repository's root. Each writes its PNG to the current directory.
+
+### Pick the approach
+
+| What you're capturing                                                      | Approach                                                            |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Command Log rows that fit on one line at the default panel width           | [`cy.screenshot()`](#command-log-with-cyscreenshot)                 |
+| Command Log rows that wrap at the default width                            | [CDP, widening the panel first](#command-log-over-cdp)              |
+| The runner showing a finished, passing test (title check mark, pass count) | [CDP](#command-log-over-cdp)                                        |
+| DevTools console output from clicking a command                            | [`cypress open` plus a DevTools frontend](#devtools-console-output) |
+
+Each approach has limits:
+
+- `cy.screenshot()` captures only the page, and DevTools isn't part of the page.
+- `cy.screenshot()` runs mid-test. Its own Command Log row shows a spinner, the
+  test title shows a spinner, and the pass/fail counts are empty (`--`).
+- A test can't set the Command Log's width.
+
+All three approaches share one config. `--force-device-scale-factor=2` gives 2x
+output for the first two approaches; the CDP approach also needs
+`--remote-allow-origins=*`. The hook skips Electron, which the DevTools approach
+configures through an environment variable instead.
+
+```javascript title="cypress.config.js"
+const { defineConfig } = require('cypress')
+
+module.exports = defineConfig({
+  e2e: {
+    supportFile: false,
+    setupNodeEvents(on) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.family === 'chromium' && browser.name !== 'electron') {
+          launchOptions.args.push('--force-device-scale-factor=2')
+          launchOptions.args.push('--remote-allow-origins=*') // CDP approach
+        }
+        return launchOptions
+      })
+    },
+  },
+})
+```
+
+Put fixture pages at the project root, next to the config, so `cy.visit()` finds
+them by file name.
+
+### Command Log with cy.screenshot
+
+Prefer this approach whenever the rows fit. It runs headlessly, with no Xvfb,
+`--no-exit`, or CDP.
+
+1. Add `cy.screenshot('<name>', { capture: 'runner' })` as the last line of the
+   spec, after the page's snippet.
+2. Run it:
+
+   ```shell
+   npx cypress run --browser "$PLAYWRIGHT_BROWSERS_PATH/chromium" \
+     --config-file cypress.config.js --spec cypress/e2e/focus.cy.js
+   ```
+
+   The file lands in `cypress/screenshots/<spec>/<name>.png`. With the config
+   above it's 2560×1266, a 1280×633 capture at 2x.
+
+3. Open that full capture and find the target rows. Divide the pixel positions
+   by 2 to get CSS pixels.
+4. Add a `clip` in **CSS pixels**. Cypress scales the saved PNG by the device
+   factor, so a 414×57 clip saves as 828×114. Crop to the rows the page's
+   snippet produces, leaving out the screenshot command's own row and the
+   running-test header. Earlier rows, such as `visit` as row 1, push the row
+   numbers up. That's fine. At the default panel width the rows are about 414
+   CSS px wide, narrower than the 940 px CDP crops. When the image must match a
+   940 px neighbor on the same page, use the CDP approach.
+5. Run the spec again and copy the PNG over the docs image right away. The
+   next `cypress run` clears `cypress/screenshots/`.
+
+```javascript title="cypress/e2e/focus.cy.js"
+it('focus', () => {
+  cy.visit('focus.html')
+  cy.get('[name="comment"]').focus() // the page's snippet, word for word
+  cy.screenshot('get-input-then-focus', {
+    capture: 'runner',
+    clip: { x: 19, y: 239, width: 414, height: 57 }, // CSS px: rows 2 and 3
+  })
+})
+```
+
+### Command Log over CDP
+
+Use this approach when a row wraps at the default width, or when the image must
+show a finished test. It leaves the runner open and drives it from outside.
+
+1. Start the run under an Xvfb screen large enough for 2x. `--no-exit` keeps the
+   runner open after the test finishes:
+
+   ```shell
+   xvfb-run -a -s "-screen 0 3200x2000x24" npx cypress run --headed --no-exit \
+     --config-file cypress.config.js \
+     --browser "$PLAYWRIGHT_BROWSERS_PATH/chromium" \
+     --spec cypress/e2e/focused.cy.js > run.log 2>&1 &
+   timeout 180 bash -c 'until grep -q "not exiting due to options.exit being false" run.log; do sleep 2; done'
+   ```
+
+2. Read the browser's CDP port from its command line:
+
+   ```shell
+   PORT=$(pgrep -a chrome | grep -o 'remote-debugging-port=[0-9]\+' | head -1 | cut -d= -f2)
+   ```
+
+3. Run the crop script, naming the rows to keep and the output file:
+
+   ```shell
+   node "$REPO/scripts/screenshots/crop.mjs" --port "$PORT" \
+     --rows '.command-name-focused, .command-name-assert' \
+     --out make-assertion-about-focused-element.png
+   ```
+
+   Rows are `.command.command-name-<command>`, such as `.command-name-focused`
+   or `.command-name-assert`. The script:
+   - attaches to the browser and picks the runner page, the one whose URL
+     contains `/__/`
+   - widens the Command Log by dragging its resize handle
+     (`[data-cy=panel2ResizeHandle]`, at about x=451 by default) out to x=700
+     (`--panel`). It drags only once: on an already wide panel, the drag
+     selects text instead.
+   - clears any selection in the page and the frame, and moves the mouse away
+     so no hover styles show
+   - finds the about:blank iframe that holds the Command Log rows
+   - clips a screenshot of the runner page to the union of the rows' bounding
+     rects, offset by the frame's position: 470 CSS px wide (`--width`, 940 px
+     in the PNG), with 4 px of padding above and below
+
+Get 2x from the launch flag, not from CDP's `Emulation.setDeviceMetricsOverride`,
+which didn't change the screenshot scale in testing.
+
+### DevTools console output
+
+Clicking a command prints its details (`Command:`, `Yielded:`, `Elements:`, and
+so on) only in interactive mode. In a `cypress run --no-exit` run, the click only
+clears the console, so this approach needs `cypress open`.
+
+1. Start `cypress open` with a CDP port on Electron, and wait for the Launchpad:
+
+   ```shell
+   ELECTRON_EXTRA_LAUNCH_ARGS="--remote-debugging-port=9333 --remote-allow-origins=*" \
+     xvfb-run -a -s "-screen 0 3200x2000x24" \
+     npx cypress open --e2e --config-file cypress.config.js > open.log 2>&1 &
+   timeout 120 bash -c 'until curl -s 127.0.0.1:9333/json/list | grep -q __launchpad; do sleep 2; done'
+   ```
+
+2. Open the spec, naming the command you'll click so the script waits until
+   the test has run:
+
+   ```shell
+   node "$REPO/scripts/screenshots/open-spec.mjs" --spec focused.cy.js \
+     --command .command-name-focused
+   ```
+
+   It dismisses the "What's New" dialog (its "Continue" button), clicks "Start
+   E2E Testing in Electron", and clicks the spec in the specs list. The runner opens in its own window, a separate page
+   from the Launchpad. Electron is the only browser offered with a custom
+   `--browser` path, and it's fine because it's Chromium. Click the spec rather
+   than changing the URL hash, which closes the runner window.
+
+3. Capture the console:
+
+   ```shell
+   node "$REPO/scripts/screenshots/console.mjs" --command .command-name-focused \
+     --out currently-focused-element-in-an-input.png
+   ```
+
+   DevTools can't be docked in a headless session, so the script opens the
+   DevTools frontend that Electron itself serves, in a separate headless
+   Chromium:
+   - It builds the inspector URL from the runner's target id in
+     `http://127.0.0.1:9333/json/list`. Don't use the `devtoolsFrontendUrl` that
+     list returns, because it points to appspot.
+   - It turns off the screencast panel first: it loads `inspector.html` once and
+     sets `screencast-enabled` to `false` in localStorage. Older DevTools read
+     `screencastEnabled`, so it sets both.
+   - It attaches the frontend before clicking the command, because the frontend
+     only shows messages logged after it connects.
+   - Clicking a command toggles its pinned state (`command-is-pinned` on
+     `.command-wrapper`). If it was already pinned, the first click unpins it,
+     so the script clicks again.
+   - It captures an 820×200 CSS px viewport at deviceScaleFactor 2 (a 1640×400
+     PNG), tall enough that the first console line stays in view.
+
+The capture includes the "Console was cleared" line and the `runner-*.js` source
+links. The existing console screenshots show them too, so leave them in.
+
+### Editing the screenshot scripts
+
+The scripts in `scripts/screenshots/` are JavaScript checked with `// @ts-check`
+against puppeteer-core's types, so run `npm run typecheck` after changing one.
+Shared helpers live in `runner.mjs`. Keep these Puppeteer behaviors in mind:
+
+- Pass `defaultViewport: null` to `puppeteer.connect()`. Otherwise Puppeteer
+  resizes every page it touches to 800×600, runner included.
+- End with `browser.disconnect()`, not `browser.close()`. On a connected
+  browser, `close()` quits it, and Cypress with it.
+- A browser Puppeteer launches itself, like the DevTools viewer in
+  `console.mjs`, needs `--no-sandbox` when the session runs as root, as it does
+  in a cloud container.
+- `console.mjs` reads the viewer's Chromium from `$PLAYWRIGHT_BROWSERS_PATH`,
+  so puppeteer-core never downloads a browser.
+
+### Shell gotchas when capturing screenshots
+
+- `pkill -f <pattern>` can match the agent's own shell command and kill it (exit
+  144). Match the process name instead: `pkill -x Cypress`, `pkill -x chrome`,
+  `pkill -x Xvfb`, `pkill -x xvfb-run`.
+- Never leave a bare `cat`, or anything else that reads stdin, in a command. It
+  hangs until the tool times out.
+- Wait for conditions with `timeout N bash -c 'until <check>; do sleep 2; done'`,
+  not chained sleeps.
+- Stop every Cypress, Chrome, and Xvfb process when you're done, then confirm
+  with `pgrep -l 'Cypress|chrome|Xvfb'`. They can take a few seconds to exit.
+
 ## Linking
 
 `onBrokenLinks` and `onBrokenMarkdownLinks` are both set to `throw`, so a broken
@@ -522,42 +922,139 @@ sign-up/login links, or to non-Cypress third-party links. For repeated CTAs,
 prefer the shared partials (e.g. `docs/partials/_ui-coverage-premium-note.mdx`)
 that already embed the correct params rather than re-writing the URL.
 
+## API source of truth
+
+An API reference page describes behavior that lives in a different repository:
+`cypress-io/cypress`. Nothing in this repository can confirm what `.blur()`
+actually does, so a page written from the surrounding docs alone inherits
+whatever those docs already got wrong. Read the implementation instead.
+
+### Getting the source
+
+```bash
+npm run api:source              # sync .cypress-source/ to the latest release tag
+npm run api:source -- blur      # resolve a command to the files that define it
+npm run api:source -- blur --ref develop
+```
+
+The first call makes a shallow, blobless, sparse checkout of `cypress-io/cypress`
+in `.cypress-source/` (gitignored): a few seconds, a few megabytes, and only the
+directories the reference pages describe. It is pinned to a release tag, so it
+holds the source as it shipped rather than as `develop` currently has it — pass
+`--ref develop` when you are documenting something unreleased. After the first
+sync the checkout is reused, so lookups are instant. Then read and grep it like
+any other source.
+
+The lookup is the part worth having. A command's file is usually not named after
+the command: `.blur()` lives in `actions/focus.ts`, `cy.intercept()` in
+`net-stubbing/add-command.ts`, and their published types are in two different
+packages. Guessing the path wastes a search; the resolver hands you the line.
+
+### What each page section is answerable from
+
+| Page section             | Source of truth                                                                                          |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `## Syntax`              | the command's declaration in the type definitions — the signature a reader autocompletes                 |
+| Usage, correct           | `prevSubject` in the `Commands.addAll` call — it lists every subject the command accepts                 |
+| `### Arguments`          | the options interface in the type definitions, plus the `_.defaults({...})` call that sets each default  |
+| `<HeaderYields />`       | what the command function returns, and whether it is registered with `addQuery` (retried) or `add` (not) |
+| `<HeaderRequirements />` | every `throwErrByPath` call in the command, resolved against `error_messages.ts`                         |
+| `## Notes`               | the comments and special cases in the implementation                                                     |
+| `## History`             | `cli/CHANGELOG.md`                                                                                       |
+| Behavior in general      | the driver's own specs under `packages/driver/cypress/e2e/commands/` — the executable spec               |
+
+Commands are one surface of three. `Cypress.*` APIs are implemented in
+`packages/driver/src/cypress/` (`cookies.ts`, `screenshot.ts`, `clock.ts`, and
+siblings), and configuration is defined in `packages/config/src/`. Node events
+live in `packages/server/lib/plugins/`, which the checkout does not include —
+read those on GitHub.
+
+### Using what you find
+
+- **Cite the source in the pull request**, not in the page. A permalink at a
+  pinned ref (the resolver prints one per hit) lets a reviewer check a behavior
+  claim without re-deriving it.
+- **A driver test beats a reading of the implementation.** If a spec asserts the
+  behavior, that is settled; if you are inferring from code alone, say so.
+- **When the page and the source disagree, flag it — do not quietly rewrite the
+  page.** The docs may be describing intended behavior against a bug, and the fix
+  may belong in `cypress-io/cypress`. Surface the conflict and let a human pick.
+- **Options tables are the most common place drift hides.** Check every row
+  against the options interface and the defaults, including rows the source no
+  longer has.
+
 ## Testing
 
-- **End-to-end tests** (`cypress/e2e/`) crawl the built site: `basic_tests.cy.ts`
-  checks routing and the main nav, and the `all_*_pages.cy.ts` specs visit every
-  page in each section to confirm it loads. So most content changes are exercised
-  simply by the page rendering without errors.
-- To run them locally, start the site in one terminal (`npm run start`, served at
-  `http://localhost:3000`, the configured `baseUrl`) and in another run
-  `npm test` (headless) or `npx cypress open` (interactive).
-- **Plugin unit tests** (Vitest) cover the remark plugins in `plugins/`. Run them
+- **End-to-end tests** (`cypress/e2e/`) crawl the built site, so most content
+  changes are exercised by the page rendering without errors. What each spec
+  covers, and why adding a page needs no change to any of them, is in
+  [`cypress/AGENTS.md`](./cypress/AGENTS.md).
+- To run them locally, serve a production build in one terminal (`npm run build`,
+  then `npm run serve` at `http://localhost:3000`, the configured `baseUrl`) and
+  in another run `npm test` (headless) or `npx cypress open` (interactive). CI
+  serves the same build. The dev server is not interchangeable here: it returns
+  one shell title for every route and fills the real one in during hydration, so
+  the `page_titles.cy.ts` checks that read server-rendered HTML fail against it.
+- They run in **Chrome for Testing**, which `cypress.config.ts` sets as the
+  `defaultBrowser`. It is pinned to a version and never updates itself, so a run
+  is reproducible, and the enterprise Chrome policies that can block remote
+  debugging do not apply to it. Install it
+  with `npx @puppeteer/browsers install chrome@stable` and put the binary where
+  Cypress auto-detects it, which on Linux is `chrome` on `PATH`. Both E2E jobs
+  install it with `browser-actions/setup-chrome` and pass
+  `--browser chrome-for-testing` through the Cypress action, and so does the
+  nightly `update-plugins-data` workflow, which runs `plugins_list.cy.ts` on its
+  own.
+- **Plugin unit tests** (Vitest) cover both sub-packages in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
+- **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and
+  `cypress.config.ts`. The `plugins/` sub-packages type check themselves through
+  their own `tsc` builds during `npm run build`. `@docusaurus/tsconfig` points
+  `baseUrl` at its own directory, so the root `tsconfig.json` re-anchors
+  it to the repository and pulls in the `@theme/*` ambient types explicitly;
+  without that, `@site/...` and `@theme/...` imports do not resolve.
 
-## GitHub Actions workflows
+## Continuous integration
 
-Repo automation lives in `.github/workflows/`. When adding or editing a
-workflow:
+The `CI` workflow (`.github/workflows/ci.yml`) runs on every pull request and on
+every push to `main`:
 
-- **Look up the current major version of every action you use.** Check the
-  action's own GitHub repository (its releases or tags page) at the time you
-  write the workflow, and use the latest major version published there.
-- Pin each action to its latest major tag (`uses: <owner>/<action>@v<major>`),
-  matching this repo's existing style. Pinning to a commit SHA is not required
-  here.
-- After a new or changed workflow runs, read its logs and bump any action the
-  runner flags with a deprecation warning.
-- This repository is frequently forked, and workflows (including scheduled
-  `cron` jobs) are copied into every fork, where they run with reduced
-  permissions: GitHub Actions cannot create or approve pull requests in a fork
-  by default, so an unguarded job fails with a fatal error. Guard any job that
-  pushes commits, creates pull requests, or uses repo secrets with a job-level
-  condition so it only runs on the default branch of the parent repository:
+| Job                                  | Command                                                  |
+| ------------------------------------ | -------------------------------------------------------- |
+| Build                                | `npm run build`                                          |
+| Lint JS/CSS/Markdown                 | `npm run lint`                                           |
+| Typecheck                            | `npm run typecheck`                                      |
+| Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins`                    |
+| E2E                                  | `cypress run` in Chrome for Testing, across 8 containers |
+| Run Algolia scraper (`main` only)    | `scrape-and-compare-algolia-index`                       |
 
-  ```yml
-  jobs:
-    my-job:
-      if: (github.ref == 'refs/heads/main') &&
-        (github.repository == 'cypress-io/cypress-documentation')
-  ```
+Lint, typecheck, and unit tests install their own dependencies (restored from
+the `actions/setup-node` npm cache) and start immediately, without waiting on
+the build. Only the jobs that need the built site wait: the build uploads `dist`
+as an artifact and the E2E containers download it, so the site is built once for
+all eight rather than once per container.
+
+The E2E job splits the suite through Cypress Cloud, which needs
+`CYPRESS_RECORD_KEY`. GitHub withholds secrets from pull requests opened from a
+fork, so those run the `E2E (fork, not recorded)` job instead: the whole suite in
+one container, reporting nothing to the Cloud.
+
+Exactly one of those two runs and the other is skipped, so neither can be a
+required status check: GitHub reports a skipped job as **Success**, and
+requiring the eight containers would go green on a fork pull request that ran no
+tests at all. The `E2E` job (`e2e-status`) exists for that. It runs `always()`,
+reads both results, and fails unless one of them actually succeeded, including
+when both were skipped because the build failed. Require it rather than the jobs
+feeding it, and keep `fail-fast: false` on the matrix so all eight containers
+report and its aggregate result is true.
+
+The branch protection set is `Build`, `Lint JS/CSS/Markdown`, `Typecheck`,
+`Unit Tests (Search/Algolia, plugins)`, and `E2E`.
+
+One branch this workflow never sees is `automation/update-plugins-data`. GitHub
+raises no workflow run for an event caused by `GITHUB_TOKEN`, so the nightly
+pull request `update-plugins-data.yml` opens triggers nothing. That workflow
+typechecks, builds, and runs `plugins_list.cy.ts` itself before opening the pull
+request. Anything that would newly break on a change to
+`src/data/plugins-generated.json` belongs there, not only here.

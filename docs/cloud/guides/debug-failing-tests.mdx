@@ -96,8 +96,9 @@ repository to know which Cloud project the run belongs to.
 
 ### Store your record key as a CI secret
 
-The record key authorizes a machine to record runs to your project. Add it to
-your CI provider's secrets or masked environment variables as
+The record key authorizes a machine to record runs to your project, and to
+[cancel them](/cloud/features/smart-orchestration/run-cancellation-api). Add it
+to your CI provider's secrets or masked environment variables as
 `CYPRESS_RECORD_KEY`, the same way you store any other credential, so it never
 appears in your pipeline configuration or build logs.
 

@@ -1,6 +1,6 @@
 ---
 title: 'cy.spy()'
-description: Wrap a method in a spy in order to record calls to and arguments of the function in Cypress.
+description: Wrap a method in a spy to record calls to and arguments of the function in Cypress.
 sidebar_label: spy
 ---
 
@@ -8,7 +8,7 @@ sidebar_label: spy
 
 # spy
 
-Wrap a method in a spy in order to record calls to and arguments of the
+Wrap a method in a spy to record calls to and arguments of the
 function.
 
 `cy.spy()` is a utility function, and is not a Cypress command, query or
@@ -84,7 +84,7 @@ const spy = cy.spy(obj, 'foo').log(false)
 
 :::info
 
-[Check out our example recipe testing spying, stubbing and time](/app/references/recipes#Stubbing-and-spying)
+[Check out our example recipe testing spying, stubbing, and time](/app/references/recipes#Stubbing-and-spying)
 
 :::
 
@@ -92,7 +92,7 @@ const spy = cy.spy(obj, 'foo').log(false)
 
 You can alias spies, similar to how [`.as()`](/api/commands/as) works. This can
 make your spies easier to identify in error messages and Cypress's command log,
-and allows you to assert against them later using `cy.get()`.
+and retrieve them later for assertions using `cy.get()`.
 
 ```javascript
 const obj = {
@@ -184,6 +184,6 @@ the following:
 
 - [`.as()`](/api/commands/as)
 - [`cy.clock()`](/api/commands/clock)
-- [Guide: Stubs, Spies and Clocks](/app/guides/stubs-spies-and-clocks)
+- [Guide: Stubs, Spies, and Clocks](/app/guides/stubs-spies-and-clocks)
 - [Recipe: Stubbing, Spying](/app/references/recipes#Stubbing-and-spying)
 - [`cy.stub()`](/api/commands/stub)

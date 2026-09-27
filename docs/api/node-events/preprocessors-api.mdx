@@ -13,8 +13,8 @@ A preprocessor is the plugin responsible for preparing a
 or a [spec file](/app/core-concepts/writing-and-organizing-tests#Spec-files)
 for the browser.
 
-A preprocessor could transpile your file from another language (CoffeeScript or
-ClojureScript) or from a newer version of JavaScript (ES2017).
+A preprocessor could transpile your file from another language (ClojureScript)
+or from a newer version of JavaScript (ES2017).
 
 A preprocessor also typically watches the source files for changes, processes
 them again, and then notifies Cypress to re-run the tests.
@@ -24,7 +24,7 @@ them again, and then notifies Cypress to re-run the tests.
 We've created some example preprocessors as reference for you to look at. These are
 fully functioning preprocessors.
 
-The code contains comments that explain how it utilizes the preprocessor API.
+The code contains comments that explain how it uses the preprocessor API.
 
 - [webpack preprocessor](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
 - [Browserify preprocessor](https://github.com/cypress-io/cypress-browserify-preprocessor)
@@ -38,7 +38,6 @@ The webpack preprocessor handles:
 
 - ES2015 and JSX via Babel
 - TypeScript
-- CoffeeScript `1.x.x`
 - Watching and caching files
 
 :::info
@@ -54,11 +53,10 @@ as
 If you don't use webpack in your project or would like to keep the majority of
 the default options, you can
 [modify the default options](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor#modifying-default-options).
-Editing the options allows you to do things like:
+Editing the options covers cases like:
 
-- Add your own Babel plugins
-- Modify options for TypeScript compilation
-- Add support for CoffeeScript `2.x.x`
+- Adding your own Babel plugins
+- Modifying options for TypeScript compilation
 
 ## Resolving import path aliases
 
@@ -232,11 +230,11 @@ eventually be served to the browser.
 
 :::note
 
-If, for example, the source file is `spec.coffee`, the preprocessor should:
+If, for example, the source file is `spec.cljs`, the preprocessor should:
 
 :::
 
-1. Compile the CoffeeScript into JavaScript `spec.js`
+1. Compile the ClojureScript into JavaScript `spec.js`
 2. Write that JavaScript file to disk (example: `/Users/foo/tmp/spec.js`)
 3. Resolve with the absolute path to that file: `/Users/foo/tmp/spec.js`
 

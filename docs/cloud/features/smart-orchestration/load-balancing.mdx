@@ -9,20 +9,6 @@ sidebar_position: 30
 
 # Load Balancing
 
-:::info
-
-<WhatYoullLearn />
-
-- What load balancing is and why it matters for your team
-- How load balancing saves time and reduces CI spend
-- How Cypress decides which spec runs where, automatically
-- How to verify the time load balancing is saving you
-- How to get the most value out of load balancing
-
-:::
-
-## What is load balancing?
-
 When you run tests
 [in parallel](/cloud/features/smart-orchestration/parallelization) across
 multiple CI machines, _how_ you split the work matters just as much as _how
@@ -217,7 +203,7 @@ it. A few practices help Cypress balance your runs as efficiently as possible:
 - **Match machine count to suite size.** Adding machines speeds runs up only
   until the workload is evenly balanced. Use the
   [Machines View](/cloud/features/smart-orchestration/parallelization#Machines-View)
-  to confirm machines are well utilized before scaling further. Cypress Cloud
+  to confirm machines are evenly loaded before scaling further. Cypress Cloud
   also surfaces a
   [Recommendations](/cloud/features/recorded-runs#Recommendations) panel on each
   run that models your run time at different machine counts. For example, it

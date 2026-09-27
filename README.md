@@ -4,7 +4,7 @@
 
 ## CI status
 
-[![CircleCI](https://circleci.com/gh/cypress-io/cypress-documentation/tree/main.svg?style=svg)](https://circleci.com/gh/cypress-io/cypress-documentation/tree/main)
+[![CI](https://github.com/cypress-io/cypress-documentation/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cypress-io/cypress-documentation/actions/workflows/ci.yml?query=branch%3Amain)
 `main` branch
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/dbf22ada-b50c-49b0-a933-bf02e87d25d1/deploy-status)](https://app.netlify.com/sites/cypress-docs/deploys)
@@ -37,7 +37,11 @@ served using any static contents hosting service.
 
 ### LLM Docs
 
-The build process reprocesses the content into both markdown and chunked JSON to be published under `/llm` - these formats strip out unnecessary styling and formatting which can be difficult and/or token-inefficient for use by LLMs. See `/llms.txt` for indexing info.
+The build process reprocesses the content into both markdown and chunked JSON to be published under `/llm` - these formats strip out unnecessary styling and formatting which can be difficult and/or token-inefficient for use by LLMs. Three files at the site root index them:
+
+- `/llms.txt` - a link index of every documentation page, in the [llmstxt.org](https://llmstxt.org) format.
+- `/llms-full.txt` - the whole corpus concatenated into one markdown file.
+- `/docs-manifest.json` - project metadata and the machine-readable list of every format published.
 
 ## Contributing
 

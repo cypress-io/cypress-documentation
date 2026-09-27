@@ -1,4 +1,6 @@
 {
-  "label": "Core Concepts",
-  "position": 50
+  "label": "Core concepts",
+  "position": 20,
+  "collapsible": true,
+  "collapsed": true
 }

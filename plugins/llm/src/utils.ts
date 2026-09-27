@@ -15,6 +15,13 @@ export const DEFAULT_LLM_EXPORT_CONFIG: LlmExportConfig = {
 const MARKDOWN_EXT_RE = /\.(md|mdx|markdown)$/i
 
 /**
+ * Per-directory instructions for coding agents, not pages. `docusaurus.config.js`
+ * excludes them from the build, so no HTML is ever emitted for them and the
+ * export would fail looking for it. Kept in sync with that `exclude` list.
+ */
+const AGENT_INSTRUCTION_FILES = new Set(['AGENTS.md', 'CLAUDE.md'])
+
+/**
  * Normalizes path separators to `/` for URLs and stable cross-platform output.
  */
 export function toPosixPath(p: string): string {
@@ -34,14 +41,21 @@ export function writeJsonFile(filePath: string, data: unknown): void {
   writeFile(filePath, JSON.stringify(data, null, 2))
 }
 
-/** Collects all markdown / MDX source files under `dir` (recursive). */
+/**
+ * Collects all markdown / MDX source files under `dir` (recursive), skipping
+ * agent instruction files.
+ */
 export function walkDocs(dir: string, files: string[] = []): string[] {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name)
     if (entry.isDirectory()) {
       walkDocs(fullPath, files)
     }
-    else if (entry.isFile() && /\.(md|mdx|markdown)$/i.test(entry.name)) {
+    else if (
+      entry.isFile() &&
+      MARKDOWN_EXT_RE.test(entry.name) &&
+      !AGENT_INSTRUCTION_FILES.has(entry.name)
+    ) {
       files.push(fullPath)
     }
   }
@@ -88,6 +102,22 @@ export function parseHeadingLine(trimmedLine: string): { level: number; text: st
  */
 export function stripMarkdownExtension(pathStr: string): string {
   return pathStr.replace(MARKDOWN_EXT_RE, '')
+}
+
+/**
+ * Resolves the site route a doc is published at, relative to the site root and
+ * without a leading slash (e.g. `app/get-started/why-cypress`). A `slug` in the
+ * page's frontmatter wins over its file path, and is resolved against the doc's
+ * own directory when relative — matching how Docusaurus routes the page.
+ */
+export function resolveDocRoute(docId: string, slug?: string | null): string {
+  const trim = (route: string) => route.replace(/^\/+/, '').replace(/\/+$/, '')
+
+  if (!slug) return trim(toPosixPath(docId))
+  if (slug.startsWith('/')) return trim(toPosixPath(slug))
+
+  const parentDir = path.posix.dirname(toPosixPath(docId))
+  return trim(path.posix.join(parentDir === '.' ? '' : parentDir, slug))
 }
 
 /**

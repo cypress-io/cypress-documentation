@@ -1,27 +1,14 @@
 ---
 title: 'Writing and organizing Cypress tests'
 description: Learn how to structure a Cypress project and write reliable tests, covering supported spec files, folder structure, hooks, test isolation, configuration, assertions, and test statuses.
-sidebar_label: Writing and Organizing Tests
-sidebar_position: 30
+sidebar_label: Writing and organizing tests
+sidebar_position: 20
+slug: /app/core-concepts/writing-and-organizing-tests
 ---
 
 <ProductHeading product="app" />
 
 # Writing and Organizing Tests
-
-:::info
-
-<WhatYoullLearn />
-
-- How Cypress organizes your project and why it uses the conventions it does
-- The types of files Cypress works with and the role each one plays
-- How to write tests, including structure, hooks, configuration, and assertions
-- How to read the four test statuses Cypress reports
-- Which files Cypress watches so your tests re-run as you write them
-
-:::
-
-## Project structure
 
 Cypress favors **convention over configuration**. When you add a new project,
 Cypress scaffolds a suggested folder structure so you can start writing tests
@@ -86,7 +73,7 @@ Both:
 </TabItem>
 </Tabs>
 
-### Configuring file locations
+## Configuring file locations
 
 These locations are conventions, not requirements. You can point Cypress at
 different folders for your tests, fixtures, and support files, which is useful
@@ -116,7 +103,7 @@ Additionally, if you are storing sensitive variables in your
 
 :::
 
-### Spec files
+## Spec files
 
 Spec files are where your tests live. For end-to-end testing they're located in
 `cypress/e2e` by default, while component testing specs typically live next to
@@ -129,23 +116,33 @@ your team already uses:
 - `.jsx`
 - `.ts`
 - `.tsx`
-- `.coffee`
 
 Cypress also supports `ES2015` out of the box. You can use either
 `ES2015 modules` or `CommonJS modules`, which means you can `import` or
 `require` both **npm packages** and **local relative modules** to share code
 across specs.
 
-:::info
+```javascript title="cypress/e2e/modules.cy.js"
+// ES2015 `import` of a local module
+import getSelector from '../support/utils/get_selector'
 
-<strong>Example Recipe</strong>
+// CommonJS `require` of an npm package from your package.json
+const { upperFirst } = require('lodash')
 
-Check out our recipe using
-[ES2015 and CommonJS modules](/app/references/recipes#Fundamentals).
+describe('modules', () => {
+  it('uses code from both', () => {
+    expect(getSelector('checkbox')).to.eq('.my-app-checkbox')
+    expect(upperFirst('jane')).to.eq('Jane')
+  })
+})
+```
 
-:::
+The [default preprocessor](#The-default-preprocessor) bundles these imports for
+you, so this works with no extra setup. That bundle runs in the browser, which
+means a module that depends on Node.js APIs like `fs` won't load in a spec. Run
+that code in [`cy.task()`](/api/commands/task) instead.
 
-#### How Cypress finds your specs
+### How Cypress finds your specs
 
 Cypress doesn't treat every file in your test folder as a spec. It only loads
 files that match the [`specPattern`](/app/references/configuration#e2e) glob,
@@ -194,7 +191,58 @@ it, and `--spec` picks which of the remaining specs to run this time.
 
 :::
 
-### Support file
+### How much to put in one spec file
+
+Should every page, section, or form get its own spec? Nothing requires your
+specs to mirror your application's structure. A good default is one spec per
+feature or user flow, with `describe()` blocks grouping related scenarios and
+several `it()` tests inside covering them.
+
+Two forces pull in opposite directions, and they're what to weigh when you're
+deciding where to draw the line:
+
+- The spec file is the unit Cypress runs, balances, and reports on. Cypress
+  distributes whole spec files across machines when you
+  [parallelize](/cloud/features/smart-orchestration/parallelization), so one
+  spec that runs far longer than the rest can hold up a run that is otherwise
+  finished.
+- Every spec pays fixed overhead. Cypress reloads the browser, your
+  [support file](#Support-file), and your application for each one. Twenty
+  specs of one test each run noticeably slower than one spec containing the
+  same twenty tests.
+
+Split a spec when:
+
+- It runs longer than a few minutes. See
+  [spec file duration](/app/guides/test-performance#Spec-file-duration) for
+  target ranges.
+- It covers areas that have little to do with each other, so a failure in one
+  says nothing about the others.
+- Its sections need different setup, such as a different seeded user, fixture,
+  or [test configuration](#Test-Configuration) like `viewportWidth` or
+  `browser`.
+- Several teams edit it constantly and collide in it.
+
+Keep tests in the same spec when:
+
+- They share the same `beforeEach`, and splitting them would repeat expensive
+  setup.
+- Each one finishes in seconds, where per-spec overhead would outweigh the
+  tests themselves.
+- The split you're considering is one test per file.
+
+A login page with a single form is one feature, so a `login.cy.js` covering a
+valid login, invalid credentials, and validation messages is right-sized. An
+account settings area with profile, billing, and notification sections is three
+features that happen to share a URL, and three specs are usually easier to work
+with, especially when each needs a different account state.
+
+Splitting specs is not the same as splitting tests. Inside a spec, the question
+becomes how much behavior a single `it()` should cover, which comes down to how
+quickly a failing test tells your team where to look. See
+[Creating "Tiny" Tests With A Single Assertion](/app/core-concepts/best-practices#Creating-Tiny-Tests-With-A-Single-Assertion).
+
+## Support file
 
 The support file is your hook into every spec. It runs **before** every single
 spec file, which makes it the natural home for setup and behavior you want
@@ -209,12 +257,12 @@ path. By default it looks for:
 - **E2E:** `cypress/support/e2e.{js,jsx,ts,tsx}`
 - **Component:** `cypress/support/component.{js,jsx,ts,tsx}`
 
-#### Execution
+### Execution
 
 When Cypress runs a spec file via `cypress open` or `cypress run`, it loads the
 support file first and then the spec file.
 
-#### supportFile per testing type
+### supportFile per testing type
 
 `supportFile` is configured separately for each testing type. Set it under the
 `e2e` key for end-to-end testing and under the `component` key for component
@@ -236,7 +284,7 @@ support file locations:
 
 :::
 
-#### Organizing imports
+### Organizing imports
 
 From your support file you can `import` or `require` other files to keep things
 organized as it grows.
@@ -255,7 +303,7 @@ in the test performance guide for examples.
 
 :::
 
-#### Global hooks
+### Global hooks
 
 Because the support file runs first, it's a convenient place to define `before`
 or `beforeEach` behavior that should apply to every spec:
@@ -271,7 +319,7 @@ beforeEach(() => {
   alt="Global hooks for tests"
 />
 
-### Fixtures
+## Fixtures
 
 Fixtures are external pieces of static data your tests can load on demand.
 Think of them as the canned data your tests run against. Keeping this data in
@@ -282,7 +330,7 @@ lets you reuse the same data across many tests. Fixture files live in
 directory.
 
 Cypress recognizes a range of fixture file types and parses or encodes each
-based on its extension: `.json`, `.js`, `.coffee`, `.html`, `.txt`, `.csv`,
+based on its extension: `.json`, `.js`, `.html`, `.txt`, `.csv`,
 `.png`, `.jpg`, `.jpeg`, `.gif`, `.tif`, `.tiff`, and `.zip`. Any other
 extension is read as `utf8` unless you pass a different encoding. See
 [`cy.fixture()`](/api/commands/fixture) for the full encoding details.
@@ -301,7 +349,7 @@ There are a few ways to use a fixture:
 - [`.selectFile()`](/api/commands/selectfile) attaches a fixture to a file input
   when you're testing uploads.
 
-### Node events (setupNodeEvents)
+## Node events (setupNodeEvents)
 
 Your tests run in the browser, but some things, like touching the file system,
 talking to a database, or controlling how specs are bundled, can only happen in
@@ -320,7 +368,7 @@ via the [browser launch API](/api/node-events/browser-launch-api), and run other
 tasks that need access to the operating system. Read our
 [plugins guide](/app/plugins/plugins-guide) for details and examples.
 
-### Generated assets
+## Generated assets
 
 When a run produces artifacts (files your app downloaded, screenshots, or
 videos), Cypress saves them to dedicated folders so you can inspect what
@@ -335,7 +383,7 @@ cypress/screenshots/
 cypress/videos/
 ```
 
-#### Downloads
+### Downloads
 
 Any files downloaded while testing an application's file download feature will
 be stored in the [`downloadsFolder`](/app/references/configuration#Downloads)
@@ -347,7 +395,7 @@ which is set to `cypress/downloads` by default.
     - records.csv
 ```
 
-#### Screenshots
+### Screenshots
 
 If screenshots were taken via the [cy.screenshot()](/api/commands/screenshot)
 command or automatically when a test fails, the screenshots are stored in the
@@ -364,7 +412,7 @@ to `cypress/screenshots` by default.
 To learn more about screenshots and settings available, see
 [Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots)
 
-#### Videos
+### Videos
 
 Any videos recorded of the run are stored in the
 [`videosFolder`](/app/references/configuration#Videos) which is set to
@@ -376,7 +424,7 @@ Any videos recorded of the run are stored in the
     - app.cy.js.mp4
 ```
 
-#### How asset file paths are generated
+### How asset file paths are generated
 
 Screenshots and videos are saved inside their respective folders
 (`cypress/screenshots`, `cypress/videos`), and Cypress mirrors each spec's
@@ -445,7 +493,7 @@ remove, or filter specs.
 
 :::
 
-#### Storing assets in Cypress Cloud
+### Storing assets in Cypress Cloud
 
 <DocsImage
   src="/img/cloud/features/test-replay/test-replay-ui.png"
@@ -461,7 +509,7 @@ Replay the test as it executed during the recorded run with full debug capabilit
 Screenshots and videos are attached to their respective test results and kept
 for the length of your
 [data retention](/cloud/account-management/billing-and-usage#Plan-overview)
-period, and are easily shared or browsed through our web interface. To learn more about videos and settings available, see
+period, and can be shared or browsed through our web interface. To learn more about videos and settings available, see
 [Screenshots and Videos](/app/guides/screenshots-and-videos#Screenshots).
 
 ## Writing tests
@@ -518,6 +566,12 @@ describe('Account settings', () => {
 })
 ```
 
+How much a single `it()` should cover is a judgment call, and the useful test is
+whether its title would tell a teammate what broke when it fails. See
+[Where the balance sits](/app/core-concepts/best-practices#Where-the-balance-sits)
+in Best Practices, and [How much to put in one spec file](#How-much-to-put-in-one-spec-file)
+for the same decision at the file level.
+
 ### Assertion Styles
 
 Cypress supports both BDD (`expect`/`should`) and TDD (`assert`) style plain
@@ -535,7 +589,7 @@ it('asserts in TDD style with assert', () => {
 ```
 
 The [.should()](/api/commands/should) command and its alias
-[.and()](/api/commands/and) can also be used to more easily chain assertions off
+[.and()](/api/commands/and) can also be used to chain assertions off
 of Cypress commands.
 [Read more about assertions.](/app/core-concepts/introduction-to-cypress#Assertions)
 
@@ -599,7 +653,7 @@ describe('Hooks', () => {
 
 :::danger
 
-🚨 Before writing `after()` or `afterEach()` hooks, please see our
+🚨 Before writing `after()` or `afterEach()` hooks, see our
 [thoughts on the anti-pattern of cleaning up state with `after()` or `afterEach()`](/app/core-concepts/best-practices#Using-after-Or-afterEach-Hooks).
 
 :::
@@ -976,9 +1030,8 @@ JSX support out of the box with zero configuration. That zero-config support is
 the reason most projects never have to think about bundling at all.
 
 If you need further control of the file-watching behavior you can configure this
-preprocessor explicitly: it exposes options that allow you to configure behavior
-such as _what_ is watched and the delay before emitting an "update" event after
-a change.
+preprocessor explicitly: it exposes options that control behavior such as _what_
+is watched and the delay before emitting an "update" event after a change.
 
 Cypress also ships other [file-watching preprocessors](/app/plugins/plugins-list) -
 you'll have to configure these explicitly if you want to use them.
@@ -1002,7 +1055,7 @@ failing any assertions. The test screenshot below shows a passed test:
   alt="Cypress with a single passed test"
 />
 
-Note that a test can pass after several
+A test can pass after several
 [test retries](/app/guides/test-retries). In that case the Command Log shows
 some failed attempts, but ultimately the entire test finishes successfully.
 

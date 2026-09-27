@@ -40,13 +40,14 @@ cy.get('@btn').blur()
 ```javascript
 cy.get('[type="email"]').blur() // Blur email input
 cy.get('[tabindex="1"]').blur() // Blur el with tabindex
+cy.window().blur() // Blur the window
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
 cy.blur('input') // Errors, cannot be chained off 'cy'
-cy.window().blur() // Errors, 'window' does not yield DOM element
+cy.get('li').blur() // Errors, subject contains more than one element
 ```
 
 ### Arguments
@@ -82,8 +83,8 @@ cy.get('[name="comment"]').blur()
 
 #### Blur the first input
 
-Setting `force` to `true` in the options disables checking whether the input is
-focusable or currently has focus.
+Setting `force` to `true` in the options disables checking whether the input
+currently has focus.
 
 ```javascript
 cy.get('input:first').blur({ force: true })
@@ -107,6 +108,14 @@ separate action like this is very indirect.
 Therefore it's often much more efficient to test the blur behavior directly with
 `.blur()`.
 
+### Subjects
+
+#### Blurring the window leaves the focused element alone
+
+`.blur()` accepts the window as its subject, so `cy.window().blur()` fires a
+`blur` event on the window. Focus itself does not move: whichever element held
+it still does, and `document.activeElement` is unchanged.
+
 ### Timeouts {#Notes-Timeouts}
 
 #### `.blur()` can time out because your browser did not receive any blur events
@@ -124,9 +133,11 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 
 <HeaderRequirements />
 
-- `.blur()` requires being chained off a command that yields DOMelement(s).
-- `.blur()` requires the element to currently have focus.
-- `.blur()` requires the element to be able to receive focus.
+- `.blur()` requires being chained off a command that yields a DOM element or
+  the window.
+- `.blur()` requires the subject to contain a single element.
+- `.blur()` requires the element to currently have focus. The window and the
+  `body` are exempt, since neither reports as the focused element.
 
 <HeaderAssertions />
 

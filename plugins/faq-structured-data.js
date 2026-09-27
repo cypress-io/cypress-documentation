@@ -3,7 +3,8 @@ const path = require('path')
 
 /**
  * Source pages mapped to the routes they are published at. `routeBasePath` is
- * '/' for the docs, so docs/app/faq.mdx -> /app/faq.
+ * '/' for the docs, and App pages pin their route with `slug`, so
+ * docs/app/debug/faq.mdx -> /app/faq.
  *
  * Each entry may set:
  *   - requireIconHeading: only treat `###` headings that begin with an <Icon>
@@ -12,13 +13,13 @@ const path = require('path')
  *     subsections that should not become FAQ entries.
  */
 const STRUCTURED_DATA_PAGES = [
-  { route: '/app/faq', file: 'docs/app/faq.mdx' },
+  { route: '/app/faq', file: 'docs/app/debug/faq.mdx' },
   { route: '/cloud/faq', file: 'docs/cloud/faq.mdx' },
   { route: '/ui-coverage/faq', file: 'docs/ui-coverage/faq.mdx' },
   { route: '/accessibility/faq', file: 'docs/accessibility/faq.mdx' },
   {
     route: '/app/references/error-messages',
-    file: 'docs/app/references/error-messages.mdx',
+    file: 'docs/app/debug/error-messages.mdx',
     requireIconHeading: true,
   },
 ]

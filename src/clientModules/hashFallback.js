@@ -12,6 +12,8 @@ function collectIds() {
 
 /** Canonical id we rewrote to, so a delayed retry can scroll after hydration. */
 let rewrittenId = null
+/** Pending retry timer, so a route change can cancel a scroll meant for the previous page. */
+let retryTimer = null
 
 /**
  * If the current hash does not match an id exactly, rewrite it to the
@@ -53,14 +55,21 @@ function retryRewrittenScroll() {
 }
 
 function scheduleResolve() {
+  if (retryTimer) {
+    window.clearTimeout(retryTimer)
+  }
   resolveHash()
   window.requestAnimationFrame(resolveHash)
-  window.setTimeout(retryRewrittenScroll, 250)
+  retryTimer = window.setTimeout(retryRewrittenScroll, 250)
 }
 
 export function onRouteDidUpdate({ location }) {
   if (location?.hash) {
     scheduleResolve()
+  } else if (retryTimer) {
+    window.clearTimeout(retryTimer)
+    retryTimer = null
+    rewrittenId = null
   }
 }
 

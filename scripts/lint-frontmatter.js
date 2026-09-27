@@ -16,6 +16,10 @@
  * Partial files (anything under docs/partials or named `_*.mdx`) are skipped:
  * they are fragments included into other pages and intentionally have no
  * frontmatter.
+ *
+ * Per-directory agent instructions (`AGENTS.md` / `CLAUDE.md`) are skipped too.
+ * They are guidance for coding agents rather than pages, and the docs preset in
+ * `docusaurus.config.js` excludes them from the build for the same reason.
  */
 const fs = require('fs')
 const path = require('path')
@@ -37,17 +41,22 @@ const KEY_ORDER = [
   'componentSpecific',
 ]
 
-/** Recursively collect .md/.mdx files, skipping partials. */
+// Agent instructions, not pages. Kept in sync with the docs `exclude` list in
+// `docusaurus.config.js`.
+const AGENT_INSTRUCTION_FILES = new Set(['AGENTS.md', 'CLAUDE.md'])
+
+/** Recursively collect .md/.mdx files, skipping partials and agent instructions. */
 function collectDocs(dir, files = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name)
     if (entry.isDirectory()) {
       collectDocs(full, files)
     } else if (/\.mdx?$/.test(entry.name)) {
-      const isPartial =
+      const isSkipped =
         entry.name.startsWith('_') ||
+        AGENT_INSTRUCTION_FILES.has(entry.name) ||
         path.relative(DOCS_DIR, full).split(path.sep).includes('partials')
-      if (!isPartial) files.push(full)
+      if (!isSkipped) files.push(full)
     }
   }
   return files

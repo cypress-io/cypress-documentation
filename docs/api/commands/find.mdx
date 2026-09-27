@@ -37,7 +37,7 @@ cy.get('.article').find('footer') // Yield 'footer' within '.article'
 
 ```javascript
 cy.find('.progress') // Errors, cannot be chained off 'cy'
-cy.exec('node start').find() // Errors, 'exec' does not yield DOM element
+cy.task('log', 'hello').find() // Errors, 'task' does not yield DOM element
 ```
 
 ### Arguments
@@ -83,7 +83,8 @@ cy.get('#parent').find('li')
 
 <HeaderRequirements />
 
-- `.find()` requires being chained off a command that yields DOM element(s).
+- `.find()` requires being chained off a command that yields DOM element(s) or a
+  document.
 
 <HeaderAssertions />
 

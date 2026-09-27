@@ -528,7 +528,7 @@ Record each run with a distinct [`--tag`](/app/references/command-line#cypress-r
 
 ### <Icon name="angle-right" /> Can I see which App Quality configuration or profile produced a Cypress UI Coverage report?
 
-Yes. The result object includes a `config` property containing the [App Quality Config](/ui-coverage/configuration/overview) as saved for the project when the run was processed. Read `config.value` for the rules and `config.updatedAt` for when that configuration last changed. Note that `config.value` is not resolved against the run's tags, so if a [Profile](/ui-coverage/configuration/profiles) applied you match the run's tags against profile names yourself. See [Assert the configuration](/ui-coverage/results-api#Assert-the-configuration).
+Yes. The result object includes a `config` property containing the [App Quality Config](/ui-coverage/configuration/overview) as saved for the project when the run was processed. Read `config.value` for the rules and `config.updatedAt` for when that configuration last changed. `config.value` is not resolved against the run's tags, so if a [Profile](/ui-coverage/configuration/profiles) applied you match the run's tags against profile names yourself. See [Assert the configuration](/ui-coverage/results-api#Assert-the-configuration).
 
 ### <Icon name="angle-right" /> Should I block pull requests on a coverage threshold or on new coverage gaps?
 

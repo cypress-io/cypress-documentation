@@ -22,7 +22,8 @@ const orderIndex = (child: React.ReactNode): number => {
   if (!React.isValidElement(child)) {
     return OS_ORDER.length
   }
-  const index = OS_ORDER.indexOf(child.props.value)
+  const { value } = child.props as { value?: string }
+  const index = value ? OS_ORDER.indexOf(value) : -1
   return index === -1 ? OS_ORDER.length : index
 }
 

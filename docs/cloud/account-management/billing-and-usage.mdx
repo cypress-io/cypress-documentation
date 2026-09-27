@@ -11,19 +11,6 @@ sidebar_position: 50
 
 The **Billing & Usage** section of [Cypress Cloud](https://on.cypress.io/cloud) shows your current plan, what it includes, and how much your team has used in the current billing period. It is more than a receipt: it tells you whether your plan still fits how your team works, so you can upgrade before you hit a limit, attribute usage to the right projects, and see where your team is adopting AI.
 
-:::info
-
-<WhatYoullLearn />
-
-- What your Cypress Cloud plan includes and meters, and why those metrics matter
-- How to read your test result usage to right-size your plan and avoid interruptions
-- How to track cy.prompt AI adoption across your organization
-- How to set up usage notifications so you hear about limits before they interrupt CI
-- How to manage your payment method and billing email, and download past invoices
-- How to request a free Open Source Plan and what it unlocks
-
-:::
-
 Your plan meters two things that matter day to day: how many **test results** you can record per billing period, and the limits on **AI** capabilities. Test results are counted across three tiers: **included**, **bundled**, and **on-demand** (explained in [Cloud test results](#Cloud-test-results)). Depending on your plan, the test results allowance may be monthly or annual. Watching both here keeps the value of Cloud flowing without surprises.
 
 <DocsImage
@@ -40,7 +27,7 @@ The card at the top of the page summarizes your subscription at a glance, so you
 - **Bundled test results:** the number of extra test results you have purchased up front, mid-term, to extend your allowance before you rely on on-demand pricing.
 - **On-demand test results:** the per-unit price for any test results recorded beyond your included and bundled amounts, so you can anticipate these costs before they appear on an invoice.
 - **cy.prompt executions:** how many [cy.prompt](/api/commands/prompt) executions your plan allows and how many you have used.
-- **Users:** how many of your plan's [user](/cloud/account-management/users) seats are in use.
+- **Users:** how many of your plan's [user](/cloud/account-management/users) seats are in use. To see how many seats each plan allows, compare plans on the [pricing page](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=billing-and-usage).
 - **Data Retention:** how long your recorded runs and their artifacts stay available in Cypress Cloud.
 - **Renews on:** the date your plan renews and your usage cycle resets.
 
@@ -74,11 +61,11 @@ Keeping an eye on this card matters because of what happens once you exhaust you
 | New results in dashboard                        | Hidden until upgrade or cycle reset if on-demand is not available |
 | Usage cycle                                     | Resets each billing period (monthly or annual)                    |
 
-Reviewing usage here lets you [upgrade](https://www.cypress.io/pricing) ahead of time and avoid any interruption.
+Reviewing usage here lets you [upgrade](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=billing-and-usage) ahead of time and avoid any interruption.
 
 ### Usage over time
 
-Click the **Usage details** button in order to view graphs of your test results usage.
+Click the **Usage details** button to view graphs of your test results usage.
 
 The **Detailed** tab shows your usage over time during the selected billing period, broken down by **included**, **bundled**, and **on-demand** test results. Use it to spot trends: a steadily rising line tells you when it's time to move to a larger plan, while a sudden spike can reveal a misconfigured pipeline recording far more than you expected. A growing share of on-demand usage is a signal to consider more included or bundled test results, which are typically more cost-effective.
 
@@ -106,7 +93,7 @@ For limit behavior, the grace period, and what happens when you exceed your allo
 
 ### Usage over time
 
-Click the **Usage details** button in order to view graphs of your cy.prompt AI usage.
+Click the **Usage details** button to view graphs of your cy.prompt AI usage.
 
 The **Detailed** tab shows your prompt usage over time during the selected billing period, so you can watch AI adoption grow as more of your team picks it up.
 
@@ -186,7 +173,7 @@ To qualify, all Projects in your Organization must meet the following criteria:
   [OSI-approved license](https://opensource.org/licenses)
 - Record minimum of 500
   [tests](/cloud/faq#What-counts-as-a-test-result) included
-  with the [Starter Plan](https://www.cypress.io/pricing)
+  with the [Starter Plan](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=billing-and-usage)
 
 ### Requesting OSS plan for an Organization
 
@@ -213,7 +200,7 @@ To qualify, all Projects in your Organization must meet the following criteria:
    your request and, if approved, an OSS plan subscription will be applied to
    your Organization.
 
-If you have any questions regarding the OSS plan, please feel free
+If you have any questions regarding the OSS plan, feel free to
 [contact us](mailto:hello@cypress.io).
 
 ## Common billing questions
@@ -228,7 +215,7 @@ If you have any questions regarding the OSS plan, please feel free
 
 ## See also
 
-- [Cypress Cloud pricing](https://www.cypress.io/pricing)
+- [Cypress Cloud pricing](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=billing-and-usage)
 - [Free Trial of Cypress Cloud](/cloud/get-started/free-trial)
 - [Managing organizations](/cloud/account-management/organizations)
 - [Managing users](/cloud/account-management/users)

@@ -42,7 +42,7 @@ const Btn: React.FC<BtnProps> = ({
         {icon && 
             <Icon 
                 className={'mr-1'}
-                name={icon} 
+                name={icon as any} 
             />
         }
         {label}

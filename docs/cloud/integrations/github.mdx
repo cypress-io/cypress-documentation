@@ -9,16 +9,6 @@ sidebar_position: 10
 
 # GitHub Integration
 
-:::info
-
-<WhatYoullLearn />
-
-- How to install the Cypress GitHub App
-- How to enable GitHub integration for a project
-- How to configure status checks and pull request comments
-
-:::
-
 [Cypress Cloud](https://on.cypress.io/cloud) can integrate your Cypress tests
 with your GitHub workflow via commit [status checks](#Status-checks) and
 [pull request comments](#Pull-request-comments). A project first needs to be
@@ -43,9 +33,9 @@ GitHub admin to enable repository access.
 GitHub Integration depends on your CI environment reliably providing a commit
 SHA (typically via an environment variable). This is not a problem for most
 users, but if you are facing GitHub integration issues with your CI setup,
-please make sure the git information is being sent properly by following
+make sure the git information is being sent properly by following
 [these guidelines](/app/continuous-integration/overview#Git-information).
-If you still face issues after this, please
+If you still face issues after this,
 [contact us](mailto:hello@cypress.io).
 
 :::
@@ -57,7 +47,7 @@ If you still face issues after this, please
 <Icon name="star" /> **Premium Cypress Cloud Feature**
 
 GitHub Enterprise integration is included in our
-[Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
+[Business and Enterprise paid pricing plans](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=github-integration).
 
 :::
 
@@ -202,9 +192,9 @@ them into Cypress Cloud, and complete the activation process.
 2. Complete the **Register new GitHub app** section.
    - Enter a **GitHub App name**. Name may contain only dashes, letters, and
      numbers, **no spaces**.
-   - Enter Cypress Cloud **Homepage URL**, https://cloud.cypress.io
+   - Enter Cypress Cloud **Homepage URL**, https://cloud.cypress.io.
    - Enter the **Callback URL** and **Setup URL**,
-     https://cloud.cypress.io/apps/github/callback
+     https://cloud.cypress.io/apps/github/callback.
 
 <DocsImage
   src="/img/cloud/integrations/github/ghe/ghe-02.jpg"
@@ -213,7 +203,7 @@ them into Cypress Cloud, and complete the activation process.
 />
 
 3. Complete the **Webhook** section.
-   - Enter the **Webhook URL**, https://cloud.cypress.io/webhooks/github-app
+   - Enter the **Webhook URL**, https://cloud.cypress.io/webhooks/github-app.
    - Copy and paste the provided **Webhook secret** from Cypress Cloud to
      **Webhook secret (optional)**.
 
@@ -426,7 +416,7 @@ integration settings:
 <Icon name="star" /> **Premium Cypress Cloud Feature**
 
 Reporting on flaky status checks is included in our
-[Team, Business and Enterprise paid pricing plans](https://www.cypress.io/pricing).
+[Team, Business, and Enterprise paid pricing plans](https://www.cypress.io/pricing?utm_source=docs.cypress.io&utm_medium=github-integration).
 
 :::
 

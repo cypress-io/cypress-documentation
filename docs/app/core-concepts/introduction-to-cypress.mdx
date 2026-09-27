@@ -1,30 +1,20 @@
 ---
 title: Introduction to Cypress
 description: Learn the basics of Cypress, including querying elements, chaining commands, and interacting with elements.
-sidebar_label: Introduction
+sidebar_label: How Cypress works
 sidebar_position: 10
+slug: /app/core-concepts/introduction-to-cypress
 ---
 
 <ProductHeading product="app" />
 
-# Introduction to Cypress App
+# How Cypress works
 
 :::tip
 
 **This is the single most important guide** for understanding how to test with
 Cypress. Read it. Understand it. Ask questions about it so that we can improve
 it.
-
-:::
-
-:::info
-
-<WhatYoullLearn />
-
-- The rules Cypress follows so you can productively test your application
-- How to query elements in Cypress
-- How Cypress uses command chains and the asynchronous nature of Cypress commands
-- How to interact with elements and assert about elements
 
 :::
 
@@ -111,7 +101,7 @@ cy.get('#main-content').find('.article').children('img[src^="/static"]').first()
 
 <strong>Core Concept</strong>
 
-Cypress leverages jQuery's powerful selector engine to help make tests familiar
+Cypress uses jQuery's powerful selector engine to help make tests familiar
 and readable for modern web developers.
 
 Interested in the best practices for selecting elements?
@@ -309,8 +299,8 @@ understanding how they work is helpful!
 
 ### Interacting With Elements
 
-As we saw in the initial example, Cypress allows you to click on and type into
-elements on the page by using [`.click()`](/api/commands/click) and
+As we saw in the initial example, Cypress clicks on and types into elements on
+the page with [`.click()`](/api/commands/click) and
 [`.type()`](/api/commands/type) action commands with a
 [`cy.get()`](/api/commands/get) or [`cy.contains()`](/api/commands/contains)
 query command. This is a great example of chaining in action. Let's see it
@@ -377,7 +367,7 @@ cy.get('form').should('have.class', 'form-horizontal')
 cy.get('input').should('not.have.value', 'US')
 ```
 
-In each of these examples, it's important to note that Cypress will
+In each of these examples, Cypress will
 automatically _wait_ until these assertions pass. This prevents you from having
 to know or care about the precise moment your elements eventually do reach this
 state.
@@ -601,7 +591,7 @@ it('does not work as we expect', () => {
 
 <Icon name="check-circle" color="green" /> **Correct usage**
 
-Below is one way the code above could be rewritten in order to ensure the
+Below is one way the code above could be rewritten to ensure the
 commands run as expected.
 
 ```js
@@ -666,7 +656,7 @@ it('test', () => {
 
 <Icon name="check-circle" color="green" /> **Correct usage**
 
-Below is one way the code above could be rewritten in order to ensure the
+Below is one way the code above could be rewritten to ensure the
 commands run as expected.
 
 ```js
@@ -894,7 +884,7 @@ the timeout is reached, the test will fail.
 While the API may look similar to Promises, with its `then()` syntax, Cypress
 commands and queries are not promises - they are serial commands passed into a
 central queue, to be executed asynchronously at a later date. These commands are
-designed to deliver deterministic, repeatable and consistent tests.
+designed to deliver deterministic, repeatable, and consistent tests.
 
 Almost all commands come with built-in
 **[retry-ability](/app/core-concepts/retry-ability)**. Without
@@ -905,7 +895,7 @@ randomly fail. This would lead to flaky, inconsistent results.
 
 While Cypress does have a [`.then()`](/api/commands/then) command, Cypress
 commands are not Promises and cannot be `await`ed. If you'd like to learn more
-about handling asynchronous Cypress Commands please read our
+about handling asynchronous Cypress Commands, read our
 [Variables and Aliases Guide](/app/core-concepts/variables-and-aliases).
 
 :::
@@ -941,7 +931,7 @@ A lot of Cypress commands _mutate_ the state of the browser in some way.
 
 None of the above commands are _idempotent_; they all cause side effects. Racing
 commands is not possible because commands must be run in a controlled, serial
-manner in order to create consistency. Because integration and e2e tests
+manner to create consistency. Because integration and e2e tests
 primarily mimic the actions of a real user, Cypress models its command execution
 model after a real user working step by step.
 
@@ -1245,9 +1235,8 @@ subject quickly.
 
 ### Mocha Assertions
 
-Using `expect` allows you to assert on any JavaScript object, not just the
-current subject. This is probably how you're used to seeing assertions written
-in unit tests:
+`expect` asserts on any JavaScript object, not just the current subject. This is
+probably how you're used to seeing assertions written in unit tests:
 
 ```js
 // the explicit subject here is the boolean: true
@@ -1398,7 +1387,7 @@ wait _up to 10 seconds total_ for all of them to pass.
 
 :::danger
 
-Note that you _never_ change the timeout inside the assertion. The `timeout`
+You _never_ change the timeout inside the assertion. The `timeout`
 parameter **always** goes inside the command.
 
 ```js
@@ -1425,7 +1414,7 @@ For instance:
 - [`cy.visit()`](/api/commands/visit) loads a remote page and does not resolve
   _until all of the external resources complete their loading phase_. This may
   take awhile, so its default timeout is set to `60000ms`.
-- [`cy.exec()`](/api/commands/exec) runs a system command such as _seeding a
+- [`cy.task()`](/api/commands/task) runs code in Node such as _seeding a
   database_. We expect this to potentially take a long time, and its default
   timeout is set to `60000ms`.
 - [`cy.wait()`](/api/commands/wait) actually uses 2 different timeouts. When

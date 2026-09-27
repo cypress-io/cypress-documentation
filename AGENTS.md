@@ -5,6 +5,45 @@ Cypress Documentation: a **Docusaurus 3** (TypeScript) docs site. Content is in
 detail behind each rule, read **[`AGENTS_REFERENCE.md`](./AGENTS_REFERENCE.md)**
 (and the section links below).
 
+## Directory guides
+
+Some directories carry their own `AGENTS.md` (plus a `CLAUDE.md` that imports
+it) for conventions that apply only inside them. Read the one for the directory
+you're working in:
+
+| Directory            | Covers                                                      |
+| -------------------- | ----------------------------------------------------------- |
+| `docs/api/`          | the Cypress source behind a page, frontmatter, the skeleton |
+| `docs/partials/`     | when a partial is warranted, naming, registration           |
+| `docs/app/releases/` | changelog entry format                                      |
+| `src/`               | component layout, registration, swizzled theme files        |
+| `plugins/`           | the sub-package build and dependency rules                  |
+| `cypress/`           | the generated page list, what the crawl specs are for       |
+| `.github/workflows/` | pinning actions, what forks copy, required checks           |
+
+Three conventions hold for every one of them:
+
+1. **Each opens with a pointer back here.** Tools differ on whether they merge a
+   nested file with its ancestors or read only the nearest one, so a nested file
+   never assumes this file was loaded.
+2. **They are additive, never contradictory.** A nested rule that conflicts with
+   a rule in this file is a sign the rule in this file is wrong. Fix it here.
+3. **Keep them short**, under about 75 lines. They are the rules that apply
+   here, not a second reference manual. Treat 75 as a ceiling rather than a
+   target: most directories need far less, and a guide that splits one
+   convention across two files to hit a number costs the reader more than the
+   lines saved. Detail belongs in `AGENTS_REFERENCE.md`; link its anchor rather
+   than restating it.
+
+Four things walk `docs/` independently, and each skips these two filenames: the
+docs build (`exclude` in `docusaurus.config.js`), the LLM export (`walkDocs` in
+`plugins/llm`), `npm run lint:frontmatter`, and `npm run preview:og`. Because
+they match on filename, adding a nested guide to a **new** directory needs no
+config change. Prettier still formats them, so `npm run lint:fix` applies as
+usual — check `.prettierignore` when adding a guide outside `docs/`, since a
+guide inside an ignored directory is silently skipped and a negation cannot pull
+it back out.
+
 ## Commands
 
 ```bash
@@ -13,9 +52,16 @@ npm run start         # local dev server at http://localhost:3000
 npm run build         # production build into dist/ (also rebuilds plugins)
 npm run lint:fix      # Prettier autofix on **/*.{md,mdx}
 npm run typecheck     # tsc
-npm test              # cypress e2e (needs the dev server running)
+npm test              # cypress e2e (needs `npm run serve`, not the dev server)
 npm run test:plugins  # vitest unit tests for plugins/
+npm run api:source -- blur   # locate the Cypress source a /api page documents
 ```
+
+Install before you lint. With no `node_modules` present, `npm run lint:fix`
+still runs, but on whatever Prettier `npx` fetches rather than the pinned one,
+and a different version reformats files the pinned one leaves alone. For
+content-only work, `CYPRESS_INSTALL_BINARY=0 npm i` skips a 250 MB download and
+is enough for every command above except `npm test`.
 
 ## Verify ladder (cheap → authoritative)
 
@@ -23,8 +69,15 @@ npm run test:plugins  # vitest unit tests for plugins/
    hook and CI both enforce Prettier on `*.{md,mdx}`).
 2. `npm run build` — the real safety net for content: `onBrokenLinks` and
    `onBrokenMarkdownLinks` are `throw`, so any bad link or anchor fails the build.
-3. `npm run test:plugins` — only when you touched `plugins/`.
-4. `npm test` (with `npm run start` running) — for nav/routing or broad changes.
+3. `npm run typecheck` — when you touched TypeScript in `src/` or `cypress/`, or
+   a script in `scripts/screenshots/`.
+4. `npm run test:plugins` — only when you touched `plugins/`.
+5. `npm test` — for nav/routing or broad changes. Serve a production build
+   first (`npm run build`, then `npm run serve`), which is what CI does. The dev
+   server injects page titles during hydration, so the specs that assert on
+   server-rendered HTML fail against it.
+
+CI runs all of these, so a miss fails the PR rather than `main`.
 
 ## Pull requests
 
@@ -51,12 +104,14 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Include the standard frontmatter (`title`, `description`, `sidebar_label`,
   `slug`). `title` and `description` are the page's `<title>` and meta
   description, so make them **SEO-friendly**: lead with the key term and
-  summarize the page accurately. Match the section's house style — API reference
-  pages are terse (`'name | Cypress Documentation'` + one short sentence); guides
-  are more descriptive. Mirror a sibling file when unsure. Never add a `keywords`
-  field to frontmatter — Docusaurus only emits it as a `<meta name="keywords">`
-  tag that modern search engines ignore and that the site's own search doesn't
-  index, so it adds noise with no benefit.
+  summarize the page accurately. Match the section's house style and mirror a
+  sibling file when unsure. Never append `| Cypress Documentation` to a `title`:
+  a per-section suffix is appended at build time from `src/sectionTitles.js`,
+  and `cypress/e2e/page_titles.cy.ts` asserts it. Never add a `keywords` field to
+  frontmatter —
+  Docusaurus only emits it as a `<meta name="keywords">` tag that modern search
+  engines ignore and that the site's own search doesn't index, so it adds noise
+  with no benefit.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.
@@ -68,23 +123,24 @@ Each rule is a hard convention. See the linked section for the how and why.
 [naming](./AGENTS_REFERENCE.md#product-heading--naming),
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
 [AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
-[alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text)
+[alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text),
+[screenshots](./AGENTS_REFERENCE.md#capturing-cypress-app-screenshots)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
+- Capture Cypress App screenshots from a real run of the page's own snippet, never
+  a mock-up: follow the [capture procedure](./AGENTS_REFERENCE.md#capturing-cypress-app-screenshots).
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
   partial for content rendered in **more than one location**. If it's used in a
-  single page, inline it there — don't add a partial (or keep an existing one)
-  that has just one render site.
+  single page, inline it there instead.
 - End related pages with a `## See also` section (sentence-case H2, as the page's
   last section): a short bulleted list of doc-to-doc links to closely related
   pages, command names in backticks, with an optional `- short description` after
-  a link. It's standard on API reference pages (link 2–5 sibling
-  commands/utilities); add it to guides and other pages only when there are
-  genuinely related pages worth surfacing. Don't pad it with tangential links or
-  repeat links already prominent in the page body.
+  a link. It's standard on API reference pages; add it to guides and other pages
+  only when there are genuinely related pages worth surfacing. Don't pad it with
+  tangential links or repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
 - For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
   not a code block; keep example-specific prompts, code, commands, and diagrams in
@@ -92,17 +148,59 @@ Each rule is a hard convention. See the linked section for the how and why.
   characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
-- Never use em dashes — they read as AI-generated; use commas, periods, or
-  parentheses instead.
+
+**API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
+
+- The behavior an `/api` page describes is implemented in `cypress-io/cypress`,
+  not here. Before writing or changing a behavior claim, read that source:
+  `npm run api:source -- <command>` syncs a pinned, sparse checkout of it into
+  `.cypress-source/` and resolves the command to its implementation, published
+  types, error messages, and driver specs.
+- Where the source contradicts the page, flag the conflict rather than rewriting
+  the page to match. The fix may belong in `cypress-io/cypress`.
+
+**Writing style** — [details](./AGENTS_REFERENCE.md#writing-style)
+
+- **Lead a guide with the value of the feature**, what it does for the reader,
+  before getting into configuration or steps. How you do that is up to the page.
+- **Write headings that stand on their own**, since search engines and answer
+  engines surface them without the page around them. "Cypress Cloud MCP
+  workflows to try", not "Workflows to try". Add the context that makes the
+  heading this page's, keep it to roughly 40 to 60 characters, and use sentence
+  case. The fixed API page skeleton and `## See also` are exempt.
+- Address the reader as **you**. Reserve "we" for Cypress speaking as a team
+  ("we recommend"), never as a stand-in for the reader.
+- **Present tense, active voice.** "Cypress retries the assertion", not "Cypress
+  will retry the assertion" or "the assertion is retried".
+- **Say what something does**, not what it lets the reader do. "`cy.session()`
+  caches and restores session state", not "allows you to cache…".
+- Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
+- Cut filler. `please`, `note that`, and hedges that carry no information.
+- Don't use minimizing words like "simply", "just", "easy", or "obviously" in
+  instructions. They undermine a reader who is struggling and add nothing; state
+  the step plainly instead. Don't tell the reader a feature is easy or fast,
+  either. Show it with a short example and let them draw the conclusion. The
+  rule is the minimizing sense, not the letters: "not just", "just as", and
+  `just-in-time` are other words doing other work.
+- Go easy on em dashes. Overused, they read as AI-generated, so prefer a comma,
+  period, colon, or parentheses and rework the sentence rather than reaching for
+  a dash. Keep one where it is clearly the best fit, rarely more than one per
+  paragraph.
+- **Link text names its destination.** Never `[here]`, `[this link]`, or
+  `[learn more]`.
+- Oxford comma. US English, except that every `cancel` form doubles the `l`:
+  **cancellation**, **cancelled**, **cancelling**. Leave a single `l` only where
+  it is a literal you are quoting, such as an API value or UI string.
+- Write "accessibility", not "a11y", in prose. Keep `a11y` where it is part of an
+  actual name, such as the `data-a11y-ignore` attribute, the `checkA11y()`
+  command, or an identifier like a `groupId` or an image filename.
+- Bullets take no terminal punctuation when they are fragments and a period when
+  they are full sentences. Don't mix the two within one list.
 - Use **bold** only for real UI controls the reader acts on in a walkthrough
   (actual buttons, links, tabs, and flows in Cypress Cloud or the Cypress App,
   e.g. the **App Quality** tab). Put hypothetical UI labels from illustrative
   examples in `"quotes"` instead (e.g. an `"Add to cart"` button in a sample),
-  so invented examples stay distinct from the real UI a tutorial navigates. See
-  [Writing style](./AGENTS_REFERENCE.md#writing-style).
-- Don't use minimizing words like "simply", "just", "easy", or "obviously" in
-  instructions. They undermine a reader who is struggling and add nothing; state
-  the step plainly instead.
+  so invented examples stay distinct from the real UI a tutorial navigates.
 - Describe configuration by what it does and accepts. Don't call out fields or
   features a property lacks (e.g. "there is no `comment` field") unless the
   absence is a documented point of confusion.
@@ -140,20 +238,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   params (`utm_source=docs.cypress.io` + a placement `utm_medium`). Do not add
   them to internal links or `cloud.cypress.io`.
 
-**Plugins** — [details](./AGENTS_REFERENCE.md#project-layout)
+**GitHub Actions workflows** — [details](./.github/workflows/AGENTS.md)
 
-- The sub-packages in `plugins/` are never installed on their own; all of their
-  dependencies resolve from the repository root's `node_modules`. Declare new
-  dependencies in the **root** `package.json`, never in a plugin's own
-  `package.json` (pins there are never installed and just drift stale).
-
-**GitHub Actions workflows** — [details](./AGENTS_REFERENCE.md#github-actions-workflows)
-
-- When adding or editing a workflow in `.github/workflows/`, look up each
-  action's latest major release on its GitHub repository at the time of
-  writing and pin that major tag.
-- Workflows are copied into forks, where they run with reduced permissions
-  (Actions cannot create or approve pull requests there). Guard any job that
-  pushes commits, creates pull requests, or uses repo secrets with a job-level
-  `if` restricting it to the `main` branch of
-  `cypress-io/cypress-documentation`.
+- Read that guide before adding or editing a workflow. Every file in
+  `.github/workflows/` is copied into each fork and runs there with reduced
+  permissions, so an unguarded job that pushes commits, opens pull requests, or
+  reads secrets fails in somebody else's repository.

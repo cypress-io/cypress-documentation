@@ -5,6 +5,7 @@ import Tag from '@cypress-design/react-tag'
 import styles from './styles.module.css'
 import { getWhatsNewItems, getSection } from './whatsNewItems'
 import { IconGeneralSparkleDoubleSmall, IconChevronRightMedium, IconActionDeleteMedium } from '@cypress-design/react-icon'
+import type { WindiColor } from '@cypress-design/react-icon'
 
 
 const DISMISS_LOCAL_STORAGE_KEY = 'docs-whats-new-dismissed'
@@ -42,14 +43,14 @@ export default function WhatsNew({ path, onLinkClick }: { path: string; onLinkCl
         <Button
           className={styles.dismiss}
           square
-          size={24}
+          size="24"
           aria-label="Dismiss now available section"
           onClick={() => {
             writeDismissedToLocalStorage(section)
             setDismissed(true)
           }}
         >
-          <IconActionDeleteMedium strokeColor="currentColor" />
+          <IconActionDeleteMedium strokeColor={'currentColor' as WindiColor} />
         </Button>
       </div>
       <ul className={styles.list}>

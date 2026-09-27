@@ -216,6 +216,119 @@ on('task', {
 
 :::
 
+### Clean up and verify downloaded files
+
+Tasks are a good fit for file system work, such as emptying the downloads folder
+between tests and then finding the file the test just downloaded.
+`config.downloadsFolder` is the resolved absolute path, so the task keeps
+working if the project overrides
+[`downloadsFolder`](/app/references/configuration#Downloads).
+
+```javascript title='downloads.cy.js'
+cy.task('clearDownloads')
+
+cy.task('latestDownload').then((filepath) => {
+  expect(filepath).to.be.a('string')
+  cy.readFile(filepath)
+})
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+```
+
+```ts
+const downloads = config.downloadsFolder
+
+on('task', {
+  clearDownloads() {
+    fs.rmSync(downloads, { recursive: true, force: true })
+    fs.mkdirSync(downloads, { recursive: true })
+
+    return null
+  },
+
+  latestDownload() {
+    const files = fs
+      .readdirSync(downloads)
+      .map((name) => ({
+        name,
+        time: fs.statSync(path.join(downloads, name)).mtimeMs,
+      }))
+      .sort((a, b) => b.time - a.time)
+
+    return files.length ? path.join(downloads, files[0].name) : null
+  },
+})
+```
+
+:::
+
+Cypress already trashes the downloads folder before `cypress run` when
+[`trashAssetsBeforeRuns`](/app/references/configuration#trashAssetsBeforeRuns)
+is enabled, which it is by default. A `clearDownloads` task is for clearing the
+folder between tests within a run.
+
+### Run an external command or CLI
+
+When setup depends on a tool that isn't a Node module, such as a Docker
+container, a database CLI, or a cloud provider's command line tool, spawn it
+from the task with
+[`child_process.execFileSync()`](https://nodejs.org/api/child_process.html#child_processexecfilesynccommand-args-options).
+Passing the arguments as an array avoids the shell entirely, so quoting and
+`PATH` resolution behave the same way on every platform.
+
+```javascript title='database.cy.js'
+cy.task('resetDatabase')
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import { execFileSync } from 'child_process'
+```
+
+```ts
+on('task', {
+  resetDatabase() {
+    execFileSync('docker', ['exec', 'db', 'reset-script'], { stdio: 'pipe' })
+
+    return null
+  },
+})
+```
+
+:::
+
+A task can also return the command's output to the test:
+
+```javascript title='bucket.cy.js'
+cy.task('listBucket', 's3://my-test-bucket').should('have.length', 3)
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import { execFileSync } from 'child_process'
+```
+
+```ts
+on('task', {
+  listBucket(bucket) {
+    const output = execFileSync('aws', ['s3', 'ls', bucket], {
+      encoding: 'utf8',
+    })
+
+    return output.split('\n').filter(Boolean)
+  },
+})
+```
+
+:::
+
 ### Run Node code before each test
 
 There is no `setupNodeEvents` event for each test. To run Node code before every
@@ -624,7 +737,6 @@ the following:
 
 ## See also
 
-- [`cy.exec()`](/api/commands/exec)
 - [`cy.fixture()`](/api/commands/fixture)
 - [`cy.readFile()`](/api/commands/readfile)
 - [`cy.request()`](/api/commands/request)

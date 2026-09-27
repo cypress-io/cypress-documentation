@@ -46,8 +46,8 @@ div.markdown {
     --ifm-h5-font-size: 1.2rem;
   }
 
-  // Icon + text callout labels (e.g. "What you'll learn", "Examples and use
-  // cases"). Rendered as a non-heading (see src/components/callout-label) to
+  // Icon + text callout labels (e.g. "Examples and use cases").
+  // Rendered as a non-heading (see src/components/callout-label) to
   // avoid the heading-order violation they caused as an h5 following the page
   // h1, but styled to match that h5 exactly.
   p.callout-label {

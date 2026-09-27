@@ -1,27 +1,14 @@
 ---
 title: 'Cypress best practices'
 description: Best practices for organizing tests, selecting elements, and controlling state in Cypress.
-sidebar_label: Best Practices
-sidebar_position: 80
+sidebar_label: Best practices
+sidebar_position: 90
+slug: /app/core-concepts/best-practices
 ---
 
 <ProductHeading product="app" />
 
 # Best Practices
-
-:::info
-
-<WhatYoullLearn />
-
-- Best practices on how to organize tests, log in, and control state
-- Strategies for selecting elements and assigning return values
-- Best practices on visiting external sites
-- How to avoid relying on the state of previous tests
-- When to use `after` or `afterEach` hooks
-- How to avoid unnecessary waiting in your tests
-- Setting a global base URL for your tests to save time
-
-:::
 
 :::tip
 
@@ -42,7 +29,7 @@ tests, and runs them all in an
 [efficient CI pipeline](https://cloud.cypress.io/projects/7s5okt).
 
 The app is bundled with everything you need,
-[just clone the repository](https://github.com/cypress-io/cypress-realworld-app)
+[clone the repository](https://github.com/cypress-io/cypress-realworld-app)
 and start testing.
 
 ## <Icon name="angle-right" /> Handling Secrets and Sensitive Data
@@ -232,6 +219,12 @@ your tests.
 
 :::
 
+Isolation applies to how you divide specs up, too. Organize specs around
+features and user flows rather than mirroring your application's page
+structure, and let spec duration and differing setup tell you when to split one
+up. See
+[How much to put in one spec file](/app/core-concepts/writing-and-organizing-tests#How-much-to-put-in-one-spec-file).
+
 We have several
 [Logging in recipes](https://github.com/cypress-io/cypress-example-recipes#logging-in-recipes)
 in our examples.
@@ -362,7 +355,7 @@ A rule of thumb is to ask yourself this:
 
 If the content of the element **changed** would you want the test to fail?
 
-- If the answer is yes: then use [`cy.contains()`](/api/commands/contains)
+- If the answer is yes: then use [`cy.contains()`](/api/commands/contains).
 - If the answer is no: then use a data attribute.
 
 **Example:**
@@ -456,7 +449,7 @@ them, you will want to do some refactoring.
 :::
 
 If you are new to Cypress and wanting to better understand how Commands work -
-[please read our Introduction to Cypress guide](/app/core-concepts/introduction-to-cypress#Chains-of-Commands).
+[read our Introduction to Cypress guide](/app/core-concepts/introduction-to-cypress#Chains-of-Commands).
 
 If you're familiar with Cypress commands already, but find yourself using
 `const`, `let`, or `var` then you're typically trying to do one of two things:
@@ -466,7 +459,7 @@ If you're familiar with Cypress commands already, but find yourself using
 - You're trying to share **values** between tests and hooks like `before` and
   `beforeEach`.
 
-For working with either of these patterns, please read our
+For working with either of these patterns, read our
 [Variables and Aliases guide](/app/core-concepts/variables-and-aliases).
 
 ## <Icon name="angle-right" /> Visiting External Sites
@@ -501,7 +494,7 @@ You may want to access 3rd party services in several situations:
 
 If you choose, these situations can be tested with
 [`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
-However, you will only want to utilize these commands for resources in your
+However, you will only want to use these commands for resources in your
 control, either by controlling the domain or hosted instance. These use cases
 are common for:
 
@@ -553,7 +546,7 @@ affect other tests downstream.
    via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
    will not run into the problems listed above, while still being able to
    automate your login flow. You can reduce the amount of authentication
-   requests by utilizing [`cy.session()`](/api/commands/session).
+   requests by using [`cy.session()`](/api/commands/session).
 2. [Stub](/api/commands/stub) out the OAuth provider and bypass it using their
    UI altogether if [`cy.origin()`](/api/commands/origin) is not an option. You
    could trick your application into believing the OAuth provider has passed its
@@ -601,12 +594,12 @@ passwords, your server schedules an email to be delivered.
 1. If your application is running locally and is sending the emails directly
    through an SMTP server, you can use a temporary local test SMTP server
    running inside Cypress. Read the blog post
-   ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/)
+   ["Testing HTML Emails using Cypress"](https://www.cypress.io/blog/2021/05/11/testing-html-emails-using-cypress/?utm_source=docs.cypress.io&utm_medium=best-practices)
    for details.
 2. If your application is using a 3rd party email service, or you cannot stub
    the SMTP requests, you can use a test email inbox with an API access. Read
    the blog post
-   ["Full Testing of HTML Emails using SendGrid and Ethereal Accounts"](https://www.cypress.io/blog/2021/05/24/full-testing-of-html-emails-using-ethereal-accounts/)
+   ["Full Testing of HTML Emails using SendGrid and Ethereal Accounts"](https://www.cypress.io/blog/2021/05/24/full-testing-of-html-emails-using-ethereal-accounts/?utm_source=docs.cypress.io&utm_medium=best-practices)
    for details.
 
 Cypress can even load the received HTML email in its browser to verify the
@@ -692,7 +685,7 @@ What's wrong with the above tests? They are all coupled together!
 If you were to change `it` to
 [`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout) on any of the
 last three tests, they would fail. Each test requires the previous to run in a
-specific order in order to pass.
+specific order to pass.
 
 Here's 2 ways we can fix this:
 
@@ -844,6 +837,30 @@ describe('my form', () => {
 })
 ```
 
+### Where the balance sits
+
+Grouping assertions has a limit in the other direction. A single test that walks
+an entire checkout flow (browse, add to cart, apply a coupon, enter shipping,
+pay, see the confirmation) reports one failure under one title, and a title like
+"completes checkout" tells the person debugging almost nothing about which part
+of the application broke. They have to open the run to find out.
+
+The most useful way to think about where a test starts and stops is the signal
+its failure sends. Both extremes weaken that signal:
+
+- A test large enough that its title no longer describes what failed hands the
+  diagnosis back to whoever is debugging.
+- Tests small enough that they all lean on the same lengthy setup fail together
+  the moment that setup breaks, and a screen of red tells you only that
+  something upstream went wrong.
+
+Aim for the middle: each test covers a meaningful piece of behavior, its title
+names that behavior, and a failure narrows down where to look. For the checkout
+example, that might be one test for adding an item to the cart, one for applying
+a coupon, and one for completing payment, each getting to its starting point
+[programmatically](#Having-Tests-Rely-On-The-State-Of-Previous-Tests) rather
+than by repeating the steps before it through the UI.
+
 ## <Icon name="angle-right" /> Using `after` Or `afterEach` Hooks
 
 :::danger
@@ -904,7 +921,7 @@ it after a test ends.
 
 If you remove your application's state after each test, then you instantly lose
 the ability to use your application in this mode. Logging out at the end would
-always leave you with the same login page at the end of the test. In order to
+always leave you with the same login page at the end of the test. To
 debug your application or write a partial test, you would always be left
 commenting out your custom `cy.logout()` command.
 
@@ -1042,9 +1059,9 @@ The same practice above can be used for any type of database (PostgreSQL,
 MongoDB, etc.). In this example, a request is sent to a back end API, but you
 could also interact directly with your database with direct queries, custom
 libraries, etc. If you already have non-JavaScript methods of handling or
-interacting with your database, you can use [`cy.exec`](/api/commands/exec),
-instead of [`cy.task`](/api/commands/task), to execute any system command or
-script.
+interacting with your database, you can use [`cy.task`](/api/commands/task) to
+run them from Node, including
+[spawning an external command or CLI](/api/commands/task#Run-an-external-command-or-CLI).
 
 ## <Icon name="angle-right" /> Unnecessary Waiting
 
@@ -1148,7 +1165,7 @@ waste.
 
 <Icon name="exclamation-triangle" color="red" /> **Anti-Pattern:** Trying to
 start a web server from within Cypress scripts with
-[`cy.exec()`](/api/commands/exec) or [`cy.task()`](/api/commands/task).
+[`cy.task()`](/api/commands/task).
 
 :::
 
@@ -1162,19 +1179,18 @@ prior to running Cypress.
 We do NOT recommend trying to start your back end web server from within
 Cypress.
 
-Any command run by [cy.exec()](/api/commands/exec) or
-[cy.task()](/api/commands/task) has to exit eventually. Otherwise, Cypress will
-not continue running any other commands.
+Any command run by [cy.task()](/api/commands/task) has to exit eventually.
+Otherwise, Cypress will not continue running any other commands.
 
-Trying to start a web server from [cy.exec()](/api/commands/exec) or
-[cy.task()](/api/commands/task) causes all kinds of problems because:
+Trying to start a web server from [cy.task()](/api/commands/task) causes all
+kinds of problems because:
 
-- You have to background the process
-- You lose access to it via terminal
-- You don't have access to its `stdout` or logs
+- You have to background the process.
+- You lose access to it via terminal.
+- You don't have access to its `stdout` or logs.
 - Every time your tests run, you'd have to work out the complexity around
   starting an already running web server.
-- You would likely encounter constant port conflicts
+- You would likely encounter constant port conflicts.
 
 **Why can't I shut down the process in an `after` hook?**
 
@@ -1214,7 +1230,7 @@ commands like [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) that are not fully qualified domain name
 (FQDN) URLs.
 
-This allows you to omit hard-coding fully qualified domain name (FQDN) URLs in
+This removes the need to hard-code fully qualified domain name (FQDN) URLs in
 commands. For example,
 
 ```javascript
@@ -1240,7 +1256,7 @@ port.
 
 <DocsImage
   src="/img/app/references/cypress-loads-in-localhost-and-random-port.png"
-  alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.coffee"
+  alt="Url address shows localhost:53927/__/#tests/integration/organizations/list_spec.cy.js"
 />
 
 As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
@@ -1268,7 +1284,7 @@ load the main window in the `baseUrl` you specified as soon as your tests start.
 
 <DocsImage
   src="/img/app/references/cypress-loads-window-in-base-url-localhost.png"
-  alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.coffee"
+  alt="Url address bar shows localhost:8484/__tests/integration/organizations/list_spec.cy.js"
 />
 
 Having a `baseUrl` set gives you the added bonus of seeing an error if your

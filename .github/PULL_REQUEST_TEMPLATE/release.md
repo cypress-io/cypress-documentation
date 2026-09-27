@@ -16,11 +16,13 @@ Target release: <!-- product + version -->
 <!-- List every change in this PR. A new changelog entry is always one of them.
 Link each page or entry, and note the issue/PR it corresponds to where relevant. -->
 
-- [ ] **Changelog entry** — new `## X.Y.Z` section in the relevant changelog
-      (`docs/app/references/changelog.mdx`, `docs/accessibility/changelog.mdx`,
-      or `docs/ui-coverage/changelog.mdx`) with the release date and the
-      appropriate `Performance` / `Features` / `Bugfixes` / `Misc` /
-      `Dependency Updates` groupings.
+- [ ] **Changelog entry** — new section in the relevant changelog
+      (`docs/app/releases/changelog.mdx`, `docs/accessibility/changelog.mdx`,
+      or `docs/ui-coverage/changelog.mdx`) with the release date. The Cypress
+      App changelog uses `## X.Y.Z` plus the `Performance` / `Features` /
+      `Bugfixes` / `Misc` / `Dependency Updates` groupings; the Accessibility
+      and UI Coverage changelogs use `## Week of Mon D, YYYY` with a flat
+      bullet list. See `docs/app/releases/AGENTS.md`.
 -
 
 ## Notes for reviewers

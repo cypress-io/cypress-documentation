@@ -34,9 +34,10 @@ cy.getAllSessionStorage()
 Pass in an options object to change the default behavior of
 `cy.getAllSessionStorage()`.
 
-| Option | Default | Description                                                                         |
-| ------ | ------- | ----------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| Option    | Default                                                           | Description                                                                            |
+| --------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)    |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.getAllSessionStorage()` to resolve before [timing out](#Timeouts) |
 
 <HeaderYields />
 
@@ -57,6 +58,33 @@ For example, if `key1` is set to `value1` on `https://example.cypress.io` and
   },
 }
 ```
+
+`cy.getAllSessionStorage()` is a query, and it is _safe_ to chain further
+commands. It will automatically [retry](/app/core-concepts/retry-ability) until
+all chained assertions have passed, or until it times out, re-reading
+`sessionStorage` from all origins on each retry so the yielded object stays up to
+date.
+
+:::caution
+
+Because `cy.getAllSessionStorage()` is a query, it re-reads `sessionStorage` on
+every retry, and assertions you chain with [`.should()`](/api/commands/should)
+drive those retries until they pass or the command times out. A
+[`.then()`](/api/commands/then) callback, by contrast, runs only once after the
+command settles and is not retried — so prefer chaining
+[`.should()`](/api/commands/should) assertions over asserting inside `.then()`
+when you need Cypress to wait for storage to be populated.
+
+:::
+
+#### When no `sessionStorage` data is present:
+
+On each read, `cy.getAllSessionStorage()` yields the current object of origins to
+`sessionStorage` data, or an empty object if none exists yet. The yielded object
+is the subject your chained assertions run against. If an assertion fails, because
+the object is empty, or because its contents don't match yet, the query re-reads
+`sessionStorage` and re-runs the assertion, looping until it passes or the command
+times out.
 
 ## Examples
 
@@ -86,12 +114,20 @@ cy.getAllSessionStorage().then((result) => {
 
 <HeaderAssertions />
 
-- `cy.getAllSessionStorage()` will only run assertions you have chained once,
-  and will not [retry](/app/core-concepts/retry-ability).
+- `cy.getAllSessionStorage()` will automatically
+  [retry](/app/core-concepts/retry-ability) until all chained assertions have
+  passed.
 
 <HeaderTimeouts />
 
-- `cy.getAllSessionStorage()` cannot time out.
+- `cy.getAllSessionStorage()` can time out waiting for assertions you've added to
+  pass.
+
+## History
+
+| Version                                    | Changes                                                                                        |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | `cy.getAllSessionStorage()` is now a query and retries assertions until they pass or time out. |
 
 ## See also
 

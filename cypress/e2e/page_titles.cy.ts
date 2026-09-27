@@ -2,7 +2,7 @@ import sectionTitles from '../../src/sectionTitles'
 
 const URLs: Array<string> = Cypress.expose('URLs')
 
-// Optional: `cypress run --env limitPerSection=2` to spot-check a few pages
+// Optional: `cypress run --expose limitPerSection=2` to spot-check a few pages
 // per section instead of every page (useful for fast local iteration).
 const limitPerSection: number = Cypress.expose('limitPerSection')
 
