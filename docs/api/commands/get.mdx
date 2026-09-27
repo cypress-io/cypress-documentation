@@ -98,6 +98,28 @@ cy.get('input').should('be.disabled')
 cy.get('ul li:first').should('have.class', 'active')
 ```
 
+#### Find the first `li` in every `ul`
+
+`:first` is a jQuery extension that yields only the first matching element on
+the whole page. To get the first `li` in each list, use the CSS `:first-child`
+selector instead.
+
+```html
+<ul class="fruits">
+  <li>Apple</li>
+  <li>Banana</li>
+</ul>
+<ul class="vegetables">
+  <li>Carrot</li>
+  <li>Pea</li>
+</ul>
+```
+
+```javascript
+cy.get('ul li:first').should('have.length', 1) // Apple only
+cy.get('ul li:first-child').should('have.length', 2) // Apple and Carrot
+```
+
 #### Find the dropdown-menu and click it
 
 ```javascript
