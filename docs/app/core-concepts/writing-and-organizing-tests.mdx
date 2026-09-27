@@ -319,7 +319,7 @@ beforeEach(() => {
   alt="Global hooks for tests"
 />
 
-## Fixtures
+## Cypress fixtures for repeatable test data
 
 Fixtures are external pieces of static data your tests can load on demand.
 Think of them as the canned data your tests run against. Keeping this data in
@@ -348,6 +348,68 @@ There are a few ways to use a fixture:
   `cy.intercept('GET', '/users', { fixture: 'users.json' })`.
 - [`.selectFile()`](/api/commands/selectfile) attaches a fixture to a file input
   when you're testing uploads.
+
+### Choosing how to load test data in Cypress
+
+Cypress gives you several ways to get data from a file into a test, and each
+one fits a different situation. Picking the right one up front saves you from
+stale data, tests that never get generated, and files too large for the
+browser.
+
+| Situation                                       | Reach for                                 |
+| ----------------------------------------------- | ----------------------------------------- |
+| Known data that stays the same during the run   | [`cy.fixture()`](/api/commands/fixture)   |
+| Data you need to generate the tests themselves  | A static `import`                         |
+| A file that changes, or a file your app creates | [`cy.readFile()`](/api/commands/readfile) |
+| A large file, or work that needs Node.js        | [`cy.task()`](/api/commands/task)         |
+
+#### Load known test data with `cy.fixture()`
+
+Fixtures are data you control and check in alongside your tests: the API
+response you stub, the user you log in as, the image you upload. They don't
+change while the tests run, and `cy.fixture()` is built around that. It caches
+each fixture after the first read, so a fixture shared by many tests isn't read from
+disk every time. Paths start at the `fixturesFolder` and the extension is
+optional. Images arrive as `base64` strings, ready to use in a `data:` URI.
+
+```javascript
+cy.fixture('users').then((users) => {
+  cy.intercept('GET', '/api/users', users)
+})
+```
+
+#### Generate tests from data with a static `import`
+
+To generate one test per record, `import` the data. `cy.fixture()` supplies
+data inside a test, but it can't create `it()` blocks. See
+[Driving tests from external data](#Driving-tests-from-external-data) for JSON,
+CSV, and Excel examples.
+
+#### Read changing or app-created files with `cy.readFile()`
+
+When the file is something your test waits on or checks, such as a report your
+app exports or a file a task writes, the fixture cache works against you.
+`cy.readFile()` reads the file on every call and keeps reading it until your
+assertions pass, so it can wait for a file to appear or finish changing. It can
+also confirm a file was removed with `.should('not.exist')`.
+
+```javascript
+cy.get('[data-cy="export-csv"]').click()
+cy.readFile('cypress/downloads/report.csv').should('contain', 'Total')
+```
+
+#### Keep large files and Node.js work on the server with `cy.task()`
+
+`cy.fixture()` and `cy.readFile()` both send the whole file to the browser. When
+you only need an answer about a file, such as its size or row count, or the data
+needs Node.js to produce, such as seeding a database or parsing a spreadsheet,
+run that work in Node.js with `cy.task()` and return only the result. You define
+tasks in
+[`setupNodeEvents`](#Node-events-setupNodeEvents).
+
+```javascript
+cy.task('countCsvRows', 'cypress/fixtures/large.csv').should('eq', 50000)
+```
 
 ## Node events (setupNodeEvents)
 

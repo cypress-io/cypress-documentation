@@ -77,18 +77,18 @@ cy.focused().should('not.exist')
 
 ## Notes
 
-### How Cypress finds the focused element
+### Nothing focused
 
-`cy.focused()` reads the `document.activeElement` of the application under
-test. When the page has no focused element, the browser reports `<body>` as the
-active element, and `cy.focused()` treats that as nothing focused. The
-exception is a `<body>` with `contenteditable`, which `cy.focused()` yields.
+When no element has focus, the browser reports the document's `<body>` as the
+active element. `cy.focused()` doesn't treat `<body>` as focused, so it yields
+nothing and retries until an element receives focus or the command times out.
+To assert that nothing has focus, chain `.should('not.exist')`. The exception
+is a `<body>` with `contenteditable`, which `cy.focused()` yields.
 
-### Focused elements inside a shadow DOM
+### Shadow DOM
 
-When the focused element is inside a shadow root, `cy.focused()` follows each
-shadow root's `activeElement` and yields the innermost focused element rather
-than its shadow host. This does not require the
+When the focused element is inside an open shadow root, `cy.focused()` yields
+that element rather than its shadow host. This does not require the
 [`includeShadowDom`](/app/references/configuration#Global) option.
 
 ### Scope of `cy.focused()`
@@ -128,15 +128,16 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/focused/make-assertion-about-focused-element.png"
-  alt="Command Log focused"
+  alt="Command Log showing the focused command followed by its assertions"
 />
 
 When clicking on the `focused` command within the command log, the console
-outputs the following:
+outputs the element it yielded (`Yielded`) and how many elements it found
+(`Elements`):
 
 <DocsImage
   src="/img/api/focused/currently-focused-element-in-an-input.png"
-  alt="console focused"
+  alt="Browser console showing the input element yielded by cy.focused()"
 />
 
 ## History

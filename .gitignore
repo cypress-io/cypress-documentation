@@ -41,3 +41,6 @@ db.json
 
 # Pinned checkout of cypress-io/cypress source (npm run api:source)
 .cypress-source
+
+# Throwaway harness for running code examples (AGENTS_REFERENCE.md#verifying-code-examples)
+.example-check
