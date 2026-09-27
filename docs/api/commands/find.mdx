@@ -72,14 +72,14 @@ Pass in an options object to change the default behavior of `.find()`.
 
 #### Get li's within parent
 
-```html
+```html title="index.html"
 <ul id="parent">
   <li class="first"></li>
   <li class="second"></li>
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<li class="first"></li>, <li class="second"></li>]
 cy.get('#parent').find('li')
 ```
@@ -89,7 +89,7 @@ cy.get('#parent').find('li')
 Start the selector with `>` to match only direct children of the subject. The
 result is the same as [`.children('li')`](/api/commands/children).
 
-```html
+```html title="index.html"
 <ul class="nav">
   <li>Home</li>
   <li>
@@ -101,7 +101,7 @@ result is the same as [`.children('li')`](/api/commands/children).
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<li>Home</li>, <li>Docs<ul>…</ul></li>]
 cy.get('.nav').find('> li')
 
@@ -149,14 +149,14 @@ By default, `.find()` does not search inside shadow roots. Pass
 [`includeShadowDom` configuration option](/app/references/configuration#Global)
 to search them in every query.
 
-```html
+```html title="index.html"
 <checkout-panel>
   #shadow-root
   <button>Checkout</button>
 </checkout-panel>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<button>Checkout</button>]
 cy.get('checkout-panel').find('button', { includeShadowDom: true })
 ```
@@ -169,13 +169,13 @@ cy.get('checkout-panel').find('button', { includeShadowDom: true })
 element that matches the selector is left out of the result when it is the
 subject.
 
-```html
+```html title="index.html"
 <div class="card">
   <div class="card">Nested</div>
 </div>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<div class="card">Nested</div>], not the outer .card
 cy.get('.card').first().find('.card')
 ```
@@ -185,14 +185,14 @@ cy.get('.card').first().find('.card')
 When the subject holds more than one element, `.find()` searches inside each
 one and yields a single set, in document order, with any duplicates removed.
 
-```html
+```html title="index.html"
 <ul>
   <li><a href="/home">Home</a></li>
   <li><a href="/docs">Docs</a></li>
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 // yields [<a href="/home">Home</a>, <a href="/docs">Docs</a>]
 cy.get('li').find('a')
 ```
@@ -219,18 +219,18 @@ cy.get('[data-cy=login-form]').within(() => {
 ### Reading a `.find()` timeout error
 
 When `.find()` times out without finding its elements, the error names the
-selector and lists the query chain it ran from. The chain shows whether the
-problem is the `.find()` selector or an earlier query that yielded a different
-element than you expected.
+selector and lists the queries that produced its subject. The chain shows
+whether the problem is the `.find()` selector or an earlier query that yielded a
+different element than you expected.
 
 ```javascript
 cy.get('[data-cy=cart]').find('.total')
 ```
 
 ```text
-Expected to find element: `.total`, but never found it. Queried from:
+Timed out retrying after 4000ms: Expected to find element: `.total`, but never found it. Queried from:
 
-  > cy.get([data-cy=cart]).find(.total)
+  > cy.get([data-cy=cart])
 ```
 
 ### Shadow DOM boundaries and `.find()`
