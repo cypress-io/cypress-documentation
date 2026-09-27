@@ -346,6 +346,14 @@ by using the special property `fixture` on the
 cy.intercept('GET', '/users/**', { fixture: 'users' })
 ```
 
+The Command Log's **Routes** panel lists the route as stubbed, and each request
+it answers appears in the test body without a live server behind it:
+
+<DocsImage
+  src="/img/api/fixture/command-log-fixture-stubbed-route.png"
+  alt="Command Log with the Routes panel showing GET /users/** stubbed, and a fetch to /users/1 answered by it"
+/>
+
 `cy.intercept()` serves image and `.zip` fixtures as raw bytes. Other binary
 files, such as `.mp4` or `.pdf`, are read as `utf8` text by default, which
 corrupts them. To serve one of those byte for byte, add `null` as the encoding
