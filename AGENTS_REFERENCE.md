@@ -361,96 +361,78 @@ session doesn't have, such as a record key or a paid service. "It's short" or
 "it's obviously right" is not a reason, and neither is being a fragment: a
 fragment runs once you wrap it in the scaffolding from Step 5.
 
-### Step 2: install Cypress with its binary
+### Step 2: check for Cypress, and install it only if it's missing
 
-The harness runs real Cypress, so it needs the binary that
-`CYPRESS_INSTALL_BINARY=0` skips.
+Check first:
+
+```shell
+npx --no-install cypress verify
+```
+
+If it prints `Verified Cypress!`, skip to Step 3. In Claude Code on the web, the
+`SessionStart` hook in `.claude/settings.json` has usually done the install
+already, so this is the common case.
+
+Two details keep the check honest:
+
+- **Use `verify`, not `version`.** `cypress version` exits successfully even
+  when the binary is missing; it prints `Cypress binary version: not installed`
+  and carries on. `verify` launches the binary and fails if it can't.
+- **Keep `--no-install`.** Without it, `npx` can download a different Cypress
+  from the registry when the repository's copy isn't installed, and you would
+  verify the wrong version.
+
+If `verify` fails, install the dependencies and the binary, then verify again:
 
 ```shell
 npm i
-npx cypress verify
+env -u CYPRESS_INSTALL_BINARY npx cypress install
+npx --no-install cypress verify
 ```
 
-If `verify` reports the binary is missing, run `npx cypress install`. In
-Claude Code on the web, the `SessionStart` hook in `.claude/settings.json` runs
-these for you, including when the environment sets `CYPRESS_INSTALL_BINARY=0`.
+`env -u` clears `CYPRESS_INSTALL_BINARY` for that one command. With it set to
+`0`, as the content-only install in `AGENTS.md` does, `cypress install` prints a
+note and installs nothing.
 
 ### Step 3: create the harness
 
-Build it in `.example-check/` at the repository root. It sits inside the repo so
-`cypress` and `typescript` resolve from the root `node_modules`, and it is
-gitignored, so it never reaches a commit. The root `npm run typecheck` does not
-include it.
+The harness template is committed in `scripts/example-check/`. Copy it to
+`.example-check/` at the repository root and move into the copy. The `rm`
+clears a harness left over from an earlier run; without it, `cp -r` would nest
+the template inside the old folder instead of replacing it.
 
 ```shell
+rm -rf .example-check && cp -r scripts/example-check .example-check
 mkdir -p .example-check/cypress/e2e .example-check/app
 cd .example-check
 ```
+
+`.example-check/` is gitignored, so nothing in it reaches a commit, and the root
+`npm run typecheck` doesn't include it. It sits inside the repository so
+`cypress` and `typescript` resolve from the root `node_modules`.
 
 Run every command from here on inside `.example-check/`. It is the harness's
 project root, the same place a reader runs commands from in their own project,
 so relative paths such as `cypress/e2e/login.cy.ts` resolve the way the docs
 expect.
 
-Give it its own `package.json` first. Without one, npm walks up to the
-repository's `package.json`, and an install command from an example rewrites
-`package.json` and `package-lock.json` at the root, where a later commit can
-pick up the change. With one, installs land in `.example-check/`, and
-`npx cypress` still finds the repository's copy.
+The template holds three files:
 
-```json title=".example-check/package.json"
-{
-  "name": "example-check",
-  "private": true
-}
-```
+- **`package.json`** makes the harness its own project root. Without it, npm
+  walks up to the repository's `package.json`, and an install command from an
+  example rewrites `package.json` and `package-lock.json` at the root. With it,
+  installs land in `.example-check/`, and `npx cypress` still finds the
+  repository's copy.
+- **`cypress.config.ts`** holds the harness settings in a `base` object, with
+  `retries: 0` so a flaky example fails instead of passing on a retry. A config
+  example goes in the `example` slot and merges over `base`, so an example that
+  sets its own `e2e` doesn't collide with it.
+- **`tsconfig.json`** typechecks the config and specs strictly against the
+  Cypress types, so a misspelled option or a wrong value type is an error.
 
-```ts title=".example-check/cypress.config.ts"
-import { defineConfig } from 'cypress'
-
-// A config example from the docs replaces the empty object. See Step 5.
-const example: Cypress.ConfigOptions =
-  // --- example (verbatim) ---
-  {}
-// --- end example ---
-
-const base: Cypress.ConfigOptions = {
-  video: false,
-  screenshotOnRunFailure: false,
-  fixturesFolder: false,
-  retries: 0,
-  e2e: {
-    supportFile: false,
-  },
-}
-
-export default defineConfig({
-  ...base,
-  ...example,
-  e2e: { ...base.e2e, ...example.e2e },
-})
-```
-
-The harness settings live in `base`, apart from the example, so an example that
-sets its own `e2e` merges with them instead of colliding. The
-`Cypress.ConfigOptions` type on `example` keeps the typecheck strict: a
-misspelled option or a wrong value type in the example is still an error.
-
-```json title=".example-check/tsconfig.json"
-{
-  "compilerOptions": {
-    "target": "es2020",
-    "lib": ["es2020", "dom"],
-    "module": "commonjs",
-    "types": ["cypress", "node"],
-    "strict": true,
-    "noEmit": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true
-  },
-  "include": ["cypress.config.ts", "cypress/**/*.ts"]
-}
-```
+Edit the copy, never the template. Change the template only when the harness
+itself needs to change, and when you do, copy it fresh and run a passing example
+through Steps 6 and 7 before you commit the change.
 
 ### Step 4: write the page the example expects
 
