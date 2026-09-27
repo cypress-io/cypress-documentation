@@ -1,0 +1,10 @@
+|                               | `cy.fixture()`                                          | `cy.readFile()`                             |
+| ----------------------------- | ------------------------------------------------------- | ------------------------------------------- |
+| Path is relative to           | `fixturesFolder`                                        | The project root                            |
+| File extension                | Optional                                                | Required                                    |
+| Reads from disk               | Once per path and encoding, then yields the cached copy | On every call                               |
+| Retries until assertions pass | No                                                      | Yes, reading the file again on each retry   |
+| Images by default             | A `base64` string                                       | A `utf8` string                             |
+| Default timeout               | `responseTimeout`                                       | `defaultCommandTimeout`                     |
+| Command Log                   | Not logged                                              | Logged                                      |
+| Missing file                  | Always fails                                            | Can be asserted with `.should('not.exist')` |
