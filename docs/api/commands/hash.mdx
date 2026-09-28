@@ -14,7 +14,8 @@ Get the current URL hash of the page that is currently active.
 
 :::info
 
-This is an alias of [`cy.location('hash')`](/api/commands/location)
+`cy.hash()` yields the same value as
+[`cy.location('hash')`](/api/commands/location).
 
 :::
 
@@ -50,8 +51,8 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 
 - When the current URL contains a hash, `cy.hash()` yields the current URL's
   hash (including the `#` character).
-- When the current URL does not contain a hash, `cy.hash()` yields an empty
-  string.
+- When the current URL does not contain a hash, or ends in a `#` with nothing
+  after it, `cy.hash()` yields an empty string.
 - `cy.hash()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -67,7 +68,7 @@ cy.hash().should('eq', '#/users/1') // => true
 
 #### Assert that the hash matches via RegExp
 
-```html
+```html title="index.html"
 <ul id="users">
   <li>
     <a href="#/users/8fc45b67-d2e5-465a-b822-b281d9c8e4d1">Fred</a>
@@ -75,9 +76,27 @@ cy.hash().should('eq', '#/users/1') // => true
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#users li').find('a').click()
 cy.hash().should('match', /users\/.+$/) // => true
+```
+
+## Notes
+
+### Cross-origin pages and `cy.hash()`
+
+`cy.hash()` reads the URL from the browser rather than from the page's
+`window`, so it yields the hash after your application navigates to another
+origin, without wrapping the command in [`cy.origin()`](/api/commands/origin).
+
+### Percent-encoded characters in the hash
+
+`cy.hash()` yields the hash as the browser's URL parser serializes it, so
+characters such as spaces are percent-encoded. A hash set to `#first name`
+yields `#first%20name`.
+
+```javascript
+cy.hash().should('eq', '#first%20name')
 ```
 
 ## Rules
@@ -110,13 +129,19 @@ The commands above will display in the Command Log as:
   alt="Command Log for hash"
 />
 
-When clicking on `hash` within the command log, the console outputs the
+When clicking on `hash` within the Command Log, the console outputs the
 following:
 
 <DocsImage
   src="/img/api/hash/hash-command-yields-url-after-hash.png"
   alt="Console Log for hash"
 />
+
+## History
+
+| Version                                    | Changes                                                                              |
+| ------------------------------------------ | ------------------------------------------------------------------------------------ |
+| [15.0.0](/app/references/changelog#15-0-0) | Reads the URL through the browser's automation client instead of the page's `window` |
 
 ## See also
 
