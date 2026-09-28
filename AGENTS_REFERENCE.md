@@ -1137,7 +1137,8 @@ Keep these behaviors in mind when writing examples or answering questions:
 `actions/scroll.ts`): each axis becomes `0`, `'50%'`, or `'100%'`, which jQuery
 `scrollTo` applies as a share of the scrollable distance. The position describes
 where the visible area ends up, not a point on an element, so never reuse the
-action-command diagram there. The plugin computes that distance as
+action-command diagram there: its own diagram is
+`static/img/api/scrollto/scroll-positions-diagram.svg`. The plugin computes that distance as
 `scrollHeight` minus the element's CSS height, which includes the space a
 classic scrollbar takes: on an element with always-visible scrollbars, `bottom`
 and `right` stop short of the end by the scrollbar's width. The window is not
