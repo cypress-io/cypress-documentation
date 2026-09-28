@@ -33,7 +33,7 @@ cy.get('.article').find('footer') // Yield 'footer' within '.article'
 
 ```javascript
 cy.find('.progress') // Errors, cannot be chained off 'cy'
-cy.task('log', 'hello').find('li') // Errors, 'task' does not yield DOM elements
+cy.clock().find('li') // Errors, 'clock' does not yield DOM elements
 ```
 
 ### Arguments
