@@ -64,11 +64,17 @@ Pass in an options object to change the default behavior of `cy.location()`.
 - `port`
 - `protocol`
 - `search`
-- `toString`
+- `searchParams`
+
+Every property is a string except `searchParams`, which is a
+[`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
+object.
 
 #### When given a `key` argument:
 
-- `cy.location()` yields the value of the location property as a string
+- `cy.location()` yields the value of that property: a string, or a
+  `URLSearchParams` object for `searchParams`
+- `cy.location()` fails when the location object has no property named `key`
 
 ## Examples
 
@@ -91,16 +97,15 @@ cy.location().should((loc) => {
   expect(loc.port).to.eq('8000')
   expect(loc.protocol).to.eq('http:')
   expect(loc.search).to.eq('?q=dan')
-  expect(loc.toString()).to.eq(
-    'http://localhost:8000/app/index.html?q=dan#/users/123/edit'
-  )
+  expect(loc.searchParams.get('q')).to.eq('dan')
 })
 ```
 
 #### Check location for query params and pathname
 
-We can yield the location object within a [`.should()`](/api/commands/should)
-command and work with it directly.
+Pass a callback to [`.should()`](/api/commands/should) to work with the
+location object directly. Cypress retries the callback until every assertion in
+it passes.
 
 ```javascript
 cy.get('#search').type('niklas{enter}')
@@ -121,20 +126,38 @@ cy.visit('http://localhost:3000/admin')
 cy.location('pathname').should('eq', '/login')
 ```
 
+#### Read a query parameter
+
+`searchParams` yields a `URLSearchParams` object, so you can call its methods
+with [`.invoke()`](/api/commands/invoke).
+
+```javascript
+cy.visit('http://localhost:3000/users?page=2&sort=name')
+cy.location('searchParams').invoke('get', 'sort').should('eq', 'name')
+```
+
 ## Notes
 
 ### Native Location
 
 #### No need to use `window.location`
 
-Cypress automatically normalizes the `cy.location()` command and strips out
-extraneous values and properties found in `window.location`. Also, the object
-literal yielded by `cy.location()` is a basic object literal, not the special
-`window.location` object.
+`cy.location()` reads the current URL of the application under test from the
+browser and yields a plain object with the properties listed under
+[Yields](#Yields). It isn't the `window.location` object, so it has none of that
+object's methods, such as `assign()`, `reload()`, or `toString()`. Read `href`
+when you need the full URL as a string.
 
-When changing properties on the real `window.location` object, it forces the
-browser to navigate away. In Cypress, the object yielded is a plain object, so
-changing its properties will have no effect on navigation.
+Changing a property on the real `window.location` object navigates the browser
+away. Changing a property on the object `cy.location()` yields has no effect on
+navigation.
+
+#### Reading the location after a cross-origin navigation
+
+Cypress reads the URL through the browser's automation protocol instead of the
+application's `window`, so `cy.location()` works after your application
+navigates to another origin, without wrapping it in
+[`cy.origin()`](/api/commands/origin).
 
 #### Console output of `window.location`
 
@@ -146,7 +169,7 @@ cy.window().then((win) => {
 
 <DocsImage
   src="/img/api/location/window-location-object-printed-in-console-log.png"
-  alt="Console.log of window.location"
+  alt="DevTools console showing the native window.location object and its properties"
 />
 
 #### Console output of `.location()`
@@ -159,7 +182,7 @@ cy.location().then((loc) => {
 
 <DocsImage
   src="/img/api/location/special-cypress-location-object-logged-in-console-output.png"
-  alt="Console Log of Cypress location command"
+  alt="DevTools console showing the plain object cy.location() yields, with hash, host, hostname, href, origin, pathname, port, protocol, search, and searchParams"
 />
 
 ## Rules
@@ -170,9 +193,8 @@ cy.location().then((loc) => {
 
 <HeaderAssertions />
 
-- `cy.location()` will automatically
-  [retry](/app/core-concepts/retry-ability) until all chained assertions have
-  passed
+- `cy.location()` automatically [retries](/app/core-concepts/retry-ability)
+  until all chained assertions have passed
 
 <HeaderTimeouts />
 
@@ -188,11 +210,11 @@ cy.location().should((loc) => {
 })
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/location/make-assertion-about-location-url-in-tests.png"
-  alt="Command Log of Cypress location command"
+  alt="Command Log showing a location command followed by an assertion that the href includes commands/querying"
 />
 
 When clicking on `location` within the command log, the console outputs the
@@ -200,8 +222,15 @@ following:
 
 <DocsImage
   src="/img/api/location/location-object-in-console-log.png"
-  alt="Console Log of Cypress location command"
+  alt="DevTools console after clicking the location command, showing Command: location and the Yielded location object"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                                                                       |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | Experimental WebKit yields the same location object as other browsers                                                                                                         |
+| [15.0.0](/app/references/changelog#15-0-0) | In Chromium-based browsers and Firefox, reads the URL through the browser's automation protocol. The yielded object includes `searchParams` and no longer includes `toString` |
 
 ## See also
 
