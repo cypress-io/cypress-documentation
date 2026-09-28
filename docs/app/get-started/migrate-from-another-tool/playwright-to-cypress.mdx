@@ -536,17 +536,18 @@ and `getByText()`. Before translating tests, decide how these map to Cypress,
 because the choice affects nearly every test.
 
 **Option A — Semantic queries (lowest friction, no app changes).**
-Cypress has [`cy.getByRole()`](/api/commands/getbyrole) built in. For the other
-semantic locators, install
-[`@testing-library/cypress`](https://github.com/testing-library/cypress-testing-library):
+Cypress has [`cy.getByRole()`](/api/commands/getbyrole) built in. The other
+semantic locators map to the `findBy*` queries from
+[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library),
+which you install as the `@testing-library/cypress` package:
 
-| Playwright                      | Cypress                            |
-| ------------------------------- | ---------------------------------- |
-| `getByRole('button', { name })` | `cy.getByRole('button', { name })` |
-| `getByLabel('Email')`           | `findByLabelText('Email')`         |
-| `getByText('Welcome')`          | `findByText('Welcome')`            |
-| `getByPlaceholder('Search')`    | `findByPlaceholderText('Search')`  |
-| `getByTestId('submit')`         | `findByTestId('submit')`           |
+| Playwright                      | Cypress                              | Provided by        |
+| ------------------------------- | ------------------------------------ | ------------------ |
+| `getByRole('button', { name })` | `cy.getByRole('button', { name })`   | Cypress (built in) |
+| `getByLabel('Email')`           | `cy.findByLabelText('Email')`        | Testing Library    |
+| `getByText('Welcome')`          | `cy.findByText('Welcome')`           | Testing Library    |
+| `getByPlaceholder('Search')`    | `cy.findByPlaceholderText('Search')` | Testing Library    |
+| `getByTestId('submit')`         | `cy.findByTestId('submit')`          | Testing Library    |
 
 **Option B — `data-*` attributes (Cypress best practice for new code).**
 Add `data-testid` (or `data-cy`) attributes to your application and select with
