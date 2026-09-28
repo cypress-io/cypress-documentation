@@ -268,6 +268,12 @@ describe('user list', { testIsolation: false }, () => {
 })
 ```
 
+When the test is taller than the Command Log, the reporter scrolls to follow
+the running test and cuts off the pass count and the first rows, and scrolling
+it back from the spec doesn't stick. Give the browser more height instead by
+adding `launchOptions.args.push('--window-size=1280,900')` to the config's
+`before:browser:launch` hook, then measure again.
+
 Clip above the capturing test, which shows its own spinner below. Define
 `findCommandLogHeader()` and `clickCommandLogHeader()` as in
 [Expanding a collapsed Command Log panel](#expanding-a-collapsed-command-log-panel).

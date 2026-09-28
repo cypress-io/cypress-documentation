@@ -197,13 +197,13 @@ cy.clearAllSessionStorage()
 cy.getAllSessionStorage().should('be.empty')
 ```
 
-The commands above display in the Command Log as shown below. The first
-assertion lists both origins holding session storage, and after
-`clearAllSessionStorage` the second assertion finds none.
+The commands above display in the Command Log as shown below once the test
+passes. The first assertion lists both origins holding session storage, and
+after `clearAllSessionStorage` the second assertion finds none.
 
 <DocsImage
   src="/img/api/clearallsessionstorage/command-log-clear-all-session-storage-two-origins.png"
-  alt="Command Log showing cy.clearAllSessionStorage() between two getAllSessionStorage assertions: the first lists session storage on localhost:8080 and example.cypress.io, and the second yields an empty object"
+  alt="Command Log for a passing test showing cy.clearAllSessionStorage() between two getAllSessionStorage assertions: the first lists session storage on localhost:8080 and example.cypress.io, and the second yields an empty object"
 />
 
 ## History
