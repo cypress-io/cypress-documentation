@@ -30,13 +30,15 @@ cy.log('created new user')
 
 <Icon name="angle-right" /> **message _(String)_**
 
-Message to be printed to Cypress Command Log. Accepts a Markdown formatted
-message.
+Message to print to the Cypress Command Log. The Command Log renders inline
+Markdown in the message, such as `**bold**`, `_italic_`, and `` `code` ``. HTML
+tags display as plain text.
 
 <Icon name="angle-right" /> **args...**
 
-Additional arguments to be printed to the Cypress Command Log. There is no limit
-to the number of arguments.
+Additional values to print after the message. There is no limit to the number
+of arguments. See [Formatting arguments in the Command Log](#Formatting-arguments-in-the-Command-Log)
+for how each value is displayed.
 
 <HeaderYields />
 
@@ -46,20 +48,64 @@ to the number of arguments.
 
 ### Message
 
-#### Print a message to the Command Log.
+#### Print a message to the Command Log
 
 ```javascript
-cy.click('Login')
+cy.contains('button', 'Login').click()
 cy.log('Login successful')
+```
+
+#### Format a message with Markdown
+
+```javascript
+cy.log('**Checkout** started for `standard` shipping')
 ```
 
 ### Args
 
-#### Print a message with arguments to the Command Log.
+#### Print a message with arguments to the Command Log
 
 ```javascript
+const events = ['click', 'focus', 'blur']
+
 cy.log('events triggered', events)
 ```
+
+## Notes
+
+### Formatting arguments in the Command Log
+
+`cy.log()` joins the message and every argument with a comma and a space.
+Strings, numbers, and booleans print as they are. Larger arrays and objects are
+summarized so the Command Log stays readable:
+
+- An array with more than 3 items prints as `Array[length]`, such as
+  `Array[5]`.
+- An object with more than 2 keys prints as `Object{keyCount}`, such as
+  `Object{3}`.
+- A function prints as `function(){}`.
+- An `undefined` argument is left out.
+
+The full values are always available in the console. Click the `log` command in
+the Command Log to print its `message` and `args` to the Developer Tools
+console.
+
+### Values are captured when the command is queued
+
+`cy.log()` is enqueued like every other Cypress command, so its arguments are
+evaluated when the test code runs, before any commands execute. A variable that
+an earlier command changes still holds its old value when `cy.log()` receives
+it. Call `cy.log()` inside [`.then()`](/api/commands/then) to print a value
+that an earlier command produces.
+
+```javascript
+cy.get('li').then(($items) => {
+  cy.log('item count', $items.length)
+})
+```
+
+Read [Variables and Aliases](/app/core-concepts/variables-and-aliases) for more
+on how Cypress queues commands.
 
 ## Rules
 
@@ -99,7 +145,15 @@ following:
   alt="Console Log log"
 />
 
+## History
+
+| Version                                    | Changes                                                        |
+| ------------------------------------------ | -------------------------------------------------------------- |
+| [7.3.0](/app/references/changelog#7-3-0)   | All arguments display in the Command Log, not only the first 2 |
+| [0.18.3](/app/references/changelog#0-18-3) | `cy.log()` command added                                       |
+
 ## See also
 
 - [`Cypress.log`](/api/cypress-api/cypress-log)
 - [`cy.task()`](/api/commands/task)
+- [`.then()`](/api/commands/then)
