@@ -14,7 +14,7 @@ Get the last DOM element within a set of DOM elements.
 :::info
 
 The querying behavior of this command matches exactly how
-[`.last()`](http://api.jquery.com/last) works in jQuery.
+[`.last()`](https://api.jquery.com/last) works in jQuery.
 
 :::
 
@@ -53,7 +53,7 @@ Pass in an options object to change the default behavior of `.last()`.
 
 <HeaderYields />
 
-- `.last()` yields the new DOM element it found.
+- `.last()` yields the last DOM element within the set it was given.
 - `.last()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -74,6 +74,27 @@ Pass in an options object to change the default behavior of `.last()`.
 ```javascript
 // yields <li class="four">Knick knack on my door</li>
 cy.get('li').last()
+```
+
+## Notes
+
+### How `.last()` compares to `.eq(-1)`
+
+`.last()` yields the same element as [`.eq(-1)`](/api/commands/eq). Use `.eq()`
+to get an element at any other index, including negative indexes counted back
+from the end of the set.
+
+### Selecting the last element that matches a selector
+
+`.last()` takes no selector. `cy.get('li').last('.active')` yields the last
+`<li>` whether or not it has the class `active`. The Command Log still shows
+`.active` as the command's message, which can make it look as though the
+selector was applied. TypeScript flags the call as an error. To get the last
+element that matches a selector, narrow the set with
+[`.filter()`](/api/commands/filter) before calling `.last()`.
+
+```javascript
+cy.get('li').filter('.active').last()
 ```
 
 ## Rules
@@ -105,22 +126,29 @@ cy.get('li').last()
 cy.get('form').find('button').last()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/last/find-the-last-button-in-a-form.png"
-  alt="Command Log for last"
+  alt="Command Log showing last chained after get form and find button"
 />
 
-When clicking on `last` within the command log, the console outputs the
-following:
+Click the `last` command in the Command Log to print the following to the
+console:
 
 <DocsImage
   src="/img/api/last/inspect-last-element-in-console.png"
-  alt="Console Log for last"
+  alt="Console output for last, listing the two buttons it was applied to and the last button it yielded"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                                                                                     |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `.last()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
 
 ## See also
 
 - [`.eq()`](/api/commands/eq)
+- [`.filter()`](/api/commands/filter)
 - [`.first()`](/api/commands/first)
