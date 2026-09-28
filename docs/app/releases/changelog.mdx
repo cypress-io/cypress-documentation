@@ -10,6 +10,14 @@ slug: /app/references/changelog
 
 # Changelog
 
+## 16.2.0
+
+_Released Oct TBD, 2026_
+
+**Features:**
+
+- Added the [`cy.getByRole()`](/api/commands/getbyrole) query, which finds elements by their ARIA role, such as `tab`, `menuitem`, or `navigation`, and optionally by their accessible name: the text a screen reader announces for an element, taken from its content, its label, `aria-label`, or `aria-labelledby`. For example, `cy.getByRole('tab', { name: 'Billing' })`. Elements hidden from the accessibility tree are skipped unless you pass `{ hidden: true }`, and `{ native: true }` matches only elements whose HTML tag gives them the role, so a test fails if the page uses a `<div role="button">` in place of a `<button>`. Like [`cy.get()`](/api/commands/get), it yields every match, retries until its assertions pass, and works inside [`.within()`](/api/commands/within). Addressed in [#34937](https://github.com/cypress-io/cypress/pull/34937).
+
 ## 16.1.0
 
 _Released Sep 15, 2026_
