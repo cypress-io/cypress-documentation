@@ -31,8 +31,8 @@ chain further commands that rely on the subject after `.dblclick()`.
 
 ```javascript
 cy.get('button').dblclick() // Double-click on button
-cy.focused().dblclick() // Double-click on el with focus
-cy.contains('Welcome').dblclick() // Double-click on first el containing 'Welcome'
+cy.focused().dblclick() // Double-click on element with focus
+cy.contains('Welcome').dblclick() // Double-click on first element containing 'Welcome'
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
@@ -52,7 +52,7 @@ default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 
 <DocsImage
   src="/img/api/coordinates-diagram.jpg"
-  alt="cypress-command-positions-diagram"
+  alt="Diagram of the nine positions on an element: topLeft, top, topRight, left, center, right, bottomLeft, bottom, and bottomRight"
 />
 
 <Icon name="angle-right" /> **x _(Number)_**
@@ -167,7 +167,7 @@ cy.get('button').dblclick('bottom')
 
 ### Coordinates
 
-#### Specify coordinates relative to the top left corner
+#### Specify coordinates relative to the top-left corner
 
 Cypress issues the double-click below inside of the element (30px from the left
 and 10px from the top).
@@ -192,7 +192,9 @@ cy.get('[data-cy=zoom-level]').should('have.text', '4')
 
 Forcing a double-click overrides the
 [actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
-Cypress applies and fires the events.
+Cypress applies and fires the events. On a disabled element, a forced
+double-click fires both click sequences but not the `dblclick` event, so a
+`dblclick` handler on a disabled element never runs.
 
 ```javascript
 cy.get('button').dblclick({ force: true })
@@ -237,9 +239,9 @@ such as `ALT + double-click`.
 
 :::info
 
-You can also use key combinations during [.type()](/api/commands/type). This
-offers options to hold down keys across multiple commands. See
-[Key Combinations](/api/commands/type#Key-Combinations) for more information.
+You can also use key combinations during [`.type()`](/api/commands/type),
+which can hold keys down across multiple commands. See
+[Key Combinations](/api/commands/type#Key-Combinations).
 
 :::
 
@@ -287,11 +289,12 @@ to both clicks.
 
 ### Text selection
 
-#### A double-click does not select text on the page
+#### A double-click does not select the word you double-click
 
 In a browser, double-clicking a word selects it. Cypress fires the double-click
-as simulated events, which don't trigger the browser's native text selection, so
-`.dblclick()` leaves no text selected in the page or in an input. To select the
+as simulated events, which don't trigger the browser's native text selection.
+`.dblclick()` doesn't select the word you double-click, in page text or in an
+input, and it leaves any text that was already selected in place. To select the
 text in an input or textarea, use [`.type('{selectall}')`](/api/commands/type).
 
 ```javascript
