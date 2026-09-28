@@ -37,7 +37,6 @@ import HeaderRequirements from '@site/docs/partials/_header-requirements.mdx'
 import HeaderTimeouts from '@site/docs/partials/_header-timeouts.mdx'
 import HeaderYields from '@site/docs/partials/_header-yields.mdx'
 import Icon from '@site/src/components/icon'
-import ImportMountFunctions from '@site/docs/partials/_import-mount-functions.mdx'
 import IntellisenseCodeCompletion from '@site/docs/partials/_intellisense-code-completion.mdx'
 import InvertedContainsSelection from '@site/docs/partials/_inverted-contains-selection.mdx'
 import NativeBrowserNetworkBrowsers from '@site/docs/partials/_native-browser-network-browsers.mdx'
@@ -241,7 +240,6 @@ export default {
   HeaderTimeouts,
   HeaderYields,
   Icon,
-  ImportMountFunctions,
   IntellisenseCodeCompletion,
   InvertedContainsSelection,
   NativeBrowserNetworkBrowsers,
