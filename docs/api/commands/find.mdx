@@ -70,7 +70,7 @@ Pass in an options object to change the default behavior of `.find()`.
 
 ### Selector
 
-#### Get li's within parent
+#### Find the `li` elements inside a parent with `.find()`
 
 ```html title="index.html"
 <ul id="parent">
@@ -84,7 +84,7 @@ Pass in an options object to change the default behavior of `.find()`.
 cy.get('#parent').find('li')
 ```
 
-#### Find direct children with a leading combinator
+#### Find direct children with a leading `>` in `.find()`
 
 Start the selector with `>` to match only direct children of the subject. The
 result is the same as [`.children('li')`](/api/commands/children).
@@ -111,7 +111,7 @@ cy.get('.nav').find('li')
 
 ### Assertions
 
-#### Assert on the number of elements found
+#### Assert on the number of elements `.find()` yields
 
 When `.find()` is chained off another query such as
 [`cy.get()`](/api/commands/get), Cypress reruns the whole chain until the
@@ -121,7 +121,7 @@ assertion passes, so the count stays current as the page updates.
 cy.get('[data-cy=cart]').find('[data-cy=cart-item]').should('have.length', 3)
 ```
 
-#### Assert that an element no longer exists
+#### Assert that `.find()` no longer finds an element
 
 Chain `.should('not.exist')` to wait for an element, such as a loading spinner,
 to leave the subject.
@@ -132,7 +132,7 @@ cy.get('[data-cy=results]').find('.spinner').should('not.exist')
 
 ### Options
 
-#### Wait longer for slow content
+#### Wait longer for slow content with `timeout`
 
 Pass `timeout` to give `.find()` more time than
 [`defaultCommandTimeout`](/app/references/configuration#Timeouts) to locate its
@@ -142,7 +142,7 @@ elements.
 cy.get('[data-cy=report]').find('table', { timeout: 10000 })
 ```
 
-#### Find elements inside a shadow root
+#### Find elements inside a shadow root with `includeShadowDom`
 
 By default, `.find()` does not search inside shadow roots. Pass
 `includeShadowDom: true` to search them, or set the
@@ -167,7 +167,9 @@ cy.get('checkout-panel').find('button', { includeShadowDom: true })
 
 `.find()` matches descendants of the subject, never the subject itself. An
 element that matches the selector is left out of the result when it is the
-subject.
+subject. To search from the root of the page instead, use
+[`cy.get()`](/api/commands/get), and see
+[how `cy.get()` and `.find()` differ](/api/commands/get#Get-vs-Find).
 
 ```html title="index.html"
 <div class="card">
@@ -205,10 +207,10 @@ subject, which reads better when you run several commands against the same
 region.
 
 ```javascript
-// One query
+// Option 1: one query
 cy.get('[data-cy=login-form]').find('[data-cy=submit]').click()
 
-// Several commands in the same region
+// Option 2: several commands in the same region
 cy.get('[data-cy=login-form]').within(() => {
   cy.get('[data-cy=email]').type('user@example.com')
   cy.get('[data-cy=password]').type('secret')
@@ -268,22 +270,22 @@ cy.get('checkout-panel').shadow().find('button')
 
 ## Command Log
 
-**_Find the li's within the nav_**
+**_Find the `li` elements within the nav_**
 
 ```javascript
 cy.get('.left-nav>.nav').find('>li')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/find/find-li-of-uls-in-test.png"
   alt="Command Log where the find entry for the >li selector reports a count of 8"
 />
 
-When clicking on the `find` command within the command log, the console outputs
-the selector, the element(s) it was applied to, the yielded elements, and the
-number of elements found:
+Clicking the `find` command in the Command Log outputs the selector, the
+element(s) it was applied to, the yielded elements, and the number of elements
+found to the console:
 
 <DocsImage
   src="/img/api/find/find-in-console-shows-list-and-yields.png"
