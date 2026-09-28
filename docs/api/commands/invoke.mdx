@@ -20,9 +20,9 @@ subject, use [`.its()`](/api/commands/its).
 
 :::caution
 
-If you chain further commands off of `.invoke()`, it will be called multiple
-times. If you only want the method to be called once, end your chain with
-`.invoke()` and start fresh with `cy` afterwards.
+If you chain further commands off of `.invoke()`, the function can be called
+more than once. If you only want the method to be called once, end your chain
+with `.invoke()` and start fresh with `cy` afterwards.
 
 :::
 
@@ -60,7 +60,9 @@ cy.wrap({ animate: fn })
 
 <Icon name="angle-right" /> **functionName _(String, Number)_**
 
-Name of function to be invoked.
+Name of function to be invoked. Use dot notation to invoke a function nested
+inside the subject, such as `'math.sum'`, or a number to invoke a function in an
+array by its index.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -71,7 +73,7 @@ Pass in an options object to change the default behavior of `.invoke()`.
 | `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.invoke()` to resolve before [timing out](#Timeouts)              |
 
-<Icon name="angle-right" /> args...**
+<Icon name="angle-right" /> **args...**
 
 Additional arguments to be given to the function call. There is no limit to the
 number of arguments.
@@ -80,8 +82,8 @@ number of arguments.
 
 - `.invoke()` yields the return value of the method.
 - `.invoke()` is a query, and it is _safe_ to chain further commands.
-- If you chain additional commands off of `.invoke()`, the function will be
-  called multiple times!
+- If you chain additional commands off of `.invoke()`, the function can be
+  called more than once.
 
 ## Examples
 
@@ -101,7 +103,7 @@ cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 
 :::info
 
-[Check out our example recipe where we use `cy.invoke('text')` to test against HTML content in 'Bootstrapping your App'](/app/references/recipes#Server-Communication)
+[Check out our example recipe where we use `.invoke('text')` to test against HTML content in 'Bootstrapping your App'](/app/references/recipes#Server-Communication)
 
 :::
 
@@ -119,11 +121,11 @@ cy.get('div.container')
   .type('Cypress is great') // and type text
 ```
 
-#### Use `.invoke('show')` and `.invoke('trigger')`
+#### Use `.invoke('show')` and `.trigger()`
 
 :::info
 
-[Check out our example recipe where we use `cy.invoke('show')` and `cy.invoke('trigger')` to click an element that is only visible on hover](/app/references/recipes#Testing-the-DOM)
+[Check out our example recipe where we use `.invoke('show')` and `.trigger()` to click an element that is only visible on hover](/app/references/recipes#Testing-the-DOM)
 
 :::
 
@@ -142,11 +144,11 @@ cy.wrap({ sum: fn })
   .and('be.lt', 20) // true
 ```
 
-#### Use `cy.invoke('removeAttr', 'target')` to get around new tab
+#### Use `.invoke('removeAttr', 'target')` to get around new tab
 
 :::info
 
-[Check out our example recipe where we use `cy.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab](/app/references/recipes#Testing-the-DOM)
+[Check out our example recipe where we use `.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab](/app/references/recipes#Testing-the-DOM)
 
 :::
 
@@ -158,15 +160,30 @@ cy.get('img').invoke('attr', 'src').should('include', 'myLogo')
 
 ### Arrays
 
-In the above examples, the subject was an object, but `cy.invoke` also works on
-arrays and allows using numerical index to pick a function to run.
+In the above examples, the subject was an object, but `.invoke()` also works on
+arrays and accepts a numerical index to pick a function to run.
 
 ```javascript
 const reverse = (s) => Cypress._.reverse(s)
-const double = (n) => n * n
+const square = (n) => n * n
 
 // picks function with index 1 and calls it with argument 4
-cy.wrap([reverse, double]).invoke(1, 4).should('eq', 16)
+cy.wrap([reverse, square]).invoke(1, 4).should('eq', 16)
+```
+
+### Nested functions
+
+Pass a property path in dot notation to invoke a function nested inside the
+subject. The function runs with its parent object as `this`.
+
+```javascript
+const api = {
+  math: {
+    sum: (a, b) => a + b,
+  },
+}
+
+cy.wrap(api).invoke('math.sum', 2, 3).should('eq', 5)
 ```
 
 ### jQuery method
@@ -206,18 +223,17 @@ cy.get('input')
   .invoke('getKendoDropDownList')
   .then((dropDownList) => {
     // yields the return of $input.getKendoDropDownList()
-    return dropDownList.select('apples')
+    dropDownList.value('apples')
   })
 ```
 
 We can rewrite the previous example in a more terse way and add an assertion.
+The chain ends at `.invoke('value', 'apples')` so the dropdown's value is set
+once, and the assertion starts a new chain.
 
 ```javascript
-cy.get('input')
-  .invoke('getKendoDropDownList')
-  .invoke('select', 'apples')
-  .invoke('val')
-  .should('match', /apples/)
+cy.get('input').invoke('getKendoDropDownList').invoke('value', 'apples')
+cy.get('input').should('have.value', 'apples')
 ```
 
 ### Retries
@@ -260,13 +276,15 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 - `.invoke()` will wait for the `function` to exist on the subject before
   running.
-- `.invoke()` will throw an error if the invoked `function` returns a promise.
-  If you want to invoke a function that returns a promise, use [`.then()`](/api/commands/then) instead.
+- `.invoke()` does not wait for a promise returned by the invoked `function`
+  to resolve. If you want to invoke a function that returns a promise and use
+  its resolved value, use [`.then()`](/api/commands/then) instead.
 - `.invoke()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
 
+- `.invoke()` can time out waiting for the `function` to exist on the subject.
 - `.invoke()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
