@@ -141,19 +141,21 @@ render. Match by the start of the header text, since headers hold more than
 their label:
 
 ```javascript title="cypress/e2e/fixture-intercept.cy.js"
-// Clicks a Command Log header, such as the Routes panel or a test title
-const clickCommandLogHeader = (pattern) => {
+// Finds a Command Log header, such as the Routes panel or a test title
+const findCommandLogHeader = (pattern) => {
   const top = window.top
   for (let i = 0; i < top.frames.length; i++) {
     try {
       const header = [
         ...top.frames[i].document.querySelectorAll('.collapsible-header'),
       ].find((h) => pattern.test(h.textContent.trim()))
-      if (header) return header.click()
+      if (header) return header
     } catch (e) {}
   }
   throw new Error(`no Command Log header matches ${pattern}`)
 }
+
+const clickCommandLogHeader = (pattern) => findCommandLogHeader(pattern).click()
 
 it('fixture intercept', () => {
   cy.intercept('GET', '/users/**', { fixture: 'users' }) // the page's snippet
@@ -222,20 +224,38 @@ A screenshot inside a test shows it running, and `after()` doesn't help: the
 reporter marks a test finished only after its hooks. Capture from the **next**
 test, when the first shows its check mark and a pass count of 1.
 
-In `cypress run`, the reporter clears a finished test's rows unless it's open
-when it finishes, and a running test only looks open. Pin it by clicking its
-title twice at the end (close, then open) with `clickCommandLogHeader()`. If the
-image shows the page under test, add `testIsolation: false` to the suite, or the
-page resets to `about:blank` before the next test:
+In `cypress run`, the reporter clears a finished test's rows unless you pinned
+it open. Clicking a test's title pins it to the opposite of what it shows, and a
+running test can show open or closed depending on timing, so a fixed number of
+clicks leaves it closed some of the time. Pin it at the end of the test with
+`pinCommandLogTestOpen()`, which clicks once, lets the reporter render, and
+clicks again only if the test now shows closed. If the image shows the page
+under test, add `testIsolation: false` to the suite, or the page resets to
+`about:blank` before the next test:
 
 ```javascript title="cypress/e2e/shows-the-user.cy.js"
+// Pins a test open so the reporter keeps its rows after it passes
+const pinCommandLogTestOpen = (pattern) => {
+  const render = () =>
+    new Cypress.Promise((resolve) => setTimeout(resolve, 100))
+  const isOpen = () =>
+    findCommandLogHeader(pattern).getAttribute('aria-expanded') === 'true'
+  clickCommandLogHeader(pattern)
+  return render()
+    .then(() => {
+      if (!isOpen()) clickCommandLogHeader(pattern)
+      return render()
+    })
+    .then(() => {
+      if (!isOpen()) throw new Error(`could not pin ${pattern} open`)
+    })
+}
+
 describe('user list', { testIsolation: false }, () => {
   it('shows the user', () => {
     cy.visit('list.html')
     cy.contains('Alan Turing') // the page's snippet
-    // Pin the test open so the reporter keeps its rows after it passes
-    cy.then(() => clickCommandLogHeader(/^shows the user/))
-    cy.then(() => clickCommandLogHeader(/^shows the user/))
+    cy.then(() => pinCommandLogTestOpen(/^shows the user/))
   })
 
   it('capture', () => {
@@ -249,7 +269,7 @@ describe('user list', { testIsolation: false }, () => {
 ```
 
 Clip above the capturing test, which shows its own spinner below. Define
-`clickCommandLogHeader()` as in
+`findCommandLogHeader()` and `clickCommandLogHeader()` as in
 [Expanding a collapsed Command Log panel](#expanding-a-collapsed-command-log-panel).
 
 ## Command Log over CDP
