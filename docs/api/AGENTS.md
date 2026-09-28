@@ -12,6 +12,8 @@ source before writing or changing a behavior claim: `npm run api:source -- blur`
 resolves a command to the files that define it. What each section is answerable
 from, and why a conflict gets flagged rather than written away, is in
 [`AGENTS_REFERENCE.md`](../../AGENTS_REFERENCE.md#api-source-of-truth).
+The nine position names work two different ways: see
+[Position and coordinate arguments](../../AGENTS_REFERENCE.md#position-and-coordinate-arguments).
 
 ## Frontmatter
 
