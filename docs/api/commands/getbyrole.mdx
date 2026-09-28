@@ -141,6 +141,35 @@ cy.getByRole('link').should('have.length', 2)
 cy.getByRole('link').eq(1).should('have.attr', 'href', '/billing')
 ```
 
+#### Check every element with a role
+
+Chain [`.each()`](/api/commands/each) to run the same check against every
+match, or pass a callback to [`.should()`](/api/commands/should) to assert on
+the whole set at once. A `.should()` callback retries until it passes, so it
+also waits for a list that is still loading.
+
+```html title="index.html"
+<nav aria-label="Account">
+  <a href="/profile">Profile</a>
+  <a href="/billing">Billing</a>
+  <a href="/security">Security</a>
+</nav>
+```
+
+```javascript title="spec.cy.js"
+// Runs once for each of the three links
+cy.getByRole('link').each(($link) => {
+  cy.wrap($link).should('have.attr', 'href').and('match', /^\//)
+})
+
+// Retries until the links have these names, in this order
+cy.getByRole('link').should(($links) => {
+  const names = $links.toArray().map((link) => link.textContent)
+
+  expect(names).to.deep.equal(['Profile', 'Billing', 'Security'])
+})
+```
+
 ### Name
 
 #### Match by accessible name
@@ -175,6 +204,7 @@ CSS `::before` and `::after` content, such as an icon-font glyph.
 ```
 
 ```javascript title="spec.cy.js"
+// Yields and clicks the <button>, whose accessible name is "Send" without the ✉️
 cy.getByRole('button', { name: 'Send' }).click()
 ```
 
@@ -187,7 +217,10 @@ Pass a regular expression to match part of the name, or to ignore case.
 ```
 
 ```javascript title="spec.cy.js"
+// Yields both buttons, since each name starts with "Delete"
 cy.getByRole('button', { name: /^delete/i }).should('have.length', 2)
+
+// Yields and clicks only the "Delete draft" button
 cy.getByRole('button', { name: /draft$/ }).click()
 ```
 
@@ -309,7 +342,8 @@ cy.getByRole('dialog', { name: 'Delete user' }).within(() => {
 #### Narrow the results by state with `.filter()`
 
 `cy.getByRole()` matches on role and name only. To narrow the results by an ARIA
-state or property, chain [`.filter()`](/api/commands/filter).
+state or property, chain [`.filter()`](/api/commands/filter), or chain
+[`.not()`](/api/commands/not) to leave matches out.
 
 ```javascript
 // The tab that is currently selected
@@ -320,6 +354,18 @@ cy.getByRole('heading').filter('h2, [aria-level="2"]')
 
 // A checked checkbox
 cy.getByRole('checkbox').filter(':checked')
+
+// The menu button whose menu is open
+cy.getByRole('button').filter('[aria-expanded="true"]')
+
+// A toggle button that is switched on
+cy.getByRole('button').filter('[aria-pressed="true"]')
+
+// The link to the page the reader is on
+cy.getByRole('link').filter('[aria-current="page"]')
+
+// Every button except disabled ones
+cy.getByRole('button').not(':disabled, [aria-disabled="true"]')
 ```
 
 ### Waiting for elements
@@ -395,16 +441,10 @@ Here are the accessible roles that were found, with the accessible name of each 
   - button: "Save", "Cancel"
 ```
 
-The list leaves out the `generic` role and the element a query was chained off.
-When every element with a role is hidden from the accessibility tree, the error
-suggests passing `{ hidden: true }` instead. When `native: true` is why nothing
-matched, the error says so and names the native elements for the role.
-
 ### How `cy.getByRole()` decides an element's role
 
 `cy.getByRole()` maps elements to roles with
-[aria-query](https://github.com/A11yance/aria-query), the same source that
-Testing Library uses. Some roles depend on attributes: an `<a>` needs an `href`
+[aria-query](https://github.com/A11yance/aria-query). Some roles depend on attributes: an `<a>` needs an `href`
 to be a `link`, a `<section>` needs an `aria-label` or `aria-labelledby` to be a
 `region`, and an
 `<input>` with a missing or unknown `type` is a `textbox`.
@@ -413,19 +453,17 @@ The mapping doesn't consider where an element sits in the page, so every
 `<header>` is a `banner` and every `<footer>` a `contentinfo`, even inside an
 `<article>`, where a browser gives them no landmark role.
 
-### Coming from Testing Library or Playwright
+### Coming from Cypress Testing Library `findByRole()`
 
 `cy.getByRole()` works without a plugin. A few behaviors differ from the
 `findByRole()` query in
-[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library)
-and Playwright's `getByRole()`:
+[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library):
 
 - It yields every match instead of failing when there's more than one. Chain
   [`.first()`](/api/commands/first) or narrow the `name` to pick one.
 - A string `name` always matches the whole name, case-sensitively. There's no
   `exact` option, so use a regular expression for a partial or case-insensitive
-  match. Playwright matches a string name case-insensitively and by substring
-  by default.
+  match.
 - There are no `checked`, `selected`, `pressed`, `expanded`, `current`, `busy`,
   `level`, or `value` options. Chain [`.filter()`](#Narrow-the-results-by-state-with-filter)
   instead. The error for each of these options suggests the filter to use.
