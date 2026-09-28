@@ -139,17 +139,17 @@ minimatch option applied.
 | Option                                                | Description                                                                                                                                       |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | auth                                                  | HTTP Basic Authentication (`object` with keys `username` and `password`)                                                                          |
-| headers                                               | HTTP request headers (`object`)                                                                                                                   |
+| headers                                               | HTTP request headers (`object`). Header names match case-insensitively.                                                                           |
 | hostname                                              | HTTP request hostname                                                                                                                             |
 | https                                                 | `true`: only secure (https://) requests, `false`: only insecure (http://) requests                                                                |
-| method                                                | HTTP request method (matches any method by default)                                                                                               |
-| middleware                                            | `true`: match route first and in defined order, `false`: match route in reverse order (default)                                                   |
+| method                                                | HTTP request method (matches any method by default). A string matches case-insensitively.                                                         |
+| middleware                                            | `true`: match route first and in defined order, `false`: match route in reverse order (default). `true` requires a `routeHandler` function.       |
 | path                                                  | HTTP request path after the hostname, including query parameters                                                                                  |
 | pathname                                              | Like `path`, but without query parameters                                                                                                         |
 | port                                                  | HTTP request port(s) (`number` or `Array`)                                                                                                        |
 | query                                                 | Parsed query string (`object`)                                                                                                                    |
 | resourceType <Badge type="caution">deprecated</Badge> | The resource type of the request. See ["Request object properties"](#Request-object-properties) for a list of possible values for `resourceType`. |
-| times                                                 | Maximum number of times to match (`number`)                                                                                                       |
+| times                                                 | Maximum number of times to match (positive integer)                                                                                               |
 | url                                                   | Full HTTP request URL                                                                                                                             |
 
 See [examples](#With-RouteMatcher) below.
@@ -238,7 +238,7 @@ cy.intercept('GET', '/users')
 
 ### Matching with [RouteMatcher](#routeMatcher-RouteMatcher)
 
-Specifying a `method` and `url` to match can also be acheived by passing the
+Specifying a `method` and `url` to match can also be achieved by passing the
 `routeMatcher` object into `cy.intercept` instead:
 
 ```js
@@ -259,16 +259,14 @@ cy.intercept({
 ```
 
 ```js
-cy.intercept(
-  {
-    // this RegExp matches any URL beginning with
-    // 'http://api.example.com/' and ending with '/edit' or '/save'
-    url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
-    // matching requests must also contain this header
-    headers: {
-      'x-requested-with': 'exampleClient',
-    },
-  }
+cy.intercept({
+  // this RegExp matches any URL beginning with
+  // 'http://api.example.com/' and ending with '/edit' or '/save'
+  url: /^http:\/\/api\.example\.com\/.*\/(edit|save)/,
+  // matching requests must also contain this header
+  headers: {
+    'x-requested-with': 'exampleClient',
+  },
 })
 ```
 
@@ -333,7 +331,7 @@ cy.intercept({
 
 // same as above, but using regex
 cy.intercept({
-  method: '/PUT|PATCH/',
+  method: /^(PUT|PATCH)$/,
   url: '**/users/*',
 })
 ```
@@ -663,7 +661,7 @@ request handler until none are left.
 // sets an auth token on all requests
 // but remember setting `middleware: true` will
 // cause this to always be called first
-cy.intercept('http://api.company.com/', { middleware: true }, (req) => {
+cy.intercept('http://api.company.com/**', { middleware: true }, (req) => {
   req.headers['authorization'] = `token ${token}`
 })
 
@@ -739,7 +737,7 @@ cy.intercept('/users', (req) => {
 })
 ```
 
-#### Throttle or delay response all incoming responses
+#### Throttle or delay all incoming responses
 
 You can throttle or delay all incoming responses using a `beforeEach()` in the
 [supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
@@ -754,9 +752,10 @@ beforeEach(() => {
     },
     (req) => {
       req.on('response', (res) => {
-        // Throttle the response to 1 Mbps to simulate a
-        // mobile 3G connection
-        res.setThrottle(1000)
+        // Throttle the response to 125 kilobytes per
+        // second (about 1 Mbps) to simulate a mobile
+        // 3G connection
+        res.setThrottle(125)
       })
     }
   )
@@ -786,7 +785,7 @@ From here, you can do several things with the intercepted request:
 - modify and make assertions on the request like its body, headers, URL, method,
   etc. ([example](#Asserting-on-a-request-1))
 - stub out the response without interacting with a real back-end
-  ([example](#Controlling-the-response)
+  ([example](#Controlling-the-response))
 - pass the request through to its destination and modify or make assertions on
   the real response on its way back ([example](#Controlling-the-response))
 - attach listeners to various events on the request
@@ -888,15 +887,15 @@ argument:
 cy.intercept('POST', '/users', (req) => {
   req.reply({
     headers: {
-      Set-Cookie: 'newUserName=Peter Pan;'
+      'Set-Cookie': 'newUserName=Peter Pan;',
     },
     statusCode: 201,
     body: {
-      name: 'Peter Pan'
+      name: 'Peter Pan',
     },
     delay: 10, // milliseconds
-    throttleKbps: 1000, // to simulate a 3G connection
-    forceNetworkError: false // default
+    throttleKbps: 125, // kilobytes per second, about 1 Mbps
+    forceNetworkError: false, // default
   })
 })
 
@@ -904,7 +903,7 @@ cy.intercept('POST', '/users', (req) => {
 cy.intercept('GET', '/users', (req) => {
   req.reply({
     statusCode: 200, // default
-    fixture: 'users.json'
+    fixture: 'users.json',
   })
 })
 ```
@@ -997,8 +996,8 @@ cy.intercept('POST', '/users', (req) => {
 ```
 
 See example for
-[throttling a response](#Throttle-or-delay-response-all-incoming-responses) See
-more examples of [events](#Request-events)
+[throttling a response](#Throttle-or-delay-all-incoming-responses). See
+more examples of [events](#Request-events).
 
 #### Returning a Promise
 
@@ -1022,6 +1021,11 @@ cy.intercept('POST', '/users', (req) => {
   })
 })
 ```
+
+A returned Promise must resolve within the
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts), or the
+test fails with a timeout error. Increase `defaultCommandTimeout` if a callback
+needs more time.
 
 #### Stubbing a response with a string
 
@@ -1069,7 +1073,7 @@ The request object (`req`) has several properties from the HTTP request itself:
   /**
    * The headers of the request.
    */
-  headers: { [key: string]: string }
+  headers: { [key: string]: string | string[] }
   /**
    * Request HTTP method (GET, POST, ...).
    */
@@ -1166,7 +1170,7 @@ for more information.
 The `req.reply()` function can be used to send a stub response for an
 intercepted request. By passing a string, object, or
 [`StaticResponse`][staticresponse] to `req.reply()`, the request can be
-preventing from reaching the destination server.
+prevented from reaching the destination server.
 
 For example, the following code stubs out a JSON response from a request
 interceptor:
@@ -1379,7 +1383,7 @@ Cypress-specific behavior:
 
 | Property     | Description                                                                 |
 | ------------ | --------------------------------------------------------------------------- |
-| throttleKbps | Maximum data transfer rate of the response (kilobits/second)                |
+| throttleKbps | Maximum data transfer rate of the response (kilobytes/second)               |
 | delay        | Minimum network latency or delay to add to the response time (milliseconds) |
 
 Any modifications to the properties of `res` will be persisted to other response
@@ -1456,13 +1460,13 @@ The following properties are available on `StaticResponse`.
 
 | Option            | Description                                                                                                                                                                                                                                                      |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| statusCode        | HTTP response status code                                                                                                                                                                                                                                        |
+| statusCode        | HTTP response status code (default: `200`)                                                                                                                                                                                                                       |
 | headers           | HTTP response headers                                                                                                                                                                                                                                            |
 | body              | Serve a static response body (`object`, `string`, `ArrayBuffer`) (when `fixture` is omitted).                                                                                                                                                                    |
 | fixture           | Serve a fixture as the HTTP response body (allowed when `body` is omitted). Read the contents with an encoding other than the [default for the file type](/api/commands/fixture#How-Cypress-chooses-a-fixtures-encoding), pass the fixture like `path,encoding`. |
-| forceNetworkError | Force an error by destroying the browser connection                                                                                                                                                                                                              |
+| forceNetworkError | Force an error by destroying the browser connection. Can't be combined with `body`, `statusCode`, or `headers`.                                                                                                                                                  |
 | delay             | Minimum network latency or delay to add to the response time (milliseconds)                                                                                                                                                                                      |
-| throttleKbps      | Maximum data transfer rate of the response (kilobits/second)                                                                                                                                                                                                     |
+| throttleKbps      | Maximum data transfer rate of the response (kilobytes/second)                                                                                                                                                                                                    |
 
 **Note:** All properties are optional.
 
@@ -1624,10 +1628,10 @@ full URL — to replicate the fallback behavior accurately:
 
 ```js
 // path-only pattern: test with the path
-Cypress.minimatch('/api/users/1', '/api/users*', { matchBase: true }) // true
+Cypress.minimatch('/api/users?page=1', '/api/users*', { matchBase: true }) // true
 
 // full-URL pattern (** absorbs the hostname): test with the full URL
-Cypress.minimatch('http://localhost/api/users/1', '**/api/users*') // true
+Cypress.minimatch('http://localhost/api/users?page=1', '**/api/users*') // true
 ```
 
 Passing the full URL to `Cypress.minimatch()` with a path-only pattern may
@@ -1643,13 +1647,9 @@ expect(
   )
 ).to.be.true
 expect(
-  Cypress.minimatch(
-    'http://localhost/users?_limit=5',
-    '/users\\?_limit=+(3|5)',
-    {
-      matchBase: true,
-    }
-  )
+  Cypress.minimatch('/users?_limit=5', '/users\\?_limit=+(3|5)', {
+    matchBase: true,
+  })
 ).to.be.true
 expect(
   Cypress.minimatch(
@@ -1809,7 +1809,7 @@ information about the request and response to the console:
 | [15.20.0](/app/references/changelog#15-20-0) | Added support for `QUERY` method.                                                                                                                                                                                                                                                                    |
 | [14.0.0](/app/references/changelog#14-0-0)   | Deprecated `resourceType` property                                                                                                                                                                                                                                                                   |
 | [12.2.0](/app/references/changelog#12-2-0)   | Added `resourceType` property to `req` and `RouteMatcher`.                                                                                                                                                                                                                                           |
-| [7.6.0](/app/references/changelog#7-0-0)     | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
+| [7.6.0](/app/references/changelog#7-6-0)     | Added `query` option to `req` (The incoming request object yielded to request handler functions).                                                                                                                                                                                                    |
 | [7.0.0](/app/references/changelog#7-0-0)     | Removed `matchUrlAgainstPath` option from `RouteMatcher`, reversed handler ordering, added request events, removed substring URL matching, removed `cy.route2` alias, added `middleware` RouteMatcher option, renamed `res.delay()` to `res.setDelay()` and `res.throttle()` to `res.setThrottle()`. |
 | [6.4.0](/app/references/changelog#6-4-0)     | Renamed `delayMs` property to `delay` (backwards-compatible).                                                                                                                                                                                                                                        |
 | [6.2.0](/app/references/changelog#6-2-0)     | Added `matchUrlAgainstPath` option to `RouteMatcher`.                                                                                                                                                                                                                                                |
