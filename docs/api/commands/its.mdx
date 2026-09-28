@@ -45,7 +45,9 @@ cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 
 <Icon name="angle-right" /> **propertyName _(String, Number)_**
 
-Index, name of property or name of nested properties (with dot notation) to get.
+Index, name of property, or path to a nested property to get. A path uses dot
+notation (`'body.user'`) and can reach into arrays with a numeric segment or
+bracket notation (`'items.1'` or `'items[1]'`).
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -58,7 +60,7 @@ Pass in an options object to change the default behavior of `.its()`.
 
 <HeaderYields />
 
-- `.its()` 'yields the value of the property.
+- `.its()` yields the value of the property.
 - `.its()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -85,7 +87,7 @@ cy.wrap(['Wai Yan', 'Yu']).its(1).should('eq', 'Yu') // true
 
 ```javascript
 cy.get('ul li') // this yields us a jquery object
-  .its('length') // calls 'length' property returning that value
+  .its('length') // gets the 'length' property of that jQuery object
   .should('be.gt', 2) // ensure the length is greater than 2
 ```
 
@@ -94,19 +96,21 @@ cy.get('ul li') // this yields us a jquery object
 #### Get the `user` object of the response's `body`
 
 ```javascript
-cy
-  .request(...)
+cy.request('/users/1')
   .its('body.user')
-  .then(user => ...)
+  .then((user) => {
+    // do something with the user
+  })
 ```
 
-alternatively, use destructuring
+Alternatively, get the `body` and destructure it:
 
 ```javascript
-cy
-  .request(...)
+cy.request('/users/1')
   .its('body')
-  .then(({user}) => ...)
+  .then(({ user }) => {
+    // do something with the user
+  })
 ```
 
 ### Strings
@@ -179,6 +183,17 @@ const user = {
 cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
 ```
 
+Include an array index in the path with a numeric segment or bracket notation.
+
+```javascript
+const order = {
+  items: [{ name: 'Apple' }, { name: 'Banana' }],
+}
+
+cy.wrap(order).its('items[1].name').should('eq', 'Banana') // true
+cy.wrap(order).its('items.1.name').should('eq', 'Banana') // true
+```
+
 ### Existence
 
 #### Wait for some property to exist on `window`
@@ -205,8 +220,13 @@ cy.window().its('evilProp').should('not.exist')
 
 <HeaderAssertions />
 
-- `.its()` will automatically [retry](/app/core-concepts/retry-ability) until
-  it has a property that is not `null` or `undefined`.
+- `.its()` automatically [retries](/app/core-concepts/retry-ability) until
+  the property is not `null` or `undefined`, unless the next assertion is one
+  that can pass on those values: `not.exist`, `be.undefined`, `be.null`,
+  `not.be.ok`, `eq`, or `not.eq`. In that case, the assertion alone decides
+  when `.its()` passes.
+- `.its()` automatically [retries](/app/core-concepts/retry-ability) until
+  all chained assertions have passed.
 
 <HeaderTimeouts />
 
@@ -215,27 +235,24 @@ cy.window().its('evilProp').should('not.exist')
 
 ## Command Log
 
-**_Get `responseBody` of aliased route_**
+**_Get `response.body` of an aliased intercept_**
 
 ```javascript
 cy.intercept('/comments', { fixture: 'comments.json' }).as('getComments')
 cy.get('#fetch-comments').click()
 cy.wait('@getComments')
   .its('response.body')
-  .should(
-    'deep.eq',
-    JSON.stringify([
-      { id: 1, comment: 'hi' },
-      { id: 2, comment: 'there' },
-    ])
-  )
+  .should('deep.eq', [
+    { id: 1, comment: 'hi' },
+    { id: 2, comment: 'there' },
+  ])
 ```
 
 The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/its/xhr-response-its-response-body-for-testing.png"
-  alt="Command Log for its"
+  alt="Command Log showing the stubbed /comments route, the request aliased getComments, the wait on @getComments, its .response.body, and a passing deep-equal assertion"
 />
 
 When clicking on `its` within the command log, the console outputs the
@@ -243,15 +260,16 @@ following:
 
 <DocsImage
   src="/img/api/its/response-body-yielded-with-its-command-log.png"
-  alt="Console Log for its"
+  alt="DevTools console output for the its command showing Property .response.body, the intercepted request as Subject, and a two-item array as Yielded"
 />
 
 ## History
 
-| Version                                  | Changes                                                       |
-| ---------------------------------------- | ------------------------------------------------------------- |
-| [3.8.0](/app/references/changelog#3-8-0) | Added support for `options` argument                          |
-| [3.7.0](/app/references/changelog#3-7-0) | Added support for arguments of type Number for `propertyName` |
+| Version                                    | Changes                                                                                                                                                                                    |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [12.0.0](/app/references/changelog#12-0-0) | `.its()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
+| [3.8.0](/app/references/changelog#3-8-0)   | Added support for `options` argument                                                                                                                                                       |
+| [3.7.0](/app/references/changelog#3-7-0)   | Added support for arguments of type Number for `propertyName`                                                                                                                              |
 
 ## See also
 
