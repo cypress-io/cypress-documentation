@@ -88,7 +88,7 @@ cy.clearAllSessionStorage({ log: false })
 
 ### Common workflows
 
-#### Reset session storage between tests with test isolation off
+#### Reset session storage between tests with test isolation off <E2EOnlyBadge />
 
 When
 [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
@@ -108,7 +108,7 @@ describe('checkout', { testIsolation: false }, () => {
 })
 ```
 
-#### Restart a multi-step form saved in session storage
+#### Restart a multi-step form saved in session storage <E2EOnlyBadge />
 
 Apps often keep a multi-step form's progress in `sessionStorage` so a reload
 doesn't lose the user's place. Clear it partway through a test to check that
@@ -203,7 +203,7 @@ after `clearAllSessionStorage` the second assertion finds none.
 
 <DocsImage
   src="/img/api/clearallsessionstorage/command-log-clear-all-session-storage-two-origins.png"
-  alt="Command Log for a passing test showing cy.clearAllSessionStorage() between two getAllSessionStorage assertions: the first lists session storage on localhost:8080 and example.cypress.io, and the second yields an empty object"
+  alt="Passing test in the Command Log: session storage on two origins, then clearAllSessionStorage, then expected {} to be empty"
 />
 
 ## History
