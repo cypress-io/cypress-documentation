@@ -1105,47 +1105,6 @@ read those on GitHub.
   against the options interface and the defaults, including rows the source no
   longer has.
 
-### Position and coordinate arguments
-
-Two different mechanisms share the same nine position names (`topLeft` through
-`bottomRight`), so check which one a page documents before describing or
-illustrating it. Both were verified against Cypress 16.1.0 by recording where
-each position landed.
-
-**Action commands** (`.click()`, `.dblclick()`, `.rightclick()`, `.trigger()`)
-resolve a position through `cy/actionability.ts` into `dom/coordinates.ts`,
-and all four fire at the same pixel:
-
-- Positions are points on the element's **border box**, the first rect from
-  `getClientRects()`. Margin is never included.
-- `left` and `top` round up onto the first whole pixel inside the box; `right`
-  and `bottom` round down and subtract 1, onto the last pixel inside it. So edge
-  and corner positions land on the element's border when it has one.
-- `x` and `y` are offsets from that same top-left pixel: `(0, 0)` is `topLeft`.
-- The shared diagram is `static/img/api/coordinates-diagram.svg`. Render it
-  with `noBorder`, since the SVG draws its own card.
-
-Keep these behaviors in mind when writing examples or answering questions:
-
-- **Rounded corners:** corner positions use the rectangle, not the painted
-  shape. On a large `border-radius`, `topLeft` can fall outside the element,
-  and the command fails actionability as if the element were covered.
-- **Wrapped inline elements:** an element that wraps onto several lines uses
-  only its first line's rect, so `bottomRight` lands at the end of line one.
-
-**`.scrollTo()`** turns a position into scroll offsets instead (in
-`actions/scroll.ts`): each axis becomes `0`, `'50%'`, or `'100%'`, which jQuery
-`scrollTo` applies as a share of the scrollable distance. The position describes
-where the visible area ends up, not a point on an element, so never reuse the
-action-command diagram there: its own diagram is
-`static/img/api/scrollto/scroll-positions-diagram.svg`. The plugin computes that distance as
-`scrollHeight` minus the element's CSS height, which includes the space a
-classic scrollbar takes: on an element with always-visible scrollbars, `bottom`
-and `right` stop short of the end by the scrollbar's width. The window is not
-affected, because the browser clamps its scroll at the true end. Treat that
-shortfall as an open behavior question for `cypress-io/cypress`, not something
-to document around.
-
 ## Testing
 
 - **End-to-end tests** (`cypress/e2e/`) crawl the built site, so most content
