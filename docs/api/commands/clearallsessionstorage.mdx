@@ -181,6 +181,31 @@ Command Log and moves on instead of failing the test.
 - `cy.clearAllSessionStorage()` should never time out. When an origin doesn't
   respond, the command logs a warning after 2 seconds rather than failing.
 
+## Command Log
+
+**_Clear session storage on two origins_**
+
+```javascript
+cy.visit('/')
+cy.window().then((win) => win.sessionStorage.setItem('draft', 'home'))
+cy.origin('https://example.cypress.io', () => {
+  cy.visit('/')
+  cy.window().then((win) => win.sessionStorage.setItem('draft', 'docs'))
+})
+cy.getAllSessionStorage().should('not.be.empty')
+cy.clearAllSessionStorage()
+cy.getAllSessionStorage().should('be.empty')
+```
+
+The commands above display in the Command Log as shown below. The first
+assertion lists both origins holding session storage, and after
+`clearAllSessionStorage` the second assertion finds none.
+
+<DocsImage
+  src="/img/api/clearallsessionstorage/command-log-clear-all-session-storage-two-origins.png"
+  alt="Command Log showing cy.clearAllSessionStorage() between two getAllSessionStorage assertions: the first lists session storage on localhost:8080 and example.cypress.io, and the second yields an empty object"
+/>
+
 ## History
 
 | Version                                    | Changes                                     |
