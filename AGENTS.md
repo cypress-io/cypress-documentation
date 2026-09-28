@@ -145,6 +145,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   only when there are genuinely related pages worth surfacing. Don't pad it with
   tangential links or repeat links already prominent in the page body.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
+  When an example pairs test code with the app code it runs against (markup,
+  source, a fixture), title every block in the pair with its filename, such as
+  `index.html` and `spec.cy.js`, so the reader tells them apart at a glance.
 - For a copyable, reusable AI prompt (or an agent skill/rule), use `<CopyPrompt>`,
   not a code block; keep example-specific prompts, code, commands, and diagrams in
   code blocks. Prompts are expanded by default; add `defaultCollapsed` past 350

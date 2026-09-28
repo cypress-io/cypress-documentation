@@ -307,6 +307,31 @@ same change. `## See also` always stays as it is.
 - Add a `title="..."` to show a filename header when the snippet represents a
   file, e.g. ` ```ts title="cypress/support/commands.ts" `. Spec examples
   commonly use `title="test.cy.ts"` / `title="spec.cy.js"`.
+- Title the blocks when an example mixes files. An example that shows test code
+  next to the app code it runs against (HTML markup, a component or source file,
+  a fixture) reads faster when each block names its file, because the reader
+  sees which block goes in the app and which goes in the spec before reading
+  either. Title every block in the pair, not only one, and keep the names
+  consistent across a page: `index.html` for markup, `spec.cy.js` for spec code,
+  or the real path (`src/search.js`, `cypress/e2e/search.cy.js`) when the
+  example depends on where the file lives.
+
+  ````mdx
+  ```html title="index.html"
+  <ul>
+    <li class="active">About</li>
+  </ul>
+  ```
+
+  ```javascript title="spec.cy.js"
+  cy.get('li').filter('.active')
+  ```
+  ````
+
+  Leave titles off where they add nothing: a standalone test snippet with no
+  app code beside it, and `## Syntax` and `### Usage` blocks, which show call
+  shapes rather than files.
+
 - For Cypress config snippets use the
   [`:::cypress-config-example`](#cypress-config-examples) directive, and for
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
