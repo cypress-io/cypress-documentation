@@ -178,8 +178,8 @@ Command Log and moves on instead of failing the test.
 
 <HeaderTimeouts />
 
-- `cy.clearAllSessionStorage()` should never time out. When an origin doesn't
-  respond, the command logs a warning after 2 seconds rather than failing.
+- `cy.clearAllSessionStorage()` cannot time out. When an origin doesn't respond
+  within 2 seconds, the command logs a warning and continues.
 
 ## Command Log
 
