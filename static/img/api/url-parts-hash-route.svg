@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="137" viewBox="0 0 760 137" role="img" aria-labelledby="t d">
+<title id="t">Parts of a hash-based route</title>
+<desc id="d">The hash-based route https://example.com/app/#/users/1?tab=profile split into its parts: pathname is /app/ and hash is #/users/1?tab=profile. The question mark is inside the hash, so search is an empty string.</desc>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .u, .u-dim, .u-hash { font: 500 19px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
+  .u { fill: #1b1e2e; }
+  .u-dim { fill: #8a8ea3; }
+  .u-hash { fill: #4956e3; }
+  .hl { fill: #e3e6fb; }
+  .br { fill: none; stroke: #6f74a0; stroke-width: 1.25; }
+  .callout { fill: none; stroke: #555a6e; stroke-width: 1.25; }
+  .key { font: 600 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .key-hash { font: 600 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #4956e3; }
+  .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="759" height="136" rx="12"/>
+<rect class="hl" x="488" y="53" width="144" height="26" rx="4"/>
+<text class="u" x="92" y="72" textLength="72" lengthAdjust="spacingAndGlyphs">https:</text>
+<text class="u-dim" x="164" y="72" textLength="24" lengthAdjust="spacingAndGlyphs">//</text>
+<text class="u" x="188" y="72" textLength="132" lengthAdjust="spacingAndGlyphs">example.com</text>
+<text class="u" x="320" y="72" textLength="60" lengthAdjust="spacingAndGlyphs">/app/</text>
+<text class="u-hash" x="380" y="72" textLength="108" lengthAdjust="spacingAndGlyphs">#/users/1</text>
+<text class="u-hash" x="488" y="72" textLength="144" lengthAdjust="spacingAndGlyphs">?tab=profile</text>
+<path class="br" d="M 321.5 82 V 89 H 378.5 V 82"/>
+<text class="key" x="350.0" y="106" text-anchor="middle">pathname</text>
+<path class="br" d="M 381.5 82 V 89 H 630.5 V 82"/>
+<text class="key-hash" x="506.0" y="106" text-anchor="middle">hash</text>
+<path class="callout" d="M 494.0 51 V 34 H 478.0"/>
+<text class="note" x="472.0" y="38" text-anchor="end">This ? is part of the hash, so search is an empty string</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="220" viewBox="0 0 760 220" role="img" aria-labelledby="t d">
+<title id="t">Parts of a standard URL</title>
+<desc id="d">The URL https://example.com:8080/app/users?tab=1#section split into its parts: protocol is https:, hostname is example.com, port is 8080, host is example.com:8080, origin is https://example.com:8080, pathname is /app/users, search is ?tab=1, hash is #section, and href is the whole URL.</desc>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .u, .u-dim, .u-hash { font: 500 19px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
+  .u { fill: #1b1e2e; }
+  .u-dim { fill: #8a8ea3; }
+  .u-hash { fill: #4956e3; }
+  .hl { fill: #e3e6fb; }
+  .br { fill: none; stroke: #6f74a0; stroke-width: 1.25; }
+  .callout { fill: none; stroke: #555a6e; stroke-width: 1.25; }
+  .key { font: 600 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .key-hash { font: 600 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #4956e3; }
+  .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="759" height="219" rx="12"/>
+<text class="u" x="92" y="112" textLength="72" lengthAdjust="spacingAndGlyphs">https:</text>
+<text class="u-dim" x="164" y="112" textLength="24" lengthAdjust="spacingAndGlyphs">//</text>
+<text class="u" x="188" y="112" textLength="132" lengthAdjust="spacingAndGlyphs">example.com</text>
+<text class="u-dim" x="320" y="112" textLength="12" lengthAdjust="spacingAndGlyphs">:</text>
+<text class="u" x="332" y="112" textLength="48" lengthAdjust="spacingAndGlyphs">8080</text>
+<text class="u" x="380" y="112" textLength="120" lengthAdjust="spacingAndGlyphs">/app/users</text>
+<text class="u" x="500" y="112" textLength="72" lengthAdjust="spacingAndGlyphs">?tab=1</text>
+<text class="u-hash" x="572" y="112" textLength="96" lengthAdjust="spacingAndGlyphs">#section</text>
+<path class="br" d="M 189.5 90 V 83 H 378.5 V 90"/>
+<text class="key" x="284.0" y="76" text-anchor="middle">host</text>
+<path class="br" d="M 93.5 52 V 45 H 378.5 V 52"/>
+<text class="key" x="236.0" y="38" text-anchor="middle">origin</text>
+<path class="br" d="M 93.5 122 V 129 H 162.5 V 122"/>
+<text class="key" x="128.0" y="146" text-anchor="middle">protocol</text>
+<path class="br" d="M 189.5 122 V 129 H 318.5 V 122"/>
+<text class="key" x="254.0" y="146" text-anchor="middle">hostname</text>
+<path class="br" d="M 333.5 122 V 129 H 378.5 V 122"/>
+<text class="key" x="356.0" y="146" text-anchor="middle">port</text>
+<path class="br" d="M 381.5 122 V 129 H 498.5 V 122"/>
+<text class="key" x="440.0" y="146" text-anchor="middle">pathname</text>
+<path class="br" d="M 501.5 122 V 129 H 570.5 V 122"/>
+<text class="key" x="536.0" y="146" text-anchor="middle">search</text>
+<path class="br" d="M 573.5 122 V 129 H 666.5 V 122"/>
+<text class="key-hash" x="620.0" y="146" text-anchor="middle">hash</text>
+<path class="br" d="M 93.5 164 V 171 H 666.5 V 164"/>
+<text class="key" x="380.0" y="188" text-anchor="middle">href</text>
+</svg>
