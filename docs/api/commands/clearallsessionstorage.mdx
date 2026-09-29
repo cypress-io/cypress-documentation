@@ -58,8 +58,7 @@ Pass in an options object to change the default behavior of
 
 #### Clear session storage for every origin <E2EOnlyBadge />
 
-`cy.clearAllSessionStorage()` clears `sessionStorage` on every origin the test
-has loaded a page from, including origins visited inside
+This clears `sessionStorage` on both origins, including the one visited inside
 [`cy.origin()`](/api/commands/origin).
 
 ```javascript
@@ -90,10 +89,10 @@ cy.clearAllSessionStorage({ log: false })
 
 #### Reset session storage between tests with test isolation off <E2EOnlyBadge />
 
-When
+With
 [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
-is off, `sessionStorage` carries over from one test to the next. Clear it in a
-`beforeEach()` hook so each test starts from the same state. Pair it with
+off, clear session storage in a `beforeEach()` hook so each test starts from
+the same state. Pair it with
 [`cy.clearAllCookies()`](/api/commands/clearallcookies) and
 [`cy.clearAllLocalStorage()`](/api/commands/clearalllocalstorage) for a full
 reset.
@@ -126,17 +125,14 @@ cy.get('[data-cy="email"]').should('have.value', '')
 
 #### Clear session storage on the current origin only
 
-To clear `sessionStorage` on the current origin and leave other origins in
-place, call `sessionStorage.clear()` on the window from
-[`cy.window()`](/api/commands/window). `cy.clearAllSessionStorage()` clears
-every key on every tracked origin.
+Cypress has no `cy.clearSessionStorage()` command to match
+[`cy.clearLocalStorage()`](/api/commands/clearlocalstorage). To clear
+`sessionStorage` on the current origin and leave other origins in place, call
+`sessionStorage.clear()` on the window from
+[`cy.window()`](/api/commands/window).
 
 ```javascript
-// Clear session storage on the current origin
 cy.window().then((win) => win.sessionStorage.clear())
-
-// Clear session storage on every tracked origin
-cy.clearAllSessionStorage()
 ```
 
 ## Notes
@@ -178,8 +174,8 @@ Command Log and moves on instead of failing the test.
 
 <HeaderTimeouts />
 
-- `cy.clearAllSessionStorage()` cannot time out. When an origin doesn't respond
-  within 2 seconds, the command logs a warning and continues.
+- `cy.clearAllSessionStorage()` cannot time out. See
+  [Origins that don't respond within 2 seconds](#Origins-that-dont-respond-within-2-seconds).
 
 ## Command Log
 
@@ -197,9 +193,7 @@ cy.clearAllSessionStorage()
 cy.getAllSessionStorage().should('be.empty')
 ```
 
-The commands above display in the Command Log as shown below once the test
-passes. The first assertion lists both origins holding session storage, and
-after `clearAllSessionStorage` the second assertion finds none.
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/clearallsessionstorage/command-log-clear-all-session-storage-two-origins.png"
