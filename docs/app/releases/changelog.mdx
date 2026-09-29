@@ -10,6 +10,35 @@ slug: /app/references/changelog
 
 # Changelog
 
+## 16.1.1
+
+_Released Sep 29, 2026_
+
+**Performance:**
+
+- Improved the performance of [`.closest()`](/api/commands/closest) on subjects with many elements inside the shadow DOM. Fixed in [#34925](https://github.com/cypress-io/cypress/pull/34925).
+
+**Bugfixes:**
+
+- Fixed an issue where [`cy.clock()`](/api/commands/clock) overrode `requestIdleCallback` but not `cancelIdleCallback`, so an idle callback that your application canceled while the clock was installed still ran on the next [`cy.tick()`](/api/commands/tick). `cy.clock()` now overrides `cancelIdleCallback` by default, and passing `cancelIdleCallback` in the list of functions to override no longer throws a `non-existent timers and/or objects cannot be faked` error. Fixed in [#34926](https://github.com/cypress-io/cypress/pull/34926).
+
+**Misc:**
+
+- TypeScript now accepts an options object on six commands that already accepted one at runtime: [`.nextUntil()`](/api/commands/nextuntil), [`.parentsUntil()`](/api/commands/parentsuntil), and [`.prevUntil()`](/api/commands/prevuntil) take options in place of the filter argument; [`.each()`](/api/commands/each) and [`.spread()`](/api/commands/spread) take options before the callback; and [`.scrollIntoView()`](/api/commands/scrollintoview) takes an `offset` that sets a single axis, leaving the other at 0. These calls previously reported a type error. Addressed in [#34886](https://github.com/cypress-io/cypress/pull/34886).
+- TypeScript now accepts every function [`cy.clock()`](/api/commands/clock) can override in the browser, such as `requestAnimationFrame`, `requestIdleCallback`, `performance`, `Intl`, and `queueMicrotask`, and accepts `null` as the first argument, as in `cy.clock(null, ['setTimeout', 'clearTimeout'])`. These calls previously reported a type error. The `tick()` method on the yielded clock is now typed as returning the clock's new time in milliseconds instead of `void`. Addressed in [#34912](https://github.com/cypress-io/cypress/pull/34912).
+- TypeScript now types the `docsUrl` property on the error passed to an [`uncaught:exception`](/api/cypress-api/catalog-of-events) handler as `string | string[]`. An uncaught exception carries the docs url for your application's error alongside the Cypress one, so `docsUrl` can hold more than one url at a time. Addressed in [#34879](https://github.com/cypress-io/cypress/pull/34879).
+- TypeScript now types the third argument of a [`.each()`](/api/commands/each) callback on DOM elements as the jQuery collection being iterated, which is what Cypress passes at runtime, instead of an array of elements. Addressed in [#34933](https://github.com/cypress-io/cypress/pull/34933).
+- The error shown when [`.clear()`](/api/commands/clear) is called on an element it can't clear now lists the elements `.clear()` accepts: a `<textarea>`, a text-like `<input>` such as `text`, `email`, or `number`, or an element made editable by `contenteditable` or `designMode`. Addressed in [#34914](https://github.com/cypress-io/cypress/pull/34914).
+- The error shown when a [`.each()`](/api/commands/each) or [`.spread()`](/api/commands/spread) callback both runs Cypress commands and returns a synchronous value now names the command you called and links to its documentation, instead of saying that `cy.then()` failed. The same error from [`.then()`](/api/commands/then) now links to the `.then()` documentation. Addressed in [#34933](https://github.com/cypress-io/cypress/pull/34933).
+- When a command runs after your application navigates to another subdomain of the same domain outside of [`cy.origin()`](/api/commands/origin), the error now explains that, while [`injectDocumentDomain`](/app/references/configuration#injectDocumentDomain) is disabled (the default), a subdomain counts as a different origin, so commands run there also need `cy.origin()`. This explanation was intended to appear but never did. Addressed in [#34930](https://github.com/cypress-io/cypress/pull/34930).
+- The TypeScript documentation for the `multiple` option of [`.dblclick()`](/api/commands/dblclick) now shows its default as `true`, matching how `.dblclick()` behaves. Addressed in [#34929](https://github.com/cypress-io/cypress/pull/34929).
+- [`cy.contains()`](/api/commands/contains) now shows as a parent command in the Command Log when it starts a chain, as in `cy.contains('Save')`. It previously always showed as a child command, with a `-` before its name, as if it were chained off the command before it. Addressed in [#34939](https://github.com/cypress-io/cypress/pull/34939).
+
+**Dependency Updates:**
+
+- Upgraded `axios` from `1.15.2` to `1.20.0` to address [Prototype Pollution](https://github.com/advisories/GHSA-35jp-ww65-95wh) (CVE-2026-44494), [NO_PROXY Bypass](https://github.com/advisories/GHSA-pjwm-pj3p-43mv) (CVE-2026-44492), [Header Injection](https://github.com/advisories/GHSA-898c-q2cr-xwhg) (CVE-2026-44490), and [ReDoS](https://github.com/advisories/GHSA-hfxv-24rg-xrqf) (CVE-2026-44496) vulnerabilities reported in security scans. Also upgraded `form-data` from `4.0.5` to `4.0.6`, the minimum version `axios` `1.20.0` requires, which addresses a [CRLF Injection](https://github.com/advisories/GHSA-hmw2-7cc7-3qxx) (CVE-2026-12143) vulnerability reported in security scans. Addresses [#34863](https://github.com/cypress-io/cypress/issues/34863).
+- Upgraded `proxy-addr` from `2.0.7` to `2.0.8` to address a [User Impersonation](https://security.snyk.io/vuln/SNYK-JS-PROXYADDR-19812342) (CVE-2026-90711) vulnerability reported in security scans. Addresses [#34858](https://github.com/cypress-io/cypress/issues/34858).
+
 ## 16.1.0
 
 _Released Sep 15, 2026_
