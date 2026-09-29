@@ -223,19 +223,19 @@ cy.log('log out any message we want here')
 cy.log('another message', ['one', 'two', 'three'])
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/log/custom-command-log-with-any-message.png"
-  alt="Command Log log"
+  alt="Command Log showing two log rows: a plain message, and a message followed by the array [one, two, three]"
 />
 
-When clicking on `log` within the command log, the console outputs the
-following:
+Clicking the second `log` row in the Command Log prints its details to the
+console:
 
 <DocsImage
   src="/img/api/log/console-shows-logs-message-and-any-arguments.png"
-  alt="Console Log log"
+  alt="Developer Tools console showing the log command's Command, Message, and Args after clicking it in the Command Log"
 />
 
 ## History
