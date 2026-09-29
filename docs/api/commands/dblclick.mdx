@@ -30,9 +30,9 @@ chain further commands that rely on the subject after `.dblclick()`.
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.get('button').dblclick() // Double click on button
-cy.focused().dblclick() // Double click on el with focus
-cy.contains('Welcome').dblclick() // Double click on first el containing 'Welcome'
+cy.get('button').dblclick() // Double-click on button
+cy.focused().dblclick() // Double-click on element with focus
+cy.contains('Welcome').dblclick() // Double-click on first element containing 'Welcome'
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
@@ -46,22 +46,23 @@ cy.window().dblclick() // Errors, 'window' does not yield DOM element
 
 <Icon name="angle-right" /> **position _(String)_**
 
-The position where the double click should be issued. The `center` position is
-the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
+The position where Cypress issues the double-click. The `center` position is the
+default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
 <DocsImage
-  src="/img/api/coordinates-diagram.jpg"
-  alt="cypress-command-positions-diagram"
+  src="/img/api/coordinates-diagram.svg"
+  alt="Diagram of the nine positions on an element's border box: topLeft, top, and topRight along the top edge; left, center, and right across the middle; and bottomLeft, bottom, and bottomRight along the bottom edge. Edge and corner positions sit just inside the outer edge of the border box, on the border when the element has one, and never in the margin. center is the default."
+  noBorder
 />
 
 <Icon name="angle-right" /> **x _(Number)_**
 
-The distance in pixels from the element's left to issue the double click.
+The distance in pixels from the element's left to issue the double-click.
 
 <Icon name="angle-right" /> **y _(Number)_**
 
-The distance in pixels from the element's top to issue the double click.
+The distance in pixels from the element's top to issue the double-click.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -72,10 +73,10 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 | `altKey`                     | `false`                                                                     | Activates the alt key (option key for Mac). Aliases: `optionKey`.                                                                                                                                                               |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                  |
 | `ctrlKey`                    | `false`                                                                     | Activates the control key. Aliases: `controlKey`.                                                                                                                                                                               |
-| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                             |
+| `log`                        | `true`                                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                             |
 | `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                            |
 | `metaKey`                    | `false`                                                                     | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`.                                                                                                                                   |
-| `multiple`                   | `true`                                                                      | Serially click multiple elements                                                                                                                                                                                                |
+| `multiple`                   | `true`                                                                      | Serially double-click multiple elements                                                                                                                                                                                         |
 | `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`. |
 | `shiftKey`                   | `false`                                                                     | Activates the shift key.                                                                                                                                                                                                        |
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.dblclick()` to resolve before [timing out](#Timeouts)                                                                                                                                                        |
@@ -91,17 +92,75 @@ Pass in an options object to change the default behavior of `.dblclick()`.
 
 ### No Args
 
-#### Double click an anchor link
+#### Double-click an anchor link in the navigation
 
 ```javascript
 cy.get('a#nav1').dblclick() // yields the <a>
 ```
 
+#### Double-click a label to edit an item inline
+
+Many apps turn a label, table cell, or file name into an input when you
+double-click it. The double-click usually replaces the element, so start a new
+chain from `cy` to reach the input instead of chaining off `.dblclick()`.
+
+```javascript
+cy.get('[data-cy=todo-label]').first().dblclick()
+cy.get('[data-cy=todo-edit]').clear().type('Buy oat milk{enter}')
+cy.get('[data-cy=todo-label]').first().should('have.text', 'Buy oat milk')
+```
+
+#### Double-click one element out of several matches
+
+`.dblclick()` double-clicks
+[every element in its subject](#Double-click-every-element-that-matches-a-selector)
+by default, so a selector that matches several rows puts all of them into edit
+mode without an error. Narrow the query to the element you want with
+[`.eq()`](/api/commands/eq), [`.first()`](/api/commands/first), or
+[`cy.contains()`](/api/commands/contains) with a selector and text.
+
+```javascript
+cy.get('[data-cy=row]').eq(2).dblclick()
+cy.contains('[data-cy=file]', 'report.pdf').dblclick()
+```
+
+#### Wait for the request a double-click sends
+
+Register a [`cy.intercept()`](/api/commands/intercept) before the double-click,
+then [`cy.wait()`](/api/commands/wait) on its alias so the test continues only
+after the request completes.
+
+```javascript
+cy.intercept('GET', '/api/files/*').as('openFile')
+cy.contains('[data-cy=file]', 'report.pdf').dblclick()
+cy.wait('@openFile')
+cy.get('[data-cy=preview]').should('be.visible')
+```
+
+#### Test an element that handles both click and double-click
+
+Cypress sends two `click` events before the `dblclick` event (see
+[Events](#Events)), so a click handler runs twice. Apps that respond to both
+often wait briefly after a click to see whether a second one follows. If yours
+uses a timer like that, freeze it with [`cy.clock()`](/api/commands/clock),
+then advance it past your app's delay with [`cy.tick()`](/api/commands/tick).
+The example below assumes a delay under 300 milliseconds. Without the tick, the
+`not.have.class` assertion passes before the timer fires, so it can't catch a
+single-click action that runs by mistake.
+
+```javascript
+cy.clock()
+cy.get('[data-cy=photo]').dblclick()
+cy.tick(300)
+cy.get('[data-cy=lightbox]').should('be.visible')
+cy.get('[data-cy=photo]').should('not.have.class', 'selected')
+```
+
 ### Position
 
-#### Specify a position of the element to double click
+#### Specify a position of the element to double-click
 
-Click the bottom center of the button.
+Double-click the bottom center of the button.
 
 ```javascript
 cy.get('button').dblclick('bottom')
@@ -109,66 +168,85 @@ cy.get('button').dblclick('bottom')
 
 ### Coordinates
 
-#### Specify coordinates relative to the top left corner
+#### Specify coordinates relative to the top-left corner
 
-The double click below will be issued inside of the element (30px from the left
+Cypress issues the double-click below inside of the element (30px from the left
 and 10px from the top).
 
 ```javascript
 cy.get('button').dblclick(30, 10)
 ```
 
+#### Double-click a precise spot on a map or canvas
+
+Coordinates matter when the double-click position changes the result, such as
+zooming a map in on the point under the cursor.
+
+```javascript
+cy.get('[data-cy=map]').dblclick(200, 150)
+cy.get('[data-cy=zoom-level]').should('have.text', '4')
+```
+
 ### Options
 
-#### Force a double click regardless of its actionable state
+#### Force a double-click regardless of its actionable state
 
-Forcing a double click overrides the
+Forcing a double-click overrides the
 [actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
-Cypress applies and will automatically fire the events.
+Cypress applies and fires the events. On a disabled element, a forced
+double-click fires both click sequences but not the `dblclick` event, so a
+`dblclick` handler on a disabled element never runs.
 
 ```javascript
 cy.get('button').dblclick({ force: true })
 ```
 
-#### Force a double click with position argument
+#### Force a double-click with a position argument
 
 ```javascript
 cy.get('button').dblclick('topRight', { force: true })
 ```
 
-#### Force a double click with relative coordinates
+#### Force a double-click with relative coordinates
 
 ```javascript
 cy.get('button').dblclick(60, 60, { force: true })
 ```
 
-#### Double click all buttons found on the page
+#### Double-click every element that matches a selector
 
-By default, Cypress will iteratively apply the double click to each element and
-will also log to the
-[Command Log](/app/core-concepts/open-mode#Command-Log) multiple times.
-
-You can turn this off by passing `multiple: false` to `.dblclick()`.
+Unlike [`.click()`](/api/commands/click), `.dblclick()` defaults to
+`{ multiple: true }`. When the subject contains several elements, Cypress
+double-clicks each one in turn, gives each double-click its own full timeout,
+and logs each one to the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
 
 ```javascript
-cy.get('button').dblclick({ multiple: false })
+cy.get('[data-cy=todo-label]').dblclick() // double-clicks every label
 ```
 
-#### Double click with key combinations
+Pass `{ multiple: false }` as a guard when a selector should match exactly one
+element. If it ever matches more, `.dblclick()` fails the test instead of
+double-clicking all of them.
 
-The `.dblclick()` command may also be fired with key modifiers to
-simulate holding key combinations while double clicking, such as
-`SHIFT + double click`.
+```javascript
+cy.get('[data-cy=current-todo]').dblclick({ multiple: false })
+```
+
+#### Double-click with key combinations
+
+Pass key modifiers to `.dblclick()` to hold down keys while it double-clicks,
+such as `ALT + double-click`.
 
 :::info
 
-You can also use key combinations during [.type()](/api/commands/type). This
-offers options to hold down keys across multiple commands. See
-[Key Combinations](/api/commands/type#Key-Combinations) for more information.
+You can also use key combinations during [`.type()`](/api/commands/type),
+which can hold keys down across multiple commands. See
+[Key Combinations](/api/commands/type#Key-Combinations).
 
 :::
 
-The following modifiers can be combined with `.dblclick()`.
+The following keys can be combined with `.dblclick()` through the `options`.
 
 | Option     | Notes                                                                                         |
 | ---------- | --------------------------------------------------------------------------------------------- |
@@ -177,11 +255,11 @@ The following modifiers can be combined with `.dblclick()`.
 | `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`. |
 | `shiftKey` | Activates the shift key.                                                                      |
 
-##### Alt click
+##### Alt + double-click the first list item
 
-```js
+```javascript
 // execute ALT + dblclick on the first <li>
-cy.get('li:first').dblclick({
+cy.get('li').first().dblclick({
   altKey: true,
 })
 ```
@@ -195,18 +273,51 @@ cy.get('li:first').dblclick({
 `.dblclick()` is an "action command" that follows all the rules of
 [Actionability](/app/core-concepts/interacting-with-elements).
 
+### Events
+
+#### A double-click fires two clicks, then a dblclick
+
+Cypress fires the full [`.click()`](/api/commands/click) event sequence twice,
+then a `dblclick` event, matching what a browser sends for a real double-click.
+The mouse events in the first click have a `detail` of `1`. The mouse events in
+the second click, and the `dblclick` event, have a `detail` of `2`. The
+`pointerdown` and `pointerup` events have a `detail` of `0`.
+
+Because each click follows the `.click()` rules, the
+[focus](/api/commands/click#Focus) and
+[cancellation](/api/commands/click#Cancellation) behavior of `.click()` applies
+to both clicks.
+
+### Text selection
+
+#### A double-click does not select the word you double-click
+
+In a browser, double-clicking a word selects it. Cypress fires the double-click
+as simulated events, which don't trigger the browser's native text selection.
+`.dblclick()` doesn't select the word you double-click, in page text or in an
+input, and it leaves any text that was already selected in place. To select the
+text in an input or textarea, use [`.type('{selectall}')`](/api/commands/type).
+
+```javascript
+cy.get('[data-cy=title]').type('{selectall}')
+```
+
 ## Rules
 
 <HeaderRequirements />
 
 - `.dblclick()` requires being chained off a command that yields DOM element(s).
+- `.dblclick()` cannot be called on a `<select>` element. Use
+  [`.select()`](/api/commands/select) to change its value.
 
 <HeaderAssertions />
 
-- `.dblclick()` will automatically wait for the element to reach an
+- `.dblclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.dblclick()` will automatically [retry](/app/core-concepts/retry-ability)
-  until all chained assertions have passed.
+- `.dblclick()` itself is not retried. It fires once when the element is
+  actionable. Assertions chained after `.dblclick()` are retried until they
+  pass or time out. See
+  [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 <HeaderTimeouts />
 
@@ -216,38 +327,41 @@ cy.get('li:first').dblclick({
 
 ## Command Log
 
-**_Double click on a div_**
+**_Double-click a div_**
 
 ```javascript
 cy.get('.action-div').dblclick()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/dblclick/double-click-in-testing.png"
-  alt="Command Log dblclick"
+  alt="Command Log showing a get command for .action-div followed by a dblclick command"
 />
 
-When clicking on `dblclick` within the command log, the console outputs the
+When you click `dblclick` in the Command Log, the console outputs the
 following:
 
 <DocsImage
   src="/img/api/dblclick/element-double-clicked-on.png"
-  alt="console.log dblclick"
+  alt="DevTools console showing the dblclick command details and a Mouse Events table of the hover events, two full click sequences, and a dblclick event"
 />
 
 ## History
 
-| Version                                      | Changes                                                                                                                 |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments      |
-| [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                           |
-| [3.5.0](/app/references/changelog#3-5-0)     | Added support for options `force` and `multiple`.                                                                       |
-| [3.5.0](/app/references/changelog#3-5-0)     | Added support for `position`, `x`, and `y` arguments.                                                                   |
-| [3.5.0](/app/references/changelog#3-5-0)     | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.dblclick()`. |
+| Version                                      | Changes                                                                                                                |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments     |
+| [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                          |
+| [5.0.0](/app/references/changelog#5-0-0)     | Added options `altKey`, `ctrlKey`, `metaKey`, and `shiftKey`                                                           |
+| [3.5.0](/app/references/changelog#3-5-0)     | `.dblclick()` now follows the same actionability checks as `.click()`                                                  |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added support for options `force` and `multiple`                                                                       |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added support for `position`, `x`, and `y` arguments                                                                   |
+| [3.5.0](/app/references/changelog#3-5-0)     | Added sending `mouseover`, `mousemove`, `mouseout`, `pointerdown`, `pointerup`, and `pointermove` during `.dblclick()` |
 
 ## See also
 
 - [`.click()`](/api/commands/click)
 - [`.rightclick()`](/api/commands/rightclick)
+- [`.select()`](/api/commands/select)
