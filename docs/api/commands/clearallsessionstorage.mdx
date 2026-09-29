@@ -125,10 +125,8 @@ cy.get('[data-cy="email"]').should('have.value', '')
 
 #### Clear session storage on the current origin only
 
-Cypress has no `cy.clearSessionStorage()` command to match
-[`cy.clearLocalStorage()`](/api/commands/clearlocalstorage). To clear
-`sessionStorage` on the current origin and leave other origins in place, call
-`sessionStorage.clear()` on the window from
+To clear `sessionStorage` on the current origin and leave other origins in
+place, call `sessionStorage.clear()` on the window from
 [`cy.window()`](/api/commands/window).
 
 ```javascript
