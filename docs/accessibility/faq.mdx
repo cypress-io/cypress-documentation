@@ -169,9 +169,9 @@ Four things move a score without a code change: someone edited the App Quality C
 
 Record the Cypress project on a schedule against staging or production and compare consecutive runs in Branch Review, which works even when every run is on the same branch. This catches the changes no pull request would show, such as published content, a new version of an embedded third-party widget, or a feature flag enabling untested UI. See [Production monitoring](/accessibility/guides/production-monitoring).
 
-### <Icon name="angle-right" /> Can Cypress notify my team when accessibility results change?
+### <Icon name="angle-right" /> Can Cypress notify my team when accessibility results are ready?
 
-Yes, two ways. The [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) integrations include the accessibility score, failed rules by severity, and failed element count in run notifications, and can be filtered by run tag or run group. For conditional alerts, act on the [Results API](/accessibility/connect-and-extend/results-api) response in CI, which includes deep links per rule and per view so a notification can point at the exact failure.
+Yes. The [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integrations/microsoft-teams) integrations include the accessibility score, failed rules by severity, and failed element count in run notifications, and can be filtered by run tag or run group. For conditional alerts, act on the [Results API](/accessibility/connect-and-extend/results-api) response in CI, which includes deep links per rule and per view so a notification can point at the exact failure. To push the report to your own endpoint when it finishes, use [Accessibility webhooks](/accessibility/connect-and-extend/webhooks) and subscribe to `run.accessibility.completed`.
 
 ### <Icon name="angle-right" /> How do I track Cypress Accessibility trends across projects over time?
 
