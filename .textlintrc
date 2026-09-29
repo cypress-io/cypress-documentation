@@ -95,8 +95,6 @@
 
         // Prefer American spelling
         ["behaviour", "behavior"],
-        ["cancelled", "canceled"],
-        ["cancelling", "canceling"],
         ["centre", "center"],
         ["colour", "color"],
         ["customise", "customize"],
