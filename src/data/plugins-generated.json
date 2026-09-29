@@ -131,9 +131,9 @@
     },
     "cypress-watch-and-reload": {
       "npm": "cypress-watch-and-reload",
-      "version": "2.1.8",
-      "lastPublished": "2026-08-07T20:41:50.248Z",
-      "cypressVersion": "15.20.0"
+      "version": "2.1.9",
+      "lastPublished": "2026-09-26T23:09:57.891Z",
+      "cypressVersion": "15.21.1"
     },
     "cypress-html-validate": {
       "npm": "cypress-html-validate",
@@ -436,8 +436,8 @@
     },
     "cypress-terminal-report": {
       "npm": "cypress-terminal-report",
-      "version": "7.3.3",
-      "lastPublished": "2025-10-18T10:20:32.314Z",
+      "version": "7.4.0",
+      "lastPublished": "2026-09-27T11:41:33.099Z",
       "cypressVersion": ">=10.0.0"
     },
     "cypress-xray-junit-reporter": {
@@ -488,8 +488,8 @@
     },
     "@chromatic-com/cypress": {
       "npm": "@chromatic-com/cypress",
-      "version": "0.14.0",
-      "lastPublished": "2026-09-21T07:47:32.576Z",
+      "version": "1.0.0",
+      "lastPublished": "2026-09-25T09:40:38.606Z",
       "cypressVersion": ">=15.10.0"
     },
     "cypress-ntlm-auth": {
