@@ -1069,9 +1069,15 @@ cy.clock(null, ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval'])
 
 ## Multiple tabs and windows
 
-You can handle multi-tab workflows using the
-[`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer)
-plugin, which gives Cypress access to the underlying browser via Puppeteer. This approach requires Puppeteer as a dependency.
+Cypress drives one tab, and the `@cypress/puppeteer` plugin handles the others.
+It runs Puppeteer code against the browser Cypress launched and bundles its own
+copy of Puppeteer, so installing the plugin is all you need:
+
+<PackageManagerTabs install="@cypress/puppeteer" dev />
+
+Where Playwright works with the new page in the test itself, Cypress moves that
+work into a named handler in your Cypress config. The spec then runs it with
+`cy.puppeteer()`.
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -1087,51 +1093,58 @@ await newPage.getByRole('button', { name: 'Confirm' }).click()
 
 <Badge type="success">After: Cypress</Badge>
 
-```ts title="cypress.config.ts"
-import { defineConfig } from 'cypress'
+:::cypress-config-plugin-example
+
+```ts
 import { setup, retry } from '@cypress/puppeteer'
+```
 
-export default defineConfig({
-  e2e: {
-    setupNodeEvents(on) {
-      setup({
-        on,
-        onMessage: {
-          async switchToTabAndGetContent(browser) {
-            const page = await retry(async () => {
-              const pages = await browser.pages()
-              const page = pages.find((p) => p.url().includes('page-2.html'))
-              if (!page) throw new Error('Could not find page')
-              return page
-            })
+```ts
+setup({
+  on,
+  onMessage: {
+    async confirmInNewTab(browser, urlPart: string) {
+      // Wait for the new tab to open, like waitForEvent('page')
+      const page = await retry(async () => {
+        const pages = await browser.pages()
+        const tab = pages.find((p) => p.url().includes(urlPart))
 
-            await page.bringToFront()
-            const paragraph = await page.waitForSelector('p')
-            return await page.evaluate((el) => el.textContent, paragraph)
-          },
-        },
+        if (!tab) throw new Error(`No tab with a URL containing "${urlPart}"`)
+
+        return tab
       })
+
+      await page.bringToFront()
+      // Like getByRole('button', { name: 'Confirm' })
+      const button = await page.waitForSelector(
+        '::-p-aria([name="Confirm"][role="button"])'
+      )
+      await button?.click()
+      await page.close()
     },
   },
 })
 ```
 
-In your support file, import the command once:
+:::
 
-```ts
-// cypress/support/e2e.ts
+Import the command in your support file:
+
+```ts title="cypress/support/e2e.ts"
 import '@cypress/puppeteer/support'
 ```
 
 ```ts title="test.cy.ts"
 cy.visit('/')
-cy.contains('button', 'Open new tab').click()
+cy.contains('open new tab').click()
 
-cy.puppeteer('switchToTabAndGetContent').should(
-  'equal',
-  'You said: Hello from Page 1'
-)
+cy.puppeteer('confirmInNewTab', '/confirm')
 ```
+
+The handler closes the tab when it's done, so the next test starts with only the
+Cypress tab. The plugin works in Chromium-based browsers only. The
+[Multi-tab testing guide](/app/guides/multi-tab-testing) covers browser support,
+popups, opening a second tab yourself, and troubleshooting.
 
 ## Iframes
 

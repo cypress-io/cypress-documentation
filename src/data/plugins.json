@@ -452,7 +452,7 @@
       "plugins": [
         {
           "name": "Puppeteer",
-          "description": "Utilize Puppeteer's browser API with one command within Cypress.",
+          "description": "Drive multiple tabs and windows in Cypress tests with Puppeteer's browser API.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer",
           "keywords": ["puppeteer", "multi-tab", "commands", "browser", "cdp"],
           "badge": "official",

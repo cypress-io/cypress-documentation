@@ -1146,9 +1146,10 @@ design. There are two common approaches:
 - **Prefer testing the behavior, not the tab.** If a link opens a new tab
   via `target="_blank"`, assert it has the right `href` rather than following
   it, or [`cy.request()`](/api/commands/request) the URL directly.
-- **When you must drive a second tab,** use the
-  [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer)
-  plugin, which gives Cypress access to the underlying browser via Puppeteer.
+- **When you must drive a second tab,** use the `@cypress/puppeteer` plugin,
+  which runs Puppeteer against the browser Cypress launched. The
+  [Multi-tab testing guide](/app/guides/multi-tab-testing) covers setup and
+  examples, including popups and cleaning up tabs between tests.
 
 <Badge type="danger">Before: Selenium</Badge>
 
@@ -1522,50 +1523,50 @@ Learn more about
 Selenium calls below use the JavaScript bindings, with `await` omitted for
 brevity. The Java, Python, C#, and Ruby bindings map the same way.
 
-| Selenium                                                       | Cypress                                                                                       |
-| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `new Builder().forBrowser('chrome').build()` / `driver.quit()` | _(removed; managed by Cypress)_                                                               |
-| `driver.get('/path')`                                          | `cy.visit('/path')`                                                                           |
-| `driver.navigate().to(url)`                                    | `cy.visit(url)`                                                                               |
-| `driver.navigate().back()`                                     | `cy.go('back')`                                                                               |
-| `driver.navigate().forward()`                                  | `cy.go('forward')`                                                                            |
-| `driver.navigate().refresh()`                                  | `cy.reload()`                                                                                 |
-| `driver.getCurrentUrl()`                                       | `cy.url()`                                                                                    |
-| `driver.getTitle()`                                            | `cy.title()`                                                                                  |
-| `driver.findElement(By.id('x'))`                               | `cy.get('#x')`                                                                                |
-| `driver.findElement(By.css('.x'))`                             | `cy.get('.x')`                                                                                |
-| `driver.findElement(By.linkText('Next'))`                      | `cy.contains('a', 'Next')`                                                                    |
-| `driver.findElement(By.xpath("//b[text()='X']"))`              | `cy.contains('b', 'X')`                                                                       |
-| `driver.findElements(By.css('.x'))`                            | `cy.get('.x')` (yields all)                                                                   |
-| `el.click()`                                                   | `cy.get(sel).click()`                                                                         |
-| `el.sendKeys('text')`                                          | `cy.get(sel).type('text')`                                                                    |
-| `el.clear()`                                                   | `cy.get(sel).clear()`                                                                         |
-| `el.getText()`                                                 | `cy.get(sel).invoke('text')`                                                                  |
-| `el.getAttribute('href')`                                      | `cy.get(sel).invoke('attr', 'href')`                                                          |
-| `el.isDisplayed()`                                             | `cy.get(sel).should('be.visible')`                                                            |
-| `el.isEnabled()`                                               | `cy.get(sel).should('be.enabled')`                                                            |
-| `el.isSelected()`                                              | `cy.get(sel).should('be.checked')`                                                            |
-| `new Select(el).selectByVisibleText('US')`                     | `cy.get(sel).select('US')`                                                                    |
-| `driver.actions().move({ origin: el })` (hover)                | `cy.get(sel).trigger('mouseover')`                                                            |
-| `driver.actions().contextClick(el)`                            | `cy.get(sel).rightclick()`                                                                    |
-| `driver.actions().doubleClick(el)`                             | `cy.get(sel).dblclick()`                                                                      |
-| `el.sendKeys(Key.ENTER)`                                       | `cy.get(sel).type('{enter}')`                                                                 |
-| `driver.wait(until.elementIsVisible(el))`                      | `cy.get(sel).should('be.visible')`                                                            |
-| `driver.wait(until.elementIsEnabled(el))`                      | `cy.get(sel).click()`                                                                         |
-| `driver.sleep(ms)`                                             | _(remove; assert on the resulting state)_                                                     |
-| `manage().setTimeouts({ implicit: ms })`                       | `defaultCommandTimeout` in config                                                             |
-| `el.sendKeys('/path/file.png')` (upload)                       | `cy.get(sel).selectFile('path/file.png')`                                                     |
-| `driver.switchTo().frame(el)`                                  | `cy.get('#f').its('0.contentDocument.body')...`                                               |
-| `driver.switchTo().alert().accept()`                           | auto-accepted; `cy.on('window:alert', ...)`                                                   |
-| `driver.switchTo().alert().dismiss()` (confirm)                | `cy.on('window:confirm', () => false)`                                                        |
-| `driver.switchTo().window(handle)`                             | [`@cypress/puppeteer`](https://www.npmjs.com/package/@cypress/puppeteer) or assert the `href` |
-| `driver.manage().getCookies()`                                 | `cy.getCookies()`                                                                             |
-| `driver.manage().addCookie(cookie)`                            | `cy.setCookie(name, value)`                                                                   |
-| `driver.manage().deleteAllCookies()`                           | `cy.clearCookies()`                                                                           |
-| `driver.takeScreenshot()`                                      | `cy.screenshot()`                                                                             |
-| `driver.executeScript(js)`                                     | `cy.window().then(win => ...)` / `cy.invoke(...)`                                             |
-| `fetch(url)` / an HTTP client                                  | `cy.request(url)`                                                                             |
-| Selenium Grid / `RemoteWebDriver`                              | `cypress run --record --parallel` (Cypress Cloud)                                             |
+| Selenium                                                       | Cypress                                                                    |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `new Builder().forBrowser('chrome').build()` / `driver.quit()` | _(removed; managed by Cypress)_                                            |
+| `driver.get('/path')`                                          | `cy.visit('/path')`                                                        |
+| `driver.navigate().to(url)`                                    | `cy.visit(url)`                                                            |
+| `driver.navigate().back()`                                     | `cy.go('back')`                                                            |
+| `driver.navigate().forward()`                                  | `cy.go('forward')`                                                         |
+| `driver.navigate().refresh()`                                  | `cy.reload()`                                                              |
+| `driver.getCurrentUrl()`                                       | `cy.url()`                                                                 |
+| `driver.getTitle()`                                            | `cy.title()`                                                               |
+| `driver.findElement(By.id('x'))`                               | `cy.get('#x')`                                                             |
+| `driver.findElement(By.css('.x'))`                             | `cy.get('.x')`                                                             |
+| `driver.findElement(By.linkText('Next'))`                      | `cy.contains('a', 'Next')`                                                 |
+| `driver.findElement(By.xpath("//b[text()='X']"))`              | `cy.contains('b', 'X')`                                                    |
+| `driver.findElements(By.css('.x'))`                            | `cy.get('.x')` (yields all)                                                |
+| `el.click()`                                                   | `cy.get(sel).click()`                                                      |
+| `el.sendKeys('text')`                                          | `cy.get(sel).type('text')`                                                 |
+| `el.clear()`                                                   | `cy.get(sel).clear()`                                                      |
+| `el.getText()`                                                 | `cy.get(sel).invoke('text')`                                               |
+| `el.getAttribute('href')`                                      | `cy.get(sel).invoke('attr', 'href')`                                       |
+| `el.isDisplayed()`                                             | `cy.get(sel).should('be.visible')`                                         |
+| `el.isEnabled()`                                               | `cy.get(sel).should('be.enabled')`                                         |
+| `el.isSelected()`                                              | `cy.get(sel).should('be.checked')`                                         |
+| `new Select(el).selectByVisibleText('US')`                     | `cy.get(sel).select('US')`                                                 |
+| `driver.actions().move({ origin: el })` (hover)                | `cy.get(sel).trigger('mouseover')`                                         |
+| `driver.actions().contextClick(el)`                            | `cy.get(sel).rightclick()`                                                 |
+| `driver.actions().doubleClick(el)`                             | `cy.get(sel).dblclick()`                                                   |
+| `el.sendKeys(Key.ENTER)`                                       | `cy.get(sel).type('{enter}')`                                              |
+| `driver.wait(until.elementIsVisible(el))`                      | `cy.get(sel).should('be.visible')`                                         |
+| `driver.wait(until.elementIsEnabled(el))`                      | `cy.get(sel).click()`                                                      |
+| `driver.sleep(ms)`                                             | _(remove; assert on the resulting state)_                                  |
+| `manage().setTimeouts({ implicit: ms })`                       | `defaultCommandTimeout` in config                                          |
+| `el.sendKeys('/path/file.png')` (upload)                       | `cy.get(sel).selectFile('path/file.png')`                                  |
+| `driver.switchTo().frame(el)`                                  | `cy.get('#f').its('0.contentDocument.body')...`                            |
+| `driver.switchTo().alert().accept()`                           | auto-accepted; `cy.on('window:alert', ...)`                                |
+| `driver.switchTo().alert().dismiss()` (confirm)                | `cy.on('window:confirm', () => false)`                                     |
+| `driver.switchTo().window(handle)`                             | [`@cypress/puppeteer`](/app/guides/multi-tab-testing) or assert the `href` |
+| `driver.manage().getCookies()`                                 | `cy.getCookies()`                                                          |
+| `driver.manage().addCookie(cookie)`                            | `cy.setCookie(name, value)`                                                |
+| `driver.manage().deleteAllCookies()`                           | `cy.clearCookies()`                                                        |
+| `driver.takeScreenshot()`                                      | `cy.screenshot()`                                                          |
+| `driver.executeScript(js)`                                     | `cy.window().then(win => ...)` / `cy.invoke(...)`                          |
+| `fetch(url)` / an HTTP client                                  | `cy.request(url)`                                                          |
+| Selenium Grid / `RemoteWebDriver`                              | `cypress run --record --parallel` (Cypress Cloud)                          |
 
 ## Conclusion
 

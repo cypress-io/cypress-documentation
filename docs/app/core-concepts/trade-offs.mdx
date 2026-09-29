@@ -28,6 +28,9 @@ to have. In a sense they prevent you from writing bad, slow, or flaky tests.
 - Cypress commands run [inside of a browser](#Inside-the-browser).
 - You cannot use Cypress to drive
   [two browsers at the same time](#Multiple-browsers-open-at-the-same-time).
+  To test a flow that opens a new tab or popup in the same browser, use the
+  `@cypress/puppeteer` plugin, covered in the
+  [Multi-tab testing guide](/app/guides/multi-tab-testing).
 - Each test is bound to a single superdomain. Cross-origin navigation inside
   tests can be enabled by using the [`cy.origin`](/api/commands/origin) command.
   Read our
@@ -96,8 +99,11 @@ the browser may take a little extra work.
 
 ### Multiple browsers open at the same time
 
-Cypress does not support controlling more than 1 open browser at a time.
-You can test multiple tabs, however, using our [@cypress/puppeteer](https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer) plugin.
+Cypress controls one browser at a time. Tabs and popups that open inside that
+browser are a different case: the `@cypress/puppeteer` plugin drives them and
+hands the results back to your Cypress test. The
+[Multi-tab testing guide](/app/guides/multi-tab-testing) covers setup, browser
+support, and worked examples.
 
 With that said, except in the most unusual and rare circumstances, you can still
 test most application behavior without opening multiple browsers at the same

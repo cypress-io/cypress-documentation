@@ -1205,11 +1205,18 @@ like `.click()` or `.type()`.
 
 ### <Icon name="angle-right" /> Can I test anchor links that open in a new tab?
 
-Cypress does not have native multi-tab support, but new tabs can be tested with the [@cypress/puppeteer plugin](https://github.com/cypress-io/cypress/blob/develop/npm/puppeteer/README.md).
+Yes. When the test needs what happens inside the new tab, use the
+`@cypress/puppeteer` plugin, which the
+[Multi-tab testing guide](/app/guides/multi-tab-testing) walks through with
+examples.
 
-If you would like to test anchor links natively, there are lots of workarounds that enable you to test them in your application.
-
-[Read through the recipe on tab handling and links to see how to test anchor links.](/app/references/recipes#Testing-the-DOM)
+When the test only needs to check where the link goes, you can stay in the
+Cypress tab: assert the link's `href`, or remove its `target` attribute and
+follow the link.
+[Choose how to test links that open a new tab](/app/guides/multi-tab-testing#Choose-how-to-test-links-that-open-a-new-tab)
+compares these options, and the
+[tab handling and links recipe](/app/references/recipes#Testing-the-DOM) has
+more examples.
 
 ### <Icon name="angle-right" /> Can I dynamically test multiple viewports?
 
