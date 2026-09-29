@@ -5,9 +5,9 @@
   .card { fill: #f7f8fc; stroke: #e1e3ed; }
   .u, .u-dim, .u-hash { font: 500 19px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
   .u { fill: #1b1e2e; }
-  .u-dim { fill: #8a8ea3; }
+  .u-dim { fill: #676b82; }
   .u-hash { fill: #4956e3; }
-  .hl { fill: #e3e6fb; }
+  .hl { fill: #e9ebfc; }
   .br { fill: none; stroke: #6f74a0; stroke-width: 1.25; }
   .callout { fill: none; stroke: #555a6e; stroke-width: 1.25; }
   .key { font: 600 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
