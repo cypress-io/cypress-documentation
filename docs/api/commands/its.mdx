@@ -91,6 +91,28 @@ cy.get('ul li') // this yields us a jquery object
   .should('be.gt', 2) // ensure the length is greater than 2
 ```
 
+#### Wait for a list to finish rendering with `.its('length')`
+
+`.its()` is a query, so Cypress re-runs [`cy.get()`](/api/commands/get) and
+`.its()` together until the assertion passes. If the app renders its list items
+over time, this waits until all three are on the page.
+
+```javascript
+cy.get('#todo-list li').its('length').should('eq', 3)
+```
+
+#### Get a property of the DOM element inside the jQuery object
+
+Commands like [`cy.get()`](/api/commands/get) yield a jQuery object. Start the
+path with an index to reach the DOM element inside it, then read the element's
+own properties, such as the browser's
+[validity state](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState).
+
+```javascript
+cy.get('#email').type('not-an-email')
+cy.get('#email').its('0.validity.valid').should('be.false')
+```
+
 ### Requests
 
 #### Get the `user` object of the response's `body`
@@ -111,6 +133,30 @@ cy.request('/users/1')
   .then(({ user }) => {
     // do something with the user
   })
+```
+
+### Intercepted requests
+
+[`cy.wait()`](/api/commands/wait) on an [`cy.intercept()`](/api/commands/intercept)
+alias yields the interception, so `.its()` can reach into its `request` and
+`response`.
+
+#### Assert on the status code of an intercepted response
+
+```javascript
+cy.intercept('GET', '/comments').as('getComments')
+cy.get('#fetch-comments').click()
+cy.wait('@getComments').its('response.statusCode').should('eq', 200)
+```
+
+#### Assert on the body of an intercepted request
+
+```javascript
+cy.intercept('POST', '/comments').as('postComment')
+cy.get('#post-comment').click()
+cy.wait('@postComment')
+  .its('request.body')
+  .should('deep.include', { comment: 'hi' })
 ```
 
 ### Strings
@@ -167,6 +213,29 @@ cy.window() // yields window object
 
 :::
 
+### Application state
+
+#### Read app state from a store exposed on `window`
+
+When your app exposes its store on `window`, `.its()` and
+[`.invoke()`](/api/commands/invoke) can read that state directly. The whole
+chain retries, so the assertion waits for the app to update its state.
+
+```javascript title="app.js"
+// expose the store only when the app runs inside Cypress
+if (window.Cypress) {
+  window.store = store
+}
+```
+
+```javascript title="spec.cy.js"
+cy.window()
+  .its('store')
+  .invoke('getState')
+  .its('cart.items')
+  .should('have.length', 2)
+```
+
 ### Nested Properties
 
 You can drill into nested properties by using _dot notation_.
@@ -211,6 +280,45 @@ cy.window()
 ```javascript
 cy.window().its('evilProp').should('not.exist')
 ```
+
+#### Assert that a property is `null` or `undefined`
+
+`.its()` normally retries until a property has a value. Chain an assertion that
+expects `null` or `undefined`, and `.its()` leaves the decision to that
+assertion instead.
+
+```javascript
+cy.wrap({ deletedAt: null }).its('deletedAt').should('be.null')
+cy.wrap({ name: 'Jane' }).its('nickname').should('be.undefined')
+```
+
+#### Wait longer for a property with the `timeout` option
+
+Pass `timeout` when a property takes longer to appear than
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) allows, such
+as a flag an app sets after a slow startup.
+
+```javascript
+cy.window().its('appReady', { timeout: 10000 }).should('be.true')
+```
+
+## Notes
+
+### Choosing between `.its()`, `.invoke()`, and `.then()`
+
+All three work with the subject, but they do different jobs:
+
+- `.its()` reads a property. When the property holds a function, `.its()`
+  yields the function itself without calling it.
+- [`.invoke()`](/api/commands/invoke) calls a function on the subject and
+  yields what it returns.
+- [`.then()`](/api/commands/then) runs a callback with the subject, for
+  logic that doesn't fit a single property read or function call.
+
+`.its()` and `.invoke()` are queries, so Cypress retries them together with the
+queries before them until chained assertions pass. `.then()` runs its callback
+once and is not [retried](/app/core-concepts/retry-ability#Only-queries-are-retried),
+so prefer `.its()` or `.invoke()` whenever you assert on the value they yield.
 
 ## Rules
 
