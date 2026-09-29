@@ -245,9 +245,7 @@ cy.window().its('localStorage').invoke('getItem', 'token').should('exist')
 ### Options
 
 Pass an options object as the first argument, before the function name. Set
-`log: false` to leave the `.invoke()` call out of the Command Log. Assertions
-you chain to it still log their own line, including the yielded value, so
-`log: false` does not hide a sensitive value on its own.
+`log: false` to leave the `.invoke()` call out of the Command Log.
 
 ```javascript
 cy.window()
