@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="590" viewBox="0 0 760 590" role="img" aria-labelledby="t d">
+<title id="t">Where each scrollTo position moves the visible area</title>
+<desc id="d">Nine small panels, one per position. Each shows a large area of scrollable content with the smaller visible area moved to that spot: topLeft, top, and topRight along the top; left, center, and right across the middle; bottomLeft, bottom, and bottomRight along the bottom. Each position scrolls both axes to 0, 50%, or 100% of the scrollable distance.</desc>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .content { fill: #eef0fb; stroke: #6f74a0; stroke-width: 1.25; stroke-dasharray: 4 4; }
+  .view { fill: #ffffff; stroke: #4956e3; stroke-width: 3; }
+  .pos { font: 600 15px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .pct { font: 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #555a6e; }
+  .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="759" height="589" rx="12"/>
+<rect class="content" x="190.0" y="22" width="26" height="16"/>
+<text class="note" x="224.0" y="35">scrollable content</text>
+<rect class="view" x="400.0" y="22" width="26" height="16"/>
+<text class="note" x="434.0" y="35">visible area after the scroll</text>
+<rect class="content" x="60" y="70" width="168" height="96"/>
+<rect class="view" x="60.0" y="70.0" width="72" height="42"/>
+<text class="pos" x="144.0" y="188" text-anchor="middle">topLeft</text>
+<text class="pct" x="144.0" y="206" text-anchor="middle">x 0, y 0</text>
+<rect class="content" x="296" y="70" width="168" height="96"/>
+<rect class="view" x="344.0" y="70.0" width="72" height="42"/>
+<text class="pos" x="380.0" y="188" text-anchor="middle">top</text>
+<text class="pct" x="380.0" y="206" text-anchor="middle">x 50%, y 0</text>
+<rect class="content" x="532" y="70" width="168" height="96"/>
+<rect class="view" x="628.0" y="70.0" width="72" height="42"/>
+<text class="pos" x="616.0" y="188" text-anchor="middle">topRight</text>
+<text class="pct" x="616.0" y="206" text-anchor="middle">x 100%, y 0</text>
+<rect class="content" x="60" y="222" width="168" height="96"/>
+<rect class="view" x="60.0" y="249.0" width="72" height="42"/>
+<text class="pos" x="144.0" y="340" text-anchor="middle">left</text>
+<text class="pct" x="144.0" y="358" text-anchor="middle">x 0, y 50%</text>
+<rect class="content" x="296" y="222" width="168" height="96"/>
+<rect class="view" x="344.0" y="249.0" width="72" height="42"/>
+<text class="pos" x="380.0" y="340" text-anchor="middle">center</text>
+<text class="pct" x="380.0" y="358" text-anchor="middle">x 50%, y 50%</text>
+<rect class="content" x="532" y="222" width="168" height="96"/>
+<rect class="view" x="628.0" y="249.0" width="72" height="42"/>
+<text class="pos" x="616.0" y="340" text-anchor="middle">right</text>
+<text class="pct" x="616.0" y="358" text-anchor="middle">x 100%, y 50%</text>
+<rect class="content" x="60" y="374" width="168" height="96"/>
+<rect class="view" x="60.0" y="428.0" width="72" height="42"/>
+<text class="pos" x="144.0" y="492" text-anchor="middle">bottomLeft</text>
+<text class="pct" x="144.0" y="510" text-anchor="middle">x 0, y 100%</text>
+<rect class="content" x="296" y="374" width="168" height="96"/>
+<rect class="view" x="344.0" y="428.0" width="72" height="42"/>
+<text class="pos" x="380.0" y="492" text-anchor="middle">bottom</text>
+<text class="pct" x="380.0" y="510" text-anchor="middle">x 50%, y 100%</text>
+<rect class="content" x="532" y="374" width="168" height="96"/>
+<rect class="view" x="628.0" y="428.0" width="72" height="42"/>
+<text class="pos" x="616.0" y="492" text-anchor="middle">bottomRight</text>
+<text class="pct" x="616.0" y="510" text-anchor="middle">x 100%, y 100%</text>
+<text class="note" x="380.0" y="562" text-anchor="middle">Each position scrolls both axes to 0, 50%, or 100% of the distance the element or window can scroll.</text>
+</svg>
