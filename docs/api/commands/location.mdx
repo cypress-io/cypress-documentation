@@ -130,6 +130,46 @@ cy.visit('http://localhost:3000/admin')
 cy.location('pathname').should('eq', '/login')
 ```
 
+#### Wait longer for a slow redirect
+
+Pass a `timeout` when a redirect takes longer than
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts), such as after
+a login request. Cypress retries the assertion until the pathname matches or the
+timeout passes.
+
+```javascript
+cy.get('[data-cy="login"]').click()
+cy.location('pathname', { timeout: 10000 }).should('eq', '/dashboard')
+```
+
+#### Match a pathname that contains a generated ID
+
+When your application creates a record and navigates to it, the ID in the URL
+isn't known ahead of time. Match the pathname against a regular expression
+instead.
+
+```javascript
+cy.get('[data-cy="create-user"]').click()
+cy.location('pathname').should('match', /^\/users\/\d+$/)
+```
+
+#### Save part of the URL for later in the test
+
+Transform the value in [`.then()`](/api/commands/then) and save it with
+[`.as()`](/api/commands/as) to use it in a later command.
+
+```javascript
+cy.location('pathname')
+  .then((pathname) => pathname.split('/').pop())
+  .as('userId')
+
+cy.get('@userId').then((userId) => {
+  cy.request(`/api/users/${userId}`).its('status').should('eq', 200)
+})
+```
+
+### Query parameters
+
 #### Read a query parameter
 
 `searchParams` yields a `URLSearchParams` object, so you can call its methods
@@ -138,6 +178,43 @@ with [`.invoke()`](/api/commands/invoke).
 ```javascript
 cy.visit('http://localhost:3000/users?page=2&sort=name')
 cy.location('searchParams').invoke('get', 'sort').should('eq', 'name')
+```
+
+#### Assert on query parameters in any order
+
+Comparing `search` to a string fails when your application writes the same
+parameters in a different order. Asserting on `searchParams` checks each
+parameter by name, and `getAll()` reads a parameter that appears more than once.
+
+```javascript
+cy.visit('http://localhost:3000/posts?sort=name&tag=cypress&page=2&tag=testing')
+cy.location('searchParams').should((params) => {
+  expect(params.get('page')).to.eq('2')
+  expect(params.get('sort')).to.eq('name')
+  expect(params.getAll('tag')).to.deep.eq(['cypress', 'testing'])
+})
+```
+
+### Cross-origin redirects
+
+#### Assert that sign-in redirects to an identity provider
+
+`cy.location()` reads the URL after your application navigates to another
+origin, so you can confirm where a sign-in flow landed before you interact with
+that page inside [`cy.origin()`](/api/commands/origin).
+
+```javascript
+cy.visit('http://localhost:3000/')
+cy.contains('a', 'Sign in').click()
+
+cy.location('origin').should('eq', 'http://auth.example.com')
+cy.location('searchParams')
+  .invoke('get', 'redirect_uri')
+  .should('eq', 'http://localhost:3000/callback')
+
+cy.origin('http://auth.example.com', () => {
+  cy.get('input[name="email"]').type('user@example.com')
+})
 ```
 
 ## Notes
@@ -188,6 +265,32 @@ cy.location().then((loc) => {
   src="/img/api/location/special-cypress-location-object-logged-in-console-output.png"
   alt="DevTools console showing the plain object cy.location() yields, with hash, host, hostname, href, origin, pathname, port, protocol, search, and searchParams"
 />
+
+### Choosing between `cy.location()`, `cy.url()`, and `cy.hash()`
+
+All three commands read the same URL from the browser. Use the one that yields
+what you're asserting on:
+
+- [`cy.url()`](/api/commands/url) yields the full URL as a string, the same
+  value as `cy.location('href')`
+- [`cy.hash()`](/api/commands/hash) yields the fragment, the same value as
+  `cy.location('hash')`
+- `cy.location()` yields any other part of the URL, such as `pathname`, `host`,
+  or `searchParams`, or the whole location object
+
+In a hash-based route, a query string after the `#` belongs to the hash, so
+`search` and `searchParams` don't include it. See
+[Query strings inside a hash route](/api/commands/hash#Query-strings-inside-a-hash-route).
+
+### Pass a key instead of chaining `.its()`
+
+`cy.location('pathname')` and `cy.location().its('pathname')` both retry until
+the assertion that follows passes. Passing the key reads more clearly and shows
+the key next to `location` in the Command Log.
+
+```javascript
+cy.location('pathname').should('eq', '/users')
+```
 
 ## Rules
 
