@@ -303,8 +303,8 @@ Cypress.Commands.add('mount', (component, options) => {
 If you'd rather keep custom commands in `cypress/support/commands.js`, you can
 register `cy.mount()` there instead. The scaffolded support file already imports
 it with `import './commands'`. Register the command in only one of the two
-files. If both register it, the registration that runs last replaces the other
-without an error, which is the one in `component.js` for the scaffolded file.
+files (see
+[Troubleshooting the `cy.mount()` command](#Troubleshooting-the-cymount-command)).
 
 ## TypeScript typings for the `cy.mount()` command
 
@@ -338,6 +338,244 @@ If your tests have trouble finding the types for the custom command, add
 ```json title="tsconfig.json"
 "include": ["./src", "cypress.d.ts"]
 ```
+
+## `cy.mount()` examples for common workflows
+
+The examples in this section use React and TypeScript. In JavaScript, leave out
+the `import type` lines and the `declare global` block. The same patterns carry
+over to the other frameworks, with each framework's own options.
+
+### Setting defaults that a single test can override
+
+A custom command is the place for setup that most tests share. Pull your own
+option out of `options` and pass the rest through, so a test can change the
+default without the command getting in the way.
+
+This command wraps every component in a theme provider. It assumes a
+`ThemeContext` in your app like this one:
+
+```ts title="src/ThemeContext.ts"
+import { createContext } from 'react'
+
+export const ThemeContext = createContext<'light' | 'dark'>('light')
+```
+
+The command adds a `theme` option that defaults to `'light'`:
+
+```tsx title="cypress/support/component.tsx"
+import { mount } from 'cypress/react'
+import type { MountOptions, MountReturn } from 'cypress/react'
+import type { ReactNode } from 'react'
+import { ThemeContext } from '../../src/ThemeContext'
+
+type Theme = 'light' | 'dark'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount(
+        component: ReactNode,
+        options?: MountOptions & { theme?: Theme }
+      ): Chainable<MountReturn>
+    }
+  }
+}
+
+Cypress.Commands.add('mount', (component, options = {}) => {
+  const { theme = 'light', ...mountOptions } = options
+
+  return mount(
+    <ThemeContext.Provider value={theme}>{component}</ThemeContext.Provider>,
+    mountOptions
+  )
+})
+```
+
+Most tests call `cy.mount()` as usual. A test that needs something different
+passes the option:
+
+```tsx title="src/Toolbar.cy.tsx"
+import { Toolbar } from './Toolbar'
+
+it('uses the light theme by default', () => {
+  cy.mount(<Toolbar />)
+  cy.get('[data-cy=toolbar]').should('have.class', 'light')
+})
+
+it('uses the dark theme in this test', () => {
+  cy.mount(<Toolbar />, { theme: 'dark' })
+  cy.get('[data-cy=toolbar]').should('have.class', 'dark')
+})
+```
+
+The [Vue command](#Customizing-the-cymount-command-for-your-app) above follows
+the same idea: it lists `transition: false` before `...options.global.stubs`, so
+stubs a test passes are merged in and can replace the default.
+
+### Turning on React Strict Mode by default
+
+`mount()` from `cypress/react` takes a `strict` option that renders the
+component inside [`<StrictMode>`](https://react.dev/reference/react/StrictMode).
+Set it in the command, before `...options`, so it's on for every test and a
+test can still pass `{ strict: false }`:
+
+```tsx title="cypress/support/component.tsx"
+import { mount } from 'cypress/react'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
+    }
+  }
+}
+
+Cypress.Commands.add('mount', (component, options = {}) => {
+  return mount(component, { strict: true, ...options })
+})
+```
+
+### Using what `cy.mount()` yields
+
+`cy.mount()` yields an object you can use in `.then()`. What it contains depends
+on the framework:
+
+| Framework | Yields                                                                                        |
+| --------- | --------------------------------------------------------------------------------------------- |
+| React     | `{ component, rerender }`: the element you mounted and a function to render it with new props |
+| Angular   | `{ fixture, component }`: the `ComponentFixture` and the component instance                   |
+| Vue       | `{ wrapper, component }`: the Vue Test Utils wrapper and the component instance               |
+| Svelte    | `{ component }`: the mounted component instance                                               |
+
+In React, `rerender()` updates the mounted component with new props, without
+unmounting it first:
+
+```tsx title="src/Greeting.cy.tsx"
+import { Greeting } from './Greeting'
+
+it('updates the greeting when the name changes', () => {
+  cy.mount(<Greeting name="Ada" />).then(({ rerender }) => {
+    cy.contains('Hello, Ada')
+    rerender(<Greeting name="Grace" />)
+    cy.contains('Hello, Grace')
+  })
+})
+```
+
+:::caution
+
+`rerender()` renders exactly the element you pass it. It doesn't reapply the
+providers your custom command added, so a component that reads the
+`ThemeContext` from the earlier example falls back to the context's default
+after `rerender(<Greeting name="Grace" />)`. Wrap the new element in the same
+providers when the component depends on them.
+
+:::
+
+The framework guides show more of what you can do with the yielded object, such
+as [aliasing the Vue wrapper](/app/component-testing/vue/examples#Using-Vue-Test-Utils)
+and
+[accessing the Angular component instance](/app/component-testing/angular/examples#Accessing-the-Component-Instance).
+
+### Adding a second mount command for a specific setup
+
+When only some tests need extra setup, such as a router, register a second
+command next to `cy.mount()` instead of adding a flag to it. Each command stays
+short, and the command name says what the test gets.
+
+This example adds `cy.mountWithRouter()`, which renders the component inside a
+React Router
+[`<MemoryRouter>`](https://reactrouter.com/api/declarative-routers/MemoryRouter)
+that starts at the routes the test passes:
+
+```tsx title="cypress/support/component.tsx"
+import { mount } from 'cypress/react'
+import type { MountOptions, MountReturn } from 'cypress/react'
+import type { ReactNode } from 'react'
+import { MemoryRouter } from 'react-router'
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
+      mountWithRouter(
+        component: ReactNode,
+        options?: MountOptions & { initialEntries?: string[] }
+      ): Chainable<MountReturn>
+    }
+  }
+}
+
+Cypress.Commands.add('mount', mount)
+
+Cypress.Commands.add('mountWithRouter', (component, options = {}) => {
+  const { initialEntries = ['/'], ...mountOptions } = options
+
+  return mount(
+    <MemoryRouter initialEntries={initialEntries}>{component}</MemoryRouter>,
+    mountOptions
+  )
+})
+```
+
+```tsx title="src/CurrentPath.cy.tsx"
+import { CurrentPath } from './CurrentPath'
+
+it('starts at the route the test passes', () => {
+  cy.mountWithRouter(<CurrentPath />, { initialEntries: ['/settings'] })
+  cy.get('[data-cy=path]').should('have.text', '/settings')
+})
+```
+
+### Showing or hiding the mount in the Command Log
+
+Whether a mount shows up in the Command Log depends on the framework:
+
+- **React and Vue** log each mount. Pass `{ log: false }` to leave it out.
+- **Svelte** leaves the mount out by default, because Svelte 5 components log as
+  a generic name. Pass `{ log: true }` to show it.
+- **Angular** always logs the mount.
+
+The option passes through a custom command like any other mount option, as long
+as the command forwards `options`:
+
+```tsx title="src/Toolbar.cy.tsx"
+import { Toolbar } from './Toolbar'
+
+it('mounts without a Command Log entry', () => {
+  cy.mount(<Toolbar />, { log: false })
+  cy.get('[data-cy=toolbar]').should('be.visible')
+})
+```
+
+## Troubleshooting the `cy.mount()` command
+
+If `cy.mount()` fails with
+`cy.mount() must be implemented by the user`, Cypress didn't find a registered
+command. Check that:
+
+- Your component support file calls `Cypress.Commands.add('mount', ...)`, or
+  imports a file that does.
+- The [`supportFile`](/app/references/configuration#Testing-Type-Specific-Options) option under
+  `component` in your Cypress config points to that file and isn't `false`.
+
+If `cy.mount()` doesn't do what your custom command says, check whether more
+than one file registers it. Registering `mount` again replaces the earlier
+command without an error, so the registration that runs last wins. In the
+scaffolded support file, `import './commands'` runs first, so a command in
+`component.js` replaces one in `commands.js`.
+
+If TypeScript reports one of these errors, it can't see your `declare global`
+block:
+
+```text
+Argument of type '"mount"' is not assignable to parameter of type 'keyof Chainable<any>'.
+Property 'mount' does not exist on type 'cy & CyEventEmitter'.
+```
+
+Add the block to your support file, or to a `cypress.d.ts` file that your
+`tsconfig.json` includes, as shown in
+[TypeScript typings for the `cy.mount()` command](#TypeScript-typings-for-the-cymount-command).
 
 ## More `cy.mount()` examples for each framework
 
