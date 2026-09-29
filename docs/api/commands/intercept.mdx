@@ -438,6 +438,27 @@ cy.wait('@someRoute').its('response.statusCode').should('eq', 500)
 cy.wait('@someRoute').its('response.body').should('include', 'id')
 ```
 
+#### Waiting on multiple intercepted requests at once
+
+Pass an array of aliases to [cy.wait()](/api/commands/wait) to wait for several
+requests. The requests can complete in any order, and the yielded array follows
+the order of the aliases you passed:
+
+```js
+cy.intercept('GET', '/users', { fixture: 'users.json' }).as('getUsers')
+cy.intercept('GET', '/projects', { body: [] }).as('getProjects')
+
+// the dashboard requests projects first, then users
+cy.get('[data-cy="load-dashboard"]').click()
+
+// wait for both requests to complete, in any order
+cy.wait(['@getUsers', '@getProjects']).then((interceptions) => {
+  // `interceptions` is in the same order as the aliases
+  expect(interceptions[0].request.url).to.include('/users')
+  expect(interceptions[1].request.url).to.include('/projects')
+})
+```
+
 #### Waiting on errors
 
 You can use [cy.wait()](/api/commands/wait) to wait on requests that end with
@@ -450,6 +471,25 @@ cy.intercept('GET', '/should-err', { forceNetworkError: true }).as('err')
 // and that it ended in an error
 cy.wait('@err').should('have.property', 'error')
 ```
+
+### Asserting that an intercepted request was not made
+
+To check that your app did **not** send a request, alias the route and assert
+that the [`.all` suffix](#Accessing-all-intercepted-requests) yields an empty
+array:
+
+```js
+cy.intercept('POST', '/analytics', { statusCode: 204 }).as('track')
+
+cy.get('#opt-out').click()
+
+// no request matched, so `.all` yields an empty array
+cy.get('@track.all').should('have.length', 0)
+```
+
+The assertion passes as soon as the array is empty, so it can't catch a request
+that your app sends later. Place it after something that proves the app has
+finished the action, such as an element that appears when it's done.
 
 ### Stubbing a response
 
@@ -512,6 +552,76 @@ cy.intercept('/not-found', {
 
 See also [`StaticResponse` object][staticresponse].
 
+#### Stubbing a server error or a network failure
+
+A server error and a network failure reach your app differently, so test the
+one your app needs to handle. A `statusCode` of `500` sends a real HTTP
+response, and your app's request succeeds with an error status:
+
+```js
+// the server responds with an error status code:
+// `fetch` resolves, and `response.ok` is `false`
+cy.intercept('GET', '/users', {
+  statusCode: 500,
+  body: { message: 'Internal Server Error' },
+}).as('getUsers')
+```
+
+`forceNetworkError` sends no response at all, the way an unreachable server or
+a dropped connection would:
+
+```js
+// no response arrives at all: `fetch` rejects with a `TypeError`
+cy.intercept('GET', '/users', { forceNetworkError: true }).as('getUsers')
+```
+
+#### Failing an intercepted request once, then succeeding
+
+Combine [`times`](#routeMatcher-RouteMatcher) with the
+[matching order](#Interception-lifecycle) to test how your app recovers from a
+failed request. The route defined last matches first, and `times: 1` stops it
+from matching after one request, so the next request falls through to the
+earlier route:
+
+```js
+// every request to `/users` gets the fixture...
+cy.intercept('GET', '/users', { fixture: 'users.json' }).as('getUsers')
+
+// ...except the first, which fails. This route is defined later, so it
+// matches first, and `times: 1` retires it after one match.
+cy.intercept(
+  { method: 'GET', url: '/users', times: 1 },
+  { statusCode: 500 }
+).as('getUsersFailure')
+
+cy.get('[data-cy="load-users"]').click()
+cy.wait('@getUsersFailure').its('response.statusCode').should('eq', 500)
+
+cy.get('[data-cy="retry"]').click()
+cy.wait('@getUsers').its('response.statusCode').should('eq', 200)
+```
+
+### Overriding an intercept in a single test
+
+Because the route defined last matches first, a test can replace an intercept
+that a `beforeEach()` set up. Define the new route in the test and it wins for
+that test only, since all intercepts are cleared before the next one:
+
+```js
+beforeEach(() => {
+  // most tests see a list of users
+  cy.intercept('GET', '/users', { fixture: 'users.json' }).as('getUsers')
+})
+
+it('shows an empty state when there are no users', () => {
+  // defined later, so it matches first and wins for this test
+  cy.intercept('GET', '/users', { body: [] }).as('getUsers')
+
+  cy.get('[data-cy="load-users"]').click()
+  cy.wait('@getUsers').its('response.body').should('have.length', 0)
+})
+```
+
 ### Using the **`routeHandler`** function
 
 By specifying a [`routeHandler`][arg-routehandler] function as the last argument
@@ -562,6 +672,23 @@ cy.intercept('POST', '/login', (req) => {
   req.alias = 'login'
 })
 ```
+
+#### Changing query parameters with `req.query`
+
+`req.query` holds the request's query parameters as an object. Setting or
+deleting a property rewrites `req.url`, so the change reaches the server:
+
+```js
+cy.intercept('GET', '/users*', (req) => {
+  // ask for a smaller page than the app does, and drop a debug flag.
+  // Cypress rewrites `req.url` to match.
+  req.query.limit = '2'
+  delete req.query.debug
+}).as('getUsers')
+```
+
+A request the app sends to `/users?limit=10&debug=true` goes out as
+`/users?limit=2`.
 
 #### Adding a header to an outgoing request
 
@@ -720,6 +847,33 @@ cy.intercept('/projects/2', (req) => {
     expect(res.body).to.include('My Project')
   })
 })
+```
+
+#### Modifying the real response
+
+Change `res` inside the `req.continue()` callback to keep most of the real
+response while testing an edge case. Here the app still gets the real user,
+with one field changed:
+
+```js
+cy.intercept('GET', '/api/users/1', (req) => {
+  req.continue((res) => {
+    // keep the real user, but make them an admin
+    res.body.isAdmin = true
+  })
+}).as('getUser')
+```
+
+To change the status code, pass it to [`res.send()`][res-send], which merges it
+with the real response:
+
+```js
+cy.intercept('GET', '/api/users/1', (req) => {
+  req.continue((res) => {
+    // keep the real body, but respond with an error status code
+    res.send({ statusCode: 503 })
+  })
+}).as('getUser')
 ```
 
 #### Returning a Promise
@@ -1745,6 +1899,31 @@ are some workarounds:
 - Chromium-family browsers only: Use `remote:debugger:protocol` to disable cache
   entirely. For more information, see
   [this comment on issue #14459](https://github.com/cypress-io/cypress/issues/14459#issuecomment-768616195).
+
+## `cy.intercept()` and CORS preflight requests
+
+Before some cross-origin requests, such as a `POST` with a JSON body, the
+browser sends an `OPTIONS` preflight request to ask the other origin for
+permission. When a `cy.intercept()` route matches the request's URL, Cypress
+answers that preflight for you and allows the request. A stub for another origin
+works without a real server behind it and without adding CORS headers to the
+stub:
+
+```js
+// the app, served from its own origin, POSTs JSON to another origin,
+// so the browser sends an OPTIONS preflight first
+cy.intercept('POST', 'https://api.example.com/orders', {
+  statusCode: 201,
+  body: { id: 1 },
+}).as('createOrder')
+
+cy.get('[data-cy="place-order"]').click()
+cy.wait('@createOrder').its('response.statusCode').should('eq', 201)
+```
+
+To test how your app handles the preflight itself, such as a rejected one, add a
+route that matches the `OPTIONS` method. Cypress then passes the preflight to
+your routes instead of answering it.
 
 ## Command Log
 
