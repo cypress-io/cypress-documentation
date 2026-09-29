@@ -118,6 +118,10 @@ In the **Add webhook** dialog, configure the following:
   store the secret somewhere safe. It is shown only once and cannot be viewed
   again**. If you lose it, you can rotate it later by editing the webhook. See
   [Verify webhook signatures](#Verify-webhook-signatures).
+- **Custom Authorization header** _(optional)_: A header name and value sent
+  on every request, independent of the secret above, for an endpoint that
+  requires its own `Authorization` header. The value is stored securely and
+  cannot be viewed again after saving.
 - **Events that will trigger webhook**: Select which events should be delivered
   to this endpoint. At least one event is required.
 - **Enable this webhook**: Whether the webhook is active. Enabled by default;
@@ -125,7 +129,7 @@ In the **Add webhook** dialog, configure the following:
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/add-webhook-modal.png"
-  alt="The Add webhook dialog with Payload URL, Secret, events, and enable toggle"
+  alt="The Add webhook dialog with Payload URL, Secret, custom Authorization header, events, and enable toggle"
   width={600}
 />
 
