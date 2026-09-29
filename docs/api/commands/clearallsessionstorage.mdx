@@ -1,6 +1,6 @@
 ---
 title: 'cy.clearAllSessionStorage()'
-description: Clear all session storage data in Cypress.
+description: Clear all sessionStorage data in Cypress.
 sidebar_label: clearAllSessionStorage
 ---
 
@@ -46,11 +46,116 @@ Pass in an options object to change the default behavior of
 
 | Option | Default | Description                                                                         |
 | ------ | ------- | ----------------------------------------------------------------------------------- |
-| `log`  | `true`  | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| `log`  | `true`  | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log) |
 
 <HeaderYields />
 
 - `cy.clearAllSessionStorage()` yields `null`.
+
+## Examples
+
+### No Args
+
+#### Clear session storage for every origin <E2EOnlyBadge />
+
+This clears `sessionStorage` on both origins, including the one visited inside
+[`cy.origin()`](/api/commands/origin).
+
+```javascript
+cy.visit('/')
+cy.window().then((win) => win.sessionStorage.setItem('draft', 'home'))
+cy.origin('https://example.cypress.io', () => {
+  cy.visit('/')
+  cy.window().then((win) => win.sessionStorage.setItem('draft', 'docs'))
+})
+cy.getAllSessionStorage().should('not.be.empty')
+cy.clearAllSessionStorage()
+cy.getAllSessionStorage().should('be.empty')
+```
+
+### Options
+
+#### Clear session storage without logging to the Command Log
+
+Pass `{ log: false }` to keep `cy.clearAllSessionStorage()` out of the
+[Command Log](/app/core-concepts/open-mode#Command-Log), which is useful when it
+runs in a hook before every test and would otherwise repeat in every test's log.
+
+```javascript
+cy.clearAllSessionStorage({ log: false })
+```
+
+### Common workflows
+
+#### Reset session storage between tests with test isolation off <E2EOnlyBadge />
+
+With
+[test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
+off, clear session storage in a `beforeEach()` hook so each test starts from
+the same state. Pair it with
+[`cy.clearAllCookies()`](/api/commands/clearallcookies) and
+[`cy.clearAllLocalStorage()`](/api/commands/clearalllocalstorage) for a full
+reset.
+
+```javascript
+describe('checkout', { testIsolation: false }, () => {
+  beforeEach(() => {
+    cy.clearAllCookies()
+    cy.clearAllLocalStorage()
+    cy.clearAllSessionStorage()
+  })
+})
+```
+
+#### Restart a multi-step form saved in session storage <E2EOnlyBadge />
+
+Apps often keep a multi-step form's progress in `sessionStorage` so a reload
+doesn't lose the user's place. Clear it partway through a test to check that
+the form starts over when the saved progress is gone.
+
+```javascript
+cy.visit('/signup')
+cy.get('[data-cy="email"]').type('user@example.com')
+cy.get('[data-cy="next-step"]').click()
+
+cy.clearAllSessionStorage()
+cy.reload()
+cy.get('[data-cy="email"]').should('have.value', '')
+```
+
+#### Clear session storage on the current origin only
+
+To clear `sessionStorage` on the current origin and leave other origins in
+place, call `sessionStorage.clear()` on the window from
+[`cy.window()`](/api/commands/window).
+
+```javascript
+cy.window().then((win) => win.sessionStorage.clear())
+```
+
+## Notes
+
+### Origins cleared by cy.clearAllSessionStorage()
+
+Cypress tracks every origin that serves an HTML page, and
+`cy.clearAllSessionStorage()` clears `sessionStorage` for each of them. When
+[test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
+is enabled, Cypress resets that list at the start of each test. When it's off,
+the list carries over between the tests in a spec file, so the command also
+clears origins that earlier tests in the spec loaded.
+
+### HTTP origins in an HTTPS test
+
+When your app runs on HTTPS, `cy.clearAllSessionStorage()` clears only the
+HTTPS origins and leaves `sessionStorage` on any HTTP origins in place. Browsers
+block an HTTPS page from reaching an HTTP origin's storage. If every origin your
+test visits uses the same protocol, this doesn't affect you.
+
+### Origins that don't respond within 2 seconds
+
+Cypress clears storage on other origins through a hidden iframe for each one. If
+an origin doesn't respond within 2 seconds, Cypress logs a warning in the
+Command Log and moves on instead of failing the test.
 
 ## Rules
 
@@ -67,7 +172,37 @@ Pass in an options object to change the default behavior of
 
 <HeaderTimeouts />
 
-- `cy.clearAllSessionStorage()` cannot time out.
+- `cy.clearAllSessionStorage()` cannot time out. See
+  [Origins that don't respond within 2 seconds](#Origins-that-dont-respond-within-2-seconds).
+
+## Command Log
+
+**_Clear session storage on two origins_**
+
+```javascript
+cy.visit('/')
+cy.window().then((win) => win.sessionStorage.setItem('draft', 'home'))
+cy.origin('https://example.cypress.io', () => {
+  cy.visit('/')
+  cy.window().then((win) => win.sessionStorage.setItem('draft', 'docs'))
+})
+cy.getAllSessionStorage().should('not.be.empty')
+cy.clearAllSessionStorage()
+cy.getAllSessionStorage().should('be.empty')
+```
+
+The commands above display in the Command Log as:
+
+<DocsImage
+  src="/img/api/clearallsessionstorage/command-log-clear-all-session-storage-two-origins.png"
+  alt="Passing test in the Command Log: session storage on two origins, then clearAllSessionStorage, then expected {} to be empty"
+/>
+
+## History
+
+| Version                                    | Changes                                     |
+| ------------------------------------------ | ------------------------------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | `cy.clearAllSessionStorage()` command added |
 
 ## See also
 

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" role="img" aria-labelledby="t d">
+<title id="t">Named positions on an element</title>
+<desc id="d">Nine positions on the border box of an element: topLeft, top, and topRight along the top edge; left, center, and right across the middle; bottomLeft, bottom, and bottomRight along the bottom edge. The edge and corner positions sit just inside the outer edge of the border box, on the border when the element has one. center is the default. Margin is never included.</desc>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .border { fill: #4956e3; }
+  .pad { fill: #eef0fb; }
+  .content { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.25; stroke-dasharray: 4 4; }
+  .dot { fill: #4956e3; stroke: #ffffff; stroke-width: 2.5; }
+  .pos { font: 600 15px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .pos-default { font: 600 15px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1f7a45; }
+  .tag { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+  .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="759" height="419" rx="12"/>
+<rect class="border" x="190" y="95" width="380" height="210"/>
+<rect class="pad" x="200" y="105" width="360" height="190"/>
+<rect class="content" x="224" y="129" width="312" height="142"/>
+<text class="tag" x="208" y="122">padding</text>
+<text class="tag" x="232" y="147">content</text>
+<circle class="dot" cx="195.0" cy="100.0" r="6.5"/>
+<circle class="dot" cx="380.0" cy="100.0" r="6.5"/>
+<circle class="dot" cx="565.0" cy="100.0" r="6.5"/>
+<circle class="dot" cx="195.0" cy="200.0" r="6.5"/>
+<circle cx="380.0" cy="200.0" r="10" fill="#ffffff" stroke="#1f7a45" stroke-width="2.5"/><circle cx="380.0" cy="200.0" r="4.5" fill="#1f7a45"/>
+<circle class="dot" cx="565.0" cy="200.0" r="6.5"/>
+<circle class="dot" cx="195.0" cy="300.0" r="6.5"/>
+<circle class="dot" cx="380.0" cy="300.0" r="6.5"/>
+<circle class="dot" cx="565.0" cy="300.0" r="6.5"/>
+<text class="pos" x="195.0" y="81" text-anchor="middle">topLeft</text>
+<text class="pos" x="380.0" y="81" text-anchor="middle">top</text>
+<text class="pos" x="565.0" y="81" text-anchor="middle">topRight</text>
+<text class="pos" x="176" y="205.0" text-anchor="end">left</text>
+<text class="pos-default" x="380.0" y="230.0" text-anchor="middle">center</text>
+<text class="tag" x="380.0" y="247.0" text-anchor="middle">(default)</text>
+<text class="pos" x="584" y="205.0">right</text>
+<text class="pos" x="195.0" y="332" text-anchor="middle">bottomLeft</text>
+<text class="pos" x="380.0" y="332" text-anchor="middle">bottom</text>
+<text class="pos" x="565.0" y="332" text-anchor="middle">bottomRight</text>
+<path d="M 572 265 H 604" stroke="#555a6e" stroke-width="1.25" fill="none"/>
+<text class="tag" x="610" y="269">border</text>
+<text class="note" x="380.0" y="376" text-anchor="middle">Edge and corner positions sit just inside the outer edge of the border box.</text>
+<text class="note" x="380.0" y="396" text-anchor="middle">When the element has a border, they land on it. Margin is never included.</text>
+</svg>

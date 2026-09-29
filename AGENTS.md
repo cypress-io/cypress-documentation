@@ -127,12 +127,16 @@ Each rule is a hard convention. See the linked section for the how and why.
 [code blocks](./AGENTS_REFERENCE.md#code-blocks),
 [AI prompts vs code blocks](./AGENTS_REFERENCE.md#ai-prompts-copyprompt-vs-a-code-block),
 [alt text](./AGENTS_REFERENCE.md#accessible-image-alt-text),
+[diagram contrast](./AGENTS_REFERENCE.md#diagram-color-contrast),
 [screenshots](./scripts/screenshots/README.md)
 
 - Use the MDX components, not raw HTML: `<DocsImage>` / `<DocsVideo>` / `<Icon>`.
   Always give images meaningful `alt` (describe purpose, not "screenshot of…").
 - Capture Cypress App screenshots from a real run of the page's own snippet, never
   a mock-up: follow the [capture procedure](./scripts/screenshots/README.md).
+- Check every diagram you add or change against WCAG 2.2 AA color contrast before
+  committing it: 4.5:1 for text and 3:1 for lines and shapes the reader needs.
+  Measure each color pair against what it sits on, and report the ratios.
 - Start every product page with `<ProductHeading product="…" />`. Use canonical
   names: Cypress App, Cypress Cloud, Cypress Accessibility, UI Coverage.
 - Reuse `docs/partials/_*.mdx` instead of repeating content, but only create a
