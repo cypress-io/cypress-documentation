@@ -31,8 +31,8 @@ cy.log('created new user')
 <Icon name="angle-right" /> **message _(String)_**
 
 Message to print to the Cypress Command Log. The Command Log renders inline
-Markdown in the message, such as `**bold**`, `_italic_`, and `` `code` ``. HTML
-tags display as plain text.
+Markdown, such as `**bold**`, `_italic_`, and `` `code` ``, across the whole
+line it displays, including any arguments. HTML tags display as plain text.
 
 <Icon name="angle-right" /> **args...**
 
@@ -187,7 +187,8 @@ cy.get('li').each(($item, index) => {
 ### Formatting arguments in the Command Log
 
 `cy.log()` joins the message and every argument with a comma and a space.
-Strings, numbers, and booleans print as they are. Arrays with more than 3 items
+Strings, numbers, and booleans print as they are, and Markdown in a string
+renders the same way it does in the message. Arrays with more than 3 items
 and objects with more than 2 keys are summarized so the Command Log stays
 readable:
 
