@@ -1,0 +1,36 @@
+---
+title: 'Send Cypress Accessibility results with webhooks'
+description: 'Use the run.accessibility.completed webhook to post Accessibility results to Google Chat, triage reports before AI analysis, and send scores to dashboards.'
+sidebar_label: Webhooks
+sidebar_position: 25
+---
+
+<ProductHeading product="accessibility" />
+
+# Accessibility webhooks
+
+Cypress Accessibility webhooks move a finished report into the systems where your team already works. Cypress Cloud sends the [`run.accessibility.completed` event](/cloud/integrations/webhooks#Events) when the report finishes processing, so a workflow can start from that report without polling Cypress Cloud or waiting on a CI job.
+
+## Example use cases for Cypress Accessibility webhook events
+
+### Send Accessibility results to Google Chat
+
+Keep the team informed in a channel that Cypress Cloud doesn't have a built-in integration for. The payload includes the project name, branch, Accessibility score, violation counts by impact, and a direct `reportUrl`. A receiver such as a Google Apps Script web app can turn those fields into a Google Chat message that links back to the report.
+
+### Triage Accessibility reports before AI analysis
+
+Reserve AI analysis and token usage for reports that need attention. Cypress Cloud sends the event after Accessibility processing finishes, and the payload identifies processing failures and partial reports while summarizing the score and violations. Your receiver can use those fields to decide whether to investigate, then pass the run URL to the [Cypress Cloud CLI](/cloud/integrations/cloud-cli) or [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) for detailed analysis.
+
+### Add Accessibility scores to engineering dashboards
+
+Put accessibility alongside the quality and ownership signals your team already tracks in Cortex, Datadog, or another internal system. The payload provides stable project and run identifiers, branch and commit data, timestamps, the score, violation counts, and the Axe Core® version. Your receiver can transform those fields into metrics or events for dashboards, alerts, and service scorecards.
+
+Setup, payload fields, test events, signature verification, and retry behavior are in the [Cypress Cloud webhooks documentation](/cloud/integrations/webhooks).
+
+## See also
+
+- [Connect & extend](/accessibility/connect-and-extend/overview) lists the other ways to get Cypress Accessibility results out of Cypress Cloud.
+- [Webhooks integration](/cloud/integrations/webhooks) documents events, payloads, headers, security, and retries.
+- [Build custom integrations with webhooks](/cloud/guides/webhooks) walks through a Slack message for a completed run.
+- [Cypress Cloud CLI](/cloud/integrations/cloud-cli) inspects a specific run from the terminal.
+- [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) queries a specific run from an AI client.
