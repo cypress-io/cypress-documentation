@@ -25,16 +25,17 @@ All intercepts are automatically cleared before every test.
 
 Find the section for what you want to do:
 
-| I want to…                          | Use                                           | See                                                                                                       |
-| ----------------------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Wait for a request                  | `cy.intercept(url).as()` and `cy.wait()`      | [Waiting on a request](#Waiting-on-a-request)                                                             |
-| Return fixed data                   | a [`StaticResponse`][staticresponse]          | [Stubbing a response](#Stubbing-a-response)                                                               |
-| Decide the response at request time | `req.reply()`                                 | [Providing a stub response with `req.reply()`][req-reply]                                                 |
-| Change what's sent to the server    | a [`routeHandler`][arg-routehandler]          | [Modifying an outgoing request](#Modifying-an-outgoing-request)                                           |
-| Change the real response            | `req.continue()` with a callback              | [Modifying the real response](#Modifying-the-real-response)                                               |
-| Test errors or slow networks        | `statusCode`, `forceNetworkError`, or `delay` | [Stubbing a server error or a network failure](#Stubbing-a-server-error-or-a-network-failure)             |
-| Check that a request was not made   | the `.all` alias suffix                       | [Asserting that an intercepted request was not made](#Asserting-that-an-intercepted-request-was-not-made) |
-| Fix an intercept that doesn't match | the Routes panel and `Cypress.minimatch()`    | [Troubleshooting a route that doesn't match](#Troubleshooting-a-cyintercept-route-that-doesnt-match)      |
+| I want to…                             | Use                                        | See                                                                                                                   |
+| -------------------------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| Wait for a request                     | `cy.intercept(url).as()` and `cy.wait()`   | [Waiting on a request](#Waiting-on-a-request)                                                                         |
+| Return fixed data                      | a [`StaticResponse`][staticresponse]       | [Stubbing a response](#Stubbing-a-response)                                                                           |
+| Decide the response at request time    | `req.reply()`                              | [Providing a stub response with `req.reply()`][req-reply]                                                             |
+| Change what's sent to the server       | a [`routeHandler`][arg-routehandler]       | [Modifying an outgoing request](#Modifying-an-outgoing-request)                                                       |
+| Change the real response               | `req.continue()` with a callback           | [Modifying the real server response with `req.continue()`](#Modifying-the-real-server-response-with-reqcontinue)      |
+| Test a server error or network failure | `statusCode` or `forceNetworkError`        | [Stubbing a server error or a network failure](#Stubbing-a-server-error-or-a-network-failure)                         |
+| Test a slow network                    | `delay` or `throttleKbps`                  | [Throttle or delay all incoming responses](#Throttle-or-delay-all-incoming-responses)                                 |
+| Check that a request was not made      | the `.all` alias suffix                    | [Asserting that an intercepted request was not made](#Asserting-that-an-intercepted-request-was-not-made)             |
+| Fix an intercept that doesn't match    | the Routes panel and `Cypress.minimatch()` | [Troubleshooting a `cy.intercept()` route that doesn't match](#Troubleshooting-a-cyintercept-route-that-doesnt-match) |
 
 ## Syntax
 
@@ -487,7 +488,7 @@ cy.wait('@err').should('have.property', 'error')
 
 ### Asserting that an intercepted request was not made
 
-To check that your app did **not** send a request, alias the route and assert
+To check that your app did not send a request, alias the route and assert
 that the [`.all` suffix](#Accessing-all-intercepted-requests) yields an empty
 array:
 
@@ -862,7 +863,7 @@ cy.intercept('/projects/2', (req) => {
 })
 ```
 
-#### Modifying the real response
+#### Modifying the real server response with `req.continue()`
 
 Change `res` inside the `req.continue()` callback to keep most of the real
 response while testing an edge case. Here the app still gets the real user,
@@ -1669,10 +1670,10 @@ From there, each interception has two phases: request and response.
 `cy.intercept()` runs the routes that match a request in this order:
 
 1. Routes defined with `{ middleware: true }`, in the order you define them.
-2. All other routes, starting with the one you defined **last**.
+2. All other routes, starting with the one you defined last.
 
-It stops at the first route that responds, whether with a static response,
-`req.reply()`, or `req.continue()`. Routes after it never see the request.
+It stops at the first route that has a static response or calls `req.reply()`
+or `req.continue()`. Routes after it never see the request.
 
 In practice, this means a route you define later overrides an earlier one, and
 middleware always runs first:
@@ -1943,17 +1944,17 @@ cy.intercept({ method: 'GET', pathname: '/api/users' }).as('getUsers')
 
 When a route doesn't match, check these:
 
-- **The pattern covers the whole URL.** A glob must match the full URL or path,
+- The pattern covers the whole URL. A glob must match the full URL or path,
   including any query string. Test it with
   [`Cypress.minimatch()`](#Cypressminimatch), or match on `pathname` instead.
-- **The method matches.** `cy.intercept('GET', …)` never matches a `POST`.
-- **The intercept is defined before the request.** A route only sees requests
+- The method matches. `cy.intercept('GET', …)` never matches a `POST`.
+- The intercept is defined before the request. A route only sees requests
   sent after it's defined, so call `cy.intercept()` before the
   `cy.visit()` or action that triggers the request.
-- **The request isn't served from the cache.** Cached responses never reach
+- The request isn't served from the cache. Cached responses never reach
   the network. See
   [`cy.intercept()` and request caching](#cyintercept-and-request-caching).
-- **Your app sent the request.** `cy.intercept()` doesn't see requests made by
+- Your app sent the request. `cy.intercept()` doesn't see requests made by
   [`cy.request()`](/api/commands/request).
 
 ## `cy.intercept()` and request caching
@@ -1963,9 +1964,9 @@ confusion when trying to intercept a request that has already been cached by the
 browser. If a request is served from the browser cache, it will never hit the
 network layer, and `cy.intercept()` will never fire.
 
-To see if this is affecting your app, open the **Network** tab in your
-browser's developer tools and check the **Size** column. A request served from
-the cache shows `(memory cache)` or `(disk cache)` there. It never reaches the
+To see if this is affecting your app, open the **Network** tab in Chrome
+DevTools and check the **Size** column. A request served from the cache shows
+`(memory cache)` or `(disk cache)` there. It never reaches the
 network, so `cy.intercept()` can't intercept it. In this example, only `users`
 and the page itself went over the network:
 
