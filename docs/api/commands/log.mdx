@@ -87,6 +87,13 @@ cy.log('**Step 2:** Check out')
 cy.contains('button', 'Checkout').click()
 ```
 
+The bold step markers stand out from the commands that follow them:
+
+<DocsImage
+  src="/img/api/log/command-log-step-markers.png"
+  alt="Command Log showing log rows with bold Step 1 and Step 2 labels, each followed by its contains and click commands"
+/>
+
 #### Log a network response
 
 Log values from a request that [`cy.intercept()`](/api/commands/intercept)
@@ -141,6 +148,17 @@ Then call it with [`cy.task()`](/api/commands/task):
 cy.task('log', 'Checkout finished')
 ```
 
+The message prints in the terminal alongside the spec's test results:
+
+```text
+  Checkout
+Checkout finished
+    ✓ completes an order (72ms)
+
+
+  1 passing (112ms)
+```
+
 #### Log the browser and configuration for a run
 
 Logging the run's context at the start of a spec helps explain a test that
@@ -169,15 +187,17 @@ cy.get('li').each(($item, index) => {
 ### Formatting arguments in the Command Log
 
 `cy.log()` joins the message and every argument with a comma and a space.
-Strings, numbers, and booleans print as they are. Larger arrays and objects are
-summarized so the Command Log stays readable:
+Strings, numbers, and booleans print as they are. Arrays with more than 3 items
+and objects with more than 2 keys are summarized so the Command Log stays
+readable:
 
-- An array with more than 3 items prints as `Array[length]`, such as
-  `Array[5]`.
-- An object with more than 2 keys prints as `Object{keyCount}`, such as
-  `Object{3}`.
-- A function prints as `function(){}`.
-- An `undefined` argument is left out.
+| Argument               | Shown in the Command Log |
+| ---------------------- | ------------------------ |
+| `['a', 'b', 'c']`      | `[a, b, c]`              |
+| `[1, 2, 3, 4, 5]`      | `Array[5]`               |
+| `{ a: 1, b: 2, c: 3 }` | `Object{3}`              |
+| `() => {}`             | `function(){}`           |
+| `undefined`            | Left out                 |
 
 The full values are always available in the console. Click the `log` command in
 the Command Log to print its `message` and `args` to the Developer Tools
