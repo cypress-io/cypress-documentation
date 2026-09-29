@@ -76,6 +76,68 @@ Pass in an options object to change the default behavior of `.last()`.
 cy.get('li').last()
 ```
 
+#### Assert on the newest item after adding one with `.last()`
+
+A new item often renders at the end of a list after a request resolves. Chain an
+assertion off `.last()`, and Cypress re-runs the query until the new item is the
+last one and the assertion passes.
+
+```html title="index.html"
+<input class="new-todo" />
+<ul class="todo-list">
+  <li>Buy milk</li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+cy.get('.new-todo').type('Write docs{enter}')
+cy.get('.todo-list li').last().should('have.text', 'Write docs')
+```
+
+#### Act on the last row of a table with `.last()`
+
+`.last()` yields a DOM element, so you can keep chaining queries and actions off
+it.
+
+```html title="index.html"
+<table>
+  <tbody>
+    <tr>
+      <td>Ada</td>
+      <td><button>Delete</button></td>
+    </tr>
+    <tr>
+      <td>Grace</td>
+      <td><button>Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+```javascript title="spec.cy.js"
+cy.get('tbody tr').last().find('td').first().should('have.text', 'Grace')
+cy.get('tbody tr').last().find('button').click()
+cy.get('tbody tr').should('have.length', 1)
+```
+
+### Options
+
+#### Wait longer for the last element with the `timeout` option
+
+The `timeout` you pass to `.last()` sets how long Cypress retries the whole
+query chain, including the `cy.get()` before it. Here, the second notification
+appears after 6 seconds, which is past the default 4-second
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts).
+
+```html title="index.html"
+<div class="notification">Saved</div>
+<!-- a second .notification with the text "Synced" is added after 6 seconds -->
+```
+
+```javascript title="spec.cy.js"
+cy.get('.notification').last({ timeout: 10000 }).should('have.text', 'Synced')
+```
+
 ## Notes
 
 ### How `.last()` compares to `.eq(-1)`
@@ -95,6 +157,46 @@ element that matches a selector, narrow the set with
 
 ```javascript
 cy.get('li').filter('.active').last()
+```
+
+### How `.last()` compares to the `:last-child` selector
+
+`.last()` yields a single element, the last one in the whole set. The CSS
+`:last-child` selector matches the last child of _each_ parent, so it can match
+several elements when the set spans more than one parent.
+
+```html
+<ul class="fruits">
+  <li>Apple</li>
+  <li>Banana</li>
+</ul>
+<ul class="veggies">
+  <li>Carrot</li>
+  <li>Daikon</li>
+</ul>
+```
+
+```javascript
+cy.get('li').last() // yields <li>Daikon</li>
+cy.get('li:last-child') // yields <li>Banana</li> and <li>Daikon</li>
+```
+
+### Aliasing the result of `.last()`
+
+An alias stores the query chain, not the element it found. Each time you use the
+alias, Cypress re-runs the chain against the current DOM, so an aliased
+`.last()` always yields the element that is last _now_. Learn more in
+[aliasing DOM elements](/app/core-concepts/variables-and-aliases#Elements).
+
+Using the to-do list from
+[the newest item example](#Assert-on-the-newest-item-after-adding-one-with-last):
+
+```javascript
+cy.get('.todo-list li').last().as('newest')
+cy.get('@newest').should('have.text', 'Buy milk')
+
+cy.get('.new-todo').type('Write docs{enter}')
+cy.get('@newest').should('have.text', 'Write docs')
 ```
 
 ## Rules
