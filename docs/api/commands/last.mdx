@@ -151,7 +151,14 @@ from the end of the set.
 `.last()` takes no selector. `cy.get('li').last('.active')` yields the last
 `<li>` whether or not it has the class `active`. The Command Log still shows
 `.active` as the command's message, which can make it look as though the
-selector was applied. TypeScript flags the call as an error. To get the last
+selector was applied:
+
+<DocsImage
+  src="/img/api/last/command-log-last-with-ignored-selector.png"
+  alt="Command Log showing get li followed by last with .active as its message, though the selector was not applied"
+/>
+
+TypeScript flags the call as an error. To get the last
 element that matches a selector, narrow the set with
 [`.filter()`](/api/commands/filter) before calling `.last()`.
 
@@ -180,6 +187,22 @@ several elements when the set spans more than one parent.
 cy.get('li').last() // yields <li>Daikon</li>
 cy.get('li:last-child') // yields <li>Banana</li> and <li>Daikon</li>
 ```
+
+Click a row in the Command Log to pin its snapshot and highlight the elements it
+yielded. Pinning `last` highlights only Daikon:
+
+<DocsImage
+  src="/img/api/last/command-log-last-pinned-snapshot.png"
+  alt="Command Log with the last command pinned and only the Daikon list item highlighted in the app preview"
+/>
+
+Pinning `get li:last-child` highlights Banana and Daikon, the last item in each
+list:
+
+<DocsImage
+  src="/img/api/last/command-log-last-child-pinned-snapshot.png"
+  alt="Command Log with the get li:last-child command pinned and both the Banana and Daikon list items highlighted in the app preview"
+/>
 
 ### Aliasing the result of `.last()`
 
