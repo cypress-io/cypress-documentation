@@ -101,6 +101,14 @@ over time, this waits until all three are on the page.
 cy.get('#todo-list li').its('length').should('eq', 3)
 ```
 
+In the Command Log, `.its()` and its assertion stay pending while the list
+renders, then pass once the third item appears.
+
+<DocsImage
+  src="/img/api/its/its-length-retries-until-list-renders.gif"
+  alt="Command Log retrying its .length while the app renders a todo list one item at a time, then passing the assertion expected 3 to equal 3"
+/>
+
 #### Get a property of the DOM element inside the jQuery object
 
 Commands like [`cy.get()`](/api/commands/get) yield a jQuery object. Start the
