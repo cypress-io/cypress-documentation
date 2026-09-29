@@ -1644,24 +1644,45 @@ The lifecycle of a `cy.intercept()` interception begins when an HTTP request is
 sent from your app that matches one or more registered `cy.intercept()` routes.
 From there, each interception has two phases: request and response.
 
-`cy.intercept()` routes are matched in reverse order of definition, except for
-routes which are defined with `{ middleware: true }`, which always run first.
-This overrides existing `cy.intercept()` declarations when you define an
-overlapping `cy.intercept()`. In this example, five routes match the same
-request:
+`cy.intercept()` runs the routes that match a request in this order:
 
-<DocsImage
-  src="/img/api/intercept/middleware-algo.png"
-  alt="Five cy.intercept() calls for '/api/*', defined in order with handler1 through handler5, where routes 2 and 4 set middleware: true. Cypress runs them as handler2, handler4, then handler5, handler3, handler1: middleware routes first in the order defined, then all other routes newest first, until one calls req.reply() or req.continue()."
-  noBorder={true}
-/>
+1. Routes defined with `{ middleware: true }`, in the order you define them.
+2. All other routes, starting with the one you defined **last**.
+
+It stops at the first route that responds, whether with a static response,
+`req.reply()`, or `req.continue()`. Routes after it never see the request.
+
+In practice, this means a route you define later overrides an earlier one, and
+middleware always runs first:
+
+```js
+beforeEach(() => {
+  // runs first on every request, because it's middleware
+  cy.intercept('/api/*', { middleware: true }, (req) => {
+    req.headers['authorization'] = 'Bearer test-token'
+  })
+
+  // the default for most tests
+  cy.intercept('GET', '/api/users', { fixture: 'users.json' })
+})
+
+it('shows an empty state', () => {
+  // defined last, so it runs before the fixture route and responds,
+  // and the fixture route never sees the request
+  cy.intercept('GET', '/api/users', { body: [] })
+})
+```
+
+See
+[Overriding an intercept in a single test](#Overriding-an-intercept-in-a-single-test)
+for a complete example.
 
 ### Request phase
 
 The following steps are used to handle the request phase.
 
-1. Start with the first matching route according to the above algorithm
-   (middleware first, followed by handlers in reverse order).
+1. Start with the first matching route, in the order described above
+   (middleware first, then all other routes starting with the last defined).
 2. Was a handler (body, [`StaticResponse`][staticresponse], or function)
    supplied to `cy.intercept()`? If not, continue to step 7.
 3. If the handler was a body or [`StaticResponse`][staticresponse], immediately
