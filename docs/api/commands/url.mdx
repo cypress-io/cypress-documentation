@@ -52,6 +52,12 @@ Pass in an options object to change the default behavior of `cy.url()`.
 - `cy.url()` yields the current URL as a string.
 - `cy.url()` is a query, and it is _safe_ to chain further commands.
 
+The diagram shows that `cy.url()` yields the whole URL, the `href`, next to the
+parts that [`cy.hash()`](/api/commands/hash) and
+[`cy.location()`](/api/commands/location) yield:
+
+<UrlPartsDiagram />
+
 ## Examples
 
 ### No Args
