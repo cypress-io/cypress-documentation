@@ -23,6 +23,19 @@ All intercepts are automatically cleared before every test.
 
 :::
 
+Find the section for what you want to do:
+
+| I want to…                          | Use                                           | See                                                                                                       |
+| ----------------------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Wait for a request                  | `cy.intercept(url).as()` and `cy.wait()`      | [Waiting on a request](#Waiting-on-a-request)                                                             |
+| Return fixed data                   | a [`StaticResponse`][staticresponse]          | [Stubbing a response](#Stubbing-a-response)                                                               |
+| Decide the response at request time | `req.reply()`                                 | [Providing a stub response with `req.reply()`][req-reply]                                                 |
+| Change what's sent to the server    | a [`routeHandler`][arg-routehandler]          | [Modifying an outgoing request](#Modifying-an-outgoing-request)                                           |
+| Change the real response            | `req.continue()` with a callback              | [Modifying the real response](#Modifying-the-real-response)                                               |
+| Test errors or slow networks        | `statusCode`, `forceNetworkError`, or `delay` | [Stubbing a server error or a network failure](#Stubbing-a-server-error-or-a-network-failure)             |
+| Check that a request was not made   | the `.all` alias suffix                       | [Asserting that an intercepted request was not made](#Asserting-that-an-intercepted-request-was-not-made) |
+| Fix an intercept that doesn't match | the Routes panel and `Cypress.minimatch()`    | [Troubleshooting a route that doesn't match](#Troubleshooting-a-cyintercept-route-that-doesnt-match)      |
+
 ## Syntax
 
 ```js
@@ -1454,6 +1467,15 @@ The response can be intercepted in two ways:
 - by listening for the `before:response` or `response` request events (see
   ["Request events"](#Request-events))
 
+Each one runs at a different point in the response:
+
+| Hook                        | Runs                                                                      | Changes to `res` reach the browser |
+| --------------------------- | ------------------------------------------------------------------------- | ---------------------------------- |
+| `req.on('before:response')` | First, before any `req.continue()` callback                               | Yes                                |
+| `req.continue(callback)`    | After `before:response`                                                   | Yes                                |
+| `req.on('response')`        | After the `req.continue()` callback, before the browser gets the response | Yes                                |
+| `req.on('after:response')`  | After the browser has received the response                               | No                                 |
+
 The response object, `res`, will be passed as the first argument to the handler
 function:
 
@@ -1882,6 +1904,58 @@ Cypress.minimatch(
 // true (plus debug messages)
 ```
 
+## Troubleshooting a `cy.intercept()` route that doesn't match
+
+When an intercept never fires, the Command Log shows it. In the **Routes**
+panel, the route's **#** column shows `-` because it hasn't matched a request,
+and the request your app sent appears without an alias badge:
+
+<!-- Code to reproduce screenshot (expand the Routes panel before capturing):
+it('unmatched route', () => {
+    cy.visit('list.html') // a button that fetches /api/users?page=1
+    cy.intercept('GET', '/api/users').as('getUsers') // never matches
+    cy.get('[data-cy="load-users"]').click()
+})
+-->
+
+<DocsImage
+  src="/img/api/intercept/command-log-unmatched-route.png"
+  alt="The Command Log's Routes panel shows a GET /api/users route whose match count is a dash, and below it a fetch to /api/users?page=1 with no alias badge"
+/>
+
+Here the app requested `/api/users?page=1`, but the route's pattern has no
+wildcard for the query string:
+
+```js
+// the app requests /api/users?page=1
+cy.intercept('GET', '/api/users').as('getUsers') // never matches
+```
+
+Either pattern below matches it:
+
+```js
+// match any query string
+cy.intercept('GET', '/api/users*').as('getUsers')
+
+// or match the path and ignore the query string
+cy.intercept({ method: 'GET', pathname: '/api/users' }).as('getUsers')
+```
+
+When a route doesn't match, check these:
+
+- **The pattern covers the whole URL.** A glob must match the full URL or path,
+  including any query string. Test it with
+  [`Cypress.minimatch()`](#Cypressminimatch), or match on `pathname` instead.
+- **The method matches.** `cy.intercept('GET', …)` never matches a `POST`.
+- **The intercept is defined before the request.** A route only sees requests
+  sent after it's defined, so call `cy.intercept()` before the
+  `cy.visit()` or action that triggers the request.
+- **The request isn't served from the cache.** Cached responses never reach
+  the network. See
+  [`cy.intercept()` and request caching](#cyintercept-and-request-caching).
+- **Your app sent the request.** `cy.intercept()` doesn't see requests made by
+  [`cy.request()`](/api/commands/request).
+
 ## `cy.intercept()` and request caching
 
 `cy.intercept()` intercepts requests at the network layer. This can cause
@@ -1889,14 +1963,15 @@ confusion when trying to intercept a request that has already been cached by the
 browser. If a request is served from the browser cache, it will never hit the
 network layer, and `cy.intercept()` will never fire.
 
-To see if this is affecting your app, check the Developer Tools. In the
-following example, all of the requests circled in red have been served from
-cache, and will not send an HTTP request. Thus, they cannot be intercepted by
-`cy.intercept()`:
+To see if this is affecting your app, open the **Network** tab in your
+browser's developer tools and check the **Size** column. A request served from
+the cache shows `(memory cache)` or `(disk cache)` there. It never reaches the
+network, so `cy.intercept()` can't intercept it. In this example, only `users`
+and the page itself went over the network:
 
 <DocsImage
   src="/img/api/intercept/devtools-cached-responses.png"
-  alt="Screenshot of Chrome DevTools showing cached responses."
+  alt="Chrome DevTools Network tab listing six requests. The Size column shows styles.css, app.js, and logo.svg from the memory cache and settings from the disk cache, while the page and the users request show transferred sizes."
 />
 
 If you would like to intercept resources that normally send cache headers, here
@@ -1995,6 +2070,17 @@ route's alias, or "no alias" when the route has none:
 The circular indicator is filled if the request went to the destination server,
 and outlined if the request was stubbed with a response. It's green for a `2xx`
 or `3xx` status and red for any other status.
+
+Hover over a badge to see which `cy.intercept()` routes the request matched, and
+whether it reached the server:
+
+<!-- Code to reproduce screenshot: the Command Log snippet above, then hover
+over the companyGet badge before capturing. -->
+
+<DocsImage
+  src="/img/api/intercept/command-log-interception-tooltip.png"
+  alt="A tooltip over the companyGet badge reads: This request did not go to origin because the response was stubbed. This request matched: cy.intercept() stub with alias @companyGet"
+/>
 
 Clicking on a request that matched a `cy.intercept()` will print additional
 information about the request and response to the console:
