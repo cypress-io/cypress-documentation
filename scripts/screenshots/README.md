@@ -329,7 +329,8 @@ them only when `isInteractive` is true and tests are kept in memory.
 
    DevTools can't dock headlessly, so the script renders Electron's DevTools
    frontend in a separate headless Chromium and captures 820×200 CSS px at 2x
-   (1640×400). Its comments explain each step.
+   (1640×400). When the command logs more lines than fit, raise the height
+   with `--height` (CSS px). Its comments explain each step.
 
 Leave in the `runner-*.js` source links; the existing console screenshots show
 them too. The "Console was cleared" line is optional: keep it when the capture

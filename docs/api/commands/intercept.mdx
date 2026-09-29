@@ -1943,6 +1943,7 @@ stubbed, any alias, and number of matched requests:
 
 <!-- Code to reproduce screenshot:
 it('cy.intercept command log', () => {
+    cy.visit('intercept.html') // any page; the fetches go to its origin
     cy.intercept('/accounts*').as('accountsGet')
     cy.intercept('/company', { companyId: 1 }).as('companyGet')
     cy.intercept('/teams*', [{ teamId: 2 }]).as('teamsGet')
@@ -1956,27 +1957,28 @@ it('cy.intercept command log', () => {
 
 <DocsImage
   src="/img/api/intercept/command-log-routes-ui.png"
-  alt="Screenshot of Command Log Routes UI"
+  alt="The Routes panel in the Command Log listing three routes with their method, route matcher, whether each is stubbed, alias, and match count"
 />
 
-When HTTP requests are made, Cypress will log them in the Command Log and
-indicate whether they matched a `cy.intercept()` by the presence of a yellow
-badge on the right hand side:
+When HTTP requests are made, Cypress logs them in the Command Log. A request
+that matched a `cy.intercept()` shows a badge on the right-hand side with the
+route's alias, or "no alias" when the route has none:
 
 <DocsImage
   src="/img/api/intercept/command-log-fetches.png"
-  alt="Screenshot of example fetches"
+  alt="Three fetch requests in the Command Log, each with its route's alias badge: a 404 that went to the server, and two stubbed 200 responses"
 />
 
 The circular indicator is filled if the request went to the destination server,
-but unfilled if the request was stubbed with a response.
+and outlined if the request was stubbed with a response. It's green for a `2xx`
+or `3xx` status and red for any other status.
 
 Clicking on a request that matched a `cy.intercept()` will print additional
 information about the request and response to the console:
 
 <DocsImage
   src="/img/api/intercept/console-props.png"
-  alt="Screenshot of cy.intercept console output"
+  alt="DevTools console output for a stubbed request, showing its URL, that it did not go to the origin, the matched cy.intercept() route, and the request and response headers and body"
 />
 
 [Read more about request logging in Cypress.](/app/guides/network-requests#Command-Log)
