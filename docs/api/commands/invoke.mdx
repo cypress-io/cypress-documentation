@@ -209,6 +209,95 @@ The above example can be written as:
 cy.contains('The code example').should('have.attr', 'id', 'code-snippet')
 ```
 
+Any jQuery method that returns a value works the same way, such as `css`,
+`outerWidth`, or `prop`:
+
+```javascript
+cy.get('.sidebar').invoke('css', 'position').should('eq', 'sticky')
+cy.get('.sidebar').invoke('outerWidth').should('be.gt', 200)
+cy.get('#terms').invoke('prop', 'checked').should('eq', true)
+```
+
+### Application code on `window`
+
+Use [`cy.window()`](/api/commands/window) and [`.its()`](/api/commands/its) to
+reach functions your app exposes on `window`, such as a Redux store, then call
+them with `.invoke()`. Because `dispatch` changes app state, end the chain at
+`.invoke()` so it runs once, and read the result in a new chain.
+
+```javascript
+cy.window().its('store').invoke('dispatch', { type: 'cart/clear' })
+
+cy.window()
+  .its('store')
+  .invoke('getState')
+  .its('cart.items')
+  .should('have.length', 0)
+```
+
+Browser APIs work the same way. The function runs with its parent object as
+`this`, so `getItem` reads from `localStorage`:
+
+```javascript
+cy.window().its('localStorage').invoke('getItem', 'token').should('exist')
+```
+
+### Options
+
+Pass an options object as the first argument, before the function name. Set
+`log: false` to leave the `.invoke()` call out of the Command Log. Assertions
+you chain to it still log their own line, including the yielded value, so
+`log: false` does not hide a sensitive value on its own.
+
+```javascript
+cy.window()
+  .its('localStorage')
+  .invoke({ log: false }, 'getItem', 'theme')
+  .should('eq', 'dark')
+```
+
+Set `timeout` when the assertion needs longer than
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) to pass, such
+as a status that a slow widget sets after it loads:
+
+```javascript
+cy.get('#chart')
+  .invoke({ timeout: 10000 }, 'data', 'status')
+  .should('eq', 'ready')
+```
+
+### Functions that return a promise
+
+`.invoke()` does not wait for a returned promise to resolve. To call a function
+that returns a promise and work with its resolved value, call it inside
+[`.then()`](/api/commands/then), which waits for the promise:
+
+```javascript
+const userApi = {
+  fetchUser: () => Promise.resolve({ name: 'Jane' }),
+}
+
+cy.wrap(userApi)
+  .then((api) => api.fetchUser())
+  .its('name')
+  .should('eq', 'Jane')
+```
+
+### Save the yielded value for later
+
+An alias created with [`.as()`](/api/commands/as) re-runs `.invoke()` each time
+you use it, so it yields the current value. To keep the value from the moment
+you saved it, such as an input's value before the test changes it, create a
+static alias:
+
+```javascript
+cy.get('#username').invoke('val').as('username', { type: 'static' })
+
+cy.get('#username').clear().type('new-name')
+
+cy.get('@username').should('eq', 'jane')
+```
+
 ## Notes
 
 ### Third Party Plugins
