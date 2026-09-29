@@ -1647,11 +1647,13 @@ From there, each interception has two phases: request and response.
 `cy.intercept()` routes are matched in reverse order of definition, except for
 routes which are defined with `{ middleware: true }`, which always run first.
 This overrides existing `cy.intercept()` declarations when you define an
-overlapping `cy.intercept()`:
+overlapping `cy.intercept()`. In this example, five routes match the same
+request:
 
 <DocsImage
   src="/img/api/intercept/middleware-algo.png"
-  alt="Middleware Algorithm"
+  alt="Five cy.intercept() calls for '/api/*', defined in order with handler1 through handler5, where routes 2 and 4 set middleware: true. Cypress runs them as handler2, handler4, then handler5, handler3, handler1: middleware routes first in the order defined, then all other routes newest first, until one calls req.reply() or req.continue()."
+  noBorder={true}
 />
 
 ### Request phase
