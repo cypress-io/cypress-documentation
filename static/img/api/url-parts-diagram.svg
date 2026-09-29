@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="542" viewBox="0 0 760 542" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" role="img" aria-labelledby="t d">
 <title id="t">Parts of a URL that Cypress reads</title>
-<desc id="d">Two URLs split into the parts that Cypress reads. A standard URL, https://example.com:8080/app/users?tab=1#section: protocol is https:, hostname is example.com, port is 8080, host is example.com:8080, origin is https://example.com:8080, pathname is /app/users, search is ?tab=1, hash is #section, and href is the whole URL. A hash-based route, https://example.com/app/#/users/1?tab=profile: pathname is /app/ and hash is #/users/1?tab=profile. The question mark is inside the hash, so search is an empty string. cy.url() yields href, cy.hash() yields hash, and cy.location(key) yields the part named by key.</desc>
+<desc id="d">Two URLs split into the parts that Cypress reads. A standard URL, https://example.com:8080/app/users?tab=1#section: protocol is https:, hostname is example.com, port is 8080, host is example.com:8080, origin is https://example.com:8080, pathname is /app/users, search is ?tab=1, hash is #section, and href is the whole URL. A hash-based route, https://example.com/app/#/users/1?tab=profile: pathname is /app/ and hash is #/users/1?tab=profile. The question mark is inside the hash, so search is an empty string.</desc>
 <style>
   .card { fill: #f7f8fc; stroke: #e1e3ed; }
   .rule { stroke: #e1e3ed; stroke-width: 1; }
@@ -14,11 +14,9 @@
   .callout { fill: none; stroke: #555a6e; stroke-width: 1.25; }
   .key { font: 600 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
   .key-hash { font: 600 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #4956e3; }
-  .cmd { font: 600 14px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
-  .key-inline { font: 600 13px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
   .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
 </style>
-<rect class="card" x="0.5" y="0.5" width="759" height="541" rx="12"/>
+<rect class="card" x="0.5" y="0.5" width="759" height="429" rx="12"/>
 <text class="heading" x="32" y="42">A standard URL</text>
 <text class="u" x="92" y="160" textLength="72" lengthAdjust="spacingAndGlyphs">https:</text>
 <text class="u-dim" x="164" y="160" textLength="24" lengthAdjust="spacingAndGlyphs">//</text>
@@ -61,11 +59,4 @@
 <text class="key-hash" x="506.0" y="394" text-anchor="middle">hash</text>
 <path class="callout" d="M 494.0 339 V 322 H 478.0"/>
 <text class="note" x="472.0" y="326" text-anchor="end">This ? is part of the hash, so search is an empty string</text>
-<line class="rule" x1="32" x2="728" y1="428" y2="428"/>
-<text class="cmd" x="32" y="460">cy.url()</text>
-<text class="note" x="190" y="460">yields <tspan class="key-inline">href</tspan></text>
-<text class="cmd" x="32" y="486">cy.hash()</text>
-<text class="note" x="190" y="486">yields <tspan class="key-inline">hash</tspan>, the same value as <tspan class="key-inline">cy.location('hash')</tspan></text>
-<text class="cmd" x="32" y="512">cy.location(key)</text>
-<text class="note" x="190" y="512">yields the part named by <tspan class="key-inline">key</tspan>; with no key, an object holding every part</text>
 </svg>

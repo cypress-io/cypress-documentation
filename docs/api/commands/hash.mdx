@@ -68,9 +68,7 @@ Pass in an options object to change the default behavior of `cy.hash()`.
   after it, `cy.hash()` yields an empty string.
 - `cy.hash()` is a query, and it is _safe_ to chain further commands.
 
-The diagram shows which part of the URL `cy.hash()` yields, next to the parts
-that [`cy.url()`](/api/commands/url) and [`cy.location()`](/api/commands/location)
-yield:
+`cy.hash()` yields the part of the URL labeled `hash` in this diagram:
 
 <UrlPartsDiagram />
 
