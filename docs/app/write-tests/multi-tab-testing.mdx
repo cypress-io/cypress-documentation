@@ -1,0 +1,517 @@
+---
+title: 'Multi-tab testing in Cypress'
+description: 'Test links, popups, and windows that open a new browser tab in Cypress with the @cypress/puppeteer plugin, or keep the test in one tab when the new tab is not the point.'
+sidebar_label: Multi-tab testing
+sidebar_position: 65
+slug: /app/guides/multi-tab-testing
+e2eSpecific: true
+---
+
+<ProductHeading product="app" />
+
+# Multi-tab testing
+
+Plenty of real user flows leave the tab they started in. A receipt opens in a new
+tab, a sign-in or payment provider opens a popup, and a settings change in one tab
+has to show up in another. Cypress drives a single tab, so the
+[`@cypress/puppeteer`](https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer)
+plugin reaches the others for you. It runs [Puppeteer](https://pptr.dev/) code
+against the same browser Cypress launched, then hands the result back to your
+Cypress command chain, where your retries, assertions, and Command Log work the
+way they always do.
+
+This guide starts with when a test needs a second tab at all, then covers
+setting up the plugin and the multi-tab flows teams ask about most.
+
+:::caution
+
+`@cypress/puppeteer` is in public beta, so its API may change between versions.
+Share what works and what doesn't in the
+[@cypress/puppeteer feedback discussion](https://github.com/cypress-io/cypress/discussions/28410).
+
+:::
+
+## Choose how to test links that open a new tab
+
+Ask what the test is really checking. If it's that your app _opens_ the right
+page, you can check that without leaving the Cypress tab, and the test runs in
+every browser Cypress supports. Use `@cypress/puppeteer` when the test depends
+on what happens _inside_ the new tab.
+
+The examples in this section run against this page:
+
+```html title="order.html"
+<h1>Order #1234</h1>
+<a href="/receipt.html" target="_blank">View receipt</a>
+```
+
+### Assert the link instead of following it
+
+When the link is the behavior you care about, assert its attributes:
+
+```js title="order.cy.js"
+cy.contains('a', 'View receipt')
+  .should('have.attr', 'target', '_blank')
+  .and('have.attr', 'href', '/receipt.html')
+```
+
+### Open a new-tab link in the Cypress tab instead
+
+To check the destination page as well, remove the `target` attribute before
+clicking. The browser then opens the link in the Cypress tab:
+
+```js title="order.cy.js"
+cy.contains('a', 'View receipt').invoke('removeAttr', 'target').click()
+cy.contains('h1', 'Receipt for order #1234')
+```
+
+### Stub `window.open` to check which page your app opens
+
+When your app opens a tab from JavaScript, stub
+[`window.open`](https://developer.mozilla.org/en-US/docs/Web/API/Window/open)
+before the page loads and assert how your app called it:
+
+```js title="connect.cy.js"
+cy.visit('/connect.html', {
+  onBeforeLoad(win) {
+    cy.stub(win, 'open').as('open')
+  },
+})
+cy.contains('button', 'Connect calendar').click()
+cy.get('@open').should('have.been.calledWith', '/authorize.html')
+```
+
+[Stubs, spies, and clocks](/app/guides/stubs-spies-and-clocks) covers `cy.stub()`
+in more depth. To follow a link to another origin in the same tab, use
+[`cy.origin()`](/api/commands/origin).
+
+## How the @cypress/puppeteer plugin works
+
+The plugin has two halves:
+
+- **In your Cypress config**, you register named message handlers with
+  `setup()`. Each handler runs in Node.js and receives a Puppeteer
+  [`Browser`](https://pptr.dev/api/puppeteer.browser) connected to the browser
+  Cypress launched.
+- **In your spec**, `cy.puppeteer('handlerName', ...args)` runs that handler and
+  yields whatever it returns.
+
+Each time `cy.puppeteer()` runs, the plugin connects Puppeteer to the browser,
+calls your handler, and disconnects again. The browser stays open throughout. In
+headed Chromium-based browsers other than Electron, the plugin also brings the
+Cypress tab back to the front before it disconnects, so your test carries on
+where it left off.
+
+Keep these behaviors in mind as you write handlers:
+
+- Puppeteer calls both tabs and windows
+  [pages](https://pptr.dev/api/puppeteer.page). `browser.pages()` lists every
+  one of them, including the tab Cypress runs in.
+- Each call gets a fresh connection, so look up pages inside the handler every
+  time. Don't keep a `Page` or element around for the next call.
+- `cy.puppeteer()` runs on top of [`cy.task()`](/api/commands/task), so the same
+  rules apply. Arguments and return values must be serializable, a handler that
+  returns `undefined` yields `null`, and a handler that runs longer than
+  [`taskTimeout`](/app/references/configuration#Timeouts) (60 seconds by default)
+  fails the command.
+- If a handler throws, `cy.puppeteer()` fails the test with the handler's error
+  message.
+
+## Browser support for @cypress/puppeteer
+
+The plugin requires Cypress 13.6.0 or later and a Chromium-based browser.
+
+| Browser                                | `cypress run` (headless) | `cypress open` and `cypress run --headed` |
+| -------------------------------------- | ------------------------ | ----------------------------------------- |
+| Chrome for Testing, Chromium, and Edge | Supported                | Supported                                 |
+| Google Chrome                          | Supported                | Chrome 136 and earlier                    |
+| Electron                               | Supported, with limits   | Supported, with limits                    |
+| Firefox and WebKit                     | Not supported            | Not supported                             |
+
+- **Google Chrome 137 and later** removed the `--load-extension` flag, and the
+  plugin needs the Cypress extension to bring the Cypress tab back to the front
+  in a headed browser. Use Chrome for Testing or Chromium for headed runs. The
+  Cypress Docker images repository has examples for
+  [Chrome for Testing](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chrome-for-testing)
+  and
+  [Chromium](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chromium).
+- **Electron** reads and controls tabs that your app opens, but it can't open a
+  new tab with `browser.newPage()`, and a popup your app opens in Electron has
+  no `window.opener`. The examples below point out where this matters.
+
+## Set up @cypress/puppeteer in your project
+
+Install the plugin. It bundles its own copy of Puppeteer, so you don't need to
+install Puppeteer separately.
+
+<PackageManagerTabs install="@cypress/puppeteer" dev />
+
+Import its support file to add the `cy.puppeteer()` command:
+
+```js title="cypress/support/e2e.js"
+import '@cypress/puppeteer/support'
+```
+
+Then register your message handlers in your Cypress config with `setup()`. Each
+example below shows the handler it uses.
+
+:::caution
+
+Register all of your handlers in a **single** `setup()` call. A second call
+replaces the handlers from the first, so when you combine examples from this
+guide, merge their `onMessage` objects into one.
+
+:::
+
+If you write your tests in TypeScript, add the plugin's types to your
+`tsconfig.json` so your editor recognizes `cy.puppeteer()`:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["cypress", "@cypress/puppeteer/support"]
+  }
+}
+```
+
+## Read content from a tab that a link opens
+
+Here, a link on an order page opens the receipt in a new tab:
+
+```html title="order.html"
+<h1>Order #1234</h1>
+<a href="/receipt.html" target="_blank">View receipt</a>
+```
+
+```html title="receipt.html"
+<h1>Receipt for order #1234</h1>
+```
+
+The `readNewTab` handler finds the new tab by its URL, reads its heading, and
+closes the tab so it doesn't carry over into the next test. A tab takes a moment
+to open, so `retry()` keeps calling the lookup until it returns a page instead of
+throwing:
+
+:::cypress-config-plugin-example
+
+```ts
+import { setup, retry } from '@cypress/puppeteer'
+```
+
+```ts
+setup({
+  on,
+  onMessage: {
+    async readNewTab(browser, urlPart: string) {
+      // The tab can take a moment to open, so keep looking until it does
+      const page = await retry(async () => {
+        const pages = await browser.pages()
+        const tab = pages.find((p) => p.url().includes(urlPart))
+
+        if (!tab) throw new Error(`No tab with a URL containing "${urlPart}"`)
+
+        return tab
+      })
+
+      const heading = await page.waitForSelector('h1')
+      const text = await heading?.evaluate((el) => el.textContent)
+
+      await page.close()
+
+      return text
+    },
+  },
+})
+```
+
+:::
+
+The spec clicks the link, then asserts on the text the handler yields:
+
+```js title="order.cy.js"
+cy.visit('/order.html')
+cy.contains('a', 'View receipt').click()
+
+cy.puppeteer('readNewTab', 'receipt').should('equal', 'Receipt for order #1234')
+```
+
+`retry()` gives up after 4 seconds by default. For a page that takes longer to
+open, pass an options object as the second argument with a longer `timeout` in
+milliseconds, such as `{ timeout: 10000 }`.
+
+## Complete a popup flow and assert in the main tab
+
+Sign-in, payment, and account-linking flows often open a popup, wait for the user
+to approve something there, then update the original page. In this example, the
+popup reports back to your app with `window.opener.postMessage()`:
+
+```html title="connect.html"
+<button id="connect">Connect calendar</button>
+<p id="status">Not connected</p>
+<script>
+  document.querySelector('#connect').addEventListener('click', () => {
+    window.open('/authorize.html', 'authorize', 'width=500,height=600')
+  })
+
+  window.addEventListener('message', (event) => {
+    if (event.data === 'authorized') {
+      document.querySelector('#status').textContent = 'Connected'
+    }
+  })
+</script>
+```
+
+```html title="authorize.html"
+<button id="allow">Allow access</button>
+<script>
+  document.querySelector('#allow').addEventListener('click', () => {
+    window.opener.postMessage('authorized', window.location.origin)
+    window.close()
+  })
+</script>
+```
+
+The `allowAccessInPopup` handler waits for the popup, then clicks its
+`"Allow access"` button the way a user would:
+
+:::cypress-config-plugin-example
+
+```ts
+import { setup, retry } from '@cypress/puppeteer'
+```
+
+```ts
+setup({
+  on,
+  onMessage: {
+    async allowAccessInPopup(browser) {
+      const popup = await retry(async () => {
+        const pages = await browser.pages()
+        const tab = pages.find((p) => p.url().includes('/authorize'))
+
+        if (!tab) throw new Error('The authorization popup did not open')
+
+        return tab
+      })
+
+      await popup.bringToFront()
+      await popup.waitForSelector('#allow')
+      // The app closes the popup after this click
+      await popup.click('#allow')
+    },
+  },
+})
+```
+
+:::
+
+Back in the spec, Cypress retries the assertion on the main tab until the app
+updates:
+
+```js title="connect.cy.js"
+it('connects a calendar through the authorization popup', () => {
+  cy.visit('/connect.html')
+  cy.contains('button', 'Connect calendar').click()
+
+  cy.puppeteer('allowAccessInPopup')
+
+  cy.get('#status').should('have.text', 'Connected')
+})
+```
+
+:::info
+
+Run this flow in Chrome, Chromium, or Edge. In Electron, a popup's
+`window.opener` is `null`, so the popup can't send its message back to your app.
+
+:::
+
+## Open a second tab to test cross-tab updates
+
+Some apps keep several tabs in sync, for example through `localStorage` and the
+[`storage` event](https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event).
+To test that, open the same page in a second tab and change something there.
+This settings page updates its theme whenever another tab changes it:
+
+```html title="settings.html"
+<p>Theme: <span id="theme"></span></p>
+<button id="use-dark">Use dark theme</button>
+<script>
+  const showTheme = () => {
+    document.querySelector('#theme').textContent =
+      localStorage.getItem('theme') || 'light'
+  }
+
+  document.querySelector('#use-dark').addEventListener('click', () => {
+    localStorage.setItem('theme', 'dark')
+    showTheme()
+  })
+
+  // Fires when another tab changes localStorage
+  window.addEventListener('storage', showTheme)
+  showTheme()
+</script>
+```
+
+The `clickInNewTab` handler opens a URL in a new tab with `browser.newPage()`,
+clicks an element, and closes the tab. The new tab shares `localStorage` with
+the Cypress tab, the same as a tab a user opens on the same site:
+
+:::cypress-config-plugin-example
+
+```ts
+import { setup } from '@cypress/puppeteer'
+```
+
+```ts
+setup({
+  on,
+  onMessage: {
+    async clickInNewTab(browser, url: string, selector: string) {
+      const page = await browser.newPage()
+
+      await page.goto(url)
+      await page.click(selector)
+      await page.close()
+    },
+  },
+})
+```
+
+:::
+
+The spec passes the current URL and a selector to the handler, then asserts that
+the original tab picked up the change:
+
+```js title="settings.cy.js"
+it('updates the theme when another tab changes it', () => {
+  cy.visit('/settings.html')
+  cy.get('#theme').should('have.text', 'light')
+
+  cy.url().then((url) => {
+    cy.puppeteer('clickInNewTab', url, '#use-dark')
+  })
+
+  cy.get('#theme').should('have.text', 'dark')
+})
+```
+
+:::info
+
+`browser.newPage()` needs Chrome, Chromium, or Edge. In Electron it fails with
+`Protocol error (Target.createTarget): Not supported`.
+
+:::
+
+## Close leftover tabs between Cypress tests
+
+A tab that a test opens stays open until something closes it, and a leftover tab
+can confuse the next test's handlers. To start every test with only the Cypress
+tab, register a handler that closes all the others:
+
+:::cypress-config-plugin-example
+
+```ts
+import { setup } from '@cypress/puppeteer'
+```
+
+```ts
+setup({
+  on,
+  onMessage: {
+    async closeExtraTabs(browser) {
+      const pages = await browser.pages()
+      // The Cypress tab's URL contains /__/, so leave that one open
+      const extraTabs = pages.filter((page) => !page.url().includes('/__/'))
+
+      await Promise.all(extraTabs.map((page) => page.close()))
+    },
+  },
+})
+```
+
+:::
+
+Then call it after every test from your support file:
+
+```js title="cypress/support/e2e.js"
+import '@cypress/puppeteer/support'
+
+afterEach(() => {
+  cy.puppeteer('closeExtraTabs')
+})
+```
+
+## Run @cypress/puppeteer tests in CI
+
+Headless runs work in every supported browser, including any version of Google
+Chrome, so most CI setups need nothing extra. Choose a Chromium-based browser
+with `--browser`:
+
+<CypressCommandTabs command="run --browser chrome" />
+
+Tests that use `browser.newPage()` or rely on a popup's `window.opener` need
+Chrome, Chromium, or Edge. For those, avoid the default Electron browser. For
+headed runs in CI, use Chrome for Testing or Chromium, as described in
+[Browser support for @cypress/puppeteer](#Browser-support-for-cypresspuppeteer).
+
+## Troubleshoot @cypress/puppeteer errors
+
+### Could not find message handler with the name
+
+The name you passed to `cy.puppeteer()` doesn't match a key in `onMessage`. The
+error lists the handlers that are registered. If a handler you registered is
+missing from that list, check for a second `setup()` call, which replaces the
+handlers from the first.
+
+### Failed retrying after 4000ms
+
+`retry()` ran out of time before your lookup succeeded, and the error ends with
+the last message your function threw. Check that the tab opened and that its URL
+contains what you're matching on. If it's slow to open, pass a longer `timeout`
+to `retry()`.
+
+### cy.puppeteer() times out waiting for a handler
+
+The error says that `cy.task('__cypressPuppeteer__')` timed out, because
+`cy.puppeteer()` runs on `cy.task()`. A handler ran longer than
+[`taskTimeout`](/app/references/configuration#Timeouts). Look for a
+`waitForSelector()` or navigation that never finishes, or raise `taskTimeout`
+for tests with slow handlers.
+
+### Protocol error (Target.createTarget): Not supported
+
+`browser.newPage()` doesn't work in Electron. Run the spec in Chrome, Chromium,
+or Edge.
+
+### Only browsers in the Chromium family are supported
+
+The spec ran in Firefox or WebKit. Switch to a Chromium-based browser.
+
+### @cypress/puppeteer does not work in Google Chrome v137 and higher
+
+You ran headed Google Chrome 137 or later, which can't load the Cypress
+extension. Use Chrome for Testing, Chromium, or Electron for headed runs, or run
+Chrome headlessly with `cypress run`.
+
+### Cannot communicate with the Cypress Chrome extension
+
+The plugin couldn't bring the Cypress tab back to the front because the Cypress
+extension didn't respond. Check that the extension is enabled at
+`chrome://extensions/` in the browser Cypress launched, and that your
+organization's browser policy allows it
+([Allow the Cypress Chrome extension](/app/references/troubleshooting#Allow-the-Cypress-Chrome-extension)).
+
+### Lost the reference to the browser
+
+Your Cypress config reloaded without the browser relaunching. Close the browser
+and open it again from Cypress.
+
+## See also
+
+- [`cy.origin()`](/api/commands/origin)
+- [`cy.stub()`](/api/commands/stub)
+- [`cy.task()`](/api/commands/task)
+- [Cross origin testing](/app/guides/cross-origin-testing)
+- [Plugins guide](/app/plugins/plugins-guide)
+- [Trade-offs](/app/references/trade-offs)
