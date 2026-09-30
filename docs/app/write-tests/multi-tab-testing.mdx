@@ -96,6 +96,12 @@ The plugin has two halves:
 - **In your spec**, `cy.puppeteer('handlerName', ...args)` runs that handler and
   yields whatever it returns.
 
+<DocsImage
+  src="/img/app/multi-tab-testing/cy-puppeteer-how-it-works.svg"
+  alt="Diagram of one cy.puppeteer() call. The browser Cypress launched holds the Cypress tab running your spec and a new tab your app opened. Node.js runs your Cypress config, where the readNewTab handler lives. Step 1: cy.puppeteer() sends the call to Node.js through cy.task(). Step 2: the handler finds the new tab with Puppeteer, reads its heading, and closes it. Step 3: the handler's return value is yielded back to the spec, where .should() asserts on it."
+  noBorder
+/>
+
 Each time `cy.puppeteer()` runs, the plugin connects Puppeteer to the browser,
 calls your handler, and disconnects again. The browser stays open throughout. In
 headed Chromium-based browsers other than Electron, the plugin also brings the
@@ -106,7 +112,9 @@ Keep these behaviors in mind as you write handlers:
 
 - Puppeteer calls both tabs and windows
   [pages](https://pptr.dev/api/puppeteer.page). `browser.pages()` lists every
-  one of them, including the tab Cypress runs in.
+  one of them, including the tab Cypress runs in. That tab's URL contains `/__/`
+  and your spec's file name, so skip it when you look for a tab by URL, or a
+  handler can match the Cypress tab and close it.
 - Each call gets a fresh connection, so look up pages inside the handler every
   time. Don't keep a `Page` or element around for the next call.
 - `cy.puppeteer()` runs on top of [`cy.task()`](/api/commands/task), so the same
@@ -136,8 +144,9 @@ The plugin requires Cypress 13.6.0 or later and a Chromium-based browser.
   and
   [Chromium](https://github.com/cypress-io/cypress-docker-images/tree/master/examples/chromium).
 - **Electron** reads and controls tabs that your app opens, but it can't open a
-  new tab with `browser.newPage()`, and a popup your app opens in Electron has
-  no `window.opener`. The examples below point out where this matters.
+  new tab with `browser.newPage()`, create a separate browser context, or take a
+  screenshot of another tab. A popup your app opens in Electron also has no
+  `window.opener`. The examples below point out where this matters.
 
 ## Set up @cypress/puppeteer in your project
 
@@ -206,7 +215,10 @@ setup({
       // The tab can take a moment to open, so keep looking until it does
       const page = await retry(async () => {
         const pages = await browser.pages()
-        const tab = pages.find((p) => p.url().includes(urlPart))
+        // Skip the Cypress tab, whose URL includes your spec's file name
+        const tab = pages.find(
+          (p) => !p.url().includes('/__/') && p.url().includes(urlPart)
+        )
 
         if (!tab) throw new Error(`No tab with a URL containing "${urlPart}"`)
 
@@ -234,6 +246,14 @@ cy.contains('a', 'View receipt').click()
 
 cy.puppeteer('readNewTab', 'receipt').should('equal', 'Receipt for order #1234')
 ```
+
+The Command Log shows the handler as a `puppeteer` step, followed by the
+assertion on the text it yielded:
+
+<DocsImage
+  src="/img/app/multi-tab-testing/command-log-puppeteer-passing.png"
+  alt="Cypress Command Log for a passing test: visit /order.html, contains the View receipt link, click, puppeteer readNewTab, then an assertion that the yielded text equals Receipt for order #1234."
+/>
 
 `retry()` gives up after 4 seconds by default. For a page that takes longer to
 open, pass an options object as the second argument with a longer `timeout` in
@@ -271,6 +291,14 @@ popup reports back to your app with `window.opener.postMessage()`:
 </script>
 ```
 
+Here's how the test, the popup, and the handler hand off to each other:
+
+<DocsImage
+  src="/img/app/multi-tab-testing/popup-flow-sequence.svg"
+  alt="Sequence diagram with three lanes: the Cypress tab showing connect.html, the popup showing authorize.html, and the message handler in Node.js. Step 1: after the spec clicks Connect calendar, the app opens the popup with window.open. Step 2: the spec calls cy.puppeteer('allowAccessInPopup'), which runs through cy.task(). Step 3: the handler finds the popup with retry() and clicks Allow access. Step 4: the popup posts an authorized message to window.opener and closes. Step 5: the handler returns, and cy.puppeteer() yields null. Step 6: the assertion that #status reads Connected passes in the Cypress tab."
+  noBorder
+/>
+
 The `allowAccessInPopup` handler waits for the popup, then clicks its
 `"Allow access"` button the way a user would:
 
@@ -287,7 +315,10 @@ setup({
     async allowAccessInPopup(browser) {
       const popup = await retry(async () => {
         const pages = await browser.pages()
-        const tab = pages.find((p) => p.url().includes('/authorize'))
+        // Skip the Cypress tab, whose URL includes your spec's file name
+        const tab = pages.find(
+          (p) => !p.url().includes('/__/') && p.url().includes('/authorize')
+        )
 
         if (!tab) throw new Error('The authorization popup did not open')
 
@@ -403,6 +434,188 @@ it('updates the theme when another tab changes it', () => {
 
 :::
 
+### Sign out in one tab and check the other tabs
+
+The same handler covers another common check: signing out in one tab signs the
+user out everywhere. This account page shows who is signed in and updates when
+another tab signs out:
+
+```html title="account.html"
+<p id="session-status"></p>
+<button id="sign-out">Sign out</button>
+<script>
+  const showSession = () => {
+    const user = localStorage.getItem('user')
+    document.querySelector('#session-status').textContent = user
+      ? `Signed in as ${user}`
+      : 'Signed out'
+  }
+
+  document.querySelector('#sign-out').addEventListener('click', () => {
+    localStorage.removeItem('user')
+    showSession()
+  })
+
+  // Fires when another tab signs out
+  window.addEventListener('storage', showSession)
+  showSession()
+</script>
+```
+
+The spec signs in, uses `clickInNewTab` to click `"Sign out"` in a second tab,
+then asserts the Cypress tab signed out too:
+
+```js title="account.cy.js"
+it('signs out every tab when one tab signs out', () => {
+  cy.visit('/account.html', {
+    onBeforeLoad(win) {
+      win.localStorage.setItem('user', 'Ada')
+    },
+  })
+  cy.get('#session-status').should('have.text', 'Signed in as Ada')
+
+  cy.url().then((url) => {
+    cy.puppeteer('clickInNewTab', url, '#sign-out')
+  })
+
+  cy.get('#session-status').should('have.text', 'Signed out')
+})
+```
+
+## Test two users at once with a separate browser context
+
+Chat, comments, and shared documents need a second person to test properly. A
+tab from `browser.newPage()` won't do, because it shares the Cypress tab's
+cookies, so it signs in as the same user. A separate browser context has its own
+cookies and storage, so it acts like a second person on another computer, while
+still running in the browser Cypress launched.
+
+This chat page asks for a name, stores it in a cookie, and shows every message
+from the server:
+
+```html title="chat.html"
+<form id="sign-in">
+  <input id="name" aria-label="Name" />
+  <button>Sign in</button>
+</form>
+<form id="send" hidden>
+  <input id="message" aria-label="Message" />
+  <button>Send</button>
+</form>
+<ul id="messages"></ul>
+<script>
+  const signIn = document.querySelector('#sign-in')
+  const send = document.querySelector('#send')
+  const currentUser = () => document.cookie.match(/user=([^;]+)/)?.[1]
+
+  const showForms = () => {
+    signIn.hidden = Boolean(currentUser())
+    send.hidden = !currentUser()
+  }
+
+  const showMessages = async () => {
+    const messages = await (await fetch('/api/messages')).json()
+    document.querySelector('#messages').replaceChildren(
+      ...messages.map(({ user, text }) => {
+        const li = document.createElement('li')
+        li.textContent = `${user}: ${text}`
+        return li
+      })
+    )
+  }
+
+  signIn.addEventListener('submit', (event) => {
+    event.preventDefault()
+    document.cookie = `user=${document.querySelector('#name').value}; path=/`
+    showForms()
+  })
+
+  send.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    const input = document.querySelector('#message')
+    await fetch('/api/messages', {
+      method: 'POST',
+      body: JSON.stringify({ user: currentUser(), text: input.value }),
+    })
+    input.value = ''
+    showMessages()
+  })
+
+  showForms()
+  showMessages()
+  setInterval(showMessages, 500)
+</script>
+```
+
+The `sendChatAsSecondUser` handler opens the chat in a new browser context,
+signs in under another name, sends a message, and waits until the message
+appears before closing the context:
+
+:::cypress-config-plugin-example
+
+```ts
+import { setup } from '@cypress/puppeteer'
+```
+
+```ts
+setup({
+  on,
+  onMessage: {
+    async sendChatAsSecondUser(
+      browser,
+      url: string,
+      name: string,
+      text: string
+    ) {
+      // A separate browser context has its own cookies and storage, like a
+      // second person on another computer
+      const context = await browser.createIncognitoBrowserContext()
+      const page = await context.newPage()
+
+      await page.goto(url)
+      await page.type('#name', name)
+      await page.click('#sign-in button')
+      await page.type('#message', text)
+      await page.click('#send button')
+      await page.waitForSelector(`#messages li::-p-text(${name}: ${text})`)
+
+      await context.close()
+    },
+  },
+})
+```
+
+:::
+
+In the spec, the Cypress tab signs in as Ada, and the handler sends a message as
+Grace:
+
+```js title="chat.cy.js"
+it('shows a message from another user', () => {
+  cy.setCookie('user', 'Ada')
+  cy.visit('/chat.html')
+
+  cy.url().then((url) => {
+    cy.puppeteer('sendChatAsSecondUser', url, 'Grace', 'Hi Ada!')
+  })
+
+  cy.contains('#messages li', 'Grace: Hi Ada!')
+})
+```
+
+Ada stays signed in throughout, because Grace's cookie lives only in the
+separate context.
+
+:::info
+
+Separate browser contexts need Chrome, Chromium, or Edge. In Electron,
+`createIncognitoBrowserContext()` fails with
+`Protocol error (Target.createBrowserContext): Failed to create browser context`.
+If you pass Puppeteer 22 or later to `setup()` with the `puppeteer` option, call
+`browser.createBrowserContext()` instead, which is that method's newer name.
+
+:::
+
 ## Close leftover tabs between Cypress tests
 
 A tab that a test opens stays open until something closes it, and a leftover tab
@@ -442,6 +655,87 @@ afterEach(() => {
 })
 ```
 
+## Screenshot other tabs when a Cypress test fails
+
+Cypress screenshots and videos record the Cypress tab only. When a multi-tab
+test fails in CI, a screenshot of the other tabs shows what the user would have
+seen there. The `screenshotOtherTabs` handler saves one image per tab to your
+[`screenshotsFolder`](/app/references/configuration#Screenshots) and yields the
+file paths. Register it in the same `setup()` call as `closeExtraTabs`:
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+import { setup } from '@cypress/puppeteer'
+```
+
+```ts
+const screenshotsFolder = config.screenshotsFolder || 'cypress/screenshots'
+
+setup({
+  on,
+  onMessage: {
+    async screenshotOtherTabs(browser, testName: string) {
+      const pages = await browser.pages()
+      const otherTabs = pages.filter((page) => !page.url().includes('/__/'))
+      const safeName = testName.replace(/[^\w -]/g, '')
+      const files: string[] = []
+
+      await fs.promises.mkdir(screenshotsFolder, { recursive: true })
+
+      for (const [index, page] of otherTabs.entries()) {
+        const file = path.join(
+          screenshotsFolder,
+          `${safeName} (tab ${index + 1}).png`
+        )
+
+        await page.screenshot({ path: file })
+        files.push(file)
+      }
+
+      return files
+    },
+    async closeExtraTabs(browser) {
+      const pages = await browser.pages()
+      // The Cypress tab's URL contains /__/, so leave that one open
+      const extraTabs = pages.filter((page) => !page.url().includes('/__/'))
+
+      await Promise.all(extraTabs.map((page) => page.close()))
+    },
+  },
+})
+```
+
+:::
+
+Then take the screenshots from your support file when a test fails, before the
+tabs close:
+
+```js title="cypress/support/e2e.js"
+import '@cypress/puppeteer/support'
+
+afterEach(function () {
+  // Capture the other tabs before closing them, so a failed run in CI
+  // shows what they looked like. Electron can't screenshot them.
+  if (
+    this.currentTest?.state === 'failed' &&
+    Cypress.browser.name !== 'electron'
+  ) {
+    cy.puppeteer('screenshotOtherTabs', this.currentTest.fullTitle())
+  }
+
+  cy.puppeteer('closeExtraTabs')
+})
+```
+
+The hook uses `function ()` rather than an arrow function so it can read
+`this.currentTest`. Upload your screenshots folder as a CI artifact, and a
+failed run keeps an image of every tab. Electron is skipped because
+`page.screenshot()` never finishes there for a tab your app opened, which would
+leave the hook waiting until `taskTimeout`.
+
 ## Run @cypress/puppeteer tests in CI
 
 Headless runs work in every supported browser, including any version of Google
@@ -450,8 +744,9 @@ with `--browser`:
 
 <CypressCommandTabs command="run --browser chrome" />
 
-Tests that use `browser.newPage()` or rely on a popup's `window.opener` need
-Chrome, Chromium, or Edge. For those, avoid the default Electron browser. For
+Tests that open tabs or browser contexts themselves, take screenshots of other
+tabs, or rely on a popup's `window.opener` need Chrome, Chromium, or Edge. For
+those, avoid the default Electron browser. For
 headed runs in CI, use Chrome for Testing or Chromium, as described in
 [Browser support for @cypress/puppeteer](#Browser-support-for-cypresspuppeteer).
 
@@ -467,7 +762,26 @@ handlers from the first.
 ### Failed retrying after 4000ms
 
 `retry()` ran out of time before your lookup succeeded, and the error ends with
-the last message your function threw. Check that the tab opened and that its URL
+the last message your function threw. In this spec, the link opens
+`receipt.html`, so `readNewTab` never finds a tab whose URL contains
+`"invoice"`:
+
+```js title="order.cy.js"
+cy.visit('/order.html')
+cy.contains('a', 'View receipt').click()
+
+cy.puppeteer('readNewTab', 'invoice')
+```
+
+The Command Log marks the `puppeteer` step as failed and shows the handler's
+error:
+
+<DocsImage
+  src="/img/app/multi-tab-testing/command-log-puppeteer-failed-retry.png"
+  alt="Cypress Command Log for a failed test: after the puppeteer readNewTab step, an error reads cy.puppeteer() failed with the following error: Failed retrying after 4000ms: No tab with a URL containing invoice."
+/>
+
+Check that the tab opened and that its URL
 contains what you're matching on. If it's slow to open, pass a longer `timeout`
 to `retry()`.
 
@@ -476,13 +790,17 @@ to `retry()`.
 The error says that `cy.task('__cypressPuppeteer__')` timed out, because
 `cy.puppeteer()` runs on `cy.task()`. A handler ran longer than
 [`taskTimeout`](/app/references/configuration#Timeouts). Look for a
-`waitForSelector()` or navigation that never finishes, or raise `taskTimeout`
-for tests with slow handlers.
+`waitForSelector()` or navigation that never finishes, or a `page.screenshot()`
+in Electron, which never finishes for a tab your app opened. Otherwise, raise
+`taskTimeout` for tests with slow handlers.
 
-### Protocol error (Target.createTarget): Not supported
+### Protocol errors from Target.createTarget or createBrowserContext
 
-`browser.newPage()` doesn't work in Electron. Run the spec in Chrome, Chromium,
-or Edge.
+`Protocol error (Target.createTarget): Not supported` and
+`Protocol error (Target.createBrowserContext): Failed to create browser context`
+mean the handler called `browser.newPage()` or
+`createIncognitoBrowserContext()` in Electron, which supports neither. Run the
+spec in Chrome, Chromium, or Edge.
 
 ### Only browsers in the Chromium family are supported
 

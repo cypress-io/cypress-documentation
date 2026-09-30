@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="500" viewBox="0 0 860 500" role="img" aria-labelledby="t d">
+<title id="t">Popup flow tested with cy.puppeteer()</title>
+<desc id="d">A sequence across three lanes: the Cypress tab showing connect.html, the popup showing authorize.html, and the message handler in Node.js. Step 1: the spec clicks Connect calendar, and the app calls window.open to open the popup. Step 2: the spec calls cy.puppeteer with allowAccessInPopup. Step 3: the handler finds the popup and clicks Allow access. Step 4: the popup posts an authorized message to window.opener and closes itself. Step 5: the handler returns, and cy.puppeteer yields null. Step 6: back in the Cypress tab, the assertion that the status reads Connected passes.</desc>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .region { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.25; }
+  .hl { fill: #e9ebfc; stroke: #4956e3; stroke-width: 1.5; }
+  .box { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.25; }
+  .title { font: 600 14px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
+  .label { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
+  .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+  .code { font: 500 12.5px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .arrow { fill: none; stroke: #4956e3; stroke-width: 1.75; }
+  .life { fill: none; stroke: #6f74a0; stroke-width: 1.25; stroke-dasharray: 5 4; }
+  .badge { fill: #4956e3; }
+  .num { font: 700 12px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #ffffff; }
+</style>
+<defs>
+  <marker id="head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#4956e3"/>
+  </marker>
+</defs>
+<rect class="card" x="0.5" y="0.5" width="859" height="499" rx="12"/>
+<rect class="hl" x="45.5" y="20.5" width="190" height="52" rx="8"/>
+<text class="label" x="140" y="42" text-anchor="middle">Cypress tab</text>
+<text class="code" x="140" y="62" text-anchor="middle">connect.html</text>
+<path class="life" d="M 140 74 V 470"/>
+<rect class="box" x="345.5" y="20.5" width="190" height="52" rx="8"/>
+<text class="label" x="440" y="42" text-anchor="middle">Popup</text>
+<text class="code" x="440" y="62" text-anchor="middle">authorize.html</text>
+<path class="life" d="M 440 74 V 470"/>
+<rect class="hl" x="645.5" y="20.5" width="190" height="52" rx="8"/>
+<text class="label" x="740" y="42" text-anchor="middle">Message handler</text>
+<text class="code" x="740" y="62" text-anchor="middle">Node.js</text>
+<path class="life" d="M 740 74 V 470"/>
+<path class="arrow" d="M 144 112 L 434 112" marker-end="url(#head)"/>
+<circle class="badge" cx="164" cy="95" r="10"/><text class="num" x="164" y="99" text-anchor="middle">1</text>
+<text class="label" x="182" y="100" text-anchor="start">window.open(&#x27;/authorize.html&#x27;)</text>
+<text class="note" x="182" y="132" text-anchor="start">after the spec clicks “Connect calendar”</text>
+<path class="arrow" d="M 144 176 L 734 176" marker-end="url(#head)"/>
+<circle class="badge" cx="164" cy="159" r="10"/><text class="num" x="164" y="163" text-anchor="middle">2</text>
+<text class="label" x="182" y="164" text-anchor="start">cy.puppeteer(&#x27;allowAccessInPopup&#x27;)</text>
+<text class="note" x="182" y="196" text-anchor="start">runs through cy.task()</text>
+<path class="arrow" d="M 736 240 L 446 240" marker-end="url(#head)"/>
+<circle class="badge" cx="464" cy="223" r="10"/><text class="num" x="464" y="227" text-anchor="middle">3</text>
+<text class="label" x="482" y="228" text-anchor="start">clicks “Allow access”</text>
+<text class="note" x="482" y="260" text-anchor="start">after finding the popup with retry()</text>
+<path class="arrow" d="M 436 304 L 146 304" marker-end="url(#head)"/>
+<circle class="badge" cx="164" cy="287" r="10"/><text class="num" x="164" y="291" text-anchor="middle">4</text>
+<text class="label" x="182" y="292" text-anchor="start">postMessage(&#x27;authorized&#x27;)</text>
+<text class="note" x="182" y="324" text-anchor="start">to window.opener, then the popup closes</text>
+<path class="arrow" d="M 736 368 L 146 368" marker-end="url(#head)"/>
+<circle class="badge" cx="164" cy="351" r="10"/><text class="num" x="164" y="355" text-anchor="middle">5</text>
+<text class="label" x="182" y="356" text-anchor="start">handler returns</text>
+<text class="note" x="182" y="388" text-anchor="start">cy.puppeteer() yields null</text>
+<rect class="hl" x="45.5" y="400.5" width="230" height="58" rx="8"/>
+<circle class="badge" cx="68" cy="420" r="10"/><text class="num" x="68" y="424" text-anchor="middle">6</text>
+<text class="label" x="86" y="424" text-anchor="start">Assertion passes</text>
+<text class="code" x="62" y="448" text-anchor="start">#status: &#x27;Connected&#x27;</text>
+</svg>
