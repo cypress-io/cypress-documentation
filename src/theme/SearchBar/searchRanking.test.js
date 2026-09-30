@@ -1,11 +1,15 @@
 import { describe, expect, test } from 'vitest'
 import {
   assignDisplayPositions,
+  DEMOTED_MIGRATION_GROUP,
   boostCurrentSection,
+  demoteUnrequestedMigrationGuides,
   filterDisplayableHits,
   getCurrentSectionLvl0,
+  getMigrationGuideTool,
   isDisplayableHit,
   mergeFacetFilters,
+  tokenizeQuery,
 } from './searchRanking.js'
 
 describe('getCurrentSectionLvl0', () => {
@@ -234,5 +238,159 @@ describe('mergeFacetFilters', () => {
   test('handles empty arrays', () => {
     expect(mergeFacetFilters([], ['b'])).toEqual(['b'])
     expect(mergeFacetFilters([], [])).toEqual([])
+  })
+})
+
+describe('getMigrationGuideTool', () => {
+  const base = 'https://docs.cypress.io/app/guides/migration'
+
+  test.each([
+    [`${base}/playwright-to-cypress`, 'playwright'],
+    [`${base}/selenium-to-cypress#Locating-elements`, 'selenium'],
+    [`${base}/protractor-to-cypress/`, 'protractor'],
+    [
+      '/app/get-started/migrate-from-another-tool/playwright-to-cypress',
+      'playwright',
+    ],
+  ])('identifies %s as the %s guide', (url, expected) => {
+    expect(getMigrationGuideTool({ url })).toBe(expected)
+  })
+
+  test('returns null for other pages', () => {
+    expect(
+      getMigrationGuideTool({
+        url: 'https://docs.cypress.io/api/commands/intercept',
+      })
+    ).toBeNull()
+    expect(
+      getMigrationGuideTool({ url: `${base}/playwright-to-cypress-extra` })
+    ).toBeNull()
+    // The Cypress version upgrade guide is not a tool migration guide
+    expect(
+      getMigrationGuideTool({
+        url: 'https://docs.cypress.io/app/references/migration-guide#Test-Isolation',
+      })
+    ).toBeNull()
+    expect(getMigrationGuideTool({})).toBeNull()
+    expect(getMigrationGuideTool(undefined)).toBeNull()
+  })
+})
+
+describe('tokenizeQuery', () => {
+  test('lowercases and splits on non-alphanumerics', () => {
+    expect(tokenizeQuery("Playwright's  locator")).toEqual([
+      'playwright',
+      's',
+      'locator',
+    ])
+  })
+
+  test('returns an empty list for a missing query', () => {
+    expect(tokenizeQuery(undefined)).toEqual([])
+    expect(tokenizeQuery('')).toEqual([])
+  })
+})
+
+describe('demoteUnrequestedMigrationGuides', () => {
+  const base = '/app/guides/migration'
+  const items = [
+    { id: 1, url: `${base}/playwright-to-cypress#Waiting` },
+    { id: 2, url: '/api/commands/wait' },
+    { id: 3, url: `${base}/selenium-to-cypress` },
+    { id: 4, url: '/app/core-concepts/retry-ability' },
+    { id: 5, url: `${base}/protractor-to-cypress` },
+  ]
+  const ids = (list) => list.map((h) => h.id)
+
+  test('moves every migration guide to the end for an unrelated query', () => {
+    expect(ids(demoteUnrequestedMigrationGuides(items, 'wait'))).toEqual([
+      2, 4, 1, 3, 5,
+    ])
+  })
+
+  test("keeps only the named tool's guide in place", () => {
+    expect(
+      ids(demoteUnrequestedMigrationGuides(items, 'playwright wait'))
+    ).toEqual([1, 2, 4, 3, 5])
+    expect(ids(demoteUnrequestedMigrationGuides(items, 'Selenium'))).toEqual([
+      2, 3, 4, 1, 5,
+    ])
+    expect(ids(demoteUnrequestedMigrationGuides(items, 'protractor'))).toEqual([
+      2, 4, 5, 1, 3,
+    ])
+  })
+
+  test('requires the whole tool name, not a prefix or synonym', () => {
+    expect(ids(demoteUnrequestedMigrationGuides(items, 'playwr'))).toEqual([
+      2, 4, 1, 3, 5,
+    ])
+    expect(ids(demoteUnrequestedMigrationGuides(items, 'webdriver'))).toEqual([
+      2, 4, 1, 3, 5,
+    ])
+    expect(ids(demoteUnrequestedMigrationGuides(items, 'migrate'))).toEqual([
+      2, 4, 1, 3, 5,
+    ])
+  })
+
+  test('demotes guides when the query is missing', () => {
+    expect(ids(demoteUnrequestedMigrationGuides(items, undefined))).toEqual([
+      2, 4, 1, 3, 5,
+    ])
+  })
+
+  test('never drops or duplicates results', () => {
+    const ranked = demoteUnrequestedMigrationGuides(items, 'wait')
+    expect(ids(ranked).sort()).toEqual(ids(items))
+  })
+
+  test('moves demoted guides into their own trailing result group', () => {
+    const grouped = [
+      {
+        id: 1,
+        url: `${base}/protractor-to-cypress#Using-Page-Objects`,
+        hierarchy: { lvl0: 'App', lvl1: 'Protractor' },
+        _highlightResult: {
+          hierarchy: { lvl0: { value: 'App', matchLevel: 'none' } },
+        },
+      },
+      {
+        id: 2,
+        url: '/app/faq#Can-I-use-the-Page-Object-pattern',
+        hierarchy: { lvl0: 'App', lvl1: 'FAQ' },
+        _highlightResult: {
+          hierarchy: { lvl0: { value: 'App', matchLevel: 'none' } },
+        },
+      },
+    ]
+    const [kept, demoted] = demoteUnrequestedMigrationGuides(
+      grouped,
+      'page object'
+    )
+
+    expect(kept).toBe(grouped[1])
+    expect(demoted.hierarchy).toEqual({
+      lvl0: DEMOTED_MIGRATION_GROUP,
+      lvl1: 'Protractor',
+    })
+    // DocSearch groups on the highlighted lvl0, so that copy moves too
+    expect(demoted._highlightResult.hierarchy.lvl0).toEqual({
+      value: DEMOTED_MIGRATION_GROUP,
+      matchLevel: 'none',
+    })
+    // The input hit is not mutated
+    expect(grouped[0].hierarchy.lvl0).toBe('App')
+  })
+
+  test('leaves a requested guide in its original group', () => {
+    const hit = {
+      id: 1,
+      url: `${base}/playwright-to-cypress`,
+      hierarchy: { lvl0: 'App' },
+    }
+    expect(demoteUnrequestedMigrationGuides([hit], 'playwright')[0]).toBe(hit)
+  })
+
+  test('handles an empty list', () => {
+    expect(demoteUnrequestedMigrationGuides([], 'wait')).toEqual([])
   })
 })
