@@ -1,6 +1,6 @@
 ---
 title: 'cy.location()'
-description: 'Get the global window.location object of the page that is currently active in Cypress.'
+description: 'Get the URL of the page that is currently active in Cypress as a location object, or one part of it, such as the pathname.'
 sidebar_label: location
 slug: /api/commands/location
 e2eSpecific: true
@@ -10,7 +10,7 @@ e2eSpecific: true
 
 # location
 
-Get the global `window.location` object of the page that is currently active.
+Get the URL of the page that is currently active as a location object, or one part of that URL.
 
 ## Syntax
 
@@ -35,8 +35,8 @@ cy.location('port') // Get the port of the location object
 
 <Icon name="angle-right" /> **key _(String)_**
 
-A key on the location object. Returns this value instead of the full location
-object.
+A key on the location object. `cy.location()` yields this value instead of the
+full location object.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -69,6 +69,15 @@ Pass in an options object to change the default behavior of `cy.location()`.
 Every property is a string except `searchParams`, which is a
 [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 object.
+
+:::caution
+
+As of Cypress 16.1.0, the TypeScript types for `cy.location()` don't include
+`searchParams`, so TypeScript reports an error on `cy.location('searchParams')`
+and `loc.searchParams` even though both work when the test runs. In a TypeScript
+spec, read `search` and pass it to `new URLSearchParams()` instead.
+
+:::
 
 #### When given a `key` argument:
 
@@ -233,13 +242,6 @@ Changing a property on the real `window.location` object navigates the browser
 away. Changing a property on the object `cy.location()` yields has no effect on
 navigation.
 
-#### Reading the location after a cross-origin navigation
-
-Cypress reads the URL through the browser's automation protocol instead of the
-application's `window`, so `cy.location()` works after your application
-navigates to another origin, without wrapping it in
-[`cy.origin()`](/api/commands/origin).
-
 #### Console output of `window.location`
 
 ```javascript
@@ -265,6 +267,14 @@ cy.location().then((loc) => {
   src="/img/api/location/special-cypress-location-object-logged-in-console-output.png"
   alt="DevTools console showing the plain object cy.location() yields, with hash, host, hostname, href, origin, pathname, port, protocol, search, and searchParams"
 />
+
+### Cross-origin pages and `cy.location()`
+
+Cypress reads the URL through the browser's automation protocol instead of the
+application's `window`, so `cy.location()` works after your application
+navigates to another origin, without wrapping it in
+[`cy.origin()`](/api/commands/origin). See
+[Assert that sign-in redirects to an identity provider](#Assert-that-sign-in-redirects-to-an-identity-provider).
 
 ### Choosing between `cy.location()`, `cy.url()`, and `cy.hash()`
 
@@ -324,7 +334,7 @@ The commands above display in the Command Log as:
   alt="Command Log showing a location command followed by an assertion that the href includes commands/querying"
 />
 
-When clicking on `location` within the command log, the console outputs the
+When clicking on `location` within the Command Log, the console outputs the
 following:
 
 <DocsImage
@@ -334,10 +344,10 @@ following:
 
 ## History
 
-| Version                                    | Changes                                                                                                                                                                       |
-| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [16.0.0](/app/references/changelog#16-0-0) | Experimental WebKit yields the same location object as other browsers                                                                                                         |
-| [15.0.0](/app/references/changelog#15-0-0) | In Chromium-based browsers and Firefox, reads the URL through the browser's automation protocol. The yielded object includes `searchParams` and no longer includes `toString` |
+| Version                                      | Changes                                                                                                                                                                       |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [15.18.1](/app/references/changelog#15-18-1) | Experimental WebKit yields the same location object as other browsers                                                                                                         |
+| [15.0.0](/app/references/changelog#15-0-0)   | In Chromium-based browsers and Firefox, reads the URL through the browser's automation protocol. The yielded object includes `searchParams` and no longer includes `toString` |
 
 ## See also
 
