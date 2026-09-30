@@ -31,12 +31,27 @@ cy.location('host') // Get the host of the location object
 cy.location('port') // Get the port of the location object
 ```
 
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.get('a').location() // Ignores the link, yields the page's location
+cy.location('assign') // Errors, the location object has no assign key
+```
+
+`cy.location()` reads the page's URL, not an element's `href`. To check where a
+link points, assert on the link's own properties instead:
+
+```javascript
+cy.get('a').should('have.prop', 'pathname', '/users')
+```
+
 ### Arguments
 
 <Icon name="angle-right" /> **key _(String)_**
 
-A key on the location object. `cy.location()` yields this value instead of the
-full location object.
+One of the properties listed under [Yields](#Yields), such as `'pathname'`.
+`cy.location()` yields that property's value instead of the full location
+object, and fails when the location object has no property named `key`.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -44,31 +59,30 @@ Pass in an options object to change the default behavior of `cy.location()`.
 
 | Option    | Default                                                           | Description                                                                         |
 | --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| `log`     | `true`                                                            | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.location()` to resolve before [timing out](#Timeouts)          |
 
 <HeaderYields />
 
 `cy.location()` is a query, and it is _safe_ to chain further commands.
 
-#### When not given a `key` argument:
+#### When not given a `key` argument
 
-`cy.location()` yields the location object with the following properties:
+`cy.location()` yields a plain object with these properties. The example values
+are for the URL `https://example.com:8080/app/users?tab=1#section`.
 
-- `hash`
-- `host`
-- `hostname`
-- `href`
-- `origin`
-- `pathname`
-- `port`
-- `protocol`
-- `search`
-- `searchParams`
-
-Every property is a string except `searchParams`, which is a
-[`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
-object.
+| Property       | Type                                                                                  | Example value                                        |
+| -------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `hash`         | string                                                                                | `'#section'`                                         |
+| `host`         | string                                                                                | `'example.com:8080'`                                 |
+| `hostname`     | string                                                                                | `'example.com'`                                      |
+| `href`         | string                                                                                | `'https://example.com:8080/app/users?tab=1#section'` |
+| `origin`       | string                                                                                | `'https://example.com:8080'`                         |
+| `pathname`     | string                                                                                | `'/app/users'`                                       |
+| `port`         | string                                                                                | `'8080'`                                             |
+| `protocol`     | string                                                                                | `'https:'`                                           |
+| `search`       | string                                                                                | `'?tab=1'`                                           |
+| `searchParams` | [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) | `searchParams.get('tab')` returns `'1'`              |
 
 :::caution
 
@@ -79,7 +93,7 @@ spec, read `search` and pass it to `new URLSearchParams()` instead.
 
 :::
 
-#### When given a `key` argument:
+#### When given a `key` argument
 
 - `cy.location()` yields the value of that property: a string, or a
   `URLSearchParams` object for `searchParams`
@@ -91,44 +105,7 @@ These diagrams show where each key sits in a URL:
 
 ## Examples
 
-### No Args
-
-#### Make assertions about every location property
-
-```javascript
-cy.visit('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
-
-cy.location().should((loc) => {
-  expect(loc.hash).to.eq('#/users/123/edit')
-  expect(loc.host).to.eq('localhost:8000')
-  expect(loc.hostname).to.eq('localhost')
-  expect(loc.href).to.eq(
-    'http://localhost:8000/app/index.html?q=dan#/users/123/edit'
-  )
-  expect(loc.origin).to.eq('http://localhost:8000')
-  expect(loc.pathname).to.eq('/app/index.html')
-  expect(loc.port).to.eq('8000')
-  expect(loc.protocol).to.eq('http:')
-  expect(loc.search).to.eq('?q=dan')
-  expect(loc.searchParams.get('q')).to.eq('dan')
-})
-```
-
-#### Check location for query params and pathname
-
-Pass a callback to [`.should()`](/api/commands/should) to work with the
-location object directly. Cypress retries the callback until every assertion in
-it passes.
-
-```javascript
-cy.get('#search').type('niklas{enter}')
-cy.location().should((loc) => {
-  expect(loc.search).to.eq('?search=niklas')
-  expect(loc.pathname).to.eq('/users')
-})
-```
-
-### Key
+### Key argument
 
 #### Assert that a redirect works
 
@@ -174,6 +151,50 @@ cy.location('pathname')
 
 cy.get('@userId').then((userId) => {
   cy.request(`/api/users/${userId}`).its('status').should('eq', 200)
+})
+```
+
+### No arguments
+
+#### Make assertions about every location property
+
+```javascript
+cy.visit('http://localhost:8000/app/index.html?q=dan#/users/123/edit')
+
+cy.location().should((loc) => {
+  expect(loc.hash).to.eq('#/users/123/edit')
+  expect(loc.host).to.eq('localhost:8000')
+  expect(loc.hostname).to.eq('localhost')
+  expect(loc.href).to.eq(
+    'http://localhost:8000/app/index.html?q=dan#/users/123/edit'
+  )
+  expect(loc.origin).to.eq('http://localhost:8000')
+  expect(loc.pathname).to.eq('/app/index.html')
+  expect(loc.port).to.eq('8000')
+  expect(loc.protocol).to.eq('http:')
+  expect(loc.search).to.eq('?q=dan')
+  expect(loc.searchParams.get('q')).to.eq('dan')
+})
+```
+
+#### Check location for query params and pathname
+
+Pass a callback to [`.should()`](/api/commands/should) to work with the
+location object directly. Cypress retries the callback until every assertion in
+it passes.
+
+```html title="index.html"
+<form action="/users">
+  <input id="search" name="search" />
+</form>
+```
+
+```javascript title="spec.cy.js"
+cy.visit('http://localhost:3000/')
+cy.get('#search').type('niklas{enter}')
+cy.location().should((loc) => {
+  expect(loc.search).to.eq('?search=niklas')
+  expect(loc.pathname).to.eq('/users')
 })
 ```
 
@@ -228,34 +249,19 @@ cy.origin('http://auth.example.com', () => {
 
 ## Notes
 
-### Native Location
-
-#### No need to use `window.location`
+### `cy.location()` yields a plain object, not `window.location`
 
 `cy.location()` reads the current URL of the application under test from the
 browser and yields a plain object with the properties listed under
-[Yields](#Yields). It isn't the `window.location` object, so it has none of that
-object's methods, such as `assign()`, `reload()`, or `toString()`. Read `href`
-when you need the full URL as a string.
+[Yields](#Yields). It has none of the `window.location` methods, such as
+`assign()` or `reload()`, and its `toString()` returns `"[object Object]"`
+rather than the URL. Read `href` when you need the full URL as a string.
 
 Changing a property on the real `window.location` object navigates the browser
 away. Changing a property on the object `cy.location()` yields has no effect on
 navigation.
 
-#### Console output of `window.location`
-
-```javascript
-cy.window().then((win) => {
-  console.log(win.location)
-})
-```
-
-<DocsImage
-  src="/img/api/location/window-location-object-printed-in-console-log.png"
-  alt="DevTools console showing the native window.location object and its properties"
-/>
-
-#### Console output of `.location()`
+Logging the yielded object shows only its URL properties:
 
 ```javascript
 cy.location().then((loc) => {
@@ -315,6 +321,8 @@ cy.location('pathname').should('eq', '/users')
 
 <HeaderTimeouts />
 
+- `cy.location()` can time out waiting for the browser to report the page's
+  URL.
 - `cy.location()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
