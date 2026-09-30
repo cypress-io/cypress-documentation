@@ -300,14 +300,6 @@ popup reports back to your app with `window.opener.postMessage()`:
 </script>
 ```
 
-Here's how the test, the popup, and the handler hand off to each other:
-
-<DocsImage
-  src="/img/app/multi-tab-testing/popup-flow-sequence.svg"
-  alt="Sequence diagram with three lanes: the Cypress tab showing connect.html, the popup showing authorize.html, and the message handler in Node.js. Step 1: after the spec clicks Connect calendar, the app opens the popup with window.open. Step 2: the spec calls cy.puppeteer('allowAccessInPopup'), which runs through cy.task(). Step 3: the handler finds the popup with retry() and clicks Allow access. Step 4: the popup posts an authorized message to window.opener and closes. Step 5: the handler returns, and cy.puppeteer() yields null. Step 6: the assertion that #status reads Connected passes in the Cypress tab."
-  noBorder
-/>
-
 The `allowAccessInPopup` handler waits for the popup, then clicks its
 `"Allow access"` button the way a user would:
 
