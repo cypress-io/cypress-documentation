@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="860" height="262" viewBox="0 0 860 262" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="214" viewBox="0 0 860 214" role="img" aria-labelledby="t d">
 <title id="t">How cy.puppeteer() reaches another tab</title>
-<desc id="d">Three columns. On the left, the Cypress tab in the browser Cypress launched runs your spec, which calls cy.puppeteer with readNewTab and receipt, then asserts with should. In the middle, Node.js runs your Cypress config, where the readNewTab message handler lives. On the right, a new tab or popup that your app opened, receipt.html, in the same browser. An arrow runs from the Cypress tab to the handler, an arrow runs from the handler to the new tab, and an arrow runs from the handler back to the Cypress tab.</desc>
+<desc id="d">Three columns. On the left, in the browser Cypress launched, the Cypress tab calls cy.puppeteer with readNewTab and receipt, then asserts with should. In the middle, Node.js runs your Cypress config, where the readNewTab message handler lives. On the right, in the same browser, a new tab or popup showing receipt.html. An arrow runs from the Cypress tab to the handler, an arrow runs from the handler to the new tab, and an arrow runs from the handler back to the Cypress tab.</desc>
 <style>
   .card { fill: #f7f8fc; stroke: #e1e3ed; }
   .region { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.25; }
@@ -20,29 +20,23 @@
     <path d="M 0 0 L 10 5 L 0 10 z" fill="#4956e3"/>
   </marker>
 </defs>
-<rect class="card" x="0.5" y="0.5" width="859" height="261" rx="12"/>
+<rect class="card" x="0.5" y="0.5" width="859" height="213" rx="12"/>
 <text class="title" x="140" y="36" text-anchor="middle">Browser launched by Cypress</text>
 <text class="title" x="430" y="36" text-anchor="middle">Node.js (your Cypress config)</text>
 <text class="title" x="720" y="36" text-anchor="middle">Browser launched by Cypress</text>
-<rect class="hl" x="20.5" y="56.5" width="240" height="180" rx="8"/>
+<rect class="hl" x="20.5" y="56.5" width="240" height="132" rx="8"/>
 <text class="label" x="38" y="84" text-anchor="start">Cypress tab</text>
 <text class="code" x="38" y="116" text-anchor="start">cy.puppeteer(&#x27;readNewTab&#x27;,</text>
 <text class="code" x="38" y="134" text-anchor="start">  &#x27;receipt&#x27;)</text>
 <text class="code" x="38" y="166" text-anchor="start">.should(&#x27;equal&#x27;, …)</text>
-<text class="note" x="38" y="210" text-anchor="start">Your spec runs here</text>
-<rect class="hl" x="310.5" y="56.5" width="240" height="180" rx="8"/>
+<rect class="hl" x="310.5" y="56.5" width="240" height="132" rx="8"/>
 <text class="label" x="328" y="84" text-anchor="start">Message handler</text>
 <text class="code" x="328" y="116" text-anchor="start">readNewTab(browser,</text>
 <text class="code" x="328" y="134" text-anchor="start">  urlPart)</text>
-<text class="note" x="328" y="168" text-anchor="start">Registered with setup()</text>
-<text class="note" x="328" y="192" text-anchor="start">Gets a fresh Puppeteer</text>
-<text class="note" x="328" y="210" text-anchor="start">connection on every call</text>
-<rect class="box" x="600.5" y="56.5" width="240" height="180" rx="8"/>
+<rect class="box" x="600.5" y="56.5" width="240" height="132" rx="8"/>
 <text class="label" x="618" y="84" text-anchor="start">New tab or popup</text>
 <text class="code" x="618" y="116" text-anchor="start">receipt.html</text>
-<text class="note" x="618" y="192" text-anchor="start">Opened by your app, outside</text>
-<text class="note" x="618" y="210" text-anchor="start">the Cypress tab</text>
-<path class="arrow" d="M 264 110 L 306 110" marker-end="url(#head)"/>
-<path class="arrow" d="M 306 182 L 266 182" marker-end="url(#head)"/>
-<path class="arrow" d="M 554 146 L 596 146" marker-end="url(#head)"/>
+<path class="arrow" d="M 264 100 L 306 100" marker-end="url(#head)"/>
+<path class="arrow" d="M 306 160 L 266 160" marker-end="url(#head)"/>
+<path class="arrow" d="M 554 130 L 596 130" marker-end="url(#head)"/>
 </svg>

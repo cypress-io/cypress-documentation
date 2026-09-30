@@ -101,7 +101,7 @@ that a link opened:
 
 <DocsImage
   src="/img/app/multi-tab-testing/cy-puppeteer-how-it-works.svg"
-  alt="Diagram in three columns. On the left, the Cypress tab runs your spec, which calls cy.puppeteer('readNewTab', 'receipt') and then .should('equal', …). In the middle, Node.js runs your Cypress config, where the readNewTab message handler gets a fresh Puppeteer connection on every call. On the right, a new tab or popup, receipt.html, that your app opened in the same browser. Arrows run from the Cypress tab to the handler, from the handler to the new tab, and from the handler back to the Cypress tab."
+  alt="Diagram in three columns. On the left, in the browser Cypress launched, the Cypress tab calls cy.puppeteer('readNewTab', 'receipt') and then .should('equal', …). In the middle, Node.js runs your Cypress config, where the readNewTab message handler lives. On the right, in the same browser, a new tab or popup showing receipt.html. Arrows run from the Cypress tab to the handler, from the handler to the new tab, and from the handler back to the Cypress tab."
   noBorder
 />
 
