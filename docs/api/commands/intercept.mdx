@@ -35,6 +35,7 @@ Find the section for what you want to do:
 | Test a server error or network failure | `statusCode` or `forceNetworkError`        | [Stubbing a server error or a network failure](#Stubbing-a-server-error-or-a-network-failure)                         |
 | Test a slow network                    | `delay` or `throttleKbps`                  | [Throttle or delay all incoming responses](#Throttle-or-delay-all-incoming-responses)                                 |
 | Check that a request was not made      | the `.all` alias suffix                    | [Asserting that an intercepted request was not made](#Asserting-that-an-intercepted-request-was-not-made)             |
+| Keep intercepts from slowing tests     | scoped routes and `blockHosts`             | [`cy.intercept()` and test performance](#cyintercept-and-test-performance)                                            |
 | Fix an intercept that doesn't match    | the Routes panel and `Cypress.minimatch()` | [Troubleshooting a `cy.intercept()` route that doesn't match](#Troubleshooting-a-cyintercept-route-that-doesnt-match) |
 
 ## Syntax
@@ -471,6 +472,18 @@ cy.wait(['@getUsers', '@getProjects']).then((interceptions) => {
   expect(interceptions[0].request.url).to.include('/users')
   expect(interceptions[1].request.url).to.include('/projects')
 })
+```
+
+Every alias in the array waits at the same time, with the same
+`requestTimeout` and `responseTimeout`, and each alias's clock starts when
+`cy.wait()` starts. The timeout has to cover the slowest request. To give a
+slower request more time, wait on it separately:
+
+```js
+cy.wait('@getUsers')
+
+// starts after `@getUsers` resolves, with a longer timeout
+cy.wait('@getProjects', { requestTimeout: 10000 })
 ```
 
 #### Waiting on errors
@@ -1904,6 +1917,44 @@ Cypress.minimatch(
 )
 // true (plus debug messages)
 ```
+
+## `cy.intercept()` and test performance
+
+Intercept only the requests your test needs. A catch-all route such as
+`cy.intercept('*')` matches every request the page makes, including images,
+scripts, fonts, and third-party calls. Cypress records and logs every request a
+route matches, and a route with a handler function holds each request until the
+handler finishes. Scope the route to the endpoint instead:
+
+```js
+// 🚫 matches every request the page makes
+cy.intercept('*').as('anyRequest')
+
+// ✅ matches only the requests the test waits on
+cy.intercept('GET', '/api/users*').as('getUsers')
+```
+
+Third-party services such as analytics and error monitoring (Sentry, for
+example) usually don't need to run in tests. Add their hosts to
+[`blockHosts`](/app/references/configuration#blockHosts), and Cypress answers
+those requests with a `503` instead of sending them:
+
+:::cypress-config-example
+
+```ts
+{
+  blockHosts: ['*.sentry.io'],
+}
+```
+
+:::
+
+`blockHosts` doesn't remove these requests from `cy.intercept()`. Cypress checks
+your routes before it blocks a request, so a catch-all route still matches and
+logs them. Scope your routes too.
+
+See [Test Performance](/app/guides/test-performance#Intercept-only-the-requests-you-need)
+for more ways to speed up tests that use the network.
 
 ## Troubleshooting a `cy.intercept()` route that doesn't match
 
