@@ -84,15 +84,6 @@ are for the URL `https://example.com:8080/app/users?tab=1#section`.
 | `search`       | string                                                                                | `'?tab=1'`                                           |
 | `searchParams` | [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) | `searchParams.get('tab')` returns `'1'`              |
 
-:::caution
-
-As of Cypress 16.1.0, the TypeScript types for `cy.location()` don't include
-`searchParams`, so TypeScript reports an error on `cy.location('searchParams')`
-and `loc.searchParams` even though both work when the test runs. In a TypeScript
-spec, read `search` and pass it to `new URLSearchParams()` instead.
-
-:::
-
 #### When given a `key` argument
 
 - `cy.location()` yields the value of that property: a string, or a
@@ -254,8 +245,7 @@ cy.origin('http://auth.example.com', () => {
 `cy.location()` reads the current URL of the application under test from the
 browser and yields a plain object with the properties listed under
 [Yields](#Yields). It has none of the `window.location` methods, such as
-`assign()` or `reload()`, and its `toString()` returns `"[object Object]"`
-rather than the URL. Read `href` when you need the full URL as a string.
+`assign()` or `reload()`. Read `href` when you need the full URL as a string.
 
 Changing a property on the real `window.location` object navigates the browser
 away. Changing a property on the object `cy.location()` yields has no effect on
