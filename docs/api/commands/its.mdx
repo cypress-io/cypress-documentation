@@ -145,7 +145,7 @@ cy.request('/users/1')
 
 ### Intercepted requests
 
-[`cy.wait()`](/api/commands/wait) on an [`cy.intercept()`](/api/commands/intercept)
+[`cy.wait()`](/api/commands/wait) on a [`cy.intercept()`](/api/commands/intercept)
 alias yields the interception, so `.its()` can reach into its `request` and
 `response`.
 
@@ -364,15 +364,14 @@ cy.wait('@getComments')
   ])
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/its/xhr-response-its-response-body-for-testing.png"
   alt="Command Log showing the stubbed /comments route, the request aliased getComments, the wait on @getComments, its .response.body, and a passing deep-equal assertion"
 />
 
-When clicking on `its` within the command log, the console outputs the
-following:
+Clicking `its` in the Command Log prints the following to the console:
 
 <DocsImage
   src="/img/api/its/response-body-yielded-with-its-command-log.png"
