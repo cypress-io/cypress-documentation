@@ -298,31 +298,6 @@ cy.get('@username').should('eq', 'jane')
 
 ## Notes
 
-### Third Party Plugins
-
-#### Using a Kendo DropDown
-
-If you are using `jQuery` then the `jQuery` wrapped elements will automatically
-have your 3rd party plugins available to be called.
-
-```javascript
-cy.get('input')
-  .invoke('getKendoDropDownList')
-  .then((dropDownList) => {
-    // yields the return of $input.getKendoDropDownList()
-    dropDownList.value('apples')
-  })
-```
-
-We can rewrite the previous example in a more terse way and add an assertion.
-The chain ends at `.invoke('value', 'apples')` so the dropdown's value is set
-once, and the assertion starts a new chain.
-
-```javascript
-cy.get('input').invoke('getKendoDropDownList').invoke('value', 'apples')
-cy.get('input').should('have.value', 'apples')
-```
-
 ### Retries
 
 `.invoke()` automatically retries invoking the specified method until the
