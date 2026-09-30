@@ -475,9 +475,9 @@ cy.wait(['@getUsers', '@getProjects']).then((interceptions) => {
 ```
 
 Every alias in the array waits at the same time, with the same
-`requestTimeout` and `responseTimeout`, and each alias's clock starts when
-`cy.wait()` starts. The timeout has to cover the slowest request. To give a
-slower request more time, wait on it separately:
+`requestTimeout` and `responseTimeout`. Each alias's `requestTimeout` starts
+counting when `cy.wait()` starts, so it has to cover the slowest request to
+arrive. To give a slower request more time, wait on it separately:
 
 ```js
 cy.wait('@getUsers')
