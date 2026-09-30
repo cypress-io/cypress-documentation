@@ -531,10 +531,10 @@ it('starts at the route the test passes', () => {
 
 Whether a mount shows up in the Command Log depends on the framework:
 
-- **React and Vue** log each mount. Pass `{ log: false }` to leave it out.
-- **Svelte** leaves the mount out by default, because Svelte 5 components log as
-  a generic name. Pass `{ log: true }` to show it.
-- **Angular** always logs the mount.
+- React and Vue log each mount. Pass `{ log: false }` to leave it out.
+- Svelte leaves the mount out by default, because Svelte 5 components log as a
+  generic name. Pass `{ log: true }` to show it.
+- Angular always logs the mount.
 
 The option passes through a custom command like any other mount option, as long
 as the command forwards `options`:
@@ -547,6 +547,21 @@ it('mounts without a Command Log entry', () => {
   cy.get('[data-cy=toolbar]').should('be.visible')
 })
 ```
+
+Here, both tests run with the theme command from
+[Setting defaults that a single test can override](#Setting-defaults-that-a-single-test-can-override).
+The first test's log starts with a `mount` row. The test that passes
+`{ log: false }` starts at `get`:
+
+<DocsImage
+  src="/img/api/mount/command-log-mount-with-and-without-log-false.png"
+  alt="Command Log for two passing tests: the first lists mount, get, and assert rows; the second, which passes log: false, lists only get and assert"
+/>
+
+The `mount` row names the outermost element passed to `mount()`. When your
+command wraps the component, as the theme command does with
+`<ThemeContext.Provider>`, the row names the wrapper instead of your component.
+A context provider has no display name, so the row reads `<Unknown ... />`.
 
 ## Troubleshooting the `cy.mount()` command
 
