@@ -1107,10 +1107,7 @@ setup({
       // Wait for the new tab to open, like waitForEvent('page')
       const page = await retry(async () => {
         const pages = await browser.pages()
-        // Skip the Cypress tab, whose URL includes your spec's file name
-        const tab = pages.find(
-          (p) => !p.url().includes('/__/') && p.url().includes(urlPart)
-        )
+        const tab = pages.find((p) => p.url().includes(urlPart))
 
         if (!tab) throw new Error(`No tab with a URL containing "${urlPart}"`)
 

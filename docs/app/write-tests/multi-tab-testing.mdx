@@ -224,10 +224,7 @@ setup({
       // The tab can take a moment to open, so keep looking until it does
       const page = await retry(async () => {
         const pages = await browser.pages()
-        // Skip the Cypress tab, whose URL includes your spec's file name
-        const tab = pages.find(
-          (p) => !p.url().includes('/__/') && p.url().includes(urlPart)
-        )
+        const tab = pages.find((p) => p.url().includes(urlPart))
 
         if (!tab) throw new Error(`No tab with a URL containing "${urlPart}"`)
 
@@ -316,10 +313,7 @@ setup({
     async allowAccessInPopup(browser) {
       const popup = await retry(async () => {
         const pages = await browser.pages()
-        // Skip the Cypress tab, whose URL includes your spec's file name
-        const tab = pages.find(
-          (p) => !p.url().includes('/__/') && p.url().includes('/authorize')
-        )
+        const tab = pages.find((p) => p.url().includes('/authorize'))
 
         if (!tab) throw new Error('The authorization popup did not open')
 
