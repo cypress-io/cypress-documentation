@@ -109,8 +109,8 @@ cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 
 #### Properties that are functions are invoked
 
-In the example below, we use `.invoke()` to force a hidden div to be
-`'display: block'` so we can interact with its children elements.
+In the example below, `.invoke()` forces a hidden div to be `'display: block'`
+so you can interact with its children elements.
 
 ```javascript
 cy.get('div.container')
@@ -188,15 +188,15 @@ cy.wrap(api).invoke('math.sum', 2, 3).should('eq', 5)
 
 ### jQuery method
 
-If the parent command yields a jQuery element, we can invoke a jQuery method,
+If the parent command yields a jQuery element, you can invoke a jQuery method,
 like `attr`, `text`, or `val`. To confirm the element's `id` attribute for
 example:
 
-```html
+```html title="index.html"
 <div id="code-snippet">The code example</div>
 ```
 
-```js
+```javascript title="spec.cy.js"
 cy.contains('The code example')
   .invoke('attr', 'id')
   .should('equal', 'code-snippet')
@@ -205,7 +205,7 @@ cy.contains('The code example')
 **Tip:** Cypress has a built-in Chai-jQuery assertion to confirm the attribute.
 The above example can be written as:
 
-```js
+```javascript
 cy.contains('The code example').should('have.attr', 'id', 'code-snippet')
 ```
 
@@ -235,8 +235,7 @@ cy.window()
   .should('have.length', 0)
 ```
 
-Browser APIs work the same way. The function runs with its parent object as
-`this`, so `getItem` reads from `localStorage`:
+Browser APIs work the same way, such as `localStorage.getItem`:
 
 ```javascript
 cy.window().its('localStorage').invoke('getItem', 'token').should('exist')
@@ -283,10 +282,10 @@ cy.wrap(userApi)
 
 ### Save the yielded value for later
 
-An alias created with [`.as()`](/api/commands/as) re-runs `.invoke()` each time
-you use it, so it yields the current value. To keep the value from the moment
-you saved it, such as an input's value before the test changes it, create a
-static alias:
+An alias created with [`.as()`](/api/commands/as) re-runs the query chain,
+including `.invoke()`, each time you use it, so it yields the current value. To
+keep the value from the moment you saved it, such as an input's value before the
+test changes it, create a static alias:
 
 ```javascript
 cy.get('#username').invoke('val').as('username', { type: 'static' })
