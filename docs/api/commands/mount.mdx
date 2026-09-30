@@ -124,17 +124,6 @@ Other frameworks get the same file with their own import: `cypress/angular`,
 `cypress/vue`, or `cypress/svelte`. The JavaScript version leaves out the
 `declare global` block.
 
-Here's the path from registration to a rendered component. The support file
-runs before each spec and registers the command, replacing the built-in
-placeholder. When a test calls `cy.mount()`, your command hands the component to
-the framework's `mount()`, which renders it into the `[data-cy-root]` element of
-`cypress/support/component-index.html`:
-
-<DocsImage
-  src="/img/api/mount/how-cy-mount-is-registered-and-called.svg"
-  alt="Two-step flow: the support file's registration replaces the built-in cy.mount() placeholder, then a test's cy.mount() call runs that command, which calls the framework's mount() to render into data-cy-root"
-/>
-
 ## Customizing the `cy.mount()` command for your app
 
 To set up what your components need in every test, replace the direct
@@ -445,15 +434,6 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   return mount(component, { strict: true, ...options })
 })
 ```
-
-Both examples follow the same pattern. The command takes out the options it
-handles and passes the rest to `mount()`. Where it spreads `options` decides
-whether the command sets a default or forces a value:
-
-<DocsImage
-  src="/img/api/mount/how-options-flow-through-cy-mount.svg"
-  alt="A test's theme option goes to the provider while log: false passes through to mount(); spreading options after a default lets tests override it, spreading before forces the command's value"
-/>
 
 ### Using what `cy.mount()` yields
 
