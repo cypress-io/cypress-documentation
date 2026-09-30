@@ -299,7 +299,8 @@ To upload a file, build a
 [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) object
 and pass it as the `body`. Cypress encodes each field, sends the file's bytes
 unchanged, and sets the `Content-Type: multipart/form-data` header with the
-boundary the server needs to parse the parts.
+boundary the server needs to parse the parts. Leave `form` unset, since it
+applies to URL-encoded forms only.
 
 This is the `cy.request()` equivalent of `curl -F file=@image.png`:
 
@@ -420,9 +421,14 @@ When `body` is a **`FormData`** instance, Cypress:
 1. Encodes each field as a part of a `multipart/form-data` body. A `File` or
    `Blob` field keeps its filename and type, and defaults to
    `application/octet-stream` when it has no type.
-2. Sets the `Content-Type: multipart/form-data` header with a generated
-   boundary. This replaces any `Content-Type` header you pass in `headers`, so
-   you don't need to set one.
+2. Sets the `Content-Type: multipart/form-data` header with the boundary that
+   separates the parts. This replaces a `Content-Type` header you pass in
+   `headers`, such as `multipart/form-data` without a boundary, so you don't
+   need to set one.
+
+Don't combine a `FormData` body with `form: true` or an
+`application/x-www-form-urlencoded` header. Either one sends the body down the
+URL-encoded form path, and the request fails with a network-level error.
 
 When `body` is a **`Blob`**, Cypress sends its bytes as-is and no `Content-Type`
 header is added automatically. Set one in `headers` if your server expects it.
