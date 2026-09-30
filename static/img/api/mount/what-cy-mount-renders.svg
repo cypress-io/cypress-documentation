@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 320" width="780" height="320" role="img" aria-labelledby="title">
+<title id="title">What a custom cy.mount() command renders</title>
+<style>
+  .t{font-family:Inter,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#0f172a}
+  .m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;fill:#0f172a}
+  .h{font-size:15px;font-weight:700}
+  .b{font-size:14px;font-weight:600}
+  .s{font-size:13.5px;fill:#334155}
+  .c{font-size:13.5px}
+  .err{fill:#b91c1c}
+</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#475569"/></marker></defs>
+<rect width="780" height="320" rx="10" fill="#f8fafc"/>
+<rect x="20" y="20" width="740" height="280" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+<text class="m b" x="38" y="44">&lt;div data-cy-root&gt;</text>
+<text class="t s" x="210" y="44">in cypress/support/component-index.html</text>
+<rect x="44" y="60" width="692" height="224" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text class="m b" x="62" y="84">&lt;StrictMode&gt;</text>
+<text class="t s" x="176" y="84">added by mount() when strict: true. rerender() keeps it.</text>
+<rect x="68" y="100" width="644" height="168" rx="8" fill="#fff7ed" stroke="#c2410c" stroke-width="2"/>
+<text class="m b" x="86" y="124">&lt;ThemeContext.Provider&gt;</text>
+<text class="t s" x="300" y="124">added by your command. rerender() drops it.</text>
+<text class="t s" x="86" y="146">This is the element passed to mount(), so the Command Log's mount row names it:</text>
+<text class="m c" x="86" y="165">mount &lt;Unknown ... /&gt;</text>
+<rect x="92" y="182" width="596" height="70" rx="8" fill="#ecfdf5" stroke="#047857" stroke-width="2"/>
+<text class="m b" x="110" y="208">&lt;Toolbar /&gt;</text>
+<text class="t s" x="210" y="208">what your test passed to cy.mount()</text>
+<text class="t s" x="110" y="232">rerender() renders only what you pass it, so wrap it again to keep the provider.</text>
+</svg>
