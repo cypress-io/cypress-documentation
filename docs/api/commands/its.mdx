@@ -81,7 +81,7 @@ cy.wrap({ age: 52 }).its('age').should('eq', 52) // true
 cy.wrap(['Wai Yan', 'Yu']).its(1).should('eq', 'Yu') // true
 ```
 
-### DOM Elements
+### DOM elements
 
 #### Get the `length` property of a DOM element
 
@@ -192,11 +192,10 @@ cy.wrap({ getNum: fn }).its('getNum').should('be.a', 'function')
 You can access functions to then drill into their own properties instead of
 invoking them.
 
-```javascript
-// Your app code
+```javascript title="app.js"
 // a basic Factory constructor
-const Factory = (arg) => {
-  // ...
+function Factory(arg) {
+  this.arg = arg
 }
 
 Factory.create = (arg) => {
@@ -207,7 +206,7 @@ Factory.create = (arg) => {
 window.Factory = Factory
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.window() // yields window object
   .its('Factory') // yields Factory function
   .invoke('create', 'arg') // now invoke properties on it
@@ -244,7 +243,7 @@ cy.window()
   .should('have.length', 2)
 ```
 
-### Nested Properties
+### Nested properties
 
 You can drill into nested properties by using _dot notation_.
 
