@@ -18,17 +18,6 @@ subject, use [`.its()`](/api/commands/its).
 
 :::
 
-:::caution
-
-`.invoke()` is a query, so Cypress runs it again each time it
-[retries](#Retries) a chained assertion and whenever a later command in the
-chain needs its value. If the function has side effects, such as a jQuery setter
-like `.invoke('val', 'text')`, end your chain with `.invoke()` and start fresh
-with `cy` afterwards. See
-[Functions with side effects](#Functions-with-side-effects).
-
-:::
-
 ## Syntax
 
 ```javascript
@@ -91,7 +80,8 @@ number of arguments.
 - `.invoke()` yields the return value of the method.
 - `.invoke()` is a query. Chaining further commands is safe when the function
   has no side effects, because the function can be called more than once. When
-  it does have side effects, end the chain at `.invoke()`.
+  it does have side effects, end the chain at `.invoke()`. See
+  [Functions with side effects](#Functions-with-side-effects).
 
 ## Examples
 
