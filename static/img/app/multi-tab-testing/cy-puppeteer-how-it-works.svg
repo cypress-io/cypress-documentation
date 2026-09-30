@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="462" viewBox="0 0 760 462" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="262" viewBox="0 0 860 262" role="img" aria-labelledby="t d">
 <title id="t">How cy.puppeteer() reaches another tab</title>
-<desc id="d">Two areas side by side. On the left, the browser Cypress launched holds the Cypress tab running your spec and a new tab or popup your app opened. On the right, Node.js runs your Cypress config, where the readNewTab message handler lives. Step 1: cy.puppeteer in the spec sends the call to Node.js through cy.task. Step 2: the handler gets a fresh Puppeteer connection to the same browser, finds the new tab, reads it, and closes it. Step 3: the handler returns a value, Puppeteer disconnects, and the value is yielded back to the spec, where should asserts on it.</desc>
+<desc id="d">Three columns. On the left, the Cypress tab in the browser Cypress launched runs your spec, which calls cy.puppeteer with readNewTab and receipt, then asserts with should. In the middle, Node.js runs your Cypress config, where the readNewTab message handler lives. On the right, a new tab or popup that your app opened, receipt.html, in the same browser. An arrow runs from the Cypress tab to the handler, an arrow runs from the handler to the new tab, and an arrow runs from the handler back to the Cypress tab.</desc>
 <style>
   .card { fill: #f7f8fc; stroke: #e1e3ed; }
   .region { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.25; }
@@ -20,41 +20,29 @@
     <path d="M 0 0 L 10 5 L 0 10 z" fill="#4956e3"/>
   </marker>
 </defs>
-<rect class="card" x="0.5" y="0.5" width="759" height="461" rx="12"/>
-<text class="title" x="24" y="34" text-anchor="start">Browser launched by Cypress</text>
-<rect class="region" x="20.5" y="46.5" width="290" height="276" rx="10"/>
-<text class="title" x="450" y="34" text-anchor="start">Node.js (your Cypress config)</text>
-<rect class="region" x="449.5" y="46.5" width="290" height="276" rx="10"/>
-<rect class="hl" x="38.5" y="64.5" width="254" height="112" rx="8"/>
-<text class="label" x="54" y="88" text-anchor="start">Cypress tab</text>
-<text class="code" x="54" y="114" text-anchor="start">cy.puppeteer(&#x27;readNewTab&#x27;,</text>
-<text class="code" x="54" y="132" text-anchor="start">  &#x27;receipt&#x27;)</text>
-<text class="code" x="54" y="158" text-anchor="start">.should(&#x27;equal&#x27;, …)</text>
-<rect class="box" x="38.5" y="194.5" width="254" height="110" rx="8"/>
-<text class="label" x="54" y="218" text-anchor="start">New tab or popup</text>
-<text class="code" x="54" y="244" text-anchor="start">receipt.html</text>
-<text class="note" x="54" y="270" text-anchor="start">Opened by your app, outside</text>
-<text class="note" x="54" y="288" text-anchor="start">the Cypress tab</text>
-<rect class="hl" x="467.5" y="84.5" width="254" height="200" rx="8"/>
-<text class="label" x="483" y="108" text-anchor="start">Message handler</text>
-<text class="code" x="483" y="134" text-anchor="start">readNewTab(browser, urlPart)</text>
-<text class="note" x="483" y="166" text-anchor="start">Registered with setup() in</text>
-<text class="note" x="483" y="184" text-anchor="start">setupNodeEvents</text>
-<text class="note" x="483" y="214" text-anchor="start">Gets a fresh Puppeteer</text>
-<text class="note" x="483" y="232" text-anchor="start">connection on every call, then</text>
-<text class="note" x="483" y="250" text-anchor="start">disconnects when it returns</text>
-<path class="arrow" d="M 294 98 L 464 120" marker-end="url(#head)"/>
-<circle class="badge" cx="379" cy="98" r="10"/><text class="num" x="379" y="102" text-anchor="middle">1</text>
-<path class="arrow" d="M 466 196 L 296 154" marker-end="url(#head)"/>
-<circle class="badge" cx="381" cy="164" r="10"/><text class="num" x="381" y="168" text-anchor="middle">3</text>
-<path class="arrow" d="M 466 262 L 296 250" marker-end="url(#head)"/>
-<circle class="badge" cx="381" cy="246" r="10"/><text class="num" x="381" y="250" text-anchor="middle">2</text>
-<circle class="badge" cx="34" cy="348" r="10"/><text class="num" x="34" y="352" text-anchor="middle">1</text>
-<text class="note" x="54" y="352" text-anchor="start">cy.puppeteer() sends the call to Node.js through cy.task(), so arguments and</text>
-<text class="note" x="54" y="370" text-anchor="start">return values must be serializable.</text>
-<circle class="badge" cx="34" cy="394" r="10"/><text class="num" x="34" y="398" text-anchor="middle">2</text>
-<text class="note" x="54" y="398" text-anchor="start">The handler finds the new tab with Puppeteer, reads its heading, and closes it.</text>
-<circle class="badge" cx="34" cy="424" r="10"/><text class="num" x="34" y="428" text-anchor="middle">3</text>
-<text class="note" x="54" y="428" text-anchor="start">The handler&#x27;s return value is yielded back to your spec, where .should()</text>
-<text class="note" x="54" y="446" text-anchor="start">asserts on it like any other subject.</text>
+<rect class="card" x="0.5" y="0.5" width="859" height="261" rx="12"/>
+<text class="title" x="140" y="36" text-anchor="middle">Browser launched by Cypress</text>
+<text class="title" x="430" y="36" text-anchor="middle">Node.js (your Cypress config)</text>
+<text class="title" x="720" y="36" text-anchor="middle">Browser launched by Cypress</text>
+<rect class="hl" x="20.5" y="56.5" width="240" height="180" rx="8"/>
+<text class="label" x="38" y="84" text-anchor="start">Cypress tab</text>
+<text class="code" x="38" y="116" text-anchor="start">cy.puppeteer(&#x27;readNewTab&#x27;,</text>
+<text class="code" x="38" y="134" text-anchor="start">  &#x27;receipt&#x27;)</text>
+<text class="code" x="38" y="166" text-anchor="start">.should(&#x27;equal&#x27;, …)</text>
+<text class="note" x="38" y="210" text-anchor="start">Your spec runs here</text>
+<rect class="hl" x="310.5" y="56.5" width="240" height="180" rx="8"/>
+<text class="label" x="328" y="84" text-anchor="start">Message handler</text>
+<text class="code" x="328" y="116" text-anchor="start">readNewTab(browser,</text>
+<text class="code" x="328" y="134" text-anchor="start">  urlPart)</text>
+<text class="note" x="328" y="168" text-anchor="start">Registered with setup()</text>
+<text class="note" x="328" y="192" text-anchor="start">Gets a fresh Puppeteer</text>
+<text class="note" x="328" y="210" text-anchor="start">connection on every call</text>
+<rect class="box" x="600.5" y="56.5" width="240" height="180" rx="8"/>
+<text class="label" x="618" y="84" text-anchor="start">New tab or popup</text>
+<text class="code" x="618" y="116" text-anchor="start">receipt.html</text>
+<text class="note" x="618" y="192" text-anchor="start">Opened by your app, outside</text>
+<text class="note" x="618" y="210" text-anchor="start">the Cypress tab</text>
+<path class="arrow" d="M 264 110 L 306 110" marker-end="url(#head)"/>
+<path class="arrow" d="M 306 182 L 266 182" marker-end="url(#head)"/>
+<path class="arrow" d="M 554 146 L 596 146" marker-end="url(#head)"/>
 </svg>

@@ -96,11 +96,20 @@ The plugin has two halves:
 - **In your spec**, `cy.puppeteer('handlerName', ...args)` runs that handler and
   yields whatever it returns.
 
+Here's one call from the first example below, `readNewTab`, which reads a tab
+that a link opened:
+
 <DocsImage
   src="/img/app/multi-tab-testing/cy-puppeteer-how-it-works.svg"
-  alt="Diagram of one cy.puppeteer() call. The browser Cypress launched holds the Cypress tab running your spec and a new tab your app opened. Node.js runs your Cypress config, where the readNewTab handler lives. Step 1: cy.puppeteer() sends the call to Node.js through cy.task(). Step 2: the handler finds the new tab with Puppeteer, reads its heading, and closes it. Step 3: the handler's return value is yielded back to the spec, where .should() asserts on it."
+  alt="Diagram in three columns. On the left, the Cypress tab runs your spec, which calls cy.puppeteer('readNewTab', 'receipt') and then .should('equal', …). In the middle, Node.js runs your Cypress config, where the readNewTab message handler gets a fresh Puppeteer connection on every call. On the right, a new tab or popup, receipt.html, that your app opened in the same browser. Arrows run from the Cypress tab to the handler, from the handler to the new tab, and from the handler back to the Cypress tab."
   noBorder
 />
+
+When your spec calls `cy.puppeteer('readNewTab', 'receipt')`, the call travels
+to Node.js through `cy.task()`, so its arguments must be serializable. The
+handler uses Puppeteer to find the new tab, read its heading, and close it. Its
+return value then travels back to the Cypress tab, where `.should()` asserts on
+it like any other subject.
 
 Each time `cy.puppeteer()` runs, the plugin connects Puppeteer to the browser,
 calls your handler, and disconnects again. The browser stays open throughout. In
