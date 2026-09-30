@@ -20,9 +20,12 @@ subject, use [`.its()`](/api/commands/its).
 
 :::caution
 
-If you chain further commands off of `.invoke()`, the function can be called
-more than once. If you only want the method to be called once, end your chain
-with `.invoke()` and start fresh with `cy` afterwards.
+`.invoke()` is a query, so Cypress runs it again each time it
+[retries](#Retries) a chained assertion and whenever a later command in the
+chain needs its value. If the function has side effects, such as a jQuery setter
+like `.invoke('val', 'text')`, end your chain with `.invoke()` and start fresh
+with `cy` afterwards. See
+[Functions with side effects](#Functions-with-side-effects).
 
 :::
 
@@ -64,9 +67,14 @@ Name of function to be invoked. Use dot notation to invoke a function nested
 inside the subject, such as `'math.sum'`, or a number to invoke a function in an
 array by its index.
 
+In TypeScript, a function name yields the function's return type. A dot-notation
+path can't be strongly typed, so it yields `any`.
+
 <Icon name="angle-right" /> **options _(Object)_**
 
-Pass in an options object to change the default behavior of `.invoke()`.
+Pass in an options object to change the default behavior of `.invoke()`. Unlike
+most commands, `.invoke()` takes `options` as its first argument, before
+`functionName`.
 
 | Option    | Default                                                           | Description                                                                         |
 | --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
@@ -81,9 +89,9 @@ number of arguments.
 <HeaderYields />
 
 - `.invoke()` yields the return value of the method.
-- `.invoke()` is a query, and it is _safe_ to chain further commands.
-- If you chain additional commands off of `.invoke()`, the function can be
-  called more than once.
+- `.invoke()` is a query. Chaining further commands is safe when the function
+  has no side effects, because the function can be called more than once. When
+  it does have side effects, end the chain at `.invoke()`.
 
 ## Examples
 
@@ -99,15 +107,7 @@ const fn = () => {
 cy.wrap({ foo: fn }).invoke('foo').should('eq', 'bar') // true
 ```
 
-#### Use `.invoke()` to test HTML content
-
-:::info
-
-[Check out our example recipe where we use `.invoke('text')` to test against HTML content in 'Bootstrapping your App'](/app/references/recipes#Server-Communication)
-
-:::
-
-#### Properties that are functions are invoked
+#### Show a hidden element with `.invoke('show')`
 
 In the example below, `.invoke()` forces a hidden div to be `'display: block'`
 so you can interact with its children elements.
@@ -121,17 +121,11 @@ cy.get('div.container')
   .type('Cypress is great') // and type text
 ```
 
-#### Use `.invoke('show')` and `.trigger()`
-
-:::info
-
-[Check out our example recipe where we use `.invoke('show')` and `.trigger()` to click an element that is only visible on hover](/app/references/recipes#Testing-the-DOM)
-
-:::
-
 ### Function with Arguments
 
-#### Send specific arguments to the function
+#### Pass arguments to the function
+
+Arguments after the function name are passed to the function in order.
 
 ```javascript
 const fn = (a, b, c) => {
@@ -144,15 +138,7 @@ cy.wrap({ sum: fn })
   .and('be.lt', 20) // true
 ```
 
-#### Use `.invoke('removeAttr', 'target')` to get around new tab
-
-:::info
-
-[Check out our example recipe where we use `.invoke('removeAttr', 'target')` to test clicking on a link without opening in a new tab](/app/references/recipes#Testing-the-DOM)
-
-:::
-
-#### Arguments are automatically forwarded to the function
+The same works for jQuery methods, such as `attr`:
 
 ```javascript
 cy.get('img').invoke('attr', 'src').should('include', 'myLogo')
@@ -295,7 +281,35 @@ cy.get('#username').clear().type('new-name')
 cy.get('@username').should('eq', 'jane')
 ```
 
+### Recipes that use `.invoke()`
+
+- [Bootstrapping your App](/app/references/recipes#Server-Communication) -
+  `.invoke('text')` to test HTML content
+- [Hover and Hidden Elements](/app/references/recipes#Testing-the-DOM) -
+  `.invoke('show')` and `.trigger()` to click an element that is only visible on
+  hover
+- [Tab Handling and Links](/app/references/recipes#Testing-the-DOM) -
+  `.invoke('removeAttr', 'target')` to click a link without opening a new tab
+
 ## Notes
+
+### Functions with side effects
+
+Cypress runs `.invoke()` again each time a chained command or assertion needs
+its value, so a function with side effects can run more than once. Here, the
+jQuery setter `val` runs every time `.type()` asks for its subject:
+
+```javascript
+cy.get('input').invoke('val', 'text').type('newText')
+```
+
+End the chain at `.invoke()` so the setter runs once, then continue in a new
+chain:
+
+```javascript
+cy.get('input').invoke('val', 'text')
+cy.get('input').type('newText')
+```
 
 ### Retries
 
@@ -337,9 +351,6 @@ cy.wrap(english).invoke('greeting').should('equal', 'bye')
 
 - `.invoke()` will wait for the `function` to exist on the subject before
   running.
-- `.invoke()` does not wait for a promise returned by the invoked `function`
-  to resolve. If you want to invoke a function that returns a promise and use
-  its resolved value, use [`.then()`](/api/commands/then) instead.
 - `.invoke()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
@@ -363,7 +374,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/invoke/invoke-jquery-show-on-element-for-testing.png"
-  alt="Command Log for invoke"
+  alt="Command Log showing get, an assertion that the element is hidden, invoke .show(), and an assertion that it is visible"
 />
 
 When clicking on `invoke` within the command log, the console outputs the
@@ -371,7 +382,7 @@ following:
 
 <DocsImage
   src="/img/api/invoke/log-function-invoked-and-return.png"
-  alt="Console Log for invoke"
+  alt="DevTools console showing the invoke command's Function, Subject, With arguments, and Yielded values"
 />
 
 ## History
@@ -384,6 +395,8 @@ following:
 
 ## See also
 
+- [`.as()`](/api/commands/as)
 - [`.its()`](/api/commands/its)
 - [`.then()`](/api/commands/then)
+- [`cy.window()`](/api/commands/window)
 - [`cy.wrap()`](/api/commands/wrap)
