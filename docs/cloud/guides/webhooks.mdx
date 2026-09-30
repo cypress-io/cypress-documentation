@@ -1,6 +1,6 @@
 ---
 title: Build custom integrations with Cypress webhooks
-description: Use the Cypress Cloud run.completed webhook with Slack Workflow Builder and other tools to send messages, create issues, trigger deploys, and more.
+description: Use Cypress Cloud webhooks for run completion, Accessibility, and UI Coverage with Slack and other tools to send messages, create issues, and trigger deploys.
 sidebar_label: Build Custom Integrations with Webhooks
 sidebar_position: 20
 ---
@@ -12,19 +12,25 @@ sidebar_position: 20
 When a Cypress Cloud run finishes, the
 `run.completed` webhook delivers a JSON payload
 describing the run. You can use that event to send a message, create a tracking
-ticket, trigger a deployment, or page an on-call engineer.
+ticket, trigger a deployment, or page an on-call engineer. This guide focuses on this run completion event, but more events are available, for example
+`run.accessibility.completed` for
+[Cypress Accessibility](/accessibility/get-started/introduction), and `run.uiCoverage.completed` for
+[UI Coverage](/ui-coverage/get-started/introduction) reports.
 
-The [Cloud Webhook documentation](/cloud/integrations/webhooks) explains the
-event, payload, headers, security, and retry behavior. This guide provides
-examples and shows you one deep-dive: how to create a custom Slack message with different
-formatting for passing and failing runs.
+The [Cloud Webhook documentation](/cloud/integrations/webhooks) explains each
+event, its payload, headers, security, and retry behavior. This guide shows
+examples and one deep dive: a custom Slack message with different formatting
+for passing and failing `run.completed` deliveries.
 
 ## What you can build
 
-One event, `run.completed`, can drive many downstream actions. Point the
-**Payload URL** at a tool that accepts an inbound webhook, map the
+`run.completed`, `run.accessibility.completed`, and `run.uiCoverage.completed`
+can each drive a downstream action. Point the **Payload URL** at a tool that
+accepts an inbound webhook, map the
 [payload fields](/cloud/integrations/webhooks#Payload) you care about, and
-filter in the destination if you only want certain runs.
+filter in the destination if you only want certain deliveries. The outcomes
+in this table use `run.completed`.
+
 [Slack's built-in Workflow Builder](https://slack.com/help/articles/360053571454) works
 this way. Some destinations use a no-code platform or a short script that
 receives the Cypress POST and performs the next action.
@@ -98,7 +104,6 @@ the Cypress Cloud run.
 2. For the way the workflow starts, choose **Starts with a webhook**.
 3. Under **Data Variables**, add a key for each payload field you want in the
    message. Slack reads these from the top-level keys of the JSON body. You will likely want to start with fields like this:
-   - `message` (only present in Cypress Cloud's generic `webhook.ping` test event)
    - `status`
    - `projectName`
    - `runNumber`
@@ -124,9 +129,11 @@ the Cypress Cloud run.
 :::note
 
 Array fields such as `tags` and `groups` don't map to a Workflow Builder
-variable. If you need these fields in Slack, transform the response in another
-service. You can also use **Submit feedback** in Cypress Cloud or contact your
-Cypress representative to request support for these fields.
+variable, and neither do nested objects. The Accessibility and UI Coverage
+payloads keep report data under `accessibility` and `uiCoverage`. If you need
+these fields in Slack, transform the body in another service. You can also use
+**Submit feedback** in Cypress Cloud or contact your Cypress representative to
+request support for these fields.
 
 :::
 
@@ -226,7 +233,7 @@ Click **Publish** when the message looks right.
    panel, and click **Add webhook**. See
    [Create a webhook](/cloud/integrations/webhooks#Create-a-webhook).
 2. Paste the Slack workflow's webhook URL as the **Payload URL**.
-3. Leave `run.completed` selected. Save the webhook.
+3. Leave `run.completed` select and save the webhook. **Uncheck other events** if they are pre-selected. This walkthrough maps fields from `run.completed` only.
 
 :::caution
 
@@ -241,18 +248,19 @@ full tradeoff, see
 
 ### Step 5: Test the delivery
 
-Use **Send test** on the webhook to confirm Cypress Cloud can reach Slack. See
+Use **Send test** on the webhook and choose `run.completed` from the menu.
+Cypress Cloud delivers a sample of that event's payload, with realistic but
+fabricated data, so Slack can fill in `status`, `runNumber`, and the other
+variables. See
 [Send a test event](/cloud/integrations/webhooks#Send-a-test-event).
 
 :::note
 
-The test event is a `webhook.ping`, not a `run.completed`. Its body is
-`{ "message": "Webhook ping" }`, so it doesn't contain `status`,
-`runNumber`, or the other run fields your message maps. Send test confirms the
-connection and that the workflow fires; it will not render your mapped values.
+The sample body matches the
+[example `run.completed` payload](/cloud/integrations/webhooks#Payload) with example data.
 
-To confirm the field mapping end to end, record a Cypress run so a fresh
-`run.completed` fires. You can trigger this run locally with a single test if
+To see your own project data in the message, record a Cypress run so a fresh
+`run.completed` fires. You can trigger that run locally with a single test if
 your project doesn't record runs often.
 
 :::
@@ -301,8 +309,9 @@ run, use the [Cloud CLI](/cloud/integrations/cloud-cli) or
 
 ## See also
 
-- [Webhooks Integration](/cloud/integrations/webhooks) - the full event, payload, headers, security, and retry reference
-- [`run.completed` payload](/cloud/integrations/webhooks#Payload) - every field, its type, and meaning
+- [Webhooks Integration](/cloud/integrations/webhooks) - headers, security, and retries
+- [Webhook events](/cloud/integrations/webhooks#Events) - `run.completed`, `run.accessibility.completed`, and `run.uiCoverage.completed`
+- [Webhook payloads](/cloud/integrations/webhooks#Payload) - fields for each event
 - [Verify webhook signatures](/cloud/integrations/webhooks#Verify-webhook-signatures) - HMAC verification for destinations that support it
 - [Slack integration](/cloud/integrations/slack) - built-in Slack notifications for run results
 - [GitHub integration](/cloud/integrations/github#Status-checks) - built-in commit status checks and pull request comments

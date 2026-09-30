@@ -225,6 +225,8 @@ Both the [Slack](/cloud/integrations/slack) and [Microsoft Teams](/cloud/integra
 
 These notifications report a run's results rather than a comparison, which makes them a good fit for runs where you know what normal looks like, such as a nightly production monitoring run. Filter notifications by run tag or run group so the channel that watches accessibility sees the runs it cares about and nothing else.
 
+To create customized messages and workflows, or send the report to other destinations such as Google Chat or Jira, use [Accessibility webhooks](/accessibility/connect-and-extend/webhooks). Cypress Cloud sends `run.accessibility.completed` when the Accessibility report finishes processing.
+
 ## Track trends over time with analytics {#track-trends-over-time}
 
 Branch Review and the Results API each answer a question about one change in one project. Analytics answers the questions no single run can: is this application getting better, how fast, and how does it compare with every other project in the organization?

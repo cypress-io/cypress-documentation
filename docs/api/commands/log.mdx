@@ -30,13 +30,14 @@ cy.log('created new user')
 
 <Icon name="angle-right" /> **message _(String)_**
 
-Message to be printed to Cypress Command Log. Accepts a Markdown formatted
-message.
+Message to print to the Cypress Command Log. The Command Log renders inline
+Markdown, such as `**bold**`, `_italic_`, and `` `code` ``, across the whole
+line it displays, including any arguments. HTML tags display as plain text.
 
 <Icon name="angle-right" /> **args...**
 
-Additional arguments to be printed to the Cypress Command Log. There is no limit
-to the number of arguments.
+Additional values to print after the message. See [Formatting arguments in the Command Log](#Formatting-arguments-in-the-Command-Log)
+for how each value is displayed.
 
 <HeaderYields />
 
@@ -46,20 +47,178 @@ to the number of arguments.
 
 ### Message
 
-#### Print a message to the Command Log.
+#### Print a message to the Command Log
 
 ```javascript
-cy.click('Login')
+cy.contains('button', 'Login').click()
 cy.log('Login successful')
+```
+
+#### Format a message with Markdown
+
+```javascript
+cy.log('**Checkout** started for `standard` shipping')
 ```
 
 ### Args
 
-#### Print a message with arguments to the Command Log.
+#### Print a message with arguments to the Command Log
 
 ```javascript
+const events = ['click', 'focus', 'blur']
+
 cy.log('events triggered', events)
 ```
+
+### Common workflows
+
+#### Mark the steps of a longer test
+
+Step markers turn the Command Log into an outline of the test, which makes it
+faster to find where a failure happened in the Command Log, a screenshot, or
+Test Replay.
+
+```javascript
+cy.log('**Step 1:** Add an item to the cart')
+cy.contains('button', 'Add to cart').click()
+
+cy.log('**Step 2:** Check out')
+cy.contains('button', 'Checkout').click()
+```
+
+The bold step markers stand out from the commands that follow them:
+
+<DocsImage
+  src="/img/api/log/command-log-step-markers.png"
+  alt="Command Log showing log rows with bold Step 1 and Step 2 labels, each followed by its contains and click commands"
+/>
+
+#### Log a network response
+
+Log values from a request that [`cy.intercept()`](/api/commands/intercept)
+aliased, once [`cy.wait()`](/api/commands/wait) yields it.
+
+```javascript
+cy.intercept('GET', '/api/user').as('getUser')
+cy.contains('button', 'Load profile').click()
+
+cy.wait('@getUser').then(({ response }) => {
+  cy.log('status', response?.statusCode)
+  cy.log('user', response?.body.name)
+})
+```
+
+#### Log an element's text
+
+Read the text with [`.invoke()`](/api/commands/invoke), then log it inside
+[`.then()`](/api/commands/then) so the value is current.
+
+```javascript
+cy.get('[data-cy=cart-total]')
+  .invoke('text')
+  .then((total) => {
+    cy.log('cart total', total)
+  })
+```
+
+#### Print a message to the terminal during `cypress run`
+
+`cy.log()` writes only to the Command Log, so its messages don't appear in the
+terminal output of `cypress run` or in CI logs. To print to the terminal,
+register a task that calls `console.log()`:
+
+:::cypress-config-plugin-example
+
+```ts
+on('task', {
+  log(message: string) {
+    console.log(message)
+
+    return null
+  },
+})
+```
+
+:::
+
+Then call it with [`cy.task()`](/api/commands/task):
+
+```javascript
+cy.task('log', 'Checkout finished')
+```
+
+The message prints in the terminal alongside the spec's test results:
+
+```text
+  Checkout
+Checkout finished
+    ✓ completes an order (72ms)
+
+
+  1 passing (112ms)
+```
+
+#### Log the browser and configuration for a run
+
+Logging the run's context at the start of a spec helps explain a test that
+passes locally and fails in CI.
+
+```javascript
+before(() => {
+  cy.log('browser', `${Cypress.browser.name} ${Cypress.browser.majorVersion}`)
+  cy.log('baseUrl', Cypress.config('baseUrl'))
+})
+```
+
+#### Trace each item in a loop
+
+Log inside [`.each()`](/api/commands/each) to see which item a test was on when
+it failed.
+
+```javascript
+cy.get('li').each(($item, index) => {
+  cy.log(`item ${index}`, $item.text())
+})
+```
+
+## Notes
+
+### Formatting arguments in the Command Log
+
+`cy.log()` joins the message and every argument with a comma and a space.
+Strings, numbers, and booleans print as they are, and Markdown in a string
+renders the same way it does in the message. Arrays with more than 3 items
+and objects with more than 2 keys are summarized so the Command Log stays
+readable:
+
+| Argument               | Shown in the Command Log |
+| ---------------------- | ------------------------ |
+| `['a', 'b', 'c']`      | `[a, b, c]`              |
+| `[1, 2, 3, 4, 5]`      | `Array[5]`               |
+| `{ a: 1, b: 2, c: 3 }` | `Object{3}`              |
+| `() => {}`             | `function(){}`           |
+| `undefined`            | Left out                 |
+
+The full values are always available in the console. Click the `log` command in
+the Command Log to print its `message` and `args` to the Developer Tools
+console.
+
+### Values are captured when the command is queued
+
+`cy.log()` is enqueued like every other Cypress command, so its arguments are
+evaluated when the test code runs, before any commands execute. A variable that
+an earlier command changes still holds its old value when `cy.log()` receives
+it. Call `cy.log()` inside [`.then()`](/api/commands/then) to print a value
+that an earlier command produces.
+
+```javascript
+cy.get('li').then(($items) => {
+  cy.log('item count', $items.length)
+})
+```
+
+Read [Variables and Aliases](/app/core-concepts/variables-and-aliases) for more
+on how Cypress queues commands.
 
 ## Rules
 
@@ -84,22 +243,30 @@ cy.log('log out any message we want here')
 cy.log('another message', ['one', 'two', 'three'])
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/log/custom-command-log-with-any-message.png"
-  alt="Command Log log"
+  alt="Command Log showing two log rows: a plain message, and a message followed by the array [one, two, three]"
 />
 
-When clicking on `log` within the command log, the console outputs the
-following:
+Clicking the second `log` row in the Command Log prints its details to the
+console:
 
 <DocsImage
   src="/img/api/log/console-shows-logs-message-and-any-arguments.png"
-  alt="Console Log log"
+  alt="Developer Tools console showing the log command's Command, Message, and Args after clicking it in the Command Log"
 />
+
+## History
+
+| Version                                    | Changes                                                        |
+| ------------------------------------------ | -------------------------------------------------------------- |
+| [7.3.0](/app/references/changelog#7-3-0)   | All arguments display in the Command Log, not only the first 2 |
+| [0.18.3](/app/references/changelog#0-18-3) | `cy.log()` command added                                       |
 
 ## See also
 
 - [`Cypress.log`](/api/cypress-api/cypress-log)
 - [`cy.task()`](/api/commands/task)
+- [`.then()`](/api/commands/then)
