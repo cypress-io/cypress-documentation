@@ -1949,10 +1949,6 @@ those requests with a `503` instead of sending them:
 
 :::
 
-`blockHosts` doesn't remove these requests from `cy.intercept()`. Cypress checks
-your routes before it blocks a request, so a catch-all route still matches and
-logs them. Scope your routes too.
-
 See [Test Performance](/app/guides/test-performance#Intercept-only-the-requests-you-need)
 for more ways to speed up tests that use the network.
 
