@@ -160,13 +160,13 @@ The native HTML `button` element has a complex accessibility contract implemente
 
 On the other hand, a `div` with `role` of `button` does not get any default browser accessibility behavior, and is **not accessible** without custom JavaScript and CSS replacing the browser contract.
 
-This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though a role-based locator treats each as the same by default. This is because, much like test IDs, the role-based approach is intended to _avoid_ testing the implementation directly, to keep tests resilient when code is refactored.
+This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though a role-based locator such as Testing Library's `findByRole()` treats each as the same. This is because, much like test IDs, the role-based approach is intended to _avoid_ testing the implementation directly, to keep tests resilient when code is refactored.
 
 Developers who are unfamiliar with accessibility may assume that if a role-based locator can be made to pass before and after a code change, there has been no functional or accessibility-related change in the underlying element. As we've seen, this is not actually the case, because of the extra behavior browsers only implement for native HTML elements. For more about this difference and why semantic HTML elements are preferred, see the [first rule of Accessible Rich Internet Applications (ARIA)](https://www.w3.org/TR/using-aria/#rule1).
 
-### Require a native button with `cy.getByRole()`
+### `cy.getByRole()` requires a native button by default
 
-To catch that refactor, pass `native: true` to `cy.getByRole()`. It then matches only elements whose HTML tag gives them the role, so the test fails if a `<button>` is replaced with a `<div role="button">`:
+[`cy.getByRole()`](/api/commands/getbyrole) catches that refactor without any extra options. For a role that HTML has an element for, it matches only elements whose HTML tag gives them the role, so the test fails if a `<button>` is replaced with a `<div role="button">`:
 
 ```html title="index.html"
 <button>Submit</button>
@@ -175,13 +175,13 @@ To catch that refactor, pass `native: true` to `cy.getByRole()`. It then matches
 
 ```js title="spec.cy.js"
 // passes: the <button> element has the `button` role natively
-cy.getByRole('button', { name: 'Submit', native: true }).click()
+cy.getByRole('button', { name: 'Submit' }).click()
 
 // passes: the <div> is left out, since it has the role only through its `role` attribute
-cy.getByRole('button', { name: 'Cancel', native: true }).should('not.exist')
+cy.getByRole('button', { name: 'Cancel' }).should('not.exist')
 ```
 
-Use `native: true` for any role that HTML has an element for, such as `button`, `link`, `heading`, `checkbox`, or `navigation`. Leave it off for widget roles that HTML has no element for, such as `tab` or `menuitem`, where a `role` attribute is the only way to give an element that role.
+This applies to any role that HTML has an element for, such as `button`, `link`, `heading`, `checkbox`, or `navigation`. Widget roles that HTML has no element for, such as `tab` or `menuitem`, are matched by their `role` attribute, since that's the only way to give an element those roles. When a component library renders a role on a generic element, such as a `<div role="dialog">`, pass `native: false` to match it, and test its keyboard and focus behavior explicitly.
 
 ## Where to test accessibility
 
@@ -197,7 +197,7 @@ Test IDs are the most resilient locator option and are a good choice for maximiz
 
 Role-based locators like [`cy.getByRole()`](/api/commands/getbyrole) don't require any code changes, but may cause _many_ tests to fail when a label is missing, instead of just your explicit accessibility assertions, because they are a step closer to the implementation details.
 
-Additionally, role-based locators can provide a false sense of confidence that something is accessible simply because it can be located by its role. Passing `native: true` to `cy.getByRole()` closes part of that gap by confirming the element is a native HTML control. Still, when understood correctly, teams can write effective tests using this approach. For label and text queries, Cypress Testing Library locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly useful.
+Additionally, role-based locators can provide a false sense of confidence that something is accessible simply because it can be located by its role. `cy.getByRole()` closes part of that gap by matching only native HTML controls by default. Still, when understood correctly, teams can write effective tests using this approach. For label and text queries, Cypress Testing Library locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly useful.
 
 What is most important in all accessibility automation discussions is this: how can your testing strategy best support your users with disabilities to independently understand and use your application? Cypress enables you to place the user at the center of your testing process. With a mix of automated scans and some specific intentional assertions, you can reach high levels of confidence that your application is free of known accessibility errors and let your test pipeline warn you if things are going off track.
 

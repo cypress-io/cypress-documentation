@@ -604,6 +604,7 @@ Keep these differences in mind when you translate `getByRole()`:
 - A Playwright locator fails an action when it matches more than one element. `cy.getByRole()` yields every match, so chain [`.first()`](/api/commands/first) or narrow the `name` when several elements share a role.
 - Options such as `checked`, `expanded`, `pressed`, and `level` become a chained [`.filter()`](/api/commands/getbyrole#Narrow-the-results-by-state-with-filter), such as `cy.getByRole('heading').filter('h2, [aria-level="2"]')`.
 - `includeHidden: true` becomes `hidden: true`.
+- For a role that HTML has an element for, `cy.getByRole()` matches only native elements by default, so `cy.getByRole('button')` skips a `<div role="button">` that Playwright's `getByRole('button')` finds. Pass `native: false` to match it.
 
 ## Interactions
 
