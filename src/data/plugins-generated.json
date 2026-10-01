@@ -221,8 +221,8 @@
     },
     "Puppeteer": {
       "npm": "@cypress/puppeteer",
-      "version": "0.1.9",
-      "lastPublished": "2026-09-24T22:13:09.900Z",
+      "version": "0.1.10",
+      "lastPublished": "2026-09-30T16:43:51.824Z",
       "cypressVersion": ">=13.6.0"
     },
     "@testing-library/cypress": {
