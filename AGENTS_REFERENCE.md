@@ -950,6 +950,67 @@ load, so write it to convey the image's _purpose_, not just its existence.
 />
 ```
 
+## Diagram color contrast
+
+A diagram is read by people with low vision and color blindness too, and an SVG
+gets no contrast check from the build. So measure every diagram you add or
+change against [WCAG 2.2 AA](https://www.w3.org/TR/WCAG22/#contrast-minimum)
+before you commit it.
+
+| What                                                                           | Minimum ratio |
+| ------------------------------------------------------------------------------ | ------------- |
+| Text, including labels, callouts, and dimmed characters                        | 4.5:1         |
+| Lines and shapes the reader needs to understand it: brackets, arrows, dots     | 3:1           |
+| Decoration: the card border, a highlight when a label also carries its meaning | none          |
+
+- **Measure each pair against what it sits on.** Text on a highlight is
+  measured against the highlight, not the card.
+- **Styling doesn't exempt text.** A character dimmed to recede, such as the
+  `//` in a URL, is still text and still needs 4.5:1.
+- **Don't rely on the large-text allowance.** WCAG drops text to 3:1 at 24px, or
+  18.66px bold, but `<DocsImage>` scales a diagram down to fit the content
+  column, so text drawn at that size renders smaller. Hold all text to 4.5:1.
+- **Don't carry meaning with color alone.** Pair a color with a label, bracket,
+  or shape, so a reader who can't tell the colors apart still gets it.
+- **Diagrams stay light in dark mode.** They draw their own card background, so
+  measure against that background, not the page.
+
+To check, list every `fill` and `stroke` in the SVG, pair each with the color
+behind it, and compute the ratios:
+
+```js title="contrast.mjs"
+// Relative luminance and contrast ratio, as WCAG defines them
+const luminance = (hex) => {
+  const [r, g, b] = hex
+    .match(/[0-9a-f]{2}/gi)
+    .map((h) => parseInt(h, 16) / 255)
+    .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+const ratio = (a, b) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x)
+  return (hi + 0.05) / (lo + 0.05)
+}
+
+// [what, foreground, background, minimum]
+const pairs = [
+  ['URL text', '#1b1e2e', '#f7f8fc', 4.5],
+  ['brackets', '#6f74a0', '#f7f8fc', 3],
+]
+for (const [what, fg, bg, min] of pairs) {
+  const r = ratio(fg, bg)
+  console.log(`${r >= min ? 'PASS' : 'FAIL'} ${r.toFixed(2)}:1 ${what}`)
+}
+```
+
+```shell
+node contrast.mjs
+```
+
+Report every pair's ratio in the thread, passes included. When one fails,
+darken or lighten the color until it passes, then look at the rendered diagram
+again to make sure it still reads the way it was drawn.
+
 ## Capturing Cypress App screenshots
 
 Screenshots of the Command Log and the DevTools console go stale as the Cypress

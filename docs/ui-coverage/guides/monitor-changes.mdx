@@ -46,7 +46,9 @@ Once runs are recording, connect [Slack](/cloud/integrations/slack) or
 whenever a run finishes, with UI Coverage results surfaced directly in the
 notification. For
 scheduled runs especially, this is what turns a nightly regression into an alert
-rather than a report no one opens.
+rather than a report no one opens. To send the report to a tool those
+integrations don't reach, the
+[Cypress Cloud webhooks](/cloud/integrations/webhooks) `run.uiCoverage.completed` event.
 
 ## Step 2: Catch regressions on each pull request
 
@@ -108,3 +110,5 @@ for your own dashboards.
   automate the regression gate in CI.
 - [Address coverage gaps](/ui-coverage/guides/address-coverage-gaps): close the
   gaps your monitoring surfaces.
+- [Webhooks](/cloud/integrations/webhooks): send `run.uiCoverage.completed`
+  when a UI Coverage report finishes processing.

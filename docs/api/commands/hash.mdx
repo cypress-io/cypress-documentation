@@ -14,7 +14,8 @@ Get the current URL hash of the page that is currently active.
 
 :::info
 
-This is an alias of [`cy.location('hash')`](/api/commands/location)
+`cy.hash()` yields the same value as
+[`cy.location('hash')`](/api/commands/location).
 
 :::
 
@@ -31,6 +32,19 @@ cy.hash(options)
 
 ```javascript
 cy.hash() // Get the url hash
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.get('a').hash() // Ignores the link, yields the page's hash
+```
+
+`cy.hash()` reads the page's URL, not an element's `href`. To check the hash a
+link points to, assert on the link's `hash` property instead:
+
+```javascript
+cy.get('a').should('have.prop', 'hash', '#/users/1')
 ```
 
 ### Arguments
@@ -50,9 +64,13 @@ Pass in an options object to change the default behavior of `cy.hash()`.
 
 - When the current URL contains a hash, `cy.hash()` yields the current URL's
   hash (including the `#` character).
-- When the current URL does not contain a hash, `cy.hash()` yields an empty
-  string.
+- When the current URL does not contain a hash, or ends in a `#` with nothing
+  after it, `cy.hash()` yields an empty string.
 - `cy.hash()` is a query, and it is _safe_ to chain further commands.
+
+`cy.hash()` yields the part of the URL labeled `hash` in these diagrams:
+
+<UrlPartsDiagram />
 
 ## Examples
 
@@ -67,7 +85,7 @@ cy.hash().should('eq', '#/users/1') // => true
 
 #### Assert that the hash matches via RegExp
 
-```html
+```html title="index.html"
 <ul id="users">
   <li>
     <a href="#/users/8fc45b67-d2e5-465a-b822-b281d9c8e4d1">Fred</a>
@@ -75,9 +93,104 @@ cy.hash().should('eq', '#/users/1') // => true
 </ul>
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.get('#users li').find('a').click()
 cy.hash().should('match', /users\/.+$/) // => true
+```
+
+#### Assert that the hash is empty after closing a view
+
+A link to a bare `#` clears the hash, so `cy.hash()` yields an empty string.
+
+```html title="index.html"
+<nav>
+  <a href="#/users/1">Open profile</a>
+  <a href="#">Close profile</a>
+</nav>
+```
+
+```javascript title="spec.cy.js"
+cy.contains('a', 'Open profile').click()
+cy.hash().should('eq', '#/users/1')
+
+cy.contains('a', 'Close profile').click()
+cy.hash().should('be.empty')
+```
+
+### Hash-based routing
+
+#### Wait for a hash route to change after a click
+
+`cy.hash()` retries until its assertions pass, so the test waits for your
+application's router to update the URL without a [`cy.wait()`](/api/commands/wait).
+
+```html title="index.html"
+<nav>
+  <a href="#/">Home</a>
+  <a href="#/settings">Settings</a>
+</nav>
+```
+
+```javascript title="spec.cy.js"
+cy.contains('a', 'Settings').click()
+cy.hash().should('eq', '#/settings')
+```
+
+#### Query strings inside a hash route
+
+In a hash-based route, everything after the `#` belongs to the hash, including a
+`?` query string. [`cy.location('search')`](/api/commands/location) reads only
+the query string before the `#`.
+
+```javascript
+// given remote URL: http://localhost:8000/#/users/1?tab=profile
+cy.hash().should('eq', '#/users/1?tab=profile')
+cy.location('search').should('eq', '')
+```
+
+### In-page anchor links
+
+#### Assert the hash after following a jump link
+
+```html title="index.html"
+<a href="#pricing">Pricing</a>
+
+<section id="pricing" style="margin-top: 2000px">
+  <h2>Pricing</h2>
+</section>
+```
+
+```javascript title="spec.cy.js"
+cy.contains('a', 'Pricing').click()
+cy.hash().should('eq', '#pricing')
+cy.window().its('scrollY').should('be.greaterThan', 0)
+```
+
+## Notes
+
+### Cross-origin pages and `cy.hash()`
+
+`cy.hash()` reads the URL from the browser rather than from the page's
+`window`, so it yields the hash after your application navigates to another
+origin, without wrapping the command in [`cy.origin()`](/api/commands/origin).
+
+### Percent-encoded characters in the hash
+
+`cy.hash()` yields the hash as the browser's URL parser serializes it, so
+characters such as spaces are percent-encoded. A hash set to `#first name`
+yields `#first%20name`.
+
+```javascript
+cy.hash().should('eq', '#first%20name')
+```
+
+To compare against the readable text, decode the hash inside a
+[`.should()`](/api/commands/should) callback, which keeps the retry:
+
+```javascript
+cy.hash().should((hash) => {
+  expect(decodeURIComponent(hash)).to.eq('#first name')
+})
 ```
 
 ## Rules
@@ -107,16 +220,23 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/hash/test-url-hash-for-users-page.png"
-  alt="Command Log for hash"
+  alt="Command Log showing the hash command and a passing assertion that the hash equals #users/new"
 />
 
-When clicking on `hash` within the command log, the console outputs the
+When clicking on `hash` within the Command Log, the console outputs the
 following:
 
 <DocsImage
   src="/img/api/hash/hash-command-yields-url-after-hash.png"
-  alt="Console Log for hash"
+  alt="DevTools console showing Command: hash and Yielded: #users/new"
 />
+
+## History
+
+| Version                                      | Changes                                                                                                                     |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| [15.18.1](/app/references/changelog#15-18-1) | Reads the URL through the automation client in experimental WebKit                                                          |
+| [15.0.0](/app/references/changelog#15-0-0)   | Reads the URL through the browser's automation client instead of the page's `window` in Chromium-based browsers and Firefox |
 
 ## See also
 

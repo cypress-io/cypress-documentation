@@ -73,6 +73,7 @@ import UrlAllowList from '@site/docs/partials/_url_allowlist.mdx'
 import UICovPremiumNote from '@site/docs/partials/_ui-coverage-premium-note.mdx'
 import ResultsApiEnvVars from '@site/docs/partials/_results-api-env-vars.mdx'
 import FixtureVsReadFile from '@site/docs/partials/_fixture-vs-readfile.mdx'
+import UrlPartsDiagram from '@site/docs/partials/_url-parts-diagram.mdx'
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -276,4 +277,5 @@ export default {
   UICovPremiumNote,
   ResultsApiEnvVars,
   FixtureVsReadFile,
+  UrlPartsDiagram,
 }
