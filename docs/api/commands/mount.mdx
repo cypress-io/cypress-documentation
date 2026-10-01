@@ -43,7 +43,7 @@ framework-specific `mount()` function for each one. They ship with the
 <Tabs groupId="frameworks">
 <TabItem value="React">
 
-```js
+```js title="cypress/support/component.js"
 import { mount } from 'cypress/react'
 ```
 
@@ -54,7 +54,7 @@ accepts standard JSX, such as `cy.mount(<Stepper />)`.
 </TabItem>
 <TabItem value="Angular">
 
-```ts
+```ts title="cypress/support/component.ts"
 import { mount } from 'cypress/angular'
 ```
 
@@ -66,7 +66,7 @@ but renders the component in your real browser rather than a simulated DOM.
 </TabItem>
 <TabItem value="Vue">
 
-```js
+```js title="cypress/support/component.js"
 import { mount } from 'cypress/vue'
 ```
 
@@ -78,7 +78,7 @@ component in your real browser rather than a simulated DOM.
 </TabItem>
 <TabItem value="Svelte">
 
-```js
+```js title="cypress/support/component.js"
 import { mount } from 'cypress/svelte'
 ```
 
