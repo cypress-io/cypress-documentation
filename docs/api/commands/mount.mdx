@@ -1,6 +1,6 @@
 ---
 title: 'cy.mount()'
-description: Set up a mount command in your support file for Cypress Component Testing
+description: Register and customize cy.mount(), the command that renders components in Cypress Component Testing.
 sidebar_label: mount
 slug: /api/commands/mount
 componentSpecific: true
@@ -141,7 +141,7 @@ import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', (component, options) => {
   // Wrap any parent components needed
-  // ie: return mount(<MyProvider>{component}</MyProvider>, options)
+  // For example: return mount(<MyProvider>{component}</MyProvider>, options)
   return mount(component, options)
 })
 ```
@@ -162,7 +162,7 @@ declare global {
 
 Cypress.Commands.add('mount', (component, options) => {
   // Wrap any parent components needed
-  // ie: return mount(<MyProvider>{component}</MyProvider>, options)
+  // For example: return mount(<MyProvider>{component}</MyProvider>, options)
   return mount(component, options)
 })
 ```
@@ -268,7 +268,7 @@ import { mount } from 'cypress/svelte'
 
 Cypress.Commands.add('mount', (component, options) => {
   // Pass any props or context every component needs
-  // ie: return mount(component, { context: new Map([['theme', 'dark']]), ...options })
+  // For example: return mount(component, { context: new Map([['theme', 'dark']]), ...options })
   return mount(component, options)
 })
 ```
@@ -289,7 +289,7 @@ declare global {
 
 Cypress.Commands.add('mount', (component, options) => {
   // Pass any props or context every component needs
-  // ie: return mount(component, { context: new Map([['theme', 'dark']]), ...options })
+  // For example: return mount(component, { context: new Map([['theme', 'dark']]), ...options })
   return mount(component, options)
 })
 ```
@@ -339,11 +339,20 @@ If your tests have trouble finding the types for the custom command, add
 "include": ["./src", "cypress.d.ts"]
 ```
 
+## How `cy.mount()` cleans up between tests
+
+Cypress unmounts the mounted component after each test, so every test starts
+with an empty `[data-cy-root]` element. Calling `cy.mount()` again in the same
+test replaces the component you mounted earlier. You don't need to unmount
+anything yourself.
+
 ## `cy.mount()` examples for common workflows
 
 The examples in this section use React and TypeScript. In JavaScript, leave out
 the `import type` lines and the `declare global` block. The same patterns carry
-over to the other frameworks, with each framework's own options.
+over to the other frameworks, with each framework's own options: `providers`
+and `imports` in Angular, `global.plugins` and `global.stubs` in Vue, and
+`props` and `context` in Svelte.
 
 ### Setting defaults that a single test can override
 
@@ -570,7 +579,10 @@ The first test's log starts with a `mount` row. The test that passes
 The `mount` row names the outermost element passed to `mount()`. When your
 command wraps the component, as the theme command does with
 `<ThemeContext.Provider>`, the row names the wrapper instead of your component.
-A context provider has no display name, so the row reads `<Unknown ... />`.
+A context provider has no display name, so the row reads `<Unknown ... />`. In
+React 19, give the context one with `ThemeContext.displayName = 'ThemeContext'`
+and the row reads `<ThemeContext ... />`. React 18 shows `<Unknown ... />`
+either way.
 
 ## Troubleshooting the `cy.mount()` command
 
@@ -582,6 +594,23 @@ command. Check that:
   imports a file that does.
 - The [`supportFile`](/app/references/configuration#Testing-Type-Specific-Options) option under
   `component` in your Cypress config points to that file and isn't `false`.
+
+If `cy.mount()` fails with
+`No element found that matches selector [data-cy-root]`, the framework's
+`mount()` has nowhere to render. Put an element with the `data-cy-root`
+attribute back in `cypress/support/component-index.html`:
+
+```html title="cypress/support/component-index.html"
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div data-cy-root></div>
+  </body>
+</html>
+```
 
 If `cy.mount()` doesn't do what your custom command says, check whether more
 than one file registers it. Registering `mount` again replaces the earlier
@@ -610,6 +639,14 @@ adding providers, routers, and stores:
 - [Angular examples](/app/component-testing/angular/examples)
 - [Vue examples](/app/component-testing/vue/examples)
 - [Svelte examples](/app/component-testing/svelte/examples)
+
+## History
+
+| Version                                    | Changes                                                                                            |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0) | Removed `cypress/react18` and `cypress/angular-signals`; use `cypress/react` and `cypress/angular` |
+| [11.0.0](/app/references/changelog#11-0-0) | Calling `cy.mount()` again in the same test removes the previously mounted component               |
+| [10.0.0](/app/references/changelog#10-0-0) | Cypress scaffolds a `cy.mount()` command when you configure Component Testing                      |
 
 ## See also
 
