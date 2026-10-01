@@ -34,7 +34,7 @@ function into each spec:
   them in a [React context provider](https://react.dev/reference/react/createContext#provider)
   or installing [Vue plugins](https://vuejs.org/guide/reusability/plugins.html).
 
-## Framework `mount()` functions for Cypress Component Testing
+## Framework `mount()` functions for component testing
 
 Each framework renders components differently, so Cypress provides a
 framework-specific `mount()` function for each one. They ship with the
@@ -353,6 +353,10 @@ the `import type` lines and the `declare global` block. The same patterns carry
 over to the other frameworks, with each framework's own options: `providers`
 and `imports` in Angular, `global.plugins` and `global.stubs` in Vue, and
 `props` and `context` in Svelte.
+
+These examples use JSX in the support file, so rename the scaffolded
+`component.ts` to `component.tsx` (or `component.js` to `component.jsx`).
+Cypress finds either by default.
 
 ### Setting defaults that a single test can override
 
