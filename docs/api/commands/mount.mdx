@@ -126,7 +126,7 @@ Other frameworks get the same file with their own import: `cypress/angular`,
 
 ## Customizing the `cy.mount()` command for your app
 
-To set up what your components need in every test, replace the direct
+To customize the command, replace the direct
 `Cypress.Commands.add('mount', mount)` registration with a function that wraps
 `mount()`. Start from the example for your framework:
 
@@ -348,21 +348,18 @@ anything yourself.
 
 ## `cy.mount()` examples for common workflows
 
-The examples in this section use React and TypeScript. In JavaScript, leave out
+The examples in this section use React and TypeScript, with JSX in the support
+file. Rename the scaffolded `component.ts` to `component.tsx` (or `component.js`
+to `component.jsx`); Cypress finds either by default. In JavaScript, leave out
 the `import type` lines and the `declare global` block. The same patterns carry
 over to the other frameworks, with each framework's own options: `providers`
 and `imports` in Angular, `global.plugins` and `global.stubs` in Vue, and
 `props` and `context` in Svelte.
 
-These examples use JSX in the support file, so rename the scaffolded
-`component.ts` to `component.tsx` (or `component.js` to `component.jsx`).
-Cypress finds either by default.
-
 ### Setting defaults that a single test can override
 
-A custom command is the place for setup that most tests share. Pull your own
-option out of `options` and pass the rest through, so a test can change the
-default without the command getting in the way.
+Pull your own option out of `options` and pass the rest through, so a test can
+change the default without the command getting in the way.
 
 This command wraps every component in a theme provider. It assumes a
 `ThemeContext` in your app like this one:
@@ -485,9 +482,9 @@ providers when the component depends on them.
 
 :::
 
-This diagram shows the layers a wrapping command renders, and which ones
-`rerender()` keeps. With `strict` on, `mount()` adds `<StrictMode>` itself, so
-it survives a rerender. Your command adds the provider, so a rerender drops it:
+This diagram shows the layers a wrapping command renders and which ones a
+rerender keeps. `<StrictMode>` comes from `mount()` itself when `strict` is on,
+so it survives:
 
 <DocsImage
   src="/img/api/mount/what-cy-mount-renders.svg"
