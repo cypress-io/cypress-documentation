@@ -476,6 +476,19 @@ To get the most out of Cloud MCP, follow these four principles:
 </CopyPrompt>
 
 <CopyPrompt
+  title="Parallelize CI runs with the right machine count"
+  subtext="Split your suite across machines, sized from real spec durations instead of a guess."
+  prompt={`Parallelize the Cypress tests in our CI workflow across multiple machines. Use the spec durations from the latest passing run on main in Cypress Cloud to pick the machine count: compare the total spec time with the slowest spec, and stop adding machines once another one saves less time than its setup costs. Then update the CI config to run in parallel, and explain why you chose that number.`}
+  defaultCollapsed
+>
+
+### Parallelize CI runs with the right machine count
+
+</CopyPrompt>
+
+The agent reads each spec's duration from `cypress_get_specs` and the run's total duration from `cypress_get_runs`, so the machine count it picks reflects how your suite actually runs. The slowest spec sets a floor on how short each machine can get, which is why adding machines past a certain point stops paying off. See [Parallelization](/cloud/features/smart-orchestration/parallelization) for how Cypress Cloud balances specs across machines.
+
+<CopyPrompt
   title="Audit skipped and pending tests in a run"
   subtext="Catch coverage erosion by listing what a run has stopped testing."
   prompt={`List every skipped and pending test in run [Run URL] in Cypress Cloud, grouped by spec.`}
