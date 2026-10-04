@@ -487,6 +487,14 @@ div[class^='codeBlockTitle'] {
     margin-bottom: 0;
   }
 
+  /* Osano's "Powered by" link sits on its own row; inline after the policy
+     link it stays visible without adding a row to the bar. */
+  .osano-cm-powered-by {
+    display: inline-flex;
+    margin: 0 0 0 12px;
+    vertical-align: middle;
+  }
+
   .osano-cm-dialog__buttons {
     flex: none;
     width: 100%;
