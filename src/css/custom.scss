@@ -35,13 +35,13 @@
   --ifm-color-primary-light: theme(colors.jade.200);
   --ifm-color-primary-lighter: theme(colors.jade.100);
   --ifm-color-primary-lightest: theme(colors.jade.50);
-  --ifm-color-secondary: var(--ifm-color-indigo-500);
-  --ifm-color-secondary-dark: var(--ifm-color-indigo-400);
-  --ifm-color-secondary-darker: var(--ifm-color-indigo-500);
-  --ifm-color-secondary-darkest: var(--ifm-color-indigo-600);
-  --ifm-color-secondary-light: var(--ifm-color-indigo-200);
-  --ifm-color-secondary-lighter: var(--ifm-color-indigo-100);
-  --ifm-color-secondary-lightest: var(--ifm-color-indigo-50);
+  --ifm-color-secondary: theme(colors.indigo.500);
+  --ifm-color-secondary-dark: theme(colors.indigo.400);
+  --ifm-color-secondary-darker: theme(colors.indigo.500);
+  --ifm-color-secondary-darkest: theme(colors.indigo.600);
+  --ifm-color-secondary-light: theme(colors.indigo.200);
+  --ifm-color-secondary-lighter: theme(colors.indigo.100);
+  --ifm-color-secondary-lightest: theme(colors.indigo.50);
   --ifm-color-jade-50: theme(colors.jade.50);
   --ifm-color-jade-100: theme(colors.jade.100);
   --ifm-color-jade-200: theme(colors.jade.200);
@@ -53,17 +53,17 @@
   --ifm-color-jade-800: theme(colors.jade.800);
   --ifm-color-jade-900: theme(colors.jade.900);
   --ifm-color-jade-1000: theme(colors.jade.1000);
-  --ifm-color-gray-50: var(--ifm-color-gray-50);
-  --ifm-color-gray-100: var(--ifm-color-gray-100);
-  --ifm-color-gray-200: var(--ifm-color-gray-200);
-  --ifm-color-gray-300: var(--ifm-color-gray-300);
-  --ifm-color-gray-400: var(--ifm-color-gray-400);
-  --ifm-color-gray-500: var(--ifm-color-gray-500);
-  --ifm-color-gray-600: var(--ifm-color-gray-600);
-  --ifm-color-gray-700: var(--ifm-color-gray-700);
-  --ifm-color-gray-800: var(--ifm-color-gray-800);
-  --ifm-color-gray-900: var(--ifm-color-gray-900);
-  --ifm-color-gray-1000: var(--ifm-color-gray-1000);
+  --ifm-color-gray-50: theme(colors.gray.50);
+  --ifm-color-gray-100: theme(colors.gray.100);
+  --ifm-color-gray-200: theme(colors.gray.200);
+  --ifm-color-gray-300: theme(colors.gray.300);
+  --ifm-color-gray-400: theme(colors.gray.400);
+  --ifm-color-gray-500: theme(colors.gray.500);
+  --ifm-color-gray-600: theme(colors.gray.600);
+  --ifm-color-gray-700: theme(colors.gray.700);
+  --ifm-color-gray-800: theme(colors.gray.800);
+  --ifm-color-gray-900: theme(colors.gray.900);
+  --ifm-color-gray-1000: theme(colors.gray.1000);
   --ifm-color-teal-50: theme(colors.teal.50);
   --ifm-color-teal-100: theme(colors.teal.100);
   --ifm-color-teal-200: theme(colors.teal.200);
@@ -97,18 +97,18 @@
   --ifm-color-red-800: theme(colors.red.800);
   --ifm-color-red-900: theme(colors.red.900);
   --ifm-color-red-1000: theme(colors.red.1000);
-  --ifm-color-indigo-50: var(--ifm-color-indigo-50);
-  --ifm-color-indigo-100: var(--ifm-color-indigo-100);
-  --ifm-color-indigo-200: var(--ifm-color-indigo-200);
-  --ifm-color-indigo-300: var(--ifm-color-indigo-300);
-  --ifm-color-indigo-400: var(--ifm-color-indigo-400);
-  --ifm-color-indigo-500: var(--ifm-color-indigo-500);
-  --ifm-color-indigo-600: var(--ifm-color-indigo-600);
-  --ifm-color-indigo-700: var(--ifm-color-indigo-700);
-  --ifm-color-indigo-800: var(--ifm-color-indigo-800);
-  --ifm-color-indigo-900: var(--ifm-color-indigo-900);
-  --ifm-color-indigo-1000: var(--ifm-color-indigo-1000);
-  --ifm-color-indigo-50: var(--ifm-color-indigo-50);
+  --ifm-color-indigo-50: theme(colors.indigo.50);
+  --ifm-color-indigo-100: theme(colors.indigo.100);
+  --ifm-color-indigo-200: theme(colors.indigo.200);
+  --ifm-color-indigo-300: theme(colors.indigo.300);
+  --ifm-color-indigo-400: theme(colors.indigo.400);
+  --ifm-color-indigo-500: theme(colors.indigo.500);
+  --ifm-color-indigo-600: theme(colors.indigo.600);
+  --ifm-color-indigo-700: theme(colors.indigo.700);
+  --ifm-color-indigo-800: theme(colors.indigo.800);
+  --ifm-color-indigo-900: theme(colors.indigo.900);
+  --ifm-color-indigo-1000: theme(colors.indigo.1000);
+  --ifm-color-indigo-50: theme(colors.indigo.50);
   --ifm-color-purple-100: theme(colors.purple.100);
   --ifm-color-purple-200: theme(colors.purple.200);
   --ifm-color-purple-300: theme(colors.purple.300);
@@ -141,13 +141,13 @@
   // override the default mapping of footer links to the `secondary` color,
   // which is not good for dark backgrounds such as the footer
   .footer--dark {
-    --ifm-footer-link-color: var(--ifm-color-gray-50);
+    --ifm-footer-link-color: theme(colors.gray.50);
   }
 }
 
 html[data-theme] {
   --ifm-font-size-base: 16px;
-  --ifm-link-hover-color: var(--ifm-color-indigo-500);
+  --ifm-link-hover-color: theme(colors.indigo.500);
   --ifm-link-hover-decoration: none;
   --doc-sidebar-hidden-width: 0;
 }
@@ -170,7 +170,7 @@ html[data-theme='light'] {
   --ifm-tabs-color: var(--ifm-color-gray-300);
   --ifm-tabs-hover-color: rgba(255, 255, 255, 0.08);
 
-  --ifm-link-color: var(--ifm-color-indigo-500);
+  --ifm-link-color: theme(colors.indigo.500);
 
   --ifm-toc-border-color: var(--ifm-color-gray-100);
 
@@ -460,12 +460,12 @@ div[class^='codeBlockTitle'] {
 }
 
 /* Osano cookie banner. Layout (box or bar), position, buttons, and copy come
-   from the Osano dashboard; these rules style whichever layout it serves. */
-.osano-cm-dialog {
-  background: #fff;
+   from the Osano dashboard; these rules style whichever layout it serves.
+   Osano injects its dashboard colors at runtime, after this stylesheet, so
+   rules that override them are scoped under .osano-cm-window to win. */
+.osano-cm-window .osano-cm-dialog {
+  /* was the dashboard's #838391 on #edeff5 = 3.25:1 */
   color: var(--ifm-color-gray-700);
-  font-size: 14px;
-  line-height: 20px;
 }
 
 /* Osano switches the bar from a column to a row at 768px, so the close button
@@ -474,8 +474,7 @@ div[class^='codeBlockTitle'] {
   align-items: center;
   gap: 4px 16px;
   padding: 8px 12px;
-  border-top: 1px solid var(--ifm-color-gray-100);
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
   font-size: 13px;
   line-height: 18px;
 
@@ -492,11 +491,13 @@ div[class^='codeBlockTitle'] {
     flex: none;
     width: 100%;
     margin: 0;
+    gap: 8px;
   }
 
   .osano-cm-button {
     flex: 1 1 auto;
     width: auto;
+    min-width: 0;
     height: 32px;
     margin: 0;
     padding: 4px 8px;
@@ -505,14 +506,13 @@ div[class^='codeBlockTitle'] {
   }
 
   .osano-cm-close {
-    position: absolute;
-    top: 0;
-    right: 0;
+    top: 6px;
+    right: 6px;
     margin: 0;
   }
 
   @media (min-width: 768px) {
-    padding: 8px 24px;
+    padding: 8px 16px 8px 24px;
     font-size: 14px;
     line-height: 20px;
 
@@ -533,62 +533,68 @@ div[class^='codeBlockTitle'] {
     }
 
     .osano-cm-close {
-      position: static;
+      position: relative;
+      top: auto;
+      right: auto;
       order: 99;
       align-self: center;
-      margin: -8px -8px -8px 8px;
+      margin: 0 0 0 4px;
     }
   }
 }
 
-/* Keeps the bar clear of the docs back-to-top button (bottom-right). */
+/* Keeps the bar clear of the dark mode switch (the swizzled BackToTopButton,
+   fixed bottom-right). */
 @media (min-width: 768px) {
   body:has(.theme-back-to-top-button) .osano-cm-dialog--type_bar {
-    right: 5.6rem;
-    border-right: 1px solid var(--ifm-color-gray-100);
+    right: 6.5rem;
     border-top-right-radius: 4px;
   }
 }
 
 /* Outlined so Accept and Reject carry equal weight. */
-.osano-cm-button {
+.osano-cm-window .osano-cm-button {
   border: 1px solid var(--ifm-color-indigo-600);
   border-radius: 4px;
-  background: #fff;
+  background-color: #fff;
   color: var(--ifm-color-indigo-600);
   font-weight: 500;
   line-height: 20px;
 
   &:hover {
-    background: var(--ifm-color-indigo-50);
+    background-color: var(--ifm-color-indigo-50);
   }
 }
 
 /* The preferences drawer's only action, so it stays solid. */
-.osano-cm-button.osano-cm-save {
+.osano-cm-window .osano-cm-button.osano-cm-save {
   border-color: var(--ifm-color-indigo-500);
-  background: var(--ifm-color-indigo-500);
+  background-color: var(--ifm-color-indigo-500);
   color: #fff;
 
   &:hover {
     border-color: var(--ifm-color-indigo-600);
-    background: var(--ifm-color-indigo-600);
+    background-color: var(--ifm-color-indigo-600);
   }
 }
 
-.osano-cm-button:focus-visible,
-.osano-cm-close:focus-visible,
-.osano-cm-link:focus-visible {
+.osano-cm-window .osano-cm-button:focus-visible,
+.osano-cm-window .osano-cm-close:focus-visible,
+.osano-cm-window .osano-cm-link:focus-visible {
   outline: 2px solid var(--ifm-color-indigo-600);
   outline-offset: 2px;
 }
 
-/* Osano fixes the close icon at 20px; padding grows the tap target to 40px,
-   and the negative margin keeps the layout unchanged. */
-.osano-cm-dialog__close {
-  padding: 8px;
-  margin: -8px;
-  box-sizing: content-box;
+/* Grows the close button's tap target from its 24px circle to 40px without
+   changing how it looks or where it sits. */
+.osano-cm-window .osano-cm-dialog__close {
+  overflow: visible;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+  }
 }
 
 .logo {
