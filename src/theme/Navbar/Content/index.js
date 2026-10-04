@@ -10,6 +10,7 @@ import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle'
 import NavbarLogo from '@theme/Navbar/Logo'
 import NavbarSearch from '@theme/Navbar/Search'
 import { SocialIcons } from './SocialIcons'
+import { SupportAssistantButton } from '@site/src/components/support-assistant'
 function useNavbarItems() {
   // TODO temporary casting until ThemeConfig type is improved
   return useThemeConfig().navbar.items
@@ -80,6 +81,7 @@ export default function NavbarContent() {
               <SearchBar />
             </NavbarSearch>
           )}
+          <SupportAssistantButton />
           <SocialIcons className="hidden sm:flex" />
         </>
       }
