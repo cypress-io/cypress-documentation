@@ -133,6 +133,29 @@ describe('Support Assistant', () => {
     panel().should('be.visible')
   })
 
+  it('offers cypress.io when the embed never loads', () => {
+    // A frame the browser refuses, such as on a host outside the embed's frame-ancestors, never announces itself.
+    cy.intercept('GET', `${EMBED_ORIGIN}/ask/embed*`, {
+      statusCode: 200,
+      headers: { 'content-type': 'text/html' },
+      body: '<!doctype html><html><body></body></html>',
+    }).as('silentEmbed')
+    button().click()
+    cy.wait('@silentEmbed')
+    cy.get('[data-cy="support-assistant-fallback"]', { timeout: 12000 })
+      .should('be.visible')
+      .find('a')
+      .should('have.attr', 'href')
+      .and('include', `${EMBED_ORIGIN}/ask?utm_source=docs.cypress.io`)
+  })
+
+  it('does not show the fallback once the embed loads', () => {
+    button().click()
+    cy.wait('@embed')
+    cy.wait(9000)
+    cy.get('[data-cy="support-assistant-fallback"]').should('not.exist')
+  })
+
   it('stays open across a reload', () => {
     button().click()
     panel().should('be.visible')

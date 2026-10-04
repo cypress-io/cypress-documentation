@@ -20,6 +20,9 @@ const MESSAGES = {
 }
 
 const OPEN_STORAGE_KEY = 'supportAssistant.isOpen'
+// How long the embed has to announce itself before the panel offers cypress.io instead. A frame the
+// browser refuses (a host outside its frame-ancestors, a content blocker) never loads and never says so.
+const LOAD_TIMEOUT_MS = 8000
 const BUTTON_ID = 'support-assistant-button'
 const PANEL_ID = 'support-assistant'
 
@@ -57,6 +60,7 @@ export function SupportAssistantProvider({
 
   const [isOpen, setIsOpen] = useState(false)
   const [frameSrc, setFrameSrc] = useState<string | null>(null)
+  const [hasFailed, setHasFailed] = useState(false)
   const frameRef = useRef<HTMLIFrameElement>(null)
   const isReady = useRef(false)
   // Set when the reader opens the panel, never when it reopens on page load. Focus moves once the
@@ -129,6 +133,7 @@ export function SupportAssistantProvider({
       }
       if (event.data?.type === MESSAGES.ready) {
         isReady.current = true
+        setHasFailed(false)
         post({ type: MESSAGES.page, url: pageUrlRef.current })
         focusIfPending()
       }
@@ -156,6 +161,14 @@ export function SupportAssistantProvider({
     return () => document.removeEventListener('keydown', onKeydown)
   }, [isOpen, setOpen])
 
+  useEffect(() => {
+    if (!frameSrc) return
+    const timer = window.setTimeout(() => {
+      if (!isReady.current) setHasFailed(true)
+    }, LOAD_TIMEOUT_MS)
+    return () => window.clearTimeout(timer)
+  }, [frameSrc])
+
   return (
     <SupportAssistantContext.Provider value={{ isOpen, toggle }}>
       {children}
@@ -177,6 +190,24 @@ export function SupportAssistantProvider({
             data-cy="support-assistant-frame"
             className="block h-full w-full border-0"
           />
+          {hasFailed && (
+            <div
+              data-cy="support-assistant-fallback"
+              className="absolute inset-0 flex flex-col items-center justify-center gap-[16px] bg-white p-[24px] text-center text-gray-700"
+            >
+              <p className="m-0">
+                The Support Assistant couldn't load on this page.
+              </p>
+              <a
+                href={`${embedOrigin}/ask?utm_source=docs.cypress.io&utm_medium=support-assistant&utm_content=embed-fallback`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-indigo-500"
+              >
+                Open the Support Assistant on cypress.io
+              </a>
+            </div>
+          )}
         </div>
       )}
     </SupportAssistantContext.Provider>
