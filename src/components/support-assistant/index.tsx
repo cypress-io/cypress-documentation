@@ -141,12 +141,13 @@ export function SupportAssistantProvider({
   useEffect(() => {
     if (!isOpen) return
     const onKeydown = (event: KeyboardEvent) => {
-      // Escape that closes search or another overlay is theirs, not the panel's.
-      if (
-        event.key !== 'Escape' ||
-        event.defaultPrevented ||
-        document.querySelector('.DocSearch-Modal, .navbar-sidebar--show')
-      ) {
+      // Only Escape aimed at the assistant closes it, so closing search, an image zoom, or any
+      // other overlay leaves the panel open. Escape inside the frame arrives as `close` instead.
+      const target = document.activeElement
+      const isOnAssistant =
+        target?.id === BUTTON_ID ||
+        document.getElementById(PANEL_ID)?.contains(target)
+      if (event.key !== 'Escape' || event.defaultPrevented || !isOnAssistant) {
         return
       }
       setOpen(false)

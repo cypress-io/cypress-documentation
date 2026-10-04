@@ -85,9 +85,22 @@ describe('Support Assistant', () => {
   it('closes on Escape and returns focus to the button', () => {
     button().click()
     panel().should('be.visible')
-    cy.get('body').type('{esc}')
+    button().focus().type('{esc}')
     panel().should('not.be.visible')
     button().should('have.attr', 'aria-expanded', 'false').and('have.focus')
+  })
+
+  it('stays open when Escape is meant for something else on the page', () => {
+    button().click()
+    panel().should('be.visible')
+    cy.get('h1')
+      .first()
+      .then(($h1) => {
+        $h1.attr('tabindex', '-1')
+        $h1[0].focus()
+      })
+    cy.focused().type('{esc}')
+    panel().should('be.visible')
   })
 
   it('moves focus into the panel when it is reopened', () => {
