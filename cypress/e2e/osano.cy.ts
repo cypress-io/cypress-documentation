@@ -7,4 +7,14 @@ describe('Cookie consent (Osano)', () => {
     cy.visit('/')
     cy.get('.osano-cm-dialog', { timeout: 20000 }).should('exist')
   })
+
+  // plugins/osano.js labels the close button and its inner <svg>, where the
+  // click actually lands, so FullStory reports dismissals by name.
+  it('labels the dismiss button for FullStory', () => {
+    cy.visit('/')
+    cy.get('.osano-cm-dialog .osano-cm-close', { timeout: 20000 })
+      .should('have.attr', 'data-fs-element', 'Cookie Consent - Dismiss')
+      .find('svg')
+      .should('have.attr', 'data-fs-element', 'Cookie Consent - Dismiss')
+  })
 })
