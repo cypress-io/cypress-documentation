@@ -116,6 +116,8 @@ describe('Support Assistant', () => {
   it('closes when the embed asks it to', () => {
     button().click()
     cy.wait('@embed')
+    // The stub listens once it has announced itself, which the panel answers with focus.
+    cy.wrap(received).should('deep.include', { type: 'cypressgpt:focus' })
     frame().then(($frame) => {
       const embed = ($frame[0] as HTMLIFrameElement).contentWindow
       embed?.postMessage({ type: 'stub:close' }, '*')
@@ -133,27 +135,65 @@ describe('Support Assistant', () => {
     panel().should('be.visible')
   })
 
-  it('offers cypress.io when the embed never loads', () => {
-    // A frame the browser refuses, such as on a host outside the embed's frame-ancestors, never announces itself.
-    cy.intercept('GET', `${EMBED_ORIGIN}/ask/embed*`, {
-      statusCode: 200,
-      headers: { 'content-type': 'text/html' },
-      body: '<!doctype html><html><body></body></html>',
-    }).as('silentEmbed')
-    button().click()
-    cy.wait('@silentEmbed')
-    cy.get('[data-cy="support-assistant-fallback"]', { timeout: 12000 })
-      .should('be.visible')
-      .find('a')
-      .should('have.attr', 'href')
-      .and('include', `${EMBED_ORIGIN}/ask?utm_source=docs.cypress.io`)
-  })
+  describe('when the embed cannot load', () => {
+    const fallback = () => cy.get('[data-cy="support-assistant-fallback"]')
 
-  it('does not show the fallback once the embed loads', () => {
-    button().click()
-    cy.wait('@embed')
-    cy.wait(9000)
-    cy.get('[data-cy="support-assistant-fallback"]').should('not.exist')
+    it('offers cypress.io once the embed has had time to announce itself', () => {
+      // A frame the browser refuses, such as on a host outside the embed's frame-ancestors, never announces itself.
+      cy.intercept('GET', `${EMBED_ORIGIN}/ask/embed*`, {
+        statusCode: 200,
+        headers: { 'content-type': 'text/html' },
+        body: '<!doctype html><html><body></body></html>',
+      }).as('silentEmbed')
+      cy.clock(Date.now(), ['setTimeout', 'clearTimeout'])
+      button().click()
+      cy.wait('@silentEmbed')
+      cy.tick(7999)
+      fallback().should('not.exist')
+      cy.tick(1)
+      fallback()
+        .should('be.visible')
+        .and('contain', "The Support Assistant couldn't load on this page.")
+      fallback()
+        .contains('a', 'Open the Support Assistant on cypress.io')
+        .should('have.attr', 'target', '_blank')
+        .and('have.attr', 'rel', 'noopener noreferrer')
+        .and('have.attr', 'href')
+        .then((href) => {
+          const url = new URL(href as unknown as string)
+          expect(url.origin + url.pathname).to.eq(`${EMBED_ORIGIN}/ask`)
+          expect(Object.fromEntries(url.searchParams)).to.deep.eq({
+            utm_source: 'docs.cypress.io',
+            utm_medium: 'support-assistant',
+            utm_content: 'embed-fallback',
+          })
+        })
+    })
+
+    it('keeps the fallback in the panel the reader can still close', () => {
+      cy.intercept('GET', `${EMBED_ORIGIN}/ask/embed*`, {
+        statusCode: 200,
+        headers: { 'content-type': 'text/html' },
+        body: '<!doctype html><html><body></body></html>',
+      })
+      cy.clock(Date.now(), ['setTimeout', 'clearTimeout'])
+      button().click()
+      cy.tick(8000)
+      fallback().should('be.visible')
+      button().click()
+      panel().should('not.be.visible')
+      button().click()
+      fallback().should('be.visible')
+    })
+
+    it('does not show once the embed loads', () => {
+      cy.clock(Date.now(), ['setTimeout', 'clearTimeout'])
+      button().click()
+      cy.wait('@embed')
+      cy.wrap(received).should('deep.include', { type: 'cypressgpt:focus' })
+      cy.tick(8000)
+      fallback().should('not.exist')
+    })
   })
 
   it('stays open across a reload', () => {
