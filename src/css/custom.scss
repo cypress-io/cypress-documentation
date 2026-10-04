@@ -459,6 +459,152 @@ div[class^='codeBlockTitle'] {
   color: var(--ifm-color-gray-700) !important;
 }
 
+/* Osano cookie banner. Layout (box or bar), position, buttons, and copy come
+   from the Osano dashboard; these rules style whichever layout it serves.
+   Osano injects its dashboard colors at runtime, after this stylesheet, so
+   rules that override them are scoped under .osano-cm-window to win. */
+.osano-cm-window .osano-cm-dialog {
+  /* was the dashboard's #838391 on #edeff5 = 3.25:1 */
+  color: var(--ifm-color-gray-700);
+}
+
+/* Osano switches the bar from a column to a row at 768px, so the close button
+   moves from the corner into the row there. */
+.osano-cm-dialog--type_bar {
+  align-items: center;
+  gap: 4px 16px;
+  padding: 8px 12px;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+  line-height: 18px;
+
+  .osano-cm-dialog__content {
+    margin: 0;
+    padding-right: 32px;
+  }
+
+  .osano-cm-content__message {
+    margin-bottom: 0;
+  }
+
+  /* Osano's "Powered by" link sits on its own row; inline after the policy
+     link it stays visible without adding a row to the bar. */
+  .osano-cm-powered-by {
+    display: inline-flex;
+    margin: 0 0 0 12px;
+    vertical-align: middle;
+  }
+
+  .osano-cm-dialog__buttons {
+    flex: none;
+    width: 100%;
+    margin: 0;
+    gap: 8px;
+  }
+
+  .osano-cm-button {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+    height: 32px;
+    margin: 0;
+    padding: 4px 8px;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .osano-cm-close {
+    top: 6px;
+    right: 6px;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    padding: 8px 16px 8px 24px;
+    font-size: 14px;
+    line-height: 20px;
+
+    .osano-cm-dialog__content {
+      padding-right: 0;
+    }
+
+    .osano-cm-dialog__buttons {
+      width: auto;
+      min-width: 0;
+      max-width: none;
+    }
+
+    .osano-cm-button {
+      flex: none;
+      padding: 4px 12px;
+      font-size: 14px;
+    }
+
+    .osano-cm-close {
+      position: relative;
+      top: auto;
+      right: auto;
+      order: 99;
+      align-self: center;
+      margin: 0 0 0 4px;
+    }
+  }
+}
+
+/* Keeps the bar clear of the dark mode switch (the swizzled BackToTopButton,
+   fixed bottom-right). */
+@media (min-width: 768px) {
+  body:has(.theme-back-to-top-button) .osano-cm-dialog--type_bar {
+    right: 6.5rem;
+    border-top-right-radius: 4px;
+  }
+}
+
+/* Outlined so Accept and Reject carry equal weight. */
+.osano-cm-window .osano-cm-button {
+  border: 1px solid var(--ifm-color-indigo-600);
+  border-radius: 4px;
+  background-color: #fff;
+  color: var(--ifm-color-indigo-600);
+  font-weight: 500;
+  line-height: 20px;
+
+  &:hover {
+    background-color: var(--ifm-color-indigo-50);
+  }
+}
+
+/* The preferences drawer's only action, so it stays solid. */
+.osano-cm-window .osano-cm-button.osano-cm-save {
+  border-color: var(--ifm-color-indigo-500);
+  background-color: var(--ifm-color-indigo-500);
+  color: #fff;
+
+  &:hover {
+    border-color: var(--ifm-color-indigo-600);
+    background-color: var(--ifm-color-indigo-600);
+  }
+}
+
+.osano-cm-window .osano-cm-button:focus-visible,
+.osano-cm-window .osano-cm-close:focus-visible,
+.osano-cm-window .osano-cm-link:focus-visible {
+  outline: 2px solid var(--ifm-color-indigo-600);
+  outline-offset: 2px;
+}
+
+/* Grows the close button's tap target from its 24px circle to 40px without
+   changing how it looks or where it sits. */
+.osano-cm-window .osano-cm-dialog__close {
+  overflow: visible;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+  }
+}
+
 .logo {
   width: 20px;
   display: inline-block;
