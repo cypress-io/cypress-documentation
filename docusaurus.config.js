@@ -21,6 +21,11 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
+  customFields: {
+    // The Support Assistant is framed from cypress.io; point at a local cypress.io stack to develop against it.
+    supportAssistantOrigin:
+      process.env.SUPPORT_ASSISTANT_ORIGIN || 'https://www.cypress.io',
+  },
   onBrokenLinks: 'throw',
   onBrokenAnchors: 'throw',
   markdown: {
