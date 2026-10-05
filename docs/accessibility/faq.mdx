@@ -328,11 +328,11 @@ Determining conformance with the Web Content Accessibility Guidelines (WCAG), pu
 
 ### <Icon name="angle-right" /> Which WCAG version and level do the Cypress Accessibility rules cover?
 
-By default, a run evaluates Axe-Core®'s default ruleset: rules tagged for WCAG 2.0 and WCAG 2.1 Level A and AA, plus Deque's Best Practices rules. Three WCAG-tagged rules are turned off by default in Cypress Accessibility, and Axe-Core®'s WCAG 2.2, Level AAA, experimental, and deprecated rule groups are off unless Cypress enables them for your project. This means the default report is broader than any single WCAG level in one sense, because Best Practices findings are Deque recommendations rather than WCAG success criteria, and narrower in another, because it doesn't run every WCAG-tagged rule. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
+By default, a run evaluates Axe-Core®'s default ruleset: rules tagged for WCAG 2.0 and WCAG 2.1 Level A and AA, plus Deque's Best Practices rules. Three WCAG-tagged rules are turned off by default in Cypress Accessibility, and Axe-Core®'s WCAG 2.2, Level AAA, experimental, and deprecated rule groups are off unless you enable them with [`axeConfig`](/accessibility/configuration/axe-core-configuration). This means the default report is broader than any single WCAG level in one sense, because Best Practices findings are Deque recommendations rather than WCAG success criteria, and narrower in another, because it doesn't run every WCAG-tagged rule. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
 
 ### <Icon name="angle-right" /> Can Cypress Accessibility run WCAG 2.2 or Level AAA rules?
 
-Yes, on request. Axe-Core® ships those rules but keeps them off by default, so they don't run in Cypress Accessibility unless they're enabled for your project. Enabling them is a guided change Cypress applies for you rather than a setting in the App Quality editor, and historical runs can be regenerated so you can see the effect before adopting it. See [How Cypress can tune the ruleset for your project](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project).
+Yes. Axe-Core® ships those rules but keeps them off by default. Enable them for your project with [`axeConfig`](/accessibility/configuration/axe-core-configuration) in the App Quality editor, using `runOnly` with the relevant tags or per-rule `rules` overrides. After you save, regenerate a historical run to preview the effect before adopting it on new runs.
 
 ### <Icon name="angle-right" /> Can I use Cypress Accessibility results in a VPAT or accessibility conformance report?
 
@@ -348,19 +348,33 @@ No. A 100% score means Axe-Core® detected no violations in the scope your tests
 
 ### <Icon name="angle-right" /> Which accessibility rules does Cypress Accessibility run?
 
-Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every captured snapshot, plus a few [custom Cypress rules](/accessibility/core-concepts/cypress-rules). That covers WCAG 2.0 and 2.1 Level A and AA, along with Deque's Best Practices rules, which are recommendations rather than WCAG success criteria. Rule groups that Axe-Core® keeps off by default, including WCAG 2.2, Level AAA, experimental, and deprecated rules, don't run unless Cypress enables them for your project. Three further rules are [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default) in Cypress Accessibility: `color-contrast`, `no-autoplay-audio`, and `meta-refresh`. You don't add any assertions or `cy.` commands to your tests to run these checks; they run automatically when Cypress Accessibility is enabled. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
+Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every captured snapshot, plus a few [custom Cypress rules](/accessibility/core-concepts/cypress-rules). That covers WCAG 2.0 and 2.1 Level A and AA, along with Deque's Best Practices rules, which are recommendations rather than WCAG success criteria. Rule groups that Axe-Core® keeps off by default, including WCAG 2.2, Level AAA, experimental, and deprecated rules, don't run unless you enable them with [`axeConfig`](/accessibility/configuration/axe-core-configuration). Three further rules are [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default) in Cypress Accessibility: `color-contrast`, `no-autoplay-audio`, and `meta-refresh`. You don't add any assertions or `cy.` commands to your tests to run these checks; they run automatically when Cypress Accessibility is enabled. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
 
 ### <Icon name="angle-right" /> Can I change which Axe-Core® rules Cypress Accessibility runs?
 
-Yes. Cypress can [tune the Cypress Accessibility ruleset for your project](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project), including enabling a rule that's off by default, turning off a rule that's a known false positive, or scoping the report to a WCAG conformance target. This is a guided change applied by Cypress rather than a setting in the App Quality editor, so reach out to your Cypress point of contact. To ignore a rule for individual elements yourself, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
+Yes. Set [`axeConfig`](/accessibility/configuration/axe-core-configuration) under the `accessibility` key in the App Quality editor to enable a rule that's off by default, turn off a rule that's a known false positive, or scope the report to a WCAG conformance target with `runOnly`. To ignore a rule for individual elements, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
 
 ### <Icon name="angle-right" /> Why isn't color contrast reported in my Cypress Accessibility results?
 
-Color contrast checking is off by default in Cypress Accessibility because it's the slowest Axe-Core® rule and the most likely to produce false positives or incomplete results. It works well in many projects, so Cypress can turn it on for your project on request. Reach out to your Cypress point of contact. See [Rules that are off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default).
+Color contrast checking is off by default in Cypress Accessibility because it's the slowest Axe-Core® rule and the most likely to produce false positives or incomplete results. It works well in many projects; enable it with [`axeConfig`](/accessibility/configuration/axe-core-configuration):
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "axeConfig": {
+      "rules": {
+        "color-contrast": { "enabled": true }
+      }
+    }
+  }
+}
+```
+
+See [Rules that are off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default).
 
 ### <Icon name="angle-right" /> How do I stop Cypress Accessibility from reporting a rule I can't fix?
 
-You have three options in Cypress Accessibility, from broadest to narrowest. Ask Cypress to disable the rule project-wide, which is a [guided change applied for you](/accessibility/configuration/axe-core-configuration#how-cypress-can-tune-the-ruleset-for-your-project); ignore the rule for specific elements yourself with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element); or leave the rule on and control whether it blocks your build in CI with the [Results API](/accessibility/connect-and-extend/results-api). Keeping a rule reported but non-blocking is often the best choice, since you retain visibility into the issue.
+You have three options in Cypress Accessibility, from broadest to narrowest. Disable the rule project-wide with [`axeConfig`](/accessibility/configuration/axe-core-configuration); ignore the rule for specific elements yourself with the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element); or leave the rule on and control whether it blocks your build in CI with the [Results API](/accessibility/connect-and-extend/results-api). Keeping a rule reported but non-blocking is often the best choice, since you retain visibility into the issue.
 
 ### <Icon name="angle-right" /> Does Cypress Accessibility work with component tests?
 
@@ -407,7 +421,7 @@ Add a profile (for example, `aq-config-pr`) whose `config` narrows the report to
 
 ### <Icon name="angle-right" /> Can a Cypress Accessibility profile change which Axe Core® rules run for a specific run?
 
-No. A profile's `config` can override the App Quality settings in the editor ([`views`](/accessibility/configuration/views), [`viewFilters`](/accessibility/configuration/viewfilters), [`elementFilters`](/accessibility/configuration/elementfilters), [`significantAttributes`](/accessibility/configuration/significantattributes), [`attributeFilters`](/accessibility/configuration/attributefilters), and [`components`](/accessibility/configuration/components)), but the [Axe Core® ruleset](/accessibility/configuration/axe-core-configuration) isn't one of those settings. Enabling a rule that's off by default (such as `color-contrast`), turning off a false positive, or scoping to a WCAG target is a guided change Cypress applies at the project level, so it can't vary run to run through a profile. To ignore a rule only for certain elements yourself, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
+Yes. Set [`axeConfig`](/accessibility/configuration/axe-core-configuration) under `accessibility` in a profile's `config` to enable, disable, or scope rules for tagged runs. A common pattern is a broader base ruleset for regression runs and a WCAG-scoped `runOnly` selection on a pull request profile. To ignore a rule only for certain elements, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
 
 ### <Icon name="angle-right" /> Can a Cypress Accessibility profile change how violation targets are identified, such as components or significantAttributes, for certain runs?
 

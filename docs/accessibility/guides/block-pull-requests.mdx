@@ -152,7 +152,7 @@ Record pull request runs with the matching tag to select the profile:
 cypress run --record --tag "aq-config-pr"
 ```
 
-This approach ensures that PR checks are fast and focused, while still maintaining comprehensive reporting for your full test suite. A profile can't change which Axe-Core® rules run, so which rules block a merge stays a decision you make in the verification step above.
+This approach ensures that PR checks are fast and focused, while still maintaining comprehensive reporting for your full test suite. A profile can also set [`axeConfig`](/accessibility/configuration/axe-core-configuration) under `accessibility` if you want pull request runs to use a different Axe-Core® ruleset than regression runs. Which findings block a merge still stays a decision you make in the verification step above.
 
 ## Comparing against a baseline {#comparing-against-a-baseline}
 
