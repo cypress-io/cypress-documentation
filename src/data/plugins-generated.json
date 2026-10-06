@@ -20,9 +20,9 @@
     },
     "cypress-markdown-preprocessor": {
       "npm": "cypress-markdown-preprocessor",
-      "version": "1.10.36",
-      "lastPublished": "2025-12-07T09:51:36.961Z",
-      "cypressVersion": "15.7.1"
+      "version": "1.11.0",
+      "lastPublished": "2026-10-02T14:01:08.724Z",
+      "cypressVersion": "16.1.1"
     },
     "cypress-vite": {
       "npm": "cypress-vite",
@@ -221,8 +221,8 @@
     },
     "Puppeteer": {
       "npm": "@cypress/puppeteer",
-      "version": "0.1.9",
-      "lastPublished": "2026-09-24T22:13:09.900Z",
+      "version": "0.1.10",
+      "lastPublished": "2026-09-30T16:43:51.824Z",
       "cypressVersion": ">=13.6.0"
     },
     "@testing-library/cypress": {
@@ -262,9 +262,9 @@
     },
     "cypress-firebase": {
       "npm": "cypress-firebase",
-      "version": "4.4.0",
-      "lastPublished": "2026-06-11T16:17:11.571Z",
-      "cypressVersion": "15.17.0"
+      "version": "4.6.0",
+      "lastPublished": "2026-10-04T14:26:38.289Z",
+      "cypressVersion": "16.1.0"
     },
     "cypress-if": {
       "npm": "cypress-if",
@@ -458,8 +458,8 @@
     },
     "@qualflare/cypress": {
       "npm": "@qualflare/cypress",
-      "version": "0.7.2",
-      "lastPublished": "2026-09-08T22:34:26.089Z",
+      "version": "0.7.3",
+      "lastPublished": "2026-10-03T13:34:06.519Z",
       "cypressVersion": ">=12.0.0"
     },
     "Sauce Labs Visual": {
@@ -482,8 +482,8 @@
     },
     "Visual Regression Diff": {
       "npm": "@frsource/cypress-plugin-visual-regression-diff",
-      "version": "4.2.0",
-      "lastPublished": "2026-09-20T23:12:44.988Z",
+      "version": "4.2.1",
+      "lastPublished": "2026-10-02T20:38:46.984Z",
       "cypressVersion": ">=13.0.0"
     },
     "@chromatic-com/cypress": {
@@ -537,6 +537,12 @@
       "version": "0.1.0",
       "lastPublished": "2026-09-23T21:29:24.328Z",
       "cypressVersion": "^16.0.0"
+    },
+    "cypress-mailsink": {
+      "npm": "cypress-mailsink",
+      "version": "0.1.0",
+      "lastPublished": "2026-10-02T14:55:35.158Z",
+      "cypressVersion": ">=15.0.0"
     },
     "cypress-mailslurp": {
       "npm": "cypress-mailslurp",
