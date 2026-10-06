@@ -13,7 +13,7 @@ Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s
 
 When you need a different ruleset for your project, set `axeConfig` under the `accessibility` key in App Quality Config. You can enable a rule that is off by default, turn off a rule that is a known false positive, or scope the report to the WCAG tags your team measures against. Changes apply the next time a run is processed, and you can [regenerate a past run](/accessibility/configuration/overview#Setting-Configuration) to preview the effect without rerunning your tests.
 
-Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/connect-and-extend/results-api), turning rules off only to keep CI green is usually unnecessary. Leaving a rule reported but non-blocking keeps full visibility into every finding while you control the gate in your pipeline.
+Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/connect-and-extend/results-api) or [webhook-driven workflows](/accessibility/connect-and-extend/webhooks), turning rules off only to keep CI green is unnecessary. Leaving a rule reported but non-blocking keeps full visibility into every finding while you control the gate in your pipeline.
 
 ## Why use axeConfig?
 
