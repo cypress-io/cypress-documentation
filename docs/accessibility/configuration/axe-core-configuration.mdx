@@ -27,7 +27,6 @@ To ignore a specific rule for individual elements, add the [`data-a11y-ignore`](
 
 `axeConfig` is only valid under an `accessibility` key in your App Quality configuration. It can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply different rulesets to tagged runs.
 
-If Cypress previously set an `axeConfig` for your project at the root of the configuration, Cypress Cloud moves that value under `accessibility` when the configuration is read or saved. You don't need to migrate it yourself. Nested `accessibility.axeConfig` wins if both locations are present.
 
 ## Setting axeConfig
 
