@@ -48,6 +48,8 @@ cy.get('nav').getByRole('link') // Yield every link inside <nav>
 ```javascript
 cy.getByRole(/button/) // Errors, the role must be a string
 cy.title().getByRole('heading') // Errors, 'title' does not yield DOM element
+cy.getByRole('switch checkbox') // Errors, query one role at a time
+cy.getByRole('tab', { native: true }) // Errors, HTML has no native tab element
 cy.getByRole('heading', { level: 2 }) // Errors, narrow by level with .filter()
 ```
 
@@ -61,21 +63,23 @@ The ARIA role to find, such as `'button'`, `'heading'`, `'navigation'`, or
 - Its tag implies one, such as `<button>` for `button`, `<nav>` for
   `navigation`, or `<input type="checkbox">` for `checkbox`.
 - Its `role` attribute sets one, such as `<div role="tab">`. The attribute
-  replaces the implied role, and only its first token counts, so
-  `role="switch checkbox"` gives the element the `switch` role alone.
+  replaces the implied role. When it lists several roles as fallbacks, the
+  first valid one counts, as in browsers: `role="switch checkbox"` is a
+  `switch`, and `role="foo button"` is a `button`. With no valid role in the
+  attribute, the element keeps its implied role.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `cy.getByRole()`.
 
-| Option             | Default                                                                        | Description                                                                                                                                                                                                             |
-| ------------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`             | `undefined`                                                                    | Match only elements whose [accessible name](#Match-by-accessible-name) matches. Accepts a string, number, regular expression, or function.                                                                              |
-| `hidden`           | `false`                                                                        | Include elements [hidden from the accessibility tree](#Include-elements-hidden-from-the-accessibility-tree), such as those with `aria-hidden="true"`.                                                                   |
-| `native`           | `true`                                                                         | For a role that HTML has an element for, match only elements whose [HTML tag gives them the role](#Native-elements-by-default). Pass `false` to also match elements that have the role only through a `role` attribute. |
-| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                     |
-| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time, in milliseconds, to wait for `cy.getByRole()` to resolve before [timing out](#Timeouts). Must be a number.                                                                                                        |
-| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results.                                                                                                            |
+| Option             | Default                                                                        | Description                                                                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`             | `undefined`                                                                    | Match only elements whose [accessible name](#Match-by-accessible-name) matches. Accepts a string, number, regular expression, or function.                                     |
+| `hidden`           | `false`                                                                        | Include elements [hidden from the accessibility tree](#Include-elements-hidden-from-the-accessibility-tree), such as those with `aria-hidden="true"`.                          |
+| `native`           | `true` for roles that HTML has an element for                                  | Match only elements whose [HTML tag gives them the role](#Native-elements-by-default). Pass `false` to also match elements that have the role only through a `role` attribute. |
+| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                            |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time, in milliseconds, to wait for `cy.getByRole()` to resolve before [timing out](#Timeouts). Must be a number.                                                               |
+| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results.                                                                   |
 
 `cy.getByRole()` throws an error for any other option. To narrow the results by
 an ARIA state such as `checked`, `expanded`, or `level`, chain
@@ -296,7 +300,8 @@ cy.getByRole('button', { name: 'Cancel' }).should('not.exist')
 
 For widget roles that HTML has no element for, such as `tab`, `menuitem`, or
 `switch`, a `role` attribute is the only way to give an element the role, so
-native matching doesn't apply.
+`cy.getByRole()` always matches the `role` attribute. Passing `native: true`
+with one of these roles throws an error.
 
 #### Include elements with a `role` attribute
 
@@ -308,6 +313,16 @@ library.
 // Yields the <div role="button">
 cy.getByRole('button', { name: 'Cancel', native: false }).click()
 ```
+
+Some widely used patterns need `native: false` even though they follow the ARIA
+authoring practices, because HTML has a different element for the role:
+
+- An autocomplete `<input role="combobox">`. The native combobox is a
+  `<select>` or an `<input>` with a `list` attribute.
+- An icon `<svg role="img">`. The native image is an `<img>`.
+
+When an element was skipped only because it has the role through a `role`
+attribute, the error says so and suggests passing `{ native: false }`.
 
 ### Scope
 
@@ -366,8 +381,11 @@ cy.getByRole('tab').filter('[aria-selected="true"]')
 // Level 2 headings
 cy.getByRole('heading').filter('h2, [aria-level="2"]')
 
-// A checked checkbox
+// A checked native checkbox
 cy.getByRole('checkbox').filter(':checked')
+
+// A checked checkbox that gets its role from a role attribute
+cy.getByRole('checkbox', { native: false }).filter('[aria-checked="true"]')
 
 // The menu button whose menu is open
 cy.getByRole('button').filter('[aria-expanded="true"]')
@@ -446,7 +464,7 @@ and lists the roles and accessible names it did find. Here, the name was
 misspelled:
 
 ```text
-Timed out retrying after 4000ms: Expected to find an accessible element with the role "button" and name "Svae", but never did.
+Timed out retrying after 4000ms: Expected to find an accessible native element with the role "button" and name "Svae", but never did.
 
 Here are the accessible roles that were found, with the accessible name of each element:
 
@@ -463,9 +481,20 @@ to be a `link`, a `<section>` needs an `aria-label` or `aria-labelledby` to be a
 `region`, and an
 `<input>` with a missing or unknown `type` is a `textbox`.
 
-The mapping doesn't consider where an element sits in the page, so every
-`<header>` is a `banner` and every `<footer>` a `contentinfo`, even inside an
-`<article>`, where a browser gives them no landmark role.
+Some roles depend on the surrounding table: a `<td>` is a `cell` in a table,
+a `gridcell` in a `grid` or `treegrid`, and has no role in a table with
+`role="presentation"`. Otherwise, the mapping doesn't consider where an element
+sits in the page, so every `<header>` is a `banner` and every `<footer>` a
+`contentinfo`, even inside an `<article>`, where a browser gives them no
+landmark role.
+
+### Rename an existing `getByRole` custom command
+
+If your project already defines its own `getByRole` with
+`Cypress.Commands.add()` or `Cypress.Commands.addQuery()`, that call now throws
+an error, because `getByRole` is a built-in Cypress query. Rename your command,
+or remove it and use the built-in `cy.getByRole()`. Cypress Testing Library adds
+only `findBy*` queries, so it doesn't conflict.
 
 ### Coming from Cypress Testing Library `findByRole()`
 
