@@ -496,23 +496,79 @@ an error, because `getByRole` is a built-in Cypress query. Rename your command,
 or remove it and use the built-in `cy.getByRole()`. Cypress Testing Library adds
 only `findBy*` queries, so it doesn't conflict.
 
-### Coming from Cypress Testing Library `findByRole()`
+### Migrate from Testing Library `findByRole()` to `cy.getByRole()`
 
-`cy.getByRole()` works without a plugin. A few behaviors differ from the
-`findByRole()` query in
-[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library):
+`cy.getByRole()` does what the `findByRole()` and `findAllByRole()` queries from
+[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library)
+do for role queries, without a plugin. Most calls translate by renaming the
+query, and the state options become a chained
+[`.filter()`](#Narrow-the-results-by-state-with-filter).
 
-- For a role that HTML has an element for, it matches only native elements by
-  default. Pass `native: false` to also match an element such as
-  `<div role="button">`, the way `findByRole()` does.
-- It yields every match instead of failing when there's more than one. Chain
-  [`.first()`](/api/commands/first) or narrow the `name` to pick one.
-- A string `name` always matches the whole name, case-sensitively. There's no
-  `exact` option, so use a regular expression for a partial or case-insensitive
-  match.
-- There are no `checked`, `selected`, `pressed`, `expanded`, `current`, `busy`,
-  `level`, or `value` options. Chain [`.filter()`](#Narrow-the-results-by-state-with-filter)
-  instead. The error for each of these options suggests the filter to use.
+<Badge type="danger">Before: Cypress Testing Library</Badge>
+
+```javascript title="spec.cy.js"
+cy.findByRole('button', { name: 'Save' }).click()
+cy.findByRole('button', { name: /save/i }).click()
+cy.findAllByRole('listitem').should('have.length', 3)
+cy.findByRole('tab', { selected: true }).should('have.text', 'Billing')
+cy.findByRole('checkbox', { checked: true }).should(
+  'have.attr',
+  'name',
+  'terms'
+)
+```
+
+<Badge type="success">After: `cy.getByRole()`</Badge>
+
+```javascript title="spec.cy.js"
+cy.getByRole('button', { name: 'Save' }).click()
+cy.getByRole('button', { name: /save/i }).click()
+cy.getByRole('listitem').should('have.length', 3)
+cy.getByRole('tab')
+  .filter('[aria-selected="true"]')
+  .should('have.text', 'Billing')
+cy.getByRole('checkbox').filter(':checked').should('have.attr', 'name', 'terms')
+```
+
+Keep these differences in mind as you migrate:
+
+- **Native elements only, by default.** For a role that HTML has an element
+  for, `cy.getByRole()` skips elements that have the role only through a `role`
+  attribute, so a test that found a `<div role="button">` with `findByRole()`
+  fails after the migration. Decide for each one whether the application should
+  use the native element, or whether the test should pass `native: false`.
+- **Every match, not one.** `cy.getByRole()` yields every match, like
+  `findAllByRole()`, instead of failing when more than one element matches.
+  Narrow the `name`, or chain [`.first()`](/api/commands/first), to act on one.
+- **State options.** The `checked`, `selected`, `pressed`, `expanded`,
+  `current`, `busy`, `level`, and `value` options become a chained `.filter()`.
+  The error for each of these options names the filter to use.
+
+When no other Testing Library queries remain in your tests, remove
+`@testing-library/cypress` from your dependencies, its import from your support
+file, and its entry in the `types` of your `tsconfig.json`.
+
+<CopyPrompt
+  title="Migrate from Testing Library findByRole() to cy.getByRole()"
+  subtext="Move your role queries to the built-in cy.getByRole() and get a list of the elements that need a decision about native elements."
+  defaultCollapsed
+  excludeFromLlmExport
+  prompt={`Migrate this project's Cypress tests from Testing Library's findByRole() and findAllByRole() queries to the built-in cy.getByRole() query. First read https://docs.cypress.io/api/commands/getbyrole.md, then work through these steps:
+
+1. Find every cy.findByRole() and cy.findAllByRole() call in the Cypress specs, custom commands, and support files. If the project defines its own getByRole custom command, stop and tell me, since it conflicts with the built-in query.
+
+2. Replace each call with cy.getByRole(), keeping the role, the command it's chained from, and the name, timeout, log, and hidden options as they are.
+
+3. Replace the checked, selected, pressed, expanded, current, busy, level, and value options with a chained .filter(), as the page describes. Use :checked only for native checkboxes and radios, and [aria-checked="true"] for elements that get their role from a role attribute.
+
+4. Run the migrated specs. cy.getByRole() matches only native elements for roles that HTML has an element for, so a test that found an element such as a <div role="button"> now fails. Don't add native: false to every call. List each of these elements with its spec file and line, so I can decide whether the application should use the native element or the test should pass native: false.
+
+5. If no other Testing Library queries remain, remove @testing-library/cypress from package.json, its import from the support file, and its entry in the types of tsconfig.json. Keep it if any other Testing Library query, such as findByLabelText(), is still in use.
+
+6. Flag any option or pattern with no direct equivalent instead of guessing.
+
+Finish with a summary of what changed and the list of elements that need a decision.`}
+/>
 
 ## Rules
 
