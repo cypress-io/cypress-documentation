@@ -254,7 +254,8 @@ reach:
 
 - The element or an ancestor has the `hidden` attribute, `aria-hidden="true"`,
   or `display: none`.
-- The element itself has `visibility: hidden`.
+- The element's computed `visibility` is `hidden`. It inherits this from a
+  `visibility: hidden` ancestor unless it sets `visibility: visible` itself.
 
 Pass `hidden: true` to include them, such as to find a closed menu.
 
@@ -379,7 +380,7 @@ state or property, chain [`.filter()`](/api/commands/filter), or chain
 cy.getByRole('tab').filter('[aria-selected="true"]')
 
 // Level 2 headings
-cy.getByRole('heading').filter('h2, [aria-level="2"]')
+cy.getByRole('heading').filter('[aria-level="2"], h2:not([aria-level])')
 
 // A checked native checkbox
 cy.getByRole('checkbox').filter(':checked')
