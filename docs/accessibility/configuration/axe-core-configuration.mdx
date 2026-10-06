@@ -21,6 +21,8 @@ Because you decide what actually blocks a build with the [Accessibility Results 
 - **Turn off a rule that is a known false positive**: If a specific rule consistently misfires because of a third-party framework you can't change, disable it project-wide so it stops adding noise to your reports.
 - **Scope the report to a conformance target**: Limit the run to the WCAG tags your team measures against, including rule groups that Axe-Core® keeps off by default, such as WCAG 2.2 or Level AAA.
 
+### Customize included elements, pages, and CI-blocking behavior
+
 To ignore a specific rule for individual elements, add the [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) attribute in your application code. To keep a rule enabled but stop a particular element or page from being reported, use [`elementFilters`](/accessibility/configuration/elementfilters) or [`viewFilters`](/accessibility/configuration/viewfilters). To decide which findings block a build in CI, parse your run's results with the [Results API](/accessibility/connect-and-extend/results-api).
 
 ## Scope
