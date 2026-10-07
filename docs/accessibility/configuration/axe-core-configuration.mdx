@@ -1,19 +1,224 @@
 ---
-title: 'Axe Core® configuration in Cypress Accessibility'
-description: 'How Cypress Accessibility runs the Axe Core® ruleset, which rules are off by default, and how Cypress can tune rules for your project.'
-sidebar_label: 'Axe Core® configuration'
+title: 'axeConfig: enable, disable, and scope Axe Core® rules in Cypress Accessibility'
+description: 'Use accessibility.axeConfig in App Quality Config to enable or disable Axe Core® rules, or scope a report to WCAG tags.'
+sidebar_label: 'axeConfig'
 sidebar_position: 50
 ---
 
 <ProductHeading product="accessibility" />
 
-# Axe Core® configuration
+# Configure Axe Core® rules - `axeConfig`
 
-Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every snapshot captured during your test run, with no setup, assertions, or `cy.` commands to add to your specs. The ruleset is tuned to favor high-confidence results, so the report you get out of the box is already the recommended configuration for most teams.
+Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every snapshot captured during your test run, with no setup, assertions, or `cy.` commands to add to your specs. The ruleset favors high-confidence results, so the report you get out of the box is already the recommended configuration for most teams.
 
-Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/connect-and-extend/results-api), where you have full control over how to parse results and which rules to react to, there is rarely a need to change which rules run in Cypress Cloud. Keeping the ruleset broad means you can still see and understand every accessibility finding, even when only a subset of results is treated as blocking in your pipeline.
+When you need a different ruleset for your project, set `axeConfig` under the `accessibility` key in App Quality Config. You can enable a rule that is off by default, turn off a rule that is a known false positive, or scope the report to the WCAG tags your team measures against. Changes apply the next time a run is processed, and you can [regenerate a past run](/accessibility/configuration/overview#Setting-Configuration) to preview the effect without rerunning your tests.
 
-When you do need to change how the ruleset behaves for your project, Cypress can tune it for you. This is a guided process handled through your Cypress point of contact rather than a setting in the App Quality editor, so you get results that fit your application without the risk of silently turning off important checks.
+Because you decide what actually blocks a build with the [Accessibility Results API](/accessibility/connect-and-extend/results-api) or [webhook-driven workflows](/accessibility/connect-and-extend/webhooks), turning rules off only to keep CI green is unnecessary. Leaving a rule reported but non-blocking keeps full visibility into every finding while you control the gate in your pipeline.
+
+## Why use axeConfig?
+
+- **Enable a rule that is off by default**: The most common change is turning on [color contrast checking](#rules-that-are-off-by-default) for a project where you've confirmed it produces reliable results.
+- **Turn off a rule that is a known false positive**: If a specific rule consistently misfires because of a third-party framework you can't change, disable it project-wide so it stops adding noise to your reports.
+- **Scope the report to a conformance target**: Limit the run to the WCAG tags your team measures against, including rule groups that Axe-Core® keeps off by default, such as WCAG 2.2 or Level AAA.
+
+### Customize included elements, pages, and CI-blocking behavior
+
+To ignore a specific rule for individual elements, add the [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) attribute in your application code. To keep a rule enabled but stop a particular element or page from being reported, use [`elementFilters`](/accessibility/configuration/elementfilters) or [`viewFilters`](/accessibility/configuration/viewfilters). To decide which findings block a build in CI, parse your run's results with the [Results API](/accessibility/connect-and-extend/results-api).
+
+## Scope
+
+`axeConfig` is only valid under an `accessibility` key in your App Quality configuration. It can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply different rulesets to tagged runs.
+
+## Setting axeConfig
+
+To add or edit `axeConfig`, open the **App Quality** tab in your project settings in Cypress Cloud. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration) for details, including how to regenerate past reports with a new configuration without rerunning your tests.
+
+<DocsImage
+  src="/img/accessibility/configuration/cypress-accessibility-configuration-editor.png"
+  alt="The App Quality tab of a project's settings in Cypress Cloud, showing the configuration editor with JSON configuration"
+/>
+
+## Syntax
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "axeConfig": {
+      "runOnly": {
+        "type": "tag" | "tags" | "rule" | "rules",
+        "values": [string]
+      },
+      "rules": {
+        "<rule-id>": { "enabled": boolean }
+      }
+    }
+  }
+}
+```
+
+### Options
+
+| Option    | Required | Default | Description                                                                                                                                                                                                                                           |
+| --------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `runOnly` | Optional |         | Limits which Axe-Core® rules run to the listed tags or rule IDs. `type` is `tag` or `tags` for Axe-Core® tags such as `wcag2aa`, and `rule` or `rules` for individual rule IDs. `values` is the list of tags or rule IDs to include.                  |
+| `rules`   | Optional |         | Per-rule overrides. Each key is an Axe-Core® [rule ID](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md), and `enabled` turns that rule on or off. Overrides apply on top of Cypress defaults and any `runOnly` selection. |
+
+### How is axeConfig applied?
+
+- **`rules` overrides win over Cypress defaults.** Cypress Accessibility starts from its [default disabled rules](#rules-that-are-off-by-default). Any rule you set in `axeConfig.rules` replaces that default for that rule, so `"color-contrast": { "enabled": true }` turns color contrast on for the project.
+- **`runOnly` narrows the ruleset.** When you set `runOnly`, only rules that match the listed tags or IDs run. Rules outside that selection are reported as ignored by configuration.
+- **Combine `runOnly` and `rules` when you need both.** A common pattern is scoping to WCAG tags with `runOnly`, then enabling or disabling individual rules inside that scope with `rules`.
+- **Disabled rules stay visible in the report.** In the **Rules** view, rules turned off by configuration appear with an **Ignored by configuration** status, so it's clear which checks a run did and did not include.
+- **Unknown properties are rejected.** Cypress Cloud validates `axeConfig` against a strict schema. Only `runOnly` and `rules` are accepted, and each `rules` entry accepts only `enabled`.
+
+### Validation rules
+
+Cypress Cloud rejects a configuration when:
+
+- `axeConfig` is set at the root of the configuration instead of under `accessibility`.
+- `axeConfig` contains a property other than `runOnly` or `rules`.
+- `runOnly` is missing `type` or `values`, or uses an unsupported `type`.
+- A `rules` entry is missing `enabled`, or contains a property other than `enabled`.
+
+## Examples
+
+### Enable color contrast checking
+
+Color contrast is [off by default](#rules-that-are-off-by-default). Turn it on for the project.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "axeConfig": {
+      "rules": {
+        "color-contrast": { "enabled": true }
+      }
+    }
+  }
+}
+```
+
+#### Result
+
+The `color-contrast` rule runs for the project. The other rules that are off by default stay off.
+
+---
+
+### Disable a noisy rule project-wide
+
+Turn off a rule that's not relevant to your project or your current accessibility goals, to reduce noise for your team when parsing reports.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "axeConfig": {
+      "rules": {
+        "region": { "enabled": false }
+      }
+    }
+  }
+}
+```
+
+#### Result
+
+The `region` rule is listed as **Ignored by configuration** and stops adding violations to the report.
+
+---
+
+### Scope the report to WCAG 2.1 A and AA
+
+Limit the run to WCAG 2.0 and 2.1 Level A and AA tags, and leave Best Practices rules out of the report.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "axeConfig": {
+      "runOnly": {
+        "type": "tag",
+        "values": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]
+      }
+    }
+  }
+}
+```
+
+#### Result
+
+Only rules tagged for those WCAG levels run. Best Practices rules, such as `region` and `landmark-one-main`, are ignored by configuration.
+
+---
+
+### Scope to WCAG tags and enable color contrast
+
+Combine `runOnly` with a per-rule override so the report stays on your conformance target while color contrast still runs.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "accessibility": {
+    "axeConfig": {
+      "runOnly": {
+        "type": "tag",
+        "values": ["wcag2a", "wcag21a"]
+      },
+      "rules": {
+        "color-contrast": { "enabled": true }
+      }
+    }
+  }
+}
+```
+
+#### Result
+
+The report includes WCAG 2.0 and 2.1 Level A rules, including `color-contrast`, and leaves Best Practices rules out.
+
+---
+
+### Apply a different ruleset on pull request runs
+
+Use a [`profiles`](/accessibility/configuration/profiles) entry so tagged pull request runs scope to WCAG 2.0 and 2.1 Level A and AA tags while regression runs keep the broader base ruleset.
+
+#### Config
+
+```json title="App Quality Config"
+{
+  "profiles": [
+    {
+      "name": "aq-config-pr",
+      "comment": "Pull request gate: WCAG A/AA only",
+      "config": {
+        "accessibility": {
+          "axeConfig": {
+            "runOnly": {
+              "type": "tag",
+              "values": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+#### Usage
+
+```shell
+cypress run --record --tag "aq-config-pr"
+```
+
+#### Result
+
+Runs recorded with the `aq-config-pr` tag use the scoped ruleset. Runs recorded without that tag keep the base configuration.
 
 ## What the default ruleset covers {#what-the-default-ruleset-covers}
 
@@ -24,44 +229,24 @@ Cypress applies no conformance filter of its own, so a run evaluates whatever Ax
 | WCAG 2.0 Level A and AA     | Yes             | Minus `color-contrast`, `no-autoplay-audio`, and `meta-refresh`, which are WCAG-tagged but off by default   |
 | WCAG 2.1 Level A and AA     | Yes             |                                                                                                             |
 | Best Practices              | Yes             | Deque's own recommendations, such as `region` and `landmark-one-main`. These are not WCAG success criteria. |
-| WCAG 2.2 Level A and AA     | No              | Off by default in Axe-Core® itself. Cypress can enable these for your project.                              |
-| WCAG Level AAA              | No              | Off by default in Axe-Core® itself. Cypress can enable these for your project.                              |
+| WCAG 2.2 Level A and AA     | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.       |
+| WCAG Level AAA              | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.       |
 | Experimental and deprecated | No              | Off by default in Axe-Core® itself.                                                                         |
 
-Two consequences are worth knowing if you're measuring against a formal standard:
+Keep these behaviors in mind if you're measuring against a formal standard:
 
 - **The default report is broader than any single WCAG level.** Best Practices findings appear alongside WCAG ones, so a violation in your report is not automatically a WCAG failure. Use the **Rules** filter in a report to separate WCAG 2.1 A, WCAG 2.1 AA, and Best Practices results.
 - **The default report is also not complete WCAG coverage.** The three rules that are off by default map to WCAG success criteria (1.4.3, 1.4.2, and 2.2.1), and no automated ruleset can evaluate every success criterion in the first place. See [accessibility automation principles](/accessibility/guides/accessibility-automation) for what conformance requires beyond automation.
 
-To align a project's report with a specific conformance target, ask Cypress to scope the ruleset for you, as described below.
-
-## How Cypress can tune the ruleset for your project {#how-cypress-can-tune-the-ruleset-for-your-project}
-
-Teams reach out for a few common adjustments. In each case, Cypress applies the change on your behalf and can regenerate historical runs so you can preview the effect before adopting it:
-
-- **Enable a rule that is off by default.** The most common request is turning on [color contrast checking](#rules-that-are-off-by-default) for a project where you've confirmed it produces reliable results.
-- **Turn off a rule that is a known false positive.** If a specific rule consistently misfires because of a third-party framework you can't change, it can be disabled project-wide so it stops adding noise to your reports.
-- **Scope the report to a conformance target.** Cypress can narrow the ruleset to the standard your team is committed to, such as WCAG 2.1 Level A and AA, so the report reflects exactly the criteria you're measuring against. This is also how you enable rule groups that Axe-Core® keeps off by default, such as WCAG 2.2 or Level AAA.
-
-We're happy to have a call to dial in your report configuration and make sure you're getting the most useful reports possible.
-
-### Adjustments you can make yourself
-
-Some ways of shaping your results don't require any rule configuration and are fully in your control:
-
-- To ignore a specific rule for individual elements, add the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) in your application code.
-- To keep a rule enabled but stop a particular element or page from being reported, use [`elementFilters`](/accessibility/configuration/elementfilters) or [`viewFilters`](/accessibility/configuration/viewfilters).
-- To decide which findings block a build in CI, parse your run's results with the [Results API](/accessibility/connect-and-extend/results-api). Leaving a rule reported but non-blocking is often the best choice, since you keep full visibility into the issue.
-
 ## Rules that are off by default {#rules-that-are-off-by-default}
 
-A small number of Axe-Core® rules are turned off in Cypress Accessibility by default. Color contrast can be enabled per project on request. The other two depend on live runtime behavior that isn't reproduced when Cypress re-renders a captured snapshot for analysis, so they can't be evaluated reliably.
+A small number of Axe-Core® rules are turned off in Cypress Accessibility by default. Color contrast can be enabled per project with `axeConfig`. The other two depend on live runtime behavior that isn't reproduced when Cypress re-renders a captured snapshot for analysis, so they can't be evaluated reliably even if you enable them.
 
-| Rule                                                        | Why it's off by default                                                                                                                                                                                      |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Elements must meet minimum color contrast ratio thresholds  | This is the slowest rule in the Axe-Core® ruleset and the one most likely to produce false positives or incomplete results. It works well in many projects, so we're happy to turn it on for you on request. |
-| `<video>` or `<audio>` elements must not play automatically | Detecting a violation requires loading and playing the media to measure how long it plays. Cypress analyzes a reconstructed snapshot of the page without playable media, so this rule can't be evaluated.    |
-| Delayed refresh under 20 hours must not be used             | This rule reads a page's meta refresh directive, which Cypress disables while it analyzes a run so the reconstructed page doesn't navigate away. With the directive disabled, the rule can't be evaluated.   |
+| Rule                                                        | Why it's off by default                                                                                                                                                                                             |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Elements must meet minimum color contrast ratio thresholds  | This is the slowest rule in the Axe-Core® ruleset and the one most likely to produce false positives or incomplete results. It works well in many projects; enable it with `"color-contrast": { "enabled": true }`. |
+| `<video>` or `<audio>` elements must not play automatically | Detecting a violation requires loading and playing the media to measure how long it plays. Cypress analyzes a reconstructed snapshot of the page without playable media, so this rule can't be evaluated.           |
+| Delayed refresh under 20 hours must not be used             | This rule reads a page's meta refresh directive, which Cypress disables while it analyzes a run so the reconstructed page doesn't navigate away. With the directive disabled, the rule can't be evaluated.          |
 
 In addition, the custom [Cypress rule](/accessibility/core-concepts/cypress-rules) _Interactive elements should be semantically correct_ is available in all projects but is not enabled by default. Reach out to Cypress if you'd like it turned on.
 
@@ -73,7 +258,7 @@ Cypress Accessibility works with [component testing](/app/component-testing/get-
 
 Rules skipped for component tests include page-structure and document-level checks, such as whether the page has a main landmark, a single top-level heading, a language attribute, and a document title. Rules that evaluate the components themselves, such as color contrast (when enabled), button naming, and image alternative text, run as normal.
 
-The exact set of skipped rules isn't a fixed list Cypress maintains. It's derived from which rules Axe-Core® classifies as page-level, so it can shift when Cypress updates its Axe-Core® version. In a component's report, these page-structure rules are reported as not applicable rather than as failures.
+The exact set of skipped rules isn't a fixed list Cypress maintains. It's derived from which rules Axe-Core® classifies as page-level, so it can shift when Cypress updates its Axe-Core® version. In a component's report, these page-structure rules are reported as not applicable rather than as failures. An `axeConfig` rule override can't force a page-level rule to run for component tests.
 
 ## Axe-Core® library version and updates {#axe-core-library-version-and-updates}
 
@@ -85,8 +270,9 @@ The exact Axe-Core® version used for a given run is shown in the **Properties**
 
 ## See also
 
-- [Configuration overview](/accessibility/configuration/overview) lists every App Quality Config option you can set yourself and how to apply and regenerate configuration.
+- [Configuration overview](/accessibility/configuration/overview) lists every App Quality Config option and how to apply and regenerate configuration.
 - [Results API](/accessibility/connect-and-extend/results-api) is where you decide which rules block a build in CI.
 - [Ignore rules per element - `data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) turns off specific rules for individual elements from your application code.
+- [Profiles](/accessibility/configuration/profiles) apply a different `axeConfig` to tagged runs.
 - [Cypress rules](/accessibility/core-concepts/cypress-rules) documents the custom rules Cypress layers on top of Axe-Core®.
 - [Cypress Accessibility FAQ](/accessibility/faq) answers common questions about rules and configuration.
