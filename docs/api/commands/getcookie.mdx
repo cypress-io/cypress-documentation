@@ -106,34 +106,36 @@ To check that the cookie exists without comparing any of its properties, assert
 cy.getCookie('my-session-cookie').should('exist')
 ```
 
-To use the cookie's value in a later command, save the cookie in a variable and
-read it inside a [`.then()`](/api/commands/then) callback. Cypress evaluates the
-`cy.request()` options when the callback runs, after the cookie is saved, rather
-than when the test queues its commands.
+#### Send the session cookie's value in a request header
 
-```js
-let cookie
+To pass the cookie's value to a later command, chain
+[`.its('value')`](/api/commands/its) and use the value inside
+[`.then()`](/api/commands/then). Cypress runs the callback after `.its()`
+finds the value, so `cy.request()` gets the current value rather than one read
+when the test queued its commands.
 
+```javascript
 cy.getCookie('session_id')
-  .should('exist')
-  .then((c) => {
-    // save cookie until we need it
-    cookie = c
-  })
-
-// some time later, force the "cy.request"
-// to run ONLY after the cookie has been set
-// by placing it inside ".then"
-cy.get('#submit')
-  .click()
-  .then(() => {
+  .its('value')
+  .then((token) => {
     cy.request({
       url: '/api/admin',
       headers: {
-        'my-token-x': cookie.value,
+        'my-token-x': token,
       },
     })
   })
+```
+
+#### Check that the session cookie is removed after logout
+
+Assert `not.exist` to confirm a cookie is gone. The query retries until the
+assertion passes, so it waits for a logout request that clears the cookie after
+a short delay.
+
+```javascript
+cy.contains('Log out').click()
+cy.getCookie('session_id').should('not.exist')
 ```
 
 #### Using `cy.getCookie()` to test logging in
@@ -145,6 +147,118 @@ The [Logging In recipes](/app/references/recipes#Logging-In) use
 single sign-on.
 
 :::
+
+### Cookie properties
+
+#### Assert on one cookie property with `.its()`
+
+[`.its()`](/api/commands/its) yields a single property of the cookie. Because
+`.its()` is also a query, the assertion still retries `cy.getCookie()`, so the
+test waits for a cookie that hasn't been set yet.
+
+```javascript
+cy.getCookie('csrf_token').its('value').should('have.length', 32)
+```
+
+#### Check the security attributes of an auth cookie
+
+Assert `include` with the attributes your server must set. The assertion passes
+when the cookie has every listed property with the listed value.
+
+```javascript
+cy.getCookie('session_id').should('include', {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'strict',
+})
+```
+
+`sameSite` is `'lax'`, `'strict'`, or `'no_restriction'` (the value for
+`SameSite=None`). For a cookie set without a `SameSite` attribute, Firefox
+reports `'unspecified'`, and Chromium-based browsers and WebKit leave the
+property off.
+
+#### Check that a remember-me cookie expires in the future
+
+`expiry` is the time the cookie expires, in seconds since the Unix epoch. This
+example checks that a cookie lasts at least 29 more days:
+
+```javascript
+const twentyNineDays = 29 * 24 * 60 * 60
+
+cy.getCookie('remember_me')
+  .its('expiry')
+  .should('be.greaterThan', Date.now() / 1000 + twentyNineDays)
+```
+
+A session cookie, one that the browser deletes when it closes, has no `expiry`
+property, so `.its('expiry')` fails for it.
+
+### Domain
+
+#### Get a cookie set on an API subdomain with `domain`
+
+By default, `cy.getCookie()` reads cookies for the hostname of the application
+under test. Pass `domain` to read a cookie set for a different domain, such as
+an API that your app calls on its own subdomain.
+
+```javascript
+cy.getCookie('refresh_token', { domain: 'api.example.com' }).should('exist')
+```
+
+### Sessions and origins
+
+#### Validate a cached login with `cy.session()`
+
+[`cy.session()`](/api/commands/session) saves the browser's cookies when its
+setup function finishes, so wait for the session cookie at the end of setup.
+Without that wait, a cookie that arrives after the login click is left out of
+the cached session.
+
+```javascript
+cy.session(
+  username,
+  () => {
+    cy.visit('/login')
+    cy.get('#username').type(username)
+    cy.get('#password').type(password)
+    cy.contains('Log in').click()
+    cy.getCookie('session_id').should('exist')
+  },
+  {
+    validate() {
+      cy.getCookie('session_id').should('exist')
+    },
+  }
+)
+```
+
+When `cy.session()` restores a cached session, `validate` confirms the cookie
+came back. A cookie that has expired since it was cached isn't restored, so the
+assertion fails after the
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) and
+`cy.session()` runs setup again. To confirm that your server still accepts the
+session, [validate with a request](/api/commands/session#Validating-the-session)
+instead.
+
+#### Read a cookie on another origin with `cy.origin()` <E2EOnlyBadge />
+
+`cy.getCookie()` reads cookies for the origin of the page under test. When the
+page is on a different origin from the one your test visited first, such as a
+single sign-on provider, run `cy.getCookie()` inside
+[`cy.origin()`](/api/commands/origin).
+
+```javascript
+cy.visit('/')
+cy.contains('Log in with SSO').click()
+
+cy.origin('https://auth.example.com', () => {
+  cy.get('#username').type('jane')
+  cy.get('#password').type('s3cr3t')
+  cy.contains('Sign in').click()
+  cy.getCookie('sso_session').should('exist')
+})
+```
 
 ## Notes
 
