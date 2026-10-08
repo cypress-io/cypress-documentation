@@ -116,18 +116,31 @@ Therefore it's often much more efficient to test the blur behavior directly with
 `blur` event on the window. Focus itself does not move: whichever element held
 it still does, and `document.activeElement` is unchanged.
 
-### Timeouts {#Notes-Timeouts}
+#### Blurring the body doesn't fire a blur event
 
-#### `.blur()` can time out because your browser did not receive any blur events
+`.blur()` also accepts the `body` without it having focus, but the browser never
+fires `blur` on the `body`, so Cypress doesn't simulate one. Focus stays where it
+was.
 
-If you see this error, you may want to ensure that the main browser window is
-currently focused. This means not being focused in debugger or any other window
-when the command is run.
+### Events
 
-Internally Cypress does account for this, and will polyfill the blur events when
-necessary to replicate what the browser does. Unfortunately the browser will
-still behave differently when not in focus - for instance it may throttle async
-events. Your best bet here is to keep Cypress focused when working on a test.
+#### Blurring a field you typed into fires its `change` event
+
+When the element has a value change waiting from [`.type()`](/api/commands/type)
+or [`.clear()`](/api/commands/clear), `.blur()` fires the `change` event first,
+then `blur`, the same order the browser uses when a user leaves the field.
+
+### Browser focus
+
+#### `.blur()` fires blur events when the browser window isn't focused
+
+When the browser window doesn't have focus, for instance because you're working
+in DevTools or another window, the browser may not fire the native `blur` event.
+Cypress then dispatches `blur` and `focusout` on the element itself, so the
+command doesn't wait on the browser.
+
+The browser can still behave differently in the background, for instance by
+throttling timers, so keep the Cypress window focused while you work on a test.
 
 ## Rules
 
@@ -136,8 +149,9 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 - `.blur()` requires being chained off a command that yields a DOM element or
   the window.
 - `.blur()` requires the subject to contain a single element.
-- `.blur()` requires the element to currently have focus. The window and the
-  `body` are exempt, since neither reports as the focused element.
+- `.blur()` requires the element to currently have focus, unless you pass
+  `{ force: true }`. The window and the `body` are exempt, since neither reports
+  as the focused element.
 
 <HeaderAssertions />
 
