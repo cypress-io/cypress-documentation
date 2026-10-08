@@ -1,6 +1,6 @@
 ---
 title: 'cy.eq()'
-description: Get a DOM element at a specific index in an array of elements in Cypress.
+description: Get a DOM element at a specific index within a set of DOM elements in Cypress.
 sidebar_label: eq
 slug: /api/commands/eq
 ---
@@ -73,7 +73,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 
 ### Index
 
-#### Find the 2nd element within the elements
+#### Get the 2nd list item with `.eq()`
 
 ```html
 <ul>
@@ -89,7 +89,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 cy.get('li').eq(1).should('contain', 'siamese')
 ```
 
-#### Make an assertion on the 3rd row of a table
+#### Assert on the 3rd row of a table with `.eq()`
 
 The header row is a `<tr>` too, so it sits at index `0`.
 
@@ -120,7 +120,7 @@ cy.get('tr').eq(2).should('contain', 'Canada')
 
 ### Index From End
 
-#### Find the 2nd from the last element within the elements
+#### Get the 2nd-to-last list item with `.eq()`
 
 ```html
 <ul>
@@ -153,41 +153,38 @@ an element exists at the index. Here, the results render one at a time, and
 cy.get('.results li').eq(2).should('have.text', 'Katherine')
 ```
 
-#### Act on a specific row of a table with `.eq()`
+#### Move a table row up and check its position with `.eq()`
 
 `.eq()` yields a single DOM element, so you can keep chaining queries and actions
 off it. It also narrows the set to one element before
 [`.within()`](/api/commands/within), which throws an error when its subject
-contains more than one element.
+contains more than one element. Here, the test checks where each row ends up, so
+the index is what's under test.
 
 ```html title="index.html"
 <table>
   <tbody>
     <tr>
       <td>Ada</td>
-      <td><button>Edit</button></td>
-      <td><button>Delete</button></td>
+      <td><button>Move up</button></td>
     </tr>
     <tr>
       <td>Grace</td>
-      <td><button>Edit</button></td>
-      <td><button>Delete</button></td>
+      <td><button>Move up</button></td>
     </tr>
   </tbody>
 </table>
-<!-- clicking Edit adds the class "editing" to its row, and clicking Delete removes its row -->
+<!-- clicking Move up swaps its row with the row above it -->
 ```
 
 ```javascript title="spec.cy.js"
 cy.get('tbody tr')
   .eq(1)
   .within(() => {
-    cy.contains('Edit').click()
+    cy.contains('Move up').click()
   })
-cy.get('tbody tr').eq(1).should('have.class', 'editing')
-
-cy.get('tbody tr').eq(1).contains('Delete').click()
-cy.get('tbody tr').should('have.length', 1)
+cy.get('tbody tr').eq(0).should('contain', 'Grace')
+cy.get('tbody tr').eq(1).should('contain', 'Ada')
 ```
 
 #### Click an item after the list finishes loading with `.eq()`
@@ -200,7 +197,10 @@ calling `.eq()`, and Cypress retries the query until the assertion passes.
 
 ```html title="index.html"
 <ul class="results"></ul>
-<!-- 10 placeholder <li> elements render first, then 10 <li data-cy="result"> elements replace them; clicking a result adds the class "selected" -->
+<!--
+  10 placeholder <li> elements render first, then 10 <li data-cy="result">
+  elements replace them. Clicking a result adds the class "selected".
+-->
 ```
 
 ```javascript title="spec.cy.js"
@@ -268,7 +268,8 @@ cy.get('[data-cy=user-ada]').should('be.visible')
 ### When the index is outside the set
 
 When no element exists at the index, `.eq()` yields an empty set. Cypress
-retries until the element exists, then fails with an error such as
+retries until an element appears at the index. If none appears before the
+timeout, it fails with an error such as
 ``Expected to find element: `5`, but never found it.`` To assert that the set has
 no element at an index, chain `.should('not.exist')`.
 
