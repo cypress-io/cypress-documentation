@@ -35,20 +35,13 @@ cy.request('http://dev.local/seed')
 
 The URL to make the request to.
 
-If you do not provide a fully qualified domain name (FQDN) URL, Cypress will
-make its best guess as to which host you want `cy.request()` to use in the URL.
+If you do not provide a fully qualified domain name (FQDN) URL, Cypress resolves
+the host for `cy.request()` in this order:
 
-1. If you make a `cy.request()` after visiting a page, Cypress assumes the URL
-   used for the `cy.visit()` is the host.
-
-```javascript
-cy.visit('http://localhost:8080/app')
-cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
-```
-
-2. If you make a `cy.request()` prior to visiting a page, Cypress assumes the
-   host is the `baseUrl` property configured inside of your
-   [configuration file](/app/references/configuration).
+1. If the `baseUrl` property is set in your
+   [configuration file](/app/references/configuration), Cypress prefixes the URL
+   with it. This applies whether or not you have visited a page, so `baseUrl`
+   wins over the origin of a page you visited.
 
 :::cypress-config-example
 
@@ -66,13 +59,22 @@ cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
 cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
 ```
 
-3. If Cypress cannot determine the host it will throw an error.
+2. If no `baseUrl` is set and you have visited a page, Cypress uses the origin of
+   the URL used for the `cy.visit()`.
+
+```javascript
+cy.visit('http://localhost:8080/app')
+cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
+```
+
+3. If Cypress cannot determine the host, it throws an error.
 
 <Icon name="angle-right" /> **body _(String, Object, FormData, Blob)_**
 
 A request `body` to be sent in the request. When `body` is a JavaScript object
 or boolean, Cypress automatically JSON-serializes it and sets the
-`Content-Type: application/json` request header. When `body` is a string, it is
+`Content-Type: application/json` request header, unless you set a `Content-Type`
+in `headers`. When `body` is a string, it is
 sent as-is with no automatic content-type. When `body` is a `FormData`
 instance, Cypress sends it as `multipart/form-data`, which is how you
 [upload a file](#Upload-a-file-with-multipartform-data).
@@ -116,44 +118,51 @@ Supported methods include:
 
 Pass in an options object to change the default behavior of `cy.request()`.
 
-You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
-globally in [configuration](/app/references/configuration).
-
-| Option                     | Default                                                     | Description                                                                                                                                                                                              |
-| -------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                      |
-| `url`                      | `null`                                                      | The URL to make the request to                                                                                                                                                                           |
-| `method`                   | `GET`                                                       | The HTTP method to use in the request                                                                                                                                                                    |
-| `auth`                     | `null`                                                      | Adds Authorization headers for [HTTP Basic Authentication](#HTTP-Basic-Authentication).                                                                                                                  |
-| `body`                     | `null`                                                      | Body to send along with the request                                                                                                                                                                      |
-| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                             |
-| `followRedirect`           | `true`                                                      | Whether to automatically follow redirects                                                                                                                                                                |
-| `form`                     | `false`                                                     | Whether to convert the `body` values to URL encoded content and set the `x-www-form-urlencoded` header                                                                                                   |
-| `encoding`                 | `utf8`                                                      | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le` |
-| `gzip`                     | `true`                                                      | Whether to accept the `gzip` encoding                                                                                                                                                                    |
-| `headers`                  | `null`                                                      | Additional headers to send; Accepts object literal. _Note:_ `headers` will only be sent for the initial request for `cy.request()`, not for any subsequent requests.                                     |
-| `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request                                                                                                                                                   |
-| `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                         |
-| `retryOnNetworkFailure`    | `true`                                                      | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                   |
-| `timeout`                  | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts)                                                                                                                                |
+| Option                     | Default                                                     | Description                                                                                                                                                                                                                                    |
+| -------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                            |
+| `url`                      | `null`                                                      | The URL to make the request to                                                                                                                                                                                                                 |
+| `method`                   | `GET`                                                       | The HTTP method to use in the request                                                                                                                                                                                                          |
+| `auth`                     | `null`                                                      | Adds an `Authorization` header for [HTTP Basic Authentication](#HTTP-Basic-Authentication), or a bearer token with `bearer`                                                                                                                    |
+| `body`                     | `null`                                                      | Body to send along with the request                                                                                                                                                                                                            |
+| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                                                                   |
+| `followRedirect`           | `true`                                                      | Whether to automatically follow redirects                                                                                                                                                                                                      |
+| `form`                     | `false`                                                     | Whether to convert the `body` values to URL encoded content and set the `x-www-form-urlencoded` header                                                                                                                                         |
+| `encoding`                 | `utf8`                                                      | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le`                                       |
+| `gzip`                     | `true`                                                      | Whether to accept the `gzip` encoding                                                                                                                                                                                                          |
+| `headers`                  | `null`                                                      | Additional headers to send; accepts an object literal. Cypress also sends them on any redirect it follows, except that it drops `Content-Type` and `Content-Length`, and drops `Authorization` when the redirect changes the hostname.         |
+| `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request                                                                                                                                                                                         |
+| `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true. Requires `failOnStatusCode: true`; setting it with `failOnStatusCode: false` throws an error. |
+| `retryOnNetworkFailure`    | `true`                                                      | Whether Cypress should automatically retry transient network errors (such as `ECONNREFUSED`, `ECONNRESET`, or `ENOTFOUND`) under the hood. Cypress will retry a request up to 4 times if this is set to true.                                  |
+| `timeout`                  | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts)                                                                                                                                                                      |
 
 You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
 globally in the [Cypress configuration](/app/references/configuration).
 
 <HeaderYields />
 
-`cy.request()` yields the `response` as an object literal containing properties
-such as:
+`cy.request()` yields the `response` as an object literal containing these
+properties:
 
-- `status`
-- `body`
-- `headers`
-- `duration`
+- `status`: the response status code
+- `statusText`: the status message, such as `OK` or `Found`
+- `isOkStatusCode`: `true` when `status` is `2xx` or `3xx`
+- `body`: the response body
+- `headers`: the response headers
+- `duration`: how long the request took, in milliseconds
+- `requestHeaders`: the headers Cypress sent with the request
+- `allRequestResponses`: each request and response in the chain, including
+  redirects
+- `redirects`: each redirect Cypress followed, as `status: url` strings (only
+  present when a redirect was followed)
+- `redirectedToUrl`: the URL the response redirects to (only present with
+  `followRedirect: false`)
 
 The `response.body` is automatically parsed as a JavaScript object when the
 response has a `Content-Type` header whose value ends in `json` (such as
-`application/json` or `application/vnd.api+json`). Otherwise, `response.body`
-is a string.
+`application/json` or `application/vnd.api+json`). When the request `body` is an
+object or boolean, Cypress also parses any response body that is valid JSON,
+whatever its `Content-Type`. Otherwise, `response.body` is a string.
 
 ## Examples
 
@@ -257,7 +266,17 @@ cy.request({
 ```
 
 The `auth` option also accepts `user`/`pass` as aliases for
-`username`/`password`.
+`username`/`password`. To send a bearer token instead, pass it as `bearer`, and
+Cypress sends `Authorization: Bearer <token>`.
+
+```javascript
+cy.request({
+  url: '/api/profile',
+  auth: {
+    bearer: 'some-token',
+  },
+})
+```
 
 #### Download a PDF file
 
@@ -283,7 +302,7 @@ for use elsewhere.
 
 ```javascript
 cy.request({
-  url: 'https://docs.cypress.io/img/logo.png',
+  url: 'https://docs.cypress.io/img/logo/cypress-logo-circle-dark.png',
   encoding: 'base64',
 }).then((response) => {
   const base64Content = response.body
@@ -411,7 +430,8 @@ When `body` is a JavaScript **object or boolean** and `form` is not `true`,
 Cypress automatically:
 
 1. JSON-serializes the request body.
-2. Adds a `Content-Type: application/json` header to the request.
+2. Adds a `Content-Type: application/json` header to the request, unless you
+   set a `Content-Type` in `headers`, such as `application/vnd.api+json`.
 
 When `body` is a **string**, it is sent as-is and no `Content-Type` header is
 added automatically.
@@ -438,11 +458,13 @@ header is added automatically. Set one in `headers` if your server expects it.
 Cypress always inspects the `Content-Type` header of the response. If that
 header's value ends in `json` (for example `application/json` or
 `application/vnd.api+json`), `response.body` is automatically parsed into a
-JavaScript object. Otherwise `response.body` is a string.
+JavaScript object.
 
-This means the automatic JSON parsing of `response.body` depends entirely on
-what the server returns in its `Content-Type` header — it is **not** affected
-by the type of the request `body`.
+The request `body` matters too. When it is an object or boolean, the request is
+sent as JSON, and Cypress parses any response body that is valid JSON, even when
+the server sends it as `text/plain` or with no `Content-Type` at all.
+
+In every other case, `response.body` is a string.
 
 ### Debugging
 
@@ -461,10 +483,8 @@ Normally when the browser detects a cross-origin HTTP request, it will send an
 `cy.request()` bypasses CORS entirely.
 
 ```javascript
-// we can make requests to any external server, no problem.
-cy.request('https://www.google.com/webhp?#q=cypress.io+cors')
-  .its('body')
-  .should('include', 'Testing, the way it should be') // true
+// docs.cypress.io sends no CORS headers, and cy.request() still succeeds
+cy.request('https://docs.cypress.io').its('status').should('eq', 200)
 ```
 
 ### Cookies
@@ -553,7 +573,7 @@ following:
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [15.20.0](/app/references/changelog#15-20-0) | Added support for `QUERY` method.                                                                                                                                                                                                                                          |
 | [7.4.0](/app/references/changelog#7-4-0)     | Added support for `FormData` and `Blob` request bodies.                                                                                                                                                                                                                    |
-| [4.7.0](/app/references/changelog#3-3-0)     | Added support for `encoding` option.                                                                                                                                                                                                                                       |
+| [4.7.0](/app/references/changelog#4-7-0)     | Added support for `encoding` option.                                                                                                                                                                                                                                       |
 | [3.3.0](/app/references/changelog#3-3-0)     | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.                                                                                                                                                                                          |
 | [3.2.0](/app/references/changelog#3-2-0)     | Added support for any valid HTTP `method` argument including `TRACE`, `COPY`, `LOCK`, `MKCOL`, `MOVE`, `PURGE`, `PROPFIND`, `PROPPATCH`, `UNLOCK`, `REPORT`, `MKACTIVITY`, `CHECKOUT`, `MERGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`, `SEARCH`, and `CONNECT`. |
 
