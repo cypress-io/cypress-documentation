@@ -118,7 +118,7 @@ The header row is a `<tr>` too, so it sits at index `0`.
 cy.get('tr').eq(2).should('contain', 'Canada')
 ```
 
-### Index From End
+### Index from end
 
 #### Get the 2nd-to-last list item with `.eq()`
 
@@ -194,6 +194,7 @@ An action such as [`.click()`](/api/commands/click) is not an assertion, so
 that moment. If the list renders placeholder rows before the real results, the
 element it clicks can be a placeholder. Assert on the finished list before
 calling `.eq()`, and Cypress retries the query until the assertion passes.
+Here, the results are ranked, so the test clicks the fourth-ranked result.
 
 ```html title="index.html"
 <ul class="results"></ul>
@@ -236,8 +237,8 @@ order.
 
 ```javascript title="spec.cy.js"
 cy.contains('th', 'Name').click()
-cy.get('tbody tr').eq(0).should('have.text', 'Ada')
-cy.get('tbody tr').eq(1).should('have.text', 'Grace')
+cy.get('tbody tr').eq(0).should('contain', 'Ada')
+cy.get('tbody tr').eq(1).should('contain', 'Grace')
 ```
 
 ## Notes
@@ -254,7 +255,7 @@ attribute. Learn more in
 
 ```javascript
 // position matters: the first row after sorting
-cy.get('tbody tr').eq(0).should('have.text', 'Ada')
+cy.get('tbody tr').eq(0).should('contain', 'Ada')
 
 // position doesn't matter: the row for a specific user
 cy.get('[data-cy=user-ada]').should('be.visible')
