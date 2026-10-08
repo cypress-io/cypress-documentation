@@ -695,7 +695,7 @@ See
 **_Request comments endpoint and test response_**
 
 ```javascript
-cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
+cy.request('https://jsonplaceholder.cypress.io/comments').then((response) => {
   expect(response.status).to.eq(200)
   expect(response.body).to.have.length(500)
   expect(response).to.have.property('headers')
@@ -703,19 +703,21 @@ cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
 })
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as a `request` row with the
+method, status, and URL, followed by one row per assertion:
 
 <DocsImage
   src="/img/api/request/testing-request-url-and-its-response-body-headers.png"
-  alt="Command Log request"
+  alt="Command Log showing a request row reading GET 200 https://jsonplaceholder.cypress.io/comments, followed by five passing assertions on the status, body length, headers, and duration"
 />
 
-When clicking on `request` within the command log, the console outputs the
-following:
+When you click `request` in the Command Log, the console shows the request
+Cypress sent and the response it got under `Request:`, and the yielded response
+under `Yielded:`:
 
 <DocsImage
   src="/img/api/request/console-log-request-response-body-headers-status-url.png"
-  alt="Console Log request"
+  alt="DevTools console after clicking the request command, showing Command: request, a Request object with the request URL, body, and headers alongside the response body and headers, and a Yielded object with status 200, duration, a 500-item body array, and headers"
 />
 
 ## History
