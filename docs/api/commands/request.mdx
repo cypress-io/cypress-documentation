@@ -130,7 +130,7 @@ Pass in an options object to change the default behavior of `cy.request()`.
 | `form`                     | `false`                                                     | Whether to convert the `body` values to URL encoded content and set the `x-www-form-urlencoded` header                                                                                                                                         |
 | `encoding`                 | `utf8`                                                      | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le`                                       |
 | `gzip`                     | `true`                                                      | Whether to accept the `gzip` encoding                                                                                                                                                                                                          |
-| `headers`                  | `null`                                                      | Additional headers to send; accepts an object literal. Cypress also sends them on any redirect it follows, except that it drops `Content-Type` and `Content-Length`, and drops `Authorization` when the redirect changes the hostname.         |
+| `headers`                  | `null`                                                      | Additional headers to send; accepts an object literal. Cypress also sends them on each redirect it follows, with the exceptions in [Redirects](#Redirects).                                                                                    |
 | `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request                                                                                                                                                                                         |
 | `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true. Requires `failOnStatusCode: true`; setting it with `failOnStatusCode: false` throws an error. |
 | `retryOnNetworkFailure`    | `true`                                                      | Whether Cypress should automatically retry transient network errors (such as `ECONNREFUSED`, `ECONNRESET`, or `ENOTFOUND`) under the hood. Cypress will retry a request up to 4 times if this is set to true.                                  |
@@ -162,7 +162,10 @@ The `response.body` is automatically parsed as a JavaScript object when the
 response has a `Content-Type` header whose value ends in `json` (such as
 `application/json` or `application/vnd.api+json`). When the request `body` is an
 object or boolean, Cypress also parses any response body that is valid JSON,
-whatever its `Content-Type`. Otherwise, `response.body` is a string.
+whatever its `Content-Type`. After a `FormData` or `Blob` request,
+`response.body` is an `ArrayBuffer` (see
+[Response body parsing](#Response-body-parsing)). Otherwise, `response.body` is a
+string.
 
 ## Examples
 
@@ -259,6 +262,16 @@ cy.request('/old-dashboard').then((response) => {
 })
 ```
 
+When you click `request` in the Command Log, the console lists every request in
+the chain under `Requests:` (here, the original request and the redirect it
+followed), rather than the single `Request:` entry shown for a request without
+redirects:
+
+<DocsImage
+  src="/img/api/request/console-log-request-redirect-chain.png"
+  alt="DevTools console after clicking the request command, showing Command: request, a Requests array with 2 entries, and a Yielded object with status 200 and the body of the page the redirect landed on"
+/>
+
 #### Test an error response with `failOnStatusCode: false`
 
 By default, a status code other than `2xx` or `3xx` fails the test. Set
@@ -274,6 +287,14 @@ cy.request({
   expect(response.body).to.have.property('error', 'User not found')
 })
 ```
+
+The Command Log marks the `404` with a red indicator, and the test still passes
+because the assertions match:
+
+<DocsImage
+  src="/img/api/request/command-log-request-404-failonstatuscode-false.png"
+  alt="Command Log showing a request row reading GET 404 /api/users/999 with a red status indicator, followed by three passing assertions on the 404 status and the error property"
+/>
 
 #### Send query parameters with `qs`
 
@@ -341,6 +362,14 @@ code yourself, as the
 [API login example](#Log-in-through-the-API-and-cache-it-with-cysession) does.
 
 :::
+
+Here the bearer token example fails with a `401`. The token came from
+`cy.env()`, and the error still prints it under `The request we sent was`:
+
+<DocsImage
+  src="/img/api/request/command-log-request-failure-prints-token.png"
+  alt="Command Log showing a failed request row reading GET 401 /api/profile, followed by a CypressError whose request headers include authorization: Bearer expired-token-123"
+/>
 
 #### Download a PDF file
 
@@ -416,6 +445,9 @@ cy.env(['apiToken']).then(({ apiToken }) => {
 The third argument to `formData.append()` sets the filename the server
 receives. Without it, the part is sent with the filename `blob`. Plain string
 fields go in the same object, such as `formData.append('description', 'Avatar')`.
+
+The response to a `FormData` request arrives as raw bytes, even when it is JSON.
+See [Response body parsing](#Response-body-parsing) to read it.
 
 #### HTML form submissions using form option
 
@@ -497,6 +529,16 @@ it('shows the dashboard to a logged-in user', () => {
 })
 ```
 
+In the Command Log, the `session` row stands in for the whole login, and its
+`created` badge shows the session was built in this test. Later tests show
+`restored` instead. The login request itself doesn't appear, because of
+`log: false`:
+
+<DocsImage
+  src="/img/api/request/command-log-request-api-login-session.png"
+  alt="Command Log showing a Sessions panel, a before each section with a session api-login row marked created, and a test body section with visit /dashboard and contains h1, Dashboard rows"
+/>
+
 #### Create a record, then use its ID in later requests
 
 Seed the data a test needs, then use what the API returns. Here the `id` from
@@ -573,9 +615,56 @@ For a version that yields the finished job so you can assert on it, see
 
 ## Notes
 
+### How `cy.request()` sends a request
+
+`cy.request()` doesn't send the request from the browser. Your test hands it to
+the Cypress server, which runs in Node.js and sends it to your server directly.
+Along the way, the Cypress server reads the browser's cookies for the URL and
+saves any `Set-Cookie` headers it gets back into the browser. The notes below on
+[Debugging](#Debugging), [CORS](#CORS), [Cookies](#Cookies), and
+[`cy.intercept()`](#cyintercept) all follow from this.
+
+<DocsImage
+  src="/img/api/request/request-runs-in-node.svg"
+  alt="Diagram: your test in the browser sends cy.request() to the Cypress server in Node.js, which reads cookies from the browser, sends the request to your server, saves Set-Cookie headers back into the browser, and yields the response. The DevTools Network tab, CORS checks, and cy.intercept() routes are not involved."
+/>
+
+### Redirects
+
+With `followRedirect: true`, the default, Cypress follows each redirect and
+records it in `response.redirects` and `response.allRequestResponses`. At each
+hop it:
+
+- Saves any `Set-Cookie` headers into the browser, then attaches the cookies
+  that match the next URL.
+- Sends your `headers` again.
+- Follows the redirect as a `GET` and drops the body, `Content-Type`, and
+  `Content-Length`. A `307` is the exception: it keeps the method, body, and
+  `Content-Type`.
+- Drops `Authorization` when the redirect changes the hostname.
+
+<DocsImage
+  src="/img/api/request/request-redirect-hops.svg"
+  alt="Diagram of a redirect chain: a POST to localhost:8080/login with your headers, Authorization, Content-Type, and a body returns 302 with Set-Cookie sid. The next request is a GET to localhost:8080/home with your headers, Authorization, and the sid cookie, dropping the body, Content-Type, and Content-Length. It returns 302 to api.example.com/me, a different hostname, so the final GET keeps your headers but drops Authorization."
+/>
+
 ### JSON request and response bodies
 
 #### Request body serialization
+
+What Cypress sends, and what you get back in `response.body`, depends on the
+type of `body`:
+
+| `body`                   | `Content-Type` Cypress sets                                  | `response.body`                                                              |
+| ------------------------ | ------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Object or boolean        | `application/json`, unless you set one                       | Parsed whenever it is valid JSON, whatever the response's `Content-Type`     |
+| Object with `form: true` | `application/x-www-form-urlencoded`                          | Parsed when the response's `Content-Type` ends in `json`, otherwise a string |
+| String                   | None                                                         | Parsed when the response's `Content-Type` ends in `json`, otherwise a string |
+| `FormData`               | `multipart/form-data` with a boundary, replacing one you set | An `ArrayBuffer` of the raw bytes, whatever the response's `Content-Type`    |
+| `Blob`                   | None                                                         | An `ArrayBuffer` of the raw bytes, whatever the response's `Content-Type`    |
+| None                     | None                                                         | Parsed when the response's `Content-Type` ends in `json`, otherwise a string |
+
+The rest of this section covers each case in detail.
 
 When `body` is a JavaScript **object or boolean** and `form` is not `true`,
 Cypress automatically:
@@ -614,6 +703,19 @@ JavaScript object.
 The request `body` matters too. When it is an object or boolean, the request is
 sent as JSON, and Cypress parses any response body that is valid JSON, even when
 the server sends it as `text/plain` or with no `Content-Type` at all.
+
+When the request `body` is a `FormData` or a `Blob`, Cypress sends and receives
+raw bytes, so `response.body` is an `ArrayBuffer`, even for a JSON response.
+Decode it before you assert on it:
+
+```javascript
+cy.request({ method: 'POST', url: '/api/echo-json', body: formData }).then(
+  (response) => {
+    const body = JSON.parse(new TextDecoder().decode(response.body))
+    expect(body).to.have.property('ok', true)
+  }
+)
+```
 
 In every other case, `response.body` is a string.
 

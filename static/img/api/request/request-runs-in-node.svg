@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340" role="img" aria-labelledby="t d">
+<title id="t">How cy.request() sends a request</title>
+<desc id="d">Your test in the browser hands cy.request() to the Cypress server, which runs in Node.js. The Cypress server reads the browser's cookies for the URL, sends the HTTP request to your server, saves any Set-Cookie headers back into the browser, and yields the response to your test. The browser's own network layer is not involved, so the request does not appear in the DevTools Network tab, CORS does not apply, and cy.intercept() routes do not match it.</desc>
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#555a6e"/>
+  </marker>
+</defs>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .box { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.25; }
+  .hl { fill: #e9ebfc; stroke: #4956e3; stroke-width: 1.5; }
+  .skip { fill: none; stroke: #6f74a0; stroke-width: 1.25; stroke-dasharray: 5 4; }
+  .line { fill: none; stroke: #555a6e; stroke-width: 1.5; }
+  .title { font: 600 15px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
+  .sub { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+  .lbl { font: 600 12.5px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
+  .dim { font: italic 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="719" height="339" rx="12"/>
+
+<!-- Row of actors -->
+<rect class="box" x="20" y="40" width="180" height="76" rx="8"/>
+<text class="title" x="110" y="72" text-anchor="middle">Your test</text>
+<text class="sub" x="110" y="94" text-anchor="middle">runs in the browser</text>
+
+<rect class="hl" x="270" y="40" width="180" height="76" rx="8"/>
+<text class="title" x="360" y="72" text-anchor="middle">Cypress server</text>
+<text class="sub" x="360" y="94" text-anchor="middle">runs in Node.js</text>
+
+<rect class="box" x="520" y="40" width="180" height="76" rx="8"/>
+<text class="title" x="610" y="72" text-anchor="middle">Your server</text>
+<text class="sub" x="610" y="94" text-anchor="middle">any host or origin</text>
+
+<!-- test <-> Cypress server -->
+<path class="line" d="M 202 64 H 266" marker-end="url(#arr)"/>
+<text class="lbl" x="235" y="30" text-anchor="middle">cy.request()</text>
+<path class="line" d="M 268 94 H 204" marker-end="url(#arr)"/>
+<text class="lbl" x="235" y="134" text-anchor="middle">yields</text>
+
+<!-- Cypress server <-> your server -->
+<path class="line" d="M 452 64 H 516" marker-end="url(#arr)"/>
+<text class="lbl" x="485" y="30" text-anchor="middle">request</text>
+<path class="line" d="M 518 94 H 456" marker-end="url(#arr)"/>
+<text class="lbl" x="485" y="134" text-anchor="middle">response</text>
+
+<!-- Cookies -->
+<rect class="box" x="270" y="206" width="180" height="62" rx="8"/>
+<text class="title" x="360" y="233" text-anchor="middle">Browser cookies</text>
+<text class="sub" x="360" y="254" text-anchor="middle">the same cookie jar</text>
+<path class="line" d="M 330 204 V 120" marker-end="url(#arr)"/>
+<path class="line" d="M 390 120 V 202" marker-end="url(#arr)"/>
+<text class="note" x="322" y="160" text-anchor="end">1. reads cookies</text>
+<text class="note" x="322" y="177" text-anchor="end">for the URL</text>
+<text class="note" x="398" y="160">2. saves each</text>
+<text class="note" x="398" y="177">Set-Cookie</text>
+
+<!-- Bypassed browser network -->
+<rect class="skip" x="20" y="176" width="200" height="120" rx="8"/>
+<text class="title" x="36" y="202">Not involved</text>
+<text class="note" x="36" y="226">DevTools Network tab</text>
+<text class="note" x="36" y="248">CORS checks</text>
+<text class="note" x="36" y="270">cy.intercept() routes</text>
+<text class="dim" x="20" y="320">The browser's network layer never sees the request.</text>
+</svg>
