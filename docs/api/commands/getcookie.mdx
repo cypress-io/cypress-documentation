@@ -25,11 +25,18 @@ cy.getCookie(name, options)
 cy.getCookie('auth_key') // Get cookie with name 'auth_key'
 ```
 
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.getCookie() // Errors, a cookie name is required
+cy.getCookie({ domain: 'example.com' }) // Errors, name must be a string
+```
+
 ### Arguments
 
 <Icon name="angle-right" /> **name _(String)_**
 
-The name of the cookie to get. Required.
+The name of the cookie to get. Required, and must be a string.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -45,45 +52,31 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 
 `cy.getCookie()` yields a cookie object with the following properties:
 
-- `domain`
-- `expiry` _(if specified)_
-- `hostOnly` _(if specified)_
-- `httpOnly`
-- `name`
-- `path`
-- `sameSite` _(if specified)_
-- `secure`
-- `value`
+- `domain`: _(String)_
+- `expiry`: _(Number)_ _(if specified)_
+- `hostOnly`: _(Boolean)_ _(if specified)_
+- `httpOnly`: _(Boolean)_
+- `name`: _(String)_
+- `path`: _(String)_
+- `sameSite`: _(String)_ _(if specified)_
+- `secure`: _(Boolean)_
+- `value`: _(String)_
 
-`cy.getCookie()` is a query, and it is _safe_ to chain further commands. It will
-automatically [retry](/app/core-concepts/retry-ability) until all chained
-assertions have passed, or until it times out, re-reading the cookie on each
-retry so the yielded value stays up to date. Chained assertions are what drive
-those retries: with no assertions chained, `cy.getCookie()` yields whatever it
-reads on the first attempt, which is `null` if the cookie does not exist yet.
-Chain [`.should('exist')`](/api/commands/should) to wait for a cookie that is
-set asynchronously.
+`cy.getCookie()` is a query, and it is _safe_ to chain further commands. It
+re-reads the cookie on each [retry](/app/core-concepts/retry-ability), and the
+assertions you chain with [`.should()`](/api/commands/should) drive those
+retries. If an assertion fails, because the cookie is `null` or because a
+property doesn't match yet, the query reads the cookie again and re-runs the
+assertion until it passes or the command times out.
 
-:::caution
-
-Because `cy.getCookie()` is a query, it re-reads the cookie on every retry, and
-assertions you chain with [`.should()`](/api/commands/should) drive those retries
-until they pass or the command times out. A [`.then()`](/api/commands/then)
-callback, by contrast, runs only once after the command settles and is not
-retried — so prefer chaining [`.should()`](/api/commands/should) assertions over
-asserting inside `.then()` when you need Cypress to wait for the cookie to be
-set.
-
-:::
+With no assertion chained, `cy.getCookie()` yields whatever it reads on the
+first attempt. A [`.then()`](/api/commands/then) callback runs once and isn't
+retried, so chain `.should('exist')` before it to wait for a cookie that your
+application sets asynchronously.
 
 #### When a cookie matching the name could not be found:
 
-On each read, `cy.getCookie()` yields the cookie object, or `null` if no cookie
-with that name exists yet. The yielded value is the subject your chained
-assertions run against. If an assertion fails, either because the cookie is `null`, or
-because it exists but a property doesn't match yet, the query re-reads the
-cookie and re-runs the assertion, looping until it passes or the command times
-out.
+`cy.getCookie()` yields `null`.
 
 ## Examples
 
@@ -106,13 +99,17 @@ cy.getCookie('session_id')
   })
 ```
 
-You can check the cookie existence without comparing any of its properties
+To check that the cookie exists without comparing any of its properties, assert
+`exist`:
 
 ```javascript
 cy.getCookie('my-session-cookie').should('exist')
 ```
 
-If you need the cookie value, for example to use in a subsequent call
+To use the cookie's value in a later command, save the cookie in a variable and
+read it inside a [`.then()`](/api/commands/then) callback. Cypress evaluates the
+`cy.request()` options when the callback runs, after the cookie is saved, rather
+than when the test queues its commands.
 
 ```js
 let cookie
@@ -143,10 +140,9 @@ cy.get('#submit')
 
 :::info
 
-Check out our example recipes using `cy.getCookie()` to test
-[logging in using HTML web forms](/app/references/recipes#Logging-In),
-[logging in using XHR web forms](/app/references/recipes#Logging-In), and
-[logging in with single sign on](/app/references/recipes#Logging-In)
+The [Logging In recipes](/app/references/recipes#Logging-In) use
+`cy.getCookie()` to test logging in with HTML web forms, XHR web forms, and
+single sign-on.
 
 :::
 
@@ -156,6 +152,13 @@ Check out our example recipes using `cy.getCookie()` to test
 
 <CookieDefaultDomain />
 
+### Matching a cookie by domain in WebKit
+
+In WebKit, `cy.getCookie()` first looks for a cookie whose `domain` exactly
+matches the requested domain. If none matches, it falls back to a cookie set on
+the parent (apex) domain, such as `example.com` when you request
+`app.example.com`.
+
 ## Rules
 
 <HeaderRequirements />
@@ -164,12 +167,22 @@ Check out our example recipes using `cy.getCookie()` to test
 
 <HeaderAssertions />
 
-- `cy.getCookie()` will automatically [retry](/app/core-concepts/retry-ability)
+- `cy.getCookie()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
 
 - `cy.getCookie()` can time out waiting for assertions you've added to pass.
+- `cy.getCookie()` can time out waiting for the browser to return the cookie.
+  Both waits use the
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (or the
+  `timeout` option, when passed).
+- If the application under test is on a different origin, `cy.getCookie()`
+  retries until the command times out and then fails with a cross-origin error.
+  Run it inside [`cy.origin()`](/api/commands/origin) to read cookies on that
+  origin.
+- If the browser returns an error while reading the cookie, `cy.getCookie()`
+  fails right away instead of retrying.
 
 ## Command Log
 
@@ -183,30 +196,33 @@ The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png"
-  alt="Command Log getcookie"
+  alt="Command Log showing getCookie for fakeCookie1, followed by passing assertions that the cookie has a value property of 123ABC"
 />
 
-When clicking on `getCookie` within the command log, the console outputs the
-following:
+When you click `getCookie` in the Command Log, the console outputs the
+following. When no cookie matches, the console shows `null` as the yielded
+value, with a note that no cookie with that name was found.
 
 <DocsImage
   src="/img/api/getcookie/inspect-cookie-object-properties-in-console.png"
-  alt="Console Log getcookie"
+  alt="Console output for getCookie showing the fakeCookie1 cookie object with its domain, httpOnly, name, path, secure, and value properties"
 />
 
 ## History
 
-| Version                                    | Changes                                                                                            |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| [16.0.0](/app/references/changelog#16-0-0) | `cy.getCookie()` is now a query and retries assertions until they pass or time out.                |
-| [5.0.0](/app/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.            |
-| [4.3.0](/app/references/changelog#4-3-0)   | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`. |
+| Version                                    | Changes                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | `cy.getCookie()` is now a query and retries assertions until they pass or time out. Its timeout now defaults to `defaultCommandTimeout` instead of `responseTimeout`, and overwriting it requires [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries). See the [Migration Guide](/app/references/migration-guide#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries). |
+| [15.6.0](/app/references/changelog#15-6-0) | In WebKit, prefers a cookie that matches the exact `domain`, falling back to the apex domain.                                                                                                                                                                                                                                                                                                                                   |
+| [12.0.0](/app/references/changelog#12-0-0) | The `domain` option defaults to the hostname instead of the superdomain.                                                                                                                                                                                                                                                                                                                                                        |
+| [11.0.0](/app/references/changelog#11-0-0) | Added `domain` option.                                                                                                                                                                                                                                                                                                                                                                                                          |
+| [5.0.0](/app/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                                                                                                                                                                                                                                                                                                         |
+| [4.3.0](/app/references/changelog#4-3-0)   | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`.                                                                                                                                                                                                                                                                                                                              |
 
 ## See also
 
-- [Cypress Cookies API](/api/cypress-api/cookies)
 - [`cy.clearCookie()`](/api/commands/clearcookie)
-- [`cy.clearCookies()`](/api/commands/clearcookies)
+- [`cy.getAllCookies()`](/api/commands/getallcookies)
 - [`cy.getCookies()`](/api/commands/getcookies)
 - [`cy.setCookie()`](/api/commands/setcookie)
 - [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)
