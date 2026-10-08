@@ -153,7 +153,112 @@ an element exists at the index. Here, the results render one at a time, and
 cy.get('.results li').eq(2).should('have.text', 'Katherine')
 ```
 
+#### Act on a specific row of a table with `.eq()`
+
+`.eq()` yields a single DOM element, so you can keep chaining queries and actions
+off it. It also narrows the set to one element before
+[`.within()`](/api/commands/within), which throws an error when its subject
+contains more than one element.
+
+```html title="index.html"
+<table>
+  <tbody>
+    <tr>
+      <td>Ada</td>
+      <td><button>Edit</button></td>
+      <td><button>Delete</button></td>
+    </tr>
+    <tr>
+      <td>Grace</td>
+      <td><button>Edit</button></td>
+      <td><button>Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+<!-- clicking Edit adds the class "editing" to its row, and clicking Delete removes its row -->
+```
+
+```javascript title="spec.cy.js"
+cy.get('tbody tr')
+  .eq(1)
+  .within(() => {
+    cy.contains('Edit').click()
+  })
+cy.get('tbody tr').eq(1).should('have.class', 'editing')
+
+cy.get('tbody tr').eq(1).contains('Delete').click()
+cy.get('tbody tr').should('have.length', 1)
+```
+
+#### Click an item after the list finishes loading with `.eq()`
+
+An action such as [`.click()`](/api/commands/click) is not an assertion, so
+`cy.get('[data-cy=result]').eq(3).click()` acts on the element at index `3` at
+that moment. If the list renders placeholder rows before the real results, the
+element it clicks can be a placeholder. Assert on the finished list before
+calling `.eq()`, and Cypress retries the query until the assertion passes.
+
+```html title="index.html"
+<ul class="results"></ul>
+<!-- 10 placeholder <li> elements render first, then 10 <li data-cy="result"> elements replace them; clicking a result adds the class "selected" -->
+```
+
+```javascript title="spec.cy.js"
+cy.get('[data-cy=result]').should('have.length', 10).eq(3).click()
+cy.get('[data-cy=result]').eq(3).should('have.class', 'selected')
+```
+
+#### Assert on a table row after sorting it with `.eq()`
+
+`cy.get()` and `.eq()` are both queries, so Cypress re-runs them together until
+the chained assertion passes. After the table re-sorts, the assertion checks
+whichever row is at the index _now_, which is what you want when testing sort
+order.
+
+```html title="index.html"
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Grace</td>
+    </tr>
+    <tr>
+      <td>Ada</td>
+    </tr>
+  </tbody>
+</table>
+<!-- clicking the Name header sorts the rows alphabetically -->
+```
+
+```javascript title="spec.cy.js"
+cy.contains('th', 'Name').click()
+cy.get('tbody tr').eq(0).should('have.text', 'Ada')
+cy.get('tbody tr').eq(1).should('have.text', 'Grace')
+```
+
 ## Notes
+
+### When to use `.eq()` instead of a `data-cy` selector
+
+An index is tied to the order of the elements on the page. When that order
+changes, such as a new item added at the top of a list, `.eq()` selects a
+different element and the test breaks for a reason unrelated to what it checks.
+Use `.eq()` when the position itself is what you're testing, such as sort order
+or the newest item in a feed. Otherwise, select the element by a `data-cy`
+attribute. Learn more in
+[selecting elements](/app/core-concepts/best-practices#Selecting-Elements).
+
+```javascript
+// position matters: the first row after sorting
+cy.get('tbody tr').eq(0).should('have.text', 'Ada')
+
+// position doesn't matter: the row for a specific user
+cy.get('[data-cy=user-ada]').should('be.visible')
+```
 
 ### How `.eq()` compares to `.first()` and `.last()`
 
@@ -201,6 +306,30 @@ several elements when the set spans more than one parent.
 ```javascript
 cy.get('li').eq(1) // yields <li>Banana</li>
 cy.get('li:nth-child(2)') // yields <li>Banana</li> and <li>Daikon</li>
+```
+
+### Aliasing the result of `.eq()`
+
+An alias stores the query chain, not the element it found. Each time you use the
+alias, Cypress re-runs the chain against the current DOM, so an aliased `.eq()`
+yields whichever element is at that index _now_. Learn more in
+[aliasing DOM elements](/app/core-concepts/variables-and-aliases#Elements).
+
+```html title="index.html"
+<input class="new-todo" />
+<ul class="todo-list">
+  <li>Buy milk</li>
+  <li>Walk dog</li>
+</ul>
+<!-- pressing Enter in .new-todo adds the text as a new <li> at the top of the list -->
+```
+
+```javascript title="spec.cy.js"
+cy.get('.todo-list li').eq(1).as('second')
+cy.get('@second').should('have.text', 'Walk dog')
+
+cy.get('.new-todo').type('Write docs{enter}')
+cy.get('@second').should('have.text', 'Buy milk')
 ```
 
 ## Rules
