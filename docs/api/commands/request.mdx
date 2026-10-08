@@ -627,6 +627,7 @@ saves any `Set-Cookie` headers it gets back into the browser. The notes below on
 <DocsImage
   src="/img/api/request/request-runs-in-node.svg"
   alt="Diagram: your test in the browser sends cy.request() to the Cypress server in Node.js, which reads cookies from the browser, sends the request to your server, saves Set-Cookie headers back into the browser, and yields the response. The DevTools Network tab, CORS checks, and cy.intercept() routes are not involved."
+  noBorder
 />
 
 ### Redirects
@@ -646,6 +647,7 @@ hop it:
 <DocsImage
   src="/img/api/request/request-redirect-hops.svg"
   alt="Diagram of a redirect chain: a POST to localhost:8080/login with your headers, Authorization, Content-Type, and a body returns 302 with Set-Cookie sid. The next request is a GET to localhost:8080/home with your headers, Authorization, and the sid cookie, dropping the body, Content-Type, and Content-Length. It returns 302 to api.example.com/me, a different hostname, so the final GET keeps your headers but drops Authorization."
+  noBorder
 />
 
 ### JSON request and response bodies

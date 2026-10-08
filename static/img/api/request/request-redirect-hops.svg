@@ -3,28 +3,31 @@
 <desc id="d">A POST to http://localhost:8080/login with your headers, an Authorization header, a Content-Type header, and a body returns 302 with a Set-Cookie header, which Cypress saves in the browser. Cypress follows it with a GET to http://localhost:8080/home that keeps your headers and Authorization, adds the saved cookie, and drops the body, Content-Type, and Content-Length. That returns 302 to https://api.example.com/me, a different hostname, so the next GET keeps your headers but drops Authorization too, and sends only cookies that match api.example.com. A 307 redirect keeps the method, body, and Content-Type.</desc>
 <defs>
   <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-    <path d="M0 0 L10 5 L0 10 z" fill="#555a6e"/>
+    <path d="M0 0 L10 5 L0 10 z" fill="#5A5F7A"/>
   </marker>
 </defs>
 <style>
-  .card { fill: #f7f8fc; stroke: #e1e3ed; }
-  .box { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.25; }
-  .line { fill: none; stroke: #555a6e; stroke-width: 1.5; }
-  .num { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
-  .req { font: 600 14px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
-  .k { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
-  .drop { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #b4232a; }
-  .v { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
-  .resp { font: 600 12.5px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
-  .side { font: italic 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+  @font-face { font-family: Poppins; font-weight: 500; src: url(data:font/woff2;base64,d09GMgABAAAAAAU4AAwAAAAACMgAAATsAAQBBgAAAAAAAAAAAAAAAAAAAAAAAAAAGyAcMAZgAFwKi1yJVQE2AiQDSAsmAAQgBQYHIBvIBgiO1E7xz5Sp5sN/p/25M1PNLOSgCPySiVQFBZhUSp/0vRSSPohfq/4f0699danuzb/nYq1ZKEGPwJee2qgX7vT4pJlYvDSORatAwEIUMI+C7AK0Q0k3gwBgMQtzQMxWtw+JYADgJQAAMLcQYtDDkyoqO9IwJ4fSZTQIlxk6n/yHOIB6h8oB4MpHSBHSiDPXxUNLULnK4bOm4wLmoZ2Z8WITKphmKowaqaXUycA8uU4KAN2eBBqkrWdg/wljkAgK8ZgHCczIRiXaXwIwD6kwIwsVaHrp5dceuujIyy0v14DADUywty8CMAsgTwBqJUAwKC5AaogSW6xNEszQ9KH4mUIuaWySaOK4aQmTx41NKftNo4WTJseNZkbVj/LnBAOVtC834CsmHMPGBUdGRkgkxr7zZB47MsK9G8XQkyc+7WiMIl92M35BipvD1GRHLMBtjLKUeZZwLOBR58Es9tcoWGHjuM+hCYobncdSbByvgi+3ih4ejUdjMcKtfVgWz92yxroDERW2+9l1MfadBxg6e9MSZRz4FBgV0RzDkj2alGLk25japScYiqpE+fl/p43qSQQ5TQWm5SgCm8xjVCxQLD1XBYpFsR9TRXFWHLsaIn8N9ymw2TsxMcUmcPhaOq+gP4SLZ+n6lyMcEjoyLODW3l1xn0RuOW8ZD/fgjOfOk7Kr0Yfzo/lUr8LxGIgRmiVcDaDqXIgozWHsbmTpM/+53pvf9u18cV2w80Xsw+dx4N2u/yKELTUPPg63omdVcVZTnSOs1ipNOo3BOaeJah3uqmzs6ayw21+rqPGYr+uKf8iGPjJcXWWtTJX45a/wwS+YjXyRUyPLr5U6G95pYqqbpA6jXscbZdYcdcGMopkZ8EmUKR+plB/lNmPNsW2+vHV1dXmrt2U1f3v82+7cyKtd3ZE3e1qft+LI+snBKaHjf2U0KeSFarO3KXPi7rkDLQMGg14uf8YP4Of45hR9rrZH+7NKwytFC9+9Xmga71uk8fBaTW59sq1yqCI+OLCYl8lTHybPqzmuM08ILNZ6jTJlYYPSiUU15sEOq0NeI/6BDX8Xzj5eJjHYO+zm4exLcnG2SyAUulaIs1Qqsd8tFAhdArFPBRNRbmX4YLqhYLG7d5pruKQ0vc9qHfL7zUN9lkxvt8nUk9GxcEzQxWuynYPYmFwlU9W6LK1Sp8NrMDi9TmloaUh/MLA4Fb8m9lttQ36fIzJoSU8ftDgiPp8rMmxNF5S5lydna7WiLNdyodC5XJClzc0rseDjp0n09g6raTA72zTcYbfrS9O+D4REoUzvG+Is9wqhwC0QZ6tUYp9bIBC6hWK/aq7fYCiTbMkIi8KBLZUS3tZmfWIUWWJVx2yT2eRbEFoaysDDxCqxJmN8x4J74hTz7Ll7/37gmavk5UKJvWS5vihURGeGFuWLRX/PmvL8wZ3z7nmDTLLEUbTcgPs3U+feWmgtzvNk2jJT+UL+7fDbbxRCt2RpiN8YWJLKV8nUtS5zq2SVVJLH9r4MiWf2fH+reKz2/0Sa/gkAPtqy8xIA/PDb+RXAi1PrqV8AJICi5p5jA3UVoKDlj+b4BPIfQJgn/qCI4pFGZSGFugoX1YW6bwHU1DYspmqH34aLGsCSfuyitmEyhOEpEJE2zEIKVpDnNyB6YgMIAnN+C7ICwYx40Gvh5ZCGCg==) format('woff2'); } /* Poppins 500, subset to this diagram's title glyphs. SIL Open Font License 1.1 */
+  /* Colors are @cypress-design/css tokens: gray, indigo, jade, and red. */
+  .card { fill: #F3F4FA; stroke: #E1E3ED; }
+  .box { fill: #FFFFFF; stroke: #747994; stroke-width: 1.25; }
+  .line { fill: none; stroke: #5A5F7A; stroke-width: 1.5; }
+  .num { font: 500 13px Poppins, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #5A5F7A; }
+  .req { font: 600 14px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; fill: #1B1E2E; }
+  .method { font: 600 14px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; fill: #3A46CC; }
+  .send { font: 500 13px Poppins, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #005F39; }
+  .drop { font: 500 13px Poppins, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #C62B49; }
+  .v { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #1B1E2E; }
+  .resp { font: 600 12.5px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; fill: #1B1E2E; }
+  .side { font: italic 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #5A5F7A; }
 </style>
 <rect class="card" x="0.5" y="0.5" width="719" height="391" rx="12"/>
 
 <!-- Request 1 -->
 <rect class="box" x="20" y="20" width="680" height="62" rx="8"/>
 <text class="num" x="36" y="44">Request 1</text>
-<text class="req" x="120" y="44">POST http://localhost:8080/login</text>
-<text class="k" x="36" y="68">Sends</text>
+<text x="120" y="44"><tspan class="method">POST</tspan><tspan class="req"> http://localhost:8080/login</tspan></text>
+<text class="send" x="36" y="68">Sends</text>
 <text class="v" x="120" y="68">your headers, Authorization, Content-Type, body</text>
 
 <path class="line" d="M 60 84 V 114" marker-end="url(#arr)"/>
@@ -34,8 +37,8 @@
 <!-- Request 2 -->
 <rect class="box" x="20" y="118" width="680" height="100" rx="8"/>
 <text class="num" x="36" y="142">Request 2</text>
-<text class="req" x="120" y="142">GET http://localhost:8080/home</text>
-<text class="k" x="36" y="166">Sends</text>
+<text x="120" y="142"><tspan class="method">GET</tspan><tspan class="req"> http://localhost:8080/home</tspan></text>
+<text class="send" x="36" y="166">Sends</text>
 <text class="v" x="120" y="166">your headers, Authorization, Cookie: sid=…</text>
 <text class="drop" x="36" y="190">Drops</text>
 <text class="v" x="120" y="190">body, Content-Type, Content-Length</text>
@@ -48,8 +51,8 @@
 <!-- Request 3 -->
 <rect class="box" x="20" y="254" width="680" height="84" rx="8"/>
 <text class="num" x="36" y="278">Request 3</text>
-<text class="req" x="120" y="278">GET https://api.example.com/me</text>
-<text class="k" x="36" y="302">Sends</text>
+<text x="120" y="278"><tspan class="method">GET</tspan><tspan class="req"> https://api.example.com/me</tspan></text>
+<text class="send" x="36" y="302">Sends</text>
 <text class="v" x="120" y="302">your headers, cookies that match api.example.com</text>
 <text class="drop" x="36" y="326">Drops</text>
 <text class="v" x="120" y="326">Authorization, because the hostname changed</text>
