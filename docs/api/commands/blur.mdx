@@ -90,6 +90,98 @@ currently has focus.
 cy.get('input:first').blur({ force: true })
 ```
 
+### Workflows
+
+#### Show a validation message when a field loses focus
+
+```html title="index.html"
+<input id="email" type="email" />
+<p id="email-error" hidden>Enter a valid email address</p>
+<script>
+  const email = document.getElementById('email')
+  email.addEventListener('blur', () => {
+    document.getElementById('email-error').hidden = email.checkValidity()
+  })
+</script>
+```
+
+```javascript title="spec.cy.js"
+cy.get('#email').type('not-an-email')
+cy.get('#email').blur()
+cy.get('#email-error').should('be.visible')
+```
+
+#### Format a value when a field loses focus
+
+```html title="index.html"
+<input id="price" />
+<script>
+  const price = document.getElementById('price')
+  price.addEventListener('blur', () => {
+    price.value = Number(price.value).toFixed(2)
+  })
+</script>
+```
+
+```javascript title="spec.cy.js"
+cy.get('#price').type('19.5')
+cy.get('#price').blur()
+cy.get('#price').should('have.value', '19.50')
+```
+
+#### Autosave a field when it loses focus
+
+Blurring a field you typed into fires its `change` event, so an app that saves
+on `change` sends its request when `.blur()` runs. Wait on the request with
+[`cy.intercept()`](/api/commands/intercept).
+
+```html title="index.html"
+<textarea id="notes"></textarea>
+<script>
+  const notes = document.getElementById('notes')
+  notes.addEventListener('change', () => {
+    fetch('/api/notes', {
+      method: 'POST',
+      body: JSON.stringify({ notes: notes.value }),
+    })
+  })
+</script>
+```
+
+```javascript title="spec.cy.js"
+cy.intercept('POST', '/api/notes', { statusCode: 204 }).as('saveNotes')
+cy.get('#notes').type('Ships Friday')
+cy.get('#notes').blur()
+cy.wait('@saveNotes').its('request.body').should('include', 'Ships Friday')
+```
+
+#### Confirm the element no longer has focus
+
+```javascript
+cy.get('#email').focus()
+cy.get('#email').blur()
+cy.get('#email').should('not.have.focus')
+```
+
+#### Test what your app does when the window loses focus
+
+Blurring the window fires a `blur` event on it, the same event the browser sends
+when the user switches to another tab or app.
+
+```html title="index.html"
+<p id="status">playing</p>
+<script>
+  window.addEventListener('blur', () => {
+    document.getElementById('status').textContent = 'paused'
+  })
+</script>
+```
+
+```javascript title="spec.cy.js"
+cy.window().blur()
+cy.get('#status').should('have.text', 'paused')
+```
+
 ## Notes
 
 ### Actionability
