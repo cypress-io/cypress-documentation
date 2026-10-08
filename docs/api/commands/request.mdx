@@ -145,27 +145,17 @@ globally in the [Cypress configuration](/app/references/configuration).
 properties:
 
 - `status`: the response status code
-- `statusText`: the status message, such as `OK` or `Found`
-- `isOkStatusCode`: `true` when `status` is `2xx` or `3xx`
-- `body`: the response body
+- `body`: the response body, parsed as described in
+  [Response body parsing](#Response-body-parsing)
 - `headers`: the response headers
 - `duration`: how long the request took, in milliseconds
-- `requestHeaders`: the headers Cypress sent with the request
-- `allRequestResponses`: each request and response in the chain, including
-  redirects
 - `redirects`: each redirect Cypress followed, as `status: url` strings (only
   present when a redirect was followed)
 - `redirectedToUrl`: the URL the response redirects to (only present with
   `followRedirect: false`)
 
-The `response.body` is automatically parsed as a JavaScript object when the
-response has a `Content-Type` header whose value ends in `json` (such as
-`application/json` or `application/vnd.api+json`). When the request `body` is an
-object or boolean, Cypress also parses any response body that is valid JSON,
-whatever its `Content-Type`. After a `FormData` or `Blob` request,
-`response.body` is an `ArrayBuffer` (see
-[Response body parsing](#Response-body-parsing)). Otherwise, `response.body` is a
-string.
+It also includes `statusText`, `isOkStatusCode`, `requestHeaders`, and
+`allRequestResponses`.
 
 ## Examples
 
@@ -261,16 +251,6 @@ cy.request('/old-dashboard').then((response) => {
   expect(response.status).to.eq(200)
 })
 ```
-
-When you click `request` in the Command Log, the console lists every request in
-the chain under `Requests:` (here, the original request and the redirect it
-followed), rather than the single `Request:` entry shown for a request without
-redirects:
-
-<DocsImage
-  src="/img/api/request/console-log-request-redirect-chain.png"
-  alt="DevTools console after clicking the request command, showing Command: request, a Requests array with 2 entries, and a Yielded object with status 200 and the body of the page the redirect landed on"
-/>
 
 #### Test an error response with `failOnStatusCode: false`
 
@@ -368,7 +348,7 @@ Here the bearer token example fails with a `401`. The token came from
 
 <DocsImage
   src="/img/api/request/command-log-request-failure-prints-token.png"
-  alt="Command Log showing a failed request row reading GET 401 /api/profile, followed by a CypressError whose request headers include authorization: Bearer expired-token-123"
+  alt="The request we sent was section of a cy.request() failure, listing the method, URL, and request headers, including authorization: Bearer expired-token-123"
 />
 
 #### Download a PDF file
@@ -529,16 +509,6 @@ it('shows the dashboard to a logged-in user', () => {
 })
 ```
 
-In the Command Log, the `session` row stands in for the whole login, and its
-`created` badge shows the session was built in this test. Later tests show
-`restored` instead. The login request itself doesn't appear, because of
-`log: false`:
-
-<DocsImage
-  src="/img/api/request/command-log-request-api-login-session.png"
-  alt="Command Log showing a Sessions panel, a before each section with a session api-login row marked created, and a test body section with visit /dashboard and contains h1, Dashboard rows"
-/>
-
 #### Create a record, then use its ID in later requests
 
 Seed the data a test needs, then use what the API returns. Here the `id` from
@@ -632,23 +602,14 @@ saves any `Set-Cookie` headers it gets back into the browser. The notes below on
 
 ### Redirects
 
-With `followRedirect: true`, the default, Cypress follows each redirect and
-records it in `response.redirects` and `response.allRequestResponses`. At each
-hop it:
+With `followRedirect: true`, the default, Cypress follows each redirect and sends
+your `headers` again, with these differences:
 
-- Saves any `Set-Cookie` headers into the browser, then attaches the cookies
-  that match the next URL.
-- Sends your `headers` again.
-- Follows the redirect as a `GET` and drops the body, `Content-Type`, and
-  `Content-Length`. A `307` is the exception: it keeps the method, body, and
-  `Content-Type`.
-- Drops `Authorization` when the redirect changes the hostname.
-
-<DocsImage
-  src="/img/api/request/request-redirect-hops.svg"
-  alt="Diagram of a redirect chain: a POST to localhost:8080/login with your headers, Authorization, Content-Type, and a body returns 302 with Set-Cookie sid. The next request is a GET to localhost:8080/home with your headers, Authorization, and the sid cookie, dropping the body, Content-Type, and Content-Length. It returns 302 to api.example.com/me, a different hostname, so the final GET keeps your headers but drops Authorization."
-  noBorder
-/>
+- Cookies carry across. Cypress saves any `Set-Cookie` headers into the browser,
+  then attaches the cookies that match the next URL.
+- `Authorization` is dropped when the redirect changes the hostname.
+- A redirected `POST`, `PUT`, or `DELETE` is followed as a `GET` without its
+  body. Only a `307` keeps the method and body.
 
 ### JSON request and response bodies
 
@@ -697,18 +658,14 @@ header is added automatically. Set one in `headers` if your server expects it.
 
 #### Response body parsing
 
-Cypress always inspects the `Content-Type` header of the response. If that
-header's value ends in `json` (for example `application/json` or
-`application/vnd.api+json`), `response.body` is automatically parsed into a
-JavaScript object.
+`response.body` is parsed into an object when either:
 
-The request `body` matters too. When it is an object or boolean, the request is
-sent as JSON, and Cypress parses any response body that is valid JSON, even when
-the server sends it as `text/plain` or with no `Content-Type` at all.
+- The response's `Content-Type` ends in `json`, such as `application/json`.
+- The request `body` is an object or boolean, and the response is valid JSON.
 
-When the request `body` is a `FormData` or a `Blob`, Cypress sends and receives
-raw bytes, so `response.body` is an `ArrayBuffer`, even for a JSON response.
-Decode it before you assert on it:
+After a `FormData` or `Blob` request, `response.body` is an `ArrayBuffer` of raw
+bytes, even for JSON, so decode it before you assert on it. In every other case,
+it is a string.
 
 ```javascript
 cy.request({ method: 'POST', url: '/api/echo-json', body: formData }).then(
@@ -718,8 +675,6 @@ cy.request({ method: 'POST', url: '/api/echo-json', body: formData }).then(
   }
 )
 ```
-
-In every other case, `response.body` is a string.
 
 ### Debugging
 
