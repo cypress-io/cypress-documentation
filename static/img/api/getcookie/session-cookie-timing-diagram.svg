@@ -1,9 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="300" viewBox="0 0 640 300" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="280" viewBox="0 0 640 280" role="img" aria-labelledby="t d">
 <title id="t">When cy.session() saves the session cookie</title>
 <desc id="d">Two timelines of a cy.session() setup function. In the first, setup ends and the session is saved right after the login click, so the session_id cookie arrives too late and is missing from the saved session. In the second, cy.getCookie('session_id').should('exist') retries after the login click until the cookie arrives, then setup ends and the session is saved with the cookie.</desc>
 <style>
   /* Colors are @cypress-design tokens: gray, jade (primary), indigo (secondary), red */
   .card { fill: #FAFAFC; stroke: #E1E3ED; }
+  .divider { fill: none; stroke: #E1E3ED; stroke-width: 1; }
   .h { font: 500 14px Poppins, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1B1E2E; }
   .code { font: 500 12px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #00442A; }
   .code-bg { fill: #E4FBF2; }
@@ -17,43 +18,45 @@
   .save { fill: #4956E3; }
   .wait { fill: #E4FBF2; stroke: #00814D; stroke-width: 1.25; }
 </style>
-<rect class="card" x="0.5" y="0.5" width="639" height="299" rx="12"/>
+<rect class="card" x="0.5" y="0.5" width="639" height="279" rx="12"/>
 
 <!-- Timeline 1: no wait at the end of setup -->
-<text class="h" x="24" y="36">Setup without a wait</text>
-<path class="axis" d="M 24 90 H 608"/>
-<path class="head" d="M 616 90 L 606 85 V 95 Z"/>
-<text class="sub" x="616" y="74" text-anchor="end">time</text>
+<text class="h" x="24" y="34">Setup without a wait</text>
+<path class="axis" d="M 24 64 H 608"/>
+<path class="head" d="M 616 64 L 606 59 V 69 Z"/>
+<text class="sub" x="616" y="52" text-anchor="end">time</text>
 
-<circle class="event" cx="90" cy="90" r="6"/>
-<text class="lbl" x="90" y="118" text-anchor="middle">"Log in" clicked</text>
+<circle class="event" cx="90" cy="64" r="6"/>
+<text class="lbl" x="90" y="88" text-anchor="middle">"Log in" clicked</text>
 
-<rect class="save" x="244" y="84" width="12" height="12"/>
-<text class="lbl" x="250" y="118" text-anchor="middle">Setup ends,</text>
-<text class="lbl" x="250" y="135" text-anchor="middle">session saved</text>
+<rect class="save" x="244" y="58" width="12" height="12"/>
+<text class="lbl" x="250" y="88" text-anchor="middle">Setup ends,</text>
+<text class="lbl" x="250" y="104" text-anchor="middle">session saved</text>
 
-<circle class="event" cx="430" cy="90" r="6"/>
-<text class="lbl" x="430" y="118" text-anchor="middle">session_id cookie arrives</text>
-<text class="bad" x="430" y="135" text-anchor="middle">✗ missing from the session</text>
+<circle class="event" cx="450" cy="64" r="6"/>
+<text class="lbl" x="450" y="88" text-anchor="middle">session_id cookie arrives</text>
+<text class="bad" x="450" y="104" text-anchor="middle">✗ missing from the session</text>
+
+<path class="divider" d="M 24 134 H 616"/>
 
 <!-- Timeline 2: cy.getCookie() waits at the end of setup -->
-<text class="h" x="24" y="186">Setup that waits with</text>
-<rect class="code-bg" x="168" y="172" width="312" height="20" rx="4"/>
-<text class="code" x="174" y="186">cy.getCookie('session_id').should('exist')</text>
-<path class="axis" d="M 24 240 H 608"/>
-<path class="head" d="M 616 240 L 606 235 V 245 Z"/>
-<text class="sub" x="616" y="224" text-anchor="end">time</text>
+<text class="h" x="24" y="172">Setup that waits with</text>
+<rect class="code-bg" x="168" y="158" width="312" height="20" rx="4"/>
+<text class="code" x="174" y="172">cy.getCookie('session_id').should('exist')</text>
+<path class="axis" d="M 24 214 H 608"/>
+<path class="head" d="M 616 214 L 606 209 V 219 Z"/>
+<text class="sub" x="616" y="202" text-anchor="end">time</text>
 
-<rect class="wait" x="96" y="234" width="298" height="12" rx="3"/>
-<text class="sub" x="245" y="224" text-anchor="middle">retries until the cookie exists</text>
+<text class="sub" x="230" y="200" text-anchor="middle">retries until the cookie exists</text>
+<rect class="wait" x="96" y="208" width="268" height="12" rx="3"/>
 
-<circle class="event" cx="90" cy="240" r="6"/>
-<text class="lbl" x="90" y="268" text-anchor="middle">"Log in" clicked</text>
+<circle class="event" cx="90" cy="214" r="6"/>
+<text class="lbl" x="90" y="238" text-anchor="middle">"Log in" clicked</text>
 
-<circle class="event" cx="400" cy="240" r="6"/>
-<text class="lbl" x="400" y="268" text-anchor="middle">session_id cookie arrives</text>
+<circle class="event" cx="370" cy="214" r="6"/>
+<text class="lbl" x="370" y="238" text-anchor="middle">session_id cookie arrives</text>
 
-<rect class="save" x="539" y="234" width="12" height="12"/>
-<text class="lbl" x="545" y="268" text-anchor="middle">Setup ends,</text>
-<text class="good" x="545" y="285" text-anchor="middle">✓ session saved with it</text>
+<rect class="save" x="534" y="208" width="12" height="12"/>
+<text class="lbl" x="540" y="238" text-anchor="middle">Setup ends,</text>
+<text class="good" x="540" y="254" text-anchor="middle">✓ session saved with it</text>
 </svg>
