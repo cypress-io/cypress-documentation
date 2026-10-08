@@ -213,7 +213,13 @@ cy.getCookie('refresh_token', { domain: 'api.example.com' }).should('exist')
 [`cy.session()`](/api/commands/session) saves the browser's cookies when its
 setup function finishes, so wait for the session cookie at the end of setup.
 Without that wait, a cookie that arrives after the login click is left out of
-the cached session.
+the cached session. The top timeline shows the cookie arriving too late, and the
+bottom one shows `cy.getCookie()` holding setup open until it arrives:
+
+<DocsImage
+  src="/img/api/getcookie/session-cookie-timing-diagram.svg"
+  alt="Two timelines of a cy.session() setup. Without a wait, setup ends and the session is saved before the session_id cookie arrives, so the cookie is missing from the session. With cy.getCookie('session_id').should('exist'), the query retries until the cookie arrives, then setup ends and the session is saved with it."
+/>
 
 ```javascript
 cy.session(
@@ -266,12 +272,46 @@ cy.origin('https://auth.example.com', () => {
 
 <CookieDefaultDomain />
 
-### Matching a cookie by domain in WebKit
+### Which cookies `cy.getCookie()` matches by domain
 
-In WebKit, `cy.getCookie()` first looks for a cookie whose `domain` exactly
-matches the requested domain. If none matches, it falls back to a cookie set on
-the parent (apex) domain, such as `example.com` when you request
-`app.example.com`.
+`cy.getCookie()` looks for the cookie on the requested domain: the `domain`
+option if you pass one, otherwise the hostname of the application under test.
+It matches the same domain and any parent domain the cookie was set on, but not
+a subdomain or a sibling domain. For a request on `app.example.com`:
+
+| Cookie set on                            | Yielded by `cy.getCookie()` |
+| ---------------------------------------- | --------------------------- |
+| `app.example.com` (same domain)          | Yes                         |
+| `example.com` (parent domain)            | Yes                         |
+| `api.app.example.com` (subdomain)        | No                          |
+| `api.example.com` (sibling domain)       | No                          |
+| `app.example.com` and `example.com` both | Depends on the browser      |
+
+When cookies with the same name exist on both the same domain and a parent
+domain, WebKit yields the same-domain cookie. Chromium-based browsers and
+Firefox yield whichever of the two the browser lists first, which can be the
+parent-domain cookie. To see every matching cookie, use
+[`cy.getCookies()`](/api/commands/getcookies).
+
+### Timeout error when the cookie is never set
+
+When an assertion keeps failing until the command times out, the Command Log
+marks the assertion in red and shows the error. If no cookie with the name
+exists, the yielded subject is `null`, so the error names `null` rather than a
+cookie:
+
+```javascript
+cy.getCookie('session_id').should('exist')
+```
+
+<DocsImage
+  src="/img/api/getcookie/command-log-getcookie-timed-out.png"
+  alt="Command Log showing getCookie for session_id followed by a failed assertion, with the error Timed out retrying after 4000ms: expected null to exist"
+/>
+
+If you see this error, check the cookie's name and the domain it's set on (see
+[which cookies `cy.getCookie()` matches](#Which-cookies-cygetCookie-matches-by-domain)),
+or pass a longer `timeout` when the cookie arrives after a slow request.
 
 ## Rules
 
