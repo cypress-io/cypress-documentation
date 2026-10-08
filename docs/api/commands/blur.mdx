@@ -132,8 +132,9 @@ cy.get('#price').should('have.value', '19.50')
 #### Autosave a field when it loses focus
 
 Blurring a field you typed into fires its `change` event, so an app that saves
-on `change` sends its request when `.blur()` runs. Wait on the request with
-[`cy.intercept()`](/api/commands/intercept).
+on `change` sends its request when `.blur()` runs. Stub the request with
+[`cy.intercept()`](/api/commands/intercept) and wait on it with
+[`cy.wait()`](/api/commands/wait).
 
 ```html title="index.html"
 <textarea id="notes"></textarea>
@@ -228,8 +229,8 @@ then `blur`, the same order the browser uses when a user leaves the field.
 
 When the browser window doesn't have focus, for instance because you're working
 in DevTools or another window, the browser may not fire the native `blur` event.
-Cypress then dispatches `blur` and `focusout` on the element itself, so the
-command doesn't wait on the browser.
+Cypress then dispatches `blur` and `focusout` on the element itself, so your
+app's blur handlers still run.
 
 The browser can still behave differently in the background, for instance by
 throttling timers, so keep the Cypress window focused while you work on a test.
@@ -263,20 +264,29 @@ cy.get('[name="comment"]').type('Nice Product!')
 cy.get('[name="comment"]').blur()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/blur/blur-input-command-log.png"
-  alt="Command Log showing get followed by focus, type, and blur on the comment textarea"
+  alt="Command Log showing focus, type, and blur, each chained off a get of the comment textarea"
 />
 
-When clicking on the `blur` command within the command log, the console outputs
-the following:
+Clicking the `blur` command in the Command Log prints the following to the
+console:
 
 <DocsImage
   src="/img/api/blur/console-showing-blur-command.png"
   alt="Browser console showing the textarea that .blur() was applied to"
 />
+
+## History
+
+| Version                                      | Changes                                                                          |
+| -------------------------------------------- | -------------------------------------------------------------------------------- |
+| [3.0.3](/app/references/changelog#3-0-3)     | Added support for blurring the `body`; blurring the window no longer moves focus |
+| [0.20.0](/app/references/changelog#0-20-0)   | Added support for blurring the window                                            |
+| [0.11.10](/app/references/changelog#0-11-10) | Added option `force`                                                             |
+| [0.8.0](/app/references/changelog#0-8-0)     | `.blur()` fires a pending `change` event before `blur`                           |
 
 ## See also
 
