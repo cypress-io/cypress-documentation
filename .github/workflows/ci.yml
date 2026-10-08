@@ -149,6 +149,9 @@ jobs:
       - name: Plugin unit tests
         run: npm run test:plugins
 
+      - name: Plugin review unit tests
+        run: npm run test:plugin-review
+
   e2e:
     name: E2E (${{ matrix.container }}/8)
     needs: build

@@ -64,3 +64,10 @@ not at all, on the `automation/update-plugins-data` branch or anywhere else.
 That workflow typechecks, builds, and runs `plugins_list.cy.ts` itself before
 opening the pull request. Anything that would newly break on a change to
 `src/data/plugins-generated.json` belongs there, not only in `ci.yml`.
+
+## `pull_request_target` never runs pull request code
+
+`plugin-review.yml` runs on `pull_request_target` so that it can comment on a
+fork's pull request and read `ANTHROPIC_API_KEY`. That event carries a write
+token and secrets, so never check out, install, or run anything from the pull
+request's head in it. Read what you need through the API, as data.

@@ -1,0 +1,121 @@
+name: Plugin review
+
+# A maintainer adds the `plugin-review` label to a pull request that adds
+# plugins to src/data/plugins.json. This job checks each new entry against the
+# requirements in CONTRIBUTING.md and posts the result as a single comment,
+# updated in place on each run. It's advisory, so it isn't a required check.
+#
+# Why `pull_request_target`: most plugin pull requests come from forks, and a
+# fork's `pull_request` run gets a read-only token and no secrets, so it could
+# neither comment nor call Claude. `pull_request_target` runs this file as it
+# is on the default branch, with those permissions. That's only safe because
+# no code from the pull request is checked out or run: the one thing read from
+# it is plugins.json, fetched as data through the API.
+on:
+  pull_request_target:
+    types: [labeled]
+
+permissions: {}
+
+concurrency:
+  group: plugin-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Review new plugins
+    # Run for the label only, and only in the parent repository: forks have no
+    # ANTHROPIC_API_KEY secret and no reason to run this.
+    if: github.event.label.name == 'plugin-review' &&
+      github.repository == 'cypress-io/cypress-documentation'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      # The default branch, never the pull request's head.
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          HUSKY: 0
+          CYPRESS_INSTALL_BINARY: 0
+
+      # Read the pull request's plugins.json as data. The head commit is
+      # reachable from this repository through the pull request ref, so this
+      # works for forks too, including one deleted after the PR was opened.
+      - name: Fetch plugins.json from the pull request
+        run: |
+          gh api "repos/$REPO/contents/src/data/plugins.json?ref=$HEAD_SHA" \
+            -H 'Accept: application/vnd.github.raw' \
+            > "$RUNNER_TEMP/head-plugins.json"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+
+      - name: Review new plugins
+        run: |
+          npm run review:plugins -- \
+            --base src/data/plugins.json \
+            --head "$RUNNER_TEMP/head-plugins.json" \
+            --out "$RUNNER_TEMP/comment.md" \
+            --footer "Reviewed at ${HEAD_SHA:0:7}. To run it again, add the \`plugin-review\` label again."
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          # Without this secret the docs criteria are reported as not checked
+          # and everything else still runs.
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Post or update the review comment
+        uses: actions/github-script@v9
+        env:
+          COMMENT_PATH: ${{ runner.temp }}/comment.md
+        with:
+          script: |
+            const fs = require('node:fs')
+            const body = fs.readFileSync(process.env.COMMENT_PATH, 'utf8')
+            const marker = '<!-- plugin-review -->'
+            const { owner, repo } = context.repo
+            const issue_number = context.payload.pull_request.number
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner, repo, issue_number, per_page: 100,
+            })
+            const previous = comments.find(
+              (c) => c.user?.login === 'github-actions[bot]' && c.body?.startsWith(marker)
+            )
+            if (previous) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body })
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body })
+            }
+
+      # Take the label off so adding it again re-runs the review, whether or
+      # not this run succeeded.
+      - name: Remove the label
+        if: always()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            try {
+              await github.rest.issues.removeLabel({
+                ...context.repo,
+                issue_number: context.payload.pull_request.number,
+                name: 'plugin-review',
+              })
+            } catch (error) {
+              if (error.status !== 404) throw error
+            }

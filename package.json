@@ -17,6 +17,7 @@
     "lint:frontmatter": "node scripts/lint-frontmatter.js",
     "lint:frontmatter:fix": "node scripts/lint-frontmatter.js --fix",
     "enrich:plugins": "node ./scripts/enrich-plugins.mjs",
+    "review:plugins": "node ./scripts/plugin-review/index.mjs",
     "api:source": "node ./scripts/api-source.mjs",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
@@ -27,6 +28,7 @@
     "test:plugins": "npm --prefix ./plugins/cypressRemarkPlugins run test && npm --prefix ./plugins/llm run test && npm run test:faq-plugin && npm run test:video-structured-data",
     "test:faq-plugin": "vitest run plugins/faq-structured-data.test.js",
     "test:video-structured-data": "vitest run src/components/video-youtube/structured-data.test.ts",
+    "test:plugin-review": "vitest run scripts/plugin-review",
     "test:search": "vitest run src/theme/SearchBar/searchRanking.test.js scripts/search/algolia-client.test.mjs scripts/search/scrape-and-compare-algolia-index.test.mjs",
     "preview:og": "node scripts/preview-og-cards.js",
     "test:titles": "npm run build && node scripts/test-titles.js",
@@ -64,6 +66,7 @@
     "tailwindcss": "^3.4.19"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.132.1",
     "@cypress-design/constants-button": "^1.12.0",
     "@docusaurus/module-type-aliases": "^3.10.1",
     "@docusaurus/tsconfig": "3.10.1",
@@ -81,6 +84,7 @@
     "prettier": "^3.9.4",
     "puppeteer-core": "^25.12.0",
     "sanitize-html": "^2.17.5",
+    "semver": "^7.8.5",
     "turndown": "^7.2.4",
     "turndown-plugin-gfm": "1.0.2",
     "typescript": "^6.0.3",

@@ -1191,6 +1191,10 @@ read those on GitHub.
 - **Plugin unit tests** (Vitest) cover both sub-packages in `plugins/`. Run them
   with `npm run test:plugins`, and run them whenever you change anything under
   `plugins/`.
+- **Plugin review unit tests** (Vitest) cover the checks behind
+  `plugin-review.yml`, the label-triggered review of plugins added to
+  `src/data/plugins.json`. Run them with `npm run test:plugin-review` whenever
+  you change `scripts/plugin-review/` or `scripts/plugin-signals.mjs`.
 - **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and
   `cypress.config.ts`. The `plugins/` sub-packages type check themselves through
   their own `tsc` builds during `npm run build`. `@docusaurus/tsconfig` points
