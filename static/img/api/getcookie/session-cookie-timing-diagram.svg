@@ -2,18 +2,20 @@
 <title id="t">When cy.session() saves the session cookie</title>
 <desc id="d">Two timelines of a cy.session() setup function. In the first, setup ends and the session is saved right after the login click, so the session_id cookie arrives too late and is missing from the saved session. In the second, cy.getCookie('session_id').should('exist') retries after the login click until the cookie arrives, then setup ends and the session is saved with the cookie.</desc>
 <style>
-  .card { fill: #f7f8fc; stroke: #e1e3ed; }
-  .h { font: 600 14px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
-  .code { font: 500 12px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
-  .lbl { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
-  .sub { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
-  .bad { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #b4232c; }
-  .good { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1f6b3a; }
-  .axis { fill: none; stroke: #6f74a0; stroke-width: 1.5; }
-  .head { fill: #6f74a0; }
-  .event { fill: #1b1e2e; }
-  .save { fill: #4956e3; }
-  .wait { fill: #e9ebfc; stroke: #4956e3; stroke-width: 1.25; }
+  /* Colors are @cypress-design tokens: gray, jade (primary), indigo (secondary), red */
+  .card { fill: #FAFAFC; stroke: #E1E3ED; }
+  .h { font: 500 14px Poppins, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1B1E2E; }
+  .code { font: 500 12px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #00442A; }
+  .code-bg { fill: #E4FBF2; }
+  .lbl { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1B1E2E; }
+  .sub { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #5A5F7A; }
+  .bad { font: 600 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #9F1331; }
+  .good { font: 600 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #005F39; }
+  .axis { fill: none; stroke: #747994; stroke-width: 1.5; }
+  .head { fill: #747994; }
+  .event { fill: #1B1E2E; }
+  .save { fill: #4956E3; }
+  .wait { fill: #E4FBF2; stroke: #00814D; stroke-width: 1.25; }
 </style>
 <rect class="card" x="0.5" y="0.5" width="639" height="299" rx="12"/>
 
@@ -36,7 +38,8 @@
 
 <!-- Timeline 2: cy.getCookie() waits at the end of setup -->
 <text class="h" x="24" y="186">Setup that waits with</text>
-<text class="code" x="172" y="186">cy.getCookie('session_id').should('exist')</text>
+<rect class="code-bg" x="168" y="172" width="312" height="20" rx="4"/>
+<text class="code" x="174" y="186">cy.getCookie('session_id').should('exist')</text>
 <path class="axis" d="M 24 240 H 608"/>
 <path class="head" d="M 616 240 L 606 235 V 245 Z"/>
 <text class="sub" x="616" y="224" text-anchor="end">time</text>
