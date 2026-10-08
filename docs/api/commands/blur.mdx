@@ -54,11 +54,11 @@ cy.get('li').blur() // Errors, subject contains more than one element
 
 <Icon name="angle-right" /> **options _(Object)_**
 
-Pass in an options object to change the default behavior of `.blur`.
+Pass in an options object to change the default behavior of `.blur()`.
 
 | Option    | Default                                                           | Description                                                                         |
 | --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
+| `log`     | `true`                                                            | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log) |
 | `force`   | `false`                                                           | Forces the action, disables checking if [element is focused](#Requirements)         |
 | `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.blur()` to resolve before [timing out](#Timeouts)                |
 
@@ -248,7 +248,7 @@ throttling timers, so keep the Cypress window focused while you work on a test.
 
 <HeaderAssertions />
 
-- `.blur()` will automatically wait for assertions you have chained to pass.
+- `.blur()` automatically waits for assertions you've chained to pass.
 
 <HeaderTimeouts />
 
@@ -286,7 +286,7 @@ console:
 | [3.0.3](/app/references/changelog#3-0-3)     | Added support for blurring the `body`; blurring the window no longer moves focus |
 | [0.20.0](/app/references/changelog#0-20-0)   | Added support for blurring the window                                            |
 | [0.11.10](/app/references/changelog#0-11-10) | Added option `force`                                                             |
-| [0.8.0](/app/references/changelog#0-8-0)     | `.blur()` fires a pending `change` event before `blur`                           |
+| [0.8.0](/app/references/changelog#0-8-0)     | `.blur()` fires `change` events for fields whose value changed                   |
 
 ## See also
 
