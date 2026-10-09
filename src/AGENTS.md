@@ -12,6 +12,7 @@ specific to `src/`, the React side of the site. Reasoning lives in
 | `theme/`         | swizzled Docusaurus internals, plus `MDXComponents.js`                |
 | `utils/`         | non-UI helpers shared by more than one component                      |
 | `data/`          | `plugins.json` (hand-edited) and `plugins-generated.json` (generated) |
+|                  | `plugins.schema.json`, the rules `npm run lint:plugins` checks        |
 |                  | `youtube-videos.json` (hand-edited) for video structured data         |
 | `css/`, `pages/` | global styles, standalone non-docs pages                              |
 

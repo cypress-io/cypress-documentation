@@ -1194,7 +1194,8 @@ read those on GitHub.
 - **Plugin review unit tests** (Vitest) cover the checks behind
   `plugin-review.yml`, the label-triggered review of plugins added to
   `src/data/plugins.json`. Run them with `npm run test:plugin-review` whenever
-  you change `scripts/plugin-review/` or `scripts/plugin-signals.mjs`.
+  you change `scripts/plugin-review/`, `scripts/plugin-signals.mjs`,
+  `scripts/plugins-schema.mjs`, or `src/data/plugins.schema.json`.
 - **Type checking** (`npm run typecheck`) covers `src/`, `cypress/`, and
   `cypress.config.ts`. The `plugins/` sub-packages type check themselves through
   their own `tsc` builds during `npm run build`. `@docusaurus/tsconfig` points
@@ -1218,9 +1219,11 @@ every push to `main`:
 
 Lint, typecheck, and unit tests install their own dependencies (restored from
 the `actions/setup-node` npm cache) and start immediately, without waiting on
-the build. Only the jobs that need the built site wait: the build uploads `dist`
-as an artifact and the E2E containers download it, so the site is built once for
-all eight rather than once per container.
+the build. `npm run lint` includes `lint:plugins`, which validates
+`src/data/plugins.json` against `src/data/plugins.schema.json` and rejects a
+plugin listed twice. Only the jobs that need the built site wait: the build
+uploads `dist` as an artifact and the E2E containers download it, so the site is
+built once for all eight rather than once per container.
 
 The E2E job splits the suite through Cypress Cloud, which needs
 `CYPRESS_RECORD_KEY`. GitHub withholds secrets from pull requests opened from a

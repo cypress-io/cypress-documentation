@@ -80,10 +80,9 @@ describe('checkEntry', () => {
     )
     const row = byLabel(rows, 'Entry fields')
     expect(row.status).toBe(STATUS.notMet)
-    expect(row.detail).toContain('`description` is missing')
-    expect(row.detail).toContain('https')
-    expect(row.detail).toContain('`badge`')
-    expect(row.detail).toContain('`extra`')
+    expect(row.detail).toBe(
+      'Unknown field `extra`; `description` is empty; `link` must be an https URL or a path on this site; `badge` must be `official` or `community`'
+    )
   })
 
   it('rejects the official badge outside cypress-io', () => {
@@ -97,6 +96,18 @@ describe('checkEntry', () => {
       []
     )
     expect(byLabel(rows, 'Badge').status).toBe(STATUS.met)
+  })
+
+  it('accepts the official badge on a docs site path', () => {
+    const rows = checkEntry(
+      plugin({
+        badge: 'official',
+        link: '/ui-coverage/get-started/introduction',
+      }),
+      []
+    )
+    expect(byLabel(rows, 'Badge').status).toBe(STATUS.met)
+    expect(byLabel(rows, 'Entry fields').status).toBe(STATUS.met)
   })
 
   it('flags a duplicate npm package listed under another name', () => {

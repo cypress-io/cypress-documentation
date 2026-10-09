@@ -1,4 +1,5 @@
 {
+  "$schema": "./plugins.schema.json",
   "plugins": [
     {
       "name": "Preprocessors",

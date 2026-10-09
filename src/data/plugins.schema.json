@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cypress plugins list",
+  "description": "The curated plugin list shown at /app/plugins/plugins-list. See CONTRIBUTING.md, \"Adding Plugins\".",
+  "type": "object",
+  "required": ["plugins"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "plugins": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/category" }
+    }
+  },
+  "definitions": {
+    "category": {
+      "type": "object",
+      "required": ["name", "description", "plugins"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Category heading."
+        },
+        "description": {
+          "type": "string",
+          "description": "Short introduction to the category. Basic HTML is allowed."
+        },
+        "plugins": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/plugin" }
+        }
+      }
+    },
+    "plugin": {
+      "type": "object",
+      "required": ["name", "description", "link"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display name. If the plugin is published to npm, this is usually the package name."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Short summary of what the plugin does. Basic HTML is allowed."
+        },
+        "link": {
+          "type": "string",
+          "pattern": "^(https://\\S+|/(?!/)\\S*)$",
+          "description": "URL to the plugin's source or documentation: an https URL, or a path on this site for a Cypress-owned plugin documented here."
+        },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "Tags used for search and filtering."
+        },
+        "badge": {
+          "enum": ["official", "community"],
+          "description": "official (Cypress owned) or community (the default)."
+        },
+        "npm": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The npm package name. Set this only when it differs from name."
+        }
+      }
+    }
+  }
+}

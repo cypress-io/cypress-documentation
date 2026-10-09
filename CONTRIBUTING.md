@@ -112,10 +112,17 @@ Each entry supports the following fields:
 | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `name`        | yes      | Display name. If the plugin is published to npm, this is usually the package name.                                         |
 | `description` | yes      | Short summary of what the plugin does. Basic HTML is allowed.                                                              |
-| `link`        | yes      | URL to the plugin's source or documentation.                                                                               |
+| `link`        | yes      | `https` URL to the plugin's source or documentation.                                                                       |
 | `keywords`    | no       | Array of tags used for search and filtering.                                                                               |
 | `badge`       | no       | One of `official` or `community` (defaults to `community`).                                                                |
 | `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
+
+These rules live in [`plugins.schema.json`](/src/data/plugins.schema.json), which
+`plugins.json` points to, so most editors show field descriptions and flag
+mistakes as you type. A `link` is an `https` URL, or a path on this site for a
+Cypress-owned plugin documented here. Run `npm run lint:plugins` to check the
+file before you push. CI runs the same check, which also catches a plugin
+listed twice.
 
 Signals shown on each card — latest version, last published date, and Cypress
 compatibility — are generated automatically into

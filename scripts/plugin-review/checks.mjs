@@ -13,6 +13,7 @@
 
 import semver from 'semver'
 import { cypressCompat } from '../plugin-signals.mjs'
+import { pluginEntryErrors } from '../plugins-schema.mjs'
 import { normalizeLink } from './diff.mjs'
 
 export const STATUS = /** @type {const} */ ({
@@ -21,16 +22,6 @@ export const STATUS = /** @type {const} */ ({
   unclear: 'unclear',
   notChecked: 'not_checked',
 })
-
-const ALLOWED_FIELDS = [
-  'name',
-  'description',
-  'link',
-  'keywords',
-  'badge',
-  'npm',
-]
-const BADGES = ['official', 'community']
 
 const row = (label, status, detail = '') => ({ label, status, detail })
 
@@ -46,40 +37,7 @@ export const code = (value) => '`' + String(value).replace(/`/g, '') + '`'
  */
 export function checkEntry(plugin, existing) {
   const rows = []
-  const problems = []
-
-  for (const field of ['name', 'description', 'link']) {
-    const value = plugin[field]
-    if (typeof value !== 'string' || !value.trim()) {
-      problems.push(`${code(field)} is missing`)
-    }
-  }
-  if (typeof plugin.link === 'string' && !/^https:\/\//.test(plugin.link)) {
-    problems.push(`${code('link')} isn't an https URL`)
-  }
-  if (
-    plugin.keywords !== undefined &&
-    !(
-      Array.isArray(plugin.keywords) &&
-      plugin.keywords.every((k) => typeof k === 'string')
-    )
-  ) {
-    problems.push(`${code('keywords')} isn't a list of strings`)
-  }
-  if (plugin.badge !== undefined && !BADGES.includes(plugin.badge)) {
-    problems.push(
-      `${code('badge')} must be ${code('official')} or ${code('community')}`
-    )
-  }
-  if (plugin.npm !== undefined && typeof plugin.npm !== 'string') {
-    problems.push(`${code('npm')} isn't a string`)
-  }
-  const unknown = Object.keys(plugin).filter((k) => !ALLOWED_FIELDS.includes(k))
-  if (unknown.length) {
-    problems.push(
-      `unknown ${unknown.length > 1 ? 'fields' : 'field'} ${unknown.map(code).join(', ')}`
-    )
-  }
+  const problems = pluginEntryErrors(plugin)
   rows.push(
     problems.length
       ? row('Entry fields', STATUS.notMet, capitalize(problems.join('; ')))
@@ -91,14 +49,13 @@ export function checkEntry(plugin, existing) {
   )
 
   if (plugin.badge === 'official') {
-    const owner = /github\.com\/([^/]+)/i.exec(plugin.link || '')
-    const cypressOwned = owner && owner[1].toLowerCase() === 'cypress-io'
+    const cypressOwned = isCypressOwned(plugin.link)
     rows.push(
       cypressOwned
         ? row(
             'Badge',
             STATUS.met,
-            `${code('official')} on a Cypress-owned repository`
+            `${code('official')} on a Cypress-owned link`
           )
         : row(
             'Badge',
@@ -128,6 +85,16 @@ export function checkEntry(plugin, existing) {
   )
 
   return rows
+}
+
+/** A cypress-io repository, a cypress.io site, or a path on this docs site
+ *  (which is how official plugins documented here link to their page). */
+function isCypressOwned(link) {
+  if (typeof link !== 'string') return false
+  if (/^\/(?!\/)/.test(link)) return true
+  return /^https:\/\/(github\.com\/cypress-io\/|([\w-]+\.)?cypress\.io(\/|$))/i.test(
+    link
+  )
 }
 
 /**
