@@ -102,17 +102,7 @@ cy.get('#email-error').should('be.visible')
 
 #### Format a value when a field loses focus
 
-```html title="index.html"
-<input id="price" />
-<script>
-  const price = document.getElementById('price')
-  price.addEventListener('blur', () => {
-    price.value = Number(price.value).toFixed(2)
-  })
-</script>
-```
-
-```javascript title="spec.cy.js"
+```javascript
 cy.get('#price').type('19.5')
 cy.get('#price').blur()
 cy.get('#price').should('have.value', '19.50')
@@ -125,20 +115,7 @@ on `change` sends its request when `.blur()` runs. Stub the request with
 [`cy.intercept()`](/api/commands/intercept) and wait on it with
 [`cy.wait()`](/api/commands/wait).
 
-```html title="index.html"
-<textarea id="notes"></textarea>
-<script>
-  const notes = document.getElementById('notes')
-  notes.addEventListener('change', () => {
-    fetch('/api/notes', {
-      method: 'POST',
-      body: JSON.stringify({ notes: notes.value }),
-    })
-  })
-</script>
-```
-
-```javascript title="spec.cy.js"
+```javascript
 cy.intercept('POST', '/api/notes', { statusCode: 204 }).as('saveNotes')
 cy.get('#notes').type('Ships Friday')
 cy.get('#notes').blur()
@@ -158,16 +135,7 @@ cy.get('#email').should('not.have.focus')
 Blurring the window fires a `blur` event on it, the same event the browser sends
 when the user switches to another tab or app.
 
-```html title="index.html"
-<p id="status">playing</p>
-<script>
-  window.addEventListener('blur', () => {
-    document.getElementById('status').textContent = 'paused'
-  })
-</script>
-```
-
-```javascript title="spec.cy.js"
+```javascript
 cy.window().blur()
 cy.get('#status').should('have.text', 'paused')
 ```
@@ -211,18 +179,6 @@ was.
 When the element has a value change waiting from [`.type()`](/api/commands/type)
 or [`.clear()`](/api/commands/clear), `.blur()` fires the `change` event first,
 then `blur`, the same order the browser uses when a user leaves the field.
-
-### Browser focus
-
-#### `.blur()` fires blur events when the browser window isn't focused
-
-When the browser window doesn't have focus, for instance because you're working
-in DevTools or another window, the browser may not fire the native `blur` event.
-Cypress then dispatches `blur` and `focusout` on the element itself, so your
-app's blur handlers still run.
-
-The browser can still behave differently in the background, for instance by
-throttling timers, so keep the Cypress window focused while you work on a test.
 
 ## Rules
 
