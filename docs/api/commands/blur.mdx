@@ -1,6 +1,6 @@
 ---
 title: 'cy.blur()'
-description: Blur a focused element in Cypress.
+description: Remove focus from an element and fire blur events in Cypress tests.
 sidebar_label: blur
 ---
 
@@ -8,21 +8,16 @@ sidebar_label: blur
 
 # blur
 
-Blur a focused element.
+Remove focus from an element and fire its `blur` and `focusout` events. Use it
+to test what your app does when a field loses focus.
 
 It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.blur()`.
 
 :::caution
 
-This element must currently be in focus. If you want to ensure an element is
-focused before blurring, try using [`.focus()`](/api/commands/focus) before
-`.blur()`.
-
-```javascript
-cy.get('button').as('btn').focus()
-cy.get('@btn').blur()
-```
+The element must have focus. Call [`.focus()`](/api/commands/focus) or
+[`.type()`](/api/commands/type) on it first.
 
 :::
 
@@ -38,8 +33,8 @@ cy.get('@btn').blur()
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.get('[type="email"]').blur() // Blur email input
-cy.get('[tabindex="1"]').blur() // Blur el with tabindex
+cy.get('[type="email"]').blur() // Blur the focused email input
+cy.get('[tabindex="1"]').blur() // Blur the focused element with tabindex
 cy.window().blur() // Blur the window
 ```
 
@@ -54,13 +49,13 @@ cy.get('li').blur() // Errors, subject contains more than one element
 
 <Icon name="angle-right" /> **options _(Object)_**
 
-Pass in an options object to change the default behavior of `.blur`.
+Pass in an options object to change the default behavior of `.blur()`.
 
-| Option    | Default                                                           | Description                                                                         |
-| --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
-| `force`   | `false`                                                           | Forces the action, disables checking if [element is focused](#Requirements)         |
-| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.blur()` to resolve before [timing out](#Timeouts)                |
+| Option    | Default                                                           | Description                                                                             |
+| --------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `log`     | `true`                                                            | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)     |
+| `force`   | `false`                                                           | Forces the action, disables checking if [element is focused](#Requirements)             |
+| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for assertions chained to `.blur()` to pass before [timing out](#Timeouts) |
 
 <HeaderYields />
 
@@ -87,7 +82,57 @@ Setting `force` to `true` in the options disables checking whether the input
 currently has focus.
 
 ```javascript
-cy.get('input:first').blur({ force: true })
+cy.get('input').first().blur({ force: true })
+```
+
+### Workflows
+
+#### Show a validation message when a field loses focus
+
+```javascript
+cy.get('#email').type('not-an-email')
+cy.get('#email').blur()
+cy.get('#email-error').should('be.visible')
+```
+
+#### Format a value when a field loses focus
+
+```javascript
+cy.get('#price').type('19.5')
+cy.get('#price').blur()
+cy.get('#price').should('have.value', '19.50')
+```
+
+#### Autosave a field when it loses focus
+
+Blurring a field you typed into fires its `change` event, so an app that saves
+on `change` sends its request when `.blur()` runs. Stub the request with
+[`cy.intercept()`](/api/commands/intercept) and wait on it with
+[`cy.wait()`](/api/commands/wait).
+
+```javascript
+cy.intercept('POST', '/api/notes', { statusCode: 204 }).as('saveNotes')
+cy.get('#notes').type('Ships Friday')
+cy.get('#notes').blur()
+cy.wait('@saveNotes').its('request.body').should('include', 'Ships Friday')
+```
+
+#### Confirm the element no longer has focus
+
+```javascript
+cy.get('#email').focus()
+cy.get('#email').blur()
+cy.get('#email').should('not.have.focus')
+```
+
+#### Test what your app does when the window loses focus
+
+Blurring the window fires a `blur` event on it, the same event the browser sends
+when the user switches to another tab or app.
+
+```javascript
+cy.window().blur()
+cy.get('#status').should('have.text', 'paused')
 ```
 
 ## Notes
@@ -96,17 +141,11 @@ cy.get('input:first').blur({ force: true })
 
 #### Blur is not an action command
 
-`.blur()` is not implemented like other action commands, and does not follow the
-same rules of
-[waiting for actionability](/app/core-concepts/interacting-with-elements).
-
-`.blur()` is a helpful command used as a shortcut. Normally there's no way for a
-user to "blur" an element. Typically the user would have to perform **another**
-action like clicking or tabbing to a different element. Needing to perform a
-separate action like this is very indirect.
-
-Therefore it's often much more efficient to test the blur behavior directly with
-`.blur()`.
+`.blur()` doesn't wait for
+[actionability](/app/core-concepts/interacting-with-elements) the way action
+commands such as [`.click()`](/api/commands/click) do. A user never blurs
+an element on its own; they click or tab somewhere else. `.blur()` removes focus
+without that other action, so a blur test doesn't depend on it.
 
 ### Subjects
 
@@ -116,18 +155,19 @@ Therefore it's often much more efficient to test the blur behavior directly with
 `blur` event on the window. Focus itself does not move: whichever element held
 it still does, and `document.activeElement` is unchanged.
 
-### Timeouts {#Notes-Timeouts}
+#### Blurring the body doesn't fire a blur event
 
-#### `.blur()` can time out because your browser did not receive any blur events
+`.blur()` also accepts the `body` without it having focus, but the browser never
+fires `blur` on the `body`, so Cypress doesn't simulate one. Focus stays where it
+was.
 
-If you see this error, you may want to ensure that the main browser window is
-currently focused. This means not being focused in debugger or any other window
-when the command is run.
+### Events
 
-Internally Cypress does account for this, and will polyfill the blur events when
-necessary to replicate what the browser does. Unfortunately the browser will
-still behave differently when not in focus - for instance it may throttle async
-events. Your best bet here is to keep Cypress focused when working on a test.
+#### Blurring a field you typed into fires its `change` event
+
+When the element has a value change waiting from [`.type()`](/api/commands/type)
+or [`.clear()`](/api/commands/clear), `.blur()` fires the `change` event first,
+then `blur`, the same order the browser uses when a user leaves the field.
 
 ## Rules
 
@@ -136,12 +176,13 @@ events. Your best bet here is to keep Cypress focused when working on a test.
 - `.blur()` requires being chained off a command that yields a DOM element or
   the window.
 - `.blur()` requires the subject to contain a single element.
-- `.blur()` requires the element to currently have focus. The window and the
-  `body` are exempt, since neither reports as the focused element.
+- `.blur()` requires the element to currently have focus, unless you pass
+  `{ force: true }`. The window and the `body` are exempt, since neither reports
+  as the focused element.
 
 <HeaderAssertions />
 
-- `.blur()` will automatically wait for assertions you have chained to pass.
+- `.blur()` automatically waits for assertions you've chained to pass.
 
 <HeaderTimeouts />
 
@@ -157,22 +198,32 @@ cy.get('[name="comment"]').type('Nice Product!')
 cy.get('[name="comment"]').blur()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/blur/blur-input-command-log.png"
-  alt="command log for blur"
+  alt="Command Log showing focus, type, and blur, each chained off a get of the comment textarea"
 />
 
-When clicking on the `blur` command within the command log, the console outputs
-the following:
+Clicking the `blur` command in the Command Log prints the following to the
+console:
 
 <DocsImage
   src="/img/api/blur/console-showing-blur-command.png"
-  alt="console.log for blur"
+  alt="Browser console showing the textarea that .blur() was applied to"
 />
+
+## History
+
+| Version                                      | Changes                                                                          |
+| -------------------------------------------- | -------------------------------------------------------------------------------- |
+| [3.0.3](/app/references/changelog#3-0-3)     | Added support for blurring the `body`; blurring the window no longer moves focus |
+| [0.20.0](/app/references/changelog#0-20-0)   | Added support for blurring the window                                            |
+| [0.11.10](/app/references/changelog#0-11-10) | Added option `force`                                                             |
+| [0.8.0](/app/references/changelog#0-8-0)     | `.blur()` fires `change` events for fields whose value changed                   |
 
 ## See also
 
 - [`.focus()`](/api/commands/focus)
 - [`cy.focused()`](/api/commands/focused)
+- [`.type()`](/api/commands/type)
