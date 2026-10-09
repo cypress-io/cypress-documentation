@@ -248,10 +248,6 @@ Logging in with `cy.request()` skips the login page, and wrapping it in
 session cookie in later tests. The `validate` function checks that the cached
 session still works before each test reuses it.
 
-`log: false` keeps the password out of the Command Log, and
-`failOnStatusCode: false` keeps it out of the error message if the login fails.
-The assertion then checks only the status code.
-
 ```javascript
 beforeEach(() => {
   cy.session(
@@ -263,7 +259,6 @@ beforeEach(() => {
           url: '/api/login',
           body: { username, password },
           log: false,
-          failOnStatusCode: false,
         }).then((response) => {
           expect(response.status, 'login status').to.eq(200)
         })
