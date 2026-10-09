@@ -9,8 +9,8 @@ name: Plugin review
 # fork's `pull_request` run gets a read-only token and no secrets, so it could
 # neither comment nor call Claude. `pull_request_target` runs this file as it
 # is on the default branch, with those permissions. That's only safe because
-# no code from the pull request is checked out or run: the one thing read from
-# it is plugins.json, fetched as data through the API.
+# the job never checks out or runs code from the pull request: it reads only
+# plugins.json, as data, through the API.
 on:
   pull_request_target:
     types: [labeled]
@@ -74,8 +74,8 @@ jobs:
             --footer "Reviewed at ${HEAD_SHA:0:7}. To run it again, add the \`plugin-review\` label again."
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-          # Without this secret the docs criteria are reported as not checked
-          # and everything else still runs.
+          # Without this secret, the review reports the docs criteria as not
+          # checked and runs everything else.
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GITHUB_TOKEN: ${{ github.token }}
 

@@ -3,8 +3,8 @@
  * Validate src/data/plugins.json against src/data/plugins.schema.json, with
  * errors phrased for a contributor rather than in Ajv's own wording.
  *
- * Used by `npm run lint:plugins` (every pull request, via `npm run lint`) and
- * by the plugin review's entry check, so both report the same rules.
+ * `npm run lint:plugins` (every pull request, via `npm run lint`) and the
+ * plugin review's entry check both call it, so they report the same rules.
  */
 
 import { readFileSync } from 'node:fs'

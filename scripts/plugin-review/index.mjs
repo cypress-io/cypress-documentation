@@ -11,8 +11,8 @@
  * to Claude when ANTHROPIC_API_KEY is set and are reported as not checked when
  * it isn't. Set GITHUB_TOKEN for a higher GitHub API rate limit.
  *
- * The plugin's own code is never downloaded or run: everything comes from the
- * npm registry and the GitHub API.
+ * This never downloads or runs the plugin's own code: everything comes from
+ * the npm registry and the GitHub API.
  */
 
 import { readFile, writeFile } from 'node:fs/promises'
@@ -28,8 +28,8 @@ import {
   loadRepo,
 } from './sources.mjs'
 
-// A single pull request adding more than this many plugins gets the first
-// ones reviewed and a note, so one run can't fan out without bound.
+// When a pull request adds more plugins than this, the review covers the
+// first ones and says so, so one run can't fan out without bound.
 const MAX_PLUGINS = 10
 
 async function main() {

@@ -2,7 +2,8 @@
 /**
  * Pure evaluators for the plugin requirements in CONTRIBUTING.md
  * ("Adding Plugins"). Each takes data the caller already fetched and returns
- * result rows; nothing here touches the network, so it is unit tested directly.
+ * result rows. Nothing here touches the network, so the unit tests call it
+ * directly.
  *
  * A row is `{ label, status, detail }`, where status is one of:
  *   - met         the requirement is satisfied
@@ -25,8 +26,8 @@ export const STATUS = /** @type {const} */ ({
 
 const row = (label, status, detail = '') => ({ label, status, detail })
 
-/** Format a value as inline code for the comment. Backticks inside the value
- *  would end the span early, so they are dropped. */
+/** Format a value as inline code for the comment. A backtick inside the value
+ *  would end the span early, so this drops them. */
 export const code = (value) => '`' + String(value).replace(/`/g, '') + '`'
 
 /**

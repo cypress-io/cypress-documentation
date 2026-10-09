@@ -11,8 +11,8 @@ import { jsonSchemaOutputFormat } from '@anthropic-ai/sdk/helpers/json-schema'
 
 export const MODEL = 'claude-opus-5-5'
 
-// Well past any real README. Past this, the review is skipped and reported
-// rather than run on a cut-down copy.
+// Well past any real README. A longer one skips the review and says so,
+// rather than sending Claude a cut-down copy.
 const MAX_README_CHARS = 150_000
 
 const criterion = /** @type {const} */ ({

@@ -1,8 +1,9 @@
 // @ts-check
 /**
  * Network lookups for the plugin review: the npm registry and the GitHub API.
- * Every function is best-effort and never throws; a failed lookup comes back
- * as null so the matching check reports "not checked" instead of failing.
+ * Every function is best-effort and never throws. A failed lookup comes back
+ * as null or flagged as failed, so the matching check reports "not checked"
+ * instead of failing.
  */
 
 import {

@@ -2,7 +2,7 @@
 /**
  * Find the plugins a pull request adds to src/data/plugins.json.
  *
- * Entries are matched by link and by name rather than by a text diff, so a
+ * This matches entries by link and by name rather than by a text diff, so a
  * reformatted file, a reordered category, or a plugin moved between categories
  * doesn't count as new. An entry counts as new only when neither its link nor
  * its name appears anywhere in the base file.

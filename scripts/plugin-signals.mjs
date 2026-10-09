@@ -4,8 +4,9 @@
  * list: `enrich-plugins.mjs` (the nightly refresh of plugins-generated.json)
  * and `plugin-review/` (the evaluation posted on plugin pull requests).
  *
- * Every lookup is best-effort and never throws, so callers can tell a
- * definitive answer ("not found") apart from a transient failure.
+ * Every lookup is best-effort and never throws. Each one's return value tells
+ * a definitive answer ("not found") apart from a transient failure, so a
+ * caller can keep its last good data when a request fails.
  */
 
 import got from 'got'
@@ -14,7 +15,7 @@ export const REGISTRY = 'https://registry.npmjs.org'
 export const GITHUB_API = 'https://api.github.com'
 
 // A pre-configured got instance handles the timeout, automatic retries, and
-// JSON parsing that we'd otherwise wire up by hand.
+// JSON parsing for every request.
 const http = got.extend({
   timeout: { request: 15000 },
   retry: { limit: 2 },
@@ -110,10 +111,10 @@ export function parseGitHubLocation(link) {
   }
 }
 
-/** Parse "owner/repo" out of a GitHub URL, or null. Subpath links
- *  (`…/tree/…`, `…/blob/…`) are skipped: they point into a repo — often a
- *  monorepo like cypress-io/cypress — whose archived status wouldn't reflect the
- *  individual package. */
+/** Parse "owner/repo" out of a GitHub URL, or null. This skips subpath links
+ *  (`…/tree/…`, `…/blob/…`): they point into a repo (often a monorepo like
+ *  cypress-io/cypress) whose archived status wouldn't reflect the individual
+ *  package. */
 export function parseGitHub(link) {
   const loc = parseGitHubLocation(link)
   if (!loc || loc.subpath) return null
@@ -134,9 +135,9 @@ export function isSecurityPlaceholder(latest, versionManifest) {
 /**
  * Resolve the canonical npm package name for a plugin entry.
  * Preference: explicit `npm` field -> the plugin `name` if it's itself a real
- * package. We deliberately do NOT guess from the GitHub repo basename, since
- * monorepo subpaths (e.g. cypress-io/cypress/tree/.../npm/webpack-preprocessor)
- * and generic repo names would resolve to the wrong package. Entries whose
+ * package. It doesn't guess from the GitHub repo basename, since monorepo
+ * subpaths (e.g. cypress-io/cypress/tree/.../npm/webpack-preprocessor) and
+ * generic repo names would resolve to the wrong package. Entries whose
  * display name isn't the package should set an explicit `npm` field.
  * Returns the manifest too so callers don't re-fetch, plus `notFound` which is
  * true only when a candidate got a definitive 404 (not a transient failure).

@@ -35,7 +35,7 @@ export function cell(text, max = 240) {
     .trim()
   if (s.length > max) s = s.slice(0, max - 1).trimEnd() + '…'
   // Odd segments are inside `code spans`, where GitHub shows entities
-  // literally, so HTML is only escaped outside them. Pipes are escaped in
+  // literally, so this escapes HTML only outside them. It escapes pipes in
   // both: GitHub splits table cells on them even inside a code span.
   return s
     .split(/(`[^`]*`)/)
