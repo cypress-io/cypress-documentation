@@ -285,7 +285,10 @@ same change. `## See also` always stays as it is.
   `[learn more]`. A reader skimming the links alone should still know where each
   one goes, and a screen reader announces them out of context.
 - Header anchor casing is intentionally preserved via a `patch-package` patch to
-  `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug.
+  `@docusaurus/mdx-loader` (see `patches/`). This is expected, not a bug. A
+  client-side fallback (`src/clientModules/hashFallback.js`) rewrites inbound
+  hashes that only differ by case to the canonical id. In-repo markdown links
+  must still use the exact casing; the build throws on mismatches.
 
 ### UI labels
 
