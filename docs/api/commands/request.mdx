@@ -1,6 +1,6 @@
 ---
 title: 'cy.request()'
-description: Make an HTTP request in Cypress.
+description: Send HTTP requests from Cypress tests with cy.request() to seed data, log in, and test APIs.
 sidebar_label: request
 slug: /api/commands/request
 ---
@@ -9,7 +9,11 @@ slug: /api/commands/request
 
 # request
 
-Make an HTTP request.
+Send an HTTP request from your test. You can use `cy.request()` to seed data
+before a test, log in without going through the login page, or test API
+endpoints directly. The Cypress server sends the request from Node.js rather
+than the browser, so CORS doesn't apply, and it shares cookies with the browser.
+See [How `cy.request()` sends a request](#How-cyrequest-sends-a-request).
 
 ## Syntax
 
@@ -35,46 +39,18 @@ cy.request('http://dev.local/seed')
 
 The URL to make the request to.
 
-If you do not provide a fully qualified domain name (FQDN) URL, Cypress will
-make its best guess as to which host you want `cy.request()` to use in the URL.
-
-1. If you make a `cy.request()` after visiting a page, Cypress assumes the URL
-   used for the `cy.visit()` is the host.
-
-```javascript
-cy.visit('http://localhost:8080/app')
-cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
-```
-
-2. If you make a `cy.request()` prior to visiting a page, Cypress assumes the
-   host is the `baseUrl` property configured inside of your
-   [configuration file](/app/references/configuration).
-
-:::cypress-config-example
-
-```ts
-{
-  e2e: {
-    baseUrl: 'http://localhost:1234'
-  }
-}
-```
-
-:::
-
-```javascript
-cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
-```
-
-3. If Cypress cannot determine the host it will throw an error.
+A relative URL resolves against the `cy.origin()` origin, your `baseUrl`, or the
+page you visited, in that order. See
+[How `cy.request()` resolves a relative URL](#How-cyrequest-resolves-a-relative-URL).
 
 <Icon name="angle-right" /> **body _(String, Object, FormData, Blob)_**
 
 A request `body` to be sent in the request. When `body` is a JavaScript object
 or boolean, Cypress automatically JSON-serializes it and sets the
-`Content-Type: application/json` request header. When `body` is a string, it is
-sent as-is with no automatic content-type. When `body` is a `FormData`
-instance, Cypress sends it as `multipart/form-data`, which is how you
+`Content-Type: application/json` request header, unless you set a `Content-Type`
+in `headers`. When `body` is a string, it is sent as-is with no automatic
+content-type. When `body` is a `FormData` instance, Cypress sends it as
+`multipart/form-data`, which is how you
 [upload a file](#Upload-a-file-with-multipartform-data).
 
 <Icon name="angle-right" /> **method _(String)_**
@@ -82,78 +58,59 @@ instance, Cypress sends it as `multipart/form-data`, which is how you
 Make a request using a specific method. If no method is defined, Cypress uses
 the `GET` method by default.
 
-Supported methods include:
+Cypress accepts these methods:
 
-- `GET`
-- `POST`
-- `PUT`
-- `DELETE`
-- `PATCH`
-- `HEAD`
-- `OPTIONS`
-- `TRACE`
-- `COPY`
-- `QUERY`
-- `LOCK`
-- `MKCOL`
-- `MOVE`
-- `PURGE`
-- `PROPFIND`
-- `PROPPATCH`
-- `UNLOCK`
-- `REPORT`
-- `MKACTIVITY`
-- `CHECKOUT`
-- `MERGE`
-- `M-SEARCH`
-- `NOTIFY`
-- `SUBSCRIBE`
-- `UNSUBSCRIBE`
-- `SEARCH`
-- `CONNECT`
+| Group            | Methods                                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Standard HTTP    | `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `TRACE`, `CONNECT`                                            |
+| WebDAV           | `CHECKOUT`, `COPY`, `LOCK`, `MERGE`, `MKACTIVITY`, `MKCOL`, `MOVE`, `PROPFIND`, `PROPPATCH`, `REPORT`, `SEARCH`, `UNLOCK` |
+| Other extensions | `QUERY`, `PURGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`                                                        |
 
 <Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `cy.request()`.
 
-You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
-globally in [configuration](/app/references/configuration).
+| Option                     | Default                                                     | Description                                                                                                                                                                                                                                                         |
+| -------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                                 |
+| `url`                      | `null`                                                      | The URL to make the request to                                                                                                                                                                                                                                      |
+| `method`                   | `GET`                                                       | The HTTP method to use in the request                                                                                                                                                                                                                               |
+| `auth`                     | `null`                                                      | Adds an `Authorization` header for [HTTP Basic Authentication](#Authenticate-with-HTTP-Basic-or-a-bearer-token), or a bearer token with `bearer`                                                                                                                    |
+| `body`                     | `null`                                                      | Body to send along with the request                                                                                                                                                                                                                                 |
+| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                                                                                        |
+| `followRedirect`           | `true`                                                      | Whether to automatically follow redirects                                                                                                                                                                                                                           |
+| `form`                     | `false`                                                     | Whether to convert the `body` values to URL encoded content and set the `x-www-form-urlencoded` header                                                                                                                                                              |
+| `encoding`                 | `utf8`                                                      | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le`                                                            |
+| `gzip`                     | `true`                                                      | Whether to accept the `gzip` encoding                                                                                                                                                                                                                               |
+| `headers`                  | `null`                                                      | Additional headers to send; accepts an object literal. Cypress also sends them on each redirect it follows, with the exceptions in [How `cy.request()` follows redirects](#How-cyrequest-follows-redirects).                                                        |
+| `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request                                                                                                                                                                                                              |
+| `retryOnStatusCodeFailure` | `false`                                                     | Whether to [retry a request](#Retry-a-request-that-fails-with-a-server-error) that fails with a status code error. Cypress retries up to 4 times when this is `true`. Requires `failOnStatusCode: true`; setting it with `failOnStatusCode: false` throws an error. |
+| `retryOnNetworkFailure`    | `true`                                                      | Whether to retry a request that fails with a transient network error, such as `ECONNREFUSED`, `ECONNRESET`, or `ENOTFOUND`. Cypress retries up to 4 times when this is `true`.                                                                                      |
+| `timeout`                  | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts). See [Give a slow endpoint more time](#Give-a-slow-endpoint-more-time-with-timeout).                                                                                                      |
 
-| Option                     | Default                                                     | Description                                                                                                                                                                                              |
-| -------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                      |
-| `url`                      | `null`                                                      | The URL to make the request to                                                                                                                                                                           |
-| `method`                   | `GET`                                                       | The HTTP method to use in the request                                                                                                                                                                    |
-| `auth`                     | `null`                                                      | Adds Authorization headers for [HTTP Basic Authentication](#HTTP-Basic-Authentication).                                                                                                                  |
-| `body`                     | `null`                                                      | Body to send along with the request                                                                                                                                                                      |
-| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                             |
-| `followRedirect`           | `true`                                                      | Whether to automatically follow redirects                                                                                                                                                                |
-| `form`                     | `false`                                                     | Whether to convert the `body` values to URL encoded content and set the `x-www-form-urlencoded` header                                                                                                   |
-| `encoding`                 | `utf8`                                                      | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le` |
-| `gzip`                     | `true`                                                      | Whether to accept the `gzip` encoding                                                                                                                                                                    |
-| `headers`                  | `null`                                                      | Additional headers to send; Accepts object literal. _Note:_ `headers` will only be sent for the initial request for `cy.request()`, not for any subsequent requests.                                     |
-| `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request                                                                                                                                                   |
-| `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                         |
-| `retryOnNetworkFailure`    | `true`                                                      | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                   |
-| `timeout`                  | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts)                                                                                                                                |
-
-You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
-globally in the [Cypress configuration](/app/references/configuration).
+Set `baseUrl`, which relative URLs resolve against, and `responseTimeout`, the
+default for `timeout`, globally in the
+[Cypress configuration](/app/references/configuration).
 
 <HeaderYields />
 
-`cy.request()` yields the `response` as an object literal containing properties
-such as:
+`cy.request()` yields the `response` as an object literal containing these
+properties:
 
-- `status`
-- `body`
-- `headers`
-- `duration`
-
-The `response.body` is automatically parsed as a JavaScript object when the
-response has a `Content-Type` header whose value ends in `json` (such as
-`application/json` or `application/vnd.api+json`). Otherwise, `response.body`
-is a string.
+- `status`: the response status code
+- `statusText`: the status message, such as `OK` or `Found`
+- `isOkStatusCode`: `true` when `status` is `2xx` or `3xx`
+- `body`: the response body, parsed as described in
+  [Response body parsing](#Response-body-parsing)
+- `headers`: the response headers
+- `duration`: how long the request took, in milliseconds
+- `requestHeaders`: the headers Cypress sent with the request
+- `allRequestResponses`: each request and response in the chain, including
+  redirects
+- `redirects`: each redirect Cypress followed, as `status: url` strings (only
+  present when a redirect was followed)
+- `redirectedToUrl`: the URL the response redirects to (only present with
+  `followRedirect: false`)
 
 ## Examples
 
@@ -161,8 +118,7 @@ is a string.
 
 #### Make a `GET` request
 
-`cy.request()` is great for talking to an external endpoint before your tests to
-seed a database.
+Call an endpoint before each test, such as one that seeds a database.
 
 ```javascript
 beforeEach(() => {
@@ -170,11 +126,11 @@ beforeEach(() => {
 })
 ```
 
-#### Issue an HTTP request
+#### Check a page's HTML without visiting it
 
-Sometimes it's quicker to test the contents of a page rather than
-[`cy.visit()`](/api/commands/visit) and wait for the entire page and all of its
-resources to load.
+Unlike [`cy.visit()`](/api/commands/visit), which loads the page and all of its
+resources, requesting a page returns only its HTML. That makes it a quick way to
+check what the server renders.
 
 ```javascript
 cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
@@ -185,7 +141,7 @@ cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
 #### Send a `DELETE` request
 
 ```javascript
-cy.request('DELETE', 'http://localhost:8888/users/827')
+cy.request('DELETE', 'http://localhost:8080/users/827')
 ```
 
 #### Alias the request using [.as()](/api/commands/as)
@@ -205,7 +161,7 @@ cy.get('@comments').should((response) => {
 #### Send a `POST` request with a JSON body
 
 ```javascript
-cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then(
+cy.request('POST', 'http://localhost:8080/users/admin', { name: 'Jane' }).then(
   (response) => {
     // response.body is automatically parsed from JSON when the server responds
     // with a Content-Type ending in "json" (e.g. application/json)
@@ -214,56 +170,209 @@ cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then(
 )
 ```
 
-### Options
+### Authentication
 
-#### Request a page while disabling auto redirect
-
-To test the redirection behavior of a login without a session, `cy.request` can
-be used to check the `status` and `redirectedToUrl` property.
-
-The `redirectedToUrl` property is a special Cypress property that normalizes the
-URL the browser would normally follow during a redirect.
-
-```javascript
-cy.request({
-  url: '/dashboard',
-  followRedirect: false, // turn off following redirects
-}).then((resp) => {
-  // redirect status code is 302
-  expect(resp.status).to.eq(302)
-  expect(resp.redirectedToUrl).to.eq('http://localhost:8082/unauthorized')
-})
-```
-
-#### HTTP Basic Authentication
+#### Authenticate with HTTP Basic or a bearer token
 
 To send a request to an endpoint protected by
 [HTTP Basic Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication),
 provide the credentials with the `auth` option. Cypress base64-encodes them and
 attaches an `Authorization` header to the request.
 
+Read credentials with [`cy.env()`](/api/commands/env) rather than writing them
+into the test, so they stay out of your spec files. The examples on this page
+read `username`, `password`, and `apiToken`, which you set as described in
+[Environment Variables & Secrets](/app/guides/environment-variables).
+
 ```javascript
-cy.request({
-  method: 'POST',
-  url: 'https://api.example.com/query',
-  auth: {
-    username: 'jane.lane',
-    password: 'password123',
-  },
-  body: {
-    cpId: 709916,
-  },
+cy.env(['username', 'password']).then(({ username, password }) => {
+  cy.request({
+    method: 'POST',
+    url: '/api/query',
+    auth: {
+      username,
+      password,
+    },
+    body: {
+      cpId: 709916,
+    },
+  })
 })
 ```
 
 The `auth` option also accepts `user`/`pass` as aliases for
-`username`/`password`.
+`username`/`password`. To send a bearer token instead, pass it as `bearer`, and
+Cypress sends `Authorization: Bearer <token>`.
+
+```javascript
+cy.env(['apiToken']).then(({ apiToken }) => {
+  cy.request({
+    url: '/api/profile',
+    auth: {
+      bearer: apiToken,
+    },
+  })
+})
+```
+
+#### Log in with an HTML form using `form: true`
+
+Once a test covers your login page, other tests don't need to go through it.
+Submitting the login form with `cy.request()` skips loading the page and its
+resources, and the session cookie your server sets lands in the browser, the
+same as a real form submission. For more approaches, see the
+[logging in recipes](/app/references/recipes#Logging-In).
+
+```javascript
+cy.env(['username', 'password']).then(({ username, password }) => {
+  cy.request({
+    method: 'POST',
+    url: '/login_with_form', // baseUrl is prepended to the URL
+    form: true, // sends the body URL-encoded with Content-Type: application/x-www-form-urlencoded
+    body: {
+      username,
+      password,
+    },
+    log: false, // keeps the credentials out of the Command Log
+  })
+})
+
+// to prove we have a session
+cy.getCookie('cypress-session-cookie').should('exist')
+```
+
+#### Log in through the API and cache it with `cy.session()`
+
+Logging in with `cy.request()` skips the login page, and wrapping it in
+[`cy.session()`](/api/commands/session) runs the login once and restores the
+session cookie in later tests. The `validate` function checks that the cached
+session still works before each test reuses it.
+
+```javascript
+beforeEach(() => {
+  cy.session(
+    'api-login',
+    () => {
+      cy.env(['username', 'password']).then(({ username, password }) => {
+        cy.request({
+          method: 'POST',
+          url: '/api/login',
+          body: { username, password },
+          log: false,
+        }).then((response) => {
+          expect(response.status, 'login status').to.eq(200)
+        })
+      })
+    },
+    {
+      validate() {
+        cy.request('/api/me').its('status').should('eq', 200)
+      },
+    }
+  )
+})
+
+it('shows the dashboard to a logged-in user', () => {
+  cy.visit('/dashboard')
+  cy.contains('h1', 'Dashboard')
+})
+```
+
+### Redirects, errors, and retries
+
+#### Request a page without following redirects
+
+To test where a page redirects, such as a dashboard that sends a logged-out
+user away, set `followRedirect: false`. The response then has the redirect's
+`status`, and `redirectedToUrl` holds the absolute URL the browser would go to
+next.
+
+```javascript
+cy.request({
+  url: '/dashboard',
+  followRedirect: false, // turn off following redirects
+}).then((response) => {
+  // redirect status code is 302
+  expect(response.status).to.eq(302)
+  expect(response.redirectedToUrl).to.eq('http://localhost:8080/unauthorized')
+})
+```
+
+#### Check every redirect `cy.request()` followed
+
+When Cypress follows redirects, `response.redirects` lists each hop as the status
+code and the absolute URL it redirected to. Use it to confirm that an old route
+lands on the right page, and with the right status code.
+
+```javascript
+cy.request('/old-dashboard').then((response) => {
+  expect(response.redirects).to.deep.eq([
+    '301: http://localhost:8080/dashboard',
+  ])
+  expect(response.status).to.eq(200)
+})
+```
+
+#### Test an error response with `failOnStatusCode: false`
+
+By default, a status code other than `2xx` or `3xx` fails the test. Set
+`failOnStatusCode: false` to get the response back instead, so you can assert on
+the status code and the error your API returns.
+
+```javascript
+cy.request({
+  url: '/api/users/999',
+  failOnStatusCode: false,
+}).then((response) => {
+  expect(response.status).to.eq(404)
+  expect(response.body).to.have.property('error', 'User not found')
+})
+```
+
+The Command Log marks the `404` with a red indicator, and the test still passes
+because the assertions match:
+
+<DocsImage
+  src="/img/api/request/command-log-request-404-failonstatuscode-false.png"
+  alt="Command Log showing a request row reading GET 404 /api/users/999 with a red status indicator, followed by three passing assertions on the 404 status and the error property"
+/>
+
+#### Retry a request that fails with a server error
+
+A service that's still starting up can answer with a `503` for a moment. With
+`retryOnStatusCodeFailure: true`, Cypress retries a request that comes back with
+a status code other than `2xx` or `3xx`, up to 4 times, before it fails the
+test.
+
+```javascript
+cy.request({
+  url: '/api/status',
+  retryOnStatusCodeFailure: true,
+})
+  .its('status')
+  .should('eq', 200)
+```
+
+#### Give a slow endpoint more time with `timeout`
+
+`timeout` overrides [`responseTimeout`](/app/references/configuration#Timeouts)
+for one request, so a slow endpoint doesn't need a longer timeout for every
+request in your suite.
+
+```javascript
+cy.request({
+  url: '/api/reports/monthly',
+  timeout: 60000, // wait up to 60 seconds for this request only
+})
+```
+
+### Files
 
 #### Download a PDF file
 
-By passing the `encoding: binary` option, the `response.body` will be serialized
-binary content of the file. You can use this to access various file types via
-`.request()` like `.pdf`, `.zip`, or `.doc` files.
+With `encoding: 'binary'`, `response.body` holds the file's binary content, which
+you can save with [`cy.writeFile()`](/api/commands/writefile). This works for
+other file types too, such as `.zip` or `.doc` files.
 
 ```javascript
 cy.request({
@@ -274,16 +383,15 @@ cy.request({
 })
 ```
 
-#### Get Data URL of an image
+#### Get the data URL of an image
 
-By passing the `encoding: base64` option, the `response.body` will be
-base64-encoded content of the image. You can use this to construct a
-[Data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs)
-for use elsewhere.
+With `encoding: 'base64'`, `response.body` holds the image's base64-encoded
+content, which you can use to build a
+[Data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs).
 
 ```javascript
 cy.request({
-  url: 'https://docs.cypress.io/img/logo.png',
+  url: 'https://docs.cypress.io/img/logo/cypress-logo-circle-dark.png',
   encoding: 'base64',
 }).then((response) => {
   const base64Content = response.body
@@ -305,26 +413,28 @@ applies to URL-encoded forms only.
 This is the `cy.request()` equivalent of `curl -F file=@image.png`:
 
 ```javascript
-// image fixtures are read as base64 by default
-cy.fixture('image.png').then((image) => {
-  const formData = new FormData()
+cy.env(['apiToken']).then(({ apiToken }) => {
+  // image fixtures are read as base64 by default
+  cy.fixture('image.png').then((image) => {
+    const formData = new FormData()
 
-  formData.append(
-    'file',
-    Cypress.Blob.base64StringToBlob(image, 'image/png'),
-    'image.png'
-  )
+    formData.append(
+      'file',
+      Cypress.Blob.base64StringToBlob(image, 'image/png'),
+      'image.png'
+    )
 
-  cy.request({
-    method: 'POST',
-    url: '/api/action/upload_file',
-    headers: {
-      Authorization: 'Bearer some-token',
-    },
-    body: formData,
+    cy.request({
+      method: 'POST',
+      url: '/api/action/upload_file',
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+      },
+      body: formData,
+    })
+      .its('status')
+      .should('eq', 200)
   })
-    .its('status')
-    .should('eq', 200)
 })
 ```
 
@@ -332,152 +442,177 @@ The third argument to `formData.append()` sets the filename the server
 receives. Without it, the part is sent with the filename `blob`. Plain string
 fields go in the same object, such as `formData.append('description', 'Avatar')`.
 
-#### HTML form submissions using form option
+The response to a `FormData` request arrives as raw bytes, even when it is JSON.
+See [Response body parsing](#Response-body-parsing) to read it.
 
-Oftentimes, once you have a proper e2e test around logging in, there's no reason
-to continue to `cy.visit()` the login and wait for the entire page to load all
-associated resources before running any other commands. Doing so can slow down
-our entire test suite.
+### API testing workflows with `cy.request()`
 
-Using `cy.request()`, we can bypass all of this because it automatically gets
-and sets cookies as if the requests had come from the browser.
+#### Send query parameters with `qs`
+
+The `qs` option builds the query string for you. Cypress merges it with any
+query string already in the `url`, rather than replacing it.
 
 ```javascript
 cy.request({
-  method: 'POST',
-  url: '/login_with_form', // baseUrl is prepend to URL
-  form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
-  body: {
-    username: 'jane.lane',
-    password: 'password123',
-  },
+  url: '/api/users?active=true',
+  qs: { page: 2, limit: 10 },
 })
-
-// to prove we have a session
-cy.getCookie('cypress-session-cookie').should('exist')
+// requests /api/users?active=true&page=2&limit=10
 ```
 
-#### Using `cy.request()` for HTML Forms
+#### Create a record, then use its ID in later requests
 
-:::info
+Seed the data a test needs, then use what the API returns. Here the `id` from
+the `POST` response drives the `GET` and the `DELETE` that cleans up.
 
-[Check out our example recipe using `cy.request()` for HTML web forms](/app/references/recipes#Logging-In)
+```javascript
+cy.request('POST', '/api/users', { name: 'Jane' })
+  .its('body.id')
+  .then((id) => {
+    cy.request(`/api/users/${id}`).its('body.name').should('eq', 'Jane')
+    cy.request('DELETE', `/api/users/${id}`).its('status').should('eq', 204)
+  })
+```
 
-:::
+#### Assert on the status, headers, and response time
 
-### Request Polling
+Every response carries its `status`, its `headers`, and the `duration` of the
+request in milliseconds, so one request can check all three.
 
-#### Call `cy.request()` over and over again
+```javascript
+cy.request('/api/users').then((response) => {
+  expect(response.status).to.eq(200)
+  expect(response.headers['content-type']).to.include('application/json')
+  expect(response.duration).to.be.lessThan(500)
+})
+```
 
-This is useful when you're polling a server for a response that may take awhile
-to complete.
+#### Type the response body in TypeScript
 
-All we're really doing here is creating a recursive function. Nothing more
-complicated than that.
+`cy.request()` takes a type argument for the response body, so `response.body`
+is typed in your editor instead of `any`.
 
-```js
-// a regular ol' function folks
-function req () {
-  cy
-    .request(...)
-    .then((resp) => {
-      // if we got what we wanted
-
-      if (resp.status === 200 && resp.body.ok === true)
-        // break out of the recursive loop
-        return
-
-      // else recurse
-      req()
-    })
+```typescript copyTsToJs
+interface User {
+  id: number
+  name: string
 }
 
-cy
-  // do the thing causing the side effect
-  .get('button').click()
-
-  // now start the requests
-  .then(req)
-
+cy.request<User>('/api/users/1').then((response) => {
+  expect(response.body.name).to.eq('Jane')
+})
 ```
+
+#### Poll an endpoint until a job finishes
+
+To wait for work the server does in the background, call `cy.request()` from a
+function that calls itself until the response shows the job is done. The
+`attempts` count stops the loop, so a job that never finishes fails the test
+rather than polling forever.
+
+```javascript
+function waitForJob(id, attempts = 10) {
+  if (attempts === 0) {
+    throw new Error(`Job ${id} did not finish`)
+  }
+
+  cy.request(`/api/jobs/${id}`).then(({ body }) => {
+    if (body.status !== 'done') {
+      cy.wait(500)
+      waitForJob(id, attempts - 1)
+    }
+  })
+}
+
+cy.request('POST', '/api/jobs', { type: 'export' })
+  .its('body.id')
+  .then((id) => {
+    waitForJob(id)
+  })
+```
+
+For a version that yields the finished job so you can assert on it, see
+[Poll an asynchronous job](/app/guides/api-testing#Poll-an-asynchronous-job).
 
 ## Notes
 
-### JSON request and response bodies
+### How `cy.request()` sends a request
 
-#### Request body serialization
+`cy.request()` doesn't send the request from the browser. Your test hands it to
+the Cypress server, which runs in Node.js and sends it to your server directly.
+Along the way, the Cypress server reads the browser's cookies for the URL and
+saves any `Set-Cookie` headers it gets back into the browser.
 
-When `body` is a JavaScript **object or boolean** and `form` is not `true`,
-Cypress automatically:
+<DocsImage
+  src="/img/api/request/request-runs-in-node.svg"
+  alt="Diagram: your test in the browser sends cy.request() to the Cypress server in Node.js, which reads cookies from the browser, sends the request to your server, saves Set-Cookie headers back into the browser, and yields the response. The DevTools Network tab, CORS checks, and cy.intercept() routes are not involved."
+  noBorder
+/>
 
-1. JSON-serializes the request body.
-2. Adds a `Content-Type: application/json` header to the request.
+Because the request doesn't go through the browser:
 
-When `body` is a **string**, it is sent as-is and no `Content-Type` header is
-added automatically.
+- It doesn't appear in the browser's DevTools Network tab.
+- CORS doesn't apply, so you can request any server, whatever its CORS headers.
+- [`cy.intercept()`](/api/commands/intercept) routes don't match it. It always
+  reaches your real server, which is what you want when you test an endpoint
+  without starting your front end.
+- Cypress doesn't verify the server's TLS certificate, so a self-signed or
+  expired certificate doesn't fail the request. It also means `cy.request()`
+  doesn't catch a certificate problem.
+- It sends the browser's `User-Agent` unless you set one in `headers`. To change
+  the browser's own user agent, see
+  [how to override the browser's default user agent](/app/faq#Can-I-override-or-change-the-default-user-agent-the-browser-uses).
 
-When `body` is a **`FormData`** instance, Cypress:
-
-1. Encodes each field as a part of a `multipart/form-data` body. A `File` or
-   `Blob` field keeps its filename and type, and defaults to
-   `application/octet-stream` when it has no type.
-2. Sets the `Content-Type: multipart/form-data` header with the boundary that
-   separates the parts. This replaces a `Content-Type` header you pass in
-   `headers`, such as `multipart/form-data` without a boundary, so you don't
-   need to set one.
-
-Don't combine a `FormData` body with `form: true` or an
-`application/x-www-form-urlencoded` header. Either one sends the body down the
-URL-encoded form path, and the request fails with a network-level error.
-
-When `body` is a **`Blob`**, Cypress sends its bytes as-is and no `Content-Type`
-header is added automatically. Set one in `headers` if your server expects it.
-
-#### Response body parsing
-
-Cypress always inspects the `Content-Type` header of the response. If that
-header's value ends in `json` (for example `application/json` or
-`application/vnd.api+json`), `response.body` is automatically parsed into a
-JavaScript object. Otherwise `response.body` is a string.
-
-This means the automatic JSON parsing of `response.body` depends entirely on
-what the server returns in its `Content-Type` header — it is **not** affected
-by the type of the request `body`.
-
-### Debugging
-
-#### Request is not displayed in the Network Tab of Developer Tools
-
-Cypress does not _actually_ make an XHR request from the browser. We are
-actually making the HTTP request from Cypress (in Node). So, you won't see the
-request inside of your Developer Tools.
-
-### CORS
-
-#### CORS is bypassed
-
-Normally when the browser detects a cross-origin HTTP request, it will send an
-`OPTIONS` preflight check to ensure the server allows cross-origin requests, but
-`cy.request()` bypasses CORS entirely.
+For example:
 
 ```javascript
-// we can make requests to any external server, no problem.
-cy.request('https://www.google.com/webhp?#q=cypress.io+cors')
-  .its('body')
-  .should('include', 'Testing, the way it should be') // true
+// docs.cypress.io sends no CORS headers, and cy.request() still succeeds
+cy.request('https://docs.cypress.io').its('status').should('eq', 200)
 ```
 
-### Cookies
+### How `cy.request()` resolves a relative URL
 
-#### Cookies are automatically sent and received
+When you pass a URL without a protocol and host, such as `/api/users`, Cypress
+resolves the host for `cy.request()` in this order:
 
-Before sending the HTTP request, we automatically attach cookies that would have
-otherwise been attached had the request come from the browser. Additionally, if
-a response has a `Set-Cookie` header, these are automatically set back on the
-browser cookies.
+1. Inside a [`cy.origin()`](/api/commands/origin) callback, Cypress uses the
+   origin you passed to `cy.origin()`.
+2. If the `baseUrl` property is set in your
+   [configuration file](/app/references/configuration), Cypress prefixes the URL
+   with it. This applies whether or not you have visited a page, so `baseUrl`
+   wins over the origin of a page you visited.
 
-In other words, `cy.request()` transparently performs all of the underlying
-functions as if it came from the browser.
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    baseUrl: 'http://localhost:1234'
+  }
+}
+```
+
+:::
+
+```javascript
+cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
+```
+
+3. If no `baseUrl` is set and you have visited a page, Cypress uses the origin of
+   the URL used for the `cy.visit()`.
+
+```javascript
+cy.visit('http://localhost:8080/app')
+cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
+```
+
+4. If Cypress cannot determine the host, it throws an error.
+
+### How `cy.request()` sends and stores cookies
+
+Before it sends a request, Cypress attaches the cookies the browser would have
+sent to that URL. When the response has `Set-Cookie` headers, Cypress sets those
+cookies in the browser, so later requests and page visits use them.
 
 Cookies are pulled from the cookie jar by domain match. A cookie set without
 `hostOnly: true` is a domain cookie, so it can be attached to a `cy.request()`
@@ -487,19 +622,69 @@ unexpectedly, see
 [Cookie scope (host-only vs. domain cookies)](/api/commands/setcookie#Cookie-scope-host-only-vs-domain-cookies)
 for how to scope it to a single exact host with `hostOnly: true`.
 
-### [`cy.intercept()`](/api/commands/intercept)
+### How `cy.request()` follows redirects
 
-#### `cy.request()` sends requests to actual endpoints, bypassing those defined using `cy.intercept()`
+With `followRedirect: true`, the default, Cypress follows each redirect and sends
+your `headers` again. Keep these behaviors in mind:
 
-The intention of `cy.request()` is to be used for checking endpoints on an
-actual, running server without having to start the front end application.
+- Cookies carry across. Cypress saves any `Set-Cookie` headers into the browser,
+  then attaches the cookies that match the next URL.
+- `Authorization` is dropped when the redirect changes the hostname.
+- A redirected `POST`, `PUT`, or `DELETE` is followed as a `GET`, without its
+  body or `Content-Type`. Only a `307` keeps the method and body.
 
-### User agent
+### How `cy.request()` handles request and response bodies
 
-Trying to change the `User-Agent`?
+#### Request body serialization
 
-See
-[how to override the browser's default user agent](/app/faq#Can-I-override-or-change-the-default-user-agent-the-browser-uses).
+What Cypress sends, and what you get back in `response.body`, depends on the
+type of `body`:
+
+| `body`                   | `Content-Type` Cypress sets                                  | `response.body`                                                              |
+| ------------------------ | ------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Object or boolean        | `application/json`, unless you set one                       | Parsed whenever it is valid JSON, whatever the response's `Content-Type`     |
+| Object with `form: true` | `application/x-www-form-urlencoded`                          | Parsed when the response's `Content-Type` ends in `json`, otherwise a string |
+| String                   | None                                                         | Parsed when the response's `Content-Type` ends in `json`, otherwise a string |
+| `FormData`               | `multipart/form-data` with a boundary, replacing one you set | An `ArrayBuffer` of the raw bytes, whatever the response's `Content-Type`    |
+| `Blob`                   | None                                                         | An `ArrayBuffer` of the raw bytes, whatever the response's `Content-Type`    |
+| None                     | None                                                         | Parsed when the response's `Content-Type` ends in `json`, otherwise a string |
+
+For a string or `Blob` body, set a `Content-Type` in `headers` if your server
+expects one.
+
+A `FormData` body needs no `Content-Type` of its own. Cypress encodes each field
+as a part of a `multipart/form-data` body, and a `File` or `Blob` field keeps
+its filename and type, defaulting to `application/octet-stream` when it has no
+type. The boundary that separates the parts goes in the `Content-Type` header
+Cypress sets, replacing any you pass in `headers`.
+
+Don't combine a `FormData` body with `form: true` or an
+`application/x-www-form-urlencoded` header. Either one sends the body down the
+URL-encoded form path, and the request fails with a network-level error.
+
+#### Response body parsing
+
+`response.body` is parsed into an object when either:
+
+- The response's `Content-Type` ends in `json`, such as `application/json`.
+- The request `body` is an object or boolean (without `form: true`), and the
+  response is valid JSON.
+
+After a `FormData` or `Blob` request, `response.body` is an `ArrayBuffer` of raw
+bytes, even for JSON, so decode it before you assert on it. In every other case,
+it is a string.
+
+```javascript
+const formData = new FormData()
+formData.append('name', 'Jane')
+
+cy.request({ method: 'POST', url: '/api/users', body: formData }).then(
+  (response) => {
+    const user = JSON.parse(new TextDecoder().decode(response.body))
+    expect(user).to.have.property('name', 'Jane')
+  }
+)
+```
 
 ## Rules
 
@@ -521,10 +706,10 @@ See
 
 ## Command Log
 
-**_Request comments endpoint and test response_**
+This example requests the comments endpoint and tests the response:
 
 ```javascript
-cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
+cy.request('https://jsonplaceholder.cypress.io/comments').then((response) => {
   expect(response.status).to.eq(200)
   expect(response.body).to.have.length(500)
   expect(response).to.have.property('headers')
@@ -532,19 +717,21 @@ cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
 })
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as a `request` row with the
+method, status, and URL, followed by one row per assertion:
 
 <DocsImage
   src="/img/api/request/testing-request-url-and-its-response-body-headers.png"
-  alt="Command Log request"
+  alt="Command Log showing a request row reading GET 200 https://jsonplaceholder.cypress.io/comments, followed by five passing assertions on the status, body length, headers, and duration"
 />
 
-When clicking on `request` within the command log, the console outputs the
-following:
+When you click `request` in the Command Log, the console shows the request
+Cypress sent and the response it got under `Request:`, and the yielded response
+under `Yielded:`:
 
 <DocsImage
   src="/img/api/request/console-log-request-response-body-headers-status-url.png"
-  alt="Console Log request"
+  alt="DevTools console after clicking the request command, showing Command: request, a Request object with the request URL, body, and headers alongside the response body and headers, and a Yielded object with status 200, duration, a 500-item body array, and headers"
 />
 
 ## History
@@ -553,16 +740,15 @@ following:
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [15.20.0](/app/references/changelog#15-20-0) | Added support for `QUERY` method.                                                                                                                                                                                                                                          |
 | [7.4.0](/app/references/changelog#7-4-0)     | Added support for `FormData` and `Blob` request bodies.                                                                                                                                                                                                                    |
-| [4.7.0](/app/references/changelog#3-3-0)     | Added support for `encoding` option.                                                                                                                                                                                                                                       |
+| [4.7.0](/app/references/changelog#4-7-0)     | Added support for `encoding` option.                                                                                                                                                                                                                                       |
 | [3.3.0](/app/references/changelog#3-3-0)     | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`.                                                                                                                                                                                          |
 | [3.2.0](/app/references/changelog#3-2-0)     | Added support for any valid HTTP `method` argument including `TRACE`, `COPY`, `LOCK`, `MKCOL`, `MOVE`, `PURGE`, `PROPFIND`, `PROPPATCH`, `UNLOCK`, `REPORT`, `MKACTIVITY`, `CHECKOUT`, `MERGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`, `SEARCH`, and `CONNECT`. |
 
 ## See also
 
 - [API Testing](/app/guides/api-testing)
-- [`cy.task()`](/api/commands/task)
+- [`cy.session()`](/api/commands/session)
+- [`cy.intercept()`](/api/commands/intercept)
+- [`cy.env()`](/api/commands/env)
 - [`cy.visit()`](/api/commands/visit)
-- [Recipe: Logging In - Single Sign on](/app/references/recipes#Logging-In)
-- [Recipe: Logging In - HTML Web Form](/app/references/recipes#Logging-In)
-- [Recipe: Logging In - XHR Web Form](/app/references/recipes#Logging-In)
-- [Recipe: Logging In - CSRF Tokens](/app/references/recipes#Logging-In)
+- [Recipes: Logging In](/app/references/recipes#Logging-In)
