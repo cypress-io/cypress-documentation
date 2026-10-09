@@ -48,7 +48,7 @@
     {
       "label": "Webhooks",
       "href": "/cloud/guides/webhooks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=webhooks",
-      "description": "Send UI Coverage results to Slack and other tools.",
+      "description": "Send run events to your own HTTPS endpoints.",
       "isNew": true
     }
   ],
@@ -62,7 +62,7 @@
     {
       "label": "Webhooks",
       "href": "/accessibility/connect-and-extend/webhooks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=webhooks",
-      "description": "Send Accessibility results to your own tools.",
+      "description": "Send run events to your own HTTPS endpoints.",
       "isNew": true
     }
   ]
