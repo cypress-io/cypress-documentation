@@ -14,7 +14,7 @@ slug: /app/guides/migration/playwright-to-cypress
   defaultCollapsed
   excludeFromLlmExport
   title="Migrate from Playwright to Cypress with your AI assistant"
-  prompt={`Migrate this project's tests from Playwright to Cypress. First read https://docs.cypress.io/app/guides/migration/playwright-to-cypress.md for the syntax mappings and patterns, then work through these steps:\n\n1. Take inventory. Detect my package manager, find my Playwright config and test files, and summarize the patterns I use: locators, assertions, network mocking, authentication, fixtures/page objects, web server startup, and CI configuration.\n\n2. Agree on a selector strategy. If my tests rely on getByRole/getByLabel/getByText and I have no test attributes, recommend installing @testing-library/cypress for a near 1:1 mapping instead of editing my app to add data-testid attributes.\n\n3. Install Cypress alongside Playwright. Configure them to coexist, and do not modify or delete my Playwright config or specs until the Cypress equivalents pass.\n\n4. Migrate one spec at a time. Translate async/await and the locator API to Cypress command chaining and retry-ability (never assign a cy.* return value to a variable), map expect() assertions to Cypress assertions, convert page.route() mocks to cy.intercept(), and port authentication, fixtures, and page objects. If my Playwright config uses a webServer block, set up start-server-and-test so Cypress has a running app.\n\n5. Flag gaps. Call out anything with no direct Cypress equivalent (visual snapshots, soft assertions, test.step) instead of guessing.\n\n6. Verify. Show me the proposed changes before applying them, then install and run eslint-plugin-cypress and my migrated Cypress tests to confirm they pass.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+  prompt={`Migrate this project's tests from Playwright to Cypress. First read https://docs.cypress.io/app/guides/migration/playwright-to-cypress.md for the syntax mappings and patterns, then work through these steps:\n\n1. Take inventory. Detect my package manager, find my Playwright config and test files, and summarize the patterns I use: locators, assertions, network mocking, authentication, fixtures/page objects, web server startup, and CI configuration.\n\n2. Agree on a selector strategy. Translate getByRole to the built-in cy.getByRole(), using a regular expression for the name wherever Playwright relied on its default case-insensitive substring match. For a role that HTML has an element for, cy.getByRole() matches only the native element by default, so it skips an element such as a <div role="button"> that Playwright finds. Don't add native: false to every call: list each of these elements with its spec file and line so I can decide whether the app should use the native element or the test should pass native: false. If my tests also rely on getByLabel/getByText and I have no test attributes, recommend installing @testing-library/cypress for those instead of editing my app to add data-testid attributes.\n\n3. Install Cypress alongside Playwright. Configure them to coexist, and do not modify or delete my Playwright config or specs until the Cypress equivalents pass.\n\n4. Migrate one spec at a time. Translate async/await and the locator API to Cypress command chaining and retry-ability (never assign a cy.* return value to a variable), map expect() assertions to Cypress assertions, convert page.route() mocks to cy.intercept(), and port authentication, fixtures, and page objects. If my Playwright config uses a webServer block, set up start-server-and-test so Cypress has a running app.\n\n5. Flag gaps. Call out anything with no direct Cypress equivalent (visual snapshots, soft assertions, test.step) instead of guessing.\n\n6. Verify. Show me the proposed changes before applying them, then install and run eslint-plugin-cypress and my migrated Cypress tests to confirm they pass.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
 This guide helps you translate Playwright tests to Cypress. It covers the
@@ -535,18 +535,19 @@ Playwright suites lean on semantic locators — `getByRole()`, `getByLabel()`,
 and `getByText()`. Before translating tests, decide how these map to Cypress,
 because the choice affects nearly every test.
 
-**Option A — Cypress Testing Library (lowest friction, no app changes).**
-Install
-[`@testing-library/cypress`](https://github.com/testing-library/cypress-testing-library)
-for a near 1:1 replacement of Playwright's semantic locators:
+**Option A — Semantic queries (lowest friction, no app changes).**
+Cypress has [`cy.getByRole()`](/api/commands/getbyrole) built in. The other
+semantic locators map to the `findBy*` queries from
+[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library),
+which you install as the `@testing-library/cypress` package:
 
-| Playwright                      | Cypress (Testing Library)         |
-| ------------------------------- | --------------------------------- |
-| `getByRole('button', { name })` | `findByRole('button', { name })`  |
-| `getByLabel('Email')`           | `findByLabelText('Email')`        |
-| `getByText('Welcome')`          | `findByText('Welcome')`           |
-| `getByPlaceholder('Search')`    | `findByPlaceholderText('Search')` |
-| `getByTestId('submit')`         | `findByTestId('submit')`          |
+| Playwright                      | Cypress                              | Provided by        |
+| ------------------------------- | ------------------------------------ | ------------------ |
+| `getByRole('button', { name })` | `cy.getByRole('button', { name })`   | Cypress (built in) |
+| `getByLabel('Email')`           | `cy.findByLabelText('Email')`        | Testing Library    |
+| `getByText('Welcome')`          | `cy.findByText('Welcome')`           | Testing Library    |
+| `getByPlaceholder('Search')`    | `cy.findByPlaceholderText('Search')` | Testing Library    |
+| `getByTestId('submit')`         | `cy.findByTestId('submit')`          | Testing Library    |
 
 **Option B — `data-*` attributes (Cypress best practice for new code).**
 Add `data-testid` (or `data-cy`) attributes to your application and select with
@@ -579,9 +580,9 @@ cy.get('[data-testid="email"]').type('user@email.com')
 cy.contains('button', 'Sign in').click()
 ```
 
-### getByRole() and getByLabel()
+### Translating getByRole() and getByLabel() to Cypress
 
-If you want `getByRole()`/`getByLabel()` ergonomics in Cypress, install [Cypress Testing Library](https://github.com/testing-library/cypress-testing-library).
+Translate `getByRole()` to the built-in [`cy.getByRole()`](/api/commands/getbyrole). For `getByLabel()`, install [Cypress Testing Library](https://github.com/testing-library/cypress-testing-library) and use `findByLabelText()`.
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -593,9 +594,18 @@ await page.getByLabel('First name').fill('Jane')
 <Badge type="success">After: Cypress</Badge>
 
 ```ts title="test.cy.ts"
-cy.findByRole('button', { name: 'Save' }).click()
+cy.getByRole('button', { name: 'Save' }).click()
 cy.findByLabelText('First name').type('Jane')
 ```
+
+Keep these differences in mind when you translate `getByRole()`:
+
+- Playwright matches a string `name` case-insensitively and as a substring unless you pass `exact: true`. `cy.getByRole()` always matches a string against the whole name, case-sensitively. Where a test relied on a partial match, pass a regular expression, such as `{ name: /save/i }`.
+- A Playwright locator fails an action when it matches more than one element. `cy.getByRole()` yields every match, so chain [`.first()`](/api/commands/first) or narrow the `name` when several elements share a role.
+- Options such as `checked`, `expanded`, `pressed`, and `level` become a chained [`.filter()`](/api/commands/getbyrole#Narrow-the-results-by-state-with-filter), such as `cy.getByRole('heading').filter('[aria-level="2"], h2:not([aria-level])')` for `level: 2`.
+- `includeHidden: true` becomes `hidden: true`.
+- `cy.getByRole('banner')` and `cy.getByRole('contentinfo')` match every `<header>` and `<footer>`, including ones inside an `<article>` or `<section>`, where Playwright gives them no landmark role. Scope the query, such as `cy.get('body > header')`, when the page has more than one.
+- For a role that HTML has an element for, `cy.getByRole()` matches only native elements by default, so `cy.getByRole('button')` skips a `<div role="button">` that Playwright's `getByRole('button')` finds. Pass `native: false` to match it.
 
 ## Interactions
 
@@ -650,7 +660,7 @@ await page.getByRole('menuitem', { name: 'Settings' }).click()
 
 ```ts title="test.cy.ts"
 cy.get('[data-testid="menu"]').trigger('mouseover')
-cy.contains('[role="menuitem"]', 'Settings').click()
+cy.getByRole('menuitem', { name: 'Settings' }).click()
 ```
 
 ### Mobile viewport testing
@@ -867,7 +877,7 @@ await expect(page.getByRole('banner')).toBeVisible()
 cy.visit('https://site-a.example')
 cy.origin('https://site-b.example', () => {
   cy.visit('https://site-b.example')
-  cy.get('[role="banner"]').should('be.visible')
+  cy.getByRole('banner').should('be.visible')
 })
 ```
 

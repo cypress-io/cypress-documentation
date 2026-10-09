@@ -1,0 +1,626 @@
+---
+title: 'cy.getByRole()'
+description: Get DOM elements by their role and accessible name in Cypress.
+sidebar_label: getByRole
+slug: /api/commands/getbyrole
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="app" />
+
+# getByRole
+
+Get every DOM element with the given role, optionally narrowed to the elements
+whose accessible name matches. The role is what a screen reader announces an
+element as, such as a button or a link, and the accessible name is the text it
+announces for it. A test written with `cy.getByRole()` finds elements the way
+assistive technology does, and fails when a control loses its label.
+
+Most elements get their role from their tag, such as a `<button>` or a `<nav>`,
+with no ARIA involved. A `role` attribute can also set one, which is the only
+way to give an element a widget role such as `tab`. For the full list, see the
+[implicit roles of HTML elements](https://www.w3.org/TR/html-aria/#docconformance)
+and the [roles that a `role` attribute can set](https://www.w3.org/TR/wai-aria-1.2/#role_definitions).
+
+By default, `cy.getByRole()` skips elements hidden from the accessibility tree.
+For a role that HTML has an element for, it also matches only that native
+element, so a test confirms a control is a real `<button>` or `<a>` rather than
+a `<div>` with a `role` attribute.
+
+## Syntax
+
+```javascript
+.getByRole(role)
+.getByRole(role, options)
+
+// ---or---
+
+cy.getByRole(role)
+cy.getByRole(role, options)
+```
+
+### Usage
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```javascript
+cy.getByRole('button', { name: 'Save' }) // Yield the button named "Save"
+cy.get('nav').getByRole('link') // Yield every link inside <nav>
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.getByRole(/button/) // Errors, the role must be a string
+cy.title().getByRole('heading') // Errors, 'title' does not yield DOM element
+cy.getByRole('switch checkbox') // Errors, query one role at a time
+cy.getByRole('tab', { native: true }) // Errors, HTML has no native tab element
+cy.getByRole('heading', { level: 2 }) // Errors, narrow by level with .filter()
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **role _(String)_**
+
+The role to find, such as `'button'`, `'heading'`, `'navigation'`, or
+`'tab'`. An element has a role when:
+
+- Its tag implies one, such as `<button>` for `button`, `<nav>` for
+  `navigation`, or `<input type="checkbox">` for `checkbox`.
+- Its `role` attribute sets one, such as `<div role="tab">`. The attribute
+  replaces the implied role. When it lists several roles as fallbacks, the
+  first valid one counts, as in browsers: `role="switch checkbox"` is a
+  `switch`, and `role="foo button"` is a `button`. With no valid role in the
+  attribute, the element keeps its implied role.
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+Pass in an options object to change the default behavior of `cy.getByRole()`.
+
+| Option             | Default                                                                        | Description                                                                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`             | `undefined`                                                                    | Match only elements whose [accessible name](#Match-by-accessible-name) matches. Accepts a string, number, regular expression, or function.                                     |
+| `hidden`           | `false`                                                                        | Include elements [hidden from the accessibility tree](#Include-elements-hidden-from-the-accessibility-tree), such as those with `aria-hidden="true"`.                          |
+| `native`           | `true` for roles that HTML has an element for                                  | Match only elements whose [HTML tag gives them the role](#Native-elements-by-default). Pass `false` to also match elements that have the role only through a `role` attribute. |
+| `log`              | `true`                                                                         | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                            |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)              | Time, in milliseconds, to wait for `cy.getByRole()` to resolve before [timing out](#Timeouts). Must be a number.                                                               |
+| `includeShadowDom` | [`includeShadowDom` config option value](/app/references/configuration#Global) | Whether to traverse shadow DOM boundaries and include elements within the shadow DOM in the yielded results.                                                                   |
+
+`cy.getByRole()` throws an error for any other option. To narrow the results by
+an ARIA state such as `checked`, `expanded`, or `level`, chain
+[`.filter()`](#Narrow-the-results-by-state-with-filter).
+
+<HeaderYields />
+
+- `cy.getByRole()` yields every matching element, in document order.
+- `cy.getByRole()` is a query, and it is _safe_ to chain further commands.
+
+## Examples
+
+### Role
+
+#### Find an element by the role its tag implies
+
+```html title="index.html"
+<main>
+  <h1>Account settings</h1>
+  <button>Save changes</button>
+</main>
+```
+
+```javascript title="spec.cy.js"
+cy.getByRole('main').should('match', 'main')
+cy.getByRole('heading').should('have.text', 'Account settings')
+cy.getByRole('button').click()
+```
+
+#### Find a widget by its `role` attribute
+
+HTML has no element for widget roles such as `tab`, `menuitem`, or `switch`, so
+a page gives an element one with a `role` attribute. Native matching doesn't
+apply to these roles, so `cy.getByRole()` finds the element by its `role`
+attribute.
+
+```html title="index.html"
+<div role="tablist">
+  <button role="tab" aria-selected="true">Profile</button>
+  <button role="tab" aria-selected="false">Billing</button>
+</div>
+```
+
+```javascript title="spec.cy.js"
+cy.getByRole('tab', { name: 'Billing' }).click()
+```
+
+#### Get every element with a role
+
+`cy.getByRole()` yields every match, like [`cy.get()`](/api/commands/get), so
+assert on the length or pick one with [`.first()`](/api/commands/first) or
+[`.eq()`](/api/commands/eq).
+
+```html title="index.html"
+<ul>
+  <li><a href="/profile">Profile</a></li>
+  <li><a href="/billing">Billing</a></li>
+  <li><a>Coming soon</a></li>
+</ul>
+```
+
+```javascript title="spec.cy.js"
+// An <a> without an href has no link role, so only two match
+cy.getByRole('link').should('have.length', 2)
+cy.getByRole('link').eq(1).should('have.attr', 'href', '/billing')
+```
+
+#### Check every element with a role
+
+Chain [`.each()`](/api/commands/each) to run the same check against every
+match, or pass a callback to [`.should()`](/api/commands/should) to assert on
+the whole set at once. A `.should()` callback retries until it passes, so it
+also waits for a list that is still loading.
+
+```html title="index.html"
+<nav aria-label="Account">
+  <a href="/profile">Profile</a>
+  <a href="/billing">Billing</a>
+  <a href="/security">Security</a>
+</nav>
+```
+
+```javascript title="spec.cy.js"
+// Runs once for each of the three links
+cy.getByRole('link').each(($link) => {
+  cy.wrap($link).should('have.attr', 'href').and('match', /^\//)
+})
+
+// Retries until the links have these names, in this order
+cy.getByRole('link').should(($links) => {
+  const names = $links.toArray().map((link) => link.textContent)
+
+  expect(names).to.deep.equal(['Profile', 'Billing', 'Security'])
+})
+```
+
+### Name
+
+#### Match by accessible name
+
+The accessible name comes from the element's content, a `<label>`,
+`aria-label`, `aria-labelledby`, an image's `alt` text, or a `title`
+attribute. A string must match the whole name, and it is case-sensitive.
+Whitespace in the name is collapsed to a single space and trimmed before it's
+compared.
+
+```html title="index.html"
+<button>Save changes</button>
+<button aria-label="Close dialog">×</button>
+<label>Email <input type="email" /></label>
+```
+
+```javascript title="spec.cy.js"
+cy.getByRole('button', { name: 'Save changes' }).click()
+cy.getByRole('button', { name: 'Close dialog' }).click()
+cy.getByRole('textbox', { name: 'Email' }).type('jane@example.com')
+
+// Neither matches: a string matches the whole name, case-sensitively
+cy.getByRole('button', { name: 'Save' }).should('not.exist')
+cy.getByRole('button', { name: 'save changes' }).should('not.exist')
+```
+
+Content hidden with `aria-hidden="true"` is left out of the name, and so is
+CSS `::before` and `::after` content, such as an icon-font glyph.
+
+```html title="index.html"
+<button>Send<span aria-hidden="true"> ✉️</span></button>
+```
+
+```javascript title="spec.cy.js"
+// Yields and clicks the <button>, whose accessible name is "Send" without the ✉️
+cy.getByRole('button', { name: 'Send' }).click()
+```
+
+#### Match part of a name with a regular expression
+
+Pass a regular expression to match part of the name, or to ignore case.
+
+```html title="index.html"
+<button>Delete account</button> <button>Delete draft</button>
+```
+
+```javascript title="spec.cy.js"
+// Yields both buttons, since each name starts with "Delete"
+cy.getByRole('button', { name: /^delete/i }).should('have.length', 2)
+
+// Yields and clicks only the "Delete draft" button
+cy.getByRole('button', { name: /draft$/ }).click()
+```
+
+#### Match a name with a function
+
+A function receives the accessible name and the element, and returns `true`
+for a match.
+
+```html title="index.html"
+<button>Pay $20.00</button> <button>Pay $120.00</button>
+```
+
+```javascript title="spec.cy.js"
+cy.getByRole('button', {
+  name: (name) => Number(name.replace(/[^\d.]/g, '')) > 100,
+}).should('have.text', 'Pay $120.00')
+```
+
+### Hidden elements
+
+#### Include elements hidden from the accessibility tree
+
+By default, `cy.getByRole()` skips an element that assistive technology can't
+reach:
+
+- The element or an ancestor has the `hidden` attribute, `aria-hidden="true"`,
+  or `display: none`.
+- The element's computed `visibility` is `hidden`. It inherits this from a
+  `visibility: hidden` ancestor unless it sets `visibility: visible` itself.
+
+Pass `hidden: true` to include them, such as to find a closed menu.
+
+```html title="index.html"
+<nav aria-label="Account" hidden>
+  <a href="/settings">Settings</a>
+</nav>
+```
+
+```javascript title="spec.cy.js"
+cy.getByRole('link', { name: 'Settings' }).should('not.exist')
+cy.getByRole('link', { name: 'Settings', hidden: true }).should('exist')
+```
+
+An element that is only _visually_ hidden, such as one clipped to a single pixel
+or set to `opacity: 0`, is still in the accessibility tree, so
+`cy.getByRole()` finds it without `hidden: true`. The `hidden` option is about
+what a screen reader can reach, not what Cypress considers
+[visible](/app/core-concepts/interacting-with-elements#Visibility).
+
+### Native elements
+
+#### Native elements by default
+
+A `<div role="button">` has the `button` role, but it doesn't get a button's
+keyboard behavior unless the page adds it. For a role that HTML has an element
+for, such as `button`, `link`, `heading`, `dialog`, or `checkbox`,
+`cy.getByRole()` matches only elements whose tag gives them the role. The test
+fails if a native control is replaced with an imitation.
+
+```html title="index.html"
+<button>Save</button>
+<div role="button" tabindex="0">Cancel</div>
+```
+
+```javascript title="spec.cy.js"
+// Yields and clicks the native <button>
+cy.getByRole('button', { name: 'Save' }).click()
+
+// The <div> has the role only through its role attribute, so it's skipped
+cy.getByRole('button', { name: 'Cancel' }).should('not.exist')
+```
+
+For widget roles that HTML has no element for, such as `tab`, `menuitem`, or
+`switch`, a `role` attribute is the only way to give an element the role, so
+`cy.getByRole()` always matches the `role` attribute. Passing `native: true`
+with one of these roles throws an error.
+
+#### Include elements with a `role` attribute
+
+Pass `native: false` to also match elements that have the role only through a
+`role` attribute, such as a `<div role="dialog">` rendered by a component
+library.
+
+```javascript title="spec.cy.js"
+// Yields the <div role="button">
+cy.getByRole('button', { name: 'Cancel', native: false }).click()
+```
+
+Some widely used patterns need `native: false` even though they follow the ARIA
+authoring practices, because HTML has a different element for the role:
+
+- An autocomplete `<input role="combobox">`. The native combobox is a
+  `<select>` or an `<input>` with a `list` attribute.
+- An icon `<svg role="img">`. The native image is an `<img>`.
+
+When an element was skipped only because it has the role through a `role`
+attribute, the error says so and suggests passing `{ native: false }`.
+
+### Scope
+
+#### Search inside another element
+
+Chained off a command that yields DOM elements, `cy.getByRole()` searches the
+descendants of each of them. It never matches a subject element itself.
+
+```html title="index.html"
+<header>
+  <nav aria-label="Main">
+    <a href="/">Home</a>
+  </nav>
+</header>
+<footer>
+  <a href="/privacy">Privacy</a>
+</footer>
+```
+
+```javascript title="spec.cy.js"
+cy.getByRole('navigation', { name: 'Main' })
+  .getByRole('link')
+  .should('have.length', 1)
+  .and('have.text', 'Home')
+```
+
+#### Act inside a dialog with `.within()`
+
+Inside a [`.within()`](/api/commands/within) callback, `cy.getByRole()` searches
+only the `.within()` subject.
+
+```html title="index.html"
+<button>Delete</button>
+<dialog open aria-label="Delete user">
+  <button>Cancel</button>
+  <button>Delete</button>
+</dialog>
+```
+
+```javascript title="spec.cy.js"
+cy.getByRole('dialog', { name: 'Delete user' }).within(() => {
+  cy.getByRole('button', { name: 'Delete' }).click()
+})
+```
+
+#### Narrow the results by state with `.filter()`
+
+`cy.getByRole()` matches on role and name only. To narrow the results by a state
+or property, chain [`.filter()`](/api/commands/filter), or chain
+[`.not()`](/api/commands/not) to leave matches out.
+
+```javascript
+// The tab that is currently selected
+cy.getByRole('tab').filter('[aria-selected="true"]')
+
+// Level 2 headings
+cy.getByRole('heading').filter('[aria-level="2"], h2:not([aria-level])')
+
+// A checked native checkbox
+cy.getByRole('checkbox').filter(':checked')
+
+// A checked checkbox that gets its role from a role attribute
+cy.getByRole('checkbox', { native: false }).filter('[aria-checked="true"]')
+
+// The menu button whose menu is open
+cy.getByRole('button').filter('[aria-expanded="true"]')
+
+// A toggle button that is switched on
+cy.getByRole('button').filter('[aria-pressed="true"]')
+
+// The link to the page the reader is on
+cy.getByRole('link').filter('[aria-current="page"]')
+
+// Every button except disabled ones
+cy.getByRole('button').not(':disabled, [aria-disabled="true"]')
+```
+
+### Waiting for elements
+
+#### Wait for an element to appear
+
+`cy.getByRole()` retries until a matching element exists and every chained
+assertion passes, so it waits for an alert that renders after a save.
+
+```javascript
+cy.getByRole('button', { name: 'Save' }).click()
+cy.getByRole('alert').should('have.text', 'Changes saved')
+```
+
+#### Assert an element doesn't exist
+
+`cy.getByRole()` retries a negative assertion too, until the element is gone.
+
+```javascript
+cy.getByRole('dialog').should('not.exist')
+```
+
+### Options
+
+#### Find elements inside shadow DOM with `includeShadowDom`
+
+By default, `cy.getByRole()` doesn't search inside shadow roots. Pass
+`includeShadowDom: true` to search them, including nested shadow roots, or set
+the
+[`includeShadowDom` configuration option](/app/references/configuration#Global)
+to search them in every query.
+
+```javascript
+cy.getByRole('button', { name: 'Checkout', includeShadowDom: true }).click()
+```
+
+To search one shadow root only, chain `cy.getByRole()` off
+[`.shadow()`](/api/commands/shadow):
+
+```javascript
+cy.get('checkout-panel').shadow().getByRole('button', { name: 'Checkout' })
+```
+
+### TypeScript
+
+#### Type the yielded element
+
+The `role` argument autocompletes role names and accepts any other string.
+Pass a type argument to type the yielded element.
+
+```typescript
+cy.getByRole<HTMLInputElement>('textbox', { name: 'Email' }).then(($input) => {
+  // $input is typed as JQuery<HTMLInputElement>
+  expect($input[0].value).to.eq('')
+})
+```
+
+## Notes
+
+### What a `cy.getByRole()` error looks like
+
+When no element matches before the timeout, the error says what it looked for
+and lists the roles and accessible names it did find. Here, the name was
+misspelled:
+
+```text
+Timed out retrying after 4000ms: Expected to find an accessible native element with the role "button" and name "Svae", but never did.
+
+Here are the accessible roles that were found, with the accessible name of each element:
+
+  - main: (no name)
+  - heading: "Account settings"
+  - button: "Save", "Cancel"
+```
+
+### How `cy.getByRole()` decides an element's role
+
+`cy.getByRole()` maps elements to roles with
+[aria-query](https://github.com/A11yance/aria-query). Some roles depend on attributes: an `<a>` needs an `href`
+to be a `link`, a `<section>` needs an `aria-label` or `aria-labelledby` to be a
+`region`, and an
+`<input>` with a missing or unknown `type` is a `textbox`.
+
+Some roles depend on the surrounding table: a `<td>` is a `cell` in a table,
+a `gridcell` in a `grid` or `treegrid`, and has no role in a table with
+`role="presentation"`. Otherwise, the mapping doesn't consider where an element
+sits in the page, so every `<header>` is a `banner` and every `<footer>` a
+`contentinfo`, even inside an `<article>`, where a browser gives them no
+landmark role.
+
+### Rename an existing `getByRole` custom command
+
+If your project already defines its own `getByRole` with
+`Cypress.Commands.add()` or `Cypress.Commands.addQuery()`, that call now throws
+an error, because `getByRole` is a built-in Cypress query. Rename your command,
+or remove it and use the built-in `cy.getByRole()`. Cypress Testing Library adds
+only `findBy*` queries, so it doesn't conflict.
+
+### How to migrate from Testing Library `findByRole()` to `cy.getByRole()`
+
+`cy.getByRole()` does what the `findByRole()` and `findAllByRole()` queries from
+[Cypress Testing Library](https://github.com/testing-library/cypress-testing-library)
+do for role queries, without a plugin. Most calls translate by renaming the
+query, and the state options become a chained
+[`.filter()`](#Narrow-the-results-by-state-with-filter).
+
+<Badge type="danger">Before: Cypress Testing Library</Badge>
+
+```javascript title="spec.cy.js"
+cy.findByRole('button', { name: 'Save' }).click()
+cy.findByRole('button', { name: /save/i }).click()
+cy.findAllByRole('listitem').should('have.length', 3)
+cy.findByRole('tab', { selected: true }).should('have.text', 'Billing')
+cy.findByRole('checkbox', { checked: true }).should(
+  'have.attr',
+  'name',
+  'terms'
+)
+```
+
+<Badge type="success">After: `cy.getByRole()`</Badge>
+
+```javascript title="spec.cy.js"
+cy.getByRole('button', { name: 'Save' }).click()
+cy.getByRole('button', { name: /save/i }).click()
+cy.getByRole('listitem').should('have.length', 3)
+cy.getByRole('tab')
+  .filter('[aria-selected="true"]')
+  .should('have.text', 'Billing')
+cy.getByRole('checkbox').filter(':checked').should('have.attr', 'name', 'terms')
+```
+
+Keep these differences in mind as you migrate:
+
+- **Native elements only, by default.** For a role that HTML has an element
+  for, `cy.getByRole()` skips elements that have the role only through a `role`
+  attribute, so a test that found a `<div role="button">` with `findByRole()`
+  fails after the migration. Decide for each one whether the application should
+  use the native element, or whether the test should pass `native: false`.
+- **Every match, not one.** `cy.getByRole()` yields every match, like
+  `findAllByRole()`, instead of failing when more than one element matches.
+  Narrow the `name`, or chain [`.first()`](/api/commands/first), to act on one.
+- **State options.** The `checked`, `selected`, `pressed`, `expanded`,
+  `current`, `busy`, `level`, and `value` options become a chained `.filter()`.
+  The error for each of these options names the filter to use.
+
+When no other Testing Library queries remain in your tests, remove
+`@testing-library/cypress` from your dependencies, its import from your support
+file, and its entry in the `types` of your `tsconfig.json`.
+
+<CopyPrompt
+  title="Migrate from Testing Library findByRole() to cy.getByRole()"
+  subtext="Move your role queries to the built-in cy.getByRole() and get a list of the elements that need a decision about native elements."
+  defaultCollapsed
+  excludeFromLlmExport
+  prompt={`Migrate this project's Cypress tests from Testing Library's findByRole() and findAllByRole() queries to the built-in cy.getByRole() query. First read https://docs.cypress.io/api/commands/getbyrole.md, then work through these steps:
+
+1. Find every cy.findByRole() and cy.findAllByRole() call in the Cypress specs, custom commands, and support files. If the project defines its own getByRole custom command, stop and tell me, since it conflicts with the built-in query.
+
+2. Replace each call with cy.getByRole(), keeping the role, the command it's chained from, and the name, timeout, log, and hidden options as they are.
+
+3. Replace the checked, selected, pressed, expanded, current, busy, level, and value options with a chained .filter(), as the page describes. Use :checked only for native checkboxes and radios, and [aria-checked="true"] for elements that get their role from a role attribute.
+
+4. Run the migrated specs. cy.getByRole() matches only native elements for roles that HTML has an element for, so a test that found an element such as a <div role="button"> now fails. Don't add native: false to every call. List each of these elements with its spec file and line, so I can decide whether the application should use the native element or the test should pass native: false.
+
+5. If no other Testing Library queries remain, remove @testing-library/cypress from package.json, its import from the support file, and its entry in the types of tsconfig.json. Keep it if any other Testing Library query, such as findByLabelText(), is still in use.
+
+6. Flag any option or pattern with no direct equivalent instead of guessing.
+
+Finish with a summary of what changed and the list of elements that need a decision.`}
+/>
+
+## Rules
+
+<HeaderRequirements />
+
+- `cy.getByRole()` can be chained off of `cy` or off a command that yields DOM
+  element(s). Chained off [`cy.window()`](/api/commands/window) or
+  [`cy.document()`](/api/commands/document), it searches the whole page.
+
+<HeaderAssertions />
+
+- `cy.getByRole()` automatically [retries](/app/core-concepts/retry-ability)
+  until the element(s)
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `cy.getByRole()` automatically [retries](/app/core-concepts/retry-ability)
+  until all chained assertions have passed.
+
+<HeaderTimeouts />
+
+- `cy.getByRole()` can time out waiting for the element(s) to
+  [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
+- `cy.getByRole()` can time out waiting for assertions you've added to pass.
+
+## Command Log
+
+**_Find a button by its role and name_**
+
+```javascript
+cy.getByRole('button', { name: 'Save changes' }).click()
+```
+
+The Command Log shows a `getByRole` row with the role and options, followed by
+the `click`. When clicking on the `getByRole` command within the command log,
+the console outputs the role, the options, the element the query was applied
+to, the yielded element(s), and the number of elements found.
+
+## History
+
+| Version                                    | Changes                        |
+| ------------------------------------------ | ------------------------------ |
+| [16.2.0](/app/references/changelog#16-2-0) | `cy.getByRole()` command added |
+
+## See also
+
+- [`cy.contains()`](/api/commands/contains)
+- [`.filter()`](/api/commands/filter)
+- [`cy.get()`](/api/commands/get)
+- [`.within()`](/api/commands/within)
+- [Accessibility testing](/app/guides/accessibility-testing)

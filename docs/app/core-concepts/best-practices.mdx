@@ -388,7 +388,9 @@ accessible role is not present.
 You can use the
 [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
 package to use the familiar testing library methods (like `findByRole`,
-`findByLabelText`, etc...) to select elements in Cypress specs.
+`findByLabelText`, etc...) to select elements in Cypress specs. To find elements
+by role without a plugin, use the built-in
+[`cy.getByRole()`](/api/commands/getbyrole).
 
 If you are coming from a React Testing Library background and looking for more resources to understand how we
 recommend you approach testing your components, look to: [Cypress Component Testing](/app/component-testing/get-started).
