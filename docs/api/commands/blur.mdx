@@ -94,18 +94,7 @@ cy.get('input:first').blur({ force: true })
 
 #### Show a validation message when a field loses focus
 
-```html title="index.html"
-<input id="email" type="email" />
-<p id="email-error" hidden>Enter a valid email address</p>
-<script>
-  const email = document.getElementById('email')
-  email.addEventListener('blur', () => {
-    document.getElementById('email-error').hidden = email.checkValidity()
-  })
-</script>
-```
-
-```javascript title="spec.cy.js"
+```javascript
 cy.get('#email').type('not-an-email')
 cy.get('#email').blur()
 cy.get('#email-error').should('be.visible')
