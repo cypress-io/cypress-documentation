@@ -8,16 +8,9 @@
  * its name appears anywhere in the base file.
  */
 
-/** Flatten the categorized list into `{ category, plugin }` pairs. */
-export function flattenPlugins(data) {
-  const out = []
-  for (const category of (data && data.plugins) || []) {
-    for (const plugin of category.plugins || []) {
-      out.push({ category: category.name, plugin })
-    }
-  }
-  return out
-}
+/** Every plugin entry in the file, across categories. */
+export const flattenPlugins = (data) =>
+  (data?.plugins || []).flatMap((category) => category.plugins || [])
 
 /** Normalize a link so `https://github.com/a/b/` and `http://www.github.com/a/b.git`
  *  compare equal. */
@@ -26,28 +19,23 @@ export function normalizeLink(link) {
   return link
     .trim()
     .toLowerCase()
-    .replace(/^https?:\/\//, '')
-    .replace(/^www\./, '')
+    .replace(/^https?:\/\/(www\.)?/, '')
     .replace(/[#?].*$/, '')
     .replace(/\/+$/, '')
     .replace(/\.git$/, '')
 }
 
-function normalizeName(name) {
-  return typeof name === 'string' ? name.trim().toLowerCase() : ''
-}
-
-/** Return the head entries that don't exist in base, in head order. */
+/** The head entries that don't exist in base, in head order. */
 export function findNewPlugins(base, head) {
-  const baseEntries = flattenPlugins(base)
-  const links = new Set(baseEntries.map((e) => normalizeLink(e.plugin.link)))
-  const names = new Set(baseEntries.map((e) => normalizeName(e.plugin.name)))
-  links.delete('')
-  names.delete('')
-
-  return flattenPlugins(head).filter(({ plugin }) => {
-    const link = normalizeLink(plugin.link)
-    const name = normalizeName(plugin.name)
-    return !(link && links.has(link)) && !(name && names.has(name))
-  })
+  const known = new Set(
+    flattenPlugins(base).flatMap((p) => [
+      normalizeLink(p.link),
+      String(p.name).toLowerCase(),
+    ])
+  )
+  return flattenPlugins(head).filter(
+    (p) =>
+      !known.has(normalizeLink(p.link)) &&
+      !known.has(String(p.name).toLowerCase())
+  )
 }

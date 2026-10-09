@@ -1,11 +1,8 @@
 // @ts-check
 /**
- * Render the review as the pull request comment.
- *
- * Built to scan: each plugin gets a heading with its verdict, one table of what
- * needs attention, and the requirements it meets folded into a <details> block.
- * Status is a plain word, not an emoji, so it reads the same in email
- * notifications and screen readers.
+ * Render the review as the pull request comment: per plugin, a heading with
+ * its verdict and one table, worst results first. Status is a plain word, not
+ * an emoji, so it reads the same in email notifications and screen readers.
  */
 
 import { STATUS, code } from './checks.mjs'
@@ -15,14 +12,14 @@ export const MARKER = '<!-- plugin-review -->'
 const REQUIREMENTS_URL =
   'https://github.com/cypress-io/cypress-documentation/blob/main/CONTRIBUTING.md#adding-plugins'
 
+/** Result labels in table order, worst first. */
 const LABEL = {
   [STATUS.notMet]: '**Not met**',
   [STATUS.unclear]: 'Unclear',
   [STATUS.notChecked]: 'Not checked',
+  [STATUS.met]: 'Met',
 }
-
-/** @type {string[]} */
-const ORDER = [STATUS.notMet, STATUS.unclear, STATUS.notChecked]
+const ORDER = Object.keys(LABEL)
 
 /**
  * Make text from a plugin entry or the model safe for a table cell: one line,
@@ -45,19 +42,18 @@ export function cell(text, max = 240) {
         : part
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
-            .replace(/@(?=\w)/g, '@​')
+            .replace(/@(?=\w)/g, '@\u200b')
     )
     .join('')
     .replace(/\|/g, '\\|')
 }
 
 /**
- * @param {Array<{ plugin: Record<string, any>, category: string, rows: Array<{ label: string, status: string, detail: string }>, docsSource?: string }>} results
- * @param {{ footer?: string }} [options]
+ * @param {Array<{ plugin: Record<string, any>, rows: Array<{ label: string, status: string, detail: string }> }>} results
+ * @param {string} [footer]
  */
-export function renderComment(results, options = {}) {
+export function renderComment(results, footer = '') {
   const out = [MARKER, '## Plugin review', '']
-
   if (!results.length) {
     out.push(
       `No new plugins found in ${code('src/data/plugins.json')}. Edits to existing entries aren’t reviewed.`
@@ -68,72 +64,41 @@ export function renderComment(results, options = {}) {
     out.push(
       `Checked ${count} against the [plugin requirements](${REQUIREMENTS_URL}). Advisory only: a maintainer makes the final call.`
     )
-    for (const result of results) out.push('', ...renderPlugin(result))
   }
 
-  if (options.footer) out.push('', '---', options.footer)
-  return out.join('\n') + '\n'
-}
-
-/** @param {{ plugin: Record<string, any>, category: string, rows: Array<{ label: string, status: string, detail: string }>, docsSource?: string }} result */
-function renderPlugin({ plugin, category, rows, docsSource }) {
-  // The name sits inside a code span, where HTML and @mentions are inert, so
-  // it only needs to stay on one line and keep its backticks out.
-  const name = String(plugin.name || 'Unnamed plugin')
-    .replace(/[`\s]+/g, ' ')
-    .trim()
-    .slice(0, 80)
-  const open = rows
-    .filter((r) => r.status !== STATUS.met)
-    .sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status))
-  const met = rows.filter((r) => r.status === STATUS.met)
-
-  const out = [`### \`${name}\`: ${verdict(rows)}`, '']
-
-  const meta = [`Category: ${cell(category, 60)}`]
-  if (typeof plugin.link === 'string' && /^https:\/\//.test(plugin.link)) {
-    meta.push(
-      `[Source](${plugin.link.replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\s/g, '%20')})`
+  for (const { plugin, rows } of results) {
+    // The name sits inside a code span, where HTML and @mentions are inert, so
+    // it only needs to stay on one line and keep its backticks out.
+    const name = String(plugin.name || 'Unnamed plugin')
+      .replace(/[`\s]+/g, ' ')
+      .trim()
+      .slice(0, 80)
+    const sorted = [...rows].sort(
+      (a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status)
     )
-  }
-  if (docsSource) meta.push(`Docs reviewed from the ${cell(docsSource, 80)}`)
-  out.push(meta.join(' · '), '')
-
-  if (open.length) {
-    out.push('| Requirement | Result | Details |', '| --- | --- | --- |')
-    for (const r of open) {
-      out.push(`| ${r.label} | ${LABEL[r.status]} | ${cell(r.detail)} |`)
-    }
-    out.push('')
-  }
-
-  if (met.length) {
-    const summary = `${met.length} ${met.length === 1 ? 'requirement' : 'requirements'} met`
     out.push(
-      `<details><summary>${summary}</summary>`,
       '',
-      '| Requirement | Details |',
-      '| --- | --- |',
-      ...met.map((r) => `| ${r.label} | ${cell(r.detail) || '—'} |`),
+      `### \`${name}\`: ${verdict(rows)}`,
       '',
-      '</details>'
+      '| Requirement | Result | Details |',
+      '| --- | --- | --- |',
+      ...sorted.map(
+        (r) => `| ${r.label} | ${LABEL[r.status]} | ${cell(r.detail)} |`
+      )
     )
   }
 
-  return out
+  if (footer) out.push('', '---', footer)
+  return out.join('\n') + '\n'
 }
 
 /** One-line verdict for the plugin heading, worst news first. */
 export function verdict(rows) {
-  const count = (status) => rows.filter((r) => r.status === status).length
-  const notMet = count(STATUS.notMet)
-  const unclear = count(STATUS.unclear)
-  const notChecked = count(STATUS.notChecked)
-
-  if (!notMet && !unclear && !notChecked) return 'meets every requirement'
-  const parts = []
-  if (notMet) parts.push(`${notMet} not met`)
-  if (unclear) parts.push(`${unclear} unclear`)
-  if (notChecked) parts.push(`${notChecked} not checked`)
-  return parts.join(', ')
+  const parts = ORDER.slice(0, 3)
+    .map((status) => [rows.filter((r) => r.status === status).length, status])
+    .filter(([n]) => n)
+    .map(
+      ([n, status]) => `${n} ${LABEL[status].replace(/\*/g, '').toLowerCase()}`
+    )
+  return parts.length ? parts.join(', ') : 'meets every requirement'
 }

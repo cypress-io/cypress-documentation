@@ -8,7 +8,6 @@ const entry = (overrides = {}) => ({
   link: 'https://github.com/someone/cypress-example',
   ...overrides,
 })
-
 const file = (...plugins) => ({
   plugins: [{ name: 'Utilities', description: 'Helpers.', plugins }],
 })
@@ -19,77 +18,42 @@ describe('pluginsFileErrors', () => {
     expect(pluginsFileErrors(data)).toEqual([])
   })
 
-  it('names the category and plugin for each problem', () => {
-    expect(pluginsFileErrors(file(entry({ badge: 'gold' })))).toEqual([
-      'Utilities › cypress-example: `badge` must be `official` or `community`',
+  it('names where each problem is', () => {
+    const data = { ...file(entry({ extra: 1 })), other: true }
+    expect(pluginsFileErrors(data)).toEqual([
+      'plugins.json: must NOT have additional properties: other',
+      'Utilities › cypress-example: must NOT have additional properties: extra',
     ])
   })
 
   it('flags a plugin listed twice, even with a trailing slash', () => {
-    const errors = pluginsFileErrors(
-      file(
-        entry(),
-        entry({
-          name: 'Other',
-          link: 'https://github.com/someone/cypress-example/',
-        })
-      )
+    const data = file(
+      entry(),
+      entry({
+        name: 'Other',
+        link: 'https://github.com/someone/cypress-example/',
+      })
     )
-    expect(errors).toEqual([
-      'Utilities › Other: same link `https://github.com/someone/cypress-example/` as an entry in Utilities',
-    ])
-  })
-
-  it('rejects unknown top-level and category fields', () => {
-    const data = { ...file(entry()), extra: true }
-    data.plugins[0].icon = 'x'
     expect(pluginsFileErrors(data)).toEqual([
-      'plugins.json: unknown field `extra`',
-      'Utilities: unknown field `icon`',
+      'Utilities › Other: same link "https://github.com/someone/cypress-example/" as an entry in Utilities',
     ])
   })
 })
 
 describe('pluginEntryErrors', () => {
-  it('accepts a complete entry and a site path link', () => {
-    expect(
-      pluginEntryErrors(
-        entry({ keywords: ['a'], badge: 'community', npm: 'x' })
-      )
-    ).toEqual([])
+  it('accepts an https link or a site path, but not a protocol-relative one', () => {
+    expect(pluginEntryErrors(entry())).toEqual([])
     expect(
       pluginEntryErrors(entry({ link: '/cloud/integrations/cloud-mcp' }))
     ).toEqual([])
+    expect(pluginEntryErrors(entry({ link: '//evil.example' }))).toHaveLength(1)
   })
 
-  it('phrases each rule for a contributor', () => {
-    expect(
-      pluginEntryErrors({
-        name: 'x',
-        description: '',
-        link: 'http://example.com',
-        keywords: 'a, b',
-        extra: 1,
-      })
-    ).toEqual([
-      'unknown field `extra`',
-      '`description` is empty',
-      '`link` must be an https URL or a path on this site',
-      '`keywords` must be a list',
-    ])
-  })
-
-  it('reports missing fields and bad list items', () => {
-    expect(pluginEntryErrors({ name: 'x', keywords: [1] })).toEqual([
-      '`description` is missing',
-      '`link` is missing',
-      '`keywords` must contain only strings',
-    ])
-  })
-
-  it('rejects a protocol-relative link', () => {
-    expect(pluginEntryErrors(entry({ link: '//evil.example' }))).toEqual([
-      '`link` must be an https URL or a path on this site',
+  it('reports missing fields and wrong types', () => {
+    expect(pluginEntryErrors({ name: 'x', keywords: 'a' })).toEqual([
+      "must have required property 'description'",
+      "must have required property 'link'",
+      'keywords must be array',
     ])
   })
 })

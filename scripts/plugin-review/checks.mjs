@@ -15,6 +15,7 @@
 import semver from 'semver'
 import { cypressCompat } from '../plugin-signals.mjs'
 import { pluginEntryErrors } from '../plugins-schema.mjs'
+import { CRITERIA } from './claude-review.mjs'
 import { normalizeLink } from './diff.mjs'
 
 export const STATUS = /** @type {const} */ ({
@@ -31,28 +32,22 @@ const row = (label, status, detail = '') => ({ label, status, detail })
 export const code = (value) => '`' + String(value).replace(/`/g, '') + '`'
 
 /**
- * Check the entry itself: the fields CONTRIBUTING.md documents, the badge, and
- * that it doesn't duplicate an entry already on the list.
+ * Check the entry itself: the schema, the badge, and that it doesn't duplicate
+ * an entry already on the list.
  * @param {Record<string, any>} plugin
- * @param {Array<{ plugin: Record<string, any> }>} existing entries already in the base file
+ * @param {Array<Record<string, any>>} existing entries already in the base file
  */
 export function checkEntry(plugin, existing) {
-  const rows = []
   const problems = pluginEntryErrors(plugin)
-  rows.push(
+  const rows = [
     problems.length
-      ? row('Entry fields', STATUS.notMet, capitalize(problems.join('; ')))
-      : row(
-          'Entry fields',
-          STATUS.met,
-          'Name, description, and link are present'
-        )
-  )
+      ? row('Entry fields', STATUS.notMet, problems.join('; '))
+      : row('Entry fields', STATUS.met, 'Matches the plugins.json schema'),
+  ]
 
   if (plugin.badge === 'official') {
-    const cypressOwned = isCypressOwned(plugin.link)
     rows.push(
-      cypressOwned
+      isCypressOwned(plugin.link)
         ? row(
             'Badge',
             STATUS.met,
@@ -69,22 +64,20 @@ export function checkEntry(plugin, existing) {
   const link = normalizeLink(plugin.link)
   const name = (plugin.name || '').toLowerCase()
   const npm = (plugin.npm || '').toLowerCase()
-  const dupe = existing.find(({ plugin: other }) => {
+  const dupe = existing.find((other) => {
     if (link && normalizeLink(other.link) === link) return true
     if (name && (other.name || '').toLowerCase() === name) return true
-    const otherNpm = (other.npm || other.name || '').toLowerCase()
-    return Boolean(npm && otherNpm === npm)
+    return Boolean(npm && (other.npm || other.name || '').toLowerCase() === npm)
   })
   rows.push(
     dupe
       ? row(
           'Not already listed',
           STATUS.notMet,
-          `Matches the existing entry ${code(dupe.plugin.name)}`
+          `Matches the existing entry ${code(dupe.name)}`
         )
       : row('Not already listed', STATUS.met)
   )
-
   return rows
 }
 
@@ -100,120 +93,93 @@ function isCypressOwned(link) {
 
 /**
  * Check the npm package: published, package.json metadata, Cypress support.
- * @param {{ pkg: string | null, manifest: any, notFound: boolean, failed?: boolean }} npm result of `resolveNpm`
+ * @param {{ pkg: string | null, manifest: any, notFound: boolean }} npm result of `resolveNpm`
  * @param {number | null} cypressMajor latest major version of Cypress, or null if unknown
  */
 export function checkNpm(npm, cypressMajor) {
-  const compatLabel = cypressMajor
+  const compat = cypressMajor
     ? `Supports Cypress ${cypressMajor}`
     : 'Supports the latest Cypress'
-
   if (!npm.manifest) {
-    let published
-    if (npm.failed) {
-      published = row(
-        'Published to npm',
-        STATUS.notChecked,
-        'The npm registry couldn’t be reached'
-      )
-    } else if (npm.pkg && npm.notFound) {
-      published = row(
-        'Published to npm',
-        STATUS.notMet,
-        `${code(npm.pkg)} isn’t on the npm registry`
-      )
-    } else {
-      published = row(
-        'Published to npm',
-        STATUS.unclear,
-        `No npm package found under this name. If it’s published, add an ${code('npm')} field`
-      )
-    }
-    const skipped = 'Needs an npm package to check'
     return [
-      published,
-      row('package.json metadata', STATUS.notChecked, skipped),
-      row(compatLabel, STATUS.notChecked, skipped),
+      npm.pkg && npm.notFound
+        ? row(
+            'Published to npm',
+            STATUS.notMet,
+            `${code(npm.pkg)} isn’t on the npm registry`
+          )
+        : row(
+            'Published to npm',
+            STATUS.unclear,
+            `No npm package found. If it’s published, add an ${code('npm')} field`
+          ),
+      row('package.json metadata', STATUS.notChecked, 'Needs an npm package'),
+      row(compat, STATUS.notChecked, 'Needs an npm package'),
     ]
   }
 
-  const manifest = npm.manifest
-  const latest = manifest['dist-tags'] && manifest['dist-tags'].latest
-  const vm = latest && manifest.versions ? manifest.versions[latest] : undefined
-  const rows = []
+  const { name } = npm.manifest
+  const latest = npm.manifest['dist-tags']?.latest
+  const vm = npm.manifest.versions?.[latest]
+  const missing = ['homepage', 'repository', 'bugs'].filter((f) => {
+    const v = vm?.[f]
+    return !(typeof v === 'string' ? v.trim() : v?.url || v?.email)
+  })
 
-  if (!vm || /-security$/.test(latest)) {
-    rows.push(
-      row(
-        'Published to npm',
-        STATUS.notMet,
-        `${code(manifest.name)} has no installable release`
-      )
-    )
-  } else if (typeof vm.deprecated === 'string') {
-    rows.push(
-      row(
-        'Published to npm',
-        STATUS.notMet,
-        `${code(`${manifest.name}@${latest}`)} is deprecated on npm`
-      )
-    )
-  } else {
-    rows.push(
-      row('Published to npm', STATUS.met, code(`${manifest.name}@${latest}`))
-    )
-  }
-
-  const fields = ['homepage', 'repository', 'bugs']
-  const missing = fields.filter((f) => !hasValue(vm && vm[f]))
-  rows.push(
+  return [
+    !vm || /-security$/.test(latest)
+      ? row(
+          'Published to npm',
+          STATUS.notMet,
+          `${code(name)} has no installable release`
+        )
+      : typeof vm.deprecated === 'string'
+        ? row(
+            'Published to npm',
+            STATUS.notMet,
+            `${code(`${name}@${latest}`)} is deprecated on npm`
+          )
+        : row('Published to npm', STATUS.met, code(`${name}@${latest}`)),
     missing.length
       ? row(
           'package.json metadata',
           STATUS.notMet,
-          `Missing ${listOf(missing.map(code))}`
+          `Missing ${missing.map(code).join(', ')}`
         )
       : row(
           'package.json metadata',
           STATUS.met,
-          `${listOf(fields.map(code))} are set`
-        )
-  )
-
-  rows.push(checkCompat(vm, cypressMajor, compatLabel))
-  return rows
+          '`homepage`, `repository`, and `bugs` are set'
+        ),
+    checkCompat(vm, cypressMajor, compat),
+  ]
 }
 
 function checkCompat(vm, cypressMajor, label) {
   // Only a peer range is a compatibility claim. A dev or runtime dependency is
   // the version the plugin is built against, which is weaker evidence, so it
   // can raise a flag for a maintainer but never fail the check on its own.
-  const rawPeer = vm && vm.peerDependencies && vm.peerDependencies.cypress
-  if (typeof rawPeer === 'string' && rawPeer.trim() === '*') {
+  if (vm?.peerDependencies?.cypress?.trim?.() === '*') {
     return row(label, STATUS.met, `Peer range ${code('*')} accepts any version`)
   }
   // cypressCompat skips monorepo placeholders such as `0.0.0-development`.
-  const peer = cypressCompat({ peerDependencies: vm && vm.peerDependencies })
+  const peer = cypressCompat({ peerDependencies: vm?.peerDependencies })
   const range = peer || cypressCompat(vm)
-
-  if (!range) {
+  if (!range)
     return row(
       label,
       STATUS.unclear,
       `No ${code('cypress')} peer dependency declared`
     )
-  }
-  const source = peer ? 'peer range' : 'dev dependency'
-  if (!cypressMajor) {
+  if (!cypressMajor)
     return row(
       label,
       STATUS.notChecked,
-      `Couldn’t look up the latest Cypress version (${source} ${code(range)})`
+      'Couldn’t look up the latest Cypress version'
     )
-  }
-  if (!semver.validRange(range)) {
-    return row(label, STATUS.unclear, `Can’t read the ${source} ${code(range)}`)
-  }
+  if (!semver.validRange(range))
+    return row(label, STATUS.unclear, `Can’t read the range ${code(range)}`)
+
   const supports = semver.intersects(range, `^${cypressMajor}.0.0`)
   if (peer) {
     return supports
@@ -224,217 +190,53 @@ function checkCompat(vm, cypressMajor, label) {
           `Peer range ${code(range)} excludes Cypress ${cypressMajor}`
         )
   }
-  return supports
-    ? row(
-        label,
-        STATUS.met,
-        `Built against ${code(range)}; no peer dependency declared`
-      )
-    : row(
-        label,
-        STATUS.unclear,
-        `No peer dependency; built against ${code(range)}, not Cypress ${cypressMajor}`
-      )
-}
-
-const TEST_PATTERNS = [
-  /(^|\/)cypress\.config\.[cm]?[jt]s$/,
-  /(^|\/)cypress\.json$/,
-  /\.cy\.[cm]?[jt]sx?$/,
-  /(^|\/)cypress\/(e2e|integration|component)\/.+\.[cm]?[jt]sx?$/,
-]
-
-/** @type {Array<[RegExp, string]>} */
-const CI_PATTERNS = [
-  [/^\.github\/workflows\/[^/]+\.ya?ml$/, 'GitHub Actions'],
-  [/^\.circleci\/config\.ya?ml$/, 'CircleCI'],
-  [/^\.gitlab-ci\.ya?ml$/, 'GitLab CI'],
-  [/^azure-pipelines\.ya?ml$/, 'Azure Pipelines'],
-  [/^bitbucket-pipelines\.ya?ml$/, 'Bitbucket Pipelines'],
-  [/^\.travis\.ya?ml$/, 'Travis CI'],
-  [/^Jenkinsfile$/, 'Jenkins'],
-]
-
-/**
- * Check the source repository: reachable and not archived, Cypress tests, CI.
- * `repo` is what `loadRepo` returns: `host` ('github' or 'other'); for GitHub,
- * `info` (the repo object, or null with `infoStatus` set), `path` (a monorepo
- * subpath, '' for the root), `tree` (`{ paths, truncated }` or null),
- * `workflows` (workflow path -> contents), `runs` (recent completed Actions
- * runs on the default branch, newest first), and `branch`.
- * @param {Record<string, any>} repo
- */
-export function checkRepo(repo) {
-  if (repo.host !== 'github') {
-    const why = 'Only GitHub repositories are inspected automatically'
-    return [
-      row('Source repository', STATUS.notChecked, why),
-      row('Cypress tests', STATUS.notChecked, why),
-      row('CI pipeline', STATUS.notChecked, why),
-    ]
-  }
-
-  if (!repo.info) {
-    const why =
-      repo.infoStatus === 404
-        ? 'Repository not found, or it’s private'
-        : 'GitHub couldn’t be reached'
-    const status = repo.infoStatus === 404 ? STATUS.notMet : STATUS.notChecked
-    return [
-      row('Source repository', status, why),
-      row('Cypress tests', STATUS.notChecked, 'Needs a readable repository'),
-      row('CI pipeline', STATUS.notChecked, 'Needs a readable repository'),
-    ]
-  }
-
-  const rows = [
-    repo.info.archived
-      ? row('Source repository', STATUS.notMet, 'Repository is archived')
-      : row('Source repository', STATUS.met, 'Public and not archived'),
-  ]
-
-  if (!repo.tree) {
-    rows.push(
-      row(
-        'Cypress tests',
-        STATUS.notChecked,
-        'Couldn’t list the repository files'
-      )
-    )
-    rows.push(
-      row(
-        'CI pipeline',
-        STATUS.notChecked,
-        'Couldn’t list the repository files'
-      )
-    )
-    return rows
-  }
-
-  rows.push(checkTests(repo.tree, repo.path || ''))
-  rows.push(
-    checkCi(repo.tree, repo.workflows || {}, repo.runs || [], repo.branch || '')
-  )
-  return rows
-}
-
-function checkTests(tree, path) {
-  const prefix = path ? `${path.replace(/\/+$/, '')}/` : ''
-  const inScope = tree.paths.filter((p) => p.startsWith(prefix))
-  const configs = inScope.filter(
-    (p) => TEST_PATTERNS[0].test(p) || TEST_PATTERNS[1].test(p)
-  )
-  const specs = inScope.filter(
-    (p) => TEST_PATTERNS[2].test(p) || TEST_PATTERNS[3].test(p)
-  )
-  const where = prefix ? ` under ${code(prefix)}` : ''
-
-  if (!configs.length && !specs.length) {
-    return row(
-      'Cypress tests',
-      tree.truncated ? STATUS.unclear : STATUS.notMet,
-      tree.truncated
-        ? `None found${where}, but the repository is too large to list in full`
-        : `No ${code('cypress.config.*')} or ${code('*.cy.*')} files${where}`
-    )
-  }
-  const parts = []
-  if (configs.length) parts.push(code(configs[0].split('/').pop()))
-  if (specs.length)
-    parts.push(`${specs.length} spec ${specs.length === 1 ? 'file' : 'files'}`)
   return row(
-    'Cypress tests',
-    STATUS.met,
-    `Found ${parts.join(' and ')}${where}`
+    label,
+    supports ? STATUS.met : STATUS.unclear,
+    `No peer dependency; built against ${code(range)}`
   )
 }
-
-// How a workflow runs Cypress: the official action, the CLI, or a package
-// script named for it. A bare mention (a repo called cypress-io/…) isn't one.
-const RUNS_CYPRESS =
-  /cypress-io\/github-action|\bcypress\s+run\b|\bcy(?:press)?:run\b|\bcypress-run\b/i
-
-function checkCi(tree, workflows, runs, branch) {
-  const systems = new Set()
-  for (const p of tree.paths) {
-    for (const [pattern, system] of CI_PATTERNS) {
-      if (pattern.test(p)) systems.add(system)
-    }
-  }
-  if (!systems.size) {
-    return row('CI pipeline', STATUS.notMet, 'No CI configuration found')
-  }
-
-  const cypressWorkflows = Object.keys(workflows).filter((p) =>
-    RUNS_CYPRESS.test(workflows[p])
-  )
-  const parts = [[...systems].join(', ')]
-
-  if (Object.keys(workflows).length && !cypressWorkflows.length) {
-    parts.push('no workflow runs Cypress directly')
-    return row('CI pipeline', STATUS.unclear, parts.join('; '))
-  }
-  if (cypressWorkflows.length) {
-    const names = cypressWorkflows.map((p) => code(p.split('/').pop()))
-    parts.push(
-      `${listOf(names)} ${names.length === 1 ? 'runs' : 'run'} Cypress`
-    )
-  }
-
-  // Judge the latest finished run of a workflow that runs Cypress, not
-  // whichever unrelated job happened to finish last.
-  const run = runs.find((r) => cypressWorkflows.includes(r.path))
-  if (run) {
-    const which = `latest ${code(run.path.split('/').pop())} run on ${code(branch)}`
-    if (run.conclusion === 'failure') {
-      parts.push(`${which} failed`)
-      return row('CI pipeline', STATUS.unclear, parts.join('; '))
-    }
-    if (run.conclusion === 'success') parts.push(`${which} passed`)
-  }
-  return row('CI pipeline', STATUS.met, parts.join('; '))
-}
-
-export const DOCS_CRITERIA = /** @type {const} */ ([
-  ['purpose', 'Purpose stated up front'],
-  ['installation', 'Installation guide'],
-  ['api', 'Options and API documented'],
-  ['usability', 'Usable without reading the source'],
-])
 
 /**
- * Turn the docs review into rows. `review` is the parsed model output, or an
+ * Check that the source repository exists and isn't archived.
+ * @param {Record<string, any>} repo what `loadRepo` returns
+ */
+export function checkSource(repo) {
+  const label = 'Source repository'
+  if (repo.host !== 'github') {
+    return row(
+      label,
+      STATUS.notChecked,
+      'Only GitHub repositories are inspected automatically'
+    )
+  }
+  if (!repo.info) {
+    return repo.infoStatus === 404
+      ? row(label, STATUS.notMet, 'Repository not found, or it’s private')
+      : row(label, STATUS.notChecked, 'GitHub couldn’t be reached')
+  }
+  return repo.info.archived
+    ? row(label, STATUS.notMet, 'Repository is archived')
+    : row(label, STATUS.met, 'Public and not archived')
+}
+
+/**
+ * Turn Claude's review into rows. `review` is the parsed model output, or an
  * object with `skipped` set to the reason it didn't run.
  * @param {{ skipped?: string, criteria?: Record<string, { status: string, detail: string }> }} review
  */
-export function checkDocs(review) {
-  return DOCS_CRITERIA.map(([key, label]) => {
-    if (review.skipped || !review.criteria || !review.criteria[key]) {
+export function checkClaude(review) {
+  return CRITERIA.map(([key, label]) => {
+    const result = review.criteria?.[key]
+    if (!result)
       return row(
         label,
         STATUS.notChecked,
         review.skipped || 'No assessment returned'
       )
-    }
-    const { status, detail } = review.criteria[key]
-    const known = Object.values(STATUS).includes(/** @type {any} */ (status))
-    return row(label, known ? status : STATUS.unclear, detail)
+    const known = Object.values(STATUS).includes(
+      /** @type {any} */ (result.status)
+    )
+    return row(label, known ? result.status : STATUS.unclear, result.detail)
   })
-}
-
-function hasValue(v) {
-  if (!v) return false
-  if (typeof v === 'string') return v.trim() !== ''
-  if (typeof v === 'object') return Boolean(v.url || v.email)
-  return false
-}
-
-function listOf(items) {
-  if (items.length <= 1) return items.join('')
-  if (items.length === 2) return `${items[0]} and ${items[1]}`
-  return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`
-}
-
-function capitalize(s) {
-  return s ? s[0].toUpperCase() + s.slice(1) : s
 }

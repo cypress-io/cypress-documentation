@@ -9,12 +9,9 @@
  */
 
 import { readFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { pluginsFileErrors } from './plugins-schema.mjs'
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const FILE = resolve(ROOT, 'src/data/plugins.json')
+const FILE = new URL('../src/data/plugins.json', import.meta.url)
 
 let data
 try {
@@ -27,7 +24,7 @@ try {
 const errors = pluginsFileErrors(data)
 if (errors.length) {
   console.error(`src/data/plugins.json has ${errors.length} problem(s):`)
-  for (const error of errors) console.error(`  - ${error.replace(/`/g, '')}`)
+  for (const error of errors) console.error(`  - ${error}`)
   console.error(
     'See CONTRIBUTING.md, "Adding Plugins", for the fields an entry takes.'
   )

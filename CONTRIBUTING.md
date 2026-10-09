@@ -156,18 +156,18 @@ Each plugin submitted to the plugins list should have the following:
 When a maintainer picks up your pull request, they can run an automated review
 by adding the `plugin-review` label. It checks each new entry against the
 requirements above, using the npm registry, your repository on GitHub, and an
-AI read of your README, then posts one comment on the pull request listing what
-needs attention. The comment is updated in place each time the review runs. It
-is advisory: a maintainer makes the final call. To run the same checks
-yourself, compare your branch's `plugins.json` with the one on `main`:
+AI read of your README and file list, then posts one comment on the pull request
+listing what needs attention. The comment is updated in place each time the
+review runs. It is advisory: a maintainer makes the final call. To run the same
+checks yourself, compare your branch's `plugins.json` with the one on `main`:
 
 ```shell
 git show main:src/data/plugins.json > /tmp/base-plugins.json
 npm run review:plugins -- --base /tmp/base-plugins.json --head src/data/plugins.json --out /tmp/review.md
 ```
 
-The README criteria need an `ANTHROPIC_API_KEY` in your environment; without
-one they are reported as not checked.
+The README, test, and CI criteria need an `ANTHROPIC_API_KEY` in your
+environment; without one they are reported as not checked.
 
 Categories are displayed alphabetically, and plugins are sorted within each
 category by badge tier and then by most recently published first (so the entry
