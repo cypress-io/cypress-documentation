@@ -80,7 +80,7 @@ application sets asynchronously.
 
 ## Examples
 
-### Session id
+### Session cookies
 
 #### Get `session_id` cookie after logging in
 
@@ -92,11 +92,7 @@ cy.contains('Login').click()
 cy.url().should('include', 'profile')
 // retries until cookie with value=189jd09su
 // is found or default command timeout ends
-cy.getCookie('session_id')
-  .should('have.property', 'value', '189jd09su')
-  .then((cookie) => {
-    // cookie is an object with "domain", "name" and other properties
-  })
+cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
 ```
 
 To check that the cookie exists without comparing any of its properties, assert
@@ -137,8 +133,6 @@ a short delay.
 cy.contains('Log out').click()
 cy.getCookie('session_id').should('not.exist')
 ```
-
-#### Using `cy.getCookie()` to test logging in
 
 :::info
 
@@ -257,13 +251,26 @@ a subdomain or a sibling domain. For a request on `app.example.com`:
 If cookies with the same name match on more than one domain, use
 [`cy.getCookies()`](/api/commands/getcookies) to see all of them.
 
+### Reading HttpOnly cookies with `cy.getCookie()`
+
+`cy.getCookie()` reads cookies through the browser, so it yields cookies marked
+`HttpOnly`, such as most session cookies. Your application's JavaScript can't
+see those through `document.cookie`, so reading `document.cookie` in a test
+misses them.
+
 ### Timeout error when the cookie is never set
 
 If no cookie with the name is ever found, `cy.getCookie('session_id').should('exist')`
-fails with `Timed out retrying after 4000ms: expected null to exist`. Check the
-cookie's name and the domain it's set on (see
-[which cookies `cy.getCookie()` matches](#Which-cookies-cygetCookie-matches-by-domain)),
-or pass a longer `timeout` when the cookie arrives after a slow request.
+fails with `Timed out retrying after 4000ms: expected null to exist` (`4000ms`
+is the default `defaultCommandTimeout`). Check these causes:
+
+- The name or domain doesn't match. See
+  [which cookies `cy.getCookie()` matches](#Which-cookies-cygetCookie-matches-by-domain).
+- The cookie was set in an earlier test. With
+  [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
+  on, Cypress clears cookies before each test. Use
+  [`cy.session()`](/api/commands/session) to keep a login across tests.
+- The cookie arrives after a slow request. Pass a longer `timeout`.
 
 ## Rules
 
@@ -316,14 +323,14 @@ value, with a note that no cookie with that name was found.
 
 ## History
 
-| Version                                    | Changes                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [16.0.0](/app/references/changelog#16-0-0) | `cy.getCookie()` is now a query and retries assertions until they pass or time out. Its timeout now defaults to `defaultCommandTimeout` instead of `responseTimeout`, and overwriting it requires [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries). See the [Migration Guide](/app/references/migration-guide#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries). |
-| [15.6.0](/app/references/changelog#15-6-0) | In WebKit, prefers a cookie that matches the exact `domain`, falling back to the apex domain.                                                                                                                                                                                                                                                                                                                                   |
-| [12.0.0](/app/references/changelog#12-0-0) | The `domain` option defaults to the hostname instead of the superdomain.                                                                                                                                                                                                                                                                                                                                                        |
-| [11.0.0](/app/references/changelog#11-0-0) | Added `domain` option.                                                                                                                                                                                                                                                                                                                                                                                                          |
-| [5.0.0](/app/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                                                                                                                                                                                                                                                                                                         |
-| [4.3.0](/app/references/changelog#4-3-0)   | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`.                                                                                                                                                                                                                                                                                                                              |
+| Version                                    | Changes                                                                                                                                                                                                    |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | Now a query that retries assertions, with `defaultCommandTimeout` as its timeout. See the [Migration Guide](/app/references/migration-guide#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries). |
+| [15.6.0](/app/references/changelog#15-6-0) | In WebKit, prefers a cookie that matches the exact `domain`, falling back to the apex domain.                                                                                                              |
+| [12.0.0](/app/references/changelog#12-0-0) | The `domain` option defaults to the hostname instead of the superdomain.                                                                                                                                   |
+| [11.0.0](/app/references/changelog#11-0-0) | Added `domain` option.                                                                                                                                                                                     |
+| [5.0.0](/app/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                                                                                    |
+| [4.3.0](/app/references/changelog#4-3-0)   | Added `sameSite` property when the `experimentalGetCookiesSameSite` configuration value is `true`.                                                                                                         |
 
 ## See also
 
