@@ -118,8 +118,9 @@ Pass in an options object to change the default behavior of `cy.request()`.
 | `retryOnNetworkFailure`    | `true`                                                      | Whether to retry a request that fails with a transient network error, such as `ECONNREFUSED`, `ECONNRESET`, or `ENOTFOUND`. Cypress retries up to 4 times when this is `true`.                                                                                      |
 | `timeout`                  | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](#Timeouts). See [Give a slow endpoint more time](#Give-a-slow-endpoint-more-time-with-timeout).                                                                                                      |
 
-You can also set options for `cy.request()`'s `baseUrl` and `responseTimeout`
-globally in the [Cypress configuration](/app/references/configuration).
+Set `baseUrl`, which relative URLs resolve against, and `responseTimeout`, the
+default for `timeout`, globally in the
+[Cypress configuration](/app/references/configuration).
 
 <HeaderYields />
 
@@ -145,7 +146,7 @@ It also includes `statusText`, `isOkStatusCode`, `requestHeaders`, and
 
 #### Make a `GET` request
 
-Call an endpoint before your tests run, such as one that seeds a database.
+Call an endpoint before each test, such as one that seeds a database.
 
 ```javascript
 beforeEach(() => {
@@ -155,9 +156,9 @@ beforeEach(() => {
 
 #### Check a page's HTML without visiting it
 
-Requesting a page returns its HTML without loading the page and all of its
-resources, the way [`cy.visit()`](/api/commands/visit) does. That makes it a
-quick way to check what the server renders.
+Unlike [`cy.visit()`](/api/commands/visit), which loads the page and all of its
+resources, requesting a page returns only its HTML. That makes it a quick way to
+check what the server renders.
 
 ```javascript
 cy.request('/admin').its('body').should('include', '<h1>Admin</h1>')
@@ -254,8 +255,9 @@ code yourself, as the
 
 :::
 
-Here the bearer token example fails with a `401`. The token came from
-`cy.env()`, and the error still prints it under `The request we sent was`:
+For example, if the server rejects the token in the bearer example with a
+`401`, the error prints it under `The request we sent was`, even though it came
+from `cy.env()`:
 
 <DocsImage
   src="/img/api/request/command-log-request-failure-prints-token.png"
@@ -615,8 +617,7 @@ Because the request doesn't go through the browser:
   the browser's own user agent, see
   [how to override the browser's default user agent](/app/faq#Can-I-override-or-change-the-default-user-agent-the-browser-uses).
 
-For example, docs.cypress.io sends no CORS headers, and the request still
-succeeds:
+For example:
 
 ```javascript
 // docs.cypress.io sends no CORS headers, and cy.request() still succeeds
