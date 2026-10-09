@@ -9,11 +9,11 @@ slug: /api/commands/request
 
 # request
 
-Send an HTTP request from your test. `cy.request()` seeds data before a test,
-logs in without going through the login page, and tests API endpoints directly.
-The Cypress server sends the request from Node.js rather than the browser, so
-CORS doesn't apply, and it shares cookies with the browser. See
-[How `cy.request()` sends a request](#How-cyrequest-sends-a-request).
+Send an HTTP request from your test. You can use `cy.request()` to seed data
+before a test, log in without going through the login page, or test API
+endpoints directly. The Cypress server sends the request from Node.js rather
+than the browser, so CORS doesn't apply, and it shares cookies with the browser.
+See [How `cy.request()` sends a request](#How-cyrequest-sends-a-request).
 
 ## Syntax
 
@@ -39,41 +39,9 @@ cy.request('http://dev.local/seed')
 
 The URL to make the request to.
 
-If you do not provide a fully qualified domain name (FQDN) URL, Cypress resolves
-the host for `cy.request()` in this order:
-
-1. Inside a [`cy.origin()`](/api/commands/origin) callback, Cypress uses the
-   origin you passed to `cy.origin()`.
-2. If the `baseUrl` property is set in your
-   [configuration file](/app/references/configuration), Cypress prefixes the URL
-   with it. This applies whether or not you have visited a page, so `baseUrl`
-   wins over the origin of a page you visited.
-
-:::cypress-config-example
-
-```ts
-{
-  e2e: {
-    baseUrl: 'http://localhost:1234'
-  }
-}
-```
-
-:::
-
-```javascript
-cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
-```
-
-3. If no `baseUrl` is set and you have visited a page, Cypress uses the origin of
-   the URL used for the `cy.visit()`.
-
-```javascript
-cy.visit('http://localhost:8080/app')
-cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
-```
-
-4. If Cypress cannot determine the host, it throws an error.
+A relative URL resolves against the `cy.origin()` origin, your `baseUrl`, or the
+page you visited, in that order. See
+[How `cy.request()` resolves a relative URL](#How-cyrequest-resolves-a-relative-URL).
 
 <Icon name="angle-right" /> **body _(String, Object, FormData, Blob)_**
 
@@ -90,11 +58,13 @@ content-type. When `body` is a `FormData` instance, Cypress sends it as
 Make a request using a specific method. If no method is defined, Cypress uses
 the `GET` method by default.
 
-Cypress accepts the common methods `GET`, `POST`, `PUT`, `PATCH`, `DELETE`,
-`HEAD`, and `OPTIONS`, plus `QUERY`, `TRACE`, `CONNECT`, and these extension
-methods: `CHECKOUT`, `COPY`, `LOCK`, `M-SEARCH`, `MERGE`, `MKACTIVITY`, `MKCOL`,
-`MOVE`, `NOTIFY`, `PROPFIND`, `PROPPATCH`, `PURGE`, `REPORT`, `SEARCH`,
-`SUBSCRIBE`, `UNLOCK`, and `UNSUBSCRIBE`.
+Cypress accepts these methods:
+
+| Group            | Methods                                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Standard HTTP    | `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `TRACE`, `CONNECT`                                            |
+| WebDAV           | `CHECKOUT`, `COPY`, `LOCK`, `MERGE`, `MKACTIVITY`, `MKCOL`, `MOVE`, `PROPFIND`, `PROPPATCH`, `REPORT`, `SEARCH`, `UNLOCK` |
+| Other extensions | `QUERY`, `PURGE`, `M-SEARCH`, `NOTIFY`, `SUBSCRIBE`, `UNSUBSCRIBE`                                                        |
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -128,17 +98,19 @@ default for `timeout`, globally in the
 properties:
 
 - `status`: the response status code
+- `statusText`: the status message, such as `OK` or `Found`
+- `isOkStatusCode`: `true` when `status` is `2xx` or `3xx`
 - `body`: the response body, parsed as described in
   [Response body parsing](#Response-body-parsing)
 - `headers`: the response headers
 - `duration`: how long the request took, in milliseconds
+- `requestHeaders`: the headers Cypress sent with the request
+- `allRequestResponses`: each request and response in the chain, including
+  redirects
 - `redirects`: each redirect Cypress followed, as `status: url` strings (only
   present when a redirect was followed)
 - `redirectedToUrl`: the URL the response redirects to (only present with
   `followRedirect: false`)
-
-It also includes `statusText`, `isOkStatusCode`, `requestHeaders`, and
-`allRequestResponses`.
 
 ## Examples
 
@@ -210,9 +182,7 @@ attaches an `Authorization` header to the request.
 Read credentials with [`cy.env()`](/api/commands/env) rather than writing them
 into the test, so they stay out of your spec files. The examples on this page
 read `username`, `password`, and `apiToken`, which you set as described in
-[Environment Variables & Secrets](/app/guides/environment-variables). A request
-still shows its headers and body when you click it in the Command Log, so add
-`log: false` to a request that carries a secret, as the login examples do.
+[Environment Variables & Secrets](/app/guides/environment-variables).
 
 ```javascript
 cy.env(['username', 'password']).then(({ username, password }) => {
@@ -244,25 +214,6 @@ cy.env(['apiToken']).then(({ apiToken }) => {
   })
 })
 ```
-
-:::caution
-
-When a request fails on its status code, the error message prints the headers
-and body Cypress sent, credentials included, even with `log: false`. To keep a
-secret out of a failure, pass `failOnStatusCode: false` and assert on the status
-code yourself, as the
-[API login example](#Log-in-through-the-API-and-cache-it-with-cysession) does.
-
-:::
-
-For example, if the server rejects the token in the bearer example with a
-`401`, the error prints it under `The request we sent was`, even though it came
-from `cy.env()`:
-
-<DocsImage
-  src="/img/api/request/command-log-request-failure-prints-token.png"
-  alt="The request we sent was section of a cy.request() failure, listing the method, URL, and request headers, including authorization: Bearer expired-token-123"
-/>
 
 #### Log in with an HTML form using `form: true`
 
@@ -623,6 +574,44 @@ For example:
 // docs.cypress.io sends no CORS headers, and cy.request() still succeeds
 cy.request('https://docs.cypress.io').its('status').should('eq', 200)
 ```
+
+### How `cy.request()` resolves a relative URL
+
+When you pass a URL without a protocol and host, such as `/api/users`, Cypress
+resolves the host for `cy.request()` in this order:
+
+1. Inside a [`cy.origin()`](/api/commands/origin) callback, Cypress uses the
+   origin you passed to `cy.origin()`.
+2. If the `baseUrl` property is set in your
+   [configuration file](/app/references/configuration), Cypress prefixes the URL
+   with it. This applies whether or not you have visited a page, so `baseUrl`
+   wins over the origin of a page you visited.
+
+:::cypress-config-example
+
+```ts
+{
+  e2e: {
+    baseUrl: 'http://localhost:1234'
+  }
+}
+```
+
+:::
+
+```javascript
+cy.request('seed/admin') // URL is http://localhost:1234/seed/admin
+```
+
+3. If no `baseUrl` is set and you have visited a page, Cypress uses the origin of
+   the URL used for the `cy.visit()`.
+
+```javascript
+cy.visit('http://localhost:8080/app')
+cy.request('users/1.json') //  URL is  http://localhost:8080/users/1.json
+```
+
+4. If Cypress cannot determine the host, it throws an error.
 
 ### How `cy.request()` sends and stores cookies
 
