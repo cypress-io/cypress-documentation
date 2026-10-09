@@ -38,25 +38,31 @@
       "isNew": true
     },
     {
-      "label": "Cloud MCP",
-      "href": "/cloud/integrations/cloud-mcp?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-mcp",
-      "description": "Connect AI agents directly to Cypress Cloud runs.",
+      "label": "Webhooks",
+      "href": "/cloud/integrations/webhooks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=webhooks",
+      "description": "Send run events to your own HTTPS endpoints.",
       "isNew": true
     }
   ],
   "ui-coverage": [
     {
-      "label": "Cloud MCP",
-      "href": "/cloud/integrations/cloud-mcp?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-mcp",
-      "description": "Handle UI Coverage triage with AI agents.",
+      "label": "Webhooks",
+      "href": "/cloud/guides/webhooks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=webhooks",
+      "description": "Send UI Coverage report complete events to your HTTPS endpoints.",
       "isNew": true
     }
   ],
   "accessibility": [
     {
-      "label": "Cloud MCP",
-      "href": "/cloud/integrations/cloud-mcp?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-mcp",
-      "description": "Handle accessibility issues with AI agents.",
+      "label": "Download Reports",
+      "href": "/accessibility/connect-and-extend/download-reports?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=download-reports",
+      "description": "Export violations as CSV or JSON.",
+      "isNew": true
+    },
+    {
+      "label": "Webhooks",
+      "href": "/accessibility/connect-and-extend/webhooks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=webhooks",
+      "description": "Send Accessibility report complete events to your HTTPS endpoints.",
       "isNew": true
     }
   ]
