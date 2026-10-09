@@ -1,6 +1,6 @@
 ---
 title: 'cy.getByRole()'
-description: Get DOM elements by their ARIA role and accessible name in Cypress.
+description: Get DOM elements by their role and accessible name in Cypress.
 sidebar_label: getByRole
 slug: /api/commands/getbyrole
 sidebar_custom_props: { 'new_label': true }
@@ -10,12 +10,17 @@ sidebar_custom_props: { 'new_label': true }
 
 # getByRole
 
-Get every DOM element with the given
-[ARIA role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles),
-optionally narrowed to the elements whose accessible name matches. The
-accessible name is the text a screen reader announces for an element, so a test
-written with `cy.getByRole()` finds elements the way assistive technology does,
-and fails when a control loses its label.
+Get every DOM element with the given role, optionally narrowed to the elements
+whose accessible name matches. The role is what a screen reader announces an
+element as, such as a button or a link, and the accessible name is the text it
+announces for it. A test written with `cy.getByRole()` finds elements the way
+assistive technology does, and fails when a control loses its label.
+
+Most elements get their role from their tag, such as a `<button>` or a `<nav>`,
+with no ARIA involved. A `role` attribute can also set one, which is the only
+way to give an element a widget role such as `tab`. For the full list, see the
+[implicit roles of HTML elements](https://www.w3.org/TR/html-aria/#docconformance)
+and the [roles that a `role` attribute can set](https://www.w3.org/TR/wai-aria-1.2/#role_definitions).
 
 By default, `cy.getByRole()` skips elements hidden from the accessibility tree.
 For a role that HTML has an element for, it also matches only that native
@@ -57,7 +62,7 @@ cy.getByRole('heading', { level: 2 }) // Errors, narrow by level with .filter()
 
 <Icon name="angle-right" /> **role _(String)_**
 
-The ARIA role to find, such as `'button'`, `'heading'`, `'navigation'`, or
+The role to find, such as `'button'`, `'heading'`, `'navigation'`, or
 `'tab'`. An element has a role when:
 
 - Its tag implies one, such as `<button>` for `button`, `<nav>` for
@@ -371,8 +376,8 @@ cy.getByRole('dialog', { name: 'Delete user' }).within(() => {
 
 #### Narrow the results by state with `.filter()`
 
-`cy.getByRole()` matches on role and name only. To narrow the results by an ARIA
-state or property, chain [`.filter()`](/api/commands/filter), or chain
+`cy.getByRole()` matches on role and name only. To narrow the results by a state
+or property, chain [`.filter()`](/api/commands/filter), or chain
 [`.not()`](/api/commands/not) to leave matches out.
 
 ```javascript
@@ -446,7 +451,7 @@ cy.get('checkout-panel').shadow().getByRole('button', { name: 'Checkout' })
 
 #### Type the yielded element
 
-The `role` argument autocompletes the ARIA roles and accepts any other string.
+The `role` argument autocompletes role names and accepts any other string.
 Pass a type argument to type the yielded element.
 
 ```typescript

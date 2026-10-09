@@ -649,7 +649,7 @@ dedicated `data-cy` (or `data-testid`) attributes to your application, then
 select with `cy.get('[data-cy="submit"]')`. To find elements the way a screen
 reader does without editing markup, use the built-in
 [`cy.getByRole()`](/api/commands/getbyrole), such as
-`cy.getByRole('button', { name: 'Submit' })`. It matches the element's ARIA role
+`cy.getByRole('button', { name: 'Submit' })`. It matches the element's role
 and accessible name, so `cy.getByRole('link', { name: 'Sign in' })` usually
 replaces `By.linkText('Sign in')`. An `<a>` needs an `href` to have the `link`
 role, so keep `cy.contains('a', 'Sign in')` for an anchor without one.
