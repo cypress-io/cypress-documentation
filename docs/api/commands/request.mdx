@@ -130,7 +130,7 @@ Pass in an options object to change the default behavior of `cy.request()`.
 | `form`                     | `false`                                                     | Whether to convert the `body` values to URL encoded content and set the `x-www-form-urlencoded` header                                                                                                                                         |
 | `encoding`                 | `utf8`                                                      | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le`                                       |
 | `gzip`                     | `true`                                                      | Whether to accept the `gzip` encoding                                                                                                                                                                                                          |
-| `headers`                  | `null`                                                      | Additional headers to send; accepts an object literal. Cypress also sends them on each redirect it follows, with the exceptions in [Redirects](#Redirects).                                                                                    |
+| `headers`                  | `null`                                                      | Additional headers to send; accepts an object literal. Cypress also sends them on each redirect it follows, with the exceptions in [How `cy.request()` follows redirects](#How-cyrequest-follows-redirects).                                   |
 | `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request                                                                                                                                                                                         |
 | `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true. Requires `failOnStatusCode: true`; setting it with `failOnStatusCode: false` throws an error. |
 | `retryOnNetworkFailure`    | `true`                                                      | Whether Cypress should automatically retry transient network errors (such as `ECONNREFUSED`, `ECONNRESET`, or `ENOTFOUND`) under the hood. Cypress will retry a request up to 4 times if this is set to true.                                  |
@@ -297,10 +297,11 @@ provide the credentials with the `auth` option. Cypress base64-encodes them and
 attaches an `Authorization` header to the request.
 
 Read credentials with [`cy.env()`](/api/commands/env) rather than writing them
-into the test, so they stay out of your spec files and your Command Log. The
-examples on this page read `username`, `password`, and `apiToken`, which you set
-as described in
-[Environment Variables & Secrets](/app/guides/environment-variables).
+into the test, so they stay out of your spec files. The examples on this page
+read `username`, `password`, and `apiToken`, which you set as described in
+[Environment Variables & Secrets](/app/guides/environment-variables). A request
+still shows its headers and body when you click it in the Command Log, so add
+`log: false` to a request that carries a secret, as the login examples do.
 
 ```javascript
 cy.env(['username', 'password']).then(({ username, password }) => {
@@ -397,8 +398,8 @@ applies to URL-encoded forms only.
 This is the `cy.request()` equivalent of `curl -F file=@image.png`:
 
 ```javascript
-// image fixtures are read as base64 by default
 cy.env(['apiToken']).then(({ apiToken }) => {
+  // image fixtures are read as base64 by default
   cy.fixture('image.png').then((image) => {
     const formData = new FormData()
 
@@ -465,7 +466,7 @@ cy.getCookie('cypress-session-cookie').should('exist')
 
 :::
 
-### API workflows
+### API testing workflows with `cy.request()`
 
 #### Log in through the API and cache it with `cy.session()`
 
@@ -600,16 +601,16 @@ saves any `Set-Cookie` headers it gets back into the browser. The notes below on
   noBorder
 />
 
-### Redirects
+### How `cy.request()` follows redirects
 
 With `followRedirect: true`, the default, Cypress follows each redirect and sends
-your `headers` again, with these differences:
+your `headers` again. Keep these behaviors in mind:
 
 - Cookies carry across. Cypress saves any `Set-Cookie` headers into the browser,
   then attaches the cookies that match the next URL.
 - `Authorization` is dropped when the redirect changes the hostname.
-- A redirected `POST`, `PUT`, or `DELETE` is followed as a `GET` without its
-  body. Only a `307` keeps the method and body.
+- A redirected `POST`, `PUT`, or `DELETE` is followed as a `GET`, without its
+  body or `Content-Type`. Only a `307` keeps the method and body.
 
 ### JSON request and response bodies
 
@@ -661,17 +662,21 @@ header is added automatically. Set one in `headers` if your server expects it.
 `response.body` is parsed into an object when either:
 
 - The response's `Content-Type` ends in `json`, such as `application/json`.
-- The request `body` is an object or boolean, and the response is valid JSON.
+- The request `body` is an object or boolean (without `form: true`), and the
+  response is valid JSON.
 
 After a `FormData` or `Blob` request, `response.body` is an `ArrayBuffer` of raw
 bytes, even for JSON, so decode it before you assert on it. In every other case,
 it is a string.
 
 ```javascript
-cy.request({ method: 'POST', url: '/api/echo-json', body: formData }).then(
+const formData = new FormData()
+formData.append('name', 'Jane')
+
+cy.request({ method: 'POST', url: '/api/users', body: formData }).then(
   (response) => {
-    const body = JSON.parse(new TextDecoder().decode(response.body))
-    expect(body).to.have.property('ok', true)
+    const user = JSON.parse(new TextDecoder().decode(response.body))
+    expect(user).to.have.property('name', 'Jane')
   }
 )
 ```
