@@ -90,7 +90,7 @@ leading-dot form (e.g. `.app.example.com`), mirroring how real browsers store a
 cookie that omits the `Domain` attribute's host-only flag. As a result the
 cookie matches that host **and all of its subdomains**.
 
-This matters for [`cy.request()`](/api/commands/request#Cookies), which pulls
+This matters for [`cy.request()`](/api/commands/request#How-cyrequest-sends-and-stores-cookies), which pulls
 matching cookies from the cookie jar by domain match before sending a request.
 Because the default cookie is a domain cookie, it can be attached to a
 `cy.request()` aimed at a _different_ host that domain-matches it, for example
