@@ -75,7 +75,7 @@ Pass in an options object to change the default behavior of `.trigger()`.
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                  |
 | `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                                                                                                       |
 | `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                                                                                                 |
-| `eventConstructor`           | `Event`                                                                     | The constructor for creating the event object (e.g. `MouseEvent`, `KeyboardEvent`)                                                                                                                                              |
+| `eventConstructor`           | `'Event'`                                                                   | The name of the constructor, as a string, that creates the event object (e.g. `'MouseEvent'`, `'KeyboardEvent'`). It must exist on the application's `window`.                                                                  |
 | `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                            |
 | `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                             |
 | `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`. |
@@ -83,8 +83,13 @@ Pass in an options object to change the default behavior of `.trigger()`.
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                       |
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
-they will be attached to the event. Passing in coordinate arguments (`clientX`,
-`pageX`, etc) will override the position coordinates.
+they are attached to the event.
+
+When the subject is an element, `.trigger()` sets `clientX`, `clientY`, `pageX`,
+`pageY`, `screenX`, and `screenY` on the event from the `position` or `x` and `y`
+you pass. `screenX` and `screenY` carry the same viewport-relative values as
+`clientX` and `clientY`. Any of these properties you pass in options override
+the calculated ones.
 
 <HeaderYields />
 
@@ -120,7 +125,7 @@ cy.get('.target').trigger('mouseup')
 cy.get('.target').trigger('mousedown', { button: 0 })
 // Auxiliary button pressed (usually the middle button)
 cy.get('.target').trigger('mousedown', { button: 1 })
-//Secondary button pressed (usually the right button)
+// Secondary button pressed (usually the right button)
 cy.get('.target').trigger('mousedown', { button: 2 })
 ```
 
@@ -161,8 +166,8 @@ trigger the appropriate event to signal it has changed.
 Below we invoke jQuery's `val()` method to set the value, then trigger the
 `change` event.
 
-Some implementations may rely on the `input` event instead, which is
-fired as a user moves the slider, but is not supported by some browsers.
+Some implementations listen for the `input` event instead, which fires as the
+user moves the slider.
 
 ```javascript
 cy.get('input[type=range]').as('range').invoke('val', 25).trigger('change')
@@ -207,7 +212,7 @@ element itself.
 cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ```
 
-### Fire other Event types.
+### Fire other Event types
 
 By default, `cy.trigger()` fires
 [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). But you may
@@ -217,6 +222,24 @@ In that case, use the `eventConstructor` option.
 
 ```js
 cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
+```
+
+When the constructor is
+[`UIEvent`](https://developer.mozilla.org/en-US/docs/Web/API/UIEvent) or one of
+its subclasses, such as `MouseEvent` or `KeyboardEvent`, `.trigger()` sets the
+event's `view` property to the application's `window`.
+
+### Window and Document
+
+#### Trigger an event on the window or document
+
+`.trigger()` also accepts the window or document as its subject. It dispatches
+the event right away, without waiting for actionability, and doesn't add any
+coordinate properties to the event.
+
+```javascript
+cy.window().trigger('resize')
+cy.document().trigger('dragover')
 ```
 
 ## Notes
@@ -245,11 +268,11 @@ As you can see the documentation of
 [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent),
 most properties of event class instances are read-only. Because of that, it's
 sometimes impossible to set the value of some properties like `pageX`, `pageY`.
-This can be problematic in when testing some situations.
+This can be problematic when testing some situations.
 
 ### Differences
 
-#### What's the difference between triggering and event and calling the corresponding cypress command?
+#### What's the difference between triggering an event and calling the corresponding Cypress command?
 
 In other words, what's the difference between:
 
@@ -263,7 +286,7 @@ cy.get('button').trigger('click')
 cy.get('button').click()
 ```
 
-Both types commands will first verify element actionability, but only the "true"
+Both types of commands will first verify element actionability, but only the "true"
 action commands will implement all of the default actions of the browser, and
 additionally perform low level actions to fulfill what's defined in the spec.
 
@@ -298,11 +321,14 @@ cy.get('input[type=range]')
 
 - `.trigger()` requires being chained off a command that yields DOM element(s),
   the window, or the document.
+- `.trigger()` requires the element subject to be a single element. It errors
+  when the subject contains more than one element.
 
 <HeaderAssertions />
 
 - `.trigger()` will automatically wait for the element to reach an
-  [actionable state](/app/core-concepts/interacting-with-elements).
+  [actionable state](/app/core-concepts/interacting-with-elements). It skips
+  this wait when the subject is the window or the document.
 - `.trigger()` will automatically [retry](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
@@ -341,6 +367,7 @@ following:
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments |
 | [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                      |
+| [5.1.0](/app/references/changelog#5-1-0)     | Added option `eventConstructor`, and events from `UIEvent` constructors now include the `view` property            |
 | [3.5.0](/app/references/changelog#3-5-0)     | Added `screenX` and `screenY` properties to events                                                                 |
 | [0.20.0](/app/references/changelog#0-20-0)   | `.trigger()` command added                                                                                         |
 
