@@ -54,7 +54,7 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 
 - `domain`: _(String)_
 - `expiry`: _(Number)_ _(if specified)_
-- `hostOnly`: _(Boolean)_ _(if specified)_
+- `hostOnly`: _(Boolean)_ _(only present for host-only cookies)_
 - `httpOnly`: _(Boolean)_
 - `name`: _(String)_
 - `path`: _(String)_
@@ -188,11 +188,12 @@ has no `expiry` property, so `.its('expiry')` fails for it.
 
 ### Read a cookie on another domain with `cy.getCookie()`
 
-#### Get a cookie set on an API subdomain with `domain`
+#### Get a cookie set on a sibling API domain with `domain`
 
 By default, `cy.getCookie()` reads cookies for the hostname of the application
 under test. Pass `domain` to read a cookie set for a different domain, such as
-an API that your app calls on its own subdomain.
+an API on a sibling domain: `api.example.com` when your app runs on
+`app.example.com`.
 
 ```javascript
 cy.getCookie('refresh_token', { domain: 'api.example.com' }).should('exist')
@@ -200,7 +201,7 @@ cy.getCookie('refresh_token', { domain: 'api.example.com' }).should('exist')
 
 ### Validate a `cy.session()` login with `cy.getCookie()`
 
-#### Check the session cookie in `validate`
+#### Check the login cookie in a `cy.session()` validate function
 
 Use `cy.getCookie()` in the `validate` function of
 [`cy.session()`](/api/commands/session) to confirm the login cookie is set.
@@ -238,7 +239,8 @@ To confirm that your server still accepts a restored session, see
 `cy.getCookie()` looks for the cookie on the requested domain: the `domain`
 option if you pass one, otherwise the hostname of the application under test.
 It matches the same domain and any parent domain the cookie was set on, but not
-a subdomain or a sibling domain. For a request on `app.example.com`:
+a subdomain or a sibling domain. When the application under test is on
+`app.example.com`, or you pass `domain: 'app.example.com'`:
 
 | Cookie set on                      | Yielded by `cy.getCookie()` |
 | ---------------------------------- | --------------------------- |
@@ -248,8 +250,10 @@ a subdomain or a sibling domain. For a request on `app.example.com`:
 | `api.example.com` (sibling domain) | No                          |
 
 Matching ignores `hostOnly`, so a host-only cookie set by `example.com` is
-yielded even though the browser wouldn't send it to `app.example.com`. To check
-that a cookie is host-only, assert on its `hostOnly` property. If cookies with
+yielded even though the browser wouldn't send it to `app.example.com`. The
+yielded cookie has `hostOnly: true` only when it's host-only on a registrable
+domain such as `example.com`. For a cookie on `localhost` or an IP address,
+`hostOnly` is left off even when the cookie is host-only. If cookies with
 the same name match on more than one domain, use
 [`cy.getCookies()`](/api/commands/getcookies) to see all of them.
 
