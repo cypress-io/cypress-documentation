@@ -276,7 +276,7 @@ cy.get('.notifications li')
 
 When no element exists at the index, `.eq()` yields an empty set. Cypress
 retries until an element appears at the index. If none appears before the
-timeout, it fails with an error such as
+[timeout](#Wait-longer-for-eq-with-the-timeout-option), it fails with an error such as
 ``Expected to find element: `5`, but never found it.`` To assert that the set has
 no element at an index, chain `.should('not.exist')`.
 
@@ -314,6 +314,37 @@ several elements when the set spans more than one parent.
 ```javascript
 cy.get('li').eq(1) // yields <li>Banana</li>
 cy.get('li:nth-child(2)') // yields <li>Banana</li> and <li>Daikon</li>
+```
+
+### How `.eq()` compares to the jQuery `:eq()` selector
+
+`cy.get()` accepts jQuery selectors, so `cy.get('li:eq(1)')` yields the same
+element as `cy.get('li').eq(1)`. jQuery deprecated the
+[`:eq()` selector](https://api.jquery.com/eq-selector/) in jQuery 3.4 and removed
+it in jQuery 4, so use the `.eq()` command instead.
+
+```javascript
+cy.get('li:eq(1)') // deprecated jQuery selector
+cy.get('li').eq(1) // use the .eq() command instead
+```
+
+### When to use `.select()` instead of `.eq()` on options
+
+`.eq()` yields an `<option>` element without selecting it, so the `<select>`
+keeps its value. Calling `.click()` on the option doesn't select it either:
+Cypress fails because the option isn't visible. To choose an option by its
+position, pass the index to [`.select()`](/api/commands/select).
+
+```html
+<select>
+  <option value="small">Small</option>
+  <option value="medium">Medium</option>
+  <option value="large">Large</option>
+</select>
+```
+
+```javascript
+cy.get('select').select(1).should('have.value', 'medium')
 ```
 
 ### How an aliased `.eq()` re-queries the current DOM
