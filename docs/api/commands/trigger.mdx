@@ -262,13 +262,34 @@ should be triggered. This means you'll need to know the implementation details
 (which may be in a 3rd party library) of the event handler(s) receiving the
 event and provide the necessary properties.
 
-#### Why should I manually set the event type?
+#### How `eventConstructor` changes the properties you can set
 
-As you can see the documentation of
-[`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent),
-most properties of event class instances are read-only. Because of that, it's
-sometimes impossible to set the value of some properties like `pageX`, `pageY`.
-This can be problematic when testing some situations.
+With the default `Event` constructor, `.trigger()` attaches every property you
+pass to the event as is, including ones like `pageX` and `pageY` that a real
+mouse event calculates for itself. Handlers that only read properties, like the
+[jQuery UI Sortable](#jQuery-UI-Sortable) example above, work with this default.
+
+When you set `eventConstructor` to a class such as
+[`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent), the
+browser builds the event, and that class decides which properties you can set.
+Properties the constructor accepts, such as `clientX`, `button`, and `shiftKey`,
+take your values. Read-only properties the browser calculates, such as `pageX`
+and `offsetX`, keep the browser's values, and `.trigger()` drops yours without
+an error.
+
+```javascript
+// Event (default): pageX is attached as passed
+cy.get('.target').trigger('mousedown', { pageX: 600 })
+
+// MouseEvent: clientX is set, and the browser calculates pageX from it
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  clientX: 300,
+})
+```
+
+Keep the default unless the handler needs a real instance of the class, for
+example when it checks `event instanceof MouseEvent`.
 
 ### Differences
 
