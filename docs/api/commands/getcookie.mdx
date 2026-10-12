@@ -184,8 +184,8 @@ cy.getCookie('remember_me')
   .should('be.greaterThan', Date.now() / 1000 + twentyNineDays)
 ```
 
-A cookie set without an expiry date, which the browser deletes when it closes,
-has no `expiry` property, so `.its('expiry')` fails for it.
+A cookie set without an expiry date has no `expiry` property, so
+`.its('expiry')` fails for it.
 
 ### Read a cookie on another domain with `cy.getCookie()`
 
