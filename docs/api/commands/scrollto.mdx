@@ -150,6 +150,44 @@ cy.get('table').scrollTo('bottom', { ensureScrollable: false })
 cy.get('table').find('tr:last-child').should('be.visible')
 ```
 
+### Workflows
+
+#### Assert the scroll position after scrolling
+
+`.scrollTo()` yields the window or element it scrolled, not the scroll position.
+To check the position, query it after the scroll: `scrollY` on the window, or
+`scrollTop` on an element.
+
+```javascript
+cy.scrollTo(0, 500)
+cy.window().its('scrollY').should('equal', 500)
+
+cy.get('#feed').scrollTo('bottom')
+cy.get('#feed').invoke('scrollTop').should('be.gt', 0)
+```
+
+#### Load more items in an infinite scroll list
+
+Scroll to the bottom of the list, then assert on the new item count. The
+assertion retries until the next page of items renders.
+
+```javascript
+cy.get('#feed .item').should('have.length', 20)
+cy.get('#feed').scrollTo('bottom')
+cy.get('#feed .item').should('have.length.gt', 20)
+```
+
+#### Show a back-to-top button after scrolling
+
+Some elements appear only once the page scrolls, such as a back-to-top button,
+a sticky header, or a lazy-loaded image. Scroll first, then assert on the
+element.
+
+```javascript
+cy.scrollTo('bottom')
+cy.get('[data-cy="back-to-top"]').should('be.visible')
+```
+
 ## Notes
 
 ### Actionability
@@ -181,6 +219,46 @@ This scrolls the `#checkout-items` element.
 ```javascript
 cy.get('#checkout-items').scrollTo('right')
 ```
+
+#### When chained off `cy.window()`:
+
+This scrolls the `window`, the same as starting a series of commands.
+
+```javascript
+cy.window().scrollTo('bottom')
+```
+
+### Choosing between .scrollTo() and .scrollIntoView()
+
+`.scrollTo()` scrolls a container, either the window or a scrollable element, to
+a position. [`.scrollIntoView()`](/api/commands/scrollintoview) scrolls whatever
+contains an element until that element is in view. To reach a specific item, use
+`.scrollIntoView()` on the item rather than `.scrollTo()` on its container.
+
+```javascript
+cy.get('#feed').scrollTo('bottom') // scrolls the container itself
+cy.get('#feed .item').last().scrollIntoView() // scrolls until this item is in view
+```
+
+### Fixing the "element is not scrollable" error
+
+`.scrollTo()` errors with `failed because this element is not scrollable` when
+the element you target has no content overflowing it to scroll. This usually
+means the scrolling happens on a different element, often the window, while the
+targeted wrapper grows to fit its content. Target the element whose `overflow`
+is `auto` or `scroll` instead, or scroll the window.
+
+```javascript
+// Errors: .page-wrapper grows with its content, so the window scrolls instead
+cy.get('.page-wrapper').scrollTo('bottom')
+
+// Scroll the window instead
+cy.scrollTo('bottom')
+```
+
+Pass `ensureScrollable: false` only when an element is sometimes scrollable and
+sometimes not, as in
+[Do not error if element is not scrollable](#Do-not-error-if-element-is-not-scrollable).
 
 ### Snapshots
 
@@ -241,3 +319,4 @@ following:
 ## See also
 
 - [`.scrollIntoView()`](/api/commands/scrollintoview)
+- [`cy.window()`](/api/commands/window)
