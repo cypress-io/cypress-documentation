@@ -91,6 +91,15 @@ you pass. `screenX` and `screenY` carry the same viewport-relative values as
 `clientX` and `clientY`. Any of these properties you pass in options override
 the calculated ones.
 
+`clientX` and `clientY` measure from the viewport, while `pageX` and `pageY`
+measure from the top of the document, so they differ once the page scrolls.
+
+<DocsImage
+  src="/img/api/trigger/client-vs-page-coordinates.svg"
+  alt="A scrolled page where clientY runs from the viewport's top to the event's point and pageY from the document's top, so pageY equals clientY plus window.scrollY"
+  noBorder
+/>
+
 <HeaderYields />
 
 - `.trigger()` yields the same subject it was given.
@@ -305,6 +314,14 @@ cy.get('@range').siblings('p').should('have.text', '25')
 cy.get('button').trigger('mousedown', 'topRight')
 ```
 
+Click the `trigger` command in the Command Log to pin its snapshot. A red dot
+marks the point where the event fired, here the button's top-right corner.
+
+<DocsImage
+  src="/img/api/trigger/command-log-trigger-top-right-snapshot.png"
+  alt="Pinned trigger mousedown, topRight command with a red dot on the top-right corner of the highlighted Save button"
+/>
+
 ### Coordinates
 
 #### Specify explicit coordinates relative to the top left corner
@@ -475,6 +492,21 @@ cy.get('.target').trigger('mousedown', {
 })
 ```
 
+This table shows where each mouse property's value comes from:
+
+| Property                                      | Default `Event`                                                  | `MouseEvent`                                     |
+| --------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------ |
+| `clientX`, `clientY`, `screenX`, `screenY`    | Your value                                                       | Your value                                       |
+| `button`, `buttons`, `movementX`, `movementY` | Your value                                                       | Your value                                       |
+| `shiftKey`, `ctrlKey`, `altKey`, `metaKey`    | Your value                                                       | Your value                                       |
+| `pageX`, `pageY`                              | Your value                                                       | Calculated from `clientX`, `clientY`, and scroll |
+| `offsetX`, `offsetY`                          | Your value                                                       | Calculated from the element's position           |
+| `which`                                       | Your value                                                       | Calculated from `button`                         |
+| `x`, `y`                                      | Not attached: `.trigger()` reads them as the position to fire at | Calculated, equal to `clientX` and `clientY`     |
+
+With `KeyboardEvent`, the properties key handlers usually read, `key`, `code`,
+`keyCode`, `which`, `repeat`, and the modifier keys, all take your values.
+
 Keep the default unless the handler needs a real instance of the class, for
 example when it checks `event instanceof MouseEvent`.
 
@@ -494,16 +526,23 @@ cy.get('button').trigger('click')
 cy.get('button').click()
 ```
 
-Both types of commands will first verify element actionability, but only the "true"
-action commands will implement all of the default actions of the browser, and
-additionally perform low level actions to fulfill what's defined in the spec.
+Both kinds of commands wait for the element to reach actionability first. The
+action commands then reproduce the full sequence of events a user's input
+produces, along with what the browser does in response. `.trigger()` dispatches
+only the event you name.
 
-`.trigger()` will _only_ fire the corresponding event and do nothing else.
+| You call                            | Events fired                                                                                                                                                          | What happens in the browser                                                                                                                                                           |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.trigger('click')`                 | `click`                                                                                                                                                               | Focus doesn't move. With the default `Event`, nothing else happens. With `eventConstructor: 'MouseEvent'`, a checkbox toggles and fires `input` and `change`, and a link is followed. |
+| `.click()`                          | `pointerover`, `pointerenter`, `mouseover`, `mouseenter`, `pointermove`, `mousemove`, `pointerdown`, `mousedown`, `focus`, `focusin`, `pointerup`, `mouseup`, `click` | Focus moves to the element, a checkbox toggles, and a link is followed.                                                                                                               |
+| `.trigger('keydown', { key: 'a' })` | `keydown`                                                                                                                                                             | Focus doesn't move, and no text is inserted, even with `eventConstructor: 'KeyboardEvent'`.                                                                                           |
+| `.type('a')`                        | The `.click()` sequence when the element isn't focused yet, then `keydown`, `keypress`, `beforeinput`, `textInput`, `input`, `keyup`                                  | Focus moves to the element, and `a` is inserted.                                                                                                                                      |
+| `.trigger('focus')`                 | `focus`                                                                                                                                                               | Focus doesn't move.                                                                                                                                                                   |
+| `.focus()`                          | `focus`, `focusin`                                                                                                                                                    | Focus moves to the element.                                                                                                                                                           |
 
-That means that your event listener callbacks will be invoked, but don't expect
-the browser to actually "do" anything for these events. For the most part, it
-shouldn't matter, which is why `.trigger()` is an excellent stop-gap if the
-command / event you're looking for hasn't been implemented yet.
+Your listeners run either way. Use the action command when you're testing what a
+user does, and `.trigger()` when a handler listens for an event no action
+command fires.
 
 ### Interact with a range input in a controlled component (React, Vue, etc.)
 

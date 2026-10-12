@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440" role="img" aria-labelledby="t d">
+<title id="t">Client and page coordinates on a scrolled page</title>
+<desc id="d">A document scrolled down so its top is above the viewport. The point where the event fires sits on an element inside the viewport. clientY measures from the top of the viewport to the point, and pageY measures from the top of the document, so pageY equals clientY plus window.scrollY. With no horizontal scroll, clientX and pageX are equal. .trigger() sets screenX and screenY to the same values as clientX and clientY.</desc>
+<defs>
+  <marker id="arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4956e3"/></marker>
+  <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1f7a45"/></marker>
+  <marker id="arrow-gray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#555a6e"/></marker>
+</defs>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .doc { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.5; }
+  .scrolled { fill: #eef0fb; }
+  .viewport { fill: none; stroke: #4956e3; stroke-width: 3; }
+  .el { fill: #eef0fb; stroke: #6f74a0; stroke-width: 1.5; }
+  .dot { fill: #4956e3; stroke: #ffffff; stroke-width: 2.5; }
+  .guide { stroke: #6f74a0; stroke-width: 1.25; stroke-dasharray: 4 4; fill: none; }
+  .label { font: 600 15px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
+  .client { fill: #4956e3; }
+  .page { fill: #1f7a45; }
+  .both { fill: #1b1e2e; }
+  .tag { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+  .key { font: 600 14px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .text { font: 14px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="759" height="439" rx="12"/>
+
+<!-- document, with the part scrolled above the viewport shaded -->
+<rect class="doc" x="110" y="40" width="260" height="370"/>
+<rect class="scrolled" x="110.75" y="40.75" width="258.5" height="109.25"/>
+<text class="tag" x="122" y="62">document</text>
+<text class="tag" x="122" y="100">scrolled out of view</text>
+<text class="tag" x="122" y="118">(window.scrollY)</text>
+
+<!-- viewport -->
+<rect class="viewport" x="110" y="150" width="260" height="200"/>
+<text class="tag" x="122" y="172">viewport</text>
+
+<!-- element and the point where the event fires -->
+<rect class="el" x="220" y="215" width="130" height="85"/>
+<text class="tag" x="228" y="236">element</text>
+<path class="guide" d="M 60 268 H 410"/>
+<circle class="dot" cx="280" cy="268" r="7"/>
+
+<!-- pageY: from the top of the document -->
+<path class="guide" d="M 60 40 H 110"/>
+<path d="M 72 42 V 264" stroke="#1f7a45" stroke-width="2" fill="none" marker-end="url(#arrow-green)" marker-start="url(#arrow-green)"/>
+<text class="label page" x="66" y="158" text-anchor="end">pageY</text>
+
+<!-- clientY: from the top of the viewport -->
+<path class="guide" d="M 370 150 H 410"/>
+<path d="M 398 152 V 264" stroke="#4956e3" stroke-width="2" fill="none" marker-end="url(#arrow-accent)" marker-start="url(#arrow-accent)"/>
+<text class="label client" x="406" y="214">clientY</text>
+
+<!-- clientX and pageX: equal with no horizontal scroll -->
+<path d="M 112 322 H 276" stroke="#555a6e" stroke-width="2" fill="none" marker-end="url(#arrow-gray)" marker-start="url(#arrow-gray)"/>
+<path class="guide" d="M 280 275 V 330"/>
+<text class="label both" x="194" y="342" text-anchor="middle">clientX = pageX</text>
+
+<!-- key -->
+<text class="key" x="480" y="90">clientX, clientY</text>
+<text class="text" x="480" y="112">from the viewport's top-left corner</text>
+<text class="key" x="480" y="160">pageX, pageY</text>
+<text class="text" x="480" y="182">from the document's top-left corner</text>
+<text class="key" x="480" y="230">pageY</text>
+<text class="text" x="480" y="252">= clientY + window.scrollY</text>
+<text class="key" x="480" y="300">screenX, screenY</text>
+<text class="text" x="480" y="322">.trigger() sets these to the</text>
+<text class="text" x="480" y="342">clientX and clientY values</text>
+</svg>
