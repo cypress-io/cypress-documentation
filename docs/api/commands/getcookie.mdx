@@ -54,8 +54,7 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 
 - `domain`: _(String)_
 - `expiry`: _(Number)_ _(if specified)_
-- `hostOnly`: _(Boolean)_ _(not always reported; see
-  [domain matching](#Which-cookies-cygetCookie-matches-by-domain))_
+- `hostOnly`: _(Boolean)_ _(not always reported)_
 - `httpOnly`: _(Boolean)_
 - `name`: _(String)_
 - `path`: _(String)_
@@ -249,11 +248,6 @@ a subdomain or a sibling domain. When the application under test is on
 | `example.com` (parent domain)      | Yes                         |
 | `api.app.example.com` (subdomain)  | No                          |
 | `api.example.com` (sibling domain) | No                          |
-
-Matching ignores `hostOnly`, so a host-only cookie set by `example.com` is
-yielded even though the browser wouldn't send it to `app.example.com`. Don't
-rely on the `hostOnly` property to test a cookie's scope: it's left off when
-`false`, for cookies on `localhost` or an IP address, and always in WebKit.
 
 If cookies with the same name match on more than one domain, WebKit yields the
 one on the exact domain. Chromium-based browsers and Firefox yield whichever
