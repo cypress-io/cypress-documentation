@@ -646,10 +646,13 @@ Treat an XPath-heavy suite as an opportunity to move to more robust selectors.
 For the most resilient long-term strategy, follow Cypress
 [Best Practices](/app/core-concepts/best-practices#Selecting-Elements) and add
 dedicated `data-cy` (or `data-testid`) attributes to your application, then
-select with `cy.get('[data-cy="submit"]')`. If you want role/label
-ergonomics without editing markup, install
-[`@testing-library/cypress`](https://github.com/testing-library/cypress-testing-library)
-and use `cy.findByRole('button', { name: 'Submit' })`.
+select with `cy.get('[data-cy="submit"]')`. To find elements the way a screen
+reader does without editing markup, use the built-in
+[`cy.getByRole()`](/api/commands/getbyrole), such as
+`cy.getByRole('button', { name: 'Submit' })`. It matches the element's role
+and accessible name, so `cy.getByRole('link', { name: 'Sign in' })` usually
+replaces `By.linkText('Sign in')`. An `<a>` needs an `href` to have the `link`
+role, so keep `cy.contains('a', 'Sign in')` for an anchor without one.
 
 The examples in this guide use `data-testid` for brevity.
 
