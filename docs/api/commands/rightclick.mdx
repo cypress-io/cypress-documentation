@@ -16,9 +16,9 @@ chain further commands that rely on the subject after `.rightclick()`.
 
 :::caution
 
-`.rightclick()` will not open context menus native to the browser.
-`.rightclick()` should be used to test your app's handling of right click
-related events such as `contextmenu`.
+`.rightclick()` does not open context menus native to the browser. Use
+`.rightclick()` to test your app's handling of right click related events such
+as `contextmenu`.
 
 :::
 
@@ -120,8 +120,8 @@ cy.get('#open-menu').rightclick('topRight')
 
 #### Specify explicit coordinates relative to the top left corner
 
-The right click below will be issued inside of the element (15px from the left
-and 40px from the top).
+The right click below is issued inside of the element (15px from the left and
+40px from the top).
 
 ```javascript
 cy.get('#open-menu').rightclick(15, 40)
@@ -133,7 +133,7 @@ cy.get('#open-menu').rightclick(15, 40)
 
 Forcing a right click overrides the
 [actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
-Cypress applies and will automatically fire the events.
+Cypress applies and fires the events at the element.
 
 ```javascript
 cy.get('#open-menu').rightclick({ force: true })
@@ -153,10 +153,10 @@ cy.get('#open-menu').rightclick(5, 60, { force: true })
 
 #### Right click all buttons found on the page
 
-By default, Cypress will error if you're trying to right click multiple
-elements. By passing `{ multiple: true }` Cypress will iteratively apply the
-right click to each element and will also log to the
-[Command Log](/app/core-concepts/open-mode#Command-Log) multiple times.
+By default, Cypress errors if you try to right click multiple elements. When
+you pass `{ multiple: true }`, Cypress right clicks each element in turn and
+logs each right click to the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
 
 ```javascript
 cy.get('.open-menu').rightclick({ multiple: true })
@@ -176,7 +176,7 @@ offers options to hold down keys across multiple commands. See
 
 :::
 
-The following key can be combined with `.rightclick()` through the `options`..
+The following keys can be combined with `.rightclick()` through the `options`.
 
 | Option     | Notes                                                                                         |
 | ---------- | --------------------------------------------------------------------------------------------- |
@@ -203,20 +203,62 @@ cy.get('.menu-item').rightclick({
 `.rightclick()` is an "action command" that follows all the rules of
 [Actionability](/app/core-concepts/interacting-with-elements).
 
+### Events
+
+#### Events fired by a right click
+
+Cypress first moves the mouse to the element, which fires hover events such as
+`pointerover`, `mouseover`, and `mousemove`. Then `.rightclick()` fires these
+events in order:
+
+1. `pointerdown`
+2. `mousedown`
+3. `contextmenu`
+4. `pointerup`
+5. `mouseup`
+
+Each event carries `button: 2` and `buttons: 2`. `.rightclick()` does not fire a
+`click` event.
+
+### Focus
+
+#### Focus is given to the first focusable element
+
+Like [`.click()`](/api/commands/click#Focus), `.rightclick()` gives focus to the
+first focusable element at the click coordinates or among its ancestors.
+
+### Cancellation
+
+#### Pointerdown or mousedown cancellation prevents focus
+
+If the `pointerdown` or `mousedown` event has its default action prevented
+(`e.preventDefault()`), Cypress does not give the element focus.
+
+When `pointerdown` is cancelled, Cypress also skips the `mousedown` and
+`mouseup` events, following the Pointer Events spec. It still sends
+`contextmenu` and `pointerup`.
+
+Cancelling the `contextmenu` event does not change which events Cypress sends.
+
 ## Rules
 
 <HeaderRequirements />
 
 - `.rightclick()` requires being chained off a command that yields DOM
   element(s).
+- `.rightclick()` requires a single element unless you pass
+  `{ multiple: true }`.
+- `.rightclick()` cannot be called on a `<select>` element. Use
+  [`.select()`](/api/commands/select) to change its value.
 
 <HeaderAssertions />
 
-- `.rightclick()` will automatically wait for the element to reach an
+- `.rightclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.rightclick()` will automatically
-  [retry](/app/core-concepts/retry-ability) until all chained assertions have
-  passed.
+- `.rightclick()` itself is not retried. It fires once when the element is
+  actionable. Assertions chained after `.rightclick()` are retried until they
+  pass or time out. See
+  [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 <HeaderTimeouts />
 
@@ -253,6 +295,7 @@ following:
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments |
 | [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                      |
+| [5.0.0](/app/references/changelog#5-0-0)     | Added options `altKey`, `ctrlKey`, `metaKey`, and `shiftKey`                                                       |
 | [3.5.0](/app/references/changelog#3-5-0)     | `.rightclick()` command added                                                                                      |
 
 ## See also
