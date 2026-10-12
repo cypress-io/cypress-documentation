@@ -604,7 +604,7 @@ Keep these differences in mind when you translate `getByRole()`:
 - A Playwright locator fails an action when it matches more than one element. `cy.getByRole()` yields every match, so chain [`.first()`](/api/commands/first) or narrow the `name` when several elements share a role.
 - Options such as `checked`, `expanded`, `pressed`, and `level` become a chained [`.filter()`](/api/commands/getbyrole#Narrow-the-results-by-state-with-filter), such as `cy.getByRole('heading').filter('[aria-level="2"], h2:not([aria-level])')` for `level: 2`.
 - `includeHidden: true` becomes `hidden: true`.
-- `cy.getByRole('banner')` and `cy.getByRole('contentinfo')` match every `<header>` and `<footer>`, including ones inside an `<article>` or `<section>`, where Playwright gives them no landmark role. Scope the query, such as `cy.get('body > header')`, when the page has more than one.
+- `cy.getByRole('banner')` and `cy.getByRole('contentinfo')` match every `<header>` and `<footer>`, including ones inside an `<article>` or `<section>`, where Playwright gives them no landmark role. When the page has more than one, select the page-level one with `cy.get('body > header')`.
 - For a role that HTML has an element for, `cy.getByRole()` matches only native elements by default, so `cy.getByRole('button')` skips a `<div role="button">` that Playwright's `getByRole('button')` finds. Pass `native: false` to match it.
 
 ## Interactions
@@ -877,6 +877,7 @@ await expect(page.getByRole('banner')).toBeVisible()
 cy.visit('https://site-a.example')
 cy.origin('https://site-b.example', () => {
   cy.visit('https://site-b.example')
+  // Assumes one page-level <header>; see the getByRole() differences above
   cy.getByRole('banner').should('be.visible')
 })
 ```

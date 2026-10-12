@@ -139,7 +139,7 @@ This approach explicitly avoids testing accessibility - which is all about the n
 
 Role-based locators, such as [`cy.getByRole()`](/api/commands/getbyrole) and the `findByRole()` query from [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro), are sometimes seen as a solution to the fact that explicit Test IDs do not provide any accessibility testing benefit. While these locators are convenient and keep accessibility top-of-mind for testers, finding an element by its role does **not** guarantee the accessibility of that element.
 
-:::warning
+:::caution
 Whether you primarily use role-based locators, test IDs, or a different approach, testing for accessibility requires making specific assertions about the **implementation and behavior** of your application.
 :::
 
@@ -164,7 +164,7 @@ This means that, without some assertions about either the `button` element itsel
 
 Developers who are unfamiliar with accessibility may assume that if a role-based locator can be made to pass before and after a code change, there has been no functional or accessibility-related change in the underlying element. As we've seen, this is not actually the case, because of the extra behavior browsers only implement for native HTML elements. For more about this difference and why semantic HTML elements are preferred, see the [first rule of Accessible Rich Internet Applications (ARIA)](https://www.w3.org/TR/using-aria/#rule1).
 
-### `cy.getByRole()` requires a native button by default
+### `cy.getByRole()` requires native elements by default
 
 [`cy.getByRole()`](/api/commands/getbyrole) catches that refactor without any extra options. For a role that HTML has an element for, it matches only elements whose HTML tag gives them the role, so the test fails if a `<button>` is replaced with a `<div role="button">`:
 

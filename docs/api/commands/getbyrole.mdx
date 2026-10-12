@@ -487,7 +487,9 @@ cy.get('checkout-panel').shadow().getByRole('button', { name: 'Checkout' })
 
 #### Type the yielded element
 
-The `role` argument autocompletes role names and accepts any other string.
+The `role` argument autocompletes role names, and its type allows any other
+string. At runtime, a role that contains a space still
+[throws an error](#Usage).
 Pass a type argument to type the yielded element.
 
 ```typescript
