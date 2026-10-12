@@ -34,6 +34,25 @@ cy.url(options)
 cy.url() // Yields the current URL as a string
 ```
 
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+const url = cy.url() // Yields a chainable, not the URL string
+cy.get('a').url() // Ignores the link, yields the page's URL
+```
+
+Cypress commands are enqueued and run later, so `cy.url()` never returns the URL
+directly. To work with the string, read it in a [`.then()`](/api/commands/then)
+callback or save it as an [alias](/api/commands/as):
+
+```javascript
+cy.url().then((url) => {
+  // url is the current URL as a string
+})
+
+cy.url().as('startUrl')
+```
+
 ### Arguments
 
 <Icon name="angle-right" /> **options _(Object)_**
@@ -93,6 +112,69 @@ cy.url({ decode: true }).should(
 )
 ```
 
+### Redirects and navigation
+
+#### Wait for a redirect after signing in
+
+`cy.url()` retries until its assertions pass, so the test waits for your
+application to finish redirecting without a [`cy.wait()`](/api/commands/wait).
+
+```javascript
+cy.get('#email').type('jane@example.com')
+cy.get('#password').type('secret')
+cy.contains('button', 'Sign in').click()
+cy.url().should('include', '/dashboard')
+```
+
+#### Match a URL that contains a generated ID
+
+When a URL includes a value your test doesn't know in advance, such as the ID of
+a record the test created, match it with a regular expression.
+
+```javascript
+cy.contains('button', 'Create user').click()
+cy.url().should('match', /\/users\/\d+\/edit$/)
+```
+
+#### Assert that the URL doesn't change
+
+Save the URL before an action, then compare against it afterward. Here, the
+`required` field blocks the form from submitting, so the page stays where it
+is.
+
+```html title="index.html"
+<form action="/saved">
+  <input name="name" required />
+  <button>Save</button>
+</form>
+```
+
+```javascript title="spec.cy.js"
+cy.url().then((startUrl) => {
+  cy.contains('button', 'Save').click()
+  cy.url().should('eq', startUrl)
+})
+```
+
+### Cross-origin redirects
+
+#### Assert that sign-in redirects to an identity provider
+
+`cy.url()` reads the URL after your application navigates to another origin, so
+you can confirm where a sign-in flow landed before you interact with that page
+inside [`cy.origin()`](/api/commands/origin).
+
+```javascript
+cy.visit('http://localhost:8000/')
+cy.contains('a', 'Sign in with SSO').click()
+
+cy.url().should('include', 'http://auth.example.com/login')
+
+cy.origin('http://auth.example.com', () => {
+  cy.get('input[name="username"]').type('jane')
+})
+```
+
 ## Notes
 
 ### `cy.url()` and `cy.location('href')`
@@ -146,6 +228,51 @@ cy.url().should('eq', Cypress.config().baseUrl + '/index.html') // tests won't f
 ```javascript
 cy.url().should('contain', '#users/new')
 ```
+
+### Assert on part of the URL with `cy.location()`
+
+`cy.url()` yields the whole URL, including the protocol, host, and port. When
+you only care about the path or the query string, assert on that part with
+[`cy.location()`](/api/commands/location) instead of slicing the string. The
+assertion then passes on any host, such as a local server or a preview
+deployment.
+
+```javascript
+// given remote URL: http://localhost:8000/users/1/edit?tab=profile
+cy.location('pathname').should('eq', '/users/1/edit')
+cy.location('search').should('eq', '?tab=profile')
+```
+
+### Trailing `#` and `?` in the URL
+
+The browser keeps a bare `#` or `?` at the end of the URL, so `cy.url()` yields
+it even though the hash or query string is empty. A link to `#` adds a trailing
+`#`:
+
+```html title="index.html"
+<nav>
+  <a href="#/users/1">Open profile</a>
+  <a href="#">Close profile</a>
+</nav>
+```
+
+```javascript title="spec.cy.js"
+cy.contains('a', 'Close profile').click()
+cy.url().should('eq', 'http://localhost:8000/index.html#')
+cy.hash().should('eq', '')
+cy.location('pathname').should('eq', '/index.html')
+```
+
+A URL ending in `?` works the same way:
+
+```javascript
+// given remote URL: http://localhost:8000/index.html?
+cy.url().should('eq', 'http://localhost:8000/index.html?')
+cy.location('search').should('eq', '')
+```
+
+To leave the trailing character out of the assertion, compare the
+`pathname` with `cy.location()`, as shown above.
 
 ### Cross-origin pages and `cy.url()`
 
