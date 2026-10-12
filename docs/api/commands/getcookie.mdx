@@ -54,7 +54,8 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 
 - `domain`: _(String)_
 - `expiry`: _(Number)_ _(if specified)_
-- `hostOnly`: _(Boolean)_ _(only present for host-only cookies)_
+- `hostOnly`: _(Boolean)_ _(not always reported; see
+  [domain matching](#Which-cookies-cygetCookie-matches-by-domain))_
 - `httpOnly`: _(Boolean)_
 - `name`: _(String)_
 - `path`: _(String)_
@@ -81,6 +82,14 @@ application sets asynchronously.
 ## Examples
 
 ### Session id
+
+:::info
+
+The [Logging In recipes](/app/references/recipes#Logging-In) use
+`cy.getCookie()` to test logging in with HTML web forms, XHR web forms, and
+single sign-on.
+
+:::
 
 #### Get `session_id` cookie after logging in
 
@@ -133,14 +142,6 @@ a short delay.
 cy.contains('Log out').click()
 cy.getCookie('session_id').should('not.exist')
 ```
-
-:::info
-
-The [Logging In recipes](/app/references/recipes#Logging-In) use
-`cy.getCookie()` to test logging in with HTML web forms, XHR web forms, and
-single sign-on.
-
-:::
 
 ### Assert on cookie properties from `cy.getCookie()`
 
@@ -250,10 +251,10 @@ a subdomain or a sibling domain. When the application under test is on
 | `api.example.com` (sibling domain) | No                          |
 
 Matching ignores `hostOnly`, so a host-only cookie set by `example.com` is
-yielded even though the browser wouldn't send it to `app.example.com`. The
-yielded cookie has `hostOnly: true` only when it's host-only on a registrable
-domain such as `example.com`. For a cookie on `localhost` or an IP address,
-`hostOnly` is left off even when the cookie is host-only. If cookies with
+yielded even though the browser wouldn't send it to `app.example.com`. Don't
+rely on the `hostOnly` property to test a cookie's scope: it's left off when
+`false`, for cookies on `localhost` or an IP address, and always in WebKit. If
+cookies with
 the same name match on more than one domain, use
 [`cy.getCookies()`](/api/commands/getcookies) to see all of them.
 
@@ -297,9 +298,9 @@ causes:
   [`defaultCommandTimeout`](/app/references/configuration#Timeouts), `4000` ms
   by default, or the `timeout` option, when passed.
 - If the application under test is on a different origin, `cy.getCookie()`
-  retries until the command times out and then fails with a cross-origin error.
-  Run it inside [`cy.origin()`](/api/commands/origin) to read cookies on that
-  origin.
+  retries until the command times out and then fails with a cross-origin error,
+  even when you pass the `domain` option. Run it inside
+  [`cy.origin()`](/api/commands/origin) to read cookies on that origin.
 - If the browser returns an error before the first read succeeds,
   `cy.getCookie()` fails right away instead of retrying.
 
