@@ -272,7 +272,7 @@ cy.get('.notifications li')
 `.eq(0)` yields the same element as [`.first()`](/api/commands/first), and
 `.eq(-1)` yields the same element as [`.last()`](/api/commands/last).
 
-### What `.eq()` yields when the index is out of range
+### What happens when the `.eq()` index is out of range
 
 When no element exists at the index, `.eq()` yields an empty set. Cypress
 retries until an element appears at the index. If none appears before the
