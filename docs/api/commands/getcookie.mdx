@@ -80,7 +80,7 @@ application sets asynchronously.
 
 ## Examples
 
-### Session cookies
+### Session id
 
 #### Get `session_id` cookie after logging in
 
@@ -142,7 +142,7 @@ single sign-on.
 
 :::
 
-### Cookie properties
+### Assert on cookie properties from `cy.getCookie()`
 
 #### Assert on one cookie property with `.its()`
 
@@ -183,10 +183,10 @@ cy.getCookie('remember_me')
   .should('be.greaterThan', Date.now() / 1000 + twentyNineDays)
 ```
 
-A session cookie, one that the browser deletes when it closes, has no `expiry`
-property, so `.its('expiry')` fails for it.
+A cookie set without an expiry date, which the browser deletes when it closes,
+has no `expiry` property, so `.its('expiry')` fails for it.
 
-### Domain
+### Read a cookie on another domain with `cy.getCookie()`
 
 #### Get a cookie set on an API subdomain with `domain`
 
@@ -198,14 +198,14 @@ an API that your app calls on its own subdomain.
 cy.getCookie('refresh_token', { domain: 'api.example.com' }).should('exist')
 ```
 
-### Sessions
+### Validate a `cy.session()` login with `cy.getCookie()`
 
-#### Validate a cached login with `cy.session()`
+#### Check the session cookie in `validate`
 
-[`cy.session()`](/api/commands/session) saves the browser's cookies when its
-setup function finishes, so wait for the session cookie at the end of setup.
-Without that wait, a cookie that arrives after the login click is left out of
-the cached session.
+Use `cy.getCookie()` in the `validate` function of
+[`cy.session()`](/api/commands/session) to confirm the login cookie is set.
+Cypress saves the session's cookies again after `validate` passes, so a cookie
+that arrives after the login click is still part of the cached session.
 
 ```javascript
 cy.session(
@@ -215,7 +215,6 @@ cy.session(
     cy.get('#username').type(username)
     cy.get('#password').type(password)
     cy.contains('Log in').click()
-    cy.getCookie('session_id').should('exist')
   },
   {
     validate() {
@@ -248,7 +247,10 @@ a subdomain or a sibling domain. For a request on `app.example.com`:
 | `api.app.example.com` (subdomain)  | No                          |
 | `api.example.com` (sibling domain) | No                          |
 
-If cookies with the same name match on more than one domain, use
+Matching ignores `hostOnly`, so a host-only cookie set by `example.com` is
+yielded even though the browser wouldn't send it to `app.example.com`. To check
+that a cookie is host-only, assert on its `hostOnly` property. If cookies with
+the same name match on more than one domain, use
 [`cy.getCookies()`](/api/commands/getcookies) to see all of them.
 
 ### Reading HttpOnly cookies with `cy.getCookie()`
@@ -258,19 +260,20 @@ If cookies with the same name match on more than one domain, use
 see those through `document.cookie`, so reading `document.cookie` in a test
 misses them.
 
-### Timeout error when the cookie is never set
+### Why `cy.getCookie()` yields `null`
 
 If no cookie with the name is ever found, `cy.getCookie('session_id').should('exist')`
-fails with `Timed out retrying after 4000ms: expected null to exist` (`4000ms`
-is the default `defaultCommandTimeout`). Check these causes:
+fails with `Timed out retrying after 4000ms: expected null to exist`. Check these
+causes:
 
 - The name or domain doesn't match. See
   [which cookies `cy.getCookie()` matches](#Which-cookies-cygetCookie-matches-by-domain).
 - The cookie was set in an earlier test. With
-  [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
-  on, Cypress clears cookies before each test. Use
-  [`cy.session()`](/api/commands/session) to keep a login across tests.
-- The cookie arrives after a slow request. Pass a longer `timeout`.
+  [test isolation](/app/core-concepts/test-isolation) on, Cypress clears cookies
+  before each test. Use [`cy.session()`](/api/commands/session) to keep a login
+  across tests.
+- The cookie arrives after a slow request. Pass a longer `timeout` (see
+  [Timeouts](#Timeouts)).
 
 ## Rules
 
@@ -285,17 +288,16 @@ is the default `defaultCommandTimeout`). Check these causes:
 
 <HeaderTimeouts />
 
-- `cy.getCookie()` can time out waiting for assertions you've added to pass.
-- `cy.getCookie()` can time out waiting for the browser to return the cookie.
-  Both waits use the
-  [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (or the
-  `timeout` option, when passed).
+- `cy.getCookie()` can time out waiting for assertions you've added to pass, or
+  for the browser to return the cookie. Both waits use the
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts), `4000` ms
+  by default, or the `timeout` option, when passed.
 - If the application under test is on a different origin, `cy.getCookie()`
   retries until the command times out and then fails with a cross-origin error.
   Run it inside [`cy.origin()`](/api/commands/origin) to read cookies on that
   origin.
-- If the browser returns an error while reading the cookie, `cy.getCookie()`
-  fails right away instead of retrying.
+- If the browser returns an error before the first read succeeds,
+  `cy.getCookie()` fails right away instead of retrying.
 
 ## Command Log
 
