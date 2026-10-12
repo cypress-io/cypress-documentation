@@ -74,8 +74,8 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 
 | Option             | Default                                                           | Description                                                                         |
 | ------------------ | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `duration`         | `0`                                                               | Scrolls over the duration (in ms)                                                   |
-| `easing`           | `swing`                                                           | Will scroll with the easing animation                                               |
+| `duration`         | `0`                                                               | Scrolls over the duration (in ms). Accepts a number or a numeric string.            |
+| `easing`           | `swing`                                                           | Easing animation for the scroll. Accepts `swing` or `linear`.                       |
 | `ensureScrollable` | `true`                                                            | Ensure element is scrollable. Error if element cannot scroll.                       |
 | `log`              | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
 | `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)            |
@@ -83,6 +83,7 @@ Pass in an options object to change the default behavior of `cy.scrollTo()`.
 <HeaderYields />
 
 - `.scrollTo()` yields the same subject it was given.
+- `cy.scrollTo()` yields the `window` when it starts a chain.
 - It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried)
   to chain further commands that rely on the subject after `.scrollTo()`.
 
@@ -153,13 +154,17 @@ cy.get('table').find('tr:last-child').should('be.visible')
 
 ### Actionability
 
-`cy.scrollTo()` is an "action command" that follows all the rules of
-[Actionability](/app/core-concepts/interacting-with-elements).
+`cy.scrollTo()` does not run the
+[actionability](/app/core-concepts/interacting-with-elements) checks that
+commands like [`.click()`](/api/commands/click) do. It scrolls an element even
+when the element is hidden, disabled, or covered by another element. Before it
+scrolls, `cy.scrollTo()` retries until the subject is attached to the DOM and is
+scrollable. Pass `ensureScrollable: false` to skip the scrollable check.
 
 ### Scopes
 
 `cy.scrollTo()` acts differently whether it's starting a series of commands or
-being chained off of an existing.
+being chained off of an existing one.
 
 #### When starting a series of commands:
 
@@ -171,7 +176,7 @@ cy.scrollTo('bottom')
 
 #### When chained to an existing series of commands:
 
-This will scroll the `<#checkout-items>` element.
+This scrolls the `#checkout-items` element.
 
 ```javascript
 cy.get('#checkout-items').scrollTo('right')
@@ -191,11 +196,16 @@ or
 
 <HeaderRequirements />
 
-- `.scrollTo()` requires being chained off a command that yields DOM element(s).
-- `.scrollTo()` requires the element to be scrollable.
+- `.scrollTo()` requires being chained off a command that yields a DOM element
+  or the `window`.
+- `.scrollTo()` requires a single element. It errors when the subject contains
+  more than one element.
+- `.scrollTo()` requires the element to be scrollable, unless you pass
+  `ensureScrollable: false`.
 
 <HeaderTimeouts />
 
+- `.scrollTo()` can time out waiting for the element to become scrollable.
 - `.scrollTo()` can time out waiting for assertions you've added to pass.
 
 ## Command Log
