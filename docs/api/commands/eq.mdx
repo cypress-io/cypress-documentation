@@ -73,7 +73,7 @@ Pass in an options object to change the default behavior of `.eq()`.
 
 ### Index
 
-#### Get the 2nd list item with `.eq()`
+#### Get the 2nd item in a list with `.eq()`
 
 ```html
 <ul>
@@ -120,7 +120,7 @@ cy.get('tr').eq(2).should('contain', 'Canada')
 
 ### Index from end
 
-#### Get the 2nd-to-last list item with `.eq()`
+#### Get the 2nd-to-last item in a list with `.eq()`
 
 ```html
 <ul>
@@ -210,7 +210,7 @@ cy.get('[data-cy=result]').should('have.length', 10).eq(3).click()
 cy.get('[data-cy=result]').eq(3).should('have.class', 'selected')
 ```
 
-#### Assert on a table row after sorting it with `.eq()`
+#### Check table row order after sorting with `.eq()`
 
 `cy.get()` and `.eq()` are both queries, so Cypress re-runs them together until
 the chained assertion passes. After the table re-sorts, the assertion checks
@@ -242,36 +242,41 @@ cy.get('tbody tr').eq(0).should('contain', 'Ada')
 cy.get('tbody tr').eq(1).should('contain', 'Grace')
 ```
 
-## Notes
+### Options
 
-### When to use `.eq()` instead of a `data-cy` selector
+#### Wait longer for `.eq()` with the `timeout` option
 
-An index is tied to the order of the elements on the page. When that order
-changes, such as a new item added at the top of a list, `.eq()` selects a
-different element and the test breaks for a reason unrelated to what it checks.
-Use `.eq()` when the position itself is what you're testing, such as sort order
-or the newest item in a feed. Otherwise, select the element by a `data-cy`
-attribute. Learn more in
-[selecting elements](/app/core-concepts/best-practices#Selecting-Elements).
+The `timeout` you pass to `.eq()` sets how long Cypress retries the whole query
+chain, including the `cy.get()` before it. Here, the third notification appears
+after 6 seconds, which is past the default 4-second
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts).
 
-```javascript
-// position matters: the first row after sorting
-cy.get('tbody tr').eq(0).should('contain', 'Ada')
-
-// position doesn't matter: the row for a specific user
-cy.get('[data-cy=user-ada]').should('be.visible')
+```html title="index.html"
+<ul class="notifications">
+  <li>Saved</li>
+  <li>Uploaded</li>
+</ul>
+<!-- a third <li> with the text "Synced" is added after 6 seconds -->
 ```
+
+```javascript title="spec.cy.js"
+cy.get('.notifications li')
+  .eq(2, { timeout: 10000 })
+  .should('have.text', 'Synced')
+```
+
+## Notes
 
 ### How `.eq()` compares to `.first()` and `.last()`
 
 `.eq(0)` yields the same element as [`.first()`](/api/commands/first), and
 `.eq(-1)` yields the same element as [`.last()`](/api/commands/last).
 
-### When the index is outside the set
+### What happens when the `.eq()` index is out of range
 
 When no element exists at the index, `.eq()` yields an empty set. Cypress
 retries until an element appears at the index. If none appears before the
-timeout, it fails with an error such as
+[timeout](#Wait-longer-for-eq-with-the-timeout-option), it fails with an error such as
 ``Expected to find element: `5`, but never found it.`` To assert that the set has
 no element at an index, chain `.should('not.exist')`.
 
@@ -311,7 +316,38 @@ cy.get('li').eq(1) // yields <li>Banana</li>
 cy.get('li:nth-child(2)') // yields <li>Banana</li> and <li>Daikon</li>
 ```
 
-### Aliasing the result of `.eq()`
+### How `.eq()` compares to the jQuery `:eq()` selector
+
+`cy.get()` accepts jQuery selectors, so `cy.get('li:eq(1)')` yields the same
+element as `cy.get('li').eq(1)`. jQuery deprecated the
+[`:eq()` selector](https://api.jquery.com/eq-selector/) in jQuery 3.4 and removed
+it in jQuery 4, so use the `.eq()` command instead.
+
+```javascript
+cy.get('li:eq(1)') // deprecated jQuery selector
+cy.get('li').eq(1) // use the .eq() command instead
+```
+
+### When to use `.select()` instead of `.eq()` on options
+
+`.eq()` yields an `<option>` element without selecting it, so the `<select>`
+keeps its value. Calling `.click()` on the option doesn't select it either:
+Cypress fails because the option isn't visible. To choose an option by its
+position, pass the index to [`.select()`](/api/commands/select).
+
+```html
+<select>
+  <option value="small">Small</option>
+  <option value="medium">Medium</option>
+  <option value="large">Large</option>
+</select>
+```
+
+```javascript
+cy.get('select').select(1).should('have.value', 'medium')
+```
+
+### How an aliased `.eq()` re-queries the current DOM
 
 An alias stores the query chain, not the element it found. Each time you use the
 alias, Cypress re-runs the chain against the current DOM, so an aliased `.eq()`
@@ -333,6 +369,24 @@ cy.get('@second').should('have.text', 'Walk dog')
 
 cy.get('.new-todo').type('Write docs{enter}')
 cy.get('@second').should('have.text', 'Buy milk')
+```
+
+### When to use `.eq()` instead of a `data-cy` selector
+
+An index is tied to the order of the elements on the page. When that order
+changes, such as a new item added at the top of a list, `.eq()` selects a
+different element and the test breaks for a reason unrelated to what it checks.
+Use `.eq()` when the position itself is what you're testing, such as sort order
+or the newest item in a feed. Otherwise, select the element by a `data-cy`
+attribute. Learn more in
+[selecting elements](/app/core-concepts/best-practices#Selecting-Elements).
+
+```javascript
+// position matters: the first row after sorting
+cy.get('tbody tr').eq(0).should('contain', 'Ada')
+
+// position doesn't matter: the row for a specific user
+cy.get('[data-cy=user-ada]').should('be.visible')
 ```
 
 ## Rules
