@@ -249,11 +249,6 @@ a subdomain or a sibling domain. When the application under test is on
 | `api.app.example.com` (subdomain)  | No                          |
 | `api.example.com` (sibling domain) | No                          |
 
-If cookies with the same name match on more than one domain, WebKit yields the
-one on the exact domain. Chromium-based browsers and Firefox yield whichever
-match the browser lists first, which can be the parent-domain cookie. Use
-[`cy.getCookies()`](/api/commands/getcookies) to see all of them.
-
 ### Reading HttpOnly cookies with `cy.getCookie()`
 
 `cy.getCookie()` reads cookies through the browser, so it yields cookies marked
