@@ -1327,7 +1327,18 @@
           "link": "https://github.com/Bkucera/cypress-plugin-tab",
           "keywords": ["commands", "tab", "keyboard", "accessibility"],
           "badge": "community"
-        }
+        },
+        {
+        "name": "cypress-performance-ui",
+        "description": "Collect browser-native performance metrics in Cypress tests, track historical results in JSON, and generate visual HTML reports without Lighthouse.",
+        "link": "https://github.com/pete2121/cypress-performance-ui",
+        "keywords": [
+        "performance",
+        "reporting",
+        "metrics"
+                   ],
+        "badge": "community"
+      }
       ]
     }
   ]
