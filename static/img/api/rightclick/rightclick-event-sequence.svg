@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="372" viewBox="0 0 760 372" role="img" aria-labelledby="t d">
+<title id="t">Events fired by .click() and .rightclick()</title>
+<desc id="d">Three event sequences. .click() fires pointerdown, mousedown, pointerup, mouseup, then click. .rightclick() fires pointerdown, mousedown, contextmenu, pointerup, then mouseup, and no click event. When pointerdown is cancelled, .rightclick() fires pointerdown, contextmenu, then pointerup, and skips mousedown and mouseup.</desc>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .chip { fill: #ffffff; stroke: #6f74a0; stroke-width: 1.25; }
+  .chip-accent { fill: #4956e3; }
+  .chip-skipped { fill: none; stroke: #6f74a0; stroke-width: 1.25; stroke-dasharray: 5 4; }
+  .evt { font: 600 14px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .evt-accent { font: 600 14px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #ffffff; }
+  .evt-skipped { font: 14px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #555a6e; text-decoration: line-through; }
+  .label { font: 600 15px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+  .arrow { stroke: #555a6e; stroke-width: 1.5; fill: none; }
+  .head { fill: #555a6e; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="759" height="371" rx="12"/>
+<text class="label" x="22.0" y="34">.click()</text>
+<rect class="chip" x="22.0" y="52" width="124" height="40" rx="6"/>
+<text class="evt" x="84.0" y="77.0" text-anchor="middle">pointerdown</text>
+<path class="arrow" d="M 149.0 72.0 H 161.0"/>
+<path class="head" d="M 166.0 72.0 l -6 -4 v 8 z"/>
+<rect class="chip" x="170.0" y="52" width="124" height="40" rx="6"/>
+<text class="evt" x="232.0" y="77.0" text-anchor="middle">mousedown</text>
+<path class="arrow" d="M 297.0 72.0 H 309.0"/>
+<path class="head" d="M 314.0 72.0 l -6 -4 v 8 z"/>
+<rect class="chip" x="318.0" y="52" width="124" height="40" rx="6"/>
+<text class="evt" x="380.0" y="77.0" text-anchor="middle">pointerup</text>
+<path class="arrow" d="M 445.0 72.0 H 457.0"/>
+<path class="head" d="M 462.0 72.0 l -6 -4 v 8 z"/>
+<rect class="chip" x="466.0" y="52" width="124" height="40" rx="6"/>
+<text class="evt" x="528.0" y="77.0" text-anchor="middle">mouseup</text>
+<path class="arrow" d="M 593.0 72.0 H 605.0"/>
+<path class="head" d="M 610.0 72.0 l -6 -4 v 8 z"/>
+<rect class="chip" x="614.0" y="52" width="124" height="40" rx="6"/>
+<text class="evt" x="676.0" y="77.0" text-anchor="middle">click</text>
+<text class="label" x="22.0" y="152">.rightclick()</text>
+<rect class="chip" x="22.0" y="170" width="124" height="40" rx="6"/>
+<text class="evt" x="84.0" y="195.0" text-anchor="middle">pointerdown</text>
+<path class="arrow" d="M 149.0 190.0 H 161.0"/>
+<path class="head" d="M 166.0 190.0 l -6 -4 v 8 z"/>
+<rect class="chip" x="170.0" y="170" width="124" height="40" rx="6"/>
+<text class="evt" x="232.0" y="195.0" text-anchor="middle">mousedown</text>
+<path class="arrow" d="M 297.0 190.0 H 309.0"/>
+<path class="head" d="M 314.0 190.0 l -6 -4 v 8 z"/>
+<rect class="chip-accent" x="318.0" y="170" width="124" height="40" rx="6"/>
+<text class="evt-accent" x="380.0" y="195.0" text-anchor="middle">contextmenu</text>
+<path class="arrow" d="M 445.0 190.0 H 457.0"/>
+<path class="head" d="M 462.0 190.0 l -6 -4 v 8 z"/>
+<rect class="chip" x="466.0" y="170" width="124" height="40" rx="6"/>
+<text class="evt" x="528.0" y="195.0" text-anchor="middle">pointerup</text>
+<path class="arrow" d="M 593.0 190.0 H 605.0"/>
+<path class="head" d="M 610.0 190.0 l -6 -4 v 8 z"/>
+<rect class="chip" x="614.0" y="170" width="124" height="40" rx="6"/>
+<text class="evt" x="676.0" y="195.0" text-anchor="middle">mouseup</text>
+<text class="note" x="22.0" y="232">Fires contextmenu between mousedown and pointerup, and no click event</text>
+<text class="label" x="22.0" y="270">.rightclick() when pointerdown is cancelled</text>
+<rect class="chip" x="22.0" y="288" width="124" height="40" rx="6"/>
+<text class="evt" x="84.0" y="313.0" text-anchor="middle">pointerdown</text>
+<path class="arrow" d="M 149.0 308.0 H 161.0"/>
+<path class="head" d="M 166.0 308.0 l -6 -4 v 8 z"/>
+<rect class="chip-skipped" x="170.0" y="288" width="124" height="40" rx="6"/>
+<text class="evt-skipped" x="232.0" y="313.0" text-anchor="middle">mousedown</text>
+<path class="arrow" d="M 297.0 308.0 H 309.0"/>
+<path class="head" d="M 314.0 308.0 l -6 -4 v 8 z"/>
+<rect class="chip-accent" x="318.0" y="288" width="124" height="40" rx="6"/>
+<text class="evt-accent" x="380.0" y="313.0" text-anchor="middle">contextmenu</text>
+<path class="arrow" d="M 445.0 308.0 H 457.0"/>
+<path class="head" d="M 462.0 308.0 l -6 -4 v 8 z"/>
+<rect class="chip" x="466.0" y="288" width="124" height="40" rx="6"/>
+<text class="evt" x="528.0" y="313.0" text-anchor="middle">pointerup</text>
+<path class="arrow" d="M 593.0 308.0 H 605.0"/>
+<path class="head" d="M 610.0 308.0 l -6 -4 v 8 z"/>
+<rect class="chip-skipped" x="614.0" y="288" width="124" height="40" rx="6"/>
+<text class="evt-skipped" x="676.0" y="313.0" text-anchor="middle">mouseup</text>
+<text class="note" x="22.0" y="350">Skips mousedown and mouseup, and still fires contextmenu and pointerup</text>
+<text class="note" x="22.0" y="114">Ends with a click event</text>
+</svg>

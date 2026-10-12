@@ -194,6 +194,15 @@ cy.get('[data-cy=chart]').rightclick(120, 45)
 cy.get('[data-cy=context-menu]').should('contain', 'March')
 ```
 
+When a coordinate right click lands in the wrong place, click the `rightclick`
+command in the Command Log to pin its snapshot. A red dot marks the exact point
+Cypress right clicked.
+
+<DocsImage
+  src="/img/api/rightclick/command-log-rightclick-chart-snapshot.png"
+  alt="The rightclick 120, 45 command pinned in the Command Log. In the app preview, a red dot marks the right click on the March bar of a bar chart, and the app's context menu shows Show March details and Hide March."
+/>
+
 ### Options
 
 #### Control where Cypress scrolls the element before right clicking
@@ -314,6 +323,15 @@ events in order:
 Each event carries `button: 2` and `buttons: 2`. `.rightclick()` does not fire a
 `click` event.
 
+The diagram compares the sequence with `.click()` and shows which events
+Cypress skips when `pointerdown` is cancelled.
+
+<DocsImage
+  src="/img/api/rightclick/rightclick-event-sequence.svg"
+  alt="Three event sequences. .click() fires pointerdown, mousedown, pointerup, mouseup, then click. .rightclick() fires pointerdown, mousedown, contextmenu, pointerup, then mouseup, and no click event. When pointerdown is cancelled, .rightclick() fires pointerdown, contextmenu, then pointerup, and skips mousedown and mouseup."
+  noBorder
+/>
+
 ### Focus
 
 #### Focus is given to the first focusable element
@@ -368,20 +386,24 @@ Cancelling the `contextmenu` event does not change which events Cypress sends.
 cy.get('.rightclick-action-div').rightclick()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/rightclick/rightclick-dom-element-in-command-log.png"
-  alt="Command log for right click"
+  alt="Command Log showing a get command for .rightclick-action-div followed by a rightclick command."
 />
 
-When clicking on `rightclick` within the command log, the console outputs the
+When you click `rightclick` in the Command Log, the console outputs the
 following:
 
 <DocsImage
   src="/img/api/rightclick/rightclick-console-log-with-mouse-events.png"
-  alt="console.log for right click"
+  alt="DevTools console output for the rightclick command: the element it was applied to, the element count, the coordinates, and a Mouse Events table listing each event with its target element, whether its default was prevented, whether its propagation was stopped, and the active modifier keys."
 />
+
+The Mouse Events table lists the `contextmenu` event last, after the press and
+release events. Cypress fires it between `mousedown` and `pointerup`, as
+described in [Events fired by a right click](#Events-fired-by-a-right-click).
 
 ## History
 
