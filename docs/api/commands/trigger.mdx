@@ -110,11 +110,34 @@ happening (it must be visible and not disabled).
 cy.get('button').trigger('mouseover') // yields 'button'
 ```
 
+#### Show and hide a tooltip on hover
+
+When a JavaScript handler shows the tooltip, trigger the events it listens for
+and assert on the result.
+
+```javascript
+cy.get('[data-cy=help-icon]').trigger('mouseover')
+cy.get('[data-cy=tooltip]').should('be.visible')
+
+cy.get('[data-cy=help-icon]').trigger('mouseout')
+cy.get('[data-cy=tooltip]').should('not.be.visible')
+```
+
+If the app listens for `mouseenter` and `mouseleave` instead, trigger those
+event names. A triggered event doesn't apply CSS `:hover` styles, so a tooltip
+shown only by a `:hover` rule stays hidden. See [`.hover()`](/api/commands/hover)
+for workarounds.
+
 #### Simulate a "long press" event
+
+Hold the press with `mousedown`, assert on what the long press shows, then
+release it with `mouseup`. The assertion retries until the menu appears, so the
+test holds the press only as long as the app needs, without a fixed
+[`cy.wait()`](/api/commands/wait).
 
 ```javascript
 cy.get('.target').trigger('mousedown')
-cy.wait(1000)
+cy.get('.long-press-menu').should('be.visible')
 cy.get('.target').trigger('mouseup')
 ```
 
@@ -148,13 +171,112 @@ cy.get('[data-cy=draggable]').trigger('mousemove', {
 cy.get('[data-cy=draggable]').trigger('mouseup')
 ```
 
-#### Drag and Drop
+### Drag and Drop Events
+
+#### Drag an item to a drop zone with `dataTransfer`
+
+HTML drag and drop handlers pass data through the event's `dataTransfer`
+property. Create one
+[`DataTransfer`](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer)
+and pass the same object to every event, so the data the `dragstart` handler
+sets is there when the `drop` handler reads it.
+
+```javascript
+const dataTransfer = new DataTransfer()
+
+cy.get('[data-cy=card]').trigger('dragstart', { dataTransfer })
+cy.get('[data-cy=done-column]').trigger('dragenter', { dataTransfer })
+cy.get('[data-cy=done-column]').trigger('dragover', { dataTransfer })
+cy.get('[data-cy=done-column]').trigger('drop', { dataTransfer })
+cy.get('[data-cy=card]').trigger('dragend', { dataTransfer })
+
+cy.get('[data-cy=done-column]').should('contain', 'Write docs')
+```
 
 :::info
 
 [Check out our example recipe triggering mouse and drag events to test drag and drop](/app/references/recipes#Testing-the-DOM)
 
 :::
+
+### Keyboard Events
+
+#### Close a dialog with the Escape key
+
+```javascript
+cy.get('[data-cy=dialog]').trigger('keydown', { key: 'Escape' })
+cy.get('[data-cy=dialog]').should('not.exist')
+```
+
+Pass the properties the handler reads, such as `key`, `code`, or `keyCode`. The
+event bubbles, so a listener on the document receives it too.
+
+`.trigger()` fires the one event you name on any element.
+[`.type()`](/api/commands/type) simulates the full sequence of keyboard events,
+but only on elements it can type into, such as inputs, textareas, and elements
+with a `tabindex`. Use `.type('{esc}')` when the element accepts typing, and
+`.trigger()` when it doesn't.
+
+### Custom Events
+
+#### Trigger a custom event with a `detail` payload
+
+`.trigger()` fires any event name, including your app's own events. With the
+default `Event` constructor, the `detail` you pass is attached as is.
+
+```javascript
+cy.get('[data-cy=cart]').trigger('cart:updated', { detail: { count: 3 } })
+cy.get('[data-cy=cart-count]').should('have.text', '3')
+```
+
+If the handler checks `event instanceof CustomEvent`, add
+`eventConstructor: 'CustomEvent'`, which also accepts `detail`.
+
+### Touch and Pointer Events
+
+#### Swipe a carousel with touch events
+
+Touch handlers read finger positions from the `touches` and `changedTouches`
+lists rather than from `clientX`. With the default `Event` constructor, pass
+plain objects with the properties the handler reads. On `touchend`, the lifted
+finger is in `changedTouches`, and `touches` is empty.
+
+```javascript
+cy.get('[data-cy=carousel]').trigger('touchstart', {
+  touches: [{ clientX: 300, clientY: 100 }],
+})
+cy.get('[data-cy=carousel]').trigger('touchmove', {
+  touches: [{ clientX: 50, clientY: 100 }],
+})
+cy.get('[data-cy=carousel]').trigger('touchend', {
+  touches: [],
+  changedTouches: [{ clientX: 50, clientY: 100 }],
+})
+
+cy.get('[data-cy=slide-2]').should('be.visible')
+```
+
+#### Drag a slider thumb with pointer events
+
+Many drag and gesture libraries listen for pointer events and ignore pointers
+that aren't primary. Pass the same `pointerId` with every event so the library
+tracks one pointer from press to release.
+
+```javascript
+const pointer = { pointerId: 1, pointerType: 'mouse', isPrimary: true }
+
+cy.get('[data-cy=volume-thumb]').trigger('pointerdown', {
+  ...pointer,
+  button: 0,
+})
+cy.get('[data-cy=volume-thumb]').trigger('pointermove', {
+  ...pointer,
+  clientX: 400,
+})
+cy.get('[data-cy=volume-thumb]').trigger('pointerup', pointer)
+
+cy.get('[data-cy=volume-value]').should('have.text', '80')
+```
 
 ### Change Event
 
@@ -202,6 +324,19 @@ from bubbling.
 cy.get('button').trigger('mouseover', { bubbles: false })
 ```
 
+A [`cy.spy()`](/api/commands/spy) added as a listener on the document confirms
+the event stopped at the button.
+
+```javascript
+const onDocumentMouseover = cy.spy().as('documentMouseover')
+cy.document().then((doc) => {
+  doc.addEventListener('mouseover', onDocumentMouseover)
+})
+
+cy.get('button').trigger('mouseover', { bubbles: false })
+cy.get('@documentMouseover').should('not.have.been.called')
+```
+
 #### Specify the exact `clientX` and `clientY` the event should have
 
 This overrides the default auto-positioning based on the element itself. Useful
@@ -211,6 +346,39 @@ element itself.
 ```javascript
 cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
 ```
+
+To check the properties a listener receives, add a
+[`cy.spy()`](/api/commands/spy) as the listener and assert on its call.
+
+```javascript
+const onMousemove = cy.spy().as('mousemove')
+cy.get('button').then(($button) => {
+  $button[0].addEventListener('mousemove', onMousemove)
+})
+
+cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
+cy.get('@mousemove').should('have.been.calledWithMatch', {
+  clientX: 200,
+  clientY: 300,
+})
+```
+
+#### Force an event on a hidden element
+
+Custom controls often hide the native input they're built on. Without `force`,
+`.trigger()` waits for the input to become visible and fails when it times out.
+`force: true` skips the [actionability](#Actionability) checks and the scroll
+into view, and dispatches the event right away.
+
+```javascript
+cy.get('[data-cy=volume-input]').invoke('val', 60).trigger('change', {
+  force: true,
+})
+cy.get('[data-cy=volume-label]').should('have.text', '60')
+```
+
+Forcing lets the test do something a user can't, so keep it for elements like
+this one, which receive events but are never visible.
 
 ### Fire other Event types
 
@@ -238,9 +406,28 @@ the event right away, without waiting for actionability, and doesn't add any
 coordinate properties to the event.
 
 ```javascript
-cy.window().trigger('resize')
-cy.document().trigger('dragover')
+cy.window().trigger('beforeprint')
+cy.document().trigger('visibilitychange')
 ```
+
+#### Show an offline banner when the connection drops
+
+```javascript
+cy.window().trigger('offline')
+cy.get('[data-cy=offline-banner]').should('be.visible')
+
+cy.window().trigger('online')
+cy.get('[data-cy=offline-banner]').should('not.be.visible')
+```
+
+This runs the app's `offline` and `online` listeners, but `navigator.onLine`
+doesn't change. It works when the app reacts to the events rather than reading
+`navigator.onLine`.
+
+For `scroll` and `resize`, use [`.scrollTo()`](/api/commands/scrollto) and
+[`cy.viewport()`](/api/commands/viewport) instead. They change the scroll
+position or window size and fire the real event, so the handler reads values
+that match it.
 
 ## Notes
 
