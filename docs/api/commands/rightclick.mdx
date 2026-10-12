@@ -106,6 +106,61 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 cy.get('#open-menu').rightclick()
 ```
 
+#### Open a custom context menu
+
+Chaining further commands off the subject of `.rightclick()` is unsafe, since
+opening a menu can re-render the element. Start a new chain from `cy` and assert
+that the menu appeared.
+
+```javascript
+cy.get('[data-cy=file-row]').first().rightclick()
+cy.get('[data-cy=context-menu]').should('be.visible')
+```
+
+#### Choose an item from a context menu
+
+Query the menu from `cy`, not from the subject of `.rightclick()`, then click
+the item you want.
+
+```javascript
+cy.get('[data-cy=file-row]').first().rightclick()
+cy.get('[data-cy=context-menu]').contains('Rename').click()
+cy.get('[data-cy=rename-input]').should('be.focused')
+```
+
+#### Close a context menu
+
+Test the way your users close the menu. Many menus close when the user presses
+Escape.
+
+```javascript
+cy.get('[data-cy=file-row]').first().rightclick()
+cy.get('[data-cy=context-menu]').should('be.visible')
+cy.get('body').type('{esc}')
+cy.get('[data-cy=context-menu]').should('not.exist')
+```
+
+#### Check that your app blocks the native context menu
+
+`.rightclick()` never opens the browser's own context menu, so a test can pass
+even when your app forgets to call `preventDefault()` and real users see two
+menus. To check, add a `contextmenu` listener on the window after the page
+loads. It runs after your app's own handlers, so the event it receives shows
+whether one of them called `preventDefault()`.
+
+```javascript
+cy.window().then((win) => {
+  win.addEventListener('contextmenu', cy.stub().as('contextmenu'))
+})
+cy.get('[data-cy=canvas]').rightclick()
+cy.get('@contextmenu').should('have.been.calledWithMatch', {
+  defaultPrevented: true,
+})
+```
+
+If your app stops the event from propagating, the window listener never runs.
+Assert on your app's menu instead.
+
 ### Position
 
 #### Specify a corner of the element to right click
@@ -127,7 +182,33 @@ The right click below is issued inside of the element (15px from the left and
 cy.get('#open-menu').rightclick(15, 40)
 ```
 
+#### Right click a point on a canvas or chart
+
+When the target is a region inside one element, such as a bar in a chart drawn
+on a `<canvas>`, there is no child element to select. Pass the coordinates of
+that spot instead.
+
+```javascript
+// the March bar is 120px from the left and 45px from the top of the chart
+cy.get('[data-cy=chart]').rightclick(120, 45)
+cy.get('[data-cy=context-menu]').should('contain', 'March')
+```
+
 ### Options
+
+#### Control where Cypress scrolls the element before right clicking
+
+Cypress scrolls the element into view before right clicking it. To put the
+element in a predictable spot, such as clear of a sticky header, pass
+`scrollBehavior`. Center the element in the viewport, or set each axis
+separately with a `{ block, inline }` object.
+
+```javascript
+cy.get('[data-cy=row-42]').rightclick({ scrollBehavior: 'center' })
+cy.get('[data-cy=carousel-item]').rightclick({
+  scrollBehavior: { block: 'center', inline: 'nearest' },
+})
+```
 
 #### Force a right click regardless of its actionable state
 
@@ -185,13 +266,26 @@ The following keys can be combined with `.rightclick()` through the `options`.
 | `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`. |
 | `shiftKey` | Activates the shift key.                                                                      |
 
-##### Command right click
+#### Command right click
 
 ```js
 // execute a CMD + right click on the .menu-item
 cy.get('.menu-item').rightclick({
   metaKey: true,
 })
+```
+
+#### Shift right click to show more options
+
+Some apps add options to the context menu when the user holds Shift while right
+clicking.
+
+```js
+// execute a SHIFT + right click on the first file
+cy.get('[data-cy=file-row]').first().rightclick({
+  shiftKey: true,
+})
+cy.get('[data-cy=context-menu]').should('contain', 'Copy as path')
 ```
 
 ## Notes
