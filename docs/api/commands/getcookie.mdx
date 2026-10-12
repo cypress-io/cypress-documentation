@@ -169,7 +169,7 @@ cy.getCookie('session_id').should('include', {
 ```
 
 `sameSite` is `'lax'`, `'strict'`, or `'no_restriction'` (the value for
-`SameSite=None`).
+`SameSite=None`), or `'unspecified'` in Firefox when the cookie doesn't set one.
 
 #### Check that a remember-me cookie expires in the future
 
@@ -253,9 +253,11 @@ a subdomain or a sibling domain. When the application under test is on
 Matching ignores `hostOnly`, so a host-only cookie set by `example.com` is
 yielded even though the browser wouldn't send it to `app.example.com`. Don't
 rely on the `hostOnly` property to test a cookie's scope: it's left off when
-`false`, for cookies on `localhost` or an IP address, and always in WebKit. If
-cookies with
-the same name match on more than one domain, use
+`false`, for cookies on `localhost` or an IP address, and always in WebKit.
+
+If cookies with the same name match on more than one domain, WebKit yields the
+one on the exact domain. Chromium-based browsers and Firefox yield whichever
+match the browser lists first, which can be the parent-domain cookie. Use
 [`cy.getCookies()`](/api/commands/getcookies) to see all of them.
 
 ### Reading HttpOnly cookies with `cy.getCookie()`
@@ -300,7 +302,9 @@ causes:
 - If the application under test is on a different origin, `cy.getCookie()`
   retries until the command times out and then fails with a cross-origin error,
   even when you pass the `domain` option. Run it inside
-  [`cy.origin()`](/api/commands/origin) to read cookies on that origin.
+  [`cy.origin()`](/api/commands/origin) to read cookies on that origin, or use
+  [`cy.getAllCookies()`](/api/commands/getallcookies), which reads cookies on
+  every domain without that check.
 - If the browser returns an error before the first read succeeds,
   `cy.getCookie()` fails right away instead of retrying.
 
@@ -316,7 +320,7 @@ The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/getcookie/get-browser-cookie-and-make-assertions-about-object.png"
-  alt="Command Log showing getCookie for fakeCookie1, followed by a passing assertion that the cookie has a value property of 123ABC"
+  alt="Command Log showing getCookie for fakeCookie1, followed by a passing assertion that the cookie has a value property of 123ABC, displayed with stray asterisks around value and 123ABC"
 />
 
 When you click `getCookie` in the Command Log, the console outputs the
@@ -333,7 +337,7 @@ value, with a note that no cookie with that name was found.
 | Version                                    | Changes                                                                                                                                                                                                    |
 | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [16.0.0](/app/references/changelog#16-0-0) | Now a query that retries assertions, with `defaultCommandTimeout` as its timeout. See the [Migration Guide](/app/references/migration-guide#cygetCookie-cygetCookies-and-cygetAllCookies-are-now-queries). |
-| [15.6.0](/app/references/changelog#15-6-0) | In WebKit, prefers a cookie that matches the exact `domain`, falling back to the apex domain.                                                                                                              |
+| [15.6.0](/app/references/changelog#15-6-0) | In WebKit, prefers a cookie that matches the exact `domain`, falling back to a parent domain.                                                                                                              |
 | [12.0.0](/app/references/changelog#12-0-0) | The `domain` option defaults to the hostname instead of the superdomain.                                                                                                                                   |
 | [11.0.0](/app/references/changelog#11-0-0) | Added `domain` option.                                                                                                                                                                                     |
 | [5.0.0](/app/references/changelog#5-0-0)   | Removed `experimentalGetCookiesSameSite` and made `sameSite` property always available.                                                                                                                    |
