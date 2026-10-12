@@ -11,8 +11,7 @@
       "label": "Cypress Studio AI",
       "href": "/app/guides/cypress-studio",
       "description": "Smart recommendations while building tests.",
-      "showAISparkle": true,
-      "isNew": true
+      "showAISparkle": true
     }
   ],
   "api": [
@@ -26,8 +25,7 @@
       "label": "cy.prompt()",
       "href": "/api/commands/prompt",
       "description": "Natural language and self-healing tests.",
-      "showAISparkle": true,
-      "isNew": true
+      "showAISparkle": true
     }
   ],
   "cloud": [
@@ -40,24 +38,21 @@
     {
       "label": "Cloud MCP",
       "href": "/cloud/integrations/cloud-mcp?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-mcp",
-      "description": "Connect AI agents directly to Cypress Cloud runs.",
-      "isNew": true
+      "description": "Connect AI agents directly to Cypress Cloud runs."
     }
   ],
   "ui-coverage": [
     {
       "label": "Cloud MCP",
       "href": "/cloud/integrations/cloud-mcp?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-mcp",
-      "description": "Handle UI Coverage triage with AI agents.",
-      "isNew": true
+      "description": "Handle UI Coverage triage with AI agents."
     }
   ],
   "accessibility": [
     {
       "label": "Cloud MCP",
       "href": "/cloud/integrations/cloud-mcp?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-mcp",
-      "description": "Handle accessibility issues with AI agents.",
-      "isNew": true
+      "description": "Handle accessibility issues with AI agents."
     }
   ]
 }
