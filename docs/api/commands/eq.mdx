@@ -1,6 +1,6 @@
 ---
 title: 'cy.eq()'
-description: Get a DOM element at a specific index in an array of elements in Cypress.
+description: Get a DOM element at a specific index within a set of DOM elements in Cypress.
 sidebar_label: eq
 slug: /api/commands/eq
 ---
@@ -9,7 +9,7 @@ slug: /api/commands/eq
 
 # eq
 
-Get A DOM element at a specific index in an array of elements.
+Get a DOM element at a specific index within a set of DOM elements.
 
 :::info
 
@@ -47,13 +47,13 @@ cy.getCookies().eq(4) // Errors, 'getCookies' does not yield DOM element
 
 <Icon name="angle-right" /> **index _(Number)_**
 
-A number indicating the index to find the element at within an array of
-elements. Starts with 0.
+The position of the element to get within the set of elements, counting from
+`0`.
 
 <Icon name="angle-right" /> **indexFromEnd _(Number)_**
 
-A negative number indicating the index position from the end to find the element
-at within an array of elements.
+A negative number that counts back from the end of the set of elements. `-1` is
+the last element.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -66,14 +66,14 @@ Pass in an options object to change the default behavior of `.eq()`.
 
 <HeaderYields />
 
-- `.eq()` yields the new DOM element it found.
+- `.eq()` yields the DOM element at the given index within the set it was given.
 - `.eq()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
 
 ### Index
 
-#### Find the 2nd element within the elements
+#### Get the 2nd list item with `.eq()`
 
 ```html
 <ul>
@@ -86,10 +86,12 @@ Pass in an options object to change the default behavior of `.eq()`.
 ```
 
 ```javascript
-cy.get('li').eq(1).should('contain', 'siamese') // true
+cy.get('li').eq(1).should('contain', 'siamese')
 ```
 
-#### Make an assertion on the 3rd row of a table
+#### Assert on the 3rd row of a table with `.eq()`
+
+The header row is a `<tr>` too, so it sits at index `0`.
 
 ```html
 <table>
@@ -113,12 +115,12 @@ cy.get('li').eq(1).should('contain', 'siamese') // true
 ```
 
 ```javascript
-cy.get('tr').eq(2).should('contain', 'Canada') //true
+cy.get('tr').eq(2).should('contain', 'Canada')
 ```
 
-### Index From End
+### Index from end
 
-#### Find the 2nd from the last element within the elements
+#### Get the 2nd-to-last list item with `.eq()`
 
 ```html
 <ul>
@@ -131,7 +133,206 @@ cy.get('tr').eq(2).should('contain', 'Canada') //true
 ```
 
 ```javascript
-cy.get('li').eq(-2).should('contain', 'sphynx') // true
+cy.get('li').eq(-2).should('contain', 'sphynx')
+```
+
+### Common workflows with `.eq()`
+
+#### Wait for the element at an index to render with `.eq()`
+
+`cy.get()` and `.eq()` are both queries, so Cypress re-runs them together until
+an element exists at the index. Here, the results render one at a time, and
+`.eq(2)` waits for the third one.
+
+```html title="index.html"
+<ul class="results"></ul>
+<!-- results render one at a time, 500 ms apart: Ada, Grace, Katherine, Margaret -->
+```
+
+```javascript title="spec.cy.js"
+cy.get('.results li').eq(2).should('have.text', 'Katherine')
+```
+
+#### Move a table row up and check its position with `.eq()`
+
+`.eq()` yields a single DOM element, so you can keep chaining queries and actions
+off it. It also narrows the set to one element before
+[`.within()`](/api/commands/within), which throws an error when its subject
+contains more than one element. Here, the test checks where each row ends up, so
+the index is what's under test.
+
+```html title="index.html"
+<table>
+  <tbody>
+    <tr>
+      <td>Ada</td>
+      <td><button>Move up</button></td>
+    </tr>
+    <tr>
+      <td>Grace</td>
+      <td><button>Move up</button></td>
+    </tr>
+  </tbody>
+</table>
+<!-- clicking Move up swaps its row with the row above it -->
+```
+
+```javascript title="spec.cy.js"
+cy.get('tbody tr')
+  .eq(1)
+  .within(() => {
+    cy.contains('Move up').click()
+  })
+cy.get('tbody tr').eq(0).should('contain', 'Grace')
+cy.get('tbody tr').eq(1).should('contain', 'Ada')
+```
+
+#### Click an item after the list finishes loading with `.eq()`
+
+An action such as [`.click()`](/api/commands/click) is not an assertion, so
+`cy.get('[data-cy=result]').eq(3).click()` acts on the element at index `3` at
+that moment. If the list renders placeholder rows before the real results, the
+element it clicks can be a placeholder. Assert on the finished list before
+calling `.eq()`, and Cypress retries the query until the assertion passes.
+Here, the results are ranked, so the test clicks the fourth-ranked result.
+
+```html title="index.html"
+<ul class="results"></ul>
+<!--
+  4 placeholder <li data-cy="result" class="placeholder"> elements render
+  first, then 10 <li data-cy="result"> results replace them. Clicking a
+  result adds the class "selected".
+-->
+```
+
+```javascript title="spec.cy.js"
+cy.get('[data-cy=result]').should('have.length', 10).eq(3).click()
+cy.get('[data-cy=result]').eq(3).should('have.class', 'selected')
+```
+
+#### Assert on a table row after sorting it with `.eq()`
+
+`cy.get()` and `.eq()` are both queries, so Cypress re-runs them together until
+the chained assertion passes. After the table re-sorts, the assertion checks
+whichever row is at the index _now_, which is what you want when testing sort
+order.
+
+```html title="index.html"
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Grace</td>
+    </tr>
+    <tr>
+      <td>Ada</td>
+    </tr>
+  </tbody>
+</table>
+<!-- clicking the Name header sorts the rows alphabetically -->
+```
+
+```javascript title="spec.cy.js"
+cy.contains('th', 'Name').click()
+cy.get('tbody tr').eq(0).should('contain', 'Ada')
+cy.get('tbody tr').eq(1).should('contain', 'Grace')
+```
+
+## Notes
+
+### When to use `.eq()` instead of a `data-cy` selector
+
+An index is tied to the order of the elements on the page. When that order
+changes, such as a new item added at the top of a list, `.eq()` selects a
+different element and the test breaks for a reason unrelated to what it checks.
+Use `.eq()` when the position itself is what you're testing, such as sort order
+or the newest item in a feed. Otherwise, select the element by a `data-cy`
+attribute. Learn more in
+[selecting elements](/app/core-concepts/best-practices#Selecting-Elements).
+
+```javascript
+// position matters: the first row after sorting
+cy.get('tbody tr').eq(0).should('contain', 'Ada')
+
+// position doesn't matter: the row for a specific user
+cy.get('[data-cy=user-ada]').should('be.visible')
+```
+
+### How `.eq()` compares to `.first()` and `.last()`
+
+`.eq(0)` yields the same element as [`.first()`](/api/commands/first), and
+`.eq(-1)` yields the same element as [`.last()`](/api/commands/last).
+
+### When the index is outside the set
+
+When no element exists at the index, `.eq()` yields an empty set. Cypress
+retries until an element appears at the index. If none appears before the
+timeout, it fails with an error such as
+``Expected to find element: `5`, but never found it.`` To assert that the set has
+no element at an index, chain `.should('not.exist')`.
+
+```html
+<ul>
+  <li>tabby</li>
+  <li>siamese</li>
+  <li>persian</li>
+  <li>sphynx</li>
+  <li>burmese</li>
+</ul>
+```
+
+```javascript
+cy.get('li').eq(5).should('not.exist')
+```
+
+### How `.eq()` compares to the `:nth-child()` selector
+
+`.eq()` counts across the whole set and yields a single element. The CSS
+`:nth-child()` selector counts from `1` within _each_ parent, so it can match
+several elements when the set spans more than one parent.
+
+```html
+<ul class="fruits">
+  <li>Apple</li>
+  <li>Banana</li>
+</ul>
+<ul class="veggies">
+  <li>Carrot</li>
+  <li>Daikon</li>
+</ul>
+```
+
+```javascript
+cy.get('li').eq(1) // yields <li>Banana</li>
+cy.get('li:nth-child(2)') // yields <li>Banana</li> and <li>Daikon</li>
+```
+
+### Aliasing the result of `.eq()`
+
+An alias stores the query chain, not the element it found. Each time you use the
+alias, Cypress re-runs the chain against the current DOM, so an aliased `.eq()`
+yields whichever element is at that index _now_. Learn more in
+[aliasing DOM elements](/app/core-concepts/variables-and-aliases#Elements).
+
+```html title="index.html"
+<input class="new-todo" />
+<ul class="todo-list">
+  <li>Buy milk</li>
+  <li>Walk dog</li>
+</ul>
+<!-- pressing Enter in .new-todo adds the text as a new <li> at the top of the list -->
+```
+
+```javascript title="spec.cy.js"
+cy.get('.todo-list li').eq(1).as('second')
+cy.get('@second').should('have.text', 'Walk dog')
+
+cy.get('.new-todo').type('Write docs{enter}')
+cy.get('@second').should('have.text', 'Buy milk')
 ```
 
 ## Rules
@@ -157,26 +358,37 @@ cy.get('li').eq(-2).should('contain', 'sphynx') // true
 
 ## Command Log
 
-**_Find the 4th `<li>` in the navigation_**
+**_Find the 4th `<li>` in the list_**
 
 ```javascript
-cy.get('.left-nav.nav').find('>li').eq(3)
+cy.get('ul').find('li').eq(3)
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
-<DocsImage src="/img/api/eq/find-element-at-index.png" alt="Command log eq" />
+<DocsImage
+  src="/img/api/eq/find-element-at-index.png"
+  alt="Command Log showing eq with the index 3 chained after get ul and find li"
+/>
 
-When clicking on the `eq` command within the command log, the console outputs
-the following:
+Click the `eq` command in the Command Log to print the following to the
+console:
 
 <DocsImage
   src="/img/api/eq/see-element-and-list-when-using-eq.png"
-  alt="console.log eq"
+  alt="Console output for eq, listing the five list items it was applied to and the fourth list item it yielded"
 />
+
+## History
+
+| Version                                    | Changes                                                                                                                                                                |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [12.6.0](/app/references/changelog#12-6-0) | Overwrite `.eq()` with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
+| [12.0.0](/app/references/changelog#12-0-0) | `.eq()` is now a query.                                                                                                                                                |
 
 ## See also
 
+- [`.filter()`](/api/commands/filter)
 - [`.first()`](/api/commands/first)
 - [`.last()`](/api/commands/last)
 - [`.next()`](/api/commands/next)
