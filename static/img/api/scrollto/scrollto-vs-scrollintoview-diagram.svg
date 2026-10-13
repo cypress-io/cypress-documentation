@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440" role="img" aria-labelledby="t d">
 <title id="t">How .scrollTo() and .scrollIntoView() scroll the same list</title>
 <desc id="d">Two panels show the same scrollable #feed list of eight items. On the left, .scrollTo('bottom') targets the container and moves the visible area to the bottom of the list, showing items 6 to 8. On the right, .scrollIntoView() targets item 5 and moves the visible area until item 5 sits at its top, showing items 5 to 7.</desc>
 <style>
@@ -14,7 +14,7 @@
   .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
   .callout { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
 </style>
-<rect class="card" x="0.5" y="0.5" width="759" height="469" rx="12"/>
+<rect class="card" x="0.5" y="0.5" width="759" height="439" rx="12"/>
 
 <!-- legend -->
 <rect class="content" x="150" y="22" width="26" height="16"/>
@@ -65,5 +65,4 @@
 <text class="note" x="570" y="392" text-anchor="middle">Moves the container until the item</text>
 <text class="note" x="570" y="410" text-anchor="middle">is in view, at the top of the visible area.</text>
 
-<text class="note" x="380" y="448" text-anchor="middle">Both scroll #feed. What changes is what you aim at: the container, or one item inside it.</text>
 </svg>
