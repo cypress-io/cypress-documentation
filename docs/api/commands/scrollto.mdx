@@ -237,8 +237,17 @@ contains an element until that element is in view. To reach a specific item, use
 
 ```javascript
 cy.get('#feed').scrollTo('bottom') // scrolls the container itself
-cy.get('#feed .item').last().scrollIntoView() // scrolls until this item is in view
+cy.contains('#feed .item', 'Item 5').scrollIntoView() // scrolls until this item is in view
 ```
+
+Both commands scroll `#feed`. The difference is what you aim at, and where the
+list ends up.
+
+<DocsImage
+  src="/img/api/scrollto/scrollto-vs-scrollintoview-diagram.svg"
+  alt="Two views of the same eight-item #feed list. scrollTo('bottom') targets the container and shows items 6 to 8; scrollIntoView() on Item 5 targets the item and shows items 5 to 7, with Item 5 at the top."
+  noBorder
+/>
 
 ### Fixing the "element is not scrollable" error
 
