@@ -240,8 +240,7 @@ cy.get('#feed').scrollTo('bottom') // scrolls the container itself
 cy.get('#item-5').scrollIntoView() // scrolls until this item is in view
 ```
 
-Both commands scroll `#feed`. The difference is what you aim at, and where the
-list ends up.
+Compare where each call leaves the list:
 
 <DocsImage
   src="/img/api/scrollto/scrollto-vs-scrollintoview-diagram.svg"
