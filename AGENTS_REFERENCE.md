@@ -217,6 +217,22 @@ same change. `## See also` always stays as it is.
   almost always hides a simpler sentence.
   - Yes: "`cy.session()` caches and restores session state between tests."
   - No: "`cy.session()` allows you to cache and restore session state."
+- **Keep body text current.** The docs describe the product as it works today,
+  so a reader on the current release never has to work out whether a sentence
+  still applies. Leave out the Cypress release that added or changed a feature.
+  - Yes: "`cy.press()` sends a native key press, the way a user's keyboard
+    does."
+  - No: "`cy.press()` supports Escape in Cypress 15.3.0 and later."
+  - No: "Starting in Cypress 16.1.0, you can declare your server's
+    certificates."
+
+  Version history has its own homes: the `## History` table on an `/api` page
+  (see [`docs/api/AGENTS.md`](./docs/api/AGENTS.md#history-tables)) and the
+  changelog. Name a version in body text only when the reader needs it to act:
+  - Deprecation and removal notes: "`Cypress.env()` was removed in Cypress
+    16.0."
+  - Migration guides, which exist to move a reader between versions.
+  - Requirements for tools outside Cypress, such as a minimum Node.js version.
 
 ### Word choice
 
