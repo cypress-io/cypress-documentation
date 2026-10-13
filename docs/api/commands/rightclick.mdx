@@ -327,15 +327,6 @@ events in order:
 Each event carries `button: 2` and `buttons: 2`. `.rightclick()` does not fire a
 `click` event.
 
-The diagram compares the sequence with `.click()` and shows which events
-Cypress skips when `pointerdown` is cancelled.
-
-<DocsImage
-  src="/img/api/rightclick/rightclick-event-sequence.svg"
-  alt="Three event sequences. .click() fires pointerdown, mousedown, pointerup, mouseup, then click. .rightclick() fires pointerdown, mousedown, contextmenu, pointerup, then mouseup, and no click event. When pointerdown is cancelled, .rightclick() fires pointerdown, contextmenu, then pointerup, and skips mousedown and mouseup."
-  noBorder
-/>
-
 ### Focus
 
 #### Focus is given to the first focusable element
