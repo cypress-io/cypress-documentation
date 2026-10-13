@@ -62,8 +62,10 @@
 </g>
 
 <!-- legend -->
+<g id="legend" transform="translate(47 0)">
 <rect class="content" x="150" y="374" width="26" height="16"/>
 <text class="note" x="184" y="387">scrollable content</text>
 <rect class="view" x="320" y="374" width="26" height="16"/>
 <text class="note" x="354" y="387">visible area after the scroll</text>
+</g>
 </svg>
