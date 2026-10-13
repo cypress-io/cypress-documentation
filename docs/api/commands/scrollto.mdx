@@ -237,7 +237,7 @@ contains an element until that element is in view. To reach a specific item, use
 
 ```javascript
 cy.get('#feed').scrollTo('bottom') // scrolls the container itself
-cy.contains('#feed .item', 'Item 5').scrollIntoView() // scrolls until this item is in view
+cy.get('#item-5').scrollIntoView() // scrolls until this item is in view
 ```
 
 Both commands scroll `#feed`. The difference is what you aim at, and where the
