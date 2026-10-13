@@ -1,6 +1,6 @@
 ---
 title: 'cy.trigger()'
-description: Trigger an event on a DOM element in Cypress.
+description: Trigger mouse, keyboard, touch, pointer, drag, and custom events on an element, the window, or the document in Cypress.
 sidebar_label: trigger
 slug: /api/commands/trigger
 ---
@@ -9,10 +9,10 @@ slug: /api/commands/trigger
 
 # trigger
 
-Trigger an event on a DOM element.
-
-It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
-chain further commands that rely on the subject after `.trigger()`.
+Trigger any DOM event on an element, the window, or the document: mouse,
+keyboard, touch, pointer, drag and drop, or your app's own custom events. Use it
+to test a handler that listens for an event no action command, such as
+[`.click()`](/api/commands/click) or [`.type()`](/api/commands/type), fires.
 
 ## Syntax
 
@@ -70,17 +70,17 @@ The distance in pixels from element's top to trigger the event.
 
 Pass in an options object to change the default behavior of `.trigger()`.
 
-| Option                       | Default                                                                     | Description                                                                                                                                                                                                                     |
-| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                  |
-| `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                                                                                                       |
-| `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                                                                                                 |
-| `eventConstructor`           | `'Event'`                                                                   | The name of the constructor, as a string, that creates the event object (e.g. `'MouseEvent'`, `'KeyboardEvent'`). It must exist on the application's `window`.                                                                  |
-| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                            |
-| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                             |
-| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`. |
-| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                                                                                                         |
-| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                       |
+| Option                       | Default                                                                     | Description                                                                                                                                                                                                                                                   |
+| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                                                |
+| `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                                                                                                                                     |
+| `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                                                                                                                               |
+| `eventConstructor`           | `'Event'`                                                                   | The name of the constructor, as a string, that creates the event object (e.g. `'MouseEvent'`, `'KeyboardEvent'`). It must exist on the application's `window`. See [choosing an event constructor](#How-eventConstructor-changes-the-properties-you-can-set). |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                                                          |
+| `log`                        | `true`                                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                           |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`.                               |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                       |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                                                     |
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
 they are attached to the event.
@@ -102,7 +102,7 @@ measure from the top of the document, so they differ once the page scrolls.
 
 ## Examples
 
-### Mouse Events
+### Event Name
 
 #### Trigger a `mouseover` on the button
 
@@ -112,6 +112,121 @@ happening (it must be visible and not disabled).
 ```javascript
 cy.get('button').trigger('mouseover') // yields 'button'
 ```
+
+### Position
+
+#### Trigger a `mousedown` on the top right of a button
+
+```javascript
+cy.get('button').trigger('mousedown', 'topRight')
+```
+
+Click the `trigger` command in the Command Log to pin its snapshot. A red dot
+marks the point where the event fired, here the button's top-right corner.
+
+<DocsImage
+  src="/img/api/trigger/command-log-trigger-top-right-snapshot.png"
+  alt="Pinned trigger mousedown, topRight command with a red dot on the top-right corner of the highlighted Save button"
+/>
+
+### Coordinates
+
+#### Specify explicit coordinates relative to the top left corner
+
+```javascript
+cy.get('button').trigger('mouseup', 15, 40)
+```
+
+### Options
+
+#### Specify that the event should not bubble
+
+By default, the event bubbles up the DOM tree. Set `bubbles: false` to stop it
+at the element.
+
+```javascript
+cy.get('button').trigger('mouseover', { bubbles: false })
+```
+
+A [`cy.spy()`](/api/commands/spy) added as a listener on the document confirms
+the event stopped at the button.
+
+```javascript
+const onDocumentMouseover = cy.spy().as('documentMouseover')
+cy.document().then((doc) => {
+  doc.addEventListener('mouseover', onDocumentMouseover)
+})
+
+cy.get('button').trigger('mouseover', { bubbles: false })
+cy.get('@documentMouseover').should('not.have.been.called')
+```
+
+#### Check that a drop zone accepts drops
+
+A drop zone accepts a drop only when its `dragover` handler cancels the event
+with `preventDefault()`. The event is cancelable by default, so a
+[`cy.spy()`](/api/commands/spy) listener can check the event's
+`defaultPrevented` property after the handlers run.
+
+```javascript
+const onDragover = cy.spy().as('dragover')
+cy.get('[data-cy=drop-zone]').then(($zone) => {
+  $zone[0].addEventListener('dragover', onDragover)
+})
+
+cy.get('[data-cy=drop-zone]').trigger('dragover')
+cy.get('@dragover').should('have.been.calledWithMatch', {
+  defaultPrevented: true,
+})
+```
+
+With `cancelable: false`, `preventDefault()` has no effect and
+`defaultPrevented` stays `false`.
+
+#### Specify the exact `clientX` and `clientY` the event should have
+
+This overrides the default auto-positioning based on the element itself. Useful
+for events like `mousemove` where you need the position to be outside the
+element itself.
+
+```javascript
+cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
+```
+
+To check the properties a listener receives, add a
+[`cy.spy()`](/api/commands/spy) as the listener and assert on its call.
+
+```javascript
+const onMousemove = cy.spy().as('mousemove')
+cy.get('button').then(($button) => {
+  $button[0].addEventListener('mousemove', onMousemove)
+})
+
+cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
+cy.get('@mousemove').should('have.been.calledWithMatch', {
+  clientX: 200,
+  clientY: 300,
+})
+```
+
+#### Force an event on a hidden element
+
+Custom controls often hide the native input they're built on. Without `force`,
+`.trigger()` waits for the input to become visible and fails when it times out.
+`force: true` skips the [actionability](#Actionability) checks and the scroll
+into view, and dispatches the event right away.
+
+```javascript
+cy.get('[data-cy=volume-input]').invoke('val', 60).trigger('change', {
+  force: true,
+})
+cy.get('[data-cy=volume-label]').should('have.text', '60')
+```
+
+Forcing lets the test do something a user can't, so keep it for elements like
+this one, which receive events but are never visible.
+
+### Mouse Events
 
 #### Show and hide a tooltip on hover
 
@@ -174,6 +289,64 @@ cy.get('[data-cy=draggable]').trigger('mousemove', {
 cy.get('[data-cy=draggable]').trigger('mouseup')
 ```
 
+### Keyboard Events
+
+#### Close a dialog with the Escape key
+
+```javascript
+cy.get('[data-cy=dialog]').trigger('keydown', { key: 'Escape' })
+cy.get('[data-cy=dialog]').should('not.exist')
+```
+
+Pass the properties the handler reads, such as `key`, `code`, or `keyCode`. The
+event bubbles, so a listener on the document receives it too.
+
+`.trigger()` fires the one event you name on any element.
+[`.type()`](/api/commands/type) simulates the full sequence of keyboard events,
+but only on elements it can type into, such as inputs, textareas, and elements
+with a `tabindex`. Use `.type('{esc}')` when the element accepts typing, and
+`.trigger()` when it doesn't.
+
+### Change Events
+
+#### Interact with a range input (slider)
+
+To interact with a range input (slider), set its value, then trigger the event
+that signals it changed. This example invokes jQuery's `val()` method to set the
+value, then triggers the `change` event.
+
+Some implementations listen for the `input` event instead, which fires as the
+user moves the slider.
+
+```javascript
+cy.get('input[type=range]').as('range').invoke('val', 25).trigger('change')
+
+cy.get('@range').siblings('p').should('have.text', '25')
+```
+
+#### Set a range input in a controlled component (React, Vue, etc.)
+
+Frameworks such as React track an input's value themselves, so setting it with
+`.invoke('val', 70)` doesn't reach the component's change handler. Set the value
+through the element's native `value` setter, then trigger the event the
+framework listens for.
+
+```javascript
+cy.get('input[type=range]').then(($range) => {
+  const descriptor = Object.getOwnPropertyDescriptor(
+    Object.getPrototypeOf($range[0]),
+    'value'
+  )
+  descriptor?.set?.call($range[0], 70)
+})
+cy.get('input[type=range]').trigger('input')
+
+cy.get('input[type=range]').siblings('p').should('have.text', '70')
+```
+
+React's `onChange` listens for the `input` event. If the component listens for
+`change` instead, trigger `change`.
+
 ### Drag and Drop Events
 
 #### Drag an item to a drop zone with `dataTransfer`
@@ -201,39 +374,6 @@ cy.get('[data-cy=done-column]').should('contain', 'Write docs')
 [Check out our example recipe triggering mouse and drag events to test drag and drop](/app/references/recipes#Testing-the-DOM)
 
 :::
-
-### Keyboard Events
-
-#### Close a dialog with the Escape key
-
-```javascript
-cy.get('[data-cy=dialog]').trigger('keydown', { key: 'Escape' })
-cy.get('[data-cy=dialog]').should('not.exist')
-```
-
-Pass the properties the handler reads, such as `key`, `code`, or `keyCode`. The
-event bubbles, so a listener on the document receives it too.
-
-`.trigger()` fires the one event you name on any element.
-[`.type()`](/api/commands/type) simulates the full sequence of keyboard events,
-but only on elements it can type into, such as inputs, textareas, and elements
-with a `tabindex`. Use `.type('{esc}')` when the element accepts typing, and
-`.trigger()` when it doesn't.
-
-### Custom Events
-
-#### Trigger a custom event with a `detail` payload
-
-`.trigger()` fires any event name, including your app's own events. With the
-default `Event` constructor, the `detail` you pass is attached as is.
-
-```javascript
-cy.get('[data-cy=cart]').trigger('cart:updated', { detail: { count: 3 } })
-cy.get('[data-cy=cart-count]').should('have.text', '3')
-```
-
-If the handler checks `event instanceof CustomEvent`, add
-`eventConstructor: 'CustomEvent'`, which also accepts `detail`.
 
 ### Touch and Pointer Events
 
@@ -281,132 +421,20 @@ cy.get('[data-cy=volume-thumb]').trigger('pointerup', pointer)
 cy.get('[data-cy=volume-value]').should('have.text', '80')
 ```
 
-### Change Event
+### Custom Events
 
-#### Interact with a range input (slider)
+#### Trigger a custom event with a `detail` payload
 
-To interact with a range input (slider), we need to set its value and then
-trigger the appropriate event to signal it has changed.
-
-Below we invoke jQuery's `val()` method to set the value, then trigger the
-`change` event.
-
-Some implementations listen for the `input` event instead, which fires as the
-user moves the slider.
+`.trigger()` fires any event name, including your app's own events. With the
+default `Event` constructor, the `detail` you pass is attached as is.
 
 ```javascript
-cy.get('input[type=range]').as('range').invoke('val', 25).trigger('change')
-
-cy.get('@range').siblings('p').should('have.text', '25')
+cy.get('[data-cy=cart]').trigger('cart:updated', { detail: { count: 3 } })
+cy.get('[data-cy=cart-count]').should('have.text', '3')
 ```
 
-### Position
-
-#### Trigger a `mousedown` on the top right of a button
-
-```javascript
-cy.get('button').trigger('mousedown', 'topRight')
-```
-
-Click the `trigger` command in the Command Log to pin its snapshot. A red dot
-marks the point where the event fired, here the button's top-right corner.
-
-<DocsImage
-  src="/img/api/trigger/command-log-trigger-top-right-snapshot.png"
-  alt="Pinned trigger mousedown, topRight command with a red dot on the top-right corner of the highlighted Save button"
-/>
-
-### Coordinates
-
-#### Specify explicit coordinates relative to the top left corner
-
-```javascript
-cy.get('button').trigger('mouseup', 15, 40)
-```
-
-### Options
-
-#### Specify that the event should not bubble
-
-By default, the event will bubble up the DOM tree. This will prevent the event
-from bubbling.
-
-```javascript
-cy.get('button').trigger('mouseover', { bubbles: false })
-```
-
-A [`cy.spy()`](/api/commands/spy) added as a listener on the document confirms
-the event stopped at the button.
-
-```javascript
-const onDocumentMouseover = cy.spy().as('documentMouseover')
-cy.document().then((doc) => {
-  doc.addEventListener('mouseover', onDocumentMouseover)
-})
-
-cy.get('button').trigger('mouseover', { bubbles: false })
-cy.get('@documentMouseover').should('not.have.been.called')
-```
-
-#### Specify the exact `clientX` and `clientY` the event should have
-
-This overrides the default auto-positioning based on the element itself. Useful
-for events like `mousemove` where you need the position to be outside the
-element itself.
-
-```javascript
-cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
-```
-
-To check the properties a listener receives, add a
-[`cy.spy()`](/api/commands/spy) as the listener and assert on its call.
-
-```javascript
-const onMousemove = cy.spy().as('mousemove')
-cy.get('button').then(($button) => {
-  $button[0].addEventListener('mousemove', onMousemove)
-})
-
-cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
-cy.get('@mousemove').should('have.been.calledWithMatch', {
-  clientX: 200,
-  clientY: 300,
-})
-```
-
-#### Force an event on a hidden element
-
-Custom controls often hide the native input they're built on. Without `force`,
-`.trigger()` waits for the input to become visible and fails when it times out.
-`force: true` skips the [actionability](#Actionability) checks and the scroll
-into view, and dispatches the event right away.
-
-```javascript
-cy.get('[data-cy=volume-input]').invoke('val', 60).trigger('change', {
-  force: true,
-})
-cy.get('[data-cy=volume-label]').should('have.text', '60')
-```
-
-Forcing lets the test do something a user can't, so keep it for elements like
-this one, which receive events but are never visible.
-
-### Fire other Event types
-
-By default, `cy.trigger()` fires
-[`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). But you may
-want to trigger other events like `MouseEvent` or `KeyboardEvent`.
-
-In that case, use the `eventConstructor` option.
-
-```js
-cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
-```
-
-When the constructor is
-[`UIEvent`](https://developer.mozilla.org/en-US/docs/Web/API/UIEvent) or one of
-its subclasses, such as `MouseEvent` or `KeyboardEvent`, `.trigger()` sets the
-event's `view` property to the application's `window`.
+If the handler checks `event instanceof CustomEvent`, add
+`eventConstructor: 'CustomEvent'`, which also accepts `detail`.
 
 ### Window and Document
 
@@ -451,16 +479,28 @@ that match it.
 
 ### Events
 
-#### What event should I fire?
+#### Choose which event `.trigger()` fires
 
-`cy.trigger()` is meant to be a low-level utility that makes triggering events
-easier than manually constructing and dispatching them. Since any arbitrary
-event can be triggered, Cypress tries not to make any assumptions about how it
-should be triggered. This means you'll need to know the implementation details
-(which may be in a 3rd party library) of the event handler(s) receiving the
-event and provide the necessary properties.
+`.trigger()` is a low-level utility that constructs and dispatches an event for
+you. Since it fires any event, Cypress makes no assumptions about how the event
+should look. Find out which events the handlers receiving it listen for, which
+may be in a third-party library, and pass the properties they read.
 
 #### How `eventConstructor` changes the properties you can set
+
+By default, `.trigger()` fires an
+[`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). To fire
+another class, such as `MouseEvent` or `KeyboardEvent`, pass its name in the
+`eventConstructor` option.
+
+```js
+cy.get('button').trigger('mouseover', { eventConstructor: 'MouseEvent' })
+```
+
+When the constructor is
+[`UIEvent`](https://developer.mozilla.org/en-US/docs/Web/API/UIEvent) or one of
+its subclasses, such as `MouseEvent` or `KeyboardEvent`, `.trigger()` sets the
+event's `view` property to the application's `window`.
 
 With the default `Event` constructor, `.trigger()` attaches every property you
 pass to the event as is, including ones like `pageX` and `pageY` that a real
@@ -538,24 +578,6 @@ Your listeners run either way. Use the action command when you're testing what a
 user does, and `.trigger()` when a handler listens for an event no action
 command fires.
 
-### Interact with a range input in a controlled component (React, Vue, etc.)
-
-To set a range input to a specific value in a controlled component, use the
-native setter before dispatching the event. This ensures framework `onChange`
-handlers fire correctly.
-
-```js
-const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-  window.HTMLInputElement.prototype,
-  'value'
-).set
-
-cy.get('input[type=range]')
-  .then(($range) => nativeInputValueSetter.call($range[0], 70))
-  .trigger('input')
-  .trigger('change')
-```
-
 ## Rules
 
 <HeaderRequirements />
@@ -567,10 +589,10 @@ cy.get('input[type=range]')
 
 <HeaderAssertions />
 
-- `.trigger()` will automatically wait for the element to reach an
+- `.trigger()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements). It skips
   this wait when the subject is the window or the document.
-- `.trigger()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.trigger()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -587,15 +609,14 @@ cy.get('input[type=range]')
 cy.get('.trigger-input-range').invoke('val', 25).trigger('change')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/trigger/command-log-trigger.png"
   alt="Command Log showing a get command for .trigger-input-range, an invoke command calling .val(), and a trigger command for the change event"
 />
 
-When clicking on `trigger` within the command log, the console outputs the
-following:
+When you click `trigger` in the Command Log, the console outputs the following:
 
 <DocsImage
   src="/img/api/trigger/console-log-trigger.png"
@@ -614,12 +635,7 @@ following:
 
 ## See also
 
-- [`.blur()`](/api/commands/blur)
-- [`.check()`](/api/commands/check)
 - [`.click()`](/api/commands/click)
 - [`.focus()`](/api/commands/focus)
-- [`.rightclick()`](/api/commands/rightclick)
-- [`.select()`](/api/commands/select)
-- [`.submit()`](/api/commands/submit)
+- [`.hover()`](/api/commands/hover)
 - [`.type()`](/api/commands/type)
-- [`.uncheck()`](/api/commands/uncheck)
