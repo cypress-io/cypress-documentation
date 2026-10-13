@@ -111,8 +111,7 @@ cy.get('[data-cy=context-menu]').should('be.visible')
 
 #### Choose an item from a context menu
 
-Query the menu from `cy`, not from the subject of `.rightclick()`, then click
-the item you want.
+Once the menu opens, find the item you want by its label and click it.
 
 ```javascript
 cy.get('[data-cy=file-row]').first().rightclick()
@@ -124,7 +123,7 @@ cy.get('[data-cy=rename-input]').should('be.focused')
 
 Test the way your users close the menu. Many menus close when the user presses
 Escape. [`cy.press()`](/api/commands/press) sends a native key press, the way a
-user's keyboard does, and supports Escape in Cypress 15.3.0 and later.
+user's keyboard does.
 
 ```javascript
 cy.get('[data-cy=file-row]').first().rightclick()
@@ -187,9 +186,8 @@ cy.get('[data-cy=chart]').rightclick(120, 45)
 cy.get('[data-cy=context-menu]').should('contain', 'March')
 ```
 
-When a coordinate right click lands in the wrong place, click the `rightclick`
-command in the Command Log to pin its snapshot. A red dot marks the exact point
-Cypress right clicked.
+To see the exact spot Cypress right clicked, click the `rightclick` command in
+the Command Log to pin its snapshot. A red dot marks the point.
 
 <DocsImage
   src="/img/api/rightclick/command-log-rightclick-chart-snapshot.png"
