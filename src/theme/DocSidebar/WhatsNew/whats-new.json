@@ -11,8 +11,7 @@
       "label": "Cypress Studio AI",
       "href": "/app/guides/cypress-studio",
       "description": "Smart recommendations while building tests.",
-      "showAISparkle": true,
-      "isNew": true
+      "showAISparkle": true
     }
   ],
   "api": [
@@ -26,8 +25,7 @@
       "label": "cy.prompt()",
       "href": "/api/commands/prompt",
       "description": "Natural language and self-healing tests.",
-      "showAISparkle": true,
-      "isNew": true
+      "showAISparkle": true
     }
   ],
   "cloud": [
