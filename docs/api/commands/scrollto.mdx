@@ -8,7 +8,8 @@ sidebar_label: scrollTo
 
 # scrollTo
 
-Scroll to a specific position.
+Scroll the window or an element to a named position, such as `bottom`, or to
+pixel or percentage coordinates.
 
 It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.scrollTo()`.
@@ -60,25 +61,27 @@ and `bottomRight`.
 
 <Icon name="angle-right" /> **x _(Number, String)_**
 
-The distance in pixels from window/element's left or percentage of the
-window/element's width to scroll to.
+The distance to scroll to from the window or element's left edge. Pass a number
+of pixels (`500`), a pixel string (`'500px'`), or a percentage of the
+scrollable distance (`'25%'`).
 
 <Icon name="angle-right" /> **y _(Number, String)_**
 
-The distance in pixels from window/element's top or percentage of the
-window/element's height to scroll to.
+The distance to scroll to from the window or element's top edge. Pass a number
+of pixels (`500`), a pixel string (`'500px'`), or a percentage of the
+scrollable distance (`'25%'`).
 
 <Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `cy.scrollTo()`.
 
-| Option             | Default                                                           | Description                                                                         |
-| ------------------ | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `duration`         | `0`                                                               | Scrolls over the duration (in ms). Accepts a number or a numeric string.            |
-| `easing`           | `swing`                                                           | Easing animation for the scroll. Accepts `swing` or `linear`.                       |
-| `ensureScrollable` | `true`                                                            | Ensure element is scrollable. Error if element cannot scroll.                       |
-| `log`              | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
-| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts)            |
+| Option             | Default                                                           | Description                                                                          |
+| ------------------ | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `duration`         | `0`                                                               | Scrolls over the duration (in ms). Accepts a number or a numeric string.             |
+| `easing`           | `swing`                                                           | Easing animation for the scroll. Accepts `swing` or `linear`.                        |
+| `ensureScrollable` | `true`                                                            | Checks that the element can scroll, and errors if it can't.                          |
+| `log`              | `true`                                                            | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log). |
+| `timeout`          | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollTo()` to resolve before [timing out](#Timeouts).            |
 
 <HeaderYields />
 
@@ -117,7 +120,7 @@ cy.get('#infinite-scroll-list').scrollTo(0, 500)
 cy.scrollTo('500px')
 ```
 
-#### Scroll 25% down the element's height
+#### Scroll 25% of the way down the element
 
 ```javascript
 cy.get('.user-photo').scrollTo('0%', '25%')
@@ -139,13 +142,12 @@ cy.get('#slider').scrollTo('right', { duration: 2000 })
 
 #### Do not error if element is not scrollable
 
-Let's say we do not know whether our `table` element is scrollable. Sometimes
-the `table` may be scrollable (with 2,000 rows) and sometimes the `table` may
-not be scrollable (with 5 rows). You can ignore the error checking to ensure the
-element is scrollable by passing `ensureScrollable: false`.
+When an element is scrollable only some of the time, such as a `table` that
+scrolls with 2,000 rows but not with 5, pass `ensureScrollable: false`.
+`.scrollTo()` then skips the scrollable check instead of erroring.
 
-```js
-// will move on to next command even if table is not scrollable
+```javascript
+// Moves on to the next command even if the table is not scrollable
 cy.get('table').scrollTo('bottom', { ensureScrollable: false })
 cy.get('table').find('tr:last-child').should('be.visible')
 ```
@@ -204,7 +206,7 @@ scrollable. Pass `ensureScrollable: false` to skip the scrollable check.
 `cy.scrollTo()` acts differently whether it's starting a series of commands or
 being chained off of an existing one.
 
-#### When starting a series of commands:
+#### When starting a series of commands
 
 This scrolls the `window`.
 
@@ -212,7 +214,7 @@ This scrolls the `window`.
 cy.scrollTo('bottom')
 ```
 
-#### When chained to an existing series of commands:
+#### When chained to an existing series of commands
 
 This scrolls the `#checkout-items` element.
 
@@ -220,7 +222,7 @@ This scrolls the `#checkout-items` element.
 cy.get('#checkout-items').scrollTo('right')
 ```
 
-#### When chained off `cy.window()`:
+#### When chained off `cy.window()`
 
 This scrolls the `window`, the same as starting a series of commands.
 
@@ -268,9 +270,7 @@ Pass `ensureScrollable: false` only when an element is sometimes scrollable and
 sometimes not, as in
 [Do not error if element is not scrollable](#Do-not-error-if-element-is-not-scrollable).
 
-### Snapshots
-
-#### Snapshots do not reflect scroll behavior
+### Snapshots don't show scroll positions
 
 _Cypress does not reflect the accurate scroll positions of any elements within
 snapshots._ If you want to see the actual scrolling behavior in action, we
@@ -289,6 +289,14 @@ or
 - `.scrollTo()` requires the element to be scrollable, unless you pass
   `ensureScrollable: false`.
 
+<HeaderAssertions />
+
+- `.scrollTo()` automatically waits for the element to be scrollable, unless you
+  pass `ensureScrollable: false`.
+- `.scrollTo()` itself is not retried. It scrolls once. Assertions chained after
+  `.scrollTo()` are retried until they pass or time out. See
+  [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
+
 <HeaderTimeouts />
 
 - `.scrollTo()` can time out waiting for the element to become scrollable.
@@ -303,15 +311,14 @@ cy.scrollTo('bottom')
 cy.get('#scrollable-horizontal').scrollTo('right')
 ```
 
-The commands above will display in the Command Log as:
+The Command Log shows the commands above as:
 
 <DocsImage
   src="/img/api/scrollto/command-log-scrollto.png"
   alt="Command Log showing scrollTo bottom, then get #scrollable-horizontal followed by scrollTo right"
 />
 
-When clicking on `scrollTo` within the command log, the console outputs the
-following:
+Click `scrollTo` in the Command Log to print its details to the console:
 
 <DocsImage
   src="/img/api/scrollto/console-log-scrollto.png"
