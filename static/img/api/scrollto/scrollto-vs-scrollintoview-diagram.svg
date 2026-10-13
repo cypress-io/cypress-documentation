@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="432" viewBox="0 0 760 432" role="img" aria-labelledby="t d">
 <title id="t">How .scrollTo() and .scrollIntoView() scroll the same list</title>
 <desc id="d">Two panels show the same scrollable #feed list of eight items. On the left, .scrollTo('bottom') targets the container and moves the visible area to the bottom of the list, showing items 6 to 8. On the right, .scrollIntoView() targets item 5 and moves the visible area until item 5 sits at its top, showing items 5 to 7.</desc>
 <style>
@@ -14,17 +14,20 @@
   .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
   .callout { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
 </style>
-<rect class="card" x="0.5" y="0.5" width="759" height="439" rx="12"/>
+<rect class="card" x="0.5" y="0.5" width="759" height="431" rx="12"/>
 
-<!-- legend -->
-<rect class="content" x="150" y="22" width="26" height="16"/>
-<text class="note" x="184" y="35">#feed content</text>
-<rect class="view" x="320" y="22" width="26" height="16"/>
-<text class="note" x="354" y="35">visible area after the scroll</text>
+<!-- headings: the calls from the page example, then what each does -->
+<text class="code" x="190" y="44" text-anchor="middle">cy.get('#feed').scrollTo('bottom')</text>
+<text class="note" x="190" y="68" text-anchor="middle">Moves the container to a position:</text>
+<text class="note" x="190" y="86" text-anchor="middle">the bottom of the list.</text>
+<text class="code" x="570" y="44" text-anchor="middle">cy.get('#item-5').scrollIntoView()</text>
+<text class="note" x="570" y="68" text-anchor="middle">Moves the container until the item</text>
+<text class="note" x="570" y="86" text-anchor="middle">is in view, at the top of the visible area.</text>
 
-<!-- headings: the calls from the page example -->
-<text class="code" x="190" y="78" text-anchor="middle">cy.get('#feed').scrollTo('bottom')</text>
-<text class="code" x="570" y="78" text-anchor="middle">cy.get('#item-5').scrollIntoView()</text>
+<!-- divider -->
+<path d="M380 24 V376" stroke="#e1e3ed" stroke-width="1"/>
+
+<g transform="translate(0 10)">
 <!-- left panel: .scrollTo('bottom') -->
 <rect class="content" x="90" y="98" width="140" height="256"/>
 <rect class="item" x="98" y="102" width="124" height="24"/><text class="label" x="110" y="119">Item 1</text>
@@ -41,11 +44,6 @@
 <path class="head" d="M232 140 L244 134 L244 146 Z"/>
 <text class="callout" x="246" y="112">targets the</text>
 <text class="callout" x="246" y="128">container</text>
-<text class="note" x="190" y="392" text-anchor="middle">Moves the container to a position:</text>
-<text class="note" x="190" y="410" text-anchor="middle">the bottom of the list.</text>
-
-<!-- divider -->
-<path d="M380 64 V420" stroke="#e1e3ed" stroke-width="1"/>
 
 <!-- right panel: .scrollIntoView() -->
 <rect class="content" x="470" y="98" width="140" height="256"/>
@@ -63,7 +61,11 @@
 <path class="head" d="M612 242 L624 236 L624 248 Z"/>
 <text class="callout" x="626" y="214">targets</text>
 <text class="callout" x="626" y="230">the item</text>
-<text class="note" x="570" y="392" text-anchor="middle">Moves the container until the item</text>
-<text class="note" x="570" y="410" text-anchor="middle">is in view, at the top of the visible area.</text>
+</g>
 
+<!-- legend -->
+<rect class="content" x="150" y="392" width="26" height="16"/>
+<text class="note" x="184" y="405">#feed content</text>
+<rect class="view" x="320" y="392" width="26" height="16"/>
+<text class="note" x="354" y="405">visible area after the scroll</text>
 </svg>
