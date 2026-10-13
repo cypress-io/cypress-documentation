@@ -112,6 +112,13 @@ cy.url({ decode: true }).should(
 )
 ```
 
+| In the URL           | With `decode: true` | Why                                  |
+| -------------------- | ------------------- | ------------------------------------ |
+| `%EC%82%AC%EB%9E%91` | `사랑`              | Non-ASCII characters are decoded     |
+| `%C3%A9`             | `é`                 | Non-ASCII characters are decoded     |
+| `%26`                | `%26`               | `&` is reserved, so it stays encoded |
+| `%2F`                | `%2F`               | `/` is reserved, so it stays encoded |
+
 ### Redirects and navigation
 
 #### Wait for a redirect after signing in
@@ -125,6 +132,14 @@ cy.get('#password').type('secret')
 cy.contains('button', 'Sign in').click()
 cy.url().should('include', '/dashboard')
 ```
+
+In the Command Log, the `url` assertion passes on the dashboard URL, and the
+redirect's page load and new URL appear as their own rows:
+
+<DocsImage
+  src="/img/api/url/command-log-url-after-sign-in-redirect.png"
+  alt="Command Log showing click, then url with a passing assertion that http://localhost:8000/dashboard includes /dashboard, followed by page load and new url rows for the dashboard"
+/>
 
 #### Match a URL that contains a generated ID
 
@@ -235,7 +250,8 @@ cy.url().should('contain', '#users/new')
 you only care about the path or the query string, assert on that part with
 [`cy.location()`](/api/commands/location) instead of slicing the string. The
 assertion then passes on any host, such as a local server or a preview
-deployment.
+deployment. The `pathname` and `search` labels in the URL diagram under
+[Yields](#Yields) show which part each one reads.
 
 ```javascript
 // given remote URL: http://localhost:8000/users/1/edit?tab=profile
@@ -270,6 +286,16 @@ A URL ending in `?` works the same way:
 cy.url().should('eq', 'http://localhost:8000/index.html?')
 cy.location('search').should('eq', '')
 ```
+
+Side by side, `cy.url()` is the only one of these commands that keeps the
+trailing character:
+
+| Remote URL                                  | `cy.url()`                                  | `cy.hash()`   | `cy.location('search')` |
+| ------------------------------------------- | ------------------------------------------- | ------------- | ----------------------- |
+| `http://localhost:8000/index.html`          | `http://localhost:8000/index.html`          | `''`          | `''`                    |
+| `http://localhost:8000/index.html#`         | `http://localhost:8000/index.html#`         | `''`          | `''`                    |
+| `http://localhost:8000/index.html?`         | `http://localhost:8000/index.html?`         | `''`          | `''`                    |
+| `http://localhost:8000/index.html#/users/1` | `http://localhost:8000/index.html#/users/1` | `'#/users/1'` | `''`                    |
 
 To leave the trailing character out of the assertion, compare the
 `pathname` with `cy.location()`, as shown above.
