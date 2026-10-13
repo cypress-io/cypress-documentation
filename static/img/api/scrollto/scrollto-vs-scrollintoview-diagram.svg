@@ -25,7 +25,7 @@
 <!-- divider -->
 <path d="M380 24 V358" stroke="#e1e3ed" stroke-width="1"/>
 
-<g transform="translate(0 -8)">
+<g transform="translate(30 -8)">
 <!-- left panel: .scrollTo('bottom') -->
 <rect class="content" x="90" y="98" width="140" height="256"/>
 <rect class="item" x="98" y="102" width="124" height="24"/><text class="label" x="110" y="119">Item 1</text>
