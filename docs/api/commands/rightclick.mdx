@@ -14,9 +14,8 @@ handling in your app.
 
 :::caution
 
-`.rightclick()` does not open context menus native to the browser. Use
-`.rightclick()` to test your app's handling of right click events such as
-`contextmenu`. To confirm your app suppresses the browser's own menu, see
+`.rightclick()` does not open context menus native to the browser. To confirm
+your app suppresses the browser's own menu, see
 [Check that your app blocks the native context menu](#Check-that-your-app-blocks-the-native-context-menu).
 
 :::
@@ -124,12 +123,13 @@ cy.get('[data-cy=rename-input]').should('be.focused')
 #### Close a context menu
 
 Test the way your users close the menu. Many menus close when the user presses
-Escape.
+Escape. [`cy.press()`](/api/commands/press) sends a native key press, the way a
+user's keyboard does, and supports Escape in Cypress 15.3.0 and later.
 
 ```javascript
 cy.get('[data-cy=file-row]').first().rightclick()
 cy.get('[data-cy=context-menu]').should('be.visible')
-cy.get('body').type('{esc}')
+cy.press(Cypress.Keyboard.Keys.ESC)
 cy.get('[data-cy=context-menu]').should('not.exist')
 ```
 
@@ -145,7 +145,7 @@ whether one of them called `preventDefault()`.
 cy.window().then((win) => {
   win.addEventListener('contextmenu', cy.stub().as('contextmenu'))
 })
-cy.get('[data-cy=canvas]').rightclick()
+cy.get('[data-cy=file-row]').first().rightclick()
 cy.get('@contextmenu').should('have.been.calledWithMatch', {
   defaultPrevented: true,
 })
@@ -235,6 +235,10 @@ Cypress applies and fires the events at the element.
 cy.get('[data-cy=file-row]').first().rightclick({ force: true })
 ```
 
+Forcing does not make a disabled element respond. The browser does not deliver
+`mousedown`, `contextmenu`, or `mouseup` events to a disabled form control, so
+your app's context menu handler never runs.
+
 #### Force a right click with position argument
 
 ```javascript
@@ -250,8 +254,8 @@ cy.get('[data-cy=file-row]').first().rightclick(5, 10, { force: true })
 #### Right click every element that matches a selector
 
 By default, Cypress errors if you try to right click multiple elements. When
-you pass `{ multiple: true }`, Cypress right clicks each element in turn and
-logs each right click to the
+you pass `{ multiple: true }`, Cypress right clicks each element in turn, gives
+each right click its own full timeout, and logs each right click to the
 [Command Log](/app/core-concepts/open-mode#Command-Log).
 
 ```javascript
@@ -272,13 +276,18 @@ offers options to hold down keys across multiple commands. See
 
 :::
 
-#### Command right click
+#### Ctrl or Cmd right click
 
-```js
-// execute a CMD + right click on the first file
-cy.get('[data-cy=file-row]').first().rightclick({
-  metaKey: true,
-})
+Many apps check the control key on Windows and Linux and the command key on
+macOS. Use [`Cypress.platform`](/api/cypress-api/platform) to hold the key the
+app expects.
+
+```javascript
+const modifier =
+  Cypress.platform === 'darwin' ? { metaKey: true } : { ctrlKey: true }
+
+cy.get('[data-cy=file-row]').first().rightclick(modifier)
+cy.get('[data-cy=context-menu]').should('contain', 'Open in new window')
 ```
 
 #### Shift right click to show more options
@@ -286,7 +295,7 @@ cy.get('[data-cy=file-row]').first().rightclick({
 Some apps add options to the context menu when the user holds Shift while right
 clicking.
 
-```js
+```javascript
 // execute a SHIFT + right click on the first file
 cy.get('[data-cy=file-row]').first().rightclick({
   shiftKey: true,
@@ -329,30 +338,6 @@ Cypress skips when `pointerdown` is cancelled.
   noBorder
 />
 
-### Right click on macOS with the control key
-
-#### Ctrl + click does not fire a `contextmenu` event
-
-On macOS, users can open a context menu by holding Control and clicking.
-`.click({ ctrlKey: true })` fires a `click` event with the control key held, not
-a `contextmenu` event. To test the context menu a Ctrl + click opens, use
-`.rightclick()`.
-
-### Right click or trigger a contextmenu event
-
-#### Choose between .rightclick() and .trigger('contextmenu')
-
-Both commands wait for the element to reach an
-[actionable state](/app/core-concepts/interacting-with-elements).
-
-- `.rightclick()` fires the full sequence of
-  [events fired by a right click](#Events-fired-by-a-right-click) and gives
-  focus to the element, the way a user's right click does.
-- [`.trigger('contextmenu')`](/api/commands/trigger) fires only the
-  `contextmenu` event and leaves focus where it was. Use it when you need that
-  single event, or to set event properties that `.rightclick()` does not
-  expose.
-
 ### Focus
 
 #### Focus is given to the first focusable element
@@ -372,6 +357,30 @@ When `pointerdown` is cancelled, Cypress also skips the `mousedown` and
 `contextmenu` and `pointerup`.
 
 Cancelling the `contextmenu` event does not change which events Cypress sends.
+
+### Right click on macOS with the control key
+
+#### Ctrl + click does not fire a `contextmenu` event
+
+On macOS, users can open a context menu by holding Control and clicking.
+`.click({ ctrlKey: true })` fires a `click` event with the control key held, not
+a `contextmenu` event. To test the context menu a Ctrl + click opens, use
+`.rightclick()`.
+
+### Right click or trigger a `contextmenu` event
+
+#### Choose between .rightclick() and .trigger('contextmenu')
+
+Both commands wait for the element to reach an
+[actionable state](/app/core-concepts/interacting-with-elements).
+
+- `.rightclick()` fires the full sequence of
+  [events fired by a right click](#Events-fired-by-a-right-click) and gives
+  focus to the element, the way a user's right click does.
+- [`.trigger('contextmenu')`](/api/commands/trigger) fires only the
+  `contextmenu` event and leaves focus where it was. Use it when you need that
+  single event, or to set event properties that `.rightclick()` does not
+  expose.
 
 ## Rules
 
