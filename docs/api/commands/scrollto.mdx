@@ -232,23 +232,7 @@ cy.window().scrollTo('bottom')
 
 ### Choosing between .scrollTo() and .scrollIntoView()
 
-`.scrollTo()` scrolls a container, either the window or a scrollable element, to
-a position. [`.scrollIntoView()`](/api/commands/scrollintoview) scrolls whatever
-contains an element until that element is in view. To reach a specific item, use
-`.scrollIntoView()` on the item rather than `.scrollTo()` on its container.
-
-```javascript
-cy.get('#feed').scrollTo('bottom') // scrolls the container itself
-cy.get('#item-5').scrollIntoView() // scrolls until this item is in view
-```
-
-Compare where each call leaves the list:
-
-<DocsImage
-  src="/img/api/scrollto/scrollto-vs-scrollintoview-diagram.svg"
-  alt="Two views of the same eight-item #feed list. scrollTo('bottom') targets the container and shows items 6 to 8; scrollIntoView() on Item 5 targets the item and shows items 5 to 7, with Item 5 at the top."
-  noBorder
-/>
+<ScrollToVsScrollIntoView />
 
 ### Fixing the "element is not scrollable" error
 
