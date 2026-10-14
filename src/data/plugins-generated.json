@@ -78,8 +78,8 @@
     },
     "@cypress/webpack-dev-server": {
       "npm": "@cypress/webpack-dev-server",
-      "version": "6.0.0",
-      "lastPublished": "2026-08-26T23:23:46.619Z",
+      "version": "6.1.0",
+      "lastPublished": "2026-10-06T19:49:09.120Z",
       "cypressVersion": ">=15.0.0"
     },
     "cypress-load-balancer": {
