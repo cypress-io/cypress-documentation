@@ -20,7 +20,7 @@ From any test result in Cypress Cloud, you can:
 - **Create a Jira issue** for a failing, flaky, or passing test without leaving Cypress Cloud. You choose the project, issue type, assignee, and additional fields.
 - **Link an existing Jira issue** to the test when the ticket already exists in Jira. The issue appears in that test's results panel and issue history the same way as a newly created issue.
 - **View issue history per test.** Every Jira issue ever created or linked for a given test appears in that test result's panel. When the same test regresses across multiple runs, you can see whether a previous issue was filed and what happened to it.
-- **Unlink an issue from a test.** Click the <Icon name="times" /> icon on the issue in the test drawer to remove it from that test when it was linked by mistake or no longer applies.
+- **Unlink an issue from a test.** Click the <Icon name="times" /> icon on the issue in the test drawer and confirm to remove it from that test when it was linked by mistake or no longer applies. The issue itself is not changed in Jira.
 - **Inspect a linked issue from the test panel.** Expand **Jira issue** in the results panel to see assignee, status, and when the issue was created, and open the issue in Jira in one click.
 - **Navigate from Jira back to Cypress Cloud.** Every issue created through this integration includes a direct link to the test run in Cypress Cloud where the issue was filed. Anyone triaging in Jira can jump straight to the test replay, error output, and run context.
 
@@ -171,15 +171,19 @@ Inside the expanded section, click the issue to open it directly in Jira. The se
 
 ## Unlink a Jira issue from a test
 
-If an issue was linked to the wrong test, or no longer applies, you can remove it from the test in Cypress Cloud.
+If an issue was linked to the wrong test, or no longer applies, you can remove it from the test in Cypress Cloud. Unlinking removes only the association between the test and the issue. The issue itself is not changed in Jira.
 
 1. In Cypress Cloud, open a test run and select the test in the **Test Results** view so the results panel opens.
 
-1. Find the Jira issue you want to remove in the test drawer.
+1. Expand the **Jira issue** section.
 
-1. Click the <Icon name="times" /> icon on that Jira issue.
+1. Click the <Icon name="times" /> icon on the issue you want to remove. Hovering over the icon shows "Unlink issue from this test".
 
-The issue no longer appears in the results panel for that test.
+1. In the **Unlink this Jira issue** confirmation dialog, click **Unlink**. Click **Cancel** to keep the issue linked.
+
+Cypress Cloud confirms that the issue was unlinked, and the issue no longer appears in that test's results panel or issue history on any run. You can link it again at any time from the **Link** tab.
+
+Organization members and admins can unlink issues. Users with the viewer role don't see the unlink icon.
 
 ## Understand issue history
 
