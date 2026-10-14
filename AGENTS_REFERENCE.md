@@ -1198,6 +1198,67 @@ read those on GitHub.
   it to the repository and pulls in the `@theme/*` ambient types explicitly;
   without that, `@site/...` and `@theme/...` imports do not resolve.
 
+## Attaching screenshots to a pull request
+
+A reviewer reading the diff of an `.mdx` file can't see how the page renders: a
+tab set in the wrong order, a cropped image, or a diagram that runs off the page
+all look fine as text. A screenshot in the PR body shows them what the reader
+gets.
+
+**When to attach one.** Attach screenshots when the change is visible on the
+rendered site: a new or reworked page, an added or replaced image or diagram, a
+component or CSS change in `src/`, or a sidebar or navigation change. For a
+visual change to something that already exists, attach a before and an after.
+Skip them for a change with no visible effect, such as a typo fix in prose,
+`netlify.toml` redirects, or edits to agent guides and workflows, and delete the
+template's `## Screenshots` section.
+
+**Capture it.** Serve the site (`npm run start`, or `npm run build` then
+`npm run serve` for production output) and capture the page at
+`http://localhost:3000` with Playwright, cropped to the part that changed. Save
+the files to a scratch directory outside the repo, never in `static/img/`, so
+they can't be committed by accident. A screenshot that belongs on the page itself
+is a different job: follow
+[capturing Cypress App screenshots](#capturing-cypress-app-screenshots).
+
+**Attach it.** `--attach` uploads a local image or video and needs GitHub CLI
+2.99.0 or newer. Check with `gh --version`. It works on `gh pr create`,
+`gh pr edit`, and `gh pr comment` (and the matching `gh issue` commands), is
+repeatable, and takes up to 50 files per command. Supported formats are PNG,
+JPEG, GIF, WebP, SVG, MP4, MOV, and WebM. Reference each file from the body by
+its local path, and `gh` rewrites the reference to point at the uploaded asset,
+keeping the alt text you wrote:
+
+```md title="pr-body.md"
+## Screenshots
+
+![The Install tab set showing npm, Yarn, pnpm, and Bun in order](./install-tabs.png)
+```
+
+```bash
+gh pr create --draft --title "docs: …" --body-file pr-body.md \
+  --attach ./install-tabs.png
+```
+
+Run it from the directory the paths are relative to. An attached file the body
+doesn't reference is appended to the end of the body instead. Its alt text goes
+after a `#` in the path (`--attach './after.png#The sidebar with the new entry'`),
+and without one `gh` falls back to the filename, so prefer a reference in the
+body. Write the alt text by the same rules as
+[accessible image alt text](#accessible-image-alt-text). To add screenshots to an
+open PR, `gh pr edit <number> --attach ./after.png` appends them to the existing
+body without replacing it.
+
+If some uploads fail, `gh` still creates or updates the PR with the ones that
+succeeded, prints its URL, and exits non-zero. Check the exit code, open the PR,
+and confirm each image renders. If `gh` is missing or older than 2.99.0 and you
+can't upgrade it, open the PR without the images and say in the thread which
+screenshots it needs, rather than leaving them out silently.
+
+This repository is public, so anyone can open an attachment. Crop out anything
+that isn't part of the change, such as tokens, email addresses, or Cypress Cloud
+data from a real organization.
+
 ## Continuous integration
 
 The `CI` workflow (`.github/workflows/ci.yml`) runs on every pull request and on

@@ -17,6 +17,12 @@ here so the reasoning survives after the source is gone. -->
 
 Closes #<!-- issue number, or remove this line if none -->
 
+## Screenshots
+
+<!-- For a change visible on the rendered site, show it: before and after for a
+change to an existing page. Attach with `gh pr create --attach` (see
+AGENTS_REFERENCE.md). Delete this section if nothing visible changed. -->
+
 ## Notes for reviewers
 
 <!-- Anything a reviewer should focus on: decisions made, alternatives

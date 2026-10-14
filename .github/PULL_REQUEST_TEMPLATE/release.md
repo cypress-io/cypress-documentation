@@ -25,6 +25,12 @@ Link each page or entry, and note the issue/PR it corresponds to where relevant.
       bullet list. See `docs/app/releases/AGENTS.md`.
 -
 
+## Screenshots
+
+<!-- For a change visible on the rendered site, show it: before and after for a
+change to an existing page. Attach with `gh pr create --attach` (see
+AGENTS_REFERENCE.md). Delete this section if nothing visible changed. -->
+
 ## Notes for reviewers
 
 <!-- Anything a reviewer should focus on: features still unreleased, pages that

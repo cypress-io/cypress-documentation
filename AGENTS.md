@@ -96,6 +96,13 @@ Select it by appending `?template=release.md` to the compare URL. Name the
 target release, list every included change, and make sure a new changelog entry
 is one of them.
 
+When the change is visible on the rendered site (a new or reworked page, an
+image or diagram, a component or style change), attach screenshots of it to the
+PR with `gh pr create --attach` or `gh pr edit --attach` (GitHub CLI 2.99.0 or
+newer). Reference each one from the template's `## Screenshots` section, give it
+alt text, and keep the files out of the repo. See
+[attaching screenshots to a pull request](./AGENTS_REFERENCE.md#attaching-screenshots-to-a-pull-request).
+
 ## Rules
 
 Each rule is a hard convention. See the linked section for the how and why.
