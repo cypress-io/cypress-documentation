@@ -1252,8 +1252,10 @@ body without replacing it.
 If some uploads fail, `gh` still creates or updates the PR with the ones that
 succeeded, prints its URL, and exits non-zero. Check the exit code, open the PR,
 and confirm each image renders. If `gh` is missing or older than 2.99.0 and you
-can't upgrade it, open the PR without the images and say in the thread which
-screenshots it needs, rather than leaving them out silently.
+can't upgrade it, or your environment refuses the call (a sandbox that proxies
+GitHub can block both the GraphQL API that `gh pr` commands use and the binary
+upload), open the PR without the images and say in the thread which screenshots
+it needs, rather than leaving them out silently.
 
 This repository is public, so anyone can open an attachment. Crop out anything
 that isn't part of the change, such as tokens, email addresses, or Cypress Cloud
