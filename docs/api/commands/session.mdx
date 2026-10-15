@@ -1034,11 +1034,14 @@ available for the remainder of the test.
 Clicking a session `id` in the Instrument Panel or clicking the first line under
 an expanded session group in the Command Log prints that session's details to
 the console. This information contains the `id` along with any cached session
-data, including cookies, `localStorage`, and `sessionStorage`.
+data, including cookies, `localStorage`, and `sessionStorage`, grouped by
+domain. This output comes from the
+[cross-domain login example](#Cross-domain-sessions), so it lists data for both
+the app and the identity provider.
 
 <DocsImage
   src="/img/api/session/print-session-to-console.png"
-  alt="Browser console showing a session's id with its cached cookies, localStorage, and sessionStorage"
+  alt="Browser console showing session id bob, with cookies for auth.example.com and cookies and localStorage for localhost"
 />
 
 ## History
