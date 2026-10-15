@@ -259,18 +259,8 @@ cy.url().should('eq', 'http://localhost:8000/index.html?')
 cy.location('search').should('eq', '')
 ```
 
-Side by side, `cy.url()` is the only one of these commands that keeps the
-trailing character:
-
-| Remote URL                                  | `cy.url()`                                  | `cy.hash()`   | `cy.location('search')` |
-| ------------------------------------------- | ------------------------------------------- | ------------- | ----------------------- |
-| `http://localhost:8000/index.html`          | `http://localhost:8000/index.html`          | `''`          | `''`                    |
-| `http://localhost:8000/index.html#`         | `http://localhost:8000/index.html#`         | `''`          | `''`                    |
-| `http://localhost:8000/index.html?`         | `http://localhost:8000/index.html?`         | `''`          | `''`                    |
-| `http://localhost:8000/index.html#/users/1` | `http://localhost:8000/index.html#/users/1` | `'#/users/1'` | `''`                    |
-
 To leave the trailing character out of the assertion, compare the
-`pathname` with `cy.location()`, as shown above.
+`pathname` with `cy.location()`.
 
 ### Cross-origin pages and `cy.url()`
 
