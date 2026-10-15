@@ -11,8 +11,9 @@ slug: /api/commands/trigger
 
 Trigger any DOM event on an element, the window, or the document: mouse,
 keyboard, touch, pointer, drag and drop, or your app's own custom events. Use it
-to test a handler that listens for an event no action command, such as
-[`.click()`](/api/commands/click) or [`.type()`](/api/commands/type), fires.
+when a handler listens for an event that action commands such as
+[`.click()`](/api/commands/click) and [`.type()`](/api/commands/type) don't
+fire.
 
 ## Syntax
 
@@ -82,8 +83,10 @@ Pass in an options object to change the default behavior of `.trigger()`.
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                       |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                                                     |
 
-You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`) and
-they are attached to the event.
+You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`).
+With the default `Event` constructor, they're attached to the event as is. With
+another constructor, the browser decides which ones it accepts. See
+[choosing an event constructor](#How-eventConstructor-changes-the-properties-you-can-set).
 
 When the subject is an element, `.trigger()` sets `clientX`, `clientY`, `pageX`,
 `pageY`, `screenX`, and `screenY` on the event from the `position` or `x` and `y`
@@ -106,8 +109,8 @@ measure from the top of the document, so they differ once the page scrolls.
 
 #### Trigger a `mouseover` on the button
 
-The DOM element must be in an "interactable" state prior to the triggered event
-happening (it must be visible and not disabled).
+The element must first reach an [actionable state](#Actionability), such as
+being visible and not disabled.
 
 ```javascript
 cy.get('button').trigger('mouseover') // yields 'button'
@@ -136,6 +139,10 @@ marks the point where the event fired, here the button's top-right corner.
 ```javascript
 cy.get('button').trigger('mouseup', 15, 40)
 ```
+
+`x` and `y` measure from the element's top-left corner, so keep them inside it.
+A point past the element's edge lands on whatever is underneath, and
+`.trigger()` fails because the element is covered by another element.
 
 ### Options
 
@@ -185,9 +192,9 @@ With `cancelable: false`, `preventDefault()` has no effect and
 
 #### Specify the exact `clientX` and `clientY` the event should have
 
-This overrides the default auto-positioning based on the element itself. Useful
-for events like `mousemove` where you need the position to be outside the
-element itself.
+Passing `clientX` and `clientY` overrides the position `.trigger()` calculates
+from the element. Use it for events like `mousemove`, where the position needs
+to be outside the element.
 
 ```javascript
 cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
@@ -327,12 +334,11 @@ cy.get('input[type=range]').as('range').invoke('val', 25).trigger('change')
 cy.get('@range').siblings('p').should('have.text', '25')
 ```
 
-#### Set a range input in a controlled component (React, Vue, etc.)
+#### Set a range input in a React controlled component
 
-Frameworks such as React track an input's value themselves, so setting it with
-`.invoke('val', 70)` doesn't reach the component's change handler. Set the value
-through the element's native `value` setter, then trigger the event the
-framework listens for.
+React tracks an input's value itself, so setting it with `.invoke('val', 70)`
+doesn't reach the component's change handler. Set the value through the
+element's native `value` setter, then trigger the event React listens for.
 
 ```javascript
 cy.get('input[type=range]').then(($range) => {
@@ -349,6 +355,10 @@ cy.get('input[type=range]').siblings('p').should('have.text', '70')
 
 React's `onChange` listens for the `input` event. If the component listens for
 `change` instead, trigger `change`.
+
+Vue's `v-model` reads the input's value directly, so the
+[range input example](#Interact-with-a-range-input-slider) works there with
+`.trigger('input')` in place of `.trigger('change')`.
 
 ### Drag and Drop Events
 
@@ -486,8 +496,8 @@ that match it.
 
 `.trigger()` is a low-level utility that constructs and dispatches an event for
 you. Since it fires any event, Cypress makes no assumptions about how the event
-should look. Find out which events the handlers receiving it listen for, which
-may be in a third-party library, and pass the properties they read.
+should look. Check which event your app's handler listens for, including
+handlers inside a third-party library, and pass the properties it reads.
 
 #### How `eventConstructor` changes the properties you can set
 
@@ -542,15 +552,15 @@ This table shows where each mouse property's value comes from:
 | `which`                                       | Your value                                                       | Calculated from `button`                         |
 | `x`, `y`                                      | Not attached: `.trigger()` reads them as the position to fire at | Calculated, equal to `clientX` and `clientY`     |
 
-With `KeyboardEvent`, the properties key handlers usually read, `key`, `code`,
-`keyCode`, `which`, `repeat`, and the modifier keys, all take your values.
+With `KeyboardEvent`, every property keyboard handlers usually read takes your
+value: `key`, `code`, `keyCode`, `which`, `repeat`, and the modifier keys.
 
 Keep the default unless the handler needs a real instance of the class, for
 example when it checks `event instanceof MouseEvent`.
 
 ### Differences
 
-#### What's the difference between triggering an event and calling the corresponding Cypress command?
+#### How `.trigger()` differs from action commands
 
 In other words, what's the difference between:
 
@@ -586,10 +596,9 @@ command fires.
 
 <HeaderRequirements />
 
-- `.trigger()` requires being chained off a command that yields DOM element(s),
-  the window, or the document.
-- `.trigger()` requires the element subject to be a single element. It errors
-  when the subject contains more than one element.
+- `.trigger()` requires being chained off a command that yields a single DOM
+  element, the window, or the document. It errors when the subject contains
+  more than one element.
 
 <HeaderAssertions />
 
