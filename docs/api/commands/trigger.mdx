@@ -270,23 +270,26 @@ cy.get('.target').trigger('mousedown', { button: 1 })
 cy.get('.target').trigger('mousedown', { button: 2 })
 ```
 
-#### jQuery UI Sortable
+#### Drag an element with mouse events
 
-To simulate drag and drop using jQuery UI sortable requires `pageX` and `pageY`
-properties along with `which:1`.
+Many drag handlers listen for `mousedown` on the element, then follow
+`mousemove` and `mouseup` on the document. The events bubble, so triggering them
+on the element reaches document listeners too. Pass the position properties the
+handler reads at each step. With the default `Event` constructor, `pageX` and
+`pageY` reach the handler exactly as you pass them.
 
 ```javascript
 cy.get('[data-cy=draggable]').trigger('mousedown', {
-  which: 1,
-  pageX: 600,
+  button: 0,
+  pageX: 100,
   pageY: 100,
 })
-cy.get('[data-cy=draggable]').trigger('mousemove', {
-  which: 1,
-  pageX: 600,
-  pageY: 600,
-})
+cy.get('[data-cy=draggable]').trigger('mousemove', { pageX: 300, pageY: 150 })
 cy.get('[data-cy=draggable]').trigger('mouseup')
+
+cy.get('[data-cy=draggable]')
+  .should('have.css', 'left', '200px')
+  .and('have.css', 'top', '50px')
 ```
 
 ### Keyboard Events
@@ -505,7 +508,8 @@ event's `view` property to the application's `window`.
 With the default `Event` constructor, `.trigger()` attaches every property you
 pass to the event as is, including ones like `pageX` and `pageY` that a real
 mouse event calculates for itself. Handlers that only read properties, like the
-[jQuery UI Sortable](#jQuery-UI-Sortable) example above, work with this default.
+one in [Drag an element with mouse events](#Drag-an-element-with-mouse-events),
+work with this default.
 
 When you set `eventConstructor` to a class such as
 [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent), the
