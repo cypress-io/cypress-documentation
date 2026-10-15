@@ -1,6 +1,6 @@
 ---
 title: 'cy.url()'
-description: Get the current URL of the page that is currently active in Cypress.
+description: Get the full URL of the page under test in Cypress as a string.
 sidebar_label: url
 slug: /api/commands/url
 e2eSpecific: true
@@ -10,7 +10,7 @@ e2eSpecific: true
 
 # url
 
-Get the current URL of the page that is currently active.
+Get the full URL of the page under test as a string.
 
 :::info
 
@@ -85,8 +85,8 @@ Pass in an options object to change the default behavior of `cy.url()`.
 ```javascript
 // clicking the anchor causes the browser to follow the link
 cy.get('#user-edit a').click()
-cy.url().should('include', '/users/1/edit') // => true
-cy.url().should('eq', 'http://localhost:8000/users/1/edit') // => true
+cy.url().should('include', '/users/1/edit')
+cy.url().should('eq', 'http://localhost:8000/users/1/edit')
 ```
 
 ### `decode` option
@@ -175,9 +175,10 @@ cy.url().then((startUrl) => {
 
 #### Assert that sign-in redirects to an identity provider
 
-`cy.url()` reads the URL after your application navigates to another origin, so
-you can confirm where a sign-in flow landed before you interact with that page
-inside [`cy.origin()`](/api/commands/origin).
+Because `cy.url()` reads the URL
+[across origins](#Cross-origin-pages-and-cyurl), you can confirm where a
+sign-in flow landed before you interact with that page inside
+[`cy.origin()`](/api/commands/origin).
 
 ```javascript
 cy.visit('http://localhost:8000/')
@@ -192,24 +193,11 @@ cy.origin('http://auth.example.com', () => {
 
 ## Notes
 
-### `cy.url()` and `cy.location('href')`
-
-#### `cy.url()` yields the URL's `href`
+### `cy.url()` versus `cy.location('href')`
 
 `cy.url()` reads the current URL and yields its `href`, the same string
-`cy.location('href')` yields.
-
-```javascript
-cy.url() // these yield the same string
-cy.location('href') // these yield the same string
-```
-
-### Differences
-
-#### URL versus href
-
-Given the remote URL, `http://localhost:8000/index.html`, all 3 of these
-assertions are the same.
+`cy.location('href')` yields. Given the remote URL
+`http://localhost:8000/index.html`, all 3 of these assertions are the same:
 
 ```javascript
 cy.location('href').should('include', '/index.html')
@@ -223,34 +211,13 @@ cy.url().should('include', '/index.html')
 `url` property on the `location` object, so `cy.url()` gives the full current
 URL the name most developers reach for first.
 
-#### Hardcoded versus using the configuration object
-
-Instead of hard-coding the URL used in the assertion, we recommend you define a
-`baseUrl` in your [Cypress configuration](/app/references/configuration). For
-more details on why, see our Best Practices guide on
-[setting a global `baseUrl`](/app/core-concepts/best-practices#Setting-a-Global-baseUrl).
-
-Given the remote URL, `http://localhost:8000/index.html`, and the baseUrl,
-`http://localhost:8000`, these assertions are the same.
-
-```javascript
-cy.url().should('eq', 'http://localhost:8000/index.html')
-cy.url().should('eq', Cypress.config().baseUrl + '/index.html') // tests won't fail in case the port changes
-```
-
-#### Assert that the URL contains `#users/new`
-
-```javascript
-cy.url().should('contain', '#users/new')
-```
-
 ### Assert on part of the URL with `cy.location()`
 
-`cy.url()` yields the whole URL, including the protocol, host, and port. When
-you only care about the path or the query string, assert on that part with
-[`cy.location()`](/api/commands/location) instead of slicing the string. The
-assertion then passes on any host, such as a local server or a preview
-deployment. The `pathname` and `search` labels in the URL diagram under
+`cy.url()` yields the whole URL, including the protocol, host, and port, so an
+assertion on it names the host. When you only care about the path or the query
+string, assert on that part with [`cy.location()`](/api/commands/location)
+instead of hardcoding or slicing the full URL. The assertion then passes on any
+host, such as a local server, CI, or a preview deployment. The `pathname` and `search` labels in the URL diagram under
 [Yields](#Yields) show which part each one reads.
 
 ```javascript
@@ -258,6 +225,11 @@ deployment. The `pathname` and `search` labels in the URL diagram under
 cy.location('pathname').should('eq', '/users/1/edit')
 cy.location('search').should('eq', '?tab=profile')
 ```
+
+To keep the host out of [`cy.visit()`](/api/commands/visit) as well, define a
+`baseUrl` in your [Cypress configuration](/app/references/configuration). For
+more details on why, see our Best Practices guide on
+[setting a global `baseUrl`](/app/core-concepts/best-practices#Setting-a-Global-baseUrl).
 
 ### Trailing `#` and `?` in the URL
 
@@ -314,7 +286,7 @@ without wrapping the command in [`cy.origin()`](/api/commands/origin).
 
 <HeaderAssertions />
 
-- `cy.url()` will automatically [retry](/app/core-concepts/retry-ability)
+- `cy.url()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed
 
 <HeaderTimeouts />
@@ -329,7 +301,7 @@ without wrapping the command in [`cy.origin()`](/api/commands/origin).
 cy.url().should('include', '#users/new')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/url/test-url-of-website-or-web-application.png"
@@ -356,3 +328,4 @@ following:
 
 - [`cy.hash()`](/api/commands/hash)
 - [`cy.location()`](/api/commands/location)
+- [`cy.origin()`](/api/commands/origin)
