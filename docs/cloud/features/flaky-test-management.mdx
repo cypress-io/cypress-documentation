@@ -242,12 +242,11 @@ the gap between CI results and your editor. Instead of manually triaging which
 failures are real, you can ask your agent to pull flake data from Cloud and act
 on it without leaving your workflow.
 
-For flake, the agent can use the `cypress_get_flaky_tests` tool to identify the
-flaky tests in a run, which directly answers the question reviewers ask most:
-**"Are these failures real regressions, or known flakiness?"** Paired with
-`cypress_get_failed_tests`, which returns error details, stack traces, and a
-Test Replay link for each attempt, your agent can separate signal from noise and
-jump straight to a root-cause investigation.
+For flake, the agent can use the `cypress_get_flaky_tests` tool to list the
+flaky tests in a run, with the error, stack trace, and Test Replay link for each
+attempt. The agent can also call `cypress_get_test_screenshots` to see what the
+page showed when a flaky attempt failed. This lets an agent jump straight to a
+root-cause investigation.
 
 :::info
 
