@@ -61,13 +61,13 @@ and `bottomRight`.
 
 <Icon name="angle-right" /> **x _(Number, String)_**
 
-The distance to scroll to from the window or element's left edge. Pass a number
+Where to scroll to horizontally, measured from the left edge. Pass a number
 of pixels (`500`), a pixel string (`'500px'`), or a percentage of the
 scrollable distance (`'25%'`).
 
 <Icon name="angle-right" /> **y _(Number, String)_**
 
-The distance to scroll to from the window or element's top edge. Pass a number
+Where to scroll to vertically, measured from the top edge. Pass a number
 of pixels (`500`), a pixel string (`'500px'`), or a percentage of the
 scrollable distance (`'25%'`).
 
@@ -237,10 +237,11 @@ cy.window().scrollTo('bottom')
 ### Fixing the "element is not scrollable" error
 
 `.scrollTo()` errors with `failed because this element is not scrollable` when
-the element you target has no content overflowing it to scroll. This usually
-means the scrolling happens on a different element, often the window, while the
-targeted wrapper grows to fit its content. Target the element whose `overflow`
-is `auto` or `scroll` instead, or scroll the window.
+the element you target can't scroll: either its content doesn't overflow it, or
+its `overflow` isn't `auto` or `scroll`. This usually means the scrolling
+happens on a different element, often the window, while the targeted wrapper
+grows to fit its content. Target the element whose `overflow` is `auto` or
+`scroll` instead, or scroll the window.
 
 ```javascript
 // Errors: .page-wrapper grows with its content, so the window scrolls instead
