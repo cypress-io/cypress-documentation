@@ -248,6 +248,8 @@ each right click its own full timeout, and logs each right click to the
 cy.get('[data-cy=file-row]').rightclick({ multiple: true })
 ```
 
+### Modifier keys
+
 #### Right click with key combinations
 
 Pass a modifier key option to hold that key while right clicking, such as
@@ -267,6 +269,13 @@ const modifier =
 cy.get('[data-cy=file-row]').first().rightclick(modifier)
 cy.get('[data-cy=context-menu]').should('contain', 'Open in new window')
 ```
+
+#### Ctrl + click on macOS does not fire a `contextmenu` event
+
+On macOS, users can open a context menu by holding Control and clicking.
+`.click({ ctrlKey: true })` fires a `click` event with the control key held, not
+a `contextmenu` event. To test the context menu a Ctrl + click opens, use
+`.rightclick()`.
 
 #### Shift right click to show more options
 
@@ -313,15 +322,6 @@ Each event carries `button: 2` and `buttons: 2`. `.rightclick()` does not fire a
 
 Like [`.click()`](/api/commands/click#Focus), `.rightclick()` gives focus to the
 first focusable element at the click coordinates or among its ancestors.
-
-### Right click on macOS with the control key
-
-#### Ctrl + click does not fire a `contextmenu` event
-
-On macOS, users can open a context menu by holding Control and clicking.
-`.click({ ctrlKey: true })` fires a `click` event with the control key held, not
-a `contextmenu` event. To test the context menu a Ctrl + click opens, use
-`.rightclick()`.
 
 ### Right click or trigger a `contextmenu` event
 
