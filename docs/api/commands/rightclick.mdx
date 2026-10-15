@@ -326,19 +326,6 @@ Each event carries `button: 2` and `buttons: 2`. `.rightclick()` does not fire a
 Like [`.click()`](/api/commands/click#Focus), `.rightclick()` gives focus to the
 first focusable element at the click coordinates or among its ancestors.
 
-### Cancellation
-
-#### Pointerdown or mousedown cancellation prevents focus
-
-If the `pointerdown` or `mousedown` event has its default action prevented
-(`e.preventDefault()`), Cypress does not give the element focus.
-
-When `pointerdown` is cancelled, Cypress also skips the `mousedown` and
-`mouseup` events, following the Pointer Events spec. It still sends
-`contextmenu` and `pointerup`.
-
-Cancelling the `contextmenu` event does not change which events Cypress sends.
-
 ### Right click on macOS with the control key
 
 #### Ctrl + click does not fire a `contextmenu` event
