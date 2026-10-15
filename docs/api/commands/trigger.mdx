@@ -197,10 +197,12 @@ Custom controls often hide the native input they're built on. Without `force`,
 `force: true` skips the [actionability](#Actionability) checks and the scroll
 into view, and dispatches the event right away.
 
-```javascript
-cy.get('[data-cy=volume-input]').invoke('val', 60).trigger('change', {
-  force: true,
+```typescript copyTsToJs
+cy.get<HTMLInputElement>('[data-cy=volume-input]').then(($input) => {
+  $input[0].value = '60'
 })
+cy.get('[data-cy=volume-input]').trigger('change', { force: true })
+
 cy.get('[data-cy=volume-label]').should('have.text', '60')
 ```
 
@@ -639,15 +641,18 @@ command fires.
 
 **_Trigger a `change` event on input type='range'_**
 
-```javascript
-cy.get('.trigger-input-range').invoke('val', 25).trigger('change')
+```typescript copyTsToJs
+cy.get<HTMLInputElement>('.trigger-input-range').then(($range) => {
+  $range[0].value = '25'
+})
+cy.get('.trigger-input-range').trigger('change')
 ```
 
 The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/trigger/command-log-trigger.png"
-  alt="Command Log showing a get command for .trigger-input-range, an invoke command calling .val(), and a trigger command for the change event"
+  alt="Command Log showing two get commands for .trigger-input-range, followed by a trigger command for the change event"
 />
 
 When you click `trigger` in the Command Log, the console outputs the following:
