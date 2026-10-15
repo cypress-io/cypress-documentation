@@ -22,9 +22,9 @@
       "isNew": true
     },
     {
-      "label": "cy.expose()",
-      "description": "Safely expose public configuration to tests.",
-      "href": "/api/cypress-api/expose",
+      "label": "cy.env()",
+      "description": "Securely read only the environment variables you request.",
+      "href": "/api/commands/env",
       "isNew": true
     }
   ],
