@@ -237,18 +237,6 @@ Forcing does not make a disabled element respond. The browser does not deliver
 `mousedown`, `contextmenu`, or `mouseup` events to a disabled form control, so
 your app's context menu handler never runs.
 
-#### Force a right click with position argument
-
-```javascript
-cy.get('[data-cy=file-row]').first().rightclick('bottomLeft', { force: true })
-```
-
-#### Force a right click with relative coordinates
-
-```javascript
-cy.get('[data-cy=file-row]').first().rightclick(5, 10, { force: true })
-```
-
 #### Right click every element that matches a selector
 
 By default, Cypress errors if you try to right click multiple elements. When
