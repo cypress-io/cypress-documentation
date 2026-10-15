@@ -140,10 +140,6 @@ marks the point where the event fired, here the button's top-right corner.
 cy.get('button').trigger('mouseup', 15, 40)
 ```
 
-`x` and `y` measure from the element's top-left corner, so keep them inside it.
-A point past the element's edge lands on whatever is underneath, and
-`.trigger()` fails because the element is covered by another element.
-
 ### Options
 
 #### Specify that the event should not bubble
@@ -167,28 +163,6 @@ cy.document().then((doc) => {
 cy.get('button').trigger('mouseover', { bubbles: false })
 cy.get('@documentMouseover').should('not.have.been.called')
 ```
-
-#### Check that a drop zone accepts drops
-
-A drop zone accepts a drop only when its `dragover` handler cancels the event
-with `preventDefault()`. The event is cancelable by default, so a
-[`cy.spy()`](/api/commands/spy) listener can check the event's
-`defaultPrevented` property after the handlers run.
-
-```javascript
-const onDragover = cy.spy().as('dragover')
-cy.get('[data-cy=drop-zone]').then(($zone) => {
-  $zone[0].addEventListener('dragover', onDragover)
-})
-
-cy.get('[data-cy=drop-zone]').trigger('dragover')
-cy.get('@dragover').should('have.been.calledWithMatch', {
-  defaultPrevented: true,
-})
-```
-
-With `cancelable: false`, `preventDefault()` has no effect and
-`defaultPrevented` stays `false`.
 
 #### Specify the exact `clientX` and `clientY` the event should have
 
@@ -277,67 +251,56 @@ cy.get('.target').trigger('mousedown', { button: 1 })
 cy.get('.target').trigger('mousedown', { button: 2 })
 ```
 
-#### Drag an element with mouse events
-
-Many drag handlers listen for `mousedown` on the element, then follow
-`mousemove` and `mouseup` on the document. The events bubble, so triggering them
-on the element reaches document listeners too. Pass the position properties the
-handler reads at each step. With the default `Event` constructor, `pageX` and
-`pageY` reach the handler exactly as you pass them.
-
-```javascript
-cy.get('[data-cy=draggable]').trigger('mousedown', {
-  button: 0,
-  pageX: 100,
-  pageY: 100,
-})
-cy.get('[data-cy=draggable]').trigger('mousemove', { pageX: 300, pageY: 150 })
-cy.get('[data-cy=draggable]').trigger('mouseup')
-
-cy.get('[data-cy=draggable]')
-  .should('have.css', 'left', '200px')
-  .and('have.css', 'top', '50px')
-```
-
 ### Keyboard Events
 
-#### Close a dialog with the Escape key
+#### Open a command palette with a keyboard shortcut
+
+`.trigger()` fires one keyboard event with exactly the properties you pass,
+including modifier keys, without moving focus. Trigger it on the document to
+reach a global shortcut handler.
 
 ```javascript
-cy.get('[data-cy=dialog]').trigger('keydown', { key: 'Escape' })
-cy.get('[data-cy=dialog]').should('not.exist')
+cy.document().trigger('keydown', { key: 'k', ctrlKey: true })
+cy.get('[data-cy=command-palette]').should('be.visible')
 ```
 
-Pass the properties the handler reads, such as `key`, `code`, or `keyCode`. The
-event bubbles, so a listener on the document receives it too.
+Pass the properties the handler reads, such as `key`, `code`, or `keyCode`, along
+with `ctrlKey`, `metaKey`, `shiftKey`, or `altKey`.
 
-`.trigger()` fires the one event you name on any element.
-[`.type()`](/api/commands/type) simulates the full sequence of keyboard events,
-but only on elements it can type into, such as inputs, textareas, and elements
-with a `tabindex`. Use `.type('{esc}')` when the element accepts typing, and
-`.trigger()` when it doesn't.
+To press a single key the way a user does, such as Escape to close a dialog, use
+[`cy.press()`](/api/commands/press) instead. It dispatches native key events,
+while events from `.trigger()` have `isTrusted` set to `false`, so a handler
+that checks `isTrusted` ignores them. `cy.press()` takes one key without
+modifiers. To type text, use [`.type()`](/api/commands/type).
+
+```javascript
+cy.press(Cypress.Keyboard.Keys.ESC)
+cy.get('[data-cy=dialog]').should('not.exist')
+```
 
 ### Change Events
 
 #### Interact with a range input (slider)
 
-To interact with a range input (slider), set its value, then trigger the event
-that signals it changed. This example invokes jQuery's `val()` method to set the
-value, then triggers the `change` event.
+To interact with a range input (slider), set its `value` property, then trigger
+the `change` event to signal it changed.
 
 Some implementations listen for the `input` event instead, which fires as the
 user moves the slider.
 
-```javascript
-cy.get('input[type=range]').as('range').invoke('val', 25).trigger('change')
+```typescript copyTsToJs
+cy.get<HTMLInputElement>('input[type=range]').then(($range) => {
+  $range[0].value = '25'
+})
+cy.get('input[type=range]').trigger('change')
 
-cy.get('@range').siblings('p').should('have.text', '25')
+cy.get('input[type=range]').siblings('p').should('have.text', '25')
 ```
 
 #### Set a range input in a React controlled component
 
-React tracks an input's value itself, so setting it with `.invoke('val', 70)`
-doesn't reach the component's change handler. Set the value through the
+React tracks an input's value itself, so setting the `value` property directly,
+as in the range input example, doesn't reach the component's change handler. Set the value through the
 element's native `value` setter, then trigger the event React listens for.
 
 ```javascript
@@ -362,6 +325,10 @@ Vue's `v-model` reads the input's value directly, so the
 
 ### Drag and Drop Events
 
+Which events to trigger depends on how the app implements dragging: the HTML
+Drag and Drop API, mouse events, or pointer events. Each example below covers
+one of them.
+
 #### Drag an item to a drop zone with `dataTransfer`
 
 HTML drag and drop handlers pass data through the event's `dataTransfer`
@@ -382,34 +349,51 @@ cy.get('[data-cy=card]').trigger('dragend', { dataTransfer })
 cy.get('[data-cy=done-column]').should('contain', 'Write docs')
 ```
 
-:::info
+#### Check that a drop zone accepts drops
 
-[Check out our example recipe triggering mouse and drag events to test drag and drop](/app/references/recipes#Testing-the-DOM)
-
-:::
-
-### Touch and Pointer Events
-
-#### Swipe a carousel with touch events
-
-Touch handlers read finger positions from the `touches` and `changedTouches`
-lists rather than from `clientX`. With the default `Event` constructor, pass
-plain objects with the properties the handler reads. On `touchend`, the lifted
-finger is in `changedTouches`, and `touches` is empty.
+A drop zone accepts a drop only when its `dragover` handler cancels the event
+with `preventDefault()`. The event is cancelable by default, so a
+[`cy.spy()`](/api/commands/spy) listener can check the event's
+`defaultPrevented` property after the handlers run.
 
 ```javascript
-cy.get('[data-cy=carousel]').trigger('touchstart', {
-  touches: [{ clientX: 300, clientY: 100 }],
-})
-cy.get('[data-cy=carousel]').trigger('touchmove', {
-  touches: [{ clientX: 50, clientY: 100 }],
-})
-cy.get('[data-cy=carousel]').trigger('touchend', {
-  touches: [],
-  changedTouches: [{ clientX: 50, clientY: 100 }],
+const onDragover = cy.spy().as('dragover')
+cy.get('[data-cy=drop-zone]').then(($zone) => {
+  $zone[0].addEventListener('dragover', onDragover)
 })
 
-cy.get('[data-cy=slide-2]').should('be.visible')
+cy.get('[data-cy=drop-zone]').trigger('dragover')
+cy.get('@dragover').should('have.been.calledWithMatch', {
+  defaultPrevented: true,
+})
+```
+
+With `cancelable: false`, `preventDefault()` has no effect and
+`defaultPrevented` stays `false`.
+
+#### Drag an element with mouse events
+
+Many drag handlers listen for `mousedown` on the element, then follow
+`mousemove` and `mouseup` on the document. The events bubble, so triggering them
+on the element reaches document listeners too. Pass the position properties the
+handler reads at each step. With the default `Event` constructor, `pageX` and
+`pageY` reach the handler exactly as you pass them.
+
+```javascript
+cy.get('[data-cy=draggable]').trigger('mousedown', {
+  button: 0,
+  pageX: 100,
+  pageY: 100,
+})
+cy.get('[data-cy=draggable]').trigger('mousemove', {
+  pageX: 300,
+  pageY: 150,
+})
+cy.get('[data-cy=draggable]').trigger('mouseup')
+
+cy.get('[data-cy=draggable]')
+  .should('have.css', 'left', '200px')
+  .and('have.css', 'top', '50px')
 ```
 
 #### Drag a slider thumb with pointer events
@@ -433,6 +417,43 @@ cy.get('[data-cy=volume-thumb]').trigger('pointerup', pointer)
 
 cy.get('[data-cy=volume-value]').should('have.text', '80')
 ```
+
+:::info
+
+[Check out our example recipe triggering mouse and drag events to test drag and drop](/app/references/recipes#Testing-the-DOM)
+
+:::
+
+### Touch Events for Mobile Testing
+
+#### Swipe a carousel with touch events
+
+Mobile web apps often handle swipes and other gestures with touch events. Touch
+handlers read finger positions from the `touches` and `changedTouches` lists
+rather than from `clientX`. With the default `Event` constructor, pass
+plain objects with the properties the handler reads. On `touchend`, the lifted
+finger is in `changedTouches`, and `touches` is empty.
+
+```javascript
+cy.get('[data-cy=carousel]').trigger('touchstart', {
+  touches: [{ clientX: 300, clientY: 100 }],
+})
+cy.get('[data-cy=carousel]').trigger('touchmove', {
+  touches: [{ clientX: 50, clientY: 100 }],
+})
+cy.get('[data-cy=carousel]').trigger('touchend', {
+  touches: [],
+  changedTouches: [{ clientX: 50, clientY: 100 }],
+})
+
+cy.get('[data-cy=slide-2]').should('be.visible')
+```
+
+For mobile testing, pair this with [`cy.viewport()`](/api/commands/viewport),
+such as `cy.viewport('iphone-x')`, to render your app's mobile layout. A desktop
+browser usually reports no touch support, so an app that checks for it before
+adding touch listeners, such as with `'ontouchstart' in window`, doesn't respond
+to these events.
 
 ### Custom Events
 
