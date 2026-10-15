@@ -16,7 +16,7 @@ slug: /app/references/migration-guide
   defaultCollapsed
   excludeFromLlmExport
   title="Upgrade to Cypress 16 with your AI assistant"
-  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-16-0.md and https://docs.cypress.io/app/references/migration-guide/migrating-away-from-cypress-env.md, which covers in full the Cypress.env() removal that the 16.0 section only summarizes. Then upgrade this project from Cypress 15 to 16 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 15.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in the 16.0 section (Node.js 22, 24, or 26+, and Angular 21+ / Vite 8+ / Next.js 15.0.4+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency. If I depend on @cypress/angular-zoneless, replace it with @cypress/angular and update the imports.\n\n4. Migrate off Cypress.env(), following the Cypress.env() page rather than guessing. Find every Cypress.env() usage and classify each value as sensitive or public, since that choice decides the replacement. Move sensitive values (keys, tokens, passwords, credentials) to cy.env(), which is asynchronous and yields only the keys you request, and public values (feature flags, API versions, public URLs) to Cypress.expose() with a top-level expose block in my config. Replace any env key in a per-test or per-suite config override with expose. Check for --env CLI flags, for reads inside cy.origin() callbacks, and for plugins that call Cypress.env(), which that page lists with the versions that support the new APIs. Show me the proposed changes before applying them.\n\n5. Fix the remaining breaking changes in the 16.0 section that affect my code and config: delete cy.end() calls, replace cy.exec() calls with cy.task() registered in setupNodeEvents and remove execTimeout, replace experimentalMemoryManagement: false with manageBrowserMemory: false, remove allowCypressEnv, experimentalSourceRewriting, and experimentalFastVisibility, move Cypress.config() calls that set viewportWidth, viewportHeight, or blockHosts during a test into cy.viewport() or a test configuration object, and convert any .coffee specs, support files, or fixtures to JavaScript or TypeScript.\n\n6. Review what changed behavior without changing my code. Flag, but don't rewrite unless a test actually fails: assertions on req.httpVersion, compression headers, or a 304 status inside cy.intercept(); visibility assertions that depended on the legacy algorithm; tests that relied on the implicit 10ms keystrokeDelay; and cookie or storage assertions written inside .then(), which doesn't retry. Don't set forceHttp1 or visibilityStrategy: 'legacy' to make a test pass; both are deprecated escape hatches.\n\n7. Verify. Run npx cypress verify and my Cypress tests, and confirm the run starts with no deprecation or removed-option warnings.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-to-cypress-16-0.md and https://docs.cypress.io/app/references/migration-guide/migrating-away-from-cypress-env.md, which covers in full the Cypress.env() removal that the 16.0 section only summarizes. Then upgrade this project from Cypress 15 to 16 by working through these steps:\n\n1. Confirm the starting point. If the project isn't on Cypress 15.x yet, stop and tell me; majors should be upgraded one at a time.\n\n2. Check requirements. Verify my environment meets the requirements in the 16.0 section (Node.js 22, 24, or 26+, and Angular 21+ / Vite 8+ / Next.js 15.0.4+ if I use component testing) and flag anything unsupported.\n\n3. Update Cypress. Detect my package manager and update the cypress dependency. If I depend on @cypress/angular-zoneless, replace it with @cypress/angular and update the imports.\n\n4. Migrate off Cypress.env(), following the Cypress.env() page rather than guessing. Find every Cypress.env() usage and classify each value as sensitive or public, since that choice decides the replacement. Move sensitive values (keys, tokens, passwords, credentials) to cy.env(), which is asynchronous and yields only the keys you request, and public values (feature flags, API versions, public URLs) to Cypress.expose() with a top-level expose block in my config. Where a synchronous helper, utility, or request builder returned a secret, turn it into a custom command that reads the value with cy.env() and makes the request in the same chain, rather than storing the value in a variable outside the chain. cy.env() waits 4000ms by default and doesn't follow defaultCommandTimeout, so pass a timeout option to any lookup that times out. Replace any env key in a per-test or per-suite config override with expose, and check for reads inside cy.origin() callbacks. Show me the proposed changes before applying them.\n\n5. Move plugin options to expose. Update plugins that call Cypress.env() to the versions that page lists. Then find every value my CI workflows, package.json scripts, and shell scripts pass with --env or a CYPRESS_* environment variable, such as CYPRESS_grepTags for @cypress/grep or CYPRESS_TAGS for the Cucumber preprocessor. CYPRESS_* variables populate env only, so a plugin that reads expose ignores them and runs every test instead of the filtered set. Pass public values with --expose instead. Where CI has to keep the variable, copy each key from config.env to config.expose in setupNodeEvents before registering the plugin that reads it, and return config. Map each plugin's keys separately. Show me these changes before applying them too.\n\n6. Fix the remaining breaking changes in the 16.0 section that affect my code and config: delete cy.end() calls, replace cy.exec() calls with cy.task() registered in setupNodeEvents and remove execTimeout, replace experimentalMemoryManagement: false with manageBrowserMemory: false, remove allowCypressEnv, experimentalSourceRewriting, and experimentalFastVisibility, move Cypress.config() calls that set viewportWidth, viewportHeight, or blockHosts during a test into cy.viewport() or a test configuration object, and convert any .coffee specs, support files, or fixtures to JavaScript or TypeScript.\n\n7. Review what changed behavior without changing my code. Flag, but don't rewrite unless a test actually fails: assertions on req.httpVersion, compression headers, or a 304 status inside cy.intercept(); visibility assertions that depended on the legacy algorithm; tests that relied on the implicit 10ms keystrokeDelay; and cookie or storage assertions written inside .then(), which doesn't retry. Don't set forceHttp1 or visibilityStrategy: 'legacy' to make a test pass; both are deprecated escape hatches.\n\n8. Verify. Run npx cypress verify and my Cypress tests, and confirm the run starts with no deprecation or removed-option warnings. If my CI filters tests by tag, run one filtered run the way CI does and confirm it runs only the selected tests.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
 This guide details the code changes needed to migrate to Cypress version 16.0.
@@ -815,7 +815,7 @@ The bundled Electron browser is deprecated as a test browser in Cypress 16.0.0 a
   defaultCollapsed
   excludeFromLlmExport
   title="Migrate off Cypress.env() with your AI assistant"
-  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-away-from-cypress-env.md, then migrate this project off Cypress.env() by working through these steps:\n\n1. Check my Cypress version. cy.env() and Cypress.expose() require Cypress 15.10.0 or newer, so check my installed version first: if it's on an older 15.x release, detect my package manager and update the cypress dependency to the latest 15.x; if it's below Cypress 15, stop and tell me, since majors should be upgraded one at a time first.\n\n2. Classify each value. Find every Cypress.env() usage and classify each value as sensitive or public.\n\n3. Migrate the values. Migrate sensitive reads to cy.env() and public values to Cypress.expose() with a top-level expose block in my Cypress config. Check for --env CLI flags and plugins that rely on Cypress.env(), and show me the proposed changes before applying them.\n\n4. Lock it down and verify. Once every Cypress.env() call is gone, add allowCypressEnv: false to my config and run my Cypress tests to confirm nothing broke.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
+  prompt={`Read https://docs.cypress.io/app/references/migration-guide/migrating-away-from-cypress-env.md, then migrate this project off Cypress.env() by working through these steps:\n\n1. Check my Cypress version. cy.env() and Cypress.expose() require Cypress 15.10.0 or newer, so check my installed version first: if it's on an older 15.x release, detect my package manager and update the cypress dependency to the latest 15.x; if it's below Cypress 15, stop and tell me, since majors should be upgraded one at a time first.\n\n2. Classify each value. Find every Cypress.env() usage and classify each value as sensitive or public.\n\n3. Migrate the values. Migrate sensitive reads to cy.env() and public values to Cypress.expose() with a top-level expose block in my Cypress config. Turn synchronous helpers that returned a secret into custom commands that read it with cy.env(), and pass a timeout option to any cy.env() lookup that times out, since its 4000ms default doesn't follow defaultCommandTimeout. Check for --env CLI flags, plugins that rely on Cypress.env(), and CYPRESS_* variables in my CI or package.json scripts that a plugin reads, such as CYPRESS_grepTags. Those populate env only, so pass them with --expose or copy them into config.expose in setupNodeEvents. Show me the proposed changes before applying them.\n\n4. Lock it down and verify. Once every Cypress.env() call is gone, add allowCypressEnv: false to my config and run my Cypress tests to confirm nothing broke.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
 `Cypress.env()` was deprecated in Cypress 15.10.0 and removed in Cypress 16.0. This guide helps you migrate to [`cy.env()`](/api/commands/env) (for sensitive values) or [`Cypress.expose()`](/api/cypress-api/expose) (for public/non-sensitive values), depending on your use case.
@@ -930,6 +930,45 @@ describe('API tests', () => {
 })
 ```
 
+#### Move secret reads out of synchronous helpers
+
+`Cypress.env()` returned a value on the spot, so it often lived inside plain helper functions, such as one that builds request headers. `cy.env()` is a command, so a helper like that can no longer return the secret. Turn the helper into a custom command that reads the value and issues the request inside the same chain:
+
+<Badge type="danger">Before: Cypress.env()</Badge>
+
+```javascript title="cypress/support/helpers.js"
+export const authHeaders = () => ({
+  Authorization: `Bearer ${Cypress.env('apiKey')}`,
+})
+```
+
+<Badge type="success">After: cy.env()</Badge>
+
+```javascript title="cypress/support/commands.js"
+Cypress.Commands.add('apiRequest', (options) => {
+  return cy.env(['apiKey']).then(({ apiKey }) => {
+    return cy.request({
+      ...options,
+      headers: { ...options.headers, Authorization: `Bearer ${apiKey}` },
+    })
+  })
+})
+```
+
+```javascript title="cypress/e2e/users.cy.js"
+it('lists users', () => {
+  cy.apiRequest({ url: '/api/users' }).its('status').should('eq', 200)
+})
+```
+
+#### Set a timeout for slow secret lookups
+
+`cy.env()` waits 4000ms by default, and that default doesn't follow [`defaultCommandTimeout`](/app/references/configuration#Timeouts). If a lookup times out, for example on a busy CI machine, pass a `timeout`:
+
+```javascript
+cy.env(['apiKey'], { timeout: 10000 })
+```
+
 See [cy.env()](/api/commands/env) for more details.
 
 ### Migrate public config to Cypress.expose()
@@ -1003,6 +1042,32 @@ cypress run --expose FEATURE_FLAG=true,API_VERSION=v2,PUBLIC_API_URL=https://api
 ```
 
 See [Cypress.expose()](/api/cypress-api/expose) for more details.
+
+#### Via `CYPRESS_*` environment variables in CI
+
+`CYPRESS_*` environment variables, such as `CYPRESS_grepTags` set in a CI workflow, populate `env` only. They never reach `Cypress.expose()`. A plugin that now reads its options from `expose`, like `@cypress/grep` or the Cucumber preprocessor, doesn't see them, so the run quietly ignores the filter and runs every test.
+
+Pass the value with `--expose` instead:
+
+```shell
+cypress run --expose grepTags=@smoke
+```
+
+If your CI has to keep setting `CYPRESS_*` variables, copy each one into `expose` in `setupNodeEvents`, before you register any plugin that reads it. Each plugin reads its own key, so map each key it needs:
+
+:::cypress-config-plugin-example
+
+```ts
+if (config.env.grepTags !== undefined) {
+  config.expose.grepTags = config.env.grepTags
+}
+
+// Register plugins that read config.expose here
+
+return config
+```
+
+:::
 
 #### Via runtime
 
@@ -1086,7 +1151,7 @@ If you're using Cypress plugins that reference `Cypress.env()`, you should check
 
 #### Check for plugin updates
 
-Review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`.
+Review your installed plugins and update them to their latest versions. Many popular plugins need to be updated to use `Cypress.expose()` or `cy.env()` instead of `Cypress.env()`. If your CI passes plugin options as `CYPRESS_*` environment variables, move those to `expose` too. See [Via `CYPRESS_*` environment variables in CI](#Via-CYPRESS_-environment-variables-in-CI).
 
 #### Plugins requiring migration
 
