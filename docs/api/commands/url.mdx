@@ -217,8 +217,9 @@ URL the name most developers reach for first.
 assertion on it names the host. When you only care about the path or the query
 string, assert on that part with [`cy.location()`](/api/commands/location)
 instead of hardcoding or slicing the full URL. The assertion then passes on any
-host, such as a local server, CI, or a preview deployment. The `pathname` and `search` labels in the URL diagram under
-[Yields](#Yields) show which part each one reads.
+host, such as a local server, CI, or a preview deployment. The `pathname` and
+`search` labels in the URL diagram under [Yields](#Yields) show which part each
+one reads.
 
 ```javascript
 // given remote URL: http://localhost:8000/users/1/edit?tab=profile
