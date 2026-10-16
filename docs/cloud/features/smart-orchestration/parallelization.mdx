@@ -431,6 +431,9 @@ depends on a finished run can proceed:
 - [UI Coverage](/ui-coverage/get-started/introduction) and
   [Cypress Accessibility](/accessibility/get-started/introduction) reports
   finalize as soon as the run completes.
+- [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization)
+  can anchor a later rerun on this run, to skip the passing tests or specs. See
+  [Complete a run so the next rerun can anchor](#Complete-a-run-so-the-next-rerun-can-anchor).
 
 As described above, the [Run Completion Delay](#Run-Completion-Delay) keeps parallel and grouped runs open after the last-known spec finishes so a late
 group can still join. It is often long on purpose.
@@ -452,6 +455,12 @@ run completes (with no delay) the instant it stabilizes. See
 [Outcomes](#Outcomes) below.
 
 :::
+
+### Complete a run so the next rerun can anchor
+
+[Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) anchors a rerun on the latest run in the rerun group that Cypress Cloud has marked complete. While the run is inside the [Run Completion Delay](#Run-Completion-Delay), it is still open, and a rerun that starts in that window executes the full suite.
+
+Call this API when the groups have finished and a rerun may start right away. Cypress Cloud completes the run without the remaining delay, and the rerun anchors to the run you just finished.
 
 ### Endpoint
 
