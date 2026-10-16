@@ -1142,6 +1142,20 @@
           "badge": "community"
         },
         {
+          "name": "@mailsai/cypress",
+          "description": "Give each test run its own email address with mails.ai, then wait for the sign-up code or link sent to it.",
+          "link": "https://github.com/mailsai/mailsai/tree/main/packages/cypress",
+          "keywords": [
+            "email",
+            "mailsai",
+            "otp",
+            "plus-address",
+            "test",
+            "commands"
+          ],
+          "badge": "community"
+        },
+        {
           "name": "cypress-mailsink",
           "description": "Create disposable inboxes with MailSink and wait for the OTP code or verification link in one command.",
           "link": "https://github.com/heocoi/cypress-mailsink",
