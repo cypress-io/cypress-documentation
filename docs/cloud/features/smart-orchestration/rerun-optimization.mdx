@@ -44,7 +44,7 @@ Enabling Re-run optimization gives you:
 
 :::caution
 
-Review the [behavior and limitations](#Behavior-and-limitations) section before 
+Review the [behavior and limitations](#Behavior-and-limitations) section before
 enabling Re-run Optimization on critical pipelines for existing projects. It
 may change CI behavior your team is already used to.
 
@@ -219,7 +219,7 @@ environment variable to `true` (requires Cypress v15.15.0 or later).
 
 Cloud then treats the run as a full run and runs every spec, even if a matching anchor run
 exists. This is useful for specific branches or pipelines where you always want
-the complete suite to run. 
+the complete suite to run.
 
 ```yaml
 env:
@@ -228,10 +228,10 @@ env:
 
 :::caution
 
-Note that this represents a **full opt-out** from the re-run optimization process. 
-Do not use `CYPRESS_RERUN_ALL_TESTS` to "reset" a re-run chain. Instead, 
+Note that this represents a **full opt-out** from the re-run optimization process.
+Do not use `CYPRESS_RERUN_ALL_TESTS` to "reset" a re-run chain. Instead,
 modify the `CYPRESS_RERUN_GROUP_ID`.
-::: 
+:::
 
 ## What a rerun will execute
 
