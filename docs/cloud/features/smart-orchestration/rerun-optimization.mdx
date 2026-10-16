@@ -250,11 +250,8 @@ Knowing this lets you predict exactly what a rerun will do:
 - **You rerun after several attempts** → each rerun anchors on the _latest_
   completed run, so chained reruns keep narrowing toward what's still broken
   instead of replaying earlier failures you've already fixed.
-- **You rerun while another run is still in progress** → Cloud anchors on the last _completed_ run, since the in-progress one has no final results yet.
-- **You rerun within the [run-completion delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay) window** → Cloud hasn't marked the
-  previous run complete yet, so the rerun safely runs the **full** suite. **Set a
-  short [run-completion delay](/cloud/account-management/projects#Run-Completion-Delay) so more of your reruns get optimized.** That delay is the
-  main lever for getting consistent savings.
+- **You rerun while another run is still in progress** → Cloud anchors on the last _completed_ run, since the in-progress one has no final results yet. If CI already stopped that run's Cypress processes, the Cloud run stays in progress until the [run timeout](/cloud/account-management/projects#Run-Timeout). [Cancel a run so the next rerun can anchor](/cloud/features/smart-orchestration/run-cancellation-api#Cancel-a-run-so-the-next-rerun-can-anchor) on the run you stopped.
+- **You rerun within the [run-completion delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay) window** → Cloud hasn't marked the previous run complete yet, so the rerun safely runs the **full** suite. [Complete a run so the next rerun can anchor](/cloud/features/smart-orchestration/parallelization#Complete-a-run-so-the-next-rerun-can-anchor) on the run that just finished, without waiting out the delay. Shortening the [run-completion delay](/cloud/account-management/projects#Run-Completion-Delay) has the same effect when you don't call the API.
 
 Cloud never blocks parallel reruns: if several start at once, each one anchors on
 whichever run is complete at the time it begins.
@@ -294,6 +291,8 @@ failed specs or tests, so each layer gets you to a passing build faster and chea
 - [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview) - all of the Smart Orchestration features for speeding up CI runs and reducing costs
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) - run failed specs first to surface failures earlier
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) - stop a run early once failures cross a threshold
+- [Run Cancellation API](/cloud/features/smart-orchestration/run-cancellation-api#Cancel-a-run-so-the-next-rerun-can-anchor) - end a stopped run immediately so a rerun anchors to it
+- [Run Completion API](/cloud/features/smart-orchestration/parallelization#Complete-a-run-so-the-next-rerun-can-anchor) - end a finished run before the completion delay so a rerun anchors to it
 - [Parallelization](/cloud/features/smart-orchestration/parallelization) - split your suite across multiple machines to run specs in parallel
 - [Test Replay](/cloud/features/test-replay) - debug the failing specs surfaced by a rerun
 - [Test retries](/app/guides/test-retries) - retry failed tests within a single run, which is a different mechanism from Re-run optimization
