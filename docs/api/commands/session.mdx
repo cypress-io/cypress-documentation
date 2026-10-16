@@ -15,7 +15,9 @@ and
 [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
 (together, the session data) to recreate a consistent browser context between
 tests. Your login code runs the first time, and later calls to `cy.session()`
-with the same `id` restore the saved session instead of logging in again.
+with the same `id` restore the saved session instead of logging in again. For a
+walkthrough of adding it to an existing login, see
+[Caching login sessions](/app/guides/authentication-testing/caching-login-sessions).
 
 `cy.session()` inherits the
 [`testIsolation`](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
@@ -87,9 +89,9 @@ value. For example, `['Jane', '123', 'admin']` becomes the id
 
 :::info
 
-See the
-[choosing the correct id to cache a session](#Choosing-the-correct-id-to-cache-a-session)
-section for a more thorough explanation with examples.
+See
+[Choose a unique id for each `cy.session()` session](#Choose-a-unique-id-for-each-cysession-session)
+for how to build an `id` that caches each session separately.
 
 :::
 
@@ -134,31 +136,16 @@ before `setup` runs, regardless of the `testIsolation` configuration.
 
 ## Examples
 
-### Updating an existing login custom command
+### Cache a login custom command with `cy.session()`
 
-You can add session caching to your login
-[custom command](/api/cypress-api/custom-commands). Wrap the inside of the
-command with a call to `cy.session()`.
+Wrap the body of your login
+[custom command](/api/cypress-api/custom-commands) in `cy.session()`. The first
+call logs in and saves the session; later calls with the same `username`
+restore it, and `validate` confirms the restored session still works. For a
+step-by-step migration of an existing login command, see
+[Caching login sessions](/app/guides/authentication-testing/caching-login-sessions).
 
-**Before**
-
-<Tabs>
-<TabItem value="cypress/support/commands.js">
-
-```javascript
-Cypress.Commands.add('login', (username, password) => {
-  cy.visit('/login')
-  cy.get('[data-test=name]').type(username)
-  cy.get('[data-test=password]').type(password)
-  cy.get('form').contains('Log In').click()
-  cy.url().should('contain', '/login-successful')
-})
-```
-
-</TabItem>
-<TabItem value="cypress/support/commands.ts">
-
-```typescript
+```typescript copyTsToJs
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -167,70 +154,9 @@ declare global {
   }
 }
 
-Cypress.Commands.add('login', (username, password) => {
-  cy.visit('/login')
-  cy.get('[data-test=name]').type(username)
-  cy.get('[data-test=password]').type(password)
-  cy.get('form').contains('Log In').click()
-  cy.url().should('contain', '/login-successful')
-})
-```
-
-</TabItem>
-</Tabs>
-
-**After**
-
-<Tabs>
-<TabItem value="cypress/support/commands.js">
-
-```javascript
-Cypress.Commands.add('login', (username, password) => {
-  cy.session([username, password], () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(username)
-    cy.get('[data-test=password]').type(password)
-    cy.get('form').contains('Log In').click()
-    cy.url().should('contain', '/login-successful')
-  })
-})
-```
-
-</TabItem>
-<TabItem value="cypress/support/commands.ts">
-
-```typescript
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      login(username: string, password: string): Chainable<void>
-    }
-  }
-}
-
-Cypress.Commands.add('login', (username, password) => {
-  cy.session([username, password], () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(username)
-    cy.get('[data-test=password]').type(password)
-    cy.get('form').contains('Log In').click()
-    cy.url().should('contain', '/login-successful')
-  })
-})
-```
-
-</TabItem>
-</Tabs>
-
-**With session validation**
-
-<Tabs>
-<TabItem value="cypress/support/commands.js">
-
-```javascript
 Cypress.Commands.add('login', (username, password) => {
   cy.session(
-    [username, password],
+    username,
     () => {
       cy.visit('/login')
       cy.get('[data-test=name]').type(username)
@@ -245,98 +171,11 @@ Cypress.Commands.add('login', (username, password) => {
     }
   )
 })
+
+export {}
 ```
 
-</TabItem>
-<TabItem value="cypress/support/commands.ts">
-
-```typescript
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      login(username: string, password: string): Chainable<void>
-    }
-  }
-}
-
-Cypress.Commands.add('login', (username, password) => {
-  cy.session(
-    [username, password],
-    () => {
-      cy.visit('/login')
-      cy.get('[data-test=name]').type(username)
-      cy.get('[data-test=password]').type(password)
-      cy.get('form').contains('Log In').click()
-      cy.url().should('contain', '/login-successful')
-    },
-    {
-      validate() {
-        cy.request('/whoami').its('status').should('eq', 200)
-      },
-    }
-  )
-})
-```
-
-</TabItem>
-</Tabs>
-
-### Updating an existing login helper function
-
-You can add session caching to a login helper function by wrapping the inside of
-the function with a call to `cy.session()`.
-
-**Before**
-
-```javascript
-const login = (name, password) => {
-  cy.visit('/login')
-  cy.get('[data-test=name]').type(name)
-  cy.get('[data-test=password]').type(password)
-  cy.get('#submit').click()
-  cy.url().should('contain', '/home')
-}
-```
-
-**After**
-
-```javascript
-const login = (name, password) => {
-  cy.session([name, password], () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type(password)
-    cy.get('#submit').click()
-    cy.url().should('contain', '/home')
-  })
-}
-```
-
-**With session validation**
-
-```javascript
-const login = (name, password) => {
-  cy.session(
-    [name, password],
-    () => {
-      cy.visit('/login')
-      cy.get('[data-test=name]').type(name)
-      cy.get('[data-test=password]').type(password)
-      cy.get('#submit').click()
-      cy.url().should('contain', '/home')
-    },
-    {
-      validate() {
-        // Protected URLs should return a 40x http code if user is unauthorized,
-        // and by default this will cause cy.visit() to fail
-        cy.visit('/account-details')
-      },
-    }
-  )
-}
-```
-
-### Switching sessions inside tests
+### Switch users within a test using `cy.session()`
 
 Because `cy.session()` clears the page and all session data before running
 `setup`, you can use it to switch between sessions without first logging the
@@ -368,7 +207,7 @@ it('should transfer money between users', () => {
 })
 ```
 
-### Validating the session
+### Validate a restored session with `cy.session()`
 
 The `validate` function confirms the session was established correctly. It
 matters most when a cached session is restored: if the restored session isn't
@@ -408,7 +247,7 @@ function validate() {
 }
 ```
 
-### Modifying session data before caching
+### Change which session data `cy.session()` caches
 
 To change which session data is cached, modify cookies, `localStorage`, and
 `sessionStorage` as needed at the end of `setup`. Cypress saves the session
@@ -431,12 +270,13 @@ cy.session('user', () => {
 })
 ```
 
-### Caching session data across specs
+### Share a `cy.session()` session across specs
 
 To reuse the same session across multiple specs in the same Cypress run on the
-same machine, set `cacheAcrossSpecs: true` in the session options.
+same machine, set `cacheAcrossSpecs: true` in the session options. Define the
+login function once, for example in a support file, and call it from each spec.
 
-```js
+```javascript
 const login = (name = 'user1') => {
   cy.session(
     name,
@@ -476,9 +316,9 @@ When a session is cached across specs, every spec that uses it must call
 `cy.session()` with the **same** `id`, `setup`, `validate`, and
 `cacheAcrossSpecs` value. Cypress compares `setup` and `validate` by their source
 code. If any of these differ between specs, Cypress throws an error rather than
-reusing the session. For this reason, define the session once
-in a shared custom command or helper function (as in the example above) and call
-that everywhere, rather than copying the `cy.session()` call into each spec.
+reusing the session. For this reason, define the session once in a shared custom
+command or helper function and call that everywhere, rather than copying the
+`cy.session()` call into each spec.
 
 :::
 
@@ -489,245 +329,7 @@ machine. It is not written to disk and is not shared between machines, so:
 - When specs are split across machines in parallel CI, `setup` runs at least
   once per machine.
 
-### Multiple login commands
-
-A more complex app may need multiple login commands, each with its own call to
-`cy.session()`. Because Cypress saves and restores sessions by `id`, the `id`
-must be unique per session.
-
-In the following example, if the resulting session data that `loginByForm` and
-`loginByApi` create is different _in any way_, it would be a mistake to specify
-`[name, password]` as the `id` for both, because there would be no way to
-distinguish between the sessions created by `loginByForm("user", "p4ssw0rd")`
-and `loginByApi("user", "p4ssw0rd")`. Instead, give each login function its own
-`id` so each session is cached separately.
-
-```javascript
-const loginByForm = (name, password) => {
-  cy.session(['loginByForm', name], () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type(password)
-    cy.get('#submit').click()
-    cy.url().should('contain', '/home')
-  })
-}
-
-const loginByApi = (name, password) => {
-  cy.session(['loginByApi', name], () => {
-    cy.request({
-      method: 'POST',
-      url: '/api/login',
-      body: { name, password },
-    }).then(({ body }) => {
-      window.localStorage.setItem('authToken', body.token)
-    })
-  })
-}
-```
-
-### Where to call `cy.visit()`
-
-Intuitively it seems that you should call [`cy.visit()`](/api/commands/visit)
-immediately after `cy.session()` in your login function or custom command, so it
-behaves (from the point of view of the subsequent test) exactly the same as a
-login function without `cy.session()`.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type('s3cr3t')
-    cy.get('#submit').click()
-    cy.url().should('contain', '/home')
-  })
-  cy.visit('/home')
-}
-
-beforeEach(() => {
-  login('user')
-})
-
-it('should test something on the /home page', () => {
-  // assertions
-})
-
-it('should test something else on the /home page', () => {
-  // assertions
-})
-```
-
-However, to test something on a different page, you need to call `cy.visit()`
-at the beginning of that test, which means calling `cy.visit()` a **second**
-time in your test. Since `cy.visit()` waits for the visited page to become
-active before continuing, the extra visits add up.
-
-```javascript
-// ...continued...
-
-it('should test something on the /other page', () => {
-  cy.visit('/other')
-  // assertions
-})
-```
-
-Tests run faster when you call `cy.visit()` only when necessary. To do this,
-[organize tests into suites](/app/core-concepts/writing-and-organizing-tests#Test-Structure)
-and call `cy.visit()` **after** logging in, inside a
-[`beforeEach`](/app/core-concepts/writing-and-organizing-tests#Hooks) hook.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type('s3cr3t')
-    cy.get('#submit').click()
-    cy.url().should('contain', '/home')
-  })
-  // no visit here
-}
-
-describe('home page tests', () => {
-  beforeEach(() => {
-    login('user')
-    cy.visit('/home')
-  })
-
-  it('should test something on the /home page', () => {
-    // assertions
-  })
-
-  it('should test something else on the /home page', () => {
-    // assertions
-  })
-})
-
-describe('other page tests', () => {
-  beforeEach(() => {
-    login('user')
-    cy.visit('/other')
-  })
-
-  it('should test something on the /other page', () => {
-    // assertions
-  })
-})
-```
-
-### Updating a login function that returns a value
-
-If your custom login command returns a value that you use to assert in a test,
-wrapping it with `cy.session()` breaks that test. You can usually solve this
-by refactoring the login code to assert directly inside `setup`.
-
-**Before**
-
-<Tabs>
-<TabItem value="cypress/support/commands.js">
-
-```javascript
-Cypress.Commands.add('loginByApi', (username, password) => {
-  return cy.request('POST', `/api/login`, {
-    username,
-    password,
-  })
-})
-
-it('should return the correct value', () => {
-  cy.loginByApi('user', 's3cr3t').then((response) => {
-    expect(response.status).to.eq(200)
-  })
-})
-```
-
-</TabItem>
-<TabItem value="cypress/support/commands.ts">
-
-```typescript
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      loginByApi(
-        username: string,
-        password: string
-      ): Chainable<Cypress.Response<any>>
-    }
-  }
-}
-
-Cypress.Commands.add('loginByApi', (username, password) => {
-  return cy.request('POST', `/api/login`, {
-    username,
-    password,
-  })
-})
-
-it('should return the correct value', () => {
-  cy.loginByApi('user', 's3cr3t').then((response) => {
-    expect(response.status).to.eq(200)
-  })
-})
-```
-
-</TabItem>
-</Tabs>
-
-**After**
-
-<Tabs>
-<TabItem value="cypress/support/commands.js">
-
-```javascript
-Cypress.Commands.add('loginByApi', (username, password) => {
-  cy.session(username, () => {
-    cy.request('POST', `/api/login`, {
-      username,
-      password,
-    }).then((response) => {
-      expect(response.status).to.eq(200)
-    })
-  })
-})
-
-it('is a redundant test', () => {
-  /* which you can now delete! */
-})
-```
-
-</TabItem>
-<TabItem value="cypress/support/commands.ts">
-
-```typescript
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      loginByApi(username: string, password: string): Chainable<void>
-    }
-  }
-}
-
-Cypress.Commands.add('loginByApi', (username, password) => {
-  cy.session(username, () => {
-    cy.request('POST', `/api/login`, {
-      username,
-      password,
-    }).then((response) => {
-      expect(response.status).to.eq(200)
-    })
-  })
-})
-
-it('is a redundant test', () => {
-  /* which you can now delete! */
-})
-```
-
-</TabItem>
-</Tabs>
-
-### Cross-domain sessions
+### Cache a cross-origin login with `cy.session()`
 
 `cy.session()` caches cookies, `localStorage`, and `sessionStorage` for every
 domain the browser visited during `setup`, not only the domain the test ends
@@ -766,7 +368,7 @@ it('views the dashboard', () => {
 
 ## Notes
 
-### When the page and session data are cleared
+### When `cy.session()` clears the page and session data
 
 #### Session clearing with test isolation enabled
 
@@ -783,7 +385,8 @@ created or restored, and you can switch sessions without logging out first.
 
 Because the page is blank when `cy.session()` ends, call
 [`cy.visit()`](/api/commands/visit) afterwards to load the page you want to
-test.
+test. To avoid visiting twice, see
+[Where to call cy.visit() after cy.session()](/app/guides/authentication-testing/caching-login-sessions#Where-to-call-cyvisit-after-cysession).
 
 #### Session clearing with test isolation disabled
 
@@ -805,7 +408,7 @@ inconsistent when you run a single test with `.only()`. Write isolated tests
 when test isolation is disabled, and set up your session in a `before` hook or
 in the first test so it starts from a clean state.
 
-### Session caching
+### How long `cy.session()` keeps a session cached
 
 Once created, a session for a given `id` is cached for the duration of the spec
 file. You can't modify a stored session after it has been cached, but you can
@@ -817,133 +420,24 @@ cached _for spec file reruns_.
 To persist a session across multiple specs, set the `cacheAcrossSpecs: true`
 option.
 
-### Explicitly clearing sessions
+### Clear saved `cy.session()` sessions while debugging
 
 When running Cypress in "open" mode, you can explicitly clear all spec and
 global sessions and re-run the spec file by clicking the **Clear All Sessions**
 button in the [Instrument Panel](#The-Instrument-Panel).
 
-<DocsImage
-  src="/img/api/session/sessions-panel.png"
-  alt="Sessions Instrument Panel listing each saved session id, with a Clear All Sessions button"
-/>
-
 For debugging purposes, all spec and global sessions can be cleared with the
 [`Cypress.session.clearAllSavedSessions()`](/api/cypress-api/session) method.
 
-### Where to call `cy.session()`
-
-While it is possible to call `cy.session()` explicitly inside a test or
-`beforeEach`, it is considered a best practice to call `cy.session()` inside a
-login [custom command](/api/cypress-api/custom-commands) or reusable wrapper
-function. See the
-[Updating an existing login custom command](#Updating-an-existing-login-custom-command)
-and
-[Updating an existing login helper function](#Updating-an-existing-login-helper-function)
-examples for more details.
-
-### Choosing the correct id to cache a session
+### Choose a unique id for each `cy.session()` session
 
 For sessions to be cached uniquely, the [`id` argument](#Arguments) must be
-unique for each new session created. The `id` you pass to `cy.session()`
-displays in the Command Log, so we don't recommend using sensitive data like
-passwords or tokens as unique identifiers.
-
-```javascript
-// If your session setup code uses a string variable, pass in the
-// string as the id
-const login = (name) => {
-  cy.session(name, () => {
-    loginWith(name)
-  })
-}
-
-// If your session setup code uses a single object, pass in the
-// object as the id and it will be serialized into an identifier
-const login = (params = {}) => {
-  cy.session(params, () => {
-    loginWith(params)
-  })
-}
-
-// If your session setup code uses multiple variables, pass in an
-// array of those variables and it will be serialized into an
-// identifier
-const login = (name, email, params = {}) => {
-  cy.session([name, email, params], () => {
-    loginWith(name, email, params)
-  })
-}
-
-// If your session setup code uses external constants, they don't
-// need to be included in the id, since they will never change
-const API_KEY = 'I_AM_AN_API_KEY'
-const login = (name, email) => {
-  cy.session([name, email], () => {
-    loginWith(name, email, API_KEY)
-  })
-}
-```
-
-<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
-
-If you have custom `login` code that uses multiple parameters (in this example,
-a name, a token, and a password), to be able to log in many different
-users, but the `id` only included one of them (in this example, `name`):
-
-```js
-const login = (name, token, password) => {
-  cy.session(name, () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=token]').type(token)
-    cy.get('[data-test=password]').type(password)
-    cy.get('#submit').click()
-  })
-}
-```
-
-If you ran this, `user1` would be logged in with `token1` and `p4ssw0rd`, and a
-session would be created and cached using `"user1"` as the `id`.
-
-```js
-login('user1', 'token1', 'p4ssw0rd')
-```
-
-Now let's say you wanted to try to log in the same user, but with a different
-token and/or password, and expect a different session to be created and cached.
-You run this, but because `cy.session()` only receives `name` as its `id`, it
-doesn't create a new session. It restores the saved session for `"user1"`
-instead.
-
-```js
-login('user1', 'different-token', 'p4ssw0rd')
-```
-
-In summary, you need to ensure that the `id` is unique. Create it from all the
-parameters used inside the `setup` function that may change, otherwise `id`
-values may collide and create unexpected results.
-
-<Icon name="check-circle" color="green" /> **Correct Usage**
-
-In this example, setting the `id` to `[name, uniqueKey]` guarantees that calling
-`login()` with different `name`, `token`, and `password` values creates and
-caches unique sessions, as long as each combination gets its own `uniqueKey`.
-
-```js
-const login = (name, token, password, uniqueKey) => {
-  cy.session([name, uniqueKey], () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=token]').type(token)
-    cy.get('[data-test=password]').type(password)
-    cy.get('#submit').click()
-  })
-}
-```
-
-The [`uuid`](https://www.npmjs.com/package/uuid) npm package can be used to
-generate random unique ids if an arbitrary name-space does not meet your needs.
+unique for each new session created. Build it from every value that changes the
+resulting session, such as the user and their role. The `id` you pass to
+`cy.session()` displays in the Command Log, so leave out sensitive data like
+passwords and tokens. For examples, including how a too-narrow `id` restores
+the wrong session, see
+[Choose a unique id for each cached session](/app/guides/authentication-testing/caching-login-sessions#Choose-a-unique-id-for-each-cached-session).
 
 ### Common questions about `cy.session()`
 
@@ -976,6 +470,10 @@ necessary.
 - `cy.session()` can't be called inside a [`cy.origin()`](/api/commands/origin)
   callback. Call it outside the callback, and call `cy.origin()` inside `setup`
   instead.
+- `cy.session()` requires end-to-end testing. In a component spec, the official
+  mount adapters (`cypress/react`, `cypress/vue`, `cypress/angular`, and
+  `cypress/svelte`) make it throw `cy.session from a component spec is not
+allowed`.
 
 ## Command Log
 
@@ -990,11 +488,11 @@ state of your sessions.
 Clicking any session `id` in the panel prints that session's details to the
 console, and clicking the **Clear All Sessions** button clears all saved spec
 and global sessions and re-runs the spec file (see
-[Session caching](#Session-caching) for more details).
+[How long `cy.session()` keeps a session cached](#How-long-cysession-keeps-a-session-cached) for more details).
 
 <DocsImage
   src="/img/api/session/sessions-panel.png"
-  alt="Sessions Instrument Panel listing each saved session id, with a Clear All Sessions button"
+  alt="Sessions Instrument Panel listing the user and other-user sessions as created, with a Clear All Sessions button"
 />
 
 Whenever `cy.session()` is called, the Command Log shows one of the following
@@ -1029,15 +527,17 @@ session, the test fails with an error.
 Expanding the session group in the Command Log shows every command that ran
 while creating, restoring, or validating the session.
 
-In this image, a saved session is restored, but an assertion on the
-`expiredDate` cookie in the `validate` function fails, which invalidates the
-session. Cypress clears the page and the session data, recreates the session by
-running `setup`, and validates it again. Validation succeeds, and the session is
+In this image, the server expired the session after it was saved. Cypress
+restores the saved session, but the
+[redirect `validate` example](#Validate-a-restored-session-with-cysession) finds
+that `/account` now redirects to `/login`, which invalidates the session.
+Cypress clears the page and the session data, recreates the session by running
+`setup`, and validates it again. Validation succeeds, and the session is
 available for the remainder of the test.
 
 <DocsImage
   src="/img/api/session/session-expanded.png"
-  alt="Expanded session group showing the saved session restored, a failed cookie assertion in validation, and the session recreated and validated again"
+  alt="Expanded session group showing the saved session restored, validation failing because /account redirected to /login, and the session recreated and validated again"
 />
 
 Clicking a session `id` in the Instrument Panel or clicking the first line under
@@ -1045,7 +545,7 @@ an expanded session group in the Command Log prints that session's details to
 the console. This information contains the `id` along with any cached session
 data, including cookies, `localStorage`, and `sessionStorage`, grouped by
 domain. This output comes from the
-[cross-domain login example](#Cross-domain-sessions), so it lists data for both
+[cross-origin login example](#Cache-a-cross-origin-login-with-cysession), so it lists data for both
 the app and the identity provider.
 
 <DocsImage
@@ -1068,7 +568,8 @@ the app and the identity provider.
 
 ## See also
 
-- [Authenticate faster in tests with the cy.session command](https://www.cypress.io/blog/authenticate-faster-in-tests-cy-session-command?utm_source=docs.cypress.io&utm_medium=api-session)
-- [Custom Commands](/api/cypress-api/custom-commands)
+- [Caching login sessions](/app/guides/authentication-testing/caching-login-sessions)
 - [`Cypress.session`](/api/cypress-api/session)
+- [`cy.origin()`](/api/commands/origin)
 - [`cy.visit()`](/api/commands/visit)
+- [Authenticate faster in tests with the cy.session command](https://www.cypress.io/blog/authenticate-faster-in-tests-cy-session-command?utm_source=docs.cypress.io&utm_medium=api-session)

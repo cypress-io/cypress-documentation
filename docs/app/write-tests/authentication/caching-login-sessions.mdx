@@ -1,0 +1,460 @@
+---
+title: 'Caching login sessions with cy.session() in Cypress'
+description: 'Log in once and reuse the session across tests with cy.session(). Add caching to a login command, choose a session id, and decide where to call cy.visit().'
+sidebar_label: Caching login sessions
+sidebar_position: 5
+slug: /app/guides/authentication-testing/caching-login-sessions
+---
+
+<ProductHeading product="app" />
+
+# Caching login sessions with cy.session()
+
+Logging in through your app's UI before every test is the most realistic way to
+test it, and also the slowest. [`cy.session()`](/api/commands/session) keeps the
+realism and drops the repetition: your login code runs once, Cypress saves the
+cookies, `localStorage`, and `sessionStorage` it produces, and every later test
+that asks for the same session gets it restored in place of a fresh login.
+
+This guide covers adding `cy.session()` to the login code you already have,
+choosing the `id` that identifies each session, and organizing tests around a
+cached login. For the full API, including every option and what Cypress clears
+and when, see the [`cy.session()` reference](/api/commands/session).
+
+## Add `cy.session()` to a login custom command
+
+Most suites already log in through a
+[custom command](/api/cypress-api/custom-commands). To cache it, wrap the body
+of the command in a call to `cy.session()`, using the values that identify the
+user as the session `id`.
+
+**Before**
+
+```typescript copyTsToJs
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username, password) => {
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(username)
+  cy.get('[data-test=password]').type(password)
+  cy.get('form').contains('Log In').click()
+  cy.url().should('contain', '/login-successful')
+})
+
+export {}
+```
+
+**After**
+
+```typescript copyTsToJs
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(username, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(username)
+    cy.get('[data-test=password]').type(password)
+    cy.get('form').contains('Log In').click()
+    cy.url().should('contain', '/login-successful')
+  })
+})
+
+export {}
+```
+
+The `id` is `username` alone. The password changes how the user logs in, not
+which session they end up with, and the `id` appears in the Command Log, so
+leave secrets out of it.
+
+**With session validation**
+
+A `validate` function checks a restored session before the test uses it. If the
+check fails, for example because the server expired the session, `cy.session()`
+runs `setup` again to log in fresh.
+
+```typescript copyTsToJs
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(
+    username,
+    () => {
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(username)
+      cy.get('[data-test=password]').type(password)
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
+    },
+    {
+      validate() {
+        cy.request('/whoami').its('status').should('eq', 200)
+      },
+    }
+  )
+})
+
+export {}
+```
+
+## Add `cy.session()` to a login helper function
+
+A plain helper function works the same way: wrap its body in `cy.session()`.
+
+**Before**
+
+```javascript
+const login = (name, password) => {
+  cy.visit('/login')
+  cy.get('[data-test=name]').type(name)
+  cy.get('[data-test=password]').type(password)
+  cy.get('#submit').click()
+  cy.url().should('contain', '/home')
+}
+```
+
+**After, with session validation**
+
+```javascript
+const login = (name, password) => {
+  cy.session(
+    name,
+    () => {
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(name)
+      cy.get('[data-test=password]').type(password)
+      cy.get('#submit').click()
+      cy.url().should('contain', '/home')
+    },
+    {
+      validate() {
+        // Protected URLs should return a 40x http code if user is unauthorized,
+        // and by default this will cause cy.visit() to fail
+        cy.visit('/account-details')
+      },
+    }
+  )
+}
+```
+
+## Where to call `cy.session()` in your test suite
+
+You can call `cy.session()` directly inside a test or a `beforeEach` hook, but
+calling it inside a login custom command or helper function, as in the examples
+above, keeps the session definition in one place. That matters because every
+call with the same `id` has to pass the same `setup` and `validate` functions,
+and a single definition can't drift. It's also what
+[`cacheAcrossSpecs`](/api/commands/session#Arguments) needs to share a session
+between specs.
+
+## Where to call `cy.visit()` after `cy.session()`
+
+With [test isolation](/app/core-concepts/test-isolation) enabled, the page is
+blank after `cy.session()`, so you need a [`cy.visit()`](/api/commands/visit)
+before the test interacts with your app. It's tempting to put that visit inside
+the login function, so that tests behave exactly as they did before caching:
+
+```javascript
+const login = (name) => {
+  cy.session(name, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+  cy.visit('/home')
+}
+
+beforeEach(() => {
+  login('user')
+})
+
+it('should test something on the /home page', () => {
+  // assertions
+})
+
+it('should test something else on the /home page', () => {
+  // assertions
+})
+```
+
+However, a test of a different page then has to call `cy.visit()` a **second**
+time. Since `cy.visit()` waits for the visited page to become active before
+continuing, the extra visits add up.
+
+```javascript
+// ...continued...
+
+it('should test something on the /other page', () => {
+  cy.visit('/other')
+  // assertions
+})
+```
+
+Tests run faster when you call `cy.visit()` only when necessary. To do this,
+[organize tests into suites](/app/core-concepts/writing-and-organizing-tests#Test-Structure)
+and call `cy.visit()` **after** logging in, inside a
+[`beforeEach`](/app/core-concepts/writing-and-organizing-tests#Hooks) hook.
+
+```javascript
+const login = (name) => {
+  cy.session(name, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+  // no visit here
+}
+
+describe('home page tests', () => {
+  beforeEach(() => {
+    login('user')
+    cy.visit('/home')
+  })
+
+  it('should test something on the /home page', () => {
+    // assertions
+  })
+
+  it('should test something else on the /home page', () => {
+    // assertions
+  })
+})
+
+describe('other page tests', () => {
+  beforeEach(() => {
+    login('user')
+    cy.visit('/other')
+  })
+
+  it('should test something on the /other page', () => {
+    // assertions
+  })
+})
+```
+
+## Choose a unique id for each cached session
+
+Cypress saves and restores each session by its `id`, so the `id` has to change
+whenever the session `setup` creates would change. Build it from every value
+that changes the resulting session, and leave out values that don't, such as a
+password or an API key that stays the same between calls. The `id` displays in
+the Command Log, so keep passwords and tokens out of it either way.
+
+```javascript
+// If your session setup code uses a string variable, pass in the
+// string as the id
+const loginByName = (name) => {
+  cy.session(name, () => {
+    loginWith(name)
+  })
+}
+
+// If your session setup code uses a single object, pass in the
+// object as the id and it will be serialized into an identifier
+const loginWithParams = (params = {}) => {
+  cy.session(params, () => {
+    loginWith(params)
+  })
+}
+
+// If your session setup code uses multiple variables, pass in an
+// array of those variables and it will be serialized into an
+// identifier
+const loginWithProfile = (name, email, params = {}) => {
+  cy.session([name, email, params], () => {
+    loginWith(name, email, params)
+  })
+}
+
+// If your session setup code uses external constants, they don't
+// need to be included in the id, since they will never change
+const API_KEY = 'I_AM_AN_API_KEY'
+const loginWithApiKey = (name, email) => {
+  cy.session([name, email], () => {
+    loginWith(name, email, API_KEY)
+  })
+}
+```
+
+### Session id collisions that restore the wrong session
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+This `login` function logs a user in with a role, but its `id` includes only
+`name`:
+
+```javascript
+const login = (name, role) => {
+  cy.session(name, () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('[data-test=role]').select(role)
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+}
+```
+
+The first call logs `user1` in as an admin and caches the session under the
+`id` `"user1"`:
+
+```javascript
+login('user1', 'admin')
+```
+
+A later call for the same user with a different role expects a new session, but
+because the `id` is still `"user1"`, `cy.session()` restores the admin session
+instead:
+
+```javascript
+login('user1', 'viewer')
+```
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+Include the role in the `id`, so each combination of user and role gets its own
+cached session:
+
+```javascript
+const login = (name, role) => {
+  cy.session([name, role], () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type('s3cr3t')
+    cy.get('[data-test=role]').select(role)
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+}
+```
+
+## Cache separate sessions for multiple login methods
+
+A more complex app may need multiple login commands, each with its own call to
+`cy.session()`. If the session data that `loginByForm` and `loginByApi` create
+differs _in any way_, give each function its own `id`, for example by adding the
+login method to it. Otherwise `loginByForm('user', 'p4ssw0rd')` and
+`loginByApi('user', 'p4ssw0rd')` share the `id` `"user"`, and whichever runs
+second restores the other's session.
+
+```javascript
+const loginByForm = (name, password) => {
+  cy.session(['loginByForm', name], () => {
+    cy.visit('/login')
+    cy.get('[data-test=name]').type(name)
+    cy.get('[data-test=password]').type(password)
+    cy.get('#submit').click()
+    cy.url().should('contain', '/home')
+  })
+}
+
+const loginByApi = (name, password) => {
+  cy.session(['loginByApi', name], () => {
+    cy.request({
+      method: 'POST',
+      url: '/api/login',
+      body: { name, password },
+    }).then(({ body }) => {
+      window.localStorage.setItem('authToken', body.token)
+    })
+  })
+}
+```
+
+## Update a login command that returns a value
+
+If your login command yields a value that a test asserts on, wrapping it in
+`cy.session()` breaks that test, because `cy.session()` yields the session's
+status instead. Move the assertion inside `setup`, where it runs every time a
+session is created.
+
+**Before**
+
+```typescript copyTsToJs
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByApi(
+        username: string,
+        password: string
+      ): Chainable<Cypress.Response<any>>
+    }
+  }
+}
+
+Cypress.Commands.add('loginByApi', (username, password) => {
+  return cy.request('POST', `/api/login`, {
+    username,
+    password,
+  })
+})
+
+it('should return the correct value', () => {
+  cy.loginByApi('user', 's3cr3t').then((response) => {
+    expect(response.status).to.eq(200)
+  })
+})
+
+export {}
+```
+
+**After**
+
+```typescript copyTsToJs
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      loginByApi(username: string, password: string): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('loginByApi', (username, password) => {
+  cy.session(username, () => {
+    cy.request('POST', `/api/login`, {
+      username,
+      password,
+    }).then((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+})
+
+it('is a redundant test', () => {
+  /* which you can now delete! */
+})
+
+export {}
+```
+
+## See also
+
+- [`cy.session()`](/api/commands/session) - options, what gets cleared, and the
+  Command Log
+- [`Cypress.session`](/api/cypress-api/session) - clear saved sessions while
+  debugging
+- [Test isolation](/app/core-concepts/test-isolation)
+- [`cy.origin()`](/api/commands/origin) - log in through an identity provider
+  on another origin
