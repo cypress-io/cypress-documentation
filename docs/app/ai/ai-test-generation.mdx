@@ -32,7 +32,7 @@ You always have full visibility into what the AI generated. Click the **Code** b
 - [Placeholders](#Placeholders): use dynamic and sensitive values without breaking the cache
 - [View and export generated code](#View-and-export-generated-code): inspect, save, and download the generated code
 
-For the command signature, the full list of supported actions, examples, and limitations, see the [`cy.prompt` API reference](/api/commands/prompt).
+For the command signature, the full list of supported actions, examples, and limitations (including the 50-step-per-call cap), see the [`cy.prompt` API reference](/api/commands/prompt).
 
 :::
 
@@ -185,6 +185,7 @@ Prompt clarity determines reliability. Follow these rules:
 - **Imperative voice**: Start with an action (click, type, verify).
 - **Use absolute URLs**: Use the full URL of the page you want to visit.
 - **One action per step**: Avoid chaining multiple actions in one string.
+- **50 steps per call**: Each `cy.prompt` call accepts at most 50 steps. Split a longer flow into more than one call. See [Limitations](/api/commands/prompt#Limitations) in the command reference.
 - **Avoid ambiguity**: Specify the action or element explicitly.
 - **Include positional context**: `click the login button in the header` is better than `click login button`.
 - **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. Force and timeout are the only options that are currently supported. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`.
@@ -512,16 +513,19 @@ cy.get('#tab-all').should('have.class', 'text-indigo-500')
 
 Cypress Cloud meters [`cy.prompt`](/api/commands/prompt) usage at the organization
 level as **cy.prompt executions**, with separate per-user hourly limits on runs
-that are not recording to Cypress Cloud. The
+that are not recording to Cypress Cloud. Each `cy.prompt` call also accepts at
+most 50 steps; see
+[Limitations](/api/commands/prompt#Limitations). The
 [cy.prompt FAQ](/cloud/faq#cyprompt) is the full reference for execution counting,
-usage limits, the grace period, billing, and usage notifications.
+hourly limits, billing, the August 1, 2026 grace period, and usage notifications.
 
 :::note
 
-Through August 1, 2026, accumulated usage before that date is ignored for
-billing purposes. There are no charges or limiting behavior related to usage
-prior to the cutoff. See
-[What happens at the end of the grace period?](/cloud/faq#What-happens-at-the-end-of-the-cyprompt-grace-period)
+`cy.prompt` usage before August 1, 2026 was forgiven and does not count toward
+your plan's allowance. If you are on an annual contract, that grace period is
+still part of the contract year, but only executions on or after the cutoff
+count. See
+[What happens at the end of the `cy.prompt` grace period?](/cloud/faq#What-happens-at-the-end-of-the-cyprompt-grace-period)
 in the Cloud FAQ.
 
 :::

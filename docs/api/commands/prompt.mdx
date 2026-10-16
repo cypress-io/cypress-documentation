@@ -38,7 +38,9 @@ interface PromptCommand {
 
 <Icon name="angle-right" /> **steps _(String[])_**
 
-An array of steps to execute.
+An array of steps to execute. Each `cy.prompt` call accepts at most 50
+steps. Split a longer flow into more than one call. See
+[Limitations](#Limitations).
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -559,6 +561,7 @@ These apply to all `cy.prompt` usage unless noted otherwise.
 
 | Limitation       | Details                                                                                                                                                                                                                                                                                                                                                                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Steps per call   | Each `cy.prompt` call accepts at most 50 steps. Split a longer flow into more than one call.                                                                                                                                                                                                                                                                            |
 | Command Coverage | Not all Cypress APIs supported - see [Supported actions](#Supported-actions)                                                                                                                                                                                                                                                                                            |
 | Authentication   | Requires Cypress Cloud account and/or valid record key                                                                                                                                                                                                                                                                                                                  |
 | Test Type        | E2E tests only (component testing not supported)                                                                                                                                                                                                                                                                                                                        |

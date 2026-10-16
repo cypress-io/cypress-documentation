@@ -918,7 +918,7 @@ that the run is within your data retention window.
 
 Cloud AI is part of Cypress AI: capabilities in Cypress Cloud (such as Test Intent Summaries, Error Summaries, and UI Coverage Test Generation) plus AI in the Cypress App ([Studio AI](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt)) when you're connected to Cloud. These capabilities are continuously being added to improve insights and make it easier to accomplish tasks.
 
-See [AI at Cypress](/cloud/features/cypress-ai-features) for the full picture. For [`cy.prompt`](/api/commands/prompt) execution limits, billing, and the grace period, see [cy.prompt](#cyprompt) below.
+See [AI at Cypress](/cloud/features/cypress-ai-features) for the full picture. For [`cy.prompt`](/api/commands/prompt) execution limits, billing, and usage before August 1, 2026, see [cy.prompt](#cyprompt) below.
 
 ### <Icon name="angle-right" /> Do AI features require a paid plan?
 
@@ -982,27 +982,33 @@ Cloud:
 
 **Per-prompt limits** apply to every `cy.prompt` call:
 
-- Up to 50 steps per call, to maintain context fidelity and produce reliable,
-  executable commands.
-- System-wide limits apply to the total input length. Very long prompts may be
-  rejected or require splitting. To stay within these limits, keep one action or
-  assertion per step and split long flows into multiple `cy.prompt` calls.
+- Up to 50 steps per call. See
+  [Steps per call](/api/commands/prompt#Limitations) in the command reference.
+- System-wide limits apply to the total input length. Very long prompts can be
+  rejected or require splitting. Keep one action or assertion per step and split
+  long flows into multiple `cy.prompt` calls.
 
 ### <Icon name="angle-right" /> My organization shows that it is over the limit during the `cy.prompt` grace period, will I be charged anything for this?
 
-No. There are no charges or limiting behavior related to any usage prior to the
-August 1, 2026 cutoff.
+No. `cy.prompt` usage before August 1, 2026 was forgiven: there are no charges
+or limiting behavior for that usage. If Billing & Usage still looks high because
+the grace period sat inside an annual contract year, only executions on or after
+the cutoff count toward your allowance.
 
 ### <Icon name="angle-right" /> What happens at the end of the `cy.prompt` grace period?
 
-Your accumulated usage from before August 1, 2026 will be fully ignored for
-billing purposes. On August 1, 2026, your organization will start with a count
-of zero `cy.prompt` executions consumed. You will see a limit that matches your
-plan and is pro-rated to your contract term.
+The grace period ended on August 1, 2026. All `cy.prompt` executions before that
+date were ignored for billing. On the cutoff, your organization started from
+zero consumed `cy.prompt` executions, with a remaining allowance that matches
+your plan and is pro-rated to your contract term.
 
-For example, if you have 6 months remaining on your plan on August 1, 2026, and
-the plan has 2,000 built-in cy.prompt executions for the year, you would have
-1,000 executions available.
+For example, if you had 6 months remaining on your plan on August 1, 2026, and
+the plan includes 2,000 built-in cy.prompt executions for the year, you would
+have 1,000 executions available for the rest of the term.
+
+If you are on an annual contract, the forgiven period is still part of that
+contract year. Your remaining allowance reflects only executions on or after
+August 1, 2026.
 
 ### <Icon name="angle-right" /> What happens when I exceed my allowed limit of cy.prompt executions?
 
