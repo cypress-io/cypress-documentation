@@ -133,6 +133,33 @@ Compression is negotiated between the browser and your server, and the body Cypr
 you has already been decoded. Assert on the body itself rather than on the encoding
 headers.
 
+### Redirect response bodies are empty
+
+`res.body` is an empty string for a `3xx` response. The browser exposes a paused redirect
+differently from a paused response and does not make its body available to Cypress, so there is
+nothing for Cypress to hand your handler. The status code and the response headers, including
+`location`, are reported normally.
+
+```js
+// Cypress 15 and earlier
+cy.intercept('/api/old-path', (req) => {
+  req.on('response', (res) => {
+    expect(res.statusCode).to.equal(302)
+    expect(res.body).to.contain('Moved')
+  })
+})
+```
+
+```js
+// Cypress 16: assert on the status code and the location header
+cy.intercept('/api/old-path', (req) => {
+  req.on('response', (res) => {
+    expect(res.statusCode).to.equal(302)
+    expect(res.headers.location).to.equal('/api/new-path')
+  })
+})
+```
+
 ### `httpVersion` is not reported
 
 `req.httpVersion` is `undefined` and `res.httpVersion` is `null` in Chrome, Chromium, and
