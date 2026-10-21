@@ -404,6 +404,14 @@ cy.visit('/admin')
 cy.location('pathname').should('eq', '/login')
 ```
 
+The Command Log shows each redirect after the URL you visited, with its status
+code and where it led:
+
+<DocsImage
+  src="/img/api/visit/command-log-visit-redirect-chain.png"
+  alt="Command Log showing visit /admin redirected with a 302 to /login, followed by a passing pathname assertion"
+/>
+
 ### Protocol
 
 #### Protocol can be omitted from common hosts
@@ -544,7 +552,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/visit/visit-example-page-in-before-each-of-test.png"
-  alt="Command Log visit"
+  alt="Command Log showing a visit to https://example.cypress.io/commands/viewport under the Before Each hook"
 />
 
 When clicking on `visit` within the command log, the console outputs the
@@ -552,7 +560,7 @@ following:
 
 <DocsImage
   src="/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png"
-  alt="console Log visit"
+  alt="DevTools console after clicking visit in the Command Log, listing the command, the resolved URL, redirects, and cookies set"
 />
 
 ## History
