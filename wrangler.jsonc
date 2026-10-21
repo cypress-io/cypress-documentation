@@ -1,0 +1,18 @@
+{
+  // Must match the Worker name in the Cloudflare dashboard, or builds fail.
+  "name": "cypress-documentation",
+  "compatibility_date": "2026-10-21",
+  "assets": {
+    // `npm run build` writes to dist/, not Docusaurus's default build/.
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    // Serve docs/foo/index.html at /foo, matching the URLs Netlify serves today.
+    "html_handling": "drop-trailing-slash",
+  },
+  // Serves each branch preview at <branch>-cypress-documentation.<subdomain>.workers.dev.
+  // Without it, preview builds succeed but have no URL.
+  "preview_urls": true,
+  // Required for `wrangler preview`, which builds the per-branch PR previews.
+  // Empty because previews reuse the assets settings above.
+  "previews": {},
+}

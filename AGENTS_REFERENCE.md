@@ -94,6 +94,13 @@ Three files at the site root index all of that, and none is hand-maintained:
     status = 301
     force = true
   ```
+  Add the same rule, at the same position, to `static/_redirects`, which
+  Cloudflare reads. Netlify serves production while hosting moves to
+  Cloudflare, so the two lists must match. Both hosts use the first rule that
+  matches a path:
+  ```text title="static/_redirects"
+  /old/path /new/path 301
+  ```
   Then update any in-repo links to the old path, since `onBrokenLinks: throw`
   will otherwise fail the build.
 
@@ -1226,6 +1233,7 @@ every push to `main`:
 | Typecheck                            | `npm run typecheck`                                      |
 | Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins`                    |
 | E2E                                  | `cypress run` in Chrome for Testing, across 8 containers |
+| Cloudflare preview (same-repo PRs)   | `wrangler preview`, then a `cloudflare/preview` status   |
 | Run Algolia scraper (`main` only)    | `scrape-and-compare-algolia-index`                       |
 
 Lint, typecheck, and unit tests install their own dependencies (restored from
@@ -1250,6 +1258,12 @@ report and its aggregate result is true.
 
 The branch protection set is `Build`, `Lint JS/CSS/Markdown`, `Typecheck`,
 `Unit Tests (Search/Algolia, plugins)`, and `E2E`.
+
+The `Cloudflare preview` job uploads a pull request's build as a Cloudflare
+Worker Preview named `pr-<number>` and posts a `cloudflare/preview` status whose
+**Details** link opens it. It needs the `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID` secrets, so pull requests from forks skip it. Keep it,
+and its status, out of the branch protection set for the same reason.
 
 One branch this workflow never sees is `automation/update-plugins-data`. GitHub
 raises no workflow run for an event caused by `GITHUB_TOKEN`, so the nightly
