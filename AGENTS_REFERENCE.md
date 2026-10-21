@@ -94,6 +94,13 @@ Three files at the site root index all of that, and none is hand-maintained:
     status = 301
     force = true
   ```
+  Add the same rule, at the same position, to `static/_redirects`, which
+  Cloudflare reads. Netlify serves production while hosting moves to
+  Cloudflare, so the two lists must match. Both hosts use the first rule that
+  matches a path:
+  ```text title="static/_redirects"
+  /old/path /new/path 301
+  ```
   Then update any in-repo links to the old path, since `onBrokenLinks: throw`
   will otherwise fail the build.
 

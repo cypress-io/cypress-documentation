@@ -118,8 +118,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.
-- Moving/renaming/deleting a page **requires** a `301` in `netlify.toml`, plus
-  updating in-repo links to it.
+- Moving/renaming/deleting a page **requires** a `301` in both `netlify.toml`
+  and `static/_redirects` (Netlify serves production while Cloudflare builds
+  previews), plus updating in-repo links to it.
 
 **Authoring** — [components](./AGENTS_REFERENCE.md#mdx-components),
 [partials](./AGENTS_REFERENCE.md#partials),
