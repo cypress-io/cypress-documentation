@@ -84,20 +84,11 @@ Three files at the site root index all of that, and none is hand-maintained:
   don't set a `sidebar_position`, leave it off your new page too and let it sort
   alphabetically rather than introducing positions into a folder that doesn't use
   them. Only add `sidebar_position` where the folder already relies on it.
-- **Moving, renaming, or deleting a page requires a redirect.** Add a `301` entry
-  to `netlify.toml` (it already holds ~200) so existing bookmarks and inbound
-  links keep working:
-  ```toml
-  [[redirects]]
-    from = "/old/path"
-    to = "/new/path"
-    status = 301
-    force = true
-  ```
-  Add the same rule, at the same position, to `static/_redirects`, which
-  Cloudflare reads. Netlify serves production while hosting moves to
-  Cloudflare, so the two lists must match. Both hosts use the first rule that
-  matches a path:
+- **Moving, renaming, or deleting a page requires a redirect.** Add a `301` line
+  to `static/_redirects` (it already holds ~200) so existing bookmarks and
+  inbound links keep working. Docusaurus copies the file into `dist/`, where
+  Cloudflare reads it. Cloudflare applies the first rule that matches a path, so
+  add a specific rule above any wildcard rule that would also match it:
   ```text title="static/_redirects"
   /old/path /new/path 301
   ```
@@ -199,7 +190,7 @@ Guidance, not arithmetic:
 This applies to headings you are writing. Renaming an existing heading costs two
 published URLs, and neither is redirectable:
 
-- **Its anchor.** A URL fragment never reaches the server, so `netlify.toml`
+- **Its anchor.** A URL fragment never reaches the server, so `_redirects`
   cannot redirect it the way it redirects a moved page. Inbound deep links land
   on the page and fail to scroll.
 - **Its section `.md` file.** The LLM export publishes every `##` section at

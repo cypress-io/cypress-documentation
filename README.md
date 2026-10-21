@@ -7,8 +7,6 @@
 [![CI](https://github.com/cypress-io/cypress-documentation/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/cypress-io/cypress-documentation/actions/workflows/ci.yml?query=branch%3Amain)
 `main` branch
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/dbf22ada-b50c-49b0-a933-bf02e87d25d1/deploy-status)](https://app.netlify.com/sites/cypress-docs/deploys)
-
 Our docs are built using [Docusaurus](https://docusaurus.io/).
 
 ### Installation

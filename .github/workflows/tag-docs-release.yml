@@ -31,7 +31,7 @@ on:
         type: boolean
         default: false
 
-# Nothing ships through this workflow. Docs deploy via Netlify/Vercel and CI
+# Nothing ships through this workflow. Docs deploy via Cloudflare Workers and CI
 # runs in ci.yml, and this runs on push to main after the merge, so it is not
 # a pull request check. A failure here means a release is missing its tag and
 # nothing else — it cannot block a merge or a deploy. It still opens an issue so

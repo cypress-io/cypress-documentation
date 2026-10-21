@@ -316,9 +316,9 @@ jobs:
     name: Cloudflare preview
     needs: build
     # Uploads this pull request's build as a Cloudflare Worker Preview and posts
-    # a `cloudflare/preview` commit status whose Details link opens it, the way
-    # Netlify's deploy-preview status does. Cloudflare's own Workers Builds
-    # check links to its dashboard instead, which needs a Cloudflare login.
+    # a `cloudflare/preview` commit status whose Details link opens it.
+    # Cloudflare's own Workers Builds check links to its dashboard instead,
+    # which needs a Cloudflare login.
     #
     # Same condition as `e2e`, minus pushes: it needs the Cloudflare secrets,
     # which GitHub withholds from a pull request opened from a fork. This job
@@ -340,7 +340,7 @@ jobs:
       # is the temporary merge commit, which the pull request never shows.
       HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       # `pr-<number>` keeps one stable, short URL per pull request across
-      # pushes, like Netlify's `deploy-preview-<number>`.
+      # pushes.
       PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
     steps:
       # Until both secrets exist, skip with a notice rather than fail the run.
