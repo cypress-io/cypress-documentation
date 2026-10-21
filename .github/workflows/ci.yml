@@ -382,14 +382,19 @@ jobs:
           -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
 
       # Reads wrangler.jsonc and uploads dist/ as-is: no second build.
+      #
+      # Even with `--json`, Wrangler prints its upload progress to stdout ahead
+      # of the JSON, so parse from the first line that opens an object. Print
+      # only the URL: the JSON carries the token owner's email address, and
+      # this log is public.
       - name: Deploy the preview
         id: deploy
         if: steps.credentials.outputs.ready == 'true'
         run: |
           set -o pipefail
           output="$(npx --yes wrangler@4.151.3 preview --name "$PREVIEW_NAME" --json)"
-          printf '%s\n' "$output"
-          url="$(printf '%s' "$output" | jq -er '.preview.urls[0]')"
+          url="$(printf '%s\n' "$output" | sed -n '/^{$/,$p' | jq -er '.preview.urls[0]')"
+          echo "Preview: $url"
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Preview: $url" >> "$GITHUB_STEP_SUMMARY"
 
