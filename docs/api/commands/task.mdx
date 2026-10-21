@@ -385,6 +385,130 @@ on('task', {
 
 :::
 
+### Type the value a task yields
+
+In TypeScript, `cy.task()` yields `unknown` unless you pass a type parameter
+describing what the task returns. Cypress doesn't check the type at runtime, so
+keep it in step with the handler.
+
+```ts title="users.cy.ts"
+type User = { id: number; name: string }
+
+cy.task<User[]>('getUsers').then((users) => {
+  // users is typed as User[]
+  expect(users[0].name).to.eq('Ada')
+})
+```
+
+:::cypress-config-plugin-example
+
+```ts
+on('task', {
+  getUsers() {
+    return [
+      { id: 1, name: 'Ada' },
+      { id: 2, name: 'Grace' },
+    ]
+  },
+})
+```
+
+:::
+
+### Wait for an email or background job
+
+`cy.task()` runs the handler once and doesn't retry it. To wait for something
+that happens outside the browser, such as an email arriving or a background job
+finishing, poll inside the handler and resolve once the result is ready.
+
+```javascript title='signup.cy.js'
+cy.task(
+  'waitForEmail',
+  { to: 'new-user@example.com', timeout: 30000 },
+  { timeout: 40000 }
+)
+  .its('subject')
+  .should('eq', 'Welcome to the app')
+```
+
+:::cypress-config-plugin-example
+
+```ts
+// findEmail comes from your email testing service's client
+import { findEmail } from './mail-client'
+```
+
+```ts
+on('task', {
+  async waitForEmail({ to, timeout }) {
+    const deadline = Date.now() + timeout
+
+    while (Date.now() < deadline) {
+      const email = await findEmail(to)
+
+      if (email) {
+        return email
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+    }
+
+    throw new Error(`No email to ${to} arrived within ${timeout}ms`)
+  },
+})
+```
+
+:::
+
+Give the `cy.task()` `timeout` option a few seconds more than the handler's own
+deadline. The handler then gives up first, and the test fails with its message
+instead of a generic timeout.
+
+### Share state between spec files
+
+The config process keeps running for the whole run, so a value stored in a
+variable there is still available to later spec files.
+
+```javascript title='create-org.cy.js'
+cy.task('setValue', { key: 'orgId', value: 42 })
+```
+
+```javascript title='view-org.cy.js'
+cy.task('getValue', 'orgId').should('eq', 42)
+```
+
+:::cypress-config-plugin-example
+
+```ts
+const store: Record<string, unknown> = {}
+```
+
+```ts
+on('task', {
+  setValue({ key, value }) {
+    store[key] = value
+
+    return null
+  },
+  getValue(key) {
+    // return null rather than undefined when the key is missing
+    return store[key] ?? null
+  },
+})
+```
+
+:::
+
+Keep these behaviors in mind:
+
+- The store starts empty each time the config process starts, such as at the
+  beginning of every `cypress run`.
+- Machines running specs in parallel each have their own config process, so
+  they don't share values.
+- A spec that reads a value another spec wrote only passes when the specs run
+  in that order. Use a store for values you can recreate when they're missing,
+  and [`cy.session()`](/api/commands/session) for caching logins.
+
 ### Save a variable across non same-origin URL visits
 
 When visiting non same-origin URL, Cypress will
@@ -466,6 +590,56 @@ cy.task('seedDatabase', null, { timeout: 20000 })
 
 A task must end within the `taskTimeout` or Cypress will fail the current test.
 
+### Errors thrown in a task fail the test
+
+When a handler throws or returns a rejected promise, `cy.task()` fails the test
+with the error's message. The stack trace from Node.js appears in the error's
+stack under `From Node.js Internals`.
+
+Return `null` when "not found" is an answer the test can act on, and throw when
+the test can't continue:
+
+:::cypress-config-plugin-example
+
+```ts
+const users = [{ email: 'ada@example.com', name: 'Ada' }]
+```
+
+```ts
+on('task', {
+  // a missing user is an expected answer, so return null
+  findUser(email) {
+    return users.find((user) => user.email === email) ?? null
+  },
+  // a test that deletes a missing user has bad setup, so throw
+  deleteUser(email) {
+    const index = users.findIndex((user) => user.email === email)
+
+    if (index === -1) {
+      throw new Error(`No user with email ${email}`)
+    }
+
+    users.splice(index, 1)
+
+    return null
+  },
+})
+```
+
+:::
+
+```javascript title='users.cy.js'
+cy.task('deleteUser', 'grace@example.com')
+```
+
+```text
+CypressError: `cy.task('deleteUser')` failed with the following error:
+
+> No user with email grace@example.com
+
+https://on.cypress.io/api/task
+```
+
 ### Tasks are merged automatically
 
 Sometimes you might be using plugins that export their tasks for registration.
@@ -501,6 +675,39 @@ on('task', myTask)
 
 See [#2284](https://github.com/cypress-io/cypress/issues/2284) for
 implementation.
+
+The same merging lets you split your own tasks into modules by area and
+register each one:
+
+```ts copyTsToJs
+// cypress/tasks/state.ts
+const store: Record<string, unknown> = {}
+
+export const stateTasks = {
+  setValue({ key, value }: { key: string; value: unknown }) {
+    store[key] = value
+
+    return null
+  },
+  getValue(key: string) {
+    return store[key] ?? null
+  },
+}
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import { stateTasks } from './cypress/tasks/state'
+import { userTasks } from './cypress/tasks/users'
+```
+
+```ts
+on('task', stateTasks)
+on('task', userTasks)
+```
+
+:::
 
 :::caution
 
@@ -663,16 +870,24 @@ You can use `cy.task()` to securely access secrets at runtime when they aren't a
 
 ```javascript
 // in test - executes at runtime
-cy.task('getSecret', 'API_KEY').then((apiKey) => {
+cy.task('getSecret', 'API_KEY', { log: false }).then((apiKey) => {
   cy.request({
     method: 'POST',
     url: 'https://api.example.com/data',
     headers: {
       Authorization: `Bearer ${apiKey}`,
     },
+    log: false,
   })
 })
 ```
+
+Pass `{ log: false }` to both commands. Otherwise the Command Log shows the
+`cy.task()` call, its console output shows the secret it yields, and the
+`cy.request()` console output shows the `Authorization` header. With
+`log: false`, neither command appears in the Command Log. When
+[Test Replay](/cloud/features/test-replay) is recording, Cypress still records
+a hidden entry for each command.
 
 :::cypress-config-plugin-example
 
