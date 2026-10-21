@@ -69,9 +69,16 @@ An event name to be handled via the `task` event in the
 
 An argument to send along with the event. This can be any value that can be
 serialized by
-[JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
-Unserializable types such as functions, regular expressions, or symbols will be
-omitted to `null`.
+[JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify),
+and the handler receives it the way `JSON.stringify()` would serialize it:
+
+- Functions, symbols, and `undefined` are dropped from object properties and
+  become `null` inside arrays.
+- Regular expressions, `Map`, and `Set` become empty objects (`{}`).
+- `Date` objects become ISO date strings.
+
+When you omit `arg`, the handler receives `undefined`, so a default parameter
+value in the handler applies.
 
 If you need to pass multiple arguments, use an object
 
@@ -499,9 +506,10 @@ implementation.
 
 <strong>Duplicate task keys</strong>
 
-If multiple task objects use the same key, the later registration will overwrite
-that particular key, similar to how merging multiple objects with duplicate keys
-will overwrite the first one.
+If multiple task objects use the same key, the later registration overwrites
+that particular key, the same way merging multiple objects with duplicate keys
+overwrites the first one. Cypress prints a warning in the terminal that names
+each duplicated task.
 
 :::
 
@@ -692,6 +700,12 @@ on('task', {
 <HeaderRequirements />
 
 - `cy.task()` requires being chained off of `cy`.
+- `cy.task()` requires a non-empty string as its first argument.
+- `cy.task()` requires the `task` event to be registered in
+  [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin), with a handler
+  for the given event name.
+- `cy.task()` requires being invoked from the spec file or support file in
+  end-to-end tests.
 - `cy.task()` requires the task to eventually end.
 
 <HeaderAssertions />
