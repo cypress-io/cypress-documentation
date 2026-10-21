@@ -11,32 +11,28 @@ e2eSpecific: true
 
 # Multi-tab testing
 
-Plenty of real user flows leave the tab they started in. A receipt opens in a new
-tab, a sign-in or payment provider opens a popup, and a settings change in one tab
-has to show up in another. Cypress drives a single tab, so the
+Plenty of real user flows don't stay in one tab. A receipt opens in a new tab, a
+sign-in or payment provider opens a popup, and a settings change in one tab has
+to show up in another. Cypress runs your test in a single tab, and the
 [`@cypress/puppeteer`](https://github.com/cypress-io/cypress/tree/develop/npm/puppeteer)
-plugin reaches the others for you. It runs [Puppeteer](https://pptr.dev/) code
-against the same browser Cypress launched, then hands the result back to your
-Cypress command chain, where your retries, assertions, and Command Log work the
-way they always do.
+plugin reaches the tabs and popups outside it. The plugin runs
+[Puppeteer](https://pptr.dev/) code against the same browser Cypress launched,
+then hands the result back to your command chain. From there, retries,
+assertions, and the Command Log work the way they do in any other Cypress test.
 
 This guide starts with when a test needs a second tab at all, then covers
 setting up the plugin and the multi-tab flows teams ask about most.
 
-:::caution
+## Test new-tab links when the tabs don't interact
 
-`@cypress/puppeteer` is in public beta, so its API may change between versions.
-Share what works and what doesn't in the
-[@cypress/puppeteer feedback discussion](https://github.com/cypress-io/cypress/discussions/28410).
-
-:::
-
-## Choose how to test links that open a new tab
-
-Ask what the test is really checking. If it's that your app _opens_ the right
-page, you can check that without leaving the Cypress tab, and the test runs in
-every browser Cypress supports. Use `@cypress/puppeteer` when the test depends
-on what happens _inside_ the new tab.
+Ask what the test is really checking. Often it's only that your app _opens_ the
+right page, and nothing passes between the tabs while both are open: no popup
+reports back to your app, and no change in one tab has to show up in the other.
+You can check that from the Cypress tab without opening a second one, and the
+test runs in every browser Cypress supports. When the test depends on what
+happens _inside_ the new tab, or on the tabs communicating, use
+[`@cypress/puppeteer`](#When-a-test-needs-cypresspuppeteer-and-a-second-tab)
+instead.
 
 The examples in this section run against this page:
 
@@ -85,7 +81,23 @@ cy.get('@open').should('have.been.calledWith', '/authorize.html')
 in more depth. To follow a link to another origin in the same tab, use
 [`cy.origin()`](/api/commands/origin).
 
-## How the @cypress/puppeteer plugin works
+## When a test needs @cypress/puppeteer and a second tab
+
+Reach for `@cypress/puppeteer` when the other tab has to stay open and do
+something, not only open. Each of these scenarios has a worked example later in
+this guide:
+
+- [Read content from a tab that a link opens](#Read-content-from-a-tab-that-a-link-opens),
+  such as a receipt, an invoice, or an export preview
+- [Complete a popup flow](#Complete-a-popup-flow-and-assert-in-the-main-tab),
+  such as a sign-in, payment, or account-linking popup that reports back to your
+  app
+- [Test cross-tab updates](#Open-a-second-tab-to-test-cross-tab-updates), such
+  as a setting or a sign-out in one tab that has to show up in the others
+- [Test two users at once](#Test-two-users-at-once-with-a-separate-browser-context),
+  such as chat, comments, or a shared document
+
+### How @cypress/puppeteer connects your spec to other tabs
 
 The plugin has two halves:
 
@@ -97,11 +109,13 @@ The plugin has two halves:
   yields whatever it returns.
 
 Here's one call from the first example below, `readNewTab`, which reads a tab
-that a link opened:
+that a link opened. The Cypress tab and the new tab both run in the browser
+Cypress launched, and the message handler between them runs in Node.js, in your
+Cypress config:
 
 <DocsImage
   src="/img/app/multi-tab-testing/cy-puppeteer-how-it-works.svg"
-  alt="Diagram in three columns. On the left, in the browser Cypress launched, the Cypress tab calls cy.puppeteer('readNewTab', 'receipt') and then .should('equal', …). In the middle, Node.js runs your Cypress config, where the readNewTab message handler lives. On the right, in the same browser, a new tab or popup showing receipt.html. Arrows run from the Cypress tab to the handler, from the handler to the new tab, and from the handler back to the Cypress tab."
+  alt="Diagram of three boxes. On the left, the Cypress tab calls cy.puppeteer('readNewTab', 'receipt') and then .should('equal', …). In the middle, the readNewTab message handler. On the right, a new tab or popup showing receipt.html. Arrows run from the Cypress tab to the handler, from the handler to the new tab, and from the handler back to the Cypress tab."
   noBorder
 />
 
@@ -136,14 +150,8 @@ Keep these behaviors in mind as you write handlers:
 
 ## Browser support for @cypress/puppeteer
 
-The plugin requires Cypress 13.6.0 or later and a Chromium-based browser.
-
-| Browser                                | `cypress run` (headless) | `cypress open` and `cypress run --headed` |
-| -------------------------------------- | ------------------------ | ----------------------------------------- |
-| Chrome for Testing, Chromium, and Edge | Supported                | Supported                                 |
-| Google Chrome                          | Supported                | Chrome 136 and earlier                    |
-| Electron                               | Supported, with limits   | Supported, with limits                    |
-| Firefox and WebKit                     | Not supported            | Not supported                             |
+The plugin requires a Chromium-based browser, such as Chrome, Chrome for
+Testing, Chromium, Edge, or Electron. Two of those browsers have limits:
 
 - **Google Chrome 137 and later** removed the `--load-extension` flag, and the
   plugin needs the Cypress extension to bring the Cypress tab back to the front
@@ -298,7 +306,7 @@ popup reports back to your app with `window.opener.postMessage()`:
 ```
 
 The `allowAccessInPopup` handler waits for the popup, then clicks its
-`"Allow access"` button the way a user would:
+`"Allow access"` button:
 
 :::cypress-config-plugin-example
 
@@ -321,9 +329,11 @@ setup({
       })
 
       await popup.bringToFront()
-      await popup.waitForSelector('#allow')
-      // The app closes the popup after this click
-      await popup.click('#allow')
+      await popup.waitForSelector('button#allow')
+      // The app closes the popup as soon as the button is clicked. Clicking
+      // from inside the page returns before the popup closes, where
+      // popup.click() can fail with "Target closed".
+      await popup.$eval('button#allow', (button) => button.click())
     },
   },
 })
