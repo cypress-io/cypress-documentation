@@ -1,6 +1,6 @@
 ---
 title: 'cy.rightclick()'
-description: Right click a DOM element in Cypress.
+description: Right click a DOM element in Cypress to test custom context menus and contextmenu events.
 sidebar_label: rightclick
 slug: /api/commands/rightclick
 ---
@@ -9,16 +9,14 @@ slug: /api/commands/rightclick
 
 # rightclick
 
-Right click a DOM element.
-
-It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
-chain further commands that rely on the subject after `.rightclick()`.
+Right click a DOM element to test custom context menus and other `contextmenu`
+handling in your app.
 
 :::caution
 
-`.rightclick()` will not open context menus native to the browser.
-`.rightclick()` should be used to test your app's handling of right click
-related events such as `contextmenu`.
+`.rightclick()` does not open context menus native to the browser. To confirm
+your app suppresses the browser's own menu, see
+[Check that your app blocks the native context menu](#Check-that-your-app-blocks-the-native-context-menu).
 
 :::
 
@@ -38,7 +36,7 @@ related events such as `contextmenu`.
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.get('.menu').rightclick() // Right click on .menu
+cy.get('[data-cy=file-row]').first().rightclick() // Right click on the first file row
 cy.focused().rightclick() // Right click on el with focus
 cy.contains('Today').rightclick() // Right click on first el containing 'Today'
 ```
@@ -46,7 +44,7 @@ cy.contains('Today').rightclick() // Right click on first el containing 'Today'
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```javascript
-cy.rightclick('button') // Errors, cannot be chained off 'cy'
+cy.rightclick('[data-cy=file-row]') // Errors, cannot be chained off 'cy'
 cy.window().rightclick() // Errors, 'window' does not yield DOM element
 ```
 
@@ -81,13 +79,13 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 | `altKey`                     | `false`                                                                     | Activates the alt key (option key for Mac). Aliases: `optionKey`.                                                                                                                                                               |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                  |
 | `ctrlKey`                    | `false`                                                                     | Activates the control key. Aliases: `controlKey`.                                                                                                                                                                               |
-| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                            |
-| `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                             |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions).                                                                                                                                                           |
+| `log`                        | `true`                                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).                                                                                                                                            |
 | `metaKey`                    | `false`                                                                     | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`.                                                                                                                                   |
-| `multiple`                   | `false`                                                                     | Serially click multiple elements                                                                                                                                                                                                |
+| `multiple`                   | `false`                                                                     | Serially right click multiple elements.                                                                                                                                                                                         |
 | `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`. |
 | `shiftKey`                   | `false`                                                                     | Activates the shift key.                                                                                                                                                                                                        |
-| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.rightclick()` to resolve before [timing out](#Timeouts)                                                                                                                                                      |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.rightclick()` to resolve before [timing out](#Timeouts).                                                                                                                                                     |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                       |
 
 <HeaderYields />
@@ -98,13 +96,62 @@ Pass in an options object to change the default behavior of `.rightclick()`.
 
 ## Examples
 
-### No Args
+### Context menus
 
-#### Right click the menu
+#### Open a custom context menu
+
+Chaining further commands off the subject of `.rightclick()` is unsafe, since
+opening a menu can re-render the element. Start a new chain from `cy` and assert
+that the menu appeared.
 
 ```javascript
-cy.get('#open-menu').rightclick()
+cy.get('[data-cy=file-row]').first().rightclick()
+cy.get('[data-cy=context-menu]').should('be.visible')
 ```
+
+#### Choose an item from a context menu
+
+Once the menu opens, find the item you want by its label and click it.
+
+```javascript
+cy.get('[data-cy=file-row]').first().rightclick()
+cy.get('[data-cy=context-menu]').contains('Rename').click()
+cy.get('[data-cy=rename-input]').should('be.focused')
+```
+
+#### Close a context menu
+
+Test the way your users close the menu. Many menus close when the user presses
+Escape. [`cy.press()`](/api/commands/press) sends a native key press, the way a
+user's keyboard does.
+
+```javascript
+cy.get('[data-cy=file-row]').first().rightclick()
+cy.get('[data-cy=context-menu]').should('be.visible')
+cy.press(Cypress.Keyboard.Keys.ESC)
+cy.get('[data-cy=context-menu]').should('not.exist')
+```
+
+#### Check that your app blocks the native context menu
+
+`.rightclick()` never opens the browser's own context menu, so a test can pass
+even when your app forgets to call `preventDefault()` and real users see two
+menus. To check, add a `contextmenu` listener on the window after the page
+loads. It runs after your app's own handlers, so the event it receives shows
+whether one of them called `preventDefault()`.
+
+```javascript
+cy.window().then((win) => {
+  win.addEventListener('contextmenu', cy.stub().as('contextmenu'))
+})
+cy.get('[data-cy=file-row]').first().rightclick()
+cy.get('@contextmenu').should('have.been.calledWithMatch', {
+  defaultPrevented: true,
+})
+```
+
+If your app stops the event from propagating, the window listener never runs.
+Assert on your app's menu instead.
 
 ### Position
 
@@ -113,85 +160,134 @@ cy.get('#open-menu').rightclick()
 Right click the top right corner of the DOM element.
 
 ```javascript
-cy.get('#open-menu').rightclick('topRight')
+cy.get('[data-cy=file-row]').first().rightclick('topRight')
 ```
 
 ### Coordinates
 
 #### Specify explicit coordinates relative to the top left corner
 
-The right click below will be issued inside of the element (15px from the left
-and 40px from the top).
+The right click below is issued inside of the element (15px from the left and
+40px from the top).
 
 ```javascript
-cy.get('#open-menu').rightclick(15, 40)
+cy.get('[data-cy=chart]').rightclick(15, 40)
 ```
 
+#### Right click a point on a canvas or chart
+
+When the target is a region inside one element, such as a bar in a chart drawn
+on a `<canvas>`, there is no child element to select. Pass the coordinates of
+that spot instead.
+
+```javascript
+// the March bar is 120px from the left and 45px from the top of the chart
+cy.get('[data-cy=chart]').rightclick(120, 45)
+cy.get('[data-cy=context-menu]').should('contain', 'March')
+```
+
+To see the exact spot Cypress right clicked, click the `rightclick` command in
+the Command Log to pin its snapshot. A red dot marks the point.
+
+<DocsImage
+  src="/img/api/rightclick/command-log-rightclick-chart-snapshot.png"
+  alt="The rightclick 120, 45 command pinned in the Command Log. In the app preview, a red dot marks the right click on the March bar of a bar chart, and the app's context menu shows Show March details and Hide March."
+/>
+
 ### Options
+
+#### Control where Cypress scrolls the element before right clicking
+
+Cypress scrolls the element into view before right clicking it. To put the
+element in a predictable spot, such as clear of a sticky header, pass
+`scrollBehavior`. Center the element in the viewport, or set each axis
+separately with a `{ block, inline }` object.
+
+```javascript
+cy.get('[data-cy=row-42]').rightclick({ scrollBehavior: 'center' })
+cy.get('[data-cy=carousel-item]').rightclick({
+  scrollBehavior: { block: 'center', inline: 'nearest' },
+})
+```
+
+#### Dismiss what covers an element before right clicking it
+
+When another element covers the one you want to right click, deal with it the
+way a user would before reaching for
+[`{ force: true }`](#Force-a-right-click-regardless-of-its-actionable-state).
+Forcing skips the checks that would catch a real bug, such as a banner that
+blocks users from opening the menu.
+
+```javascript
+cy.get('[data-cy=cookie-banner] [data-cy=accept]').click()
+cy.get('[data-cy=file-row]').first().rightclick()
+```
 
 #### Force a right click regardless of its actionable state
 
 Forcing a right click overrides the
 [actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
-Cypress applies and will automatically fire the events.
+Cypress applies and fires the events at the element.
 
 ```javascript
-cy.get('#open-menu').rightclick({ force: true })
+cy.get('[data-cy=file-row]').first().rightclick({ force: true })
 ```
 
-#### Force a right click with position argument
+Forcing does not make a disabled element respond. The browser does not deliver
+`mousedown`, `contextmenu`, or `mouseup` events to a disabled form control, so
+your app's context menu handler never runs.
+
+#### Right click every element that matches a selector
+
+By default, Cypress errors if you try to right click multiple elements. When
+you pass `{ multiple: true }`, Cypress right clicks each element in turn, gives
+each right click its own full timeout, and logs each right click to the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
 
 ```javascript
-cy.get('#open-menu').rightclick('bottomLeft', { force: true })
+cy.get('[data-cy=file-row]').rightclick({ multiple: true })
 ```
 
-#### Force a right click with relative coordinates
-
-```javascript
-cy.get('#open-menu').rightclick(5, 60, { force: true })
-```
-
-#### Right click all buttons found on the page
-
-By default, Cypress will error if you're trying to right click multiple
-elements. By passing `{ multiple: true }` Cypress will iteratively apply the
-right click to each element and will also log to the
-[Command Log](/app/core-concepts/open-mode#Command-Log) multiple times.
-
-```javascript
-cy.get('.open-menu').rightclick({ multiple: true })
-```
+### Modifier keys
 
 #### Right click with key combinations
 
-The `.rightclick()` command may also be fired with key modifiers to
-simulate holding key combinations while right clicking, such as
-`ALT + rightclick`.
+Pass a modifier key option to hold that key while right clicking, such as
+`altKey` for Alt + right click. The [options table](#Arguments) lists each
+modifier key option and its aliases.
 
-:::info
+#### Ctrl or Cmd right click
 
-You can also use key combinations during [.type()](/api/commands/type). This
-offers options to hold down keys across multiple commands. See
-[Key Combinations](/api/commands/type#Key-Combinations) for more information.
+Many apps check the control key on Windows and Linux and the command key on
+macOS. Use [`Cypress.platform`](/api/cypress-api/platform) to hold the key the
+app expects.
 
-:::
+```javascript
+const modifier =
+  Cypress.platform === 'darwin' ? { metaKey: true } : { ctrlKey: true }
 
-The following key can be combined with `.rightclick()` through the `options`..
+cy.get('[data-cy=file-row]').first().rightclick(modifier)
+cy.get('[data-cy=context-menu]').should('contain', 'Open in new window')
+```
 
-| Option     | Notes                                                                                         |
-| ---------- | --------------------------------------------------------------------------------------------- |
-| `altKey`   | Activates the alt key (option key for Mac). Aliases: `optionKey`.                             |
-| `ctrlKey`  | Activates the control key. Aliases: `controlKey`.                                             |
-| `metaKey`  | Activates the meta key (Windows key or command key for Mac). Aliases: `commandKey`, `cmdKey`. |
-| `shiftKey` | Activates the shift key.                                                                      |
+#### Ctrl + click on macOS does not fire a `contextmenu` event
 
-##### Command right click
+On macOS, users can open a context menu by holding Control and clicking.
+`.click({ ctrlKey: true })` fires a `click` event with the control key held, not
+a `contextmenu` event. To test the context menu a Ctrl + click opens, use
+`.rightclick()`.
 
-```js
-// execute a CMD + right click on the .menu-item
-cy.get('.menu-item').rightclick({
-  metaKey: true,
+#### Shift right click to show more options
+
+Some apps add options to the context menu when the user holds Shift while right
+clicking.
+
+```javascript
+// execute a SHIFT + right click on the first file
+cy.get('[data-cy=file-row]').first().rightclick({
+  shiftKey: true,
 })
+cy.get('[data-cy=context-menu]').should('contain', 'Copy as path')
 ```
 
 ## Notes
@@ -203,20 +299,64 @@ cy.get('.menu-item').rightclick({
 `.rightclick()` is an "action command" that follows all the rules of
 [Actionability](/app/core-concepts/interacting-with-elements).
 
+### Events
+
+#### Events fired by a right click
+
+Cypress first moves the mouse to the element, which fires hover events such as
+`pointerover`, `mouseover`, and `mousemove`. Then `.rightclick()` fires these
+events in order:
+
+1. `pointerdown`
+2. `mousedown`
+3. `contextmenu`
+4. `pointerup`
+5. `mouseup`
+
+Each event carries `button: 2` and `buttons: 2`. `.rightclick()` does not fire a
+`click` event.
+
+### Focus
+
+#### Focus is given to the first focusable element
+
+Like [`.click()`](/api/commands/click#Focus), `.rightclick()` gives focus to the
+first focusable element at the click coordinates or among its ancestors.
+
+### Right click or trigger a `contextmenu` event
+
+#### Choose between .rightclick() and .trigger('contextmenu')
+
+Both commands wait for the element to reach an
+[actionable state](/app/core-concepts/interacting-with-elements).
+
+- `.rightclick()` fires the full sequence of
+  [events fired by a right click](#Events-fired-by-a-right-click) and gives
+  focus to the element, the way a user's right click does.
+- [`.trigger('contextmenu')`](/api/commands/trigger) fires only the
+  `contextmenu` event and leaves focus where it was. Use it when you need that
+  single event, or to set event properties that `.rightclick()` does not
+  expose.
+
 ## Rules
 
 <HeaderRequirements />
 
 - `.rightclick()` requires being chained off a command that yields DOM
   element(s).
+- `.rightclick()` requires a single element unless you pass
+  `{ multiple: true }`.
+- `.rightclick()` cannot be called on a `<select>` element. Use
+  [`.select()`](/api/commands/select) to change its value.
 
 <HeaderAssertions />
 
-- `.rightclick()` will automatically wait for the element to reach an
+- `.rightclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.rightclick()` will automatically
-  [retry](/app/core-concepts/retry-ability) until all chained assertions have
-  passed.
+- `.rightclick()` itself is not retried. It fires once when the element is
+  actionable. Assertions chained after `.rightclick()` are retried until they
+  pass or time out. See
+  [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 <HeaderTimeouts />
 
@@ -232,20 +372,24 @@ cy.get('.menu-item').rightclick({
 cy.get('.rightclick-action-div').rightclick()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/rightclick/rightclick-dom-element-in-command-log.png"
-  alt="Command log for right click"
+  alt="Command Log showing a get command for .rightclick-action-div followed by a rightclick command."
 />
 
-When clicking on `rightclick` within the command log, the console outputs the
+When you click `rightclick` in the Command Log, the console outputs the
 following:
 
 <DocsImage
   src="/img/api/rightclick/rightclick-console-log-with-mouse-events.png"
-  alt="console.log for right click"
+  alt="DevTools console output for the rightclick command: the element it was applied to, the element count, the coordinates, and a Mouse Events table listing each event with its target element, whether its default was prevented, whether its propagation was stopped, and the active modifier keys."
 />
+
+The Mouse Events table lists the `contextmenu` event last, after the press and
+release events. Cypress fires it between `mousedown` and `pointerup`, as
+described in [Events fired by a right click](#Events-fired-by-a-right-click).
 
 ## History
 
@@ -253,6 +397,7 @@ following:
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments |
 | [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                      |
+| [5.0.0](/app/references/changelog#5-0-0)     | Added options `altKey`, `ctrlKey`, `metaKey`, and `shiftKey`                                                       |
 | [3.5.0](/app/references/changelog#3-5-0)     | `.rightclick()` command added                                                                                      |
 
 ## See also
