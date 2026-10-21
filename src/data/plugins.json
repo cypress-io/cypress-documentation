@@ -166,6 +166,13 @@
           "link": "https://github.com/cypress-io/ai-toolkit/tree/main/skills/cypress-docs",
           "keywords": ["ai", "skill", "docs", "agents"],
           "badge": "official"
+        },
+        {
+          "name": "cypress-ai-vitals",
+          "description": "Test AI features: check text, image and audio output by meaning, set limits on latency, tokens and cost, and compare models side by side.",
+          "link": "https://github.com/anvitech12/cypress-ai-vitals",
+          "keywords": ["ai", "llm", "semantic", "image", "audio", "metrics", "models"],
+          "badge": "community"
         }
       ]
     },
