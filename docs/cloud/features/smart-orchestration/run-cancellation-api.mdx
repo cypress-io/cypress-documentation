@@ -48,7 +48,7 @@ for the full list of effects.
 
 This is especially useful when:
 
-- You want to use [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) to execute only the tests that did not pass in a previously cancelled run.
+- You want to use [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) to execute only the tests that did not pass in a previously cancelled run. See [Cancel a run so the next rerun can anchor](#Cancel-a-run-so-the-next-rerun-can-anchor).
 - You want to trigger [`run.completed` webhooks](/cloud/integrations/webhooks) in a timely manner after your CI has stopped.
 - You want any other end-of-run integrations like [GitHub](/cloud/integrations/github) or [Slack](/cloud/integrations/slack) to happen at the moment of the CI cancellation, not after the Run Timeout expires.
 - You want Cypress [Cloud MCP](/cloud/integrations/cloud-mcp) and [CLI](/cloud/integrations/cloud-cli) to reflect the intentional cancelled state immediately when working with results, instead of a partial "timing out" state.
@@ -72,6 +72,12 @@ You should account for that in the job that ran the cancelled specs, so a run yo
 cancelled doesn't get treated as a broken build.
 
 :::
+
+## Cancel a run so the next rerun can anchor
+
+[Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) anchors a rerun on the latest run in the rerun group that has already ended, then re-executes only the specs or tests that did not pass in that run. After CI stops the Cypress processes, the Cypress Cloud run stays in progress until the project's [run timeout](/cloud/account-management/projects#Run-Timeout). A rerun that starts during that wait anchors to an older finished run in the group. When the group has no finished run yet, the rerun executes the full suite.
+
+Call this API from that same CI cancellation. Cypress Cloud marks the run cancelled at that moment, keeps the results collected so far, and the next rerun in the group anchors to this run.
 
 ## Endpoint
 
@@ -182,5 +188,7 @@ error response is a JSON body of the form `{ "message": "...", "code": "..." }`.
   cancel a run from the Cypress Cloud dashboard
 - [Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API) -
   mark a run complete early instead of cancelling it
+- [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization#What-a-rerun-will-execute) -
+  re-execute only what failed, using this run as the anchor once it has ended
 - [`run.completed` webhooks](/cloud/integrations/webhooks) - get notified when
   a run finishes, including by cancellation

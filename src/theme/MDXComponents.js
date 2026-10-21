@@ -46,6 +46,7 @@ import AppQualityConfigEditing from '@site/docs/partials/_app-quality-config-edi
 import AppQualityConfigWhoCanEdit from '@site/docs/partials/_app-quality-config-who-can-edit.mdx'
 import Profiles from '@site/docs/partials/_profiles.mdx'
 import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
+import ScrollToVsScrollIntoView from '@site/docs/partials/_scrollto-vs-scrollintoview.mdx'
 import SignificantAttributesValidation from '@site/docs/partials/_significantattributes-validation.mdx'
 import SitemapScanExample from '@site/docs/partials/_sitemap-scan-example.mdx'
 import SourceMaps from '@site/docs/partials/_source-maps.mdx'
@@ -251,6 +252,7 @@ export default {
   AppQualityConfigWhoCanEdit,
   Profiles,
   RecordKeyEnvVar,
+  ScrollToVsScrollIntoView,
   SignificantAttributesValidation,
   SitemapScanExample,
   SourceMaps,

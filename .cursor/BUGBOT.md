@@ -43,7 +43,9 @@ The build catches broken links _inside the site_. It catches none of this:
   This is the single highest-cost miss in the repo: inbound links and bookmarks
   die and nothing fails. Check the PR's renames/deletions under `docs/` against
   new `[[redirects]]` entries. (`netlify.toml` is the live redirect list, ~200
-  entries; `vercel.json` holds only a handful of legacy ones.)
+  entries; `vercel.json` holds only a handful of legacy ones.) Each new rule
+  also needs a matching line in `static/_redirects`, which Cloudflare previews
+  read.
 - **URLs the build never checks.** Docusaurus only validates links it can see as
   internal markdown links. Verify by hand that these resolve to a real page:
   - absolute `https://docs.cypress.io/...` URLs (treated as external, unchecked)

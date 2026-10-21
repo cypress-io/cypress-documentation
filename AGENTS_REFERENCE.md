@@ -94,6 +94,13 @@ Three files at the site root index all of that, and none is hand-maintained:
     status = 301
     force = true
   ```
+  Add the same rule, at the same position, to `static/_redirects`, which
+  Cloudflare reads. Netlify serves production while hosting moves to
+  Cloudflare, so the two lists must match. Both hosts use the first rule that
+  matches a path:
+  ```text title="static/_redirects"
+  /old/path /new/path 301
+  ```
   Then update any in-repo links to the old path, since `onBrokenLinks: throw`
   will otherwise fail the build.
 
@@ -217,6 +224,22 @@ same change. `## See also` always stays as it is.
   almost always hides a simpler sentence.
   - Yes: "`cy.session()` caches and restores session state between tests."
   - No: "`cy.session()` allows you to cache and restore session state."
+- **Keep body text current.** The docs describe the product as it works today,
+  so a reader on the current release never has to work out whether a sentence
+  still applies. Leave out the Cypress release that added or changed a feature.
+  - Yes: "`cy.press()` sends a native key press, the way a user's keyboard
+    does."
+  - No: "`cy.press()` supports Escape in Cypress 15.3.0 and later."
+  - No: "Starting in Cypress 16.1.0, you can declare your server's
+    certificates."
+
+  Version history has its own homes: the `## History` table on an `/api` page
+  (see [`docs/api/AGENTS.md`](./docs/api/AGENTS.md#history-tables)) and the
+  changelog. Name a version in body text only when the reader needs it to act:
+  - Deprecation and removal notes: "`Cypress.env()` was removed in Cypress
+    16.0."
+  - Migration guides, which exist to move a reader between versions.
+  - Requirements for tools outside Cypress, such as a minimum Node.js version.
 
 ### Word choice
 
@@ -1210,6 +1233,7 @@ every push to `main`:
 | Typecheck                            | `npm run typecheck`                                      |
 | Unit Tests (Search/Algolia, plugins) | `npm run test:search`, `test:plugins`                    |
 | E2E                                  | `cypress run` in Chrome for Testing, across 8 containers |
+| Cloudflare preview (same-repo PRs)   | `wrangler preview`, then a `cloudflare/preview` status   |
 | Run Algolia scraper (`main` only)    | `scrape-and-compare-algolia-index`                       |
 
 Lint, typecheck, and unit tests install their own dependencies (restored from
@@ -1234,6 +1258,12 @@ report and its aggregate result is true.
 
 The branch protection set is `Build`, `Lint JS/CSS/Markdown`, `Typecheck`,
 `Unit Tests (Search/Algolia, plugins)`, and `E2E`.
+
+The `Cloudflare preview` job uploads a pull request's build as a Cloudflare
+Worker Preview named `pr-<number>` and posts a `cloudflare/preview` status whose
+**Details** link opens it. It needs the `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID` secrets, so pull requests from forks skip it. Keep it,
+and its status, out of the branch protection set for the same reason.
 
 One branch this workflow never sees is `automation/update-plugins-data`. GitHub
 raises no workflow run for an event caused by `GITHUB_TOKEN`, so the nightly

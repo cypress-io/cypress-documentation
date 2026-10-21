@@ -118,8 +118,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.
-- Moving/renaming/deleting a page **requires** a `301` in `netlify.toml`, plus
-  updating in-repo links to it.
+- Moving/renaming/deleting a page **requires** a `301` in both `netlify.toml`
+  and `static/_redirects` (Netlify serves production while Cloudflare builds
+  previews), plus updating in-repo links to it.
 
 **Authoring** — [components](./AGENTS_REFERENCE.md#mdx-components),
 [partials](./AGENTS_REFERENCE.md#partials),
@@ -198,6 +199,12 @@ Each rule is a hard convention. See the linked section for the how and why.
   ("we recommend"), never as a stand-in for the reader.
 - **Present tense, active voice.** "Cypress retries the assertion", not "Cypress
   will retry the assertion" or "the assertion is retried".
+- **Keep body text current.** Describe how the product works today, without
+  naming the Cypress release that added or changed it ("supports Escape", not
+  "supports Escape in Cypress 15.3.0 and later"). Version history goes in the
+  page's `## History` table and the changelog. Deprecation, removal, and
+  migration notes are the exception, since the reader needs the version to
+  upgrade.
 - **Say what something does**, not what it lets the reader do. "`cy.session()`
   caches and restores session state", not "allows you to cache…".
 - Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
