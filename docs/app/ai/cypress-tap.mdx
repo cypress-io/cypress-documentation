@@ -476,6 +476,10 @@ STYLES (2)
 
 ### Getting Started
 
+You do not need a Cypress account to use `cypress tap`. It drives the open-mode
+Cypress session on your own machine, so everything in this section works with
+the Cypress App you already have.
+
 :::note
 
 The steps below walk through the commands by hand. If you want your agent to run
@@ -865,11 +869,12 @@ commands for you so your agent knows what happened when those tests ran.
 
 ## Verify a Cloud failure locally
 
-Cypress Cloud tells your agent what broke in CI. `cypress tap` lets it prove
-the fix against a real browser before pushing. Reach Cloud with either
-[Cloud MCP](/cloud/integrations/cloud-mcp), if your agent speaks the Model
-Context Protocol, or the [Cloud CLI](/cloud/integrations/cloud-cli), if it
-runs shell commands.
+If you have a Cypress Cloud account, you can work with your Cloud data locally
+through [Cloud MCP](/cloud/integrations/cloud-mcp) or the
+[Cloud CLI](/cloud/integrations/cloud-cli), and pair it with `cypress tap` for a
+hands-off debug, triage, fix, and verify loop. Cypress Cloud tells your agent
+what broke in CI, and `cypress tap` proves the fix against a real browser before
+you push.
 
 ### With Cloud MCP
 
@@ -1077,9 +1082,9 @@ alongside its accessibility node.
 
 ### When to use it?
 
-The `cypress tap` CLI gives you the ability to interact and inspect a local Cypress session while developing or debugging tests.
+The `cypress tap` CLI gives you the ability to interact and inspect a local Cypress session while developing or debugging tests. You do not need a Cypress account to use it.
 
-Both the [Cloud MCP](/cloud/integrations/cloud-mcp) and the [Cloud CLI](/cloud/integrations/cloud-cli) give programmatic access to your Cypress Cloud data.
+Both the [Cloud MCP](/cloud/integrations/cloud-mcp) and the [Cloud CLI](/cloud/integrations/cloud-cli) give programmatic access to your Cypress Cloud data, which does require a Cloud account.
 
 Together these tools provide the availability for you or an AI agent to fully engage with Cypress and your recorded Cloud data to author, debug, and maintain your test suite without leaving your terminal.
 
@@ -1113,7 +1118,7 @@ Together these tools provide the availability for you or an AI agent to fully en
 
 ### Pricing & Usage Limits
 
-The `cypress tap` CLI is available for use for all Cypress test authors using Cypress version 15.21.0+ at no cost. Additionally, there are no usage limits.
+The `cypress tap` CLI is available for use for all Cypress test authors using Cypress version 15.21.0+ at no cost. It does not require a Cypress Cloud account or a paid subscription. Additionally, there are no usage limits.
 
 ### Security and privacy
 
