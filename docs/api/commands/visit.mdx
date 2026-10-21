@@ -172,12 +172,18 @@ Dev Tools.
 its resources. Your scripts will not be ready at this point, but it's a great
 hook to potentially manipulate the page.
 
+This example seeds a token in `localStorage` before the app reads it, and stubs
+`window.open` so the test can assert on it:
+
 ```javascript
-cy.visit('http://localhost:3000/#dashboard', {
-  onBeforeLoad: (contentWindow) => {
-    // contentWindow is the remote page's window object
+cy.visit('/#dashboard', {
+  onBeforeLoad(win) {
+    // win is the remote page's window object
+    win.localStorage.setItem('token', 'abc123')
+    cy.stub(win, 'open').as('windowOpen')
   },
 })
+cy.get('@windowOpen').should('not.have.been.called')
 ```
 
 :::info
@@ -197,7 +203,7 @@ scripts, stylesheets, html, and other resources are guaranteed to be available a
 this point.
 
 ```javascript
-cy.visit('http://localhost:3000/#/users', {
+cy.visit('/#/users', {
   onLoad: (contentWindow) => {
     // contentWindow is the remote page's window object
     if (contentWindow.angular) {
@@ -213,8 +219,8 @@ You can provide query parameters as an object to `cy.visit()` by passing `qs` to
 `options`.
 
 ```js
-// visits http://localhost:3500/users?page=1&role=admin
-cy.visit('http://localhost:3500/users', {
+// visits <baseUrl>/users?page=1&role=admin
+cy.visit('/users', {
   qs: {
     page: '1',
     role: 'admin',
@@ -239,12 +245,68 @@ method with a `body` containing the form values:
 
 ```javascript
 cy.visit({
-  url: 'http://localhost:3000/cgi-bin/newsletterSignup',
+  url: '/cgi-bin/newsletterSignup',
   method: 'POST',
   body: {
     name: 'George P. Burdell',
-    email: 'burdell@microsoft.com',
+    email: 'burdell@example.com',
   },
+})
+```
+
+#### Send custom request headers with `cy.visit()`
+
+Pass `headers` to send extra HTTP headers with the page request, such as a
+language preference or a feature flag your server reads. Cypress sends them
+only with the initial `cy.visit()` request, not with the requests the page
+makes afterward.
+
+```javascript
+cy.visit('/', {
+  headers: { 'Accept-Language': 'fr-FR' },
+})
+cy.contains('Bienvenue')
+```
+
+#### Visit an error page with `failOnStatusCode: false`
+
+By default, `cy.visit()` fails when the server responds with a status code
+outside the `2xx` and `3xx` ranges. To test your 404 or 500 page, set
+`failOnStatusCode` to `false` and assert on what the page shows:
+
+```javascript
+cy.visit('/does-not-exist', { failOnStatusCode: false })
+cy.contains('h1', 'Page not found')
+```
+
+#### Retry `cy.visit()` while your server finishes starting
+
+When your server answers with an error status for a few seconds after it
+starts, such as a `503` in CI, set `retryOnStatusCodeFailure` to `true`.
+Cypress retries the request up to 4 times before failing.
+
+```javascript
+cy.visit('/', { retryOnStatusCodeFailure: true })
+```
+
+### Workflows
+
+#### Log in once with `cy.session()` and visit in each test
+
+Pair `cy.visit()` with [`cy.session()`](/api/commands/session) to log in once,
+cache the session, and restore it before each test. Call `cy.visit()` after
+`cy.session()`, since Cypress clears the page each time it restores a session.
+
+```javascript
+beforeEach(() => {
+  cy.session('user', () => {
+    cy.visit('/login')
+    cy.get('#username').type('user')
+    cy.get('#password').type('s3cret')
+    cy.get('form').submit()
+    cy.location('pathname').should('eq', '/dashboard')
+  })
+  cy.visit('/dashboard')
 })
 ```
 
@@ -338,8 +400,8 @@ it('visits local file', { baseUrl: null }, () => {
 ```javascript
 // we aren't logged in, so our web server
 // redirected us to /login
-cy.visit('http://localhost:3000/admin')
-cy.url().should('match', /login/)
+cy.visit('/admin')
+cy.location('pathname').should('eq', '/login')
 ```
 
 ### Protocol
@@ -401,8 +463,8 @@ You may think this works:
 
 ```javascript
 // this code may not work depending on implementation
-cy.visit('http://localhost:8000/#/app')
-cy.intercept('/users/**', { fixture: 'users' })
+cy.visit('/#/app')
+cy.intercept('GET', '/users/**', { fixture: 'users.json' })
 ```
 
 But if your app makes a request upon being initialized, _the above code will not
@@ -419,8 +481,9 @@ Luckily Cypress supports this use case. Reverse the order of the commands:
 
 ```javascript
 // this code is probably what you want
-cy.intercept('/users/**', {...})
-cy.visit('http://localhost:8000/#/app')
+cy.intercept('GET', '/users/**', { fixture: 'users.json' }).as('getUsers')
+cy.visit('/#/app')
+cy.wait('@getUsers')
 ```
 
 Cypress will automatically apply the routes to the very next `cy.visit()` and
@@ -453,7 +516,19 @@ After visiting a cross-origin site, to interact with the content, you must use a
 [`cy.origin()`](/api/commands/origin) block.
 
 When visiting a cross-origin site, the `onBeforeLoad` and `onLoad` options are
-not supported.
+not supported. Instead, register a `window:before:load` or `window:load` event
+listener inside a `cy.origin()` block for that origin, then visit it:
+
+```javascript
+cy.visit('/')
+cy.origin('https://auth.example.com', () => {
+  cy.on('window:before:load', (win) => {
+    // what you would have put in onBeforeLoad
+    win.localStorage.setItem('returnTo', '/dashboard')
+  })
+})
+cy.visit('https://auth.example.com/login')
+```
 
 ## Command Log
 
