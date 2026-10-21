@@ -9,4 +9,7 @@
     // Serve docs/foo/index.html at /foo, matching the URLs Netlify serves today.
     "html_handling": "drop-trailing-slash",
   },
+  // Required for `wrangler preview`, which builds the per-branch PR previews.
+  // Empty because previews reuse the assets settings above.
+  "previews": {},
 }
