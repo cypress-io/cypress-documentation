@@ -21,6 +21,11 @@ const config = {
     'Fast, easy and reliable testing for anything that runs in a browser.',
   url: 'https://docs.cypress.io',
   baseUrl: '/',
+  customFields: {
+    // The Support Assistant is framed from cypress.io; point at a local cypress.io stack to develop against it.
+    supportAssistantOrigin:
+      process.env.SUPPORT_ASSISTANT_ORIGIN || 'https://www.cypress.io',
+  },
   onBrokenLinks: 'throw',
   onBrokenAnchors: 'throw',
   markdown: {
@@ -188,9 +193,9 @@ const config = {
       // Styles for this are controlled in src/css/announcement-bar.scss
       announcementBar: {
         //give id a unique value to get a new announcement bar to appear
-        id: 'cypress-16-release-sep-2026',
+        id: 'cypressconf-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        content: `🚀 Cypress 16 is live: faster tests, starting with HTTP/2 support &mdash; <a href="https://www.cypress.io/blog/cypress-16-faster-tests-starting-with-http2-support?&utm_source=docs.cypress.io&utm_medium=announcement-bar&utm_campaign=app_release">Read the Announcement</a>`,
+        content: `🌟 Join teams building and shipping quality applications with confidence at CypressConf 2026, October 20-22. <a href="https://cypress.registration.goldcast.io/events/670deb6c-06ee-4ce8-858b-8a4db3a62eb1?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=cypressconf2026">Register today</a>`,
         isCloseable: true,
       },
       footer: {

@@ -282,14 +282,15 @@ Given a button that we want to interact with:
 
 Let's investigate how we could target it:
 
-| Selector                                | Recommended                                                   | Notes                                                           |
-| --------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
-| `cy.get('button').click()`              | <Icon name="exclamation-triangle" color="red" /> Never        | Worst - too generic, no context.                                |
-| `cy.get('.btn.btn-large').click()`      | <Icon name="exclamation-triangle" color="red" /> Never        | Bad. Coupled to styling. Highly subject to change.              |
-| `cy.get('#main').click()`               | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Better. But still coupled to styling or JS event listeners.     |
-| `cy.get('[name="submission"]').click()` | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Coupled to the `name` attribute which has HTML semantics.       |
-| `cy.contains('Submit').click()`         | <Icon name="check-circle" color="green" /> Depends            | Much better. But still coupled to text content that may change. |
-| `cy.get('[data-cy="submit"]').click()`  | <Icon name="check-circle" color="green" /> Always             | Best. Isolated from all changes.                                |
+| Selector                                             | Recommended                                                   | Notes                                                                               |
+| ---------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `cy.get('button').click()`                           | <Icon name="exclamation-triangle" color="red" /> Never        | Worst - too generic, no context.                                                    |
+| `cy.get('.btn.btn-large').click()`                   | <Icon name="exclamation-triangle" color="red" /> Never        | Bad. Coupled to styling. Highly subject to change.                                  |
+| `cy.get('#main').click()`                            | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Better. But still coupled to styling or JS event listeners.                         |
+| `cy.get('[name="submission"]').click()`              | <Icon name="exclamation-triangle" color="orange" /> Sparingly | Coupled to the `name` attribute which has HTML semantics.                           |
+| `cy.contains('Submit').click()`                      | <Icon name="check-circle" color="green" /> Depends            | Much better. But still coupled to text content that may change.                     |
+| `cy.getByRole('button', { name: 'Submit' }).click()` | <Icon name="check-circle" color="green" /> Depends            | Much better. Checks both the role and the accessible name, so it's coupled to each. |
+| `cy.get('[data-cy="submit"]').click()`               | <Icon name="check-circle" color="green" /> Always             | Best. Isolated from all changes.                                                    |
 
 Targeting the element above by `tag`, `class` or `id` is very volatile and
 highly subject to change. You may swap out the element, you may refactor CSS and
@@ -388,7 +389,9 @@ accessible role is not present.
 You can use the
 [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
 package to use the familiar testing library methods (like `findByRole`,
-`findByLabelText`, etc...) to select elements in Cypress specs.
+`findByLabelText`, etc...) to select elements in Cypress specs. To find elements
+by role without a plugin, use the built-in
+[`cy.getByRole()`](/api/commands/getbyrole).
 
 If you are coming from a React Testing Library background and looking for more resources to understand how we
 recommend you approach testing your components, look to: [Cypress Component Testing](/app/component-testing/get-started).

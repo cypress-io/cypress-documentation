@@ -1,13 +1,14 @@
+/* Leaves room for the icon-only Support Assistant button to the right of search. */
 @media (max-width: 996px) {
   .searchBox {
     position: absolute;
-    right: 100px;
+    right: 148px;
   }
 }
 
 @media (max-width: 640px) {
   .searchBox {
-    right: 0;
+    right: 58px;
   }
 }
 

@@ -535,7 +535,7 @@ See the [Network Requests guide](/app/guides/network-requests) for a full discus
 
 #### Intercept only the requests you need
 
-Using a wildcard pattern to observe or intercept every HTTP request creates real overhead: every request that matches an intercept is paused and handed to your test code before it continues. Broad wildcard patterns that match dozens or hundreds of requests per page load multiply that cost across the entire suite.
+Using a wildcard pattern to observe or intercept every HTTP request creates real overhead: Cypress records and logs every request that matches an intercept, and a route with a handler function holds each request until the handler finishes. Broad wildcard patterns that match dozens or hundreds of requests per page load multiply that cost across the entire suite.
 
 ```js
 // ❌ Anti-pattern: intercepts every request; Cypress processes each one
@@ -546,7 +546,7 @@ cy.intercept('GET', '/api/users*').as('getUsers')
 cy.intercept('POST', '/api/orders').as('createOrder')
 ```
 
-A page that fires 50 network requests (images, analytics pings, feature flag polls, error monitoring payloads) routes all 50 through the intercept handler when using `*`. Intercept only the requests your test explicitly needs to observe, stub, or wait on.
+A page that fires 50 network requests (images, analytics pings, feature flag polls, error monitoring payloads) has all 50 matched, recorded, and logged when using `*`. Intercept only the requests your test explicitly needs to observe, stub, or wait on.
 
 ### Block third-party requests with `blockHosts`
 

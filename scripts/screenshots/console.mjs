@@ -17,11 +17,14 @@ const { values: args } = parseArgs({
     port: { type: 'string', default: '9333' },
     command: { type: 'string' },
     out: { type: 'string' },
+    // CSS px; raise it when the command logs more lines than fit
+    height: { type: 'string', default: '200' },
   },
 })
 const port = args.port
 const command = must(args.command, '--command is required')
 const out = must(args.out, '--out is required')
+const height = Number(args.height)
 const chromium = must(
   process.env.PLAYWRIGHT_BROWSERS_PATH,
   'Set PLAYWRIGHT_BROWSERS_PATH to the directory holding chromium'
@@ -44,8 +47,9 @@ const viewer = await puppeteer.launch({
   args: ['--no-sandbox'], // required when running as root
 })
 const devtools = await viewer.newPage()
-// 820×200 CSS px at 2x: a 1640×400 PNG, tall enough to keep the first line
-await devtools.setViewport({ width: 820, height: 200, deviceScaleFactor: 2 })
+// 820×200 CSS px at 2x by default: a 1640×400 PNG, tall enough to keep the
+// first line
+await devtools.setViewport({ width: 820, height, deviceScaleFactor: 2 })
 
 // Turn off the screencast panel before the frontend attaches
 await devtools.goto(`http://127.0.0.1:${port}/devtools/inspector.html`)

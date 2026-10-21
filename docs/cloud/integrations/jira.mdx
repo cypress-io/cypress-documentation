@@ -1,6 +1,6 @@
 ---
 title: Integrate Jira with Cypress Cloud
-description: 'Create Jira issues directly from failing tests in Cypress Cloud, track issue history per test case, and link every issue back to the exact test run that surfaced the failure.'
+description: 'Create or link Jira issues from any test in Cypress Cloud, track issue history per test, and jump from each issue back to the test run.'
 sidebar_label: Jira
 sidebar_position: 30
 ---
@@ -19,8 +19,9 @@ From any test result in Cypress Cloud, you can:
 
 - **Create a Jira issue** for a failing, flaky, or passing test without leaving Cypress Cloud. You choose the project, issue type, assignee, and additional fields.
 - **Link an existing Jira issue** to the test when the ticket already exists in Jira. The issue appears in that test's results panel and issue history the same way as a newly created issue.
-- **View issue history per test.** Every Jira issue ever created or linked for a given test appears in that test result's panel. When the same test regresses across multiple runs, you can see whether a previous issue was filed and what happened to it.
+- **View issue history per test.** Every Jira issue created or linked for a given test appears in that test result's panel until it's unlinked. When the same test regresses across multiple runs, you can see whether a previous issue was filed and what happened to it.
 - **Inspect a linked issue from the test panel.** Expand **Jira issue** in the results panel to see assignee, status, and when the issue was created, and open the issue in Jira in one click.
+- **Unlink an issue from a test.** Remove an issue that was linked by mistake or no longer applies. The issue itself is not changed in Jira.
 - **Navigate from Jira back to Cypress Cloud.** Every issue created through this integration includes a direct link to the test run in Cypress Cloud where the issue was filed. Anyone triaging in Jira can jump straight to the test replay, error output, and run context.
 
 The most common use case is tracking and prioritizing failing or flaky tests. But the integration works for passing tests too, which is useful for capturing behavioral notes or flagging intermittent behavior before it becomes a consistent failure.
@@ -120,7 +121,7 @@ You can file a Jira issue from any test result. Here is how to do it for a faili
      alt="Create Jira issue form in Cypress Cloud"
    />
 
-1. After you submit, the issue appears in the results panel for that test. It will remain there as part of the test's issue history across all future runs.
+1. After you submit, the issue appears in the results panel for that test. It stays there as part of the test's issue history across all future runs until it's unlinked.
 
    <DocsImage
      src="/img/cloud/integrations/jira/dashboard-jira-integration-inline-issue.png"
@@ -168,9 +169,25 @@ Inside the expanded section, click the issue to open it directly in Jira. The se
   alt="Cypress Cloud test results panel with the Jira issue section expanded, showing issue key as a link, status, assignee, and when the issue was created"
 />
 
+## Unlink a Jira issue from a test
+
+If an issue was linked to the wrong test, or no longer applies, you can remove it from the test in Cypress Cloud. Unlinking removes only the association between the test and the issue. The issue itself is not changed in Jira.
+
+1. In Cypress Cloud, open a test run and select the test in the **Test Results** view so the results panel opens.
+
+1. Expand the **Jira issue** section.
+
+1. Click the <Icon useCypressIcon name="action-delete-outline" size="16" className="inline mt-[-2px]" /> icon (an x inside a circle) on the issue you want to remove. Hovering over the icon shows "Unlink issue from this test".
+
+1. In the **Unlink this Jira issue** confirmation dialog, click **Unlink**. Click **Cancel** to keep the issue linked.
+
+Cypress Cloud confirms that the issue was unlinked, and the issue no longer appears in that test's results panel or issue history on any run. You can link it again at any time from the **Link** tab.
+
+Every [user role](/cloud/account-management/users#User-roles) except Viewer can unlink issues. Viewers don't see the unlink icon.
+
 ## Understand issue history
 
-Every Jira issue created or linked for a test, from any run, accumulates in that test's results panel in Cypress Cloud. This history is useful when a test has failed before: you can see whether a previous issue was filed, who it was assigned to, and whether it was resolved before the test regressed again.
+Every Jira issue created or linked for a test, from any run, accumulates in that test's results panel in Cypress Cloud until it's unlinked. This history is useful when a test has failed before: you can see whether a previous issue was filed, who it was assigned to, and whether it was resolved before the test regressed again.
 
 If a test has a long history of recurring failures and associated issues, that pattern is visible without leaving Cypress Cloud.
 

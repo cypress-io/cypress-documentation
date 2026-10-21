@@ -52,7 +52,7 @@ Several options change what appears in reports and how it's organized. Pick the 
 | Group related URLs into a single view                          | [`views`](/accessibility/configuration/views)                                           |
 | Remove entire pages or URLs from reports                       | [`viewFilters`](/accessibility/configuration/viewfilters)                               |
 | Remove elements from reports and the score entirely            | [`elementFilters`](/accessibility/configuration/elementfilters)                         |
-| Enable, disable, or tune individual Axe Core® rules            | [Axe Core® configuration](/accessibility/configuration/axe-core-configuration)          |
+| Enable, disable, or scope Axe Core® rules                      | [`axeConfig`](/accessibility/configuration/axe-core-configuration)                      |
 | Keep an element but ignore specific rules for it               | [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) |
 | Identify violation targets by your own attributes              | [`significantAttributes`](/accessibility/configuration/significantattributes)           |
 | Stop dynamic or generated attributes from identifying elements | [`attributeFilters`](/accessibility/configuration/attributefilters)                     |
@@ -139,6 +139,15 @@ The shape of every available option, with the type each value expects. Every pro
       ],
       "comment": string
     },
+    "axeConfig": {
+      "runOnly": {
+        "type": "tag" | "tags" | "rule" | "rules",
+        "values": [string]
+      },
+      "rules": {
+        "<rule-id>": { "enabled": boolean }
+      }
+    },
     "comment": string
   },
   "profiles": [
@@ -153,7 +162,7 @@ The shape of every available option, with the type each value expects. Every pro
 }
 ```
 
-Two accessibility-specific controls live outside this JSON: [Axe Core® rule configuration](/accessibility/configuration/axe-core-configuration) is handled with your Account Executive, and the per-element [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) attribute is added to your application's markup.
+One accessibility-specific control lives outside this JSON: the per-element [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) attribute is added to your application's markup.
 
 ## How rules are applied
 
@@ -170,7 +179,7 @@ Some properties are shared across App Quality products, and some belong to Cypre
 
 - **Shared properties**: `viewFilters`, `elementFilters`, `significantAttributes`, and `attributeFilters` apply to both Cypress Accessibility and UI Coverage when set at the root of your configuration. To apply one to Cypress Accessibility only, nest it under an `accessibility` key. A nested value **completely replaces** the root-level value for that product (the two are not merged), so repeat any shared rules you still want in the nested list.
 - **Shared, but not nestable**: `views` applies to both Cypress Accessibility and UI Coverage and can only be set at the root.
-- **Accessibility only**: `components` shapes the violation-target selectors in your accessibility reports and is always set under the `accessibility` key. UI Coverage has its own product-only options (`elements`, `elementGroups`, and interaction commands) set under a `uiCoverage` key. See the [UI Coverage configuration overview](/ui-coverage/configuration/overview) for those.
+- **Accessibility only**: `components` and `axeConfig` belong to Cypress Accessibility alone and are always set under the `accessibility` key. `components` shapes violation-target selectors; [`axeConfig`](/accessibility/configuration/axe-core-configuration) enables, disables, and scopes Axe Core® rules. UI Coverage has its own product-only options (`elements`, `elementGroups`, and interaction commands) set under a `uiCoverage` key. See the [UI Coverage configuration overview](/ui-coverage/configuration/overview) for those.
 
 ## Viewing Configuration for a Run
 
@@ -206,7 +215,7 @@ If no configuration was applied to the run, `config` may be absent, so check for
 - [Exclude views](/accessibility/configuration/viewfilters)
 - [Exclude elements](/accessibility/configuration/elementfilters)
 - [Ignore rules per element](/accessibility/configuration/ignoring-rules-per-element)
-- [Axe Core® configuration](/accessibility/configuration/axe-core-configuration)
+- [Configure Axe Core® rules - `axeConfig`](/accessibility/configuration/axe-core-configuration)
 - [Prioritize identifying attributes](/accessibility/configuration/significantattributes)
 - [Ignore attributes for identification](/accessibility/configuration/attributefilters)
 - [Define components](/accessibility/configuration/components)

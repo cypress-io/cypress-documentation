@@ -728,7 +728,7 @@ modifying browser launch arguments.
 ### <Icon name="angle-right" /> Can I make cy.request() poll until a condition is met?
 
 Yes. You do it the
-[same way as any other recursive loop](/api/commands/request#Request-Polling).
+[same way as any other recursive loop](/api/commands/request#Poll-an-endpoint-until-a-job-finishes).
 See [polling an asynchronous job](/app/guides/api-testing#Poll-an-asynchronous-job)
 for a version with a bounded number of attempts.
 
@@ -1785,6 +1785,10 @@ Absolutely! Feel free to add the
 [@testing-library/cypress](https://testing-library.com/docs/cypress-testing-library/intro/)
 to your setup and use its methods like `findByRole`, `findByLabelText`,
 `findByText`, `findByTestId`, and others to find the DOM elements.
+
+To find elements by role, Cypress also has the built-in
+[`cy.getByRole()`](/api/commands/getbyrole), which needs no plugin. See
+[how to migrate from `findByRole()`](/api/commands/getbyrole#How-to-migrate-from-Testing-Library-findByRole-to-cygetByRole).
 
 The following example comes from the Testing Library's documentation
 

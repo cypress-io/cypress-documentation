@@ -45,7 +45,9 @@ cy.clearCookies().its('length') // Errors, 'clearCookies' does not yield Object
 
 <Icon name="angle-right" /> **propertyName _(String, Number)_**
 
-Index, name of property or name of nested properties (with dot notation) to get.
+Index, name of property, or path to a nested property to get. A path uses dot
+notation (`'body.user'`) and can reach into arrays with a numeric segment or
+bracket notation (`'items.1'` or `'items[1]'`).
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -58,7 +60,7 @@ Pass in an options object to change the default behavior of `.its()`.
 
 <HeaderYields />
 
-- `.its()` 'yields the value of the property.
+- `.its()` yields the value of the property.
 - `.its()` is a query, and it is _safe_ to chain further commands.
 
 ## Examples
@@ -79,14 +81,44 @@ cy.wrap({ age: 52 }).its('age').should('eq', 52) // true
 cy.wrap(['Wai Yan', 'Yu']).its(1).should('eq', 'Yu') // true
 ```
 
-### DOM Elements
+### DOM elements
 
 #### Get the `length` property of a DOM element
 
 ```javascript
 cy.get('ul li') // this yields us a jquery object
-  .its('length') // calls 'length' property returning that value
+  .its('length') // gets the 'length' property of that jQuery object
   .should('be.gt', 2) // ensure the length is greater than 2
+```
+
+#### Wait for a list to finish rendering with `.its('length')`
+
+`.its()` is a query, so Cypress re-runs [`cy.get()`](/api/commands/get) and
+`.its()` together until the assertion passes. If the app renders its list items
+over time, this waits until all three are on the page.
+
+```javascript
+cy.get('#todo-list li').its('length').should('eq', 3)
+```
+
+In the Command Log, `.its()` and its assertion stay pending while the list
+renders, then pass once the third item appears.
+
+<DocsImage
+  src="/img/api/its/its-length-retries-until-list-renders.gif"
+  alt="Command Log retrying its .length while the app renders a todo list one item at a time, then passing the assertion expected 3 to equal 3"
+/>
+
+#### Get a property of the DOM element inside the jQuery object
+
+Commands like [`cy.get()`](/api/commands/get) yield a jQuery object. Start the
+path with an index to reach the DOM element inside it, then read the element's
+own properties, such as the browser's
+[validity state](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState).
+
+```javascript
+cy.get('#email').type('not-an-email')
+cy.get('#email').its('0.validity.valid').should('be.false')
 ```
 
 ### Requests
@@ -94,19 +126,45 @@ cy.get('ul li') // this yields us a jquery object
 #### Get the `user` object of the response's `body`
 
 ```javascript
-cy
-  .request(...)
+cy.request('/users/1')
   .its('body.user')
-  .then(user => ...)
+  .then((user) => {
+    // do something with the user
+  })
 ```
 
-alternatively, use destructuring
+Alternatively, get the `body` and destructure it:
 
 ```javascript
-cy
-  .request(...)
+cy.request('/users/1')
   .its('body')
-  .then(({user}) => ...)
+  .then(({ user }) => {
+    // do something with the user
+  })
+```
+
+### Intercepted requests
+
+[`cy.wait()`](/api/commands/wait) on a [`cy.intercept()`](/api/commands/intercept)
+alias yields the interception, so `.its()` can reach into its `request` and
+`response`.
+
+#### Assert on the status code of an intercepted response
+
+```javascript
+cy.intercept('GET', '/comments').as('getComments')
+cy.get('#fetch-comments').click()
+cy.wait('@getComments').its('response.statusCode').should('eq', 200)
+```
+
+#### Assert on the body of an intercepted request
+
+```javascript
+cy.intercept('POST', '/comments').as('postComment')
+cy.get('#post-comment').click()
+cy.wait('@postComment')
+  .its('request.body')
+  .should('deep.include', { comment: 'hi' })
 ```
 
 ### Strings
@@ -134,11 +192,10 @@ cy.wrap({ getNum: fn }).its('getNum').should('be.a', 'function')
 You can access functions to then drill into their own properties instead of
 invoking them.
 
-```javascript
-// Your app code
+```javascript title="app.js"
 // a basic Factory constructor
-const Factory = (arg) => {
-  // ...
+function Factory(arg) {
+  this.arg = arg
 }
 
 Factory.create = (arg) => {
@@ -149,7 +206,7 @@ Factory.create = (arg) => {
 window.Factory = Factory
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.window() // yields window object
   .its('Factory') // yields Factory function
   .invoke('create', 'arg') // now invoke properties on it
@@ -163,7 +220,30 @@ cy.window() // yields window object
 
 :::
 
-### Nested Properties
+### Application state
+
+#### Read app state from a store exposed on `window`
+
+When your app exposes its store on `window`, `.its()` and
+[`.invoke()`](/api/commands/invoke) can read that state directly. The whole
+chain retries, so the assertion waits for the app to update its state.
+
+```javascript title="app.js"
+// expose the store only when the app runs inside Cypress
+if (window.Cypress) {
+  window.store = store
+}
+```
+
+```javascript title="spec.cy.js"
+cy.window()
+  .its('store')
+  .invoke('getState')
+  .its('cart.items')
+  .should('have.length', 2)
+```
+
+### Nested properties
 
 You can drill into nested properties by using _dot notation_.
 
@@ -177,6 +257,17 @@ const user = {
 }
 
 cy.wrap(user).its('contacts.work.name').should('eq', 'Kamil') // true
+```
+
+Include an array index in the path with a numeric segment or bracket notation.
+
+```javascript
+const order = {
+  items: [{ name: 'Apple' }, { name: 'Banana' }],
+}
+
+cy.wrap(order).its('items[1].name').should('eq', 'Banana') // true
+cy.wrap(order).its('items.1.name').should('eq', 'Banana') // true
 ```
 
 ### Existence
@@ -197,6 +288,45 @@ cy.window()
 cy.window().its('evilProp').should('not.exist')
 ```
 
+#### Assert that a property is `null` or `undefined`
+
+`.its()` normally retries until a property has a value. Chain an assertion that
+expects `null` or `undefined`, and `.its()` leaves the decision to that
+assertion instead.
+
+```javascript
+cy.wrap({ deletedAt: null }).its('deletedAt').should('be.null')
+cy.wrap({ name: 'Jane' }).its('nickname').should('be.undefined')
+```
+
+#### Wait longer for a property with the `timeout` option
+
+Pass `timeout` when a property takes longer to appear than
+[`defaultCommandTimeout`](/app/references/configuration#Timeouts) allows, such
+as a flag an app sets after a slow startup.
+
+```javascript
+cy.window().its('appReady', { timeout: 10000 }).should('be.true')
+```
+
+## Notes
+
+### Choosing between `.its()`, `.invoke()`, and `.then()`
+
+All three work with the subject, but they do different jobs:
+
+- `.its()` reads a property. When the property holds a function, `.its()`
+  yields the function itself without calling it.
+- [`.invoke()`](/api/commands/invoke) calls a function on the subject and
+  yields what it returns.
+- [`.then()`](/api/commands/then) runs a callback with the subject, for
+  logic that doesn't fit a single property read or function call.
+
+`.its()` and `.invoke()` are queries, so Cypress retries them together with the
+queries before them until chained assertions pass. `.then()` runs its callback
+once and is not [retried](/app/core-concepts/retry-ability#Only-queries-are-retried),
+so prefer `.its()` or `.invoke()` whenever you assert on the value they yield.
+
 ## Rules
 
 <HeaderRequirements />
@@ -205,8 +335,13 @@ cy.window().its('evilProp').should('not.exist')
 
 <HeaderAssertions />
 
-- `.its()` will automatically [retry](/app/core-concepts/retry-ability) until
-  it has a property that is not `null` or `undefined`.
+- `.its()` automatically [retries](/app/core-concepts/retry-ability) until
+  the property is not `null` or `undefined`, unless the next assertion is one
+  that can pass on those values: `not.exist`, `be.undefined`, `be.null`,
+  `not.be.ok`, `eq`, or `not.eq`. In that case, the assertion alone decides
+  when `.its()` passes.
+- `.its()` automatically [retries](/app/core-concepts/retry-ability) until
+  all chained assertions have passed.
 
 <HeaderTimeouts />
 
@@ -215,43 +350,40 @@ cy.window().its('evilProp').should('not.exist')
 
 ## Command Log
 
-**_Get `responseBody` of aliased route_**
+**_Get `response.body` of an aliased intercept_**
 
 ```javascript
 cy.intercept('/comments', { fixture: 'comments.json' }).as('getComments')
 cy.get('#fetch-comments').click()
 cy.wait('@getComments')
   .its('response.body')
-  .should(
-    'deep.eq',
-    JSON.stringify([
-      { id: 1, comment: 'hi' },
-      { id: 2, comment: 'there' },
-    ])
-  )
+  .should('deep.eq', [
+    { id: 1, comment: 'hi' },
+    { id: 2, comment: 'there' },
+  ])
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/its/xhr-response-its-response-body-for-testing.png"
-  alt="Command Log for its"
+  alt="Command Log showing the stubbed /comments route, the request aliased getComments, the wait on @getComments, its .response.body, and a passing deep-equal assertion"
 />
 
-When clicking on `its` within the command log, the console outputs the
-following:
+Clicking `its` in the Command Log prints the following to the console:
 
 <DocsImage
   src="/img/api/its/response-body-yielded-with-its-command-log.png"
-  alt="Console Log for its"
+  alt="DevTools console output for the its command showing Property .response.body, the intercepted request as Subject, and a two-item array as Yielded"
 />
 
 ## History
 
-| Version                                  | Changes                                                       |
-| ---------------------------------------- | ------------------------------------------------------------- |
-| [3.8.0](/app/references/changelog#3-8-0) | Added support for `options` argument                          |
-| [3.7.0](/app/references/changelog#3-7-0) | Added support for arguments of type Number for `propertyName` |
+| Version                                    | Changes                                                                                                                                                                                    |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [12.0.0](/app/references/changelog#12-0-0) | `.its()` is now a query. Overwrite it with [`Cypress.Commands.overwriteQuery()`](/api/cypress-api/custom-queries#Overwriting-Existing-Queries) rather than `Cypress.Commands.overwrite()`. |
+| [3.8.0](/app/references/changelog#3-8-0)   | Added support for `options` argument                                                                                                                                                       |
+| [3.7.0](/app/references/changelog#3-7-0)   | Added support for arguments of type Number for `propertyName`                                                                                                                              |
 
 ## See also
 

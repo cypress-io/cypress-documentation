@@ -19,6 +19,7 @@ import { IconObjectMagnifyingGlass } from '@cypress-design/react-icon'
 import {
   assignDisplayPositions,
   boostCurrentSection,
+  demoteUnrequestedMigrationGuides,
   filterDisplayableHits,
   getCurrentSectionLvl0,
   mergeFacetFilters,
@@ -220,7 +221,15 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
     // record each hit's final displayed position so click analytics report the
     // rank the user actually saw rather than Algolia's original ordering.
     const boosted = boostCurrentSection(displayable, currentSectionRef.current)
-    return assignDisplayPositions(boosted)
+
+    // Keep the Playwright, Selenium, and Protractor migration guides out of the
+    // top results unless the query names that tool. They mention most Cypress
+    // commands, so they otherwise outrank the pages readers are looking for.
+    const ranked = demoteUnrequestedMigrationGuides(
+      boosted,
+      displayable[0]?.__searchQuery
+    )
+    return assignDisplayPositions(ranked)
   }).current
   const resultsFooterComponent = useMemo(
     () =>
@@ -239,6 +248,20 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
           if (response.results?.[0]?.queryID) {
             queryIDRef.current = response.results[0].queryID
           }
+          // Stamp each hit with the query that produced it, so transformItems
+          // (which only receives the hits) can rank on the query text. Reading
+          // it per hit rather than from a shared ref keeps a slow response for
+          // an earlier keystroke from being ranked against a later query.
+          // algoliasearch v5 takes `{ requests: [...] }`; v4 takes the array.
+          const requestList = Array.isArray(requests)
+            ? requests
+            : requests?.requests
+          response.results?.forEach((result, index) => {
+            const query = requestList?.[index]?.query
+            result?.hits?.forEach((hit) => {
+              hit.__searchQuery = query
+            })
+          })
           return response
         })
       }
