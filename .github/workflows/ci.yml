@@ -312,6 +312,105 @@ jobs:
 
           echo 'The e2e suite passed.'
 
+  preview:
+    name: Cloudflare preview
+    needs: build
+    # Uploads this pull request's build as a Cloudflare Worker Preview and posts
+    # a `cloudflare/preview` commit status whose Details link opens it, the way
+    # Netlify's deploy-preview status does. Cloudflare's own Workers Builds
+    # check links to its dashboard instead, which needs a Cloudflare login.
+    #
+    # Same condition as `e2e`, minus pushes: it needs the Cloudflare secrets,
+    # which GitHub withholds from a pull request opened from a fork. This job
+    # is not an aggregator, so never make it a required check, or every fork
+    # pull request would wait on it forever.
+    if: github.event_name == 'pull_request' &&
+      (github.repository == 'cypress-io/cypress-documentation') &&
+      (github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      statuses: write
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # The pull request's head commit, where the status belongs. `github.sha`
+      # is the temporary merge commit, which the pull request never shows.
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      # `pr-<number>` keeps one stable, short URL per pull request across
+      # pushes, like Netlify's `deploy-preview-<number>`.
+      PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
+    steps:
+      # Until both secrets exist, skip with a notice rather than fail the run.
+      - name: Check for Cloudflare credentials
+        id: credentials
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo '::notice::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is not set, so no preview was deployed.'
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.credentials.outputs.ready == 'true'
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        if: steps.credentials.outputs.ready == 'true'
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.node-version'
+
+      - name: Download the production build
+        if: steps.credentials.outputs.ready == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+
+      - name: Mark the preview as pending
+        if: steps.credentials.outputs.ready == 'true'
+        run: >
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$HEAD_SHA"
+          -f state=pending -f context=cloudflare/preview
+          -f description='Deploying the Cloudflare preview'
+          -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
+      # Reads wrangler.jsonc and uploads dist/ as-is: no second build.
+      - name: Deploy the preview
+        id: deploy
+        if: steps.credentials.outputs.ready == 'true'
+        run: |
+          set -o pipefail
+          output="$(npx --yes wrangler@4.151.3 preview --name "$PREVIEW_NAME" --json)"
+          printf '%s\n' "$output"
+          url="$(printf '%s' "$output" | jq -er '.preview.urls[0]')"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Preview: $url" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Link the status to the preview
+        if: steps.credentials.outputs.ready == 'true'
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.url }}
+        run: >
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$HEAD_SHA"
+          -f state=success -f context=cloudflare/preview
+          -f description='Cloudflare preview ready'
+          -f target_url="$PREVIEW_URL"
+
+      - name: Report a failed preview
+        if: failure() && steps.credentials.outputs.ready == 'true'
+        run: >
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$HEAD_SHA"
+          -f state=failure -f context=cloudflare/preview
+          -f description='Cloudflare preview failed, see the job log'
+          -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
   algolia:
     name: Run Algolia scraper
     needs: build
