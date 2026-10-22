@@ -29,16 +29,6 @@ two:
   noBorder
 />
 
-:::info
-
-<strong>Replacing `cy.exec()`</strong>
-
-Cypress 16 removed `cy.exec()`. Move each command into a task, as shown in
-[Run an external command or CLI](#Run-an-external-command-or-CLI), and see the
-[migration guide](/app/references/migration-guide#cyexec-removed).
-
-:::
-
 :::caution
 
 <strong>Anti-Pattern</strong>
@@ -293,8 +283,7 @@ folder between tests within a run.
 
 #### Seed a database
 
-```js
-// in test
+```js title='articles.cy.js'
 describe('e2e', () => {
   beforeEach(() => {
     cy.task('defaults:db')
@@ -334,8 +323,7 @@ Pass the query and the name of the database to run it against in one object,
 then destructure it in the handler. This example uses the
 [mysql2](https://www.npmjs.com/package/mysql2) client.
 
-```javascript
-// in test
+```javascript title='query-users.cy.js'
 const dbName = 'stagingA'
 const query = 'SELECT * FROM users'
 
@@ -442,8 +430,7 @@ When a test visits a different origin, Cypress reloads the spec to
 variables in your spec file. A task keeps the value in Node.js, where the reload
 doesn't reach it.
 
-```javascript
-// in test
+```javascript title='href.cy.js'
 describe('Href visit', () => {
   it('captures href', () => {
     cy.visit('https://example.cypress.io')
@@ -652,8 +639,7 @@ There is no `setupNodeEvents` event for each test. To run Node code before every
 test, call `cy.task()` from a global `beforeEach` in your
 [support file](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
-```javascript
-// cypress/support/e2e.js
+```javascript title='cypress/support/e2e.js'
 beforeEach(function () {
   cy.task('logTestStart', this.currentTest.fullTitle())
 })
@@ -856,9 +842,7 @@ cy.task('getSecret', 'API_KEY', { log: false }).then((apiKey) => {
 Pass `{ log: false }` to both commands. Otherwise the Command Log shows the
 `cy.task()` call, its console output shows the secret it yields, and the
 `cy.request()` console output shows the `Authorization` header. With
-`log: false`, neither command appears in the Command Log. When
-[Test Replay](/cloud/features/test-replay) is recording, Cypress still records
-a hidden entry for each command.
+`log: false`, neither command appears in the Command Log.
 
 :::cypress-config-plugin-example
 
