@@ -8,7 +8,16 @@ sidebar_label: task
 
 # task
 
-Execute code in [Node](https://nodejs.org) via the `task` plugin event.
+`cy.task()` runs code in [Node.js](https://nodejs.org) from your test, through
+the `task` event you register in
+[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin). It handles the
+work a browser can't do on its own:
+
+- Seed or query a database.
+- Read, clean up, and inspect files on disk.
+- Run a CLI or another external command.
+- Wait for something that happens outside the browser, such as an email.
+- Keep state between spec files.
 
 Your test runs in the browser and your task handler runs in Node.js, so the
 argument and the return value are both serialized as they cross between the
@@ -20,12 +29,22 @@ two:
   noBorder
 />
 
+:::info
+
+<strong>Replacing `cy.exec()`</strong>
+
+Cypress 16 removed `cy.exec()`. Move each command into a task, as shown in
+[Run an external command or CLI](#Run-an-external-command-or-CLI), and see the
+[migration guide](/app/references/migration-guide#cyexec-removed).
+
+:::
+
 :::caution
 
 <strong>Anti-Pattern</strong>
 
-We do not recommend starting a web server using `cy.task()`. Read about
-[best practices](/app/core-concepts/best-practices#Web-Servers) here.
+Don't start a web server with `cy.task()`. Start it before Cypress instead, as
+described in [Best Practices](/app/core-concepts/best-practices#Web-Servers).
 
 :::
 
@@ -61,12 +80,31 @@ on('task', {
 :::
 
 The `task` plugin event handler can return a value or a promise. The command
-will fail if `undefined` is returned or if the promise is resolved with
-`undefined`. This helps catch typos or cases where the task event is not
+fails if the handler returns `undefined` or the promise resolves with
+`undefined`. This catches typos and events that no handler covers.
+
+If you don't need to return a value, return `null` to signal that the event was
 handled.
 
-If you do not need to return a value, explicitly return `null` to signal that
-the given event has been handled.
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+// Errors, the event name is required
+cy.task()
+```
+
+:::cypress-config-plugin-example
+
+```javascript
+on('task', {
+  // Errors, the handler returns undefined
+  log(message) {
+    console.log(message)
+  },
+})
+```
+
+:::
 
 ### Arguments
 
@@ -85,12 +123,16 @@ and the handler receives it the way `JSON.stringify()` would serialize it:
 - Functions, symbols, and `undefined` are dropped from object properties and
   become `null` inside arrays.
 - Regular expressions, `Map`, and `Set` become empty objects (`{}`).
-- `Date` objects become ISO date strings.
+- `Date` objects become ISO date strings. Rebuild one in the handler with
+  `new Date(value)`.
+- An argument with circular references can't be serialized, so the command
+  fails.
 
 When you omit `arg`, the handler receives `undefined`, so a default parameter
 value in the handler applies.
 
-If you need to pass multiple arguments, use an object
+To pass multiple values, put them in an object and destructure it in the
+handler:
 
 ```javascript
 // in test
@@ -101,7 +143,7 @@ cy.task('hello', { greeting: 'Hello', name: 'World' })
 
 ```ts
 on('task', {
-  // deconstruct the individual properties
+  // destructure the individual properties
   hello({ greeting, name }) {
     console.log('%s, %s', greeting, name)
 
@@ -128,20 +170,12 @@ Pass in an options object to change the default behavior of `cy.task()`.
 
 ## Examples
 
-`cy.task()` provides an escape hatch for running arbitrary Node code, so you can
-take actions necessary for your tests outside of the scope of Cypress. This is
-great for:
+### Work with files from a task
 
-- Seeding your test database.
-- Storing state in Node that you want persisted between spec files.
-- Performing parallel tasks, like making multiple http requests outside of
-  Cypress.
-- Running an external process.
+#### Read a file that might not exist
 
-### Read a file that might not exist
-
-Command [cy.readFile()](/api/commands/readfile) assumes the file exists. If you
-need to read a file that might not exist, use `cy.task`.
+[cy.readFile()](/api/commands/readfile) assumes the file exists. To read a file
+that might not exist, use a task.
 
 ```javascript
 // in test
@@ -168,7 +202,7 @@ on('task', {
 
 :::
 
-### Return number of files in the folder
+#### Return number of files in the folder
 
 ```javascript
 // in test
@@ -199,41 +233,7 @@ on('task', {
 
 :::
 
-### Seed a database
-
-```js
-// in test
-describe('e2e', () => {
-  beforeEach(() => {
-    cy.task('defaults:db')
-    cy.visit('/')
-  })
-
-  it('displays article values', () => {
-    cy.get('.article-list').should('have.length', 10)
-  })
-})
-```
-
-:::cypress-config-plugin-example
-
-```ts
-// we require some code in our app that
-// is responsible for seeding our database
-import db from '../../server/src/db'
-```
-
-```ts
-on('task', {
-  'defaults:db': () => {
-    return db.seed('defaults')
-  },
-})
-```
-
-:::
-
-### Clean up and verify downloaded files
+#### Clean up and verify downloaded files
 
 Tasks are a good fit for file system work, such as emptying the downloads folder
 between tests and then finding the file the test just downloaded.
@@ -289,7 +289,204 @@ Cypress already trashes the downloads folder before `cypress run` when
 is enabled, which it is by default. A `clearDownloads` task is for clearing the
 folder between tests within a run.
 
-### Run an external command or CLI
+### Manage test data and state with tasks
+
+#### Seed a database
+
+```js
+// in test
+describe('e2e', () => {
+  beforeEach(() => {
+    cy.task('defaults:db')
+    cy.visit('/')
+  })
+
+  it('displays article values', () => {
+    cy.get('.article-list').should('have.length', 10)
+  })
+})
+```
+
+:::cypress-config-plugin-example
+
+```ts
+// the module in your app that seeds the database,
+// with a path relative to the Cypress config file
+import db from './server/db'
+```
+
+```ts
+on('task', {
+  async 'defaults:db'() {
+    await db.seed('defaults')
+
+    // seed() may resolve with undefined, so signal success explicitly
+    return null
+  },
+})
+```
+
+:::
+
+#### Query a database
+
+Pass the query and the name of the database to run it against in one object,
+then destructure it in the handler. This example uses the
+[mysql2](https://www.npmjs.com/package/mysql2) client.
+
+```javascript
+// in test
+const dbName = 'stagingA'
+const query = 'SELECT * FROM users'
+
+cy.task('queryDatabase', { dbName, query })
+```
+
+:::cypress-config-plugin-example
+
+```ts
+import mysql from 'mysql2/promise'
+
+// the connection details for each database could
+// come from environment variables
+const connections: Record<string, mysql.ConnectionOptions> = {
+  stagingA: {
+    host: 'staging.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users',
+  },
+  stagingB: {
+    host: 'staging-b.my.co',
+    user: 'test',
+    password: '***',
+    database: 'users',
+  },
+}
+```
+
+```ts
+on('task', {
+  // destructure the argument into the individual fields
+  async queryDatabase({ dbName, query }) {
+    const connectionInfo = connections[dbName]
+
+    if (!connectionInfo) {
+      throw new Error(`No database connection named ${dbName}`)
+    }
+
+    const connection = await mysql.createConnection(connectionInfo)
+
+    try {
+      const [rows] = await connection.query(query)
+
+      return rows
+    } finally {
+      await connection.end()
+    }
+  },
+})
+```
+
+:::
+
+#### Share state between spec files
+
+The config process keeps running for the whole run, so a value stored in a
+variable there is still available to later spec files.
+
+```javascript title='create-org.cy.js'
+cy.task('setValue', { key: 'orgId', value: 42 })
+```
+
+```javascript title='view-org.cy.js'
+cy.task('getValue', 'orgId').should('eq', 42)
+```
+
+:::cypress-config-plugin-example
+
+```ts
+const store: Record<string, unknown> = {}
+```
+
+```ts
+on('task', {
+  setValue({ key, value }) {
+    store[key] = value
+
+    return null
+  },
+  getValue(key) {
+    // return null rather than undefined when the key is missing
+    return store[key] ?? null
+  },
+})
+```
+
+:::
+
+Keep these behaviors in mind:
+
+- The store starts empty each time the config process starts, such as at the
+  beginning of every `cypress run`.
+- Machines running specs in parallel each have their own config process, so
+  they don't share values.
+- A spec that reads a value another spec wrote only passes when the specs run
+  in that order. Use a store for values you can recreate when they're missing,
+  and [`cy.session()`](/api/commands/session) for caching logins.
+
+#### Keep a variable across visits to different origins
+
+When a test visits a different origin, Cypress reloads the spec to
+[switch to the new origin](/app/guides/cross-origin-testing), which resets the
+variables in your spec file. A task keeps the value in Node.js, where the reload
+doesn't reach it.
+
+```javascript
+// in test
+describe('Href visit', () => {
+  it('captures href', () => {
+    cy.visit('https://example.cypress.io')
+    cy.get('a')
+      .invoke('attr', 'href')
+      .then((href) => {
+        // href is not same-origin as current url
+        // like https://www.cypress-dx.com
+        cy.task('setHref', href)
+      })
+  })
+
+  it('visit href', () => {
+    cy.task('getHref').then((href) => {
+      // visit non same-origin url https://www.cypress-dx.com
+      cy.visit(href)
+    })
+  })
+})
+```
+
+:::cypress-config-plugin-example
+
+```ts
+let href: string
+```
+
+```ts
+on('task', {
+  setHref: (val) => {
+    return (href = val)
+  },
+  getHref: () => {
+    return href
+  },
+})
+```
+
+:::
+
+### Run processes outside the browser with tasks
+
+#### Run an external command or CLI
 
 When setup depends on a tool that isn't a Node module, such as a Docker
 container, a database CLI, or a cloud provider's command line tool, spawn it
@@ -346,86 +543,7 @@ on('task', {
 
 :::
 
-### Run Node code before each test
-
-There is no `setupNodeEvents` event for each test. To run Node code before every
-test, call `cy.task()` from a global `beforeEach` in your
-[support file](/app/core-concepts/writing-and-organizing-tests#Support-file).
-
-```javascript
-// cypress/support/e2e.js
-beforeEach(function () {
-  cy.task('logTestStart', this.currentTest.fullTitle())
-})
-```
-
-:::cypress-config-plugin-example
-
-```ts
-on('task', {
-  logTestStart(title) {
-    console.log(`Starting: ${title}`)
-
-    return null
-  },
-})
-```
-
-:::
-
-### Return a Promise from an asynchronous task
-
-```javascript
-// in test
-cy.task('pause', 1000)
-```
-
-:::cypress-config-plugin-example
-
-```ts
-on('task', {
-  pause(ms) {
-    return new Promise((resolve) => {
-      // tasks should not resolve with undefined
-      setTimeout(() => resolve(null), ms)
-    })
-  },
-})
-```
-
-:::
-
-### Type the value a task yields
-
-In TypeScript, `cy.task()` yields `unknown` unless you pass a type parameter
-describing what the task returns. Cypress doesn't check the type at runtime, so
-keep it in step with the handler.
-
-```ts title="users.cy.ts"
-type User = { id: number; name: string }
-
-cy.task<User[]>('getUsers').then((users) => {
-  // users is typed as User[]
-  expect(users[0].name).to.eq('Ada')
-})
-```
-
-:::cypress-config-plugin-example
-
-```ts
-on('task', {
-  getUsers() {
-    return [
-      { id: 1, name: 'Ada' },
-      { id: 2, name: 'Grace' },
-    ]
-  },
-})
-```
-
-:::
-
-### Wait for an email or background job
+#### Wait for an email or background job
 
 `cy.task()` runs the handler once and doesn't retry it. To wait for something
 that happens outside the browser, such as an email arriving or a background job
@@ -474,131 +592,140 @@ Give the `cy.task()` `timeout` option a few seconds more than the handler's own
 deadline. The handler then gives up first, and the test fails with its message
 instead of a generic timeout.
 
-### Share state between spec files
+### Write task handlers
 
-The config process keeps running for the whole run, so a value stored in a
-variable there is still available to later spec files.
-
-```javascript title='create-org.cy.js'
-cy.task('setValue', { key: 'orgId', value: 42 })
-```
-
-```javascript title='view-org.cy.js'
-cy.task('getValue', 'orgId').should('eq', 42)
-```
-
-:::cypress-config-plugin-example
-
-```ts
-const store: Record<string, unknown> = {}
-```
-
-```ts
-on('task', {
-  setValue({ key, value }) {
-    store[key] = value
-
-    return null
-  },
-  getValue(key) {
-    // return null rather than undefined when the key is missing
-    return store[key] ?? null
-  },
-})
-```
-
-:::
-
-Keep these behaviors in mind:
-
-- The store starts empty each time the config process starts, such as at the
-  beginning of every `cypress run`.
-- Machines running specs in parallel each have their own config process, so
-  they don't share values.
-- A spec that reads a value another spec wrote only passes when the specs run
-  in that order. Use a store for values you can recreate when they're missing,
-  and [`cy.session()`](/api/commands/session) for caching logins.
-
-### Save a variable across non same-origin URL visits
-
-When visiting non same-origin URL, Cypress will
-[change the hosted URL to the new URL](/app/guides/cross-origin-testing), wiping the
-state of any local variables. We want to save a variable across visiting non
-same-origin URLs.
-
-We can save the variable and retrieve the saved variable outside of the test
-using `cy.task()` as shown below.
+#### Return a promise from an asynchronous task
 
 ```javascript
 // in test
-describe('Href visit', () => {
-  it('captures href', () => {
-    cy.visit('https://example.cypress.io')
-    cy.get('a')
-      .invoke('attr', 'href')
-      .then((href) => {
-        // href is not same-origin as current url
-        // like https://www.cypress-dx.com
-        cy.task('setHref', href)
-      })
-  })
-
-  it('visit href', () => {
-    cy.task('getHref').then((href) => {
-      // visit non same-origin url https://www.cypress-dx.com
-      cy.visit(href)
-    })
-  })
-})
+cy.task('pause', 1000)
 ```
 
 :::cypress-config-plugin-example
 
 ```ts
-let href: string
-```
-
-```ts
 on('task', {
-  setHref: (val) => {
-    return (href = val)
-  },
-  getHref: () => {
-    return href
+  pause(ms) {
+    return new Promise((resolve) => {
+      // tasks should not resolve with undefined
+      setTimeout(() => resolve(null), ms)
+    })
   },
 })
 ```
 
 :::
 
-### Command options
+#### Type the value a task yields
 
-#### Change the timeout
+In TypeScript, `cy.task()` yields `unknown` unless you pass a type parameter
+describing what the task returns. Cypress doesn't check the type at runtime, so
+keep it in step with the handler.
 
-You can increase the time allowed to execute the task, although _we do not
-recommend executing tasks that take a long time to exit_.
+```ts title="users.cy.ts"
+type User = { id: number; name: string }
 
-Cypress will _not_ continue running any other commands until `cy.task()` has
-finished, so a long-running command will drastically slow down your test runs.
+cy.task<User[]>('getUsers').then((users) => {
+  // users is typed as User[]
+  expect(users[0].name).to.eq('Ada')
+})
+```
+
+:::cypress-config-plugin-example
+
+```ts
+on('task', {
+  getUsers() {
+    return [
+      { id: 1, name: 'Ada' },
+      { id: 2, name: 'Grace' },
+    ]
+  },
+})
+```
+
+:::
+
+#### Run Node code before each test
+
+There is no `setupNodeEvents` event for each test. To run Node code before every
+test, call `cy.task()` from a global `beforeEach` in your
+[support file](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
 ```javascript
-// will fail if seeding the database takes longer than 20 seconds to finish
-cy.task('seedDatabase', null, { timeout: 20000 })
+// cypress/support/e2e.js
+beforeEach(function () {
+  cy.task('logTestStart', this.currentTest.fullTitle())
+})
 ```
+
+:::cypress-config-plugin-example
+
+```ts
+on('task', {
+  logTestStart(title) {
+    console.log(`Starting: ${title}`)
+
+    return null
+  },
+})
+```
+
+:::
 
 ## Notes
 
 ### Tasks must end
 
-#### Tasks that do not end are not supported
-
-`cy.task()` does not support tasks that do not end, such as:
+`cy.task()` doesn't support tasks that keep running, such as:
 
 - Starting a server.
-- A task that watches for file changes.
-- Any process that needs to be manually interrupted to stop.
+- Watching for file changes.
+- Any process that needs to be interrupted to stop.
 
-A task must end within the `taskTimeout` or Cypress will fail the current test.
+A task must end within the [timeout](#Change-the-cytask-timeout), or Cypress
+fails the current test.
+
+### Change the `cy.task()` timeout
+
+`cy.task()` waits up to [`taskTimeout`](/app/references/configuration#Timeouts),
+60 seconds by default. Keep tasks short where you can: Cypress doesn't run any
+other commands until `cy.task()` finishes, so a long task slows down every test
+that calls it.
+
+To give one command more time, pass the `timeout` option:
+
+```javascript
+// fails if seeding the database takes longer than 20 seconds
+cy.task('seedDatabase', null, { timeout: 20000 })
+```
+
+To change it for a suite or test, set `taskTimeout` in the
+[test configuration](/app/references/configuration#Test-Configuration). The
+value applies while that suite or test runs, then returns to the previous
+value.
+
+```js
+describe('has data available from database', { taskTimeout: 90000 }, () => {
+  before(() => {
+    cy.task('seedDatabase')
+  })
+
+  // tests
+
+  after(() => {
+    cy.task('resetDatabase')
+  })
+})
+```
+
+To change it for the rest of the spec file, set it with
+[Cypress.config()](/api/cypress-api/config):
+
+```js
+Cypress.config('taskTimeout', 30000)
+Cypress.config('taskTimeout') // => 30000
+```
 
 ### Errors thrown in a task fail the test
 
@@ -660,42 +787,8 @@ where your handler threw.
 
 ### Tasks are merged automatically
 
-Sometimes you might be using plugins that export their tasks for registration.
-Cypress automatically merges `on('task')` objects for you. For example if you
-are using
-[cypress-skip-and-only-ui](https://github.com/bahmutov/cypress-skip-and-only-ui)
-plugin and want to install your own task to read a file that might not exist:
-
-:::cypress-config-plugin-example
-
-```ts
-import skipAndOnlyTask from 'cypress-skip-and-only-ui/task'
-import fs from 'fs'
-const myTask = {
-  readFileMaybe(filename) {
-    if (fs.existsSync(filename)) {
-      return fs.readFileSync(filename, 'utf8')
-    }
-
-    return null
-  },
-}
-```
-
-```ts
-// register plugin's task
-on('task', skipAndOnlyTask)
-// and register my own task
-on('task', myTask)
-```
-
-:::
-
-See [#2284](https://github.com/cypress-io/cypress/issues/2284) for
-implementation.
-
-The same merging lets you split your own tasks into modules by area and
-register each one:
+Cypress merges every `on('task')` object you register, so you can split your
+tasks into modules by area and register each one:
 
 ```ts copyTsToJs
 // cypress/tasks/state.ts
@@ -727,6 +820,8 @@ on('task', userTasks)
 
 :::
 
+Plugins that export their own tasks merge the same way, alongside yours.
+
 :::caution
 
 <strong>Duplicate task keys</strong>
@@ -735,148 +830,6 @@ If multiple task objects use the same key, the later registration overwrites
 that particular key, the same way merging multiple objects with duplicate keys
 overwrites the first one. Cypress prints a warning in the terminal that names
 each duplicated task.
-
-:::
-
-### Reset timeout via `Cypress.config()`
-
-You can change the timeout of `cy.task()` for the remainder of the tests by
-setting the new values for `taskTimeout` within
-[Cypress.config()](/api/cypress-api/config).
-
-```js
-Cypress.config('taskTimeout', 30000)
-Cypress.config('taskTimeout') // => 30000
-```
-
-### Set timeout in the test configuration
-
-You can configure the `cy.task()` timeout within a suite or test by passing the
-new configuration value within the
-[test configuration](/app/references/configuration#Test-Configuration).
-
-This will set the timeout throughout the duration of the tests, then return it
-to the default `taskTimeout` when complete.
-
-```js
-describe('has data available from database', { taskTimeout: 90000 }, () => {
-  before(() => {
-    cy.task('seedDatabase')
-  })
-
-  // tests
-
-  after(() => {
-    cy.task('resetDatabase')
-  })
-})
-```
-
-### Allows a single argument only
-
-The syntax `cy.task(name, arg, options)` only has place for a single argument to
-be passed from the test code to the plugins code. In the situations where you
-would like to pass multiple arguments, place them into an object to be
-destructured inside the task code. For example, if you would like to execute a
-database query and pass the database profile name you could do:
-
-```javascript
-// in test
-const dbName = 'stagingA'
-const query = 'SELECT * FROM users'
-
-cy.task('queryDatabase', { dbName, query })
-```
-
-:::cypress-config-plugin-example
-
-```ts
-import mysql from 'mysql'
-// the connection strings for different databases could
-// come from system environment variables
-const connections = {
-  stagingA: {
-    host: 'staging.my.co',
-    user: 'test',
-    password: '***',
-    database: 'users',
-  },
-  stagingB: {
-    host: 'staging-b.my.co',
-    user: 'test',
-    password: '***',
-    database: 'users',
-  },
-}
-
-// querying the database from Node
-function queryDB(connectionInfo, query) {
-  const connection = mysql.createConnection(connectionInfo)
-
-  connection.connect()
-
-  return new Promise((resolve, reject) => {
-    connection.query(query, (error, results) => {
-      if (error) {
-        return reject(error)
-      }
-
-      connection.end()
-
-      return resolve(results)
-    })
-  })
-}
-```
-
-```ts
-on('task', {
-  // destructure the argument into the individual fields
-  queryDatabase({ dbName, query }) {
-    const connectionInfo = connections[dbName]
-
-    if (!connectionInfo) {
-      throw new Error(`Do not have DB connection under name ${dbName}`)
-    }
-
-    return queryDB(connectionInfo, query)
-  },
-})
-```
-
-:::
-
-### Argument should be serializable
-
-The argument `arg` sent via `cy.task(name, arg)` should be serializable; it
-cannot have circular dependencies (issue
-[#5539](https://github.com/cypress-io/cypress/issues/5539)). If there are any
-special fields like `Date`, you are responsible for their conversion (issue
-[#4980](https://github.com/cypress-io/cypress/issues/4980)):
-
-```javascript
-// in test
-cy.task('date', new Date()).then((s) => {
-  // the yielded result is a string
-  // we need to convert it to Date object
-  const result = new Date(s)
-})
-```
-
-:::cypress-config-plugin-example
-
-```javascript
-on('task', {
-  date(s) {
-    // s is a string, so convert it to Date
-    const d = new Date(s)
-
-    // do something with the date
-    // and return it back
-    return d
-  },
-})
-```
 
 :::
 
@@ -943,8 +896,8 @@ on('task', {
 
 <HeaderAssertions />
 
-- `cy.task()` will only run assertions you have chained once, and will not
-  [retry](/app/core-concepts/retry-ability).
+- `cy.task()` runs the assertions you chain once and doesn't
+  [retry](/app/core-concepts/retry-ability) them.
 
 <HeaderTimeouts />
 
@@ -960,32 +913,39 @@ task defined above.
 cy.task('countFiles', 'cypress/e2e')
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <!-- Code to reproduce screenshot:
 configure the countFiles task in the Cypress configuration and call it in a spec file as shown in above example
 -->
 
-<DocsImage src="/img/api/task/task-count-files.png" alt="Command Log task" />
+<DocsImage
+  src="/img/api/task/task-count-files.png"
+  alt="Command Log row for the task command, showing the event name countFiles and its argument"
+/>
 
-When clicking on the `task` command within the command log, the console outputs
-the following:
+When you click the `task` command in the Command Log, the console shows the
+following:
 
 <DocsImage
   src="/img/api/task/console-shows-task-result.png"
-  alt="Console Log task"
+  alt="Console output for the task command, listing Command, Task, Arg, and the Yielded file count"
 />
 
 ## History
 
-| Version                                  | Changes                   |
-| ---------------------------------------- | ------------------------- |
-| [3.0.0](/app/references/changelog#3-0-0) | `cy.task()` command added |
+| Version                                  | Changes                                                                            |
+| ---------------------------------------- | ---------------------------------------------------------------------------------- |
+| [5.6.0](/app/references/changelog#5-6-0) | Added a type parameter for the value `cy.task()` yields                            |
+| [5.3.0](/app/references/changelog#5-3-0) | A task called without an argument receives `undefined` instead of `null`           |
+| [4.4.0](/app/references/changelog#4-4-0) | The error for a task that resolves `undefined` names the resolution value it needs |
+| [3.0.0](/app/references/changelog#3-0-0) | `cy.task()` command added                                                          |
 
 ## See also
 
 - [Guide: Choosing how to load test data](/app/core-concepts/writing-and-organizing-tests#Choosing-how-to-load-test-data-in-Cypress)
+- [Guide: Using a plugin in setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin)
 - [`cy.fixture()`](/api/commands/fixture)
 - [`cy.readFile()`](/api/commands/readfile)
 - [`cy.request()`](/api/commands/request)
-- [`cy.writeFile()`](/api/commands/writefile)
+- [`cy.session()`](/api/commands/session)
