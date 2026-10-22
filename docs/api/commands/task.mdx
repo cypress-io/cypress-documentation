@@ -50,8 +50,7 @@ cy.task(event, arg, options)
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
-```javascript
-// in test
+```javascript title='log.cy.js'
 cy.task('log', 'This will be output to the terminal')
 ```
 
@@ -124,8 +123,7 @@ value in the handler applies.
 To pass multiple values, put them in an object and destructure it in the
 handler:
 
-```javascript
-// in test
+```javascript title='hello.cy.js'
 cy.task('hello', { greeting: 'Hello', name: 'World' })
 ```
 
@@ -160,15 +158,14 @@ Pass in an options object to change the default behavior of `cy.task()`.
 
 ## Examples
 
-### Read and clean up files on disk with cy.task()
+### Read and clean up files on disk with `cy.task()`
 
-#### Read a file that might not exist with cy.task()
+#### Read a file that might not exist with `cy.task()`
 
 [cy.readFile()](/api/commands/readfile) assumes the file exists. To read a file
 that might not exist, use a task.
 
-```javascript
-// in test
+```javascript title='read-file.cy.js'
 cy.task('readFileMaybe', 'my-file.txt').then((textOrNull) => { ... })
 ```
 
@@ -192,10 +189,9 @@ on('task', {
 
 :::
 
-#### Count the files in a folder with cy.task()
+#### Count the files in a folder with `cy.task()`
 
-```javascript
-// in test
+```javascript title='count-files.cy.js'
 cy.task('countFiles', 'cypress/downloads').then((count) => { ... })
 ```
 
@@ -223,7 +219,7 @@ on('task', {
 
 :::
 
-#### Clean up and verify downloaded files with cy.task()
+#### Clean up and verify downloaded files with `cy.task()`
 
 Tasks are a good fit for file system work, such as emptying the downloads folder
 between tests and then finding the file the test just downloaded.
@@ -279,11 +275,11 @@ Cypress already trashes the downloads folder before `cypress run` when
 is enabled, which it is by default. A `clearDownloads` task is for clearing the
 folder between tests within a run.
 
-### Manage test data and state with cy.task()
+### Manage test data and state with `cy.task()`
 
-#### Seed a database before each test with cy.task()
+#### Seed a database before each test with `cy.task()`
 
-```js title='articles.cy.js'
+```javascript title='articles.cy.js'
 describe('e2e', () => {
   beforeEach(() => {
     cy.task('defaults:db')
@@ -378,7 +374,7 @@ on('task', {
 
 :::
 
-#### Share state between spec files with cy.task()
+#### Share state between spec files with `cy.task()`
 
 The config process keeps running for the whole run, so a value stored in a
 variable there is still available to later spec files.
@@ -423,7 +419,7 @@ Keep these behaviors in mind:
   in that order. Use a store for values you can recreate when they're missing,
   and [`cy.session()`](/api/commands/session) for caching logins.
 
-#### Keep a variable across origins with cy.task()
+#### Keep a variable across origins with `cy.task()`
 
 When a test visits a different origin, Cypress reloads the spec to
 [switch to the new origin](/app/guides/cross-origin-testing), which resets the
@@ -471,9 +467,9 @@ on('task', {
 
 :::
 
-### Run processes outside the browser with cy.task()
+### Run processes outside the browser with `cy.task()`
 
-#### Run an external command or CLI with cy.task()
+#### Run an external command or CLI with `cy.task()`
 
 When setup depends on a tool that isn't a Node module, such as a Docker
 container, a database CLI, or a cloud provider's command line tool, spawn it
@@ -530,7 +526,7 @@ on('task', {
 
 :::
 
-#### Wait for an email or background job with cy.task()
+#### Wait for an email or background job with `cy.task()`
 
 `cy.task()` runs the handler once and doesn't retry it. To wait for something
 that happens outside the browser, such as an email arriving or a background job
@@ -579,12 +575,11 @@ Give the `cy.task()` `timeout` option a few seconds more than the handler's own
 deadline. The handler then gives up first, and the test fails with its message
 instead of a generic timeout.
 
-### Write cy.task() handlers in setupNodeEvents
+### Write `cy.task()` handlers in `setupNodeEvents`
 
-#### Return a promise from an async cy.task() handler
+#### Return a promise from an async `cy.task()` handler
 
-```javascript
-// in test
+```javascript title='pause.cy.js'
 cy.task('pause', 1000)
 ```
 
@@ -603,7 +598,7 @@ on('task', {
 
 :::
 
-#### Type the value cy.task() yields in TypeScript
+#### Type the value `cy.task()` yields in TypeScript
 
 In TypeScript, `cy.task()` yields `unknown` unless you pass a type parameter
 describing what the task returns. Cypress doesn't check the type at runtime, so
@@ -635,8 +630,8 @@ on('task', {
 
 #### Run Node.js code before each Cypress test
 
-There is no `setupNodeEvents` event for each test. To run Node code before every
-test, call `cy.task()` from a global `beforeEach` in your
+There is no `setupNodeEvents` event for each test. To run Node.js code before
+every test, call `cy.task()` from a global `beforeEach` in your
 [support file](/app/core-concepts/writing-and-organizing-tests#Support-file).
 
 ```javascript title='cypress/support/e2e.js'
@@ -661,7 +656,7 @@ on('task', {
 
 ## Notes
 
-### cy.task() doesn't support long-running processes
+### `cy.task()` doesn't support long-running processes
 
 `cy.task()` doesn't support tasks that keep running, such as:
 
@@ -669,8 +664,9 @@ on('task', {
 - Watching for file changes.
 - Any process that needs to be interrupted to stop.
 
-A task must end within the [timeout](#Change-the-cytask-timeout-for-a-command-or-suite), or Cypress
-fails the current test.
+A task must end within the
+[timeout](#Change-the-cytask-timeout-for-a-command-or-suite), or Cypress fails
+the current test.
 
 ### Change the `cy.task()` timeout for a command or suite
 
@@ -774,7 +770,8 @@ where your handler threw.
 ### Cypress merges every `on('task')` registration
 
 Cypress merges every `on('task')` object you register, so you can split your
-tasks into modules by area and register each one:
+tasks into modules by area. Each module exports an object of handlers, like
+this `state.ts`:
 
 ```ts copyTsToJs
 // cypress/tasks/state.ts
@@ -791,6 +788,9 @@ export const stateTasks = {
   },
 }
 ```
+
+Then register each module, here alongside a `users.ts` module built the same
+way:
 
 :::cypress-config-plugin-example
 
@@ -821,12 +821,13 @@ each duplicated task.
 
 ### Access secrets at runtime with `cy.task()`
 
-You can use `cy.task()` to securely access secrets at runtime when they aren't available during configuration. Using `cy.task()` may be useful when secrets are retrieved from external secret managers or APIs that aren't available at configuration time.
+`cy.task()` reads secrets at runtime, which suits values from an external
+secret manager or an API that isn't available at configuration time. For
+secrets that are available at configuration time, use
+[cy.env()](/api/commands/env) instead.
 
-[cy.env()](/api/commands/env) is the preferred way to access secrets securely and use them in your tests, and is recommended for secrets that are available at configuration time.
-
-```javascript
-// in test - executes at runtime
+```javascript title='secrets.cy.js'
+// executes at runtime
 cy.task('getSecret', 'API_KEY', { log: false }).then((apiKey) => {
   cy.request({
     method: 'POST',
@@ -899,9 +900,8 @@ cy.task('countFiles', 'cypress/e2e')
 
 The command above displays in the Command Log as:
 
-<!-- Code to reproduce screenshot:
-configure the countFiles task in the Cypress configuration and call it in a spec file as shown in above example
--->
+<!-- To recapture: register the countFiles task above, run the snippet, and
+follow scripts/screenshots/README.md -->
 
 <DocsImage
   src="/img/api/task/task-count-files.png"
