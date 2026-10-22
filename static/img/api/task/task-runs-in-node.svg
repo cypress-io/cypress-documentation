@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="380" viewBox="0 0 720 380" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="160" viewBox="0 0 720 160" role="img" aria-labelledby="t d">
 <title id="t">How cy.task() runs code in Node.js</title>
-<desc id="d">Your test in the browser calls cy.task() with an event name and an argument. The argument is serialized the way JSON.stringify() would serialize it and sent to your task handler, which runs in Node.js in the config process. The handler's return value is serialized the same way and yielded to your test. Dates become ISO strings, regular expressions, Map, and Set become empty objects, and functions and symbols are dropped from objects or become null inside arrays. If the handler returns a value or null, or a promise that resolves to one, cy.task() yields it. If it returns undefined, throws, rejects, or runs past the timeout, the command fails.</desc>
+<desc id="d">Your test in the browser calls cy.task() with an event name and an argument. The argument is serialized the way JSON.stringify() would serialize it and sent to your task handler, which runs in Node.js. The handler's return value is serialized the same way and yielded to your test.</desc>
 <defs>
   <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
     <path d="M0 0 L10 5 L0 10 z" fill="#5A5F7A"/>
   </marker>
 </defs>
 <style>
-  /* Colors are @cypress-design/css tokens: gray, indigo, jade, and red. */
+  /* Colors are @cypress-design/css tokens: gray, indigo, and jade. */
   .card { fill: #F3F4FA; stroke: #E1E3ED; }
   .box { fill: #FFFFFF; stroke: #747994; stroke-width: 1.25; }
   .hl { fill: #E4FBF2; stroke: #00814D; stroke-width: 1.5; }
@@ -16,55 +16,22 @@
   .sub { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #5A5F7A; }
   .sub-hl { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #005F39; }
   .lbl { font: 600 12.5px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; fill: #3A46CC; }
-  .note { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #1B1E2E; }
-  .code { font: 12.5px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; fill: #1B1E2E; }
-  .ok { font: 600 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #005F39; }
-  .bad { font: 600 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #B4232C; }
 </style>
-<rect class="card" x="0.5" y="0.5" width="719" height="379" rx="12"/>
+<rect class="card" x="0.5" y="0.5" width="719" height="159" rx="12"/>
 
 <!-- Actors -->
-<rect class="box" x="20" y="40" width="200" height="76" rx="8"/>
-<text class="title" x="120" y="73" text-anchor="middle">Your test</text>
-<text class="sub" x="120" y="95" text-anchor="middle">runs in the browser</text>
+<rect class="hl" x="20" y="40" width="200" height="76" rx="8"/>
+<text class="title" x="120" y="73" text-anchor="middle">Your task handler</text>
+<text class="sub-hl" x="120" y="95" text-anchor="middle">runs in Node.js</text>
 
-<rect class="hl" x="500" y="40" width="200" height="76" rx="8"/>
-<text class="title" x="600" y="73" text-anchor="middle">Your task handler</text>
-<text class="sub-hl" x="600" y="95" text-anchor="middle">runs in Node.js</text>
+<rect class="box" x="500" y="40" width="200" height="76" rx="8"/>
+<text class="title" x="600" y="73" text-anchor="middle">Your test</text>
+<text class="sub" x="600" y="95" text-anchor="middle">runs in the browser</text>
 
 <!-- Round trip -->
-<path class="line" d="M 222 64 H 496" marker-end="url(#arr)"/>
+<path class="line" d="M 498 64 H 226" marker-end="url(#arr)"/>
 <text class="lbl" x="360" y="30" text-anchor="middle">cy.task('event', arg)</text>
 <text class="sub" x="360" y="84" text-anchor="middle">serialized like JSON.stringify()</text>
-<path class="line" d="M 498 98 H 226" marker-end="url(#arr)"/>
+<path class="line" d="M 222 98 H 494" marker-end="url(#arr)"/>
 <text class="lbl" x="360" y="136" text-anchor="middle">yields the return value</text>
-
-<!-- Serialization -->
-<rect class="box" x="20" y="166" width="330" height="170" rx="8"/>
-<text class="title" x="36" y="193">How values cross over</text>
-<text class="code" x="36" y="222">Date</text>
-<text class="note" x="176" y="222">→ ISO date string</text>
-<text class="code" x="36" y="248">RegExp, Map, Set</text>
-<text class="note" x="176" y="248">→ {}</text>
-<text class="code" x="36" y="274">function, Symbol</text>
-<text class="note" x="176" y="274">→ dropped from objects,</text>
-<text class="note" x="176" y="292">null inside arrays</text>
-<text class="code" x="36" y="318">arg omitted</text>
-<text class="note" x="176" y="318">→ handler gets undefined</text>
-
-<!-- Outcomes -->
-<rect class="box" x="370" y="166" width="330" height="170" rx="8"/>
-<text class="title" x="386" y="193">How the handler ends</text>
-<text class="ok" x="386" y="222">✓ yields</text>
-<text class="note" x="460" y="222">returns a value or null</text>
-<text class="ok" x="386" y="244">✓ yields</text>
-<text class="note" x="460" y="244">returns a promise for one</text>
-<text class="bad" x="386" y="274">✗ fails</text>
-<text class="note" x="460" y="274">returns undefined</text>
-<text class="bad" x="386" y="296">✗ fails</text>
-<text class="note" x="460" y="296">throws or rejects</text>
-<text class="bad" x="386" y="318">✗ fails</text>
-<text class="note" x="460" y="318">runs past the timeout</text>
-
-<text class="sub" x="20" y="362">The handler is registered with on('task') in setupNodeEvents, in the config process.</text>
 </svg>
