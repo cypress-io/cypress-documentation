@@ -10,6 +10,16 @@ sidebar_label: task
 
 Execute code in [Node](https://nodejs.org) via the `task` plugin event.
 
+Your test runs in the browser and your task handler runs in Node.js, so the
+argument and the return value are both serialized as they cross between the
+two:
+
+<DocsImage
+  src="/img/api/task/task-runs-in-node.svg"
+  alt="Diagram: your test in the browser calls cy.task('event', arg), which is serialized like JSON.stringify() and sent to your task handler in Node.js; the handler's return value is serialized the same way and yielded to your test. Dates become ISO date strings; RegExp, Map, and Set become empty objects; functions and symbols are dropped from objects and become null inside arrays; an omitted arg reaches the handler as undefined. The command yields when the handler returns a value or null, or a promise for one, and fails when the handler returns undefined, throws or rejects, or runs past the timeout."
+  noBorder
+/>
+
 :::caution
 
 <strong>Anti-Pattern</strong>
@@ -593,8 +603,7 @@ A task must end within the `taskTimeout` or Cypress will fail the current test.
 ### Errors thrown in a task fail the test
 
 When a handler throws or returns a rejected promise, `cy.task()` fails the test
-with the error's message. The stack trace from Node.js appears in the error's
-stack under `From Node.js Internals`.
+with the error's message.
 
 Return `null` when "not found" is an answer the test can act on, and throw when
 the test can't continue:
@@ -639,6 +648,15 @@ CypressError: `cy.task('deleteUser')` failed with the following error:
 
 https://on.cypress.io/api/task
 ```
+
+In the Cypress App, the error points to the `cy.task()` line in your spec.
+Expand **Stack trace** to find the `From Node.js Internals` section, which shows
+where your handler threw.
+
+<DocsImage
+  src="/img/api/task/command-log-task-error.png"
+  alt="Command Log for a failed test: the task row for deleteUser is highlighted in red, followed by a CypressError reading cy.task('deleteUser') failed with the following error: No user with email grace@example.com, a code frame pointing to the cy.task() line in the spec, and a collapsed Stack trace toggle."
+/>
 
 ### Tasks are merged automatically
 
