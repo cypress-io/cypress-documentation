@@ -129,13 +129,14 @@ cy.visit('/index.html', { timeout: 30000 })
 
 #### Add basic auth headers to `cy.visit()`
 
-Cypress applies the authorization headers an application needs when it uses
-[Basic Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication).
+When your application uses
+[Basic Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication),
+Cypress can send the credentials for you.
 
 Provide the `username` and `password` in the `auth` object. Cypress then
 attaches them at the network level to every later request to the origin you're
-testing. Pass `log: false` to keep the credentials out of the Command Log. Without
-it, clicking the `visit` row prints the `auth` object, password included, to the
+testing. Pass `log: false` to leave the visit out of the Command Log. Without it,
+clicking the `visit` row prints the `auth` object, password included, to the
 console.
 
 ```javascript
@@ -163,8 +164,8 @@ cy.visit('https://wile:coyote@example.cypress.io', { log: false })
 Cypress attaches the `Authorization` header for you on requests to the origin
 you visited. Other origins do not receive it. On the
 [legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path)
-the header is attached outside of the browser, so it does **not** appear in the
-Dev Tools.
+the header is attached outside of the browser, so it does **not** appear in
+DevTools.
 
 :::
 
