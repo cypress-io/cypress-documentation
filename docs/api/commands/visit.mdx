@@ -68,9 +68,9 @@ Pass in an options object to control the behavior of `cy.visit()`.
 | `body`                     | `null`                                                      | An optional body to send with a `POST` request. A string is sent unmodified. An object is URL encoded and sent with a `Content-Type: application/x-www-form-urlencoded` header.            |
 | `headers`                  | `{}`                                                        | An object that maps HTTP header names to values to send with the request. Cypress sends `headers` only with the initial `cy.visit()` request, not with any later requests.                 |
 | `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request. Must be an object.                                                                                                                 |
-| `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                        |
+| `log`                      | `true`                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).                                                                                                       |
 | `auth`                     | `null`                                                      | Adds Basic Authorization headers.                                                                                                                                                          |
-| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                               |
+| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`.                                                                                                                              |
 | `onBeforeLoad`             | none                                                        | Called before your page has loaded all of its resources.                                                                                                                                   |
 | `onLoad`                   | none                                                        | Called once your page has fired its load event.                                                                                                                                            |
 | `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress retries the request when the status code is outside `2xx` and `3xx`. When `true`, Cypress retries up to 4 times. Requires `failOnStatusCode` to be `true`.                 |
@@ -134,7 +134,9 @@ Cypress applies the authorization headers an application needs when it uses
 
 Provide the `username` and `password` in the `auth` object. Cypress then
 attaches them at the network level to every later request to the origin you're
-testing.
+testing. Pass `log: false` to keep the credentials out of the Command Log. Without
+it, clicking the `visit` row prints the `auth` object, password included, to the
+console.
 
 ```javascript
 cy.visit('https://example.cypress.io/', {
@@ -142,14 +144,18 @@ cy.visit('https://example.cypress.io/', {
     username: 'wile',
     password: 'coyote',
   },
+  log: false,
 })
 ```
 
-You can also provide the username and password directly in the URL.
+You can also provide the username and password directly in the URL. In this
+form, the Command Log row shows the full URL, password included, so `log: false`
+matters even more: without it, the password appears in screenshots and videos
+of the run.
 
 ```javascript
 // this is the same thing as providing the auth object
-cy.visit('https://wile:coyote@example.cypress.io')
+cy.visit('https://wile:coyote@example.cypress.io', { log: false })
 ```
 
 :::info
@@ -186,8 +192,8 @@ cy.get('@windowOpen').should('not.have.been.called')
 
 These recipes use the `onBeforeLoad` option to:
 
-- [Bootstrapping your App](/app/references/recipes#Server-Communication)
-- [Set a token to `localStorage` for login during Single Sign On](/app/references/recipes#Logging-In)
+- [Bootstrap your App](/app/references/recipes#Server-Communication)
+- [Set a token in `localStorage` for login during Single Sign On](/app/references/recipes#Logging-In)
 - [Stub `window.fetch`](/app/references/recipes#Stubbing-and-spying)
 
 :::
@@ -242,8 +248,8 @@ cy.visit({
   url: '/cgi-bin/newsletterSignup',
   method: 'POST',
   body: {
-    name: 'George P. Burdell',
-    email: 'burdell@example.com',
+    name: 'Avery Quinlan',
+    email: 'avery.quinlan@example.com',
   },
 })
 ```
@@ -296,7 +302,7 @@ beforeEach(() => {
   cy.session('user', () => {
     cy.visit('/login')
     cy.get('#username').type('user')
-    cy.get('#password').type('s3cret')
+    cy.get('#password').type('s3cret', { log: false })
     cy.get('form').submit()
     cy.location('pathname').should('eq', '/dashboard')
   })
@@ -338,8 +344,7 @@ cy.visit('https://example.cypress.io')
 ### Visit local files with `cy.visit()`
 
 Cypress serves your files itself when you don't provide a host and `baseUrl`
-**is not defined**. The path should be relative to your
-project's root folder (the directory that contains the
+**is not defined**. The path is relative to your project's root folder (the directory that contains the
 [Cypress configuration file](/app/references/configuration)), or to the
 [`fileServerFolder`](/app/references/configuration#Folders--Files) if you've
 configured one. The `file://` protocol is not supported.
@@ -495,7 +500,8 @@ cy.visit('https://auth.example.com/login')
   Cypress checks whether the body is HTML.
 - `cy.visit()` requires the response code to be `2xx` or `3xx` after following
   redirects, unless `failOnStatusCode` is `false`.
-- `cy.visit()` requires the `load` event to eventually fire.
+- `cy.visit()` requires the `load` event to eventually fire, unless the visit
+  changes only the URL's hash.
 
 <HeaderAssertions />
 
@@ -511,7 +517,7 @@ cy.visit('https://auth.example.com/login')
 
 ## Command Log
 
-**_Visit example application in a `beforeEach`_**
+This example visits the example application in a `beforeEach`:
 
 ```javascript
 beforeEach(() => {
