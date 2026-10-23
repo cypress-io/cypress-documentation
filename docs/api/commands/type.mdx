@@ -291,7 +291,7 @@ cy.get('input').type('{shift}{alt}hello')
 Pass the shortcut as a key combination to test an app that listens for it, such
 as an editor that saves on `CTRL+S`. Cypress fires `keydown` and `keyup` with
 `key: 's'` and `ctrlKey: true` to your app's listeners, and doesn't insert an
-`s` into the field. The browser's own Save Page dialog doesn't open.
+`s` into the field.
 
 ```javascript
 // The same as a user holding down CTRL, then pressing s
