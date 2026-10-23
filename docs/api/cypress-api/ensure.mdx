@@ -1,6 +1,6 @@
 ---
 title: 'Cypress.ensure'
-description: 'Cypress.ensure is a collection of helper methods for making assertions. They are mostly useful when writing custom queries or custom commands.'
+description: 'Cypress.ensure validates the subject of a custom query or custom command and throws the same errors as the built-in Cypress commands.'
 sidebar_label: ensure
 sidebar_position: 110
 ---
@@ -9,127 +9,429 @@ sidebar_position: 110
 
 # Cypress.ensure
 
-`Cypress.ensure` is a collection of helper methods for making assertions. They
-are mostly useful when writing [custom queries](/api/cypress-api/custom-queries)
-or [custom commands](/api/cypress-api/custom-commands).
+`Cypress.ensure` is a set of helper functions that validate a
+[subject](/app/core-concepts/introduction-to-cypress#Subject-Management) inside
+your own [custom queries](/api/cypress-api/custom-queries) and
+[custom commands](/api/cypress-api/custom-commands). They are the same checks
+Cypress's built-in commands run: [`.contains()`](/api/commands/contains) uses
+`Cypress.ensure.isType()` to accept only an element, document, or window, and
+[`.select()`](/api/commands/select) uses `Cypress.ensure.isNotDisabled()` to
+refuse a disabled `<select>`.
 
-Most functions on `Cypress.ensure` accept a
-[`subject`](/app/core-concepts/introduction-to-cypress#Subject-Management)
-argument, check an assertion, and throw an error if the assertion fails. These
-functions have no return value.
+Each function checks one condition and throws a Cypress error when the subject
+fails it. Because the errors come from Cypress itself, a failure in your command
+reads like a failure in a built-in one:
+
+- The message names your command, so the reader knows which step failed.
+- It describes the subject Cypress received and the command that ran before it.
+- It links to the relevant Cypress docs page, such as
+  [Interacting with Elements](/app/core-concepts/interacting-with-elements).
+- Inside a custom query, a failed check is retried until it passes or the query
+  times out, the same as Cypress's own queries.
 
 ## Syntax
 
 ```javascript
-// Type of argument
-Cypress.ensure.isType(subject, type, commandName, cy)​
-Cypress.ensure.isElement(subject, commandName, cy)​
+// Check the type of the subject
+Cypress.ensure.isType(subject, types, commandName, cy)
+Cypress.ensure.isElement(subject, commandName, cy)
+Cypress.ensure.isDocument(subject, commandName, cy)
 Cypress.ensure.isWindow(subject, commandName, cy)
-Cypress.ensure.isDocument(subject, commandName, cy)​
 
-// State of DOM element
-Cypress.ensure.isAttached(subject, commandName, cy)​
-Cypress.ensure.isNotDisabled(subject, commandName)​
-Cypress.ensure.isNotHiddenByAncestors(subject, commandName)​
-Cypress.ensure.isNotReadonly(subject, commandName)​
-Cypress.ensure.isScrollable(subject, commandName)​
-Cypress.ensure.isStrictlyVisible(subject, commandName)​
-Cypress.ensure.isVisible(subject, commandName)​
+// Check the state of a DOM element
+Cypress.ensure.isAttached(subject, commandName, cy)
+Cypress.ensure.isNotDisabled(subject, commandName)
+Cypress.ensure.isNotHiddenByAncestors(subject, commandName)
+Cypress.ensure.isNotReadonly(subject, commandName)
+Cypress.ensure.isScrollable(subject, commandName)
+Cypress.ensure.isVisible(subject, commandName)
 ```
-
-:::caution
-
-Many of these functions accept an optional `onFail` argument. This is a legacy
-feature used to customize the thrown error, and may be removed in a future
-release; we recommend against relying on it. If you need more control over the
-error thrown, write your own `ensure` function instead.
-
-:::
 
 ### Usage
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
-<Tabs>
-<TabItem value="cypress/support/commands.js">
-
 ```javascript
-Cypress.Commands.addQuery('getChildById', function (id) {
+Cypress.Commands.addQuery('editable', function () {
   return (subject) => {
-    // Verify that the subject is an element, document, or window object
-    Cypress.ensure.isType(
-      subject,
-      ['element', 'document', 'window'],
-      'getChildById',
-      cy
-    )
-
-    return $$(`#${id}`, subject)
-  }
-})
-
-const queryName = 'verifyElementActionable'
-
-Cypress.Commands.addQuery(queryName, function (...args) {
-  return (subject) => {
-    // Verify that the subject fulfills a variety of conditions
-    Cypress.ensure.isElement(subject, queryName, cy)
-    Cypress.ensure.isVisible(subject, queryName, cy)
-    Cypress.ensure.isNotDisabled(subject, queryName, cy)
-    Cypress.ensure.isNotReadonly(subject, queryName, cy)
+    Cypress.ensure.isElement(subject, 'editable', cy)
+    Cypress.ensure.isNotDisabled(subject, 'editable')
 
     return subject
   }
 })
 ```
 
-</TabItem>
-<TabItem value="cypress/support/commands.ts">
+<Icon name="times-circle" color="red" /> **Incorrect Usage**
 
-```typescript
+```javascript
+// The state checks take no `cy` argument
+Cypress.ensure.isNotDisabled(subject, 'editable', cy)
+
+// The state checks need the jQuery-wrapped subject, not a raw DOM element
+Cypress.ensure.isNotDisabled(subject[0], 'editable')
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **subject** **_(any)_**
+
+The value to check, usually the subject your query or command received from the
+previous command. The element state checks (`isNotDisabled`,
+`isNotHiddenByAncestors`, `isNotReadonly`, `isScrollable`, and `isVisible`)
+expect a jQuery-wrapped element, which is what [`cy.get()`](/api/commands/get)
+and other element queries yield.
+
+<Icon name="angle-right" /> **types** **_(Array)_**
+
+`isType()` only. The subject types to accept: any of `'element'`, `'document'`,
+`'window'`, and `'optional'`. The check passes when the subject matches at least
+one of them. `'optional'` lets an `undefined` subject through, for a query that
+can start a chain or continue one. These are the same values a custom command
+accepts in its [`prevSubject`](/api/cypress-api/custom-commands#Validations)
+option.
+
+<Icon name="angle-right" /> **commandName** **_(String)_**
+
+The name of your query or command, as the reader calls it. Cypress puts it in
+the error message, so `'editable'` produces an error that starts with
+`` `cy.editable()` failed because… ``.
+
+<Icon name="angle-right" /> **cy** **_(Object)_**
+
+The global [`cy`](/api/table-of-contents) object. Pass it to the type checks and
+`isAttached()`. Cypress reads the current command chain from it to describe the
+previous command and the subject in the error.
+
+### Return value
+
+Each function returns nothing when the check passes and throws an error when it
+fails. `isScrollable()` returns `true` when the check passes.
+
+### Checks at a glance
+
+| Function                   | Throws when the subject…                                           |
+| -------------------------- | ------------------------------------------------------------------ |
+| `isType()`                 | matches none of the listed `types`                                 |
+| `isElement()`              | is not a DOM element                                               |
+| `isDocument()`             | is not a `document`                                                |
+| `isWindow()`               | is not a `window`                                                  |
+| `isAttached()`             | is a DOM element that is no longer attached to the page            |
+| `isNotDisabled()`          | has the `disabled` property                                        |
+| `isNotHiddenByAncestors()` | is hidden by one of its ancestor elements                          |
+| `isNotReadonly()`          | is a text-like input or `<textarea>` with the `readonly` attribute |
+| `isScrollable()`           | cannot be scrolled                                                 |
+| `isVisible()`              | is not visible                                                     |
+
+## Examples
+
+### Accept only certain subject types in a custom query
+
+The `.dataCy()` query below finds elements by their `data-cy` attribute. It can
+start a chain, where it searches the whole page, or continue one, where it
+searches inside the previous element or document. `isType()` rejects every other
+subject, such as a string yielded by [`.invoke()`](/api/commands/invoke).
+
+Add it to `cypress/support/commands.ts` (or `.js`):
+
+```typescript copyTsToJs
 declare global {
   namespace Cypress {
     interface Chainable {
-      getChildById(id: string): Chainable<JQuery>
-      verifyElementActionable(...args: any[]): Chainable<JQuery>
+      dataCy(value: string): Chainable<JQuery<HTMLElement>>
     }
   }
 }
 
-Cypress.Commands.addQuery('getChildById', function (id) {
+Cypress.Commands.addQuery('dataCy', function (value: string) {
   return (subject) => {
-    // Verify that the subject is an element, document, or window object
     Cypress.ensure.isType(
       subject,
-      ['element', 'document', 'window'],
-      'getChildById',
+      ['optional', 'element', 'document'],
+      'dataCy',
       cy
     )
 
-    return $$(`#${id}`, subject)
+    const $root = subject === undefined ? cy.$$('body') : Cypress.$(subject)
+
+    return $root.find(`[data-cy="${value}"]`)
   }
 })
 
-const queryName = 'verifyElementActionable'
+export {}
+```
 
-Cypress.Commands.addQuery(queryName, function (...args) {
+Then use it at the start of a chain or after another query:
+
+```javascript
+cy.dataCy('submit').should('have.text', 'Submit')
+cy.get('form').dataCy('email').should('have.attr', 'type', 'email')
+```
+
+Chaining `.dataCy()` off a subject it doesn't accept fails with a Cypress error
+that lists every accepted type:
+
+```javascript
+cy.title().dataCy('submit')
+```
+
+```text
+CypressError: Timed out retrying after 4000ms: `cy.dataCy()` failed because it requires a DOM element or document.
+
+The subject received was:
+
+  > `Example page`
+
+The previous command that ran was:
+
+  > `cy.title()`
+```
+
+### Wait for an element to be editable
+
+Checks inside a custom query are retried, so a query built from
+`Cypress.ensure` functions waits for the element to reach the state you need.
+The `.editable()` query yields its subject once it is visible, enabled, and not
+read-only, and fails with Cypress's own actionability error if it never gets
+there.
+
+```typescript copyTsToJs
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      editable(): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.addQuery('editable', function () {
   return (subject) => {
-    // Verify that the subject fulfills a variety of conditions
-    Cypress.ensure.isElement(subject, queryName, cy)
-    Cypress.ensure.isVisible(subject, queryName, cy)
-    Cypress.ensure.isNotDisabled(subject, queryName, cy)
-    Cypress.ensure.isNotReadonly(subject, queryName, cy)
+    Cypress.ensure.isElement(subject, 'editable', cy)
+    Cypress.ensure.isVisible(subject, 'editable')
+    Cypress.ensure.isNotDisabled(subject, 'editable')
+    Cypress.ensure.isNotReadonly(subject, 'editable')
 
     return subject
   }
 })
+
+export {}
 ```
 
-</TabItem>
-</Tabs>
+Here, the `#email` input starts out disabled and the app enables it after it
+loads the user's profile. `.editable()` retries until the input is enabled, then
+[`.invoke()`](/api/commands/invoke) sets its value:
+
+```javascript
+cy.get('#email').editable().invoke('val', 'jane@example.com')
+cy.get('#email').should('have.value', 'jane@example.com')
+```
+
+If the input stays disabled, the query times out with the same error a
+[`.type()`](/api/commands/type) into a disabled input produces:
+
+```text
+CypressError: Timed out retrying after 4000ms: `cy.editable()` failed because this element is `disabled`:
+
+`<input id="email" type="email" disabled="">`
+
+Fix this problem, or use `{force: true}` to disable error checking.
+
+https://on.cypress.io/element-cannot-be-interacted-with
+```
+
+### Check an element before acting on it in a custom command
+
+A custom command added with
+[`Cypress.Commands.add()`](/api/cypress-api/custom-commands) runs once and is
+not retried, so a failed check fails the test right away. The `.scrollToBottom()`
+command below checks that its subject can be scrolled before it changes the
+element's `scrollTop`, then yields the element so the chain can continue.
+
+```typescript copyTsToJs
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      scrollToBottom(): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.add(
+  'scrollToBottom',
+  { prevSubject: 'element' },
+  (subject) => {
+    Cypress.ensure.isScrollable(subject, 'scrollToBottom')
+
+    subject[0].scrollTop = subject[0].scrollHeight
+
+    return cy.wrap(subject, { log: false })
+  }
+)
+
+export {}
+```
+
+```javascript
+cy.get('#messages')
+  .scrollToBottom()
+  .contains('Latest message')
+  .should('be.visible')
+```
+
+Calling it on an element that can't scroll fails with:
+
+```text
+CypressError: `cy.scrollToBottom()` failed because this element is not scrollable:
+
+`<div id="footer">Footer</div>`
+
+Make sure you're targeting the correct element or use `{ensureScrollable: false}` to disable the scrollable check.
+
+https://on.cypress.io/scrollto
+```
+
+The message ends with the hint and docs link Cypress shows for its own
+[`.scrollTo()`](/api/commands/scrollto) command. See
+[Error messages come from the built-in commands](#Error-messages-come-from-the-built-in-commands).
+
+### Require a window subject
+
+`isWindow()` and `isDocument()` check for the global `window` and `document`
+objects that [`cy.window()`](/api/commands/window) and
+[`cy.document()`](/api/commands/document) yield. The `.storageKeys()` query
+below reads the keys in the app's `localStorage` and retries until an assertion
+on them passes.
+
+```typescript copyTsToJs
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      storageKeys(): Chainable<string[]>
+    }
+  }
+}
+
+Cypress.Commands.addQuery('storageKeys', function () {
+  return (subject) => {
+    Cypress.ensure.isWindow(subject, 'storageKeys', cy)
+
+    return Object.keys(subject.localStorage)
+  }
+})
+
+export {}
+```
+
+```javascript
+cy.window().storageKeys().should('include', 'authToken')
+```
+
+## Notes
+
+### Retry behavior in queries and commands
+
+`Cypress.ensure` functions throw an error and nothing more. What happens next
+depends on where you call them:
+
+- In the inner function of a [custom query](/api/cypress-api/custom-queries),
+  Cypress retries the function until it stops throwing or the query times out,
+  then fails the test with the last error, prefixed with
+  `Timed out retrying after…`.
+- In a [custom command](/api/cypress-api/custom-commands) or a
+  [`.then()`](/api/commands/then) callback, the error fails the test right away.
+
+Call them while a command is running, from a query, a command, or a callback.
+The type checks read the running command from `cy` to build their error
+message.
+
+### The element type check includes an attachment check
+
+When `isType()` checks for `'element'` and the subject is an element, it also
+runs `isAttached()`. A subject that the app has removed from the page fails with
+Cypress's detached-element error rather than passing the type check.
+
+### Checks on a collection of elements
+
+When the subject is a jQuery collection of several elements, the checks treat it
+differently:
+
+- `isVisible()` and `isNotHiddenByAncestors()` fail when any element in the
+  collection is hidden.
+- `isNotDisabled()` and `isNotReadonly()` check only the first element.
+
+### Error messages come from the built-in commands
+
+Each check throws the error message Cypress uses for its own commands, with your
+`commandName` in place of the built-in name. Some messages end with a hint
+written for those commands, such as `use {force: true} to disable error
+checking`. Your query or command only supports that option if you add it. When
+the hint would mislead your readers, write your own check instead.
+
+### Visibility checks ignore opacity
+
+`isVisible()` and `isNotHiddenByAncestors()` treat an element with
+`opacity: 0` as visible, matching the actionability checks that Cypress runs
+before it [interacts with an element](/app/core-concepts/interacting-with-elements#Visibility).
+Assert on visibility with `.should('be.visible')` when opacity matters.
+
+### Read-only checks apply to text fields
+
+`isNotReadonly()` only checks text-like elements, such as `<input type="text">`,
+`<input type="email">`, and `<textarea>`. A checkbox, radio button, or other
+element with the `readonly` attribute passes, because browsers ignore `readonly`
+on those elements.
+
+### The optional `onFail` argument
+
+The element checks, and `isAttached()`, accept an optional final `onFail`
+argument, typed as a [`Cypress.log()`](/api/cypress-api/cypress-log) instance.
+Cypress uses it internally to attach the error to a command's log entry.
+
+:::caution
+
+`onFail` is a legacy feature and may be removed in a future release. Don't rely
+on it. When you need more control over the error, write your own check and
+throw your own error from the query or command.
+
+:::
+
+### Writing your own checks
+
+`Cypress.ensure` covers the subject checks Cypress itself needs. For any other
+condition, throw an error from your query's inner function. Cypress retries it
+the same way it retries an `ensure` check:
+
+```javascript
+Cypress.Commands.addQuery('priceValue', function () {
+  return (subject) => {
+    Cypress.ensure.isElement(subject, 'priceValue', cy)
+
+    const value = parseFloat(subject.text().replace(/[^0-9.]/g, ''))
+
+    if (Number.isNaN(value)) {
+      throw new Error(
+        `priceValue() could not read a price from "${subject.text()}"`
+      )
+    }
+
+    return value
+  }
+})
+```
+
+## History
+
+| Version                                    | Changes                |
+| ------------------------------------------ | ---------------------- |
+| [12.0.0](/app/references/changelog#12-0-0) | Added `Cypress.ensure` |
 
 ## See also
 
-- ["Custom Queries"](/api/cypress-api/custom-queries) contains more information
-  about writing custom queries, which is the main use-case for the `ensure`
-  functions.
+- [Custom Queries](/api/cypress-api/custom-queries) - the main place to use
+  `Cypress.ensure`
+- [Custom Commands](/api/cypress-api/custom-commands)
+- [`Cypress.dom`](/api/cypress-api/dom) - DOM helpers that return a boolean
+  instead of throwing
+- [Interacting with Elements](/app/core-concepts/interacting-with-elements) -
+  the actionability checks Cypress runs before it acts on an element
