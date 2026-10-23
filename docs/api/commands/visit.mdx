@@ -33,8 +33,8 @@ cy.visit(options)
 
 ```javascript
 cy.visit('/') // visits the baseUrl
-cy.visit('index.html') // visits the local file "index.html" if baseUrl is null
-cy.visit('http://localhost:3000') // specify a full URL if baseUrl is null or the host differs from baseUrl
+cy.visit('index.html') // visits a local file when baseUrl is null
+cy.visit('http://localhost:3000') // full URL: no baseUrl, or another host
 cy.visit({
   url: '/pages/hello.html',
   method: 'GET',
