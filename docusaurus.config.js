@@ -15,7 +15,10 @@ const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  clientModules: ['./src/clientModules/prismSkill.js'],
+  clientModules: [
+    './src/clientModules/prismSkill.js',
+    './src/clientModules/hashFallback.js',
+  ],
   title: 'Cypress Documentation',
   tagline:
     'Fast, easy and reliable testing for anything that runs in a browser.',
