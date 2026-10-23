@@ -286,6 +286,21 @@ characters are typed. However, [\{release: false\}](#Options) can be passed as a
 cy.get('input').type('{shift}{alt}hello')
 ```
 
+#### Type a keyboard shortcut such as CTRL+S
+
+Pass the shortcut as a key combination to test an app that listens for it, such
+as an editor that saves on `CTRL+S`. Cypress fires `keydown` and `keyup` with
+`key: 's'` and `ctrlKey: true` to your app's listeners, and doesn't insert an
+`s` into the field. The browser's own Save Page dialog doesn't open.
+
+```javascript
+// The same as a user holding down CTRL, then pressing s
+cy.get('textarea').type('{ctrl+s}')
+cy.contains('Saved').should('be.visible')
+```
+
+For a shortcut that uses `Cmd` on macOS, type `{meta+s}` instead.
+
 #### Type literal `{` or `}` characters
 
 To disable parsing special characters sequences, set the
