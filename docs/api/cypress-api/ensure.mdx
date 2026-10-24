@@ -165,6 +165,7 @@ still attached; pair it with [`isAttached()`](#isAttached) when that matters.
   followed by the subject received and the previous command.
 
 **Used in:**
+[Compare a hand-written error with an ensure error](#Compare-a-hand-written-error-with-an-ensure-error),
 [Wait for an element to be editable](#Wait-for-an-element-to-be-editable),
 [Wait for a carousel slide to scroll into view](#Wait-for-a-carousel-slide-to-scroll-into-view)
 
@@ -305,6 +306,81 @@ Throws when the subject is not a global `window` object, such as the one
 
 ## Examples
 
+### Compare a hand-written error with an ensure error
+
+Both versions of the `.inputValue()` query below reject a subject that isn't an
+element. The first throws its own error:
+
+```javascript title="cypress/support/commands.js"
+Cypress.Commands.addQuery('inputValue', function () {
+  return (subject) => {
+    if (!Cypress.dom.isElement(subject)) {
+      throw new Error('inputValue() requires an element')
+    }
+
+    return subject.val()
+  }
+})
+```
+
+The second calls `Cypress.ensure.isElement()` instead:
+
+```javascript title="cypress/support/commands.js"
+Cypress.Commands.addQuery('inputValue', function () {
+  return (subject) => {
+    Cypress.ensure.isElement(subject, 'inputValue', cy)
+
+    return subject.val()
+  }
+})
+```
+
+Chain either one off a subject that isn't an element:
+
+```javascript title="cypress/e2e/profile.cy.js"
+cy.title().inputValue()
+```
+
+The hand-written check fails with only its own message:
+
+```text
+Error: Timed out retrying after 4000ms: inputValue() requires an element
+```
+
+The `ensure` check fails with a Cypress error that names the command, shows the
+subject it received, and names the command that produced it:
+
+```text
+CypressError: Timed out retrying after 4000ms: `cy.inputValue()` failed because it requires a DOM element.
+
+The subject received was:
+
+  > `Example page`
+
+The previous command that ran was:
+
+  > `cy.title()`
+```
+
+### Choose between an ensure check and an assertion
+
+`Cypress.ensure` and assertions can check the same state, but they belong in
+different places. In a test, assert the state you expect with
+[`.should()`](/api/commands/should). Inside a custom query or command, call
+`Cypress.ensure`, so every test that uses the query gets the check, and the
+error names the query:
+
+```javascript title="cypress/e2e/profile.cy.js"
+// In a test: assert the state you expect
+cy.get('#email').should('be.enabled')
+
+// In a custom query: the check is part of the query
+cy.get('#email').editable()
+```
+
+`.editable()` is defined in
+[Wait for an element to be editable](#Wait-for-an-element-to-be-editable).
+
 ### Accept only certain subject types in a custom query
 
 The `.dataCy()` query below finds elements by their `data-cy` attribute. It can
@@ -425,6 +501,50 @@ In the Cypress App, the error appears under the failed test and names
   src="/img/api/ensure/command-log-editable-disabled-error.png"
   alt="Command Log for a failed test: the visit and get rows, then a CypressError reading cy.editable() failed because this element is disabled, with the disabled input, the force hint, the docs link, and the code frame pointing at the editable() call."
 />
+
+### Support a force option in a custom query
+
+Some `ensure` errors end with `use {force: true} to disable error checking`, a
+hint written for built-in commands such as [`.type()`](/api/commands/type). To
+make that hint true for your own query, accept a `force` option and skip the
+state checks when it's set. This version of `.editable()` keeps the type check
+either way:
+
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      editable(options?: { force?: boolean }): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.addQuery(
+  'editable',
+  function (options: { force?: boolean } = {}) {
+    return (subject) => {
+      Cypress.ensure.isElement(subject, 'editable', cy)
+
+      if (!options.force) {
+        Cypress.ensure.isVisible(subject, 'editable')
+        Cypress.ensure.isNotDisabled(subject, 'editable')
+        Cypress.ensure.isNotReadonly(subject, 'editable')
+      }
+
+      return subject
+    }
+  }
+)
+
+export {}
+```
+
+With `{ force: true }`, the query yields the disabled `#locked` input right
+away, and `.invoke()` sets its value:
+
+```javascript title="cypress/e2e/profile.cy.js"
+cy.get('#locked').editable({ force: true }).invoke('val', 'jane@example.com')
+```
 
 ### Wait for a carousel slide to scroll into view
 
@@ -655,8 +775,10 @@ message.
 Each check throws the error message Cypress uses for its own commands, with your
 `commandName` in place of the built-in name. Some messages end with a hint
 written for those commands, such as `use {force: true} to disable error
-checking`. Your query or command only supports that option if you add it. When
-the hint would mislead your readers, write your own check instead.
+checking`. Your query or command only supports that option if you add it, as
+in [Support a force option in a custom query](#Support-a-force-option-in-a-custom-query).
+Otherwise, when the hint would mislead your readers, write your own check
+instead.
 
 ### The optional `onFail` argument
 
