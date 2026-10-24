@@ -1225,9 +1225,9 @@ model page. The sections, in order:
   shared Arguments section links to it.
 - **Each `### name()` entry holds** the signature, what the function does, the
   behavior specific to it (as bullets), its error message when it throws, and a
-  **Used in:** line linking to the recipe that shows it. A function with no
+  "Used in:" line linking to the recipe that shows it. A function with no
   recipe gets a new tested one, which makes coverage gaps visible: an entry
-  without a **Used in:** line is missing an example.
+  without a "Used in:" line is missing an example.
 - **`### Return value`, not `<HeaderYields />`.** These are plain functions that
   return a value or nothing; they don't yield a subject to a chain.
 - **The function headings are exempt from the heading-length rule.** A bare

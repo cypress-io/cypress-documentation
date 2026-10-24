@@ -26,8 +26,8 @@ reads like a failure in a built-in one:
 - It describes the subject Cypress received and the command that ran before it.
 - It links to the relevant Cypress docs page, such as
   [Interacting with Elements](/app/core-concepts/interacting-with-elements).
-- Inside a custom query, a failed check is retried until it passes or the query
-  times out, the same as Cypress's own queries.
+- Inside a custom query, Cypress retries a failed check until it passes or the
+  query times out, the same as its own queries.
 
 This page has a reference entry for each function under
 [Functions](#Functions), and complete custom queries and commands that combine
@@ -52,7 +52,7 @@ Cypress.ensure.isWindow(subject, commandName, cy)
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
-```javascript title="cypress/support/commands.js"
+```javascript
 Cypress.Commands.addQuery('editable', function () {
   return (subject) => {
     Cypress.ensure.isElement(subject, 'editable', cy)
@@ -65,7 +65,7 @@ Cypress.Commands.addQuery('editable', function () {
 
 <Icon name="times-circle" color="red" /> **Incorrect Usage**
 
-```javascript title="cypress/support/commands.js"
+```javascript
 // The state checks take no `cy` argument
 Cypress.ensure.isNotDisabled(subject, 'editable', cy)
 
@@ -130,10 +130,9 @@ method on an element you've held onto. On a detached element, a native call such
 as `.click()` acts on the stale element instead of the one on the page, and
 raises no error.
 
-- Error:
-  `` `cy.<commandName>()` failed because the page updated as a result of this command, but you tried to continue the command chain. ``
+- It throws `` `cy.<commandName>()` failed because the page updated as a result of this command, but you tried to continue the command chain. ``.
 
-**Used in:**
+Used in:
 [Guard a native DOM call against a detached element](#Guard-a-native-DOM-call-against-a-detached-element)
 
 ### isDocument()
@@ -145,10 +144,9 @@ Cypress.ensure.isDocument(subject, commandName, cy)
 Throws when the subject is not a global `document` object, such as the one
 [`cy.document()`](/api/commands/document) yields.
 
-- Error:
-  `` `cy.<commandName>()` failed because it requires the subject be a global `document` object. ``
+- It throws `` `cy.<commandName>()` failed because it requires the subject be a global `document` object. ``.
 
-**Used in:**
+Used in:
 [Read a document's meta tags in a custom query](#Read-a-documents-meta-tags-in-a-custom-query)
 
 ### isElement()
@@ -161,12 +159,12 @@ Throws when the subject is not a DOM element or a jQuery collection of them.
 Unlike `isType(subject, ['element'], …)`, it doesn't check that the element is
 still attached; pair it with [`isAttached()`](#isAttached) when that matters.
 
-- Error: `` `cy.<commandName>()` failed because it requires a DOM element. ``,
+- It throws `` `cy.<commandName>()` failed because it requires a DOM element. ``,
   followed by the subject received and the previous command.
 
-**Used in:**
+Used in:
 [Compare a hand-written error with an ensure error](#Compare-a-hand-written-error-with-an-ensure-error),
-[Wait for an element to be editable](#Wait-for-an-element-to-be-editable),
+[Wait for an element to be editable in a custom query](#Wait-for-an-element-to-be-editable-in-a-custom-query),
 [Wait for a carousel slide to scroll into view](#Wait-for-a-carousel-slide-to-scroll-into-view)
 
 ### isNotDisabled()
@@ -179,11 +177,11 @@ Throws when the subject has the `disabled` property, the same check
 [`.select()`](/api/commands/select) and
 [`.selectFile()`](/api/commands/selectfile) run.
 
-- When the subject is a collection, only the first element is checked.
-- Error: `` `cy.<commandName>()` failed because this element is `disabled`: ``
+- When the subject is a collection, it checks only the first element.
+- It throws `` `cy.<commandName>()` failed because this element is `disabled`: ``.
 
-**Used in:**
-[Wait for an element to be editable](#Wait-for-an-element-to-be-editable)
+Used in:
+[Wait for an element to be editable in a custom query](#Wait-for-an-element-to-be-editable-in-a-custom-query)
 
 ### isNotHiddenByAncestors()
 
@@ -204,11 +202,10 @@ is `'legacy'`.
 
 - It treats `opacity: 0` as visible.
 - When the subject is a collection, it fails when any element is clipped.
-- Error:
-  `` `cy.<commandName>()` failed because this element is not visible: ``,
+- It throws `` `cy.<commandName>()` failed because this element is not visible: ``,
   followed by the reason.
 
-**Used in:**
+Used in:
 [Wait for a carousel slide to scroll into view](#Wait-for-a-carousel-slide-to-scroll-into-view)
 
 ### isNotReadonly()
@@ -222,11 +219,11 @@ Throws when the subject is a text-like element, such as `<input type="text">`,
 checkbox, radio button, or other element with `readonly` passes, because
 browsers ignore `readonly` on those elements.
 
-- When the subject is a collection, only the first element is checked.
-- Error: `` `cy.<commandName>()` failed because this element is readonly: ``
+- When the subject is a collection, it checks only the first element.
+- It throws `` `cy.<commandName>()` failed because this element is readonly: ``.
 
-**Used in:**
-[Wait for an element to be editable](#Wait-for-an-element-to-be-editable)
+Used in:
+[Wait for an element to be editable in a custom query](#Wait-for-an-element-to-be-editable-in-a-custom-query)
 
 ### isScrollable()
 
@@ -237,10 +234,9 @@ Cypress.ensure.isScrollable(subject, commandName)
 Throws when the subject cannot be scrolled, the same check
 [`.scrollTo()`](/api/commands/scrollto) runs. Returns `true` when it passes.
 
-- Error:
-  `` `cy.<commandName>()` failed because this element is not scrollable: ``
+- It throws `` `cy.<commandName>()` failed because this element is not scrollable: ``.
 
-**Used in:**
+Used in:
 [Check an element before acting on it in a custom command](#Check-an-element-before-acting-on-it-in-a-custom-command)
 
 ### isType()
@@ -262,10 +258,10 @@ when the subject matches at least one of them.
   chain or continue one.
 - `'element'` also runs [`isAttached()`](#isAttached), so a subject the app has
   removed from the page fails with the detached-element error.
-- When more than one type is listed, the error names all of them:
+- When you list more than one type, the error names all of them:
   `` `cy.<commandName>()` failed because it requires a DOM element or document. ``
 
-**Used in:**
+Used in:
 [Accept only certain subject types in a custom query](#Accept-only-certain-subject-types-in-a-custom-query)
 
 ### isVisible()
@@ -282,12 +278,11 @@ your [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibil
   interacts with an element. Assert with `.should('be.visible')` when opacity
   matters.
 - When the subject is a collection, it fails when any element is hidden.
-- Error:
-  `` `cy.<commandName>()` failed because this element is not visible: ``,
+- It throws `` `cy.<commandName>()` failed because this element is not visible: ``,
   followed by the reason.
 
-**Used in:**
-[Wait for an element to be editable](#Wait-for-an-element-to-be-editable)
+Used in:
+[Wait for an element to be editable in a custom query](#Wait-for-an-element-to-be-editable-in-a-custom-query)
 
 ### isWindow()
 
@@ -298,10 +293,9 @@ Cypress.ensure.isWindow(subject, commandName, cy)
 Throws when the subject is not a global `window` object, such as the one
 [`cy.window()`](/api/commands/window) yields.
 
-- Error:
-  `` `cy.<commandName>()` failed because it requires the subject be a global `window` object. ``
+- It throws `` `cy.<commandName>()` failed because it requires the subject be a global `window` object. ``.
 
-**Used in:**
+Used in:
 [Read the app's localStorage keys in a custom query](#Read-the-apps-localStorage-keys-in-a-custom-query)
 
 ## Examples
@@ -311,7 +305,15 @@ Throws when the subject is not a global `window` object, such as the one
 Both versions of the `.inputValue()` query below reject a subject that isn't an
 element. The first throws its own error:
 
-```javascript title="cypress/support/commands.js"
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      inputValue(): Chainable<string | number | string[] | undefined>
+    }
+  }
+}
+
 Cypress.Commands.addQuery('inputValue', function () {
   return (subject) => {
     if (!Cypress.dom.isElement(subject)) {
@@ -321,11 +323,21 @@ Cypress.Commands.addQuery('inputValue', function () {
     return subject.val()
   }
 })
+
+export {}
 ```
 
 The second calls `Cypress.ensure.isElement()` instead:
 
-```javascript title="cypress/support/commands.js"
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      inputValue(): Chainable<string | number | string[] | undefined>
+    }
+  }
+}
+
 Cypress.Commands.addQuery('inputValue', function () {
   return (subject) => {
     Cypress.ensure.isElement(subject, 'inputValue', cy)
@@ -333,6 +345,8 @@ Cypress.Commands.addQuery('inputValue', function () {
     return subject.val()
   }
 })
+
+export {}
 ```
 
 Chain either one off a subject that isn't an element:
@@ -379,7 +393,7 @@ cy.get('#email').editable()
 ```
 
 `.editable()` is defined in
-[Wait for an element to be editable](#Wait-for-an-element-to-be-editable).
+[Wait for an element to be editable in a custom query](#Wait-for-an-element-to-be-editable-in-a-custom-query).
 
 ### Accept only certain subject types in a custom query
 
@@ -441,9 +455,9 @@ The previous command that ran was:
   > `cy.title()`
 ```
 
-### Wait for an element to be editable
+### Wait for an element to be editable in a custom query
 
-Checks inside a custom query are retried, so a query built from
+Cypress retries the checks inside a custom query, so a query built from
 `Cypress.ensure` functions waits for the element to reach the state you need.
 The `.editable()` query yields its subject once it is visible, enabled, and not
 read-only, and fails with Cypress's own actionability error if it never gets
@@ -499,7 +513,7 @@ In the Cypress App, the error appears under the failed test and names
 
 <DocsImage
   src="/img/api/ensure/command-log-editable-disabled-error.png"
-  alt="Command Log for a failed test: the visit and get rows, then a CypressError reading cy.editable() failed because this element is disabled, with the disabled input, the force hint, the docs link, and the code frame pointing at the editable() call."
+  alt="Command Log showing cy.editable() failed because the #email input is disabled"
 />
 
 ### Support a force option in a custom query
@@ -707,7 +721,15 @@ panel, which leaves `subject` pointing at a detached element, and a native
 click on it never reaches the panel on the page. `isAttached()` turns that
 silent miss into a clear failure:
 
-```javascript title="cypress/support/commands.js"
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      saveAndCollapse(): Chainable<void>
+    }
+  }
+}
+
 Cypress.Commands.add(
   'saveAndCollapse',
   { prevSubject: 'element' },
@@ -722,19 +744,29 @@ Cypress.Commands.add(
     })
   }
 )
+
+export {}
 ```
 
 ```javascript title="cypress/e2e/settings.cy.js"
 cy.get('#panel').saveAndCollapse()
 ```
 
-### Write your own check in a custom query
+### Write your own subject check in a custom query
 
 `Cypress.ensure` covers the subject checks Cypress itself needs. For any other
 condition, throw an error from your query's inner function. Cypress retries it
 the same way it retries an `ensure` check:
 
-```javascript title="cypress/support/commands.js"
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      priceValue(): Chainable<number>
+    }
+  }
+}
+
 Cypress.Commands.addQuery('priceValue', function () {
   return (subject) => {
     Cypress.ensure.isElement(subject, 'priceValue', cy)
@@ -750,11 +782,13 @@ Cypress.Commands.addQuery('priceValue', function () {
     return value
   }
 })
+
+export {}
 ```
 
 ## Notes
 
-### Retry behavior in queries and commands
+### Retry behavior of ensure checks in queries and commands
 
 `Cypress.ensure` functions throw an error and nothing more. What happens next
 depends on where you call them:
@@ -780,7 +814,7 @@ in [Support a force option in a custom query](#Support-a-force-option-in-a-custo
 Otherwise, when the hint would mislead your readers, write your own check
 instead.
 
-### The optional `onFail` argument
+### The legacy onFail argument to ensure functions
 
 The element checks, and `isAttached()`, accept an optional final `onFail`
 argument, typed as a [`Cypress.log()`](/api/cypress-api/cypress-log) instance.
