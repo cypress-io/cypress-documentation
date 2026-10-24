@@ -1,6 +1,6 @@
 ---
 title: 'Cypress.dom'
-description: 'Cypress.dom.method() is a collection of DOM related helper methods in Cypress'
+description: 'Cypress.dom is a set of helper functions that check DOM elements the same way Cypress commands do, such as whether an element is visible, detached, or focusable.'
 sidebar_label: dom
 sidebar_position: 100
 ---
@@ -9,187 +9,711 @@ sidebar_position: 100
 
 # Cypress.dom
 
-`Cypress.dom.method()` is a collection of DOM related helper methods.
+`Cypress.dom` is a set of helper functions that answer questions about the DOM
+the same way Cypress does. Is this element visible? Is it still attached to the
+page? Can it receive focus? Cypress's own commands and assertions rely on these
+checks, so when you call them yourself, your answer matches the one Cypress
+uses. [`.should('be.visible')`](/app/references/assertions#Visibility), for
+example, explains a failure with the message `getReasonIsHidden()` returns.
 
-:::caution
+Each function takes a value, checks it, and returns the result right away. That
+makes `Cypress.dom` useful anywhere you already hold an element and need a
+`true` or `false` to act on:
 
-There are actually dozens of methods attached to `Cypress.dom` that are not
-documented below. These methods are used internally by Cypress in nearly every
-single built in command.
+- Inspect an element's state while you debug a test.
+- Assert on a condition no built-in assertion covers, such as whether focus
+  stays inside a dialog.
+- Make a [custom query](/api/cypress-api/custom-queries) or
+  [custom command](/api/cypress-api/custom-commands) handle different kinds of
+  subjects.
 
-We suggest
-[reading through the source code here](https://github.com/cypress-io/cypress/blob/develop/packages/driver/src/dom/index.ts)
-to see all of the methods and what they do.
-
-:::
+This page has a reference entry for each function under
+[Functions](#Functions), and complete examples that put them to work under
+[Examples](#Examples).
 
 ## Syntax
+
+```javascript
+Cypress.dom.getReasonIsHidden($el)
+Cypress.dom.isAttached(subject)
+Cypress.dom.isDescendent($ancestor, $descendent)
+Cypress.dom.isDetached(subject)
+Cypress.dom.isDocument(obj)
+Cypress.dom.isDom(obj)
+Cypress.dom.isElement(obj)
+Cypress.dom.isFocusable($el)
+Cypress.dom.isFocused(element)
+Cypress.dom.isHidden(element)
+Cypress.dom.isInputType(element, type)
+Cypress.dom.isJquery(obj)
+Cypress.dom.isScrollable(subject)
+Cypress.dom.isVisible(element)
+Cypress.dom.isWindow(obj)
+Cypress.dom.stringify(element, form)
+Cypress.dom.unwrap(obj)
+Cypress.dom.wrap(obj)
+```
+
+### Usage
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```javascript
+cy.get('#email').then(($input) => {
+  Cypress.dom.isVisible($input) // true
+  Cypress.dom.isFocused($input[0]) // false
+})
+```
+
+<Icon name="times-circle" color="red" /> **Incorrect Usage**
+
+```javascript
+// Cypress.dom functions are not commands, so they don't chain off cy
+cy.get('#email').isVisible()
+
+// They check an element, not a selector, and this call throws
+Cypress.dom.isVisible('#email')
+
+// isFocused() needs a DOM element. With a jQuery object, it always returns false
+Cypress.dom.isFocused($input)
+```
+
+### Arguments
+
+The functions take the value to check as their first argument. Some accept a
+DOM element or a jQuery object, and others accept only one of the two; the
+[Functions](#Functions) table lists which. Two functions take a second argument:
+[`isInputType()`](#isInputType) takes a `type`, and
+[`stringify()`](#stringify) takes a `form`.
+
+<Icon name="angle-right" /> **element** **_(Element, jQuery)_**
+
+A DOM element, or a jQuery object that wraps one or more elements. Element
+queries such as [`cy.get()`](/api/commands/get) yield a jQuery object, so in a
+[`.then()`](/api/commands/then) callback, pass the subject as it is, or pass
+`$el[0]` for the first DOM element in it.
+
+<Icon name="angle-right" /> **obj** **_(any)_**
+
+Any value. The type checks, such as `isElement()` and `isWindow()`, accept
+anything and return `false` for a value that isn't the type they check for.
+
+### Return value
+
+Every function except `getReasonIsHidden()`, `stringify()`, `unwrap()`, and
+`wrap()` returns a boolean. None of them yield a subject, so to use a result in
+a Cypress chain, call the function inside a callback such as
+[`.then()`](/api/commands/then) or [`.should()`](/api/commands/should).
+
+## Functions
+
+| Function                                    | Returns…                                               | Accepts         |
+| ------------------------------------------- | ------------------------------------------------------ | --------------- |
+| [`getReasonIsHidden()`](#getReasonIsHidden) | why Cypress considers an element hidden                | jQuery          |
+| [`isAttached()`](#isAttached)               | whether an element is attached to the page             | element, jQuery |
+| [`isDescendent()`](#isDescendent)           | whether one element is inside another                  | jQuery          |
+| [`isDetached()`](#isDetached)               | whether an element is no longer attached to the page   | element, jQuery |
+| [`isDocument()`](#isDocument)               | whether a value is a `document`                        | any value       |
+| [`isDom()`](#isDom)                         | whether a value is an element, `document`, or `window` | any value       |
+| [`isElement()`](#isElement)                 | whether a value is a DOM element                       | any value       |
+| [`isFocusable()`](#isFocusable)             | whether an element can receive focus                   | jQuery          |
+| [`isFocused()`](#isFocused)                 | whether an element has focus                           | element         |
+| [`isHidden()`](#isHidden)                   | whether Cypress considers an element hidden            | element, jQuery |
+| [`isInputType()`](#isInputType)             | whether an `<input>` or `<button>` has a given `type`  | element, jQuery |
+| [`isJquery()`](#isJquery)                   | whether a value is a jQuery object                     | any value       |
+| [`isScrollable()`](#isScrollable)           | whether an element or the window can scroll            | jQuery, window  |
+| [`isVisible()`](#isVisible)                 | whether Cypress considers an element visible           | element, jQuery |
+| [`isWindow()`](#isWindow)                   | whether a value is a `window`                          | any value       |
+| [`stringify()`](#stringify)                 | a short HTML string that describes an element          | element, jQuery |
+| [`unwrap()`](#unwrap)                       | the DOM elements inside a jQuery object, as an array   | any value       |
+| [`wrap()`](#wrap)                           | a jQuery object that wraps the value                   | element, HTML   |
+
+### getReasonIsHidden()
+
+```javascript
+Cypress.dom.getReasonIsHidden($el)
+```
+
+Returns a sentence that explains why Cypress considers an element hidden. It is
+the reason that follows a failed `.should('be.visible')` assertion, so you can
+read it without failing the test.
+
+- It needs a jQuery object. A DOM element throws a `TypeError`.
+- The reason follows your
+  [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy).
+  Under the default `'modern'` strategy, it names the computed `display`,
+  `visibility`, `opacity`, and `content-visibility` values, or the element's
+  size when it has no width or height.
+- For a visible element, it returns a sentence that doesn't name a cause, such
+  as ``This element `<button#place-order>` is not visible.`` Check
+  [`isHidden()`](#isHidden) first.
+
+For a `<button id="place-order">` with `display: none`, it returns:
+
+```text
+This element `<button#place-order>` is not visible per `Element.checkVisibility()`. Computed: `display: none`, `visibility: visible`, `opacity: 1`, `content-visibility: visible`.
+```
+
+Used in:
+[Inspect an element's state while debugging a test](#Inspect-an-elements-state-while-debugging-a-test)
+
+### isAttached()
+
+```javascript
+Cypress.dom.isAttached(subject)
+```
+
+Returns `true` when the element is attached to a page with an active window.
+This is the check behind Cypress's
+[detached element](/app/core-concepts/interacting-with-elements#Detached)
+errors.
+
+- For a jQuery object, it returns `true` only when every element in it is
+  attached, and `false` for an empty jQuery object.
+- A `window` or `document` counts as attached.
+
+Used in:
+[Inspect an element's state while debugging a test](#Inspect-an-elements-state-while-debugging-a-test)
+
+### isDescendent()
+
+```javascript
+Cypress.dom.isDescendent($ancestor, $descendent)
+```
+
+Returns `true` when `$descendent` is inside `$ancestor`, at any depth.
+
+- Both arguments need to be jQuery objects. A DOM element throws a `TypeError`.
+- It compares the first element in each jQuery object.
+- An element counts as its own descendent, so passing the same element twice
+  returns `true`.
+
+Used in:
+[Check that keyboard focus stays inside a dialog](#Check-that-keyboard-focus-stays-inside-a-dialog)
+
+### isDetached()
+
+```javascript
+Cypress.dom.isDetached(subject)
+```
+
+Returns `true` when the element is no longer attached to the page, for example
+because the app re-rendered it. It is the opposite of
+[`isAttached()`](#isAttached), so an empty jQuery object counts as detached.
+
+Used in:
+[Check whether the app re-rendered an element](#Check-whether-the-app-re-rendered-an-element)
+
+### isDocument()
+
+```javascript
+Cypress.dom.isDocument(obj)
+```
+
+Returns `true` when the value is a `document`, such as the one
+[`cy.document()`](/api/commands/document) yields, or a jQuery object that wraps
+one.
+
+- A document fragment, such as an element's `shadowRoot`, also returns `true`.
+
+Used in:
+[Log any subject in a custom command](#Log-any-subject-in-a-custom-command)
+
+### isDom()
+
+```javascript
+Cypress.dom.isDom(obj)
+```
+
+Returns `true` when the value is a DOM element, a `document`, or a `window`, or
+a jQuery object whose first item is one of them. A text node or an HTML string
+returns `false`.
+
+Used in:
+[Log any subject in a custom command](#Log-any-subject-in-a-custom-command)
+
+### isElement()
+
+```javascript
+Cypress.dom.isElement(obj)
+```
+
+Returns `true` when the value is a DOM element, or a jQuery object whose first
+item is a DOM element. A `window`, a `document`, a text node, and an empty
+jQuery object return `false`.
+
+Used in:
+[Log any subject in a custom command](#Log-any-subject-in-a-custom-command)
+
+### isFocusable()
+
+```javascript
+Cypress.dom.isFocusable($el)
+```
+
+Returns `true` when the element is a kind that can receive focus: a link or
+`<area>` with an `href`, an enabled `<input>`, `<select>`, `<textarea>`, or
+`<button>`, an `<iframe>`, or any element with a `tabindex` or
+`contenteditable` attribute.
+
+- It needs a jQuery object. A DOM element throws a `TypeError`. Wrap one with
+  [`wrap()`](#wrap) first.
+- It checks the element's type and attributes, not whether it is visible, so an
+  `<input>` inside a `display: none` container still returns `true`.
+- It counts `tabindex="-1"`, which can receive focus from a script but not from
+  the <kbd>Tab</kbd> key.
+
+Used in:
+[Inspect an element's state while debugging a test](#Inspect-an-elements-state-while-debugging-a-test),
+[Check that keyboard focus stays inside a dialog](#Check-that-keyboard-focus-stays-inside-a-dialog)
+
+### isFocused()
+
+```javascript
+Cypress.dom.isFocused(element)
+```
+
+Returns `true` when the element is the document's active element, including
+inside a shadow root.
+
+- It needs a DOM element. A jQuery object always returns `false`, so pass
+  `$el[0]`.
+- It returns `false` for `<body>` when nothing else has focus.
+- In a test, `.should('have.focus')` or
+  [`cy.focused()`](/api/commands/focused) asserts focus and retries. Use
+  `isFocused()` when you need the answer in your own logic.
+
+Used in:
+[Inspect an element's state while debugging a test](#Inspect-an-elements-state-while-debugging-a-test)
+
+### isHidden()
 
 ```javascript
 Cypress.dom.isHidden(element)
 ```
 
+Returns `true` when Cypress considers the element hidden, following the
+[visibility rules](/app/core-concepts/interacting-with-elements#Visibility) of
+your
+[`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy).
+It is the opposite of [`isVisible()`](#isVisible); see that entry for the
+behavior both share.
+
+When the value isn't a DOM element or a jQuery object, it throws:
+
+```text
+`Cypress.dom.isHidden()` failed because it requires a DOM element. The subject received was: `#email`
+```
+
+Used in:
+[Inspect an element's state while debugging a test](#Inspect-an-elements-state-while-debugging-a-test)
+
+### isInputType()
+
+```javascript
+Cypress.dom.isInputType(element, type)
+```
+
+Returns `true` when the element is an `<input>` or `<button>` whose `type`
+matches. Any other element returns `false`.
+
+<Icon name="angle-right" /> **type** **_(String, Array)_**
+
+The type to match, such as `'email'`, or an array of types, any of which can
+match.
+
+- It reads the element's `type` property, not its attribute. A browser treats
+  an `<input>` with an unknown `type`, such as `type="nickname"`, as
+  `type="text"`, and so does `isInputType()`.
+- For a jQuery object, it checks the first element.
+
+Used in:
+[Fill in each field of a form by its input type](#Fill-in-each-field-of-a-form-by-its-input-type)
+
+### isJquery()
+
+```javascript
+Cypress.dom.isJquery(obj)
+```
+
+Returns `true` when the value is a jQuery object, such as the subject an element
+query yields. It checks the object itself, so it also recognizes jQuery objects
+created by a different copy of jQuery, such as your app's.
+
+Used in:
+[Log any subject in a custom command](#Log-any-subject-in-a-custom-command)
+
+### isScrollable()
+
+```javascript
+Cypress.dom.isScrollable(subject)
+```
+
+Returns `true` when the element's content overflows it and its `overflow` is
+`scroll` or `auto`, so the element can scroll. This is the check
+[`.scrollTo()`](/api/commands/scrollto) runs before it scrolls an element.
+
+- It needs a jQuery object or a `window`. A DOM element always returns `false`.
+- For a `window`, or for the `<html>` element, it returns `true` when the page
+  is taller or wider than the window.
+
+Used in:
+[Inspect an element's state while debugging a test](#Inspect-an-elements-state-while-debugging-a-test),
+[Scroll a container only when its content overflows](#Scroll-a-container-only-when-its-content-overflows)
+
+### isVisible()
+
+```javascript
+Cypress.dom.isVisible(element)
+```
+
+Returns `true` when Cypress considers the element visible, following the
+[visibility rules](/app/core-concepts/interacting-with-elements#Visibility) of
+your
+[`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy).
+It is the opposite of [`isHidden()`](#isHidden).
+
+- It treats an element with `opacity: 0` as hidden. The actionability checks
+  that run before Cypress clicks or types ignore opacity, so an element can be
+  hidden by this check and still be actionable.
+- Under the default `'modern'` strategy, a jQuery object with several elements
+  counts as visible only when every element in it is visible.
+- It checks the element's state at the moment you call it and doesn't retry.
+
+When the value isn't a DOM element or a jQuery object, it throws:
+
+```text
+`Cypress.dom.isVisible()` failed because it requires a DOM element. The subject received was: `#email`
+```
+
+Used in:
+[Inspect an element's state while debugging a test](#Inspect-an-elements-state-while-debugging-a-test),
+[Dismiss an optional banner only when it is visible](#Dismiss-an-optional-banner-only-when-it-is-visible)
+
+### isWindow()
+
+```javascript
+Cypress.dom.isWindow(obj)
+```
+
+Returns `true` when the value is a `window`, such as the one
+[`cy.window()`](/api/commands/window) yields, or a jQuery object that wraps
+one.
+
+Used in:
+[Log any subject in a custom command](#Log-any-subject-in-a-custom-command)
+
+### stringify()
+
+```javascript
+Cypress.dom.stringify(element, form)
+```
+
+Returns a string that describes the element, the format Cypress uses in its
+Command Log and error messages.
+
+<Icon name="angle-right" /> **form** **_(String)_**
+
+`'long'` or `'short'`. Any other value throws.
+
+| `form`    | Returns                                                         | Example                        |
+| --------- | --------------------------------------------------------------- | ------------------------------ |
+| `'long'`  | the element's opening and closing tags, with its text shortened | `<p id="intro">Hello w...</p>` |
+| `'short'` | the tag name with its `id` and classes                          | `<p#intro.lead>`               |
+
+- For a jQuery object with several elements, `'short'` describes the first and
+  counts the rest, as in `[ <li.item>, 2 more... ]`.
+- A `window` returns `<window>` and a `document` returns `<document>`.
+
+Used in:
+[Inspect an element's state while debugging a test](#Inspect-an-elements-state-while-debugging-a-test),
+[Log any subject in a custom command](#Log-any-subject-in-a-custom-command)
+
+### unwrap()
+
+```javascript
+Cypress.dom.unwrap(obj)
+```
+
+Returns the DOM elements inside a jQuery object as an array, even when it holds
+a single element. Any other value comes back unchanged.
+
+Used in:
+[Log any subject in a custom command](#Log-any-subject-in-a-custom-command)
+
+### wrap()
+
+```javascript
+Cypress.dom.wrap(obj)
+```
+
+Returns a jQuery object that wraps the value, the same as calling
+[`Cypress.$`](/api/utilities/$) with it. Use it to pass a DOM element to a
+function that needs a jQuery object, such as [`isFocusable()`](#isFocusable).
+
+- A selector string searches the spec's document, not your app's, so it finds
+  nothing on the page you visited. To find elements in your app, use
+  [`cy.$$`](/api/utilities/$) or a query such as [`cy.get()`](/api/commands/get).
+
+Used in:
+[Check that keyboard focus stays inside a dialog](#Check-that-keyboard-focus-stays-inside-a-dialog)
+
 ## Examples
 
-### Is attached
+### Inspect an element's state while debugging a test
 
-**Returns a boolean indicating whether an element is attached to the DOM.**
+When a command fails on an element and the error doesn't explain why, log the
+checks Cypress runs. This prints a table to the browser's DevTools console:
 
-```javascript
-cy.get('button').then(($el) => {
-  Cypress.dom.isAttached($el) // true
+```javascript title="cypress/e2e/checkout.cy.js"
+cy.get('#place-order').then(($button) => {
+  console.table({
+    element: Cypress.dom.stringify($button, 'short'),
+    attached: Cypress.dom.isAttached($button),
+    visible: Cypress.dom.isVisible($button),
+    hiddenReason: Cypress.dom.isHidden($button)
+      ? Cypress.dom.getReasonIsHidden($button)
+      : 'none',
+    focusable: Cypress.dom.isFocusable($button),
+    focused: Cypress.dom.isFocused($button[0]),
+    scrollable: Cypress.dom.isScrollable($button),
+  })
 })
 ```
 
-### Is descendent
+For a visible, unfocused button, the table reads:
 
-**Returns a boolean indicating whether an element is a descendent of another
-element.**
+| (index)      | Value                  |
+| ------------ | ---------------------- |
+| element      | `<button#place-order>` |
+| attached     | `true`                 |
+| visible      | `true`                 |
+| hiddenReason | `none`                 |
+| focusable    | `true`                 |
+| focused      | `false`                |
+| scrollable   | `false`                |
 
-```javascript
-cy.get('div').then(($el) => {
-  Cypress.dom.isDescendent($el.parent(), $el) // true
+[`cy.get()`](/api/commands/get) waits only for the element to exist, so the
+callback runs as soon as the button is in the DOM, whether or not it is
+visible.
+
+### Dismiss an optional banner only when it is visible
+
+Some apps show a banner on some visits and not others, such as a promotion that
+appears on a schedule. When the test can't control whether it shows, check for
+it and dismiss it only when it's there:
+
+```javascript title="cypress/e2e/home.cy.js"
+cy.get('body').then(($body) => {
+  const $banner = $body.find('#promo-banner')
+
+  if ($banner.length && Cypress.dom.isVisible($banner)) {
+    cy.wrap($banner).find('button.dismiss').click()
+  }
+})
+
+cy.contains('h1', 'Welcome').should('be.visible')
+```
+
+The check runs once, when the callback runs, and doesn't retry. A banner that
+appears a moment later is missed, and the test carries on without dismissing
+it. When you can, control the banner from the test instead, for example with a
+cookie or a stubbed response. The
+[conditional testing guide](/app/guides/conditional-testing) covers the
+alternatives.
+
+### Check whether the app re-rendered an element
+
+Some apps update an element in place, and others replace it with a new one. To
+test that an action replaces the element, hold on to the original and check that
+it detaches:
+
+```javascript title="cypress/e2e/cart.cy.js"
+cy.get('#cart-total').then(($oldTotal) => {
+  cy.get('#add-to-cart').click()
+
+  cy.get('#cart-total').should(($newTotal) => {
+    expect(Cypress.dom.isDetached($oldTotal)).to.be.true
+    expect($newTotal).to.have.text('$20.00')
+  })
 })
 ```
 
-### Is detached
+[`.should()`](/api/commands/should) retries the callback, and
+[`cy.get()`](/api/commands/get) queries the page again on each retry, so the
+assertion passes once the old element has detached and the new one shows the
+updated total.
 
-**Returns a boolean indicating whether an element is detached from the DOM.**
+### Scroll a container only when its content overflows
 
-```javascript
-cy.get('button').then(($el) => {
-  Cypress.dom.isDetached($el) // false
+[`.scrollTo()`](/api/commands/scrollto) fails on an element that can't scroll.
+When the amount of content varies, such as an activity feed, scroll only when
+there is somewhere to scroll to:
+
+```javascript title="cypress/e2e/activity.cy.js"
+cy.get('#activity-feed').then(($feed) => {
+  if (Cypress.dom.isScrollable($feed)) {
+    cy.wrap($feed).scrollTo('bottom')
+  }
 })
 ```
 
-### Is document
+### Fill in each field of a form by its input type
 
-**Returns a boolean indicating whether a node is of document type.**
+To fill in a form whose fields change, such as a sign-up form behind a feature
+flag, iterate over its inputs and choose a value by type:
 
-```javascript
-cy.get('p').then(($el) => {
-  Cypress.dom.isDocument($el) // false
+```javascript title="cypress/e2e/signup.cy.js"
+cy.get('#signup input').each(($input) => {
+  if (Cypress.dom.isInputType($input, 'email')) {
+    cy.wrap($input).type('jane@example.com')
+  } else if (Cypress.dom.isInputType($input, ['text', 'search'])) {
+    cy.wrap($input).type('Jane')
+  }
 })
 ```
 
-### Is DOM
+Inputs of other types, such as checkboxes, are left as they are. An input with
+an unknown `type` counts as `text`, the same way the browser treats it, so it
+gets `'Jane'`.
 
-**Returns a boolean indicating whether an object is a DOM object.**
+### Check that keyboard focus stays inside a dialog
 
-```javascript
-cy.get('body').then(($el) => {
-  Cypress.dom.isDom($el) // true
+An accessible modal dialog traps focus: pressing <kbd>Tab</kbd> on its last
+control moves focus back to its first, rather than to the page behind it. This
+test counts the dialog's focusable elements, presses <kbd>Tab</kbd> once more
+than that, and checks that focus never leaves the dialog:
+
+```javascript title="cypress/e2e/settings.cy.js"
+cy.get('#open-settings').click()
+
+cy.get('[role="dialog"]').then(($dialog) => {
+  const $focusable = $dialog
+    .find('*')
+    .filter((_, el) => Cypress.dom.isFocusable(Cypress.dom.wrap(el)))
+
+  // Press Tab once more than there are focusable elements,
+  // so focus has to wrap around to the start
+  for (let i = 0; i <= $focusable.length; i++) {
+    cy.press(Cypress.Keyboard.Keys.TAB)
+    cy.focused().should(($focused) => {
+      expect(Cypress.dom.isDescendent($dialog, $focused)).to.be.true
+    })
+  }
 })
 ```
 
-### Is element
+If focus moves outside the dialog, the assertion fails. `isFocusable()` doesn't
+check visibility, so if the dialog holds hidden controls, filter them out with
+[`isVisible()`](#isVisible) before you count.
 
-**Returns a boolean indicating whether an object is a DOM element.**
+### Log any subject in a custom command
 
-```javascript
-cy.get('p').then(($el) => {
-  Cypress.dom.isElement($el) // true
+A custom command that accepts any subject can use the type checks to describe
+what it received. The `.logSubject()` command below writes the subject to the
+Command Log in the same short format Cypress uses, and lists its type and its
+elements when you click the log entry:
+
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable<Subject> {
+      logSubject(): Chainable<Subject>
+    }
+  }
+}
+
+const describeType = (subject: unknown) => {
+  if (Cypress.dom.isWindow(subject)) return 'window'
+  if (Cypress.dom.isDocument(subject)) return 'document'
+  if (Cypress.dom.isElement(subject)) return 'element'
+
+  return typeof subject
+}
+
+Cypress.Commands.add('logSubject', { prevSubject: true }, (subject) => {
+  Cypress.log({
+    name: 'logSubject',
+    message: Cypress.dom.isDom(subject)
+      ? Cypress.dom.stringify(subject, 'short')
+      : String(subject),
+    consoleProps: () => ({
+      Type: describeType(subject),
+      Elements: Cypress.dom.isJquery(subject)
+        ? Cypress.dom.unwrap(subject)
+        : subject,
+    }),
+  })
+
+  return subject
 })
+
+export {}
 ```
 
-### Is focusable
+Chain it off any command that yields a subject:
 
-**Returns a boolean indicating whether an element can receive focus.**
-
-Cypress internally uses this method _everywhere_ to figure out whether an
-element is hidden,
-[mostly for actionability](/app/core-concepts/interacting-with-elements).
-
-```javascript
-cy.get('input').then(($el) => {
-  Cypress.dom.isFocusable($el) // true
-})
+```javascript title="cypress/e2e/signup.cy.js"
+cy.get('#signup input').logSubject()
+cy.document().logSubject()
+cy.title().logSubject()
 ```
 
-### Is focused
+The Command Log shows `[ <input#name>, 4 more... ]` for the five inputs,
+`<document>` for the document, and the page title as plain text.
 
-**Returns a boolean indicating whether an element currently has focus.**
+## Notes
 
-```javascript
-cy.get('button').then(($el) => {
-  Cypress.dom.isFocused($el)
-})
-```
+### Pass a jQuery object or a DOM element as each function expects
 
-### Is hidden
+Element queries yield a jQuery object, but some functions need a DOM element,
+and passing the wrong one doesn't always throw. Two cases return a wrong answer
+without an error:
 
-**Returns a boolean indicating whether an element is hidden.**
+- `isFocused($el)` always returns `false`. Pass `$el[0]`.
+- `isScrollable($el[0])` always returns `false`. Pass `$el`.
 
-Cypress internally uses this method _everywhere_ to figure out whether an
-element is hidden,
-[mostly for actionability](/app/core-concepts/interacting-with-elements).
+The Accepts column of the [Functions](#Functions) table lists what each one
+takes. Convert between the two with [`wrap()`](#wrap) and `$el[0]`.
 
-```javascript
-cy.get('p').then(($el) => {
-  Cypress.dom.isHidden($el) // false
-})
-```
+### Cypress.dom checks don't retry on their own
 
-### Is jQuery
+Each function checks the DOM once, at the moment you call it. In a
+[`.then()`](/api/commands/then) callback, the result can be out of date by the
+time the next command runs. To wait for a condition, call the function inside a
+[`.should()`](/api/commands/should) callback or a
+[custom query](/api/cypress-api/custom-queries), which Cypress retries until it
+passes or times out.
 
-**Returns a boolean indicating whether an object is a jQuery object.**
+### Cypress.dom compared with Cypress.ensure and assertions
 
-```javascript
-cy.get('input').then(($el) => {
-  Cypress.dom.isJquery($el)
-})
-```
+- An assertion such as `.should('be.visible')` checks state in a test, and
+  retries.
+- [`Cypress.ensure`](/api/cypress-api/ensure) throws a Cypress error when a
+  subject fails a check, for validating the subject of a custom query or command.
+- `Cypress.dom` returns the answer and leaves what to do with it to you.
 
-### Is scrollable
+### Other functions on Cypress.dom
 
-**Returns a boolean indicating whether an element is scrollable.**
+`Cypress.dom` holds more functions than this page lists, such as the coordinate
+helpers Cypress uses to decide where to click. They support Cypress's own
+commands, and their behavior can change between releases. The functions on this
+page are the ones intended for use in tests.
 
-Cypress internally uses this method _everywhere_ to figure out whether an
-element can be scrolled,
-[mostly for actionability](/app/core-concepts/interacting-with-elements).
+## History
 
-```javascript
-cy.get('body').then(($el) => {
-  Cypress.dom.isScrollable($el) // true
-})
-```
+| Version                                    | Changes                                                                                                                                                                                  |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.0.0](/app/references/changelog#16-0-0) | `isVisible()`, `isHidden()`, and `getReasonIsHidden()` follow the [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy), which defaults to `'modern'` |
+| [6.2.1](/app/references/changelog#6-2-1)   | `isJquery()` always returns a boolean                                                                                                                                                    |
+| [0.20.0](/app/references/changelog#0-20-0) | Renamed `Cypress.Dom` to `Cypress.dom`                                                                                                                                                   |
 
-### Is visible
+## See also
 
-**Returns a boolean indicating whether an element is visible.**
-
-```javascript
-cy.get('img').then(($el) => {
-  Cypress.dom.isVisible($el) // true
-})
-```
-
-### Is window
-
-**Returns a boolean indicating whether an object is a window object.**
-
-```javascript
-cy.get(window).then(($el) => {
-  Cypress.dom.isWindow($el) // true
-})
-```
-
-### Unwrap
-
-**Returns an array of raw elements pulled out from a jQuery object.**
-
-```javascript
-cy.get('body').then(($el) => {
-  Cypress.dom.unwrap($el)
-})
-```
-
-### Wrap
-
-**Returns a jQuery object obtained by wrapping an object in jQuery.**
-
-```javascript
-cy.get('p').then(($el) => {
-  Cypress.dom.wrap($el)
-})
-```
+- [`Cypress.ensure`](/api/cypress-api/ensure) - checks that throw a Cypress
+  error instead of returning a boolean
+- [Custom Queries](/api/cypress-api/custom-queries) - retry a `Cypress.dom` check
+  until it passes
+- [Interacting with Elements](/app/core-concepts/interacting-with-elements) -
+  the visibility and actionability rules behind these checks
+- [`Cypress.$`](/api/utilities/$)
