@@ -194,7 +194,9 @@ Guidance, not arithmetic:
   form in FAQ and troubleshooting sections. Forcing `How to` onto a section that
   answers no question is worse than leaving it short.
 - **Sentence case**, with the fixed API page skeleton (`## Command Log`,
-  `## Syntax`) and product names keeping their own capitalization.
+  `## Syntax`), function names on
+  [namespace API pages](#namespace-api-pages) (`### isVisible()`), and product
+  names keeping their own capitalization.
 
 This applies to headings you are writing. Renaming an existing heading costs two
 published URLs, and neither is redirectable:
@@ -1188,6 +1190,54 @@ read those on GitHub.
 - **Options tables are the most common place drift hides.** Check every row
   against the options interface and the defaults, including rows the source no
   longer has.
+
+## Namespace API pages
+
+Most `/api` pages document one command with one signature, and the skeleton in
+[`docs/api/AGENTS.md`](./docs/api/AGENTS.md) fits them. A namespace page
+documents an object with several functions, such as `Cypress.ensure`. Forced
+into the single-command skeleton, it ends up with one shared Arguments list full
+of "this function only" exceptions, and each function's behavior split across
+the table, Arguments, and Notes. The reader then visits four sections to learn
+what one function does, and no function has an anchor another page can link to.
+The namespace layout gives each function one place.
+
+[`docs/api/cypress-api/ensure.mdx`](./docs/api/cypress-api/ensure.mdx) is the
+model page. The sections, in order:
+
+| Section        | Contents                                                                                            |
+| -------------- | --------------------------------------------------------------------------------------------------- |
+| Intro          | the value: what the object gives the reader, then a pointer to `## Functions` and `## Examples`     |
+| `## Syntax`    | every signature in one `javascript` block, then `### Usage`, `### Arguments`, `### Return value`    |
+| `## Functions` | an index table (function linked to its entry, one-line summary), then one `### name()` per function |
+| `## Examples`  | complete, runnable recipes that combine functions, under task headings                              |
+| `## Notes`     | only behavior that applies across functions                                                         |
+| `## History`   | version table, newest first                                                                         |
+| `## See also`  | related pages                                                                                       |
+
+- **Alphabetical order, everywhere.** The Syntax block, the index table, and the
+  `### name()` entries list functions in the same alphabetical order, so a
+  reader scans for a name instead of learning a grouping. Don't add grouping
+  comments to the Syntax block; the index table's summaries say what each
+  function is for.
+- **`### Arguments` covers only the shared arguments.** An argument one function
+  takes, like `isType()`'s `types`, goes in that function's entry, and the
+  shared Arguments section links to it.
+- **Each `### name()` entry holds** the signature, what the function does, the
+  behavior specific to it (as bullets), its error message when it throws, and a
+  "Used in:" line linking to the recipe that shows it. A function with no
+  recipe gets a new tested one, which makes coverage gaps visible: an entry
+  without a "Used in:" line is missing an example.
+- **`### Return value`, not `<HeaderYields />`.** These are plain functions that
+  return a value or nothing; they don't yield a subject to a chain.
+- **The function headings are exempt from the heading-length rule.** A bare
+  `### isVisible()` is the term readers search for, and it produces the anchor
+  `#isVisible` that other pages link to.
+
+Use it for pages like `Cypress.dom` and `Cypress.session`, where several
+functions share a page. Leave single-function configuration APIs, such as
+`Cypress.Keyboard.defaults()` and `Cypress.Screenshot.defaults()`, on the
+single-command skeleton.
 
 ## Testing
 

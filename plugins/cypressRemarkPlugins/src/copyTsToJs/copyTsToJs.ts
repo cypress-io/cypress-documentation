@@ -48,6 +48,14 @@ function matchNode(node: Node): node is Code & Parent {
   )
 }
 
+// Rewrites a TypeScript filename in a `title="..."` to its JavaScript
+// equivalent, so the generated JS block doesn't show a .ts filename.
+export function toJsMeta(meta: string): string {
+  return meta
+    .replace('copyTsToJs', '')
+    .replace(/(title=(["'])[^"']*\.)(m|c)?ts(x?)(\2)/, '$1$3js$4$5')
+}
+
 function transformNode(node: Code, options: PluginOptions) : Code[]{
   const { tsCode, jsCode } = transformTsToJs(node.value, options)
 
@@ -55,7 +63,7 @@ function transformNode(node: Code, options: PluginOptions) : Code[]{
     {
       type: node.type,
       lang: 'js',
-      meta: node.meta?.replace('copyTsToJs', ''),
+      meta: node.meta ? toJsMeta(node.meta) : node.meta,
       value: jsCode,
     },
     {

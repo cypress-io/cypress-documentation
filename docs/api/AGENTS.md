@@ -51,12 +51,16 @@ this order, using only the ones the page needs:
 | `## History`     | version table, newest first                                                                                   |
 | `## See also`    | 2 to 5 sibling commands                                                                                       |
 
+A **namespace page** (an object with several functions, like `Cypress.ensure`)
+adds `## Functions` before `## Examples`, one `### name()` entry per function,
+in **alphabetical order** everywhere functions are listed. See
+[Namespace API pages](../../AGENTS_REFERENCE.md#namespace-api-pages).
+
 Never hand-write the `Yields`, `Requirements`, `Assertions`, or `Timeouts`
-headings. The four `Header*` partials render them,
-`src/theme/MDXComponents.js` registers them globally so they take no import, and
-each carries the anchor other pages link to (`{#Yields}`, `{#Requirements}`,
-`{#Assertions}`, `{#Timeouts}`). Hand-writing one drops its anchor and breaks
-every inbound link to it.
+headings. The four `Header*` partials render them (registered globally in
+`src/theme/MDXComponents.js`, so no import) and carry the anchors other pages
+link to (`{#Yields}`, `{#Requirements}`, `{#Assertions}`, `{#Timeouts}`).
+Hand-writing one drops its anchor and breaks every inbound link to it.
 
 ## History tables
 
