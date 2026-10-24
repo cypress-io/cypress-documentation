@@ -51,7 +51,7 @@ Cypress.ensure.isVisible(subject, commandName)
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
-```javascript
+```javascript title="cypress/support/commands.js"
 Cypress.Commands.addQuery('editable', function () {
   return (subject) => {
     Cypress.ensure.isElement(subject, 'editable', cy)
@@ -64,7 +64,7 @@ Cypress.Commands.addQuery('editable', function () {
 
 <Icon name="times-circle" color="red" /> **Incorrect Usage**
 
-```javascript
+```javascript title="cypress/support/commands.js"
 // The state checks take no `cy` argument
 Cypress.ensure.isNotDisabled(subject, 'editable', cy)
 
@@ -132,9 +132,9 @@ start a chain, where it searches the whole page, or continue one, where it
 searches inside the previous element or document. `isType()` rejects every other
 subject, such as a string yielded by [`.invoke()`](/api/commands/invoke).
 
-Add it to `cypress/support/commands.ts` (or `.js`):
+Add it to your support file:
 
-```typescript copyTsToJs
+```typescript copyTsToJs title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -163,7 +163,7 @@ export {}
 
 Then use it at the start of a chain or after another query:
 
-```javascript
+```javascript title="cypress/e2e/data-cy.cy.js"
 cy.dataCy('submit').should('have.text', 'Submit')
 cy.get('form').dataCy('email').should('have.attr', 'type', 'email')
 ```
@@ -171,7 +171,7 @@ cy.get('form').dataCy('email').should('have.attr', 'type', 'email')
 Chaining `.dataCy()` off a subject it doesn't accept fails with a Cypress error
 that lists every accepted type:
 
-```javascript
+```javascript title="cypress/e2e/data-cy.cy.js"
 cy.title().dataCy('submit')
 ```
 
@@ -195,7 +195,7 @@ The `.editable()` query yields its subject once it is visible, enabled, and not
 read-only, and fails with Cypress's own actionability error if it never gets
 there.
 
-```typescript copyTsToJs
+```typescript copyTsToJs title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -222,7 +222,7 @@ Here, the `#email` input starts out disabled and the app enables it after it
 loads the user's profile. `.editable()` retries until the input is enabled, then
 [`.invoke()`](/api/commands/invoke) sets its value:
 
-```javascript
+```javascript title="cypress/e2e/profile.cy.js"
 cy.get('#email').editable().invoke('val', 'jane@example.com')
 cy.get('#email').should('have.value', 'jane@example.com')
 ```
@@ -248,7 +248,7 @@ not retried, so a failed check fails the test right away. The `.scrollToBottom()
 command below checks that its subject can be scrolled before it changes the
 element's `scrollTop`, then yields the element so the chain can continue.
 
-```typescript copyTsToJs
+```typescript copyTsToJs title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -272,7 +272,7 @@ Cypress.Commands.add(
 export {}
 ```
 
-```javascript
+```javascript title="cypress/e2e/messages.cy.js"
 cy.get('#messages')
   .scrollToBottom()
   .contains('Latest message')
@@ -303,7 +303,7 @@ objects that [`cy.window()`](/api/commands/window) and
 below reads the keys in the app's `localStorage` and retries until an assertion
 on them passes.
 
-```typescript copyTsToJs
+```typescript copyTsToJs title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -323,7 +323,7 @@ Cypress.Commands.addQuery('storageKeys', function () {
 export {}
 ```
 
-```javascript
+```javascript title="cypress/e2e/auth.cy.js"
 cy.window().storageKeys().should('include', 'authToken')
 ```
 
@@ -402,7 +402,7 @@ throw your own error from the query or command.
 condition, throw an error from your query's inner function. Cypress retries it
 the same way it retries an `ensure` check:
 
-```javascript
+```javascript title="cypress/support/commands.js"
 Cypress.Commands.addQuery('priceValue', function () {
   return (subject) => {
     Cypress.ensure.isElement(subject, 'priceValue', cy)
