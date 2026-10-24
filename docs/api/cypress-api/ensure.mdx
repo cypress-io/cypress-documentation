@@ -36,19 +36,16 @@ them under [Examples](#Examples).
 ## Syntax
 
 ```javascript
-// Check the type of the subject
-Cypress.ensure.isType(subject, types, commandName, cy)
-Cypress.ensure.isElement(subject, commandName, cy)
-Cypress.ensure.isDocument(subject, commandName, cy)
-Cypress.ensure.isWindow(subject, commandName, cy)
-
-// Check the state of a DOM element
 Cypress.ensure.isAttached(subject, commandName, cy)
+Cypress.ensure.isDocument(subject, commandName, cy)
+Cypress.ensure.isElement(subject, commandName, cy)
 Cypress.ensure.isNotDisabled(subject, commandName)
 Cypress.ensure.isNotHiddenByAncestors(subject, commandName)
 Cypress.ensure.isNotReadonly(subject, commandName)
 Cypress.ensure.isScrollable(subject, commandName)
+Cypress.ensure.isType(subject, types, commandName, cy)
 Cypress.ensure.isVisible(subject, commandName)
+Cypress.ensure.isWindow(subject, commandName, cy)
 ```
 
 ### Usage
@@ -110,88 +107,16 @@ fails. `isScrollable()` returns `true` when the check passes.
 
 | Function                                              | Throws when the subject…                           |
 | ----------------------------------------------------- | -------------------------------------------------- |
-| [`isType()`](#isType)                                 | matches none of the listed `types`                 |
-| [`isElement()`](#isElement)                           | is not a DOM element                               |
-| [`isDocument()`](#isDocument)                         | is not a `document`                                |
-| [`isWindow()`](#isWindow)                             | is not a `window`                                  |
 | [`isAttached()`](#isAttached)                         | is a DOM element no longer attached to the page    |
+| [`isDocument()`](#isDocument)                         | is not a `document`                                |
+| [`isElement()`](#isElement)                           | is not a DOM element                               |
 | [`isNotDisabled()`](#isNotDisabled)                   | is disabled                                        |
 | [`isNotHiddenByAncestors()`](#isNotHiddenByAncestors) | is clipped out of view by an ancestor's `overflow` |
 | [`isNotReadonly()`](#isNotReadonly)                   | is a read-only text field                          |
 | [`isScrollable()`](#isScrollable)                     | cannot be scrolled                                 |
+| [`isType()`](#isType)                                 | matches none of the listed `types`                 |
 | [`isVisible()`](#isVisible)                           | is not visible                                     |
-
-### isType()
-
-```javascript
-Cypress.ensure.isType(subject, types, commandName, cy)
-```
-
-Throws when the subject matches none of the `types`. This is the check behind a
-custom command's [`prevSubject`](/api/cypress-api/custom-commands#Validations)
-option.
-
-<Icon name="angle-right" /> **types** **_(Array)_**
-
-Any of `'element'`, `'document'`, `'window'`, and `'optional'`. The check passes
-when the subject matches at least one of them.
-
-- `'optional'` lets an `undefined` subject through, for a query that can start a
-  chain or continue one.
-- `'element'` also runs [`isAttached()`](#isAttached), so a subject the app has
-  removed from the page fails with the detached-element error.
-- When more than one type is listed, the error names all of them:
-  `` `cy.<commandName>()` failed because it requires a DOM element or document. ``
-
-**Used in:**
-[Accept only certain subject types in a custom query](#Accept-only-certain-subject-types-in-a-custom-query)
-
-### isElement()
-
-```javascript
-Cypress.ensure.isElement(subject, commandName, cy)
-```
-
-Throws when the subject is not a DOM element or a jQuery collection of them.
-Unlike `isType(subject, ['element'], …)`, it doesn't check that the element is
-still attached; pair it with [`isAttached()`](#isAttached) when that matters.
-
-- Error: `` `cy.<commandName>()` failed because it requires a DOM element. ``,
-  followed by the subject received and the previous command.
-
-**Used in:**
-[Wait for an element to be editable](#Wait-for-an-element-to-be-editable),
-[Wait for a carousel slide to scroll into view](#Wait-for-a-carousel-slide-to-scroll-into-view)
-
-### isDocument()
-
-```javascript
-Cypress.ensure.isDocument(subject, commandName, cy)
-```
-
-Throws when the subject is not a global `document` object, such as the one
-[`cy.document()`](/api/commands/document) yields.
-
-- Error:
-  `` `cy.<commandName>()` failed because it requires the subject be a global `document` object. ``
-
-**Used in:**
-[Read a document's meta tags in a custom query](#Read-a-documents-meta-tags-in-a-custom-query)
-
-### isWindow()
-
-```javascript
-Cypress.ensure.isWindow(subject, commandName, cy)
-```
-
-Throws when the subject is not a global `window` object, such as the one
-[`cy.window()`](/api/commands/window) yields.
-
-- Error:
-  `` `cy.<commandName>()` failed because it requires the subject be a global `window` object. ``
-
-**Used in:**
-[Read the app's localStorage keys in a custom query](#Read-the-apps-localStorage-keys-in-a-custom-query)
+| [`isWindow()`](#isWindow)                             | is not a `window`                                  |
 
 ### isAttached()
 
@@ -210,6 +135,38 @@ raises no error.
 
 **Used in:**
 [Guard a native DOM call against a detached element](#Guard-a-native-DOM-call-against-a-detached-element)
+
+### isDocument()
+
+```javascript
+Cypress.ensure.isDocument(subject, commandName, cy)
+```
+
+Throws when the subject is not a global `document` object, such as the one
+[`cy.document()`](/api/commands/document) yields.
+
+- Error:
+  `` `cy.<commandName>()` failed because it requires the subject be a global `document` object. ``
+
+**Used in:**
+[Read a document's meta tags in a custom query](#Read-a-documents-meta-tags-in-a-custom-query)
+
+### isElement()
+
+```javascript
+Cypress.ensure.isElement(subject, commandName, cy)
+```
+
+Throws when the subject is not a DOM element or a jQuery collection of them.
+Unlike `isType(subject, ['element'], …)`, it doesn't check that the element is
+still attached; pair it with [`isAttached()`](#isAttached) when that matters.
+
+- Error: `` `cy.<commandName>()` failed because it requires a DOM element. ``,
+  followed by the subject received and the previous command.
+
+**Used in:**
+[Wait for an element to be editable](#Wait-for-an-element-to-be-editable),
+[Wait for a carousel slide to scroll into view](#Wait-for-a-carousel-slide-to-scroll-into-view)
 
 ### isNotDisabled()
 
@@ -285,6 +242,31 @@ Throws when the subject cannot be scrolled, the same check
 **Used in:**
 [Check an element before acting on it in a custom command](#Check-an-element-before-acting-on-it-in-a-custom-command)
 
+### isType()
+
+```javascript
+Cypress.ensure.isType(subject, types, commandName, cy)
+```
+
+Throws when the subject matches none of the `types`. This is the check behind a
+custom command's [`prevSubject`](/api/cypress-api/custom-commands#Validations)
+option.
+
+<Icon name="angle-right" /> **types** **_(Array)_**
+
+Any of `'element'`, `'document'`, `'window'`, and `'optional'`. The check passes
+when the subject matches at least one of them.
+
+- `'optional'` lets an `undefined` subject through, for a query that can start a
+  chain or continue one.
+- `'element'` also runs [`isAttached()`](#isAttached), so a subject the app has
+  removed from the page fails with the detached-element error.
+- When more than one type is listed, the error names all of them:
+  `` `cy.<commandName>()` failed because it requires a DOM element or document. ``
+
+**Used in:**
+[Accept only certain subject types in a custom query](#Accept-only-certain-subject-types-in-a-custom-query)
+
 ### isVisible()
 
 ```javascript
@@ -305,6 +287,21 @@ your [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibil
 
 **Used in:**
 [Wait for an element to be editable](#Wait-for-an-element-to-be-editable)
+
+### isWindow()
+
+```javascript
+Cypress.ensure.isWindow(subject, commandName, cy)
+```
+
+Throws when the subject is not a global `window` object, such as the one
+[`cy.window()`](/api/commands/window) yields.
+
+- Error:
+  `` `cy.<commandName>()` failed because it requires the subject be a global `window` object. ``
+
+**Used in:**
+[Read the app's localStorage keys in a custom query](#Read-the-apps-localStorage-keys-in-a-custom-query)
 
 ## Examples
 
