@@ -29,6 +29,10 @@ reads like a failure in a built-in one:
 - Inside a custom query, a failed check is retried until it passes or the query
   times out, the same as Cypress's own queries.
 
+This page has a reference entry for each function under
+[Functions](#Functions), and complete custom queries and commands that combine
+them under [Examples](#Examples).
+
 ## Syntax
 
 ```javascript
@@ -74,22 +78,16 @@ Cypress.ensure.isNotDisabled(subject[0], 'editable')
 
 ### Arguments
 
+These arguments are shared by every function. `isType()` also takes a
+[`types`](#isType) array.
+
 <Icon name="angle-right" /> **subject** **_(any)_**
 
 The value to check, usually the subject your query or command received from the
-previous command. The element state checks (`isNotDisabled`,
-`isNotHiddenByAncestors`, `isNotReadonly`, `isScrollable`, and `isVisible`)
-expect a jQuery-wrapped element, which is what [`cy.get()`](/api/commands/get)
-and other element queries yield.
-
-<Icon name="angle-right" /> **types** **_(Array)_**
-
-`isType()` only. The subject types to accept: any of `'element'`, `'document'`,
-`'window'`, and `'optional'`. The check passes when the subject matches at least
-one of them. `'optional'` lets an `undefined` subject through, for a query that
-can start a chain or continue one. These are the same values a custom command
-accepts in its [`prevSubject`](/api/cypress-api/custom-commands#Validations)
-option.
+previous command. The element state checks (`isNotDisabled()`,
+`isNotHiddenByAncestors()`, `isNotReadonly()`, `isScrollable()`, and
+`isVisible()`) expect a jQuery-wrapped element, which is what
+[`cy.get()`](/api/commands/get) and other element queries yield.
 
 <Icon name="angle-right" /> **commandName** **_(String)_**
 
@@ -108,20 +106,205 @@ previous command and the subject in the error.
 Each function returns nothing when the check passes and throws an error when it
 fails. `isScrollable()` returns `true` when the check passes.
 
-### Checks at a glance
+## Functions
 
-| Function                   | Throws when the subject…                                           |
-| -------------------------- | ------------------------------------------------------------------ |
-| `isType()`                 | matches none of the listed `types`                                 |
-| `isElement()`              | is not a DOM element                                               |
-| `isDocument()`             | is not a `document`                                                |
-| `isWindow()`               | is not a `window`                                                  |
-| `isAttached()`             | is a DOM element that is no longer attached to the page            |
-| `isNotDisabled()`          | has the `disabled` property                                        |
-| `isNotHiddenByAncestors()` | is hidden by one of its ancestor elements                          |
-| `isNotReadonly()`          | is a text-like input or `<textarea>` with the `readonly` attribute |
-| `isScrollable()`           | cannot be scrolled                                                 |
-| `isVisible()`              | is not visible                                                     |
+| Function                                              | Throws when the subject…                           |
+| ----------------------------------------------------- | -------------------------------------------------- |
+| [`isType()`](#isType)                                 | matches none of the listed `types`                 |
+| [`isElement()`](#isElement)                           | is not a DOM element                               |
+| [`isDocument()`](#isDocument)                         | is not a `document`                                |
+| [`isWindow()`](#isWindow)                             | is not a `window`                                  |
+| [`isAttached()`](#isAttached)                         | is a DOM element no longer attached to the page    |
+| [`isNotDisabled()`](#isNotDisabled)                   | is disabled                                        |
+| [`isNotHiddenByAncestors()`](#isNotHiddenByAncestors) | is clipped out of view by an ancestor's `overflow` |
+| [`isNotReadonly()`](#isNotReadonly)                   | is a read-only text field                          |
+| [`isScrollable()`](#isScrollable)                     | cannot be scrolled                                 |
+| [`isVisible()`](#isVisible)                           | is not visible                                     |
+
+### isType()
+
+```javascript
+Cypress.ensure.isType(subject, types, commandName, cy)
+```
+
+Throws when the subject matches none of the `types`. This is the check behind a
+custom command's [`prevSubject`](/api/cypress-api/custom-commands#Validations)
+option.
+
+<Icon name="angle-right" /> **types** **_(Array)_**
+
+Any of `'element'`, `'document'`, `'window'`, and `'optional'`. The check passes
+when the subject matches at least one of them.
+
+- `'optional'` lets an `undefined` subject through, for a query that can start a
+  chain or continue one.
+- `'element'` also runs [`isAttached()`](#isAttached), so a subject the app has
+  removed from the page fails with the detached-element error.
+- When more than one type is listed, the error names all of them:
+  `` `cy.<commandName>()` failed because it requires a DOM element or document. ``
+
+**Used in:**
+[Accept only certain subject types in a custom query](#Accept-only-certain-subject-types-in-a-custom-query)
+
+### isElement()
+
+```javascript
+Cypress.ensure.isElement(subject, commandName, cy)
+```
+
+Throws when the subject is not a DOM element or a jQuery collection of them.
+Unlike `isType(subject, ['element'], …)`, it doesn't check that the element is
+still attached; pair it with [`isAttached()`](#isAttached) when that matters.
+
+- Error: `` `cy.<commandName>()` failed because it requires a DOM element. ``,
+  followed by the subject received and the previous command.
+
+**Used in:**
+[Wait for an element to be editable](#Wait-for-an-element-to-be-editable),
+[Wait for a carousel slide to scroll into view](#Wait-for-a-carousel-slide-to-scroll-into-view)
+
+### isDocument()
+
+```javascript
+Cypress.ensure.isDocument(subject, commandName, cy)
+```
+
+Throws when the subject is not a global `document` object, such as the one
+[`cy.document()`](/api/commands/document) yields.
+
+- Error:
+  `` `cy.<commandName>()` failed because it requires the subject be a global `document` object. ``
+
+**Used in:**
+[Read a document's meta tags in a custom query](#Read-a-documents-meta-tags-in-a-custom-query)
+
+### isWindow()
+
+```javascript
+Cypress.ensure.isWindow(subject, commandName, cy)
+```
+
+Throws when the subject is not a global `window` object, such as the one
+[`cy.window()`](/api/commands/window) yields.
+
+- Error:
+  `` `cy.<commandName>()` failed because it requires the subject be a global `window` object. ``
+
+**Used in:**
+[Read the app's localStorage keys in a custom query](#Read-the-apps-localStorage-keys-in-a-custom-query)
+
+### isAttached()
+
+```javascript
+Cypress.ensure.isAttached(subject, commandName, cy)
+```
+
+Throws when the subject is a DOM element that is no longer attached to the page,
+for example because the app re-rendered it. Use it before you call a native DOM
+method on an element you've held onto. On a detached element, a native call such
+as `.click()` acts on the stale element instead of the one on the page, and
+raises no error.
+
+- Error:
+  `` `cy.<commandName>()` failed because the page updated as a result of this command, but you tried to continue the command chain. ``
+
+**Used in:**
+[Guard a native DOM call against a detached element](#Guard-a-native-DOM-call-against-a-detached-element)
+
+### isNotDisabled()
+
+```javascript
+Cypress.ensure.isNotDisabled(subject, commandName)
+```
+
+Throws when the subject has the `disabled` property, the same check
+[`.select()`](/api/commands/select) and
+[`.selectFile()`](/api/commands/selectfile) run.
+
+- When the subject is a collection, only the first element is checked.
+- Error: `` `cy.<commandName>()` failed because this element is `disabled`: ``
+
+**Used in:**
+[Wait for an element to be editable](#Wait-for-an-element-to-be-editable)
+
+### isNotHiddenByAncestors()
+
+```javascript
+Cypress.ensure.isNotHiddenByAncestors(subject, commandName)
+```
+
+Throws when an ancestor clips the subject out of view, such as an
+`overflow: hidden` container the element has scrolled outside of, or a
+zero-height container with `overflow: hidden`. It also fails a `fixed` or
+`sticky` element that another element covers.
+
+It doesn't check the ancestors' `display` or `visibility`, so an element inside
+a `display: none` parent passes. Call [`isVisible()`](#isVisible) for that.
+Cypress runs this check after `isVisible()` when the
+[`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy)
+is `'legacy'`.
+
+- It treats `opacity: 0` as visible.
+- When the subject is a collection, it fails when any element is clipped.
+- Error:
+  `` `cy.<commandName>()` failed because this element is not visible: ``,
+  followed by the reason.
+
+**Used in:**
+[Wait for a carousel slide to scroll into view](#Wait-for-a-carousel-slide-to-scroll-into-view)
+
+### isNotReadonly()
+
+```javascript
+Cypress.ensure.isNotReadonly(subject, commandName)
+```
+
+Throws when the subject is a text-like element, such as `<input type="text">`,
+`<input type="email">`, or `<textarea>`, with the `readonly` attribute. A
+checkbox, radio button, or other element with `readonly` passes, because
+browsers ignore `readonly` on those elements.
+
+- When the subject is a collection, only the first element is checked.
+- Error: `` `cy.<commandName>()` failed because this element is readonly: ``
+
+**Used in:**
+[Wait for an element to be editable](#Wait-for-an-element-to-be-editable)
+
+### isScrollable()
+
+```javascript
+Cypress.ensure.isScrollable(subject, commandName)
+```
+
+Throws when the subject cannot be scrolled, the same check
+[`.scrollTo()`](/api/commands/scrollto) runs. Returns `true` when it passes.
+
+- Error:
+  `` `cy.<commandName>()` failed because this element is not scrollable: ``
+
+**Used in:**
+[Check an element before acting on it in a custom command](#Check-an-element-before-acting-on-it-in-a-custom-command)
+
+### isVisible()
+
+```javascript
+Cypress.ensure.isVisible(subject, commandName)
+```
+
+Throws when the subject is not visible, following the
+[visibility rules](/app/core-concepts/interacting-with-elements#Visibility) of
+your [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy).
+
+- It treats `opacity: 0` as visible, matching the checks Cypress runs before it
+  interacts with an element. Assert with `.should('be.visible')` when opacity
+  matters.
+- When the subject is a collection, it fails when any element is hidden.
+- Error:
+  `` `cy.<commandName>()` failed because this element is not visible: ``,
+  followed by the reason.
+
+**Used in:**
+[Wait for an element to be editable](#Wait-for-an-element-to-be-editable)
 
 ## Examples
 
@@ -131,8 +314,6 @@ The `.dataCy()` query below finds elements by their `data-cy` attribute. It can
 start a chain, where it searches the whole page, or continue one, where it
 searches inside the previous element or document. `isType()` rejects every other
 subject, such as a string yielded by [`.invoke()`](/api/commands/invoke).
-
-Add it to your support file:
 
 ```typescript copyTsToJs title="cypress/support/commands.ts"
 declare global {
@@ -240,6 +421,104 @@ Fix this problem, or use `{force: true}` to disable error checking.
 https://on.cypress.io/element-cannot-be-interacted-with
 ```
 
+### Wait for a carousel slide to scroll into view
+
+An element scrolled outside an `overflow: hidden` container is still in the
+page, but the reader can't see it. The `.unclipped()` query retries until no
+ancestor clips its subject:
+
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      unclipped(): Chainable<JQuery<HTMLElement>>
+    }
+  }
+}
+
+Cypress.Commands.addQuery('unclipped', function () {
+  return (subject) => {
+    Cypress.ensure.isElement(subject, 'unclipped', cy)
+    Cypress.ensure.isNotHiddenByAncestors(subject, 'unclipped')
+
+    return subject
+  }
+})
+
+export {}
+```
+
+Here, clicking `"Next"` scrolls the carousel to the second slide.
+`.unclipped()` waits for the scroll to finish before the assertion runs:
+
+```javascript title="cypress/e2e/carousel.cy.js"
+cy.get('#next').click()
+cy.contains('.slide', 'Slide 2').unclipped().should('have.text', 'Slide 2')
+```
+
+### Read a document's meta tags in a custom query
+
+The `.metaContent()` query reads a `<meta>` tag from the
+[`cy.document()`](/api/commands/document) subject, and `isDocument()` rejects
+any other subject. Because it's a query, an assertion on its value retries until
+the app updates the tag:
+
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      metaContent(name: string): Chainable<string | null | undefined>
+    }
+  }
+}
+
+Cypress.Commands.addQuery('metaContent', function (name: string) {
+  return (subject) => {
+    Cypress.ensure.isDocument(subject, 'metaContent', cy)
+
+    return subject
+      .querySelector(`meta[name="${name}"]`)
+      ?.getAttribute('content')
+  }
+})
+
+export {}
+```
+
+```javascript title="cypress/e2e/seo.cy.js"
+cy.document().metaContent('description').should('eq', 'Cypress example app')
+```
+
+### Read the app's localStorage keys in a custom query
+
+The `.storageKeys()` query reads the keys in the app's `localStorage` from the
+[`cy.window()`](/api/commands/window) subject, and retries until an assertion on
+them passes:
+
+```typescript copyTsToJs title="cypress/support/commands.ts"
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      storageKeys(): Chainable<string[]>
+    }
+  }
+}
+
+Cypress.Commands.addQuery('storageKeys', function () {
+  return (subject) => {
+    Cypress.ensure.isWindow(subject, 'storageKeys', cy)
+
+    return Object.keys(subject.localStorage)
+  }
+})
+
+export {}
+```
+
+```javascript title="cypress/e2e/auth.cy.js"
+cy.window().storageKeys().should('include', 'authToken')
+```
+
 ### Check an element before acting on it in a custom command
 
 A custom command added with
@@ -295,108 +574,36 @@ The message ends with the hint and docs link Cypress shows for its own
 [`.scrollTo()`](/api/commands/scrollto) command. See
 [Error messages come from the built-in commands](#Error-messages-come-from-the-built-in-commands).
 
-### Require a window subject
+### Guard a native DOM call against a detached element
 
-`isWindow()` and `isDocument()` check for the global `window` and `document`
-objects that [`cy.window()`](/api/commands/window) and
-[`cy.document()`](/api/commands/document) yield. The `.storageKeys()` query
-below reads the keys in the app's `localStorage` and retries until an assertion
-on them passes.
+The `.saveAndCollapse()` command clicks a panel's `"Save"` button, then clicks
+its `"Collapse"` button with a native DOM `click()`. Saving can re-render the
+panel, which leaves `subject` pointing at a detached element, and a native
+click on it never reaches the panel on the page. `isAttached()` turns that
+silent miss into a clear failure:
 
-```typescript copyTsToJs title="cypress/support/commands.ts"
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      storageKeys(): Chainable<string[]>
-    }
+```javascript title="cypress/support/commands.js"
+Cypress.Commands.add(
+  'saveAndCollapse',
+  { prevSubject: 'element' },
+  (subject) => {
+    cy.wrap(subject).contains('button', 'Save').click()
+
+    cy.then(() => {
+      // Saving can re-render the panel and detach `subject`
+      Cypress.ensure.isAttached(subject, 'saveAndCollapse', cy)
+
+      subject.find('[data-cy="collapse"]')[0].click()
+    })
   }
-}
-
-Cypress.Commands.addQuery('storageKeys', function () {
-  return (subject) => {
-    Cypress.ensure.isWindow(subject, 'storageKeys', cy)
-
-    return Object.keys(subject.localStorage)
-  }
-})
-
-export {}
+)
 ```
 
-```javascript title="cypress/e2e/auth.cy.js"
-cy.window().storageKeys().should('include', 'authToken')
+```javascript title="cypress/e2e/settings.cy.js"
+cy.get('#panel').saveAndCollapse()
 ```
 
-## Notes
-
-### Retry behavior in queries and commands
-
-`Cypress.ensure` functions throw an error and nothing more. What happens next
-depends on where you call them:
-
-- In the inner function of a [custom query](/api/cypress-api/custom-queries),
-  Cypress retries the function until it stops throwing or the query times out,
-  then fails the test with the last error, prefixed with
-  `Timed out retrying after…`.
-- In a [custom command](/api/cypress-api/custom-commands) or a
-  [`.then()`](/api/commands/then) callback, the error fails the test right away.
-
-Call them while a command is running, from a query, a command, or a callback.
-The type checks read the running command from `cy` to build their error
-message.
-
-### The element type check includes an attachment check
-
-When `isType()` checks for `'element'` and the subject is an element, it also
-runs `isAttached()`. A subject that the app has removed from the page fails with
-Cypress's detached-element error rather than passing the type check.
-
-### Checks on a collection of elements
-
-When the subject is a jQuery collection of several elements, the checks treat it
-differently:
-
-- `isVisible()` and `isNotHiddenByAncestors()` fail when any element in the
-  collection is hidden.
-- `isNotDisabled()` and `isNotReadonly()` check only the first element.
-
-### Error messages come from the built-in commands
-
-Each check throws the error message Cypress uses for its own commands, with your
-`commandName` in place of the built-in name. Some messages end with a hint
-written for those commands, such as `use {force: true} to disable error
-checking`. Your query or command only supports that option if you add it. When
-the hint would mislead your readers, write your own check instead.
-
-### Visibility checks ignore opacity
-
-`isVisible()` and `isNotHiddenByAncestors()` treat an element with
-`opacity: 0` as visible, matching the actionability checks that Cypress runs
-before it [interacts with an element](/app/core-concepts/interacting-with-elements#Visibility).
-Assert on visibility with `.should('be.visible')` when opacity matters.
-
-### Read-only checks apply to text fields
-
-`isNotReadonly()` only checks text-like elements, such as `<input type="text">`,
-`<input type="email">`, and `<textarea>`. A checkbox, radio button, or other
-element with the `readonly` attribute passes, because browsers ignore `readonly`
-on those elements.
-
-### The optional `onFail` argument
-
-The element checks, and `isAttached()`, accept an optional final `onFail`
-argument, typed as a [`Cypress.log()`](/api/cypress-api/cypress-log) instance.
-Cypress uses it internally to attach the error to a command's log entry.
-
-:::caution
-
-`onFail` is a legacy feature and may be removed in a future release. Don't rely
-on it. When you need more control over the error, write your own check and
-throw your own error from the query or command.
-
-:::
-
-### Writing your own checks
+### Write your own check in a custom query
 
 `Cypress.ensure` covers the subject checks Cypress itself needs. For any other
 condition, throw an error from your query's inner function. Cypress retries it
@@ -419,6 +626,46 @@ Cypress.Commands.addQuery('priceValue', function () {
   }
 })
 ```
+
+## Notes
+
+### Retry behavior in queries and commands
+
+`Cypress.ensure` functions throw an error and nothing more. What happens next
+depends on where you call them:
+
+- In the inner function of a [custom query](/api/cypress-api/custom-queries),
+  Cypress retries the function until it stops throwing or the query times out,
+  then fails the test with the last error, prefixed with
+  `Timed out retrying after…`.
+- In a [custom command](/api/cypress-api/custom-commands) or a
+  [`.then()`](/api/commands/then) callback, the error fails the test right away.
+
+Call them while a command is running, from a query, a command, or a callback.
+The type checks read the running command from `cy` to build their error
+message.
+
+### Error messages come from the built-in commands
+
+Each check throws the error message Cypress uses for its own commands, with your
+`commandName` in place of the built-in name. Some messages end with a hint
+written for those commands, such as `use {force: true} to disable error
+checking`. Your query or command only supports that option if you add it. When
+the hint would mislead your readers, write your own check instead.
+
+### The optional `onFail` argument
+
+The element checks, and `isAttached()`, accept an optional final `onFail`
+argument, typed as a [`Cypress.log()`](/api/cypress-api/cypress-log) instance.
+Cypress uses it internally to attach the error to a command's log entry.
+
+:::caution
+
+`onFail` is a legacy feature and may be removed in a future release. Don't rely
+on it. When you need more control over the error, write your own check and
+throw your own error from the query or command.
+
+:::
 
 ## History
 
