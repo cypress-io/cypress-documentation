@@ -857,20 +857,6 @@ in [Support a force option in a custom query](#Support-a-force-option-in-a-custo
 Otherwise, when the hint would mislead your readers, write your own check
 instead.
 
-### The legacy onFail argument to ensure functions
-
-The element checks, and `isAttached()`, accept an optional final `onFail`
-argument, typed as a [`Cypress.log()`](/api/cypress-api/cypress-log) instance.
-Cypress uses it internally to attach the error to a command's log entry.
-
-:::caution
-
-`onFail` is a legacy feature and may be removed in a future release. Don't rely
-on it. When you need more control over the error, write your own check and
-throw your own error from the query or command.
-
-:::
-
 ## History
 
 | Version                                    | Changes                |
