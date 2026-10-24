@@ -130,7 +130,11 @@ method on an element you've held onto. On a detached element, a native call such
 as `.click()` acts on the stale element instead of the one on the page, and
 raises no error.
 
-- It throws `` `cy.<commandName>()` failed because the page updated as a result of this command, but you tried to continue the command chain. ``.
+When the check fails, it throws:
+
+```text
+`cy.<commandName>()` failed because the page updated as a result of this command, but you tried to continue the command chain.
+```
 
 Used in:
 [Guard a native DOM call against a detached element](#Guard-a-native-DOM-call-against-a-detached-element)
@@ -144,7 +148,11 @@ Cypress.ensure.isDocument(subject, commandName, cy)
 Throws when the subject is not a global `document` object, such as the one
 [`cy.document()`](/api/commands/document) yields.
 
-- It throws `` `cy.<commandName>()` failed because it requires the subject be a global `document` object. ``.
+When the check fails, it throws:
+
+```text
+`cy.<commandName>()` failed because it requires the subject be a global `document` object.
+```
 
 Used in:
 [Read a document's meta tags in a custom query](#Read-a-documents-meta-tags-in-a-custom-query)
@@ -159,8 +167,12 @@ Throws when the subject is not a DOM element or a jQuery collection of them.
 Unlike `isType(subject, ['element'], …)`, it doesn't check that the element is
 still attached; pair it with [`isAttached()`](#isAttached) when that matters.
 
-- It throws `` `cy.<commandName>()` failed because it requires a DOM element. ``,
-  followed by the subject received and the previous command.
+When the check fails, it throws this error, followed by the subject received
+and the previous command:
+
+```text
+`cy.<commandName>()` failed because it requires a DOM element.
+```
 
 Used in:
 [Compare a hand-written error with an ensure error](#Compare-a-hand-written-error-with-an-ensure-error),
@@ -178,7 +190,12 @@ Throws when the subject has the `disabled` property, the same check
 [`.selectFile()`](/api/commands/selectfile) run.
 
 - When the subject is a collection, it checks only the first element.
-- It throws `` `cy.<commandName>()` failed because this element is `disabled`: ``.
+
+When the check fails, it throws:
+
+```text
+`cy.<commandName>()` failed because this element is `disabled`:
+```
 
 Used in:
 [Wait for an element to be editable in a custom query](#Wait-for-an-element-to-be-editable-in-a-custom-query)
@@ -202,8 +219,12 @@ is `'legacy'`.
 
 - It treats `opacity: 0` as visible.
 - When the subject is a collection, it fails when any element is clipped.
-- It throws `` `cy.<commandName>()` failed because this element is not visible: ``,
-  followed by the reason.
+
+When the check fails, it throws this error, followed by the reason:
+
+```text
+`cy.<commandName>()` failed because this element is not visible:
+```
 
 Used in:
 [Wait for a carousel slide to scroll into view](#Wait-for-a-carousel-slide-to-scroll-into-view)
@@ -220,7 +241,12 @@ checkbox, radio button, or other element with `readonly` passes, because
 browsers ignore `readonly` on those elements.
 
 - When the subject is a collection, it checks only the first element.
-- It throws `` `cy.<commandName>()` failed because this element is readonly: ``.
+
+When the check fails, it throws:
+
+```text
+`cy.<commandName>()` failed because this element is readonly:
+```
 
 Used in:
 [Wait for an element to be editable in a custom query](#Wait-for-an-element-to-be-editable-in-a-custom-query)
@@ -234,7 +260,11 @@ Cypress.ensure.isScrollable(subject, commandName)
 Throws when the subject cannot be scrolled, the same check
 [`.scrollTo()`](/api/commands/scrollto) runs. Returns `true` when it passes.
 
-- It throws `` `cy.<commandName>()` failed because this element is not scrollable: ``.
+When the check fails, it throws:
+
+```text
+`cy.<commandName>()` failed because this element is not scrollable:
+```
 
 Used in:
 [Check an element before acting on it in a custom command](#Check-an-element-before-acting-on-it-in-a-custom-command)
@@ -258,8 +288,13 @@ when the subject matches at least one of them.
   chain or continue one.
 - `'element'` also runs [`isAttached()`](#isAttached), so a subject the app has
   removed from the page fails with the detached-element error.
-- When you list more than one type, the error names all of them:
-  `` `cy.<commandName>()` failed because it requires a DOM element or document. ``
+- When you list more than one type, the error names all of them.
+
+With `['element', 'document']`, a failed check throws:
+
+```text
+`cy.<commandName>()` failed because it requires a DOM element or document.
+```
 
 Used in:
 [Accept only certain subject types in a custom query](#Accept-only-certain-subject-types-in-a-custom-query)
@@ -278,8 +313,12 @@ your [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibil
   interacts with an element. Assert with `.should('be.visible')` when opacity
   matters.
 - When the subject is a collection, it fails when any element is hidden.
-- It throws `` `cy.<commandName>()` failed because this element is not visible: ``,
-  followed by the reason.
+
+When the check fails, it throws this error, followed by the reason:
+
+```text
+`cy.<commandName>()` failed because this element is not visible:
+```
 
 Used in:
 [Wait for an element to be editable in a custom query](#Wait-for-an-element-to-be-editable-in-a-custom-query)
@@ -293,7 +332,11 @@ Cypress.ensure.isWindow(subject, commandName, cy)
 Throws when the subject is not a global `window` object, such as the one
 [`cy.window()`](/api/commands/window) yields.
 
-- It throws `` `cy.<commandName>()` failed because it requires the subject be a global `window` object. ``.
+When the check fails, it throws:
+
+```text
+`cy.<commandName>()` failed because it requires the subject be a global `window` object.
+```
 
 Used in:
 [Read the app's localStorage keys in a custom query](#Read-the-apps-localStorage-keys-in-a-custom-query)
