@@ -201,15 +201,6 @@ Cypress runs this check after `isVisible()` when the
 [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy)
 is `'legacy'`.
 
-The diagram shows the difference: the slide the carousel's `overflow` clips
-fails this check, while an input inside a hidden parent passes it and fails
-`isVisible()` instead.
-
-<DocsImage
-  src="/img/api/ensure/is-not-hidden-by-ancestors-diagram.svg"
-  alt="A carousel with overflow hidden: the slide inside its visible area passes isNotHiddenByAncestors() and the clipped slide fails it. An input inside a display: none section passes isNotHiddenByAncestors() and fails isVisible()."
-/>
-
 - It treats `opacity: 0` as visible.
 - When the subject is a collection, it fails when any element is clipped.
 - Error:
