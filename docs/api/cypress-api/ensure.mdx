@@ -201,6 +201,15 @@ Cypress runs this check after `isVisible()` when the
 [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy)
 is `'legacy'`.
 
+The diagram shows the difference: the slide the carousel's `overflow` clips
+fails this check, while an input inside a hidden parent passes it and fails
+`isVisible()` instead.
+
+<DocsImage
+  src="/img/api/ensure/is-not-hidden-by-ancestors-diagram.svg"
+  alt="A carousel with overflow hidden: the slide inside its visible area passes isNotHiddenByAncestors() and the clipped slide fails it. An input inside a display: none section passes isNotHiddenByAncestors() and fails isVisible()."
+/>
+
 - It treats `opacity: 0` as visible.
 - When the subject is a collection, it fails when any element is clipped.
 - Error:
@@ -417,6 +426,14 @@ Fix this problem, or use `{force: true}` to disable error checking.
 
 https://on.cypress.io/element-cannot-be-interacted-with
 ```
+
+In the Cypress App, the error appears under the failed test and names
+`cy.editable()`, the same way it names a built-in command:
+
+<DocsImage
+  src="/img/api/ensure/command-log-editable-disabled-error.png"
+  alt="Command Log for a failed test: the visit and get rows, then a CypressError reading cy.editable() failed because this element is disabled, with the disabled input, the force hint, the docs link, and the code frame pointing at the editable() call."
+/>
 
 ### Wait for a carousel slide to scroll into view
 
