@@ -34,19 +34,19 @@ This page has a reference entry for each function under
 ## Syntax
 
 ```javascript
-Cypress.dom.getReasonIsHidden($el)
-Cypress.dom.isAttached(subject)
-Cypress.dom.isDescendent($ancestor, $descendent)
-Cypress.dom.isDetached(subject)
+Cypress.dom.getReasonIsHidden(element)
+Cypress.dom.isAttached(element)
+Cypress.dom.isDescendent(element, descendent)
+Cypress.dom.isDetached(element)
 Cypress.dom.isDocument(obj)
 Cypress.dom.isDom(obj)
 Cypress.dom.isElement(obj)
-Cypress.dom.isFocusable($el)
+Cypress.dom.isFocusable(element)
 Cypress.dom.isFocused(element)
 Cypress.dom.isHidden(element)
 Cypress.dom.isInputType(element, type)
 Cypress.dom.isJquery(obj)
-Cypress.dom.isScrollable(subject)
+Cypress.dom.isScrollable(element)
 Cypress.dom.isVisible(element)
 Cypress.dom.isWindow(obj)
 Cypress.dom.stringify(element, form)
@@ -74,7 +74,8 @@ cy.get('#email').isVisible()
 // They check an element, not a selector, and this call throws
 Cypress.dom.isVisible('#email')
 
-// isFocused() needs a DOM element. With a jQuery object, it always returns false
+// Inside .then(($input) => ...): isFocused() needs a DOM element.
+// With a jQuery object, it always returns false
 Cypress.dom.isFocused($input)
 ```
 
@@ -82,7 +83,8 @@ Cypress.dom.isFocused($input)
 
 The functions take the value to check as their first argument. Some accept a
 DOM element or a jQuery object, and others accept only one of the two; the
-[Functions](#Functions) table lists which. Two functions take a second argument:
+Accepts column of the [Functions](#Functions) table lists which. Three functions
+take a second argument: [`isDescendent()`](#isDescendent) takes a `descendent`,
 [`isInputType()`](#isInputType) takes a `type`, and
 [`stringify()`](#stringify) takes a `form`.
 
@@ -131,7 +133,7 @@ a Cypress chain, call the function inside a callback such as
 ### getReasonIsHidden()
 
 ```javascript
-Cypress.dom.getReasonIsHidden($el)
+Cypress.dom.getReasonIsHidden(element)
 ```
 
 Returns a sentence that explains why Cypress considers an element hidden. It is
@@ -160,7 +162,7 @@ Used in:
 ### isAttached()
 
 ```javascript
-Cypress.dom.isAttached(subject)
+Cypress.dom.isAttached(element)
 ```
 
 Returns `true` when the element is attached to a page with an active window.
@@ -178,10 +180,14 @@ Used in:
 ### isDescendent()
 
 ```javascript
-Cypress.dom.isDescendent($ancestor, $descendent)
+Cypress.dom.isDescendent(element, descendent)
 ```
 
-Returns `true` when `$descendent` is inside `$ancestor`, at any depth.
+Returns `true` when `descendent` is inside `element`, at any depth.
+
+<Icon name="angle-right" /> **descendent** **_(jQuery)_**
+
+The element to look for inside `element`.
 
 - Both arguments need to be jQuery objects. A DOM element throws a `TypeError`.
 - It compares the first element in each jQuery object.
@@ -194,7 +200,7 @@ Used in:
 ### isDetached()
 
 ```javascript
-Cypress.dom.isDetached(subject)
+Cypress.dom.isDetached(element)
 ```
 
 Returns `true` when the element is no longer attached to the page, for example
@@ -248,7 +254,7 @@ Used in:
 ### isFocusable()
 
 ```javascript
-Cypress.dom.isFocusable($el)
+Cypress.dom.isFocusable(element)
 ```
 
 Returns `true` when the element is a kind that can receive focus: a link or
@@ -346,7 +352,7 @@ Used in:
 ### isScrollable()
 
 ```javascript
-Cypress.dom.isScrollable(subject)
+Cypress.dom.isScrollable(element)
 ```
 
 Returns `true` when the element's content overflows it and its `overflow` is
@@ -416,10 +422,10 @@ Command Log and error messages.
 
 `'long'` or `'short'`. Any other value throws.
 
-| `form`    | Returns                                                         | Example                        |
-| --------- | --------------------------------------------------------------- | ------------------------------ |
-| `'long'`  | the element's opening and closing tags, with its text shortened | `<p id="intro">Hello w...</p>` |
-| `'short'` | the tag name with its `id` and classes                          | `<p#intro.lead>`               |
+| `form`    | Returns                                                                    | Example                        |
+| --------- | -------------------------------------------------------------------------- | ------------------------------ |
+| `'long'`  | the element's opening and closing tags, with its text cut to 10 characters | `<p id="intro">Hello w...</p>` |
+| `'short'` | the tag name with its `id` and classes                                     | `<p#intro.lead>`               |
 
 - For a jQuery object with several elements, `'short'` describes the first and
   counts the rest, as in `[ <li.item>, 2 more... ]`.
@@ -488,7 +494,7 @@ names the computed style that hides it:
 
 <DocsImage
   src="/img/api/dom/console-element-state-hidden-button.png"
-  alt="DevTools console showing a table where the place-order button is attached and focusable but not visible, followed by a line explaining that it has display: none"
+  alt="DevTools console table showing the hidden place-order button as not visible, followed by its display: none reason"
 />
 
 [`cy.get()`](/api/commands/get) waits only for the element to exist, so the
@@ -704,7 +710,7 @@ passes or times out.
   subject fails a check, for validating the subject of a custom query or command.
 - `Cypress.dom` returns the answer and leaves what to do with it to you.
 
-### Other functions on Cypress.dom
+### Undocumented internal functions on Cypress.dom
 
 `Cypress.dom` holds more functions than this page lists, such as the coordinate
 helpers Cypress uses to decide where to click. They support Cypress's own
