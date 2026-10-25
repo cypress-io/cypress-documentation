@@ -463,7 +463,8 @@ Used in:
 ### Inspect an element's state while debugging a test
 
 When a command fails on an element and the error doesn't explain why, log the
-checks Cypress runs. This prints a table to the browser's DevTools console:
+checks Cypress runs. This prints a table of them to the browser's DevTools
+console, followed by the reason when the element is hidden:
 
 ```javascript title="cypress/e2e/checkout.cy.js"
 cy.get('#place-order').then(($button) => {
@@ -471,27 +472,24 @@ cy.get('#place-order').then(($button) => {
     element: Cypress.dom.stringify($button, 'short'),
     attached: Cypress.dom.isAttached($button),
     visible: Cypress.dom.isVisible($button),
-    hiddenReason: Cypress.dom.isHidden($button)
-      ? Cypress.dom.getReasonIsHidden($button)
-      : 'none',
     focusable: Cypress.dom.isFocusable($button),
     focused: Cypress.dom.isFocused($button[0]),
     scrollable: Cypress.dom.isScrollable($button),
   })
+
+  if (Cypress.dom.isHidden($button)) {
+    console.log(Cypress.dom.getReasonIsHidden($button))
+  }
 })
 ```
 
-For a visible, unfocused button, the table reads:
+For a button with `display: none`, the console shows `visible` as `false` and
+names the computed style that hides it:
 
-| (index)      | Value                  |
-| ------------ | ---------------------- |
-| element      | `<button#place-order>` |
-| attached     | `true`                 |
-| visible      | `true`                 |
-| hiddenReason | `none`                 |
-| focusable    | `true`                 |
-| focused      | `false`                |
-| scrollable   | `false`                |
+<DocsImage
+  src="/img/api/dom/console-element-state-hidden-button.png"
+  alt="DevTools console showing a table where the place-order button is attached and focusable but not visible, followed by a line explaining that it has display: none"
+/>
 
 [`cy.get()`](/api/commands/get) waits only for the element to exist, so the
 callback runs as soon as the button is in the DOM, whether or not it is
@@ -660,7 +658,20 @@ cy.title().logSubject()
 ```
 
 The Command Log shows `[ <input#name>, 4 more... ]` for the five inputs,
-`<document>` for the document, and the page title as plain text.
+`<document>` for the document, and the page title as plain text:
+
+<DocsImage
+  src="/img/api/dom/command-log-log-subject.png"
+  alt="Command Log with three logSubject rows: five inputs summarized as input#name and 4 more, the document, and the page title Sign up"
+/>
+
+Clicking the first `logSubject` row prints its type and all five inputs to the
+DevTools console:
+
+<DocsImage
+  src="/img/api/dom/console-log-subject-type-and-elements.png"
+  alt="DevTools console after clicking logSubject, showing Command logSubject, Type element, and an Elements array of five inputs"
+/>
 
 ## Notes
 
