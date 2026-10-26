@@ -66,6 +66,7 @@ Several options change what appears in reports and how it's organized. Pick the 
 | Count your custom commands as interactions                          | [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands)                 |
 | Limit which interaction commands count for specific elements        | [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands)                       |
 | Apply different configuration to runs based on run tags             | [`profiles`](/ui-coverage/configuration/profiles)                                                           |
+| Pass or fail runs against quality thresholds                        | [`checks`](/cloud/features/checks)                                                                          |
 
 ### Comments
 
@@ -165,6 +166,23 @@ The shape of every available option, with the type each value expects:
     // attributeFilters: same shape as the root, replacing it for UI Coverage
   },
 
+  "checks": [
+    // Root level only. See the checks page for every assertion type
+    {
+      "name": string,
+      "assertions": [
+        {
+          "type": string,
+          "value": number,
+          "viewMatch": string,
+          "comment": string
+        }
+      ],
+      "include": { "branches": [string], "tags": [string] },
+      "exclude": { "branches": [string], "tags": [string] },
+      "comment": string
+    }
+  ],
   "profiles": [
     {
       "name": string,
@@ -237,3 +255,4 @@ If no configuration was applied to the run, `config` may be absent, so check for
 - [Additional Interaction Commands](/ui-coverage/configuration/additionalinteractioncommands)
 - [Allowed Interaction Commands](/ui-coverage/configuration/allowedinteractioncommands)
 - [Profiles](/ui-coverage/configuration/profiles)
+- [Checks](/cloud/features/checks)
