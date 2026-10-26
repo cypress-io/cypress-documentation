@@ -5,6 +5,18 @@ div.markdown {
   // consecutive lines don't crowd each other
   line-height: 1.65;
 
+  // 17px body text from the width the sidebar appears, bringing wide-screen
+  // lines from ~86 to ~80 characters; phones keep 16px, where lines are
+  // already short. Code blocks stay at 1rem so more of them don't overflow
+  // and scroll sideways.
+  @media (min-width: 997px) {
+    font-size: 17px;
+
+    .theme-code-block {
+      font-size: 1rem;
+    }
+  }
+
   ul {
     padding-left: var(--ifm-list-left-padding);
     & > li {
