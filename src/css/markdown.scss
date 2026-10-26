@@ -1,6 +1,5 @@
 div.markdown {
   font-size: 1rem;
-  word-spacing: 1px;
   // a little more room than the inherited 1.5 so inline code chips on
   // consecutive lines don't crowd each other
   line-height: 1.65;
@@ -16,6 +15,10 @@ div.markdown {
       font-size: 1rem;
     }
   }
+
+  // more room between list items so bullets that wrap to several lines
+  // don't run together
+  --ifm-list-item-margin: 0.5rem;
 
   ul {
     padding-left: var(--ifm-list-left-padding);
@@ -74,8 +77,15 @@ div.markdown {
     font-size: 1.2rem;
   }
 
+  // a paragraph break reads clearly against the taller line height
   p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  // top-align table cells so each row scans from its first line, instead of
+  // a short option name floating beside a long description
+  td {
+    vertical-align: top;
   }
 
   // text links get a soft solid underline in their own color, matching linked
@@ -84,7 +94,7 @@ div.markdown {
   // border-bottom: none on their links (cards, heading anchors) keep working.
   a:not(.cy-button-width) {
     text-decoration: none;
-    font-weight: var(--ifm-font-weight-semibold);
+    font-weight: inherit;
     color: var(--ifm-link-color);
     border-bottom: 1px solid color-mix(in srgb, currentColor 75%, transparent);
 
@@ -185,11 +195,9 @@ div.markdown {
       }
     }
 
-    // linked code: tinted chip in the link color, at normal weight so only
-    // the link's plain text is semibold
+    // linked code: tinted chip in the link color
     a > code {
       color: inherit;
-      font-weight: var(--ifm-font-weight-normal);
       background-color: var(--cy-code-link-background);
     }
   }
