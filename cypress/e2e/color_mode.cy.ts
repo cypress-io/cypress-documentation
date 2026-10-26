@@ -11,7 +11,9 @@ describe('Color mode', () => {
       Cypress.automation('remote:debugger:protocol', {
         command: 'Emulation.setEmulatedMedia',
         params: {
-          features: scheme ? [{ name: 'prefers-color-scheme', value: scheme }] : [],
+          features: scheme
+            ? [{ name: 'prefers-color-scheme', value: scheme }]
+            : [],
         },
       })
     )
@@ -59,12 +61,21 @@ describe('Color mode', () => {
   })
 
   it('keeps a saved choice over the system setting', () => {
+    let systemChanged = false
     setSystemColorScheme('dark')
-    visit('light')
-    theme().should('have.attr', 'data-theme', 'light')
+    visit('dark')
+    theme().should('have.attr', 'data-theme', 'dark')
+    // The page is already in the mode it should keep, so wait until it has
+    // seen the system change. Otherwise the assertion passes before a bug
+    // could flip it.
+    cy.window().then((win) => {
+      win
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', () => (systemChanged = true))
+    })
     setSystemColorScheme('light')
-    setSystemColorScheme('dark')
-    theme().should('have.attr', 'data-theme', 'light')
+    cy.wrap(null).should(() => expect(systemChanged).to.be.true)
+    theme().should('have.attr', 'data-theme', 'dark')
   })
 
   it('saves the toggle choice and keeps it across a reload', () => {
