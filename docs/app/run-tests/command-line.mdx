@@ -730,7 +730,7 @@ be guided through selecting a browser, project, and/or testing type.
 | `--component`         | [Open in component testing mode](/app/core-concepts/testing-types#What-is-Component-Testing)                                                                                        |
 | `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                                                                          |
 | `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                                                                                    |
-| `--detached`, `-d`    | Open Cypress in detached mode                                                                                                                                                       |
+| `--detached`, `-d`    | [Return once Cypress is ready and keep Cypress running in the background](#cypress-open-detached)                                                                                   |
 | `--e2e`               | Open in end to end testing mode (default)                                                                                                                                           |
 | `--env`, `-e`         | [Specify secret environment variables](#cypress-open-env-lt-env-gt)                                                                                                                 |
 | `--expose`, `-x`      | [Specify public configuration values](#cypress-open-expose-lt-expose-gt)                                                                                                            |
@@ -751,6 +751,8 @@ cypress open --browser /usr/bin/chromium
 ```
 
 If found, the specified browser will be added to the list of available browsers.
+If Cypress cannot run the executable, it prints the reason and the output of
+running the executable with `--version`.
 
 Currently, only browsers in the Chrome family (including the new Chromium-based
 Microsoft Edge and Brave) and Firefox are supported.
@@ -785,6 +787,21 @@ You can specify a path to a file where
 ```shell
 cypress open --config-file tests/cypress.config.js
 ```
+
+#### `cypress open --detached` {#cypress-open-detached}
+
+Starts Cypress, returns once the Cypress App is ready, and leaves Cypress running
+in the background. Cypress writes its output to two files, one for standard
+output and one for standard error, and prints their paths when the command
+returns.
+
+```shell
+cypress open --e2e --browser chrome --detached
+```
+
+On Linux with no display, Cypress starts an `Xvfb` display for the app. That
+display keeps running after Cypress exits. Stop it by its own process ID,
+found with `pgrep Xvfb`.
 
 #### `cypress open --env <env>` {#cypress-open-env-lt-env-gt}
 
