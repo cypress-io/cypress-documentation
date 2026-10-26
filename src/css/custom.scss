@@ -856,6 +856,29 @@ body ul.guidesList li.card {
         color: var(--ifm-color-jade-300);
       }
     }
+
+    /* Cypress Design System icons are two-tone: the outline is drawn in
+       currentColor, and the light layer (.icon-light, .icon-light-fill) has a
+       fixed gray fill. Color them like the card titles: an indigo-500 outline
+       (5.64:1 on white) over an indigo-100 fill, and indigo-300 (5.4:1 on the
+       gray-900 card) over indigo-800 in dark mode. */
+    svg:not(.svg-inline--fa) {
+      color: var(--ifm-color-indigo-500);
+
+      .icon-light,
+      .icon-light-fill {
+        fill: var(--ifm-color-indigo-100);
+      }
+
+      html[data-theme='dark'] & {
+        color: var(--ifm-color-indigo-300);
+
+        .icon-light,
+        .icon-light-fill {
+          fill: var(--ifm-color-indigo-800);
+        }
+      }
+    }
   }
 
   h3 {
