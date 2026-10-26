@@ -451,6 +451,39 @@ table tr:nth-child(2n) {
   background-color: var(--ifm-table-background);
 }
 
+/* horizontal rules only: no vertical borders, and a plain header set off by
+   its bottom border alone. The outer cells drop their side padding so table
+   text lines up with the text around the table. */
+table {
+  thead {
+    background-color: transparent;
+  }
+
+  thead tr {
+    border-top: none;
+  }
+
+  th,
+  td {
+    border-left: none;
+    border-right: none;
+  }
+
+  th {
+    border-top: none;
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 0;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-right: 0;
+  }
+}
+
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
   margin: 0 10px;
