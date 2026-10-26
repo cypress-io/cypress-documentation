@@ -127,12 +127,16 @@
   --ifm-line-height-base: 1.6;
   --ifm-pre-line-height: 1.5em;
 
-  --ifm-code-background-color: #282a36;
+  // gray-1100 from the Cypress Design System (design.cypress.io/colors.css);
+  // the installed @cypress-design palette stops at gray-1000. Keep in sync
+  // with the Prism theme's backgroundColor (src/theme/prism-material-oceanic)
+  --ifm-code-background-color: #161827;
 
   //border color of divider between code title and block
-  --ifm-code-background-color-light: #3b3e51;
-  //bg color when code is highlighted via comments
-  --docusaurus-highlighted-code-line-bg: rgba(71, 128, 220, 0.4);
+  --ifm-code-background-color-light: var(--ifm-color-gray-900);
+  //bg color when code is highlighted via comments; indigo-900 keeps every
+  // syntax color at 4.5:1+ on it, and the indigo-400 bar below marks the line
+  --docusaurus-highlighted-code-line-bg: var(--ifm-color-indigo-900);
 
   // border color in current area of toc
   --toc-highlight: var(--ifm-color-primary);
@@ -364,6 +368,20 @@ html[data-theme='dark'] {
   margin-top: -1rem;
 }
 
+/* in dark mode the code background sits just below the page's gray-1000, so
+   outline code surfaces to keep them distinct from the page */
+html[data-theme='dark'] {
+  .theme-code-block:not(.tabs-container .theme-code-block),
+  .tabs-container {
+    box-shadow: 0 0 0 1px var(--ifm-color-gray-900);
+  }
+}
+
+/* a bar on highlighted lines, so they don't rely on the background alone */
+.theme-code-block-highlighted-line {
+  box-shadow: inset 3px 0 0 var(--ifm-color-indigo-400);
+}
+
 /* code title styling */
 div[class^='codeBlockTitle'] {
   font-size: 1.1rem;
@@ -384,7 +402,7 @@ div[class^='codeBlockTitle'] {
 }
 
 .tabs-container .tabs {
-  background-color: #1f2937;
+  background-color: var(--ifm-code-background-color);
   border-radius: 0.4rem 0.4rem 0 0;
   box-shadow: inset 0 -6px 0 -4px var(--ifm-code-background-color-light);
 }
