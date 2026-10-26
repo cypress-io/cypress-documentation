@@ -539,6 +539,21 @@ table {
   margin: 0 10px;
 }
 
+/* On desktop, cap the content at 760px so 17px body text stays near 80
+   characters a line on wide screens, and center it between the sidebar and
+   the table of contents. The padding sets the gaps when the column is
+   narrower than the cap: 26px on the left plus the column's 16px matches the
+   42px gap before the table of contents (10px here plus the two columns'
+   16px each). */
+@media (min-width: 997px) {
+  [class^='docItemContainer'] {
+    box-sizing: content-box;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 10px 0 26px;
+  }
+}
+
 [class^='docItemContainer'] [class^='codeBlockLines'] {
   max-width: 0;
 }
