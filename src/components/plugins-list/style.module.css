@@ -19,11 +19,29 @@ h3 {
   margin-bottom: 0;
 }
 
-.plugins h3 {
-  font-size: 1.3em;
+/* Plugin names are card titles, not page headings: smaller, in the heading
+   color, with an underline only on hover. They sit under the category h2s
+   instead of competing with them. */
+.plugins h3,
+:global(div.markdown) .pluginTitle h3 {
+  font-size: 1.15rem;
+  font-weight: var(--ifm-font-weight-bold);
   margin: 0;
   border-bottom: 0;
-  line-height: 1.3;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+:global(div.markdown) .pluginTitle h3 a,
+:global(div.markdown) .pluginTitle h3 a:hover {
+  color: var(--ifm-heading-color);
+  border-bottom: 0;
+}
+
+:global(div.markdown) .pluginTitle h3 a:hover,
+:global(div.markdown) .pluginTitle h3 a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .plugins a {
@@ -41,38 +59,45 @@ ul.pluginsList {
   padding: 0;
 }
 
+/* Flat cards: one 1px design-system gray border, no shadow. */
 body ul.pluginsList li {
   box-sizing: border-box;
   list-style: none;
-  padding: 20px;
-  padding-top: 12px;
+  padding: 16px 20px;
   margin: 0 !important;
   display: flex;
   flex-direction: column;
   /* The .card class styles these as clickable (pointer cursor + hover border
      glow), but the cards aren't interactive, so neutralize that. */
   cursor: default;
-  border-color: var(--ifm-color-emphasis-200);
+  border: 1px solid var(--ifm-color-gray-100);
+  border-radius: 6px;
+  box-shadow: none;
 }
 
 body ul.pluginsList li:hover {
   animation: none;
-  border-color: var(--ifm-color-emphasis-200);
-  box-shadow: var(--ifm-global-shadow-lw);
+  border-color: var(--ifm-color-gray-100);
+  box-shadow: none;
   outline: none;
+}
+
+html[data-theme='dark'] body ul.pluginsList li,
+html[data-theme='dark'] body ul.pluginsList li:hover {
+  border-color: var(--ifm-color-gray-800);
 }
 
 ul.pluginsList li p {
   margin-bottom: 0.5em;
 }
 
-.pluginBadge {
-  margin-bottom: 10px;
-}
-
+/* name, then the badge on its own line, the same on every card */
 .pluginTitle {
-  border-bottom: 1px solid var(--ifm-color-emphasis-200, #eee);
-  margin-bottom: 0.6em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  margin-bottom: 0.6rem;
 }
 
 /* remove hash symbol from appearing in the ::before
@@ -244,46 +269,60 @@ html[data-theme='dark'] .select {
 
 /* -------- Signals -------- */
 
+/* npm package, last publish, and Cypress range on one quiet line, separated
+   by middle dots. Only a stale publish date gets a highlight. */
 .signals {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 0.6rem;
-  margin: 0.25rem 0 0.6rem;
+  align-items: baseline;
+  gap: 0 0.4rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] .signals {
+  color: var(--ifm-color-gray-300);
 }
 
 .signal {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-  color: var(--ifm-color-emphasis-700);
-  background-color: var(--ifm-color-emphasis-100);
-  border-radius: 6px;
-  padding: 0.1rem 0.45rem;
   white-space: nowrap;
 }
 
-/* The theme styles in-content links (div.markdown a) with a solid
-   border-bottom and the link color, at a higher specificity than a plain
-   `a.signal`. Scope to div.markdown so we can override it: keep the npm link
-   blue like a link but drop the underline. The light value is nudged
-   slightly darker than the default link color so it clears 4.5:1 on the chip;
-   dark mode uses the theme link color (bright enough on the dark chip). */
-:global(div.markdown) .signals a.signal,
-:global(div.markdown) .signals a.signal:hover {
-  color: #4453da;
-  text-decoration: none;
-  border-bottom: 0;
+/* the npm package takes its own line; the publish date and Cypress range
+   share the next, joined by a middle dot */
+a.signal {
+  flex-basis: 100%;
 }
 
-html[data-theme='dark'] :global(div.markdown) .signals a.signal,
-html[data-theme='dark'] :global(div.markdown) .signals a.signal:hover {
-  color: var(--ifm-link-color);
+.signal + .signal::before {
+  content: '·';
+  margin-right: 0.4rem;
+  color: var(--ifm-color-gray-500);
+}
+
+a.signal + .signal::before {
+  content: none;
+}
+
+/* the npm link keeps the page's link color and soft underline, but as a
+   text underline: it fills its own line, so a border would run the card's
+   full width */
+:global(div.markdown) .signals a.signal {
+  font-size: inherit;
+  border-bottom: 0;
+  text-decoration: underline 1px solid;
+  text-decoration-color: currentColor;
+  text-decoration-color: color-mix(in srgb, currentColor 75%, transparent);
+  text-underline-offset: 3px;
 }
 
 .signalStale {
   color: #6f5200;
   background-color: #fff8e6;
+  border-radius: 4px;
+  padding: 0 0.3rem;
 }
 
 html[data-theme='dark'] .signalStale {
@@ -314,17 +353,25 @@ html[data-theme='dark'] .signalStale {
   gap: 0.2rem 0.55rem;
 }
 
-.keyword {
-  font-weight: 300;
-  font-size: 0.85rem;
-  color: var(--ifm-color-emphasis-700);
+/* tags are filters, not reading links: small gray text that takes the link
+   color and an underline on hover or focus. The theme's in-content link rule
+   (div.markdown a) is more specific than a plain .keyword, so scope to it. */
+:global(div.markdown) .keywords a.keyword {
+  font-weight: inherit;
+  font-size: 0.8rem;
+  color: var(--ifm-color-gray-700);
   text-decoration: none;
   cursor: pointer;
   border-bottom: 0;
 }
 
-.keyword:hover {
-  color: var(--ifm-color-primary);
+html[data-theme='dark'] :global(div.markdown) .keywords a.keyword {
+  color: var(--ifm-color-gray-300);
+}
+
+:global(div.markdown) .keywords a.keyword:hover,
+:global(div.markdown) .keywords a.keyword:focus-visible {
+  color: var(--ifm-link-color);
   text-decoration: underline;
-  border-bottom: 0;
+  text-underline-offset: 3px;
 }

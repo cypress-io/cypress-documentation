@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faClock,
-  faCog,
   faExclamationTriangle,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
@@ -125,6 +123,29 @@ function Badge({ badge }: { badge?: string }) {
   )
 }
 
+/** Summarize a peer range that lists whole major versions, such as
+ * `^10 || ^11 || ^12 || ^13`, as `10–13` (or `13, 15–16` with gaps). Any
+ * other range is returned unchanged. */
+function summarizeCypressRange(range: string): string {
+  const parts = range.split('||').map((part) => part.trim())
+  if (parts.length < 2) return range
+  const majors = parts.map((part) => part.match(/^[\^~]?(\d+)(?:\.[\dx*]+)*$/))
+  if (majors.some((m) => !m)) return range
+  const unique = [...new Set(majors.map((m) => Number(m![1])))].sort(
+    (a, b) => a - b
+  )
+  const runs: string[] = []
+  let start = unique[0]
+  for (let i = 1; i <= unique.length; i++) {
+    if (unique[i] !== unique[i - 1] + 1) {
+      const end = unique[i - 1]
+      runs.push(start === end ? `${start}` : `${start}–${end}`)
+      start = unique[i]
+    }
+  }
+  return runs.join(', ')
+}
+
 function Signals({ meta }: { meta?: PluginMeta }) {
   // `stale` depends on the current date, so only evaluate it after mount to
   // keep server and client markup identical during hydration.
@@ -146,10 +167,8 @@ function Signals({ meta }: { meta?: PluginMeta }) {
         rel="noopener noreferrer"
         title="View on npm"
       >
-        <span>
-          {meta.npm}
-          {meta.version ? `@${meta.version}` : ''}
-        </span>
+        {meta.npm}
+        {meta.version ? ` ${meta.version}` : ''}
       </a>
     )
   }
@@ -164,16 +183,18 @@ function Signals({ meta }: { meta?: PluginMeta }) {
             : 'Latest npm publish date.'
         }
       >
-        <FontAwesomeIcon icon={faClock} />
-        <span>Updated {updated}</span>
+        Updated {updated}
       </span>
     )
   }
   if (meta.cypressVersion) {
     items.push(
-      <span key="cy" className={s.signal} title="Supported Cypress versions">
-        <FontAwesomeIcon icon={faCog} />
-        <span>Cypress {meta.cypressVersion}</span>
+      <span
+        key="cy"
+        className={s.signal}
+        title={`Supported Cypress versions: ${meta.cypressVersion}`}
+      >
+        Cypress {summarizeCypressRange(meta.cypressVersion)}
       </span>
     )
   }
