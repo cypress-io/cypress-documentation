@@ -1,6 +1,9 @@
 div.markdown {
   font-size: 1rem;
   word-spacing: 1px;
+  // a little more room than the inherited 1.5 so inline code chips on
+  // consecutive lines don't crowd each other
+  line-height: 1.65;
 
   ul {
     padding-left: var(--ifm-list-left-padding);
