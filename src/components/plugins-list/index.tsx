@@ -41,6 +41,28 @@ function createMarkup(html: string) {
   return { __html: html }
 }
 
+/** Description HTML from plugins.json: links that open a new tab get the
+ * same screen-reader note as the card's own links. */
+function createDescriptionMarkup(html: string) {
+  return {
+    __html: html.replace(
+      /(<a\b[^>]*target=["']_blank["'][^>]*>)([\s\S]*?)(<\/a>)/g,
+      `$1$2<span class="${s.srOnly}"> (opens in a new tab)</span>$3`
+    ),
+  }
+}
+
+/** Screen-reader text for a link that opens a new tab, so it doesn't change
+ * context without warning. */
+function NewTabNote() {
+  return <span className={s.srOnly}> (opens in a new tab)</span>
+}
+
+/** Docs pages open in the same tab; only off-site links open a new one. */
+function isExternal(href: string) {
+  return /^https?:\/\//.test(href)
+}
+
 const GENERATED: Record<string, PluginMeta> =
   (generatedJSON && generatedJSON.plugins) || {}
 
@@ -123,29 +145,6 @@ function Badge({ badge }: { badge?: string }) {
   )
 }
 
-/** Summarize a peer range that lists whole major versions, such as
- * `^10 || ^11 || ^12 || ^13`, as `10–13` (or `13, 15–16` with gaps). Any
- * other range is returned unchanged. */
-function summarizeCypressRange(range: string): string {
-  const parts = range.split('||').map((part) => part.trim())
-  if (parts.length < 2) return range
-  const majors = parts.map((part) => part.match(/^[\^~]?(\d+)(?:\.[\dx*]+)*$/))
-  if (majors.some((m) => !m)) return range
-  const unique = [...new Set(majors.map((m) => Number(m![1])))].sort(
-    (a, b) => a - b
-  )
-  const runs: string[] = []
-  let start = unique[0]
-  for (let i = 1; i <= unique.length; i++) {
-    if (unique[i] !== unique[i - 1] + 1) {
-      const end = unique[i - 1]
-      runs.push(start === end ? `${start}` : `${start}–${end}`)
-      start = unique[i]
-    }
-  }
-  return runs.join(', ')
-}
-
 function Signals({ meta }: { meta?: PluginMeta }) {
   // `stale` depends on the current date, so only evaluate it after mount to
   // keep server and client markup identical during hydration.
@@ -169,6 +168,7 @@ function Signals({ meta }: { meta?: PluginMeta }) {
       >
         {meta.npm}
         {meta.version ? ` ${meta.version}` : ''}
+        <NewTabNote />
       </a>
     )
   }
@@ -189,12 +189,8 @@ function Signals({ meta }: { meta?: PluginMeta }) {
   }
   if (meta.cypressVersion) {
     items.push(
-      <span
-        key="cy"
-        className={s.signal}
-        title={`Supported Cypress versions: ${meta.cypressVersion}`}
-      >
-        Cypress {summarizeCypressRange(meta.cypressVersion)}
+      <span key="cy" className={s.signal} title="Supported Cypress versions">
+        Cypress {meta.cypressVersion}
       </span>
     )
   }
@@ -214,9 +210,14 @@ function PluginCard({
     <li className="card" data-cy={`plugin-${plugin.name}`}>
       <div className={s.pluginTitle}>
         <h3>
-          <a href={plugin.link} target="_blank" rel="noopener noreferrer">
-            {plugin.name}
-          </a>
+          {isExternal(plugin.link) ? (
+            <a href={plugin.link} target="_blank" rel="noopener noreferrer">
+              {plugin.name}
+              <NewTabNote />
+            </a>
+          ) : (
+            <a href={plugin.link}>{plugin.name}</a>
+          )}
         </h3>
         {plugin.badge && (
           <div className={s.pluginBadge}>
@@ -225,7 +226,9 @@ function PluginCard({
         )}
       </div>
 
-      <p dangerouslySetInnerHTML={createMarkup(plugin.description)}></p>
+      <p
+        dangerouslySetInnerHTML={createDescriptionMarkup(plugin.description)}
+      ></p>
 
       {meta && meta.deprecated && (
         <p className={s.deprecatedNotice}>

@@ -32,16 +32,28 @@ h3 {
   overflow-wrap: anywhere;
 }
 
-:global(div.markdown) .pluginTitle h3 a,
-:global(div.markdown) .pluginTitle h3 a:hover {
-  color: var(--ifm-heading-color);
+/* Plugin names are links, so they look like every other link on the site:
+   the link color and a soft underline at rest (WCAG 1.4.1 and 3.2.4), full
+   strength on hover. inline-block with a little padding gives a 24px tall
+   target (WCAG 2.5.8). */
+:global(div.markdown) .pluginTitle h3 a {
+  display: inline-block;
+  padding: 1px 0;
+  color: var(--ifm-link-color);
   border-bottom: 0;
+  text-decoration: underline 1px solid;
+  text-decoration-color: currentColor;
+  text-decoration-color: color-mix(in srgb, currentColor 75%, transparent);
+  text-underline-offset: 4px;
 }
 
-:global(div.markdown) .pluginTitle h3 a:hover,
-:global(div.markdown) .pluginTitle h3 a:focus-visible {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+:global(div.markdown) .pluginTitle h3 a:hover {
+  border-bottom: 0;
+  text-decoration-color: currentColor;
+}
+
+html[data-theme='dark'] :global(div.markdown) .pluginTitle h3 a {
+  color: var(--ifm-color-indigo-200);
 }
 
 .plugins a {
@@ -269,13 +281,12 @@ html[data-theme='dark'] .select {
 
 /* -------- Signals -------- */
 
-/* npm package, last publish, and Cypress range on one quiet line, separated
-   by middle dots. Only a stale publish date gets a highlight. */
+/* npm package, last publish date, and supported Cypress versions as quiet
+   small text, one to a line. Only a stale publish date gets a highlight. */
 .signals {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 0.4rem;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 0 0 0.5rem;
   font-size: 0.8rem;
   line-height: 1.5;
@@ -286,30 +297,11 @@ html[data-theme='dark'] .signals {
   color: var(--ifm-color-gray-300);
 }
 
-.signal {
-  white-space: nowrap;
-}
-
-/* the npm package takes its own line; the publish date and Cypress range
-   share the next, joined by a middle dot */
-a.signal {
-  flex-basis: 100%;
-}
-
-.signal + .signal::before {
-  content: '·';
-  margin-right: 0.4rem;
-  color: var(--ifm-color-gray-500);
-}
-
-a.signal + .signal::before {
-  content: none;
-}
-
-/* the npm link keeps the page's link color and soft underline, but as a
-   text underline: it fills its own line, so a border would run the card's
-   full width */
+/* the npm link keeps the page's link color and soft underline, with padding
+   for a 24px tall target (WCAG 2.5.8) */
 :global(div.markdown) .signals a.signal {
+  display: inline-block;
+  padding: 2px 0;
   font-size: inherit;
   border-bottom: 0;
   text-decoration: underline 1px solid;
@@ -353,14 +345,22 @@ html[data-theme='dark'] .signalStale {
   gap: 0.2rem 0.55rem;
 }
 
-/* tags are filters, not reading links: small gray text that takes the link
-   color and an underline on hover or focus. The theme's in-content link rule
-   (div.markdown a) is more specific than a plain .keyword, so scope to it. */
+/* tags are filters: small gray text with a soft underline at rest, so they
+   read as links without relying on color (WCAG 1.4.1), taking the link color
+   on hover or focus. Each is at least 24px tall (WCAG 2.5.8). The theme's
+   in-content link rule (div.markdown a) is more specific than a plain
+   .keyword, so scope to it. */
 :global(div.markdown) .keywords a.keyword {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
   font-weight: inherit;
   font-size: 0.8rem;
   color: var(--ifm-color-gray-700);
-  text-decoration: none;
+  text-decoration: underline 1px solid;
+  text-decoration-color: currentColor;
+  text-decoration-color: color-mix(in srgb, currentColor 75%, transparent);
+  text-underline-offset: 3px;
   cursor: pointer;
   border-bottom: 0;
 }
@@ -374,4 +374,17 @@ html[data-theme='dark'] :global(div.markdown) .keywords a.keyword {
   color: var(--ifm-link-color);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* visually hidden, still read by screen readers */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
