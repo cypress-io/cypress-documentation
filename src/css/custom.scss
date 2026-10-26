@@ -179,8 +179,11 @@ html[data-theme='light'] {
 
   --ifm-toc-border-color: var(--ifm-color-gray-100);
 
-  // borderless inline code chip; linked code gets an indigo tint instead
-  --ifm-code-background: var(--ifm-color-gray-50);
+  // borderless inline code chip; linked code gets an indigo tint instead.
+  // --cy-code-background holds the chip color because Infima's .alert
+  // overrides --ifm-code-background (see the admonition rules below)
+  --cy-code-background: var(--ifm-color-gray-50);
+  --ifm-code-background: var(--cy-code-background);
   --cy-code-link-background: var(--ifm-color-indigo-50);
   // lightest indigo that keeps the focus ring at 3:1+ against white
   --cy-link-focus-ring: var(--ifm-color-indigo-400);
@@ -208,7 +211,8 @@ html[data-theme='dark'] {
 
   --ifm-toc-border-color: var(--ifm-color-gray-900);
 
-  --ifm-code-background: rgba(255, 255, 255, 0.08);
+  --cy-code-background: rgba(255, 255, 255, 0.08);
+  --ifm-code-background: var(--cy-code-background);
   --cy-code-link-background: rgba(154, 162, 252, 0.14);
   --cy-link-focus-ring: var(--ifm-color-indigo-300);
 }
@@ -247,12 +251,24 @@ html[data-theme='dark'] {
   color: var(--ifm-color-secondary);
 }
 
-/* Infima colors admonition links like the admonition's text, which in light
-   mode leaves the underline as the only cue; use the page's link color, which
-   holds 5:1+ on every light admonition background */
+/* Admonitions in light mode:
+   - Infima colors links like the admonition's text, leaving the underline as
+     the only cue; use the page's link color, 5:1+ on every light admonition
+     background.
+   - Infima tints inline code with the admonition's highlight color, and the
+     indigo-50 linked chip vanishes on the indigo-50 note background. White
+     chips, plain and linked, stand out on every tinted background; links stay
+     marked by their indigo text and underline.
+   Dark mode keeps the body text's translucent chips. */
 html[data-theme='light'] .alert {
   --ifm-link-color: var(--ifm-color-indigo-500);
   --ifm-link-hover-color: var(--ifm-color-indigo-500);
+  --ifm-code-background: var(--ifm-color-white);
+  --cy-code-link-background: var(--ifm-color-white);
+}
+
+html[data-theme='dark'] .alert {
+  --ifm-code-background: var(--cy-code-background);
 }
 
 .alert.alert--info {
