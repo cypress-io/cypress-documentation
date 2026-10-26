@@ -186,6 +186,26 @@ describe('Support Assistant', () => {
       fallback().should('be.visible')
     })
 
+    it('closes from its own close button and returns focus to the button', () => {
+      // The embed's close control never loaded, and a phone has no Escape key.
+      cy.intercept('GET', `${EMBED_ORIGIN}/ask/embed*`, {
+        statusCode: 200,
+        headers: { 'content-type': 'text/html' },
+        body: '<!doctype html><html><body></body></html>',
+      })
+      cy.viewport('iphone-x')
+      cy.clock(Date.now(), ['setTimeout', 'clearTimeout'])
+      button().click()
+      cy.tick(8000)
+      fallback()
+        .find('[data-cy="support-assistant-close"]')
+        .should('be.visible')
+        .and('have.attr', 'aria-label', 'Close Support Assistant')
+        .click()
+      panel().should('not.be.visible')
+      button().should('have.attr', 'aria-expanded', 'false').and('have.focus')
+    })
+
     it('does not show once the embed loads', () => {
       cy.clock(Date.now(), ['setTimeout', 'clearTimeout'])
       button().click()
