@@ -143,8 +143,8 @@ const config = {
     {
       image: 'img/social-card.png',
       colorMode: {
-        // Follow the OS light/dark setting until the reader picks one with the
-        // toggle; their saved choice wins from then on.
+        // Match the reader's operating system light or dark setting until they
+        // pick a mode with the toggle. Their saved choice wins from then on.
         respectPrefersColorScheme: true,
       },
       metadata: [

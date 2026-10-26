@@ -1,10 +1,11 @@
 describe('Color mode', () => {
   const PAGE = '/app/get-started/why-cypress'
 
-  // Emulates the OS light/dark setting through the Chrome DevTools Protocol,
-  // so the page sees a real `prefers-color-scheme` and its change events. The
-  // call sits inside `cy.then` so it runs in command order, not when the test
-  // body is first read.
+  // Emulates the operating system light or dark setting through the Chrome
+  // DevTools Protocol, so the page sees a real `prefers-color-scheme` and its
+  // change events. With no `scheme`, it clears the emulation. The call sits
+  // inside `cy.then` so it runs in command order, not while Cypress is still
+  // queuing the test's commands.
   const setSystemColorScheme = (scheme?: 'light' | 'dark') =>
     cy.then(() =>
       Cypress.automation('remote:debugger:protocol', {
@@ -31,7 +32,8 @@ describe('Color mode', () => {
     theme().should('have.attr', 'data-has-hydrated', 'true')
   }
 
-  // Emulation outlives the test, so clear it before the next spec runs.
+  // Emulation persists in the browser after a test ends, so clear it after
+  // each one to start the next test or spec from the default setting.
   afterEach(() => setSystemColorScheme())
 
   it('matches a dark system setting when nothing is saved', () => {
