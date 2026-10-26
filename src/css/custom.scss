@@ -174,8 +174,9 @@ html[data-theme='light'] {
 
   --ifm-toc-border-color: var(--ifm-color-gray-100);
 
-  // adjust hue & transparency of `code` so dotted underline shows through in light mode
-  --ifm-code-background: #dadada33;
+  // borderless inline code chip; linked code gets an indigo tint instead
+  --ifm-code-background: var(--ifm-color-gray-50);
+  --cy-code-link-background: var(--ifm-color-indigo-50);
 }
 
 html[data-theme='dark'] {
@@ -199,6 +200,9 @@ html[data-theme='dark'] {
   --ifm-link-color: #29a7ff;
 
   --ifm-toc-border-color: var(--ifm-color-gray-900);
+
+  --ifm-code-background: rgba(255, 255, 255, 0.08);
+  --cy-code-link-background: rgba(154, 162, 252, 0.14);
 }
 
 /* prevent fonts from looking chunky, esp in Firefox */

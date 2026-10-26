@@ -121,29 +121,39 @@ div.markdown {
 
   .alert,
   & {
-    // give links that wrap a code tag a pill-style border; :not(.cy-button-width)
-    // raises specificity above the base link rule so its dotted border-bottom
-    // doesn't double up with the code tag's dotted text-decoration underline
+    // inline code is a borderless chip; :not(pre) leaves code blocks alone
+    :not(pre) > code {
+      border: none;
+      border-radius: 6px;
+      padding: 0.1em 0.35em;
+    }
+
+    // a link that wraps code drops its own border and weight so the chip is the
+    // only box; :not(.cy-button-width) raises specificity above the base link
+    // rule and the tablet/mobile dotted border-bottom
     a:not(.cy-button-width):has(> code) {
       &,
       &:hover {
-        border: 0.1rem solid rgba(0, 0, 0, 0.1);
-        border-radius: var(--ifm-code-border-radius);
-        background-color: var(--ifm-code-background);
-        padding: 0 0.2rem 0.2rem;
+        border: none;
+        background: none;
+        padding: 0;
+        font-weight: inherit;
       }
     }
 
+    // linked code: tinted chip in the link color with a soft solid underline
+    // that turns full strength on hover; 75% keeps the underline at 3:1+
+    // against the chip, since it's the non-color cue that marks a link
     a > code {
-      border: none;
-      background: transparent;
-      border-radius: 0;
-      text-decoration: underline dotted 1px;
+      color: inherit;
+      background-color: var(--cy-code-link-background);
+      text-decoration: underline 1px solid;
+      text-decoration-color: color-mix(in srgb, currentColor 75%, transparent);
       text-underline-offset: 3px;
     }
 
     a:hover > code {
-      text-decoration-style: solid;
+      text-decoration-color: currentColor;
     }
   }
 
