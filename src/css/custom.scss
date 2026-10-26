@@ -451,9 +451,10 @@ table tr:nth-child(2n) {
   background-color: var(--ifm-table-background);
 }
 
-/* horizontal rules only: no vertical borders, and a plain header set off by
-   its bottom border alone. The outer cells drop their side padding so table
-   text lines up with the text around the table. */
+/* rows separated by horizontal rules, with column dividers between body cells
+   only: none on the table's outer edges and none between header cells. The
+   header is plain, set off by its bottom border alone. The outer cells drop
+   their side padding so table text lines up with the text around the table. */
 table {
   thead {
     background-color: transparent;
@@ -471,6 +472,11 @@ table {
 
   th {
     border-top: none;
+  }
+
+  td + td {
+    border-left: var(--ifm-table-border-width) solid
+      var(--ifm-table-border-color);
   }
 
   th:first-child,
