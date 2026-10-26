@@ -49,7 +49,7 @@ Start Cypress in open mode (`cypress open`) in your project, select your testing
 `cypress tap` commands from the same project directory in another terminal.
 
 In a cloud agent or other sandbox, start the session from the agent itself. See
-[Run cypress tap in an AI agent sandbox](/app/tooling/cypress-tap-agent-sandboxes).
+[Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes).
 
 The CLI finds the running Cypress session on its own. If more than one is
 running, it prefers the one whose project matches your current directory. Use
@@ -1091,7 +1091,7 @@ Together these tools provide the availability for you or an AI agent to fully en
 - **`status` reports `not connected`.** No Cypress session was found for this
   directory. Start one with `cypress open`, and remember that headless
   `cypress run` sessions are never discoverable. In an agent sandbox, also see
-  [Troubleshooting](/app/tooling/cypress-tap-agent-sandboxes#Troubleshooting).
+  [Troubleshooting](/app/tooling/cypress-agent-sandboxes#Troubleshooting).
 
 - **`status` stays `loading` and never reaches a verdict.** The selected spec is
   waiting on its own build. A spec that fails to compile never starts a run, so
@@ -1136,7 +1136,7 @@ Cypress does capture telemetry specifically around the usage of the CLI to infor
   spec is running they fail with `SPEC_IN_PROGRESS` until the run reports a
   verdict.
 - The CLI and the Cypress session must run on the same machine, container, or
-  sandbox. See [Run cypress tap in an AI agent sandbox](/app/tooling/cypress-tap-agent-sandboxes).
+  sandbox. See [Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes).
 - Firefox and WebKit are not supported. `cypress tap` only supports Chromium-family browsers.
 - `cypress tap` drives the same session you are looking at, and there is no
   lock between the two. Starting a run from the app, switching spec, or
@@ -1146,7 +1146,7 @@ Cypress does capture telemetry specifically around the usage of the CLI to infor
 
 ## See also
 
-- [Run cypress tap in an AI agent sandbox](/app/tooling/cypress-tap-agent-sandboxes):
+- [Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes):
   set up Claude Code on the web, Cursor Cloud, or a local sandbox
 - [Cypress AI Skills](/app/tooling/ai-skills): teach your agent to write and
   review Cypress tests
