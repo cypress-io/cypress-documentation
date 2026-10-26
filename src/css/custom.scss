@@ -482,6 +482,44 @@ table {
   td:last-child {
     padding-right: 0;
   }
+
+  /* tint the row under the pointer so it's easy to follow across columns */
+  @media (hover: hover) {
+    tbody tr:hover {
+      background-color: var(--ifm-table-stripe-background);
+    }
+  }
+
+  /* a shadow on an edge with more columns to scroll to. Tables scroll on
+     their own (Infima sets display: block; overflow: auto); the covers
+     scroll with the content (local) and hide each shadow once that edge is
+     reached, the shadows stay put at the table's edges (scroll). */
+  background:
+    linear-gradient(to right, var(--cy-table-surface) 30%, transparent) left
+      center / 40px 100% no-repeat local,
+    linear-gradient(to left, var(--cy-table-surface) 30%, transparent) right
+      center / 40px 100% no-repeat local,
+    linear-gradient(to right, var(--cy-table-scroll-shadow), transparent) left
+      center / 16px 100% no-repeat scroll,
+    linear-gradient(to left, var(--cy-table-scroll-shadow), transparent) right
+      center / 16px 100% no-repeat scroll;
+}
+
+html[data-theme] {
+  --cy-table-surface: var(--ifm-background-color);
+}
+
+html[data-theme='light'] {
+  --cy-table-scroll-shadow: rgba(27, 30, 46, 0.16);
+}
+
+html[data-theme='dark'] {
+  --cy-table-scroll-shadow: rgba(0, 0, 0, 0.55);
+}
+
+/* a table inside an admonition sits on the admonition's background */
+.alert {
+  --cy-table-surface: var(--ifm-alert-background-color);
 }
 
 /* add some more spacing for main doc container */
