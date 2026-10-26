@@ -142,6 +142,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
       image: 'img/social-card.png',
+      colorMode: {
+        // Follow the OS light/dark setting until the reader picks one with the
+        // toggle; their saved choice wins from then on.
+        respectPrefersColorScheme: true,
+      },
       metadata: [
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Cypress Documentation' },
