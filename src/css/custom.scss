@@ -445,6 +445,12 @@ div[class^='codeBlockTitle'] {
   display: none;
 }
 
+/* no zebra striping on table rows; Infima's header shading uses the same
+   stripe color, so override the even-row rule rather than the variable */
+table tr:nth-child(2n) {
+  background-color: var(--ifm-table-background);
+}
+
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
   margin: 0 10px;
