@@ -126,6 +126,12 @@ div.markdown {
       border: none;
       border-radius: 6px;
       padding: 0.1em 0.35em;
+
+      // forced colors (Windows High Contrast) drops the chip background, so
+      // draw the chip outline in the system text color instead
+      @media (forced-colors: active) {
+        border: 1px solid CanvasText;
+      }
     }
 
     // a link that wraps code drops its own border and weight so the chip is the
