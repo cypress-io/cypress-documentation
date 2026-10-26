@@ -1,0 +1,399 @@
+---
+title: 'Run cypress in an AI agent sandbox'
+description: 'Run cypress inside an AI agent sandbox such as Claude Code on the web, Cursor Cloud, or locally so an AI agent can execute tests and inspect the results.'
+sidebar_label: 'Cypress in agent sandboxes'
+sidebar_position: 25
+slug: /app/tooling/cypress-agent-sandboxes
+sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
+---
+
+<ProductHeading product="app" />
+
+# Run `cypress tap` in an AI agent sandbox
+
+**An agent can start Cypress, run a spec, and read the result without anyone at the keyboard.**
+
+Cloud coding agents such as Claude Code on the web and Cursor Cloud run in a
+sandbox: an isolated container or virtual machine with no screen and no person to click
+through the Cypress app. [`cypress tap`](/app/tooling/cypress-tap) reads from a
+running Cypress app in open mode, so the sandbox has to run that app too. This
+page covers what the sandbox needs and how an agent starts a session on its own.
+
+:::info
+The behavior described on this page relies on changes made in Cypress v16.2.1.
+Earlier versions of Cypress can be run inside sandboxes but may require
+additional setup and configuration.
+:::
+
+## How it fits together
+
+Three things run in the same sandbox:
+
+1. **The agent**, which runs shell commands.
+2. **A Cypress app in open mode** (`cypress open`), with a browser it launches
+   for the selected testing type.
+3. **`cypress tap` commands**, which the agent runs to start specs and read results.
+
+`cypress tap` finds the Cypress session through files on the same machine and
+talks to it over local connections. It cannot reach a Cypress app running on
+another machine, so the agent and Cypress have to share one sandbox.
+
+## Requirements
+
+- Cypress version 16.2.1 or greater
+- A version of Node.js supported by Cypress. See
+  [System requirements](/app/get-started/install-cypress#System-requirements).
+- On Linux, the `xvfb` package. A sandbox has no screen; Cypress starts a virtual
+  one for the app and the browser using [Xvfb](https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml).
+  If you already have a display you want Cypress to use, set the `DISPLAY` environment
+  variable and Cypress uses it. If `DISPLAY` points to a display that is not running,
+  Cypress starts its own.
+- Network access to the hosts in the table below.
+- A supported browser. See [Choose a browser](#Choose-a-browser).
+
+### Network access
+
+Many agent sandboxes block network traffic by default. Allow these hosts so the
+Cypress binary downloads and the app can reach its services:
+
+| Host                  | Used for                                        |
+| --------------------- | ----------------------------------------------- |
+| `registry.npmjs.org`  | Installing the `cypress` npm package            |
+| `download.cypress.io` | Finding and downloading the Cypress binary      |
+| `cdn.cypress.io`      | Downloading the Cypress binary                  |
+| `api.cypress.io`      | Requests the Cypress App makes to Cypress Cloud |
+
+In addition to the hosts above, you will need to ensure the sandbox is allowed
+to access any hosts used by your tests; this includes your UI, API, auth layers,
+and any other network resources your tests rely on. If your test suite relies
+on dependencies downloaded from repositories other than NPMJS you will need
+to configure those as well.
+
+:::note
+If your application is network-restricted (only accessible from your corporate VPN for example) then
+you will need to coordinate with your network security team to establish a method
+for a remote sandbox to access it. This is may require use of a proxy or other advanced
+configuration.
+:::
+
+## Detecting an AI agent
+
+Cypress recognizes common coding agents from the environment variables they set. When an agent is detected,
+certain UI behaviors are bypassed or automated to facilitate running headlessly.
+If your agent is not recognized, set `CYPRESS_AGENT_MODE=1` on the same command
+line that starts Cypress. Note that some agents start a new shell for each
+command, so it may be necessary to change how the environment variable is set
+depending on how your agent works. See [Environment variables](#Environment-variables).
+
+## Changes made in a sandbox
+
+When an agent runs inside a sandbox there is the possibility it could create, delete, or edit files depending
+on the task it has been given. These changes are performed _inside the sandbox_, so you will need to
+take action to ensure they are not lost. This could involve copying the changes back to your local machine
+or committing them to a remote `git` branch. The process for identifying and handling file changes depends
+on your choice of agent and how you have configured your sandbox - refer to your agent's documentation for
+more information.
+
+## Running Cypress Tests Non-interactively
+
+Tests can be run for basic pass/fail measurements inside a sandbox using [`cypress run`](/app/references/command-line#cypress-run).
+
+## Running Cypress Tests Interactively
+
+An agent can run tests one at a time, monitor the execution, and query the application under test throughout using `cypress tap`. Doing this in a sandbox
+requires running a backgrounded instance of Cypress.
+
+### Prepare the project
+
+When launched in a sandbox, Cypress will use the established `cypress.config.js` file from your project.
+
+If a Cypress configuration has not been created yet Cypress will automatically create one when running in
+`--e2e` mode when launched by an agent. Component testing mode (`--component`) requires that configuration be created before launching inside a sandbox to avoid potential mistakes with library auto-detection.
+
+### Start Cypress in the background
+
+Run `cypress open` with a browser and a testing type, and leave it running. Use
+`nohup` so Cypress keeps running after the command that starts it returns:
+
+```shell title="Command"
+nohup npx cypress open --e2e --browser chromium --project . > cypress-open.log 2>&1 &
+```
+
+With the above command, logging output will be written to `cypress-open.log`. This includes
+error conditions, configuration issues, and the location of files that are created automatically. Instruct your agent
+to refer to this file in the event of unexpected behavior.
+
+When an AI agent has been detected, Cypress will automatically bypass the "welcome"
+portions of the UI when `--project`, `--browser` (or set `defaultBrowser` in the
+config), and a testing type parameter are supplied.
+
+`cypress open --detached` is an alternative that returns once Cypress is ready.
+Cypress keeps running after the command exits, and the command prints the files
+that hold its output:
+
+```shell title="Command"
+npx cypress open --e2e --browser chromium --detached
+```
+
+### Wait for the browser
+
+Once the "open" mode instance of Cypress has been launched it can be controlled and queried using `cypress tap`.
+On initial launch it may take some time for the browser to launch; poll `status` until it reports a
+stage other than `not connected` or `browser not selected`:
+
+```shell title="Command"
+until npx cypress tap status --json | grep -Eq '"status": *"(spec not selected|loading|running|passed|failed)"'; do
+  sleep 1
+done
+```
+
+Give the loop a timeout in your own scripts. If it does not finish, read
+`cypress-open.log` for the reason.
+
+### Run specs and read the results
+
+From here the agent uses the same commands as on a local machine:
+
+```shell title="Command"
+npx cypress tap run cypress/e2e/checkout.cy.ts
+npx cypress tap status --json
+npx cypress tap reporter --json
+```
+
+See [Getting Started](/app/tooling/cypress-tap#Getting-Started) for the full loop and
+[Polling for a verdict](/app/tooling/cypress-tap#polling) for how to tell that a
+run finished. The [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap)
+teaches an agent this loop.
+
+If `status` stays at `spec not selected` after you run a spec, run the spec again.
+
+## Choose a browser
+
+`cypress tap` works with Chromium-based browsers: Chrome, Chromium, Edge, and
+Electron.
+
+- **Chromium or Chrome.** Pass the browser by name if it is on the `PATH`, or by
+  the path to its executable:
+
+  ```shell title="Command"
+  npx cypress open --e2e --browser /usr/bin/chromium --project .
+  ```
+
+  If Cypress cannot use the path you gave, it prints the reason and the output
+  of `<path> --version` to `cypress-open.log`, but does not launch a browser:
+  `cypress tap status` stays at `browser not selected` until a spec is run.
+  This only makes the failure easier to diagnose; it is not a guarantee that
+  Cypress recognizes the binary. Why a custom Chromium path can go
+  unrecognized is not confirmed, so until it is, treat a `chromium` on `PATH`
+  as the supported route.
+
+- **Electron.** Electron ships with Cypress, so it works without installing a
+  browser. Cypress prints a deprecation warning because Electron as a test
+  browser is [deprecated](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
+
+Sandboxes often include a Chromium from a browser-automation tool. Find it with
+`ls /opt/pw-browsers/chromium-*/chrome-linux/chrome` (the location varies by
+sandbox) and pass the result to `--browser`. Whether Cypress recognizes this
+binary as Chromium is not guaranteed; see the note above about an unrecognized
+path. Until the cause is confirmed, a `chromium` build on `PATH`, such as one
+installed through the sandbox's package manager, is the supported route.
+
+Once a `cypress.config.*` file exists, setting
+[`defaultBrowser`](/app/references/configuration#Browser) in it works the same
+way as passing `--browser`, so you can set the browser once in the project
+instead of on every command that starts Cypress. On the very first launch of
+an unconfigured project, there is no config file yet to read `defaultBrowser`
+from, so pass `--browser` instead.
+
+## Configure your sandbox
+
+<Tabs groupId="agent-sandbox" defaultValue="claude" values={[
+  { label: 'Claude Code on the web', value: 'claude' },
+  { label: 'Cursor Cloud', value: 'cursor' },
+  { label: 'Other sandboxes', value: 'other' },
+]}>
+<TabItem value="claude">
+
+1. In the environment's network settings, allow the hosts in
+   [Network access](#Network-access).
+2. In the environment's setup script, install your dependencies, which also
+   downloads the Cypress binary:
+
+   ```shell title="Setup script"
+   npm ci
+   ```
+
+   As an alternative that lives in your repository, add a "SessionStart" hook
+   that installs when the session runs on the web:
+
+   ```json title=".claude/settings.json"
+   {
+     "hooks": {
+       "SessionStart": [
+         {
+           "hooks": [
+             {
+               "type": "command",
+               "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-start.sh"
+             }
+           ]
+         }
+       ]
+     }
+   }
+   ```
+
+   ```shell title=".claude/hooks/session-start.sh"
+   #!/bin/bash
+   set -euo pipefail
+   [ "${CLAUDE_CODE_REMOTE:-}" = "true" ] || exit 0
+   cd "$CLAUDE_PROJECT_DIR"
+   npm install --no-audit --no-fund >&2
+   npx cypress verify >&2 || { npx cypress install >&2; npx cypress verify >&2; }
+   ```
+
+   By default most agents will not persist the sandbox filesystem - this means Cypress and your
+   dependencies will be re-downloaded each time which can have substantial time and bandwidth
+   costs. Review your agent's documentation to determine if it is appropriate to cache the
+   Cypress binary (see [Environment variables](#Environment-variables)) and other dependencies.
+
+3. Claude sandbox environments include `xvfb` and Chromium by default. Tell the agent how to start Cypress manually, or
+   [add the recipe to your agent's instructions](#Add-the-recipe-to-your-agents-instructions).
+
+   ```shell title="Command"
+   browser="$(ls /opt/pw-browsers/chromium-*/chrome-linux/chrome | head -1)"
+   nohup npx cypress open --e2e --browser "$browser" --project . > cypress-open.log 2>&1 &
+   ```
+
+</TabItem>
+<TabItem value="cursor">
+
+Cursor Cloud builds the environment from a Dockerfile and runs commands from
+`.cursor/environment.json`.
+
+```dockerfile title=".cursor/Dockerfile"
+FROM cypress/browsers:<tag>
+```
+
+```json title=".cursor/environment.json"
+{
+  "build": { "dockerfile": "Dockerfile" },
+  "install": "npm ci"
+}
+```
+
+Use a [Cypress Docker image](/app/continuous-integration/overview) that matches
+your Node.js version in place of `<tag>`. The image provides the system
+libraries that Cypress needs. Allow the hosts in [Network access](#Network-access)
+in the environment's network settings.
+
+</TabItem>
+<TabItem value="other">
+
+Any other sandbox that meets the [requirements](#Requirements) can work, including a
+local Docker container or an agent sandbox on your own machine. However, it may require
+custom configuration, dependency installation, or setup steps.
+
+- If the sandbox restricts where processes can write or which ports they can
+  open, allow writes to the cache folder and connections on `127.0.0.1`.
+
+</TabItem>
+</Tabs>
+
+## Add the recipe to your agent's instructions
+
+Add the steps to the file your agent reads, or install the
+[`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap), which includes them:
+
+```md title="AGENTS.md"
+## Run Cypress tests
+
+Start Cypress once per session, in the background. Replace `<browser>` with
+`chromium` if it is on the PATH, or with the path to a Chromium or Chrome
+executable:
+
+    nohup npx cypress open --e2e --browser <browser> --project . > cypress-open.log 2>&1 &
+
+Wait until `npx cypress tap status --json` reports a status other than
+`not connected` or `browser not selected`. If it does not, read
+`cypress-open.log`.
+
+Then run a spec with `npx cypress tap run <spec>` and poll
+`npx cypress tap status --json` until `status` is `passed` or `failed` and
+`startedAt` has changed. Read failures with `npx cypress tap reporter --json`.
+
+For component testing, write the configuration, support files, and bundler
+config first, and check them with `npx cypress run --component --spec <spec>`.
+```
+
+## Environment variables
+
+| Name                     | Description                                                                                                                                                                                                                                            |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `CYPRESS_AGENT_MODE`     | Set to `1` or `true` to make Cypress recognize this run as an AI agent, or to `0` or `false` to turn that off. It only controls recognition: skipping the welcome screen still needs `--project`, a browser (or `defaultBrowser`), and a testing type. |
+| `CYPRESS_CACHE_FOLDER`   | [Changes the location of the Cypress binary cache](/app/references/advanced-installation#Binary-cache)                                                                                                                                                 |
+| `CYPRESS_INSTALL_BINARY` | [Sets which Cypress binary to install: a version, URL, or local file](/app/references/advanced-installation#Install-binary)                                                                                                                            |
+
+## Troubleshooting
+
+- **The binary download fails.** The sandbox blocks `download.cypress.io` or
+  `cdn.cypress.io`. Allow them, or use a mirror. See
+  [Network access](#Network-access).
+
+- **Cypress reports a missing system library.** The error names the library and
+  an install command for Debian and Ubuntu. For a library it does not
+  recognize, it gives an `apt-file search` command instead; `apt-file` is not
+  installed by default, so install it first (`apt-get install apt-file &&
+apt-file update`). Install the library and run the command again.
+
+- **Cypress reports that Xvfb is missing.** Install the `xvfb` package, or set
+  `DISPLAY` to a display that is running.
+
+- **`status` stays at `not connected`.** Cypress is not running yet, or it has
+  not started loading the project. Read `cypress-open.log`. For component
+  testing, run the headless check in [Component testing](#Component-testing).
+  A project with a configuration file but no support file may also stay at
+  `not connected` instead of reporting an error; check that
+  `cypress/support/e2e.js` or `cypress/support/e2e.ts` exists.
+
+- **`status` reports `error`.** The project failed to load: an invalid
+  configuration file, or (for component testing) a dev server that failed to
+  start. Cypress prints the same error to `cypress-open.log`, and
+  `npx cypress tap status --json` includes it under `error`. Fix the file the
+  error names and restart Cypress.
+
+- **`status` stays at `browser not selected`.** Two different causes lead
+  here. First, pass `--project`, `--browser` (or set `defaultBrowser`), and a
+  testing type to `cypress open`; if you already pass all three, set
+  `CYPRESS_AGENT_MODE=1`, because Cypress did not recognize the agent. Second,
+  if you passed a path to `--browser`, Cypress may not have recognized it as a
+  Chromium-based executable; read the reason in `cypress-open.log` and see
+  [Choose a browser](#Choose-a-browser).
+
+- **Cypress ignores `ELECTRON_RUN_AS_NODE`.** Some agent environments set this
+  variable, which makes Electron run as plain Node.js with no window.
+  `cypress open` ignores it and prints a warning.
+
+- **`cypress open` exits right away.** Run `npx cypress verify` to see why the
+  Cypress binary cannot start.
+
+## Limitations
+
+- The agent and Cypress have to run in the same sandbox.
+- An open Cypress session with a browser uses about 2 GB of memory in a small
+  project, and more in a larger one. Size the sandbox accordingly.
+- `--detached` leaves the Xvfb that Cypress started running after Cypress exits.
+  Stop it by its own process ID when you finish, with `pgrep Xvfb` to find it.
+  Avoid `pkill Xvfb`: it stops every Xvfb on the host, including one another
+  session is using.
+- `cypress tap` has several [documented limitations](/app/tooling/cypress-tap#CLI-Limitations) to be aware of.
+
+## See also
+
+- [`cypress tap`](/app/tooling/cypress-tap): commands, polling, and examples
+- [Cypress AI Skills](/app/tooling/ai-skills): teach your agent to drive
+  `cypress tap`
+- [Advanced installation](/app/references/advanced-installation): mirrors,
+  proxies, and the binary cache
+- [Command line](/app/references/command-line#cypress-open): the `cypress open`
+  options
