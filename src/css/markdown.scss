@@ -245,10 +245,12 @@ div.markdown {
     margin-top: 2px;
   }
 
-  // prose-like blocks wrap instead of scrolling sideways
+  // prose-like blocks wrap instead of scrolling sideways; a text block whose
+  // output lines up in columns opts out with `nowrap` in its fence meta
+  // (```text nowrap), which the codeNoWrap remark plugin turns into a class
   div[class*='language-skill'] pre,
-  div[class*='language-text'] pre,
-  div[class*='language-txt'] pre {
+  div[class*='language-text']:not(.code-nowrap) pre,
+  div[class*='language-txt']:not(.code-nowrap) pre {
     white-space: pre-wrap;
     word-break: break-word;
   }
@@ -256,8 +258,8 @@ div.markdown {
   // hanging indent: a wrapped line continues 4ch in, deeper than the 2-space
   // indent many log lines start with, so a continuation doesn't read as a new
   // line
-  div[class*='language-text'] .token-line,
-  div[class*='language-txt'] .token-line {
+  div[class*='language-text']:not(.code-nowrap) .token-line,
+  div[class*='language-txt']:not(.code-nowrap) .token-line {
     display: block;
     padding-left: 4ch;
     text-indent: -4ch;

@@ -6,6 +6,7 @@ const { default: remarkDirective } = require('remark-directive')
 
 const fs = require('fs')
 const {
+  codeNoWrap,
   copyTsToJs,
   cypressConfigPluginExample,
   cypressConfigExample,
@@ -68,6 +69,7 @@ const config = {
           ],
           remarkPlugins: [
             remarkDirective,
+            codeNoWrap,
             cypressConfigExample,
             cypressConfigPluginExample,
             visitMountExample,
