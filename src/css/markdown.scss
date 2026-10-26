@@ -88,6 +88,12 @@ div.markdown {
     vertical-align: top;
   }
 
+  // left-align headers to line up with their column's text; a column centered
+  // in the Markdown (`:---:`) keeps its inline style and stays centered
+  th {
+    text-align: left;
+  }
+
   // text links get a soft solid underline in their own color, matching linked
   // code; 75% keeps it at 3:1+ against the page since it's the non-color cue
   // that marks a link. It stays a border-bottom so the components that set
