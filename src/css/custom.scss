@@ -177,6 +177,8 @@ html[data-theme='light'] {
   // borderless inline code chip; linked code gets an indigo tint instead
   --ifm-code-background: var(--ifm-color-gray-50);
   --cy-code-link-background: var(--ifm-color-indigo-50);
+  // lightest indigo that keeps the focus ring at 3:1+ against white
+  --cy-link-focus-ring: var(--ifm-color-indigo-400);
 }
 
 html[data-theme='dark'] {
@@ -203,6 +205,7 @@ html[data-theme='dark'] {
 
   --ifm-code-background: rgba(255, 255, 255, 0.08);
   --cy-code-link-background: rgba(154, 162, 252, 0.14);
+  --cy-link-focus-ring: var(--ifm-color-indigo-300);
 }
 
 /* prevent fonts from looking chunky, esp in Firefox */

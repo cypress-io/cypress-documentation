@@ -63,15 +63,25 @@ div.markdown {
     margin-bottom: 1rem;
   }
 
+  // text links get a soft solid underline in their own color, matching linked
+  // code; 75% keeps it at 3:1+ against the page since it's the non-color cue
+  // that marks a link. It stays a border-bottom so the components that set
+  // border-bottom: none on their links (cards, heading anchors) keep working.
   a:not(.cy-button-width) {
     text-decoration: none;
     font-weight: var(--ifm-font-weight-semibold);
     color: var(--ifm-link-color);
-    border-bottom: 1px dotted var(--ifm-link-color);
+    border-bottom: 1px solid color-mix(in srgb, currentColor 75%, transparent);
 
     &:hover {
-      border-bottom: 1px solid var(--ifm-link-color);
+      border-bottom-color: currentColor;
       color: var(--ifm-link-hover-color);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cy-link-focus-ring);
+      outline-offset: 2px;
+      border-radius: 2px;
     }
 
     html[data-theme='dark'] & {
@@ -134,41 +144,47 @@ div.markdown {
       }
     }
 
-    // a link that wraps code drops its own border and weight so the chip is the
-    // only box; :not(.cy-button-width) raises specificity above the base link
-    // rule and the tablet/mobile dotted border-bottom
+    // a link that wraps code swaps its border-bottom for a text underline,
+    // which runs through the chip instead of below it and also covers any
+    // plain text in the same link ("`.should()` with callback"); 75% keeps it
+    // at 3:1+ against the chip, since it's the non-color cue that marks a
+    // link. :not(.cy-button-width) raises specificity above the base link rule
+    // and the tablet/mobile border-bottom
     a:not(.cy-button-width):has(> code) {
       &,
       &:hover {
         border: none;
         background: none;
         padding: 0;
-        font-weight: inherit;
+        text-decoration: underline 1px solid;
+        text-decoration-color: color-mix(
+          in srgb,
+          currentColor 75%,
+          transparent
+        );
+        text-underline-offset: 3px;
+      }
+
+      &:hover {
+        text-decoration-color: currentColor;
       }
     }
 
-    // linked code: tinted chip in the link color with a soft solid underline
-    // that turns full strength on hover; 75% keeps the underline at 3:1+
-    // against the chip, since it's the non-color cue that marks a link
+    // linked code: tinted chip in the link color, at normal weight so only
+    // the link's plain text is semibold
     a > code {
       color: inherit;
+      font-weight: var(--ifm-font-weight-normal);
       background-color: var(--cy-code-link-background);
-      text-decoration: underline 1px solid;
-      text-decoration-color: color-mix(in srgb, currentColor 75%, transparent);
-      text-underline-offset: 3px;
-    }
-
-    a:hover > code {
-      text-decoration-color: currentColor;
     }
   }
 
   // ensure text links in admonitions have underline
   .alert a {
-    border-bottom: 1px dotted var(--ifm-link-color);
+    border-bottom: 1px solid color-mix(in srgb, currentColor 75%, transparent);
 
     &:hover {
-      border-bottom: 1px solid var(--ifm-link-color);
+      border-bottom-color: currentColor;
     }
   }
 
@@ -203,22 +219,24 @@ div.markdown {
     word-break: break-word;
   }
 
-  /* add dotted underline to links on tablet and smaller mobile devices */
+  /* add underline to links on tablet and smaller mobile devices */
   @media screen and (max-width: 1024px) and (orientation: landscape) {
     a {
-      border-bottom: 1px dotted var(--ifm-link-color);
+      border-bottom: 1px solid
+        color-mix(in srgb, currentColor 75%, transparent);
 
       &:hover {
-        border-bottom: 1px solid var(--ifm-link-color);
+        border-bottom-color: currentColor;
       }
     }
   }
   @media screen and (max-width: 1024px) and (orientation: portrait) {
     a {
-      border-bottom: 1px dotted var(--ifm-link-color);
+      border-bottom: 1px solid
+        color-mix(in srgb, currentColor 75%, transparent);
 
       &:hover {
-        border-bottom: 1px solid var(--ifm-link-color);
+        border-bottom-color: currentColor;
       }
     }
   }

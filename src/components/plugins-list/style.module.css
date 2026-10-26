@@ -263,10 +263,10 @@ html[data-theme='dark'] .select {
   white-space: nowrap;
 }
 
-/* The theme styles in-content links (div.markdown a) with a dotted
+/* The theme styles in-content links (div.markdown a) with a solid
    border-bottom and the link color, at a higher specificity than a plain
    `a.signal`. Scope to div.markdown so we can override it: keep the npm link
-   blue like a link but drop the dotted underline. The light value is nudged
+   blue like a link but drop the underline. The light value is nudged
    slightly darker than the default link color so it clears 4.5:1 on the chip;
    dark mode uses the theme link color (bright enough on the dark chip). */
 :global(div.markdown) .signals a.signal,
