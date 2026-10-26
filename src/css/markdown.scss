@@ -166,7 +166,9 @@ div.markdown {
     :not(pre) > code {
       border: none;
       border-radius: 6px;
-      padding: 0.1em 0.35em;
+      // more padding on top balances the room around the glyphs, which sit
+      // low in the chip because descenders and parentheses fill the bottom
+      padding: 0.25em 0.35em 0.1em;
 
       // forced colors (Windows High Contrast) drops the chip background, so
       // draw the chip outline in the system text color instead
