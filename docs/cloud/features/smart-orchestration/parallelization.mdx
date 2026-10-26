@@ -193,18 +193,30 @@ workflows:
 It finished in **59 seconds**.
 
 ```text
-2x-chrome, Machine #1, 9 specs            2x-chrome, Machine #2, 10 specs
---------------------------------          -----------------------------------
--- actions.cy.js (14s)                    -- waiting.cy.js (6s)
--- traversal.cy.js (4s)                   -- navigation.cy.js (3s)
--- misc.cy.js (4s)                        -- utilities.cy.js (3s)
--- cypress_api.cy.js (4s)                 -- viewport.cy.js (4s)
--- cookies.cy.js (3s)                     -- network_requests.cy.js (3s)
--- files.cy.js (3s)                       -- connectors.cy.js (2s)
--- location.cy.js (2s)                    -- assertions.cy.js (1s)
--- querying.cy.js (2s)                    -- aliasing.cy.js (1s)
--- location.cy.js (1s)                    -- spies_stubs_clocks.cy.js (1s)
-                                          -- window.cy.js (1s)
+2x-chrome, Machine #1, 9 specs
+--------------------------
+-- actions.cy.js (14s)
+-- traversal.cy.js (4s)
+-- misc.cy.js (4s)
+-- cypress_api.cy.js (4s)
+-- cookies.cy.js (3s)
+-- files.cy.js (3s)
+-- location.cy.js (2s)
+-- querying.cy.js (2s)
+-- location.cy.js (1s)
+
+2x-chrome, Machine #2, 10 specs
+--------------------------
+-- waiting.cy.js (6s)
+-- navigation.cy.js (3s)
+-- utilities.cy.js (3s)
+-- viewport.cy.js (4s)
+-- network_requests.cy.js (3s)
+-- connectors.cy.js (2s)
+-- assertions.cy.js (1s)
+-- aliasing.cy.js (1s)
+-- spies_stubs_clocks.cy.js (1s)
+-- window.cy.js (1s)
 ```
 
 The difference in running times and machines used is very clear when looking at

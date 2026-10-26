@@ -245,9 +245,22 @@ div.markdown {
     margin-top: 2px;
   }
 
-  div[class*='language-skill'] pre {
+  // prose-like blocks wrap instead of scrolling sideways
+  div[class*='language-skill'] pre,
+  div[class*='language-text'] pre,
+  div[class*='language-txt'] pre {
     white-space: pre-wrap;
     word-break: break-word;
+  }
+
+  // hanging indent: a wrapped line continues 4ch in, deeper than the 2-space
+  // indent many log lines start with, so a continuation doesn't read as a new
+  // line
+  div[class*='language-text'] .token-line,
+  div[class*='language-txt'] .token-line {
+    display: block;
+    padding-left: 4ch;
+    text-indent: -4ch;
   }
 
   /* add underline to links on tablet and smaller mobile devices */
