@@ -271,76 +271,73 @@ html[data-theme='dark'] .alert {
   --ifm-code-background: var(--cy-code-background);
 }
 
+/* Admonitions follow the Cypress Design System Alert (design.cypress.io/
+   components/Alert): flat, 4px corners, 16px padding, a hue-50 background,
+   and no border or left bar. The variants map to the design system's: info
+   is indigo, note (Infima's secondary) is neutral gray, tip is jade, caution
+   and warning are orange, danger is red. Text is hue-800 instead of the
+   Alert's hue-500, which drops below 4.5:1 on orange-50 and is hard to read
+   for paragraphs; hue-800 is 8.18:1 or more on every hue-50. The design
+   system has no dark Alert, so dark mode uses hue-1000 backgrounds with
+   hue-50 text (14.4:1 or more), and gray-900 for the neutral note. */
+.alert {
+  --ifm-alert-border-width: 0;
+  --ifm-alert-border-left-width: 0;
+  --ifm-alert-border-radius: 4px;
+  --ifm-alert-padding-vertical: 16px;
+  --ifm-alert-padding-horizontal: 16px;
+
+  h2,
+  h3,
+  h4 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 4px;
+  }
+}
+
+@mixin admonition-colors($hue, $dark-background: 1000) {
+  background-color: var(--ifm-color-#{$hue}-50);
+  color: var(--ifm-color-#{$hue}-800);
+  // the divider inside an open <details>, like the Alert's hue-100 border
+  --ifm-alert-border-color: var(--ifm-color-#{$hue}-100);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-#{$hue}-#{$dark-background});
+    color: var(--ifm-color-#{$hue}-50);
+    --ifm-alert-border-color: var(--ifm-color-#{$hue}-800);
+  }
+}
+
+/* <details> renders as an info admonition with a 1px border; keep it flat
+   like the others, and draw its arrow in the text color so it reads as a
+   control (the border color it used is too faint at 1.1:1) */
+details.alert {
+  border: none;
+
+  > summary::before {
+    border-left-color: currentColor;
+  }
+}
+
 .alert.alert--info {
-  background-color: var(--ifm-color-teal-50);
-  color: var(--ifm-color-teal-1000);
-  --ifm-alert-border-color: var(--ifm-color-teal-400);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-teal-1000);
-    color: var(--ifm-color-teal-50);
-    --ifm-alert-border-color: var(--ifm-color-teal-800);
-  }
-
-  [data-theme='dark'] &,
-  & {
-    margin-bottom: 2rem;
-    h2,
-    h3,
-    h4 {
-      border-bottom: none;
-      padding-bottom: 0;
-      margin-bottom: 4px;
-    }
-  }
-}
-
-.alert.alert--success {
-  background-color: var(--ifm-color-jade-50);
-  color: var(--ifm-color-jade-1000);
-  --ifm-alert-border-color: var(--ifm-color-jade-400);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-jade-1000);
-    color: var(--ifm-color-jade-50);
-    --ifm-alert-border-color: var(--ifm-color-jade-800);
-  }
-}
-
-.alert.alert--warning {
-  background-color: var(--ifm-color-orange-50);
-  color: var(--ifm-color-orange-1000);
-  --ifm-alert-border-color: var(--ifm-color-orange-400);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-orange-1000);
-    color: var(--ifm-color-orange-50);
-    --ifm-alert-border-color: var(--ifm-color-orange-800);
-  }
-}
-
-.alert.alert--danger {
-  background-color: var(--ifm-color-red-50);
-  color: var(--ifm-color-red-1000);
-  --ifm-alert-border-color: var(--ifm-color-red-400);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-red-1000);
-    color: var(--ifm-color-red-50);
-    --ifm-alert-border-color: var(--ifm-color-red-800);
-  }
+  @include admonition-colors(indigo);
 }
 
 .alert.alert--secondary {
-  background-color: var(--ifm-color-indigo-50);
-  color: var(--ifm-color-indigo-1000);
-  --ifm-alert-border-color: var(--ifm-color-indigo-400);
+  @include admonition-colors(gray, 900);
+}
 
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-indigo-1000);
-    color: var(--ifm-color-indigo-50);
-    --ifm-alert-border-color: var(--ifm-color-indigo-800);
-  }
+.alert.alert--success {
+  @include admonition-colors(jade);
+}
+
+.alert.alert--warning {
+  @include admonition-colors(orange);
+}
+
+.alert.alert--danger {
+  @include admonition-colors(red);
 }
 
 /* Font Awesome Icons */
