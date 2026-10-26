@@ -1,6 +1,24 @@
 div.markdown {
   font-size: 1rem;
-  word-spacing: 1px;
+  // a little more room than the inherited 1.5 so inline code chips on
+  // consecutive lines don't crowd each other
+  line-height: 1.65;
+
+  // 17px body text from the width the sidebar appears, bringing wide-screen
+  // lines from ~86 to ~80 characters; phones keep 16px, where lines are
+  // already short. Code blocks stay at 1rem so more of them don't overflow
+  // and scroll sideways.
+  @media (min-width: 997px) {
+    font-size: 17px;
+
+    .theme-code-block {
+      font-size: 1rem;
+    }
+  }
+
+  // more room between list items so bullets that wrap to several lines
+  // don't run together
+  --ifm-list-item-margin: 0.5rem;
 
   ul {
     padding-left: var(--ifm-list-left-padding);
@@ -59,19 +77,45 @@ div.markdown {
     font-size: 1.2rem;
   }
 
+  // a paragraph break reads clearly against the taller line height
   p {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
 
+  // top-align table cells so each row scans from its first line, instead of
+  // a short option name floating beside a long description
+  td {
+    vertical-align: top;
+  }
+
+  // left-align headers to line up with their column's text; a column centered
+  // in the Markdown (`:---:`) keeps its inline style and stays centered
+  th {
+    text-align: left;
+  }
+
+  // text links get a soft solid underline in their own color, matching linked
+  // code; 75% keeps it at 3:1+ against the page since it's the non-color cue
+  // that marks a link. It stays a border-bottom so the components that set
+  // border-bottom: none on their links (cards, heading anchors) keep working.
   a:not(.cy-button-width) {
     text-decoration: none;
-    font-weight: var(--ifm-font-weight-semibold);
+    font-weight: inherit;
     color: var(--ifm-link-color);
-    border-bottom: 1px dotted var(--ifm-link-color);
+    // full-strength fallback where color-mix() isn't supported (Safari before
+    // 16.2, Chrome before 111, Firefox before 113), so links keep an underline
+    border-bottom: 1px solid currentColor;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 75%, transparent);
 
     &:hover {
-      border-bottom: 1px solid var(--ifm-link-color);
+      border-bottom-color: currentColor;
       color: var(--ifm-link-hover-color);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cy-link-focus-ring);
+      outline-offset: 2px;
+      border-radius: 2px;
     }
 
     html[data-theme='dark'] & {
@@ -121,38 +165,62 @@ div.markdown {
 
   .alert,
   & {
-    // give links that wrap a code tag a pill-style border; :not(.cy-button-width)
-    // raises specificity above the base link rule so its dotted border-bottom
-    // doesn't double up with the code tag's dotted text-decoration underline
-    a:not(.cy-button-width):has(> code) {
-      &,
-      &:hover {
-        border: 0.1rem solid rgba(0, 0, 0, 0.1);
-        border-radius: var(--ifm-code-border-radius);
-        background-color: var(--ifm-code-background);
-        padding: 0 0.2rem 0.2rem;
+    // inline code is a borderless chip; :not(pre) leaves code blocks alone
+    :not(pre) > code {
+      border: none;
+      border-radius: 6px;
+      // more padding on top balances the room around the glyphs, which sit
+      // low in the chip because descenders and parentheses fill the bottom
+      padding: 0.25em 0.35em 0.1em;
+
+      // forced colors (Windows High Contrast) drops the chip background, so
+      // draw the chip outline in the system text color instead
+      @media (forced-colors: active) {
+        border: 1px solid CanvasText;
       }
     }
 
-    a > code {
-      border: none;
-      background: transparent;
-      border-radius: 0;
-      text-decoration: underline dotted 1px;
-      text-underline-offset: 3px;
+    // a link that wraps code swaps its border-bottom for a text underline,
+    // which runs through the chip instead of below it and also covers any
+    // plain text in the same link ("`.should()` with callback"); 75% keeps it
+    // at 3:1+ against the chip, since it's the non-color cue that marks a
+    // link. :not(.cy-button-width) raises specificity above the base link rule
+    // and the tablet/mobile border-bottom
+    a:not(.cy-button-width):has(> code) {
+      &,
+      &:hover {
+        border: none;
+        background: none;
+        padding: 0;
+        text-decoration: underline 1px solid;
+        text-decoration-color: currentColor;
+        text-decoration-color: color-mix(
+          in srgb,
+          currentColor 75%,
+          transparent
+        );
+        text-underline-offset: 3px;
+      }
+
+      &:hover {
+        text-decoration-color: currentColor;
+      }
     }
 
-    a:hover > code {
-      text-decoration-style: solid;
+    // linked code: tinted chip in the link color
+    a > code {
+      color: inherit;
+      background-color: var(--cy-code-link-background);
     }
   }
 
   // ensure text links in admonitions have underline
   .alert a {
-    border-bottom: 1px dotted var(--ifm-link-color);
+    border-bottom: 1px solid currentColor;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 75%, transparent);
 
     &:hover {
-      border-bottom: 1px solid var(--ifm-link-color);
+      border-bottom-color: currentColor;
     }
   }
 
@@ -182,27 +250,46 @@ div.markdown {
     margin-top: 2px;
   }
 
-  div[class*='language-skill'] pre {
+  // prose-like blocks wrap instead of scrolling sideways; a text block whose
+  // output lines up in columns opts out with `nowrap` in its fence meta
+  // (```text nowrap), which the codeNoWrap remark plugin turns into a class
+  div[class*='language-skill'] pre,
+  div[class*='language-text']:not(.code-nowrap) pre,
+  div[class*='language-txt']:not(.code-nowrap) pre {
     white-space: pre-wrap;
     word-break: break-word;
   }
 
-  /* add dotted underline to links on tablet and smaller mobile devices */
+  // hanging indent: a wrapped line continues 4ch in, deeper than the 2-space
+  // indent many log lines start with, so a continuation doesn't read as a new
+  // line
+  div[class*='language-text']:not(.code-nowrap) .token-line,
+  div[class*='language-txt']:not(.code-nowrap) .token-line {
+    display: block;
+    padding-left: 4ch;
+    text-indent: -4ch;
+  }
+
+  /* add underline to links on tablet and smaller mobile devices */
   @media screen and (max-width: 1024px) and (orientation: landscape) {
     a {
-      border-bottom: 1px dotted var(--ifm-link-color);
+      border-bottom: 1px solid currentColor;
+      border-bottom: 1px solid
+        color-mix(in srgb, currentColor 75%, transparent);
 
       &:hover {
-        border-bottom: 1px solid var(--ifm-link-color);
+        border-bottom-color: currentColor;
       }
     }
   }
   @media screen and (max-width: 1024px) and (orientation: portrait) {
     a {
-      border-bottom: 1px dotted var(--ifm-link-color);
+      border-bottom: 1px solid currentColor;
+      border-bottom: 1px solid
+        color-mix(in srgb, currentColor 75%, transparent);
 
       &:hover {
-        border-bottom: 1px solid var(--ifm-link-color);
+        border-bottom-color: currentColor;
       }
     }
   }

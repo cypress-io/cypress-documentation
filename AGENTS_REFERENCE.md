@@ -357,6 +357,13 @@ same change. `## See also` always stays as it is.
   app code beside it, and `## Syntax` and `### Usage` blocks, which show call
   shapes rather than files.
 
+- `text` and `txt` blocks wrap long lines instead of scrolling sideways, which
+  suits error messages, logs, and prose-like output. Output that lines up in
+  columns with spaces (side-by-side lists, right-aligned CLI counters) breaks
+  when it wraps, so opt that block out with `nowrap` in the fence meta:
+  ` ```text nowrap `. It combines with a title:
+  ` ```text title="out.txt" nowrap `.
+
 - For Cypress config snippets use the
   [`:::cypress-config-example`](#cypress-config-examples) directive, and for
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a

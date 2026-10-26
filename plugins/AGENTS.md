@@ -42,8 +42,8 @@ npm run build:plugins   # tsc for both sub-packages
   `src/components/video-youtube/`.
 - `npm run build` is the real check for `cypressRemarkPlugins`: it backs the
   `:::cypress-config-example`, `:::cypress-config-plugin-example`, and
-  `:::visit-mount-example` directives and the `copyTsToJs` code-block flag, so a
-  change there reprocesses every page that uses them.
+  `:::visit-mount-example` directives and the `copyTsToJs` and `nowrap`
+  code-block flags, so a change there reprocesses every page that uses them.
 - For `llm/`, build and then look at the output it owns: `dist/llm/markdown/`,
   `dist/llms.txt`, `dist/llms-full.txt`, and `dist/docs-manifest.json`. A grep
   over `dist/llm/markdown/` is also how you confirm `data-sanitize` stripped the

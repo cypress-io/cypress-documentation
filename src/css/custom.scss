@@ -63,6 +63,7 @@
   --ifm-color-gray-700: theme(colors.gray.700);
   --ifm-color-gray-800: theme(colors.gray.800);
   --ifm-color-gray-900: theme(colors.gray.900);
+  --ifm-color-gray-950: theme(colors.gray.950);
   --ifm-color-gray-1000: theme(colors.gray.1000);
   --ifm-color-teal-50: theme(colors.teal.50);
   --ifm-color-teal-100: theme(colors.teal.100);
@@ -127,12 +128,16 @@
   --ifm-line-height-base: 1.6;
   --ifm-pre-line-height: 1.5em;
 
-  --ifm-code-background-color: #282a36;
+  // gray-1100 from the Cypress Design System (design.cypress.io/colors.css);
+  // the installed @cypress-design palette stops at gray-1000. Keep in sync
+  // with the Prism theme's backgroundColor (src/theme/prism-material-oceanic)
+  --ifm-code-background-color: #161827;
 
   //border color of divider between code title and block
-  --ifm-code-background-color-light: #3b3e51;
-  //bg color when code is highlighted via comments
-  --docusaurus-highlighted-code-line-bg: rgba(71, 128, 220, 0.4);
+  --ifm-code-background-color-light: var(--ifm-color-gray-900);
+  //bg color when code is highlighted via comments; indigo-900 keeps every
+  // syntax color at 4.5:1+ on it, and the indigo-400 bar below marks the line
+  --docusaurus-highlighted-code-line-bg: var(--ifm-color-indigo-900);
 
   // border color in current area of toc
   --toc-highlight: var(--ifm-color-primary);
@@ -174,8 +179,14 @@ html[data-theme='light'] {
 
   --ifm-toc-border-color: var(--ifm-color-gray-100);
 
-  // adjust hue & transparency of `code` so dotted underline shows through in light mode
-  --ifm-code-background: #dadada33;
+  // borderless inline code chip; linked code gets an indigo tint instead.
+  // --cy-code-background holds the chip color because Infima's .alert
+  // overrides --ifm-code-background (see the admonition rules below)
+  --cy-code-background: var(--ifm-color-gray-50);
+  --ifm-code-background: var(--cy-code-background);
+  --cy-code-link-background: var(--ifm-color-indigo-50);
+  // lightest indigo that keeps the focus ring at 3:1+ against white
+  --cy-link-focus-ring: var(--ifm-color-indigo-400);
 }
 
 html[data-theme='dark'] {
@@ -199,6 +210,11 @@ html[data-theme='dark'] {
   --ifm-link-color: #29a7ff;
 
   --ifm-toc-border-color: var(--ifm-color-gray-900);
+
+  --cy-code-background: rgba(255, 255, 255, 0.08);
+  --ifm-code-background: var(--cy-code-background);
+  --cy-code-link-background: rgba(154, 162, 252, 0.14);
+  --cy-link-focus-ring: var(--ifm-color-indigo-300);
 }
 
 /* prevent fonts from looking chunky, esp in Firefox */
@@ -235,76 +251,93 @@ html[data-theme='dark'] {
   color: var(--ifm-color-secondary);
 }
 
+/* Admonitions in light mode:
+   - Infima colors links like the admonition's text, leaving the underline as
+     the only cue; use the page's link color, 5:1+ on every light admonition
+     background.
+   - Infima tints inline code with the admonition's highlight color, and the
+     indigo-50 linked chip vanishes on the indigo-50 note background. White
+     chips, plain and linked, stand out on every tinted background; links stay
+     marked by their indigo text and underline.
+   Dark mode keeps the body text's translucent chips. */
+html[data-theme='light'] .alert {
+  --ifm-link-color: var(--ifm-color-indigo-500);
+  --ifm-link-hover-color: var(--ifm-color-indigo-500);
+  --ifm-code-background: var(--ifm-color-white);
+  --cy-code-link-background: var(--ifm-color-white);
+}
+
+html[data-theme='dark'] .alert {
+  --ifm-code-background: var(--cy-code-background);
+}
+
+/* Admonitions follow the Cypress Design System Alert (design.cypress.io/
+   components/Alert): flat, 4px corners, 16px padding, a hue-50 background,
+   and no border or left bar. The variants map to the design system's: info
+   is indigo, note (Infima's secondary) is neutral gray, tip is jade, caution
+   and warning are orange, danger is red. Text is hue-800 instead of the
+   Alert's hue-500, which drops below 4.5:1 on orange-50 and is hard to read
+   for paragraphs; hue-800 is 8.18:1 or more on every hue-50. The design
+   system has no dark Alert, so dark mode uses hue-1000 backgrounds with
+   hue-50 text (14.4:1 or more), and gray-900 for the neutral note. */
+.alert {
+  --ifm-alert-border-width: 0;
+  --ifm-alert-border-left-width: 0;
+  --ifm-alert-border-radius: 4px;
+  --ifm-alert-padding-vertical: 16px;
+  --ifm-alert-padding-horizontal: 16px;
+
+  h2,
+  h3,
+  h4 {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 4px;
+  }
+}
+
+@mixin admonition-colors($hue, $dark-background: 1000) {
+  background-color: var(--ifm-color-#{$hue}-50);
+  color: var(--ifm-color-#{$hue}-800);
+  // the divider inside an open <details>, like the Alert's hue-100 border
+  --ifm-alert-border-color: var(--ifm-color-#{$hue}-100);
+
+  [data-theme='dark'] & {
+    background-color: var(--ifm-color-#{$hue}-#{$dark-background});
+    color: var(--ifm-color-#{$hue}-50);
+    --ifm-alert-border-color: var(--ifm-color-#{$hue}-800);
+  }
+}
+
+/* <details> renders as an info admonition with a 1px border; keep it flat
+   like the others, and draw its arrow in the text color so it reads as a
+   control (the border color it used is too faint at 1.1:1) */
+details.alert {
+  border: none;
+
+  > summary::before {
+    border-left-color: currentColor;
+  }
+}
+
 .alert.alert--info {
-  background-color: var(--ifm-color-teal-50);
-  color: var(--ifm-color-teal-1000);
-  --ifm-alert-border-color: var(--ifm-color-teal-400);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-teal-1000);
-    color: var(--ifm-color-teal-50);
-    --ifm-alert-border-color: var(--ifm-color-teal-800);
-  }
-
-  [data-theme='dark'] &,
-  & {
-    margin-bottom: 2rem;
-    h2,
-    h3,
-    h4 {
-      border-bottom: none;
-      padding-bottom: 0;
-      margin-bottom: 4px;
-    }
-  }
-}
-
-.alert.alert--success {
-  background-color: var(--ifm-color-jade-50);
-  color: var(--ifm-color-jade-1000);
-  --ifm-alert-border-color: var(--ifm-color-jade-400);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-jade-1000);
-    color: var(--ifm-color-jade-50);
-    --ifm-alert-border-color: var(--ifm-color-jade-800);
-  }
-}
-
-.alert.alert--warning {
-  background-color: var(--ifm-color-orange-50);
-  color: var(--ifm-color-orange-1000);
-  --ifm-alert-border-color: var(--ifm-color-orange-400);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-orange-1000);
-    color: var(--ifm-color-orange-50);
-    --ifm-alert-border-color: var(--ifm-color-orange-800);
-  }
-}
-
-.alert.alert--danger {
-  background-color: var(--ifm-color-red-50);
-  color: var(--ifm-color-red-1000);
-  --ifm-alert-border-color: var(--ifm-color-red-400);
-
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-red-1000);
-    color: var(--ifm-color-red-50);
-    --ifm-alert-border-color: var(--ifm-color-red-800);
-  }
+  @include admonition-colors(indigo);
 }
 
 .alert.alert--secondary {
-  background-color: var(--ifm-color-indigo-50);
-  color: var(--ifm-color-indigo-1000);
-  --ifm-alert-border-color: var(--ifm-color-indigo-400);
+  @include admonition-colors(gray, 900);
+}
 
-  [data-theme='dark'] & {
-    background-color: var(--ifm-color-indigo-1000);
-    color: var(--ifm-color-indigo-50);
-    --ifm-alert-border-color: var(--ifm-color-indigo-800);
-  }
+.alert.alert--success {
+  @include admonition-colors(jade);
+}
+
+.alert.alert--warning {
+  @include admonition-colors(orange);
+}
+
+.alert.alert--danger {
+  @include admonition-colors(red);
 }
 
 /* Font Awesome Icons */
@@ -357,6 +390,20 @@ html[data-theme='dark'] {
   margin-top: -1rem;
 }
 
+/* in dark mode the code background sits just below the page's gray-1000, so
+   outline code surfaces to keep them distinct from the page */
+html[data-theme='dark'] {
+  .theme-code-block:not(.tabs-container .theme-code-block),
+  .tabs-container {
+    box-shadow: 0 0 0 1px var(--ifm-color-gray-900);
+  }
+}
+
+/* a bar on highlighted lines, so they don't rely on the background alone */
+.theme-code-block-highlighted-line {
+  box-shadow: inset 3px 0 0 var(--ifm-color-indigo-400);
+}
+
 /* code title styling */
 div[class^='codeBlockTitle'] {
   font-size: 1.1rem;
@@ -377,7 +424,7 @@ div[class^='codeBlockTitle'] {
 }
 
 .tabs-container .tabs {
-  background-color: #1f2937;
+  background-color: var(--ifm-code-background-color);
   border-radius: 0.4rem 0.4rem 0 0;
   box-shadow: inset 0 -6px 0 -4px var(--ifm-code-background-color-light);
 }
@@ -438,14 +485,89 @@ div[class^='codeBlockTitle'] {
   display: none;
 }
 
+/* no zebra striping on table rows; Infima's header shading uses the same
+   stripe color, so override the even-row rule rather than the variable */
+table tr:nth-child(2n) {
+  background-color: var(--ifm-table-background);
+}
+
+/* content tables fill the column; the ScrollableTable wrapper scrolls one
+   that's wider than the column, instead of Infima's display: block, which
+   shrinks every table to its content */
+.table-scroll {
+  overflow-x: auto;
+  margin-bottom: var(--ifm-spacing-vertical);
+
+  > table {
+    display: table;
+    width: 100%;
+    margin-bottom: 0;
+    overflow: visible;
+  }
+}
+
+/* horizontal rules only: no vertical borders, and a plain header set off by
+   its bottom border alone. The outer cells drop their side padding so table
+   text lines up with the text around the table. */
+table {
+  thead {
+    background-color: transparent;
+  }
+
+  thead tr {
+    border-top: none;
+  }
+
+  th,
+  td {
+    border-left: none;
+    border-right: none;
+  }
+
+  th {
+    border-top: none;
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 0;
+  }
+
+  th:last-child,
+  td:last-child {
+    padding-right: 0;
+  }
+
+  /* tint the row under the pointer so it's easy to follow across columns */
+  @media (hover: hover) {
+    tbody tr:hover {
+      background-color: var(--ifm-table-stripe-background);
+    }
+  }
+}
+
 /* add some more spacing for main doc container */
 [class^='docItemContainer'] {
   margin: 0 10px;
 }
 
+/* On desktop, cap the content at 760px so 17px body text stays near 80
+   characters a line on wide screens, and center it between the sidebar and
+   the table of contents. The padding sets the gaps when the column is
+   narrower than the cap: 26px on the left plus the column's 16px matches the
+   42px gap before the table of contents (10px here plus the two columns'
+   16px each). */
+@media (min-width: 997px) {
+  [class^='docItemContainer'] {
+    box-sizing: content-box;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 10px 0 26px;
+  }
+}
+
 [class^='docItemContainer'] [class^='codeBlockLines'] {
   max-width: 0;
-  word-spacing: 0;
 }
 
 /* hides the osano widget */
@@ -553,6 +675,29 @@ div[class^='codeBlockTitle'] {
 
 /* Keeps the bar clear of the dark mode switch (the swizzled BackToTopButton,
    fixed bottom-right). */
+/* the floating dark mode switch fades out while the page scrolls; visibility
+   waits for the fade so the hidden switch can't be clicked or tabbed to */
+.theme-back-to-top-button {
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 0s;
+}
+
+.theme-back-to-top-button--hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-back-to-top-button,
+  .theme-back-to-top-button--hidden {
+    transition: none;
+  }
+}
+
 @media (min-width: 768px) {
   body:has(.theme-back-to-top-button) .osano-cm-dialog--type_bar {
     right: 6.5rem;
@@ -709,6 +854,29 @@ body ul.guidesList li.card {
 
       html[data-theme='dark'] & {
         color: var(--ifm-color-jade-300);
+      }
+    }
+
+    /* Cypress Design System icons are two-tone: the outline is drawn in
+       currentColor, and the light layer (.icon-light, .icon-light-fill) has a
+       fixed gray fill. Color them like the card titles: an indigo-500 outline
+       (5.64:1 on white) over an indigo-100 fill, and indigo-300 (5.4:1 on the
+       gray-900 card) over indigo-800 in dark mode. */
+    svg:not(.svg-inline--fa) {
+      color: var(--ifm-color-indigo-500);
+
+      .icon-light,
+      .icon-light-fill {
+        fill: var(--ifm-color-indigo-100);
+      }
+
+      html[data-theme='dark'] & {
+        color: var(--ifm-color-indigo-300);
+
+        .icon-light,
+        .icon-light-fill {
+          fill: var(--ifm-color-indigo-800);
+        }
       }
     }
   }
