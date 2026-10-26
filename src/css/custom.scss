@@ -494,6 +494,21 @@ table tr:nth-child(2n) {
   background-color: var(--ifm-table-background);
 }
 
+/* content tables fill the column; the ScrollableTable wrapper scrolls one
+   that's wider than the column, instead of Infima's display: block, which
+   shrinks every table to its content */
+.table-scroll {
+  overflow-x: auto;
+  margin-bottom: var(--ifm-spacing-vertical);
+
+  > table {
+    display: table;
+    width: 100%;
+    margin-bottom: 0;
+    overflow: visible;
+  }
+}
+
 /* horizontal rules only: no vertical borders, and a plain header set off by
    its bottom border alone. The outer cells drop their side padding so table
    text lines up with the text around the table. */
