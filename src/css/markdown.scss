@@ -102,6 +102,9 @@ div.markdown {
     text-decoration: none;
     font-weight: inherit;
     color: var(--ifm-link-color);
+    // full-strength fallback where color-mix() isn't supported (Safari before
+    // 16.2, Chrome before 111, Firefox before 113), so links keep an underline
+    border-bottom: 1px solid currentColor;
     border-bottom: 1px solid color-mix(in srgb, currentColor 75%, transparent);
 
     &:hover {
@@ -190,6 +193,7 @@ div.markdown {
         background: none;
         padding: 0;
         text-decoration: underline 1px solid;
+        text-decoration-color: currentColor;
         text-decoration-color: color-mix(
           in srgb,
           currentColor 75%,
@@ -212,6 +216,7 @@ div.markdown {
 
   // ensure text links in admonitions have underline
   .alert a {
+    border-bottom: 1px solid currentColor;
     border-bottom: 1px solid color-mix(in srgb, currentColor 75%, transparent);
 
     &:hover {
@@ -268,6 +273,7 @@ div.markdown {
   /* add underline to links on tablet and smaller mobile devices */
   @media screen and (max-width: 1024px) and (orientation: landscape) {
     a {
+      border-bottom: 1px solid currentColor;
       border-bottom: 1px solid
         color-mix(in srgb, currentColor 75%, transparent);
 
@@ -278,6 +284,7 @@ div.markdown {
   }
   @media screen and (max-width: 1024px) and (orientation: portrait) {
     a {
+      border-bottom: 1px solid currentColor;
       border-bottom: 1px solid
         color-mix(in srgb, currentColor 75%, transparent);
 
