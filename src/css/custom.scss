@@ -63,6 +63,7 @@
   --ifm-color-gray-700: theme(colors.gray.700);
   --ifm-color-gray-800: theme(colors.gray.800);
   --ifm-color-gray-900: theme(colors.gray.900);
+  --ifm-color-gray-950: theme(colors.gray.950);
   --ifm-color-gray-1000: theme(colors.gray.1000);
   --ifm-color-teal-50: theme(colors.teal.50);
   --ifm-color-teal-100: theme(colors.teal.100);
@@ -244,6 +245,14 @@ html[data-theme='dark'] {
 
 .button.button--secondary.button--outline:not(.button--active):not(:hover) {
   color: var(--ifm-color-secondary);
+}
+
+/* Infima colors admonition links like the admonition's text, which in light
+   mode leaves the underline as the only cue; use the page's link color, which
+   holds 5:1+ on every light admonition background */
+html[data-theme='light'] .alert {
+  --ifm-link-color: var(--ifm-color-indigo-500);
+  --ifm-link-hover-color: var(--ifm-color-indigo-500);
 }
 
 .alert.alert--info {
@@ -654,6 +663,29 @@ html[data-theme='dark'] {
 
 /* Keeps the bar clear of the dark mode switch (the swizzled BackToTopButton,
    fixed bottom-right). */
+/* the floating dark mode switch fades out while the page scrolls; visibility
+   waits for the fade so the hidden switch can't be clicked or tabbed to */
+.theme-back-to-top-button {
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 0s;
+}
+
+.theme-back-to-top-button--hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 200ms ease,
+    visibility 0s linear 200ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-back-to-top-button,
+  .theme-back-to-top-button--hidden {
+    transition: none;
+  }
+}
+
 @media (min-width: 768px) {
   body:has(.theme-back-to-top-button) .osano-cm-dialog--type_bar {
     right: 6.5rem;
