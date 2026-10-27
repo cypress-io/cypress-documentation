@@ -61,6 +61,8 @@ type CategoryEntry = {
   shortName?: string
   /** Id of a stage in `plugins.json` → `stages`. */
   stage?: string
+  /** Earlier anchors that still land here after a rename or merge. */
+  aliases?: string[]
   description?: string
   plugins: PluginEntry[]
 }
@@ -69,6 +71,7 @@ type Category = {
   id: string
   name: string
   shortName: string
+  aliases: string[]
   description?: string
   stage: Stage
   plugins: Plugin[]
@@ -507,6 +510,7 @@ export default function PluginsList() {
         id: categoryId(entry.name),
         name: entry.name,
         shortName: entry.shortName || entry.name,
+        aliases: entry.aliases || [],
         description: entry.description,
         stage: STAGES.find((st) => st.id === entry.stage) || OTHER_STAGE,
         plugins: entry.plugins.map(withMeta),
@@ -722,6 +726,9 @@ export default function PluginsList() {
               data-category={category.id}
               aria-labelledby={category.id}
             >
+              {category.aliases.map((alias) => (
+                <span key={alias} id={alias} className={s.alias} />
+              ))}
               <div className={s.sectionHeader}>
                 <p className={s.eyebrow} data-cy="plugins-category-stage">
                   {category.stage.name}

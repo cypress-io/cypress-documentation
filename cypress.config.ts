@@ -82,6 +82,25 @@ export default defineConfig({
 
       const URLs = walk(path)
 
+      on('task', {
+        // The anchors docs pages link to on one route. The build checks Markdown
+        // headings only, so a spec checks the anchors a component renders.
+        anchorsLinkedTo(route: string): string[] {
+          const pattern = new RegExp(`${route}#([\\w&%-]+)`, 'g')
+          const anchors = new Set<string>()
+          for (const file of readdirSync(path, { recursive: true }) as string[]) {
+            if (!file.endsWith('.mdx')) {
+              continue
+            }
+            const source = readFileSync(join(path, file), 'utf8')
+            for (const [, anchor] of source.matchAll(pattern)) {
+              anchors.add(decodeURIComponent(anchor))
+            }
+          }
+          return [...anchors]
+        },
+      })
+
       config.expose = config.expose || {}
       config.expose.URLs = URLs
 

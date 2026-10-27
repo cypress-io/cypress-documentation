@@ -159,7 +159,10 @@ Each category sets a `stage`, one of the `id`s in the `stages` list at the top
 of `plugins.json` (Set up, Write, Run, Check, and Report & ship). The page shows
 categories stage by stage, alphabetically within each stage, with the stage name
 above the category title. A category with a long `name` can set a `shortName`
-for the category dropdown.
+for the category dropdown. A category's anchor comes from its `name`, so when you
+rename a category or merge one into another, list the old anchor in the
+surviving category's `aliases` (for example `"aliases": ["email"]`) so existing
+links still land on it.
 
 By default, plugins are sorted within each category by badge tier and then by
 most recently published first, so the entry order in `plugins.json` does not

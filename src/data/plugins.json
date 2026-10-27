@@ -239,13 +239,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-repeat",
-          "description": "Run Cypress multiple times in a row, great at finding test flake.",
-          "link": "https://github.com/bahmutov/cypress-repeat",
-          "badge": "community",
-          "keywords": ["cli", "ci", "repeat", "retry", "flake"]
-        },
-        {
           "name": "cypress-split",
           "description": "Split Cypress specs across parallel CI machines for speed.",
           "link": "https://github.com/bahmutov/cypress-split",
@@ -415,17 +408,11 @@
           "badge": "community"
         },
         {
-          "name": "cypress-each",
-          "description": "Adds describe.each and it.each for data-driven Cypress tests.",
-          "link": "https://github.com/bahmutov/cypress-each",
-          "keywords": [
-            "each",
-            "data-driven",
-            "describe-each",
-            "it-each",
-            "test-selection"
-          ],
-          "badge": "community"
+          "name": "cypress-repeat",
+          "description": "Run Cypress multiple times in a row, great at finding test flake.",
+          "link": "https://github.com/bahmutov/cypress-repeat",
+          "badge": "community",
+          "keywords": ["cli", "ci", "repeat", "retry", "flake"]
         }
       ]
     },
@@ -467,13 +454,33 @@
           "link": "https://github.com/khawjaahmad/cypress-test-data-generator",
           "keywords": ["data-generation", "faker", "testing", "test-data"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-each",
+          "description": "Adds describe.each and it.each for data-driven Cypress tests.",
+          "link": "https://github.com/bahmutov/cypress-each",
+          "keywords": [
+            "each",
+            "data-driven",
+            "describe-each",
+            "it-each",
+            "test-selection"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-data-session",
+          "description": "cy.dataSession command for flexible, cached test-data setup.",
+          "link": "https://github.com/bahmutov/cypress-data-session",
+          "keywords": ["commands", "test-data", "data-session", "caching"],
+          "badge": "community"
         }
       ]
     },
     {
       "name": "Custom commands",
       "stage": "write",
-      "description": "Read the <a target=\"_blank\" href=\"/api/cypress-api/custom-commands\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/cypress-api/custom-queries\">Custom Query</a> documentation to learn more.",
+      "description": "Add commands and queries that find elements, wait and retry, branch on page state, handle downloads, and switch environments. To write your own, read <a target=\"_blank\" href=\"/api/cypress-api/custom-commands\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/cypress-api/custom-queries\">Custom Queries</a>.",
       "plugins": [
         {
           "name": "Puppeteer",
@@ -545,19 +552,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-firebase",
-          "description": "Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).",
-          "link": "https://github.com/prescottprue/cypress-firebase",
-          "keywords": [
-            "firebase",
-            "database",
-            "commands",
-            "authentication",
-            "firestore"
-          ],
-          "badge": "community"
-        },
-        {
           "name": "cypress-if",
           "description": "Easy conditional if-else logic for your Cypress tests.",
           "link": "https://github.com/bahmutov/cypress-if",
@@ -591,13 +585,6 @@
           "link": "https://github.com/NoelDeMartin/cypress-solid",
           "keywords": ["solid", "solid-protocol", "solidproject", "commands"],
           "badge": "community"
-        },
-        {
-          "name": "cypress-data-session",
-          "description": "cy.dataSession command for flexible, cached test-data setup.",
-          "link": "https://github.com/bahmutov/cypress-data-session",
-          "keywords": ["commands", "test-data", "data-session", "caching"],
-          "badge": "community"
         }
       ]
     },
@@ -605,6 +592,7 @@
       "name": "Network & API testing",
       "shortName": "Network & API",
       "stage": "run",
+      "aliases": ["bdd-&-contract-testing"],
       "description": "Test, stub, and inspect network requests, APIs, and real-time messaging, and generate API contracts from your stubs.",
       "plugins": [
         {
@@ -740,6 +728,19 @@
             "database"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-firebase",
+          "description": "Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).",
+          "link": "https://github.com/prescottprue/cypress-firebase",
+          "keywords": [
+            "firebase",
+            "database",
+            "commands",
+            "authentication",
+            "firestore"
+          ],
+          "badge": "community"
         }
       ]
     },
@@ -827,14 +828,21 @@
             "duration"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-performance-ui",
+          "description": "Collect browser-native performance metrics in Cypress tests, track historical results in JSON, and generate visual HTML reports without Lighthouse.",
+          "link": "https://github.com/pete2121/cypress-performance-ui",
+          "keywords": ["performance", "reporting", "metrics"],
+          "badge": "community"
         }
       ]
     },
     {
-      "name": "Code coverage & reporting",
-      "shortName": "Coverage & reporting",
+      "name": "Coverage & reporting",
       "stage": "ship",
-      "description": "Collect code coverage and generate rich test reports.",
+      "aliases": ["code-coverage-&-reporting"],
+      "description": "Measure code and UI coverage, and generate rich test reports.",
       "plugins": [
         {
           "name": "UI Coverage",
@@ -937,7 +945,7 @@
     {
       "name": "Visual testing",
       "stage": "check",
-      "description": "<a target=\"_blank\" href=\"/app/tooling/visual-testing\">Visual testing</a> is a great complement to functional testing.",
+      "description": "Catch visual regressions by comparing screenshots against approved baselines, locally or in a hosted review service. To choose an approach, read <a target=\"_blank\" href=\"/app/tooling/visual-testing\">Visual testing in Cypress</a>.",
       "plugins": [
         {
           "name": "Applitools",
@@ -1162,6 +1170,7 @@
     {
       "name": "Email & SMS",
       "stage": "run",
+      "aliases": ["email"],
       "description": "Test email and SMS flows such as sign-up confirmations and one-time codes.",
       "plugins": [
         {
@@ -1387,18 +1396,7 @@
           "link": "https://github.com/kuceb/cypress-plugin-tab",
           "keywords": ["commands", "tab", "keyboard", "accessibility"],
           "badge": "community"
-        },
-        {
-        "name": "cypress-performance-ui",
-        "description": "Collect browser-native performance metrics in Cypress tests, track historical results in JSON, and generate visual HTML reports without Lighthouse.",
-        "link": "https://github.com/pete2121/cypress-performance-ui",
-        "keywords": [
-        "performance",
-        "reporting",
-        "metrics"
-                   ],
-        "badge": "community"
-      }
+        }
       ]
     }
   ]

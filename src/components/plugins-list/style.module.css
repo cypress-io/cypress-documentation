@@ -301,6 +301,12 @@ html[data-theme='dark'] .empty {
   scroll-margin-top: calc(var(--ifm-navbar-height) + 1rem);
 }
 
+/* An earlier anchor for the category, kept after a rename or merge. */
+.alias {
+  display: block;
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
 .sectionHeader {
   display: flex;
   flex-direction: column;
@@ -325,6 +331,9 @@ body :global(div.markdown) h2.sectionTitle {
   border: 0;
   font-size: 1.6rem;
   line-height: 1.25;
+  /* A link to the category lands below the sticky navbar, with the stage
+     name above the title still in view, where an alias anchor lands too. */
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 2.4rem);
 }
 
 :global(div.markdown) p.sectionDescription {

@@ -162,6 +162,10 @@ the page groups categories by stage, then alphabetically. A new category needs a
 `stage` (and a `shortName` if its `name` is long); without one it falls to the
 end of the page. Keep category names in sentence case. Their anchors come from
 the lowercased name, so existing `#custom-commands`-style links keep working.
+Renaming or merging a category changes its anchor, so add the old one to the
+surviving category's `aliases`. The build doesn't check these anchors, since the
+component renders them; `plugins_list.cy.ts` checks every `plugins-list#…` link
+in `docs/`.
 
 ## Writing style
 

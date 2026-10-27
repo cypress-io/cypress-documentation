@@ -135,6 +135,53 @@ describe('Plugins list', () => {
       })
   })
 
+  it('resolves every docs link to a category anchor', () => {
+    cy.task<string[]>('anchorsLinkedTo', '/app/plugins/plugins-list').then(
+      (anchors) => {
+        expect(anchors, 'anchors linked from docs').to.include(
+          'custom-commands'
+        )
+        anchors.forEach((anchor) => cy.get(`[id="${anchor}"]`).should('exist'))
+      }
+    )
+  })
+
+  it('keeps earlier anchors on a renamed or merged category', () => {
+    cy.readFile('src/data/plugins.json').then((data) => {
+      const aliased = data.plugins.filter(
+        (category: { aliases?: string[] }) => category.aliases
+      )
+      expect(aliased, 'categories with aliases').not.to.be.empty
+      aliased.forEach((category: { name: string; aliases: string[] }) => {
+        category.aliases.forEach((alias) => {
+          cy.get(`[id="${alias}"]`)
+            .closest(sections)
+            .find('h2')
+            .should('have.text', category.name)
+        })
+      })
+    })
+  })
+
+  it('lands a category link below the navbar, stage name in view', () => {
+    // A heading anchor, then an alias anchor.
+    ;['custom-commands', 'email'].forEach((anchor) => {
+      visitList(`/app/plugins/plugins-list#${anchor}`)
+      cy.get('.navbar').then(($navbar) => {
+        const navbarBottom = $navbar[0].getBoundingClientRect().bottom
+        cy.get(`[id="${anchor}"]`)
+          .closest(sections)
+          .find('[data-cy=plugins-category-stage]')
+          .should(($stage) => {
+            expect($stage[0].getBoundingClientRect().top).to.be.within(
+              navbarBottom,
+              navbarBottom + 80
+            )
+          })
+      })
+    })
+  })
+
   it('marks each card with its maintainer type', () => {
     cy.get(cards).each(($card) => {
       const card = $card[0]
