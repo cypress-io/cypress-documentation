@@ -345,25 +345,12 @@ html[data-theme='dark'] .empty {
   color: var(--stage-fg);
 }
 
-/* The title is inline so the count follows its last word when it wraps. */
 body :global(div.markdown) h2.sectionTitle {
-  display: inline;
   margin: 0;
   padding: 0;
   border: 0;
   font-size: 1.6rem;
   line-height: 1.25;
-}
-
-.sectionCount {
-  margin-left: 0.6rem;
-  font-size: 1rem;
-  white-space: nowrap;
-  color: var(--ifm-color-gray-700);
-}
-
-html[data-theme='dark'] .sectionCount {
-  color: var(--ifm-color-gray-300);
 }
 
 :global(div.markdown) p.sectionDescription {

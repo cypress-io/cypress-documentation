@@ -682,14 +682,9 @@ export default function PluginsList() {
                 <p className={s.eyebrow} data-cy="plugins-category-stage">
                   {category.stage.name}
                 </p>
-                <div>
-                  <h2 id={category.id} className={s.sectionTitle}>
-                    {category.name}
-                  </h2>
-                  <span className={s.sectionCount} data-sanitize="">
-                    {category.plugins.length}
-                  </span>
-                </div>
+                <h2 id={category.id} className={s.sectionTitle}>
+                  {category.name}
+                </h2>
                 {category.description && (
                   <p
                     className={s.sectionDescription}
