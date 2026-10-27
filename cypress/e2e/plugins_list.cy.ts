@@ -1,14 +1,14 @@
 describe('Plugins list', () => {
   const search = '[data-cy=plugins-search]'
-  const categoryFilter = '[data-cy=plugins-category-filter]'
-  const badgeFilter = '[data-cy=plugins-badge-filter]'
   const resultCount = '[data-cy=plugins-result-count]'
+  const sections = '[data-cy=plugins-category]'
+  const cards = 'li[data-maintainer]'
 
   const countFromText = (text: string) =>
     Number((text.match(/Showing (\d+)/) || [])[1])
 
-  beforeEach(() => {
-    cy.visit('/app/plugins/plugins-list')
+  const visitList = (url = '/app/plugins/plugins-list') => {
+    cy.visit(url)
     // Wait for the component to hydrate so typing/clicking updates React state
     // (otherwise interactions can race hydration and be dropped).
     cy.get('[data-cy=plugins-list]').should(
@@ -16,16 +16,15 @@ describe('Plugins list', () => {
       'data-hydrated',
       'true'
     )
+  }
+
+  beforeEach(() => {
+    visitList()
   })
 
-  it('explains every badge in the legend', () => {
-    cy.get('[aria-label="What the badges mean"]').within(() => {
-      cy.contains('official').should('be.visible')
-      cy.contains('community').should('be.visible')
-      cy.contains('deprecated').should('be.visible')
-      // The key message for the largest group.
-      cy.contains('not reviewed by Cypress').should('be.visible')
-    })
+  it('explains who maintains the plugins', () => {
+    cy.contains('p', /aren.t reviewed by Cypress/).should('be.visible')
+    cy.get('[data-cy=plugins-maintainer-filter]').should('be.visible')
   })
 
   it('lists many plugins with a result count by default', () => {
@@ -50,15 +49,16 @@ describe('Plugins list', () => {
       })
   })
 
-  it('filters the list when a keyword tag is clicked', () => {
-    cy.get('[data-cy="plugin-cypress-axe"]')
-      .contains('a', '#accessibility')
-      .click()
-    cy.get(search).should('have.value', 'accessibility')
-    cy.get('[data-cy="plugin-cypress-axe"]').should('be.visible')
-    cy.get('[data-cy="plugin-cypress-vite"]').should('not.exist')
-    // The applied search is reflected in a shareable URL.
+  it('reflects the search in a shareable URL', () => {
+    cy.get(search).type('accessibility')
     cy.location('search').should('contain', 'search=accessibility')
+  })
+
+  it('applies a search from the URL', () => {
+    visitList('/app/plugins/plugins-list?search=cucumber')
+    cy.get(search).should('have.value', 'cucumber')
+    cy.get('[data-cy="plugin-Cucumber"]').should('be.visible')
+    cy.get('[data-cy="plugin-cypress-vite"]').should('not.exist')
   })
 
   it('clears the search with the clear button', () => {
@@ -75,51 +75,105 @@ describe('Plugins list', () => {
   it('shows an empty state when nothing matches', () => {
     cy.get(search).type('zzzznotarealpluginxyz')
     cy.get(resultCount).should('contain', 'Showing 0 plugins')
-    cy.contains('No plugins match your search').should('be.visible')
+    cy.contains('No plugins match your search or filters').should('be.visible')
+    cy.get('[data-cy=plugins-clear-filters]').click()
+    cy.get(search).should('have.value', '')
+    cy.get(sections).should('have.length.greaterThan', 10)
   })
 
-  it('filters down to a single category', () => {
-    cy.get(categoryFilter).select('Accessibility')
-    cy.get('section[data-cy^="plugin-"]').should('have.length', 1)
+  it('filters down to a single category from the category list', () => {
+    cy.get('[data-cy="plugins-category-accessibility"]')
+      .click()
+      .should('have.attr', 'aria-pressed', 'true')
+    cy.get(sections).should('have.length', 1)
     cy.contains('h2', 'Accessibility').should('be.visible')
+    cy.get(resultCount).should('contain', 'in Accessibility')
     cy.get('[data-cy="plugin-cypress-axe"]').should('exist')
     cy.get('[data-cy="plugin-cypress-vite"]').should('not.exist')
+
+    cy.get('[data-cy=plugins-category-all]').click()
+    cy.get(sections).should('have.length.greaterThan', 10)
   })
 
-  it('lists categories in alphabetical order', () => {
-    cy.get('section[data-cy^="plugin-"] > h2').then(($h2) => {
-      const names = [...$h2].map((el) => el.textContent.trim())
-      expect(names).to.deep.equal([...names].sort((a, b) => a.localeCompare(b)))
+  it('filters by maintainer', () => {
+    cy.get('[data-cy=plugins-maintainer-official]').click()
+    cy.get(cards).should('have.length.greaterThan', 5)
+    cy.get(`${cards}[data-maintainer="community"]`).should('not.exist')
+    cy.get('[data-cy="plugin-cypress-axe"]').should('not.exist')
+
+    cy.get('[data-cy=plugins-maintainer-community]').click()
+    cy.get(`${cards}[data-maintainer="official"]`).should('not.exist')
+    cy.get('[data-cy="plugin-cypress-axe"]').should('exist')
+  })
+
+  it('groups categories by stage, alphabetically within each stage', () => {
+    cy.readFile('src/data/plugins.json').then((data) => {
+      const stageOrder: string[] = data.stages.map(
+        (stage: { name: string }) => stage.name
+      )
+      cy.get(sections).then(($sections) => {
+        const rows = [...$sections].map((section) => ({
+          stage: section
+            .querySelector('[data-cy=plugins-category-stage]')
+            ?.textContent?.trim(),
+          name: section.querySelector('h2')?.textContent?.trim() || '',
+        }))
+        const ranks = rows.map((row) => stageOrder.indexOf(row.stage || ''))
+        expect(ranks, 'every section names a known stage').not.to.include(-1)
+        expect(ranks).to.deep.equal([...ranks].sort((a, b) => a - b))
+        stageOrder.forEach((stage) => {
+          const names = rows.filter((r) => r.stage === stage).map((r) => r.name)
+          expect(names, stage).to.deep.equal(
+            [...names].sort((a, b) => a.localeCompare(b))
+          )
+        })
+      })
     })
   })
 
-  it('sorts each category by badge tier', () => {
-    cy.get(categoryFilter).select('Component Testing')
-    const rank: Record<string, number> = {
-      official: 0,
-      community: 1,
-      deprecated: 2,
-    }
-    cy.get('li.card').then(($cards) => {
-      const ranks = [...$cards].map((card) => {
-        const badge = card
-          .querySelector('[class*="badge"]')
-          ?.textContent?.trim()
-          .toLowerCase()
-        return (badge ? rank[badge] : undefined) ?? 9
-      })
-      // Ranks appear in non-decreasing order (official → community → deprecated).
+  it('names the stage and explains each category above its cards', () => {
+    cy.get('[data-category="accessibility"]').within(() => {
+      cy.get('[data-cy=plugins-category-stage]')
+        .should('be.visible')
+        .and('have.text', 'Check')
+      cy.contains('h2', 'Accessibility').should('be.visible')
+      cy.contains('Catch accessibility issues').should('be.visible')
+    })
+  })
+
+  it('lists Cypress-built plugins first in each category', () => {
+    cy.get('[data-cy="plugins-category-component-testing"]').click()
+    cy.get(cards).then(($cards) => {
+      const ranks = [...$cards].map((card) =>
+        card.dataset.deprecated
+          ? 2
+          : card.dataset.maintainer === 'official'
+            ? 0
+            : 1
+      )
+      expect(ranks[0]).to.equal(0)
+      // Ranks appear in non-decreasing order (Cypress → community → deprecated).
       expect(ranks).to.deep.equal([...ranks].sort((a, b) => a - b))
     })
   })
 
+  it('sorts by most recently updated', () => {
+    cy.get('[data-cy=plugins-sort]').select('Recently updated')
+    cy.get(sections).each(($section) => {
+      const dates = [...$section[0].querySelectorAll(cards)].map((card) => {
+        const published = card.getAttribute('data-published')
+        return published ? Date.parse(published) : 0
+      })
+      expect(dates).to.deep.equal([...dates].sort((a, b) => b - a))
+    })
+  })
+
   it('lists no deprecated plugins', () => {
-    // Deprecated plugins are curated out of the list, so filtering by the
-    // Deprecated badge yields the empty state. (Enrichment auto-flags a plugin
-    // deprecated when it is unpublished/moved, which is the signal to remove it.)
-    cy.get(badgeFilter).select('Deprecated')
-    cy.get(resultCount).should('contain', 'Showing 0 plugins')
-    cy.contains('No plugins match your search').should('be.visible')
+    // Deprecated plugins are curated out of the list. (Enrichment auto-flags a
+    // plugin deprecated when it is unpublished or moved, which is the signal to
+    // remove it.)
+    cy.get(cards).should('have.length.greaterThan', 50)
+    cy.get(`${cards}[data-deprecated]`).should('not.exist')
   })
 
   it('lists the maintained testing-library successor', () => {
@@ -128,13 +182,17 @@ describe('Plugins list', () => {
     cy.get('[data-cy="plugin-cypress-testing-library"]').should('not.exist')
   })
 
-  it('surfaces npm and version signals on a card', () => {
+  it('shows maintainer and freshness on a card, and npm details on focus', () => {
     cy.get(search).type('cucumber')
     cy.get('[data-cy="plugin-Cucumber"]').scrollIntoView()
     cy.get('[data-cy="plugin-Cucumber"]').within(() => {
+      cy.get('[data-cy=plugin-maintainer]').should('be.visible')
       cy.contains('Updated').should('be.visible')
-      cy.contains('Cypress').should('be.visible')
-      cy.get('a[href*="npmjs.com/package/"]').should('exist')
+      // Hidden at rest only where the browser reports hover support (headless
+      // runs report none and show it always), so assert the focus state only.
+      cy.get('h3 a').focus()
+      cy.get('[data-cy=plugin-cypress-range]').should('be.visible')
+      cy.get('a[href*="npmjs.com/package/"]').should('be.visible')
     })
   })
 
@@ -142,5 +200,15 @@ describe('Plugins list', () => {
     cy.get('[data-cy="plugin-cypress-axe"] h3 a')
       .should('have.attr', 'target', '_blank')
       .and('have.attr', 'rel', 'noopener noreferrer')
+  })
+
+  it('keeps the filters behind a button on small screens', () => {
+    cy.viewport(375, 800)
+    cy.get('[data-cy=plugins-category-filter]').should('not.be.visible')
+    cy.contains('button', 'Filters').click()
+    cy.get('[data-cy="plugins-category-accessibility"]').click()
+    cy.get(sections).should('have.length', 1)
+    // Picking a category closes the panel so the results are in view.
+    cy.get('[data-cy=plugins-category-filter]').should('not.be.visible')
   })
 })

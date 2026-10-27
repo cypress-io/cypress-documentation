@@ -146,9 +146,16 @@ Each plugin submitted to the plugins list should have the following:
    - [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository) for the command [npm repo](https://docs.npmjs.com/cli/v11/commands/npm-repo)
    - [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs) for the command [npm bugs](https://docs.npmjs.com/cli/v11/commands/npm-bugs)
 
-Categories are displayed alphabetically, and plugins are sorted within each
-category by badge tier and then by most recently published first (so the entry
-order in `plugins.json` does not matter):
+Each category sets a `stage`, one of the `id`s in the `stages` list at the top
+of `plugins.json` (Set up, Write, Run, Check, and Report & ship). The page shows
+categories stage by stage, alphabetically within each stage, with the stage name
+above the category title. A category with a long `name` can set a `shortName`
+for the filter list beside the cards.
+
+By default, plugins are sorted within each category by badge tier and then by
+most recently published first, so the entry order in `plugins.json` does not
+matter. Readers can also sort by most recently updated or by name. The badge
+tiers, in order:
 
 - official (Cypress owned)
 - community (community owned)

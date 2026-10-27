@@ -149,6 +149,12 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 `official` (Cypress-owned) → `community` (community-owned) → `deprecated`
 (unmaintained / incompatible with v10+).
 
+Each category sets a `stage` from the `stages` list at the top of the file, and
+the page groups categories by stage, then alphabetically. A new category needs a
+`stage` (and a `shortName` if its `name` is long); without one it falls to the
+end of the page. Keep category names in sentence case. Their anchors come from
+the lowercased name, so existing `#custom-commands`-style links keep working.
+
 ## Writing style
 
 Voice and tone are owned by the **Cypress Style Guide**, which covers audience,

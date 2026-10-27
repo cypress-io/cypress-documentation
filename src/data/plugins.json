@@ -1,7 +1,15 @@
 {
+  "stages": [
+    { "id": "setup", "name": "Set up" },
+    { "id": "write", "name": "Write" },
+    { "id": "run", "name": "Run" },
+    { "id": "check", "name": "Check" },
+    { "id": "ship", "name": "Report & ship" }
+  ],
   "plugins": [
     {
       "name": "Preprocessors",
+      "stage": "setup",
       "description": "A preprocessor is the plugin responsible for preparing a support file or a test file for the browser. By default, Cypress comes packaged with webpack preprocessor already installed. Read the <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Preprocessors API docs</a> to learn more.",
       "plugins": [
         {
@@ -50,7 +58,8 @@
       ]
     },
     {
-      "name": "Component Testing",
+      "name": "Component testing",
+      "stage": "setup",
       "description": "Loading and mounting components from various frameworks.",
       "plugins": [
         {
@@ -136,7 +145,8 @@
       ]
     },
     {
-      "name": "AI Tooling",
+      "name": "AI tooling",
+      "stage": "write",
       "description": "Connect AI coding assistants and agents to Cypress so they write, understand, and debug tests more reliably. See our <a target=\"_blank\" href=\"/app/tooling/ai-skills\">Cypress AI Skills</a> guide to get started.",
       "plugins": [
         {
@@ -177,7 +187,9 @@
       ]
     },
     {
-      "name": "Continuous Integration & Parallelization",
+      "name": "Continuous integration & parallelization",
+      "shortName": "CI & parallelization",
+      "stage": "ship",
       "description": "Run Cypress in CI and split work across machines to keep test runs fast.",
       "plugins": [
         {
@@ -249,7 +261,8 @@
       ]
     },
     {
-      "name": "Developer Tooling",
+      "name": "Developer tooling",
+      "stage": "write",
       "description": "Improve the day-to-day developer experience with editor support, linting, type definitions, and test-authoring helpers.",
       "plugins": [
         {
@@ -326,7 +339,9 @@
       ]
     },
     {
-      "name": "Test Selection & Execution",
+      "name": "Test selection & execution",
+      "shortName": "Test selection",
+      "stage": "run",
       "description": "Filter, tag, re-run, and control which tests execute and how failures are handled.",
       "plugins": [
         {
@@ -414,7 +429,8 @@
       ]
     },
     {
-      "name": "Test Data & Fixtures",
+      "name": "Test data & fixtures",
+      "stage": "write",
       "description": "Generate and manage realistic test data and fixtures.",
       "plugins": [
         {
@@ -454,7 +470,8 @@
       ]
     },
     {
-      "name": "Custom Commands",
+      "name": "Custom commands",
+      "stage": "write",
       "description": "Read the <a target=\"_blank\" href=\"/api/cypress-api/custom-commands\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/cypress-api/custom-queries\">Custom Query</a> documentation to learn more.",
       "plugins": [
         {
@@ -584,7 +601,9 @@
       ]
     },
     {
-      "name": "Network & API Testing",
+      "name": "Network & API testing",
+      "shortName": "Network & API",
+      "stage": "run",
       "description": "Test, stub, and inspect network requests, APIs, and real-time messaging.",
       "plugins": [
         {
@@ -667,7 +686,8 @@
       ]
     },
     {
-      "name": "Databases & Storage",
+      "name": "Databases & storage",
+      "stage": "run",
       "description": "Read from and write to databases and browser storage from your Cypress tests.",
       "plugins": [
         {
@@ -715,6 +735,7 @@
     },
     {
       "name": "Accessibility",
+      "stage": "check",
       "description": "Catch accessibility issues as part of your Cypress tests.",
       "plugins": [
         {
@@ -749,6 +770,7 @@
     },
     {
       "name": "Performance",
+      "stage": "check",
       "description": "Measure command timings and catch performance regressions.",
       "plugins": [
         {
@@ -798,7 +820,9 @@
       ]
     },
     {
-      "name": "Code Coverage & Reporting",
+      "name": "Code coverage & reporting",
+      "shortName": "Coverage & reporting",
+      "stage": "ship",
       "description": "Collect code coverage and generate rich test reports.",
       "plugins": [
         {
@@ -898,7 +922,8 @@
       ]
     },
     {
-      "name": "Visual Testing",
+      "name": "Visual testing",
+      "stage": "check",
       "description": "<a target=\"_blank\" href=\"/app/tooling/visual-testing\">Visual testing</a> is a great complement to functional testing.",
       "plugins": [
         {
@@ -1065,7 +1090,9 @@
       ]
     },
     {
-      "name": "Authentication & Security",
+      "name": "Authentication & security",
+      "shortName": "Auth & security",
+      "stage": "run",
       "description": "Authenticate test users and keep secrets out of your test code.",
       "plugins": [
         {
@@ -1111,6 +1138,7 @@
     },
     {
       "name": "Email & SMS",
+      "stage": "run",
       "description": "Test email and SMS flows such as sign-up confirmations and one-time codes.",
       "plugins": [
         {
@@ -1206,7 +1234,9 @@
       ]
     },
     {
-      "name": "App Framework Integrations",
+      "name": "App framework integrations",
+      "shortName": "Framework integrations",
+      "stage": "setup",
       "plugins": [
         {
           "name": "Cypress Schematic",
@@ -1261,7 +1291,9 @@
       "description": "Add and run Cypress within application frameworks, monorepos, and their CLIs."
     },
     {
-      "name": "BDD & Contract Testing",
+      "name": "BDD & contract testing",
+      "shortName": "BDD & contracts",
+      "stage": "write",
       "plugins": [
         {
           "name": "Pact Cypress Adapter",
@@ -1282,7 +1314,8 @@
       "description": "Behavior-driven development helpers and consumer-driven contract testing."
     },
     {
-      "name": "User Interactions",
+      "name": "User interactions",
+      "stage": "write",
       "description": "Fire realistic user interactions: native events, drag-and-drop, mobile gestures, and keyboard tabbing.",
       "plugins": [
         {

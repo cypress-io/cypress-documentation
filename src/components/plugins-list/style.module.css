@@ -1,212 +1,158 @@
+/* Plugin directory: a filter rail beside category sections of cards. The
+   categories follow the path of a test suite (set up, write, run, check,
+   report & ship); each section names its stage above the category title. */
+
 .root {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
-section {
-  margin-bottom: 3rem;
+/* The directory needs more room than the 760px reading column, so this page
+   widens it (custom.scss sets the cap). The intro paragraphs keep the reading
+   width. Browsers without :has() keep the 760px column, where the rail stacks
+   above the cards. */
+@media (min-width: 997px) {
+  :global([class^='docItemContainer']):has(.root) {
+    max-width: 1180px;
+  }
+
+  :global([class^='docItemContainer']):has(.root)
+    :global(.markdown)
+    > :is(p, :global(.theme-admonition)) {
+    max-width: 760px;
+  }
 }
 
-h3 {
-  margin-bottom: 0.75rem;
+/* -------- Stage colors -------- */
+
+/* Each stage tints its eyebrow, its rail heading, and its cards' monograms.
+   Light: 600 on 50 for tiles (6.25:1 or more) and 600 on white for text.
+   Dark: 200 on 900 for tiles (8.7:1 or more) and 300 on the page for text
+   (7:1 or more). */
+.root [data-stage='setup'] {
+  --stage-fg: var(--ifm-color-indigo-600);
+  --stage-tile-fg: var(--ifm-color-indigo-600);
+  --stage-tile-bg: var(--ifm-color-indigo-50);
+}
+.root [data-stage='write'] {
+  --stage-fg: var(--ifm-color-purple-600);
+  --stage-tile-fg: var(--ifm-color-purple-600);
+  --stage-tile-bg: var(--ifm-color-purple-50);
+}
+.root [data-stage='run'] {
+  --stage-fg: var(--ifm-color-teal-600);
+  --stage-tile-fg: var(--ifm-color-teal-600);
+  --stage-tile-bg: var(--ifm-color-teal-50);
+}
+.root [data-stage='check'] {
+  --stage-fg: var(--ifm-color-orange-600);
+  --stage-tile-fg: var(--ifm-color-orange-600);
+  --stage-tile-bg: var(--ifm-color-orange-50);
+}
+.root [data-stage='ship'] {
+  --stage-fg: var(--ifm-color-fuchsia-600, #901ca2);
+  --stage-tile-fg: var(--ifm-color-fuchsia-600, #901ca2);
+  --stage-tile-bg: var(--ifm-color-fuchsia-50, #faeffb);
+}
+.root [data-stage='other'] {
+  --stage-fg: var(--ifm-color-gray-700);
+  --stage-tile-fg: var(--ifm-color-gray-800);
+  --stage-tile-bg: var(--ifm-color-gray-50);
 }
 
-.plugins .wrapper {
-  padding: 40px 40px;
+html[data-theme='dark'] .root [data-stage='setup'] {
+  --stage-fg: var(--ifm-color-indigo-300);
+  --stage-tile-fg: var(--ifm-color-indigo-200);
+  --stage-tile-bg: var(--ifm-color-indigo-900);
+}
+html[data-theme='dark'] .root [data-stage='write'] {
+  --stage-fg: var(--ifm-color-purple-300);
+  --stage-tile-fg: var(--ifm-color-purple-200);
+  --stage-tile-bg: var(--ifm-color-purple-900);
+}
+html[data-theme='dark'] .root [data-stage='run'] {
+  --stage-fg: var(--ifm-color-teal-300);
+  --stage-tile-fg: var(--ifm-color-teal-200);
+  --stage-tile-bg: var(--ifm-color-teal-900);
+}
+html[data-theme='dark'] .root [data-stage='check'] {
+  --stage-fg: var(--ifm-color-orange-300);
+  --stage-tile-fg: var(--ifm-color-orange-200);
+  --stage-tile-bg: var(--ifm-color-orange-900);
+}
+html[data-theme='dark'] .root [data-stage='ship'] {
+  --stage-fg: var(--ifm-color-fuchsia-300, #ed9ff4);
+  --stage-tile-fg: var(--ifm-color-fuchsia-200, #f3c6f8);
+  --stage-tile-bg: var(--ifm-color-fuchsia-900, #400651);
+}
+html[data-theme='dark'] .root [data-stage='other'] {
+  --stage-fg: var(--ifm-color-gray-300);
+  --stage-tile-fg: var(--ifm-color-gray-100);
+  --stage-tile-bg: var(--ifm-color-gray-900);
 }
 
-.plugins h2 {
-  border-bottom: 0;
-  margin-bottom: 0;
-}
+/* -------- Toolbar: search, sort, and the small-screen filters button -------- */
 
-/* Plugin names are card titles, not page headings: smaller, in the heading
-   color, with an underline only on hover. They sit under the category h2s
-   instead of competing with them. */
-.plugins h3,
-:global(div.markdown) .pluginTitle h3 {
-  font-size: 1.15rem;
-  font-weight: var(--ifm-font-weight-bold);
-  margin: 0;
-  border-bottom: 0;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-/* Plugin names are links, so they look like every other link on the site:
-   the link color and a soft underline at rest (WCAG 1.4.1 and 3.2.4), full
-   strength on hover. inline-block with a little padding gives a 24px tall
-   target (WCAG 2.5.8). */
-:global(div.markdown) .pluginTitle h3 a {
-  display: inline-block;
-  padding: 1px 0;
-  color: var(--ifm-link-color);
-  border-bottom: 0;
-  text-decoration: underline 1px solid;
-  text-decoration-color: currentColor;
-  text-decoration-color: color-mix(in srgb, currentColor 75%, transparent);
-  text-underline-offset: 4px;
-}
-
-:global(div.markdown) .pluginTitle h3 a:hover {
-  border-bottom: 0;
-  text-decoration-color: currentColor;
-}
-
-html[data-theme='dark'] :global(div.markdown) .pluginTitle h3 a {
-  color: var(--ifm-color-indigo-200);
-}
-
-.plugins a {
-  border-bottom: 0;
-}
-.plugins a:hover {
-  border-bottom: 0;
-}
-
-ul.pluginsList {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
-  margin: 0 !important;
-  padding: 0;
-}
-
-/* Flat cards: one 1px design-system gray border, no shadow. */
-body ul.pluginsList li {
-  box-sizing: border-box;
-  list-style: none;
-  padding: 16px 20px;
-  margin: 0 !important;
-  display: flex;
-  flex-direction: column;
-  /* The .card class styles these as clickable (pointer cursor + hover border
-     glow), but the cards aren't interactive, so neutralize that. */
-  cursor: default;
-  border: 1px solid var(--ifm-color-gray-100);
-  border-radius: 6px;
-  box-shadow: none;
-}
-
-body ul.pluginsList li:hover {
-  animation: none;
-  border-color: var(--ifm-color-gray-100);
-  box-shadow: none;
-  outline: none;
-}
-
-html[data-theme='dark'] body ul.pluginsList li,
-html[data-theme='dark'] body ul.pluginsList li:hover {
-  border-color: var(--ifm-color-gray-800);
-}
-
-ul.pluginsList li p {
-  margin-bottom: 0.5em;
-}
-
-/* name, then the badge on its own line, the same on every card */
-.pluginTitle {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.35rem;
-  margin-bottom: 0.6rem;
-}
-
-/* remove hash symbol from appearing in the ::before
-   of the anchors in titles */
-.pluginTitle > h3 > a::before {
-  content: '';
-  margin-left: 0;
-  padding-right: 0;
-}
-
-/* -------- Badges -------- */
-
-.badge {
-  display: inline-block;
-  color: #fff;
-  font-size: 0.7rem;
-  border-radius: 10rem;
-  font-weight: 700;
-  padding: 0.25em 0.8em;
-  line-height: 0.75rem;
-  text-transform: capitalize;
-}
-
-.badgePill {
-  font-size: 12px;
-  color: white;
-}
-
-.badgePill.badgeOfficial {
-  background-color: var(--ifm-color-teal-500);
-}
-
-.badgePill.badgeCommunity {
-  background-color: var(--ifm-color-indigo-500);
-}
-
-.badgePill.badgeDeprecated {
-  background-color: var(--ifm-color-red-600);
-}
-
-/* -------- Badge legend -------- */
-
-.legend {
-  /* One badge per row at every viewport width. The badge pills share a
-     max-content column so every description starts at the same x position. */
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  align-items: baseline;
-  gap: 0.6rem 0.75rem;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 8px;
-  background-color: var(--ifm-background-surface-color);
-}
-
-/* Promote each item's badge and description to cells of the legend grid so
-   the two columns stay aligned across rows. */
-.legendItem {
-  display: contents;
-}
-
-.legendItem > .badge {
-  justify-self: start;
-}
-
-.legendText {
-  font-size: 0.85rem;
-  color: var(--ifm-color-emphasis-700);
-  line-height: 1.4;
-}
-
-/* -------- Controls -------- */
-
-.controls {
+.toolbar {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .searchWrap {
   position: relative;
-  flex: 1 1 260px;
-  min-width: 220px;
+  flex: 1 1 320px;
+  min-width: 0;
   display: flex;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ifm-color-gray-700);
+  pointer-events: none;
+}
+
+html[data-theme='dark'] .searchIcon {
+  color: var(--ifm-color-gray-300);
+}
+
+/* Field borders are gray-600 in light (4.3:1) and gray-500 in dark (5.6:1),
+   above the 3:1 a form control's edge needs. */
+.search,
+.select,
+.filtersToggle {
+  height: 46px;
+  border: 1px solid var(--ifm-color-gray-600);
+  border-radius: 10px;
+  background-color: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+html[data-theme='dark'] .search,
+html[data-theme='dark'] .select,
+html[data-theme='dark'] .filtersToggle {
+  border-color: var(--ifm-color-gray-500);
 }
 
 .search {
   flex: 1;
   min-width: 0;
-  padding: 0.5rem 2rem 0.5rem 0.75rem;
-  font-size: 0.95rem;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 6px;
-  background-color: var(--ifm-background-color);
-  color: var(--ifm-font-color-base);
+  padding: 0 2.5rem 0 2.6rem;
+  font-size: 1rem;
+}
+
+.search::placeholder {
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] .search::placeholder {
+  color: var(--ifm-color-gray-400);
 }
 
 /* Hide the browser's native clear button so we render a consistent one. */
@@ -217,109 +163,568 @@ ul.pluginsList li p {
 
 .clearBtn {
   position: absolute;
-  right: 0.35rem;
+  right: 0.45rem;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   padding: 0;
   border: 0;
   border-radius: 50%;
   background: transparent;
-  color: var(--ifm-color-emphasis-500);
+  color: var(--ifm-color-gray-700);
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .clearBtn:hover {
-  color: var(--ifm-color-emphasis-800);
-  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-gray-1000);
+  background-color: var(--ifm-color-gray-50);
+}
+
+html[data-theme='dark'] .clearBtn {
+  color: var(--ifm-color-gray-300);
+}
+
+html[data-theme='dark'] .clearBtn:hover {
+  color: var(--ifm-color-white);
+  background-color: var(--ifm-color-gray-900);
+}
+
+.sortWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sortLabel {
+  font-size: 0.9rem;
+  color: var(--ifm-color-gray-700);
+  white-space: nowrap;
+}
+
+html[data-theme='dark'] .sortLabel {
+  color: var(--ifm-color-gray-300);
 }
 
 .select {
-  padding: 0.5rem 2.4rem 0.5rem 0.75rem;
-  font-size: 0.95rem;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 6px;
-  background-color: var(--ifm-background-color);
-  color: var(--ifm-font-color-base);
+  padding: 0 2.4rem 0 0.85rem;
   cursor: pointer;
   /* Replace the native dropdown arrow (flush against the right border in most
      browsers) with a chevron inset from the edge. */
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23606770' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6.25l4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%235a5f7a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6.25l4 4 4-4'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.9rem center;
   background-size: 0.85em;
 }
 
 html[data-theme='dark'] .select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23b8bfc9' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6.25l4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23bfc2d4' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' d='M4 6.25l4 4 4-4'/%3E%3C/svg%3E");
 }
 
-.search:focus,
-.select:focus {
-  outline: 2px solid var(--ifm-color-primary);
-  outline-offset: 1px;
+/* Only small screens, where the rail is hidden until opened. */
+.filtersToggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  cursor: pointer;
 }
 
-.resultCount {
+.filtersDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--ifm-color-indigo-500);
+}
+
+html[data-theme='dark'] .filtersDot {
+  background-color: var(--ifm-color-indigo-300);
+}
+
+.search:focus-visible,
+.select:focus-visible,
+.filtersToggle:focus-visible,
+.clearBtn:focus-visible,
+.segment:focus-visible,
+.railItem:focus-visible,
+.clearFilters:focus-visible {
+  outline: 2px solid var(--cy-link-focus-ring);
+  outline-offset: 2px;
+}
+
+/* -------- Layout -------- */
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.results {
+  flex: 999 1 480px;
+  min-width: 0;
+  /* Picking a category scrolls here; clear the sticky navbar. */
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
+/* -------- Rail -------- */
+
+.rail {
+  flex: 1 1 220px;
+  max-width: 236px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  /* Stays in view while the sections scroll past. */
+  position: sticky;
+  top: calc(var(--ifm-navbar-height) + 1rem);
+  max-height: calc(100vh - var(--ifm-navbar-height) - 2rem);
+  overflow-y: auto;
+  padding: 0 0.25rem 1rem 0;
+}
+
+.railGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.railHeading,
+.railStageName {
+  margin: 0 0 0.35rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.railHeading {
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] .railHeading {
+  color: var(--ifm-color-gray-300);
+}
+
+.railStage {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 0.9rem;
+}
+
+.railStageName {
+  color: var(--stage-fg);
+}
+
+.railItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 34px;
+  padding: 0.3rem 0.6rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+}
+
+.railItem:hover {
+  background-color: var(--ifm-color-gray-50);
+}
+
+.railItem[aria-pressed='true'] {
+  background-color: var(--ifm-color-indigo-50);
+  color: var(--ifm-color-indigo-700);
+  font-weight: 600;
+}
+
+html[data-theme='dark'] .railItem:hover {
+  background-color: var(--ifm-color-gray-900);
+}
+
+html[data-theme='dark'] .railItem[aria-pressed='true'] {
+  background-color: var(--ifm-color-indigo-900);
+  color: var(--ifm-color-indigo-200);
+}
+
+.railCount {
+  font-size: 0.8rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] .railCount {
+  color: var(--ifm-color-gray-300);
+}
+
+.railItem[aria-pressed='true'] .railCount {
+  color: inherit;
+}
+
+.segmented {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 10px;
+  background-color: var(--ifm-color-gray-50);
+}
+
+html[data-theme='dark'] .segmented {
+  background-color: var(--ifm-color-gray-900);
+}
+
+.segment {
+  flex: 1;
+  min-height: 32px;
+  padding: 0 0.4rem;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ifm-font-color-base);
+  font: inherit;
   font-size: 0.85rem;
-  color: var(--ifm-color-emphasis-700);
-  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.segment[aria-pressed='true'] {
+  background-color: var(--ifm-color-white);
+  color: var(--ifm-color-gray-1000);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(27, 30, 46, 0.15);
+}
+
+html[data-theme='dark'] .segment[aria-pressed='true'] {
+  background-color: var(--ifm-color-gray-800);
+  color: var(--ifm-color-white);
+  box-shadow: none;
+}
+
+.railHint {
+  margin: 0.5rem 0.2rem 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] .railHint {
+  color: var(--ifm-color-gray-300);
+}
+
+/* Small screens: the rail hides behind the Filters button and opens as a
+   panel above the results. */
+@media (max-width: 996px) {
+  .filtersToggle {
+    display: inline-flex;
+  }
+
+  .rail {
+    display: none;
+    position: static;
+    flex-basis: 100%;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+    padding: 1rem;
+    border: 1px solid var(--ifm-color-gray-100);
+    border-radius: 12px;
+  }
+
+  html[data-theme='dark'] .rail {
+    border-color: var(--ifm-color-gray-800);
+  }
+
+  .rail.railOpen {
+    display: flex;
+  }
+}
+
+/* -------- Results -------- */
+
+.resultsHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 36px;
+  margin-bottom: 1.25rem;
+}
+
+:global(div.markdown) p.resultCount {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] :global(div.markdown) p.resultCount {
+  color: var(--ifm-color-gray-300);
+}
+
+.clearFilters {
+  min-height: 32px;
+  padding: 0.35rem 0.25rem;
+  border: 0;
+  background: transparent;
+  color: var(--ifm-link-color);
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+html[data-theme='dark'] .clearFilters {
+  color: var(--ifm-color-indigo-200);
 }
 
 .empty {
   padding: 2rem;
+  border: 1px dashed var(--ifm-color-gray-400);
+  border-radius: 12px;
   text-align: center;
-  color: var(--ifm-color-emphasis-700);
-}
-
-/* -------- Signals -------- */
-
-/* npm package, last publish date, and supported Cypress versions as quiet
-   small text, one to a line. Only a stale publish date gets a highlight. */
-.signals {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0 0 0.5rem;
-  font-size: 0.8rem;
-  line-height: 1.5;
   color: var(--ifm-color-gray-700);
 }
 
-html[data-theme='dark'] .signals {
+html[data-theme='dark'] .empty {
+  border-color: var(--ifm-color-gray-700);
   color: var(--ifm-color-gray-300);
 }
 
-/* the npm link keeps the page's link color and soft underline, with padding
-   for a 24px tall target (WCAG 2.5.8) */
-:global(div.markdown) .signals a.signal {
-  display: inline-block;
-  padding: 2px 0;
-  font-size: inherit;
+:global(div.markdown) .empty p {
+  margin-bottom: 0.5rem;
+}
+
+:global(div.markdown) .empty p.emptyTitle {
+  margin-bottom: 0.25rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+}
+
+/* -------- Category sections -------- */
+
+.section {
+  margin-bottom: 3rem;
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-width: 760px;
+  margin-bottom: 1rem;
+}
+
+/* The stage the category belongs to, above its title. */
+:global(div.markdown) p.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--stage-fg);
+}
+
+/* The title is inline so the count follows its last word when it wraps. */
+body :global(div.markdown) h2.sectionTitle {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 1.6rem;
+  line-height: 1.25;
+}
+
+.sectionCount {
+  margin-left: 0.6rem;
+  font-size: 1rem;
+  white-space: nowrap;
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] .sectionCount {
+  color: var(--ifm-color-gray-300);
+}
+
+:global(div.markdown) p.sectionDescription {
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
+}
+
+/* -------- Cards -------- */
+
+:global(div.markdown) ul.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The whole card is the plugin link (the title's ::after covers it), so it
+   lifts and outlines like a control. */
+:global(div.markdown) ul.grid > li.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 1rem 1rem 0.85rem;
+  border: 1px solid var(--ifm-color-gray-100);
+  border-radius: 12px;
+  background-color: var(--ifm-background-color);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+:global(div.markdown) ul.grid > li.card:hover,
+:global(div.markdown) ul.grid > li.card:focus-within {
+  border-color: var(--ifm-color-indigo-300);
+  box-shadow: 0 6px 20px rgba(27, 30, 46, 0.08);
+}
+
+:global(div.markdown) ul.grid > li.card:has(.cardLink:focus-visible) {
+  outline: 2px solid var(--cy-link-focus-ring);
+  outline-offset: 2px;
+}
+
+html[data-theme='dark'] :global(div.markdown) ul.grid > li.card {
+  border-color: var(--ifm-color-gray-800);
+}
+
+html[data-theme='dark'] :global(div.markdown) ul.grid > li.card:hover,
+html[data-theme='dark'] :global(div.markdown) ul.grid > li.card:focus-within {
+  border-color: var(--ifm-color-indigo-400);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.monogram {
+  flex: 0 0 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: var(--stage-tile-bg);
+  color: var(--stage-tile-fg);
+  font-family: var(--ifm-heading-font-family);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cardHeading {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+:global(div.markdown) h3.cardTitle {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+/* Plugin names are links, so they look like every other link on the site:
+   the link color and a soft underline at rest (WCAG 1.4.1 and 3.2.4), full
+   strength on hover. */
+:global(div.markdown) .cardTitle a.cardLink {
+  color: var(--ifm-link-color);
   border-bottom: 0;
   text-decoration: underline 1px solid;
   text-decoration-color: currentColor;
   text-decoration-color: color-mix(in srgb, currentColor 75%, transparent);
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 
-.signalStale {
-  color: #6f5200;
-  background-color: #fff8e6;
-  border-radius: 4px;
-  padding: 0 0.3rem;
+:global(div.markdown) .cardTitle a.cardLink:hover {
+  border-bottom: 0;
+  text-decoration-color: currentColor;
 }
 
-html[data-theme='dark'] .signalStale {
-  color: #ffd97a;
-  background-color: #3a2f00;
+/* The card shows the focus ring instead. */
+:global(div.markdown) .cardTitle a.cardLink:focus-visible {
+  outline: none;
+}
+
+html[data-theme='dark'] :global(div.markdown) .cardTitle a.cardLink {
+  color: var(--ifm-color-indigo-200);
+}
+
+.cardLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+}
+
+.byOfficial {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ifm-color-jade-600);
+}
+
+html[data-theme='dark'] .byOfficial {
+  color: var(--ifm-color-jade-300);
+}
+
+.sealIcon {
+  flex: 0 0 15px;
+  width: 15px;
+  height: 15px;
+}
+
+.byCommunity {
+  font-size: 0.8rem;
+  color: var(--ifm-color-gray-700);
+  overflow-wrap: anywhere;
+}
+
+html[data-theme='dark'] .byCommunity {
+  color: var(--ifm-color-gray-300);
+}
+
+:global(div.markdown) p.cardDescription {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Links in a description sit above the card-wide title link. */
+:global(div.markdown) p.cardDescription a,
+:global(div.markdown) p.sectionDescription a {
+  position: relative;
+  z-index: 1;
 }
 
 .deprecatedNotice {
@@ -328,52 +733,145 @@ html[data-theme='dark'] .signalStale {
   background-color: var(--ifm-color-danger-contrast-background, #fdecea);
   border-radius: 6px;
   padding: 0.4rem 0.6rem;
-  margin: 0 0 0.5rem !important;
+  margin: 0 !important;
 }
 
 .noticeIcon {
   margin-right: 0.4rem;
 }
 
-/* -------- Keywords -------- */
-
-.keywords {
+/* Last publish and version, pinned to the bottom of the card. */
+.cardFooter {
   margin-top: auto;
-  padding-top: 0.4rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem 0.55rem;
-}
-
-/* tags are filters: small gray text with a soft underline at rest, so they
-   read as links without relying on color (WCAG 1.4.1), taking the link color
-   on hover or focus. Each is at least 24px tall (WCAG 2.5.8). The theme's
-   in-content link rule (div.markdown a) is more specific than a plain
-   .keyword, so scope to it. */
-:global(div.markdown) .keywords a.keyword {
-  display: inline-flex;
   align-items: center;
-  min-height: 24px;
-  font-weight: inherit;
+  gap: 0.35rem;
   font-size: 0.8rem;
   color: var(--ifm-color-gray-700);
-  text-decoration: underline 1px solid;
-  text-decoration-color: currentColor;
-  text-decoration-color: color-mix(in srgb, currentColor 75%, transparent);
-  text-underline-offset: 3px;
-  cursor: pointer;
-  border-bottom: 0;
 }
 
-html[data-theme='dark'] :global(div.markdown) .keywords a.keyword {
+html[data-theme='dark'] .cardFooter {
   color: var(--ifm-color-gray-300);
 }
 
-:global(div.markdown) .keywords a.keyword:hover,
-:global(div.markdown) .keywords a.keyword:focus-visible {
-  color: var(--ifm-link-color);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.freshness {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* A stale plugin's warning takes its own line, after the version. */
+.staleNote {
+  order: 1;
+  flex-basis: 100%;
+  color: var(--ifm-color-red-600);
+}
+
+html[data-theme='dark'] .staleNote {
+  color: var(--ifm-color-red-300);
+}
+
+/* The dot repeats what the text says: filled green within 6 months, filled
+   orange within 18, a red ring when older, a gray ring when not on npm.
+   Each is 3:1 or more against the card in both themes. */
+.dot {
+  flex: 0 0 10px;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 50%;
+}
+
+.dotActive {
+  background-color: var(--ifm-color-jade-500);
+  border-color: var(--ifm-color-jade-500);
+}
+
+.dotRecent {
+  background-color: var(--ifm-color-orange-400);
+  border-color: var(--ifm-color-orange-400);
+}
+
+.dotStale {
+  border-color: var(--ifm-color-red-500);
+}
+
+.dotNone {
+  border-color: var(--ifm-color-gray-600);
+}
+
+html[data-theme='dark'] .dotActive {
+  background-color: var(--ifm-color-jade-400);
+  border-color: var(--ifm-color-jade-400);
+}
+
+html[data-theme='dark'] .dotStale {
+  border-color: var(--ifm-color-red-400);
+}
+
+html[data-theme='dark'] .dotNone {
+  border-color: var(--ifm-color-gray-500);
+}
+
+.version {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+}
+
+/* Cypress range and npm link: revealed on hover or keyboard focus, always
+   shown on touch screens. The space is reserved so the grid doesn't shift. */
+.cardMore {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed var(--ifm-color-gray-100);
+  font-size: 0.78rem;
+  color: var(--ifm-color-gray-700);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+html[data-theme='dark'] .cardMore {
+  border-top-color: var(--ifm-color-gray-800);
+  color: var(--ifm-color-gray-300);
+}
+
+.card:hover .cardMore,
+.card:focus-within .cardMore {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: none) {
+  .cardMore {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.range {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+/* Sits above the card-wide title link, with padding for a 24px tall target
+   (WCAG 2.5.8). */
+:global(div.markdown) .cardMore a.npmLink {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  font-size: 0.8rem;
 }
 
 /* visually hidden, still read by screen readers */

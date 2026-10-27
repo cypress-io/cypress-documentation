@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faExclamationTriangle,
+  faSearch,
+  faSlidersH,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import s from './style.module.css'
@@ -21,25 +23,50 @@ type PluginMeta = {
   deprecatedReason?: string
 }
 
-/** A curated entry from `src/data/plugins.json`, merged with its metadata. */
-type Plugin = {
+/** A curated entry from `src/data/plugins.json`. */
+type PluginEntry = {
   name: string
   description: string
   link: string
   keywords?: string[]
   badge?: string
-  meta?: PluginMeta
+  npm?: string
+}
+
+/** A curated entry merged with its generated metadata. */
+type Plugin = PluginEntry & {
+  meta: PluginMeta
+  /** Who maintains it, from the curated badge. */
+  maintainer: Maintainer
+  deprecated: boolean
+  author: string | null
+}
+
+type Maintainer = 'official' | 'community'
+
+/** A step in a test suite's life, used to group and order the categories. */
+type Stage = { id: string; name: string }
+
+type CategoryEntry = {
+  name: string
+  /** Shorter label for the category list, when `name` is long. */
+  shortName?: string
+  /** Id of a stage in `plugins.json` → `stages`. */
+  stage?: string
+  description?: string
+  plugins: PluginEntry[]
 }
 
 type Category = {
+  id: string
   name: string
+  shortName: string
   description?: string
+  stage: Stage
   plugins: Plugin[]
 }
 
-function createMarkup(html: string) {
-  return { __html: html }
-}
+type SortKey = 'recommended' | 'updated' | 'name'
 
 /** Description HTML from plugins.json: links that open a new tab get the
  * same screen-reader note as the card's own links. */
@@ -63,37 +90,24 @@ function isExternal(href: string) {
   return /^https?:\/\//.test(href)
 }
 
+/** Category anchors stay `name` with hyphens, lowercased, so existing links
+ * such as `#custom-commands` keep working. */
+function categoryId(name: string) {
+  return name.replaceAll(' ', '-').toLowerCase()
+}
+
 const GENERATED: Record<string, PluginMeta> =
   (generatedJSON && generatedJSON.plugins) || {}
 
-const BADGE_ORDER = ['official', 'community', 'deprecated']
-const BADGE_RANK: Record<string, number> = Object.fromEntries(
-  BADGE_ORDER.map((b, i) => [b, i])
-)
+const STAGES: Stage[] = pluginsJSON.stages || []
+/** Categories without a known stage still show, after the others. */
+const OTHER_STAGE: Stage = { id: 'other', name: 'More plugins' }
 
-/** Sort by badge tier (official → community → deprecated), then by
- *  most recently published first. Entries without a publish date sort last,
- *  with a stable alphabetical fallback. */
-function comparePlugins(a: Plugin, b: Plugin) {
-  const ta = (a.badge ? BADGE_RANK[a.badge] : undefined) ?? BADGE_ORDER.length
-  const tb = (b.badge ? BADGE_RANK[b.badge] : undefined) ?? BADGE_ORDER.length
-  if (ta !== tb) return ta - tb
-  const da = a.meta?.lastPublished
-    ? Date.parse(a.meta.lastPublished)
-    : -Infinity
-  const db = b.meta?.lastPublished
-    ? Date.parse(b.meta.lastPublished)
-    : -Infinity
-  if (da !== db) return db - da
-  return a.name.localeCompare(b.name)
-}
-
-const BADGE_INFO: Record<string, string> = {
+const MAINTAINER_HINT: Record<'all' | Maintainer, string> = {
+  all: 'Built by Cypress plugins are listed first in each category.',
   official: 'Built and maintained by the Cypress team.',
   community:
-    'Community-owned and not reviewed by Cypress. Evaluate before use.',
-  deprecated:
-    'No longer maintained, moved, or removed from npm. Look for an alternative.',
+    'Owned by their authors and not reviewed by Cypress. Check the repository before you adopt one.',
 }
 
 const monthYearFormatter = new Intl.DateTimeFormat('en-US', {
@@ -102,19 +116,75 @@ const monthYearFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: 'UTC',
 })
 
-/** Format an ISO date as e.g. "Jun 2026". */
-function formatMonthYear(iso?: string) {
+const fullDateFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+
+function parseDate(iso?: string) {
   if (!iso) return null
   const d = new Date(iso)
-  if (Number.isNaN(d.getTime())) return null
-  return monthYearFormatter.format(d)
+  return Number.isNaN(d.getTime()) ? null : d
 }
 
-function monthsSince(iso?: string) {
-  if (!iso) return null
-  const then = new Date(iso).getTime()
-  if (Number.isNaN(then)) return null
-  return (Date.now() - then) / (1000 * 60 * 60 * 24 * 30.44)
+function monthsSince(date: Date) {
+  return (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 30.44)
+}
+
+/** "this month", "3 months ago", "2 years ago". */
+function timeAgo(months: number) {
+  if (months < 1) return 'this month'
+  if (months < 12) {
+    const m = Math.floor(months)
+    return m === 1 ? '1 month ago' : `${m} months ago`
+  }
+  const y = Math.floor(months / 12)
+  return y === 1 ? '1 year ago' : `${y} years ago`
+}
+
+/** The distinctive part of a name: no npm scope, no leading `cypress-`. */
+function keyName(name: string) {
+  return name.replace(/^@[^/]+\//, '').replace(/^cypress[-\s]?/i, '') || name
+}
+
+/** Two letters for the card's tile: initials of a multi-word name, or the
+ * first two letters of a single word. */
+function monogram(name: string) {
+  const parts = keyName(name)
+    .split(/[^A-Za-z0-9]+/)
+    .filter(Boolean)
+  if (!parts.length) return 'Cy'
+  if (parts.length === 1) {
+    return parts[0][0].toUpperCase() + (parts[0][1] || '').toLowerCase()
+  }
+  return (parts[0][0] + parts[1][0]).toUpperCase()
+}
+
+/** Best guess at who publishes a community plugin: the repository owner, the
+ * npm scope, or the vendor's domain. */
+function authorOf(entry: PluginEntry, meta: PluginMeta) {
+  try {
+    const url = new URL(entry.link, 'https://docs.cypress.io')
+    if (/(^|\.)(github\.com|gitlab\.com|bitbucket\.org)$/.test(url.hostname)) {
+      const owner = url.pathname.split('/').filter(Boolean)[0]
+      if (owner) return owner
+    }
+    const npm = meta.npm || entry.npm
+    if (npm && npm.startsWith('@')) return npm.slice(1).split('/')[0]
+    // Listing pages name the store, not the author.
+    if (
+      /(^|\.)(cypress\.io|visualstudio\.com|google\.com|npmjs\.com)$/.test(
+        url.hostname
+      )
+    ) {
+      return null
+    }
+    return url.hostname.replace(/^(www|docs|support)\./, '')
+  } catch {
+    return null
+  }
 }
 
 /** False during SSR and the first client render, true afterwards. Lets us defer
@@ -126,111 +196,178 @@ function useMounted() {
 }
 
 /** Merge a plugin's curated entry with its generated metadata. */
-function withMeta(plugin: Plugin): Plugin {
-  const meta = GENERATED[plugin.name] || {}
-  const badge = meta.deprecated ? 'deprecated' : plugin.badge
-  return { ...plugin, meta, badge }
+function withMeta(entry: PluginEntry): Plugin {
+  const meta = GENERATED[entry.name] || {}
+  return {
+    ...entry,
+    meta,
+    maintainer: entry.badge === 'official' ? 'official' : 'community',
+    deprecated: !!meta.deprecated,
+    author: entry.badge === 'official' ? null : authorOf(entry, meta),
+  }
 }
 
-function Badge({ badge }: { badge?: string }) {
-  if (!badge) return null
-  const cls = `badge${badge[0].toUpperCase()}${badge.slice(1)}`
+function publishedTime(p: Plugin) {
+  const d = parseDate(p.meta.lastPublished)
+  return d ? d.getTime() : -Infinity
+}
+
+function byName(a: Plugin, b: Plugin) {
+  return a.name.localeCompare(b.name, 'en', { sensitivity: 'base' })
+}
+
+/** Built by Cypress first and deprecated last, then the most recently
+ *  published, with an alphabetical fallback. */
+function byRecommended(a: Plugin, b: Plugin) {
+  const tier = (p: Plugin) =>
+    p.deprecated ? 2 : p.maintainer === 'official' ? 0 : 1
   return (
-    <span
-      className={`${s.badge} ${s.badgePill} ${s[cls] || ''}`}
-      title={BADGE_INFO[badge]}
-    >
-      {badge}
-    </span>
+    tier(a) - tier(b) || publishedTime(b) - publishedTime(a) || byName(a, b)
   )
 }
 
-function Signals({ meta }: { meta?: PluginMeta }) {
-  // `stale` depends on the current date, so only evaluate it after mount to
-  // keep server and client markup identical during hydration.
-  const mounted = useMounted()
-  if (!meta) return null
-  const updated = formatMonthYear(meta.lastPublished)
-  const age = monthsSince(meta.lastPublished)
-  const stale = mounted && typeof age === 'number' && age > 18
-  const npmUrl = meta.npm ? `https://www.npmjs.com/package/${meta.npm}` : null
-
-  const items = []
-  if (npmUrl) {
-    items.push(
-      <a
-        key="npm"
-        className={s.signal}
-        href={npmUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        title="View on npm"
-      >
-        {meta.npm}
-        {meta.version ? ` ${meta.version}` : ''}
-        <NewTabNote />
-      </a>
-    )
-  }
-  if (updated) {
-    items.push(
-      <span
-        key="updated"
-        className={clsx(s.signal, stale && s.signalStale)}
-        title={
-          stale
-            ? 'Not published in over 18 months; may be unmaintained.'
-            : 'Latest npm publish date.'
-        }
-      >
-        Updated {updated}
-      </span>
-    )
-  }
-  if (meta.cypressVersion) {
-    items.push(
-      <span key="cy" className={s.signal} title="Supported Cypress versions">
-        Cypress {meta.cypressVersion}
-      </span>
-    )
-  }
-  if (!items.length) return null
-  return <div className={s.signals}>{items}</div>
+function byUpdated(a: Plugin, b: Plugin) {
+  return publishedTime(b) - publishedTime(a) || byName(a, b)
 }
 
-function PluginCard({
-  plugin,
-  onSelectTag,
-}: {
-  plugin: Plugin
-  onSelectTag: (tag: string) => void
-}) {
-  const { meta } = plugin
+const COMPARE: Record<SortKey, (a: Plugin, b: Plugin) => number> = {
+  recommended: byRecommended,
+  updated: byUpdated,
+  name: byName,
+}
+
+function searchText(p: Plugin, category: Category) {
+  return [
+    p.name,
+    p.description.replace(/<[^>]+>/g, ' '),
+    category.name,
+    ...(p.keywords || []),
+    p.meta.npm,
+    p.author,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+}
+
+function SealIcon() {
   return (
-    <li className="card" data-cy={`plugin-${plugin.name}`}>
-      <div className={s.pluginTitle}>
-        <h3>
-          {isExternal(plugin.link) ? (
-            <a href={plugin.link} target="_blank" rel="noopener noreferrer">
+    <svg
+      className={s.sealIcon}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 2.5l2.3 1.7 2.9-.2.9 2.7 2.4 1.6-.9 2.7.9 2.7-2.4 1.6-.9 2.7-2.9-.2L12 21.5l-2.3-1.7-2.9.2-.9-2.7-2.4-1.6.9-2.7-.9-2.7 2.4-1.6.9-2.7 2.9.2z" />
+      <path d="m8.8 12 2.2 2.2 4.2-4.4" />
+    </svg>
+  )
+}
+
+/** Last publish as a colored dot plus text. The age bucket depends on the
+ *  current date, so it's only applied after mount to keep hydration stable. */
+function Freshness({ meta }: { meta: PluginMeta }) {
+  const mounted = useMounted()
+  const published = parseDate(meta.lastPublished)
+
+  if (!published) {
+    return (
+      <span className={s.freshness}>
+        <span className={clsx(s.dot, s.dotNone)} aria-hidden="true" />
+        Not on npm
+      </span>
+    )
+  }
+
+  const months = mounted ? monthsSince(published) : null
+  const bucket =
+    months === null
+      ? null
+      : months <= 6
+        ? s.dotActive
+        : months <= 18
+          ? s.dotRecent
+          : s.dotStale
+  const stale = months !== null && months > 18
+
+  return (
+    <>
+      <span
+        className={s.freshness}
+        title={`Last published to npm on ${fullDateFormatter.format(published)}`}
+      >
+        <span
+          className={clsx(s.dot, bucket || s.dotPending)}
+          aria-hidden="true"
+        />
+        Updated{' '}
+        {months === null
+          ? monthYearFormatter.format(published)
+          : timeAgo(months)}
+      </span>
+      {stale && <span className={s.staleNote}>May be unmaintained</span>}
+    </>
+  )
+}
+
+function PluginCard({ plugin, stageId }: { plugin: Plugin; stageId: string }) {
+  const { meta } = plugin
+  const external = isExternal(plugin.link)
+  const npmUrl = meta.npm ? `https://www.npmjs.com/package/${meta.npm}` : null
+
+  return (
+    <li
+      className={s.card}
+      data-cy={`plugin-${plugin.name}`}
+      data-maintainer={plugin.maintainer}
+      data-deprecated={plugin.deprecated ? 'true' : undefined}
+      data-published={meta.lastPublished || undefined}
+    >
+      <div className={s.cardHead}>
+        <span
+          className={s.monogram}
+          data-stage={stageId}
+          aria-hidden="true"
+          data-sanitize=""
+        >
+          {monogram(plugin.name)}
+        </span>
+        <div className={s.cardHeading}>
+          <h3 className={s.cardTitle}>
+            <a
+              className={s.cardLink}
+              href={plugin.link}
+              {...(external
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {})}
+            >
               {plugin.name}
-              <NewTabNote />
+              {external && <NewTabNote />}
             </a>
+          </h3>
+          {plugin.maintainer === 'official' ? (
+            <span className={s.byOfficial} data-cy="plugin-maintainer">
+              <SealIcon />
+              Built by Cypress
+            </span>
           ) : (
-            <a href={plugin.link}>{plugin.name}</a>
+            <span className={s.byCommunity} data-cy="plugin-maintainer">
+              Community{plugin.author ? ` · ${plugin.author}` : ''}
+            </span>
           )}
-        </h3>
-        {plugin.badge && (
-          <div className={s.pluginBadge}>
-            <Badge badge={plugin.badge} />
-          </div>
-        )}
+        </div>
       </div>
 
       <p
+        className={s.cardDescription}
         dangerouslySetInnerHTML={createDescriptionMarkup(plugin.description)}
-      ></p>
+      />
 
-      {meta && meta.deprecated && (
+      {plugin.deprecated && (
         <p className={s.deprecatedNotice}>
           <FontAwesomeIcon
             icon={faExclamationTriangle}
@@ -240,34 +377,59 @@ function PluginCard({
         </p>
       )}
 
-      <Signals meta={meta} />
-
-      <div className={s.keywords}>
-        {plugin.keywords?.map((keyword, index) => (
-          <a
-            key={index}
-            className={s.keyword}
-            href={`?search=${encodeURIComponent(keyword)}`}
-            onClick={(e) => {
-              e.preventDefault()
-              onSelectTag(keyword)
-            }}
-            title={`Search plugins tagged "${keyword}"`}
-            data-cy="plugin-tag"
-          >
-            #{keyword}
-          </a>
-        ))}
+      <div className={s.cardFooter}>
+        <Freshness meta={meta} />
+        {/* Flex layout ignores these spaces; text exports keep them. */}{' '}
+        {meta.version && (
+          <span className={s.version}>
+            <span aria-hidden="true">·</span> v{meta.version}
+          </span>
+        )}
       </div>
+
+      {(meta.cypressVersion || npmUrl) && (
+        <div className={s.cardMore}>
+          <span
+            className={s.range}
+            data-cy="plugin-cypress-range"
+            title={
+              meta.cypressVersion
+                ? `Declares cypress ${meta.cypressVersion}`
+                : undefined
+            }
+          >
+            {meta.cypressVersion
+              ? `Cypress ${meta.cypressVersion}`
+              : 'No Cypress range declared'}
+          </span>{' '}
+          {npmUrl && (
+            <a
+              className={s.npmLink}
+              href={npmUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              npm
+              <span className={s.srOnly}>
+                {' '}
+                package {meta.npm}
+                {meta.version ? ` ${meta.version}` : ''} (opens in a new tab)
+              </span>
+            </a>
+          )}
+        </div>
+      )}
     </li>
   )
 }
 
 export default function PluginsList() {
   const [query, setQuery] = useState('')
-  const [badgeFilter, setBadgeFilter] = useState('all')
+  const [maintainer, setMaintainer] = useState<'all' | Maintainer>('all')
   const [categoryFilter, setCategoryFilter] = useState('all')
-  const controlsRef = useRef<HTMLDivElement>(null)
+  const [sort, setSort] = useState<SortKey>('recommended')
+  const [filtersOpen, setFiltersOpen] = useState(false)
+  const resultsRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
   // Flips to true once mounted, so tests can wait for hydration before the
   // controls are interactive.
@@ -292,60 +454,94 @@ export default function PluginsList() {
     window.history.replaceState(null, '', url)
   }
 
-  // Clicking a keyword tag filters the list by that tag and scrolls back to
-  // the controls so the applied search is visible.
-  const selectTag = (tag: string) => {
-    applyQuery(tag)
-    controlsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  // Picking a category shows only that section; bring its top into view when
+  // the reader picked it from far down the page.
+  const pickCategory = (id: string) => {
+    setCategoryFilter(id)
+    setFiltersOpen(false)
+    const top = resultsRef.current?.getBoundingClientRect().top
+    if (top !== undefined && top < 0) {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   }
 
-  // Merge metadata, sort plugins within each category, and list the categories
-  // themselves alphabetically.
-  const categories: Category[] = useMemo(
+  // Merge metadata and order the categories along the path of a test suite:
+  // by stage, then alphabetically within each stage.
+  const categories: Category[] = useMemo(() => {
+    const stageOrder = new Map(STAGES.map((stage, i) => [stage.id, i]))
+    return (pluginsJSON.plugins as CategoryEntry[])
+      .map((entry) => ({
+        id: categoryId(entry.name),
+        name: entry.name,
+        shortName: entry.shortName || entry.name,
+        description: entry.description,
+        stage: STAGES.find((st) => st.id === entry.stage) || OTHER_STAGE,
+        plugins: entry.plugins.map(withMeta),
+      }))
+      .sort(
+        (a, b) =>
+          (stageOrder.get(a.stage.id) ?? STAGES.length) -
+            (stageOrder.get(b.stage.id) ?? STAGES.length) ||
+          a.name.localeCompare(b.name)
+      )
+  }, [])
+
+  // Plugins that match the search and maintainer filter, per category. The
+  // category list counts from these, so the counts track the other filters.
+  const matching = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return categories.map((category) => ({
+      ...category,
+      plugins: category.plugins.filter(
+        (p) =>
+          (maintainer === 'all' || p.maintainer === maintainer) &&
+          (!q || searchText(p, category).includes(q))
+      ),
+    }))
+  }, [categories, query, maintainer])
+
+  const sections = useMemo(
     () =>
-      (pluginsJSON.plugins as Category[])
+      matching
+        .filter(
+          (category) =>
+            categoryFilter === 'all' || category.id === categoryFilter
+        )
         .map((category) => ({
           ...category,
-          plugins: category.plugins.map(withMeta).sort(comparePlugins),
+          plugins: [...category.plugins].sort(COMPARE[sort]),
         }))
-        .sort((a, b) => a.name.localeCompare(b.name)),
-    []
+        .filter((category) => category.plugins.length > 0),
+    [matching, categoryFilter, sort]
   )
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    return categories
-      .filter(
-        (category) =>
-          categoryFilter === 'all' || category.name === categoryFilter
-      )
-      .map((category) => {
-        const plugins = category.plugins.filter((plugin) => {
-          if (badgeFilter !== 'all' && plugin.badge !== badgeFilter) {
-            return false
-          }
-          if (!q) return true
-          const haystack = [
-            plugin.name,
-            plugin.description,
-            category.name,
-            ...(plugin.keywords || []),
-            plugin.meta?.npm,
-          ]
-            .filter(Boolean)
-            .join(' ')
-            .toLowerCase()
-          return haystack.includes(q)
-        })
-        return { ...category, plugins }
-      })
-      .filter((category) => category.plugins.length > 0)
-  }, [categories, query, badgeFilter, categoryFilter])
+  const railGroups = useMemo(() => {
+    const groups: { stage: Stage; categories: typeof matching }[] = []
+    for (const category of matching) {
+      const last = groups[groups.length - 1]
+      if (last && last.stage.id === category.stage.id) {
+        last.categories.push(category)
+      } else {
+        groups.push({ stage: category.stage, categories: [category] })
+      }
+    }
+    return groups
+  }, [matching])
 
-  const total = useMemo(
-    () => filtered.reduce((sum, c) => sum + c.plugins.length, 0),
-    [filtered]
+  const matchingTotal = matching.reduce((n, c) => n + c.plugins.length, 0)
+  const total = sections.reduce((n, c) => n + c.plugins.length, 0)
+  const selected = categories.find((c) => c.id === categoryFilter)
+  const hasFilters = !!(
+    query ||
+    maintainer !== 'all' ||
+    categoryFilter !== 'all'
   )
+
+  const clearAll = () => {
+    applyQuery('')
+    setMaintainer('all')
+    setCategoryFilter('all')
+  }
 
   return (
     <div
@@ -353,22 +549,18 @@ export default function PluginsList() {
       data-cy="plugins-list"
       data-hydrated={hydrated ? 'true' : 'false'}
     >
-      <div className={s.legend} aria-label="What the badges mean">
-        {BADGE_ORDER.map((badge) => (
-          <span key={badge} className={s.legendItem}>
-            <Badge badge={badge} />
-            <span className={s.legendText}>{BADGE_INFO[badge]}</span>
-          </span>
-        ))}
-      </div>
-
-      <div className={s.controls} ref={controlsRef}>
+      <div className={s.toolbar} data-sanitize="">
         <div className={s.searchWrap}>
+          <FontAwesomeIcon
+            icon={faSearch}
+            className={s.searchIcon}
+            aria-hidden="true"
+          />
           <input
             type="search"
             ref={searchRef}
             className={s.search}
-            placeholder="Search plugins by name, keyword, or description…"
+            placeholder="Search by name, package, author, or what it does"
             value={query}
             onChange={(e) => applyQuery(e.target.value)}
             aria-label="Search plugins"
@@ -389,71 +581,193 @@ export default function PluginsList() {
             </button>
           )}
         </div>
-        <select
-          className={s.select}
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-          aria-label="Filter by category"
-          data-cy="plugins-category-filter"
+        <div className={s.sortWrap}>
+          <label htmlFor="plugins-sort" className={s.sortLabel}>
+            Sort by
+          </label>
+          <select
+            id="plugins-sort"
+            className={s.select}
+            value={sort}
+            onChange={(e) => setSort(e.target.value as SortKey)}
+            data-cy="plugins-sort"
+          >
+            <option value="recommended">Recommended</option>
+            <option value="updated">Recently updated</option>
+            <option value="name">Name (A–Z)</option>
+          </select>
+        </div>
+        <button
+          type="button"
+          className={s.filtersToggle}
+          aria-expanded={filtersOpen}
+          aria-controls="plugins-filters"
+          onClick={() => setFiltersOpen((open) => !open)}
         >
-          <option value="all">All categories</option>
-          {categories.map((category) => (
-            <option key={category.name} value={category.name}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <select
-          className={s.select}
-          value={badgeFilter}
-          onChange={(e) => setBadgeFilter(e.target.value)}
-          aria-label="Filter by badge"
-          data-cy="plugins-badge-filter"
-        >
-          <option value="all">All badges</option>
-          {BADGE_ORDER.map((badge) => (
-            <option key={badge} value={badge}>
-              {badge[0].toUpperCase() + badge.slice(1)}
-            </option>
-          ))}
-        </select>
+          <FontAwesomeIcon icon={faSlidersH} aria-hidden="true" />
+          Filters
+          {hasFilters && <span className={s.filtersDot} aria-hidden="true" />}
+        </button>
       </div>
 
-      <p className={s.resultCount} data-cy="plugins-result-count">
-        Showing {total} {total === 1 ? 'plugin' : 'plugins'}
-      </p>
-
-      {filtered.length === 0 ? (
-        <p className={s.empty}>
-          No plugins match your search. Try a different term or clear the
-          filters.
-        </p>
-      ) : (
-        filtered.map((category) => (
-          <section key={category.name} data-cy={`plugin-${category.name}`}>
-            <h2 id={category.name.replaceAll(' ', '-').toLowerCase()}>
-              {category.name}
-            </h2>
-
-            {category.description && (
-              <p
-                className="mb-[16px]"
-                dangerouslySetInnerHTML={createMarkup(category.description)}
-              ></p>
-            )}
-
-            <ul className={clsx(s.pluginsList, '!pl-0')}>
-              {category.plugins.map((plugin) => (
-                <PluginCard
-                  key={plugin.name}
-                  plugin={plugin}
-                  onSelectTag={selectTag}
-                />
+      <div className={s.layout}>
+        <aside
+          id="plugins-filters"
+          className={clsx(s.rail, filtersOpen && s.railOpen)}
+          aria-label="Plugin filters"
+          data-sanitize=""
+        >
+          <div className={s.railGroup}>
+            <div className={s.railHeading} id="plugins-maintainer-label">
+              Maintained by
+            </div>
+            <div
+              className={s.segmented}
+              role="group"
+              aria-labelledby="plugins-maintainer-label"
+              data-cy="plugins-maintainer-filter"
+            >
+              {(
+                [
+                  ['all', 'All'],
+                  ['official', 'Cypress'],
+                  ['community', 'Community'],
+                ] as const
+              ).map(([value, label]) => (
+                <button
+                  key={value}
+                  type="button"
+                  className={s.segment}
+                  aria-pressed={maintainer === value}
+                  onClick={() => setMaintainer(value)}
+                  data-cy={`plugins-maintainer-${value}`}
+                >
+                  {label}
+                </button>
               ))}
-            </ul>
-          </section>
-        ))
-      )}
+            </div>
+            <div className={s.railHint}>{MAINTAINER_HINT[maintainer]}</div>
+          </div>
+
+          <nav
+            className={s.railGroup}
+            aria-label="Plugin categories"
+            data-cy="plugins-category-filter"
+          >
+            <button
+              type="button"
+              className={s.railItem}
+              aria-pressed={categoryFilter === 'all'}
+              onClick={() => pickCategory('all')}
+              data-cy="plugins-category-all"
+            >
+              <span>All categories</span>
+              <span className={s.railCount}>{matchingTotal}</span>
+            </button>
+            {railGroups.map(({ stage, categories: group }) => (
+              <div key={stage.id} className={s.railStage} data-stage={stage.id}>
+                <div className={s.railStageName}>{stage.name}</div>
+                {group.map((category) => (
+                  <button
+                    key={category.id}
+                    type="button"
+                    className={s.railItem}
+                    aria-pressed={categoryFilter === category.id}
+                    onClick={() => pickCategory(category.id)}
+                    data-cy={`plugins-category-${category.id}`}
+                  >
+                    <span>{category.shortName}</span>
+                    <span className={s.railCount}>
+                      {category.plugins.length}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            ))}
+          </nav>
+        </aside>
+
+        <div className={s.results} ref={resultsRef}>
+          <div className={s.resultsHeader} data-sanitize="">
+            <p
+              className={s.resultCount}
+              data-cy="plugins-result-count"
+              aria-live="polite"
+            >
+              Showing {total} {total === 1 ? 'plugin' : 'plugins'}
+              {selected ? ` in ${selected.name}` : ''}
+            </p>
+            {hasFilters && (
+              <button
+                type="button"
+                className={s.clearFilters}
+                onClick={clearAll}
+                data-cy="plugins-clear-filters"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+
+          {sections.length === 0 ? (
+            <div className={s.empty}>
+              <p className={s.emptyTitle}>
+                No plugins match your search or filters
+              </p>
+              <p>Try a shorter search, or clear the filters to see them all.</p>
+              <button
+                type="button"
+                className={s.clearFilters}
+                onClick={clearAll}
+              >
+                Clear filters
+              </button>
+            </div>
+          ) : (
+            sections.map((category) => (
+              <section
+                key={category.id}
+                className={s.section}
+                data-stage={category.stage.id}
+                data-cy="plugins-category"
+                data-category={category.id}
+                aria-labelledby={category.id}
+              >
+                <div className={s.sectionHeader}>
+                  <p className={s.eyebrow} data-cy="plugins-category-stage">
+                    {category.stage.name}
+                  </p>
+                  <div>
+                    <h2 id={category.id} className={s.sectionTitle}>
+                      {category.name}
+                    </h2>
+                    <span className={s.sectionCount} data-sanitize="">
+                      {category.plugins.length}
+                    </span>
+                  </div>
+                  {category.description && (
+                    <p
+                      className={s.sectionDescription}
+                      dangerouslySetInnerHTML={createDescriptionMarkup(
+                        category.description
+                      )}
+                    />
+                  )}
+                </div>
+                <ul className={s.grid}>
+                  {category.plugins.map((plugin) => (
+                    <PluginCard
+                      key={plugin.name}
+                      plugin={plugin}
+                      stageId={category.stage.id}
+                    />
+                  ))}
+                </ul>
+              </section>
+            ))
+          )}
+        </div>
+      </div>
     </div>
   )
 }
