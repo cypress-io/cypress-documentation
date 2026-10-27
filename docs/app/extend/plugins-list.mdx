@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Plugins: Official & Community Extensions'
-description: 'Browse official and community Cypress plugins that extend and customize your tests, with badges and maintenance signals to help you pick the right one.'
+description: 'Browse official and community Cypress plugins, grouped by where they fit in your test suite, with maintainer and npm freshness signals to help you choose.'
 sidebar_label: Plugin directory
 sidebar_position: 20
 slug: /app/plugins/plugins-list
@@ -13,21 +13,14 @@ hide_table_of_contents: true
 
 import PluginsList from '@site/src/components/plugins-list'
 
-Plugins extend and customize how you write, run, and report on your Cypress
-tests. They add capabilities like bundling and preprocessors, custom commands,
-network and API helpers, visual, accessibility, and AI-assisted testing, CI
-integrations, and rich reporters. They're typically published as versioned npm
-modules, so you can adopt and update them independently of Cypress itself.
+Cypress plugins add custom commands, preprocessors, visual and accessibility
+testing, CI integrations, and reporters to your test suite. Most are npm
+packages that you install and update separately from Cypress. Cypress doesn't
+review vendor or community plugins, so check a plugin's repository and recent
+releases before you adopt it.
 
 Built something useful?
 [Submit your own plugin](https://github.com/cypress-io/cypress-documentation/blob/master/CONTRIBUTING.md#adding-plugins).
-
-:::info
-
-Check out our [How to use Plugins](/app/plugins/plugins-guide) or our
-[Node Events Overview](/api/node-events/overview) for writing a plugin.
-
-:::
 
 <PluginsList />
 

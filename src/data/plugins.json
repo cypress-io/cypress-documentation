@@ -1,7 +1,15 @@
 {
+  "stages": [
+    { "id": "setup", "name": "Set up" },
+    { "id": "write", "name": "Write" },
+    { "id": "run", "name": "Run" },
+    { "id": "check", "name": "Check" },
+    { "id": "ship", "name": "Report & ship" }
+  ],
   "plugins": [
     {
       "name": "Preprocessors",
+      "stage": "setup",
       "description": "A preprocessor is the plugin responsible for preparing a support file or a test file for the browser. By default, Cypress comes packaged with webpack preprocessor already installed. Read the <a target=\"_blank\" href=\"/api/node-events/preprocessors-api\">Preprocessors API docs</a> to learn more.",
       "plugins": [
         {
@@ -50,7 +58,8 @@
       ]
     },
     {
-      "name": "Component Testing",
+      "name": "Component testing",
+      "stage": "setup",
       "description": "Loading and mounting components from various frameworks.",
       "plugins": [
         {
@@ -136,7 +145,8 @@
       ]
     },
     {
-      "name": "AI Tooling",
+      "name": "AI tooling",
+      "stage": "write",
       "description": "Connect AI coding assistants and agents to Cypress so they write, understand, and debug tests more reliably. See our <a target=\"_blank\" href=\"/app/tooling/ai-skills\">Cypress AI Skills</a> guide to get started.",
       "plugins": [
         {
@@ -177,7 +187,9 @@
       ]
     },
     {
-      "name": "Continuous Integration & Parallelization",
+      "name": "Continuous integration & parallelization",
+      "shortName": "CI & parallelization",
+      "stage": "ship",
       "description": "Run Cypress in CI and split work across machines to keep test runs fast.",
       "plugins": [
         {
@@ -227,13 +239,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-repeat",
-          "description": "Run Cypress multiple times in a row, great at finding test flake.",
-          "link": "https://github.com/bahmutov/cypress-repeat",
-          "badge": "community",
-          "keywords": ["cli", "ci", "repeat", "retry", "flake"]
-        },
-        {
           "name": "cypress-split",
           "description": "Split Cypress specs across parallel CI machines for speed.",
           "link": "https://github.com/bahmutov/cypress-split",
@@ -249,7 +254,8 @@
       ]
     },
     {
-      "name": "Developer Tooling",
+      "name": "Developer tooling",
+      "stage": "write",
       "description": "Improve the day-to-day developer experience with editor support, linting, type definitions, and test-authoring helpers.",
       "plugins": [
         {
@@ -279,7 +285,8 @@
           "description": "Official TypeScript definitions for the Cypress API.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/cli/types",
           "keywords": ["typescript", "types", "intellisense", "definitions"],
-          "badge": "official"
+          "badge": "official",
+          "npm": "cypress"
         },
         {
           "name": "cypress-codegen",
@@ -314,7 +321,8 @@
           "description": "Visual Studio Code extension for cypress and cucumber preprocessor.",
           "link": "https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper",
           "keywords": ["vscode", "extension", "intellisense"],
-          "badge": "community"
+          "badge": "community",
+          "author": "Shelex"
         },
         {
           "name": "cypress-html-validate",
@@ -326,7 +334,9 @@
       ]
     },
     {
-      "name": "Test Selection & Execution",
+      "name": "Test selection & execution",
+      "shortName": "Test selection",
+      "stage": "run",
       "description": "Filter, tag, re-run, and control which tests execute and how failures are handled.",
       "plugins": [
         {
@@ -399,22 +409,17 @@
           "badge": "community"
         },
         {
-          "name": "cypress-each",
-          "description": "Adds describe.each and it.each for data-driven Cypress tests.",
-          "link": "https://github.com/bahmutov/cypress-each",
-          "keywords": [
-            "each",
-            "data-driven",
-            "describe-each",
-            "it-each",
-            "test-selection"
-          ],
-          "badge": "community"
+          "name": "cypress-repeat",
+          "description": "Run Cypress multiple times in a row, great at finding test flake.",
+          "link": "https://github.com/bahmutov/cypress-repeat",
+          "badge": "community",
+          "keywords": ["cli", "ci", "repeat", "retry", "flake"]
         }
       ]
     },
     {
-      "name": "Test Data & Fixtures",
+      "name": "Test data & fixtures",
+      "stage": "write",
       "description": "Generate and manage realistic test data and fixtures.",
       "plugins": [
         {
@@ -450,12 +455,33 @@
           "link": "https://github.com/khawjaahmad/cypress-test-data-generator",
           "keywords": ["data-generation", "faker", "testing", "test-data"],
           "badge": "community"
+        },
+        {
+          "name": "cypress-each",
+          "description": "Adds describe.each and it.each for data-driven Cypress tests.",
+          "link": "https://github.com/bahmutov/cypress-each",
+          "keywords": [
+            "each",
+            "data-driven",
+            "describe-each",
+            "it-each",
+            "test-selection"
+          ],
+          "badge": "community"
+        },
+        {
+          "name": "cypress-data-session",
+          "description": "cy.dataSession command for flexible, cached test-data setup.",
+          "link": "https://github.com/bahmutov/cypress-data-session",
+          "keywords": ["commands", "test-data", "data-session", "caching"],
+          "badge": "community"
         }
       ]
     },
     {
-      "name": "Custom Commands",
-      "description": "Read the <a target=\"_blank\" href=\"/api/cypress-api/custom-commands\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/cypress-api/custom-queries\">Custom Query</a> documentation to learn more.",
+      "name": "Custom commands",
+      "stage": "write",
+      "description": "Add commands and queries that find elements, wait and retry, branch on page state, handle downloads, and switch environments. To write your own, read <a target=\"_blank\" href=\"/api/cypress-api/custom-commands\">Custom Commands</a> and <a target=\"_blank\" href=\"/api/cypress-api/custom-queries\">Custom Queries</a>.",
       "plugins": [
         {
           "name": "Puppeteer",
@@ -527,19 +553,6 @@
           "badge": "community"
         },
         {
-          "name": "cypress-firebase",
-          "description": "Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).",
-          "link": "https://github.com/prescottprue/cypress-firebase",
-          "keywords": [
-            "firebase",
-            "database",
-            "commands",
-            "authentication",
-            "firestore"
-          ],
-          "badge": "community"
-        },
-        {
           "name": "cypress-if",
           "description": "Easy conditional if-else logic for your Cypress tests.",
           "link": "https://github.com/bahmutov/cypress-if",
@@ -573,19 +586,15 @@
           "link": "https://github.com/NoelDeMartin/cypress-solid",
           "keywords": ["solid", "solid-protocol", "solidproject", "commands"],
           "badge": "community"
-        },
-        {
-          "name": "cypress-data-session",
-          "description": "cy.dataSession command for flexible, cached test-data setup.",
-          "link": "https://github.com/bahmutov/cypress-data-session",
-          "keywords": ["commands", "test-data", "data-session", "caching"],
-          "badge": "community"
         }
       ]
     },
     {
-      "name": "Network & API Testing",
-      "description": "Test, stub, and inspect network requests, APIs, and real-time messaging.",
+      "name": "Network & API testing",
+      "shortName": "Network & API",
+      "stage": "run",
+      "aliases": ["bdd-&-contract-testing"],
+      "description": "Test, stub, and inspect network requests, APIs, and real-time messaging, and generate API contracts from your stubs.",
       "plugins": [
         {
           "name": "@bahmutov/cy-api",
@@ -604,7 +613,7 @@
         {
           "name": "cypress-har-generator",
           "description": "Generate HTTP Archive (HAR) while running tests.",
-          "link": "https://github.com/NeuraLegion/cypress-har-generator",
+          "link": "https://github.com/BrightSec/cypress-har-generator",
           "keywords": [
             "har",
             "http-archive",
@@ -648,7 +657,8 @@
           "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
           "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
           "keywords": ["commands", "signalr", "mock", "websocket"],
-          "badge": "community"
+          "badge": "community",
+          "npm": "cypress-signalr-mock"
         },
         {
           "name": "cypress-network-idle",
@@ -663,11 +673,21 @@
           "link": "https://github.com/dhrusoni84/cypress-mock-latency",
           "keywords": ["network", "latency", "jitter", "mock", "throttle"],
           "badge": "community"
+        },
+        {
+          "name": "Pact Cypress Adapter",
+          "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team.",
+          "link": "https://github.com/pactflow/pact-cypress-adapter",
+          "keywords": ["pact", "pactflow", "contract testing", "commands"],
+          "badge": "vendor",
+          "vendor": "PactFlow",
+          "npm": "@pactflow/pact-cypress-adapter"
         }
       ]
     },
     {
-      "name": "Databases & Storage",
+      "name": "Databases & storage",
+      "stage": "run",
       "description": "Read from and write to databases and browser storage from your Cypress tests.",
       "plugins": [
         {
@@ -710,11 +730,25 @@
             "database"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-firebase",
+          "description": "Custom commands for Firebase including Authentication and Database communication (both Real Time Database and Firestore).",
+          "link": "https://github.com/prescottprue/cypress-firebase",
+          "keywords": [
+            "firebase",
+            "database",
+            "commands",
+            "authentication",
+            "firestore"
+          ],
+          "badge": "community"
         }
       ]
     },
     {
       "name": "Accessibility",
+      "stage": "check",
       "description": "Catch accessibility issues as part of your Cypress tests.",
       "plugins": [
         {
@@ -734,7 +768,7 @@
         {
           "name": "cypress-axe",
           "description": "Helps test your applications for accessibility issues using axe-core.",
-          "link": "https://github.com/avanslaars/cypress-axe",
+          "link": "https://github.com/component-driven/cypress-axe",
           "keywords": ["accessibility", "a11y", "axe-core", "wcag"],
           "badge": "community"
         },
@@ -743,12 +777,14 @@
           "description": "IBM Equal Access accessibility checker for Cypress.",
           "link": "https://github.com/IBMa/equal-access",
           "keywords": ["accessibility", "a11y", "ibm", "equal-access", "wcag"],
-          "badge": "community"
+          "badge": "community",
+          "author": "IBM"
         }
       ]
     },
     {
       "name": "Performance",
+      "stage": "check",
       "description": "Measure command timings and catch performance regressions.",
       "plugins": [
         {
@@ -794,12 +830,21 @@
             "duration"
           ],
           "badge": "community"
+        },
+        {
+          "name": "cypress-performance-ui",
+          "description": "Collect browser-native performance metrics in Cypress tests, track historical results in JSON, and generate visual HTML reports without Lighthouse.",
+          "link": "https://github.com/pete2121/cypress-performance-ui",
+          "keywords": ["performance", "reporting", "metrics"],
+          "badge": "community"
         }
       ]
     },
     {
-      "name": "Code Coverage & Reporting",
-      "description": "Collect code coverage and generate rich test reports.",
+      "name": "Coverage & reporting",
+      "stage": "ship",
+      "aliases": ["code-coverage-&-reporting"],
+      "description": "Measure code and UI coverage, and generate rich test reports.",
       "plugins": [
         {
           "name": "UI Coverage",
@@ -880,7 +925,8 @@
           "description": "Reporter that sends Cypress results to ReportPortal.",
           "link": "https://github.com/reportportal/agent-js-cypress",
           "keywords": ["reporter", "reportportal", "reporting"],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "ReportPortal"
         },
         {
           "name": "@qualflare/cypress",
@@ -893,20 +939,24 @@
             "screenshot",
             "flaky"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Qualflare"
         }
       ]
     },
     {
-      "name": "Visual Testing",
-      "description": "<a target=\"_blank\" href=\"/app/tooling/visual-testing\">Visual testing</a> is a great complement to functional testing.",
+      "name": "Visual testing",
+      "stage": "check",
+      "description": "Catch visual regressions by comparing screenshots against approved baselines, locally or in a hosted review service. To choose an approach, read <a target=\"_blank\" href=\"/app/tooling/visual-testing\">Visual testing in Cypress</a>.",
       "plugins": [
         {
           "name": "Applitools",
           "description": "Fast, easy and reliable visual UI testing with Cypress.",
           "link": "https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started",
-          "badge": "community",
-          "keywords": ["screenshots", "visual regression", "visual-ai"]
+          "badge": "vendor",
+          "vendor": "Applitools",
+          "keywords": ["screenshots", "visual regression", "visual-ai"],
+          "npm": "@applitools/eyes-cypress"
         },
         {
           "name": "Argos",
@@ -919,7 +969,9 @@
             "visual testing",
             "ci"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Argos",
+          "npm": "@argos-ci/cypress"
         },
         {
           "name": "Happo",
@@ -931,7 +983,9 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Happo",
+          "npm": "happo"
         },
         {
           "name": "Percy",
@@ -943,7 +997,9 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Percy",
+          "npm": "@percy/cypress"
         },
         {
           "name": "SmartBear VisualTest",
@@ -956,7 +1012,9 @@
             "visual regression",
             "screenshots comparison"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "SmartBear",
+          "npm": "@smartbear/visualtest-cypress"
         },
         {
           "name": "Sauce Labs Visual",
@@ -969,7 +1027,8 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Sauce Labs"
         },
         {
           "name": "LambdaTest SmartUI",
@@ -982,14 +1041,16 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "LambdaTest"
         },
         {
           "name": "Cypress Image Diff",
           "description": "Visual regression testing plugin maintained by DIT - UK Gov.",
           "link": "https://github.com/uktrade/cypress-image-diff",
           "keywords": ["screenshots", "visual regression", "image-diff"],
-          "badge": "community"
+          "badge": "community",
+          "npm": "cypress-image-diff-js"
         },
         {
           "name": "Cypress Image Snapshot",
@@ -1009,7 +1070,8 @@
           "description": "Plugin that adds powerful visual regression testing capabilities to Cypress, that comes with a comparison preview built in the Cypress Test Runner.",
           "link": "https://github.com/cypress-visual-regression/cypress-visual-regression",
           "keywords": ["image-diff", "snapshot", "visual regression"],
-          "badge": "community"
+          "badge": "community",
+          "npm": "cypress-visual-regression"
         },
         {
           "name": "Pixeleye",
@@ -1021,12 +1083,14 @@
             "visual regression",
             "multi-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Pixeleye",
+          "npm": "@pixeleye/cypress"
         },
         {
           "name": "Visual Regression Diff",
           "description": "Perform visual regression test with a nice GUI as help. 💅 Supports both E2E and Component Testings",
-          "link": "https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff",
+          "link": "https://github.com/pixsame/pixsame/tree/main/packages/cypress-plugin-visual-regression-diff",
           "keywords": [
             "screenshots",
             "visual regression",
@@ -1036,7 +1100,7 @@
             "image snapshot"
           ],
           "badge": "community",
-          "npm": "@frsource/cypress-plugin-visual-regression-diff"
+          "npm": "@pixsame/cypress-plugin-visual-regression-diff"
         },
         {
           "name": "Wopee.io",
@@ -1048,7 +1112,9 @@
             "visual regression",
             "screenshots comparison"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Wopee.io",
+          "npm": "@wopee-io/wopee.cy"
         },
         {
           "name": "@chromatic-com/cypress",
@@ -1060,12 +1126,15 @@
             "chromatic",
             "screenshots"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Chromatic"
         }
       ]
     },
     {
-      "name": "Authentication & Security",
+      "name": "Authentication & security",
+      "shortName": "Auth & security",
+      "stage": "run",
       "description": "Authenticate test users and keep secrets out of your test code.",
       "plugins": [
         {
@@ -1085,7 +1154,8 @@
             "aws-secrets-manager",
             "secrets-manager"
           ],
-          "badge": "community"
+          "badge": "community",
+          "npm": "cypress-aws-secrets-manager"
         },
         {
           "name": "cypress-get-otp",
@@ -1111,6 +1181,8 @@
     },
     {
       "name": "Email & SMS",
+      "stage": "run",
+      "aliases": ["email"],
       "description": "Test email and SMS flows such as sign-up confirmations and one-time codes.",
       "plugins": [
         {
@@ -1132,7 +1204,8 @@
           "description": "Test email and SMS messages using Mailosaur.",
           "link": "https://github.com/mailosaur/cypress-mailosaur",
           "keywords": ["email", "sms", "commands"],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Mailosaur"
         },
         {
           "name": "cypress-mailpit",
@@ -1146,7 +1219,8 @@
           "description": "Test email flows with Mailsac: wait for matching messages and extract verification links or codes.",
           "link": "https://github.com/mailsac/cypress-mailsac",
           "keywords": ["email", "mailsac", "test", "commands"],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Mailsac"
         },
         {
           "name": "@mailsai/cypress",
@@ -1160,7 +1234,8 @@
             "test",
             "commands"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Mailsai"
         },
         {
           "name": "cypress-mailsink",
@@ -1174,7 +1249,8 @@
           "description": "Use test email accounts to send and receive emails in Cypress tests with MailSlurp.",
           "link": "https://github.com/mailslurp/cypress-mailslurp",
           "keywords": ["email", "mailslurp", "test", "commands"],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "MailSlurp"
         },
         {
           "name": "cypress-temp-mail",
@@ -1206,7 +1282,9 @@
       ]
     },
     {
-      "name": "App Framework Integrations",
+      "name": "App framework integrations",
+      "shortName": "Framework integrations",
+      "stage": "setup",
       "plugins": [
         {
           "name": "Cypress Schematic",
@@ -1221,7 +1299,9 @@
           "description": "The Aurelia CLI is the official command line tool for Aurelia.",
           "link": "https://aurelia.io/docs/cli",
           "keywords": ["aurelia", "cli", "integration", "setup"],
-          "badge": "community"
+          "badge": "community",
+          "author": "Aurelia",
+          "npm": "aurelia-cli"
         },
         {
           "name": "cypress-on-rails",
@@ -1254,35 +1334,16 @@
           "description": "Smart, Fast and Extensible Build System.",
           "link": "https://nx.dev/cypress/overview",
           "keywords": ["angular", "react", "cli", "monorepo"],
-          "badge": "community",
+          "badge": "vendor",
+          "vendor": "Nx",
           "npm": "@nx/cypress"
         }
       ],
       "description": "Add and run Cypress within application frameworks, monorepos, and their CLIs."
     },
     {
-      "name": "BDD & Contract Testing",
-      "plugins": [
-        {
-          "name": "Pact Cypress Adapter",
-          "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team.",
-          "link": "https://github.com/pactflow/pact-cypress-adapter",
-          "keywords": ["pact", "pactflow", "contract testing", "commands"],
-          "badge": "community",
-          "npm": "@pactflow/pact-cypress-adapter"
-        },
-        {
-          "name": "PickleJS",
-          "description": "An addition to the Cucumber plugin, featuring a collection of phrases you can use for common actions (ex: \"I click on an &lt;Element&gt;\", \"I should see an &lt;Element&gt;\").",
-          "link": "https://picklejs.com",
-          "keywords": ["cucumber", "collection", "actions", "commands"],
-          "badge": "community"
-        }
-      ],
-      "description": "Behavior-driven development helpers and consumer-driven contract testing."
-    },
-    {
-      "name": "User Interactions",
+      "name": "User interactions",
+      "stage": "write",
       "description": "Fire realistic user interactions: native events, drag-and-drop, mobile gestures, and keyboard tabbing.",
       "plugins": [
         {
@@ -1345,21 +1406,10 @@
         {
           "name": "cypress-plugin-tab",
           "description": "A Cypress plugin to add a tab command.",
-          "link": "https://github.com/Bkucera/cypress-plugin-tab",
+          "link": "https://github.com/kuceb/cypress-plugin-tab",
           "keywords": ["commands", "tab", "keyboard", "accessibility"],
           "badge": "community"
-        },
-        {
-        "name": "cypress-performance-ui",
-        "description": "Collect browser-native performance metrics in Cypress tests, track historical results in JSON, and generate visual HTML reports without Lighthouse.",
-        "link": "https://github.com/pete2121/cypress-performance-ui",
-        "keywords": [
-        "performance",
-        "reporting",
-        "metrics"
-                   ],
-        "badge": "community"
-      }
+        }
       ]
     }
   ]

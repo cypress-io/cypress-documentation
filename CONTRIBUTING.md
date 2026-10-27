@@ -114,7 +114,9 @@ Each entry supports the following fields:
 | `description` | yes      | Short summary of what the plugin does. Basic HTML is allowed.                                                              |
 | `link`        | yes      | URL to the plugin's source or documentation.                                                                               |
 | `keywords`    | no       | Array of tags used for search and filtering.                                                                               |
-| `badge`       | no       | One of `official` or `community` (defaults to `community`).                                                                |
+| `badge`       | no       | One of `official`, `vendor`, or `community` (defaults to `community`).                                                     |
+| `vendor`      | no       | With the `vendor` badge, the company that builds the plugin, shown as `Built by <vendor>` on its card.                     |
+| `author`      | no       | With the `community` badge, the name shown after "Community ·". Set it only when the default below isn't a readable name.  |
 | `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
 
 Signals shown on each card — latest version, last published date, and Cypress
@@ -123,6 +125,13 @@ compatibility — are generated automatically into
 `npm run enrich:plugins`. You do not need to edit that file by hand; it is
 refreshed from the npm registry. Setting an accurate `npm` field is what lets
 the script find these signals for your plugin.
+
+A community plugin's card credits the owner of the repository its `link` points
+to, or its npm scope when the link isn't a repository. Keep the `link` on the
+repository's current home. When a plugin's npm package names a different
+repository owner than its `link`, `npm run enrich:plugins` records the new home
+as `repoMovedTo` in the generated file, so a moved repository shows up in the
+nightly refresh pull request.
 
 We want to showcase plugins that work and have a good developer experience. This
 means that a good plugin generally has:
@@ -146,12 +155,23 @@ Each plugin submitted to the plugins list should have the following:
    - [repository](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#repository) for the command [npm repo](https://docs.npmjs.com/cli/v11/commands/npm-repo)
    - [bugs](https://docs.npmjs.com/cli/v11/configuring-npm/package-json#bugs) for the command [npm bugs](https://docs.npmjs.com/cli/v11/commands/npm-bugs)
 
-Categories are displayed alphabetically, and plugins are sorted within each
-category by badge tier and then by most recently published first (so the entry
-order in `plugins.json` does not matter):
+Each category sets a `stage`, one of the `id`s in the `stages` list at the top
+of `plugins.json` (Set up, Write, Run, Check, and Report & ship). The page shows
+categories stage by stage, alphabetically within each stage, with the stage name
+above the category title. A category with a long `name` can set a `shortName`
+for the category dropdown. A category's anchor comes from its `name`, so when you
+rename a category or merge one into another, list the old anchor in the
+surviving category's `aliases` (for example `"aliases": ["email"]`) so existing
+links still land on it.
+
+By default, plugins are sorted within each category by badge tier and then by
+most recently published first, so the entry order in `plugins.json` does not
+matter. Readers can also sort by most recently updated or by name. The badge
+tiers, in order:
 
 - official (Cypress owned)
-- community (community owned)
+- vendor and community, sorted together (owned by the company behind the
+  product the plugin connects to, or by independent authors)
 - deprecated (npm registry missing, source repo archived or incompatible with v10+)
 
 The `deprecated` state is applied automatically by `npm run enrich:plugins` when

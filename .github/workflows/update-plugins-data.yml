@@ -112,4 +112,6 @@ jobs:
           body: |
             Nightly refresh of `src/data/plugins-generated.json` via `npm run enrich:plugins`.
 
+            A `repoMovedTo` value in the diff means that plugin's npm package now names a different repository owner than its `link`. Update the `link` in `src/data/plugins.json` so the card credits the right owner.
+
             Automated by the `update-plugins-data` workflow.

@@ -146,8 +146,26 @@ Writing, naming, registering, and retiring one is covered in
 
 To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 (name, description, repo link, keywords). Entries are grouped in this order:
-`official` (Cypress-owned) → `community` (community-owned) → `deprecated`
-(unmaintained / incompatible with v10+).
+`official` (Cypress-owned) → `vendor` and `community` together → `deprecated`
+(unmaintained / incompatible with v10+). Use `vendor`, plus a `vendor` field
+naming the company, only when the company behind the product a plugin connects
+to builds it. Company-run open source that sells nothing stays `community`.
+
+A community card credits the owner of the repository in `link`, then the npm
+scope, and shows no name rather than guess. Set `author` only when that owner
+isn't a readable name (`IBMa` → `IBM`) or the link isn't a repository. A
+`repoMovedTo` value in `plugins-generated.json` means the package's npm
+metadata names a different owner: update `link` to the repository's new home.
+
+Each category sets a `stage` from the `stages` list at the top of the file, and
+the page groups categories by stage, then alphabetically. A new category needs a
+`stage` (and a `shortName` if its `name` is long); without one it falls to the
+end of the page. Keep category names in sentence case. Their anchors come from
+the lowercased name, so existing `#custom-commands`-style links keep working.
+Renaming or merging a category changes its anchor, so add the old one to the
+surviving category's `aliases`. The build doesn't check these anchors, since the
+component renders them; `plugins_list.cy.ts` checks every `plugins-list#…` link
+in `docs/`.
 
 ## Writing style
 
