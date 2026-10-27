@@ -344,12 +344,16 @@ runs in the current window.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flake-analytics.png"
-  alt="Flaky tests analytics"
+  alt="Flaky tests analytics in Cypress Cloud with a chart of flaky test cases per day, severity KPIs, and a filterable table of flaky tests"
 />
 
 Selecting any flaky test case opens a details panel with the context engineers
 need to find and fix the root cause quickly:
 
+- A **[Test intent](/cloud/features/cypress-ai-features#Test-Intent-Summaries)**
+  summary of what the test verifies, generated on first open from the test's
+  latest flaky result within your current branch and time range filters (when
+  [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled for your organization)
 - A historical log of the latest flaky runs
 - The most common errors across the test case's runs
 - The related test case changelog
