@@ -114,7 +114,8 @@ Each entry supports the following fields:
 | `description` | yes      | Short summary of what the plugin does. Basic HTML is allowed.                                                              |
 | `link`        | yes      | URL to the plugin's source or documentation.                                                                               |
 | `keywords`    | no       | Array of tags used for search and filtering.                                                                               |
-| `badge`       | no       | One of `official` or `community` (defaults to `community`).                                                                |
+| `badge`       | no       | One of `official`, `vendor`, or `community` (defaults to `community`).                                                     |
+| `vendor`      | no       | With the `vendor` badge, the company that builds the plugin, shown as "Built by <vendor>" on its card.                     |
 | `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
 
 Signals shown on each card — latest version, last published date, and Cypress
@@ -158,7 +159,8 @@ matter. Readers can also sort by most recently updated or by name. The badge
 tiers, in order:
 
 - official (Cypress owned)
-- community (community owned)
+- vendor and community, sorted together (owned by the company behind the
+  product the plugin connects to, or by independent authors)
 - deprecated (npm registry missing, source repo archived or incompatible with v10+)
 
 The `deprecated` state is applied automatically by `npm run enrich:plugins` when

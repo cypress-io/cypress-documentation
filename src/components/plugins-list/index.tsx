@@ -5,6 +5,7 @@ import {
   faSearch,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
+import useBaseUrl from '@docusaurus/useBaseUrl'
 import s from './style.module.css'
 // @ts-ignore
 import pluginsJSON from '@site/src/data/plugins.json'
@@ -28,7 +29,10 @@ type PluginEntry = {
   description: string
   link: string
   keywords?: string[]
+  /** `official`, `vendor`, or `community` (the default). */
   badge?: string
+  /** With the `vendor` badge, the company that builds the plugin. */
+  vendor?: string
   npm?: string
 }
 
@@ -41,7 +45,9 @@ type Plugin = PluginEntry & {
   author: string | null
 }
 
-type Maintainer = 'official' | 'community'
+/** Built by Cypress, by the company behind the product the plugin connects
+ *  to, or by the community. */
+type Maintainer = 'official' | 'vendor' | 'community'
 
 /** A step in a test suite's life, used to group and order the categories. */
 type Stage = { id: string; name: string }
@@ -136,24 +142,6 @@ function timeAgo(months: number) {
   return y === 1 ? '1 year ago' : `${y} years ago`
 }
 
-/** The distinctive part of a name: no npm scope, no leading `cypress-`. */
-function keyName(name: string) {
-  return name.replace(/^@[^/]+\//, '').replace(/^cypress[-\s]?/i, '') || name
-}
-
-/** Two letters for the card's tile: initials of a multi-word name, or the
- * first two letters of a single word. */
-function monogram(name: string) {
-  const parts = keyName(name)
-    .split(/[^A-Za-z0-9]+/)
-    .filter(Boolean)
-  if (!parts.length) return 'Cy'
-  if (parts.length === 1) {
-    return parts[0][0].toUpperCase() + (parts[0][1] || '').toLowerCase()
-  }
-  return (parts[0][0] + parts[1][0]).toUpperCase()
-}
-
 /** Best guess at who publishes a community plugin: the repository owner, the
  * npm scope, or the vendor's domain. */
 function authorOf(entry: PluginEntry, meta: PluginMeta) {
@@ -193,9 +181,17 @@ function withMeta(entry: PluginEntry): Plugin {
   return {
     ...entry,
     meta,
-    maintainer: entry.badge === 'official' ? 'official' : 'community',
+    maintainer:
+      entry.badge === 'official' || entry.badge === 'vendor'
+        ? entry.badge
+        : 'community',
     deprecated: !!meta.deprecated,
-    author: entry.badge === 'official' ? null : authorOf(entry, meta),
+    author:
+      entry.badge === 'official'
+        ? null
+        : entry.badge === 'vendor' && entry.vendor
+          ? entry.vendor
+          : authorOf(entry, meta),
   }
 }
 
@@ -209,7 +205,8 @@ function byName(a: Plugin, b: Plugin) {
 }
 
 /** Built by Cypress first and deprecated last, then the most recently
- *  published, with an alphabetical fallback. */
+ *  published, with an alphabetical fallback. Vendor and community plugins
+ *  share a tier, so neither outranks the other. */
 function byRecommended(a: Plugin, b: Plugin) {
   const tier = (p: Plugin) =>
     p.deprecated ? 2 : p.maintainer === 'official' ? 0 : 1
@@ -240,24 +237,6 @@ function searchText(p: Plugin, category: Category) {
     .filter(Boolean)
     .join(' ')
     .toLowerCase()
-}
-
-function SealIcon() {
-  return (
-    <svg
-      className={s.sealIcon}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M12 2.5l2.3 1.7 2.9-.2.9 2.7 2.4 1.6-.9 2.7.9 2.7-2.4 1.6-.9 2.7-2.9-.2L12 21.5l-2.3-1.7-2.9.2-.9-2.7-2.4-1.6.9-2.7-.9-2.7 2.4-1.6.9-2.7 2.9.2z" />
-      <path d="m8.8 12 2.2 2.2 4.2-4.4" />
-    </svg>
-  )
 }
 
 /** Last publish as a colored dot plus text. The age bucket depends on the
@@ -306,7 +285,77 @@ function Freshness({ meta }: { meta: PluginMeta }) {
   )
 }
 
-function PluginCard({ plugin, stageId }: { plugin: Plugin; stageId: string }) {
+/** Stroke icons for the maintainer marks, on a 24px grid. */
+const MARK_ICON = {
+  building:
+    'M4 21V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v16M15 9h4a1 1 0 0 1 1 1v11M3 21h18M8 8h3M8 12h3M8 16h3',
+  users:
+    'M9 11a3.5 3.5 0 1 0 0-7a3.5 3.5 0 1 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.3a3.5 3.5 0 0 1 0 6.4M18 14.2a6.5 6.5 0 0 1 3.5 5.8',
+  archive: 'M3 4h18v4H3zM5 8v12h14V8M10 12h4',
+}
+
+function MarkIcon({ path }: { path: string }) {
+  return (
+    <svg
+      className={s.markIcon}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={path} />
+    </svg>
+  )
+}
+
+/** One mark per maintainer type, told apart by shape as well as color: a
+ *  square with the Cypress logo, a shield for vendors, and a circle for the
+ *  community. A deprecated plugin's mark becomes a dashed red circle.
+ *  Decorative, since the line under the name says who maintains the plugin. */
+function MaintainerMark({ plugin }: { plugin: Plugin }) {
+  const cypressLogo = useBaseUrl('/img/logo/cypress-logomark-white.svg')
+  const type = plugin.deprecated ? 'deprecated' : plugin.maintainer
+  const common = {
+    'aria-hidden': true,
+    'data-sanitize': '',
+    'data-mark': type,
+  }
+
+  if (type === 'official') {
+    return (
+      <span className={clsx(s.mark, s.markCypress)} {...common}>
+        <img src={cypressLogo} alt="" width={28} height={28} />
+      </span>
+    )
+  }
+  if (type === 'vendor') {
+    return (
+      <span className={clsx(s.mark, s.markVendor)} {...common}>
+        <svg className={s.shield} viewBox="0 0 44 44">
+          <path d="M22 3 38 9v12c0 10-7 17-16 20C13 38 6 31 6 21V9z" />
+        </svg>
+        <MarkIcon path={MARK_ICON.building} />
+      </span>
+    )
+  }
+  return (
+    <span
+      className={clsx(
+        s.mark,
+        type === 'deprecated' ? s.markDeprecated : s.markCommunity
+      )}
+      {...common}
+    >
+      <MarkIcon
+        path={type === 'deprecated' ? MARK_ICON.archive : MARK_ICON.users}
+      />
+    </span>
+  )
+}
+
+function PluginCard({ plugin }: { plugin: Plugin }) {
   const { meta } = plugin
   const external = isExternal(plugin.link)
   const npmUrl = meta.npm ? `https://www.npmjs.com/package/${meta.npm}` : null
@@ -320,14 +369,7 @@ function PluginCard({ plugin, stageId }: { plugin: Plugin; stageId: string }) {
       data-published={meta.lastPublished || undefined}
     >
       <div className={s.cardHead}>
-        <span
-          className={s.monogram}
-          data-stage={stageId}
-          aria-hidden="true"
-          data-sanitize=""
-        >
-          {monogram(plugin.name)}
-        </span>
+        <MaintainerMark plugin={plugin} />
         <div className={s.cardHeading}>
           <h3 className={s.cardTitle}>
             <a
@@ -341,14 +383,21 @@ function PluginCard({ plugin, stageId }: { plugin: Plugin; stageId: string }) {
               {external && <NewTabNote />}
             </a>
           </h3>
-          {plugin.maintainer === 'official' ? (
-            <span className={s.byOfficial} data-cy="plugin-maintainer">
-              <SealIcon />
-              Built by Cypress
-            </span>
-          ) : (
+          {plugin.maintainer === 'community' ? (
             <span className={s.byCommunity} data-cy="plugin-maintainer">
               Community{plugin.author ? ` · ${plugin.author}` : ''}
+            </span>
+          ) : (
+            <span
+              className={
+                plugin.maintainer === 'official' ? s.byOfficial : s.byVendor
+              }
+              data-cy="plugin-maintainer"
+            >
+              Built by{' '}
+              {plugin.maintainer === 'official'
+                ? 'Cypress'
+                : plugin.author || 'its vendor'}
             </span>
           )}
         </div>
@@ -615,6 +664,7 @@ export default function PluginsList() {
           >
             <option value="all">All</option>
             <option value="official">Cypress</option>
+            <option value="vendor">Vendors</option>
             <option value="community">Community</option>
           </select>
         </div>
@@ -696,11 +746,7 @@ export default function PluginsList() {
               </div>
               <ul className={s.grid}>
                 {category.plugins.map((plugin) => (
-                  <PluginCard
-                    key={plugin.name}
-                    plugin={plugin}
-                    stageId={category.stage.id}
-                  />
+                  <PluginCard key={plugin.name} plugin={plugin} />
                 ))}
               </ul>
             </section>

@@ -917,7 +917,8 @@
             "screenshot",
             "flaky"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Qualflare"
         }
       ]
     },
@@ -930,7 +931,8 @@
           "name": "Applitools",
           "description": "Fast, easy and reliable visual UI testing with Cypress.",
           "link": "https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started",
-          "badge": "community",
+          "badge": "vendor",
+          "vendor": "Applitools",
           "keywords": ["screenshots", "visual regression", "visual-ai"]
         },
         {
@@ -944,7 +946,8 @@
             "visual testing",
             "ci"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Argos"
         },
         {
           "name": "Happo",
@@ -956,7 +959,8 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Happo"
         },
         {
           "name": "Percy",
@@ -968,7 +972,8 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Percy"
         },
         {
           "name": "SmartBear VisualTest",
@@ -981,7 +986,8 @@
             "visual regression",
             "screenshots comparison"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "SmartBear"
         },
         {
           "name": "Sauce Labs Visual",
@@ -994,7 +1000,8 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Sauce Labs"
         },
         {
           "name": "LambdaTest SmartUI",
@@ -1007,7 +1014,8 @@
             "visual testing",
             "cross-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "LambdaTest"
         },
         {
           "name": "Cypress Image Diff",
@@ -1046,7 +1054,8 @@
             "visual regression",
             "multi-browser"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Pixeleye"
         },
         {
           "name": "Visual Regression Diff",
@@ -1073,7 +1082,8 @@
             "visual regression",
             "screenshots comparison"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Wopee.io"
         },
         {
           "name": "@chromatic-com/cypress",
@@ -1085,7 +1095,8 @@
             "chromatic",
             "screenshots"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Chromatic"
         }
       ]
     },
@@ -1160,7 +1171,8 @@
           "description": "Test email and SMS messages using Mailosaur.",
           "link": "https://github.com/mailosaur/cypress-mailosaur",
           "keywords": ["email", "sms", "commands"],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Mailosaur"
         },
         {
           "name": "cypress-mailpit",
@@ -1174,7 +1186,8 @@
           "description": "Test email flows with Mailsac: wait for matching messages and extract verification links or codes.",
           "link": "https://github.com/mailsac/cypress-mailsac",
           "keywords": ["email", "mailsac", "test", "commands"],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Mailsac"
         },
         {
           "name": "@mailsai/cypress",
@@ -1188,7 +1201,8 @@
             "test",
             "commands"
           ],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "Mailsai"
         },
         {
           "name": "cypress-mailsink",
@@ -1202,7 +1216,8 @@
           "description": "Use test email accounts to send and receive emails in Cypress tests with MailSlurp.",
           "link": "https://github.com/mailslurp/cypress-mailslurp",
           "keywords": ["email", "mailslurp", "test", "commands"],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "MailSlurp"
         },
         {
           "name": "cypress-temp-mail",
@@ -1284,7 +1299,8 @@
           "description": "Smart, Fast and Extensible Build System.",
           "link": "https://nx.dev/cypress/overview",
           "keywords": ["angular", "react", "cli", "monorepo"],
-          "badge": "community",
+          "badge": "vendor",
+          "vendor": "Nx",
           "npm": "@nx/cypress"
         }
       ],
@@ -1300,7 +1316,8 @@
           "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team.",
           "link": "https://github.com/pactflow/pact-cypress-adapter",
           "keywords": ["pact", "pactflow", "contract testing", "commands"],
-          "badge": "community",
+          "badge": "vendor",
+          "vendor": "PactFlow",
           "npm": "@pactflow/pact-cypress-adapter"
         },
         {

@@ -24,70 +24,44 @@
 
 /* -------- Stage colors -------- */
 
-/* Each stage tints its section's eyebrow and its cards' monograms.
-   Light: 600 on 50 for tiles (6.25:1 or more) and 600 on white for text.
-   Dark: 200 on 900 for tiles (8.7:1 or more) and 300 on the page for text
-   (7:1 or more). */
+/* Each stage tints its section's eyebrow: 600 on white in light (6.25:1 or
+   more) and 300 on the page in dark (7:1 or more). */
 .root [data-stage='setup'] {
   --stage-fg: var(--ifm-color-indigo-600);
-  --stage-tile-fg: var(--ifm-color-indigo-600);
-  --stage-tile-bg: var(--ifm-color-indigo-50);
 }
 .root [data-stage='write'] {
   --stage-fg: var(--ifm-color-purple-600);
-  --stage-tile-fg: var(--ifm-color-purple-600);
-  --stage-tile-bg: var(--ifm-color-purple-50);
 }
 .root [data-stage='run'] {
   --stage-fg: var(--ifm-color-teal-600);
-  --stage-tile-fg: var(--ifm-color-teal-600);
-  --stage-tile-bg: var(--ifm-color-teal-50);
 }
 .root [data-stage='check'] {
   --stage-fg: var(--ifm-color-orange-600);
-  --stage-tile-fg: var(--ifm-color-orange-600);
-  --stage-tile-bg: var(--ifm-color-orange-50);
 }
 .root [data-stage='ship'] {
   --stage-fg: var(--ifm-color-fuchsia-600, #901ca2);
-  --stage-tile-fg: var(--ifm-color-fuchsia-600, #901ca2);
-  --stage-tile-bg: var(--ifm-color-fuchsia-50, #faeffb);
 }
 .root [data-stage='other'] {
   --stage-fg: var(--ifm-color-gray-700);
-  --stage-tile-fg: var(--ifm-color-gray-800);
-  --stage-tile-bg: var(--ifm-color-gray-50);
 }
 
 html[data-theme='dark'] .root [data-stage='setup'] {
   --stage-fg: var(--ifm-color-indigo-300);
-  --stage-tile-fg: var(--ifm-color-indigo-200);
-  --stage-tile-bg: var(--ifm-color-indigo-900);
 }
 html[data-theme='dark'] .root [data-stage='write'] {
   --stage-fg: var(--ifm-color-purple-300);
-  --stage-tile-fg: var(--ifm-color-purple-200);
-  --stage-tile-bg: var(--ifm-color-purple-900);
 }
 html[data-theme='dark'] .root [data-stage='run'] {
   --stage-fg: var(--ifm-color-teal-300);
-  --stage-tile-fg: var(--ifm-color-teal-200);
-  --stage-tile-bg: var(--ifm-color-teal-900);
 }
 html[data-theme='dark'] .root [data-stage='check'] {
   --stage-fg: var(--ifm-color-orange-300);
-  --stage-tile-fg: var(--ifm-color-orange-200);
-  --stage-tile-bg: var(--ifm-color-orange-900);
 }
 html[data-theme='dark'] .root [data-stage='ship'] {
   --stage-fg: var(--ifm-color-fuchsia-300, #ed9ff4);
-  --stage-tile-fg: var(--ifm-color-fuchsia-200, #f3c6f8);
-  --stage-tile-bg: var(--ifm-color-fuchsia-900, #400651);
 }
 html[data-theme='dark'] .root [data-stage='other'] {
   --stage-fg: var(--ifm-color-gray-300);
-  --stage-tile-fg: var(--ifm-color-gray-100);
-  --stage-tile-bg: var(--ifm-color-gray-900);
 }
 
 /* -------- Toolbar: search and the filter dropdowns -------- */
@@ -413,18 +387,85 @@ html[data-theme='dark'] :global(div.markdown) ul.grid > li.card:focus-within {
   gap: 0.75rem;
 }
 
-.monogram {
+/* -------- Maintainer marks -------- */
+
+/* One mark per maintainer type, told apart by shape as well as color. Every
+   edge and icon is 3:1 or more against what it sits on, in both themes. */
+.mark {
+  position: relative;
   flex: 0 0 44px;
+  width: 44px;
   height: 44px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.markIcon {
+  position: relative;
+  width: 22px;
+  height: 22px;
+}
+
+/* Built by Cypress: the logomark on the brand's dark square. In dark mode the
+   square matches the page, so a hairline (3.9:1) keeps its edge. */
+.markCypress {
   border-radius: 10px;
-  background-color: var(--stage-tile-bg);
-  color: var(--stage-tile-fg);
-  font-family: var(--ifm-heading-font-family);
-  font-size: 1rem;
-  font-weight: 600;
+  background-color: var(--ifm-color-gray-1000);
+}
+
+html[data-theme='dark'] .markCypress {
+  box-shadow: inset 0 0 0 1px var(--ifm-color-gray-600);
+}
+
+/* Vendor: a white building on an indigo shield (5.6:1 light, 4.1:1 dark). */
+.markVendor {
+  color: var(--ifm-color-white);
+}
+
+.markVendor .markIcon {
+  width: 20px;
+  height: 20px;
+  margin-top: -2px;
+}
+
+.shield {
+  position: absolute;
+  inset: 0;
+  width: 44px;
+  height: 44px;
+  fill: var(--ifm-color-indigo-500);
+}
+
+html[data-theme='dark'] .shield {
+  fill: var(--ifm-color-indigo-400);
+}
+
+/* Community: people in an outlined circle. */
+.markCommunity {
+  border: 2px solid var(--ifm-color-gray-600);
+  border-radius: 50%;
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] .markCommunity {
+  border-color: var(--ifm-color-gray-500);
+  color: var(--ifm-color-gray-300);
+}
+
+/* Deprecated replaces any mark: an archive box in a dashed red circle. */
+.markDeprecated {
+  border: 2px dashed var(--ifm-color-red-500);
+  border-radius: 50%;
+  background-color: var(--ifm-color-red-50);
+  color: var(--ifm-color-red-600);
+}
+
+html[data-theme='dark'] .markDeprecated {
+  border-color: var(--ifm-color-red-400);
+  background-color: var(--ifm-color-red-1000);
+  color: var(--ifm-color-red-300);
 }
 
 .cardHeading {
@@ -487,10 +528,15 @@ html[data-theme='dark'] .byOfficial {
   color: var(--ifm-color-jade-300);
 }
 
-.sealIcon {
-  flex: 0 0 15px;
-  width: 15px;
-  height: 15px;
+/* Vendor bylines name the company, in indigo like the shield. */
+.byVendor {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ifm-color-indigo-700);
+}
+
+html[data-theme='dark'] .byVendor {
+  color: var(--ifm-color-indigo-200);
 }
 
 .byCommunity {

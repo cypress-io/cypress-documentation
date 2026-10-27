@@ -146,8 +146,10 @@ Writing, naming, registering, and retiring one is covered in
 
 To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 (name, description, repo link, keywords). Entries are grouped in this order:
-`official` (Cypress-owned) → `community` (community-owned) → `deprecated`
-(unmaintained / incompatible with v10+).
+`official` (Cypress-owned) → `vendor` and `community` together → `deprecated`
+(unmaintained / incompatible with v10+). Use `vendor`, plus a `vendor` field
+naming the company, only when the company behind the product a plugin connects
+to builds it. Company-run open source that sells nothing stays `community`.
 
 Each category sets a `stage` from the `stages` list at the top of the file, and
 the page groups categories by stage, then alphabetically. A new category needs a

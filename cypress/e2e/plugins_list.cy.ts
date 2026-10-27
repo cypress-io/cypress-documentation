@@ -25,7 +25,9 @@ describe('Plugins list', () => {
   })
 
   it('explains who maintains the plugins', () => {
-    cy.contains('p', /aren.t reviewed by Cypress/).should('be.visible')
+    cy.contains('p', /doesn.t review vendor or community plugins/).should(
+      'be.visible'
+    )
     cy.get(maintainerFilter).should('be.visible')
   })
 
@@ -106,12 +108,33 @@ describe('Plugins list', () => {
   it('filters by maintainer', () => {
     cy.get(maintainerFilter).select('official')
     cy.get(cards).should('have.length.greaterThan', 5)
-    cy.get(`${cards}[data-maintainer="community"]`).should('not.exist')
+    cy.get(`${cards}:not([data-maintainer="official"])`).should('not.exist')
     cy.get('[data-cy="plugin-cypress-axe"]').should('not.exist')
 
+    cy.get(maintainerFilter).select('vendor')
+    cy.get(cards).should('have.length.greaterThan', 5)
+    cy.get(`${cards}:not([data-maintainer="vendor"])`).should('not.exist')
+    cy.get('[data-cy="plugin-Percy"] [data-cy=plugin-maintainer]').should(
+      'have.text',
+      'Built by Percy'
+    )
+
     cy.get(maintainerFilter).select('community')
-    cy.get(`${cards}[data-maintainer="official"]`).should('not.exist')
+    cy.get(`${cards}:not([data-maintainer="community"])`).should('not.exist')
     cy.get('[data-cy="plugin-cypress-axe"]').should('exist')
+  })
+
+  it('marks each card with its maintainer type', () => {
+    cy.get(cards).each(($card) => {
+      const card = $card[0]
+      const expected = card.dataset.deprecated
+        ? 'deprecated'
+        : card.dataset.maintainer
+      expect(
+        card.querySelector('[data-mark]')?.getAttribute('data-mark'),
+        card.dataset.cy
+      ).to.equal(expected)
+    })
   })
 
   it('groups categories by stage, alphabetically within each stage', () => {
