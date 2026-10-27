@@ -745,12 +745,13 @@ table {
   outline-offset: 2px;
 }
 
-/* Dark mode bar. Osano reads its colors from variables on :root, so redefining
-   them on the bar wins without fighting its injected rules. The bar matches
-   the page background so iOS Safari, which tints its toolbar from the bar
-   while it's showing, keeps a dark toolbar after the bar is dismissed. */
-html[data-theme='dark'] .osano-cm-window .osano-cm-dialog--type_bar {
-  --osano-dialog-background-color: var(--ifm-color-gray-1000);
+/* Dark mode banner (bar or box; the preferences drawer is a separate
+   .osano-cm-info-dialog). Osano reads its colors from variables on :root, so
+   redefining them on the banner wins without fighting its injected rules. The
+   banner matches the page background so iOS Safari, which tints its toolbar
+   from the bar while it's showing, keeps a dark toolbar after it's dismissed. */
+html[data-theme='dark'] .osano-cm-window .osano-cm-dialog {
+  --osano-dialog-background-color: var(--ifm-background-color);
   --osano-dialog-foreground-color: var(--ifm-color-gray-100);
   --osano-button-close-color: var(--ifm-color-gray-100);
   --osano-link-color: var(--ifm-color-gray-100);
@@ -764,7 +765,7 @@ html[data-theme='dark'] .osano-cm-window .osano-cm-dialog--type_bar {
 
   .osano-cm-button {
     border-color: var(--ifm-color-indigo-300);
-    background-color: var(--ifm-color-gray-1000);
+    background-color: var(--ifm-background-color);
     color: var(--ifm-color-indigo-300);
 
     &:hover {
