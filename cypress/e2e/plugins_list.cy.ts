@@ -124,6 +124,21 @@ describe('Plugins list', () => {
     cy.get('[data-cy="plugin-cypress-axe"]').should('exist')
   })
 
+  it('credits community plugins to an owner, never a website', () => {
+    cy.get(
+      '[data-cy="plugin-cypress-accessibility-checker"] [data-cy=plugin-maintainer]'
+    ).should('have.text', 'Community · IBM')
+    cy.get('[data-cy="plugin-PickleJS"] [data-cy=plugin-maintainer]').should(
+      'have.text',
+      'Community'
+    )
+    cy.get(`${cards}[data-maintainer="community"] [data-cy=plugin-maintainer]`)
+      .should('have.length.greaterThan', 50)
+      .each(($byline) => {
+        expect($byline.text()).not.to.match(/\.[a-z]{2,}$/)
+      })
+  })
+
   it('marks each card with its maintainer type', () => {
     cy.get(cards).each(($card) => {
       const card = $card[0]

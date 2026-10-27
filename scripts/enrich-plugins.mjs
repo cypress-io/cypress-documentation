@@ -102,6 +102,38 @@ function parseGitHub(link) {
   return { owner, repo }
 }
 
+/** "owner/repo" from a package's `repository` field: a URL, or the
+ *  `github:owner/repo` and bare `owner/repo` shorthands. Null otherwise. */
+function repoOf(repository) {
+  const raw =
+    typeof repository === 'string' ? repository : repository && repository.url
+  if (typeof raw !== 'string') return null
+  const url =
+    /(?:github\.com|gitlab\.com|bitbucket\.org)[/:]([^/]+)\/([^/#?]+)/i.exec(
+      raw
+    )
+  if (url) return `${url[1]}/${url[2].replace(/\.git$/, '')}`
+  const short = /^(?:(?:github|gitlab|bitbucket):)?([\w.-]+)\/([\w.-]+)$/.exec(
+    raw
+  )
+  return short ? `${short[1]}/${short[2]}` : null
+}
+
+/** The "owner/repo" a plugin moved to, when its npm package names a different
+ *  repository owner than the plugin's `link`. The card credits the link's
+ *  owner, so a link left behind after a move shows the wrong byline. */
+function movedRepo(link, repository) {
+  const from =
+    /^https?:\/\/(?:www\.)?(?:github\.com|gitlab\.com|bitbucket\.org)\/([^/#?]+)/i.exec(
+      link || ''
+    )
+  const to = repoOf(repository)
+  if (!from || !to) return undefined
+  return to.split('/')[0].toLowerCase() === from[1].toLowerCase()
+    ? undefined
+    : to
+}
+
 /** npm reserves removed package names under a `0.0.x-security` placeholder
  *  described as "security holding package". Treat those as not published. */
 function isSecurityPlaceholder(latest, versionManifest) {
@@ -202,6 +234,11 @@ async function enrichPlugin(plugin, existing) {
       }
       const compat = cypressCompat(vm)
       if (compat) meta.cypressVersion = compat
+      const moved = movedRepo(
+        plugin.link,
+        (vm && vm.repository) || manifest.repository
+      )
+      if (moved) meta.repoMovedTo = moved
       if (vm && typeof vm.deprecated === 'string') markDeprecated(vm.deprecated)
     }
   } else if (pkg && notFound) {
@@ -211,7 +248,12 @@ async function enrichPlugin(plugin, existing) {
     markDeprecated('Package not found on the npm registry.')
   } else if (pkg) {
     // Transient registry failure for a known package -> keep prior npm signals.
-    for (const k of ['version', 'lastPublished', 'cypressVersion']) {
+    for (const k of [
+      'version',
+      'lastPublished',
+      'cypressVersion',
+      'repoMovedTo',
+    ]) {
       if (prior[k] !== undefined) meta[k] = prior[k]
     }
     if (prior.deprecated) markDeprecated(prior.deprecatedReason)
@@ -273,6 +315,14 @@ async function main() {
     `Resolved metadata for ${Object.keys(generated).length} plugins ` +
       `(${withVersion} with a version, ${deprecated} flagged deprecated).`
   )
+  for (const [name, m] of Object.entries(generated)) {
+    if (m.repoMovedTo) {
+      console.warn(
+        `${name}: its npm package now names ${m.repoMovedTo}. ` +
+          'Update its `link` in src/data/plugins.json.'
+      )
+    }
+  }
 
   const payload =
     JSON.stringify(

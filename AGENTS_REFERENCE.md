@@ -151,6 +151,12 @@ To add a plugin to the plugins list, add an entry to `src/data/plugins.json`
 naming the company, only when the company behind the product a plugin connects
 to builds it. Company-run open source that sells nothing stays `community`.
 
+A community card credits the owner of the repository in `link`, then the npm
+scope, and shows no name rather than guess. Set `author` only when that owner
+isn't a readable name (`IBMa` → `IBM`) or the link isn't a repository. A
+`repoMovedTo` value in `plugins-generated.json` means the package's npm
+metadata names a different owner: update `link` to the repository's new home.
+
 Each category sets a `stage` from the `stages` list at the top of the file, and
 the page groups categories by stage, then alphabetically. A new category needs a
 `stage` (and a `shortName` if its `name` is long); without one it falls to the

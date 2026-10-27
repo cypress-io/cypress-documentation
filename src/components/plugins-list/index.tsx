@@ -33,11 +33,14 @@ type PluginEntry = {
   badge?: string
   /** With the `vendor` badge, the company that builds the plugin. */
   vendor?: string
+  /** Overrides the community byline when the link's owner isn't a readable
+   *  name, or the link isn't a repository at all. */
+  author?: string
   npm?: string
 }
 
 /** A curated entry merged with its generated metadata. */
-type Plugin = PluginEntry & {
+type Plugin = Omit<PluginEntry, 'author'> & {
   meta: PluginMeta
   /** Who maintains it, from the curated badge. */
   maintainer: Maintainer
@@ -142,8 +145,8 @@ function timeAgo(months: number) {
   return y === 1 ? '1 year ago' : `${y} years ago`
 }
 
-/** Best guess at who publishes a community plugin: the repository owner, the
- * npm scope, or the vendor's domain. */
+/** Who owns a community plugin's code: the repository owner, then the npm
+ * scope. Null when neither is known, rather than a guess. */
 function authorOf(entry: PluginEntry, meta: PluginMeta) {
   try {
     const url = new URL(entry.link, 'https://docs.cypress.io')
@@ -151,20 +154,11 @@ function authorOf(entry: PluginEntry, meta: PluginMeta) {
       const owner = url.pathname.split('/').filter(Boolean)[0]
       if (owner) return owner
     }
-    const npm = meta.npm || entry.npm
-    if (npm && npm.startsWith('@')) return npm.slice(1).split('/')[0]
-    // Listing pages name the store, not the author.
-    if (
-      /(^|\.)(cypress\.io|visualstudio\.com|google\.com|npmjs\.com)$/.test(
-        url.hostname
-      )
-    ) {
-      return null
-    }
-    return url.hostname.replace(/^(www|docs|support)\./, '')
   } catch {
-    return null
+    // Not a parseable link; fall back to the npm scope.
   }
+  const npm = meta.npm || entry.npm
+  return npm && npm.startsWith('@') ? npm.slice(1).split('/')[0] : null
 }
 
 /** False during SSR and the first client render, true afterwards. Lets us defer
@@ -191,7 +185,7 @@ function withMeta(entry: PluginEntry): Plugin {
         ? null
         : entry.badge === 'vendor' && entry.vendor
           ? entry.vendor
-          : authorOf(entry, meta),
+          : entry.author || authorOf(entry, meta),
   }
 }
 

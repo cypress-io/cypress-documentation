@@ -327,7 +327,8 @@
           "description": "Visual Studio Code extension for cypress and cucumber preprocessor.",
           "link": "https://marketplace.visualstudio.com/items?itemName=Shelex.vscode-cy-helper",
           "keywords": ["vscode", "extension", "intellisense"],
-          "badge": "community"
+          "badge": "community",
+          "author": "Shelex"
         },
         {
           "name": "cypress-html-validate",
@@ -623,7 +624,7 @@
         {
           "name": "cypress-har-generator",
           "description": "Generate HTTP Archive (HAR) while running tests.",
-          "link": "https://github.com/NeuraLegion/cypress-har-generator",
+          "link": "https://github.com/BrightSec/cypress-har-generator",
           "keywords": [
             "har",
             "http-archive",
@@ -755,7 +756,7 @@
         {
           "name": "cypress-axe",
           "description": "Helps test your applications for accessibility issues using axe-core.",
-          "link": "https://github.com/avanslaars/cypress-axe",
+          "link": "https://github.com/component-driven/cypress-axe",
           "keywords": ["accessibility", "a11y", "axe-core", "wcag"],
           "badge": "community"
         },
@@ -764,7 +765,8 @@
           "description": "IBM Equal Access accessibility checker for Cypress.",
           "link": "https://github.com/IBMa/equal-access",
           "keywords": ["accessibility", "a11y", "ibm", "equal-access", "wcag"],
-          "badge": "community"
+          "badge": "community",
+          "author": "IBM"
         }
       ]
     },
@@ -904,7 +906,8 @@
           "description": "Reporter that sends Cypress results to ReportPortal.",
           "link": "https://github.com/reportportal/agent-js-cypress",
           "keywords": ["reporter", "reportportal", "reporting"],
-          "badge": "community"
+          "badge": "vendor",
+          "vendor": "ReportPortal"
         },
         {
           "name": "@qualflare/cypress",
@@ -1060,7 +1063,7 @@
         {
           "name": "Visual Regression Diff",
           "description": "Perform visual regression test with a nice GUI as help. 💅 Supports both E2E and Component Testings",
-          "link": "https://github.com/FRSOURCE/cypress-plugin-visual-regression-diff",
+          "link": "https://github.com/pixsame/pixsame/tree/main/packages/cypress-plugin-visual-regression-diff",
           "keywords": [
             "screenshots",
             "visual regression",
@@ -1070,7 +1073,7 @@
             "image snapshot"
           ],
           "badge": "community",
-          "npm": "@frsource/cypress-plugin-visual-regression-diff"
+          "npm": "@pixsame/cypress-plugin-visual-regression-diff"
         },
         {
           "name": "Wopee.io",
@@ -1266,7 +1269,8 @@
           "description": "The Aurelia CLI is the official command line tool for Aurelia.",
           "link": "https://aurelia.io/docs/cli",
           "keywords": ["aurelia", "cli", "integration", "setup"],
-          "badge": "community"
+          "badge": "community",
+          "author": "Aurelia"
         },
         {
           "name": "cypress-on-rails",
@@ -1395,7 +1399,7 @@
         {
           "name": "cypress-plugin-tab",
           "description": "A Cypress plugin to add a tab command.",
-          "link": "https://github.com/Bkucera/cypress-plugin-tab",
+          "link": "https://github.com/kuceb/cypress-plugin-tab",
           "keywords": ["commands", "tab", "keyboard", "accessibility"],
           "badge": "community"
         },
