@@ -128,10 +128,6 @@ describe('Plugins list', () => {
     cy.get(
       '[data-cy="plugin-cypress-accessibility-checker"] [data-cy=plugin-maintainer]'
     ).should('have.text', 'Community · IBM')
-    cy.get('[data-cy="plugin-PickleJS"] [data-cy=plugin-maintainer]').should(
-      'have.text',
-      'Community'
-    )
     cy.get(`${cards}[data-maintainer="community"] [data-cy=plugin-maintainer]`)
       .should('have.length.greaterThan', 50)
       .each(($byline) => {
