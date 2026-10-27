@@ -605,7 +605,7 @@
       "name": "Network & API testing",
       "shortName": "Network & API",
       "stage": "run",
-      "description": "Test, stub, and inspect network requests, APIs, and real-time messaging.",
+      "description": "Test, stub, and inspect network requests, APIs, and real-time messaging, and generate API contracts from your stubs.",
       "plugins": [
         {
           "name": "@bahmutov/cy-api",
@@ -683,6 +683,15 @@
           "link": "https://github.com/dhrusoni84/cypress-mock-latency",
           "keywords": ["network", "latency", "jitter", "mock", "throttle"],
           "badge": "community"
+        },
+        {
+          "name": "Pact Cypress Adapter",
+          "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team.",
+          "link": "https://github.com/pactflow/pact-cypress-adapter",
+          "keywords": ["pact", "pactflow", "contract testing", "commands"],
+          "badge": "vendor",
+          "vendor": "PactFlow",
+          "npm": "@pactflow/pact-cypress-adapter"
         }
       ]
     },
@@ -1309,23 +1318,6 @@
         }
       ],
       "description": "Add and run Cypress within application frameworks, monorepos, and their CLIs."
-    },
-    {
-      "name": "BDD & contract testing",
-      "shortName": "BDD & contracts",
-      "stage": "write",
-      "plugins": [
-        {
-          "name": "Pact Cypress Adapter",
-          "description": "Simple commands to generate Pact contracts from your existing Cypress tests, maintained by the Pactflow team.",
-          "link": "https://github.com/pactflow/pact-cypress-adapter",
-          "keywords": ["pact", "pactflow", "contract testing", "commands"],
-          "badge": "vendor",
-          "vendor": "PactFlow",
-          "npm": "@pactflow/pact-cypress-adapter"
-        }
-      ],
-      "description": "Behavior-driven development helpers and consumer-driven contract testing."
     },
     {
       "name": "User interactions",
