@@ -237,19 +237,14 @@ function searchText(p: Plugin, category: Category) {
 }
 
 /** Last publish as a colored dot plus text. The age bucket depends on the
- *  current date, so it's only applied after mount to keep hydration stable. */
+ *  current date, so it's only applied after mount to keep hydration stable.
+ *  Nothing shows without a publish date: the plugin isn't an npm package, or
+ *  the nightly refresh hasn't looked it up. */
 function Freshness({ meta }: { meta: PluginMeta }) {
   const mounted = useMounted()
   const published = parseDate(meta.lastPublished)
 
-  if (!published) {
-    return (
-      <span className={s.freshness}>
-        <span className={clsx(s.dot, s.dotNone)} aria-hidden="true" />
-        Not on npm
-      </span>
-    )
-  }
+  if (!published) return null
 
   const months = mounted ? monthsSince(published) : null
   const bucket =
@@ -415,17 +410,34 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
         </p>
       )}
 
-      <div className={s.cardFooter}>
-        <Freshness meta={meta} />
-        {/* Flex layout ignores these spaces; text exports keep them. */}{' '}
-        {meta.version && (
-          <span className={s.version}>
-            <span aria-hidden="true">·</span> v{meta.version}
-          </span>
-        )}
-      </div>
+      {(meta.lastPublished || npmUrl) && (
+        <div className={s.cardFooter}>
+          <Freshness meta={meta} />
+          {/* Flex layout ignores these spaces; text exports keep them. */}{' '}
+          {npmUrl && (
+            <a
+              className={s.packageLink}
+              href={npmUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`${meta.npm}${meta.version ? ` v${meta.version}` : ''} on npm`}
+              data-cy="plugin-npm"
+            >
+              <span className={s.srOnly}>npm package </span>
+              <span className={s.packageName}>{meta.npm}</span>
+              {meta.version && (
+                <>
+                  {' '}
+                  <span className={s.packageVersion}>v{meta.version}</span>
+                </>
+              )}
+              <NewTabNote />
+            </a>
+          )}
+        </div>
+      )}
 
-      {(meta.cypressVersion || npmUrl) && (
+      {meta.version && (
         <div className={s.cardMore}>
           <span
             className={s.range}
@@ -439,22 +451,7 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
             {meta.cypressVersion
               ? `Cypress ${meta.cypressVersion}`
               : 'No Cypress range declared'}
-          </span>{' '}
-          {npmUrl && (
-            <a
-              className={s.npmLink}
-              href={npmUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              npm
-              <span className={s.srOnly}>
-                {' '}
-                package {meta.npm}
-                {meta.version ? ` ${meta.version}` : ''} (opens in a new tab)
-              </span>
-            </a>
-          )}
+          </span>
         </div>
       )}
     </li>
@@ -711,7 +708,11 @@ export default function PluginsList() {
             <p className={s.emptyTitle}>
               No plugins match your search or filters
             </p>
-            <p>Try a shorter search, or clear the filters to see them all.</p>
+            <p>
+              {query.trim()
+                ? 'Try a shorter search, or clear the filters to see them all.'
+                : 'Try another category or maintainer, or clear the filters to see them all.'}
+            </p>
             <button type="button" className={s.clearFilters} onClick={clearAll}>
               Clear filters
             </button>

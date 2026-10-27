@@ -584,13 +584,13 @@ html[data-theme='dark'] .byCommunity {
   margin-right: 0.4rem;
 }
 
-/* Last publish and version, pinned to the bottom of the card. */
+/* Last publish, then the npm package, pinned to the bottom of the card. */
 .cardFooter {
   margin-top: auto;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
   font-size: 0.8rem;
   color: var(--ifm-color-gray-700);
 }
@@ -599,16 +599,16 @@ html[data-theme='dark'] .cardFooter {
   color: var(--ifm-color-gray-300);
 }
 
+/* Above the card-wide title link, so its full-date tooltip shows on hover. */
 .freshness {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
 }
 
-/* A stale plugin's warning takes its own line, after the version. */
 .staleNote {
-  order: 1;
-  flex-basis: 100%;
   color: var(--ifm-color-red-600);
 }
 
@@ -617,8 +617,9 @@ html[data-theme='dark'] .staleNote {
 }
 
 /* The dot repeats what the text says: filled green within 6 months, filled
-   orange within 18, a red ring when older, a gray ring when not on npm.
-   Each is 3:1 or more against the card in both themes. */
+   orange within 18, a red ring when older. It's a gray ring until the page
+   knows today's date (server render, or no JavaScript). Each is 3:1 or more
+   against the card in both themes. */
 .dot {
   flex: 0 0 10px;
   width: 10px;
@@ -642,7 +643,7 @@ html[data-theme='dark'] .staleNote {
   border-color: var(--ifm-color-red-500);
 }
 
-.dotNone {
+.dotPending {
   border-color: var(--ifm-color-gray-600);
 }
 
@@ -655,17 +656,43 @@ html[data-theme='dark'] .dotStale {
   border-color: var(--ifm-color-red-400);
 }
 
-html[data-theme='dark'] .dotNone {
+html[data-theme='dark'] .dotPending {
   border-color: var(--ifm-color-gray-500);
 }
 
-.version {
+/* What to install: the npm package and version, linked to npm. Sits above the
+   card-wide title link, with a 24px tall target (WCAG 2.5.8), and truncates a
+   long scoped name; the title tooltip shows it whole. */
+:global(div.markdown) .cardFooter a.packageLink {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 24px;
   font-family: var(--ifm-font-family-monospace);
   font-size: 0.78rem;
 }
 
-/* Cypress range and npm link: revealed on hover or keyboard focus, always
-   shown on touch screens. The space is reserved so the grid doesn't shift. */
+.packageName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.packageVersion {
+  flex: none;
+  margin-left: 0.4rem;
+  color: var(--ifm-color-gray-700);
+}
+
+html[data-theme='dark'] .packageVersion {
+  color: var(--ifm-color-gray-300);
+}
+
+/* Cypress range: revealed on hover or keyboard focus, always shown on touch
+   screens. The space is reserved so the grid doesn't shift. */
 .cardMore {
   display: flex;
   justify-content: space-between;
@@ -698,24 +725,16 @@ html[data-theme='dark'] .cardMore {
   }
 }
 
+/* Above the card-wide title link, so a truncated range's tooltip shows it
+   whole. */
 .range {
+  position: relative;
+  z-index: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: var(--ifm-font-family-monospace);
-}
-
-/* Sits above the card-wide title link, with padding for a 24px tall target
-   (WCAG 2.5.8). */
-:global(div.markdown) .cardMore a.npmLink {
-  position: relative;
-  z-index: 1;
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  min-height: 24px;
-  font-size: 0.8rem;
 }
 
 /* visually hidden, still read by screen readers */

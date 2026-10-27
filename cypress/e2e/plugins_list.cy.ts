@@ -90,10 +90,15 @@ describe('Plugins list', () => {
     cy.get(`${categoryFilter} optgroup`)
       .first()
       .should('have.attr', 'label', 'Set up')
-    cy.get(`${categoryFilter} option[value="accessibility"]`).should(
-      'contain',
-      'Accessibility (4)'
-    )
+    cy.readFile('src/data/plugins.json').then((data) => {
+      const accessibility = data.plugins.find(
+        (category: { name: string }) => category.name === 'Accessibility'
+      )
+      cy.get(`${categoryFilter} option[value="accessibility"]`).should(
+        'have.text',
+        `Accessibility (${accessibility.plugins.length})`
+      )
+    })
     cy.get(categoryFilter).select('accessibility')
     cy.get(sections).should('have.length', 1)
     cy.contains('h2', 'Accessibility').should('be.visible')
@@ -271,18 +276,50 @@ describe('Plugins list', () => {
     cy.get('[data-cy="plugin-cypress-testing-library"]').should('not.exist')
   })
 
-  it('shows maintainer and freshness on a card, and npm details on focus', () => {
+  it('shows maintainer, freshness, and the npm package on a card', () => {
     cy.get(search).type('cucumber')
     cy.get('[data-cy="plugin-Cucumber"]').scrollIntoView()
     cy.get('[data-cy="plugin-Cucumber"]').within(() => {
       cy.get('[data-cy=plugin-maintainer]').should('be.visible')
       cy.contains('Updated').should('be.visible')
+      cy.get('[data-cy=plugin-npm]')
+        .should('be.visible')
+        .and('contain', '@badeball/cypress-cucumber-preprocessor')
+        .and('have.attr', 'href')
+        .and('include', 'npmjs.com/package/')
       // Hidden at rest only where the browser reports hover support (headless
       // runs report none and show it always), so assert the focus state only.
       cy.get('h3 a').focus()
       cy.get('[data-cy=plugin-cypress-range]').should('be.visible')
-      cy.get('a[href*="npmjs.com/package/"]').should('be.visible')
     })
+  })
+
+  it('keeps tooltips reachable above the card-wide link', () => {
+    cy.get('[data-cy="plugin-Cucumber"]').scrollIntoView()
+    cy.get('[data-cy="plugin-Cucumber"] h3 a').focus()
+    cy.get(
+      '[data-cy="plugin-Cucumber"] [title^="Last published"], [data-cy="plugin-Cucumber"] [data-cy=plugin-cypress-range]'
+    )
+      .should('have.length', 2)
+      .each(($el) => {
+        const box = $el[0].getBoundingClientRect()
+        const hit = $el[0].ownerDocument.elementFromPoint(
+          box.left + box.width / 2,
+          box.top + box.height / 2
+        )
+        expect($el[0].contains(hit), $el.attr('title')).to.equal(true)
+      })
+  })
+
+  it('shows no freshness for plugins that are not npm packages', () => {
+    cy.contains('Not on npm').should('not.exist')
+    cy.get('[data-cy="plugin-Cypress GitHub Actions"]')
+      .find('[data-cy=plugin-npm]')
+      .should('not.exist')
+    cy.get('[data-cy="plugin-Percy"] [data-cy=plugin-npm]').should(
+      'contain',
+      '@percy/cypress'
+    )
   })
 
   it('opens plugin links in a new tab safely', () => {

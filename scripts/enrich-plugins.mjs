@@ -248,14 +248,13 @@ async function enrichPlugin(plugin, existing) {
     markDeprecated('Package not found on the npm registry.')
   } else if (pkg) {
     // Transient registry failure for a known package -> keep prior npm signals.
-    for (const k of [
-      'version',
-      'lastPublished',
-      'cypressVersion',
-      'repoMovedTo',
-    ]) {
+    for (const k of ['version', 'lastPublished', 'cypressVersion']) {
       if (prior[k] !== undefined) meta[k] = prior[k]
     }
+    // Keep a prior move only while the link still points at the old owner, so
+    // a link fixed since the last run clears it.
+    const moved = prior.repoMovedTo && movedRepo(plugin.link, prior.repoMovedTo)
+    if (moved) meta.repoMovedTo = moved
     if (prior.deprecated) markDeprecated(prior.deprecatedReason)
   }
 

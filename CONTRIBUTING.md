@@ -115,7 +115,7 @@ Each entry supports the following fields:
 | `link`        | yes      | URL to the plugin's source or documentation.                                                                               |
 | `keywords`    | no       | Array of tags used for search and filtering.                                                                               |
 | `badge`       | no       | One of `official`, `vendor`, or `community` (defaults to `community`).                                                     |
-| `vendor`      | no       | With the `vendor` badge, the company that builds the plugin, shown as "Built by <vendor>" on its card.                     |
+| `vendor`      | no       | With the `vendor` badge, the company that builds the plugin, shown as `Built by <vendor>` on its card.                     |
 | `author`      | no       | With the `community` badge, the name shown after "Community ·". Set it only when the default below isn't a readable name.  |
 | `npm`         | no       | The npm package name. Set this only when it differs from `name` (for example an official monorepo package or scoped name). |
 

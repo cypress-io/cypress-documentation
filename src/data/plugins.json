@@ -285,7 +285,8 @@
           "description": "Official TypeScript definitions for the Cypress API.",
           "link": "https://github.com/cypress-io/cypress/tree/develop/cli/types",
           "keywords": ["typescript", "types", "intellisense", "definitions"],
-          "badge": "official"
+          "badge": "official",
+          "npm": "cypress"
         },
         {
           "name": "cypress-codegen",
@@ -656,7 +657,8 @@
           "description": "Easy way to publish messages from and to your SignalR hubs in Cypress E2E tests.",
           "link": "https://github.com/JasonLandbridge/Cypress-SignalR-Mock",
           "keywords": ["commands", "signalr", "mock", "websocket"],
-          "badge": "community"
+          "badge": "community",
+          "npm": "cypress-signalr-mock"
         },
         {
           "name": "cypress-network-idle",
@@ -953,7 +955,8 @@
           "link": "https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started",
           "badge": "vendor",
           "vendor": "Applitools",
-          "keywords": ["screenshots", "visual regression", "visual-ai"]
+          "keywords": ["screenshots", "visual regression", "visual-ai"],
+          "npm": "@applitools/eyes-cypress"
         },
         {
           "name": "Argos",
@@ -967,7 +970,8 @@
             "ci"
           ],
           "badge": "vendor",
-          "vendor": "Argos"
+          "vendor": "Argos",
+          "npm": "@argos-ci/cypress"
         },
         {
           "name": "Happo",
@@ -980,7 +984,8 @@
             "cross-browser"
           ],
           "badge": "vendor",
-          "vendor": "Happo"
+          "vendor": "Happo",
+          "npm": "happo"
         },
         {
           "name": "Percy",
@@ -993,7 +998,8 @@
             "cross-browser"
           ],
           "badge": "vendor",
-          "vendor": "Percy"
+          "vendor": "Percy",
+          "npm": "@percy/cypress"
         },
         {
           "name": "SmartBear VisualTest",
@@ -1007,7 +1013,8 @@
             "screenshots comparison"
           ],
           "badge": "vendor",
-          "vendor": "SmartBear"
+          "vendor": "SmartBear",
+          "npm": "@smartbear/visualtest-cypress"
         },
         {
           "name": "Sauce Labs Visual",
@@ -1042,7 +1049,8 @@
           "description": "Visual regression testing plugin maintained by DIT - UK Gov.",
           "link": "https://github.com/uktrade/cypress-image-diff",
           "keywords": ["screenshots", "visual regression", "image-diff"],
-          "badge": "community"
+          "badge": "community",
+          "npm": "cypress-image-diff-js"
         },
         {
           "name": "Cypress Image Snapshot",
@@ -1062,7 +1070,8 @@
           "description": "Plugin that adds powerful visual regression testing capabilities to Cypress, that comes with a comparison preview built in the Cypress Test Runner.",
           "link": "https://github.com/cypress-visual-regression/cypress-visual-regression",
           "keywords": ["image-diff", "snapshot", "visual regression"],
-          "badge": "community"
+          "badge": "community",
+          "npm": "cypress-visual-regression"
         },
         {
           "name": "Pixeleye",
@@ -1075,7 +1084,8 @@
             "multi-browser"
           ],
           "badge": "vendor",
-          "vendor": "Pixeleye"
+          "vendor": "Pixeleye",
+          "npm": "@pixeleye/cypress"
         },
         {
           "name": "Visual Regression Diff",
@@ -1103,7 +1113,8 @@
             "screenshots comparison"
           ],
           "badge": "vendor",
-          "vendor": "Wopee.io"
+          "vendor": "Wopee.io",
+          "npm": "@wopee-io/wopee.cy"
         },
         {
           "name": "@chromatic-com/cypress",
@@ -1143,7 +1154,8 @@
             "aws-secrets-manager",
             "secrets-manager"
           ],
-          "badge": "community"
+          "badge": "community",
+          "npm": "cypress-aws-secrets-manager"
         },
         {
           "name": "cypress-get-otp",
@@ -1288,7 +1300,8 @@
           "link": "https://aurelia.io/docs/cli",
           "keywords": ["aurelia", "cli", "integration", "setup"],
           "badge": "community",
-          "author": "Aurelia"
+          "author": "Aurelia",
+          "npm": "aurelia-cli"
         },
         {
           "name": "cypress-on-rails",
