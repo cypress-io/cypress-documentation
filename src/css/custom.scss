@@ -217,6 +217,13 @@ html[data-theme='dark'] {
   --cy-link-focus-ring: var(--ifm-color-indigo-300);
 }
 
+/* Infima paints the theme background on html only. iOS Safari tints its
+   toolbars from the page rather than html, so without this it can fall back
+   to a light toolbar in dark mode. */
+body {
+  background-color: var(--ifm-background-color);
+}
+
 /* prevent fonts from looking chunky, esp in Firefox */
 @media (min-resolution: 2dppx) {
   body {
@@ -736,6 +743,41 @@ table {
 .osano-cm-window .osano-cm-link:focus-visible {
   outline: 2px solid var(--ifm-color-indigo-600);
   outline-offset: 2px;
+}
+
+/* Dark mode banner (bar or box; the preferences drawer is a separate
+   .osano-cm-info-dialog). Osano reads its colors from variables on :root, so
+   redefining them on the banner wins without fighting its injected rules. The
+   banner matches the page background so iOS Safari, which tints its toolbar
+   from the bar while it's showing, keeps a dark toolbar after it's dismissed. */
+html[data-theme='dark'] .osano-cm-window .osano-cm-dialog {
+  --osano-dialog-background-color: var(--ifm-background-color);
+  --osano-dialog-foreground-color: var(--ifm-color-gray-100);
+  --osano-button-close-color: var(--ifm-color-gray-100);
+  --osano-link-color: var(--ifm-color-gray-100);
+  --osano-link-color-contrast: var(--ifm-color-gray-50);
+  color: var(--ifm-color-gray-100);
+  box-shadow: 0 0 0 1px var(--ifm-color-gray-800);
+
+  .osano-cm-storage-policy {
+    color: var(--ifm-color-gray-100) !important;
+  }
+
+  .osano-cm-button {
+    border-color: var(--ifm-color-indigo-300);
+    background-color: var(--ifm-background-color);
+    color: var(--ifm-color-indigo-300);
+
+    &:hover {
+      background-color: var(--ifm-color-indigo-900);
+    }
+  }
+
+  .osano-cm-button:focus-visible,
+  .osano-cm-close:focus-visible,
+  .osano-cm-link:focus-visible {
+    outline-color: var(--cy-link-focus-ring);
+  }
 }
 
 /* Grows the close button's tap target from its 24px circle to 40px without
