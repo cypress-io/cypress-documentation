@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faExclamationTriangle,
   faSearch,
-  faSlidersH,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import s from './style.module.css'
@@ -102,13 +101,6 @@ const GENERATED: Record<string, PluginMeta> =
 const STAGES: Stage[] = pluginsJSON.stages || []
 /** Categories without a known stage still show, after the others. */
 const OTHER_STAGE: Stage = { id: 'other', name: 'More plugins' }
-
-const MAINTAINER_HINT: Record<'all' | Maintainer, string> = {
-  all: 'Built by Cypress plugins are listed first in each category.',
-  official: 'Built and maintained by the Cypress team.',
-  community:
-    'Owned by their authors and not reviewed by Cypress. Check the repository before you adopt one.',
-}
 
 const monthYearFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',
@@ -428,7 +420,6 @@ export default function PluginsList() {
   const [maintainer, setMaintainer] = useState<'all' | Maintainer>('all')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [sort, setSort] = useState<SortKey>('recommended')
-  const [filtersOpen, setFiltersOpen] = useState(false)
   const resultsRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
   // Flips to true once mounted, so tests can wait for hydration before the
@@ -455,10 +446,9 @@ export default function PluginsList() {
   }
 
   // Picking a category shows only that section; bring its top into view when
-  // the reader picked it from far down the page.
+  // the results start above the viewport.
   const pickCategory = (id: string) => {
     setCategoryFilter(id)
-    setFiltersOpen(false)
     const top = resultsRef.current?.getBoundingClientRect().top
     if (top !== undefined && top < 0) {
       resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -487,7 +477,7 @@ export default function PluginsList() {
   }, [])
 
   // Plugins that match the search and maintainer filter, per category. The
-  // category list counts from these, so the counts track the other filters.
+  // category dropdown counts from these, so the counts track the other filters.
   const matching = useMemo(() => {
     const q = query.trim().toLowerCase()
     return categories.map((category) => ({
@@ -515,7 +505,8 @@ export default function PluginsList() {
     [matching, categoryFilter, sort]
   )
 
-  const railGroups = useMemo(() => {
+  // The category dropdown groups its options by stage.
+  const categoryGroups = useMemo(() => {
     const groups: { stage: Stage; categories: typeof matching }[] = []
     for (const category of matching) {
       const last = groups[groups.length - 1]
@@ -550,39 +541,85 @@ export default function PluginsList() {
       data-hydrated={hydrated ? 'true' : 'false'}
     >
       <div className={s.toolbar} data-sanitize="">
-        <div className={s.searchWrap}>
-          <FontAwesomeIcon
-            icon={faSearch}
-            className={s.searchIcon}
-            aria-hidden="true"
-          />
-          <input
-            type="search"
-            ref={searchRef}
-            className={s.search}
-            placeholder="Search by name, package, author, or what it does"
-            value={query}
-            onChange={(e) => applyQuery(e.target.value)}
-            aria-label="Search plugins"
-            data-cy="plugins-search"
-          />
-          {query && (
-            <button
-              type="button"
-              className={s.clearBtn}
-              aria-label="Clear search"
-              data-cy="plugins-search-clear"
-              onClick={() => {
-                applyQuery('')
-                searchRef.current?.focus()
-              }}
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-          )}
+        <div className={clsx(s.field, s.searchField)}>
+          <label htmlFor="plugins-search" className={s.fieldLabel}>
+            Search
+          </label>
+          <div className={s.searchWrap}>
+            <FontAwesomeIcon
+              icon={faSearch}
+              className={s.searchIcon}
+              aria-hidden="true"
+            />
+            <input
+              id="plugins-search"
+              type="search"
+              ref={searchRef}
+              className={s.search}
+              placeholder="Name, package, or keyword"
+              value={query}
+              onChange={(e) => applyQuery(e.target.value)}
+              data-cy="plugins-search"
+            />
+            {query && (
+              <button
+                type="button"
+                className={s.clearBtn}
+                aria-label="Clear search"
+                data-cy="plugins-search-clear"
+                onClick={() => {
+                  applyQuery('')
+                  searchRef.current?.focus()
+                }}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            )}
+          </div>
         </div>
-        <div className={s.sortWrap}>
-          <label htmlFor="plugins-sort" className={s.sortLabel}>
+        <div className={clsx(s.field, s.categoryField)}>
+          <label htmlFor="plugins-category" className={s.fieldLabel}>
+            Category
+          </label>
+          <select
+            id="plugins-category"
+            className={s.select}
+            value={categoryFilter}
+            onChange={(e) => pickCategory(e.target.value)}
+            data-cy="plugins-category-filter"
+          >
+            <option value="all">All categories ({matchingTotal})</option>
+            {categoryGroups.map(({ stage, categories: group }) => (
+              <optgroup key={stage.id} label={stage.name}>
+                {group.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.shortName} ({category.plugins.length})
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+        <div className={s.field}>
+          <label htmlFor="plugins-maintainer" className={s.fieldLabel}>
+            Maintained by
+          </label>
+          <select
+            id="plugins-maintainer"
+            className={s.select}
+            value={maintainer}
+            onChange={(e) =>
+              setMaintainer(e.target.value as 'all' | Maintainer)
+            }
+            data-cy="plugins-maintainer-filter"
+          >
+            <option value="all">All</option>
+            <option value="official">Cypress</option>
+            <option value="community">Community</option>
+          </select>
+        </div>
+        <div className={s.field}>
+          <label htmlFor="plugins-sort" className={s.fieldLabel}>
             Sort by
           </label>
           <select
@@ -597,176 +634,83 @@ export default function PluginsList() {
             <option value="name">Name (A–Z)</option>
           </select>
         </div>
-        <button
-          type="button"
-          className={s.filtersToggle}
-          aria-expanded={filtersOpen}
-          aria-controls="plugins-filters"
-          onClick={() => setFiltersOpen((open) => !open)}
-        >
-          <FontAwesomeIcon icon={faSlidersH} aria-hidden="true" />
-          Filters
-          {hasFilters && <span className={s.filtersDot} aria-hidden="true" />}
-        </button>
       </div>
 
-      <div className={s.layout}>
-        <aside
-          id="plugins-filters"
-          className={clsx(s.rail, filtersOpen && s.railOpen)}
-          aria-label="Plugin filters"
-          data-sanitize=""
-        >
-          <div className={s.railGroup}>
-            <div className={s.railHeading} id="plugins-maintainer-label">
-              Maintained by
-            </div>
-            <div
-              className={s.segmented}
-              role="group"
-              aria-labelledby="plugins-maintainer-label"
-              data-cy="plugins-maintainer-filter"
-            >
-              {(
-                [
-                  ['all', 'All'],
-                  ['official', 'Cypress'],
-                  ['community', 'Community'],
-                ] as const
-              ).map(([value, label]) => (
-                <button
-                  key={value}
-                  type="button"
-                  className={s.segment}
-                  aria-pressed={maintainer === value}
-                  onClick={() => setMaintainer(value)}
-                  data-cy={`plugins-maintainer-${value}`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-            <div className={s.railHint}>{MAINTAINER_HINT[maintainer]}</div>
-          </div>
-
-          <nav
-            className={s.railGroup}
-            aria-label="Plugin categories"
-            data-cy="plugins-category-filter"
+      <div className={s.results} ref={resultsRef}>
+        <div className={s.resultsHeader} data-sanitize="">
+          <p
+            className={s.resultCount}
+            data-cy="plugins-result-count"
+            aria-live="polite"
           >
+            Showing {total} {total === 1 ? 'plugin' : 'plugins'}
+            {selected ? ` in ${selected.name}` : ''}
+          </p>
+          {hasFilters && (
             <button
               type="button"
-              className={s.railItem}
-              aria-pressed={categoryFilter === 'all'}
-              onClick={() => pickCategory('all')}
-              data-cy="plugins-category-all"
+              className={s.clearFilters}
+              onClick={clearAll}
+              data-cy="plugins-clear-filters"
             >
-              <span>All categories</span>
-              <span className={s.railCount}>{matchingTotal}</span>
+              Clear filters
             </button>
-            {railGroups.map(({ stage, categories: group }) => (
-              <div key={stage.id} className={s.railStage} data-stage={stage.id}>
-                <div className={s.railStageName}>{stage.name}</div>
-                {group.map((category) => (
-                  <button
-                    key={category.id}
-                    type="button"
-                    className={s.railItem}
-                    aria-pressed={categoryFilter === category.id}
-                    onClick={() => pickCategory(category.id)}
-                    data-cy={`plugins-category-${category.id}`}
-                  >
-                    <span>{category.shortName}</span>
-                    <span className={s.railCount}>
-                      {category.plugins.length}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            ))}
-          </nav>
-        </aside>
-
-        <div className={s.results} ref={resultsRef}>
-          <div className={s.resultsHeader} data-sanitize="">
-            <p
-              className={s.resultCount}
-              data-cy="plugins-result-count"
-              aria-live="polite"
-            >
-              Showing {total} {total === 1 ? 'plugin' : 'plugins'}
-              {selected ? ` in ${selected.name}` : ''}
-            </p>
-            {hasFilters && (
-              <button
-                type="button"
-                className={s.clearFilters}
-                onClick={clearAll}
-                data-cy="plugins-clear-filters"
-              >
-                Clear filters
-              </button>
-            )}
-          </div>
-
-          {sections.length === 0 ? (
-            <div className={s.empty}>
-              <p className={s.emptyTitle}>
-                No plugins match your search or filters
-              </p>
-              <p>Try a shorter search, or clear the filters to see them all.</p>
-              <button
-                type="button"
-                className={s.clearFilters}
-                onClick={clearAll}
-              >
-                Clear filters
-              </button>
-            </div>
-          ) : (
-            sections.map((category) => (
-              <section
-                key={category.id}
-                className={s.section}
-                data-stage={category.stage.id}
-                data-cy="plugins-category"
-                data-category={category.id}
-                aria-labelledby={category.id}
-              >
-                <div className={s.sectionHeader}>
-                  <p className={s.eyebrow} data-cy="plugins-category-stage">
-                    {category.stage.name}
-                  </p>
-                  <div>
-                    <h2 id={category.id} className={s.sectionTitle}>
-                      {category.name}
-                    </h2>
-                    <span className={s.sectionCount} data-sanitize="">
-                      {category.plugins.length}
-                    </span>
-                  </div>
-                  {category.description && (
-                    <p
-                      className={s.sectionDescription}
-                      dangerouslySetInnerHTML={createDescriptionMarkup(
-                        category.description
-                      )}
-                    />
-                  )}
-                </div>
-                <ul className={s.grid}>
-                  {category.plugins.map((plugin) => (
-                    <PluginCard
-                      key={plugin.name}
-                      plugin={plugin}
-                      stageId={category.stage.id}
-                    />
-                  ))}
-                </ul>
-              </section>
-            ))
           )}
         </div>
+
+        {sections.length === 0 ? (
+          <div className={s.empty}>
+            <p className={s.emptyTitle}>
+              No plugins match your search or filters
+            </p>
+            <p>Try a shorter search, or clear the filters to see them all.</p>
+            <button type="button" className={s.clearFilters} onClick={clearAll}>
+              Clear filters
+            </button>
+          </div>
+        ) : (
+          sections.map((category) => (
+            <section
+              key={category.id}
+              className={s.section}
+              data-stage={category.stage.id}
+              data-cy="plugins-category"
+              data-category={category.id}
+              aria-labelledby={category.id}
+            >
+              <div className={s.sectionHeader}>
+                <p className={s.eyebrow} data-cy="plugins-category-stage">
+                  {category.stage.name}
+                </p>
+                <div>
+                  <h2 id={category.id} className={s.sectionTitle}>
+                    {category.name}
+                  </h2>
+                  <span className={s.sectionCount} data-sanitize="">
+                    {category.plugins.length}
+                  </span>
+                </div>
+                {category.description && (
+                  <p
+                    className={s.sectionDescription}
+                    dangerouslySetInnerHTML={createDescriptionMarkup(
+                      category.description
+                    )}
+                  />
+                )}
+              </div>
+              <ul className={s.grid}>
+                {category.plugins.map((plugin) => (
+                  <PluginCard
+                    key={plugin.name}
+                    plugin={plugin}
+                    stageId={category.stage.id}
+                  />
+                ))}
+              </ul>
+            </section>
+          ))
+        )}
       </div>
     </div>
   )

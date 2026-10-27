@@ -1,5 +1,7 @@
 describe('Plugins list', () => {
   const search = '[data-cy=plugins-search]'
+  const categoryFilter = '[data-cy=plugins-category-filter]'
+  const maintainerFilter = '[data-cy=plugins-maintainer-filter]'
   const resultCount = '[data-cy=plugins-result-count]'
   const sections = '[data-cy=plugins-category]'
   const cards = 'li[data-maintainer]'
@@ -24,7 +26,7 @@ describe('Plugins list', () => {
 
   it('explains who maintains the plugins', () => {
     cy.contains('p', /aren.t reviewed by Cypress/).should('be.visible')
-    cy.get('[data-cy=plugins-maintainer-filter]').should('be.visible')
+    cy.get(maintainerFilter).should('be.visible')
   })
 
   it('lists many plugins with a result count by default', () => {
@@ -81,27 +83,33 @@ describe('Plugins list', () => {
     cy.get(sections).should('have.length.greaterThan', 10)
   })
 
-  it('filters down to a single category from the category list', () => {
-    cy.get('[data-cy="plugins-category-accessibility"]')
-      .click()
-      .should('have.attr', 'aria-pressed', 'true')
+  it('filters down to a single category from the dropdown', () => {
+    // Options are grouped by stage and show a live count.
+    cy.get(`${categoryFilter} optgroup`)
+      .first()
+      .should('have.attr', 'label', 'Set up')
+    cy.get(`${categoryFilter} option[value="accessibility"]`).should(
+      'contain',
+      'Accessibility (4)'
+    )
+    cy.get(categoryFilter).select('accessibility')
     cy.get(sections).should('have.length', 1)
     cy.contains('h2', 'Accessibility').should('be.visible')
     cy.get(resultCount).should('contain', 'in Accessibility')
     cy.get('[data-cy="plugin-cypress-axe"]').should('exist')
     cy.get('[data-cy="plugin-cypress-vite"]').should('not.exist')
 
-    cy.get('[data-cy=plugins-category-all]').click()
+    cy.get(categoryFilter).select('all')
     cy.get(sections).should('have.length.greaterThan', 10)
   })
 
   it('filters by maintainer', () => {
-    cy.get('[data-cy=plugins-maintainer-official]').click()
+    cy.get(maintainerFilter).select('official')
     cy.get(cards).should('have.length.greaterThan', 5)
     cy.get(`${cards}[data-maintainer="community"]`).should('not.exist')
     cy.get('[data-cy="plugin-cypress-axe"]').should('not.exist')
 
-    cy.get('[data-cy=plugins-maintainer-community]').click()
+    cy.get(maintainerFilter).select('community')
     cy.get(`${cards}[data-maintainer="official"]`).should('not.exist')
     cy.get('[data-cy="plugin-cypress-axe"]').should('exist')
   })
@@ -142,7 +150,7 @@ describe('Plugins list', () => {
   })
 
   it('lists Cypress-built plugins first in each category', () => {
-    cy.get('[data-cy="plugins-category-component-testing"]').click()
+    cy.get(categoryFilter).select('component-testing')
     cy.get(cards).then(($cards) => {
       const ranks = [...$cards].map((card) =>
         card.dataset.deprecated
@@ -202,13 +210,11 @@ describe('Plugins list', () => {
       .and('have.attr', 'rel', 'noopener noreferrer')
   })
 
-  it('keeps the filters behind a button on small screens', () => {
+  it('keeps every filter usable on small screens', () => {
     cy.viewport(375, 800)
-    cy.get('[data-cy=plugins-category-filter]').should('not.be.visible')
-    cy.contains('button', 'Filters').click()
-    cy.get('[data-cy="plugins-category-accessibility"]').click()
+    cy.get(search).should('be.visible')
+    cy.get(maintainerFilter).should('be.visible')
+    cy.get(categoryFilter).should('be.visible').select('accessibility')
     cy.get(sections).should('have.length', 1)
-    // Picking a category closes the panel so the results are in view.
-    cy.get('[data-cy=plugins-category-filter]').should('not.be.visible')
   })
 })
