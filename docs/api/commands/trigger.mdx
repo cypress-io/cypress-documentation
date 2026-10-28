@@ -45,7 +45,8 @@ cy.clock().trigger('mouseleave') // Errors, 'clock' does not yield DOM elements
 
 <Icon name="angle-right" /> **eventName _(String)_**
 
-The name of the `event` to be triggered on the DOM element.
+The name of the `event` to be triggered on the DOM element. It must be a
+non-empty string, so `.trigger('')` fails.
 
 <Icon name="angle-right" /> **position _(String)_**
 
@@ -666,6 +667,7 @@ When you click `trigger` in the Command Log, the console outputs the following:
 
 | Version                                      | Changes                                                                                                            |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [16.2.1](/app/references/changelog#16-2-1)   | Fails when `eventName` is an empty string                                                                          |
 | [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments |
 | [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                      |
 | [5.1.0](/app/references/changelog#5-1-0)     | Added option `eventConstructor`, and events from `UIEvent` constructors now include the `view` property            |
