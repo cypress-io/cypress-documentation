@@ -183,7 +183,9 @@ Screenshot naming follows these rules:
 - For a named screenshot, the name is used instead of the suites and test name:
   `{screenshotsFolder}/{adjustedSpecPath}/{name}.png`.
 - For any duplicate screenshots (named or not), they will be appended with a
-  number: `{screenshotsFolder}/{adjustedSpecPath}/{testName} (1).png`.
+  number: `{screenshotsFolder}/{adjustedSpecPath}/{testName} (1).png`. This
+  also applies across several `cypress run` processes that share a project
+  folder, so one run never overwrites another run's screenshot.
 
 :::info
 
@@ -366,9 +368,10 @@ following:
 
 ## History
 
-| Version                                  | Changes                             |
-| ---------------------------------------- | ----------------------------------- |
-| [3.5.0](/app/references/changelog#3-5-0) | Added support for option `padding`. |
+| Version                                    | Changes                                                                                       |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| [16.2.1](/app/references/changelog#16-2-1) | Duplicate file names are numbered across `cypress run` processes that share a project folder. |
+| [3.5.0](/app/references/changelog#3-5-0)   | Added support for option `padding`.                                                           |
 
 ## See also
 
