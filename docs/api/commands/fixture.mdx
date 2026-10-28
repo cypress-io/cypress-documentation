@@ -63,6 +63,9 @@ from the fixturesFolder:
 cy.fixture('users/admin.json') // Get data from {fixturesFolder}/users/admin.json
 ```
 
+The path has to resolve to a file inside the `fixturesFolder`. A path that
+leaves it, such as `'../cypress.config.js'`, fails.
+
 <Icon name="angle-right" /> **encoding _(String)_**
 
 The encoding to be used when reading the file. The following encodings are
@@ -550,6 +553,8 @@ cy.fixture('todo.json').then((todo) => {
 - `cy.fixture()` requires
   [`fixturesFolder`](/app/references/configuration#Folders--Files) to be set.
   It fails if `fixturesFolder` is `false`.
+- `cy.fixture()` requires `filePath` to resolve to a file inside the
+  `fixturesFolder`.
 
 <HeaderAssertions />
 
@@ -572,6 +577,7 @@ cy.fixture('todo.json').then((todo) => {
 
 | Version                                      | Changes                                                                                                            |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [16.2.1](/app/references/changelog#16-2-1)   | Fails when `filePath` resolves outside the `fixturesFolder`.                                                       |
 | [15.18.0](/app/references/changelog#15-18-0) | An aliased fixture keeps its file name for `.selectFile()` when a later test loads the same fixture.               |
 | [15.0.0](/app/references/changelog#15-0-0)   | `cy.writeFile()` clears the cache for a fixture it writes. An explicit `encoding` always yields raw file contents. |
 

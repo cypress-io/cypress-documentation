@@ -45,6 +45,7 @@ Cypress.dom.isJquery(obj)
 Cypress.dom.isScrollable(element)
 Cypress.dom.isVisible(element)
 Cypress.dom.isWindow(obj)
+Cypress.dom.stringify(element)
 Cypress.dom.stringify(element, form)
 Cypress.dom.unwrap(obj)
 Cypress.dom.wrap(obj)
@@ -57,7 +58,7 @@ Cypress.dom.wrap(obj)
 ```javascript
 cy.get('#email').then(($input) => {
   Cypress.dom.isVisible($input) // true
-  Cypress.dom.isFocused($input[0]) // false
+  Cypress.dom.isFocused($input) // false
 })
 ```
 
@@ -69,18 +70,15 @@ cy.get('#email').isVisible()
 
 // They check an element, not a selector, and this call throws
 Cypress.dom.isVisible('#email')
-
-// Inside .then(($input) => ...): isFocused() needs a DOM element.
-// With a jQuery object, it always returns false
-Cypress.dom.isFocused($input)
 ```
 
 ### Arguments
 
-The functions take the value to check as their first argument. Some accept a
-DOM element or a jQuery object, and others accept only one of the two; the
-Accepts column of the [Functions](#Functions) table lists which. Three functions
-take a second argument: [`isDescendent()`](#isDescendent) takes a `descendent`,
+The functions take the value to check as their first argument. Every function
+that checks an element accepts either a DOM element or a jQuery object; the
+Accepts column of the [Functions](#Functions) table lists what each one takes.
+Three functions take a second argument: [`isDescendent()`](#isDescendent) takes
+a `descendent`,
 [`isInputType()`](#isInputType) takes a `type`, and
 [`stringify()`](#stringify) takes a `form`.
 
@@ -88,8 +86,7 @@ take a second argument: [`isDescendent()`](#isDescendent) takes a `descendent`,
 
 A DOM element, or a jQuery object that wraps one or more elements. Element
 queries such as [`cy.get()`](/api/commands/get) yield a jQuery object, so in a
-[`.then()`](/api/commands/then) callback, pass the subject as it is, or pass
-`$el[0]` for the first DOM element in it.
+[`.then()`](/api/commands/then) callback, pass the subject as it is.
 
 <Icon name="angle-right" /> **obj** **_(any)_**
 
@@ -105,26 +102,26 @@ a Cypress chain, call the function inside a callback such as
 
 ## Functions
 
-| Function                                    | Returns…                                               | Accepts         |
-| ------------------------------------------- | ------------------------------------------------------ | --------------- |
-| [`getReasonIsHidden()`](#getReasonIsHidden) | why Cypress considers an element hidden                | jQuery          |
-| [`isAttached()`](#isAttached)               | whether an element is attached to the page             | element, jQuery |
-| [`isDescendent()`](#isDescendent)           | whether one element is inside another                  | jQuery          |
-| [`isDetached()`](#isDetached)               | whether an element is no longer attached to the page   | element, jQuery |
-| [`isDocument()`](#isDocument)               | whether a value is a `document`                        | any value       |
-| [`isDom()`](#isDom)                         | whether a value is an element, `document`, or `window` | any value       |
-| [`isElement()`](#isElement)                 | whether a value is a DOM element                       | any value       |
-| [`isFocusable()`](#isFocusable)             | whether an element can receive focus                   | jQuery          |
-| [`isFocused()`](#isFocused)                 | whether an element has focus                           | element         |
-| [`isHidden()`](#isHidden)                   | whether Cypress considers an element hidden            | element, jQuery |
-| [`isInputType()`](#isInputType)             | whether an `<input>` or `<button>` has a given `type`  | element, jQuery |
-| [`isJquery()`](#isJquery)                   | whether a value is a jQuery object                     | any value       |
-| [`isScrollable()`](#isScrollable)           | whether an element or the window can scroll            | jQuery, window  |
-| [`isVisible()`](#isVisible)                 | whether Cypress considers an element visible           | element, jQuery |
-| [`isWindow()`](#isWindow)                   | whether a value is a `window`                          | any value       |
-| [`stringify()`](#stringify)                 | a short HTML string that describes an element          | element, jQuery |
-| [`unwrap()`](#unwrap)                       | the DOM elements inside a jQuery object, as an array   | any value       |
-| [`wrap()`](#wrap)                           | a jQuery object that wraps the value                   | element, HTML   |
+| Function                                    | Returns…                                               | Accepts                           |
+| ------------------------------------------- | ------------------------------------------------------ | --------------------------------- |
+| [`getReasonIsHidden()`](#getReasonIsHidden) | why Cypress considers an element hidden                | element, jQuery                   |
+| [`isAttached()`](#isAttached)               | whether an element is attached to the page             | element, jQuery                   |
+| [`isDescendent()`](#isDescendent)           | whether one element is inside another                  | element, jQuery                   |
+| [`isDetached()`](#isDetached)               | whether an element is no longer attached to the page   | element, jQuery                   |
+| [`isDocument()`](#isDocument)               | whether a value is a `document`                        | any value                         |
+| [`isDom()`](#isDom)                         | whether a value is an element, `document`, or `window` | any value                         |
+| [`isElement()`](#isElement)                 | whether a value is a DOM element                       | any value                         |
+| [`isFocusable()`](#isFocusable)             | whether an element can receive focus                   | element, jQuery                   |
+| [`isFocused()`](#isFocused)                 | whether an element has focus                           | element, jQuery                   |
+| [`isHidden()`](#isHidden)                   | whether Cypress considers an element hidden            | element, jQuery                   |
+| [`isInputType()`](#isInputType)             | whether an `<input>` or `<button>` has a given `type`  | element, jQuery                   |
+| [`isJquery()`](#isJquery)                   | whether a value is a jQuery object                     | any value                         |
+| [`isScrollable()`](#isScrollable)           | whether an element or the window can scroll            | element, jQuery, window           |
+| [`isVisible()`](#isVisible)                 | whether Cypress considers an element visible           | element, jQuery                   |
+| [`isWindow()`](#isWindow)                   | whether a value is a `window`                          | any value                         |
+| [`stringify()`](#stringify)                 | a short HTML string that describes an element          | element, jQuery, window, document |
+| [`unwrap()`](#unwrap)                       | the DOM elements inside a jQuery object, as an array   | any value                         |
+| [`wrap()`](#wrap)                           | a jQuery object that wraps the value                   | element, HTML                     |
 
 ### getReasonIsHidden()
 
@@ -136,7 +133,6 @@ Returns a sentence that explains why Cypress considers an element hidden. It is
 the reason that follows a failed `.should('be.visible')` assertion, so you can
 read it without failing the test.
 
-- It needs a jQuery object. A DOM element throws a `TypeError`.
 - The reason follows your
   [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy).
   Under the default `'modern'` strategy, it names the computed `display`,
@@ -181,12 +177,13 @@ Cypress.dom.isDescendent(element, descendent)
 
 Returns `true` when `descendent` is inside `element`, at any depth.
 
-<Icon name="angle-right" /> **descendent** **_(jQuery)_**
+<Icon name="angle-right" /> **descendent** **_(Element, jQuery)_**
 
 The element to look for inside `element`.
 
-- Both arguments need to be jQuery objects. A DOM element throws a `TypeError`.
-- It compares the first element in each jQuery object.
+- Each argument can be a DOM element or a jQuery object. For a jQuery object, it
+  compares the first element in it.
+- It returns `false` when `descendent` is missing.
 - An element counts as its own descendent, so passing the same element twice
   returns `true`.
 
@@ -258,8 +255,6 @@ Returns `true` when the element is a kind that can receive focus: a link or
 `<button>`, an `<iframe>`, or any element with a `tabindex` or
 `contenteditable` attribute.
 
-- It needs a jQuery object. A DOM element throws a `TypeError`. Wrap one with
-  [`wrap()`](#wrap) first.
 - It checks the element's type and attributes, not whether it is visible, so an
   `<input>` inside a `display: none` container still returns `true`.
 - It counts `tabindex="-1"`, which can receive focus from a script but not from
@@ -278,8 +273,7 @@ Cypress.dom.isFocused(element)
 Returns `true` when the element is the document's active element, including
 inside a shadow root.
 
-- It needs a DOM element. A jQuery object always returns `false`, so pass
-  `$el[0]`.
+- For a jQuery object, it checks the first element.
 - It returns `false` for `<body>` when nothing else has focus.
 - In a test, `.should('have.focus')` or
   [`cy.focused()`](/api/commands/focused) asserts focus and retries. Use
@@ -355,7 +349,7 @@ Returns `true` when the element's content overflows it and its `overflow` is
 `scroll` or `auto`, so the element can scroll. This is the check
 [`.scrollTo()`](/api/commands/scrollto) runs before it scrolls an element.
 
-- It needs a jQuery object or a `window`. A DOM element always returns `false`.
+- For a jQuery object, it checks the first element.
 - For a `window`, or for the `<html>` element, it returns `true` when the page
   is taller or wider than the window.
 
@@ -416,7 +410,7 @@ Command Log and error messages.
 
 <Icon name="angle-right" /> **form** **_(String)_**
 
-`'long'` or `'short'`. Any other value throws.
+`'long'` (the default) or `'short'`. Any other value throws.
 
 | `form`    | Returns                                                                    | Example                        |
 | --------- | -------------------------------------------------------------------------- | ------------------------------ |
@@ -450,15 +444,12 @@ Cypress.dom.wrap(obj)
 ```
 
 Returns a jQuery object that wraps the value, the same as calling
-[`Cypress.$`](/api/utilities/$) with it. Use it to pass a DOM element to a
-function that needs a jQuery object, such as [`isFocusable()`](#isFocusable).
+[`Cypress.$`](/api/utilities/$) with it. Use it when you hold a DOM element and
+need jQuery methods on it, such as `.find()` or `.attr()`.
 
 - A selector string searches the spec's document, not your app's, so it finds
   nothing on the page you visited. To find elements in your app, use
   [`cy.$$`](/api/utilities/$) or a query such as [`cy.get()`](/api/commands/get).
-
-Used in:
-[Check that keyboard focus stays inside a dialog](#Check-that-keyboard-focus-stays-inside-a-dialog)
 
 ## Examples
 
@@ -475,7 +466,7 @@ cy.get('#place-order').then(($button) => {
     attached: Cypress.dom.isAttached($button),
     visible: Cypress.dom.isVisible($button),
     focusable: Cypress.dom.isFocusable($button),
-    focused: Cypress.dom.isFocused($button[0]),
+    focused: Cypress.dom.isFocused($button),
     scrollable: Cypress.dom.isScrollable($button),
   })
 
@@ -590,7 +581,7 @@ cy.get('#open-settings').click()
 cy.get('[role="dialog"]').then(($dialog) => {
   const $focusable = $dialog
     .find('*')
-    .filter((_, el) => Cypress.dom.isFocusable(Cypress.dom.wrap(el)))
+    .filter((_, el) => Cypress.dom.isFocusable(el))
 
   // Press Tab once more than there are focusable elements,
   // so focus has to wrap around to the start
@@ -677,18 +668,6 @@ DevTools console:
 
 ## Notes
 
-### Pass a jQuery object or a DOM element as each function expects
-
-Element queries yield a jQuery object, but some functions need a DOM element,
-and passing the wrong one doesn't always throw. Two cases return a wrong answer
-without an error:
-
-- `isFocused($el)` always returns `false`. Pass `$el[0]`.
-- `isScrollable($el[0])` always returns `false`. Pass `$el`.
-
-The Accepts column of the [Functions](#Functions) table lists what each one
-takes. Convert between the two with [`wrap()`](#wrap) and `$el[0]`.
-
 ### Cypress.dom checks don't retry on their own
 
 Each function checks the DOM once, at the moment you call it. In a
@@ -710,6 +689,7 @@ passes or times out.
 
 | Version                                    | Changes                                                                                                                                                                                  |
 | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [16.2.1](/app/references/changelog#16-2-1) | `getReasonIsHidden()`, `isDescendent()`, `isFocusable()`, `isFocused()`, and `isScrollable()` accept either a DOM element or a jQuery object                                             |
 | [16.0.0](/app/references/changelog#16-0-0) | `isVisible()`, `isHidden()`, and `getReasonIsHidden()` follow the [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy), which defaults to `'modern'` |
 | [6.2.1](/app/references/changelog#6-2-1)   | `isJquery()` always returns a boolean                                                                                                                                                    |
 | [0.20.0](/app/references/changelog#0-20-0) | Renamed `Cypress.Dom` to `Cypress.dom`                                                                                                                                                   |

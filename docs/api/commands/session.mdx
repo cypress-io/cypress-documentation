@@ -124,7 +124,11 @@ before `setup` runs, regardless of the `testIsolation` configuration.
 
 <HeaderYields />
 
-- `cy.session()` yields `null`.
+- `cy.session()` yields the session's status as a string:
+  - `'created'` when `setup` ran for a new session.
+  - `'restored'` when a saved session was restored.
+  - `'recreated'` when a restored session failed validation and `setup` ran
+    again.
 
 ## Examples
 
@@ -1030,6 +1034,7 @@ data, including cookies, `localStorage` and `sessionStorage`.
 
 | Version                                    | Changes                                                                                    |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| [16.2.1](/app/references/changelog#16-2-1) | Typed the yielded value as the session's status instead of `null`.                         |
 | [12.0.0](/app/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made the command available by default.          |
 | [11.0.0](/app/references/changelog#11-0-0) | The `setup` option is now required.                                                        |
 | [10.9.0](/app/references/changelog#10-9-0) | Added `cacheAcrossSpecs` property.                                                         |
