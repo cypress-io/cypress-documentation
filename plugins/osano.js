@@ -39,7 +39,8 @@ const fullStoryLabels = `
 
 // The footer's "Cookie Preferences" link (docusaurus.config.js) reopens the
 // consent drawer, so visitors can change their choice after the banner is gone.
-// Delegated from document because the footer renders after this script runs.
+// The handler listens on document because the footer renders after this script
+// runs. If the Osano script was blocked, the click does nothing.
 const preferencesLink = `
 document.addEventListener('click', function (event) {
   if (!event.target.closest || !event.target.closest('.osano-preferences-link')) return;

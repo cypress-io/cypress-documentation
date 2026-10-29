@@ -9,7 +9,8 @@ describe('Cookie consent (Osano)', () => {
   })
 
   // The footer link is the only way back into Osano once the banner is gone,
-  // and US visitors never get a banner at all.
+  // and US visitors never get a banner at all. Asserting the drawer starts
+  // hidden keeps the test from passing on a drawer that was already open.
   it('reopens the consent drawer from the footer', () => {
     cy.visit('/')
     cy.get('.osano-cm-info-dialog', { timeout: 20000 }).should('not.be.visible')
