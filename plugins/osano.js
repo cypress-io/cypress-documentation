@@ -37,6 +37,17 @@ const fullStoryLabels = `
 })();
 `
 
+// The footer's "Cookie Preferences" link (docusaurus.config.js) reopens the
+// consent drawer, so visitors can change their choice after the banner is gone.
+// Delegated from document because the footer renders after this script runs.
+const preferencesLink = `
+document.addEventListener('click', function (event) {
+  if (!event.target.closest || !event.target.closest('.osano-preferences-link')) return;
+  var cm = window.Osano && window.Osano.cm;
+  if (cm && cm.showDrawer) cm.showDrawer('osano-cm-dom-info-dialog-open');
+});
+`
+
 module.exports = async function osano(context) {
   return {
     name: 'docusaurus-osano-plugin',
@@ -52,6 +63,10 @@ module.exports = async function osano(context) {
           {
             tagName: 'script',
             innerHTML: fullStoryLabels,
+          },
+          {
+            tagName: 'script',
+            innerHTML: preferencesLink,
           },
         ],
       }

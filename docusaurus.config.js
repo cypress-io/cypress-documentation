@@ -282,6 +282,10 @@ const config = {
                 label: 'Support',
                 href: 'https://www.cypress.io/support?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Support',
               },
+              {
+                // Reopens the Osano consent drawer; the click handler lives in plugins/osano.js
+                html: '<button type="button" class="footer__link-item osano-preferences-link">Cookie Preferences</button>',
+              },
             ],
           },
         ],

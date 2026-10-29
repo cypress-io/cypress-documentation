@@ -8,6 +8,15 @@ describe('Cookie consent (Osano)', () => {
     cy.get('.osano-cm-dialog', { timeout: 20000 }).should('exist')
   })
 
+  // The footer link is the only way back into Osano once the banner is gone,
+  // and US visitors never get a banner at all.
+  it('reopens the consent drawer from the footer', () => {
+    cy.visit('/')
+    cy.get('.osano-cm-info-dialog', { timeout: 20000 }).should('not.be.visible')
+    cy.contains('.footer button', 'Cookie Preferences').click()
+    cy.get('.osano-cm-info-dialog').should('be.visible')
+  })
+
   // plugins/osano.js labels the banner's controls for FullStory, including
   // every descendant, since clicks on the close button land on its inner <svg>.
   // Which controls render is geo-gated too: some regions get a close button,

@@ -363,6 +363,17 @@ details.alert {
   margin-bottom: 2rem;
 }
 
+/* "Cookie Preferences" is a button (it opens the Osano drawer rather than
+   navigating), so strip the button chrome to match the footer links */
+.osano-preferences-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
 .mediaGridContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
