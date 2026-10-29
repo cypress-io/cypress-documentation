@@ -72,7 +72,7 @@ to configure those as well.
 :::note
 If your application is network-restricted (only accessible from your corporate VPN for example) then
 you will need to coordinate with your network security team to establish a method
-for a remote sandbox to access it. This is may require use of a proxy or other advanced
+for a remote sandbox to access it. This may require use of a proxy or other advanced
 configuration.
 :::
 
@@ -138,17 +138,18 @@ npx cypress open --e2e --browser chromium --detached
 ### Wait for the browser
 
 Once the "open" mode instance of Cypress has been launched it can be controlled and queried using `cypress tap`.
-On initial launch it may take some time for the browser to launch; poll `status` until it reports a
-stage other than `not connected` or `browser not selected`:
+On initial launch it may take some time for the browser to launch; poll `status` until it reports a successful connection to the browser.
+If the loop completes unsuccessfully read `cypress-open.log` for the reason.
 
 ```shell title="Command"
-until npx cypress tap status --json | grep -Eq '"status": *"(spec not selected|loading|running|passed|failed)"'; do
+deadline=$((SECONDS + 90))
+
+until out=$(npx cypress tap status --json) && echo "$out" | grep -Eq '"browserAttached": *true'; do
+  echo "$out" | grep -Eq '"status": *"error"' && { echo "$out"; exit 1; }
+  [ "$SECONDS" -ge "$deadline" ] && { echo "no browser after 90 s; see cypress-open.log"; exit 1; }
   sleep 1
 done
 ```
-
-Give the loop a timeout in your own scripts. If it does not finish, read
-`cypress-open.log` for the reason.
 
 ### Run specs and read the results
 
@@ -257,12 +258,15 @@ from, so pass `--browser` instead.
    costs. Review your agent's documentation to determine if it is appropriate to cache the
    Cypress binary (see [Environment variables](#Environment-variables)) and other dependencies.
 
-3. Claude sandbox environments include `xvfb` and Chromium by default. Tell the agent how to start Cypress manually, or
+3. Claude sandbox environments include `xvfb` and Chromium by default, but
+   leave `DISPLAY` unset. If you have a display you can set this variable manually, otherwise Cypress starts its own Xvfb. Ensure the bundled Chromium is on the `PATH` under the name `chromium`, then start Cypress
+   with that browser. Tell the agent how to do this, or
    [add the recipe to your agent's instructions](#Add-the-recipe-to-your-agents-instructions).
 
    ```shell title="Command"
-   browser="$(ls /opt/pw-browsers/chromium-*/chrome-linux/chrome | head -1)"
-   nohup npx cypress open --e2e --browser "$browser" --project . > cypress-open.log 2>&1 &
+   mkdir -p ~/bin
+   ln -sf "$(ls /opt/pw-browsers/chromium-*/chrome-linux/chrome | head -1)" ~/bin/chromium
+   PATH="$HOME/bin:$PATH" nohup npx cypress open --e2e --browser chromium --project . > cypress-open.log 2>&1 &
    ```
 
 </TabItem>
@@ -315,8 +319,8 @@ executable:
     nohup npx cypress open --e2e --browser <browser> --project . > cypress-open.log 2>&1 &
 
 Wait until `npx cypress tap status --json` reports a status other than
-`not connected` or `browser not selected`. If it does not, read
-`cypress-open.log`.
+`not connected` or `browser not selected`. Stop waiting if it reports `error`
+or if nothing changes after about 90 seconds, and read `cypress-open.log`.
 
 Then run a spec with `npx cypress tap run <spec>` and poll
 `npx cypress tap status --json` until `status` is `passed` or `failed` and
@@ -358,8 +362,10 @@ apt-file update`). Install the library and run the command again.
 - **`status` reports `error`.** The project failed to load: an invalid
   configuration file, or (for component testing) a dev server that failed to
   start. Cypress prints the same error to `cypress-open.log`, and
-  `npx cypress tap status --json` includes it under `error`. Fix the file the
-  error names and restart Cypress.
+  `npx cypress tap status --json` includes it under `error`. After a
+  configuration file fails to load, or `setupNodeEvents` throws, Cypress stops
+  watching the configuration and will need to be restarted to pick up any
+  fixes made to the configuration.
 
 - **`status` stays at `browser not selected`.** Two different causes lead
   here. First, pass `--project`, `--browser` (or set `defaultBrowser`), and a
@@ -373,14 +379,32 @@ apt-file update`). Install the library and run the command again.
   variable, which makes Electron run as plain Node.js with no window.
   `cypress open` ignores it and prints a warning.
 
+- **Component testing shows no session and no error.** Check that the
+  configuration, support file, `component-index.html`, and bundler config (such
+  as `vite.config.*`) exist, and that `setupNodeEvents` does not throw. Cypress
+  does not scaffold component testing for an agent because it needs a
+  framework and bundler to be chosen and their dependencies installed, so
+  create these files first. To check the setup, run
+  `npx cypress run --component --spec <spec>`.
+
+- **`status` reports `not connected` for a session that was running.**
+  `cypress tap` running in a different PID namespace than Cypress, such as a
+  separate container sharing the filesystem, can decide the session is gone.
+  Run `tap` in the same container as Cypress.
+
 - **`cypress open` exits right away.** Run `npx cypress verify` to see why the
   Cypress binary cannot start.
 
 ## Limitations
 
 - The agent and Cypress have to run in the same sandbox.
-- An open Cypress session with a browser uses about 2 GB of memory in a small
-  project, and more in a larger one. Size the sandbox accordingly.
+- An open Cypress session with a browser uses about 2 GB of memory in a small project, and more in a larger one. Size
+  the sandbox accordingly.
+- Each new session in a sandbox that does not persist the filesystem starts with
+  an empty Cypress binary cache. Downloading, extracting, and verifying the
+  binary adds a delay to startup in each new sandbox instance. It is recommended
+  to configure your sandbox to persist the binary cache directory for optimal
+  performance.
 - `--detached` leaves the Xvfb that Cypress started running after Cypress exits.
   Stop it by its own process ID when you finish, with `pgrep Xvfb` to find it.
   Avoid `pkill Xvfb`: it stops every Xvfb on the host, including one another
