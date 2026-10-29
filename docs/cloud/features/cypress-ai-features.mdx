@@ -44,13 +44,13 @@ Cypress AI are easy-to-use capabilities and tools across your testing lifecycle.
 
 ### AI Capabilities
 
-| When To Use        | AI Capability               | Outcome                                                                               |
-| ------------------ | --------------------------- | ------------------------------------------------------------------------------------- |
-| Author Tests       | cy.prompt(), Studio AI      | Generate commands, assertions, and full tests from natural language or UI exploration |
-| Understand Tests   | Test Intent Summaries       | Quickly see what tests verify, reducing cognitive load and onboarding friction        |
-| Debug Failures     | Error Summaries             | AI-powered explanations for what happened when a test failed                          |
-| Test maintenance   | cy.prompt()                 | Automatically adapt to UI changes that would otherwise break selectors                |
-| Fill Coverage Gaps | UI Coverage Test Generation | Identify untested flows and automatically generate new tests                          |
+| When To Use        | AI Capability               | Outcome                                                                                                       |
+| ------------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Author Tests       | cy.prompt(), Studio AI      | Generate commands, assertions, and full tests from natural language or UI exploration                         |
+| Understand Tests   | Test Intent Summaries       | Quickly see what tests verify in recorded runs and analytics, reducing cognitive load and onboarding friction |
+| Debug Failures     | Error Summaries             | AI-powered explanations for what happened when a test failed                                                  |
+| Test maintenance   | cy.prompt()                 | Automatically adapt to UI changes that would otherwise break selectors                                        |
+| Fill Coverage Gaps | UI Coverage Test Generation | Identify untested flows and automatically generate new tests                                                  |
 
 ### AI Tools
 
@@ -144,9 +144,17 @@ Studio AI observes DOM changes between interactions and generates assertions bas
 
 :::
 
-Test Intent Summaries are AI-generated descriptions of a test's purpose, available in the Cypress Cloud test details sidebar. They help you orient quickly — whether you are reviewing a new test or debugging a failure — without needing to trace through the command log manually.
+Test Intent Summaries are AI-generated descriptions of a test's purpose. They help you orient quickly — whether you are reviewing a new test, debugging a failure, or triaging analytics — without needing to trace through the command log manually.
 
-Test Intent Summaries are available on all Cypress Cloud plans at no additional cost.
+Open a Test Intent Summary from:
+
+- The **test details sidebar** when you inspect a recorded test result
+- The **Top failures** drill-in when you select a test in [Project Analytics](/cloud/features/analytics/project-analytics#Top-failures)
+- The **Flaky tests** drill-in when you select a test in [Project Analytics](/cloud/features/analytics/project-analytics#Flaky-tests)
+
+In Top failures and flaky test analytics, the summary is based on the test's latest failure or latest flaky result within your current **branch** and **time range** filters. Cypress generates the summary on first open, using the same Cloud AI capability as the test details sidebar.
+
+Test Intent Summaries require [Cloud AI](/cloud/faq#What-is-Cloud-AI) to be enabled for your organization. They are available on all Cypress Cloud plans at no additional cost.
 
 <DocsImage
   src="/img/cloud/runs/sidebar-test-intent-summary.png"
