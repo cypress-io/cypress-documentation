@@ -183,6 +183,14 @@
           "link": "https://github.com/anvitech12/cypress-ai-vitals",
           "keywords": ["ai", "llm", "semantic", "image", "audio", "metrics", "models"],
           "badge": "community"
+        },
+        {
+          "name": "TestMu AI cypress-skill",
+          "description": "AI agent skill that helps coding agents like Claude Code, Cursor and Copilot generate Cypress E2E and component tests in JavaScript or TypeScript.",
+          "link": "https://github.com/LambdaTest/agent-skills/tree/main/cypress-skill",
+          "keywords": ["ai", "skill", "agents", "test generation"],
+          "badge": "vendor",
+          "vendor": "TestMu AI"
         }
       ]
     },
