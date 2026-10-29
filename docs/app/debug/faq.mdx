@@ -224,6 +224,15 @@ We try to release the Cypress App every two weeks.
 If there is a significant bug outside of our release schedule then we release a
 patch as soon as possible.
 
+Patches for security vulnerabilities primarily focus on the latest major version.
+Security fixes are backported to the previous major version for 12 months after
+the current major version is released only for vulnerabilities with High or
+Critical CVSS Scores. The decision to backport is made based on severity
+assessment and the feasibility of implementing the patch in those versions.
+
+Updates for vulnerabilities in third-party dependencies, such as Electron,
+Chromium, Node.js, or npm packages, are not backported.
+
 ### <Icon name="angle-right" /> What information is captured or transmitted when using the Cypress App?
 
 The Cypress App runs locally so no data is sent to Cypress aside from exception data,
