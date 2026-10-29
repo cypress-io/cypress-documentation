@@ -14,8 +14,29 @@ describe('Cookie consent (Osano)', () => {
   it('reopens the consent drawer from the footer', () => {
     cy.visit('/')
     cy.get('.osano-cm-info-dialog', { timeout: 20000 }).should('not.be.visible')
-    cy.contains('.footer button', 'Cookie Preferences').click()
+    cy.contains('.footer button', 'Cookie Preferences')
+      .should(
+        'have.attr',
+        'data-fs-element',
+        'Cookie Consent - Open Preferences'
+      )
+      .click()
     cy.get('.osano-cm-info-dialog').should('be.visible')
+  })
+
+  // An ad blocker that stops osano.js leaves the link nothing to open, so
+  // plugins/osano.js hides it rather than show a button that does nothing.
+  // The earlier tests leave osano.js in the browser cache, where the intercept
+  // can't reach it, so the test clears the cache first.
+  it('hides the footer link when Osano is blocked', () => {
+    cy.wrap(
+      Cypress.automation('remote:debugger:protocol', {
+        command: 'Network.clearBrowserCache',
+      })
+    )
+    cy.intercept('GET', 'https://cmp.osano.com/**', { forceNetworkError: true })
+    cy.visit('/')
+    cy.contains('.footer button', 'Cookie Preferences').should('not.be.visible')
   })
 
   // plugins/osano.js labels the banner's controls for FullStory, including

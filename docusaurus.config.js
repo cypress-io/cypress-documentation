@@ -284,8 +284,9 @@ const config = {
               },
               {
                 // Reopens the Osano consent drawer. The click handler is in
-                // plugins/osano.js.
-                html: '<button type="button" class="footer__link-item osano-preferences-link">Cookie Preferences</button>',
+                // plugins/osano.js, which also labels Osano's own buttons for
+                // FullStory with the same "Cookie Consent - " prefix.
+                html: '<button type="button" class="footer__link-item osano-preferences-link" data-fs-element="Cookie Consent - Open Preferences">Cookie Preferences</button>',
               },
             ],
           },
