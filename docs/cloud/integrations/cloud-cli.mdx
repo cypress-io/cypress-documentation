@@ -1,6 +1,6 @@
 ---
 title: 'Cypress Cloud CLI: Debug CI failures from your terminal'
-description: 'Query Cypress Cloud runs, tests, and Test Replay data from the command line with the cy-cloud CLI. Built for developers and AI agents.'
+description: 'Query Cypress Cloud runs, tests, Test Replay, and Cypress Accessibility data from the command line with the cy-cloud CLI. Built for developers and AI agents.'
 sidebar_label: Cloud CLI
 sidebar_position: 65
 sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
@@ -10,13 +10,15 @@ sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 
 # Cloud CLI: Debug from your terminal
 
-The Cypress Cloud CLI (`cy-cloud`) brings your Cypress Cloud data to the command line. Check the status of a CI run, pull the screenshot of a failed test, or review the exact commands, network calls, and console logs captured by Test Replay that led to a failure, all without opening a browser.
+The Cypress Cloud CLI (`cy-cloud`) brings your Cypress Cloud data to the command line. Check the status of a CI run, pull the screenshot of a failed test, review the exact commands, network calls, and console logs captured by Test Replay that led to a failure, or pull a run's [Cypress Accessibility](#Accessibility-and-App-Quality) report, all without opening a browser.
 
 Every command returns structured JSON, so the CLI is equally at home in a shell script, a CI job, or an [AI coding agent](#Use-with-AI-agents).
 
 :::note
 
 The Cloud CLI is available on **every Cypress Cloud plan**, including the free Starter plan, at no additional cost.
+
+The [`accessibility`](#cy-cloud-accessibility-report-get) and [`app-quality`](#cy-cloud-app-quality-config-get) commands also need an active [Cypress Accessibility](/accessibility/get-started/introduction) or [UI Coverage](/ui-coverage/get-started/introduction) add-on or trial for your organization. See [Accessibility and App Quality](#Accessibility-and-App-Quality).
 
 :::
 
@@ -32,6 +34,7 @@ The Cloud CLI removes that round trip. It exposes the same Cloud data you would 
 - **Automate it.** Because output is JSON, you can wire the CLI into scripts, dashboards, and custom tooling.
 - **Hand it to an agent.** The CLI is designed for both humans and AI agents, so your coding assistant can gather the same context you would.
 - **Grab a failure screenshot.** Save the screenshot Cypress captured at the moment a test failed straight to disk.
+- **Work your accessibility backlog.** Read a run's Cypress Accessibility score and failing rules, list every failing element with the same fields as the [report download](/accessibility/connect-and-extend/download-reports), and check the App Quality configuration the run was processed with.
 
 ## How it works
 
@@ -202,41 +205,65 @@ To revoke a personal access token, find it under **Personal access token** and s
   alt="Personal access token section of Cloud CLI access with Regenerate token and Revoke token actions"
 />
 
+## Accessibility and App Quality
+
+The `accessibility` and `app-quality` commands read [Cypress Accessibility](/accessibility/get-started/introduction) results and [App Quality configuration](/accessibility/configuration/overview) for runs Cypress Cloud has already processed. Like every other command, they are read-only and scoped to the projects you can access.
+
+:::note
+
+These commands require `cy-cloud` version `0.6.0` or later, and an **active** add-on or trial for your organization:
+
+- [`accessibility report get`](#cy-cloud-accessibility-report-get) and [`accessibility element list`](#cy-cloud-accessibility-element-list) require Cypress Accessibility.
+- [`app-quality config get`](#cy-cloud-app-quality-config-get) requires Cypress Accessibility or UI Coverage.
+
+Access ends when the add-on is removed or the trial expires, even for runs recorded while it was active. Without an active add-on or trial, the command fails with an error such as `Cypress Accessibility is not enabled for the <organization> organization`.
+
+:::
+
+Identify the run with `--projectId` and `--runNumber`, or paste a Cypress Cloud run URL with `--runUrl`. Only the project and run number are read from the URL, so you can paste the URL of any page in the run, including a view in its Accessibility report:
+
+```bash
+cy-cloud accessibility report get --runUrl https://cloud.cypress.io/projects/abc123/runs/4021/accessibility
+```
+
 ## Command reference
 
-Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`, `test`, `replay`, `cache`), each with subcommands such as `list` and `get`. For example, `cy-cloud run list` lists runs. Each data command returns JSON on standard output.
+Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`, `test`, `replay`, `accessibility`, `app-quality`, `cache`), each with subcommands such as `list` and `get`. For example, `cy-cloud run list` lists runs. Each data command returns JSON on standard output.
 
-| Command                                                 | What it does                                                                         |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [`cy-cloud org list`](#cy-cloud-org-list)               | List the organizations you belong to.                                                |
-| [`cy-cloud project list`](#cy-cloud-project-list)       | List the projects you can access.                                                    |
-| [`cy-cloud project get`](#cy-cloud-project-get)         | Get details for a specific project.                                                  |
-| [`cy-cloud run list`](#cy-cloud-run-list)               | List runs for a project.                                                             |
-| [`cy-cloud run get`](#cy-cloud-run-get)                 | Get details for a specific run.                                                      |
-| [`cy-cloud spec list`](#cy-cloud-spec-list)             | List specs for a run, or by spec ID.                                                 |
-| [`cy-cloud spec get`](#cy-cloud-spec-get)               | Get details for a specific spec.                                                     |
-| [`cy-cloud test list`](#cy-cloud-test-list)             | List tests for a run, spec, or test ID.                                              |
-| [`cy-cloud test get`](#cy-cloud-test-get)               | Get details for a specific test.                                                     |
-| [`cy-cloud replay info`](#cy-cloud-replay-info)         | Summarize a test's replay event counts.                                              |
-| [`cy-cloud replay timeline`](#cy-cloud-replay-timeline) | Query a test's replay timeline of events.                                            |
-| [`cy-cloud replay view`](#cy-cloud-replay-view)         | Open a test replay in the browser to inspect your app. Requires `cy-cloud` `0.4.0`+. |
-| [`cy-cloud status`](#cy-cloud-status)                   | Print your authentication state and Cloud status.                                    |
-| [`cy-cloud version`](#cy-cloud-version)                 | Print the CLI version and whether an upgrade is required.                            |
-| [`cy-cloud login`](#cy-cloud-login)                     | Sign in to Cypress Cloud.                                                            |
-| [`cy-cloud logout`](#cy-cloud-logout)                   | Clear stored credentials.                                                            |
-| [`cy-cloud cache info`](#cy-cloud-cache-info)           | Print the local Test Replay cache location and size.                                 |
-| [`cy-cloud cache clear`](#cy-cloud-cache-clear)         | Remove everything from the cache.                                                    |
-| [`cy-cloud cache cleanup`](#cy-cloud-cache-cleanup)     | Delete expired and oversized cache entries.                                          |
+| Command                                                                       | What it does                                                                             |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [`cy-cloud org list`](#cy-cloud-org-list)                                     | List the organizations you belong to.                                                    |
+| [`cy-cloud project list`](#cy-cloud-project-list)                             | List the projects you can access.                                                        |
+| [`cy-cloud project get`](#cy-cloud-project-get)                               | Get details for a specific project.                                                      |
+| [`cy-cloud run list`](#cy-cloud-run-list)                                     | List runs for a project.                                                                 |
+| [`cy-cloud run get`](#cy-cloud-run-get)                                       | Get details for a specific run.                                                          |
+| [`cy-cloud spec list`](#cy-cloud-spec-list)                                   | List specs for a run, or by spec ID.                                                     |
+| [`cy-cloud spec get`](#cy-cloud-spec-get)                                     | Get details for a specific spec.                                                         |
+| [`cy-cloud test list`](#cy-cloud-test-list)                                   | List tests for a run, spec, or test ID.                                                  |
+| [`cy-cloud test get`](#cy-cloud-test-get)                                     | Get details for a specific test.                                                         |
+| [`cy-cloud replay info`](#cy-cloud-replay-info)                               | Summarize a test's replay event counts.                                                  |
+| [`cy-cloud replay timeline`](#cy-cloud-replay-timeline)                       | Query a test's replay timeline of events.                                                |
+| [`cy-cloud replay view`](#cy-cloud-replay-view)                               | Open a test replay in the browser to inspect your app. Requires `cy-cloud` `0.4.0`+.     |
+| [`cy-cloud accessibility report get`](#cy-cloud-accessibility-report-get)     | Get a run's Cypress Accessibility report summary. Requires `cy-cloud` `0.6.0`+.          |
+| [`cy-cloud accessibility element list`](#cy-cloud-accessibility-element-list) | List the failing elements in a run's Accessibility report. Requires `cy-cloud` `0.6.0`+. |
+| [`cy-cloud app-quality config get`](#cy-cloud-app-quality-config-get)         | Get a project's or run's App Quality configuration. Requires `cy-cloud` `0.6.0`+.        |
+| [`cy-cloud status`](#cy-cloud-status)                                         | Print your authentication state and Cloud status.                                        |
+| [`cy-cloud version`](#cy-cloud-version)                                       | Print the CLI version and whether an upgrade is required.                                |
+| [`cy-cloud login`](#cy-cloud-login)                                           | Sign in to Cypress Cloud.                                                                |
+| [`cy-cloud logout`](#cy-cloud-logout)                                         | Clear stored credentials.                                                                |
+| [`cy-cloud cache info`](#cy-cloud-cache-info)                                 | Print the local Test Replay cache location and size.                                     |
+| [`cy-cloud cache clear`](#cy-cloud-cache-clear)                               | Remove everything from the cache.                                                        |
+| [`cy-cloud cache cleanup`](#cy-cloud-cache-cleanup)                           | Delete expired and oversized cache entries.                                              |
 
 ### Pagination and filtering
 
 Every `list` command returns one page of results plus a `pagination` object describing the full result set.
 
-- `--limit` sets how many items to return per page. The default is 30 and the maximum is 100.
+- `--limit` sets how many items to return per page. The default is 30 and the maximum is 100 (200 for [`accessibility element list`](#cy-cloud-accessibility-element-list)).
 - `--page` selects which page to return, starting at 1 (the default).
 - The response's `pagination` object reports the effective `page`, `perPage`, and the `total` number of matching items, so you can tell how many results exist and whether more pages remain.
 
-Filters that accept multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`) take a comma-separated list, and you can combine any of them with `--page` and `--limit`.
+Filters that accept multiple values (`--status`, `--branch`, `--specId`, `--testId`, `--orgId`, `--impact`) take a comma-separated list, and you can combine any of them with `--page` and `--limit`.
 
 To walk an entire result set, request the largest page you can (`--limit 100`), then keep incrementing `--page` until a page returns fewer than `--limit` items, or until you have collected `pagination.total` items:
 
@@ -297,14 +324,14 @@ Get details for a single project by its project ID (the `projectId` from your Cy
 cy-cloud project get --projectId <projectId>
 ```
 
-The response also includes the project's latest run ids:
+The response also includes the project's latest run numbers:
 
 ```json
 {
   "projectId": "abc123",
   "name": "design-system",
-  "latestRunId": 4021,
-  "latestCompletedRunId": 4020
+  "latestRunNumber": 4021,
+  "latestCompletedRunNumber": 4020
 }
 ```
 
@@ -804,6 +831,138 @@ You must have filesystem permissions to the path being written to. If you see `E
 
 :::
 
+### cy-cloud accessibility report get
+
+Get the Accessibility report summary for a run: the score, the report URL, element counts by status, and every failing rule with how many elements fail it.
+
+```bash
+cy-cloud accessibility report get --projectId <projectId> --runNumber <runNumber>
+```
+
+```json
+{
+  "runNumber": 4021,
+  "reportStatus": "processed",
+  "reportUrl": "https://cloud.cypress.io/projects/abc123/runs/4021/accessibility",
+  "isPartialReport": false,
+  "axeVersion": "4.11.0",
+  "score": 87.42,
+  "elementCountsByStatus": { "fail": 58, "incomplete": 12, "ignore": 4 },
+  "failedRules": [
+    { "ruleId": "button-name", "impact": "critical", "failedElementCount": 3 },
+    {
+      "ruleId": "color-contrast",
+      "impact": "serious",
+      "failedElementCount": 41
+    },
+    {
+      "ruleId": "landmark-one-main",
+      "impact": "moderate",
+      "failedElementCount": 2
+    }
+  ]
+}
+```
+
+- `failedRules` is sorted by impact (critical, serious, moderate, minor), then by `failedElementCount`, highest first.
+- `elementCountsByStatus` counts distinct elements across all rules and views. An element that fails several rules counts once, so the sum of `failedElementCount` can be higher than `elementCountsByStatus.fail`.
+- `score` is the run's [accessibility score](/accessibility/core-concepts/accessibility-score), from 0 to 100.
+
+While the report is still processing, `reportStatus` is `processing` and the report fields are omitted. Run the command again shortly. If processing failed, `reportStatus` is `errored`. If Accessibility was not enabled for the run, the command fails with `Run <runNumber> has no Accessibility report`.
+
+### cy-cloud accessibility element list
+
+List the failing elements in a run's Accessibility report, worst impact first. Each element has the same fields as a row in the [report download](/accessibility/connect-and-extend/download-reports#Whats-in-the-file), so an agent can work through the full report page by page.
+
+List the elements failing one rule, for example to fix it everywhere it fails:
+
+```bash
+cy-cloud accessibility element list --projectId <projectId> --runNumber <runNumber> --ruleId color-contrast
+```
+
+```json
+{
+  "elements": [
+    {
+      "ruleId": "color-contrast",
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "impact": "serious",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast",
+      "tags": ["cat.color", "wcag2aa", "wcag143"],
+      "element": "[data-cy-component=\"Checkout\"] .cart-total",
+      "targetString": "[\".cart-total\"]",
+      "elementUrl": "https://cloud.cypress.io/projects/abc123/runs/4021/accessibility/1f6b2c3d?ruleId=color-contrast",
+      "status": "fail",
+      "failureSummaries": [
+        "Fix any of the following:\n  Element has insufficient color contrast of 3.2 (foreground color: #8a8a8a, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+      ],
+      "view": "/checkout",
+      "viewId": "1f6b2c3d",
+      "viewUrl": "https://cloud.cypress.io/projects/abc123/runs/4021/accessibility/1f6b2c3d"
+    }
+  ],
+  "pagination": { "page": 1, "perPage": 30, "total": 41 }
+}
+```
+
+Or list only the most severe failures:
+
+```bash
+cy-cloud accessibility element list --projectId <projectId> --runNumber <runNumber> --impact critical,serious
+```
+
+| Option               | Description                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------- |
+| `--projectId`        | The project ID. Required unless you pass `--runUrl`.                                                    |
+| `--runNumber`        | The run number. Required unless you pass `--runUrl`.                                                    |
+| `--runUrl`           | A Cypress Cloud run URL, in place of `--projectId` and `--runNumber`.                                   |
+| `--ruleId`           | Only elements failing this Axe Core® or [Cypress rule](/accessibility/core-concepts/cypress-rules).     |
+| `--impact`           | Only elements of rules with these impacts: `critical`, `serious`, `moderate`, `minor` (comma-separate). |
+| `--page` / `--limit` | Paginate through the elements. `--limit` defaults to 30, up to 200.                                     |
+
+Each element is one element for one rule in one view, so an element that fails a rule on several views has one entry per view. That is why `pagination.total` can be higher than the report's `failedElementCount` or `elementCountsByStatus.fail`.
+
+The list includes failing elements only. If the report is still processing, the command fails with an error asking you to try again shortly; run [`accessibility report get`](#cy-cloud-accessibility-report-get) to check `reportStatus` first.
+
+### cy-cloud app-quality config get
+
+Get the [App Quality configuration](/accessibility/configuration/overview) for a project. Cypress Accessibility settings, including [`axeConfig`](/accessibility/configuration/axe-core-configuration), are under the `accessibility` key, and UI Coverage settings are under `uiCoverage`.
+
+Get the project's current configuration:
+
+```bash
+cy-cloud app-quality config get --projectId <projectId>
+```
+
+```json
+{
+  "projectId": "abc123",
+  "config": {
+    "accessibility": {
+      "axeConfig": {
+        "runOnly": {
+          "type": "tag",
+          "values": ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]
+        }
+      },
+      "viewFilters": [
+        { "pattern": "https://admin.example.com/*", "include": false }
+      ]
+    }
+  },
+  "updatedAt": "2026-10-12T15:04:22.000Z"
+}
+```
+
+Add `--runNumber` (or pass `--runUrl`) to get the configuration a run was processed with instead. The response adds the `runNumber` and `isLatestConfig`, which is `true` when the run used the project's current configuration:
+
+```bash
+cy-cloud app-quality config get --projectId <projectId> --runNumber <runNumber>
+```
+
+Comparing a run's configuration with the project's current one tells you whether a change in the report came from your app or from a configuration change.
+
 ### cy-cloud status
 
 Print your authentication state and Cloud status. See [Authenticate](#Authenticate) for the signed-in example and field details.
@@ -980,6 +1139,16 @@ If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copil
 
 </CopyPrompt>
 
+<CopyPrompt
+  title="Plan accessibility fixes"
+  subtext="Rank a run's failing accessibility rules and plan where to start."
+  prompt={`Use cy-cloud to get the accessibility report for the latest completed run of project <projectId>. Rank the failing rules by impact and failing element count, then list the failing elements for the top rule and find where each one is rendered in my code. Propose a fix plan, starting with the rule that fixes the most elements.`}
+>
+
+### Plan accessibility fixes
+
+</CopyPrompt>
+
 For a conversational, in-editor alternative that speaks the Model Context Protocol, see [Cloud MCP](/cloud/integrations/cloud-mcp). Many teams use both: give a terminal-based agent the CLI, and connect an MCP client to Cloud MCP. The two are compared in the [Cloud MCP FAQ](/cloud/integrations/cloud-mcp#Cloud-MCP-vs-the-Cloud-CLI).
 
 ## Workflow: triage a failing run
@@ -1122,6 +1291,38 @@ cy-cloud replay view close --testId <testId>
 
 This is a different kind of answer than a failure screenshot or a broad timeline window gives you: instead of a general sense of "sometime around here," you get the state immediately before and after one specific command, so you can point at the exact step that broke your app. Hand the two `inspect` JSON blobs to an [agent](#Use-with-AI-agents) and ask it to explain the difference and propose a fix.
 
+## Workflow: fix an accessibility rule everywhere
+
+A run's [Cypress Accessibility](/accessibility/get-started/introduction) report shows dozens of failing elements across many views. Fixing them one rule at a time, starting with the rules that fail on the most elements, gets the biggest improvement for the least work. This requires an active Cypress Accessibility add-on or trial.
+
+**1. Find the latest run.** Note the project's `latestCompletedRunNumber`.
+
+```bash
+cy-cloud project get --projectId <projectId>
+```
+
+**2. Rank the failing rules.** Read the report summary. `failedRules` is already sorted by impact, then by how many elements fail each rule.
+
+```bash
+cy-cloud accessibility report get --projectId <projectId> --runNumber <runNumber>
+```
+
+If `reportStatus` is `processing`, run the command again shortly.
+
+**3. List every element failing the rule you picked.** Each element includes its selector, the failure summary, the view it fails on, and links back to the report in Cypress Cloud. Page through with `--page` until you have `pagination.total` elements.
+
+```bash
+cy-cloud accessibility element list --projectId <projectId> --runNumber <runNumber> --ruleId color-contrast --limit 200
+```
+
+**4. Check the configuration the run used.** If a rule seems to be missing or reported unexpectedly, confirm which rules and views the run was configured to check, and whether the project's configuration has changed since.
+
+```bash
+cy-cloud app-quality config get --projectId <projectId> --runNumber <runNumber>
+```
+
+From here, fix the elements in your code, or hand the JSON to an [agent](#Use-with-AI-agents). If you configure [component identification](/accessibility/configuration/components), each `element` selector names the components it is rendered in, so the agent can find the code without searching the whole page. For more prompts, including filing the failures into your issue tracker, see [Work with AI agents](/accessibility/work-with-ai-agents).
+
 ## Output format and schemas
 
 Every data command prints JSON to standard output, so you can pipe results into other tools. For example, print the run numbers of the last five failed runs on `main` with [`jq`](https://jqlang.github.io/jq/):
@@ -1252,7 +1453,7 @@ Usage limits are separate from data availability. What data you can retrieve fol
 
 ### Security and privacy
 
-- **Read-only.** The CLI only retrieves data. It cannot modify your test code, delete runs, or change any Cloud settings.
+- **Read-only.** The CLI only retrieves data. It cannot modify your test code, delete runs, or change any Cloud settings, including your App Quality configuration.
 - **Scoped to your access.** Every request runs as your Cypress Cloud user, so you only ever see the organizations, teams, and projects you can already access in the Cloud UI.
 - **Local credentials.** Credentials from `cy-cloud login` are stored on your machine under `~/.config/cy-cloud`, in files readable only by your user. The `CYPRESS_CLOUD_TOKEN` environment variable is never written to disk.
 
@@ -1266,6 +1467,7 @@ The Cloud CLI communicates with the Cypress Cloud API at `https://cloud-api.cypr
 - [Cypress AI Skills](/app/tooling/ai-skills): the `cypress-cloud-cli` skill drives this CLI for your agent
 - [cypress tap: live Cypress app context in your terminal](/app/tooling/cypress-tap)
 - [Test Replay](/cloud/features/test-replay)
+- [Cypress Accessibility: Work with AI agents](/accessibility/work-with-ai-agents)
 - [Recording Cloud Runs](/cloud/features/recorded-runs)
 - [Data Extract API](/cloud/integrations/data-extract-api)
 - [Debug failing tests](/cloud/guides/debug-failing-tests)
