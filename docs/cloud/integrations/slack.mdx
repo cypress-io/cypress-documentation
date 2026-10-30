@@ -212,6 +212,29 @@ The display mode applies to the test results, UI Coverage, and accessibility sec
 
 <!-- add image showing the same run result in stacked and compact display modes side by side -->
 
+### Customize messages further with webhooks
+
+If you need more control over message content than these options provide, use a
+[Cypress Cloud webhook](/cloud/integrations/webhooks) to trigger the message
+instead. Cypress Cloud sends the run details to an endpoint you choose as a
+[JSON payload](/cloud/integrations/webhooks#Payload), and your own system
+decides what to post, where, and when.
+
+For example, you could:
+
+- Post failed runs on your main branch to an alerts channel and all other runs
+  to a quieter channel, based on the payload's `status` and `commitBranch`.
+- Alert only when failures pass a threshold, using `totalFailed` or
+  `flakyTestCount`.
+- Address the commit author by name with `commitAuthorName`, or link straight
+  to the pull request with `ciPullRequestUrl`.
+- Use your own wording and layout, including details from other internal systems.
+
+[Slack Workflow Builder](https://slack.com/help/articles/360053571454) can
+receive the webhook directly, so you don't need to host a server. For a
+step-by-step example, see
+[Create a custom Slack message for a Cypress run](/cloud/guides/webhooks#Create-a-custom-Slack-message-for-a-Cypress-run).
+
 ## Example configurations
 
 The options above — notification preferences, tag and run group filters, content sections, display modes, and org-vs-project scoping — can be combined to build notification setups tailored to how your team works. Below are some common configurations.
