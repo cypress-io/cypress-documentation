@@ -107,6 +107,28 @@ JavaScript and yields the result.
 cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 ```
 
+#### Type the contents of a JSON file
+
+Pass a type argument to tell TypeScript the shape of the yielded contents.
+
+```typescript copyTsToJs title="spec.cy.ts"
+type User = { name: string; email: string }
+
+cy.readFile<User>('path/to/data.json').its('email').should('include', '@')
+```
+
+#### Read a `.json` file as raw text
+
+To check the exact text of a `.json` file, such as its indentation, read it with
+`null` encoding and convert the Buffer to a string. `cy.readFile()` doesn't
+parse a file read this way.
+
+```javascript
+cy.readFile('path/to/data.json', null).then((buf) => {
+  expect(buf.toString()).to.include('"name": "Eliza"')
+})
+```
+
 ### YAML
 
 #### Get translation data from a YAML file
@@ -140,6 +162,17 @@ cy.readFile('path/to/logo.png', 'base64').then((logo) => {
 })
 ```
 
+#### Specify the encoding in the options object
+
+Pass `encoding` alongside other options, such as a longer `timeout`.
+
+```javascript
+cy.readFile('path/to/logo.png', { encoding: 'base64', timeout: 10000 }).should(
+  'match',
+  /^iVBOR/ // base64 for the PNG signature
+)
+```
+
 #### Read a file as a Buffer
 
 ```javascript
@@ -159,6 +192,46 @@ cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
 
   audio.play()
 })
+```
+
+### Files your app creates
+
+#### Wait for a downloaded file
+
+`cy.readFile()` retries until the file exists, so it waits for a download to
+finish. Build the path from the
+[`downloadsFolder`](/app/references/configuration#Downloads) configuration.
+
+```javascript
+cy.get('[data-cy="export-csv"]').click()
+cy.readFile(`${Cypress.config('downloadsFolder')}/report.csv`).should(
+  'contain',
+  'Order ID'
+)
+```
+
+#### Check a file your server writes
+
+Read a file that your app or server writes as a side effect, such as a log.
+`cy.readFile()` reads the file again until the assertion passes.
+
+```javascript
+// clicking "Save" makes the server append to logs/audit.log
+cy.get('[data-cy="save-settings"]').click()
+cy.readFile('logs/audit.log').should('contain', 'settings updated')
+```
+
+### Uploads
+
+#### Upload a file with `.selectFile()`
+
+Alias the contents of a file, then pass the alias to
+[`.selectFile()`](/api/commands/selectfile). `cy.readFile()` stores the file
+name with the alias, so the upload keeps the original name.
+
+```javascript
+cy.readFile('path/to/logo.png', null).as('logo')
+cy.get('input[type=file]').selectFile('@logo')
 ```
 
 ## Notes
