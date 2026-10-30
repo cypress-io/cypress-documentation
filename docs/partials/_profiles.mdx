@@ -26,9 +26,10 @@ When a profile applies, its `config` is laid over your base configuration one se
 
 ### What a profile can and can't change
 
-A profile's `config` accepts any App Quality configuration setting your base configuration supports: the same `viewFilters`, `elementFilters`, `views`, and product-specific settings you'd set at the root. Two limits are worth knowing:
+A profile's `config` accepts any App Quality configuration setting your base configuration supports: the same `viewFilters`, `elementFilters`, `views`, and product-specific settings you'd set at the root. A few limits are worth knowing:
 
 - **You can't nest a `profiles` array inside a profile.** Profiles live only at the top level of your configuration; one level of overrides is the maximum.
+- **[Checks](/cloud/features/checks) live only at the root.** A profile can't define `checks`. To apply a check only to the runs a profile targets, scope the check to the same tag with `include: { "tags": [...] }`.
 - **There's no switch to skip a run or turn a product off.** A profile can only change configuration values. To suppress a report for a certain kind of run, point its profile at a deliberately narrow configuration (for example, `viewFilters` that exclude every view) so the run produces an empty or tightly scoped report instead.
 
 ## Best practices

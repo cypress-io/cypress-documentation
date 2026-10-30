@@ -1,0 +1,232 @@
+---
+title: 'Checks: pass/fail quality gates for Cypress Cloud runs'
+description: 'Define checks in Cypress Cloud to pass or fail each recorded run against thresholds for failed tests, flaky tests, accessibility scores, and UI Coverage, scoped to the branches and tags you choose.'
+sidebar_label: Checks
+sidebar_position: 55
+---
+
+<ProductHeading product="cloud" />
+
+# Checks
+
+A **check** is a named pass/fail gate that Cypress Cloud evaluates against every recorded run it applies to. Each check holds one or more **assertions**, such as "no more than 0 failed tests" or "an accessibility score of at least 90 on checkout views", and passes only when every assertion passes.
+
+Checks give you a single, versioned definition of what a good run looks like for a project:
+
+- **Declarative thresholds**: Encode limits on failed tests, flaky tests, accessibility scores, failing accessibility elements, UI Coverage scores, and untested elements, without maintaining parallel threshold logic in each CI pipeline.
+- **Cross-product gates**: One check can combine assertions about a run's test results, its [Cypress Accessibility](/accessibility/get-started/introduction) report, and its [UI Coverage](/ui-coverage/get-started/introduction) report.
+- **Scoped to the runs that matter**: Apply a check only to runs on certain branches or with certain [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt), so a release gate on `main` doesn't fail every feature-branch run.
+
+Checks don't change how your tests run or how reports are generated. They only define how Cypress Cloud evaluates a run's results once they're available.
+
+## Defining checks
+
+Checks are part of your project's App Quality configuration, alongside settings such as `views` and `viewFilters`. You don't need Cypress Accessibility or UI Coverage enabled to use checks: a project with neither can still gate runs on its test results.
+
+<AppQualityConfigEditing />
+
+Add a `checks` array to the root of the configuration:
+
+```json title="App Quality Config"
+{
+  "checks": [
+    {
+      "name": "release-gate",
+      "comment": "Merge requirements for main",
+      "include": { "branches": ["main"] },
+      "assertions": [
+        { "type": "run.failedTests.max", "value": 0 },
+        { "type": "accessibility.score.min", "value": 90 },
+        {
+          "type": "uiCoverage.score.min",
+          "value": 80,
+          "viewMatch": "^(Login|Checkout)",
+          "comment": "Critical flows must stay well covered"
+        }
+      ]
+    }
+  ]
+}
+```
+
+`checks` is only valid at the root of the configuration. It can't be set inside a [profile](/accessibility/configuration/profiles); to apply a check only to the runs a profile targets, scope the check with an [`include`](#Scoping-checks-to-runs) rule on the same tag.
+
+## Syntax
+
+```json title="App Quality Config"
+{
+  "checks": [
+    {
+      "name": string,
+      "assertions": [
+        {
+          "type": string,
+          "value": number,
+          // View metrics only
+          "viewMatch": string,
+          // Test result metrics only
+          "include": { "specs": [string] } | [{ "specs": [string] }],
+          "exclude": { "specs": [string] } | [{ "specs": [string] }],
+          "comment": string
+        }
+      ],
+      "include": { "branches": [string], "tags": [string] } | [ /* rules */ ],
+      "exclude": { "branches": [string], "tags": [string] } | [ /* rules */ ],
+      "comment": string
+    }
+  ]
+}
+```
+
+### Check options
+
+| Option       | Required | Description                                                                                                                                      |
+| ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`       | Required | Identifies the check in Cypress Cloud and in check results. Must be non-empty and unique across the `checks` array.                              |
+| `assertions` | Required | A non-empty array of [assertions](#Assertion-types). The check passes only when every assertion passes.                                          |
+| `include`    | Optional | One [run rule](#Scoping-checks-to-runs), or an array of rules. When set, the check applies only to runs that match at least one rule.            |
+| `exclude`    | Optional | One [run rule](#Scoping-checks-to-runs), or an array of rules. The check doesn't apply to runs that match any rule, even when `include` matches. |
+| `comment`    | Optional | A note about why the check exists. Comments have no effect on behavior.                                                                          |
+
+### Assertion options
+
+| Option      | Required | Description                                                                                                                                                                                                  |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type`      | Required | The metric and the direction of its threshold. See [Assertion types](#Assertion-types).                                                                                                                      |
+| `value`     | Required | The threshold. Scores accept a number from `0` to `100`. Counts accept a non-negative integer.                                                                                                               |
+| `viewMatch` | Optional | For `accessibility.*` and `uiCoverage.*` assertions. A regular expression matched against view names; each matching view is held to the threshold on its own. See [Narrowing to views](#Narrowing-to-views). |
+| `include`   | Optional | For `run.*` assertions. One spec rule, or an array of spec rules, selecting which specs' results are counted. See [Narrowing to specs](#Narrowing-to-specs).                                                 |
+| `exclude`   | Optional | For `run.*` assertions. One spec rule, or an array of spec rules, removing specs from the count.                                                                                                             |
+| `comment`   | Optional | A note about the assertion. Comments have no effect on behavior.                                                                                                                                             |
+
+## Assertion types
+
+Each assertion type names the data it reads and whether its threshold is a minimum (`.min`) or a maximum (`.max`). A `.min` assertion passes when the measured value is greater than or equal to `value`; a `.max` assertion passes when it's less than or equal to `value`.
+
+| Type                               | `value`       | Narrow with           | Passes when                                                                                            |
+| ---------------------------------- | ------------- | --------------------- | ------------------------------------------------------------------------------------------------------ |
+| `run.failedTests.max`              | Integer, `0`+ | `include` / `exclude` | The number of failed tests in the run is at most `value`.                                              |
+| `run.flakyTests.max`               | Integer, `0`+ | `include` / `exclude` | The number of flaky tests in the run is at most `value`. Requires flaky test detection.                |
+| `accessibility.score.min`          | `0` to `100`  | `viewMatch`           | The run's [accessibility score](/accessibility/core-concepts/accessibility-score) is at least `value`. |
+| `accessibility.failedElements.max` | Integer, `0`+ | `viewMatch`           | The number of elements failing accessibility rules is at most `value`.                                 |
+| `uiCoverage.score.min`             | `0` to `100`  | `viewMatch`           | The run's UI Coverage score is at least `value`.                                                       |
+| `uiCoverage.untestedElements.max`  | Integer, `0`+ | `viewMatch`           | The number of untested elements is at most `value`.                                                    |
+
+`run.*` assertions read the run's own test results and are available on every project. `run.flakyTests.max` reads the flaky tests that [Flaky Test Management](/cloud/features/flaky-test-management) detects, so it's [unavailable](#Assertion-statuses) on projects without flake detection.
+
+`accessibility.*` and `uiCoverage.*` assertions read the run's Cypress Accessibility and UI Coverage reports, and are [unavailable](#Assertion-statuses) on runs where that product isn't enabled or processed.
+
+### Narrowing to views
+
+Without `viewMatch`, a view assertion measures the run as a whole: the run-level score, or the total count across all views.
+
+With `viewMatch`, the assertion selects the views whose name matches the pattern and holds **each** of them to the threshold on its own. The assertion fails if any matched view misses the threshold. A `viewMatch` that matches no views passes, because there's nothing to measure.
+
+`viewMatch` is a regular expression matched against the [view](/accessibility/configuration/views) name, not the URL, and it matches anywhere in the name. Use `^` and `$` to match the start or end of the name.
+
+```json title="App Quality Config"
+{
+  "type": "accessibility.failedElements.max",
+  "value": 0,
+  "viewMatch": "Checkout",
+  "comment": "No failing elements on any checkout view"
+}
+```
+
+### Narrowing to specs
+
+`run.*` assertions count tests across every spec in the run by default. Use `include` and `exclude` on the assertion to count only some specs. Each rule is an object with a non-empty `specs` array of regular expressions, matched anywhere in the spec's file path.
+
+The counts from every matched spec are added together, and the total is held to the threshold once. A spec that ran on more than one machine, such as in multiple [run groups](/cloud/features/smart-orchestration/parallelization), contributes the results from each.
+
+```json title="App Quality Config"
+{
+  "type": "run.failedTests.max",
+  "value": 0,
+  "include": { "specs": ["cypress/e2e/checkout/"] },
+  "exclude": { "specs": ["/quarantine/"] },
+  "comment": "Checkout specs must pass, apart from quarantined ones"
+}
+```
+
+## Scoping checks to runs
+
+By default, a check applies to every run in the project. Use `include` and `exclude` on the check to apply it only to some runs.
+
+Each rule is an object with one or both of these properties:
+
+| Property   | Description                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `branches` | A non-empty array of regular expressions matched against the run's Git branch.                                                     |
+| `tags`     | A non-empty array of regular expressions matched against the run's [tags](/app/references/command-line#cypress-run-tag-lt-tag-gt). |
+
+A rule must set at least one of `branches` or `tags`. `include` and `exclude` each accept a single rule or an array of rules.
+
+Rules match as follows:
+
+- **Within a property, any pattern can match.** `{ "branches": ["main", "release/.*"] }` matches a run on `main` or on any `release/` branch.
+- **Within a rule, every property must match.** `{ "branches": ["main"], "tags": ["nightly"] }` matches only runs on `main` that also carry the `nightly` tag.
+- **Across an array of rules, any rule can match.**
+- **`exclude` wins over `include`.** A run that matches both is excluded.
+- **A run with no branch never matches a `branches` pattern.** A check that includes only certain branches doesn't apply to it, and an `exclude` rule on branches doesn't remove it.
+
+Branch and tag patterns match the **whole** value, so `main` matches the branch `main` but not `feature/main`. To match part of a value, start the pattern with `^` or end it with `$` to anchor it yourself, or use `.*`. Patterns are regular expressions, not globs: write `release/.*` rather than `release/*`. Matching is case-sensitive.
+
+```json title="App Quality Config"
+{
+  "checks": [
+    {
+      "name": "nightly-regression",
+      "include": [
+        { "branches": ["main"], "tags": ["nightly"] },
+        { "tags": ["release-candidate"] }
+      ],
+      "exclude": { "branches": ["^dependabot/"] },
+      "assertions": [
+        { "type": "run.failedTests.max", "value": 0 },
+        { "type": "run.flakyTests.max", "value": 5 }
+      ]
+    }
+  ]
+}
+```
+
+A check whose tag rule hasn't matched yet stays `pending` until the run completes. Any [run group](/cloud/features/smart-orchestration/parallelization) can add tags while the run is in progress, so Cypress Cloud can only rule out a tag rule once every group has reported.
+
+## How checks are evaluated
+
+Cypress Cloud evaluates each kind of data as soon as it's final, rather than waiting for everything at once: `run.*` assertions when the run completes, and `accessibility.*` and `uiCoverage.*` assertions when each report finishes processing. A run's check results appear on the run's page, in its **Properties** tab, and in the project's runs list, and update while evaluation is in progress.
+
+A run's checks use the App Quality configuration saved at the time the run is recorded. When you [regenerate](/accessibility/configuration/overview#Setting-Configuration) a run, its checks are evaluated again against the configuration saved at that time, so you can adjust a check and see its effect on an existing run without recording again.
+
+### Check statuses
+
+| Status           | Meaning                                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------------------- |
+| `passed`         | Every assertion passed.                                                                                    |
+| `failed`         | At least one assertion failed.                                                                             |
+| `errored`        | No assertion failed, but at least one is `errored` or `unavailable`, so the check couldn't confirm a pass. |
+| `not-applicable` | The check's `include` and `exclude` rules don't select this run, so it wasn't evaluated.                   |
+
+While a run is still processing, a check can also be `pending` (waiting on data) or `failing` (at least one assertion has already failed while others are still pending). A failed assertion never recovers, so a `failing` check always ends as `failed`.
+
+### Assertion statuses
+
+| Status        | Meaning                                                                                                                                                                                                                             |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `passed`      | The measured value met the threshold.                                                                                                                                                                                               |
+| `failed`      | The measured value missed the threshold.                                                                                                                                                                                            |
+| `errored`     | The data the assertion needs couldn't be read, for example because a report failed to load or a run-level score wasn't produced for the run.                                                                                        |
+| `unavailable` | The run has no data for the assertion by design: the product it reads isn't enabled or processed for the run, or the project doesn't have access to the assertion type (such as `run.flakyTests.max` without flaky test detection). |
+
+Keep these behaviors in mind when designing checks:
+
+- A failure outranks an error. A check with one `failed` and one `errored` assertion is `failed`.
+- An `unavailable` assertion makes its check `errored`, not `passed`. If a check mixes products and some runs don't produce one of them, scope the check with `include` and `exclude`, or split it into one check per product.
+
+## See also
+
+- [Cypress Accessibility configuration](/accessibility/configuration/overview) - every App Quality configuration option, including `views` that `viewMatch` matches against
+- [UI Coverage configuration](/ui-coverage/configuration/overview)
+- [Flaky Test Management](/cloud/features/flaky-test-management) - the flake detection `run.flakyTests.max` reads
+- [`cypress run --tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) - the run tags that check rules match
