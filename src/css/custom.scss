@@ -791,6 +791,114 @@ html[data-theme='dark'] .osano-cm-window .osano-cm-dialog {
   }
 }
 
+/* Banner and drawer use the site font instead of Osano's Helvetica stack. */
+body .osano-cm-window {
+  font-family: var(--ifm-font-family-base);
+}
+
+/* Preferences drawer (.osano-cm-info-dialog), opened from the banner or the
+   footer's "Cookie Preferences" link. Like the dark banner above, it
+   redefines Osano's variables rather than fighting its injected rules. The
+   drawer remaps the generic variables on itself, so these are set one class
+   deeper to win. Every pair meets WCAG 2.2 AA: 4.5:1 for text, 3:1 for the
+   toggle tracks against the panel and the thumbs against their track. */
+.osano-cm-window .osano-cm-info-dialog {
+  --osano-dialog-background-color: var(--ifm-background-color);
+  --osano-info-dialog-background-color: var(--ifm-background-color);
+  --osano-dialog-foreground-color: var(--ifm-color-gray-800);
+  --osano-info-dialog-foreground-color: var(--ifm-color-gray-800);
+  --osano-info-dialog-border-color: var(--ifm-color-gray-100);
+  --osano-button-close-color: var(--ifm-color-gray-800);
+  --osano-info-dialog-button-close-color: var(--ifm-color-gray-800);
+  --osano-link-color: var(--ifm-color-indigo-500);
+  --osano-link-color-contrast: var(--ifm-color-indigo-600);
+  --osano-focus-outline-color: var(--ifm-color-indigo-600);
+  --osano-toggle-on-track-color: var(--ifm-color-jade-500);
+  --osano-toggle-on-track-color-hover: var(--ifm-color-jade-600);
+  --osano-toggle-on-track-color-disabled: var(--ifm-color-jade-500);
+  --osano-toggle-on-thumb-color: #fff;
+  --osano-toggle-on-thumb-color-hover: #fff;
+  --osano-toggle-on-thumb-color-disabled: var(--ifm-color-jade-100);
+  --osano-toggle-off-track-color: var(--ifm-color-gray-600);
+  --osano-toggle-off-track-color-hover: var(--ifm-color-gray-700);
+  --osano-toggle-off-thumb-color: #fff;
+  --osano-toggle-off-thumb-color-hover: #fff;
+
+  .osano-cm-header {
+    color: var(--ifm-color-gray-900);
+    font-family: var(--ifm-heading-font-family);
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .osano-cm-label {
+    color: var(--ifm-color-gray-900);
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  /* Osano's 12px descriptions are hard to read at the drawer's width. */
+  .osano-cm-description {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  /* Overrides the light-banner color set on every .osano-cm-storage-policy
+     above, so the policy link matches "View Disclosures" in both themes. */
+  .osano-cm-storage-policy {
+    color: var(--osano-link-color) !important;
+  }
+
+  .osano-cm-powered-by__link {
+    color: var(--ifm-color-gray-700);
+  }
+
+  /* The cookie list under "View Disclosures" */
+  .osano-cm-disclosure__list {
+    border-color: var(--ifm-color-gray-100);
+    background-color: var(--ifm-color-gray-50);
+  }
+}
+
+html[data-theme='dark'] .osano-cm-window .osano-cm-info-dialog {
+  --osano-dialog-foreground-color: var(--ifm-color-gray-100);
+  --osano-info-dialog-foreground-color: var(--ifm-color-gray-100);
+  --osano-info-dialog-border-color: var(--ifm-color-gray-800);
+  --osano-button-close-color: var(--ifm-color-gray-100);
+  --osano-info-dialog-button-close-color: var(--ifm-color-gray-100);
+  --osano-link-color: var(--ifm-color-indigo-300);
+  --osano-link-color-contrast: var(--ifm-color-indigo-200);
+  --osano-focus-outline-color: var(--cy-link-focus-ring);
+  --osano-toggle-on-track-color: var(--ifm-color-jade-300);
+  --osano-toggle-on-track-color-hover: var(--ifm-color-jade-200);
+  --osano-toggle-on-track-color-disabled: var(--ifm-color-jade-300);
+  --osano-toggle-on-thumb-color: var(--ifm-color-gray-1000);
+  --osano-toggle-on-thumb-color-hover: var(--ifm-color-gray-1000);
+  --osano-toggle-on-thumb-color-disabled: var(--ifm-color-jade-700);
+  --osano-toggle-off-track-color: var(--ifm-color-gray-500);
+  --osano-toggle-off-track-color-hover: var(--ifm-color-gray-400);
+  --osano-toggle-off-thumb-color: var(--ifm-color-gray-1000);
+  --osano-toggle-off-thumb-color-hover: var(--ifm-color-gray-1000);
+
+  .osano-cm-header,
+  .osano-cm-label {
+    color: var(--ifm-color-gray-50);
+  }
+
+  .osano-cm-powered-by__link {
+    color: var(--ifm-color-gray-300);
+  }
+
+  .osano-cm-drawer-item {
+    border-color: var(--ifm-color-gray-800);
+  }
+
+  .osano-cm-disclosure__list {
+    border-color: var(--ifm-color-gray-800);
+    background-color: var(--ifm-color-gray-900);
+  }
+}
+
 /* Grows the close button's tap target from its 24px circle to 40px without
    changing how it looks or where it sits. */
 .osano-cm-window .osano-cm-dialog__close {
