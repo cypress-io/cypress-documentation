@@ -32,13 +32,14 @@ cy.readFile('menu.json')
 
 <Icon name="angle-right" /> **filePath _(String)_**
 
-A path to a file within the project root (the directory that contains the
-[Cypress configuration file](/app/references/configuration)).
+A path to a file, resolved relative to the project root (the directory that
+contains the [Cypress configuration file](/app/references/configuration)). An
+absolute path also works.
 
 <Icon name="angle-right" /> **encoding _(String)_**
 
-The encoding to be used when reading the file. The following encodings are
-supported:
+The encoding to use when reading the file. Defaults to `'utf8'`. The following
+encodings are supported:
 
 - `'ascii'`
 - `'base64'`
@@ -53,24 +54,25 @@ supported:
 - `'utf-16le'`
 - `null`
 
-Using `null` explicitly will return the file as a
-[`Cypress.Buffer`](/api/utilities/buffer) instance, regardless of file
-extension.
+Passing `null` yields the file as a [`Cypress.Buffer`](/api/utilities/buffer)
+instance, regardless of file extension.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `cy.readFile()`.
 
-| Option    | Default                                                           | Description                                                                         |
-| --------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `log`     | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
-| `timeout` | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)          |
+| Option     | Default                                                           | Description                                                                                                 |
+| ---------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `encoding` | `'utf8'`                                                          | The encoding to use when reading the file. Ignored when you pass `encoding` as the second argument instead. |
+| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                         |
+| `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)                                  |
 
 <HeaderYields />
 
-- `cy.readFile()` yields the contents of the file.
-- The file will be read from disk again if any upcoming command (such as an
-  assertion) in the chain fails.
+- `cy.readFile()` yields the contents of the file. A file with a `.json`
+  extension is parsed into JavaScript, unless the encoding is `null`.
+- `cy.readFile()` reads the file from disk again if any upcoming command (such
+  as an assertion) in the chain fails.
 
 ## Examples
 
@@ -78,32 +80,30 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 
 #### Read a `.txt` file
 
-For any file other than JSON, the contents of the file are returned.
+For any file without a `.json` extension, `cy.readFile()` yields the contents
+of the file as a string.
 
-```text
-// path/to/message.txt
-
+```text title="path/to/message.txt"
 Hello World
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.readFile('path/to/message.txt').should('eq', 'Hello World') // true
 ```
 
 ### JSON
 
-For JSON, the contents yielded are parsed into JavaScript and returned.
+For a file with a `.json` extension, `cy.readFile()` parses the contents into
+JavaScript and yields the result.
 
-```javascript
-// data.json
-
+```json title="path/to/data.json"
 {
   "name": "Eliza",
   "email": "eliza@example.com"
 }
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
 ```
 
@@ -121,7 +121,7 @@ cy.readFile('languages/en.yml').then((str) => {
   cy.get('#sidebar')
     .find('.sidebar-title')
     .each(($el, i) => {
-      englishTitle = english.sidebar[i]
+      const englishTitle = english.sidebar[i]
 
       expect($el.text()).to.eq(englishTitle)
     })
@@ -140,17 +140,17 @@ cy.readFile('path/to/logo.png', 'base64').then((logo) => {
 })
 ```
 
-#### Read
+#### Read a file as a Buffer
 
 ```javascript
-cy.fixture('path/to/logo.png', null).then((logo) => {
+cy.readFile('path/to/logo.png', null).then((logo) => {
   // logo will be read as a buffer
   // and should look something like this:
   // Buffer([0, 0, ...])
 })
 ```
 
-### Playing MP3 file
+#### Play an MP3 file
 
 ```javascript
 cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
@@ -167,14 +167,17 @@ cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
 
 #### Default file existence assertion
 
-By default, `cy.readFile()` asserts that the file exists and will fail if it
-does not exist. It will retry reading the file if it does not initially exist
-until the file exists or the command times out.
+By default, `cy.readFile()` asserts that the file exists and fails if it does
+not. It retries reading the file until the file exists or the command times
+out.
 
 ```javascript
-// will fail after the defaultCommandTimeout is reached
+// fails after the defaultCommandTimeout is reached
 cy.readFile('does-not-exist.yaml')
 ```
+
+Only a missing file is retried. Any other error while reading, such as a
+`.json` file that contains invalid JSON, fails the command immediately.
 
 #### Asserting file non-existence
 
@@ -193,8 +196,7 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 
 #### Automatic retries
 
-`cy.readFile()` will continue to read the file until it passes all of its
-assertions.
+`cy.readFile()` reads the file again until it passes all of its assertions.
 
 ```javascript
 // if this assertion fails cy.readFile will poll the file
@@ -202,8 +204,9 @@ assertions.
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
-Starting in Cypress `v13`, `cy.readFile()` is a query, and will continue to read
-the file until all chained commands of any type pass, not just assertions.
+`cy.readFile()` is a [query](/app/core-concepts/retry-ability#Only-queries-are-retried),
+so it reads the file again until all chained queries pass, not only
+assertions.
 
 ```javascript
 // will retry until the json file has a `users[123].name` field, and
@@ -227,7 +230,8 @@ reads the file once and caches it. For when to reach for a static `import` or
 <HeaderRequirements />
 
 - `cy.readFile()` requires being chained off of `cy`.
-- `cy.readFile()` requires the file must exist.
+- `cy.readFile()` requires the file to exist, unless you assert that it does
+  not with `.should('not.exist')`.
 - `cy.readFile()` requires the file be successfully read from disk.
 
 <HeaderAssertions />
