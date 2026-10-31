@@ -107,7 +107,7 @@ JavaScript and yields the result.
 cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza')
 ```
 
-#### Type the contents of a JSON file
+#### Type a JSON file's contents in TypeScript
 
 Pass a type argument to tell TypeScript the shape of the yielded contents.
 
@@ -117,7 +117,7 @@ type User = { name: string; email: string }
 cy.readFile<User>('path/to/data.json').its('email').should('include', '@')
 ```
 
-#### Read a `.json` file as raw text
+#### Read a `.json` file as raw text without parsing it
 
 To check the exact text of a `.json` file, such as its indentation, read it with
 `null` encoding and convert the Buffer to a string. `cy.readFile()` doesn't
@@ -182,7 +182,7 @@ cy.readFile('path/to/logo.png', { encoding: 'base64', timeout: 10000 }).should(
 )
 ```
 
-#### Read a file as a Buffer
+#### Read a file as a Buffer with `null` encoding
 
 ```javascript
 cy.readFile('path/to/logo.png', null).then((logo) => {
@@ -192,7 +192,7 @@ cy.readFile('path/to/logo.png', null).then((logo) => {
 })
 ```
 
-#### Play an MP3 file
+#### Play an MP3 file from its base64 contents
 
 ```javascript
 cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
@@ -203,9 +203,9 @@ cy.readFile('audio/sound.mp3', 'base64').then((mp3) => {
 })
 ```
 
-### Files your app creates
+### Read files your app or server creates
 
-#### Wait for a downloaded file
+#### Wait for a file download and check its contents
 
 `cy.readFile()` retries until the file exists, so it waits for a download to
 finish. Build the path from the
@@ -219,7 +219,7 @@ cy.readFile(`${Cypress.config('downloadsFolder')}/report.csv`).should(
 )
 ```
 
-#### Check a file your server writes
+#### Check a log file your server writes during a test
 
 Read a file that your app or server writes as a side effect, such as a log.
 `cy.readFile()` reads the file again until the assertion passes.
@@ -230,9 +230,9 @@ cy.get('[data-cy="save-settings"]').click()
 cy.readFile('logs/audit.log').should('contain', 'settings updated')
 ```
 
-### Uploads
+### Reuse file contents in file uploads
 
-#### Upload a file with `.selectFile()`
+#### Upload a file to an input with `.selectFile()`
 
 Alias the contents of a file, then pass the alias to
 [`.selectFile()`](/api/commands/selectfile). `cy.readFile()` stores the file
