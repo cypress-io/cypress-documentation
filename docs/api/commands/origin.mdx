@@ -95,14 +95,17 @@ cy.get('h1').contains('Actions')
 
 ### Arguments
 
-<Icon name="angle-right" /> **origin _(String)_**
+<Icon name="angle-right" /> **url _(String)_**
 
-A string specifying the origin in which the callback is to be executed.
-This should at the very least contain a hostname. It may also include the
-scheme and port number. The path may be included, but is not necessary.
-The hostname must precisely match that of the secondary origin, including
-all subdomains. Query params are not supported. If no scheme is provided,
-the scheme defaults to `https`.
+A URL (`https://www.example.com/path`) or domain name (`example.com`)
+specifying the origin in which the callback is to be executed. This should at
+the very least contain a hostname. It may also include the scheme and port
+number. A path or hash may be included, but is not necessary. The hostname must
+precisely match that of the secondary origin, including all subdomains. Query
+params are not supported. If no scheme is provided, the scheme defaults to
+`https`.
+
+The URL must be a different origin than the one the test is running in.
 
 This argument will be used in two ways:
 
@@ -123,6 +126,8 @@ Pass in an options object to control the behavior of `cy.origin()`.
 | option | description                                                                                                                                                                                                    |
 | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | args   | Plain JavaScript object which will be serialized and sent from the primary origin to the secondary origin, where it will be deserialized and passed into the callback function as its first and only argument. |
+
+`args` is the only supported option. Passing any other key throws an error.
 
 :::caution
 
@@ -148,11 +153,16 @@ full list.
 <HeaderYields />
 
 - `cy.origin()` yields the value yielded by the last Cypress command in the
-  callback function.
+  callback function. If the callback also returns a Promise, the value yielded
+  by the last command takes precedence.
 - If the callback contains no Cypress commands, `cy.origin()` yields the return
-  value of the function.
-- In either of the two cases above, if the value is not serializable, attempting
-  to access the yielded value will throw an error.
+  value of the function. If that value is a Promise, `cy.origin()` yields the
+  value it resolves to.
+- If the callback runs Cypress commands and also returns a value that is not a
+  Promise, `cy.origin()` fails, because it mixes synchronous and asynchronous
+  code.
+- If the yielded value is not serializable, attempting to access it throws an
+  error.
 
 ## Examples
 
@@ -208,9 +218,9 @@ cy.origin('https://example.cypress.io', () => {
 ### Navigating to secondary origin with cy.visit
 
 When navigating to a secondary origin using `cy.visit()`, you can either
-navigate prior to or after the `cy.origin` block. Errors are no longer thrown on
-cross-origin navigation, but instead when commands interact with a cross-origin
-page.
+navigate prior to or after the `cy.origin` block. Cypress doesn't throw an error
+on cross-origin navigation itself. It throws when a command outside the
+`cy.origin()` block interacts with the cross-origin page.
 
 ```js
 // Do things in primary origin...
@@ -310,7 +320,7 @@ Cypress.Commands.add('login', (username, password) => {
   // Remember to pass in arguments via `args`
   const args = { username, password }
   cy.origin('cypress.io', { args }, ({ username, password }) => {
-    // Go to https://example.cypress.com/login
+    // Go to https://cypress.io/login
     cy.visit('/login')
     cy.contains('Username').find('input').type(username)
     cy.contains('Password').find('input').type(password)
@@ -337,7 +347,7 @@ Cypress.Commands.add('login', (username, password) => {
   // Remember to pass in arguments via `args`
   const args = { username, password }
   cy.origin('cypress.io', { args }, ({ username, password }) => {
-    // Go to https://example.cypress.com/login
+    // Go to https://cypress.io/login
     cy.visit('/login')
     cy.contains('Username').find('input').type(username)
     cy.contains('Password').find('input').type(password)
@@ -352,12 +362,11 @@ Cypress.Commands.add('login', (username, password) => {
 </Tabs>
 
 Having to go through an entire login flow before every test is not very
-performant. Up until now you could get around this problem by putting login code
-in the first test of your file, then performing subsequent tests reusing the
-same session.
-
-However, this is no longer possible, since all session state is now cleared
-between tests. So to avoid this overhead we recommend you use the
+performant. Reusing a session by logging in once in the first test of a file
+doesn't work either, because with
+[test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
+enabled (the default), Cypress clears session state between tests. So to avoid
+this overhead we recommend you use the
 [`cy.session()`](/api/commands/session) command, which caches session
 information and reuses it across tests. So now let's enhance our
 custom login command with `cy.session()` for a complete syndicated login flow
@@ -583,7 +592,7 @@ beforeEach(() => {
 
 ```js
 before(() => {
-  // makes custom commands available to all subsequent cy.origin('cypress.io)
+  // makes custom commands available to all subsequent cy.origin('cypress.io')
   // calls in this spec. put it in your support file to make them available to
   // all specs
   cy.origin('cypress.io', () => {
@@ -754,6 +763,10 @@ following Cypress commands will throw errors if used in the callback:
 - [`cy.intercept()`](/api/commands/intercept)
 - [`cy.session()`](/api/commands/session)
 
+Accessing any `Cypress.session.*` method inside the callback also throws an
+error. Use `cy.intercept()`, `cy.session()`, and `Cypress.session.*` outside
+the callback instead.
+
 ### Other limitations
 
 There are other testing scenarios which are not currently covered by
@@ -764,15 +777,44 @@ There are other testing scenarios which are not currently covered by
 - It cannot run commands in a different browser tab
 - It cannot run commands
   [inside an `<iframe>` element](/app/faq#How-do-I-test-elements-inside-an-iframe)
+- It isn't supported in the experimental WebKit browser
+
+## Rules
+
+<HeaderRequirements />
+
+- `cy.origin()` requires being chained off of `cy`.
+- `cy.origin()` must be invoked from the spec file or support file.
+- `cy.origin()` requires the first argument to be a URL or domain name string
+  without query parameters.
+- `cy.origin()` requires the first argument to be a different origin than the
+  one the test is running in. When
+  [`injectDocumentDomain`](/app/references/configuration#injectDocumentDomain)
+  is `true`, it must be a different superdomain.
+- `cy.origin()` requires the `options` argument, when passed, to be a plain
+  object whose only key is `args`.
+- `cy.origin()` requires the last argument to be a function.
+- `cy.origin()` isn't supported in experimental WebKit.
+
+<HeaderTimeouts />
+
+- `cy.origin()` has no timeout of its own. It runs for as long as the commands
+  in the callback run, and each of those commands uses its own timeout.
+- `cy.origin()` fails if Cypress can't set up communication with the secondary
+  origin within the
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts). This can
+  happen when an `https` page tries to reach an insecure `http` origin.
 
 ## History
 
-| Version                                     | Changes                                                                                                     |
-| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [14.0.0](/app/references/changelog#14-0-0)  | `cy.origin()` is now required when navigating between origins in the same test, rather than superdomains.   |
-| [12.6.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
-| [10.11.0](/app/references/changelog#10-7-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
-| [10.7.0](/app/references/changelog#10-7-0)  | Support for `Cypress.require()` added                                                                       |
+| Version                                      | Changes                                                                                                     |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0)   | `cy.origin()` is required to navigate between any two origins in the same test, including subdomains.       |
+| [12.6.0](/app/references/changelog#12-6-0)   | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
+| [12.0.0](/app/references/changelog#12-0-0)   | `cy.origin()` generally available. Dependencies in the callback require `experimentalOriginDependencies`    |
+| [10.11.0](/app/references/changelog#10-11-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
+| [10.7.0](/app/references/changelog#10-7-0)   | Support for `Cypress.require()` added                                                                       |
+| [9.6.0](/app/references/changelog#9-6-0)     | `cy.origin()` added behind the `experimentalSessionAndOrigin` flag                                          |
 
 ## See also
 
