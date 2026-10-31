@@ -805,6 +805,38 @@ There are other testing scenarios which are not currently covered by
   [`defaultCommandTimeout`](/app/references/configuration#Timeouts). This can
   happen when an `https` page tries to reach an insecure `http` origin.
 
+## Command Log
+
+This example visits a page in a secondary origin, passing the path in through
+`args`, and asserts on the text the callback yields:
+
+```javascript
+cy.origin(
+  'https://example.cypress.io',
+  { args: { path: '/commands/actions' } },
+  ({ path }) => {
+    cy.visit(path)
+    cy.get('h1').invoke('text')
+  }
+).should('equal', 'Actions')
+```
+
+The commands above display in the Command Log as a collapsible `origin` group,
+with the commands run in the secondary origin nested inside it:
+
+<DocsImage
+  src="/img/api/origin/command-log-origin.png"
+  alt="Command Log showing an origin group for https://example.cypress.io containing visit, get, and invoke, followed by an assertion that the yielded text equals Actions"
+/>
+
+When you click `origin` in the Command Log, the console outputs the origin, the
+`args` passed to the callback, and the value it yielded:
+
+<DocsImage
+  src="/img/api/origin/console-log-origin.png"
+  alt="DevTools console after clicking origin in the Command Log, listing the command, the origin https://example.cypress.io, the args object with path /commands/actions, and Yielded: Actions"
+/>
+
 ## History
 
 | Version                                      | Changes                                                                                                     |
@@ -813,7 +845,7 @@ There are other testing scenarios which are not currently covered by
 | [12.6.0](/app/references/changelog#12-6-0)   | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
 | [12.0.0](/app/references/changelog#12-0-0)   | `cy.origin()` generally available. Dependencies in the callback require `experimentalOriginDependencies`    |
 | [10.11.0](/app/references/changelog#10-11-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
-| [10.7.0](/app/references/changelog#10-7-0)   | Support for `Cypress.require()` added                                                                       |
+| [10.9.0](/app/references/changelog#10-9-0)   | Support for `Cypress.require()` added                                                                       |
 | [9.6.0](/app/references/changelog#9-6-0)     | `cy.origin()` added behind the `experimentalSessionAndOrigin` flag                                          |
 
 ## See also
