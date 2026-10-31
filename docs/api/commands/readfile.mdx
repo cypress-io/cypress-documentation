@@ -64,13 +64,13 @@ Pass in an options object to change the default behavior of `cy.readFile()`.
 | Option     | Default                                                           | Description                                                                                                 |
 | ---------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `encoding` | `'utf8'`                                                          | The encoding to use when reading the file. Ignored when you pass `encoding` as the second argument instead. |
-| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                         |
+| `log`      | `true`                                                            | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                         |
 | `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.readFile()` to resolve before [timing out](#Timeouts)                                  |
 
 <HeaderYields />
 
-- `cy.readFile()` yields the contents of the file. A file with a `.json`
-  extension is parsed into JavaScript, unless the encoding is `null`.
+- `cy.readFile()` yields the contents of the file. It parses a file with a
+  `.json` extension into JavaScript, unless the encoding is `null`.
 - `cy.readFile()` reads the file from disk again if any upcoming command (such
   as an assertion) in the chain fails.
 
@@ -88,7 +88,7 @@ Hello World
 ```
 
 ```javascript title="spec.cy.js"
-cy.readFile('path/to/message.txt').should('eq', 'Hello World') // true
+cy.readFile('path/to/message.txt').should('eq', 'Hello World')
 ```
 
 ### JSON
@@ -104,7 +104,7 @@ JavaScript and yields the result.
 ```
 
 ```javascript title="spec.cy.js"
-cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza') // true
+cy.readFile('path/to/data.json').its('name').should('eq', 'Eliza')
 ```
 
 #### Type the contents of a JSON file
@@ -133,12 +133,21 @@ cy.readFile('path/to/data.json', null).then((buf) => {
 
 #### Get translation data from a YAML file
 
-```javascript
-const YAML = require('yamljs')
+`cy.readFile()` yields a YAML file as a string. Parse it with a YAML library,
+such as [`js-yaml`](https://www.npmjs.com/package/js-yaml).
+
+```yaml title="languages/en.yml"
+sidebar:
+  - Getting Started
+  - API
+```
+
+```javascript title="spec.cy.js"
+const yaml = require('js-yaml')
 
 cy.readFile('languages/en.yml').then((str) => {
-  // parse the string into object literal
-  const english = YAML.parse(str)
+  // parse the YAML string into an object
+  const english = yaml.load(str)
 
   cy.get('#sidebar')
     .find('.sidebar-title')
@@ -156,8 +165,8 @@ cy.readFile('languages/en.yml').then((str) => {
 
 ```javascript
 cy.readFile('path/to/logo.png', 'base64').then((logo) => {
-  // logo will be encoded as base64
-  // and should look something like this:
+  // logo is encoded as base64
+  // and looks something like this:
   // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
 })
 ```
@@ -177,8 +186,8 @@ cy.readFile('path/to/logo.png', { encoding: 'base64', timeout: 10000 }).should(
 
 ```javascript
 cy.readFile('path/to/logo.png', null).then((logo) => {
-  // logo will be read as a buffer
-  // and should look something like this:
+  // logo is read as a buffer
+  // and looks something like this:
   // Buffer([0, 0, ...])
 })
 ```
@@ -257,21 +266,24 @@ check where Cypress looked for it.
   alt="Command Log error for cy.readFile('does-not-exist.yaml') saying the file does not exist, followed by the full resolved path /home/user/my-app/does-not-exist.yaml"
 />
 
-Only a missing file is retried. Any other error while reading, such as a
-`.json` file that contains invalid JSON, fails the command immediately.
+`cy.readFile()` retries only when the file is missing. Any other error while
+reading, such as a `.json` file that contains invalid JSON, fails the command
+immediately.
 
 #### Asserting file non-existence
 
-You can assert that a file does not exist like so:
+Assert that a file does not exist with `.should('not.exist')`.
 
 ```javascript
-// will pass if the file does not exist
+// passes if the file does not exist
 cy.readFile('does-not-exist.yaml').should('not.exist')
 ```
 
 #### Read a file that might not exist
 
-[See our example on using `cy.task()` to read a file that _may_ not exist.](/api/commands/task#Read-a-file-that-might-not-exist-with-cytask)
+To read a file that may not exist without failing the test, use
+[`cy.task()` to read a file that might not exist](/api/commands/task#Read-a-file-that-might-not-exist-with-cytask)
+instead.
 
 ### Retries
 
@@ -280,8 +292,8 @@ cy.readFile('does-not-exist.yaml').should('not.exist')
 `cy.readFile()` reads the file again until it passes all of its assertions.
 
 ```javascript
-// if this assertion fails cy.readFile will poll the file
-// until it eventually passes its assertions (or times out)
+// if this assertion fails, cy.readFile() reads the file again
+// until it passes its assertions (or times out)
 cy.readFile('some/nested/path/story.txt').should('eq', 'Once upon a time...')
 ```
 
@@ -290,7 +302,7 @@ so it reads the file again until all chained queries pass, not only
 assertions.
 
 ```javascript
-// will retry until the json file has a `users[123].name` field, and
+// retries until the JSON file has a `users[123].name` field and
 // the assertion passes
 cy.readFile('users.json').its('users.123.name').should('eq', 'John Doe')
 ```
@@ -317,15 +329,14 @@ reads the file once and caches it. For when to reach for a static `import` or
 
 <HeaderAssertions />
 
-- `cy.readFile()` will automatically
-  [retry](/app/core-concepts/retry-ability) until all chained assertions have
-  passed.
+- `cy.readFile()` automatically [retries](/app/core-concepts/retry-ability)
+  until all chained assertions pass.
 
 <HeaderTimeouts />
 
 - `cy.readFile()` can time out waiting for assertions you've added to pass.
-- `cy.readFile()` can time out when the content being read takes a significant
-  amount of time to encode.
+- `cy.readFile()` can time out when reading the file takes longer than the
+  `timeout`.
 
 ## Command Log
 
@@ -335,7 +346,7 @@ reads the file once and caches it. For when to reach for a static `import` or
 cy.readFile('package.json')
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <!-- Code to reproduce screenshot:
   in spec file:
@@ -347,8 +358,7 @@ The command above will display in the Command Log as:
   alt="Command Log row showing readFile with the file name package.json"
 />
 
-When clicking on the `readFile` command within the command log, the console
-outputs the following:
+Click the `readFile` command in the Command Log to see this in the console:
 
 <DocsImage
   src="/img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png"
@@ -368,5 +378,6 @@ outputs the following:
 
 - [`cy.fixture()`](/api/commands/fixture) for a similar command with caching
   that does not retry
-- [`cy.task()`](/api/commands/task)
+- [`.selectFile()`](/api/commands/selectfile) to upload a file you've read
+- [`cy.task()`](/api/commands/task) to read a file that might not exist
 - [`cy.writeFile()`](/api/commands/writefile)
