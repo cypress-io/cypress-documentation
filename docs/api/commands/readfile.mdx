@@ -1,6 +1,6 @@
 ---
 title: 'cy.readFile()'
-description: Read files in Cypress tests with cy.readFile(), which retries until the file exists and your assertions pass, to check downloads, logs, and generated files.
+description: Read files in Cypress tests with cy.readFile() to check downloads, logs, and generated files. It retries until the file exists and your assertions pass.
 sidebar_label: readFile
 slug: /api/commands/readfile
 ---
@@ -156,8 +156,8 @@ cy.readFile('languages/en.yml').then((str) => {
 
 #### Wait for a file download and check its contents
 
-`cy.readFile()` retries until the file exists, so it waits for a download to
-finish. Build the path from the
+`cy.readFile()` retries until the file exists, so it waits for the downloaded
+file to appear. Build the path from the
 [`downloadsFolder`](/app/references/configuration#Downloads) configuration.
 
 ```javascript
@@ -314,11 +314,8 @@ cy.readFile('users.json').its('users.123.name').should('eq', 'John Doe')
 
 ### How `cy.readFile()` differs from `cy.fixture()`
 
-`cy.readFile()` reads the file on every call and retries until your assertions
-pass, so it suits files that change during a test or that your app creates. For
-known test data that stays the same, [`cy.fixture()`](/api/commands/fixture)
-reads the file once and caches it. For when to reach for a static `import` or
-[`cy.task()`](/api/commands/task) instead, see
+This table compares the two commands. For when to reach for a static `import`
+or [`cy.task()`](/api/commands/task) instead of either one, see
 [Choosing how to load test data in Cypress](/app/core-concepts/writing-and-organizing-tests#Choosing-how-to-load-test-data-in-Cypress).
 
 <FixtureVsReadFile />
