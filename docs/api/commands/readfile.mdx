@@ -249,6 +249,14 @@ out.
 cy.readFile('does-not-exist.yaml')
 ```
 
+The error shows the full path `cy.readFile()` resolved the file to, so you can
+check where Cypress looked for it.
+
+<DocsImage
+  src="/img/api/readfile/readfile-error-file-does-not-exist.png"
+  alt="Command Log error for cy.readFile('does-not-exist.yaml') saying the file does not exist, followed by the full resolved path /home/user/my-app/does-not-exist.yaml"
+/>
+
 Only a missing file is retried. Any other error while reading, such as a
 `.json` file that contains invalid JSON, fails the command immediately.
 
@@ -336,7 +344,7 @@ The command above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/readfile/readfile-can-get-content-of-system-files-in-tests.png"
-  alt="Command Log readFile"
+  alt="Command Log row showing readFile with the file name package.json"
 />
 
 When clicking on the `readFile` command within the command log, the console
@@ -344,7 +352,7 @@ outputs the following:
 
 <DocsImage
   src="/img/api/readfile/console-log-shows-content-from-file-formatted-as-javascript.png"
-  alt="Console Log readFile"
+  alt="Browser console output for the readFile command, listing the parsed contents of package.json as an object and the full file path"
 />
 
 ## History
