@@ -113,8 +113,8 @@
     },
     "TypeScript": {
       "npm": "cypress",
-      "version": "16.2.0",
-      "lastPublished": "2026-10-14T15:45:39.102Z"
+      "version": "16.2.1",
+      "lastPublished": "2026-10-28T14:20:32.633Z"
     },
     "cypress-codegen": {
       "npm": "cypress-codegen",
@@ -154,8 +154,8 @@
     },
     "cypress-cli-select": {
       "npm": "cypress-cli-select",
-      "version": "2.1.0",
-      "lastPublished": "2026-09-13T02:20:28.222Z",
+      "version": "2.1.1",
+      "lastPublished": "2026-10-30T02:31:00.448Z",
       "cypressVersion": "^15.21.1"
     },
     "cypress-conditional-tags": {
@@ -315,8 +315,8 @@
     },
     "cypress-har-generator": {
       "npm": "@neuralegion/cypress-har-generator",
-      "version": "5.19.1",
-      "lastPublished": "2026-10-26T16:57:23.847Z",
+      "version": "5.22.2",
+      "lastPublished": "2026-10-28T15:07:51.391Z",
       "cypressVersion": ">=4.4.1 <12.12.0 || >=12.17.0"
     },
     "cypress-intercept-formdata": {
@@ -429,14 +429,14 @@
     },
     "cypress-performance-ui": {
       "npm": "cypress-performance-ui",
-      "version": "1.2.0",
-      "lastPublished": "2026-10-08T21:09:08.054Z",
+      "version": "1.4.1",
+      "lastPublished": "2026-10-29T19:17:48.953Z",
       "cypressVersion": ">=10.0.0"
     },
     "@cypress/code-coverage": {
       "npm": "@cypress/code-coverage",
-      "version": "4.0.3",
-      "lastPublished": "2026-03-23T19:07:56.555Z",
+      "version": "4.1.2",
+      "lastPublished": "2026-10-27T22:05:49.644Z",
       "cypressVersion": ">=15.10.0"
     },
     "allure-cypress": {
@@ -493,8 +493,8 @@
     },
     "Applitools": {
       "npm": "@applitools/eyes-cypress",
-      "version": "3.62.1",
-      "lastPublished": "2026-10-26T14:55:49.425Z",
+      "version": "3.62.2",
+      "lastPublished": "2026-10-29T13:59:33.854Z",
       "cypressVersion": "^9.7"
     },
     "Argos": {
@@ -505,8 +505,8 @@
     },
     "Happo": {
       "npm": "happo",
-      "version": "7.2.0",
-      "lastPublished": "2026-10-26T14:00:30.361Z",
+      "version": "7.2.3",
+      "lastPublished": "2026-10-28T10:13:36.944Z",
       "cypressVersion": "16.2.0"
     },
     "Percy": {
@@ -603,9 +603,9 @@
     },
     "cypress-maildev": {
       "npm": "cypress-maildev",
-      "version": "2.0.0",
-      "lastPublished": "2026-06-15T12:34:28.496Z",
-      "cypressVersion": "^15.17.0"
+      "version": "3.0.0",
+      "lastPublished": "2026-10-28T21:19:29.252Z",
+      "cypressVersion": "^16.2.1"
     },
     "cypress-mailosaur": {
       "npm": "cypress-mailosaur",
@@ -645,9 +645,9 @@
     },
     "cypress-temp-mail": {
       "npm": "cypress-temp-mail",
-      "version": "3.0.1",
-      "lastPublished": "2025-03-07T09:23:33.151Z",
-      "cypressVersion": "^13.9.0"
+      "version": "3.1.0",
+      "lastPublished": "2026-10-27T19:48:05.246Z",
+      "cypressVersion": ">=10"
     },
     "cypress-temp-sms": {
       "npm": "cypress-temp-sms",
@@ -673,8 +673,8 @@
     },
     "Nx": {
       "npm": "@nx/cypress",
-      "version": "24.0.2",
-      "lastPublished": "2026-10-26T20:21:23.791Z",
+      "version": "24.0.3",
+      "lastPublished": "2026-10-30T20:41:32.103Z",
       "cypressVersion": ">= 13 < 17"
     },
     "cypress-real-events": {
