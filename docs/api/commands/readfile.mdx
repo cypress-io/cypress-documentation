@@ -1,6 +1,6 @@
 ---
 title: 'cy.readFile()'
-description: Read a file and yield its contents in Cypress.
+description: Read files in Cypress tests with cy.readFile(), which retries until the file exists and your assertions pass, to check downloads, logs, and generated files.
 sidebar_label: readFile
 slug: /api/commands/readfile
 ---
@@ -9,7 +9,12 @@ slug: /api/commands/readfile
 
 # readFile
 
-Read a file and yield its contents.
+`cy.readFile()` reads a file from disk and yields its contents. It reads the
+file again until the file exists and your assertions pass, so it suits files
+that change during a test, such as downloads, logs, and files your app
+generates. For test data that stays the same, use
+[`cy.fixture()`](/api/commands/fixture), which reads the file once and caches
+it.
 
 ## Syntax
 
