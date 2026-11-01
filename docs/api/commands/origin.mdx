@@ -15,6 +15,13 @@ than the one your test is running in, such as a sign-in page on another domain
 or subdomain. You put the commands in a callback, Cypress runs them against the
 page in that origin, and your test carries on in its own origin afterward.
 
+Use it to test flows that cross origins, such as:
+
+- [signing in through an SSO or OAuth provider](#Building-an-SSO-login-custom-command-with-cyorigin)
+- [moving between your app's subdomains](#Navigating-between-subdomains-with-cyorigin)
+- [checking a value on another site](#Yielding-a-value-from-cyorigin-back-to-your-test),
+  such as the latest version on a help site
+
 ## Syntax
 
 ```js
@@ -90,12 +97,14 @@ Pass in an options object to control the behavior of `cy.origin()`.
 
 <Icon name="angle-right" /> **callbackFn _(Function)_**
 
-The function whose commands run in the secondary origin. Cypress sends it there
-as text, so it can't use variables declared outside it: pass them in with `args`
-instead. When you pass `args`, the callback receives them as its only argument.
+The function whose commands run in the secondary origin. Write it like any
+other test code: it runs Cypress commands and assertions, custom commands and npm
+packages loaded with [`Cypress.require()`](#Using-dependencies-and-shared-code-in-cyorigin),
+and secrets read with [`cy.env()`](/api/commands/env). Pass in values from your
+test with `args`, and the callback receives them as its only argument.
 
-Some commands throw an error inside the callback. See
-[Commands that can't run inside cy.origin()](#Commands-that-cant-run-inside-cyorigin).
+A few commands belong outside the callback. See
+[Where to call cy.intercept(), cy.session(), and cy.origin()](#Where-to-call-cyintercept-cysession-and-cyorigin).
 
 <HeaderYields />
 
@@ -115,8 +124,8 @@ Some commands throw an error inside the callback. See
 
 ### Passing data into cy.origin() with the args option
 
-The callback can't see variables from your test, so pass the values it needs
-through `args`. Cypress serializes them and hands them to the callback:
+Pass the values the callback needs through `args`. Cypress serializes them and
+hands them to the callback:
 
 ```js
 const couponCode = 'HALFOFF'
@@ -139,35 +148,21 @@ cy.origin(
 
 ### Yielding a value from cy.origin() back to your test
 
-Yield a value from the last command in the callback, and pick it up after the
-block. The value crosses back serialized, so yield something that serializes,
-such as a string, rather than an element:
-
-<Icon name="check-circle" color="green" /> **Correct Usage**
+Yield a value from the last command in the callback, and chain assertions onto
+`cy.origin()` in your test. Yield data, such as an element's text, and it
+serializes back to your test:
 
 ```js
 cy.origin('https://example.cypress.io', () => {
   cy.visit('/')
-  // Yields a string, which serializes back to your test
+  // Yield the element's text, which serializes back to your test
   cy.get('h1').invoke('text')
 }).should('equal', 'Kitchen Sink')
-```
-
-<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
-
-```js
-cy.origin('https://example.cypress.io', () => {
-  cy.visit('/')
-  // Yields an element, which can't be serialized
-  cy.get('h1')
-}).should('contain', 'Kitchen Sink') // Fails
 ```
 
 To use the value in later commands, pick it up with
 [`.then()`](/api/commands/then). Here, a help site lists the latest release, and
 the test checks that the app shows the same version:
-
-<Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 cy.visit('https://app.cypress.io')
@@ -182,29 +177,14 @@ cy.origin('https://help.cypress.io', () => {
 })
 ```
 
-Reading the value with plain JavaScript and returning it doesn't work. Code in
-the callback runs before any of the Cypress commands it queues, so the page
-hasn't loaded yet, and returning a value alongside queued commands fails the
-test:
-
-<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
-
-```js
-cy.visit('https://app.cypress.io')
-
-cy.origin('https://help.cypress.io', () => {
-  cy.visit('/releases')
-  // Fails: this runs before cy.visit(), and the callback also returns a value
-  return { version: document.title }
-})
-```
+Read values from the page with Cypress commands, as above. Plain JavaScript in
+the callback runs before the commands it queues, before the page has loaded.
 
 ### Visiting a secondary origin with cy.visit()
 
-You can visit the secondary origin inside the `cy.origin()` callback, or before
-it. Cypress doesn't fail on the navigation itself. It fails when a command
-outside the callback interacts with the page at the other origin, as in
-[Usage](#Usage).
+Visit the secondary origin inside the `cy.origin()` callback, or before it.
+Navigating to another origin works anywhere in the test. Commands that interact
+with that page, such as `cy.get()`, go inside the callback.
 
 Visit inside the callback, with a URL relative to the `cy.origin()` URL:
 
@@ -232,6 +212,19 @@ cy.origin('https://example.cypress.io', () => {
 
 Clicking a link or button that goes to another origin works the same way, as in
 [Navigating between subdomains with cy.origin()](#Navigating-between-subdomains-with-cyorigin).
+
+[`cy.url()`](/api/commands/url), [`cy.location()`](/api/commands/location), and
+[`cy.title()`](/api/commands/title) work outside the callback, whichever origin
+the page is on, so you can check where a navigation landed without
+`cy.origin()`:
+
+```js
+cy.visit('https://app.cypress.io')
+cy.contains('a', 'Log in').click()
+
+// No cy.origin() needed to check where the link went
+cy.location('hostname').should('eq', 'auth.cypress.io')
+```
 
 ### Navigating between subdomains with cy.origin()
 
@@ -270,8 +263,8 @@ against `https://app.cypress.io`, but the application is at
 
 ### Navigating to multiple secondary origins in succession
 
-A callback can't call `cy.origin()` itself, so to work in several origins, call
-`cy.origin()` once for each, one after another at the top level of the test:
+To work in several origins, call `cy.origin()` once for each, one after another
+at the top level of the test:
 
 ```js
 cy.origin('auth.cypress.io', () => {
@@ -287,17 +280,15 @@ cy.origin('help.cypress.io', () => {
 
 ### Using cy.origin() with a local http server
 
-The scheme defaults to `https` when you leave it out, and local development
-servers usually run on `http`. Include the scheme and port so the origin matches
-the server exactly:
-
-<Icon name="check-circle" color="green" /> **Correct Usage**
+Local development servers usually run on `http`. Include the scheme and port in
+the `cy.origin()` URL so it matches the server exactly:
 
 ```js
 // The app runs at http://localhost:3000 and the auth server at http://localhost:3001
 cy.visit('http://localhost:3000')
 cy.contains('a', 'Log in').click()
 
+// Include http://, since the scheme defaults to https
 cy.origin('http://localhost:3001', () => {
   cy.get('#username').type('jane')
   cy.contains('button', 'Sign in').click()
@@ -305,21 +296,6 @@ cy.origin('http://localhost:3001', () => {
 
 cy.url().should('eq', 'http://localhost:3000/dashboard')
 ```
-
-<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
-
-```js
-cy.visit('http://localhost:3000')
-cy.contains('a', 'Log in').click()
-
-// Fails: without a scheme, this becomes https://localhost:3001
-cy.origin('localhost:3001', () => {
-  cy.get('#username').type('jane')
-})
-```
-
-The first command in the callback fails because it was expected to run against
-`https://localhost:3001`, but the application is at `http://localhost:3001`.
 
 ### Handling uncaught exceptions in a secondary origin
 
@@ -369,8 +345,7 @@ cy.origin('https://auth.cypress.io', () => {
 
 ### Stubbing secondary origin requests with cy.intercept()
 
-[`cy.intercept()`](/api/commands/intercept) throws an error inside the
-`cy.origin()` callback, but you don't need it there. Register it before the
+Register [`cy.intercept()`](/api/commands/intercept) in your test, before the
 `cy.origin()` block, and it matches requests the secondary origin's page makes.
 Wait on its alias after the block:
 
@@ -497,8 +472,8 @@ session with `cy.session()`. It turns on `experimentalSessionAndOrigin`, which
 
 ### How cy.origin() runs commands in another origin
 
-Your test and the page in the secondary origin can't reach each other directly,
-so Cypress runs a separate copy of itself inside the secondary origin. When your
+To reach a page at another origin, Cypress runs a separate copy of itself
+inside that origin. When your
 test reaches `cy.origin()`, it sends that copy the callback as text and the
 `args` option serialized. The copy runs the callback's commands against the
 page, then sends the yielded value back, serialized:
@@ -509,16 +484,16 @@ page, then sends the yielded value back, serialized:
   noBorder
 />
 
-This explains the rules on the rest of this page:
+This shapes how you write a `cy.origin()` test:
 
-- The callback runs from its text, so it can't see variables declared outside it.
-  Pass them in with `args` ([Serialization](#Serialization)).
-- Everything that crosses between origins is serialized, so `args` and yielded
-  values must survive the structured clone algorithm ([Yields](#Yields)).
-- `cy.intercept()` and `cy.session()` stay in your test
-  ([Commands that can't run inside cy.origin()](#Commands-that-cant-run-inside-cyorigin)).
-- The copy of Cypress stays loaded until the spec file ends, so code loaded in
-  one callback is still there in later ones for the same origin
+- Pass values from your test into the callback with `args`
+  ([Serialization](#Serialization)).
+- Yield data, such as text, numbers, and plain objects, back to your test
+  ([Yields](#Yields)).
+- Call `cy.intercept()` and `cy.session()` in your test, around the callback
+  ([Where to call cy.intercept(), cy.session(), and cy.origin()](#Where-to-call-cyintercept-cysession-and-cyorigin)).
+- Load shared code once per spec, since the copy of Cypress stays loaded for
+  later callbacks to the same origin
   ([Shared execution context across cy.origin() calls](#Shared-execution-context-across-cyorigin-calls)).
 
 ### What counts as a different origin for cy.origin()
@@ -537,11 +512,11 @@ For a test that starts on `https://app.cypress.io`:
 | `https://auth.cypress.io`         | Yes                  | The subdomain differs             |
 | `http://app.cypress.io`           | Can't be reached     | The scheme differs                |
 
-An `https` page can't reach an `http` origin at all, because the browser blocks
-an `http` page inside an `https` one, so keep both origins on the same scheme.
+Keep both origins on the same scheme. The browser blocks an `http` page inside
+an `https` one, so an `https` test can't reach an `http` origin.
 
-When you pass a URL that is the same origin as the test, `cy.origin()` fails
-with an error, since the commands don't need it.
+Commands on a page at the same origin as the test run without `cy.origin()`,
+and passing that origin to `cy.origin()` throws an error.
 
 Before Cypress 14.0.0, Cypress injected `document.domain` by default, so
 subdomains of the same domain didn't need `cy.origin()`. To keep that behavior
@@ -552,26 +527,28 @@ deprecated and will be removed in a future version of Cypress.
 
 ### Serialization
 
-Cypress transfers `args` to the secondary origin, and the yielded value back,
-with
+Cypress copies `args` to the secondary origin, and the yielded value back, with
 [the structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
-It has
-[limits on what it can copy](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone),
-such as functions and DOM elements.
+Strings, numbers, booleans, arrays, plain objects, dates, maps, and sets all copy
+across. Functions and DOM elements
+[don't copy](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#things_that_dont_work_with_structured_clone),
+so pass data rather than behavior: an element's text instead of the element, or
+a page object's selectors instead of the instance.
 
-Variables declared outside the callback aren't available inside it. Using one
-throws a `ReferenceError` that tells you to define the variable in the callback
-or pass it in with `args`, as in [Usage](#Usage).
+Pass every value the callback needs through `args`. A variable that isn't passed
+in throws a `ReferenceError` that names the variable and points you to `args`,
+as in [Usage](#Usage).
 
 ### Using dependencies and shared code in cy.origin()
 
 Inside the callback, [`Cypress.require()`](/api/cypress-api/require) includes npm
 packages and your own files, the same way
 [CommonJS `require()`](https://nodejs.org/api/modules.html#requireid) works in
-browser code. CommonJS `require()` and
-[ES module `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)
-don't work in the callback. `Cypress.require()` requires turning on the
-[`experimentalOriginDependencies`](/app/references/experiments) option.
+browser code. Use it in place of `require()` and
+[`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)
+in the callback, and turn on the
+[`experimentalOriginDependencies`](/app/references/experiments) option to enable
+it.
 
 ```js
 cy.origin('https://auth.cypress.io', () => {
@@ -648,17 +625,16 @@ it('clicks a link in a later test', () => {
   })
 
   cy.origin('https://help.cypress.io', () => {
-    // cy.clickLink() isn't defined here, because this is a different origin
+    // This origin has its own context, so load commands here separately
   })
 })
 ```
 
 #### Using page objects inside cy.origin()
 
-A page object instance can't go into the callback. The callback has no access to
-variables from outside it, and a class passed through `args` arrives without its
-methods. Instead, import the page object inside the callback with
-`Cypress.require()` and create the instance there:
+Import the page object inside the callback with `Cypress.require()`, and create
+the instance there. The class keeps its methods, which an instance passed
+through `args` would lose in serialization:
 
 ```typescript copyTsToJs title="cypress/support/SignInPage.ts"
 export class SignInPage {
@@ -719,19 +695,18 @@ it('signs in with selectors passed through args', () => {
 })
 ```
 
-### Commands that can't run inside cy.origin()
+### Where to call cy.intercept(), cy.session(), and cy.origin()
 
-These commands throw an error inside the callback:
+These commands work alongside `cy.origin()` from your test, around the callback:
 
-- `cy.origin()`: call it again at the top level of the test instead, as in
-  [Navigating to multiple secondary origins in succession](#Navigating-to-multiple-secondary-origins-in-succession)
-- [`cy.intercept()`](/api/commands/intercept): register it before the block, as
-  in [Stubbing secondary origin requests with cy.intercept()](#Stubbing-secondary-origin-requests-with-cyintercept)
-- [`cy.session()`](/api/commands/session): wrap the whole flow in it instead, as
-  in [Building an SSO login custom command with cy.origin()](#Building-an-SSO-login-custom-command-with-cyorigin)
+| Command                                     | Where it goes                                   | Example                                                                                             |
+| ------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| [`cy.intercept()`](/api/commands/intercept) | Before the `cy.origin()` block                  | [Stubbing secondary origin requests](#Stubbing-secondary-origin-requests-with-cyintercept)          |
+| [`cy.session()`](/api/commands/session)     | Around the whole sign-in flow                   | [Building an SSO login custom command](#Building-an-SSO-login-custom-command-with-cyorigin)         |
+| `cy.origin()`                               | One after another, at the top level of the test | [Navigating to multiple secondary origins](#Navigating-to-multiple-secondary-origins-in-succession) |
+| `Cypress.session.*` methods                 | In your test, outside the callback              |                                                                                                     |
 
-`Cypress.session.*` methods throw an error inside the callback too, so call them
-outside it.
+Called inside the callback, each of these throws an error.
 
 ### Framebusting code in third-party origins
 
@@ -744,16 +719,20 @@ set
 `true` so Cypress rewrites theirs too. See
 [Modifying Obstructive Third Party Code](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code).
 
-### Where cy.origin() runs commands
+### Testing windows, tabs, and iframes alongside cy.origin()
 
-`cy.origin()` runs commands against the page your test visits. It doesn't run
-them:
+`cy.origin()` runs commands against the page your test visits, in any origin.
+For other browsing contexts, use these approaches:
 
-- [in a different browser window](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
-- in a different browser tab
-- [inside an `<iframe>` element](/app/faq#How-do-I-test-elements-inside-an-iframe)
+- Links that open a new tab: test them in the same tab, as in
+  [Can I test anchor links that open in a new tab?](/app/faq#Can-I-test-anchor-links-that-open-in-a-new-tab)
+- Multiple tabs or windows: use the
+  [`@cypress/puppeteer` plugin](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+- Content inside an `<iframe>`: see
+  [How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
 
-`cy.origin()` isn't supported in the experimental WebKit browser.
+`cy.origin()` works in every browser Cypress supports, except the experimental
+WebKit browser.
 
 ## Rules
 
