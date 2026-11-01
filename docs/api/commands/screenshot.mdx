@@ -482,11 +482,15 @@ meantime and not be an accurate representation of what you want to capture.
 ### Full page captures and fixed/sticky elements
 
 When passing `fullPage` to the `capture` option, Cypress scrolls the application
-under test from top to bottom, takes screenshots at each point and stitches them
-together. Due to this, elements that are `position: fixed` or `position: sticky`
-will appear multiple times in the final screenshot. To prevent this, in most
-cases you can programmatically change the element to be `position: absolute`
-before the screenshot and change it back afterwards like shown below:
+under test one viewport height at a time, takes a screenshot at each point, and
+stitches them together. The last screenshot is cropped to the part of the page
+not yet captured. Due to this, an element that is `position: fixed` or
+`position: sticky` can appear once in each viewport-height section of the final
+image. A header at the top of the viewport repeats in every full section, while
+a banner at the bottom of the viewport also appears in the cropped last section.
+To prevent this, in most cases you can programmatically change the element to be
+`position: absolute` before the screenshot and change it back afterwards like
+shown below:
 
 ```javascript
 cy.get('.sticky-header').invoke('css', 'position', 'absolute')
@@ -509,6 +513,32 @@ instead. The same capture then has no banner at all:
 <DocsImage
   src="/img/api/screenshot/fullpage-banner-hidden-by-onbeforescreenshot.png"
   alt="Full page capture of the same Team updates page with no cookie banner"
+/>
+
+### Fixed and sticky headers in element screenshots
+
+To capture an element, Cypress scrolls it to the top of the viewport. A
+`position: fixed` or `position: sticky` header at the top of the page then
+sits on top of the element and covers part of the image:
+
+<DocsImage
+  src="/img/api/screenshot/element-screenshot-covered-by-sticky-header.png"
+  alt="Element screenshot of a post card whose top half is covered by the dark Team updates header"
+/>
+
+Hide the header for the screenshot and restore it afterward. Setting
+`visibility` to `hidden` keeps the header's space in the layout, so nothing
+else on the page moves:
+
+```javascript
+cy.get('.sticky-header').invoke('css', 'visibility', 'hidden')
+cy.get('.post').eq(3).screenshot()
+cy.get('.sticky-header').invoke('css', 'visibility', '')
+```
+
+<DocsImage
+  src="/img/api/screenshot/element-screenshot-with-sticky-header-hidden.png"
+  alt="The same post card, fully visible with its avatar, title, timestamp, and text"
 />
 
 ### Chromium-specific behavior with regard to tabs
