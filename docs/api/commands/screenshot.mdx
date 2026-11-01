@@ -18,7 +18,9 @@ Use it to:
 
 - [capture a single element](#Screenshot-an-element), such as a card or a form
 - [keep a baseline image](#Overwrite-a-baseline-screenshot-instead-of-numbering-a-new-copy)
-  for a [visual testing](/app/tooling/visual-testing) tool to compare against
+  for a
+  [visual regression tool](/app/tooling/visual-testing#Open-source-plugins) to
+  compare against
 - [check a responsive layout at several viewport sizes](#Take-a-screenshot-at-several-viewport-sizes)
 - [keep changing content, such as timestamps, out of the image](#Black-out-dynamic-content-such-as-timestamps-and-avatars)
 
@@ -478,6 +480,20 @@ For how Cypress organizes tests and the files a run generates, see
 The [`after:screenshot` event](/api/node-events/after-screenshot-api) runs after
 Cypress writes each screenshot to disk and receives its details, so you can
 rename, move, or edit the file.
+
+### Compare screenshots with visual regression plugins
+
+`cy.screenshot()` saves an image but doesn't compare it with anything. To catch
+visual changes, use a visual regression plugin or service. Plugins typically add
+their own command that captures the page and compares it, pixel by pixel, with a
+baseline image. See
+[open source plugins](/app/tooling/visual-testing#Open-source-plugins) and
+[commercial services](/app/tooling/visual-testing#Commercial-services) on the
+Visual Testing page.
+
+The [`blackout`](#Blackout) and `disableTimersAndAnimations` options on this
+page help keep those comparisons stable, by covering content that changes
+between runs and by pausing animations during the capture.
 
 ### Automatic screenshots on test failure in `cypress run`
 
