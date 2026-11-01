@@ -414,6 +414,47 @@ describe('my tests', () => {
 })
 ```
 
+After the test passes, the screenshots folder holds:
+
+```text
+cypress/screenshots/
+└── login.cy.js/
+    ├── my/
+    │   └── nested/
+    │       └── screenshot.png
+    ├── my tests -- takes a screenshot.png
+    ├── my tests -- takes a screenshot (1).png
+    ├── my tests -- takes a screenshot (2).png
+    ├── my-screenshot.png
+    └── my-screenshot (1).png
+```
+
+A test that fails and then passes on a
+[retry](/app/guides/test-retries) adds both suffixes. This test fails its first
+attempt and passes its second:
+
+```javascript
+describe('my flaky tests', () => {
+  it('passes on retry', { retries: { runMode: 1 } }, () => {
+    cy.screenshot()
+    cy.then(() => {
+      // fail the first attempt only
+      if (Cypress.currentRetry === 0) throw new Error('flaky')
+    })
+  })
+})
+```
+
+In `cypress run`, it saves three screenshots:
+
+```text
+cypress/screenshots/
+└── login.cy.js/
+    ├── my flaky tests -- passes on retry.png              ← attempt 1, cy.screenshot()
+    ├── my flaky tests -- passes on retry (failed).png     ← attempt 1, automatic failure screenshot
+    └── my flaky tests -- passes on retry (attempt 2).png  ← attempt 2, cy.screenshot()
+```
+
 :::info
 
 To learn more about how to write and organize tests and how assets are saved,
@@ -438,6 +479,24 @@ automatically takes a screenshot when a test fails. To turn this off, set
 [`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to `false`
 in your Cypress configuration or with
 [`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api).
+
+A failure screenshot uses `capture: 'runner'`, so it shows the Command Log next
+to the application under test. Here,
+[`cy.get()`](/api/commands/get) timed out looking for an element that never
+appeared, and its row is highlighted in red:
+
+```javascript
+cy.get('[data-cy=new-post]').click()
+```
+
+<DocsImage
+  src="/img/api/screenshot/failure-screenshot-highlights-failing-command.png"
+  alt="Failure screenshot showing the Command Log with the get command for data-cy=new-post highlighted in red beside the Team updates page"
+/>
+
+The error message itself isn't in this screenshot. The Command Log can still be
+rendering it when the screenshot is taken, as described in
+[Understanding when the screenshot is taken](#Understanding-when-the-screenshot-is-taken).
 
 ### Viewing Screenshots
 
@@ -488,6 +547,12 @@ not yet captured. Due to this, an element that is `position: fixed` or
 `position: sticky` can appear once in each viewport-height section of the final
 image. A header at the top of the viewport repeats in every full section, while
 a banner at the bottom of the viewport also appears in the cropped last section.
+
+<DocsImage
+  src="/img/api/screenshot/fullpage-stitching-repeats-sticky-header.svg"
+  alt="Diagram: Cypress takes three screenshots of a page 2.6 viewports tall, each with the sticky header at the top. The third overlaps the second, so its top, including the header, is cropped out. The stitched image shows the header at the top of sections 1 and 2 but not section 3."
+/>
+
 To prevent this, in most cases you can programmatically change the element to be
 `position: absolute` before the screenshot and change it back afterwards like
 shown below:
@@ -586,7 +651,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/screenshot/command-log-shows-name-of-screenshot-taken.png"
-  alt="Command Log screenshot"
+  alt="Command Log row 1 showing the screenshot command with the name my-image"
 />
 
 When clicking on `screenshot` within the command log, the console outputs the
@@ -594,7 +659,7 @@ following:
 
 <DocsImage
   src="/img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png"
-  alt="Console Log screenshot"
+  alt="DevTools console listing the screenshot's properties, including Name my-image, Size, Dimensions 1000px x 660px, and the Path it was saved to"
 />
 
 ## History

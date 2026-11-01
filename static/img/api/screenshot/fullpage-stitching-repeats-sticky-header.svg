@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="512" viewBox="0 0 760 512" role="img" aria-labelledby="t d">
+<title id="t">How a fullPage screenshot repeats a sticky header</title>
+<desc id="d">On the left, Cypress takes three screenshots of a page 2.6 viewports tall: scrolled to the top, scrolled down one viewport, and scrolled to the bottom. The sticky header is at the top of the viewport in all three. The third screenshot overlaps the second, so its top part is cropped, and the header is cropped with it. On the right, the stitched full-page image shows the sticky header at the top of section 1 and again at the top of section 2, but not in section 3.</desc>
+<style>
+  .card { fill: #f7f8fc; stroke: #e1e3ed; }
+  .pagebg { fill: #eef0fb; }
+  .item { fill: #ffffff; stroke: #6f74a0; stroke-width: 1; }
+  .view { fill: none; stroke: #4956e3; stroke-width: 3; }
+  .image { fill: none; stroke: #1b1e2e; stroke-width: 2; }
+  .divider { stroke: #6f74a0; stroke-width: 1.5; stroke-dasharray: 5 4; }
+  .hatch { stroke: #6f74a0; stroke-width: 1.5; }
+  .arrow { stroke: #1b1e2e; stroke-width: 2; fill: none; }
+  .arrowhead { fill: #1b1e2e; }
+  .head { fill: #1b1e2e; }
+  .headtext { font: 600 10px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #ffffff; }
+  .pill { fill: #ffffff; stroke: #6f74a0; stroke-width: 1; }
+  .label { font: 11px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #1b1e2e; }
+  .note { font: 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #555a6e; }
+  .callout { font: 600 13px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
+  .heading { font: 600 15px -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; fill: #1b1e2e; }
+</style>
+<defs>
+  <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line class="hatch" x1="0" y1="0" x2="0" y2="8"/>
+  </pattern>
+</defs>
+<rect class="card" x="0.5" y="0.5" width="759" height="511" rx="12"/>
+<text class="heading" x="190" y="40" text-anchor="middle">Screenshots Cypress takes</text>
+<text class="note" x="190" y="62" text-anchor="middle">One per viewport height, top to bottom</text>
+<text class="heading" x="570" y="40" text-anchor="middle">Stitched full-page image</text>
+<text class="note" x="570" y="62" text-anchor="middle">The header repeats in each full section</text>
+<path d="M380 24 V488" stroke="#e1e3ed" stroke-width="1"/>
+<text class="note" x="110" y="98">1. Scrolled to the top</text>
+<clipPath id="f0"><rect x="110" y="108" width="160" height="100"/></clipPath>
+<g clip-path="url(#f0)"><g transform="translate(0 108)"><rect class="pagebg" x="110" y="0" width="160" height="260"/>
+<rect class="item" x="122" y="24" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="41">Post 1</text>
+<rect class="item" x="122" y="58" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="75">Post 2</text>
+<rect class="item" x="122" y="92" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="109">Post 3</text>
+<rect class="item" x="122" y="126" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="143">Post 4</text>
+<rect class="item" x="122" y="160" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="177">Post 5</text>
+<rect class="item" x="122" y="194" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="211">Post 6</text>
+<rect class="item" x="122" y="228" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="245">Post 7</text></g>
+<rect class="head" x="110" y="108" width="160" height="16"/><text class="headtext" x="118" y="120">Sticky header</text></g>
+<rect class="view" x="110" y="108" width="160" height="100"/>
+<text class="note" x="110" y="242">2. Scrolled down one viewport</text>
+<clipPath id="f1"><rect x="110" y="252" width="160" height="100"/></clipPath>
+<g clip-path="url(#f1)"><g transform="translate(0 152)"><rect class="pagebg" x="110" y="0" width="160" height="260"/>
+<rect class="item" x="122" y="24" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="41">Post 1</text>
+<rect class="item" x="122" y="58" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="75">Post 2</text>
+<rect class="item" x="122" y="92" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="109">Post 3</text>
+<rect class="item" x="122" y="126" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="143">Post 4</text>
+<rect class="item" x="122" y="160" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="177">Post 5</text>
+<rect class="item" x="122" y="194" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="211">Post 6</text>
+<rect class="item" x="122" y="228" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="245">Post 7</text></g>
+<rect class="head" x="110" y="252" width="160" height="16"/><text class="headtext" x="118" y="264">Sticky header</text></g>
+<rect class="view" x="110" y="252" width="160" height="100"/>
+<text class="note" x="110" y="386">3. Scrolled to the bottom</text>
+<clipPath id="f2"><rect x="110" y="396" width="160" height="100"/></clipPath>
+<g clip-path="url(#f2)"><g transform="translate(0 236)"><rect class="pagebg" x="110" y="0" width="160" height="260"/>
+<rect class="item" x="122" y="24" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="41">Post 1</text>
+<rect class="item" x="122" y="58" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="75">Post 2</text>
+<rect class="item" x="122" y="92" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="109">Post 3</text>
+<rect class="item" x="122" y="126" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="143">Post 4</text>
+<rect class="item" x="122" y="160" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="177">Post 5</text>
+<rect class="item" x="122" y="194" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="211">Post 6</text>
+<rect class="item" x="122" y="228" width="136" height="26" rx="3"/>
+<text class="label" x="132" y="245">Post 7</text></g>
+<rect class="pagebg" x="110" y="396" width="160" height="40"/>
+<rect x="110" y="396" width="160" height="40" fill="url(#hatch)"/>
+<rect class="head" x="110" y="396" width="160" height="16"/><text class="headtext" x="118" y="408">Sticky header</text></g>
+<rect class="pill" x="140" y="414.0" width="100" height="20" rx="10"/>
+<text class="label" x="190.0" y="428.0" text-anchor="middle">Cropped out</text>
+<path class="arrow" d="M102 396 V436" /><path class="arrow" d="M98 396 H106 M98 436 H106"/>
+<rect class="view" x="110" y="396" width="160" height="100"/>
+<path class="arrow" d="M300 288 H446"/><path class="arrowhead" d="M456 288 l-12 -7 v14 z"/>
+<clipPath id="st"><rect x="490" y="108" width="160" height="260"/></clipPath>
+<g clip-path="url(#st)"><g transform="translate(0 108)"><rect class="pagebg" x="490" y="0" width="160" height="260"/>
+<rect class="item" x="502" y="24" width="136" height="26" rx="3"/>
+<text class="label" x="512" y="41">Post 1</text>
+<rect class="item" x="502" y="58" width="136" height="26" rx="3"/>
+<text class="label" x="512" y="75">Post 2</text>
+<rect class="item" x="502" y="92" width="136" height="26" rx="3"/>
+<text class="label" x="512" y="109">Post 3</text>
+<rect class="item" x="502" y="126" width="136" height="26" rx="3"/>
+<text class="label" x="512" y="143">Post 4</text>
+<rect class="item" x="502" y="160" width="136" height="26" rx="3"/>
+<text class="label" x="512" y="177">Post 5</text>
+<rect class="item" x="502" y="194" width="136" height="26" rx="3"/>
+<text class="label" x="512" y="211">Post 6</text>
+<rect class="item" x="502" y="228" width="136" height="26" rx="3"/>
+<text class="label" x="512" y="245">Post 7</text></g><rect class="head" x="490" y="108" width="160" height="16"/><text class="headtext" x="498" y="120">Sticky header</text><rect class="head" x="490" y="208" width="160" height="16"/><text class="headtext" x="498" y="220">Sticky header</text></g>
+<path class="divider" d="M460 208 H658"/>
+<path class="divider" d="M460 308 H658"/>
+<text class="label" x="476" y="162.0" text-anchor="end">1</text>
+<text class="label" x="476" y="262.0" text-anchor="end">2</text>
+<text class="label" x="476" y="342.0" text-anchor="end">3</text>
+<rect class="image" x="490" y="108" width="160" height="260"/>
+<text class="callout" x="664" y="220">Header</text><text class="callout" x="664" y="236">repeats</text>
+<text class="callout" x="664" y="334">No header:</text><text class="note" x="664" y="350">it was in the</text><text class="note" x="664" y="366">cropped part</text>
+</svg>
