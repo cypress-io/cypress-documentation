@@ -419,65 +419,86 @@ serves, as listed below.
 
 ### Real Cypress sites for examples that run as written
 
-These sites are live, so an example that uses them runs with no setup. Reach for
-`example.cypress.io` first: it exists to be tested and has forms to type into and
-click. Use the others when the example reads naturally against what they serve.
+These sites are live, so an example that uses them runs with no setup. Their
+content changes without notice, so use them to demonstrate a concept, such as
+where the page landed, that an element exists, or that a request succeeds,
+rather than to check specific text. Reach for `example.cypress.io` first when an
+example types or clicks: it exists for examples, so targeting its concrete
+elements is expected.
 
-| Site                          | What it is                                                                                          | Stable to assert on                                                                                                                                        |
-| ----------------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `https://example.cypress.io`  | The Kitchen Sink app, built for Cypress examples, with a page per command group                     | Each page's `h1` (`/commands/actions` is "Actions") and its form fields, such as `.action-email`                                                           |
-| `https://docs.cypress.io`     | This documentation site                                                                             | An API page's `h1` is the bare name and its title gets ` \| Cypress API Documentation`: `/api/commands/visit` has `h1` "visit" and title "cy.visit() \| …" |
-| `https://learn.cypress.io`    | Real World Testing, Cypress's free courses                                                          | The home page `h1`, "Real World Testing with Cypress"                                                                                                      |
-| `https://www.cypress.io/blog` | The Cypress blog                                                                                    | The `h1`, "cy.blog()"                                                                                                                                      |
-| `https://cloud.cypress.io`    | Cypress Cloud. Signed out, it redirects to `/login`, which shows "Continue", "Github", and "Google" | The `/login` path and its sign-in buttons                                                                                                                  |
+| Site                          | What it is                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------- |
+| `https://example.cypress.io`  | The Kitchen Sink app, built for Cypress examples, with a page per command group |
+| `https://www.cypress.io`      | The Cypress website                                                             |
+| `https://docs.cypress.io`     | This documentation site                                                         |
+| `https://learn.cypress.io`    | Real World Testing, Cypress's free courses                                      |
+| `https://www.cypress.io/blog` | The Cypress blog                                                                |
+| `https://cloud.cypress.io`    | Cypress Cloud, which sends a signed-out visitor to sign in                      |
+
+**❌ Tied to content that changes:**
+
+```js
+cy.visit('https://www.cypress.io/blog')
+cy.get('h1').should('have.text', 'cy.blog()')
+cy.url().should('eq', 'https://www.cypress.io/blog')
+```
+
+**✅ The same check as a concept:**
+
+```js
+cy.visit('https://www.cypress.io/blog')
+cy.get('h1').should('be.visible')
+cy.location('pathname').should('eq', '/blog')
+```
 
 Keep these behaviors in mind:
 
-- **Assert on what stays put:** a heading, the title, the URL. Blog posts,
-  course lists, and docs prose change, so never assert on them.
-- **Use the URL the site ends on.** `blog.cypress.io` redirects to
-  `https://www.cypress.io/blog`, a different origin, so an example that visits
-  `blog.cypress.io` names one origin and lands on another. Visit
-  `https://www.cypress.io/blog` directly.
-- **Docs section headings end in a hidden zero-width space** that anchors use,
-  so `h2` text reads `Syntax​`. Match with `should('contain', 'Syntax')`
-  rather than exact text. The `h1` has no such character.
-- **Cloud stops at the sign-in page.** Anything past `/login` needs an account,
-  so an example of it can't run locally. Report it as not run, with that reason.
-- **The docs, Learn, and the blog show a cookie consent banner** that can sit on
-  top of an element an example clicks.
+- **Check part of the URL, not all of it.** Page scripts can rewrite the URL
+  after it loads, for example by adding a hash, so assert on `hostname` or
+  `pathname` with `cy.location()`.
+- **Use the URL the site ends on.** Some hosts redirect to another origin:
+  `blog.cypress.io` goes to `https://www.cypress.io/blog`, so an example that
+  visits `blog.cypress.io` names one origin and lands on another.
+- **Cloud stops at sign-in.** Anything past it needs an account, so an example
+  of it can't run locally. Report it as not run, with that reason.
+- **Keep typing and clicking on `example.cypress.io`.** The other sites can show
+  an overlay, such as a cookie consent banner, on top of what an example clicks.
 - **These sites load third-party scripts.** On a network that blocks one, as
   many CI sandboxes do, the page can throw an uncaught exception, which fails
   the test. If that happens while you verify an example, it is the network, not
   the example: say so in your report.
 
-**✅ Examples that run as written against real Cypress sites:**
+**✅ Concepts demonstrated against real Cypress sites:**
 
 ```js
+// Concrete selectors are fine here: the Kitchen Sink exists for examples
 cy.visit('https://example.cypress.io/commands/actions')
 cy.get('.action-email').type('fake@email.com')
+cy.get('.action-email').should('have.value', 'fake@email.com')
 ```
 
 ```js
-cy.visit('https://docs.cypress.io/api/commands/visit')
-cy.get('h1').should('have.text', 'visit')
-cy.title().should('eq', 'cy.visit() | Cypress API Documentation')
+// The page loaded on the expected origin
+cy.visit('https://www.cypress.io')
+cy.location('hostname').should('eq', 'www.cypress.io')
+cy.get('h1').should('be.visible')
 ```
 
 ```js
-cy.visit('https://learn.cypress.io')
-cy.get('h1').should('have.text', 'Real World Testing with Cypress')
+// The page has navigation links
+cy.visit('https://docs.cypress.io')
+cy.get('nav a[href]').should('have.length.greaterThan', 0)
 ```
 
 ```js
-cy.visit('https://www.cypress.io/blog')
-cy.get('h1').should('have.text', 'cy.blog()')
+// A request succeeds without loading the page in the browser
+cy.request('https://learn.cypress.io').its('status').should('eq', 200)
 ```
 
 ```js
+// Signed out, Cloud sends you away from the page you asked for
 cy.visit('https://cloud.cypress.io')
-cy.location('pathname').should('eq', '/login')
-cy.contains('button', 'Continue')
+cy.location('pathname').should('not.eq', '/')
 ```
 
 ### Correct and incorrect hosts in code examples
