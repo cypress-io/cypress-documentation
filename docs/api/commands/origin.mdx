@@ -471,31 +471,6 @@ which `cy.origin()` no longer needs.
 
 ## Notes
 
-### How cy.origin() runs commands in another origin
-
-To reach a page at another origin, Cypress runs a separate copy of itself
-inside that origin. When your test reaches `cy.origin()`, it sends that copy the
-callback as text and the `args` option serialized. The copy runs the callback's commands against the
-page, then sends the yielded value back, serialized:
-
-<DocsImage
-  src="/img/api/origin/how-cy-origin-runs-commands.svg"
-  alt="Diagram of cy.origin(). Your test runs in the primary origin, https://app.cypress.io, and sends the callback as text, plus args serialized, to a copy of Cypress in the secondary origin, https://auth.cypress.io. That copy runs the callback's commands against the page under test at https://auth.cypress.io/login and sends the yielded value back to your test, serialized. Variables declared outside the callback, cy.intercept(), and cy.session() stay in your test. The copy of Cypress in the secondary origin stays loaded until the spec file ends."
-  noBorder
-/>
-
-This shapes how you write a `cy.origin()` test:
-
-- Pass values from your test into the callback with `args`
-  ([Serialization](#Serialization)).
-- Yield data, such as text, numbers, and plain objects, back to your test
-  ([Yields](#Yields)).
-- Call `cy.intercept()` and `cy.session()` in your test, around the callback
-  ([Where to call cy.intercept(), cy.session(), and cy.origin()](#Where-to-call-cyintercept-cysession-and-cyorigin)).
-- Load shared code once per spec, since the copy of Cypress stays loaded for
-  later callbacks to the same origin
-  ([Loaded code stays available across cy.origin() calls](#Loaded-code-stays-available-across-cyorigin-calls)).
-
 ### What counts as a different origin for cy.origin()
 
 An origin is a URL's scheme, hostname, and port. Two URLs that differ in any of
@@ -608,10 +583,9 @@ it('clicks a link in the secondary origin', () => {
 
 #### Loaded code stays available across cy.origin() calls
 
-The copy of Cypress in the secondary origin stays loaded until the spec file
-ends, so code loaded in one callback is still there in later callbacks for the
-same origin, including in later tests. A different origin gets its own copy, and
-each spec file starts fresh. To share code with `cy.origin()` callbacks in every
+Code you load in a `cy.origin()` callback stays loaded until the spec file ends,
+so it's still there in later callbacks for the same origin, including in later
+tests. Each origin loads code separately, and each spec file starts fresh. To share code with `cy.origin()` callbacks in every
 spec, put the `before()` hook in your support file.
 
 Continuing the spec above:
@@ -625,7 +599,7 @@ it('clicks a link in a later test', () => {
   })
 
   cy.origin('https://help.cypress.io', () => {
-    // A different origin gets its own copy of Cypress, so load the commands here
+    // Each origin loads code separately, so load the commands here too
     Cypress.require('../support/commands')
   })
 })
