@@ -22,7 +22,9 @@ Use it to:
   [visual regression tool](/app/tooling/visual-testing#Open-source-plugins) to
   compare against
 - [check a responsive layout at several viewport sizes](#Take-a-screenshot-at-several-viewport-sizes)
-- [keep changing content, such as timestamps, out of the image](#Black-out-dynamic-content-such-as-timestamps-and-avatars)
+- [keep changing content, such as timestamps, out of the image](#Black-out-dynamic-or-sensitive-content-in-screenshots)
+- [keep sensitive data out of screenshots](#Keep-sensitive-data-out-of-screenshots-including-failures),
+  including the ones uploaded to Cypress Cloud
 - [capture the images for your product documentation](#Capture-screenshots-for-documentation-and-keep-them-current)
   and recapture them whenever your UI changes
 
@@ -196,7 +198,7 @@ cy.screenshot({ clip: { x: 20, y: 20, width: 400, height: 300 } })
 
 ### Blackout
 
-#### Black out dynamic content such as timestamps and avatars
+#### Black out dynamic or sensitive content in screenshots
 
 Content that changes between runs, such as relative timestamps or user avatars,
 makes screenshots of the same page differ from run to run. `blackout` covers
@@ -214,6 +216,41 @@ cy.screenshot('dashboard', { blackout: ['.timestamp', '[data-cy=avatar]'] })
 
 `blackout` applies to `viewport` and `fullPage` captures only. A `runner`
 capture ignores it.
+
+#### Keep sensitive data out of screenshots, including failures
+
+`blackout` also keeps sensitive information, such as names, email addresses, or
+account numbers, out of the screenshots Cypress saves and uploads to Cypress
+Cloud. To apply it to every screenshot, set it with
+`Cypress.Screenshot.defaults()`, as shown in
+[Blackout elements in screenshots](/cloud/account-management/data-storage-and-masking#Blackout-elements-in-screenshots).
+
+:::caution
+
+`blackout` doesn't apply to `runner` captures, and the screenshots Cypress takes
+when a test fails are always `runner` captures. Sensitive information on the
+page stays visible in failure screenshots, even with a `blackout` default.
+
+:::
+
+To cover failure screenshots too, hide sensitive elements in the default
+`onBeforeScreenshot` and `onAfterScreenshot` callbacks. These run for every
+screenshot, failure screenshots included:
+
+```javascript title="cypress/support/e2e.js"
+Cypress.Screenshot.defaults({
+  onBeforeScreenshot($el) {
+    $el.find('[data-sensitive]').css('visibility', 'hidden')
+  },
+  onAfterScreenshot($el) {
+    $el.find('[data-sensitive]').css('visibility', '')
+  },
+})
+```
+
+The Command Log in a failure screenshot can also show values your test typed.
+To mask those, and to control what Test Replay and videos capture, see
+[Data storage and controls](/cloud/account-management/data-storage-and-masking).
 
 ### Screenshot an element
 
