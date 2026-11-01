@@ -158,9 +158,10 @@ full list.
 - If the callback contains no Cypress commands, `cy.origin()` yields the return
   value of the function. If that value is a Promise, `cy.origin()` yields the
   value it resolves to.
-- If the callback runs Cypress commands and also returns a value that is not a
-  Promise, `cy.origin()` fails, because it mixes synchronous and asynchronous
-  code.
+- If the callback runs Cypress commands and also returns a truthy value that is
+  not a Promise, `cy.origin()` fails, because it mixes synchronous and
+  asynchronous code. See
+  [Passing a value from a secondary origin to your test](#Passing-a-value-from-a-secondary-origin-to-your-test).
 - If the yielded value is not serializable, attempting to access it throws an
   error.
 
@@ -213,6 +214,53 @@ cy.origin('https://example.cypress.io', () => {
   cy.visit('/')
   cy.get('h1').invoke('text') // Yields a string...
 }).should('equal', 'Kitchen Sink') // 👍
+```
+
+### Passing a value from a secondary origin to your test
+
+To use a value from the secondary origin back in your test, such as a token the
+login page stores, yield it from the last command in the callback and pick it up
+with [`.then()`](/api/commands/then):
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```js
+cy.visit('https://app.example.com')
+
+cy.origin('https://auth.example.com', () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+  cy.contains('button', 'Sign in').click()
+  cy.contains('#status', 'Signed in')
+  // Yields a string, which serializes back to the primary origin
+  cy.window().its('localStorage').invoke('getItem', 'token')
+}).then((token) => {
+  cy.request({
+    url: 'https://app.example.com/api/me',
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .its('status')
+    .should('eq', 200)
+})
+```
+
+Reading the value with plain JavaScript and returning it doesn't work. Code in
+the callback runs before any of the Cypress commands it queues, so the token
+isn't set yet, and returning a value alongside queued commands fails the test:
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```js
+cy.visit('https://app.example.com')
+
+cy.origin('https://auth.example.com', () => {
+  cy.visit('/login')
+  cy.contains('button', 'Sign in').click()
+  // Runs before the commands above, so the token isn't set yet
+  const token = localStorage.getItem('token')
+  // Fails: the callback queues commands and also returns a non-Promise value
+  return { token }
+})
 ```
 
 ### Navigating to secondary origin with cy.visit
@@ -299,6 +347,145 @@ cy.origin('cypress-dx.com', () => {
   cy.visit('/')
   cy.url().should('contain', 'cypress-dx.com')
 })
+```
+
+### Navigating between subdomains with cy.origin()
+
+Two subdomains of the same domain, such as `app.example.com` and
+`auth.example.com`, are different origins. Commands that run on a page at the
+other subdomain go inside `cy.origin()`, the same as for any other domain:
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```js
+cy.visit('https://app.example.com')
+// The "Log in" link goes to https://auth.example.com/login
+cy.contains('a', 'Log in').click()
+
+cy.origin('https://auth.example.com', () => {
+  cy.get('#username').type('jane')
+  cy.contains('button', 'Sign in').click()
+})
+
+// The login page redirects back to the app
+cy.url().should('eq', 'https://app.example.com/dashboard')
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```js
+cy.visit('https://app.example.com')
+cy.contains('a', 'Log in').click()
+// Fails: auth.example.com is a different origin than app.example.com
+cy.get('#username').type('jane')
+```
+
+The command fails with an error that names both origins: it was expected to run
+against `https://app.example.com`, but the application is at
+`https://auth.example.com`.
+
+### Using cy.origin() with a local http server
+
+The scheme defaults to `https` when you leave it out, and local development
+servers usually run on `http`. Include the scheme and port so the origin matches
+the server exactly:
+
+<Icon name="check-circle" color="green" /> **Correct Usage**
+
+```js
+// The app runs at http://localhost:3000 and the auth server at http://localhost:3001
+cy.visit('http://localhost:3000')
+cy.contains('a', 'Log in').click()
+
+cy.origin('http://localhost:3001', () => {
+  cy.get('#username').type('jane')
+  cy.contains('button', 'Sign in').click()
+})
+
+cy.url().should('eq', 'http://localhost:3000/dashboard')
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```js
+cy.visit('http://localhost:3000')
+cy.contains('a', 'Log in').click()
+
+// Fails: without a scheme, this becomes https://localhost:3001
+cy.origin('localhost:3001', () => {
+  cy.get('#username').type('jane')
+})
+```
+
+The first command in the callback fails because it was expected to run against
+`https://localhost:3001`, but the application is at `http://localhost:3001`.
+
+### Handling uncaught exceptions in a secondary origin
+
+Third-party pages, such as an identity provider's login page, sometimes throw
+errors you can't fix. Cypress fails the test on an uncaught exception from the
+secondary origin, the same as from your own app. To ignore an error you expect,
+register an [`uncaught:exception`](/api/cypress-api/catalog-of-events#Uncaught-Exceptions)
+handler inside the `cy.origin()` callback, before the page loads:
+
+```js
+cy.visit('https://app.example.com')
+
+cy.origin('https://auth.example.com', () => {
+  cy.on('uncaught:exception', (err) => {
+    // Ignore only the error you expect, so anything else still fails the test
+    if (err.message.includes('Third-party widget failed to load')) {
+      return false
+    }
+  })
+
+  cy.visit('/legacy-login')
+  cy.get('h1').should('have.text', 'Sign in')
+})
+```
+
+If you navigate to the page outside the callback, register the handler in a
+`cy.origin()` block that runs before the navigation:
+
+```js
+cy.visit('https://app.example.com')
+
+// Register the handler in the secondary origin before its page loads
+cy.origin('https://auth.example.com', () => {
+  cy.on('uncaught:exception', (err) => {
+    if (err.message.includes('Third-party widget failed to load')) {
+      return false
+    }
+  })
+})
+
+cy.visit('https://auth.example.com/legacy-login')
+
+cy.origin('https://auth.example.com', () => {
+  cy.get('h1').should('have.text', 'Sign in')
+})
+```
+
+### Stubbing secondary origin requests with cy.intercept()
+
+[`cy.intercept()`](/api/commands/intercept) throws an error inside the
+`cy.origin()` callback, but you don't need it there. Register it before the
+`cy.origin()` block, and it matches requests the secondary origin's page makes.
+Wait on its alias after the block:
+
+```js
+cy.visit('https://app.example.com')
+
+cy.intercept('GET', 'https://auth.example.com/api/config', {
+  body: { mfaRequired: false },
+}).as('authConfig')
+
+cy.origin('https://auth.example.com', () => {
+  cy.visit('/login')
+  cy.get('#mfa').should('have.text', 'MFA off')
+})
+
+cy.wait('@authConfig')
 ```
 
 ### SSO login custom command
@@ -765,7 +952,8 @@ following Cypress commands will throw errors if used in the callback:
 
 Accessing any `Cypress.session.*` method inside the callback also throws an
 error. Use `cy.intercept()`, `cy.session()`, and `Cypress.session.*` outside
-the callback instead.
+the callback instead. See
+[Stubbing secondary origin requests with cy.intercept()](#Stubbing-secondary-origin-requests-with-cyintercept).
 
 ### Other limitations
 
