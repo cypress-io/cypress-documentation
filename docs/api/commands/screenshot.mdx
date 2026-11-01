@@ -1,6 +1,6 @@
 ---
 title: 'cy.screenshot()'
-description: Take a screenshot of the application under test and, optionally, the Cypress Command Log.
+description: Take screenshots in Cypress tests with cy.screenshot(). Capture the full page, the viewport, one element, or the Command Log, and save each as a PNG.
 sidebar_label: screenshot
 ---
 
@@ -8,8 +8,23 @@ sidebar_label: screenshot
 
 # screenshot
 
-Take a screenshot of the application under test and, optionally, the
-[Cypress Command Log](/app/core-concepts/open-mode#Command-Log).
+`cy.screenshot()` captures the application under test and saves it as a PNG in
+your screenshots folder, so you have a record of exactly what the page looked
+like at that step of the test. It can capture the whole page, the visible
+viewport, a single element, or the entire Cypress runner, including the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
+
+Use it to:
+
+- [capture a single element](#Screenshot-an-element), such as a card or a form
+- [keep a baseline image](#Overwrite-a-baseline-screenshot-instead-of-numbering-a-new-copy)
+  for a [visual testing](/app/tooling/visual-testing) tool to compare against
+- [check a responsive layout at several viewport sizes](#Take-a-screenshot-at-several-viewport-sizes)
+- [keep changing content, such as timestamps, out of the image](#Black-out-dynamic-content-such-as-timestamps-and-avatars)
+
+To see why a test failed, you don't need `cy.screenshot()`. During
+`cypress run`, Cypress
+[takes a screenshot automatically when a test fails](#Automatic-screenshots-on-test-failure-in-cypress-run).
 
 ## Syntax
 
