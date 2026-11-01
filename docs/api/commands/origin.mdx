@@ -218,48 +218,40 @@ cy.origin('https://example.cypress.io', () => {
 
 ### Passing a value from a secondary origin to your test
 
-To use a value from the secondary origin back in your test, such as a token the
-login page stores, yield it from the last command in the callback and pick it up
-with [`.then()`](/api/commands/then):
+To use a value from the secondary origin back in your test, yield it from the
+last command in the callback and pick it up with [`.then()`](/api/commands/then).
+Here, a help site lists the latest release, and the test checks that the app
+shows the same version:
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
 cy.visit('https://app.example.com')
 
-cy.origin('https://auth.example.com', () => {
-  cy.visit('/login')
-  cy.get('#username').type('jane')
-  cy.contains('button', 'Sign in').click()
-  cy.contains('#status', 'Signed in')
+cy.origin('https://help.example.com', () => {
+  cy.visit('/releases')
   // Yields a string, which serializes back to the primary origin
-  cy.window().its('localStorage').invoke('getItem', 'token')
-}).then((token) => {
-  cy.request({
-    url: 'https://app.example.com/api/me',
-    headers: { Authorization: `Bearer ${token}` },
-  })
-    .its('status')
-    .should('eq', 200)
+  cy.get('#latest-version').invoke('text')
+}).then((version) => {
+  cy.visit('https://app.example.com/about')
+  cy.get('#app-version').should('have.text', version)
 })
 ```
 
 Reading the value with plain JavaScript and returning it doesn't work. Code in
-the callback runs before any of the Cypress commands it queues, so the token
-isn't set yet, and returning a value alongside queued commands fails the test:
+the callback runs before any of the Cypress commands it queues, so the page
+hasn't loaded yet, and returning a value alongside queued commands fails the
+test:
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
 cy.visit('https://app.example.com')
 
-cy.origin('https://auth.example.com', () => {
-  cy.visit('/login')
-  cy.contains('button', 'Sign in').click()
-  // Runs before the commands above, so the token isn't set yet
-  const token = localStorage.getItem('token')
-  // Fails: the callback queues commands and also returns a non-Promise value
-  return { token }
+cy.origin('https://help.example.com', () => {
+  cy.visit('/releases')
+  // Fails: this runs before cy.visit(), and the callback also returns a value
+  return { version: document.title }
 })
 ```
 
