@@ -121,6 +121,52 @@ cy.screenshot('clicking-on-nav')
 cy.screenshot('actions/login/clicking-login')
 ```
 
+#### Overwrite a baseline screenshot instead of numbering a new copy
+
+By default, a second screenshot with the same name is saved as
+`checkout-baseline (1).png`. With `overwrite: true`, it replaces
+`checkout-baseline.png`, so the file always holds the latest capture.
+
+```javascript
+cy.screenshot('checkout-baseline', { overwrite: true })
+```
+
+### Capture
+
+#### Capture the viewport, the full page, or the whole Cypress runner
+
+The `capture` option decides how much of the browser ends up in the image.
+
+```javascript
+cy.screenshot('viewport', { capture: 'viewport' })
+cy.screenshot('full-page', { capture: 'fullPage' })
+cy.screenshot('runner', { capture: 'runner' })
+```
+
+`viewport` captures the part of the application under test that's currently
+visible, here 800 x 500 pixels:
+
+<DocsImage
+  src="/img/api/screenshot/capture-viewport-shows-visible-part-of-app.png"
+  alt="Viewport capture showing the top three posts of the Team updates page, cut off at the bottom of the viewport"
+/>
+
+`fullPage`, the default, scrolls through the application under test and
+captures it from top to bottom:
+
+<DocsImage
+  src="/img/api/screenshot/capture-fullpage-shows-entire-app.png"
+  alt="Full page capture showing the Team updates page from its header to its last post"
+/>
+
+`runner` captures the entire browser window, including the Command Log, with
+the three `screenshot` commands from the example:
+
+<DocsImage
+  src="/img/api/screenshot/capture-runner-shows-command-log-and-app.png"
+  alt="Runner capture showing the Cypress Command Log with three screenshot commands beside the application under test"
+/>
+
 ### Clip
 
 #### Crop a screenshot to a specific position and size
@@ -130,6 +176,27 @@ cy.screenshot('actions/login/clicking-login')
 // to the dimensions 400px x 300px
 cy.screenshot({ clip: { x: 20, y: 20, width: 400, height: 300 } })
 ```
+
+### Blackout
+
+#### Black out dynamic content such as timestamps and avatars
+
+Content that changes between runs, such as relative timestamps or user avatars,
+makes screenshots of the same page differ from run to run. `blackout` covers
+every element that matches a selector with a black box, keeping the layout
+intact:
+
+```javascript
+cy.screenshot('dashboard', { blackout: ['.timestamp', '[data-cy=avatar]'] })
+```
+
+<DocsImage
+  src="/img/api/screenshot/blackout-covers-timestamps-and-avatars.png"
+  alt="Team updates page where every avatar and every Posted timestamp is covered by a black box"
+/>
+
+`blackout` applies to `viewport` and `fullPage` captures only. A `runner`
+capture ignores it.
 
 ### Screenshot an element
 
@@ -145,10 +212,111 @@ cy.get('.post').first().screenshot()
 cy.get('.post').first().screenshot({ padding: 10 })
 ```
 
+#### Add different padding to each side of an element screenshot
+
+`padding` accepts [CSS shorthand](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties)
+as an array of one to four numbers:
+
+```javascript
+// 10px above and below, 20px left and right
+cy.get('.post')
+  .first()
+  .screenshot({ padding: [10, 20] })
+```
+
+Without padding, the image ends at the element's border:
+
+<DocsImage
+  src="/img/api/screenshot/element-screenshot-without-padding.png"
+  alt="Element screenshot of a single post card, cropped exactly at its border"
+/>
+
+With `padding: [10, 20]`, the image includes 10px of the page above and below
+the element and 20px on each side:
+
+<DocsImage
+  src="/img/api/screenshot/element-screenshot-with-padding.png"
+  alt="The same post card with a narrow band of the gray page background around it, wider on the left and right"
+/>
+
+#### Screenshot an element inside `.within()`
+
+Inside [`.within()`](/api/commands/within), `cy.screenshot()` captures the
+`.within()` subject, even when chained off `cy`. Pass `capture: 'runner'` to
+capture the whole runner instead.
+
+```javascript
+cy.get('.post')
+  .first()
+  .within(() => {
+    cy.screenshot('first-post') // captures only the first .post
+    cy.screenshot('first-post-runner', { capture: 'runner' }) // ignores .within()
+  })
+```
+
 #### Chain off the screenshot to click the element captured
 
 ```javascript
 cy.get('button').first().screenshot().click()
+```
+
+### Change the page only for the screenshot with `onBeforeScreenshot`
+
+`onBeforeScreenshot` runs right before the capture and `onAfterScreenshot`
+right after it, so a change made in the first and undone in the second never
+affects the rest of the test. Here a cookie banner is hidden for the screenshot
+and shown again afterward:
+
+```javascript
+cy.screenshot('home', {
+  onBeforeScreenshot($el) {
+    $el.find('.cookie-banner').hide()
+  },
+  onAfterScreenshot($el) {
+    $el.find('.cookie-banner').show()
+  },
+})
+```
+
+Unlike [`blackout`](#Blackout), which covers an element and keeps its space,
+hiding an element removes it from the image entirely.
+
+### Override the screenshot defaults for a single screenshot
+
+Defaults set with
+[`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api), usually in
+a support file, apply to every `cy.screenshot()`:
+
+```javascript title="cypress/support/e2e.js"
+Cypress.Screenshot.defaults({
+  blackout: ['.timestamp', '[data-cy=avatar]'],
+})
+```
+
+An option passed to `cy.screenshot()` replaces the default for that screenshot
+rather than merging with it:
+
+```javascript
+// uses the default blackout list
+cy.screenshot('dashboard')
+// replaces the default list: only h2 elements are blacked out
+cy.screenshot('dashboard-titles', { blackout: ['h2'] })
+```
+
+### Take a screenshot at several viewport sizes
+
+To check a responsive layout, loop over
+[`cy.viewport()`](/api/commands/viewport) presets and name each screenshot
+after its size. This saves `home-iphone-x.png`, `home-ipad-2.png`, and
+`home-macbook-15.png`:
+
+```javascript
+const sizes = ['iphone-x', 'ipad-2', 'macbook-15']
+
+sizes.forEach((size) => {
+  cy.viewport(size)
+  cy.screenshot(`home-${size}`)
+})
 ```
 
 ### Get screenshot info from the `onAfterScreenshot` callback
@@ -325,6 +493,23 @@ cy.get('.sticky-header').invoke('css', 'position', 'absolute')
 cy.screenshot()
 cy.get('.sticky-header').invoke('css', 'position', null)
 ```
+
+In this full-page capture, the page's `position: fixed` cookie banner appears
+twice, once at the bottom of each part of the page Cypress captured:
+
+<DocsImage
+  src="/img/api/screenshot/fullpage-fixed-banner-repeats.png"
+  alt="Full page capture of the Team updates page with the yellow cookie banner appearing twice, once over the middle of the page and once at the bottom"
+/>
+
+For an element that the screenshot doesn't need, such as a cookie banner,
+[hide it with `onBeforeScreenshot`](#Change-the-page-only-for-the-screenshot-with-onBeforeScreenshot)
+instead. The same capture then has no banner at all:
+
+<DocsImage
+  src="/img/api/screenshot/fullpage-banner-hidden-by-onbeforescreenshot.png"
+  alt="Full page capture of the same Team updates page with no cookie banner"
+/>
 
 ### Chromium-specific behavior with regard to tabs
 
