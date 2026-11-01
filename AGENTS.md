@@ -164,10 +164,13 @@ Each rule is a hard convention. See the linked section for the how and why.
 [domains](./AGENTS_REFERENCE.md#domains-in-code-examples)
 
 - Every host an example runs against is `cypress.io` or a subdomain, as if
-  Cypress only runs code it controls: `example.cypress.io` when it should run as
-  written, otherwise a stand-in such as `app.cypress.io` or `auth.cypress.io`.
-  Never `example.com`, a third-party site, or an invented domain. `localhost`
-  is fine for the reader's own server.
+  Cypress only runs code it controls. When it should run as written, use a
+  [real Cypress site](./AGENTS_REFERENCE.md#real-cypress-sites-for-examples-that-run-as-written)
+  (`example.cypress.io` first, then `docs`, `learn`, `www.cypress.io/blog`, or
+  the `cloud` sign-in page) for what it actually serves. Otherwise use a
+  stand-in such as `app.cypress.io` or `auth.cypress.io`. Never `example.com`, a
+  third-party site, or an invented domain. `localhost` is fine for the reader's
+  own server.
 
   ```js
   cy.visit('https://app.cypress.io') // ✅ not https://www.example.com

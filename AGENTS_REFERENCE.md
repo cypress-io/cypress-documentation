@@ -407,15 +407,80 @@ Pick the host by what the example needs:
 
 | The example needs                     | Use                                                                                  |
 | ------------------------------------- | ------------------------------------------------------------------------------------ |
-| To run as written against a real page | `https://example.cypress.io`, the Kitchen Sink app, at a path it serves              |
+| To run as written against a real page | a [real Cypress site](#real-cypress-sites-for-examples-that-run-as-written)          |
 | A stand-in for the reader's app       | `https://app.cypress.io`                                                             |
 | A second origin, such as a login page | `https://auth.cypress.io`                                                            |
 | More origins                          | another descriptive subdomain, such as `https://help.cypress.io`                     |
 | The reader's own local server         | `http://localhost` with a port, such as `http://localhost:3000` (the reader owns it) |
 
-Don't use a Cypress product host (`www`, `docs`, `on`, `learn`, or `cloud`) as a
-stand-in for the reader's app, since a reader takes the example as describing
-that product. Use one only when the example is about that product.
+Don't use a real Cypress site as a stand-in for the reader's app, since a reader
+takes the example as describing that site. Use one only for what it actually
+serves, as listed below.
+
+### Real Cypress sites for examples that run as written
+
+These sites are live, so an example that uses them runs with no setup. Reach for
+`example.cypress.io` first: it exists to be tested and has forms to type into and
+click. Use the others when the example reads naturally against what they serve.
+
+| Site                          | What it is                                                                                          | Stable to assert on                                                                                                                                        |
+| ----------------------------- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `https://example.cypress.io`  | The Kitchen Sink app, built for Cypress examples, with a page per command group                     | Each page's `h1` (`/commands/actions` is "Actions") and its form fields, such as `.action-email`                                                           |
+| `https://docs.cypress.io`     | This documentation site                                                                             | An API page's `h1` is the bare name and its title gets ` \| Cypress API Documentation`: `/api/commands/visit` has `h1` "visit" and title "cy.visit() \| …" |
+| `https://learn.cypress.io`    | Real World Testing, Cypress's free courses                                                          | The home page `h1`, "Real World Testing with Cypress"                                                                                                      |
+| `https://www.cypress.io/blog` | The Cypress blog                                                                                    | The `h1`, "cy.blog()"                                                                                                                                      |
+| `https://cloud.cypress.io`    | Cypress Cloud. Signed out, it redirects to `/login`, which shows "Continue", "Github", and "Google" | The `/login` path and its sign-in buttons                                                                                                                  |
+
+Keep these behaviors in mind:
+
+- **Assert on what stays put:** a heading, the title, the URL. Blog posts,
+  course lists, and docs prose change, so never assert on them.
+- **Use the URL the site ends on.** `blog.cypress.io` redirects to
+  `https://www.cypress.io/blog`, a different origin, so an example that visits
+  `blog.cypress.io` names one origin and lands on another. Visit
+  `https://www.cypress.io/blog` directly.
+- **Docs section headings end in a hidden zero-width space** that anchors use,
+  so `h2` text reads `Syntax​`. Match with `should('contain', 'Syntax')`
+  rather than exact text. The `h1` has no such character.
+- **Cloud stops at the sign-in page.** Anything past `/login` needs an account,
+  so an example of it can't run locally. Report it as not run, with that reason.
+- **The docs, Learn, and the blog show a cookie consent banner** that can sit on
+  top of an element an example clicks.
+- **These sites load third-party scripts.** On a network that blocks one, as
+  many CI sandboxes do, the page can throw an uncaught exception, which fails
+  the test. If that happens while you verify an example, it is the network, not
+  the example: say so in your report.
+
+**✅ Examples that run as written against real Cypress sites:**
+
+```js
+cy.visit('https://example.cypress.io/commands/actions')
+cy.get('.action-email').type('fake@email.com')
+```
+
+```js
+cy.visit('https://docs.cypress.io/api/commands/visit')
+cy.get('h1').should('have.text', 'visit')
+cy.title().should('eq', 'cy.visit() | Cypress API Documentation')
+```
+
+```js
+cy.visit('https://learn.cypress.io')
+cy.get('h1').should('have.text', 'Real World Testing with Cypress')
+```
+
+```js
+cy.visit('https://www.cypress.io/blog')
+cy.get('h1').should('have.text', 'cy.blog()')
+```
+
+```js
+cy.visit('https://cloud.cypress.io')
+cy.location('pathname').should('eq', '/login')
+cy.contains('button', 'Continue')
+```
+
+### Correct and incorrect hosts in code examples
 
 **❌ Hosts Cypress doesn't control:**
 
@@ -445,13 +510,6 @@ cy.origin('https://auth.cypress.io', () => {
   cy.visit('/login')
   cy.get('#username').type('jane')
 })
-```
-
-**✅ An example that runs as written:**
-
-```js
-cy.visit('https://example.cypress.io/commands/actions')
-cy.get('.action-email').type('fake@email.com')
 ```
 
 **✅ The reader's own local server:**
