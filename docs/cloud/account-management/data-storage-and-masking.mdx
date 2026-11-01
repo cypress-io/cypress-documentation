@@ -154,20 +154,20 @@ You can disable capturing data in Test Replay per project by following [this gui
 
 #### Blackout elements in screenshots
 
-Cypress offers an option to black out (mask) an array of elements from screenshots. [See screenshot API docs.](/api/commands/screenshot#Arguments) This blacks out specific elements on screenshots so that they will not be visible in the locally saved screenshots or to any users that have access to the run in Cypress Cloud.
+The [`blackout`](/api/commands/screenshot#Black-out-dynamic-or-sensitive-content-in-screenshots) option of `cy.screenshot()` covers every element that matches a selector with a black box when Cypress takes the screenshot. Those elements aren't visible in the saved screenshot, or to anyone with access to the run in Cypress Cloud.
 
-Add a control to your [support file](/app/references/configuration#Testing-Type-Specific-Options) to set the default blackout options for all screenshots.
+To black out elements in every screenshot, set a default in your [support file](/app/references/configuration#Testing-Type-Specific-Options):
 
 ```js
 before(() => {
   Cypress.Screenshot.defaults({
-    // blackout all elements with 'mask-cy' attribute
-    blackout: ['mask-cy'],
+    // black out every element with the mask-cy attribute
+    blackout: ['[mask-cy]'],
   })
 })
 ```
 
-Add a control for a specific screenshot to blackout specific elements.
+To black out elements in a single screenshot, pass `blackout` to that `cy.screenshot()`:
 
 ```js
 it('admin page loads', () => {
@@ -178,11 +178,17 @@ it('admin page loads', () => {
 })
 ```
 
+:::caution
+
+`blackout` doesn't apply to the screenshots Cypress takes automatically when a test fails, so sensitive elements stay visible in them. To hide sensitive elements in every screenshot, failure screenshots included, hide them in the default `onBeforeScreenshot` and `onAfterScreenshot` callbacks, as shown in [Keep sensitive data out of screenshots, including failures](/api/commands/screenshot#Keep-sensitive-data-out-of-screenshots-including-failures). Or turn off failure screenshots by setting [`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to `false`.
+
+:::
+
 #### Remove Cypress Command Log from screenshots
 
-Cypress offers an option to hide the Cypress Command Log from screenshots so that no information from that area will be captured in screenshots. See the [`cy.screenshot()`](/api/commands/screenshot#Arguments) command for more information.
+The [`capture`](/api/commands/screenshot#Capture-the-viewport-the-full-page-or-the-whole-Cypress-runner) option of `cy.screenshot()` decides whether a screenshot includes the Cypress Command Log. With `viewport` or `fullPage`, Cypress captures only the application under test, so nothing from the Command Log appears in the image.
 
-Add a control to your [support file](/app/references/configuration#Testing-Type-Specific-Options) to set the default capture options for all screenshots.
+To capture only the application under test with every `cy.screenshot()`, set a default in your [support file](/app/references/configuration#Testing-Type-Specific-Options):
 
 ```js
 before(() => {
@@ -192,7 +198,7 @@ before(() => {
 })
 ```
 
-Add a control for a specific screenshot to only capture the application under test.
+To capture only the application under test in a single screenshot, pass `capture` to that `cy.screenshot()`:
 
 ```js
 it('sign in page', () => {
@@ -202,6 +208,12 @@ it('sign in page', () => {
   })
 })
 ```
+
+:::caution
+
+The screenshots Cypress takes automatically when a test fails always use `capture: 'runner'`, whatever default you set, so they include the Command Log. To keep the Command Log out of failure screenshots, hide the Runner UI. Cypress hides it by default when you record a run with Test Replay enabled, and [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui) hides it in any `cypress run`. Or turn off failure screenshots by setting [`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to `false`. To keep specific values out of the Command Log itself, see [Mask data in the Cypress Command Log](#Mask-data-in-the-Cypress-Command-Log).
+
+:::
 
 ### Video controls
 
