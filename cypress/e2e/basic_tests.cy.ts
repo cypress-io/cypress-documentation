@@ -49,11 +49,17 @@ describe('Basic tests', () => {
 
   describe('Dark mode', () => {
     it('switch to dark mode when clicked', () => {
-      cy.get('[data-theme=light]')
-        .should('have.css', 'background-color', 'rgb(255, 255, 255)')  // white
+      cy.get('[data-theme=light]').should(
+        'have.css',
+        'background-color',
+        'rgb(255, 255, 255)'
+      ) // white
       cy.get('[aria-label="Switch to dark mode"]').click()
-      cy.get('[data-theme=dark]')
-        .should('have.css', 'background-color', 'rgb(27, 30, 46)') // dark gray
+      cy.get('[data-theme=dark]').should(
+        'have.css',
+        'background-color',
+        'rgb(27, 30, 46)'
+      ) // dark gray
     })
   })
 
@@ -70,10 +76,25 @@ describe('Basic tests', () => {
       // routes (the dev server returned 200 and rendered the 404 client-side),
       // so allow the non-2xx status and assert the 404 page renders.
       cy.visit('/foo/bar/baz', { failOnStatusCode: false })
-      cy.get('h1')
-        .should('be.visible')
-        .and('have.text', 'Page Not Found')
+      cy.get('h1').should('be.visible').and('have.text', 'Page Not Found')
     })
   })
 })
 
+describe('Heading hash fallback', () => {
+  it('rewrites a wrong-case hash to the canonical heading id', () => {
+    cy.visit('/app/guides/cross-origin-testing#disabling-web-security')
+    cy.hash().should('eq', '#Disabling-Web-Security')
+    cy.get('#Disabling-Web-Security').should('be.visible')
+  })
+
+  it('leaves an exact-case hash unchanged', () => {
+    cy.visit('/app/guides/cross-origin-testing#Disabling-Web-Security')
+    cy.hash().should('eq', '#Disabling-Web-Security')
+  })
+
+  it('leaves an unknown hash unchanged', () => {
+    cy.visit('/app/guides/cross-origin-testing#this-heading-does-not-exist')
+    cy.hash().should('eq', '#this-heading-does-not-exist')
+  })
+})
