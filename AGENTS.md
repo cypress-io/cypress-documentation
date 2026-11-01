@@ -152,7 +152,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Alphabetize the rows of options tables and other reference tables by their
   first column, `log` included. Keep a different order only when the order
   itself carries meaning the reader needs, such as a `## History` table (newest
-  first), sequential steps, or a scale from least to most severe.
+  first), sequential steps, a scale from least to most severe, or a permissions
+  table ordered from the permissions every role has to those only the most
+  senior role has.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
   When an example pairs test code with the app code it runs against (markup,
   source, a fixture), title every block in the pair with its filename, such as
