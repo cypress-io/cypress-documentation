@@ -34,15 +34,22 @@ cy.screenshot(fileName, options)
 ```javascript
 cy.screenshot()
 cy.get('.post').screenshot()
+cy.window().screenshot()
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.get('li').screenshot() // Errors when 'li' matches more than one element
 ```
 
 ### Arguments
 
 <Icon name="angle-right" /> **fileName _(String)_**
 
-A name for the image file. Will be relative to the
+A name for the image file, relative to the
 [screenshots folder](/app/references/configuration#Folders--Files) and the
-path to the spec file. When passed a path, the folder structure will be created.
+path to the spec file. When passed a path, Cypress creates the folder structure.
 See the [Naming conventions](/api/commands/screenshot#Naming-conventions) below
 for more.
 
@@ -50,19 +57,19 @@ for more.
 
 Pass in an options object to change the default behavior of `.screenshot()`.
 
-| Option                       | Default                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ---------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`                        | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `blackout`                   | `[]`                                                        | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `capture`                    | `'fullPage'`                                                | Which parts of the Cypress Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, the application under test is captured in the current viewport. When `fullPage`, the application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured. For screenshots automatically taken on test failure, capture is always coerced to `runner`. When [Test Replay](/cloud/features/test-replay) is enabled and the Runner UI is hidden, a `runner` screenshot will not include the Runner UI and will instead capture the application under test only in the current viewport. |
-| `clip`                       | `null`                                                      | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `disableTimersAndAnimations` | `true`                                                      | When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `padding`                    | `null`                                                      | Padding used to alter the dimensions of a screenshot of an element. It can either be a number, or an array of up to four numbers [using CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). This property is only applied for element screenshots and is ignored for all other types.                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `scale`                      | `false`                                                     | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` when `capture` is `runner`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `timeout`                    | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.screenshot()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `overwrite`                  | `false`                                                     | Whether to overwrite duplicate screenshot files with the same file name when saving.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `onBeforeScreenshot`         | `null`                                                      | A callback before a non-failure screenshot is taken. When capturing screenshots of an element, the argument is the element being captured. For other screenshots, the argument is the `document`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `onAfterScreenshot`          | `null`                                                      | A callback after a non-failure screenshot is taken. When capturing screenshots of an element, the first argument is the element being captured. For other screenshots, the first argument is the `document`. The second argument is properties concerning the screenshot, including the `path` it was saved to and the `dimensions` of the saved screenshot.                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Option                       | Default                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`                        | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `blackout`                   | `[]`                                                        | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `capture`                    | `'fullPage'`                                                | Which parts of the Cypress Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, the application under test is captured in the current viewport. When `fullPage`, the application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured. For screenshots automatically taken on test failure, capture is always coerced to `runner`. When the Runner UI is hidden, which is the default when [Test Replay](/cloud/features/test-replay) is enabled during `cypress run` and also happens with [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui), a `runner` screenshot doesn't include the Runner UI and captures only the application under test in the current viewport. |
+| `clip`                       | `null`                                                      | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `disableTimersAndAnimations` | `true`                                                      | When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `padding`                    | `null`                                                      | Padding used to alter the dimensions of a screenshot of an element. It can either be a number, or an array of up to four numbers [using CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). This property is only applied for element screenshots and is ignored for all other types.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `scale`                      | `false`                                                     | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` when `capture` is `runner`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `timeout`                    | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.screenshot()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `overwrite`                  | `false`                                                     | Whether to overwrite duplicate screenshot files with the same file name when saving.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `onBeforeScreenshot`         | `null`                                                      | A callback before a non-failure screenshot is taken. The argument is a jQuery-wrapped element: the element being captured for an element screenshot, or the document's root `<html>` element for other screenshots.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `onAfterScreenshot`          | `null`                                                      | A callback after a non-failure screenshot is taken. The first argument is a jQuery-wrapped element: the element being captured for an element screenshot, or the document's root `<html>` element for other screenshots. The second argument is properties concerning the screenshot, including the `path` it was saved to and the `dimensions` of the saved screenshot.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 For more details on these options and to set some as defaults across all uses of
 `.screenshot()`, see the
@@ -149,19 +156,24 @@ cy.get('button').first().screenshot().click()
 ```javascript
 cy.screenshot('my-screenshot', {
   onAfterScreenshot($el, props) {
+    // $el is the jQuery-wrapped <html> element, since no element was chained
     // props has information about the screenshot,
     // including but not limited to the following:
     // {
     //   name: 'my-screenshot',
-    //   path: '/Users/janelane/project/screenshots/spec.cy.js/my-screenshot.png',
-    //   size: '15 kb',
+    //   path: '/Users/janelane/project/cypress/screenshots/spec.cy.js/my-screenshot.png',
+    //   size: 15360, // in bytes
     //   dimensions: {
     //     width: 1000,
     //     height: 660,
     //   },
-    //   scaled: true,
+    //   multipart: false,
+    //   pixelRatio: 1,
+    //   takenAt: '2026-11-01T17:00:00.000Z',
+    //   scaled: false,
     //   blackout: [],
-    //   duration: 2300,
+    //   duration: 2300, // in milliseconds
+    //   testAttemptIndex: 0,
     // }
   },
 })
@@ -199,6 +211,12 @@ This behavior can be changed by passing the `{overwrite: true}` option to
   ```javascript
   {screenshotsFolder}/{adjustedSpecPath}/{testName} (failed).png
   ```
+- For a screenshot taken during a
+  [test retry](/app/guides/test-retries#Screenshots), the name is appended
+  with ` (attempt {n})`, such as `{testName} (attempt 2).png` or
+  `{testName} (failed) (attempt 2).png`.
+- Characters that aren't valid in a filename are removed from the name, and a
+  name too long for the file system is truncated.
 
 For example, given a spec file located at `cypress/e2e/users/login.cy.js`:
 
@@ -248,10 +266,10 @@ been written to disk with the
 
 When running through `cypress run` or in
 [Continuous Integration](/app/continuous-integration/overview), Cypress
-automatically takes a screenshot when a test fails. You can optionally turn this
-off by setting `screenshotOnRunFailure` to `false` within your
-[`screenshotOnRunFailure`](/app/references/configuration#Screenshots) or
-[Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
+automatically takes a screenshot when a test fails. To turn this off, set
+[`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to `false`
+in your Cypress configuration or with
+[`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api).
 
 ### Viewing Screenshots
 
@@ -324,7 +342,11 @@ stealing focus, [ensure that the extension is enabled](/app/references/troublesh
 <HeaderRequirements />
 
 - `cy.screenshot()` can be chained off of `cy` or off a command that yields a
-  single DOM element.
+  single DOM element, the `window`, or the `document`.
+- `cy.screenshot()` will throw an error if the subject contains more than one
+  element.
+- Inside [`.within()`](/api/commands/within), `cy.screenshot()` captures the
+  `.within()` subject element, unless `capture` is `'runner'`.
 
 <HeaderAssertions />
 
@@ -333,15 +355,9 @@ stealing focus, [ensure that the extension is enabled](/app/references/troublesh
 
 <HeaderTimeouts />
 
-- `cy.screenshot()` should never time out.
-
-:::caution
-
-Because `cy.screenshot()` is asynchronous it is technically possible for there
-to be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-:::
+- `cy.screenshot()` can time out waiting for the browser to capture and save the
+  screenshot, for the duration of its `timeout` option, which defaults to
+  [`responseTimeout`](/app/references/configuration#Timeouts).
 
 ## Command Log
 
