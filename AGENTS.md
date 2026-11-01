@@ -149,6 +149,10 @@ Each rule is a hard convention. See the linked section for the how and why.
   a link. It's standard on API reference pages; add it to guides and other pages
   only when there are genuinely related pages worth surfacing. Don't pad it with
   tangential links or repeat links already prominent in the page body.
+- Alphabetize the rows of options tables and other reference tables by their
+  first column, `log` included. Keep a different order only when the order
+  itself carries meaning the reader needs, such as a `## History` table (newest
+  first), sequential steps, or a scale from least to most severe.
 - Tag every code block with a language; add `title="file.ext"` for file snippets.
   When an example pairs test code with the app code it runs against (markup,
   source, a fixture), title every block in the pair with its filename, such as
