@@ -166,9 +166,11 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Every host an example runs against is `cypress.io` or a subdomain, as if
   Cypress only runs code it controls. When it should run as written, use a
   [real Cypress site](./AGENTS_REFERENCE.md#real-cypress-sites-for-examples-that-run-as-written):
-  `example.cypress.io` for typing and clicking, or `www`, `docs`, `learn`,
-  `www.cypress.io/blog`, or `cloud` to demonstrate a concept (where the page
-  landed, that an element exists) rather than check text that can change.
+  `example.cypress.io` for typing, clicking, and checking text, or
+  `www.cypress.io`, `docs.cypress.io`, `learn.cypress.io`,
+  `www.cypress.io/blog`, or `cloud.cypress.io` to demonstrate a concept (where
+  the page landed, that an element exists) rather than check text that can
+  change.
   Otherwise use a stand-in such as `app.cypress.io` or `auth.cypress.io`. Never
   `example.com`, a third-party site, or an invented domain. `localhost` is fine
   for the reader's own server.

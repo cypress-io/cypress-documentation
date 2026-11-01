@@ -417,14 +417,19 @@ Don't use a real Cypress site as a stand-in for the reader's app, since a reader
 takes the example as describing that site. Use one only for what it actually
 serves, as listed below.
 
+Some stand-in hosts resolve, for example to a redirect, but none of them serve
+the pages an example describes. They mark where the reader puts their own URL.
+To run an example that uses one, see
+[Serving a stand-in host locally](#serving-a-stand-in-host-locally).
+
 ### Real Cypress sites for examples that run as written
 
 These sites are live, so an example that uses them runs with no setup. Their
 content changes without notice, so use them to demonstrate a concept, such as
 where the page landed, that an element exists, or that a request succeeds,
 rather than to check specific text. Reach for `example.cypress.io` first when an
-example types or clicks: it exists for examples, so targeting its concrete
-elements is expected.
+example types, clicks, or checks text: it exists for examples, so targeting its
+elements and asserting on their text is expected.
 
 | Site                          | What it is                                                                      |
 | ----------------------------- | ------------------------------------------------------------------------------- |
@@ -533,36 +538,9 @@ cy.origin('https://auth.cypress.io', () => {
 })
 ```
 
-**✅ The reader's own local server:**
-
-```js
-cy.visit('http://localhost:3000')
-
-cy.origin('http://localhost:3001', () => {
-  cy.visit('/login')
-  cy.get('#username').type('jane')
-})
-```
-
 A URL inside a code example is not a link, so it never takes the
 [UTM params](#linking-to-other-cypress-domains-utm-params) that outbound links to
 `www.cypress.io` need.
-
-### Running an example that uses a stand-in host
-
-Stand-in hosts such as `app.cypress.io` don't serve the pages an example
-expects, so don't run the example against the real host. Serve fixture pages
-locally and point the stand-in hosts at them for the run:
-
-1. Back up `/etc/hosts`, then map each stand-in host to `127.0.0.1`, for example
-   `127.0.0.1 app.cypress.io auth.cypress.io`.
-2. Serve each host from a local server. For `https`, use a self-signed
-   certificate for those names; Cypress accepts it for the application under
-   test.
-3. Add the stand-in hosts, and only those, to `NO_PROXY` and `no_proxy` for the
-   `cypress run`, so the session proxy doesn't send them to the real hosts.
-   `example.cypress.io` stays off the list and keeps going through the proxy.
-4. When you're done, restore `/etc/hosts` from the backup and stop the servers.
 
 ## Verifying code examples
 
@@ -718,6 +696,22 @@ page reaches Cypress's server, where `cy.intercept()` can stub it.
 An example that loads a fixture needs the file too. Save it under
 `cypress/fixtures/`, where `cy.fixture('user.json')` looks for it, the same as
 in a reader's project.
+
+#### Serving a stand-in host locally
+
+Stand-in hosts such as `app.cypress.io` don't serve the pages an example
+expects, so don't run the example against the real host. Serve fixture pages
+locally and point the stand-in hosts at them for the run:
+
+1. Back up `/etc/hosts`, then map each stand-in host to `127.0.0.1`, for example
+   `127.0.0.1 app.cypress.io auth.cypress.io`.
+2. Serve each host from a local server. For `https`, use a self-signed
+   certificate for those names; Cypress accepts it for the application under
+   test.
+3. Add the stand-in hosts, and only those, to `NO_PROXY` and `no_proxy` for the
+   `cypress run`, so the session proxy doesn't send them to the real hosts.
+   `example.cypress.io` stays off the list and keeps going through the proxy.
+4. When you're done, restore `/etc/hosts` from the backup and stop the servers.
 
 ### Step 5: paste the example in verbatim
 

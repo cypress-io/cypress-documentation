@@ -24,7 +24,7 @@ Use it to test flows that cross origins, such as:
 
 ## Syntax
 
-```js
+```javascript
 cy.origin(url, callbackFn)
 cy.origin(url, options, callbackFn)
 ```
@@ -169,7 +169,7 @@ cy.visit('https://app.cypress.io')
 
 cy.origin('https://help.cypress.io', () => {
   cy.visit('/releases')
-  // Yields a string, which serializes back to the primary origin
+  // Yields a string, which serializes back to your test
   cy.get('#latest-version').invoke('text')
 }).then((version) => {
   cy.visit('https://app.cypress.io/about')
@@ -183,8 +183,9 @@ the callback runs before the commands it queues, before the page has loaded.
 ### Visiting a secondary origin with cy.visit()
 
 Visit the secondary origin inside the `cy.origin()` callback, or before it.
-Navigating to another origin works anywhere in the test. Commands that interact
-with that page, such as `cy.get()`, go inside the callback.
+Navigating to another origin on the same scheme works anywhere in the test.
+Commands that interact with that page, such as `cy.get()`, go inside the
+callback.
 
 Visit inside the callback, with a URL relative to the `cy.origin()` URL:
 
@@ -444,7 +445,7 @@ Cypress.Commands.add('login', (username: string) => {
       cy.location('pathname').should('eq', '/dashboard')
     },
     {
-      // Checks that a restored session still works
+      // Checks the session works after signing in and after each restore
       validate() {
         cy.request('https://app.cypress.io/api/me')
           .its('status')
@@ -465,17 +466,16 @@ export {}
 />
 
 This video walks through testing several origins in one test, and caching the
-session with `cy.session()`. It turns on `experimentalSessionAndOrigin`, which
-`cy.origin()` no longer needs.
+session with `cy.session()`. The video turns on `experimentalSessionAndOrigin`,
+which `cy.origin()` no longer needs.
 
 ## Notes
 
 ### How cy.origin() runs commands in another origin
 
 To reach a page at another origin, Cypress runs a separate copy of itself
-inside that origin. When your
-test reaches `cy.origin()`, it sends that copy the callback as text and the
-`args` option serialized. The copy runs the callback's commands against the
+inside that origin. When your test reaches `cy.origin()`, it sends that copy the
+callback as text and the `args` option serialized. The copy runs the callback's commands against the
 page, then sends the yielded value back, serialized:
 
 <DocsImage
@@ -494,7 +494,7 @@ This shapes how you write a `cy.origin()` test:
   ([Where to call cy.intercept(), cy.session(), and cy.origin()](#Where-to-call-cyintercept-cysession-and-cyorigin)).
 - Load shared code once per spec, since the copy of Cypress stays loaded for
   later callbacks to the same origin
-  ([Shared execution context across cy.origin() calls](#Shared-execution-context-across-cyorigin-calls)).
+  ([Loaded code stays available across cy.origin() calls](#Loaded-code-stays-available-across-cyorigin-calls)).
 
 ### What counts as a different origin for cy.origin()
 
@@ -504,13 +504,13 @@ one go inside `cy.origin()`. The path doesn't count.
 
 For a test that starts on `https://app.cypress.io`:
 
-| URL                               | Needs `cy.origin()`? | Why                               |
-| --------------------------------- | -------------------- | --------------------------------- |
-| `https://app.cypress.io/settings` | No                   | Only the path differs             |
-| `https://app.cypress.io:443`      | No                   | `443` is the default `https` port |
-| `https://app.cypress.io:8443`     | Yes                  | The port differs                  |
-| `https://auth.cypress.io`         | Yes                  | The subdomain differs             |
-| `http://app.cypress.io`           | Can't be reached     | The scheme differs                |
+| URL                               | Needs `cy.origin()`?                    | Why                               |
+| --------------------------------- | --------------------------------------- | --------------------------------- |
+| `https://app.cypress.io/settings` | No                                      | Only the path differs             |
+| `https://app.cypress.io:443`      | No                                      | `443` is the default `https` port |
+| `https://app.cypress.io:8443`     | Yes                                     | The port differs                  |
+| `https://auth.cypress.io`         | Yes                                     | The subdomain differs             |
+| `http://app.cypress.io`           | Yes, but an `https` test can't reach it | The scheme differs                |
 
 Keep both origins on the same scheme. The browser blocks an `http` page inside
 an `https` one, so an `https` test can't reach an `http` origin.
@@ -606,11 +606,11 @@ it('clicks a link in the secondary origin', () => {
 })
 ```
 
-#### Shared execution context across cy.origin() calls
+#### Loaded code stays available across cy.origin() calls
 
-The secondary origin keeps its JavaScript context until the spec file ends, so
-code loaded in one callback is still there in later callbacks for the same
-origin, including in later tests. A different origin has its own context, and
+The copy of Cypress in the secondary origin stays loaded until the spec file
+ends, so code loaded in one callback is still there in later callbacks for the
+same origin, including in later tests. A different origin gets its own copy, and
 each spec file starts fresh. To share code with `cy.origin()` callbacks in every
 spec, put the `before()` hook in your support file.
 
@@ -625,7 +625,8 @@ it('clicks a link in a later test', () => {
   })
 
   cy.origin('https://help.cypress.io', () => {
-    // This origin has its own context, so load commands here separately
+    // A different origin gets its own copy of Cypress, so load the commands here
+    Cypress.require('../support/commands')
   })
 })
 ```
@@ -726,13 +727,10 @@ For other browsing contexts, use these approaches:
 
 - Links that open a new tab: test them in the same tab, as in
   [Can I test anchor links that open in a new tab?](/app/faq#Can-I-test-anchor-links-that-open-in-a-new-tab)
-- Multiple tabs or windows: use the
+- Multiple tabs: use the
   [`@cypress/puppeteer` plugin](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
 - Content inside an `<iframe>`: see
   [How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
-
-`cy.origin()` works in every browser Cypress supports, except the experimental
-WebKit browser.
 
 ## Rules
 
@@ -796,7 +794,7 @@ When you click `origin` in the Command Log, the console outputs the origin, the
 
 | Version                                      | Changes                                                                                                     |
 | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [14.0.0](/app/references/changelog#14-0-0)   | `cy.origin()` is required to navigate between any two origins in the same test, including subdomains.       |
+| [14.0.0](/app/references/changelog#14-0-0)   | `cy.origin()` is required to run commands on a page at any other origin, including subdomains               |
 | [12.6.0](/app/references/changelog#12-6-0)   | Support for `Cypress.require()` added and support for CommonJS `require()` and ES module `import()` removed |
 | [12.0.0](/app/references/changelog#12-0-0)   | `cy.origin()` generally available. Dependencies in the callback require `experimentalOriginDependencies`    |
 | [10.11.0](/app/references/changelog#10-11-0) | Support for CommonJS `require()` and ES module `import()` added and support for `Cypress.require()` removed |
