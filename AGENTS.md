@@ -160,7 +160,25 @@ Each rule is a hard convention. See the linked section for the how and why.
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
 
-**Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples)
+**Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples),
+[domains](./AGENTS_REFERENCE.md#domains-in-code-examples)
+
+- Every host an example runs against is `cypress.io` or a subdomain, as if
+  Cypress only runs code it controls. When it should run as written, use a
+  [real Cypress site](./AGENTS_REFERENCE.md#real-cypress-sites-for-examples-that-run-as-written):
+  `example.cypress.io` for typing, clicking, and checking text, or
+  `www.cypress.io`, `docs.cypress.io`, `learn.cypress.io`,
+  `www.cypress.io/blog`, or `cloud.cypress.io` to demonstrate a concept (where
+  the page landed, that an element exists) rather than check text that can
+  change.
+  Otherwise use a stand-in such as `app.cypress.io` or `auth.cypress.io`. Never
+  `example.com`, a third-party site, or an invented domain. `localhost` is fine
+  for the reader's own server.
+
+  ```js
+  cy.visit('https://app.cypress.io') // ✅ not https://www.example.com
+  cy.origin('https://auth.cypress.io', () => {}) // ✅ not https://login.acme.com
+  ```
 
 - Run every code example you add or rewrite before committing it: typecheck and
   run it in the throwaway `.example-check/` harness, pasted in verbatim, with an
