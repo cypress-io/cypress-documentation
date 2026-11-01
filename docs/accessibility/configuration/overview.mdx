@@ -58,6 +58,7 @@ Several options change what appears in reports and how it's organized. Pick the 
 | Stop dynamic or generated attributes from identifying elements | [`attributeFilters`](/accessibility/configuration/attributefilters)                     |
 | Add component context to violation-target selectors            | [`components`](/accessibility/configuration/components)                                 |
 | Apply different configuration to runs based on run tags        | [`profiles`](/accessibility/configuration/profiles)                                     |
+| Pass or fail runs against quality thresholds                   | [`checks`](/cloud/features/checks)                                                      |
 
 ### Comments
 
@@ -150,6 +151,23 @@ The shape of every available option, with the type each value expects. Every pro
     },
     "comment": string
   },
+  "checks": [
+    // Root level only. See the checks page for every assertion type
+    {
+      "name": string,
+      "assertions": [
+        {
+          "type": string,
+          "value": number,
+          "viewMatch": string,
+          "comment": string
+        }
+      ],
+      "include": { "branches": [string], "tags": [string] },
+      "exclude": { "branches": [string], "tags": [string] },
+      "comment": string
+    }
+  ],
   "profiles": [
     {
       "name": string,
@@ -220,4 +238,5 @@ If no configuration was applied to the run, `config` may be absent, so check for
 - [Ignore attributes for identification](/accessibility/configuration/attributefilters)
 - [Define components](/accessibility/configuration/components)
 - [Override config by run tag](/accessibility/configuration/profiles)
+- [Gate runs with checks](/cloud/features/checks)
 - [Cypress Accessibility FAQ](/accessibility/faq)
