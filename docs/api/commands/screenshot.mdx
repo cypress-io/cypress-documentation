@@ -23,6 +23,8 @@ Use it to:
   compare against
 - [check a responsive layout at several viewport sizes](#Take-a-screenshot-at-several-viewport-sizes)
 - [keep changing content, such as timestamps, out of the image](#Black-out-dynamic-content-such-as-timestamps-and-avatars)
+- [capture the images for your product documentation](#Capture-screenshots-for-documentation-and-keep-them-current)
+  and recapture them whenever your UI changes
 
 To see why a test failed, you don't need `cy.screenshot()`. During
 `cypress run`, Cypress
@@ -341,6 +343,72 @@ sizes.forEach((size) => {
 })
 ```
 
+### Capture screenshots for documentation and keep them current
+
+Product docs, help centers, and READMEs show screenshots of your UI, and those
+images go out of date every time the UI changes. A spec that visits each
+documented page and takes a named screenshot recaptures every image on each run,
+so the images always match your app.
+
+```javascript title="cypress/e2e/docs-screenshots.cy.js"
+describe('documentation screenshots', () => {
+  beforeEach(() => {
+    // a fixed size and date keep each image the same from run to run
+    cy.viewport(1280, 720)
+    cy.clock(new Date('2026-01-15T09:00:00Z'), ['Date'])
+  })
+
+  it('dashboard', () => {
+    cy.visit('/dashboard')
+    cy.get('[data-cy=dashboard]').should('be.visible')
+    cy.screenshot('docs/dashboard', { capture: 'viewport' })
+  })
+})
+```
+
+Keep the viewport within the browser's screen size, which is 1280x720 in a
+headless `cypress run`. Cypress cuts a larger viewport off at the screen's edge,
+so a 1280x800 viewport saves a 1280x720 image. To capture larger images,
+[set a larger screen size](/api/node-events/browser-launch-api#Set-screen-size-when-running-headless).
+
+`cypress run` empties the screenshots folder before each run, so move the
+documentation images out of it as soon as Cypress saves them. This
+[`after:screenshot`](/api/node-events/after-screenshot-api) handler moves every
+screenshot named `docs/...` into a `docs/images` folder, replacing the previous
+version of each image:
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+```
+
+```ts
+on('after:screenshot', (details) => {
+  // move only the screenshots named docs/...
+  if (!details.name?.startsWith('docs/')) return
+
+  const newPath = path.join(
+    config.projectRoot,
+    'docs',
+    'images',
+    path.basename(details.path)
+  )
+
+  fs.mkdirSync(path.dirname(newPath), { recursive: true })
+  fs.renameSync(details.path, newPath)
+
+  // return the new path so the test results point to the moved file
+  return { path: newPath }
+})
+```
+
+:::
+
+Run the spec whenever your UI changes, such as on a schedule in CI, and commit
+the updated images with your docs.
+
 ### Get screenshot info from the `onAfterScreenshot` callback
 
 ```javascript
@@ -522,13 +590,64 @@ The error message itself isn't in this screenshot. The Command Log can still be
 rendering it when the screenshot is taken, as described in
 [When `cy.screenshot()` captures the page](#When-cyscreenshot-captures-the-page).
 
-### View screenshots from CI runs in Cypress Cloud
+### Find screenshots locally, in CI, and in Cypress Cloud
 
-When you record a run to [Cypress Cloud](/cloud/get-started/introduction), Cloud
-shows the screenshots from that run with each test's results.
+#### Find screenshots on your machine
 
-To view screenshots in your CI provider instead, save the screenshots folder as
-a build artifact. Most CI providers document how to do this.
+Cypress saves every screenshot in the screenshots folder, `cypress/screenshots`
+by default, following the [naming conventions](#Naming-conventions) above. This
+applies to both `cypress open` and `cypress run`, though Cypress takes
+[failure screenshots](#Automatic-screenshots-on-test-failure-in-cypress-run)
+only in `cypress run`.
+
+Before each `cypress run`, Cypress deletes everything in the screenshots
+folder, so the folder holds only the latest run's screenshots. To keep
+screenshots between runs, move them elsewhere, as in the
+[documentation example](#Capture-screenshots-for-documentation-and-keep-them-current),
+or set [`trashAssetsBeforeRuns`](/app/references/configuration#Screenshots) to
+`false`.
+
+#### Save screenshots as CI build artifacts
+
+On a CI machine, the screenshots folder disappears when the job ends. To keep
+the screenshots, save the folder as a build artifact. For example, in GitHub
+Actions:
+
+```yaml
+- name: Save screenshots
+  uses: actions/upload-artifact@v6
+  if: failure()
+  with:
+    name: cypress-screenshots
+    path: cypress/screenshots
+    if-no-files-found: ignore
+```
+
+`if: failure()` saves the folder only when an earlier step fails, which is when
+failure screenshots exist. Remove it to keep screenshots from passing runs too.
+The [GitLab CI](/app/continuous-integration/gitlab-ci) and
+[Bitbucket Pipelines](/app/continuous-integration/bitbucket-pipelines) guides
+show the same step for those providers. For other providers, see their
+documentation on build artifacts.
+
+#### View screenshots in Cypress Cloud
+
+When you [record a run](/app/continuous-integration/overview#Record-tests) to
+[Cypress Cloud](/cloud/get-started/introduction), Cypress uploads its
+screenshots with the results. Open a test in the run to see them in the
+[Artifacts](/cloud/features/recorded-runs#Artifacts) section of the test detail
+sidebar, which shows failure screenshots and screenshots from `cy.screenshot()`.
+
+#### Get screenshots from Cypress Cloud with Cloud MCP or the Cloud CLI
+
+- [Cloud MCP](/cloud/integrations/cloud-mcp#Available-tools): the
+  `cypress_get_test_screenshots` tool returns a test's screenshots, including
+  failure screenshots and screenshots from `cy.screenshot()`, from the last
+  attempt by default. For example, ask your AI assistant to "show me the
+  screenshot from the failed checkout test."
+- [Cloud CLI](/cloud/integrations/cloud-cli#cy-cloud-test-get):
+  `cy-cloud test get --testId <testId> --screenshot ./screenshots` saves a
+  test's failure screenshot to disk.
 
 ### When `cy.screenshot()` captures the page
 
