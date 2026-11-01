@@ -105,7 +105,8 @@ precisely match that of the secondary origin, including all subdomains. Query
 params are not supported. If no scheme is provided, the scheme defaults to
 `https`.
 
-The URL must be a different origin than the one the test is running in.
+The URL must be a different origin than the one the test is running in. See
+[What counts as a different origin for cy.origin()](#What-counts-as-a-different-origin-for-cyorigin).
 
 This argument will be used in two ways:
 
@@ -638,6 +639,57 @@ since [Cypress 12.0.0](https://docs.cypress.io/app/references/changelog#12-0-0)
 and the associated functionality is enabled by default.
 
 ## Notes
+
+### How cy.origin() runs commands in another origin
+
+Your test and the page in the secondary origin can't reach each other directly,
+so Cypress runs a separate copy of itself inside the secondary origin. When your
+test reaches `cy.origin()`, it sends that copy the callback as text and the
+`args` option serialized. The copy runs the callback's commands against the
+page, then sends the yielded value back, serialized:
+
+<DocsImage
+  src="/img/api/origin/how-cy-origin-runs-commands.svg"
+  alt="Diagram of cy.origin(). Your test runs in the primary origin, https://app.cypress.io, and sends the callback as text, plus args serialized, to a copy of Cypress in the secondary origin, https://auth.cypress.io. That copy runs the callback's commands against the page under test at https://auth.cypress.io/login and sends the yielded value back to your test, serialized. Variables declared outside the callback, cy.intercept(), and cy.session() stay in your test. The copy of Cypress in the secondary origin stays loaded until the spec file ends."
+  noBorder
+/>
+
+This explains the rules on the rest of this page:
+
+- The callback runs from its text, so it can't see variables declared outside it.
+  Pass them in with `args` ([Serialization](#Serialization)).
+- Everything that crosses between origins is serialized, so `args` and yielded
+  values must survive the structured clone algorithm ([Yields](#Yields)).
+- `cy.intercept()` and `cy.session()` stay in your test
+  ([Callback restrictions](#Callback-restrictions)).
+- The copy of Cypress stays loaded until the spec file ends, so code loaded in
+  one callback is still there in later ones for the same origin
+  ([Shared execution context](#Shared-execution-context)).
+
+### What counts as a different origin for cy.origin()
+
+An origin is a URL's scheme, hostname, and port. Two URLs that differ in any of
+the three are different origins, and commands that run on a page at the other
+one go inside `cy.origin()`. The path doesn't count.
+
+For a test that starts on `https://app.cypress.io`:
+
+| URL                               | Needs `cy.origin()`? | Why                               |
+| --------------------------------- | -------------------- | --------------------------------- |
+| `https://app.cypress.io/settings` | No                   | Only the path differs             |
+| `https://app.cypress.io:443`      | No                   | `443` is the default `https` port |
+| `https://app.cypress.io:8443`     | Yes                  | The port differs                  |
+| `https://auth.cypress.io`         | Yes                  | The subdomain differs             |
+| `http://app.cypress.io`           | Can't be reached     | The scheme differs                |
+
+An `https` page can't reach an `http` origin at all, because the browser blocks
+an `http` page inside an `https` one, so keep both origins on the same scheme.
+
+When you pass a URL that is the same origin as the test, `cy.origin()` fails
+with an error, since the commands don't need it. When
+[`injectDocumentDomain`](/app/references/configuration#injectDocumentDomain) is
+`true`, Cypress compares superdomains instead, so a different subdomain of the
+same domain doesn't need `cy.origin()`.
 
 ### Serialization
 
