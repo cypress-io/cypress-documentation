@@ -15,10 +15,6 @@ than the one your test is running in, such as a sign-in page on another domain
 or subdomain. You put the commands in a callback, Cypress runs them against the
 page in that origin, and your test carries on in its own origin afterward.
 
-[How cy.origin() runs commands in another origin](#How-cyorigin-runs-commands-in-another-origin)
-shows what happens when the callback runs, which explains most of the rules on
-this page.
-
 ## Syntax
 
 ```js
@@ -72,7 +68,7 @@ cy.origin('https://example.cypress.io', () => {
 The URL (`https://example.cypress.io/commands/actions`) or domain name
 (`example.cypress.io`) of the secondary origin, where the callback runs. It needs
 at least a hostname, and can include a scheme and port. The scheme defaults to
-`https`. A path or hash is fine, but query parameters aren't.
+`https`. A path or hash is fine, but query parameters are not.
 
 The URL must match the secondary origin's scheme, hostname, and port exactly, and
 be a different origin than the one the test is running in. See
