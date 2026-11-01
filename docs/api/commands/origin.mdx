@@ -543,6 +543,8 @@ Cypress.Commands.add('login', (username, password) => {
   // Confirm we're back at the primary origin before continuing
   cy.url().should('contain', '/home')
 })
+
+export {} // makes this file a module so declare global is valid
 ```
 
 </TabItem>
@@ -620,6 +622,8 @@ Cypress.Commands.add('login', (username, password) => {
     }
   )
 })
+
+export {} // makes this file a module so declare global is valid
 ```
 
 </TabItem>
@@ -756,6 +760,8 @@ declare global {
 Cypress.Commands.add('clickLink', (label) => {
   cy.get('a').contains(label).click()
 })
+
+export {} // makes this file a module so declare global is valid
 ```
 
 </TabItem>
@@ -798,8 +804,12 @@ it('tests cypress.io', () => {
 #### Shared execution context
 
 The JavaScript execution context is persisted between `cy.origin()` callbacks
-that share the same origin. This can be used to share code between
-successive `cy.origin()` calls.
+that share the same origin, including callbacks in later tests of the same spec
+file. This can be used to share code between successive `cy.origin()` calls.
+
+Each spec file starts with a fresh context for every origin. To share code with
+`cy.origin()` callbacks in every spec, load it in a `before()` hook in your
+support file instead.
 
 ```js
 before(() => {
