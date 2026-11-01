@@ -387,6 +387,104 @@ same change. `## See also` always stays as it is.
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
 
+## Domains in code examples
+
+A code example is code the reader runs. When it visits, requests, or intercepts
+a URL, the reader's test loads whatever that host serves, so write examples as
+if Cypress only runs code it controls: every host in an example is `cypress.io`
+or one of its subdomains. A reader swaps in their own app's URL; until they do,
+the example points at a host Cypress owns, not a stranger's site. That rules out
+`example.com`, real third-party sites, and invented domains such as
+`supersecurelogons.com`, which anyone can register and serve anything from.
+
+This covers every host the code runs against: `cy.visit()`, `cy.request()`,
+`cy.intercept()`, `cy.origin()`, `baseUrl`, and URLs in fixtures or `expose`
+values. It also covers the format examples in prose that show what an argument
+accepts. It doesn't cover test data that only gets typed or asserted, such as
+an email address, or links in prose, which follow [Linking](#linking).
+
+Pick the host by what the example needs:
+
+| The example needs                     | Use                                                                                  |
+| ------------------------------------- | ------------------------------------------------------------------------------------ |
+| To run as written against a real page | `https://example.cypress.io`, the Kitchen Sink app, at a path it serves              |
+| A stand-in for the reader's app       | `https://app.cypress.io`                                                             |
+| A second origin, such as a login page | `https://auth.cypress.io`                                                            |
+| More origins                          | another descriptive subdomain, such as `https://help.cypress.io`                     |
+| The reader's own local server         | `http://localhost` with a port, such as `http://localhost:3000` (the reader owns it) |
+
+Don't use a Cypress product host (`www`, `docs`, `on`, `learn`, or `cloud`) as a
+stand-in for the reader's app, since a reader takes the example as describing
+that product. Use one only when the example is about that product.
+
+**❌ Hosts Cypress doesn't control:**
+
+```js
+cy.visit('https://www.example.com')
+
+cy.intercept('GET', 'https://api.acme-corp.dev/users', {
+  fixture: 'users.json',
+})
+
+cy.origin('https://login.acme-corp.com', () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+})
+```
+
+**✅ Hosts under `cypress.io`:**
+
+```js
+cy.visit('https://app.cypress.io')
+
+cy.intercept('GET', 'https://app.cypress.io/api/users', {
+  fixture: 'users.json',
+})
+
+cy.origin('https://auth.cypress.io', () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+})
+```
+
+**✅ An example that runs as written:**
+
+```js
+cy.visit('https://example.cypress.io/commands/actions')
+cy.get('.action-email').type('fake@email.com')
+```
+
+**✅ The reader's own local server:**
+
+```js
+cy.visit('http://localhost:3000')
+
+cy.origin('http://localhost:3001', () => {
+  cy.visit('/login')
+  cy.get('#username').type('jane')
+})
+```
+
+A URL inside a code example is not a link, so it never takes the
+[UTM params](#linking-to-other-cypress-domains-utm-params) that outbound links to
+`www.cypress.io` need.
+
+### Running an example that uses a stand-in host
+
+Stand-in hosts such as `app.cypress.io` don't serve the pages an example
+expects, so don't run the example against the real host. Serve fixture pages
+locally and point the stand-in hosts at them for the run:
+
+1. Back up `/etc/hosts`, then map each stand-in host to `127.0.0.1`, for example
+   `127.0.0.1 app.cypress.io auth.cypress.io`.
+2. Serve each host from a local server. For `https`, use a self-signed
+   certificate for those names; Cypress accepts it for the application under
+   test.
+3. Add the stand-in hosts, and only those, to `NO_PROXY` and `no_proxy` for the
+   `cypress run`, so the session proxy doesn't send them to the real hosts.
+   `example.cypress.io` stays off the list and keeps going through the proxy.
+4. When you're done, restore `/etc/hosts` from the backup and stop the servers.
+
 ## Verifying code examples
 
 A reader copies an example into their own project and expects it to work. An

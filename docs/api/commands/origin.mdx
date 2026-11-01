@@ -97,7 +97,7 @@ cy.get('h1').contains('Actions')
 
 <Icon name="angle-right" /> **url _(String)_**
 
-A URL (`https://www.example.com/path`) or domain name (`example.com`)
+A URL (`https://example.cypress.io/commands/actions`) or domain name (`example.cypress.io`)
 specifying the origin in which the callback is to be executed. This should at
 the very least contain a hostname. It may also include the scheme and port
 number. A path or hash may be included, but is not necessary. The hostname must
@@ -177,7 +177,7 @@ The interface for this mechanism is the `args` option.
 ```js
 const sentArgs = { username: 'username', password: 'P@55w0rd!' }
 cy.origin(
-  'supersecurelogons.com',
+  'auth.cypress.io',
   // Send the args here...
   { args: sentArgs },
   // ...and receive them at the other end here!
@@ -226,14 +226,14 @@ shows the same version:
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
-cy.visit('https://app.example.com')
+cy.visit('https://app.cypress.io')
 
-cy.origin('https://help.example.com', () => {
+cy.origin('https://help.cypress.io', () => {
   cy.visit('/releases')
   // Yields a string, which serializes back to the primary origin
   cy.get('#latest-version').invoke('text')
 }).then((version) => {
-  cy.visit('https://app.example.com/about')
+  cy.visit('https://app.cypress.io/about')
   cy.get('#app-version').should('have.text', version)
 })
 ```
@@ -246,9 +246,9 @@ test:
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
-cy.visit('https://app.example.com')
+cy.visit('https://app.cypress.io')
 
-cy.origin('https://help.example.com', () => {
+cy.origin('https://help.cypress.io', () => {
   cy.visit('/releases')
   // Fails: this runs before cy.visit(), and the callback also returns a value
   return { version: document.title }
@@ -330,51 +330,51 @@ Callbacks may **not** themselves contain `cy.origin()` calls, so when visiting
 multiple origins, do so at the top level of the test.
 
 ```js
-cy.origin('example.cypress.com', () => {
+cy.origin('auth.cypress.io', () => {
   cy.visit('/')
-  cy.url().should('contain', 'example.cypress.com')
+  cy.url().should('contain', 'auth.cypress.io')
 })
 
-cy.origin('cypress-dx.com', () => {
+cy.origin('help.cypress.io', () => {
   cy.visit('/')
-  cy.url().should('contain', 'cypress-dx.com')
+  cy.url().should('contain', 'help.cypress.io')
 })
 ```
 
 ### Navigating between subdomains with cy.origin()
 
-Two subdomains of the same domain, such as `app.example.com` and
-`auth.example.com`, are different origins. Commands that run on a page at the
+Two subdomains of the same domain, such as `app.cypress.io` and
+`auth.cypress.io`, are different origins. Commands that run on a page at the
 other subdomain go inside `cy.origin()`, the same as for any other domain:
 
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```js
-cy.visit('https://app.example.com')
-// The "Log in" link goes to https://auth.example.com/login
+cy.visit('https://app.cypress.io')
+// The "Log in" link goes to https://auth.cypress.io/login
 cy.contains('a', 'Log in').click()
 
-cy.origin('https://auth.example.com', () => {
+cy.origin('https://auth.cypress.io', () => {
   cy.get('#username').type('jane')
   cy.contains('button', 'Sign in').click()
 })
 
 // The login page redirects back to the app
-cy.url().should('eq', 'https://app.example.com/dashboard')
+cy.url().should('eq', 'https://app.cypress.io/dashboard')
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
 
 ```js
-cy.visit('https://app.example.com')
+cy.visit('https://app.cypress.io')
 cy.contains('a', 'Log in').click()
-// Fails: auth.example.com is a different origin than app.example.com
+// Fails: auth.cypress.io is a different origin than app.cypress.io
 cy.get('#username').type('jane')
 ```
 
 The command fails with an error that names both origins: it was expected to run
-against `https://app.example.com`, but the application is at
-`https://auth.example.com`.
+against `https://app.cypress.io`, but the application is at
+`https://auth.cypress.io`.
 
 ### Using cy.origin() with a local http server
 
@@ -421,9 +421,9 @@ register an [`uncaught:exception`](/api/cypress-api/catalog-of-events#Uncaught-E
 handler inside the `cy.origin()` callback, before the page loads:
 
 ```js
-cy.visit('https://app.example.com')
+cy.visit('https://app.cypress.io')
 
-cy.origin('https://auth.example.com', () => {
+cy.origin('https://auth.cypress.io', () => {
   cy.on('uncaught:exception', (err) => {
     // Ignore only the error you expect, so anything else still fails the test
     if (err.message.includes('Third-party widget failed to load')) {
@@ -440,10 +440,10 @@ If you navigate to the page outside the callback, register the handler in a
 `cy.origin()` block that runs before the navigation:
 
 ```js
-cy.visit('https://app.example.com')
+cy.visit('https://app.cypress.io')
 
 // Register the handler in the secondary origin before its page loads
-cy.origin('https://auth.example.com', () => {
+cy.origin('https://auth.cypress.io', () => {
   cy.on('uncaught:exception', (err) => {
     if (err.message.includes('Third-party widget failed to load')) {
       return false
@@ -451,9 +451,9 @@ cy.origin('https://auth.example.com', () => {
   })
 })
 
-cy.visit('https://auth.example.com/legacy-login')
+cy.visit('https://auth.cypress.io/legacy-login')
 
-cy.origin('https://auth.example.com', () => {
+cy.origin('https://auth.cypress.io', () => {
   cy.get('h1').should('have.text', 'Sign in')
 })
 ```
@@ -466,13 +466,13 @@ cy.origin('https://auth.example.com', () => {
 Wait on its alias after the block:
 
 ```js
-cy.visit('https://app.example.com')
+cy.visit('https://app.cypress.io')
 
-cy.intercept('GET', 'https://auth.example.com/api/config', {
+cy.intercept('GET', 'https://auth.cypress.io/api/config', {
   body: { mfaRequired: false },
 }).as('authConfig')
 
-cy.origin('https://auth.example.com', () => {
+cy.origin('https://auth.cypress.io', () => {
   cy.visit('/login')
   cy.get('#mfa').should('have.text', 'MFA off')
 })
@@ -825,7 +825,7 @@ it('also uses cy.origin() + custom command', () => {
     cy.clickLink('Click Me')
   })
 
-  cy.origin('cypress-dx.com', () => {
+  cy.origin('help.cypress.io', () => {
     // WARNING: cy.clickLink() will not be available because it is a
     // different origin
   })
