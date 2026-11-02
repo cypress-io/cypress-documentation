@@ -260,6 +260,16 @@ The main key performance indicators tracked are:
 A table of results grouped by failure rate is displayed with spec files and
 total runs.
 
+### Test details
+
+Selecting a test in the table opens a drill-in panel with context for triaging
+that failure, including error history and links to recorded runs. When
+[Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled for your organization, the
+panel also includes a collapsible **Test intent** section: the same
+[Test Intent Summary](/cloud/features/cypress-ai-features#Test-Intent-Summaries)
+as in the test details sidebar. Cypress generates it on first open from the
+test's latest failure within your current branch and time range filters.
+
 ## Slowest tests
 
 <DocsImage
@@ -337,3 +347,92 @@ suite.
   src="/img/cloud/features/analytics/dashboard-analytics-common-errors.png"
   alt="Cloud Analytics Slowest Tests Table Screenshot"
 />
+
+## Flaky tests
+
+:::tip
+
+**Cypress Cloud Feature:** Flaky test analytics are available to organizations with a
+[Team Cypress Cloud plan](https://cypress.io/pricing).
+
+:::
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests.png"
+  alt="Flaky tests analytics in Cypress Cloud with a chart of flaky test cases per day, severity KPIs, and a filterable table of flaky tests"
+/>
+
+This report shows flaky tests in your suite so you can track reliability trends
+and prioritize fixes by severity. For how Cypress detects flake, alerts your
+team, and integrates with CI, see
+[Flaky Test Management](/cloud/features/flaky-test-management).
+
+### Filters and Views
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests-filters.png"
+  alt="Flaky tests analytics View By and Filter By controls for branch, tag, time range, run group, spec file, browser, Cypress version, and operating system"
+/>
+
+Results can be seen through custom grouping by using the **View By** dropdown.
+It can be grouped by:
+
+- Test Case
+- Spec File
+- Tag
+- Branch
+
+Results may also be filtered by:
+
+- Branch
+- Tag
+- Time Range
+- Run Group
+- Spec File
+- Browser
+- Cypress Version
+- Operating System
+
+### Results
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests-graph.png"
+  alt="Flaky tests analytics chart of flaky test cases detected per day"
+/>
+
+The number of flaky test cases detected per day is displayed respective of the
+filters selected.
+
+The results may be downloaded as a comma-separated values (CSV) file for further
+analysis. This can be done via the download icon to the right of the filters.
+
+### Key Performance Indicators
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests-kpi.png"
+  alt="Flaky tests analytics KPIs for overall flakiness and flaky test cases by high, medium, and low severity"
+/>
+
+The main key performance indicators tracked are:
+
+- Overall flakiness (test cases)
+- Number of flaky test cases by severity (high, medium, and low)
+
+<DocsImage
+  src="/img/cloud/features/analytics/dashboard-analytics-flaky-tests-table.png"
+  alt="Flaky tests analytics table listing test cases with last flaky time, flaky rate, and severity"
+/>
+
+A table of flaky test cases is displayed with last flaky time, flaky rate, and
+severity. See [Flake severity](/cloud/features/flaky-test-management#Flake-severity)
+for how Cypress calculates severity from flake rate.
+
+### Test details
+
+Selecting a flaky test in the table opens a drill-in panel with context for
+triaging that test, including flaky run history and error trends. When
+[Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled for your organization, the
+panel also includes a collapsible **Test intent** section: the same
+[Test Intent Summary](/cloud/features/cypress-ai-features#Test-Intent-Summaries)
+as in the test details sidebar. Cypress generates it on first open from the
+test's latest flaky result within your current branch and time range filters.
