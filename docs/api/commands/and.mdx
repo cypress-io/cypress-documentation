@@ -82,10 +82,8 @@ Whatever was passed to the function is what is yielded.
 <HeaderYields />
 
 - In most cases, `.and()` yields the same subject it was given.
-- `.and()` is an assertion, and it is _safe_ to chain further commands that use
-  the subject. Queries chained after it do retry from the subject it locks in
-  rather than from the top of the chain, which matters when the DOM re-renders.
-  See [Retry boundaries](#Retry-boundaries).
+- It is _safe_ to chain further commands that rely on the subject after `.and()`. This is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
+- Queries chained after `.and()` do not retry from the start of the chain. If the DOM re-renders, they retry from the subject `.and()` yielded. See [Retry boundaries](#Retry-boundaries).
 
 ```javascript
 cy.get('nav') // yields <nav>
