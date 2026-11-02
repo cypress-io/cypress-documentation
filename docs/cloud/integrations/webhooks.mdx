@@ -256,10 +256,12 @@ in them and the signature still verifies.
   catches a captured request sent again with new unsigned headers, and
   `X-Cypress-Event-Id` catches Cypress Cloud's own retries. `X-Cypress-Event-Id`
   is idempotency for at-least-once delivery, not a security boundary.
-- Decide which event a request carries from the body, not from
-  `X-Cypress-Event`. A `run.accessibility.completed` body has an
-  `accessibility` object, and a `run.uiCoverage.completed` body has a
-  `uiCoverage` object.
+- Don't decide which event a request carries from `X-Cypress-Event` alone. The
+  body does not always tell events apart either: a `run.allSettled` body for a
+  run without Accessibility or UI Coverage has the same fields as a
+  `run.completed` body. If your handler treats events differently, give each
+  event its own webhook, with its own Payload URL and signing secret. A request
+  that verifies with that secret can only be that webhook's event.
 
 :::
 
