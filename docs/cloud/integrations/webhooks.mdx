@@ -11,13 +11,13 @@ sidebar_custom_props: { 'new_label': true }
 # Webhooks Integration
 
 Webhooks let Cypress Cloud send a real-time HTTP request to an endpoint you own
-whenever a selected event occurs, for example when a run finishes.
+whenever a selected event occurs, for example when a test run finishes, or when Cypress Accessibility or UI Coverage reports have finished processing.
 
 ## Why Cypress Cloud Webhooks
 
 A webhook lets you build **custom automations**: update a dashboard, open a
 ticket, gate a deployment, or forward results into any internal system. For
-example, you can use `run.completed` to:
+example, you can use a `run.completed` event to:
 
 - Triage runs programmatically for certain characteristics that require attention, then dive deeper using tools like Cypress Cloud [CLI](/cloud/integrations/cloud-cli) or [MCP](/cloud/integrations/cloud-mcp) to retrieve specific failures or other details
 - Automatically feed results into your own custom real-time reporting
