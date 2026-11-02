@@ -275,13 +275,13 @@ Flaky test detection requires the flaky test management feature to be enabled fo
 
 :::
 
-### Filter notifications by tag or run group
+### Filter notifications by tag, run group, or branch
 
 When configuring at the project-level, you can filter notifications posted to Teams based on a
-[tag](/app/references/command-line#cypress-run-tag-lt-tag-gt) or
-[group](/app/references/command-line#cypress-run-group-lt-name-gt) the run was
+[tag](/app/references/command-line#cypress-run-tag-lt-tag-gt),
+[group](/app/references/command-line#cypress-run-group-lt-name-gt), or branch the run was
 recorded with. This is helpful for posting notifications only for certain runs,
-like those to a staging or release environment.
+like those to a staging or release environment, or only for runs on your main branch.
 
 1. Navigate to the **Teams** configuration page.
 2. Under **Tags**, select the **Tag** dropdown for the desired integration and
@@ -290,11 +290,23 @@ like those to a staging or release environment.
 3. Under **Run Groups**, select the **Run Group** dropdown for the desired integration and
    select which run group(s) to filter. If more than one run group is selected, the Teams message will be
    sent if any of the run groups were associated with the run.
+4. Select the **Branch** dropdown for the desired integration and
+   select which branch(es) to filter. The dropdown lists branches that runs in this project were
+   recorded on. If more than one branch is selected, the Teams message will be sent if the run was
+   recorded on any of the selected branches. Select **Unknown branch** to include runs recorded
+   without branch information.
 
-If both a tag and run group are selected, only a run associated with both criteria will
-trigger a message to be sent to Teams.
+Branch names must match exactly. If no branch is selected, notifications are sent for runs on every branch.
 
-<!-- add image showing the tag and run group filter dropdowns on the Teams configuration page for a project-level install -->
+If more than one type of filter is selected, only a run that matches every selected filter will
+trigger a message to be sent to Teams. For example, if you select a tag and a branch, the run must
+have one of the selected tags and be recorded on one of the selected branches.
+
+<DocsImage
+  src="/img/cloud/integrations/teams/teams-project-notification-filters.png"
+  alt="Microsoft Teams integration project settings showing the Tag, Run Group, and Branch filter dropdowns"
+  width={800}
+/>
 
 ## Message content
 
@@ -341,6 +353,32 @@ You can choose between two display modes for your Teams messages:
 The display mode applies to the test results, UI Coverage, and accessibility sections.
 
 <!-- add image showing the same run result in stacked and compact display modes side by side -->
+
+### Customize messages further with webhooks
+
+If you need more control over message content than these options provide, use a
+[Cypress Cloud webhook](/cloud/integrations/webhooks) to trigger the message
+instead. Cypress Cloud sends the run details to an endpoint you choose as a
+[JSON payload](/cloud/integrations/webhooks#Payload), and your own system
+decides what to post, where, and when.
+
+For example, you could:
+
+- Post failed runs on your main branch to an alerts channel and all other runs
+  to a quieter channel, based on the payload's `status` and `commitBranch`.
+- Alert only when failures pass a threshold, using `totalFailed` or
+  `flakyTestCount`.
+- Address the commit author by name with `commitAuthorName`, or link straight
+  to the pull request with `ciPullRequestUrl`.
+- Use your own wording and layout, including details from other internal systems.
+
+Microsoft Teams
+[Workflows](https://support.microsoft.com/office/browse-and-add-workflows-in-microsoft-teams-4998095c-8b72-4b0e-984c-f2ad39e6ba9a)
+can receive the webhook directly with an incoming-webhook trigger, so you don't
+need to host a server. The
+[Webhooks guide](/cloud/guides/webhooks#Create-a-custom-Slack-message-for-a-Cypress-run)
+walks through building a custom Slack message; the same approach applies to a
+Teams workflow.
 
 ## Example configurations
 

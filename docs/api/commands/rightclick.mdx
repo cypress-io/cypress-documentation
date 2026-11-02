@@ -313,8 +313,10 @@ events in order:
 4. `pointerup`
 5. `mouseup`
 
-Each event carries `button: 2` and `buttons: 2`. `.rightclick()` does not fire a
-`click` event.
+Each event carries `button: 2`. `pointerdown`, `mousedown`, and `contextmenu`
+carry `buttons: 2`, and `pointerup` and `mouseup` carry `buttons: 0`, because
+the right button has been released, as in a real right click. `.rightclick()`
+does not fire a `click` event.
 
 ### Focus
 
@@ -395,6 +397,7 @@ described in [Events fired by a right click](#Events-fired-by-a-right-click).
 
 | Version                                      | Changes                                                                                                            |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [16.2.1](/app/references/changelog#16-2-1)   | `pointerup` and `mouseup` carry `buttons: 0`                                                                       |
 | [15.20.0](/app/references/changelog#15-20-0) | Option `scrollBehavior` now accepts a per-axis `{ block, inline }` object and the `'start'` and `'end'` alignments |
 | [6.1.0](/app/references/changelog#6-1-0)     | Added option `scrollBehavior`                                                                                      |
 | [5.0.0](/app/references/changelog#5-0-0)     | Added options `altKey`, `ctrlKey`, `metaKey`, and `shiftKey`                                                       |
