@@ -221,31 +221,30 @@ failing test to the responsible code in one click.
   alt="Open file in your IDE"
 />
 
-The first time you click a file path, Cypress prompts you to select where you
-prefer to open the file. You can choose to open it in your:
+The first time you click a file path, Cypress prompts you to choose where to
+open files. You can choose:
 
-- File system (e.g. Finder on macOS, File Explorer on Windows)
-- An IDE located on your system
-- A specified application path
+- Your file system (e.g. Finder on macOS, File Explorer on Windows)
+- An editor or IDE that Cypress detects on your system
 
-:::caution
+<DocsImage
+  src="/img/app/IDE-integration/external-editor-preference.png"
+  alt="Cypress external editor preferences dialog listing detected editors and a LAUNCH_EDITOR entry"
+/>
 
-Cypress attempts to find available file editors on your system and display
-those as options. If your preferred editor is not listed, you can specify the
-(full) path to it by selecting **Other**. Cypress will make every effort to
-open the file, _but it is not guaranteed to work with every application_.
+If your editor isn't listed, set the `LAUNCH_EDITOR` environment variable to
+its command or full path before starting Cypress. The editor then appears in the
+list as **LAUNCH_EDITOR**. `LAUNCH_EDITOR` takes a single command, without
+arguments.
 
-:::
+```shell
+LAUNCH_EDITOR=zed npx cypress open
+```
 
 After setting your file opener preference, files automatically open in your
 selected application without prompting you to choose. To change your
-selection, go to the **Settings** tab of Cypress and click under **File Opener
-Preference**.
-
-<DocsImage
-  src="/img/app/IDE-integration/file-opener-preference-settings-tab.png"
-  alt="screenshot of Cypress test-runner settings tab with file opener preference panel"
-/>
+selection, go to the **Settings** tab of Cypress and choose an editor under
+**Device settings** > **External editor**.
 
 ## Edit tests inside Cypress with Studio
 
