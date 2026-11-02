@@ -247,7 +247,10 @@ in them and the signature still verifies.
   you accept until its timestamp falls outside your tolerance window, and answer
   a repeated one with `200` without processing it again. Keep deduplicating on
   `X-Cypress-Event-Id` as well: a retry from Cypress Cloud carries a new
-  timestamp, and so a new signature.
+  timestamp, and so a new signature. The two do different jobs: the signature
+  catches a captured request sent again with new unsigned headers, and
+  `X-Cypress-Event-Id` catches Cypress Cloud's own retries. `X-Cypress-Event-Id`
+  is idempotency for at-least-once delivery, not a security boundary.
 - Decide which event a request carries from the body, not from
   `X-Cypress-Event`. A `run.accessibility.completed` body has an
   `accessibility` object, and a `run.uiCoverage.completed` body has a
@@ -532,8 +535,9 @@ To verify a request:
 1. Read the `X-Cypress-Signature` and `X-Cypress-Timestamp` headers and the
    **raw** request body (before any JSON parsing; parsing and re-serializing can
    change the bytes and break verification).
-2. Optionally reject the request if the timestamp is too old (for example, more
-   than five minutes) to guard against replay attacks.
+2. Reject the request if the timestamp is too old (for example, more than five
+   minutes) to guard against replay attacks. Step 5 depends on this window:
+   without it, the record of accepted signatures has no natural bound.
 3. Recompute `HMAC-SHA256(secret, "${timestamp}.${rawBody}")`, hex-encode it, and
    prefix `sha256=`.
 4. Compare it to `X-Cypress-Signature` using a **constant-time** comparison.
@@ -553,9 +557,12 @@ verification.
 
 The following example handlers add a route to an existing Express or Flask app.
 They read the raw body, reject stale timestamps, recompute the HMAC, compare it
-in constant time, and ignore a signature they have already accepted. The record
-of accepted signatures is kept in memory; if your handler runs on more than one
-instance, keep it in a store they share.
+in constant time, and ignore a signature they have already accepted. They do
+not show deduplication on `X-Cypress-Event-Id` (or `X-Cypress-Idempotency-Key`),
+which a real handler still needs for retries. The record of accepted signatures
+is kept in memory, in one process: with several worker processes (for example,
+`gunicorn --workers`) or more than one instance, keep it in a store they share,
+and with a threaded server, check and record a signature under one lock.
 
 <details>
 <summary>Node.js and Python examples</summary>
@@ -588,10 +595,10 @@ app.post(
 
     // Reject stale requests to protect against replay attacks (5 minute window).
     // Check the format first: Number() turns anything else into NaN, and NaN
-    // passes the comparison.
+    // passes the comparison. A timestamp in seconds has at most 10 digits.
     const now = Date.now() / 1000
     if (
-      !/^\d+$/.test(timestamp) ||
+      !/^\d{1,10}$/.test(timestamp) ||
       Math.abs(now - Number(timestamp)) > TOLERANCE_SECONDS
     ) {
       return res.status(400).send('Timestamp outside of tolerance')
@@ -662,8 +669,15 @@ def receive_webhook():
         abort(400, "Missing signature headers")
 
     # Reject stale requests to protect against replay attacks (5 minute window).
+    # Check the format first: int() raises on anything else, and on a very
+    # long digit string, which Flask would answer with a 500. A timestamp in
+    # seconds has at most 10 digits.
     now = time.time()
-    if not timestamp.isdecimal() or abs(now - int(timestamp)) > TOLERANCE_SECONDS:
+    if (
+        not timestamp.isdecimal()
+        or len(timestamp) > 10
+        or abs(now - int(timestamp)) > TOLERANCE_SECONDS
+    ):
         abort(400, "Timestamp outside of tolerance")
 
     signed = f"{timestamp}.".encode() + raw_body
