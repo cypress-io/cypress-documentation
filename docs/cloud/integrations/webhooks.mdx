@@ -16,14 +16,13 @@ whenever a selected event occurs, for example when a run finishes.
 ## Why Cypress Cloud Webhooks
 
 A webhook lets you build **custom automations**: update a dashboard, open a
-ticket, gate a deployment, or forward results into any internal system.
+ticket, gate a deployment, or forward results into any internal system. For
+example, you can use `run.completed` to:
 
-Following the increased pace of AI-driven development, custom workflows have become more important than ever. You may use the initial "run completed" webhook in multiple ways:
-
-- Triage runs programmatically for certain characteristics that require attention, then dive deeper using tools like Cypress Cloud [CLI](/cloud/integrations/cloud-cli) or [MCP](/cloud/integrations/cloud-mcp) to retrieve specific failures or other details.
-- Automatically feed results into your own custom real-time reporting.
-- Create Jira issues based on failed runs.
-- Deliver customized Slack notifications, or notifications in any platform, based on criteria that are not customizable in Cypress Cloud.
+- Triage runs programmatically for certain characteristics that require attention, then dive deeper using tools like Cypress Cloud [CLI](/cloud/integrations/cloud-cli) or [MCP](/cloud/integrations/cloud-mcp) to retrieve specific failures or other details
+- Automatically feed results into your own custom real-time reporting
+- Create Jira issues based on failed runs
+- Deliver customized Slack notifications, or notifications in any platform, based on criteria that are not customizable in Cypress Cloud
 
 While Cypress Cloud already has many built-in methods of notifications related to run statuses (for example, [Desktop notifications](/app/core-concepts/open-mode#Cloud-run-notifications) and
 [Slack](/cloud/integrations/slack) messages), webhooks deliver a **raw JSON payload** to your
@@ -33,10 +32,11 @@ own service.
 
 **You need two things to get started:**
 
-- **The ability to manage webhooks for the project.** You must be an **Owner**, **Admin**, or **Team Admin** of your Cypress Cloud organization
-  organization. See [User roles](/cloud/account-management/users#User-roles) for
-  details. Anyone who can view the project can _view_ webhooks, but only those
-  roles can create, edit, enable, disable, delete, test, or redeliver them.
+- **The ability to manage webhooks for the project.** You must be an **Owner**,
+  **Org Admin**, or **Team Admin**. See
+  [User roles](/cloud/account-management/users#User-roles) for details. Anyone
+  who can view the project can _view_ webhooks, but only those roles can create,
+  edit, enable, disable, delete, test, or redeliver them.
 - **A publicly-reachable endpoint** that accepts `POST` requests. **HTTPS is
   recommended.** Cypress Cloud will not deliver to private, loopback, or internal
   network addresses (see [Security](#Security)). HTTP URLs are accepted, but
@@ -125,7 +125,7 @@ In the **Add webhook** dialog, configure the following:
 - **Events that will trigger webhook**: Select which events should be delivered
   to this endpoint. At least one event is required.
 - **Enable this webhook**: Whether the webhook is active. Enabled by default;
-  disabled webhooks not called when.
+  disabled webhooks receive no deliveries.
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/add-webhook-modal.png"
@@ -169,12 +169,16 @@ manage it:
 - **Enable or disable**: Toggle the switch on the row. A disabled webhook keeps
   its configuration but receives no deliveries.
 - **Edit**: Open the Options menu and select **Edit** to change the URL, events,
-  or secret.
+  secret, or custom Authorization header.
   - **Generate new secret**: Leaving the **Secret** field blank keeps the
     existing secret. To rotate it, enter a new value (at least 16 characters) or
     click **Generate new secret**. Copy the new secret and store it somewhere
     safe. It is shown only once. After you save, the previous secret no longer
     verifies requests, so update your endpoint to use the new value.
+  - **Custom Authorization header**: Leaving the fields blank keeps the existing
+    header. Enter a new name and value to set or rotate it. The value is shown
+    only once and cannot be viewed again. You can also clear the header so
+    later deliveries no longer include it.
 - **Recent deliveries**: Open the Options menu and select **Recent deliveries** to
   review delivery history. See [Delivery history and retries](#Delivery-history-and-retries).
 - **Delete**: Open the Options menu and select **Delete**. This permanently
@@ -202,7 +206,7 @@ Select one or more of the following events when creating or editing a webhook:
 | `run.completed`               | Sent when a Cypress Cloud run finished and resolves to one of the following states: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`. |
 | `run.accessibility.completed` | Sent when a run's Accessibility report finishes processing.                                                                                    |
 | `run.uiCoverage.completed`    | Sent when a run's UI Coverage report finishes processing.                                                                                      |
-| `run.allSettled`              | Sent when all earlier webhook-triggering events have completed, with details for each.                                                         |
+| `run.allSettled`              | Sent when the run and any Accessibility or UI Coverage reports for it have settled, with details for each.                                     |
 
 See [Payload](#Payload) for each event type's fields and an example request body.
 
@@ -338,17 +342,17 @@ Sent when a run's Accessibility report finishes processing.
 
 `accessibility` object:
 
-| Field                     | Type               | Description                                                                                                  |
-| ------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `status`                  | `string`           | Accessibility processing status: `processing`, `processing_failed`, `processed`, or `processed_with_errors`. |
-| `reportUrl`               | `string`           | Link to the Accessibility report in Cypress Cloud.                                                           |
-| `isPartialReport`         | `boolean`          | `true` if the report is missing data for some specs.                                                         |
-| `isReprocessedReport`     | `boolean`          | `true` once the report has been regenerated at least once.                                                   |
-| `score`                   | `number` \| `null` | Accessibility score. `null` when there's no readable report (for example a processing failure).              |
-| `violationCount`          | `number` \| `null` | Total number of violations.                                                                                  |
-| `violationCountsByImpact` | `object` \| `null` | Violation counts broken down by impact: `critical`, `serious`, `moderate`, `minor`.                          |
-| `elementCountsByStatus`   | `object` \| `null` | Element counts broken down by status: `fail`, `incomplete`, `ignore`.                                        |
-| `axeVersion`              | `string` \| `null` | The axe-core version used to generate the report.                                                            |
+| Field                     | Type               | Description                                                                                     |
+| ------------------------- | ------------------ | ----------------------------------------------------------------------------------------------- |
+| `status`                  | `string`           | Accessibility processing status: `processed`, `processed_with_errors`, or `processing_failed`.  |
+| `reportUrl`               | `string`           | Link to the Accessibility report in Cypress Cloud.                                              |
+| `isPartialReport`         | `boolean`          | `true` if the report is missing data for some specs.                                            |
+| `isReprocessedReport`     | `boolean`          | `true` once the report has been regenerated at least once.                                      |
+| `score`                   | `number` \| `null` | Accessibility score. `null` when there's no readable report (for example a processing failure). |
+| `violationCount`          | `number` \| `null` | Total number of violations.                                                                     |
+| `violationCountsByImpact` | `object` \| `null` | Violation counts broken down by impact: `critical`, `serious`, `moderate`, `minor`.             |
+| `elementCountsByStatus`   | `object` \| `null` | Element counts broken down by status: `fail`, `incomplete`, `ignore`.                           |
+| `axeVersion`              | `string` \| `null` | The axe-core version used to generate the report.                                               |
 
 :::caution
 
@@ -416,18 +420,18 @@ Sent when a run's UI Coverage report finishes processing.
 
 `uiCoverage` object:
 
-| Field                   | Type               | Description                                                                                                |
-| ----------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
-| `status`                | `string`           | UI Coverage processing status: `processing`, `processing_failed`, `processed`, or `processed_with_errors`. |
-| `reportUrl`             | `string`           | Link to the UI Coverage report in Cypress Cloud.                                                           |
-| `isPartialReport`       | `boolean`          | `true` if the report is missing data for some specs.                                                       |
-| `isReprocessedReport`   | `boolean`          | `true` once the report has been regenerated at least once.                                                 |
-| `coverage`              | `number` \| `null` | UI Coverage score. `null` when there's no readable report (for example a processing failure).              |
-| `testedElementsCount`   | `number` \| `null` | Number of interactive elements exercised by the run.                                                       |
-| `untestedElementsCount` | `number` \| `null` | Number of interactive elements not exercised by the run.                                                   |
-| `testedLinksCount`      | `number` \| `null` | Number of links exercised by the run.                                                                      |
-| `untestedLinksCount`    | `number` \| `null` | Number of links not exercised by the run.                                                                  |
-| `viewCount`             | `number` \| `null` | Number of distinct views (pages) covered.                                                                  |
+| Field                   | Type               | Description                                                                                   |
+| ----------------------- | ------------------ | --------------------------------------------------------------------------------------------- |
+| `status`                | `string`           | UI Coverage processing status: `processed`, `processed_with_errors`, or `processing_failed`.  |
+| `reportUrl`             | `string`           | Link to the UI Coverage report in Cypress Cloud.                                              |
+| `isPartialReport`       | `boolean`          | `true` if the report is missing data for some specs.                                          |
+| `isReprocessedReport`   | `boolean`          | `true` once the report has been regenerated at least once.                                    |
+| `coverage`              | `number` \| `null` | UI Coverage score. `null` when there's no readable report (for example a processing failure). |
+| `testedElementsCount`   | `number` \| `null` | Number of interactive elements exercised by the run.                                          |
+| `untestedElementsCount` | `number` \| `null` | Number of interactive elements not exercised by the run.                                      |
+| `testedLinksCount`      | `number` \| `null` | Number of links exercised by the run.                                                         |
+| `untestedLinksCount`    | `number` \| `null` | Number of links not exercised by the run.                                                     |
+| `viewCount`             | `number` \| `null` | Number of distinct views (pages) covered.                                                     |
 
 :::caution
 
@@ -471,8 +475,15 @@ passed run whose UI Coverage report `processing_failed`).
 <details>
 <summary><code>run.allSettled</code> payload</summary>
 
-Sent when all earlier webhook-triggering events have completed. Subscribe to this event if you want a single delivery per run instead of matching `run.completed`,
-`run.accessibility.completed`, and `run.uiCoverage.completed` independently. This is also useful to "future-proof" your webhooks if you expect you'd like to wait for **\*all possible post-run reporting** to resolve before triggering a webhook, without wanting to consider which individual products or events may be worth waiting for.
+Sent when everything expected for the run has settled: `run.completed`, plus any
+Accessibility or UI Coverage report that the run produces. Subscribe to this
+event if you want a single delivery per run instead of matching
+`run.completed`, `run.accessibility.completed`, and `run.uiCoverage.completed`
+independently. It also covers future post-run reporting without requiring you
+to subscribe to each product event as it appears.
+
+If the run does not use Accessibility or UI Coverage, `run.allSettled` still
+fires once the run completes, with only the `run.completed` fields.
 
 The payload contains every `run.completed` field, plus two optional objects:
 
@@ -484,18 +495,21 @@ The payload contains every `run.completed` field, plus two optional objects:
 When an object does not apply, it is left out of the payload rather than set to
 `null`.
 
-### Errors
+**Errors.** On this event only, a section's `status` can also be
+`fetch_failed`. That value means Cypress Cloud could not read the report after
+retrying for about 15 minutes. The section's metrics are `null`, and
+`reportUrl` still links to the report, so you can tell a failed fetch apart
+from a product the run did not use. Product-specific events
+(`run.accessibility.completed` and `run.uiCoverage.completed`) never use
+`fetch_failed`; their `status` values stay
+`processed`, `processed_with_errors`, or `processing_failed`.
 
-In this payload, in the case of an error, a section's `status` can be `fetch_failed`. This means the
-report could not be read after Cypress Cloud retried for about 15 minutes. The
-section's metrics are `null`, and `reportUrl` still links to the report, so you
-can tell a failed fetch apart from a product the run didn't use.
-
-### Reprocessing
-
-If an Accessibility or UI Coverage report is regenerated, Cypress Cloud sends a
-new `run.allSettled` event with a new `X-Cypress-Event-Id`, and
-`isReprocessedReport` is `true` in the regenerated section.
+**Reprocessing.** If an Accessibility or UI Coverage report is regenerated,
+Cypress Cloud sends a new `run.accessibility.completed` or
+`run.uiCoverage.completed` event for that report, and a new `run.allSettled`
+event once everything for that attempt has settled. Each has a new
+`X-Cypress-Event-Id`, and `isReprocessedReport` is `true` in the regenerated
+section.
 
 <details>
 <summary>Example <code>run.allSettled</code> request body</summary>
@@ -605,14 +619,14 @@ X-Cypress-Signature: sha256=<hex-encoded HMAC>
 
 The signature is an **HMAC-SHA256**, keyed with your signing secret, of the
 string `` `${timestamp}.${rawBody}` `` (the value of the `X-Cypress-Timestamp`
-header, a literal `.`, then the **exact raw bytes of the request body**). The
-result is hex-encoded and prefixed with `sha256=`.
+header, a literal `.`, then the **exact raw request body** as Cypress Cloud
+sent it). The result is hex-encoded and prefixed with `sha256=`.
 
 To verify a request:
 
 1. Read the `X-Cypress-Signature` and `X-Cypress-Timestamp` headers and the
    **raw** request body (before any JSON parsing; parsing and re-serializing can
-   change the bytes and break verification).
+   change the body and break verification).
 2. Optionally reject the request if the timestamp is too old (for example, more
    than five minutes) to guard against replay attacks.
 3. Recompute `HMAC-SHA256(secret, "${timestamp}.${rawBody}")`, hex-encode it, and

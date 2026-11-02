@@ -14,8 +14,11 @@ When a Cypress Cloud run finishes, the
 describing the run. You can use that event to send a message, create a tracking
 ticket, trigger a deployment, or page an on-call engineer. This guide focuses on this run completion event, but more events are available, for example
 `run.accessibility.completed` for
-[Cypress Accessibility](/accessibility/get-started/introduction), and `run.uiCoverage.completed` for
-[UI Coverage](/ui-coverage/get-started/introduction) reports.
+[Cypress Accessibility](/accessibility/get-started/introduction),
+`run.uiCoverage.completed` for
+[UI Coverage](/ui-coverage/get-started/introduction) reports, and
+`run.allSettled` when you want one delivery after the run and any related
+reports have all settled.
 
 The [Cloud Webhook documentation](/cloud/integrations/webhooks) explains each
 event, its payload, headers, security, and retry behavior. This guide shows
@@ -24,9 +27,9 @@ for passing and failing `run.completed` deliveries.
 
 ## What you can build
 
-`run.completed`, `run.accessibility.completed`, and `run.uiCoverage.completed`
-can each drive a downstream action. Point the **Payload URL** at a tool that
-accepts an inbound webhook, map the
+`run.completed`, `run.accessibility.completed`, `run.uiCoverage.completed`, and
+`run.allSettled` can each drive a downstream action. Point the **Payload URL**
+at a tool that accepts an inbound webhook, map the
 [payload fields](/cloud/integrations/webhooks#Payload) you care about, and
 filter in the destination if you only want certain deliveries. The outcomes
 in this table use `run.completed`.
@@ -233,7 +236,7 @@ Click **Publish** when the message looks right.
    panel, and click **Add webhook**. See
    [Create a webhook](/cloud/integrations/webhooks#Create-a-webhook).
 2. Paste the Slack workflow's webhook URL as the **Payload URL**.
-3. Leave `run.completed` select and save the webhook. **Uncheck other events** if they are pre-selected. This walkthrough maps fields from `run.completed` only.
+3. Leave `run.completed` selected and save the webhook. **Uncheck other events** if they are pre-selected. This walkthrough maps fields from `run.completed` only.
 
 :::caution
 
@@ -310,7 +313,7 @@ run, use the [Cloud CLI](/cloud/integrations/cloud-cli) or
 ## See also
 
 - [Webhooks Integration](/cloud/integrations/webhooks) - headers, security, and retries
-- [Webhook events](/cloud/integrations/webhooks#Events) - `run.completed`, `run.accessibility.completed`, and `run.uiCoverage.completed`
+- [Webhook events](/cloud/integrations/webhooks#Events) - `run.completed`, `run.accessibility.completed`, `run.uiCoverage.completed`, and `run.allSettled`
 - [Webhook payloads](/cloud/integrations/webhooks#Payload) - fields for each event
 - [Verify webhook signatures](/cloud/integrations/webhooks#Verify-webhook-signatures) - HMAC verification for destinations that support it
 - [Slack integration](/cloud/integrations/slack) - built-in Slack notifications for run results
