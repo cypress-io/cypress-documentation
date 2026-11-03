@@ -16,17 +16,14 @@ viewport, a single element, or the entire Cypress runner, including the
 
 Use it to:
 
-- [capture a single element](#Screenshot-an-element), such as a card or a form
-- [keep a baseline image](#Overwrite-a-baseline-screenshot-instead-of-numbering-a-new-copy)
-  for a
-  [visual regression tool](/app/tooling/visual-testing#Open-source-plugins) to
-  compare against
-- [check a responsive layout at several viewport sizes](#Take-a-screenshot-at-several-viewport-sizes)
-- [keep changing content, such as timestamps, out of the image](#Black-out-dynamic-or-sensitive-content-in-screenshots)
-- [keep sensitive data out of screenshots](#Keep-sensitive-data-out-of-screenshots-including-failures),
-  and out of any service you send them to
-- [capture the images for your product documentation](#Capture-screenshots-for-documentation-and-keep-them-current)
-  and recapture them whenever your UI changes
+- capture a single element, such as a card or a form
+- keep a baseline image for a visual regression tool to compare against
+- check a responsive layout at several viewport sizes
+- keep changing content, such as timestamps, out of the image
+- keep sensitive data out of screenshots, and out of any service you send them
+  to
+- capture the images for your product documentation and recapture them
+  whenever your UI changes
 
 To see why a test failed, you don't need `cy.screenshot()`. During
 `cypress run`, Cypress
