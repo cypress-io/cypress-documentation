@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
 
@@ -88,7 +89,12 @@ function getMeta(html, key, attr) {
  */
 function wrap(text, fontSize, factor, maxLines) {
   const maxChars = Math.floor(SAFE_WIDTH / (fontSize * factor))
-  const words = text.split(/\s+/).filter(Boolean)
+  // A single token wider than the column (a long URL or identifier) is cut
+  // rather than left to overflow the card.
+  const words = text
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => (w.length > maxChars ? w.slice(0, maxChars - 1) + '…' : w))
   const lines = []
   let line = ''
   for (const word of words) {
@@ -105,13 +111,17 @@ function wrap(text, fontSize, factor, maxLines) {
 
   // Truncate with an ellipsis if the text overflowed the allowed line count.
   const consumed = lines.join(' ').length
-  if (consumed < text.replace(/\s+/g, ' ').length && lines.length) {
+  if (consumed < text.replace(/\s+/g, ' ').trim().length && lines.length) {
     let last = lines[lines.length - 1]
     while (last.length > 3 && last.length + 1 > maxChars) last = last.slice(0, -1)
     lines[lines.length - 1] = last.replace(/[\s.,;:]*$/, '') + '…'
   }
   return lines
 }
+
+// Smallest title size; below it the title would read smaller than the
+// description, so a title that still doesn't fit is ellipsized instead.
+const MIN_TITLE_SIZE = 30
 
 /**
  * Pick the largest title size that fits in <=2 lines, else shrink to 3 lines.
@@ -120,27 +130,34 @@ function wrap(text, fontSize, factor, maxLines) {
  * overflowing the column.
  */
 function fitTitle(title) {
+  const fullLength = title.replace(/\s+/g, ' ').trim().length
   const longestWord = Math.max(...title.split(/\s+/).map((w) => w.length))
   const wordFits = (size) => longestWord * size * 0.56 <= SAFE_WIDTH
-  for (const size of [56, 48, 42]) {
-    if (!wordFits(size)) continue
-    const lines = wrap(title, size, 0.56, 2)
-    if (lines.join(' ').length >= title.replace(/\s+/g, ' ').length) {
+  const fits = (lines) => lines.join(' ').length >= fullLength
+  for (const [size, maxLines] of [
+    [56, 2],
+    [48, 2],
+    [42, 2],
+    [38, 3],
+    [34, 3],
+    [MIN_TITLE_SIZE, 3],
+  ]) {
+    if (!wordFits(size) && size !== MIN_TITLE_SIZE) continue
+    const lines = wrap(title, size, 0.56, maxLines)
+    if (fits(lines) || size === MIN_TITLE_SIZE) {
       return { size, lineHeight: Math.round(size * 1.15), lines }
     }
   }
-  const size = Math.min(38, Math.floor(SAFE_WIDTH / (longestWord * 0.56)))
-  return { size, lineHeight: Math.round(size * 1.15), lines: wrap(title, size, 0.56, 3) }
 }
 
 function buildSvg({ logoBase64, eyebrow, title, description }) {
   const fit = fitTitle(title)
-  const descSize = 24
-  const descLineHeight = 33
+  const descSize = 22
+  const descLineHeight = 30
   const eyebrowToTitle = 72 // eyebrow baseline -> first title baseline
   const titleToDesc = 48 // last title baseline -> first desc baseline
 
-  const descLines = description ? wrap(description, descSize, 0.52, 3) : []
+  const descLines = description ? wrap(description, descSize, 0.52, 4) : []
 
   // Vertically center the eyebrow+title+description block in the band between
   // the brand row and the hills. We work in baselines, padding for the eyebrow
@@ -289,7 +306,10 @@ module.exports = async function ogImageCardsPlugin(context) {
         const outFile = path.join(ogDir, `${slug}.png`)
         fs.writeFileSync(outFile, png)
 
-        const cardUrl = `${baseUrl}img/og/${slug}.png`
+        // The version query changes whenever the card does, so Slack and X
+        // fetch the new image instead of serving their cached copy of the URL.
+        const version = crypto.createHash('sha1').update(png).digest('hex').slice(0, 8)
+        const cardUrl = `${baseUrl}img/og/${slug}.png?v=${version}`
         // Repoint og:image / twitter:image (currently the static fallback card).
         html = html.replace(
           new RegExp(
@@ -322,6 +342,8 @@ module.exports = async function ogImageCardsPlugin(context) {
 module.exports.buildSvg = buildSvg
 module.exports.wrap = wrap
 module.exports.fitTitle = fitTitle
+module.exports.SAFE_WIDTH = SAFE_WIDTH
+module.exports.MIN_TITLE_SIZE = MIN_TITLE_SIZE
 module.exports.renderCardPng = renderCardPng
 module.exports.cardTitle = cardTitle
 module.exports.eyebrowForSegments = eyebrowForSegments
