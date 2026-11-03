@@ -24,6 +24,13 @@ full instructions for doing so at the following location.
 https://on.cypress.io/mount
 ```
 
+In the Cypress App, the error appears on the failed test in the Command Log:
+
+<DocsImage
+  src="/img/api/mount/command-log-mount-not-implemented.png"
+  alt="Failed test in the Command Log with a CypressError on the mount row stating that cy.mount() must be implemented by the user, followed by a link to https://on.cypress.io/mount"
+/>
+
 When you configure Component Testing through the Cypress App, Cypress scaffolds
 the command for you in `cypress/support/component.js` (or
 `cypress/support/component.ts`), so most projects start with a working
@@ -574,6 +581,32 @@ covers your specs includes that file.
 component support files, so a `cy.mount()` registered there bundles your
 framework's mounting library into every end-to-end spec. Move the registration
 to `cypress/support/component.js`.
+
+## Command Log
+
+Mount a component and assert on its text, as in the React example from
+[Using `cy.mount()` in a component test](#Using-cymount-in-a-component-test):
+
+```jsx title="Stepper.cy.jsx"
+cy.mount(<Stepper initial={5} />)
+cy.get('[data-cy=counter]').should('have.text', '5')
+```
+
+The commands above display in the Command Log as:
+
+<DocsImage
+  src="/img/api/mount/command-log-mount.png"
+  alt="Command Log with three rows: mount <Stepper ... />, get [data-cy=counter], and a passing assertion that the span has text 5"
+/>
+
+Whether `cy.mount()` adds a `mount` row depends on your framework's mounting
+library:
+
+- **Angular** always logs the row, with the component's class name.
+- **React** and **Vue** log the row by default. Pass `log: false` in the options
+  to leave it out.
+- **Svelte** leaves the row out by default, since Svelte 5 components don't
+  expose a useful name. Pass `log: true` in the options to show it.
 
 ## More custom `cy.mount()` command examples
 
