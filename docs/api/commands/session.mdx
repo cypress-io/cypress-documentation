@@ -113,14 +113,15 @@ The page is cleared before `setup` when `testIsolation` is enabled and is not
 cleared when `testIsolation` is disabled.
 
 Cookies, local storage, and session storage in all domains are always cleared
-before `setup` runs, regardless of the `testIsolation` configuration.
+before `setup` runs or a cached session is restored, regardless of the
+`testIsolation` configuration.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
-| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `validate`         | `undefined` | Validates the newly-created or restored session. Function to run immediately after the session is created and `setup` function runs or after a session is restored and the page is cleared. If it throws an exception, contains any failing Cypress command, returns a Promise which rejects or resolves to `false`, or the last Cypress command yielded `false`, the session is considered invalid.<br/><br/>- If validation fails immediately after `setup`, the test will fail.<br/>- If validation fails after restoring a session, `setup` will re-run. |
-| `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                                     |
+| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------ | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `validate`         | `undefined` | Validates the newly-created or restored session. Function to run immediately after the session is created and `setup` function runs or after a session is restored and the page is cleared. If it throws an exception, contains any failing Cypress command, returns a Promise which rejects or resolves to `false`, or returns nothing and its last Cypress command yields `false`, the session is considered invalid. Returning `false` directly, without a Promise, does not invalidate the session.<br/><br/>- If validation fails immediately after `setup`, the test will fail.<br/>- If validation fails after restoring a session, `setup` will re-run. |
+| `cacheAcrossSpecs` | `false`     | When enabled, the newly created session is considered "global" and can be restored in any spec during the test execution in the same Cypress run on the same machine. Use this option for a session that will be used multiple times, across many specs.                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 <HeaderYields />
 
@@ -362,7 +363,7 @@ it('should transfer money between users', () => {
 
   login('other-user')
   cy.visit('/account_balance')
-  cy.get('#balance').should('eq', '100.00')
+  cy.get('#balance').should('have.text', '100.00')
 })
 ```
 
@@ -377,8 +378,12 @@ The following scenarios will mark the session as invalid:
 
 - the `validate` function throws an exception
 - the `validate` function returns a Promise that resolves to `false` or rejects
-- the `validate` function contains failing Cypress command
-- the last Cypress command in the `validate` function yielded `false`
+- the `validate` function contains a failing Cypress command
+- the `validate` function returns nothing and its last Cypress command yields
+  `false`
+
+Returning `false` directly from `validate`, without a Promise, does not mark the
+session as invalid.
 
 Here are a few `validate` examples:
 
@@ -396,7 +401,7 @@ function validate() {
 // Run any Cypress command that fails if the user is not logged in
 function validate() {
   cy.visit('/account', { failOnStatusCode: false })
-  cy.url().should('match', /^/account/)
+  cy.url().should('match', /\/account$/)
 }
 ```
 
@@ -408,8 +413,8 @@ If you want to change which session data is cached, you can modify cookies,
 ```javascript
 cy.session('user', () => {
   cy.visit('/login')
-  cy.get('name').type('user')
-  cy.get('password').type('p4ssw0rd123')
+  cy.get('[data-test=name]').type('user')
+  cy.get('[data-test=password]').type('p4ssw0rd123')
   cy.get('#submit').click()
   cy.url().should('contain', '/home')
   // Remove session data we don't want to cache
@@ -464,10 +469,11 @@ it('can create a blog post', () => {
 
 :::caution
 
-When a session is cached across specs, every spec that uses it must call
-`cy.session()` with the **same** `id`, `setup`, `validate`, and
-`cacheAcrossSpecs` value. If any of these differ between specs, Cypress throws an
-error rather than reusing the session. For this reason, define the session once
+Every call to `cy.session()` with a given `id` must pass the **same** `setup`,
+`validate`, and `cacheAcrossSpecs` value. If any of these differ from the call
+that created the session, Cypress throws an error rather than reusing the
+session. This applies within a single spec and, when a session is cached across
+specs, in every spec that uses it. For this reason, define the session once
 in a shared custom command or helper function (as in the example above) and call
 that everywhere, rather than copying the `cy.session()` call into each spec.
 
@@ -729,35 +735,41 @@ visit the domain in your login command before calling `cy.session()`.
 
 ```jsx
 const login = (name) => {
-  if (location.hostname !== 'cypress.io') {
+  if (location.hostname !== 'example.cypress.io') {
     cy.visit('https://example.cypress.io')
   }
-  cy.session(name, () => {
-    cy.visit('/login')
-    // etc
-  }, {
-    validate() {
-      cy.request('/whoami', {
-        headers: { 'Authorization' : localStorage.token }
-        method: 'POST'
-      }).its('status').should('equal', 200)
+  cy.session(
+    name,
+    () => {
+      cy.visit('/login')
+      // etc
+    },
+    {
+      validate() {
+        cy.request('/whoami', {
+          headers: { Authorization: localStorage.token },
+          method: 'POST',
+        })
+          .its('status')
+          .should('equal', 200)
+      },
     }
-  })
+  )
 }
 
 it('t1', () => {
   login('bob')
-  // do things on cypress.io
+  // do things on example.cypress.io
 })
 
 it('t2', () => {
-  cy.visit('http://www.cypress-dx.com')
-  // do things on anotherexample.com
+  cy.visit('https://www.cypress.io')
+  // do things on www.cypress.io
 })
 
 it('t3', () => {
   login('bob')
-  // do things on cypress.io
+  // do things on example.cypress.io
 })
 ```
 
@@ -769,7 +781,7 @@ it('t3', () => {
 
 The page is cleared and cookies, local storage, and session storage (session
 data) in all domains are cleared automatically when `cy.session()` runs and test
-isolation is enabled with `testIsolation=true`, This
+isolation is enabled with `testIsolation=true`. This
 guarantees consistent behavior whether a session is being created or restored
 and switches sessions without first having to explicitly log out.
 
@@ -838,6 +850,9 @@ function. See the
 and
 [Updating an existing login helper function](#Updating-an-existing-login-helper-function)
 examples for more details.
+
+`cy.session()` can't be called inside a [`cy.origin()`](/api/commands/origin)
+callback. Call it outside of the callback instead.
 
 ### Choosing the correct id to cache a session
 
