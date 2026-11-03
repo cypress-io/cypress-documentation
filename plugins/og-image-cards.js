@@ -5,10 +5,15 @@ const path = require('path')
  * Generates a unique 1200x630 social-share ("Open Graph") card for every built
  * page and rewrites that page's og:image / twitter:image to point at it.
  *
- * The card mirrors the docs branding: the Cypress logo + wordmark in the top
- * left, a product eyebrow, the page title, and the page description — so links
- * shared in Slack, X, etc. unfurl with a rich, page-specific preview instead of
- * a single generic image.
+ * The card mirrors the docs branding: the Cypress logo + wordmark, a product
+ * eyebrow, the page title, and the page description — so links shared in
+ * Slack, X, etc. unfurl with a rich, page-specific preview instead of a single
+ * generic image.
+ *
+ * Slack's compact unfurl crops the card to a centered HEIGHT x HEIGHT square,
+ * so the card is a teal square panel of exactly that size on a dotted darker
+ * background, and every word and the logo sit in a SAFE_WIDTH column inside
+ * it. Only decoration (the dotted sides and the hills) reaches the edges.
  *
  * Runs in `postBuild` only (production builds). `npm start` keeps using the
  * static fallback card from `themeConfig.image`.
@@ -20,11 +25,14 @@ const HEIGHT = 630
 // Slack/X/LinkedIn may display them larger than 1200 device pixels. The layout
 // math below stays in 1200x630 logical units; an SVG viewBox scales it up.
 const SCALE = 2
-const PAD = 80
-const MAX_WIDTH = WIDTH - PAD * 2
+const SAFE_WIDTH = 560
+const PAD = (WIDTH - SAFE_WIDTH) / 2 // left edge of the text column
+const PANEL_X = (WIDTH - HEIGHT) / 2 // left edge of the square panel
 
 // Brand palette.
-const BG = '#004143' // teal background
+const BG = '#004143' // teal panel
+const SIDE = '#00302F' // darker teal outside the panel
+const DOT = '#0B5E5F' // dot grid on the sides
 const JADE = '#6AD3A7' // eyebrow accent
 const WHITE = '#FFFFFF'
 
@@ -83,7 +91,7 @@ function getMeta(html, key, attr) {
  * glyph width as a fraction of the font size (bold sans ~0.56, regular ~0.52).
  */
 function wrap(text, fontSize, factor, maxLines) {
-  const maxChars = Math.floor(MAX_WIDTH / (fontSize * factor))
+  const maxChars = Math.floor(SAFE_WIDTH / (fontSize * factor))
   const words = text.split(/\s+/).filter(Boolean)
   const lines = []
   let line = ''
@@ -109,26 +117,34 @@ function wrap(text, fontSize, factor, maxLines) {
   return lines
 }
 
-/** Pick the largest title size that fits in <=2 lines, else shrink to 3 lines. */
+/**
+ * Pick the largest title size that fits in <=2 lines, else shrink to 3 lines.
+ * A size only counts as fitting when its longest word also fits the column,
+ * so a long API name like `Cypress.Commands.overwriteQuery` shrinks instead of
+ * overflowing the panel.
+ */
 function fitTitle(title) {
-  for (const size of [76, 66, 58]) {
+  const longestWord = Math.max(...title.split(/\s+/).map((w) => w.length))
+  const wordFits = (size) => longestWord * size * 0.56 <= SAFE_WIDTH
+  for (const size of [56, 48, 42]) {
+    if (!wordFits(size)) continue
     const lines = wrap(title, size, 0.56, 2)
     if (lines.join(' ').length >= title.replace(/\s+/g, ' ').length) {
       return { size, lineHeight: Math.round(size * 1.15), lines }
     }
   }
-  const size = 54
+  const size = Math.min(38, Math.floor(SAFE_WIDTH / (longestWord * 0.56)))
   return { size, lineHeight: Math.round(size * 1.15), lines: wrap(title, size, 0.56, 3) }
 }
 
 function buildSvg({ logoBase64, eyebrow, title, description }) {
   const fit = fitTitle(title)
-  const descSize = 27
-  const descLineHeight = 38
-  const eyebrowToTitle = 86 // eyebrow baseline -> first title baseline
-  const titleToDesc = 56 // last title baseline -> first desc baseline
+  const descSize = 24
+  const descLineHeight = 33
+  const eyebrowToTitle = 72 // eyebrow baseline -> first title baseline
+  const titleToDesc = 48 // last title baseline -> first desc baseline
 
-  const descLines = description ? wrap(description, descSize, 0.52, 2) : []
+  const descLines = description ? wrap(description, descSize, 0.52, 3) : []
 
   // Vertically center the eyebrow+title+description block in the band between
   // the brand row and the hills. We work in baselines, padding for the eyebrow
@@ -171,11 +187,16 @@ function buildSvg({ logoBase64, eyebrow, title, description }) {
   const hills = HILLS.map((h) => `<path d="${h.d}" fill="${h.fill}"/>`).join('')
 
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${WIDTH * SCALE}" height="${HEIGHT * SCALE}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
-  <rect width="${WIDTH}" height="${HEIGHT}" fill="${BG}"/>
+  <defs>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="14" cy="14" r="2" fill="${DOT}"/></pattern>
+  </defs>
+  <rect width="${WIDTH}" height="${HEIGHT}" fill="${SIDE}"/>
+  <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#dots)"/>
+  <rect x="${PANEL_X}" width="${HEIGHT}" height="${HEIGHT}" fill="${BG}"/>
   ${hills}
-  <image x="${PAD}" y="56" width="56" height="56" xlink:href="data:image/png;base64,${logoBase64}"/>
-  <text x="${PAD + 76}" y="96" font-family="${FONT}" font-size="34" font-weight="700" fill="${WHITE}">Cypress Documentation</text>
-  <text font-family="${FONT}" font-size="30" font-weight="600" fill="${JADE}"><tspan x="${PAD}" y="${eyebrowY}">${escapeXml(eyebrow)}</tspan></text>
+  <image x="${PAD}" y="56" width="48" height="48" xlink:href="data:image/png;base64,${logoBase64}"/>
+  <text x="${PAD + 64}" y="90" font-family="${FONT}" font-size="28" font-weight="700" fill="${WHITE}">Cypress Documentation</text>
+  <text font-family="${FONT}" font-size="26" font-weight="600" fill="${JADE}"><tspan x="${PAD}" y="${eyebrowY}">${escapeXml(eyebrow)}</tspan></text>
   <text font-family="${FONT}" font-size="${fit.size}" font-weight="700" fill="${WHITE}">${titleTspans}</text>
   <text font-family="${FONT}" font-size="${descSize}" font-weight="400" fill="${WHITE}">${descTspans}</text>
 </svg>`
@@ -202,7 +223,7 @@ async function loadLogoBase64(siteDir) {
   const logoSvg = fs.readFileSync(
     path.join(siteDir, 'static/img/logo/cypress-logomark-white.svg')
   )
-  // The logomark is drawn at 56 logical px; at 2x that's 112 device px, so
+  // The logomark is drawn at 48 logical px; at 2x that's 96 device px, so
   // rasterize larger (224) for a crisp downscale.
   _logoBase64 = (
     await sharp(logoSvg, { density: 512 })
