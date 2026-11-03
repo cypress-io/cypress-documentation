@@ -11,9 +11,8 @@ const path = require('path')
  * generic image.
  *
  * Slack's compact unfurl crops the card to a centered HEIGHT x HEIGHT square,
- * so the card is a teal square panel of exactly that size on a dotted darker
- * background, and every word and the logo sit in a SAFE_WIDTH column inside
- * it. Only decoration (the dotted sides and the hills) reaches the edges.
+ * so every word and the logo sit in a centered SAFE_WIDTH column inside that
+ * square. Only the teal background and the hills reach the edges.
  *
  * Runs in `postBuild` only (production builds). `npm start` keeps using the
  * static fallback card from `themeConfig.image`.
@@ -27,12 +26,9 @@ const HEIGHT = 630
 const SCALE = 2
 const SAFE_WIDTH = 560
 const PAD = (WIDTH - SAFE_WIDTH) / 2 // left edge of the text column
-const PANEL_X = (WIDTH - HEIGHT) / 2 // left edge of the square panel
 
 // Brand palette.
-const BG = '#004143' // teal panel
-const SIDE = '#00302F' // darker teal outside the panel
-const DOT = '#0B5E5F' // dot grid on the sides
+const BG = '#004143' // teal background
 const JADE = '#6AD3A7' // eyebrow accent
 const WHITE = '#FFFFFF'
 
@@ -121,7 +117,7 @@ function wrap(text, fontSize, factor, maxLines) {
  * Pick the largest title size that fits in <=2 lines, else shrink to 3 lines.
  * A size only counts as fitting when its longest word also fits the column,
  * so a long API name like `Cypress.Commands.overwriteQuery` shrinks instead of
- * overflowing the panel.
+ * overflowing the column.
  */
 function fitTitle(title) {
   const longestWord = Math.max(...title.split(/\s+/).map((w) => w.length))
@@ -187,12 +183,7 @@ function buildSvg({ logoBase64, eyebrow, title, description }) {
   const hills = HILLS.map((h) => `<path d="${h.d}" fill="${h.fill}"/>`).join('')
 
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${WIDTH * SCALE}" height="${HEIGHT * SCALE}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
-  <defs>
-    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="14" cy="14" r="2" fill="${DOT}"/></pattern>
-  </defs>
-  <rect width="${WIDTH}" height="${HEIGHT}" fill="${SIDE}"/>
-  <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#dots)"/>
-  <rect x="${PANEL_X}" width="${HEIGHT}" height="${HEIGHT}" fill="${BG}"/>
+  <rect width="${WIDTH}" height="${HEIGHT}" fill="${BG}"/>
   ${hills}
   <image x="${PAD}" y="56" width="48" height="48" xlink:href="data:image/png;base64,${logoBase64}"/>
   <text x="${PAD + 64}" y="90" font-family="${FONT}" font-size="28" font-weight="700" fill="${WHITE}">Cypress Documentation</text>
