@@ -544,12 +544,36 @@ that everywhere, rather than copying the `cy.session()` call into each spec.
 
 :::
 
+Here, the second call reuses the `id` `user1` with a different `setup`
+function:
+
+```javascript
+cy.session('user1', () => {
+  cy.visit('/login')
+})
+
+// The same id with a different setup function
+cy.session('user1', () => {
+  cy.visit('/sso-login')
+})
+```
+
+The second call fails the test, and the error names the `id` to change:
+
+<DocsImage
+  src="/img/api/session/session-duplicate-id-error.png"
+  alt="Command Log showing the second cy.session('user1') call failing with 'This session already exists. You may not create a new session with a previously used identifier.'"
+/>
+
 The cross-spec cache lives in memory for a single `cypress run` on a single
 machine. It is not written to disk and is not shared between machines, so:
 
 - A new `cypress run` starts with an empty cache and runs `setup` again.
 - When specs are split across machines in parallel CI, `setup` runs at least
   once per machine.
+
+In the [Instrument Panel](#The-Instrument-Panel), a globe icon marks each
+session cached across specs.
 
 ### Multiple login commands
 
@@ -970,6 +994,15 @@ it('redirects a signed-out user to the login page', () => {
 
 ### When the page and session data are cleared
 
+Every call to `cy.session()` creates, restores, or recreates the session, and
+yields the status that names the path it took:
+
+<DocsImage
+  src="/img/api/session/session-lifecycle-diagram.svg"
+  alt="Diagram: cy.session() creates a session when none is saved, or restores the saved one and recreates it if validate fails. Each path clears session data first and yields 'created', 'restored', or 'recreated'."
+  noBorder
+/>
+
 ### Test Isolation Enabled
 
 The page is cleared and cookies, local storage, and session storage (session
@@ -1027,7 +1060,7 @@ button in the [Instrument Panel](#The-Instrument-Panel).
 
 <DocsImage
   src="/img/api/session/sessions-panel.png"
-  alt="Sessions Instrument Panel"
+  alt="Sessions Instrument Panel listing two created sessions, with the Clear All Sessions button at the top right"
 />
 
 For debugging purposes, all spec and global sessions can be cleared with the
@@ -1189,63 +1222,108 @@ state of your sessions.
 Clicking any session `id` in the panel will print that session's details to the
 console, and clicking the "Clear All Sessions" button will clear all saved spec
 and global sessions and re-run the spec file (see
-[Session caching](#Session-caching) for more details).
+[Session caching](#Session-caching) for more details). A globe icon marks a
+session cached across specs with `cacheAcrossSpecs`.
 
 <DocsImage
   src="/img/api/session/sessions-panel.png"
-  alt="Sessions Instrument Panel"
+  alt="Sessions Instrument Panel listing user1, marked with a globe icon as cached across specs, and user2, which has no icon"
 />
 
-Whenever `cy.session()` is called, the command log will show one of the
-following lines, which includes the status of the session call along with the
-session `id` value:
+### Session status in the Command Log
+
+The images in this section come from running this `login()` function in three
+tests. The first test creates the session and the second restores it. The third
+logs out, which ends the session on the server, so the next restore fails
+`validate` and Cypress recreates the session.
+
+```javascript
+const login = (name) => {
+  cy.session(
+    name,
+    () => {
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(name)
+      cy.get('[data-test=password]').type('s3cr3t')
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
+    },
+    {
+      validate() {
+        cy.request({ url: '/whoami', failOnStatusCode: false })
+          .its('status')
+          .should('eq', 200)
+      },
+    }
+  )
+}
+
+it('creates a session', () => {
+  login('user')
+})
+
+it('restores the session', () => {
+  login('user')
+})
+
+it('recreates the session after logging out', () => {
+  login('user')
+  cy.visit('/dashboard')
+  cy.contains('button', 'Log out').click()
+  cy.url().should('contain', '/login')
+  login('user')
+})
+```
+
+Whenever `cy.session()` is called, the Command Log shows one of the following
+lines, with the session `id` and the status of the call:
 
 - No saved session was found, so a new session was created and saved:
 
   <DocsImage
     src="/img/api/session/session-collapsed-new.png"
-    alt="New session (collapsed)"
+    alt="Command Log row for cy.session with the id user and a created status badge"
   />
 
 - A saved session was found, and used:
 
   <DocsImage
     src="/img/api/session/session-collapsed-restored.png"
-    alt="Saved session (collapsed)"
+    alt="Command Log row for cy.session with the id user and a restored status badge"
   />
 
 - A saved session was found, but the `validate` function failed, so the session
   was recreated and saved:
+
   <DocsImage
     src="/img/api/session/session-collapsed-recreated.png"
-    alt="Recreated session (collapsed)"
+    alt="Command Log row for cy.session with the id user and a recreated status badge, highlighted in yellow"
   />
 
 In cases where the `validate` function fails immediately after `setup`
 creates the session, the test will fail with an error.
 
-Expanding the session group in the command log will show all of the commands
-that were run when creating and/or validating the session.
-
-In this image, a saved session is restored, but when `/personal` is visited in
-the `validate` function, the app redirects to `/signin`, which invalidates the
-session. A new session is created by visiting `/signin` where the user is logged
-in, after which, validation succeeds, and the session is available for the
-remainder of the test.
+Expanding the session group in the Command Log shows each step Cypress ran. In
+the third test, Cypress clears the page and session data and restores the saved
+session. In **Validate session**, `/whoami` returns `401`, so the assertion
+fails and Cypress reports that it will recreate the session. It then clears the
+session data again, runs **Recreate session** and **Validate session**, and
+clears the page.
 
 <DocsImage
   src="/img/api/session/session-expanded.png"
-  alt="Recreated session (expanded)"
+  alt="Expanded recreated session group: Validate session fails on 'expected 401 to equal 200', then Recreate session and Validate session run"
 />
 
 Clicking a session `id` in the Instrument Panel or clicking the first line under
-an expanded session group in the command log will print that session's details
-to the console. This information contains the `id` along with any cached session
-data, including cookies, `localStorage` and `sessionStorage`.
+an expanded session group in the Command Log will print that session's details
+to the console. This information contains the `id` and the domains the session
+captured data from, along with the cached session data for each domain,
+including cookies, `localStorage` and `sessionStorage`.
 
 <DocsImage
   src="/img/api/session/print-session-to-console.png"
-  alt="Session console output"
+  alt="Console output for the session user: Command, Id, Domains, and the cookies and local storage cached for app.cypress.io"
 />
 
 ## History
