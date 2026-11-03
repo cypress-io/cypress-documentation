@@ -109,9 +109,11 @@ function wrap(text, fontSize, factor, maxLines) {
   }
   if (lines.length < maxLines && line) lines.push(line)
 
-  // Truncate with an ellipsis if the text overflowed the allowed line count.
-  const consumed = lines.join(' ').length
-  if (consumed < text.replace(/\s+/g, ' ').trim().length && lines.length) {
+  // Truncate with an ellipsis only if words were left over past the line
+  // limit. Counting words, not characters, keeps a token shortened above from
+  // reading as overflow.
+  const placed = lines.length ? lines.join(' ').split(' ').length : 0
+  if (placed < words.length && lines.length) {
     let last = lines[lines.length - 1]
     while (last.length > 3 && last.length + 1 > maxChars) last = last.slice(0, -1)
     lines[lines.length - 1] = last.replace(/[\s.,;:]*$/, '') + '…'

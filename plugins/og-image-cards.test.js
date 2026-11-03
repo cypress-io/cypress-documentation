@@ -33,6 +33,16 @@ describe('wrap', () => {
   })
 })
 
+test('does not add a trailing ellipsis after a shortened token when the rest fits', () => {
+  const lines = wrap(
+    `https://${'x'.repeat(200)}.com then a short tail`,
+    30,
+    0.56,
+    3
+  )
+  expect(lines.at(-1)).toBe('then a short tail')
+})
+
 describe('fitTitle', () => {
   test('uses the largest size for a short title', () => {
     expect(fitTitle('intercept')).toMatchObject({
