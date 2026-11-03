@@ -410,6 +410,66 @@ function validate() {
 }
 ```
 
+### Validating a cached session without a network request
+
+A `validate` function that visits a page or makes a request confirms the server
+still accepts the session, at the cost of a round trip on every restore. When
+your app keeps its session in a cookie or in storage, checking for that data
+directly is quicker.
+
+```javascript
+const login = (name) => {
+  cy.session(
+    name,
+    () => {
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(name)
+      cy.get('[data-test=password]').type('s3cr3t')
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
+    },
+    {
+      validate() {
+        cy.getCookie('session_id').should('exist')
+      },
+    }
+  )
+}
+```
+
+`cy.session()` restores session data while the page is blank, so read storage
+with [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage) rather than
+from `window.localStorage`. This `validate` recreates the session once the
+cached token expires:
+
+```javascript
+function validate() {
+  cy.getAllLocalStorage().then((storage) => {
+    const { tokenExpiresAt } = storage['https://app.cypress.io'] ?? {}
+
+    expect(Number(tokenExpiresAt)).to.be.greaterThan(Date.now())
+  })
+}
+```
+
+These checks confirm that the session data is present. If your server can end a
+session on its own, such as when a user logs out in another test, validate with
+a request instead so `cy.session()` catches it.
+
+### Using the session status `cy.session()` yields
+
+`cy.session()` [yields](#Yields) `'created'`, `'restored'`, or `'recreated'`.
+Use it to run work that belongs with `setup`, such as seeding data for a new
+user, only when `setup` actually ran.
+
+```javascript
+cy.session('admin', loginAsAdmin).then((status) => {
+  if (status !== 'restored') {
+    cy.task('db:seed:admin')
+  }
+})
+```
+
 ### Modifying session data before caching
 
 If you want to change which session data is cached, you can modify cookies,
@@ -622,6 +682,34 @@ describe('other page tests', () => {
 })
 ```
 
+### Caching a session with test isolation disabled
+
+With [`testIsolation`](/app/core-concepts/test-isolation) disabled, Cypress
+keeps the page and its session data between tests. Log in once in a `before`
+hook, then visit the page your tests share. The tests that follow pick up where
+the previous one left off, so they don't call `cy.visit()` again.
+
+```javascript
+describe('dashboard', { testIsolation: false }, () => {
+  before(() => {
+    login('user')
+    cy.visit('/dashboard')
+  })
+
+  it('shows the signed-in user', () => {
+    cy.contains('h1', 'user')
+  })
+
+  it('lists recent orders', () => {
+    cy.get('[data-test=orders]').should('be.visible')
+  })
+})
+```
+
+With test isolation disabled, `cy.session()` doesn't clear the page, so the
+browser stays on whatever page `setup` ends on. Call `login()` before
+`cy.visit()`, not after, so your tests start on the page you visited.
+
 ### Updating a login function that returns a value
 
 If your custom login command returns a value that you use to assert in a test,
@@ -780,6 +868,101 @@ it('t3', () => {
   login('bob')
   cy.visit('https://app.cypress.io/dashboard')
   // do things on app.cypress.io
+})
+```
+
+### Logging in through an identity provider with `cy.origin()`
+
+When your app signs users in through an identity provider on another domain,
+call [`cy.origin()`](/api/commands/origin) inside `setup`. `cy.session()` caches
+the cookies and storage for both domains, so a restored session skips the
+identity provider entirely.
+
+```javascript
+const login = (name) => {
+  cy.session(
+    name,
+    () => {
+      cy.visit('https://app.cypress.io/login')
+      cy.contains('button', 'Sign in with SSO').click()
+
+      cy.origin('https://auth.cypress.io', { args: { name } }, ({ name }) => {
+        cy.get('[data-test=name]').type(name)
+        cy.get('[data-test=password]').type('s3cr3t')
+        cy.get('form').contains('Log In').click()
+      })
+
+      cy.url().should('eq', 'https://app.cypress.io/dashboard')
+    },
+    {
+      validate() {
+        cy.request('https://app.cypress.io/whoami')
+          .its('status')
+          .should('eq', 200)
+      },
+    }
+  )
+}
+```
+
+`cy.session()` can't be called inside the `cy.origin()` callback, so keep the
+`cy.origin()` call inside `setup`. For provider-specific walkthroughs, see the
+guides for [Auth0](/app/guides/authentication-testing/auth0-authentication),
+[Okta](/app/guides/authentication-testing/okta-authentication), and
+[Azure Active Directory](/app/guides/authentication-testing/azure-active-directory-authentication).
+
+### Testing logout without ending a cached session
+
+A test that logs out ends the session on the server, but the copy that
+`cy.session()` cached still holds the old cookies. The next test that restores
+it fails `validate` and runs `setup` again. Give the logout test a session `id`
+of its own, so the session your other tests share stays valid.
+
+```javascript
+const login = (name, id = name) => {
+  cy.session(
+    id,
+    () => {
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(name)
+      cy.get('[data-test=password]').type('s3cr3t')
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
+    },
+    {
+      validate() {
+        cy.request('/whoami').its('status').should('eq', 200)
+      },
+    }
+  )
+}
+
+it('views the dashboard', () => {
+  login('user')
+  cy.visit('/dashboard')
+  cy.contains('h1', 'Dashboard')
+})
+
+it('logs out', () => {
+  // a separate session, so logging out doesn't end the shared one
+  login('user', 'user-logout')
+  cy.visit('/dashboard')
+  cy.contains('button', 'Log out').click()
+  cy.request({ url: '/whoami', failOnStatusCode: false })
+    .its('status')
+    .should('eq', 401)
+})
+```
+
+To test what a signed-out user sees without logging out on the server, clear
+the browser's session data instead. This leaves the cached session as it is.
+
+```javascript
+it('redirects a signed-out user to the login page', () => {
+  login('user')
+  cy.then(Cypress.session.clearCurrentSessionData)
+  cy.visit('/dashboard')
+  cy.url().should('contain', '/login')
 })
 ```
 
