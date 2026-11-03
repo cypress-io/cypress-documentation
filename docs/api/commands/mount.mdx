@@ -321,6 +321,257 @@ include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
 "include": ["./src", "cypress.d.ts"]
 ```
 
+## Using `cy.mount()` in a component test
+
+Once the command is registered, call `cy.mount()` from any component spec with
+the component and the options your framework's `mount()` accepts. Then query
+and assert on the rendered component the same way you would on a page.
+
+<HeaderYields />
+
+`cy.mount()` yields whatever your framework's `mount()` returns:
+
+| Framework | Yields                    | Use it to                                                                                                      |
+| --------- | ------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Angular   | `{ component, fixture }`  | Read the component instance, or work with its `ComponentFixture`                                               |
+| React     | `{ component, rerender }` | Rerender the component with new props (see [rerendering](#Remounting-and-rerendering-components-with-cymount)) |
+| Svelte    | `{ component }`           | Call functions and read values the component exports                                                           |
+| Vue       | `{ component, wrapper }`  | Read the component instance, or use the Vue Test Utils wrapper's methods                                       |
+
+<Tabs groupId="frameworks">
+<TabItem value="React" active>
+
+```jsx title="Stepper.cy.jsx"
+import Stepper from './Stepper'
+
+it('starts the count at the initial value', () => {
+  cy.mount(<Stepper initial={5} />)
+  cy.get('[data-cy=counter]').should('have.text', '5')
+})
+```
+
+</TabItem>
+<TabItem value="Angular">
+
+```ts title="stepper.component.cy.ts"
+import { StepperComponent } from './stepper.component'
+
+it('sets the count from componentProperties', () => {
+  cy.mount(StepperComponent, { componentProperties: { count: 5 } }).then(
+    ({ component }) => {
+      expect(component.count).to.equal(5)
+    }
+  )
+  cy.get('[data-cy=counter]').should('have.text', '5')
+})
+```
+
+</TabItem>
+<TabItem value="Vue">
+
+```js title="Stepper.cy.js"
+import Stepper from './Stepper.vue'
+
+it('emits the new count when incremented', () => {
+  cy.mount(Stepper, { props: { initial: 5 } }).as('stepper')
+  cy.get('[data-cy=increment]').click()
+
+  cy.get('@stepper')
+    .its('wrapper')
+    .invoke('emitted', 'change')
+    .should('deep.equal', [[6]])
+})
+```
+
+</TabItem>
+<TabItem value="Svelte">
+
+```js title="Stepper.cy.js"
+import Stepper from './Stepper.svelte'
+
+it('resets the count through an exported function', () => {
+  cy.mount(Stepper, { props: { initial: 5 } }).then(({ component }) => {
+    component.reset()
+  })
+  cy.get('[data-cy=counter]').should('have.text', '0')
+})
+```
+
+</TabItem>
+</Tabs>
+
+## Remounting and rerendering components with `cy.mount()`
+
+Calling `cy.mount()` again in the same test unmounts the previous component
+first, so each mount starts with fresh state. Every framework's `mount()`
+behaves this way.
+
+In React, use the `rerender()` function that `cy.mount()` yields to update the
+props of the component that's already mounted. Unlike a second `cy.mount()`, it
+keeps the component's state:
+
+```jsx title="Stepper.cy.jsx"
+import Stepper from './Stepper'
+
+it('keeps its count when rerendered with a new label', () => {
+  cy.mount(<Stepper label="Count" />).as('stepper')
+  cy.get('[data-cy=increment]').click()
+
+  cy.get('@stepper').then(({ rerender }) => {
+    rerender(<Stepper label="Total" />)
+  })
+
+  cy.get('[data-cy=label]').should('have.text', 'Total')
+  cy.get('[data-cy=counter]').should('have.text', '1')
+})
+
+it('starts over when mounted again', () => {
+  cy.mount(<Stepper />)
+  cy.get('[data-cy=increment]').click()
+
+  cy.mount(<Stepper />)
+  cy.get('[data-cy=counter]').should('have.text', '0')
+})
+```
+
+## Loading global styles in component tests
+
+Component tests don't run your app's entry file, so the global styles it
+imports, such as a CSS reset, fonts, or a CSS framework, are missing and
+components can look unstyled. Import those styles in your component support
+file so they load for every component test:
+
+```js title="cypress/support/component.js"
+// Global styles that your app's entry file imports
+import '../../src/styles/global.css'
+
+import { mount } from 'cypress/react'
+
+Cypress.Commands.add('mount', mount)
+```
+
+## Adding your own options to `cy.mount()`
+
+A custom command can accept options of its own, such as which theme to render a
+component in. Once it does, `mount: typeof mount` no longer describes the
+command, so declare its signature yourself. Build it from
+`Parameters<typeof mount>` and `ReturnType<typeof mount>` to keep the
+framework's own options and yield:
+
+```tsx title="cypress/support/component.tsx"
+import { mount } from 'cypress/react'
+import { ThemeProvider } from '../../src/ThemeProvider'
+
+type MountParams = Parameters<typeof mount>
+type MountOptions = NonNullable<MountParams[1]> & { theme?: 'light' | 'dark' }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount(
+        component: MountParams[0],
+        options?: MountOptions
+      ): ReturnType<typeof mount>
+    }
+  }
+}
+
+Cypress.Commands.add('mount', (component, options = {}) => {
+  const { theme = 'light', ...mountOptions } = options
+
+  return mount(
+    <ThemeProvider theme={theme}>{component}</ThemeProvider>,
+    mountOptions
+  )
+})
+```
+
+```tsx title="Button.cy.tsx"
+import { Button } from './Button'
+
+it('renders in the dark theme', () => {
+  cy.mount(<Button>Save</Button>, { theme: 'dark' })
+  cy.get('button').should('have.class', 'dark')
+})
+```
+
+The React [Router](/app/component-testing/react/examples#React-Router) and
+[Redux](/app/component-testing/react/examples#Redux) examples and the Vue
+[Router](/app/component-testing/vue/examples#Vue-Router) example follow the same
+approach.
+
+## Registering more than one mount command
+
+When only some components need extra setup, register a second command next to
+`cy.mount()` instead of adding options to it. `cy.mount()` stays a plain
+passthrough, and each spec's name for the command says what setup it gets:
+
+```tsx title="cypress/support/component.tsx"
+import { mount } from 'cypress/react'
+import { AuthProvider, type User } from '../../src/AuthProvider'
+
+type MountParams = Parameters<typeof mount>
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount
+      mountSignedIn(
+        component: MountParams[0],
+        user: User,
+        options?: MountParams[1]
+      ): ReturnType<typeof mount>
+    }
+  }
+}
+
+Cypress.Commands.add('mount', mount)
+
+Cypress.Commands.add('mountSignedIn', (component, user, options) => {
+  return mount(<AuthProvider user={user}>{component}</AuthProvider>, options)
+})
+```
+
+```tsx title="AccountMenu.cy.tsx"
+import { AccountMenu } from './AccountMenu'
+
+it('shows a sign-in link to signed-out visitors', () => {
+  cy.mount(<AccountMenu />)
+  cy.contains('a', 'Sign in')
+})
+
+it('greets a signed-in user by name', () => {
+  cy.mountSignedIn(<AccountMenu />, { name: 'Ada' })
+  cy.contains('Signed in as Ada')
+})
+```
+
+## Troubleshooting common `cy.mount()` errors
+
+### `cy.mount()` must be implemented by the user
+
+Component tests never loaded a file that registers the command. Check that:
+
+- `Cypress.Commands.add('mount', ...)` is in `cypress/support/component.js` (or
+  `.jsx`, `.ts`, `.tsx`), or in a file that it imports
+- The [`supportFile`](/app/references/configuration#component) option under
+  `component` in your Cypress configuration points at that file and isn't set to
+  `false`
+
+### Property 'mount' does not exist on type 'cy & CyEventEmitter'
+
+TypeScript can't see the typings for your command. Add the `declare global`
+block from [the typings section](#TypeScript-typings-for-a-custom-cymount-command)
+to your support file or `cypress.d.ts`, and make sure every `tsconfig.json` that
+covers your specs includes that file.
+
+### A mounting library ends up in your end-to-end tests
+
+`cypress/support/commands.js` is imported by both the end-to-end and the
+component support files, so a `cy.mount()` registered there bundles your
+framework's mounting library into every end-to-end spec. Move the registration
+to `cypress/support/component.js`.
+
 ## More custom `cy.mount()` command examples
 
 Visit the guides for scenarios in
@@ -329,3 +580,15 @@ Visit the guides for scenarios in
 [Vue](/app/component-testing/vue/examples), and
 [Svelte](/app/component-testing/svelte/examples) for customizing a mount
 command.
+
+## See also
+
+- [`Cypress.Commands.add()`](/api/cypress-api/custom-commands)
+- [Angular API](/app/component-testing/angular/api) - `cypress/angular` mount
+  options and yields
+- [React API](/app/component-testing/react/api) - `cypress/react` mount options
+  and yields
+- [Svelte API](/app/component-testing/svelte/api) - `cypress/svelte` mount
+  options and yields
+- [Vue API](/app/component-testing/vue/api) - `cypress/vue` mount options and
+  yields
