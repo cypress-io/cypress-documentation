@@ -1,6 +1,6 @@
 ---
 title: 'cy.screenshot()'
-description: Take a screenshot of the application under test and, optionally, the Cypress Command Log.
+description: Take screenshots in Cypress tests with cy.screenshot(). Capture the full page, the viewport, one element, or the Command Log, and save each as a PNG.
 sidebar_label: screenshot
 ---
 
@@ -8,8 +8,26 @@ sidebar_label: screenshot
 
 # screenshot
 
-Take a screenshot of the application under test and, optionally, the
-[Cypress Command Log](/app/core-concepts/open-mode#Command-Log).
+`cy.screenshot()` captures the application under test and saves it as a PNG in
+your screenshots folder, so you have a record of exactly what the page looked
+like at that step of the test. It can capture the whole page, the visible
+viewport, a single element, or the entire Cypress runner, including the
+[Command Log](/app/core-concepts/open-mode#Command-Log).
+
+Use it to:
+
+- capture a single element, such as a card or a form
+- keep a baseline image for a visual regression tool to compare against
+- check a responsive layout at several viewport sizes
+- keep changing content, such as timestamps, out of the image
+- keep sensitive data out of screenshots, and out of any service you send them
+  to
+- capture the images for your product documentation and recapture them
+  whenever your UI changes
+
+To see why a test failed, you don't need `cy.screenshot()`. During
+`cypress run`, Cypress
+[takes a screenshot automatically when a test fails](#Automatic-screenshots-on-test-failure-in-cypress-run).
 
 ## Syntax
 
@@ -34,35 +52,42 @@ cy.screenshot(fileName, options)
 ```javascript
 cy.screenshot()
 cy.get('.post').screenshot()
+cy.window().screenshot()
+```
+
+<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
+
+```javascript
+cy.get('li').screenshot() // Errors when 'li' matches more than one element
 ```
 
 ### Arguments
 
 <Icon name="angle-right" /> **fileName _(String)_**
 
-A name for the image file. Will be relative to the
+A name for the image file, relative to the
 [screenshots folder](/app/references/configuration#Folders--Files) and the
-path to the spec file. When passed a path, the folder structure will be created.
-See the [Naming conventions](/api/commands/screenshot#Naming-conventions) below
+path to the spec file. When passed a path, Cypress creates the folder structure.
+See the [Naming conventions](#Naming-conventions) below
 for more.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to change the default behavior of `.screenshot()`.
 
-| Option                       | Default                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ---------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `log`                        | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `blackout`                   | `[]`                                                        | Array of string selectors used to match elements that should be blacked out when the screenshot is taken. Does not apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `capture`                    | `'fullPage'`                                                | Which parts of the Cypress Test Runner to capture. This value is ignored for element screenshot captures. Valid values are `viewport`, `fullPage`, or `runner`. When `viewport`, the application under test is captured in the current viewport. When `fullPage`, the application under test is captured in its entirety from top to bottom. When `runner`, the entire browser viewport, including the Cypress Command Log, is captured. For screenshots automatically taken on test failure, capture is always coerced to `runner`. When [Test Replay](/cloud/features/test-replay) is enabled and the Runner UI is hidden, a `runner` screenshot will not include the Runner UI and will instead capture the application under test only in the current viewport. |
-| `clip`                       | `null`                                                      | Position and dimensions (in pixels) used to crop the final screenshot image. Should have the following shape: `{ x: 0, y: 0, width: 100, height: 100 }`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `disableTimersAndAnimations` | `true`                                                      | When true, prevents JavaScript timers (`setTimeout`, `setInterval`, etc) and CSS animations from running while the screenshot is taken.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `padding`                    | `null`                                                      | Padding used to alter the dimensions of a screenshot of an element. It can either be a number, or an array of up to four numbers [using CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). This property is only applied for element screenshots and is ignored for all other types.                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `scale`                      | `false`                                                     | Whether to scale the app to fit into the browser viewport. This is always coerced to `true` when `capture` is `runner`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `timeout`                    | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.screenshot()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `overwrite`                  | `false`                                                     | Whether to overwrite duplicate screenshot files with the same file name when saving.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `onBeforeScreenshot`         | `null`                                                      | A callback before a non-failure screenshot is taken. When capturing screenshots of an element, the argument is the element being captured. For other screenshots, the argument is the `document`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `onAfterScreenshot`          | `null`                                                      | A callback after a non-failure screenshot is taken. When capturing screenshots of an element, the first argument is the element being captured. For other screenshots, the first argument is the `document`. The second argument is properties concerning the screenshot, including the `path` it was saved to and the `dimensions` of the saved screenshot.                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Option                       | Default                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ---------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `blackout`                   | `[]`                                                        | Array of selectors. Cypress blacks out every element that matches each selector. Doesn't apply to `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `capture`                    | `'fullPage'`                                                | Which part of the browser to capture: `viewport`, the visible part of the application under test; `fullPage`, the whole application under test from top to bottom; or `runner`, the entire browser window, including the Command Log. Cypress ignores it for element screenshots and always uses `runner` for automatic failure screenshots. When the Runner UI is hidden, the default when [Test Replay](/cloud/features/test-replay) is enabled during `cypress run` and also with [`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui), a `runner` capture shows only the application under test in the current viewport. It still ignores `blackout` and still scales the app. |
+| `clip`                       | `null`                                                      | Position and size, in pixels, to crop the final image to, in the shape `{ x: 0, y: 0, width: 100, height: 100 }`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `disableTimersAndAnimations` | `true`                                                      | When `true`, Cypress pauses JavaScript timers (such as `setTimeout` and `setInterval`) and CSS animations while it takes the screenshot.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `log`                        | `true`                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `onAfterScreenshot`          | `null`                                                      | A callback Cypress calls right after it takes the screenshot. Its first argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise. Its second argument holds the screenshot's properties, such as the `path` it was saved to and its `dimensions`.                                                                                                                                                                                                                                                                                                                                                                        |
+| `onBeforeScreenshot`         | `null`                                                      | A callback Cypress calls right before it takes the screenshot. Its argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `overwrite`                  | `false`                                                     | Whether to replace an existing screenshot with the same file name instead of saving a numbered copy.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `padding`                    | `null`                                                      | Padding to add around an element screenshot: a number, or an array of up to four numbers in [CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). Cypress ignores it for other screenshots.                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `scale`                      | `false`                                                     | Whether to scale the application under test to fit the browser viewport. Always `true` for `runner` captures.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `timeout`                    | [`responseTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.screenshot()` to resolve before [timing out](#Timeouts).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 For more details on these options and to set some as defaults across all uses of
 `.screenshot()`, see the
@@ -76,21 +101,19 @@ For more details on these options and to set some as defaults across all uses of
 
 ## Examples
 
-The screenshot will be stored in the `cypress/screenshots` folder by default.
-You can change the directory where screenshots are saved in the
+Cypress saves screenshots in the `cypress/screenshots` folder by default. To
+save them somewhere else, set `screenshotsFolder` in the
 [Cypress configuration](/app/references/configuration#Folders--Files).
 
 ### No Args
 
 #### Take a screenshot
 
-```javascript
-// cypress/e2e/users.cy.js
-
-describe('my tests', () => {
-  it('takes a screenshot', () => {
-    // screenshot will be saved as
-    // cypress/screenshots/users.cy.js/my tests -- takes a screenshot.png
+```javascript title="cypress/e2e/users.cy.js"
+describe('users', () => {
+  it('shows the list', () => {
+    // saves the screenshot as
+    // cypress/screenshots/users.cy.js/users -- shows the list.png
     cy.screenshot()
   })
 })
@@ -100,29 +123,132 @@ describe('my tests', () => {
 
 #### Take a screenshot and save as a specific filename
 
-```javascript
-// screenshot will be saved as
-// cypress/screenshots/spec.cy.js/clicking-on-nav.png
+```javascript title="cypress/e2e/nav.cy.js"
+// saves the screenshot as
+// cypress/screenshots/nav.cy.js/clicking-on-nav.png
 cy.screenshot('clicking-on-nav')
 ```
 
 #### Take a screenshot and save in a specific directory
 
-```javascript
-// screenshot will be saved as
-// cypress/screenshots/spec.cy.js/actions/login/clicking-login.png
+```javascript title="cypress/e2e/login.cy.js"
+// saves the screenshot as
+// cypress/screenshots/login.cy.js/actions/login/clicking-login.png
 cy.screenshot('actions/login/clicking-login')
 ```
+
+#### Overwrite a baseline screenshot instead of numbering a new copy
+
+By default, Cypress saves a second screenshot with the same name as
+`checkout-baseline (1).png`. With `overwrite: true`, it replaces
+`checkout-baseline.png`, so the file always holds the latest capture.
+
+```javascript
+cy.screenshot('checkout-baseline', { overwrite: true })
+```
+
+### Capture
+
+#### Capture the viewport, the full page, or the whole Cypress runner
+
+The `capture` option decides how much of the browser ends up in the image.
+
+```javascript
+cy.screenshot('viewport', { capture: 'viewport' })
+cy.screenshot('full-page', { capture: 'fullPage' })
+cy.screenshot('runner', { capture: 'runner' })
+```
+
+`viewport` captures the part of the application under test that's currently
+visible, here 800 x 500 pixels:
+
+<DocsImage
+  src="/img/api/screenshot/capture-viewport-shows-visible-part-of-app.png"
+  alt="Viewport capture showing the top three posts of the Team updates page, cut off at the bottom of the viewport"
+/>
+
+`fullPage`, the default, scrolls through the application under test and
+captures it from top to bottom:
+
+<DocsImage
+  src="/img/api/screenshot/capture-fullpage-shows-entire-app.png"
+  alt="Full page capture showing the Team updates page from its header to its last post"
+/>
+
+`runner` captures the entire browser window, including the Command Log, with
+the three `screenshot` commands from the example:
+
+<DocsImage
+  src="/img/api/screenshot/capture-runner-shows-command-log-and-app.png"
+  alt="Runner capture showing the Cypress Command Log with three screenshot commands beside the application under test"
+/>
 
 ### Clip
 
 #### Crop a screenshot to a specific position and size
 
 ```javascript
-// screenshot will be clipped 20px from the top and left
-// to the dimensions 400px x 300px
+// clips the screenshot to 400px x 300px,
+// starting 20px from the top and left
 cy.screenshot({ clip: { x: 20, y: 20, width: 400, height: 300 } })
 ```
+
+### Blackout
+
+#### Black out dynamic or sensitive content in screenshots
+
+Content that changes between runs, such as relative timestamps or user avatars,
+makes screenshots of the same page differ from run to run. `blackout` covers
+every element that matches a selector with a black box, keeping the layout
+intact:
+
+```javascript
+cy.screenshot('dashboard', { blackout: ['.timestamp', '[data-cy=avatar]'] })
+```
+
+<DocsImage
+  src="/img/api/screenshot/blackout-covers-timestamps-and-avatars.png"
+  alt="Team updates page where every avatar and every Posted timestamp is covered by a black box"
+/>
+
+`blackout` applies to `viewport` and `fullPage` captures only. A `runner`
+capture ignores it.
+
+#### Keep sensitive data out of screenshots, including failures
+
+`blackout` also keeps sensitive information, such as names, email addresses, or
+account numbers, out of the screenshots Cypress saves, and so out of any
+service you send them to, such as CI build artifacts, a visual testing service,
+or Cypress Cloud. To apply it to every screenshot, set it with
+`Cypress.Screenshot.defaults()`, as shown in
+[Blackout elements in screenshots](/cloud/account-management/data-storage-and-masking#Blackout-elements-in-screenshots).
+
+:::caution
+
+`blackout` doesn't apply to `runner` captures, and the screenshots Cypress takes
+when a test fails are always `runner` captures. Sensitive information on the
+page stays visible in failure screenshots, even with a `blackout` default.
+
+:::
+
+To cover failure screenshots too, hide sensitive elements in the default
+`onBeforeScreenshot` and `onAfterScreenshot` callbacks. These run for every
+screenshot, failure screenshots included:
+
+```javascript title="cypress/support/e2e.js"
+Cypress.Screenshot.defaults({
+  onBeforeScreenshot($el) {
+    $el.find('[data-sensitive]').css('visibility', 'hidden')
+  },
+  onAfterScreenshot($el) {
+    $el.find('[data-sensitive]').css('visibility', '')
+  },
+})
+```
+
+The Command Log in a failure screenshot can also show values your test typed.
+To mask those, and to control what Test Replay and videos capture, see
+[Data storage and controls](/cloud/account-management/data-storage-and-masking).
 
 ### Screenshot an element
 
@@ -132,36 +258,212 @@ cy.screenshot({ clip: { x: 20, y: 20, width: 400, height: 300 } })
 cy.get('.post').first().screenshot()
 ```
 
-#### Take a screenshot of the first `.post` element with 10px of padding around it
+#### Add 10px of padding around an element screenshot
 
 ```javascript
 cy.get('.post').first().screenshot({ padding: 10 })
 ```
 
+#### Add different padding to each side of an element screenshot
+
+`padding` accepts [CSS shorthand](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties)
+as an array of one to four numbers:
+
+```javascript
+// 10px above and below, 20px left and right
+cy.get('.post')
+  .first()
+  .screenshot({ padding: [10, 20] })
+```
+
+Without padding, the image ends at the element's border:
+
+<DocsImage
+  src="/img/api/screenshot/element-screenshot-without-padding.png"
+  alt="Element screenshot of a single post card, cropped exactly at its border"
+/>
+
+With `padding: [10, 20]`, the image includes 10px of the page above and below
+the element and 20px on each side:
+
+<DocsImage
+  src="/img/api/screenshot/element-screenshot-with-padding.png"
+  alt="The same post card with a narrow band of the gray page background around it, wider on the left and right"
+/>
+
+#### Screenshot an element inside `.within()`
+
+Inside [`.within()`](/api/commands/within), `cy.screenshot()` captures the
+`.within()` subject, even when chained off `cy`. Pass `capture: 'runner'` to
+capture the whole runner instead.
+
+```javascript
+cy.get('.post')
+  .first()
+  .within(() => {
+    cy.screenshot('first-post') // captures only the first .post
+    cy.screenshot('first-post-runner', { capture: 'runner' }) // ignores .within()
+  })
+```
+
 #### Chain off the screenshot to click the element captured
+
+`.screenshot()` yields the element it captured, so you can chain another command
+off it. `.screenshot()` doesn't query the element again, so chain off it only
+while the element stays in the DOM. If the page might replace the element, query
+it again with [`cy.get()`](/api/commands/get) instead.
 
 ```javascript
 cy.get('button').first().screenshot().click()
 ```
 
-### Get screenshot info from the `onAfterScreenshot` callback
+### Change the page only for the screenshot with `onBeforeScreenshot`
+
+`onBeforeScreenshot` runs right before the capture and `onAfterScreenshot`
+right after it, so a change made in the first and undone in the second never
+affects the rest of the test. Here a cookie banner is hidden for the screenshot
+and shown again afterward:
 
 ```javascript
+cy.screenshot('home', {
+  onBeforeScreenshot($el) {
+    $el.find('.cookie-banner').hide()
+  },
+  onAfterScreenshot($el) {
+    $el.find('.cookie-banner').show()
+  },
+})
+```
+
+Unlike [`blackout`](#Blackout), which covers an element and keeps its space,
+hiding an element removes it from the image entirely.
+
+### Override the screenshot defaults for a single screenshot
+
+Defaults set with
+[`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api), usually in
+a support file, apply to every `cy.screenshot()`:
+
+```javascript title="cypress/support/e2e.js"
+Cypress.Screenshot.defaults({
+  blackout: ['.timestamp', '[data-cy=avatar]'],
+})
+```
+
+An option passed to `cy.screenshot()` replaces the default for that screenshot
+rather than merging with it:
+
+```javascript
+// uses the default blackout list
+cy.screenshot('dashboard')
+// replaces the default list: every h2 is blacked out, timestamps and avatars aren't
+cy.screenshot('dashboard-titles', { blackout: ['h2'] })
+```
+
+### Take a screenshot at several viewport sizes
+
+To check a responsive layout, loop over the widths your layout changes at, set
+each with [`cy.viewport()`](/api/commands/viewport), and name each screenshot
+after its width. This saves `home-375px.png`, `home-768px.png`, and
+`home-1280px.png`:
+
+```javascript
+const widths = [375, 768, 1280]
+
+widths.forEach((width) => {
+  cy.viewport(width, 720)
+  cy.screenshot(`home-${width}px`)
+})
+```
+
+A height of 720 keeps each viewport within the headless browser's screen, so no
+screenshot is cut off. See
+[Screenshots larger than the headless browser screen](#Screenshots-larger-than-the-headless-browser-screen).
+
+### Capture screenshots for documentation and keep them current
+
+Product docs, help centers, and READMEs show screenshots of your UI, and those
+images go out of date every time the UI changes. A spec that visits each
+documented page and takes a named screenshot recaptures every image on each run,
+so the images always match your app.
+
+```javascript title="cypress/e2e/docs-screenshots.cy.js"
+describe('documentation screenshots', () => {
+  beforeEach(() => {
+    // a fixed size and date keep each image the same from run to run
+    cy.viewport(1280, 720)
+    cy.clock(new Date('2026-01-15T09:00:00Z'), ['Date'])
+  })
+
+  it('dashboard', () => {
+    cy.visit('/dashboard')
+    cy.get('[data-cy=dashboard]').should('be.visible')
+    cy.screenshot('docs/dashboard', { capture: 'viewport' })
+  })
+})
+```
+
+`cypress run` empties the screenshots folder before each run, so move the
+documentation images out of it as soon as Cypress saves them. This
+[`after:screenshot`](/api/node-events/after-screenshot-api) handler moves every
+screenshot named `docs/...` into a `docs/images` folder, replacing the previous
+version of each image:
+
+:::cypress-config-plugin-example
+
+```ts
+import fs from 'fs'
+import path from 'path'
+```
+
+```ts
+on('after:screenshot', (details) => {
+  // move only the screenshots named docs/...
+  if (!details.name?.startsWith('docs/')) return
+
+  const newPath = path.join(
+    config.projectRoot,
+    'docs',
+    'images',
+    path.basename(details.path)
+  )
+
+  fs.mkdirSync(path.dirname(newPath), { recursive: true })
+  fs.renameSync(details.path, newPath)
+
+  // return the new path so the test results point to the moved file
+  return { path: newPath }
+})
+```
+
+:::
+
+Run the spec whenever your UI changes, such as on a schedule in CI, and commit
+the updated images with your docs.
+
+### Get screenshot info from the `onAfterScreenshot` callback
+
+```javascript title="cypress/e2e/profile.cy.js"
 cy.screenshot('my-screenshot', {
   onAfterScreenshot($el, props) {
+    // $el is the jQuery-wrapped <html> element, since no element was chained
     // props has information about the screenshot,
     // including but not limited to the following:
     // {
-    //   name: 'my-screenshot',
-    //   path: '/Users/janelane/project/screenshots/spec.cy.js/my-screenshot.png',
-    //   size: '15 kb',
-    //   dimensions: {
-    //     width: 1000,
-    //     height: 660,
-    //   },
-    //   scaled: true,
     //   blackout: [],
-    //   duration: 2300,
+    //   dimensions: {
+    //     height: 660,
+    //     width: 1000,
+    //   },
+    //   duration: 2300, // in milliseconds
+    //   multipart: false,
+    //   name: 'my-screenshot',
+    //   path: '/Users/janelane/project/cypress/screenshots/profile.cy.js/my-screenshot.png',
+    //   pixelRatio: 1,
+    //   scaled: false,
+    //   size: 15360, // in bytes
+    //   takenAt: '2026-11-01T17:00:00.000Z',
+    //   testAttemptIndex: 0,
     // }
   },
 })
@@ -171,160 +473,255 @@ cy.screenshot('my-screenshot', {
 
 ### Naming conventions
 
-Screenshot naming follows these rules:
+Cypress saves each screenshot in the
+[screenshots folder](/app/core-concepts/writing-and-organizing-tests#How-asset-file-paths-are-generated),
+inside a folder for its spec file:
+`{screenshotsFolder}/{adjustedSpecPath}/{fileName}`. The folder's path follows
+the spec file's path, minus any parent folders that all spec files share.
+Cypress names each file by these rules:
 
-- Screenshots are saved inside the
-  [screenshots folder](/app/core-concepts/writing-and-organizing-tests#How-asset-file-paths-are-generated).
-  Inside that folder, the screenshot is saved inside a folder structure relative
-  to the path of the spec file, which is adjusted to remove any common ancestor
-  paths shared with all other spec files. Inside this folder, the screenshot
-  will be saved with the test name:
-  `{screenshotsFolder}/{adjustedSpecPath}/{testName}.png`.
-- For a named screenshot, the name is used instead of the suites and test name:
-  `{screenshotsFolder}/{adjustedSpecPath}/{name}.png`.
-- For any duplicate screenshots (named or not), they will be appended with a
-  number: `{screenshotsFolder}/{adjustedSpecPath}/{testName} (1).png`. This
-  also applies across several `cypress run` processes that share a project
-  folder, so one run never overwrites another run's screenshot.
+| Screenshot                                                        | File name                                                                                                |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Default, with no name passed                                      | `{testName}.png`, from the suite and test titles, such as `users -- shows the list.png`                  |
+| Duplicate of an earlier screenshot                                | ` (1)`, ` (2)`, and so on appended, such as `{testName} (1).png` or `{name} (1).png`                     |
+| Failure screenshot                                                | `{testName} (failed).png`                                                                                |
+| Named                                                             | `{name}.png`, with a `/` in the name creating folders                                                    |
+| Taken during a [test retry](/app/guides/test-retries#Screenshots) | ` (attempt {n})` appended, such as `{testName} (attempt 2).png` or `{testName} (failed) (attempt 2).png` |
 
-:::info
+Cypress numbers duplicates, named or not, across several `cypress run`
+processes that share a project folder too, so one run never overwrites another
+run's screenshot. To replace a duplicate instead, pass `{ overwrite: true }` to
+`cy.screenshot()`. Cypress also removes characters that aren't valid in a
+filename, and truncates a name too long for the file system.
 
-This behavior can be changed by passing the `{overwrite: true}` option to
-`cy.screenshot()` to explicitly overwrite duplicate screenshots.
+For example, when every spec file is under `cypress/e2e/users/`, Cypress drops
+`users/` from the folder name, so this spec saves its screenshots in
+`cypress/screenshots/login.cy.js/`:
 
-:::
-
-- For a failure screenshot, the default naming scheme is used and the name is
-  appended with ` (failed)`:
-  ```javascript
-  {screenshotsFolder}/{adjustedSpecPath}/{testName} (failed).png
-  ```
-
-For example, given a spec file located at `cypress/e2e/users/login.cy.js`:
-
-```javascript
+```javascript title="cypress/e2e/users/login.cy.js"
 describe('my tests', () => {
   it('takes a screenshot', () => {
-    // NOTE: This file has multiple screenshots
-    // each screenshot has a common ancestor path of `/users/`.
-    // In this scenario `/users/` is stripped from the path.
-    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot.png
     cy.screenshot()
-    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (1).png
     cy.screenshot()
-    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (2).png
     cy.screenshot()
-
-    // cypress/screenshots/login.cy.js/my-screenshot.png
     cy.screenshot('my-screenshot')
-    // cypress/screenshots/login.cy.js/my-screenshot (1).png
     cy.screenshot('my-screenshot')
-    // cypress/screenshots/login.cy.js/my/nested/screenshot.png
     cy.screenshot('my/nested/screenshot')
-
-    // if this test fails, the screenshot will be saved to
-    // cypress/screenshots/login.cy.js/my tests -- takes a screenshot (failed).png
   })
 })
 ```
 
+After the test passes, the screenshots folder holds:
+
+```text
+cypress/screenshots/
+└── login.cy.js/
+    ├── my/
+    │   └── nested/
+    │       └── screenshot.png
+    ├── my tests -- takes a screenshot.png
+    ├── my tests -- takes a screenshot (1).png
+    ├── my tests -- takes a screenshot (2).png
+    ├── my-screenshot.png
+    └── my-screenshot (1).png
+```
+
+A test that fails and then passes on a
+[retry](/app/guides/test-retries) adds both suffixes. This test fails its first
+attempt and passes its second:
+
+```javascript title="cypress/e2e/users/login.cy.js"
+describe('my flaky tests', () => {
+  it('passes on retry', { retries: { runMode: 1 } }, () => {
+    cy.screenshot()
+    cy.then(() => {
+      // fail the first attempt only
+      if (Cypress.currentRetry === 0) throw new Error('flaky')
+    })
+  })
+})
+```
+
+In `cypress run`, it saves three screenshots:
+
+```text
+cypress/screenshots/
+└── login.cy.js/
+    ├── my flaky tests -- passes on retry.png              ← attempt 1, cy.screenshot()
+    ├── my flaky tests -- passes on retry (failed).png     ← attempt 1, automatic failure screenshot
+    └── my flaky tests -- passes on retry (attempt 2).png  ← attempt 2, cy.screenshot()
+```
+
 :::info
 
-To learn more about how to write and organize tests and how assets are saved,
-see
-[Writing And Organizing Tests](/app/core-concepts/writing-and-organizing-tests#Generated-assets)
+For how Cypress organizes tests and the files a run generates, see
+[Writing and Organizing Tests](/app/core-concepts/writing-and-organizing-tests#Generated-assets).
 
 :::
 
-### `after:screenshot` plugin event
+### Process saved screenshots with `after:screenshot`
 
-You can get details about any given screenshot and manipulate it after it has
-been written to disk with the
-[`after:screenshot` plugin event](/api/node-events/after-screenshot-api).
+The [`after:screenshot` event](/api/node-events/after-screenshot-api) runs after
+Cypress writes each screenshot to disk and receives its details, so you can
+rename, move, or edit the file.
 
-### Test Failures
+### Compare screenshots with visual regression plugins
 
-#### Automatic screenshots on test failure
+`cy.screenshot()` saves an image but doesn't compare it with anything. To catch
+visual changes, use a visual regression plugin or service. Plugins typically add
+their own command that captures the page and compares it, pixel by pixel, with a
+baseline image. See
+[open source plugins](/app/tooling/visual-testing#Open-source-plugins) and
+[commercial services](/app/tooling/visual-testing#Commercial-services) on the
+Visual Testing page.
 
-When running through `cypress run` or in
-[Continuous Integration](/app/continuous-integration/overview), Cypress
-automatically takes a screenshot when a test fails. You can optionally turn this
-off by setting `screenshotOnRunFailure` to `false` within your
-[`screenshotOnRunFailure`](/app/references/configuration#Screenshots) or
-[Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
+The [`blackout`](#Blackout) and `disableTimersAndAnimations` options on this
+page help keep those comparisons stable, by covering content that changes
+between runs and by pausing animations during the capture.
 
-### Viewing Screenshots
+### Automatic screenshots on test failure in `cypress run`
 
-#### Screenshots in CI
+During `cypress run`, including in
+[Continuous Integration](/app/continuous-integration/overview), Cypress takes a
+screenshot automatically when a test fails. To turn this off, set
+[`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to `false`
+in your Cypress configuration or with
+[`Cypress.Screenshot.defaults()`](/api/cypress-api/screenshot-api).
 
-You can see screenshots taken during a CI run in
-[Cypress Cloud](https://on.cypress.io/cloud) without any extra work.
-
-Alternatively, to see screenshots in your Continuous Integration UI, most CI
-providers document a way to export the screenshots as artifacts and to make them
-available. See their appropriate documentation.
-
-### Asynchronous
-
-#### Understanding when the screenshot is taken
-
-Taking a screenshot is an asynchronous action that takes around `100ms` to
-complete. By the time the screenshot is taken, _it is possible something in your
-application may have changed_. It is important to realize that the screenshot
-may not reflect what your application looked like 100% when the command was
-issued.
-
-For example - say a command we wrote timed out:
-[`cy.get('#element')`](/api/commands/get). This causes your test to fail.
-Cypress then automatically takes a screenshot when the test fails, but it is
-possible something in your application changed within this `100ms` timeframe.
-Hypothetically, your app could render the element you were originally expecting
-to be present. When this happens, the screenshot may provide confusing results.
-It is unlikely, but theoretically possible.
-
-Another potential problem to be aware of is that our own Command Log is using
-React under the hood and only rendering asynchronously during an animation
-frame. It is possible you will see screenshots taken before our Command Log is
-done rendering. This means you may not see the **error displayed** in the
-screenshot. But this is also why we allow taking a video - to show you the
-complete failure.
-
-We make our best effort to synchronize taking a screenshot with our renderer,
-but the current state of your application under test could have changed in the
-meantime and not be an accurate representation of what you want to capture.
-
-### Full page captures and fixed/sticky elements
-
-When passing `fullPage` to the `capture` option, Cypress scrolls the application
-under test from top to bottom, takes screenshots at each point and stitches them
-together. Due to this, elements that are `position: fixed` or `position: sticky`
-will appear multiple times in the final screenshot. To prevent this, in most
-cases you can programmatically change the element to be `position: absolute`
-before the screenshot and change it back afterwards like shown below:
+A failure screenshot uses `capture: 'runner'`, so it shows the Command Log next
+to the application under test, unless the Runner UI is hidden (see below). Here,
+[`cy.get()`](/api/commands/get) timed out looking for an element that never
+appeared, and its row is highlighted in red:
 
 ```javascript
-cy.get('.sticky-header').invoke('css', 'position', 'absolute')
-cy.screenshot()
-cy.get('.sticky-header').invoke('css', 'position', null)
+cy.get('[data-cy=new-post]').click()
 ```
 
-### Chromium-specific behavior with regard to tabs
+<DocsImage
+  src="/img/api/screenshot/failure-screenshot-highlights-failing-command.png"
+  alt="Failure screenshot showing the Command Log with the get command for data-cy=new-post highlighted in red beside the Team updates page"
+/>
 
-Chromium will not capture screenshots when the renderer process for the Cypress
-tab is paused. This most often happens if a new tab was opened by clicking on
-an anchor with `target="_blank"`. To accommodate capturing screenshots in this
-situation, Cypress will attempt to activate the Cypress tab when a screenshot is
-captured. We make our best effort to activate the tab via our Chromium extension.
-If the extension is disabled, Cypress will force the main tab to the front. This
-will cause the browser to steal focus in open mode. To prevent Cypress from
-stealing focus, [ensure that the extension is enabled](/app/references/troubleshooting#Allow-the-Cypress-Chrome-extension).
+The error message itself isn't in this screenshot. The Command Log can still be
+rendering it when Cypress takes the screenshot.
+
+When the Runner UI is hidden, a failure screenshot has no Command Log. It shows
+only the application under test in the current viewport. The Runner UI is
+hidden by default when you record a run with
+[Test Replay](/cloud/features/test-replay) enabled, and whenever you pass
+[`--no-runner-ui`](/app/references/command-line#cypress-run-no-runner-ui) to
+`cypress run`. To see the commands that led to the failure, open the test in
+Test Replay, or pass
+[`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) to keep the
+Command Log in the screenshot.
+
+### Find screenshots locally, in CI, and in Cypress Cloud
+
+#### Find screenshots on your machine
+
+Cypress saves every screenshot in the screenshots folder, `cypress/screenshots`
+by default, following the [naming conventions](#Naming-conventions) above. This
+applies to both `cypress open` and `cypress run`, though Cypress takes
+[failure screenshots](#Automatic-screenshots-on-test-failure-in-cypress-run)
+only in `cypress run`.
+
+Before each `cypress run`, Cypress deletes everything in the screenshots
+folder, so the folder holds only the latest run's screenshots. To keep
+screenshots between runs, move them elsewhere, as in the
+[documentation example](#Capture-screenshots-for-documentation-and-keep-them-current),
+or set [`trashAssetsBeforeRuns`](/app/references/configuration#Screenshots) to
+`false`.
+
+#### Save screenshots as CI build artifacts
+
+On a CI machine, the screenshots folder disappears when the job ends. To keep
+the screenshots, save the folder as a build artifact. For example, in GitHub
+Actions:
+
+```yaml
+- name: Save screenshots
+  uses: actions/upload-artifact@v6
+  if: failure()
+  with:
+    name: cypress-screenshots
+    path: cypress/screenshots
+    if-no-files-found: ignore
+```
+
+`if: failure()` saves the folder only when an earlier step fails, which is when
+failure screenshots exist. Remove it to keep screenshots from passing runs too.
+For other providers, see their documentation on build artifacts.
+
+#### View screenshots in Cypress Cloud
+
+When you [record a run](/app/continuous-integration/overview#Record-tests) to
+[Cypress Cloud](/cloud/get-started/introduction), Cypress uploads its
+screenshots with the results. Open a test in the run to see them in the
+[Artifacts](/cloud/features/recorded-runs#Artifacts) section of the test detail
+sidebar, which shows failure screenshots and screenshots from `cy.screenshot()`.
+
+#### Get screenshots from Cypress Cloud with Cloud MCP or the Cloud CLI
+
+- [Cloud MCP](/cloud/integrations/cloud-mcp#Available-tools): the
+  `cypress_get_test_screenshots` tool returns a test's screenshots, including
+  failure screenshots and screenshots from `cy.screenshot()`, from the last
+  attempt by default. For example, ask your AI assistant to "show me the
+  screenshot from the failed checkout test."
+- [Cloud CLI](/cloud/integrations/cloud-cli#cy-cloud-test-get):
+  `cy-cloud test get --testId <testId> --screenshot ./screenshots` saves a
+  test's failure screenshot to disk.
+
+### Screenshots larger than the headless browser screen
+
+In a headless `cypress run`, the browser's screen is 1280x720 by default.
+Cypress cuts every screenshot off at the screen's edges, so a viewport wider or
+taller than the screen saves a smaller image, for both `viewport` and
+`fullPage` captures:
+
+| Viewport | Saved image |
+| -------- | ----------- |
+| 768x1024 | 768x720     |
+| 1440x900 | 1280x720    |
+
+To capture larger screenshots,
+[set a larger screen size](/api/node-events/browser-launch-api#Set-screen-size-when-running-headless).
+
+### Fixed and sticky headers in element screenshots
+
+To capture an element, Cypress scrolls it to the top of the viewport. A
+`position: fixed` or `position: sticky` header at the top of the page then
+sits on top of the element and covers part of the image:
+
+<DocsImage
+  src="/img/api/screenshot/element-screenshot-covered-by-sticky-header.png"
+  alt="Element screenshot of a post card whose top half is covered by the dark Team updates header"
+/>
+
+Hide the header for the screenshot and restore it afterward. Setting
+`visibility` to `hidden` keeps the header's space in the layout, so nothing
+else on the page moves:
+
+```javascript
+cy.get('.sticky-header').invoke('css', 'visibility', 'hidden')
+cy.get('.post').eq(3).screenshot()
+cy.get('.sticky-header').invoke('css', 'visibility', '')
+```
+
+<DocsImage
+  src="/img/api/screenshot/element-screenshot-with-sticky-header-hidden.png"
+  alt="The same post card, fully visible with its avatar, title, timestamp, and text"
+/>
 
 ## Rules
 
 <HeaderRequirements />
 
 - `cy.screenshot()` can be chained off of `cy` or off a command that yields a
-  single DOM element.
+  single DOM element, the `window`, or the `document`.
+- `cy.screenshot()` throws an error if the subject contains more than one
+  element.
+- Inside [`.within()`](/api/commands/within), `cy.screenshot()` captures the
+  `.within()` subject element, unless `capture` is `'runner'`.
 
 <HeaderAssertions />
 
@@ -333,15 +730,9 @@ stealing focus, [ensure that the extension is enabled](/app/references/troublesh
 
 <HeaderTimeouts />
 
-- `cy.screenshot()` should never time out.
-
-:::caution
-
-Because `cy.screenshot()` is asynchronous it is technically possible for there
-to be a timeout while talking to the internal Cypress automation APIs. But for
-practical purposes it should never happen.
-
-:::
+- `cy.screenshot()` can time out waiting for the browser to capture and save the
+  screenshot, for the duration of its `timeout` option, which defaults to
+  [`responseTimeout`](/app/references/configuration#Timeouts).
 
 ## Command Log
 
@@ -355,7 +746,7 @@ The commands above will display in the Command Log as:
 
 <DocsImage
   src="/img/api/screenshot/command-log-shows-name-of-screenshot-taken.png"
-  alt="Command Log screenshot"
+  alt="Command Log row 1 showing the screenshot command with the name my-image"
 />
 
 When clicking on `screenshot` within the command log, the console outputs the
@@ -363,7 +754,7 @@ following:
 
 <DocsImage
   src="/img/api/screenshot/console-logs-exactly-where-screenshot-was-saved-in-file-system.png"
-  alt="Console Log screenshot"
+  alt="DevTools console listing the screenshot's properties, including Name my-image, Size, Dimensions 1000px x 660px, and the Path it was saved to"
 />
 
 ## History
@@ -375,11 +766,7 @@ following:
 
 ## See also
 
-- [After Screenshot API](/api/node-events/after-screenshot-api)
 - [`Cypress.Screenshot`](/api/cypress-api/screenshot-api)
-- [`cy.debug()`](/api/commands/debug)
-- [`.pause()`](/api/commands/pause)
-- [Cypress Cloud](/cloud/get-started/introduction)
-- [Test Replay](/cloud/features/test-replay)
+- [`after:screenshot`](/api/node-events/after-screenshot-api)
 - [Screenshots and Videos](/app/guides/screenshots-and-videos)
 - [Visual Testing](/app/tooling/visual-testing)
