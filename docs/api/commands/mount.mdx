@@ -1,6 +1,6 @@
 ---
 title: 'cy.mount()'
-description: Set up a mount command in your support file for Cypress Component Testing
+description: Render a component in Cypress Component Testing with cy.mount(), a custom command you register in your component support file.
 sidebar_label: mount
 slug: /api/commands/mount
 componentSpecific: true
@@ -10,47 +10,80 @@ componentSpecific: true
 
 # mount
 
-`cy.mount()` renders a component in the browser for a component test. Cypress
-reserves the command name but doesn't implement it, because each framework
-renders components differently. You register `cy.mount()` yourself in your
-component support file, using the `mount()` function from your framework's
-mounting library. Until you do, calling `cy.mount()` fails with an error that
-links to this page:
-
-```text
-`cy.mount()` must be implemented by the user. There are
-full instructions for doing so at the following location.
-
-https://on.cypress.io/mount
-```
-
-In the Cypress App, the error appears on the failed test in the Command Log:
-
-<DocsImage
-  src="/img/api/mount/command-log-mount-not-implemented.png"
-  alt="Failed test in the Command Log with a CypressError on the mount row stating that cy.mount() must be implemented by the user, followed by a link to https://on.cypress.io/mount"
-/>
+`cy.mount()` renders a component in a real browser, so your component tests run
+against the same DOM, CSS, and browser APIs your users get instead of a
+simulated DOM in Node.js. Cypress reserves the command name but doesn't
+implement it, because each framework renders components differently. You
+register `cy.mount()` in your component support file, using the `mount()`
+function from your framework's mounting library.
 
 When you configure Component Testing through the Cypress App, Cypress scaffolds
 the command for you in `cypress/support/component.js` (or
 `cypress/support/component.ts`), so most projects start with a working
-`cy.mount()`. This guide covers how to customize that command to fit the needs
-of your app.
+`cy.mount()`. This page covers how to customize that command, use it in a spec,
+and fix common errors. If you arrived here from the "`cy.mount()` must be
+implemented by the user" error, go to
+[the fix for that error](#cymount-must-be-implemented-by-the-user).
 
 We recommend registering a custom `cy.mount()` command instead of importing the
 mount function from the mounting libraries in each spec. Doing so offers a few
 advantages:
 
-- You don't need to import the mount function into every test, since the
-  `cy.mount()` command is available globally.
-- You can set up common scenarios that you usually have to do in each test, like
-  wrapping a component in a
-  [React context provider](https://react.dev/learn/passing-data-deeply-with-context)
+- You don't need to import the mount function into every spec, since
+  `cy.mount()` is available globally.
+- You set up what every test needs in one place, such as wrapping a component in
+  a [React context provider](https://react.dev/learn/passing-data-deeply-with-context)
   or adding [Vue plugins](https://vuejs.org/guide/reusability/plugins.html).
 
-## Creating a custom `cy.mount()` command
+## Syntax
 
-<ImportMountFunctions />
+```javascript
+cy.mount(component)
+cy.mount(component, options)
+```
+
+### Arguments
+
+<Icon name="angle-right" /> **component**
+
+The component to render, in the form your framework's `mount()` takes:
+
+- Angular: a component class, or a template string
+- React: a JSX element, such as `<Stepper />`
+- Svelte: a Svelte component
+- Vue: a Vue component
+
+<Icon name="angle-right" /> **options _(Object)_**
+
+Options for your framework's `mount()`, such as props, plus any options your
+custom command adds. Each framework's API page lists its options:
+[Angular API](/app/component-testing/angular/api),
+[React API](/app/component-testing/react/api),
+[Svelte API](/app/component-testing/svelte/api), and
+[Vue API](/app/component-testing/vue/api).
+
+<HeaderYields />
+
+`cy.mount()` yields whatever your framework's `mount()` returns:
+
+| Framework | Yields                    | Use it to                                                                                                                     |
+| --------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Angular   | `{ component, fixture }`  | Read the component instance, or work with its `ComponentFixture`                                                              |
+| React     | `{ component, rerender }` | Rerender the component with new props (see [Remounting and rerendering](#Remounting-and-rerendering-components-with-cymount)) |
+| Svelte    | `{ component }`           | Call functions and read values the component exports                                                                          |
+| Vue       | `{ component, wrapper }`  | Read the component instance, or use the Vue Test Utils wrapper's methods                                                      |
+
+## Creating a New `cy.mount()` Command
+
+Each framework has its own `mount()` function, exported from a mounting library
+that ships with Cypress:
+
+- [`cypress/react`](https://github.com/cypress-io/cypress/tree/develop/npm/react) supports standard JSX syntax.
+- [`cypress/angular`](https://github.com/cypress-io/cypress/tree/develop/npm/angular) uses
+  [Angular TestBed](https://angular.dev/api/core/testing/TestBed) internally.
+- [`cypress/vue`](https://github.com/cypress-io/cypress/tree/develop/npm/vue) uses
+  [Vue Test Utils](https://test-utils.vuejs.org/) internally.
+- [`cypress/svelte`](https://github.com/cypress-io/cypress/tree/develop/npm/svelte) mounts Svelte 5 components.
 
 To use `cy.mount()`, add a [custom command](/api/cypress-api/custom-commands)
 with [`Cypress.Commands.add()`](/api/cypress-api/custom-commands) in your
@@ -68,8 +101,8 @@ library they never use. Start from one of these examples:
 import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', (component, options) => {
-  // Wrap any parent components needed
-  // ie: return mount(<MyProvider>{component}</MyProvider>, options)
+  // Wrap the component in any providers it needs, for example:
+  // return mount(<MyProvider>{component}</MyProvider>, options)
   return mount(component, options)
 })
 ```
@@ -89,8 +122,8 @@ declare global {
 }
 
 Cypress.Commands.add('mount', (component, options) => {
-  // Wrap any parent components needed
-  // ie: return mount(<MyProvider>{component}</MyProvider>, options)
+  // Wrap the component in any providers it needs, for example:
+  // return mount(<MyProvider>{component}</MyProvider>, options)
   return mount(component, options)
 })
 ```
@@ -144,7 +177,7 @@ Cypress.Commands.add('mount', (component, config) => {
 import { mount } from 'cypress/vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
+  // Set up the options object
   options.global = options.global || {}
   options.global.stubs = options.global.stubs || {}
   if (!Array.isArray(options.global.stubs)) {
@@ -153,15 +186,15 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   options.global.components = options.global.components || {}
   options.global.plugins = options.global.plugins || []
 
-  /* Add any global plugins */
+  // Add any global plugins
   // options.global.plugins.push({
   //   install(app) {
-  //     app.use(MyPlugin);
+  //     app.use(MyPlugin)
   //   },
-  // });
+  // })
 
-  /* Add any global components */
-  // options.global.components['Button'] = Button;
+  // Add any global components
+  // options.global.components['Button'] = Button
 
   return mount(component, options)
 })
@@ -182,7 +215,7 @@ declare global {
 }
 
 Cypress.Commands.add('mount', (component, options = {}) => {
-  // Setup options object
+  // Set up the options object
   options.global = options.global || {}
   options.global.stubs = options.global.stubs || {}
   if (!Array.isArray(options.global.stubs)) {
@@ -191,15 +224,15 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   options.global.components = options.global.components || {}
   options.global.plugins = options.global.plugins || []
 
-  /* Add any global plugins */
+  // Add any global plugins
   // options.global.plugins.push({
   //   install(app) {
-  //     app.use(MyPlugin);
+  //     app.use(MyPlugin)
   //   },
-  // });
+  // })
 
-  /* Add any global components */
-  // options.global.components['Button'] = Button;
+  // Add any global components
+  // options.global.components['Button'] = Button
 
   return mount(component, options)
 })
@@ -247,7 +280,7 @@ Cypress.Commands.add('mount', (component, options) => {
 </TabItem>
 </Tabs>
 
-## TypeScript typings for a custom `cy.mount()` command
+## Adding TypeScript Typings for `cy.mount()` Commands
 
 When working in [TypeScript](/app/tooling/typescript-support), your custom
 command needs typings for code completion and to avoid TypeScript errors. The
@@ -321,29 +354,23 @@ declare global {
 </TabItem>
 </Tabs>
 
-If your tests have trouble finding the types for the custom commands, manually
-include the `cypress.d.ts` file in all your `tsconfig.json` files like so:
+If your specs can't find the types for your custom commands, add `cypress.d.ts`
+to the `include` array in each `tsconfig.json`:
 
 ```json title="tsconfig.json"
-"include": ["./src", "cypress.d.ts"]
+{
+  "include": ["./src", "cypress.d.ts"]
+}
 ```
 
-## Using `cy.mount()` in a component test
+## Examples
 
-Once the command is registered, call `cy.mount()` from any component spec with
-the component and the options your framework's `mount()` accepts. Then query
-and assert on the rendered component the same way you would on a page.
+### Using `cy.mount()` in a component test
 
-<HeaderYields />
-
-`cy.mount()` yields whatever your framework's `mount()` returns:
-
-| Framework | Yields                    | Use it to                                                                                                      |
-| --------- | ------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Angular   | `{ component, fixture }`  | Read the component instance, or work with its `ComponentFixture`                                               |
-| React     | `{ component, rerender }` | Rerender the component with new props (see [rerendering](#Remounting-and-rerendering-components-with-cymount)) |
-| Svelte    | `{ component }`           | Call functions and read values the component exports                                                           |
-| Vue       | `{ component, wrapper }`  | Read the component instance, or use the Vue Test Utils wrapper's methods                                       |
+Once you register the command, call `cy.mount()` from any component spec with
+the component and the options your framework's `mount()` accepts. Then query and
+assert on the rendered component the same way you would on a page, and use what
+`cy.mount()` [yields](#Yields) when you need the component itself:
 
 <Tabs groupId="frameworks">
 <TabItem value="React" active>
@@ -407,7 +434,7 @@ it('resets the count through an exported function', () => {
 </TabItem>
 </Tabs>
 
-## Remounting and rerendering components with `cy.mount()`
+### Remounting and rerendering components with `cy.mount()`
 
 Calling `cy.mount()` again in the same test unmounts the previous component
 first, so each mount starts with fresh state. Every framework's `mount()`
@@ -441,7 +468,7 @@ it('starts over when mounted again', () => {
 })
 ```
 
-## Loading global styles in component tests
+### Loading global styles in component tests
 
 Component tests don't run your app's entry file, so the global styles it
 imports, such as a CSS reset, fonts, or a CSS framework, are missing and
@@ -460,7 +487,7 @@ Cypress.Commands.add('mount', mount)
 For CSS libraries, component HTML files, and other styling setups, see
 [Styling components](/app/component-testing/styling-components).
 
-## Adding your own options to `cy.mount()`
+### Adding your own options to `cy.mount()`
 
 A custom command can accept options of its own, such as which theme to render a
 component in. Once it does, `mount: typeof mount` no longer describes the
@@ -510,7 +537,7 @@ The React [Router](/app/component-testing/react/examples#React-Router) and
 [Router](/app/component-testing/vue/examples#Vue-Router) example follow the same
 approach.
 
-## Registering more than one mount command
+### Registering more than one mount command
 
 When only some components need extra setup, register a second command next to
 `cy.mount()` instead of adding options to it. `cy.mount()` stays a plain
@@ -556,9 +583,25 @@ it('greets a signed-in user by name', () => {
 })
 ```
 
-## Troubleshooting common `cy.mount()` errors
+## Notes
 
 ### `cy.mount()` must be implemented by the user
+
+Calling `cy.mount()` before any file registers it fails with this error:
+
+```text
+`cy.mount()` must be implemented by the user. There are
+full instructions for doing so at the following location.
+
+https://on.cypress.io/mount
+```
+
+In the Cypress App, the error appears on the failed test in the Command Log:
+
+<DocsImage
+  src="/img/api/mount/command-log-mount-not-implemented.png"
+  alt="Failed test in the Command Log with a CypressError on the mount row stating that cy.mount() must be implemented by the user, followed by a link to https://on.cypress.io/mount"
+/>
 
 Component tests never loaded a file that registers the command. Check that:
 
@@ -571,14 +614,15 @@ Component tests never loaded a file that registers the command. Check that:
 ### Property 'mount' does not exist on type 'cy & CyEventEmitter'
 
 TypeScript can't see the typings for your command. Add the `declare global`
-block from [the typings section](#TypeScript-typings-for-a-custom-cymount-command)
-to your support file or `cypress.d.ts`, and make sure every `tsconfig.json` that
-covers your specs includes that file.
+block from
+[the typings section](#Adding-TypeScript-Typings-for-cymount-Commands) to your
+support file or `cypress.d.ts`, and make sure every `tsconfig.json` that covers
+your specs includes that file.
 
 ### A mounting library ends up in your end-to-end tests
 
-`cypress/support/commands.js` is imported by both the end-to-end and the
-component support files, so a `cy.mount()` registered there bundles your
+Both the end-to-end and the component support files import
+`cypress/support/commands.js`, so a `cy.mount()` registered there bundles your
 framework's mounting library into every end-to-end spec. Move the registration
 to `cypress/support/component.js`.
 
@@ -608,14 +652,14 @@ library:
 - **Svelte** leaves the row out by default, since Svelte 5 components don't
   expose a useful name. Pass `log: true` in the options to show it.
 
-## More custom `cy.mount()` command examples
+## Additional Mount Command Examples
 
-Visit the guides for scenarios in
-[React](/app/component-testing/react/examples),
-[Angular](/app/component-testing/angular/examples),
-[Vue](/app/component-testing/vue/examples), and
-[Svelte](/app/component-testing/svelte/examples) for customizing a mount
-command.
+The framework example pages cover more customized mount commands, such as
+routers, state management, and app-wide providers:
+[React examples](/app/component-testing/react/examples),
+[Angular examples](/app/component-testing/angular/examples),
+[Vue examples](/app/component-testing/vue/examples), and
+[Svelte examples](/app/component-testing/svelte/examples).
 
 ## See also
 
