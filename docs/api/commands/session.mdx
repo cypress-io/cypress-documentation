@@ -730,28 +730,30 @@ it('is a redundant test', () => {
 
 ### Cross-domain sessions
 
-It's possible to switch domains while caching sessions. Be sure to explicitly
-visit the domain in your login command before calling `cy.session()`.
+`cy.session()` caches cookies, `localStorage`, and `sessionStorage` for every
+domain, so your tests can move between domains and still restore the same
+session. Visit the login page by its full URL inside `setup`, rather than
+visiting the domain before you call `cy.session()`. `cy.session()` clears the
+page before `setup` runs, and a relative URL in `cy.visit()` resolves against
+your [`baseUrl`](/app/references/configuration#Global), not the page you visited
+earlier.
 
-```jsx
+```javascript
 const login = (name) => {
-  if (location.hostname !== 'example.cypress.io') {
-    cy.visit('https://example.cypress.io')
-  }
   cy.session(
     name,
     () => {
-      cy.visit('/login')
-      // etc
+      cy.visit('https://app.cypress.io/login')
+      cy.get('[data-test=name]').type(name)
+      cy.get('[data-test=password]').type('s3cr3t')
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
     },
     {
       validate() {
-        cy.request('/whoami', {
-          headers: { Authorization: localStorage.token },
-          method: 'POST',
-        })
+        cy.request('https://app.cypress.io/whoami')
           .its('status')
-          .should('equal', 200)
+          .should('eq', 200)
       },
     }
   )
@@ -759,7 +761,8 @@ const login = (name) => {
 
 it('t1', () => {
   login('bob')
-  // do things on example.cypress.io
+  cy.visit('https://app.cypress.io/dashboard')
+  // do things on app.cypress.io
 })
 
 it('t2', () => {
@@ -768,8 +771,10 @@ it('t2', () => {
 })
 
 it('t3', () => {
+  // restores bob's app.cypress.io cookies without logging in again
   login('bob')
-  // do things on example.cypress.io
+  cy.visit('https://app.cypress.io/dashboard')
+  // do things on app.cypress.io
 })
 ```
 
