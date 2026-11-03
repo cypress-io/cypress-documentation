@@ -33,7 +33,7 @@ No. Cypress Accessibility reports are generated in Cypress Cloud from the artifa
 
 ### <Icon name="angle-right" /> How do I fix Cypress Accessibility violations with an AI agent?
 
-Configure [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so your agent can read results directly from Cypress Cloud with three tools: `cypress_get_accessibility_report` for a run's failing rules and worst views, `cypress_get_accessibility_views` to page through every view, and `cypress_get_accessibility_rule_failures` for the failing elements of a specific rule. Scope each prompt to one rule and ask for a plan before any code changes. Narrowing your report first keeps the agent from triaging findings you were never going to fix, and adding [`components`](/accessibility/configuration/components) attributes to violation selectors helps it locate the source file without crawling your markup.
+Configure [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so your agent can read results directly from Cypress Cloud with three tools: `cypress_get_accessibility_report` for a run's failing rules and worst views, `cypress_get_accessibility_views` to page through every view, and `cypress_get_accessibility_rule_failures` for the failing elements of a specific rule. If your agent runs shell commands, the [Cloud CLI](/cloud/integrations/cloud-cli#Accessibility-and-App-Quality) gives it the same data: `cy-cloud accessibility report get` for a run's score and failing rules, and `cy-cloud accessibility element list` for the failing elements, filtered by rule or impact. Scope each prompt to one rule and ask for a plan before any code changes. Narrowing your report first keeps the agent from triaging findings you were never going to fix, and adding [`components`](/accessibility/configuration/components) attributes to violation selectors helps it locate the source file without crawling your markup.
 
 ### <Icon name="angle-right" /> How do I stop a Cypress Accessibility rule I already fixed from regressing?
 
@@ -71,7 +71,7 @@ Select the failing element to expand its detail, choose **Create Jira issue**, a
 
 ### <Icon name="angle-right" /> Can I file issues for a whole accessibility report at once?
 
-Yes, with an AI agent connected to both [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) and your issue tracker. The agent reads the report for the latest run on a branch, checks Jira or another tracker for the issues that already exist, and creates only the ones that are missing, so a weekly refresh doesn't produce duplicates. [File issues in your issue tracker](/accessibility/work-with-ai-agents#File-issues-in-your-issue-tracker) walks through the prompts, how to group violations into tickets, and the guardrails to keep on an agent that can write.
+Yes, with an AI agent connected to your issue tracker and to Cypress Cloud through [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) or the [Cloud CLI](/cloud/integrations/cloud-cli#Accessibility-and-App-Quality). The agent reads the report for the latest run on a branch, checks Jira or another tracker for the issues that already exist, and creates only the ones that are missing, so a weekly refresh doesn't produce duplicates. [File issues in your issue tracker](/accessibility/work-with-ai-agents#File-issues-in-your-issue-tracker) walks through the prompts, how to group violations into tickets, and the guardrails to keep on an agent that can write.
 
 ### <Icon name="angle-right" /> Why does my Cypress Accessibility report show generated class names instead of meaningful selectors?
 

@@ -52,9 +52,10 @@
   ],
   "accessibility": [
     {
-      "label": "Download Reports",
-      "href": "/accessibility/connect-and-extend/download-reports?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=download-reports",
-      "description": "Export violations as CSV or JSON.",
+      "label": "Cloud CLI",
+      "href": "/cloud/integrations/cloud-cli?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-cli-accessibility#Accessibility-and-App-Quality",
+      "description": "Pull Accessibility reports and failing elements into your terminal or agent.",
+      "showAISparkle": true,
       "isNew": true
     },
     {
