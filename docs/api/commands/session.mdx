@@ -3,6 +3,7 @@ title: 'cy.session()'
 description: Cache and restore cookies, localStorage, and sessionStorage to recreate a consistent browser context between tests in Cypress.
 sidebar_label: session
 e2eSpecific: true
+toc_max_heading_level: 4
 ---
 
 <ProductHeading product="app" />
@@ -81,15 +82,9 @@ cy.url().should('contain', '/login-successful')
 A unique identifier that Cypress uses to cache and restore a given session. A
 `String` is enough in most cases. When you pass an `Array` or `Object`, Cypress
 generates the id by stringifying the value deterministically. For example,
-`['Jane', '123', 'admin']` becomes the id `["Jane","123","admin"]`.
-
-:::info
-
-See
+`['Jane', '123', 'admin']` becomes the id `["Jane","123","admin"]`. See
 [Choosing the correct id to cache a session](#Choosing-the-correct-id-to-cache-a-session)
-for a more thorough explanation with examples.
-
-:::
+for examples.
 
 :::caution
 
@@ -116,10 +111,10 @@ domains before `setup` runs or a cached session is restored, whatever the
 
 <Icon name="angle-right" /> **options _(Object)_**
 
-| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `cacheAcrossSpecs` | `false`     | When enabled, Cypress treats the newly created session as global, and any spec in the same Cypress run on the same machine can restore it. Use this option for a session that many specs share.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `validate`         | `undefined` | Validates the newly created or restored session. Cypress runs it immediately after `setup` creates the session, or after it restores a session and clears the page. The session is invalid if this function throws an exception, contains a failing Cypress command, returns a Promise that rejects or resolves to `false`, or returns nothing and its last Cypress command yields `false`. Returning `false` directly, without a Promise, doesn't invalidate the session.<br/><br/>- If validation fails immediately after `setup`, the test fails.<br/>- If validation fails after Cypress restores a session, `setup` runs again. |
+| Option             | Default     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ------------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cacheAcrossSpecs` | `false`     | When enabled, Cypress treats the newly created session as global, and any spec in the same Cypress run on the same machine can restore it. Use this option for a session that many specs share.                                                                                                                                                                                                                                                                         |
+| `validate`         | `undefined` | Validates the newly created or restored session. Cypress runs it immediately after `setup` creates the session, or after it clears the page and restores a saved session. See [Validating a restored session with `validate`](#Validating-a-restored-session-with-validate) for what makes a session invalid.<br/><br/>- If validation fails immediately after `setup`, the test fails.<br/>- If validation fails after Cypress restores a session, `setup` runs again. |
 
 <HeaderYields />
 
@@ -328,8 +323,9 @@ Cypress.Commands.add('loginByApi', (username, password) => {
 })
 ```
 
-The assertion now runs every time `setup` signs in, so you can delete the test
-that only checked the sign-in response.
+The assertion now runs every time `setup` signs in, so a failed sign-in still
+fails the test. On a restore, `setup` doesn't run, and `cy.session()` checks the
+session with `validate` instead, if you pass one.
 
 #### Modifying session data before caching
 
@@ -380,8 +376,8 @@ These scenarios mark the session as invalid:
 - the `validate` function throws an exception
 - the `validate` function returns a Promise that resolves to `false` or rejects
 - the `validate` function contains a failing Cypress command
-- the `validate` function returns nothing and its last Cypress command yields
-  `false`
+- the `validate` function returns nothing, or returns a Cypress chain, and its
+  last Cypress command yields `false`
 
 Returning `false` directly from `validate`, without a Promise, does not mark the
 session as invalid.
@@ -395,17 +391,17 @@ Here are a few `validate` examples:
 
 ```javascript
 // Attempt to visit a page that only a logged-in user can see
-function validate() {
+function validateByVisit() {
   cy.visit('/private')
 }
 
 // Make an API request that returns a 200 only when logged in
-function validate() {
+function validateByRequest() {
   cy.request('/api/user').its('status').should('eq', 200)
 }
 
 // Run any Cypress command that fails if the user is not logged in
-function validate() {
+function validateByUrl() {
   cy.visit('/account', { failOnStatusCode: false })
   cy.url().should('match', /\/account$/)
 }
@@ -438,10 +434,11 @@ const login = (name) => {
 }
 ```
 
-`cy.session()` restores session data while the page is blank, so read storage
-with [`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage) rather than
-from `window.localStorage`. This `validate` recreates the session once the
-cached token expires:
+When test isolation is enabled, the application's page is blank while `validate`
+runs after a restore, so `cy.window()` can't reach its storage. Read storage with
+[`cy.getAllLocalStorage()`](/api/commands/getalllocalstorage), which returns it
+for every origin. This `validate` recreates the session once the cached token
+expires:
 
 ```javascript
 function validate() {
@@ -461,10 +458,9 @@ a request instead so `cy.session()` catches it.
 
 #### Switching between cached sessions in one test
 
-`cy.session()` clears the page and all session data before it runs `setup`, so
-it switches between sessions without logging the previous user out first. A
-test that switches users this way follows the real workflow and skips a logout
-step.
+`cy.session()` clears all session data before it creates or restores a session,
+so it switches from one user to another without logging the first one out. One
+test can then act as two users without a logout step between them.
 
 ```javascript
 const login = (name) => {
@@ -603,9 +599,10 @@ describe('dashboard', { testIsolation: false }, () => {
 })
 ```
 
-With test isolation disabled, `cy.session()` doesn't clear the page, so the
-browser stays on whatever page `setup` ends on. Call `login()` before
-`cy.visit()`, not after, so your tests start on the page you visited.
+With test isolation disabled, `cy.session()` doesn't clear the page. After it
+creates a session, the browser stays on whatever page `setup` ends on. Call
+`login()` before `cy.visit()`, not after, so your tests start on the page you
+visited.
 
 #### Caching a session across specs with `cacheAcrossSpecs`
 
@@ -655,18 +652,17 @@ it('can create a blog post', () => {
 
 :::caution
 
-Every call to `cy.session()` with a given `id` must pass the same `setup`,
-`validate`, and `cacheAcrossSpecs` value. If any of these differ from the call
-that created the session, Cypress throws an error rather than reusing the
-session. This applies within a single spec and, when a session is cached across
-specs, in every spec that uses it. For this reason, define the session once
-in a shared custom command or helper function (as in the example above) and call
-that everywhere, rather than copying the `cy.session()` call into each spec.
+Every call with a given `id` must pass `setup` and `validate` functions with the
+same source code, and the same `cacheAcrossSpecs` value. Otherwise Cypress
+throws an error instead of reusing the session.
 
 :::
 
-Here, the second call reuses the `id` `user1` with a different `setup`
-function:
+This applies within a single spec and, for a session cached across specs, in
+every spec that uses it. Cypress compares the functions' source code, so define
+the session once in a shared helper or custom command, as in the example above,
+and copies can't drift apart. Here, the second call reuses the `id` `user1` with
+a different `setup` function:
 
 ```javascript
 cy.session('user1', () => {
@@ -820,18 +816,18 @@ const login = (name) => {
   )
 }
 
-it('t1', () => {
+it('signs in on app.cypress.io', () => {
   login('bob')
   cy.visit('https://app.cypress.io/dashboard')
   // do things on app.cypress.io
 })
 
-it('t2', () => {
+it('visits www.cypress.io without the session', () => {
   cy.visit('https://www.cypress.io')
   // do things on www.cypress.io
 })
 
-it('t3', () => {
+it('restores the session on app.cypress.io', () => {
   // restores bob's app.cypress.io cookies without logging in again
   login('bob')
   cy.visit('https://app.cypress.io/dashboard')
@@ -899,17 +895,19 @@ The `testIsolation` setting decides whether Cypress also clears the page:
 | The page, before `setup` or a restore and again when `cy.session()` ends | <Icon name="check-circle" color="green" /> |                                            |
 | Session data, before `setup` or a restore                                | <Icon name="check-circle" color="green" /> | <Icon name="check-circle" color="green" /> |
 
-#### With test isolation enabled
+#### Clearing with test isolation enabled in `cy.session()`
 
 Clearing the page as well as the session data makes `cy.session()` behave the
 same whether it creates or restores a session, and it switches sessions without
 logging out first. Call [`cy.visit()`](/api/commands/visit) after
 `cy.session()` to load the page you want to test.
 
-#### With test isolation disabled
+#### Clearing with test isolation disabled in `cy.session()`
 
-Cypress clears the session data but leaves the page as it is, so you don't need
-to call `cy.visit()` afterward. Disabling test isolation can make end-to-end
+Cypress clears the session data but doesn't clear the page. After `cy.session()`,
+the browser shows the page `setup` ended on, or, after a restore, the page that
+was open before the call. Call `cy.visit()` afterward when a test needs a
+specific page. Disabling test isolation can make end-to-end
 tests faster, but each test inherits the browser state the previous one left
 behind, and a test can behave differently when you run it alone with `.only()`.
 Write each test so it doesn't depend on the one before it, and set up your
@@ -931,11 +929,6 @@ To keep a session across specs, set `cacheAcrossSpecs` to `true`.
 In `cypress open`, click **Clear All Sessions** in the
 [Instrument Panel](#The-Instrument-Panel) to clear all spec and global sessions
 and rerun the spec file.
-
-<DocsImage
-  src="/img/api/session/sessions-panel.png"
-  alt="Sessions Instrument Panel listing two created sessions, with the Clear All Sessions button at the top right"
-/>
 
 To clear all spec and global sessions from code while you debug, call
 [`Cypress.session.clearAllSavedSessions()`](/api/cypress-api/session).
@@ -959,7 +952,7 @@ keeping sensitive data such as passwords and tokens out of it.
 ```javascript
 // If your session setup code uses a string variable, pass in the
 // string as the id
-const login = (name) => {
+const loginByName = (name) => {
   cy.session(name, () => {
     loginWith(name)
   })
@@ -967,7 +960,7 @@ const login = (name) => {
 
 // If your session setup code uses a single object, pass in the
 // object as the id, and Cypress serializes it into an identifier
-const login = (params = {}) => {
+const loginWithParams = (params = {}) => {
   cy.session(params, () => {
     loginWith(params)
   })
@@ -976,7 +969,7 @@ const login = (params = {}) => {
 // If your session setup code uses multiple variables, pass in an
 // array of those variables, and Cypress serializes it into an
 // identifier
-const login = (name, email, params = {}) => {
+const loginWithVariables = (name, email, params = {}) => {
   cy.session([name, email, params], () => {
     loginWith(name, email, params)
   })
@@ -985,7 +978,7 @@ const login = (name, email, params = {}) => {
 // If your session setup code uses external constants, leave them
 // out of the id, since they never change
 const API_KEY = 'I_AM_AN_API_KEY'
-const login = (name, email) => {
+const loginWithConstants = (name, email) => {
   cy.session([name, email], () => {
     loginWith(name, email, API_KEY)
   })
@@ -1030,8 +1023,7 @@ different sessions share an `id` and restore each other's data.
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 Setting the `id` to `[name, role]` caches a separate session for each name and
-role. It leaves the password out, since Cypress shows the `id` in the Command
-Log.
+role, and leaves the password out.
 
 ```javascript
 const login = (name, role, password) => {
@@ -1078,6 +1070,8 @@ the session and recreate it when needed.
 
 - `cy.session()` has no `timeout` option. It runs for as long as the commands in
   `setup` and `validate` run, and each of those commands uses its own timeout.
+- If `setup` or `validate` returns a Promise, `cy.session()` waits up to 20
+  seconds for it to settle, then fails the test.
 
 ## Command Log
 
@@ -1087,8 +1081,7 @@ When a test creates or restores a session, Cypress shows a Sessions panel at the
 top of the test, alongside the other
 [instrument panels](/app/core-concepts/open-mode#Instrument-panel).
 
-Clicking a session `id` in the panel prints that session's details to the
-console, and clicking **Clear All Sessions** clears all saved spec and global
+Clicking **Clear All Sessions** clears all saved spec and global
 sessions and reruns the spec file (see
 [How long Cypress keeps a cached session](#How-long-Cypress-keeps-a-cached-session)). A globe icon marks a
 session cached across specs with `cacheAcrossSpecs`.
@@ -1100,10 +1093,12 @@ session cached across specs with `cacheAcrossSpecs`.
 
 ### Session status in the Command Log
 
-The images in this section come from running this `login()` function in three
-tests. The first test creates the session and the second restores it. The third
-logs out, which ends the session on the server, so the next restore fails
-`validate` and Cypress recreates the session.
+The images in this section come from running this `login()` function, with
+`baseUrl` set to `https://app.cypress.io`, in three tests. The first test
+creates the session and the second restores it. The third logs out, which ends
+the session on the server, so the next restore fails `validate` and Cypress
+recreates the session. `validate` passes `failOnStatusCode: false` so a failed
+check reports the status code, `401`, rather than the full request.
 
 ```javascript
 const login = (name) => {
@@ -1146,22 +1141,22 @@ it('recreates the session after logging out', () => {
 Whenever `cy.session()` is called, the Command Log shows one of the following
 lines, with the session `id` and the status of the call:
 
-- No saved session was found, so a new session was created and saved:
+- No saved session exists, so Cypress creates and saves a new session:
 
   <DocsImage
     src="/img/api/session/session-collapsed-new.png"
     alt="Command Log row for cy.session with the id user and a created status badge"
   />
 
-- A saved session was found, and used:
+- Cypress finds a saved session and restores it:
 
   <DocsImage
     src="/img/api/session/session-collapsed-restored.png"
     alt="Command Log row for cy.session with the id user and a restored status badge"
   />
 
-- A saved session was found, but the `validate` function failed, so the session
-  was recreated and saved:
+- Cypress finds a saved session, but `validate` fails, so Cypress recreates and
+  saves the session:
 
   <DocsImage
     src="/img/api/session/session-collapsed-recreated.png"
@@ -1175,7 +1170,7 @@ Expanding the session group in the Command Log shows each step Cypress ran. In
 the third test, Cypress clears the page and session data and restores the saved
 session. In **Validate session**, `/whoami` returns `401`, so the assertion
 fails and Cypress reports that it will recreate the session. It then clears the
-session data again, runs **Recreate session** and **Validate session**, and
+page and session data again, runs **Recreate session** and **Validate session**, and
 clears the page.
 
 <DocsImage
@@ -1200,7 +1195,7 @@ including cookies, `localStorage`, and `sessionStorage`.
 | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
 | [16.2.1](/app/references/changelog#16-2-1) | Typed the yielded value as the session's status instead of `null`.                         |
 | [12.0.0](/app/references/changelog#12-0-0) | Removed `experimentalSessionAndOrigin` and made the command available by default.          |
-| [11.0.0](/app/references/changelog#11-0-0) | The `setup` option is now required.                                                        |
+| [11.0.0](/app/references/changelog#11-0-0) | The `setup` argument is now required.                                                      |
 | [10.9.0](/app/references/changelog#10-9-0) | Added `cacheAcrossSpecs` property.                                                         |
 | [9.6.0](/app/references/changelog#9-6-0)   | Added support for `experimentalSessionAndOrigin` and removed `experimentalSessionSupport`. |
 | [8.2.0](/app/references/changelog#8-2-0)   | `cy.session()` command added and can be used when `experimentalSessionSupport` is enabled. |
