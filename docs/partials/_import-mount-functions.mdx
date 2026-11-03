@@ -1,8 +1,8 @@
 Different frameworks render their components differently, so we provide
 framework-specific `mount()` functions, which can be imported like so:
 
-<Tabs>
-<TabItem value='React'>
+<Tabs groupId="frameworks">
+<TabItem value='React' active>
 
 :::note
 
@@ -19,7 +19,25 @@ import { mount } from 'cypress/react'
 ```
 
 </TabItem>
+<TabItem value='Angular'>
 
+:::note
+
+<strong>A note for Angular users</strong>
+
+The `mount()` command exported from the
+[cypress/angular](https://github.com/cypress-io/cypress/tree/develop/npm/angular)
+library uses [Angular TestBed](https://angular.dev/api/core/testing/TestBed)
+internally, but instead of mounting your components in a virtual browser in
+node, it mounts them in your actual browser.
+
+:::
+
+```ts
+import { mount } from 'cypress/angular'
+```
+
+</TabItem>
 <TabItem value='Vue'>
 
 :::note
@@ -28,7 +46,7 @@ import { mount } from 'cypress/react'
 
 The `mount()` command exported from the
 [cypress/vue](https://github.com/cypress-io/cypress/tree/develop/npm/vue)
-library uses [Vue Test Utils](https://vue-test-utils.vuejs.org/) internally, but
+library uses [Vue Test Utils](https://test-utils.vuejs.org/) internally, but
 instead of mounting your components in a virtual browser in node, it mounts them
 in your actual browser.
 
@@ -39,22 +57,20 @@ import { mount } from 'cypress/vue'
 ```
 
 </TabItem>
-<TabItem value='Angular'>
+<TabItem value='Svelte'>
 
 :::note
 
-<strong>A note for Angular users</strong>
+<strong>A note for Svelte users</strong>
 
 The `mount()` command exported from the
-[cypress/angular](https://github.com/cypress-io/cypress/tree/develop/npm/angular)
-library uses [Angular TestBed](https://angular.io/api/core/testing/TestBed)
-internally, but instead of mounting your components in a virtual browser in
-node, it mounts them in your actual browser.
+[cypress/svelte](https://github.com/cypress-io/cypress/tree/develop/npm/svelte)
+library mounts Svelte 5 components in your actual browser.
 
 :::
 
-```ts
-import { mount } from 'cypress/angular'
+```js
+import { mount } from 'cypress/svelte'
 ```
 
 </TabItem>
