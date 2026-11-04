@@ -279,17 +279,19 @@ html[data-theme='dark'] .alert {
 }
 
 /* Admonitions follow the Cypress Design System Alert (design.cypress.io/
-   components/Alert): flat, 4px corners, 16px padding, a hue-50 background,
-   and no border or left bar. The variants map to the design system's: info
+   components/Alert): flat fill, 4px corners, 16px padding, a hue-50
+   background, plus a 4px left accent bar so call-outs read as call-outs
+   even with headings hidden. The variants map to the design system's: info
    is indigo, note (Infima's secondary) is neutral gray, tip is jade, caution
    and warning are orange, danger is red. Text is hue-800 instead of the
    Alert's hue-500, which drops below 4.5:1 on orange-50 and is hard to read
    for paragraphs; hue-800 is 8.18:1 or more on every hue-50. The design
    system has no dark Alert, so dark mode uses hue-1000 backgrounds with
-   hue-50 text (14.4:1 or more), and gray-900 for the neutral note. */
+   hue-50 text (14.4:1 or more), and gray-900 for the neutral note. The left
+   bar is hue-400 on light (about 3:1+ on hue-50) and hue-500 on dark. */
 .alert {
   --ifm-alert-border-width: 0;
-  --ifm-alert-border-left-width: 0;
+  --ifm-alert-border-left-width: 4px;
   --ifm-alert-border-radius: 4px;
   --ifm-alert-padding-vertical: 16px;
   --ifm-alert-padding-horizontal: 16px;
@@ -306,21 +308,24 @@ html[data-theme='dark'] .alert {
 @mixin admonition-colors($hue, $dark-background: 1000) {
   background-color: var(--ifm-color-#{$hue}-50);
   color: var(--ifm-color-#{$hue}-800);
-  // the divider inside an open <details>, like the Alert's hue-100 border
-  --ifm-alert-border-color: var(--ifm-color-#{$hue}-100);
+  // left accent bar (and the divider inside an open <details>)
+  --ifm-alert-border-color: var(--ifm-color-#{$hue}-400);
 
   [data-theme='dark'] & {
     background-color: var(--ifm-color-#{$hue}-#{$dark-background});
     color: var(--ifm-color-#{$hue}-50);
-    --ifm-alert-border-color: var(--ifm-color-#{$hue}-800);
+    --ifm-alert-border-color: var(--ifm-color-#{$hue}-500);
   }
 }
 
-/* <details> renders as an info admonition with a 1px border; keep it flat
-   like the others, and draw its arrow in the text color so it reads as a
-   control (the border color it used is too faint at 1.1:1) */
+/* <details> renders as an info admonition; keep the same left accent as
+   other call-outs, and draw its arrow in the text color so it reads as a
+   control */
 details.alert {
-  border: none;
+  border-width: 0;
+  border-left-width: var(--ifm-alert-border-left-width);
+  border-left-style: solid;
+  border-left-color: var(--ifm-alert-border-color);
 
   > summary::before {
     border-left-color: currentColor;
