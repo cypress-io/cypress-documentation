@@ -280,21 +280,30 @@ html[data-theme='dark'] .alert {
 
 /* Admonitions follow the Cypress Design System Alert (design.cypress.io/
    components/Alert): flat fill, 4px corners, 16px padding, a hue-50
-   background, plus a 4px left accent bar so call-outs read as call-outs
-   even with headings hidden. The variants map to the design system's: info
-   is indigo, note (Infima's secondary) is neutral gray, tip is jade, caution
-   and warning are orange, danger is red. Text is hue-800 instead of the
-   Alert's hue-500, which drops below 4.5:1 on orange-50 and is hard to read
-   for paragraphs; hue-800 is 8.18:1 or more on every hue-50. The design
-   system has no dark Alert, so dark mode uses hue-1000 backgrounds with
-   hue-50 text (14.4:1 or more), and gray-900 for the neutral note. The left
-   bar is hue-400 on light (about 3:1+ on hue-50) and hue-500 on dark. */
+   background, plus a 4px left accent bar on every call-out (info, note,
+   tip/success, caution/warning, danger, and <details>) so they read as
+   call-outs even with headings hidden. The variants map to the design
+   system's: info is indigo, note (Infima's secondary) is neutral gray, tip
+   and :::success are jade, caution and warning are orange, danger is red.
+   Text is hue-800 instead of the Alert's hue-500, which drops below 4.5:1
+   on orange-50 and is hard to read for paragraphs; hue-800 is 8.18:1 or
+   more on every hue-50. The design system has no dark Alert, so dark mode
+   uses hue-1000 backgrounds with hue-50 text (14.4:1 or more), and
+   gray-900 for the neutral note. The left bar is hue-400 on light (about
+   3:1+ on hue-50) and hue-500 on dark. Set border-left explicitly: Infima's
+   `border: 0 solid …` shorthand alone is easy to lose to later resets. */
 .alert {
   --ifm-alert-border-width: 0;
   --ifm-alert-border-left-width: 4px;
   --ifm-alert-border-radius: 4px;
   --ifm-alert-padding-vertical: 16px;
   --ifm-alert-padding-horizontal: 16px;
+  // fallback when a variant hasn't set --ifm-alert-border-color yet
+  --ifm-alert-border-color: var(--ifm-color-indigo-400);
+
+  border: none;
+  border-left: var(--ifm-alert-border-left-width) solid
+    var(--ifm-alert-border-color);
 
   h2,
   h3,
@@ -318,21 +327,16 @@ html[data-theme='dark'] .alert {
   }
 }
 
-/* <details> renders as an info admonition; keep the same left accent as
-   other call-outs, and draw its arrow in the text color so it reads as a
-   control */
+/* <details> renders as an info admonition; draw its arrow in the text color
+   so it reads as a control. Left accent comes from .alert above. */
 details.alert {
-  border-width: 0;
-  border-left-width: var(--ifm-alert-border-left-width);
-  border-left-style: solid;
-  border-left-color: var(--ifm-alert-border-color);
-
   > summary::before {
     border-left-color: currentColor;
   }
 }
 
-.alert.alert--info {
+.alert.alert--info,
+.alert.alert--primary {
   @include admonition-colors(indigo);
 }
 
