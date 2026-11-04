@@ -285,7 +285,10 @@ Each rule is a hard convention. See the linked section for the how and why.
 **Admonitions** — [details](./AGENTS_REFERENCE.md#admonition-blocks)
 
 - `:::info` (default), `:::tip`, `:::note`, `:::caution` (prefer over
-  `:::warning`), `:::danger`. Keep them short and infrequent.
+  `:::warning`), `:::danger`. Keep them short and infrequent. Never add a
+  custom title (`:::tip Do this`); site CSS hides every admonition heading. When
+  a visible heading is warranted, put a bold lead line in the body, then a blank
+  line, then the rest.
 
 **Linking** — [details](./AGENTS_REFERENCE.md#linking)
 

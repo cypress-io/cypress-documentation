@@ -123,7 +123,7 @@ See the [Configuration overview](/ui-coverage/configuration/overview) for how ev
 
 ## Step 5: Enforce coverage in CI (optional)
 
-Once you trust your reports, you can hold the line on coverage automatically. The [Results API](/ui-coverage/results-api) fetches a run's UI Coverage results in your CI job so your script can fail the build or [block a pull request](/ui-coverage/guides/block-pull-requests) when coverage drops below a threshold you set. Enforcement is entirely opt-in and lives in your CI workflow.
+Once you trust your reports, you can hold the line on coverage automatically. Define [Run Checks](/cloud/features/checks) for score and untested-element thresholds, or use the [Results API](/ui-coverage/results-api) for custom policies, so your CI job can fail the build or [block a pull request](/ui-coverage/guides/block-pull-requests). Enforcement is entirely opt-in.
 
 ## Next steps
 
@@ -214,6 +214,7 @@ Once you trust your reports, you can hold the line on coverage automatically. Th
 - [Interactivity](/ui-coverage/core-concepts/interactivity) covers which elements are counted and which commands mark them tested.
 - [Views](/ui-coverage/core-concepts/views) explains how the URLs your tests visit become views.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every App Quality configuration option and what each one does.
+- [Run Checks](/cloud/features/checks) encode coverage thresholds in App Quality configuration.
 - [Results API](/ui-coverage/results-api) fetches a run's results in CI so you can enforce coverage standards.
 - [UI Coverage FAQ](/ui-coverage/faq) answers common questions about scores, gaps, configuration, and troubleshooting.
 - [Troubleshooting](/ui-coverage/troubleshooting) maps common report problems to their causes and fixes.

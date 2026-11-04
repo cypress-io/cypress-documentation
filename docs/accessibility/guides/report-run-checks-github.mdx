@@ -1,0 +1,24 @@
+---
+title: Report Run Checks as GitHub pull request statuses in Cypress Accessibility
+description: Post Cypress Accessibility Run Checks as GitHub commit statuses so score and failed-element thresholds block a pull request merge.
+sidebar_label: Custom Status Checks
+sidebar_position: 125
+---
+
+<ProductHeading product="accessibility" />
+
+# Report Run Checks as GitHub pull request statuses
+
+[Run Checks](/cloud/features/checks) let you encode accessibility thresholds in your App Quality configuration, such as a minimum [accessibility score](/accessibility/core-concepts/accessibility-score) or a maximum number of failing elements, and have Cypress Cloud evaluate them on every recorded run. To surface those results on a pull request, fetch them in CI with `getCheckResults()` and post one commit status per applicable check.
+
+This guide covers the GitHub workflow for posting Run Check statuses. Similar techniques apply to other version control contexts. For custom policy logic the built-in assertion types don't cover, such as allowlisting known failing rules or comparing against a baseline, use the [Results API](/accessibility/connect-and-extend/results-api) approach in [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
+
+Install `@cypress/extract-cloud-results` as described in the [Results API](/accessibility/connect-and-extend/results-api#Installation) guide. Run the status script in the same CI job that recorded the run, after `cypress run --record`. For the full `getCheckResults()` response shape and options, see [Using check results in CI](/cloud/features/checks#Using-check-results-in-CI).
+
+<ReportRunChecksGithub />
+
+## See also
+
+- [Run Checks](/cloud/features/checks) - accessibility assertion types, view matching, and run scoping
+- [Block pull requests and set policies](/accessibility/guides/block-pull-requests) - custom Results API policies
+- [Results API](/accessibility/connect-and-extend/results-api) - fetch per-rule and per-view accessibility results in CI

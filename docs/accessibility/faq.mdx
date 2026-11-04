@@ -29,7 +29,7 @@ Compare your branch against a base run in Branch Review. The **Resolved elements
 
 ### <Icon name="angle-right" /> Do I need to add assertions or commands to my tests for Cypress Accessibility?
 
-No. Cypress Accessibility reports are generated in Cypress Cloud from the artifacts your recorded run already uploads, so there is nothing to add to your specs and no impact on how long your tests take. Every page and component your tests visit is checked automatically once the product is enabled for your project. Because the report is produced after the run, nothing in your Cypress pipeline fails from an accessibility violation unless you opt in with the [Results API](/accessibility/connect-and-extend/results-api).
+No. Cypress Accessibility reports are generated in Cypress Cloud from the artifacts your recorded run already uploads, so there is nothing to add to your specs and no impact on how long your tests take. Every page and component your tests visit is checked automatically once the product is enabled for your project. Because the report is produced after the run, nothing in your Cypress pipeline fails from an accessibility violation unless you opt in with [Run Checks](/cloud/features/checks) or the [Results API](/accessibility/connect-and-extend/results-api).
 
 ### <Icon name="angle-right" /> How do I fix Cypress Accessibility violations with an AI agent?
 
@@ -135,11 +135,15 @@ Open [Branch Review](/accessibility/guides/compare-reports) in Cypress Cloud wit
 
 ### <Icon name="angle-right" /> Does Cypress Accessibility fail my build when a new violation appears?
 
-No. Reports are generated in Cypress Cloud after your tests upload, so a Cypress run never fails because of an accessibility violation, and there is no performance cost to your tests. Blocking a build is an opt-in step you add with the [Results API](/accessibility/connect-and-extend/results-api), which fetches the run's results in CI so you can decide what should fail. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
+No. Reports are generated in Cypress Cloud after your tests upload, so a Cypress run never fails because of an accessibility violation, and there is no performance cost to your tests. Blocking a build is an opt-in step: define [Run Checks](/cloud/features/checks) for score or failed-element thresholds, or use the [Results API](/accessibility/connect-and-extend/results-api) for custom policy logic. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests) and [Report Run Checks as GitHub pull request statuses](/accessibility/guides/report-run-checks-github).
 
 ### <Icon name="angle-right" /> Should I block builds on failing rules or on the Cypress Accessibility score?
 
-Rules are the stricter and more reliable signal in a Cypress Accessibility report: a rule going from zero failures to any failures is a real change in the application, traceable to the build that introduced it. Element counts and the score move on their own as tests reach different states and existing broken components get reused, which makes them better suited to monitoring runs and score thresholds than to gating individual pull requests. Many teams use both, with a rule policy on pull requests and a score threshold on scheduled runs. See [Enforce a standard in CI](/accessibility/guides/detect-changes#enforce-a-standard-in-ci).
+Rules are the stricter and more reliable signal in a Cypress Accessibility report: a rule going from zero failures to any failures is a real change in the application, traceable to the build that introduced it. Element counts and the score move on their own as tests reach different states and existing broken components get reused, which makes them better suited to monitoring runs and score thresholds than to gating individual pull requests. Many teams use both, with a rule policy on pull requests (via the [Results API](/accessibility/connect-and-extend/results-api)) and a score threshold on scheduled runs (via [Run Checks](/cloud/features/checks)). See [Enforce a standard in CI](/accessibility/guides/detect-changes#enforce-a-standard-in-ci).
+
+### <Icon name="angle-right" /> When should I use Run Checks instead of the Accessibility Results API?
+
+Use [Run Checks](/cloud/features/checks) for declarative thresholds Cypress Cloud evaluates for you, such as a minimum [accessibility score](/accessibility/core-concepts/accessibility-score) or a maximum failed-element count. Use the [Results API](/accessibility/connect-and-extend/results-api) when you need custom policy logic those assertion types don't cover, such as allowlisting known failing rules, protecting remediated rules from regressing, or comparing against a stored baseline. See [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
 
 ### <Icon name="angle-right" /> Can I compare accessibility reports from two different Cypress projects?
 
@@ -415,9 +419,13 @@ The most common causes are:
 
 There's no dedicated "skip this run" switch in a profile. To suppress a report for certain runs, point a profile at a deliberately narrow configuration (for example, [`viewFilters`](/accessibility/configuration/viewfilters) that exclude every view) so Cypress Cloud produces an empty or tightly scoped accessibility report for the run instead. See [Why use profiles?](/accessibility/configuration/profiles#Why-use-profiles).
 
+### <Icon name="angle-right" /> Can I define Run Checks inside a Cypress Accessibility profile?
+
+No. [Run Checks](/cloud/features/checks) live only at the root of App Quality configuration. To apply a check only to the runs a profile targets, scope the check to the same tag with `include: { "tags": ["aq-config-pr"] }`.
+
 ### <Icon name="angle-right" /> How do I make Cypress Accessibility checks on pull requests faster and more focused than regression runs?
 
-Add a profile (for example, `aq-config-pr`) whose `config` narrows the report to your most critical flows with [`viewFilters`](/accessibility/configuration/viewfilters), then tag pull request runs with `cypress run --record --tag "aq-config-pr"`. The pull request report covers only those flows, so it's small and unambiguous for a developer to act on before merging, while regression runs record without the tag and keep the full base configuration. Combine the profile with the [Results API](/accessibility/connect-and-extend/results-api) to fail the build when a critical flow regresses. See [Block pull requests](/accessibility/guides/block-pull-requests#Using-Profiles-for-PR-specific-configuration).
+Add a profile (for example, `aq-config-pr`) whose `config` narrows the report to your most critical flows with [`viewFilters`](/accessibility/configuration/viewfilters), then tag pull request runs with `cypress run --record --tag "aq-config-pr"`. The pull request report covers only those flows, so it's small and unambiguous for a developer to act on before merging, while regression runs record without the tag and keep the full base configuration. Combine the profile with [Run Checks](/cloud/features/checks) or the [Results API](/accessibility/connect-and-extend/results-api) to fail the build when a critical flow regresses. See [Block pull requests](/accessibility/guides/block-pull-requests#Using-Profiles-for-PR-specific-configuration).
 
 ### <Icon name="angle-right" /> Can a Cypress Accessibility profile change which Axe Core® rules run for a specific run?
 
