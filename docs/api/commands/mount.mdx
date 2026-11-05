@@ -75,16 +75,6 @@ advantages:
   a [React context provider](https://react.dev/learn/passing-data-deeply-with-context)
   or adding [Vue plugins](https://vuejs.org/guide/reusability/plugins.html).
 
-Each framework has its own `mount()` function, exported from a mounting library
-that ships with Cypress:
-
-- [`cypress/react`](https://github.com/cypress-io/cypress/tree/develop/npm/react) supports standard JSX syntax.
-- [`cypress/angular`](https://github.com/cypress-io/cypress/tree/develop/npm/angular) uses
-  [Angular TestBed](https://angular.dev/api/core/testing/TestBed) internally.
-- [`cypress/vue`](https://github.com/cypress-io/cypress/tree/develop/npm/vue) uses
-  [Vue Test Utils](https://test-utils.vuejs.org/) internally.
-- [`cypress/svelte`](https://github.com/cypress-io/cypress/tree/develop/npm/svelte) mounts Svelte 5 components.
-
 To use `cy.mount()`, add a custom command with
 [`Cypress.Commands.add()`](/api/cypress-api/custom-commands) in your
 component support file. This is where Cypress scaffolds it, and the file only
@@ -544,8 +534,7 @@ same approach.
 When only some components need extra setup, register a second command next to
 `cy.mount()` instead of adding options to it. `cy.mount()` stays a plain
 passthrough, and each spec's name for the command says what setup it gets. Like
-the previous example, this one uses JSX, so it goes in
-`cypress/support/component.tsx`:
+the previous example, this one uses JSX:
 
 ```tsx title="cypress/support/component.tsx"
 import { mount } from 'cypress/react'
@@ -591,10 +580,11 @@ it('greets a signed-in user by name', () => {
 
 The framework example pages cover more customized mount commands, such as
 routers, state management, and app-wide providers:
-[React examples](/app/component-testing/react/examples),
-[Angular examples](/app/component-testing/angular/examples),
-[Vue examples](/app/component-testing/vue/examples), and
-[Svelte examples](/app/component-testing/svelte/examples).
+
+- [React examples](/app/component-testing/react/examples)
+- [Angular examples](/app/component-testing/angular/examples)
+- [Vue examples](/app/component-testing/vue/examples)
+- [Svelte examples](/app/component-testing/svelte/examples)
 
 ## Notes
 
