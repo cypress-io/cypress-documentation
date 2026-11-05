@@ -3,7 +3,6 @@ title: 'cy.session()'
 description: Cache and restore cookies, localStorage, and sessionStorage to recreate a consistent browser context between tests in Cypress.
 sidebar_label: session
 e2eSpecific: true
-toc_max_heading_level: 4
 ---
 
 <ProductHeading product="app" />
@@ -126,9 +125,7 @@ domains before `setup` runs or a cached session is restored, whatever the
 
 ## Examples
 
-### Adding `cy.session()` to existing login code
-
-#### Updating an existing login custom command
+### Updating an existing login custom command
 
 You can add session caching to your login
 [custom command](/api/cypress-api/custom-commands). Wrap the inside of the
@@ -209,7 +206,7 @@ Cypress.Commands.add('login', (username, password) => {
 The `id` is the username alone. Cypress shows the `id` in the Command Log, so
 keep passwords out of it.
 
-#### Updating an existing login helper function
+### Updating an existing login helper function
 
 You can add session caching to a login helper function by wrapping the inside of
 the function with a call to `cy.session()`.
@@ -264,7 +261,7 @@ const login = (name, password) => {
 }
 ```
 
-#### Updating a login function that returns a value
+### Updating a login function that returns a value
 
 If your custom login command returns a value that a test asserts on, wrapping it
 with `cy.session()` breaks that test, because `cy.session()` yields the
@@ -327,7 +324,7 @@ The assertion now runs every time `setup` signs in, so a failed sign-in still
 fails the test. On a restore, `setup` doesn't run, and `cy.session()` checks the
 session with `validate` instead, if you pass one.
 
-#### Modifying session data before caching
+### Modifying session data before caching
 
 To change which session data Cypress caches, modify cookies, `localStorage`, or
 `sessionStorage` in `setup`.
@@ -349,7 +346,7 @@ cy.session('user', () => {
 })
 ```
 
-#### Using the session status `cy.session()` yields
+### Using the session status `cy.session()` yields
 
 `cy.session()` [yields](#Yields) `'created'`, `'restored'`, or `'recreated'`.
 Use it to run work that belongs with `setup`, such as seeding data for a new
@@ -363,9 +360,7 @@ cy.session('admin', loginAsAdmin).then((status) => {
 })
 ```
 
-### Validating a cached session with `cy.session()`
-
-#### Validating a restored session with `validate`
+### Validating a restored session with `validate`
 
 The `validate` function checks that the session is established correctly. This
 matters most when Cypress restores a cached session: if the session is no longer
@@ -407,7 +402,7 @@ function validateByUrl() {
 }
 ```
 
-#### Validating a cached session without a network request
+### Validating a cached session without a network request
 
 A `validate` function that visits a page or makes a request confirms the server
 still accepts the session, at the cost of a round trip on every restore. When
@@ -454,9 +449,7 @@ These checks confirm that the session data is present. If your server can end a
 session on its own, such as when a user logs out in another test, validate with
 a request instead so `cy.session()` catches it.
 
-### Reusing a session across tests and specs
-
-#### Switching between cached sessions in one test
+### Switching between cached sessions in one test
 
 `cy.session()` clears all session data before it creates or restores a session,
 so it switches from one user to another without logging the first one out. One
@@ -487,7 +480,7 @@ it('should transfer money between users', () => {
 })
 ```
 
-#### Where to call `cy.visit()` after `cy.session()`
+### Where to call `cy.visit()` after `cy.session()`
 
 It can seem natural to call [`cy.visit()`](/api/commands/visit) right after
 `cy.session()` in your login function or custom command, so the function
@@ -575,7 +568,7 @@ describe('other page tests', () => {
 })
 ```
 
-#### Caching a session with test isolation disabled
+### Caching a session with test isolation disabled
 
 With [`testIsolation`](/app/core-concepts/test-isolation) disabled, Cypress
 keeps the page and its session data between tests. Log in once in a `before`
@@ -604,7 +597,7 @@ creates a session, the browser stays on whatever page `setup` ends on. Call
 `login()` before `cy.visit()`, not after, so your tests start on the page you
 visited.
 
-#### Caching a session across specs with `cacheAcrossSpecs`
+### Caching a session across specs with `cacheAcrossSpecs`
 
 To reuse a session across specs in the same Cypress run on the same machine, set
 `cacheAcrossSpecs: true` in the session options. Define the session once, in a
@@ -692,7 +685,7 @@ machine. Cypress doesn't write it to disk or share it between machines, so:
 In the [Instrument Panel](#The-Instrument-Panel), a globe icon marks each
 session cached across specs.
 
-#### Caching sessions from multiple login commands
+### Caching sessions from multiple login commands
 
 A more complex app can need several login commands, each with its own
 `cy.session()` call. Cypress saves and restores sessions by `id`, so each
@@ -728,7 +721,7 @@ const loginByApi = (name, password) => {
 }
 ```
 
-#### Testing logout without ending a cached session
+### Testing logout without ending a cached session
 
 A test that logs out ends the session on the server, but the copy that
 `cy.session()` cached still holds the old cookies. The next test that restores
@@ -783,9 +776,7 @@ it('redirects a signed-out user to the login page', () => {
 })
 ```
 
-### Signing in across domains with `cy.session()`
-
-#### Restoring a session across domains
+### Restoring a session across domains
 
 `cy.session()` caches cookies, `localStorage`, and `sessionStorage` for every
 domain, so your tests can move between domains and still restore the same
@@ -835,7 +826,7 @@ it('restores the session on app.cypress.io', () => {
 })
 ```
 
-#### Logging in through an identity provider with `cy.origin()`
+### Logging in through an identity provider with `cy.origin()`
 
 When your app signs users in through an identity provider on another domain,
 call [`cy.origin()`](/api/commands/origin) inside `setup`. `cy.session()` caches
