@@ -127,12 +127,18 @@ When an AI agent has been detected, Cypress will automatically bypass the "welco
 portions of the UI when `--project`, `--browser` (or set `defaultBrowser` in the
 config), and a testing type parameter are supplied.
 
-`cypress open --detached` is an alternative that returns once Cypress is ready.
-Cypress keeps running after the command exits, and the command prints the files
-that hold its output:
+`cypress open --detached` is an alternative that waits until Cypress reports
+ready before returning, instead of backgrounding right away like the `nohup`
+form above. It doesn't keep writing to a log the way the `nohup` form's
+redirect does: once Cypress is ready, `--detached` stops relaying output to
+the command that started it, so a redirect on it only captures what printed
+before that point, not anything that happens afterward. For the ongoing log
+this page's troubleshooting steps assume, start Cypress with the `nohup` form
+above; reach for `--detached` only when you don't need that log and just want
+the command to block until Cypress is ready.
 
 ```shell title="Command"
-npx cypress open --e2e --browser chromium --detached
+npx cypress open --e2e --browser chromium --project . --detached
 ```
 
 ### Wait for the browser
@@ -173,31 +179,37 @@ If `status` stays at `spec not selected` after you run a spec, run the spec agai
 `cypress tap` works with Chromium-based browsers: Chrome, Chromium, Edge, and
 Electron.
 
-- **Chromium or Chrome.** Pass the browser by name if it is on the `PATH`, or by
-  the path to its executable:
+- **Chromium or Chrome.** Pass the browser by name if it's on the `PATH`, or
+  point straight to its executable:
 
   ```shell title="Command"
   npx cypress open --e2e --browser /usr/bin/chromium --project .
   ```
 
-  If Cypress cannot use the path you gave, it prints the reason and the output
-  of `<path> --version` to `cypress-open.log`, but does not launch a browser:
-  `cypress tap status` stays at `browser not selected` until a spec is run.
-  This only makes the failure easier to diagnose; it is not a guarantee that
-  Cypress recognizes the binary. Why a custom Chromium path can go
-  unrecognized is not confirmed, so until it is, treat a `chromium` on `PATH`
-  as the supported route.
+  Either way, Cypress runs `<path> --version` and checks the answer against
+  what it expects for that browser, such as `Chromium 123.0.6312.4`. Passed by
+  name, it only checks the pattern for that one name; passed by path, it
+  checks every pattern it knows and uses whichever one matches. So if a build
+  isn't recognized under the name you gave it, its full path is worth trying
+  before you give up on it — but if it isn't recognized either way, its
+  `--version` output doesn't match anything Cypress knows, and renaming or
+  moving it won't change that. When Cypress can't use the browser you asked
+  for, it writes the reason, along with the raw `<path> --version` output, to
+  `cypress-open.log`, and `cypress tap status` stays at `browser not selected`.
 
 - **Electron.** Electron ships with Cypress, so it works without installing a
   browser. Cypress prints a deprecation warning because Electron as a test
   browser is [deprecated](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
 
-Sandboxes often include a Chromium from a browser-automation tool. Find it with
-`ls /opt/pw-browsers/chromium-*/chrome-linux/chrome` (the location varies by
-sandbox) and pass the result to `--browser`. Whether Cypress recognizes this
-binary as Chromium is not guaranteed; see the note above about an unrecognized
-path. Until the cause is confirmed, a `chromium` build on `PATH`, such as one
-installed through the sandbox's package manager, is the supported route.
+Sandboxes often come with a Chromium already installed by a browser-automation
+tool. Find it with `ls /opt/pw-browsers/chromium-*/chrome-linux/chrome` (the
+location varies by sandbox), then run `<path> --version` yourself to check
+that it introduces itself as Chromium before pointing Cypress at it. From
+there, pass the path straight to `--browser`, or put it on your `PATH` under a
+name Cypress knows, like `chromium`, and pass that name instead — a Chromium
+build like this one is recognized either way. If you try a name and Cypress
+doesn't recognize it, fall back to the full path, since it's checked against
+more patterns.
 
 Once a `cypress.config.*` file exists, setting
 [`defaultBrowser`](/app/references/configuration#Browser) in it works the same
@@ -258,9 +270,13 @@ from, so pass `--browser` instead.
    costs. Review your agent's documentation to determine if it is appropriate to cache the
    Cypress binary (see [Environment variables](#Environment-variables)) and other dependencies.
 
-3. Claude sandbox environments include `xvfb` and Chromium by default, but
-   leave `DISPLAY` unset. If you have a display you can set this variable manually, otherwise Cypress starts its own Xvfb. Ensure the bundled Chromium is on the `PATH` under the name `chromium`, then start Cypress
-   with that browser. Tell the agent how to do this, or
+3. Claude's sandbox environments already have `xvfb` and a Chromium build
+   installed, but `DISPLAY` is left unset and that Chromium isn't on `PATH`.
+   If you have a display of your own, set `DISPLAY` yourself; otherwise
+   Cypress starts an Xvfb display for you. Symlink the bundled Chromium onto
+   `PATH` as `chromium`, so you can refer to it by name instead of typing out
+   the full path, then start Cypress with it. Tell the agent how to do this,
+   or
    [add the recipe to your agent's instructions](#Add-the-recipe-to-your-agents-instructions).
 
    ```shell title="Command"
@@ -286,10 +302,12 @@ FROM cypress/browsers:<tag>
 }
 ```
 
-Use a [Cypress Docker image](/app/continuous-integration/overview) that matches
-your Node.js version in place of `<tag>`. The image provides the system
-libraries that Cypress needs. Allow the hosts in [Network access](#Network-access)
-in the environment's network settings.
+Use a
+[`cypress/browsers` image](/app/continuous-integration/overview#Cypress-Docker-Images)
+that matches your Node.js version in place of `<tag>`. This image comes with
+Chrome, Firefox, and Edge, but not Chromium, so pass `--browser chrome` when
+you [start Cypress](#Start-Cypress-in-the-background). Allow the hosts in
+[Network access](#Network-access) in the environment's network settings.
 
 </TabItem>
 <TabItem value="other">
@@ -367,13 +385,13 @@ apt-file update`). Install the library and run the command again.
   watching the configuration and will need to be restarted to pick up any
   fixes made to the configuration.
 
-- **`status` stays at `browser not selected`.** Two different causes lead
-  here. First, pass `--project`, `--browser` (or set `defaultBrowser`), and a
-  testing type to `cypress open`; if you already pass all three, set
-  `CYPRESS_AGENT_MODE=1`, because Cypress did not recognize the agent. Second,
-  if you passed a path to `--browser`, Cypress may not have recognized it as a
-  Chromium-based executable; read the reason in `cypress-open.log` and see
-  [Choose a browser](#Choose-a-browser).
+- **`status` stays at `browser not selected`.** This can happen for two
+  reasons. First, check that you passed `--project`, `--browser` (or set
+  `defaultBrowser`), and a testing type to `cypress open`; if you already
+  did, set `CYPRESS_AGENT_MODE=1`, since Cypress didn't recognize the agent.
+  Second, if you pointed `--browser` at a path, Cypress may not have
+  recognized the binary at that path; read the reason in `cypress-open.log`
+  and see [Choose a browser](#Choose-a-browser).
 
 - **Cypress ignores `ELECTRON_RUN_AS_NODE`.** Some agent environments set this
   variable, which makes Electron run as plain Node.js with no window.
@@ -405,10 +423,13 @@ apt-file update`). Install the library and run the command again.
   binary adds a delay to startup in each new sandbox instance. It is recommended
   to configure your sandbox to persist the binary cache directory for optimal
   performance.
-- `--detached` leaves the Xvfb that Cypress started running after Cypress exits.
-  Stop it by its own process ID when you finish, with `pgrep Xvfb` to find it.
-  Avoid `pkill Xvfb`: it stops every Xvfb on the host, including one another
-  session is using.
+- `--detached` leaves the Xvfb that Cypress started running after Cypress
+  exits. You can find its process ID with `pgrep Xvfb` and stop it when
+  you're done — but only if it's the only one on the host. If another
+  session is also running Xvfb, `pgrep Xvfb` turns up both with no way to
+  tell which is yours, so skip `pkill Xvfb` too: it would stop every Xvfb on
+  the host, including the other session's. Giving each session its own
+  sandbox, torn down once the session ends, avoids the problem entirely.
 - `cypress tap` has several [documented limitations](/app/tooling/cypress-tap#CLI-Limitations) to be aware of.
 
 ## See also

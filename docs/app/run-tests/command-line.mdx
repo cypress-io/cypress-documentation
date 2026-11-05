@@ -790,10 +790,10 @@ cypress open --config-file tests/cypress.config.js
 
 #### `cypress open --detached` {#cypress-open-detached}
 
-Starts Cypress, returns once the Cypress App is ready, and leaves Cypress running
-in the background. Cypress writes its output to two files, one for standard
-output and one for standard error, and prints their paths when the command
-returns.
+Starts Cypress, waits until the Cypress App is ready, then returns and leaves
+Cypress running in the background. Cypress doesn't write this output to a file
+for you; redirect the command's own output if you want to capture what it
+prints before it returns.
 
 ```shell
 cypress open --e2e --browser chrome --detached
@@ -801,7 +801,10 @@ cypress open --e2e --browser chrome --detached
 
 On Linux with no display, Cypress starts an `Xvfb` display for the app. That
 display keeps running after Cypress exits. Stop it by its own process ID,
-found with `pgrep Xvfb`.
+found with `pgrep Xvfb` — but see
+[Limitations](/app/tooling/cypress-agent-sandboxes#Limitations) first if more
+than one Xvfb might be running on the host, since `pgrep Xvfb` can't tell them
+apart.
 
 #### `cypress open --env <env>` {#cypress-open-env-lt-env-gt}
 
