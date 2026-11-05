@@ -983,8 +983,7 @@ For a prompt over 350 characters, add `defaultCollapsed` and structure:
 ## Admonition blocks
 
 Call-outs use Docusaurus admonition directives: `:::type` to open, `:::` to
-close, with an optional custom title (`:::note Requirements`). Reach for these
-instead of bolded inline asides. Pick the type by intent:
+close. Reach for these instead of bolded inline asides. Pick the type by intent:
 
 - `:::info` — neutral, helpful context or background. The default workhorse and
   by far the most common in this repo.
@@ -1002,7 +1001,29 @@ instead of bolded inline asides. Pick the type by intent:
   admonition type is configured. Reach for `:::tip` or `:::info` unless you
   specifically want the "good news" framing.
 
-Keep them short and infrequent; a page wall-to-wall with call-outs dilutes them.
+**Never add a custom title.** Docusaurus supports `:::note Requirements`, but
+`src/css/custom.scss` sets `[class^='admonitionHeading'] { display: none; }`, so
+the title (and the default type label) never render.
+
+When the call-out needs a visible heading, put a **bold lead line** in the body
+on its own, then a blank line, then the explanation. That layout is the stand-in
+for the hidden admonition title:
+
+```markdown
+:::tip
+
+**Run Checks evaluate runs; they don't block CI by themselves.**
+
+A check is a pass/fail evaluation after the run records. Fetch results with
+`getCheckResults()` when you need a merge gate.
+
+:::
+```
+
+Skip the bold lead when the whole call-out is one or two short sentences and a
+heading would only repeat them. Keep admonitions infrequent; a page wall-to-wall
+with call-outs dilutes them. Existing titled admonitions outside the change
+you're making can wait for a follow-up; don't expand scope just to strip them.
 
 ## Tabs
 
