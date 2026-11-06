@@ -28,7 +28,7 @@
     "test:faq-plugin": "vitest run plugins/faq-structured-data.test.js",
     "test:og-plugin": "vitest run plugins/og-image-cards.test.js",
     "test:video-structured-data": "vitest run src/components/video-youtube/structured-data.test.ts",
-    "test:search": "vitest run src/theme/SearchBar/searchRanking.test.js scripts/search/algolia-client.test.mjs scripts/search/scrape-and-compare-algolia-index.test.mjs",
+    "test:search": "vitest run src/theme/SearchBar/searchRanking.test.js scripts/search/algolia-client.test.mjs scripts/search/scrape-and-compare-algolia-index.test.mjs src/clientModules/matchCanonicalId.test.js",
     "preview:og": "node scripts/preview-og-cards.js",
     "test:titles": "npm run build && node scripts/test-titles.js",
     "write-translations": "docusaurus write-translations",
