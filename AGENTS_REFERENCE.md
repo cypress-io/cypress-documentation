@@ -84,23 +84,17 @@ Three files at the site root index all of that, and none is hand-maintained:
   don't set a `sidebar_position`, leave it off your new page too and let it sort
   alphabetically rather than introducing positions into a folder that doesn't use
   them. Only add `sidebar_position` where the folder already relies on it.
-- **Moving, renaming, or deleting a page requires a redirect.** Add a `301` entry
-  to `netlify.toml` (it already holds ~200) so existing bookmarks and inbound
-  links keep working:
-  ```toml
-  [[redirects]]
-    from = "/old/path"
-    to = "/new/path"
-    status = 301
-    force = true
-  ```
-  Add the same rule, at the same position, to `static/_redirects`, which
-  Cloudflare reads. Netlify serves production while hosting moves to
-  Cloudflare, so the two lists must match. Both hosts use the first rule that
-  matches a path:
+- **Moving, renaming, or deleting a page requires a redirect.** Add a `301` line
+  to `static/_redirects` (it already holds ~200) so existing bookmarks and
+  inbound links keep working:
   ```text title="static/_redirects"
   /old/path /new/path 301
   ```
+  Cloudflare applies an exact-path rule before any wildcard (`*`) rule, so add
+  exact paths above the wildcards at the end of the file. Avoid a new wildcard
+  that overlaps an existing one: Cloudflare doesn't reliably pick the first of
+  two overlapping wildcards (the comment above `/app/cloud/*` explains the one
+  case we have), so check any new wildcard on the pull request's preview.
   Then update any in-repo links to the old path, since `onBrokenLinks: throw`
   will otherwise fail the build.
 
@@ -219,9 +213,9 @@ Guidance, not arithmetic:
 This applies to headings you are writing. Renaming an existing heading costs two
 published URLs, and neither is redirectable:
 
-- **Its anchor.** A URL fragment never reaches the server, so `netlify.toml`
-  cannot redirect it the way it redirects a moved page. Inbound deep links land
-  on the page and fail to scroll.
+- **Its anchor.** A URL fragment never reaches the server, so
+  `static/_redirects` cannot redirect it the way it redirects a moved page.
+  Inbound deep links land on the page and fail to scroll.
 - **Its section `.md` file.** The LLM export publishes every `##` section at
   `<page-route>/<h2-slug>.md`, so renaming an H2 moves that file and the old URL
   404s. Agents and tools that fetched it lose the link.
