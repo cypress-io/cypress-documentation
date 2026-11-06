@@ -1,10 +1,25 @@
+// Injects the Fullstory data capture snippet into every page's <head>, but
+// only for production builds (NODE_ENV 'production') that have
+// FULLSTORY_ORG_ID set. Local dev, and CI builds that don't set the variable,
+// get no snippet, so they never send sessions to Fullstory or load fs.js with
+// an "undefined" org ID.
+//
+// The snippet below is SnippetSrc from @fullstory/snippet@2.1.0, copied
+// verbatim. Its four $FS_*$ placeholders are filled with JSON.stringify, the
+// same way the package's injectSnippetArgs() does. To upgrade, copy the new
+// SnippetSrc rather than editing the minified code by hand.
+
+const FULLSTORY_HOST = 'fullstory.com'
+const FULLSTORY_SCRIPT = 'edge.fullstory.com/s/fs.js'
+const FULLSTORY_NAMESPACE = 'FS'
 
 module.exports = async function fullStory({ context, options }) {
   const isProd = process.env.NODE_ENV === 'production'
+  const orgId = process.env.FULLSTORY_ORG_ID
   return {
     name: 'docusaurus-plugin-fullstory',
     injectHtmlTags({ content }) {
-      if (!isProd) {
+      if (!isProd || !orgId) {
         return {}
       }
       return {
@@ -12,28 +27,22 @@ module.exports = async function fullStory({ context, options }) {
           {
             tagName: 'script',
             innerHTML: `
-window['_fs_host'] = 'fullstory.com';
-window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
-window['_fs_org'] = '${process.env.FULLSTORY_ORG_ID}';
-window['_fs_namespace'] = 'FS';
-(function(m,n,e,t,l,o,g,y){
-    if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
-    g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
-    o=n.createElement(t);o.async=1;o.crossOrigin='anonymous';o.src='https://'+_fs_script;
-    y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
-    g.identify=function(i,v,s){g(l,{uid:i},s);if(v)g(l,v,s)};g.setUserVars=function(v,s){g(l,v,s)};g.event=function(i,v,s){g('event',{n:i,p:v},s)};
-    g.anonymize=function(){g.identify(!!0)};
-    g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
-    g.log = function(a,b){g("log",[a,b])};
-    g.consent=function(a){g("consent",!arguments.length||a)};
-    g.identifyAccount=function(i,v){o='account';v=v||{};v.acctId=i;g(o,v)};
-    g.clearUserCookie=function(){};
-    g.setVars=function(n, p){g('setVars',[n,p]);};
-    g._w={};y='XMLHttpRequest';g._w[y]=m[y];y='fetch';g._w[y]=m[y];
-    if(m[y])m[y]=function(){return g._w[y].apply(this,arguments)};
-    g._v="1.3.0";
-})(window,document,window['_fs_namespace'],'script','user');            
-            `,
+!function(m,n,e,t,l,o,g,y){var u,a,f=function(h){
+return!(h in m)||(m.console&&m.console.log&&m.console.log("FullStory namespace conflict. Please use a different namespace."),!1)}(l)
+;f&&(g=m[l]=function(){var b=function(b,d,j,r){r=r||2;var i,c=/Async$/;return c.test(b)&&(b=b.replace(c,""),
+"function"==typeof Promise)?new Promise((function(i,c){h(b,d,j,i,c,r)})):h(b,d,j,i,i,r)};function h(h,d,j,r,i,c){
+return b._api?b._api(h,d,j,r,i,c):(b.q&&b.q.push([h,d,j,r,i,c]),null)}return b.q=[],b}(),y=function(b){function h(h){
+"function"==typeof h[4]&&h[4](new Error(b))}var d=g.q;if(d){for(var j=0;j<d.length;j++)h(d[j]);d.length=0,d.push=h}},function(){
+var b="script",d=n.createElement(b);d.async=!0,d.crossOrigin="anonymous",d.src="https://"+t+"?org="+o,d.setAttribute("data-fs-namespace",l),
+d.onerror=function(){y("Error loading "+t)};var c=n.getElementsByTagName(b)[0]
+;c&&c.parentNode?c.parentNode.insertBefore(d,c):n.head.appendChild(d)}(),function(){function b(){}function h(b,h,d){g(b,h,d,1)}function d(b,d,j){
+h("setProperties",{type:b,properties:d},j)}function j(b,h){d("user",b,h)}function r(b,h,d){j({uid:b},d),h&&j(h,d)}g.identify=r,g.setUserVars=j,
+g.identifyAccount=b,g.clearUserCookie=b,g.setVars=d,g.event=function(b,d,j){h("trackEvent",{name:b,properties:d},j)},g.anonymize=function(){r(!1)
+},g.shutdown=function(){h("shutdown")},g.restart=function(){h("restart")},g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){
+h("setIdentity",{consent:!arguments.length||b})}}(),u="fetch",a="XMLHttpRequest",g._w={},g._w[a]=m[a],g._w[u]=m[u],m[u]&&(m[u]=function(){
+return g._w[u].apply(this,arguments)}),g("init",{env:{orgId:o,host:e,script:t}}),g._v="2.1.0")
+}(window,document,${JSON.stringify(FULLSTORY_HOST)},${JSON.stringify(FULLSTORY_SCRIPT)},${JSON.stringify(FULLSTORY_NAMESPACE)},${JSON.stringify(orgId)});
+`,
           },
         ],
       }
