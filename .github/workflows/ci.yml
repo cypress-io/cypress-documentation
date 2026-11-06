@@ -383,6 +383,9 @@ jobs:
 
       # Reads wrangler.jsonc and uploads dist/ as-is: no second build.
       #
+      # This job skips `npm ci`, so it fetches the Wrangler version locked in
+      # package-lock.json, the same one Workers Builds deploys production with.
+      #
       # Even with `--json`, Wrangler prints its upload progress to stdout ahead
       # of the JSON, so parse from the first line that opens an object. Print
       # only the URL: the JSON carries the token owner's email address, and
@@ -392,7 +395,8 @@ jobs:
         if: steps.credentials.outputs.ready == 'true'
         run: |
           set -o pipefail
-          output="$(npx --yes wrangler@4.151.3 preview --name "$PREVIEW_NAME" --json)"
+          version="$(jq -er '.packages["node_modules/wrangler"].version' package-lock.json)"
+          output="$(npx --yes "wrangler@$version" preview --name "$PREVIEW_NAME" --json)"
           url="$(printf '%s\n' "$output" | sed -n '/^{$/,$p' | jq -er '.preview.urls[0]')"
           echo "Preview: $url"
           echo "url=$url" >> "$GITHUB_OUTPUT"
