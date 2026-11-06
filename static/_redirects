@@ -200,4 +200,7 @@
 /examples/* /app/get-started/why-cypress 301
 /faq/* /app/faq 301
 /guides/cloud/* /cloud/:splat 301
+# Cloudflare can match /guides/* before /guides/cloud/*, sending old Cloud
+# URLs to /app/cloud/, where no pages exist. This finishes the trip to /cloud/.
+/app/cloud/* /cloud/:splat 301
 /guides/* /app/:splat 301
