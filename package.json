@@ -86,7 +86,8 @@
     "turndown-plugin-gfm": "1.0.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9",
-    "wait-on": "^9.0.10"
+    "wait-on": "^9.0.10",
+    "wrangler": "^4.158.0"
   },
   "browserslist": {
     "production": [
