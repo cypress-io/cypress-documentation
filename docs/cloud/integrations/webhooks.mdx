@@ -124,6 +124,9 @@ In the **Add webhook** dialog, configure the following:
   cannot be viewed again after saving.
 - **Events that will trigger webhook**: Select which events should be delivered
   to this endpoint. At least one event is required.
+- **Filters** _(optional)_: Limit deliveries to runs on certain branches or with
+  certain tags. Leave a filter empty to include all runs. See
+  [Filter webhook deliveries by branch or tag](#Filter-webhook-deliveries-by-branch-or-tag).
 - **Enable this webhook**: Whether the webhook is active. Enabled by default;
   disabled webhooks receive no deliveries.
 
@@ -136,6 +139,44 @@ In the **Add webhook** dialog, configure the following:
 Click **Add webhook** to save. Cypress Cloud will begin delivering the selected
 events to your endpoint.
 
+## Filter webhook deliveries by branch or tag
+
+Filters send a webhook only the runs you care about, so your endpoint does not
+have to receive and discard the rest. For example, you can deliver only runs on
+your `main` branch, or only runs tagged `production`.
+
+In the **Add webhook** or **Edit webhook** dialog, under **Filters**:
+
+1. Select the **Branch** dropdown and choose one or more branches. The dropdown
+   lists branches that runs in this project were recorded on. Select
+   **Unknown branch** to include runs recorded without branch information.
+2. Select the **Tag** dropdown and choose one or more
+   [tags](/app/references/command-line#cypress-run-tag-lt-tag-gt).
+
+Cypress Cloud matches filters against the run, the same way as the
+[Slack](/cloud/integrations/slack#Filter-notifications-by-tag-run-group-or-branch)
+and [Microsoft Teams](/cloud/integrations/microsoft-teams#Filter-notifications-by-tag-run-group-or-branch)
+notification filters:
+
+- If more than one branch is selected, a run matches when it was recorded on any
+  of them. Branch names must match exactly.
+- If **Unknown branch** is the only branch selected, only runs recorded without
+  branch information match.
+- If more than one tag is selected, a run matches when it has any of them.
+- If you set both a branch and a tag filter, a run must match both.
+- An empty filter matches every run. A webhook with no filters receives every
+  run, which is the default.
+
+Filters apply to every event the webhook sends. For a `run.accessibility.completed`,
+`run.uiCoverage.completed`, or `run.allSettled` event, Cypress Cloud checks the
+branch and tags of the run the report belongs to.
+
+**A run that does not match sends nothing.** Cypress Cloud does not create a
+delivery for it, so it does not appear in **Recent deliveries**. If a webhook
+seems to have stopped sending, check its filters first. A webhook with filters
+lists them on its row in the **Webhooks** panel.
+[Test sends](#Send-a-test-event) ignore filters.
+
 ## Send a test event
 
 To confirm your endpoint is reachable and your verification logic works, click
@@ -144,7 +185,8 @@ Cypress Cloud delivers a synthetic sample payload for that event type through
 the same signing and delivery pipeline as a real event, so it exercises your
 signature verification and parsing exactly as the real webhook event would. You can
 send a test for any event type, even one this webhook isn't currently
-subscribed to, so you can preview its payload before turning it on.
+subscribed to, so you can preview its payload before turning it on. Test sends
+ignore the webhook's [filters](#Filter-webhook-deliveries-by-branch-or-tag).
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/webhook-send-test.png"
@@ -160,8 +202,9 @@ like any other.
 
 ## Manage webhooks
 
-Each webhook appears as a row in the **Webhooks** panel showing its URL, an
-enable/disable toggle, and the status of its most recent delivery (for example,
+Each webhook appears as a row in the **Webhooks** panel showing its URL, any
+active [filters](#Filter-webhook-deliveries-by-branch-or-tag), an enable/disable
+toggle, and the status of its most recent delivery (for example,
 _Last delivery succeeded_, _Retrying_, _Last delivery failed_, _Delivering…_,
 or _Never triggered_). Use the inline controls and the _**Options (⋯)**_ menu to
 manage it:
@@ -169,7 +212,7 @@ manage it:
 - **Enable or disable**: Toggle the switch on the row. A disabled webhook keeps
   its configuration but receives no deliveries.
 - **Edit**: Open the Options menu and select **Edit** to change the URL, events,
-  secret, or custom Authorization header.
+  filters, secret, or custom Authorization header.
   - **Generate new secret**: Leaving the **Secret** field blank keeps the
     existing secret. To rotate it, enter a new value (at least 16 characters) or
     click **Generate new secret**. Copy the new secret and store it somewhere
@@ -820,6 +863,13 @@ In addition, Cypress Cloud applies several protections to webhook delivery:
   it.
 
 ## Troubleshooting
+
+### Webhook sends nothing for some runs
+
+Check the webhook's [filters](#Filter-webhook-deliveries-by-branch-or-tag). A run
+that does not match them creates no delivery, so nothing appears in **Recent
+deliveries** for it. Runs recorded without branch information match a branch
+filter only when **Unknown branch** is selected.
 
 ### Run completed webhook fires too late
 
