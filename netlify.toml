@@ -1250,6 +1250,12 @@
   force = true
 
 [[redirects]]
+  from = "/app/cloud/*"
+  to = "/cloud/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/guides/*"
   to = "/app/:splat"
   status = 301
