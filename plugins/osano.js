@@ -37,6 +37,28 @@ const fullStoryLabels = `
 })();
 `
 
+// The footer's "Cookie Preferences" link (docusaurus.config.js) reopens the
+// consent drawer, so visitors can change their choice after the banner is gone.
+// The handler listens on document because the footer renders after this script
+// runs. When an ad blocker stops osano.js, the link has nothing to open, so a
+// <style> tag hides it. Docusaurus rewrites the <html> class attribute on load,
+// which rules out toggling a class there instead.
+const preferencesLink = `
+(function () {
+  var cm = window.Osano && window.Osano.cm;
+  if (!cm || !cm.showDrawer) {
+    var style = document.createElement('style');
+    style.textContent = '.osano-preferences-link { display: none; }';
+    document.head.appendChild(style);
+    return;
+  }
+  document.addEventListener('click', function (event) {
+    if (!event.target.closest || !event.target.closest('.osano-preferences-link')) return;
+    cm.showDrawer('osano-cm-dom-info-dialog-open');
+  });
+})();
+`
+
 module.exports = async function osano(context) {
   return {
     name: 'docusaurus-osano-plugin',
@@ -52,6 +74,10 @@ module.exports = async function osano(context) {
           {
             tagName: 'script',
             innerHTML: fullStoryLabels,
+          },
+          {
+            tagName: 'script',
+            innerHTML: preferencesLink,
           },
         ],
       }

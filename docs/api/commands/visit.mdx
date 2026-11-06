@@ -1,6 +1,6 @@
 ---
 title: 'cy.visit()'
-description: Visit a remote URL in Cypress
+description: Visit a URL in Cypress with cy.visit() to load a page, send headers or auth, handle status codes, and run page load callbacks.
 sidebar_label: visit
 e2eSpecific: true
 ---
@@ -9,17 +9,13 @@ e2eSpecific: true
 
 # visit
 
-Visit a remote URL.
+Load a URL in the application under test. `cy.visit()` waits for the page to
+fire its `load` event, then yields the page's `window` object.
 
-:::caution
+:::tip
 
-<strong>Best Practice</strong>
-
-We recommend setting a `baseUrl` when using `cy.visit()`.
-
-Read about
-[best practices](/app/core-concepts/best-practices#Setting-a-Global-baseUrl)
-here.
+We recommend setting a `baseUrl` when using `cy.visit()`. See
+[Setting a global `baseUrl`](/app/core-concepts/best-practices#Setting-a-Global-baseUrl).
 
 :::
 
@@ -37,8 +33,8 @@ cy.visit(options)
 
 ```javascript
 cy.visit('/') // visits the baseUrl
-cy.visit('index.html') // visits the local file "index.html" if baseUrl is null
-cy.visit('http://localhost:3000') // specify full URL if baseUrl is null or the domain is different the baseUrl
+cy.visit('index.html') // visits a local file when baseUrl is null
+cy.visit('http://localhost:3000') // full URL: no baseUrl, or another host
 cy.visit({
   url: '/pages/hello.html',
   method: 'GET',
@@ -51,42 +47,38 @@ cy.visit({
 
 The URL to visit.
 
-Cypress will prefix the URL with the `baseUrl` configured in your
-[global configuration](/app/references/configuration#Global) if set.
+When `baseUrl` is set, Cypress prefixes the URL with it. Without a `baseUrl`,
+provide a fully qualified URL, or Cypress serves the path as a local file. See
+[how `cy.visit()` prefixes URLs with `baseUrl`](#How-cyvisit-prefixes-URLs-with-baseUrl).
 
-If the `baseUrl` has not been set, you will need to specify a fully qualified
-URL or Cypress will attempt to act as your web server. See the
-[prefixes notes](#Prefixes) for more details.
-
-**Note:** visiting a new domain requires the Cypress window to reload. You
-cannot visit different super domains in a single test without the use of [`cy.origin()`](/api/commands/origin).
+Visiting a new origin reloads the Cypress window. To visit a different origin
+in the same test, use [`cy.origin()`](/api/commands/origin), even when the
+origins share a superdomain (unless
+[`injectDocumentDomain`](/app/references/configuration#injectDocumentDomain) is
+enabled).
 
 <Icon name="angle-right" /> **options _(Object)_**
 
 Pass in an options object to control the behavior of `cy.visit()`.
 
-By default, the `cy.visit()` commands' will use the `pageLoadTimeout` and
-`baseUrl` set globally in your
-[configuration](/app/references/configuration#Global).
+| Option                     | Default                                                     | Description                                                                                                                                                                                |
+| -------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `url`                      | `null`                                                      | The URL to visit. Cypress appends it to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                        |
+| `method`                   | `GET`                                                       | The HTTP method to use in the visit. Can be `GET` or `POST`.                                                                                                                               |
+| `body`                     | `null`                                                      | An optional body to send with a `POST` request. A string is sent unmodified. An object is URL encoded and sent with a `Content-Type: application/x-www-form-urlencoded` header.            |
+| `headers`                  | `{}`                                                        | An object that maps HTTP header names to values to send with the request. Cypress sends `headers` only with the initial `cy.visit()` request, not with any later requests.                 |
+| `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request. Must be an object.                                                                                                                 |
+| `log`                      | `true`                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).                                                                                                       |
+| `auth`                     | `null`                                                      | Adds Basic Authorization headers.                                                                                                                                                          |
+| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`.                                                                                                                              |
+| `onBeforeLoad`             | none                                                        | Called before your page has loaded all of its resources.                                                                                                                                   |
+| `onLoad`                   | none                                                        | Called once your page has fired its load event.                                                                                                                                            |
+| `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress retries the request when the status code is outside `2xx` and `3xx`. When `true`, Cypress retries up to 4 times. Requires `failOnStatusCode` to be `true`.                 |
+| `retryOnNetworkFailure`    | `true`                                                      | Whether Cypress retries the request after a transient network error. When `true`, Cypress retries up to 4 times.                                                                           |
+| `timeout`                  | [`pageLoadTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts). The request for the page can still time out sooner, at `responseTimeout` or the operating system's network limit. |
 
-| Option                     | Default                                                     | Description                                                                                                                                                                                                                              |
-| -------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`                      | `null`                                                      | The URL to visit. This value will be appended to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                                                             |
-| `method`                   | `GET`                                                       | The HTTP method to use in the visit. Can be `GET` or `POST`.                                                                                                                                                                             |
-| `body`                     | `null`                                                      | An optional body to send along with a `POST` request. If it is a string, it will be passed along unmodified. If it is an object, it will be URL encoded to a string and sent with a `Content-Type: application/x-www-urlencoded` header. |
-| `headers`                  | `{}`                                                        | An object that maps HTTP header names to values to be sent along with the request. _Note:_ `headers` will only be sent for the initial `cy.visit()` request, not for any subsequent requests.                                            |
-| `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request                                                                                                                                                                                   |
-| `log`                      | `true`                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                      |
-| `auth`                     | `null`                                                      | Adds Basic Authorization headers                                                                                                                                                                                                         |
-| `failOnStatusCode`         | `true`                                                      | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                                                             |
-| `onBeforeLoad`             | `function`                                                  | Called before your page has loaded all of its resources.                                                                                                                                                                                 |
-| `onLoad`                   | `function`                                                  | Called once your page has fired its load event.                                                                                                                                                                                          |
-| `retryOnStatusCodeFailure` | `false`                                                     | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                         |
-| `retryOnNetworkFailure`    | `true`                                                      | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                                                   |
-| `timeout`                  | [`pageLoadTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.visit()` to resolve before [timing out](#Timeouts) Note: Network requests are limited by the underlying operating system, and may still time out if this value is increased.                                        |
-
-You can also set all `cy.visit()` commands' `pageLoadTimeout` and `baseUrl`
-globally in the [Cypress configuration](/app/references/configuration).
+To change `pageLoadTimeout` and `baseUrl` for every `cy.visit()`, set them in
+your [Cypress configuration](/app/references/configuration#Global).
 
 <HeaderYields />
 
@@ -95,12 +87,20 @@ globally in the [Cypress configuration](/app/references/configuration).
   to chain further commands that rely on the yielded `window` after
   `cy.visit()`.
 
-Let's confirm the `window.navigator.language` after visiting the site:
+This example confirms `window.navigator.language` after visiting the site:
 
 ```javascript
 cy.visit('/') // yields the window object
   .its('navigator.language') // yields window.navigator.language
   .should('equal', 'en-US') // asserts the expected value
+```
+
+To work with the `window` directly, use `.then()`:
+
+```javascript
+cy.visit('index.html').then((contentWindow) => {
+  // contentWindow is the remote page's window object
+})
 ```
 
 ## Examples
@@ -117,25 +117,28 @@ cy.visit('http://localhost:8000')
 
 ### Options
 
-#### Change the default timeout
+#### Change the `cy.visit()` page load timeout
 
-Overrides the `pageLoadTimeout` set globally in your
-[configuration](/app/references/configuration) for this page load.
+The `timeout` option overrides the `pageLoadTimeout` from your
+[configuration](/app/references/configuration#Timeouts) for this page load.
 
 ```javascript
 // Wait 30 seconds for page 'load' event
 cy.visit('/index.html', { timeout: 30000 })
 ```
 
-#### Add basic auth headers
+#### Add basic auth headers to `cy.visit()`
 
-Cypress will automatically apply the right authorization headers if you're
-attempting to visit an application that requires
-[Basic Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication).
+When your application uses
+[Basic Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication),
+Cypress can send the credentials for you.
 
-Provide the `username` and `password` in the `auth` object. Then all subsequent
-requests matching the origin you're testing will have these attached at the
-network level.
+Provide the `username` and `password` in the `auth` object. Cypress then
+attaches them at the network level to every later request to the origin you're
+testing. Pass `log: false` to leave the visit out of the Command Log. Without it,
+clicking the `visit` row prints the `auth` object, password included, to the
+console. Keep in mind that `log: false` also hides the visit's URL and redirects,
+which you'd otherwise use when debugging a failed visit.
 
 ```javascript
 cy.visit('https://example.cypress.io/', {
@@ -143,14 +146,18 @@ cy.visit('https://example.cypress.io/', {
     username: 'wile',
     password: 'coyote',
   },
+  log: false,
 })
 ```
 
-You can also provide the username and password directly in the URL.
+You can also provide the username and password directly in the URL. In this
+form, the Command Log row shows the full URL, password included, so `log: false`
+matters even more: without it, the password appears in screenshots and videos
+of the run.
 
 ```javascript
 // this is the same thing as providing the auth object
-cy.visit('https://wile:coyote@example.cypress.io')
+cy.visit('https://wile:coyote@example.cypress.io', { log: false })
 ```
 
 :::info
@@ -158,43 +165,48 @@ cy.visit('https://wile:coyote@example.cypress.io')
 Cypress attaches the `Authorization` header for you on requests to the origin
 you visited. Other origins do not receive it. On the
 [legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path)
-the header is attached outside of the browser, so it does **not** appear in the
-Dev Tools.
+the header is attached outside of the browser, so it does **not** appear in
+DevTools.
 
 :::
 
-#### Provide an `onBeforeLoad` callback function
+#### Run code before the page loads with `onBeforeLoad`
 
-`onBeforeLoad` is called as soon as possible, before your page has loaded all of
-its resources. Your scripts will not be ready at this point, but it's a great
-hook to potentially manipulate the page.
+Cypress calls `onBeforeLoad` as early as possible, before your page has loaded
+all of its resources. Your app's scripts haven't run yet, so this is the place
+to prepare the page before your app starts.
+
+This example seeds a token in `localStorage` before the app reads it, and stubs
+`window.open` so the test can assert on it:
 
 ```javascript
-cy.visit('http://localhost:3000/#dashboard', {
-  onBeforeLoad: (contentWindow) => {
-    // contentWindow is the remote page's window object
+cy.visit('/#dashboard', {
+  onBeforeLoad(win) {
+    // win is the remote page's window object
+    win.localStorage.setItem('token', 'abc123')
+    cy.stub(win, 'open').as('windowOpen')
   },
 })
+cy.get('@windowOpen').should('not.have.been.called')
 ```
 
 :::info
 
-Check out our example recipes using `cy.visit()`'s `onBeforeLoad` option to:
+These recipes use the `onBeforeLoad` option to:
 
-- [Bootstrapping your App](/app/references/recipes#Server-Communication)
-- [Set a token to `localStorage` for login during Single Sign On](/app/references/recipes#Logging-In)
+- [Bootstrap your app](/app/references/recipes#Server-Communication)
+- [Set a token in `localStorage` for login during single sign-on](/app/references/recipes#Logging-In)
 - [Stub `window.fetch`](/app/references/recipes#Stubbing-and-spying)
 
 :::
 
-#### Provide an `onLoad` callback function
+#### Run code after the page loads with `onLoad`
 
-`onLoad` is called once your page has fired its `load` event. All of the
-scripts, stylesheets, html, and other resources are guaranteed to be available at
-this point.
+Cypress calls `onLoad` once your page has fired its `load` event. At this point,
+all of the page's scripts, stylesheets, HTML, and other resources are available.
 
 ```javascript
-cy.visit('http://localhost:3000/#/users', {
+cy.visit('/#/users', {
   onLoad: (contentWindow) => {
     // contentWindow is the remote page's window object
     if (contentWindow.angular) {
@@ -204,14 +216,13 @@ cy.visit('http://localhost:3000/#/users', {
 })
 ```
 
-#### Add query parameters
+#### Add query parameters to a `cy.visit()` URL
 
-You can provide query parameters as an object to `cy.visit()` by passing `qs` to
-`options`.
+Pass query parameters as an object in the `qs` option.
 
 ```js
-// visits http://localhost:3500/users?page=1&role=admin
-cy.visit('http://localhost:3500/users', {
+// visits <baseUrl>/users?page=1&role=admin
+cy.visit('/users', {
   qs: {
     page: '1',
     role: 'admin',
@@ -219,8 +230,8 @@ cy.visit('http://localhost:3500/users', {
 })
 ```
 
-The parameters passed to `qs` will be merged into existing query parameters on
-the `url`.
+Cypress merges the parameters in `qs` into any query parameters already on the
+`url`.
 
 ```js
 // visits https://example.cypress.io/users?page=1&admin=true
@@ -229,31 +240,85 @@ cy.visit('https://example.cypress.io/users?page=1', {
 })
 ```
 
-#### Submit a form
+#### Submit a form with a `cy.visit()` POST request
 
 To send a request that looks like a user submitting an HTML form, use a `POST`
 method with a `body` containing the form values:
 
 ```javascript
 cy.visit({
-  url: 'http://localhost:3000/cgi-bin/newsletterSignup',
+  url: '/cgi-bin/newsletterSignup',
   method: 'POST',
   body: {
-    name: 'George P. Burdell',
-    email: 'burdell@microsoft.com',
+    name: 'Avery Quinlan',
+    email: 'avery.quinlan@example.com',
   },
+})
+```
+
+#### Send custom request headers with `cy.visit()`
+
+Pass `headers` to send extra HTTP headers with the page request, such as a
+language preference or a feature flag your server reads. Cypress sends them
+only with the initial `cy.visit()` request, not with the requests the page
+makes afterward.
+
+```javascript
+cy.visit('/', {
+  headers: { 'Accept-Language': 'fr-FR' },
+})
+cy.contains('Bienvenue')
+```
+
+#### Visit an error page with `failOnStatusCode: false`
+
+By default, `cy.visit()` fails when the server responds with a status code
+outside the `2xx` and `3xx` ranges. To test your 404 or 500 page, set
+`failOnStatusCode` to `false` and assert on what the page shows:
+
+```javascript
+cy.visit('/does-not-exist', { failOnStatusCode: false })
+cy.contains('h1', 'Page not found')
+```
+
+#### Retry `cy.visit()` while your server finishes starting
+
+When your server answers with an error status for a few seconds after it
+starts, such as a `503` in CI, set `retryOnStatusCodeFailure` to `true`.
+Cypress retries the request up to 4 times before failing.
+
+```javascript
+cy.visit('/', { retryOnStatusCodeFailure: true })
+```
+
+### Workflows
+
+#### Log in once with `cy.session()` and visit in each test
+
+Pair `cy.visit()` with [`cy.session()`](/api/commands/session) to log in once,
+cache the session, and restore it before each test. Call `cy.visit()` after
+`cy.session()`, since Cypress clears the page each time it restores a session.
+
+```javascript
+beforeEach(() => {
+  cy.session('user', () => {
+    cy.visit('/login')
+    cy.get('#username').type('user')
+    cy.get('#password').type('s3cret', { log: false })
+    cy.get('form').submit()
+    cy.location('pathname').should('eq', '/dashboard')
+  })
+  cy.visit('/dashboard')
 })
 ```
 
 ## Notes
 
-### Prefixes
+### How `cy.visit()` prefixes URLs with `baseUrl`
 
-#### Visit is automatically prefixed with `baseUrl`
-
-Cypress will prefix the URL with the `baseUrl` if it has been set. Configure
-`baseUrl` in the [Cypress configuration](/app/references/configuration) to
-prevent repeating yourself in every `cy.visit()` command.
+When `baseUrl` is set, Cypress prefixes the URL with it. Configure `baseUrl` in
+the [Cypress configuration](/app/references/configuration) so you don't repeat
+the host in every `cy.visit()` command.
 
 :::cypress-config-example
 
@@ -271,34 +336,33 @@ prevent repeating yourself in every `cy.visit()` command.
 cy.visit('dashboard') // Visits http://localhost:3000/#/dashboard
 ```
 
-If you would like to visit a different host when the `baseUrl` has been set,
-provide the fully qualified URL you would like to go to.
+To visit a different host while `baseUrl` is set, provide the fully qualified
+URL.
 
 ```javascript
 cy.visit('https://example.cypress.io')
 ```
 
-#### Visit local files
+### Visit local files with `cy.visit()`
 
-Cypress will automatically attempt to serve your files if you don't provide a
-host and `baseUrl` **is not defined**. The path should be relative to your
-project's root folder (the directory that contains the
-[Cypress configuration file](/app/references/configuration)).
+Cypress serves your files itself when you don't provide a host and `baseUrl`
+**is not defined**. The path is relative to your project's root folder (the directory that contains the
+[Cypress configuration file](/app/references/configuration)), or to the
+[`fileServerFolder`](/app/references/configuration#Folders--Files) if you've
+configured one. The `file://` protocol is not supported.
 
 Having Cypress serve your files is useful in smaller projects and example apps,
-but isn't recommended for production apps. It is always better to run your own
-server and provide the url to Cypress.
+but we don't recommend it for production apps. Run your own server and provide
+its URL to Cypress instead.
 
 ```javascript
 cy.visit('app/index.html')
 ```
 
-##### Visit local file when `baseUrl` is set
-
-If you have `baseUrl` set, but need to visit a local file in a single test or a
-group of tests, disable the `baseUrl` using
+To visit a local file in a single test or group of tests while `baseUrl` is
+set, disable `baseUrl` with
 [per-test configuration](/app/references/configuration#Test-Configuration).
-Imagine this Cypress configuration:
+Given this Cypress configuration:
 
 :::cypress-config-example
 
@@ -326,112 +390,136 @@ it('visits local file', { baseUrl: null }, () => {
 })
 ```
 
-### Redirects
+### How `cy.visit()` follows redirects
 
-#### Visit will automatically follow redirects
+`cy.visit()` follows redirects and resolves on the page it ends on:
 
 ```javascript
 // we aren't logged in, so our web server
 // redirected us to /login
-cy.visit('http://localhost:3000/admin')
-cy.url().should('match', /login/)
+cy.visit('/admin')
+cy.location('pathname').should('eq', '/login')
 ```
 
-### Protocol
+The Command Log shows each redirect after the URL you visited, with its status
+code and where it led:
 
-#### Protocol can be omitted from common hosts
+<DocsImage
+  src="/img/api/visit/command-log-visit-redirect-chain.png"
+  alt="Command Log showing visit /admin redirected with a 302 to /login, followed by a passing pathname assertion"
+/>
 
-Cypress automatically prepends the `http://` protocol to common hosts. If you're
-not using one of these 3 hosts, then make sure to provide the protocol.
+### When `cy.visit()` adds the `http://` protocol for you
+
+Cypress prepends the `http://` protocol to URLs that start with
+`localhost`, `0.0.0.0`, `127.0.0.1`, or `www.`, and to hosts with three or four
+dot-separated parts, such as `beta.example.com`. For any other host, such as
+`example.com`, provide the protocol. Otherwise Cypress treats the URL as a
+relative path.
 
 ```javascript
 cy.visit('localhost:3000') // Visits http://localhost:3000
 cy.visit('0.0.0.0:3000') // Visits http://0.0.0.0:3000
 cy.visit('127.0.0.1:3000') // Visits http://127.0.0.1:3000
+cy.visit('www.example.com') // Visits http://www.example.com/
 ```
 
-### Window
+### How `cy.visit()` handles a URL that changes only the hash
 
-#### Visit will always yield the remote page's `window` object when it resolves
+When the URL you visit matches the current page except for the hash, the browser
+doesn't make a new request. `cy.visit()` resolves on the `hashchange` event
+instead of the `load` event, and `onBeforeLoad` is not called. If the hash is
+also the same as the current one, neither `onBeforeLoad` nor `onLoad` is called.
 
 ```javascript
-cy.visit('index.html').then((contentWindow) => {
-  // contentWindow is the remote page's window object
-})
+cy.visit('/#/users')
+cy.visit('/#/settings') // no page reload
 ```
 
-### User agent
+### Change the user agent for `cy.visit()`
 
-Trying to change the `User-Agent`?
-
-See
+To change the `User-Agent` header, see
 [how to override the browser's default user agent](/app/faq#Can-I-override-or-change-the-default-user-agent-the-browser-uses).
 
-### Routing
+### Intercept requests your app makes before `cy.visit()` resolves
 
-#### Prevent requests before a remote page initially loads
-
-One common scenario Cypress supports is visiting a remote page and also
-preventing any Ajax requests from immediately going out.
-
-You may think this works:
+A common need is to visit a page and stub the requests your app makes as soon as
+it starts. You might expect this to work:
 
 ```javascript
 // this code may not work depending on implementation
-cy.visit('http://localhost:8000/#/app')
-cy.intercept('/users/**', { fixture: 'users' })
+cy.visit('/#/app')
+cy.intercept('GET', '/users/**', { fixture: 'users.json' })
 ```
 
-But if your app makes a request upon being initialized, _the above code will not
-work_. `cy.visit()` will resolve once its `load` event fires. The
-[`cy.intercept()`](/api/commands/intercept) command is not processed until
-_after_ `cy.visit()` resolves.
+If your app makes a request while it starts up, the code above can miss it.
+`cy.visit()` resolves once the page fires its `load` event, and Cypress doesn't
+process the [`cy.intercept()`](/api/commands/intercept) command until _after_
+that.
 
-Many applications will have already begun routing, initialization, and requests
-by the time the `cy.visit()` in the above code resolves. Therefore creating a
-[`cy.intercept()`](/api/commands/intercept) route will happen too late, and
-Cypress will not process the requests.
+By then, many apps have already begun routing, initializing, and sending
+requests, so the route is registered too late to catch them.
 
-Luckily Cypress supports this use case. Reverse the order of the commands:
+Reverse the order of the commands:
 
 ```javascript
 // this code is probably what you want
-cy.intercept('/users/**', {...})
-cy.visit('http://localhost:8000/#/app')
+cy.intercept('GET', '/users/**', { fixture: 'users.json' }).as('getUsers')
+cy.visit('/#/app')
+cy.wait('@getUsers')
 ```
 
-Cypress will automatically apply the routes to the very next `cy.visit()` and
-does so immediately before any of your application code runs.
+Routes you register before `cy.visit()` are already active when the page starts
+loading, so they catch the requests your app makes as soon as it runs.
+
+### Visiting cross-origin sites with `cy.visit()`
+
+After visiting a cross-origin site, interact with its content inside a
+[`cy.origin()`](/api/commands/origin) block.
+
+When visiting a cross-origin site, the `onBeforeLoad` and `onLoad` options are
+not supported. Instead, register a `window:before:load` or `window:load` event
+listener inside a `cy.origin()` block for that origin, then visit it:
+
+```javascript
+cy.visit('/')
+cy.origin('https://auth.example.com', () => {
+  cy.on('window:before:load', (win) => {
+    // what you would have put in onBeforeLoad
+    win.localStorage.setItem('returnTo', '/dashboard')
+  })
+})
+cy.visit('https://auth.example.com/login')
+```
 
 ## Rules
 
 <HeaderRequirements />
 
 - `cy.visit()` requires being chained off of `cy`.
-- `cy.visit()` requires the response to be `content-type: text/html`.
-- `cy.visit()` requires the response code to be `2xx` after following redirects.
-- `cy.visit()` requires the load `load` event to eventually fire.
+- `cy.visit()` requires the response to be `content-type: text/html` or
+  `application/xhtml+xml`. When the response has no `content-type` header,
+  Cypress checks whether the body is HTML.
+- `cy.visit()` requires the response code to be `2xx` or `3xx` after following
+  redirects, unless `failOnStatusCode` is `false`.
+- `cy.visit()` requires the `load` event to eventually fire, unless the visit
+  changes only the URL's hash.
 
 <HeaderAssertions />
 
-- `cy.visit()` will automatically wait for assertions you have chained to pass
+- `cy.visit()` automatically waits for assertions you have chained to pass.
 
 <HeaderTimeouts />
 
 - `cy.visit()` can time out waiting for the page to fire its `load` event.
 - `cy.visit()` can time out waiting for assertions you've added to pass.
-
-## Visiting cross-origin sites
-
-After visiting a cross-origin site, to interact with the content, you must use a
-[`cy.origin()`](/api/commands/origin) block.
-
-When visiting a cross-origin site, the `onBeforeLoad` and `onLoad` options are
-not supported.
+- `cy.visit()` fails with a network error if the server doesn't respond within
+  [`responseTimeout`](/app/references/configuration#Timeouts), even when
+  `pageLoadTimeout` is longer.
 
 ## Command Log
 
-**_Visit example application in a `beforeEach`_**
+This example visits the example application in a `beforeEach`:
 
 ```javascript
 beforeEach(() => {
@@ -439,42 +527,41 @@ beforeEach(() => {
 })
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/visit/visit-example-page-in-before-each-of-test.png"
-  alt="Command Log visit"
+  alt="Command Log showing a visit to https://example.cypress.io/commands/viewport under the Before Each hook"
 />
 
-When clicking on `visit` within the command log, the console outputs the
-following:
+When you click `visit` in the Command Log, the console outputs the following:
 
 <DocsImage
   src="/img/api/visit/visit-shows-any-redirect-or-cookies-set-in-the-console.png"
-  alt="console Log visit"
+  alt="DevTools console after clicking visit in the Command Log, listing the command, the resolved URL, redirects, and cookies set"
 />
 
 ## History
 
-| Version                                    | Changes                                                                          |
-| ------------------------------------------ | -------------------------------------------------------------------------------- |
-| [11.0.0](/app/references/changelog#11-0-0) | Removed `experimentalSessionAndOrigin` reference                                 |
-| [3.5.0](/app/references/changelog#3-5-0)   | Added support for options `qs`                                                   |
-| [3.3.0](/app/references/changelog#3-3-0)   | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure` |
-| [3.2.0](/app/references/changelog#3-2-0)   | Added options `url`, `method`, `body`, and `headers`                             |
-| [1.1.3](/app/references/changelog#1-1-3)   | Added option `failOnStatusCode`                                                  |
-| [0.18.2](/app/references/changelog#0-18-2) | Automatically send `Accept: text/html,*/*` request header                        |
-| [0.18.2](/app/references/changelog#0-18-2) | Automatically send `User-Agent` header                                           |
-| [0.17.0](/app/references/changelog#0-17-0) | Cannot `cy.visit()` two different super domains in a single test                 |
-| [0.6.8](/app/references/changelog#0-6-8)   | Added option `log`                                                               |
-| [0.4.3](/app/references/changelog#0-4-3)   | Added option `onBeforeLoad`                                                      |
-| [< 0.3.3](/app/references/changelog#0-3-3) | `cy.visit()` command added                                                       |
+| Version                                    | Changes                                                                                                     |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| [14.0.0](/app/references/changelog#14-0-0) | `cy.origin()` is required to visit a different origin in the same test, rather than a different superdomain |
+| [11.0.0](/app/references/changelog#11-0-0) | Removed `experimentalSessionAndOrigin` reference                                                            |
+| [3.5.0](/app/references/changelog#3-5-0)   | Added support for options `qs`                                                                              |
+| [3.3.0](/app/references/changelog#3-3-0)   | Added support for options `retryOnStatusCodeFailure` and `retryOnNetworkFailure`                            |
+| [3.2.0](/app/references/changelog#3-2-0)   | Added options `url`, `method`, `body`, and `headers`                                                        |
+| [1.1.3](/app/references/changelog#1-1-3)   | Added option `failOnStatusCode`                                                                             |
+| [0.18.2](/app/references/changelog#0-18-2) | Automatically send `Accept: text/html,*/*` request header                                                   |
+| [0.18.2](/app/references/changelog#0-18-2) | Automatically send `User-Agent` header                                                                      |
+| [0.17.0](/app/references/changelog#0-17-0) | Cannot `cy.visit()` two different super domains in a single test                                            |
+| [0.6.8](/app/references/changelog#0-6-8)   | Added option `log`                                                                                          |
+| [0.4.3](/app/references/changelog#0-4-3)   | Added option `onBeforeLoad`                                                                                 |
+| [< 0.3.3](/app/references/changelog#0-3-3) | `cy.visit()` command added                                                                                  |
 
 ## See also
 
 - [`cy.go()`](/api/commands/go)
 - [`cy.reload()`](/api/commands/reload)
 - [`cy.request()`](/api/commands/request)
-- [Recipe: Bootstrapping your App](/app/references/recipes#Server-Communication)
-- [Recipe: Logging In - Single Sign on](/app/references/recipes#Logging-In)
-- [Recipe: Stubbing `window.fetch`](/app/references/recipes#Stubbing-and-spying)
+- [`cy.origin()`](/api/commands/origin)
+- [`cy.session()`](/api/commands/session)

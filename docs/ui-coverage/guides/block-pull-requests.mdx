@@ -18,7 +18,20 @@ UI Coverage reports are generated server-side in Cypress Cloud from
 [Test Replay](/cloud/features/test-replay) data, so they add no overhead to your
 test runs, and nothing in your Cypress pipeline fails on its own when coverage
 drops. Enforcement is entirely opt-in: you choose a policy and apply it in your
-CI job with the [Results API](/ui-coverage/results-api). With it you can:
+CI job with the [Results API](/ui-coverage/results-api).
+
+:::tip
+
+For declarative thresholds such as a minimum coverage score or a maximum
+untested-element count, define [Run Checks](/cloud/features/checks) in App
+Quality configuration and
+[report them as GitHub statuses](/ui-coverage/guides/report-run-checks-github).
+Use the Results API approach below when you need custom policy logic the
+built-in assertion types don't cover, such as a baseline comparison.
+
+:::
+
+With the Results API you can:
 
 - **Fail a build or block a pull request** when overall coverage falls below a
   threshold, or when a critical view regresses.
@@ -465,6 +478,10 @@ for manual investigation during code review.
 
 ## See also
 
+- [Run Checks](/cloud/features/checks): declarative coverage thresholds evaluated
+  in Cypress Cloud.
+- [Report Run Checks as GitHub pull request statuses](/ui-coverage/guides/report-run-checks-github):
+  post each check as a required commit status.
 - [Results API](/ui-coverage/results-api): the full `getUICoverageResults`
   reference and more enforcement examples.
 - [Monitor changes](/ui-coverage/guides/monitor-changes): track coverage trends

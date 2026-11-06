@@ -115,7 +115,7 @@ Because the assertion passes sooner, the action that follows it starts sooner. I
 
 Removing the redundant `should('be.visible')` does not fix this on its own. Wait on a signal from your application that the element has settled, such as a loading indicator disappearing, a request completing with [`cy.intercept()`](/api/commands/intercept), or a class or attribute your application sets. Then perform the action.
 
-When you need to assert that a user can see and use an element, combine [`Cypress.dom.isVisible()`](/api/cypress-api/dom) with a coverage check. Define both as [custom queries](/api/cypress-api/custom-queries) so you can reuse them across your suite:
+When you need to assert that a user can see and use an element, combine [`Cypress.dom.isVisible()`](/api/cypress-api/dom#isVisible) with a coverage check. Define both as [custom queries](/api/cypress-api/custom-queries) so you can reuse them across your suite:
 
 ```javascript title="cypress/support/commands.js"
 const isCovered = (el) => {

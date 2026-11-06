@@ -6,6 +6,7 @@ const { default: remarkDirective } = require('remark-directive')
 
 const fs = require('fs')
 const {
+  codeNoWrap,
   copyTsToJs,
   cypressConfigPluginExample,
   cypressConfigExample,
@@ -68,6 +69,7 @@ const config = {
           ],
           remarkPlugins: [
             remarkDirective,
+            codeNoWrap,
             cypressConfigExample,
             cypressConfigPluginExample,
             visitMountExample,
@@ -142,6 +144,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
       image: 'img/social-card.png',
+      colorMode: {
+        // Match the reader's operating system light or dark setting until they
+        // pick a mode with the toggle. Their saved choice wins from then on.
+        respectPrefersColorScheme: true,
+      },
       metadata: [
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Cypress Documentation' },
@@ -274,6 +281,12 @@ const config = {
               {
                 label: 'Support',
                 href: 'https://www.cypress.io/support?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Support',
+              },
+              {
+                // Reopens the Osano consent drawer. The click handler is in
+                // plugins/osano.js, which also labels Osano's own buttons for
+                // FullStory with the same "Cookie Consent - " prefix.
+                html: '<button type="button" class="footer__link-item osano-preferences-link" data-fs-element="Cookie Consent - Open Preferences">Cookie Preferences</button>',
               },
             ],
           },

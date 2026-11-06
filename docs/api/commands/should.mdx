@@ -96,10 +96,9 @@ cy.get('nav') // yields <nav>
   .and('match', /serif/) // yields 'sans-serif'
 ```
 
-`.should()` is an assertion, and it is _safe_ to chain further commands that use
-the subject. Queries chained after it do retry from the subject it locks in
-rather than from the top of the chain, which matters when the DOM re-renders.
-See [Retry boundaries](#Retry-boundaries).
+It is _safe_ to chain further commands that rely on the subject after `.should()`. This is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
+
+Queries chained after `.should()` do not retry from the start of the chain. If the DOM re-renders, they retry from the subject `.should()` yielded. See [Retry boundaries](#Retry-boundaries).
 
 ## Examples
 

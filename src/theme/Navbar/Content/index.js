@@ -43,7 +43,7 @@ function NavbarContentLayout({ left, center, right }) {
     <div className="navbar__inner">
       <div className="navbar__items navbar__items--left">{left}</div>
       <div className="hidden navbar__items lg:flex">{center}</div>
-      <div className="navbar__items navbar__items--right mr-[32px] lg:mr-0">
+      <div className="navbar__items navbar__items--right mr-[4px] sm:mr-[32px] lg:mr-0">
         {right}
       </div>
     </div>

@@ -1,6 +1,6 @@
 ---
 title: Re-run optimization | Re-run Failed Specs or Tests
-description: Re-run only the specs or tests that failed in CI and skip what already passed to reach a passing build faster and cut CI cost, with Cypress Cloud's experimental Re-run optimization feature.
+description: Re-run only the specs or tests that failed in CI and skip what already passed to reach a passing build faster and cut CI cost, with Cypress Cloud's Re-run optimization feature.
 sidebar_label: Re-run optimization
 sidebar_position: 60
 ---
@@ -22,11 +22,11 @@ You choose the granularity in project or organization settings:
   that were fully green are still skipped, and passing tests inside a failing
   spec are skipped too. **This option requires Cypress 15.21.0 or later.** Use this if you are confident that each `it` block is fully independent. If it would work using `.only`, it should work here.
 - **Run only failed specs** re-executes every spec that contained a failure,
-  including tests in those specs that already passed. This reduces redundant re-runs but allows for cases where tests may rely on existing state for other tests.
+  including tests in those specs that already passed. This reduces redundant re-runs but allows for cases where tests may rely on existing state from other tests. This is the default for new Cypress Cloud organizations.
 
 ## Example
 
-With no re-run optimization settings, in a 40-spec suite where only 2 specs fail, a CI re-run triggers all 40 specs on a retry.
+With no re-run optimization applied to a run, in a 40-spec suite where only 2 specs fail, a CI re-run triggers all 40 specs on a retry.
 
 With **Run only failed specs**, the re-run executes just those
 2 specs, avoiding 38 specs entirely.
@@ -44,12 +44,9 @@ Enabling Re-run optimization gives you:
 
 :::caution
 
-**Re-run optimization is experimental.** We are shipping an early version to learn
-how it performs across real CI setups, and we expect it to evolve.
-
-Review the
-[behavior and limitations](#Behavior-and-limitations) before enabling it on
-critical pipelines.
+Review the [behavior and limitations](#Behavior-and-limitations) section before
+enabling Re-run Optimization on critical pipelines for existing projects. It
+may change CI behavior your team is already used to.
 
 :::
 
@@ -129,7 +126,9 @@ save you.
 
 Re-run optimization is configured in the **Smart Orchestration** section of your
 organization and project settings. Only **Owners** and **Admins** can change the
-setting. **Members** and **Viewers** have read-only access.
+setting. **Members** and **Viewers** have read-only access. For new Cloud organizations,
+spec-based re-runs are on by default. For organizations and projects created before Re-run
+Optimization existed, you must manually update the setting.
 
 ### Project setting
 
@@ -216,8 +215,9 @@ construct for you.
 ## Opting out in CI
 
 To force a full run and skip the optimization, set the `CYPRESS_RERUN_ALL_TESTS`
-environment variable to `true` (requires Cypress v15.15.0 or later). Cloud then
-treats the run as a full run and runs every spec, even if a matching anchor run
+environment variable to `true` (requires Cypress v15.15.0 or later).
+
+Cloud then treats the run as a full run and runs every spec, even if a matching anchor run
 exists. This is useful for specific branches or pipelines where you always want
 the complete suite to run.
 
@@ -225,6 +225,13 @@ the complete suite to run.
 env:
   CYPRESS_RERUN_ALL_TESTS: true
 ```
+
+:::caution
+
+Note that this represents a **full opt-out** from the re-run optimization process.
+Do not use `CYPRESS_RERUN_ALL_TESTS` to "reset" a re-run chain. Instead,
+modify the `CYPRESS_RERUN_GROUP_ID`.
+:::
 
 ## What a rerun will execute
 
@@ -243,11 +250,8 @@ Knowing this lets you predict exactly what a rerun will do:
 - **You rerun after several attempts** → each rerun anchors on the _latest_
   completed run, so chained reruns keep narrowing toward what's still broken
   instead of replaying earlier failures you've already fixed.
-- **You rerun while another run is still in progress** → Cloud anchors on the last _completed_ run, since the in-progress one has no final results yet.
-- **You rerun within the [run-completion delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay) window** → Cloud hasn't marked the
-  previous run complete yet, so the rerun safely runs the **full** suite. **Set a
-  short [run-completion delay](/cloud/account-management/projects#Run-Completion-Delay) so more of your reruns get optimized.** That delay is the
-  main lever for getting consistent savings.
+- **You rerun while another run is still in progress** → Cloud anchors on the last _completed_ run, since the in-progress one has no final results yet. If CI already stopped that run's Cypress processes, the Cloud run stays in progress until the [run timeout](/cloud/account-management/projects#Run-Timeout). [Cancel a run so the next rerun can anchor](/cloud/features/smart-orchestration/run-cancellation-api#Cancel-a-run-so-the-next-rerun-can-anchor) on the run you stopped.
+- **You rerun within the [run-completion delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay) window** → Cloud hasn't marked the previous run complete yet, so the rerun safely runs the **full** suite. [Complete a run so the next rerun can anchor](/cloud/features/smart-orchestration/parallelization#Complete-a-run-so-the-next-rerun-can-anchor) on the run that just finished, without waiting out the delay. Shortening the [run-completion delay](/cloud/account-management/projects#Run-Completion-Delay) has the same effect when you don't call the API.
 
 Cloud never blocks parallel reruns: if several start at once, each one anchors on
 whichever run is complete at the time it begins.
@@ -287,6 +291,8 @@ failed specs or tests, so each layer gets you to a passing build faster and chea
 - [Smart Orchestration Overview](/cloud/features/smart-orchestration/overview) - all of the Smart Orchestration features for speeding up CI runs and reducing costs
 - [Spec Prioritization](/cloud/features/smart-orchestration/spec-prioritization) - run failed specs first to surface failures earlier
 - [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) - stop a run early once failures cross a threshold
+- [Run Cancellation API](/cloud/features/smart-orchestration/run-cancellation-api#Cancel-a-run-so-the-next-rerun-can-anchor) - end a stopped run immediately so a rerun anchors to it
+- [Run Completion API](/cloud/features/smart-orchestration/parallelization#Complete-a-run-so-the-next-rerun-can-anchor) - end a finished run before the completion delay so a rerun anchors to it
 - [Parallelization](/cloud/features/smart-orchestration/parallelization) - split your suite across multiple machines to run specs in parallel
 - [Test Replay](/cloud/features/test-replay) - debug the failing specs surfaced by a rerun
 - [Test retries](/app/guides/test-retries) - retry failed tests within a single run, which is a different mechanism from Re-run optimization

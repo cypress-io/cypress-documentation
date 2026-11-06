@@ -395,7 +395,7 @@ The browser sends the request and receives the response, so everything an interc
 changes is what the browser itself records: modified request headers and bodies, stubbed
 or rewritten responses, and overridden status codes all appear in the browser's network
 panel. The `Authorization` header attached by
-[`cy.visit()`](/api/commands/visit#Add-basic-auth-headers) appears there too.
+[`cy.visit()`](/api/commands/visit#Add-basic-auth-headers-to-cyvisit) appears there too.
 
 On the legacy network path, request modifications are applied after the browser has
 already logged the request, so they do not appear in the network panel. Response

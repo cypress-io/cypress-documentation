@@ -50,7 +50,7 @@ With UI Coverage you can:
 - **Find the exact gaps.** Every untested button, input, and link is listed with a full-page, inspectable DOM snapshot showing precisely where it is.
 - **Discover flows you never test.** [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) surface pages your app links to but no test ever visits, revealing whole flows your suite is missing.
 - **Close gaps fast.** Generate a Cypress test for an untested element with [Test Generation](/ui-coverage/faq#What-is-Test-Generation-in-Cypress-UI-Coverage), or pull scores and gaps into your editor with the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp).
-- **Catch regressions before they merge.** Compare any two runs in [Branch Review](/cloud/features/branch-review), and [fail CI or block a pull request](/ui-coverage/guides/block-pull-requests) when coverage drops, using the [Results API](/ui-coverage/results-api).
+- **Catch regressions before they merge.** Compare any two runs in [Branch Review](/cloud/features/branch-review), and [fail CI or block a pull request](/ui-coverage/guides/block-pull-requests) when coverage drops, using [Run Checks](/cloud/features/checks) or the [Results API](/ui-coverage/results-api).
 - **Trim redundant tests.** See the controls your suite exercises far more than it needs to, then [consolidate that duplicated setup](/ui-coverage/guides/reduce-test-duplication) to cut test runtime, CI time, and test-results usage without losing coverage.
 
 ## How it works
@@ -91,7 +91,7 @@ UI Coverage works instantly. If you already record runs to Cypress Cloud with Te
       href="/ui-coverage/guides/identify-coverage-gaps"
       aria-labelledby="card-title-1"
     >
-      <Icon name="list-check" />
+      <Icon useCypressIcon name="technology-ui-coverage" size="24" />
       <h3 id="card-title-1">Identify coverage gaps</h3>
       <p>
         Go from a recorded run to a prioritized list of the untested buttons,
@@ -104,7 +104,7 @@ UI Coverage works instantly. If you already record runs to Cypress Cloud with Te
       href="/ui-coverage/guides/address-coverage-gaps"
       aria-labelledby="card-title-2"
     >
-      <Icon name="clipboard-check" />
+      <Icon useCypressIcon name="document-plus" size="24" />
       <h3 id="card-title-2">Address coverage gaps</h3>
       <p>
         Close the gaps that matter by writing targeted tests or generating them
@@ -114,7 +114,7 @@ UI Coverage works instantly. If you already record runs to Cypress Cloud with Te
   </li>
   <li class="card">
     <a href="/ui-coverage/guides/reduce-noise" aria-labelledby="card-title-3">
-      <Icon name="filter" />
+      <Icon useCypressIcon name="object-gear" size="24" />
       <h3 id="card-title-3">Reduce noise</h3>
       <p>
         Group views and elements and tune attribute handling so your report
@@ -127,7 +127,7 @@ UI Coverage works instantly. If you already record runs to Cypress Cloud with Te
       href="/ui-coverage/guides/monitor-changes"
       aria-labelledby="card-title-4"
     >
-      <Icon name="chart-diagram" />
+      <Icon useCypressIcon name="view-pie-chart" size="24" />
       <h3 id="card-title-4">Monitor changes</h3>
       <p>
         Track coverage over time and catch regressions as part of your CI/CD
@@ -137,12 +137,7 @@ UI Coverage works instantly. If you already record runs to Cypress Cloud with Te
   </li>
   <li class="card">
     <a href="/ui-coverage/work-with-ai-agents" aria-labelledby="card-title-5">
-      <Icon
-        useCypressIcon
-        name="general-sparkle-triple"
-        size="24"
-        fillColor="teal-600"
-      />
+      <Icon useCypressIcon name="general-sparkle-triple" size="24" />
       <h3 id="card-title-5">Work with AI agents</h3>
       <p>
         Use Cypress Cloud MCP to pull scores, views, and untested elements from
@@ -157,5 +152,6 @@ UI Coverage works instantly. If you already record runs to Cypress Cloud with Te
 - [Interactivity](/ui-coverage/core-concepts/interactivity) covers which elements are counted and which commands mark them tested.
 - [Views](/ui-coverage/core-concepts/views) explains how the URLs your tests visit become views.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every App Quality configuration option and what each one does.
+- [Run Checks](/cloud/features/checks) encode coverage thresholds in App Quality configuration.
 - [Results API](/ui-coverage/results-api) fetches a run's results in CI so you can enforce coverage standards.
 - [UI Coverage FAQ](/ui-coverage/faq) answers common questions about scores, gaps, configuration, and troubleshooting.

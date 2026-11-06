@@ -62,7 +62,7 @@ From there, you can integrate with CI to set your own standards for handling the
       href="/accessibility/guides/improve-accessibility"
       aria-labelledby="card-title-1"
     >
-      <Icon name="chart-line" />
+      <Icon useCypressIcon name="technology-accessibility" size="24" />
       <div class="card__title" id="card-title-1">
         Fix accessibility violations
       </div>
@@ -78,7 +78,7 @@ From there, you can integrate with CI to set your own standards for handling the
       href="/accessibility/guides/detect-changes"
       aria-labelledby="card-title-8"
     >
-      <Icon name="shield-halved" />
+      <Icon useCypressIcon name="document-plus-minus" size="24" />
       <div class="card__title" id="card-title-8">Catch accessibility regressions</div>
       <p>
         Compare reports in detail to review only <i>new</i> accessibility issues, use
@@ -96,7 +96,6 @@ From there, you can integrate with CI to set your own standards for handling the
         useCypressIcon
         name="general-sparkle-triple"
         size="24"
-        fillColor="teal-600"
       />
       <div class="card__title" id="card-title-9">Work with AI agents</div>
       <p>
@@ -111,12 +110,11 @@ From there, you can integrate with CI to set your own standards for handling the
       href="/accessibility/guides/block-pull-requests"
       aria-labelledby="card-title-3"
     >
-      <Icon name="bug-slash" />
+      <Icon useCypressIcon name="security-shield-check" size="24" />
       <div class="card__title" id="card-title-3">Block pull requests and set policies</div>
       <p>
-        Set policies and block pull requests automatically with Cypress
-        Accessibility's Results API, enabling custom CI workflows to enforce
-        accessibility standards and prevent regressions.
+        Set policies and block pull requests with Run Checks or the Results API,
+        so accessibility regressions fail the build before they merge.
       </p>
     </a>
   </li>
@@ -125,7 +123,7 @@ From there, you can integrate with CI to set your own standards for handling the
       href="/accessibility/guides/production-monitoring"
       aria-labelledby="card-title-5"
     >
-      <Icon name="user-shield" />
+      <Icon useCypressIcon name="object-odometer" size="24" />
       <div class="card__title" id="card-title-5">Production monitoring</div>
       <p>
         Monitor accessibility issues in production by running scheduled Cypress
@@ -139,7 +137,7 @@ From there, you can integrate with CI to set your own standards for handling the
       href="/accessibility/guides/accessibility-automation"
       aria-labelledby="card-title-7"
     >
-      <Icon name="book-open-reader" />
+      <Icon useCypressIcon name="object-book" size="24" />
       <div class="card__title" id="card-title-7">Accessibility automation principles</div>
       <p>
         Apply these core principles to maximize the impact of Cypress
@@ -163,7 +161,7 @@ Cypress Accessibility delivers detailed, actionable accessibility reports direct
 - **Run comparison**: [Compare the results](/accessibility/guides/compare-reports) from two runs and see only the new issues. Know before you merge if a code change is going to cause new accessibility problems.
 - **Deep linking and sharing**: Easily share whatever you are looking at with your team at any time by copying the link, or using built-in sharing functionality and [Jira issue creation](/accessibility/reports/element-detail-view#Create-Jira-issue).
 - **Selective element handling**: Elements marked as "ignored" in tests are excluded from scoring but remain visible for manual review, ensuring flexibility via [configuration](/accessibility/configuration/overview).
-- **Flexible pipeline integration**: The [Results API](/accessibility/connect-and-extend/results-api) delivers accessibility outcomes to your CI pipeline, so your workflow can branch on them and enforce accessibility policies programmatically.
+- **Flexible pipeline integration**: [Run Checks](/cloud/features/checks) encode score and failed-element thresholds in configuration, and the [Results API](/accessibility/connect-and-extend/results-api) delivers full accessibility outcomes to your CI pipeline for custom policies.
 - **Run-specific configuration**: Use [Profiles](/accessibility/configuration/profiles) to apply different configuration settings based on run tags, enabling team-specific reporting and optimized settings for pull requests versus regression runs.
 
 Learn more about [how it works](/accessibility/core-concepts/how-it-works).
