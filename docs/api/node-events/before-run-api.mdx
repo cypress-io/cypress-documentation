@@ -118,6 +118,13 @@ on('before:run', (details) => {
 
 :::
 
+### Manage the Run Completion Delay
+
+When the recording begins, `details.runUrl` lets you call the
+[Run Completion API](/cloud/features/smart-orchestration/parallelization#Run-Completion-API)
+before any spec starts. Pass `expectedGroupCount` so the call is safe from every machine. See the
+[`before:run` example](/cloud/features/smart-orchestration/parallelization#before-run-example).
+
 ## See also
 
 - [After Run API](/api/node-events/after-run-api)
