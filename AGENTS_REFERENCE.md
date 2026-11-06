@@ -1456,6 +1456,52 @@ functions share a page. Leave single-function configuration APIs, such as
 `Cypress.Keyboard.defaults()` and `Cypress.Screenshot.defaults()`, on the
 single-command skeleton.
 
+## Code comments
+
+These rules cover comments in the code that builds and runs this site: `src/`,
+`plugins/`, `scripts/`, `cypress/`, and config files such as
+`docusaurus.config.js`. They don't cover comments inside the code examples on a
+docs page, which are written for the reader.
+
+- **Prefer none.** Always prefer no code comment if the code is
+  self-explanatory.
+- **Explain the why.** When a comment is necessary, use it to explain the _why_
+  and anything relevant that is not directly expressed by the code itself.
+- **Don't repeat yourself.** Do not restate the same comment multiple times in a
+  file as the code flows through each step.
+- **Present state only.** Keep comments relevant to the current state of the
+  code. Do not describe what changed or how the code used to be different.
+- **Name the reason, not the predecessor.** "Matches what the old tab component
+  did" is not a _why_, and it rots once that component is deleted. State the
+  reason the old code had, and put parity with replaced tooling in the commit
+  message or guide.
+- **No measurements.** Don't cite benchmark numbers in a comment. They depend on
+  the machine they came from and go stale with the code around them. State the
+  reason instead, and keep the numbers in the commit message or pull request.
+
+Bad examples:
+
+```tsx
+// Define the types for the props
+// These were previously authored as ##### headings, now they render as a <p>
+// Sort the tabs the same way the old hand-written OS tab sets did
+// Memoized: filtering the plugins list dropped from 40ms to 3ms
+```
+
+Good examples:
+
+```tsx
+// Seed the search from a shareable `?search=` param on load. Done in an
+// effect (not the initial state) so server and client first render agree.
+
+// Not `async`: everything up to `copyPendingText` has to run in the click's
+// own tick, or the clipboard write lands outside the user activation that
+// Safari requires. The fetch is started here and handed over still pending.
+
+// Escaping `<` keeps a value such as `</script>` in a title or description
+// from closing the tag early.
+```
+
 ## Testing
 
 - **End-to-end tests** (`cypress/e2e/`) crawl the built site, so most content

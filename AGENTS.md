@@ -166,6 +166,13 @@ Each rule is a hard convention. See the linked section for the how and why.
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
 
+**Code comments** — [details](./AGENTS_REFERENCE.md#code-comments)
+
+- In the site's own code (`src/`, `plugins/`, `scripts/`, `cypress/`, config
+  files), prefer no comment when the code is self-explanatory. When one is
+  needed, explain the _why_ the code can't say, once, about the code as it is
+  now: no change history, no "matches the old tool", and no benchmark numbers.
+
 **Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples),
 [domains](./AGENTS_REFERENCE.md#domains-in-code-examples)
 
