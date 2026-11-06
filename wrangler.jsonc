@@ -6,7 +6,8 @@
     // `npm run build` writes to dist/, not Docusaurus's default build/.
     "directory": "./dist",
     "not_found_handling": "404-page",
-    // Serve docs/foo/index.html at /foo, matching the URLs Netlify serves today.
+    // Serve docs/foo/index.html at /foo, each page's canonical URL, and
+    // redirect /foo/ there.
     "html_handling": "drop-trailing-slash",
   },
   // Serves each branch preview at <branch>-cypress-documentation.<subdomain>.workers.dev.
@@ -15,8 +16,7 @@
   // Required for `wrangler preview`, which builds the per-branch PR previews.
   // Empty because previews reuse the assets settings above.
   "previews": {},
-  // Serves production at docs.cypress.io, keeping the domain attached on every
-  // deploy. Cloudflare can't attach it while another DNS record exists for the
-  // hostname, so deploys fail until that record is deleted.
+  // Serves production at docs.cypress.io and keeps the domain attached on
+  // every deploy.
   "routes": [{ "pattern": "docs.cypress.io", "custom_domain": true }],
 }
