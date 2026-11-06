@@ -118,9 +118,8 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Order with `sidebar_position` and `_category_.json`, not `sidebars.js`. Without
   a `sidebar_position`, pages sort alphabetically; if sibling files don't define
   one, match them and skip it rather than introducing positions.
-- Moving/renaming/deleting a page **requires** a `301` in both `netlify.toml`
-  and `static/_redirects` (Netlify serves production while Cloudflare builds
-  previews), plus updating in-repo links to it.
+- Moving/renaming/deleting a page **requires** a `301` in `static/_redirects`,
+  plus updating in-repo links to it.
 
 **Authoring** — [components](./AGENTS_REFERENCE.md#mdx-components),
 [partials](./AGENTS_REFERENCE.md#partials),
@@ -165,6 +164,13 @@ Each rule is a hard convention. See the linked section for the how and why.
   characters, and never wrap the prompt in quotes. Write `subtext` as the outcome
   the reader gets, not a restatement that the card copies a prompt for an AI
   assistant.
+
+**Code comments** — [details](./AGENTS_REFERENCE.md#code-comments)
+
+- In the site's own code (`src/`, `plugins/`, `scripts/`, `cypress/`, config
+  files), prefer no comment when the code is self-explanatory. When one is
+  needed, explain the _why_ the code can't say, once, about the code as it is
+  now: no change history, no "matches the old tool", and no benchmark numbers.
 
 **Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples),
 [domains](./AGENTS_REFERENCE.md#domains-in-code-examples)
@@ -285,7 +291,10 @@ Each rule is a hard convention. See the linked section for the how and why.
 **Admonitions** — [details](./AGENTS_REFERENCE.md#admonition-blocks)
 
 - `:::info` (default), `:::tip`, `:::note`, `:::caution` (prefer over
-  `:::warning`), `:::danger`. Keep them short and infrequent.
+  `:::warning`), `:::danger`. Keep them short and infrequent. Never add a
+  custom title (`:::tip Do this`); site CSS hides every admonition heading. When
+  a visible heading is warranted, put a bold lead line in the body, then a blank
+  line, then the rest.
 
 **Linking** — [details](./AGENTS_REFERENCE.md#linking)
 

@@ -1,6 +1,6 @@
 ---
 title: Work with AI agents in Cypress Accessibility
-description: 'Use AI assistants alongside Cypress Accessibility: query Cloud results with Cypress Cloud MCP, file violations into Jira or another issue tracker without duplicates, align reports with component identification settings, and explore local browser LLM workflows.'
+description: 'Use AI assistants alongside Cypress Accessibility: query Cloud results with the Cypress Cloud CLI or Cypress Cloud MCP, file violations into Jira or another issue tracker without duplicates, align reports with component identification settings, and explore local browser LLM workflows.'
 sidebar_label: Work with AI agents
 sidebar_position: 110
 ---
@@ -49,13 +49,30 @@ Here are some example prompts to try out:
 >
 > Our team includes these roles developers, QA engineers, designers, product managers, marketers, and accessibility specialists. For each role, determine if they need to be Responsible, Accountable, Consulted, Informed, or not involved.
 
+## Cypress Cloud CLI {#Cypress-Cloud-CLI}
+
+The [Cypress Cloud CLI](/cloud/integrations/cloud-cli#Accessibility-and-App-Quality) (`cy-cloud`) gives agents that run shell commands, such as Claude Code, Codex CLI, or Copilot CLI, the same Accessibility data as a [downloaded report](#Work-with-a-downloaded-report), without anyone exporting a file first. Every command returns JSON:
+
+- [`cy-cloud accessibility report get`](/cloud/integrations/cloud-cli#cy-cloud-accessibility-report-get) returns a run's score, report URL, element counts by status, and every failing rule with how many elements fail it.
+- [`cy-cloud accessibility element list`](/cloud/integrations/cloud-cli#cy-cloud-accessibility-element-list) returns the failing elements, filtered by rule or impact, with the same fields as the [report download](/accessibility/connect-and-extend/download-reports#Whats-in-the-file).
+- [`cy-cloud app-quality config get`](/cloud/integrations/cloud-cli#cy-cloud-app-quality-config-get) returns the project's current App Quality configuration, or the configuration a run was processed with, including [`axeConfig`](/accessibility/configuration/axe-core-configuration).
+
+These commands need an active Cypress Accessibility add-on or trial. See [Configure the Cloud CLI](/cloud/integrations/cloud-cli#Configure-the-Cloud-CLI) to install and sign in.
+
+Because the agent can page through every failing element of the latest run, the CLI suits the workflows below that work over a whole report, like [filing issues in your issue tracker](#File-issues-in-your-issue-tracker), without the step of downloading a file for each run.
+
+> Use cy-cloud to get the accessibility report for the latest completed run of project `<projectId>`. For the rule with the most failing elements, list every failing element, find where each one is rendered in this codebase, and propose a fix.
+
+> Use cy-cloud to get the App Quality configuration for run `<runNumber>` of project `<projectId>` and compare it with the project's current configuration. Tell me whether any rule or view changes explain the difference in the accessibility report.
+
 ## Work with a downloaded report {#Work-with-a-downloaded-report}
 
 The [**Download report** button](/accessibility/connect-and-extend/download-reports) on a run's Accessibility report exports the run's violations as a `.csv` or `.json` file. This gives an AI agent a complete, self-contained view of a run's accessibility results that it can read directly from disk—no Cloud connection or MCP setup required.
 
-This pairs well with the [Cypress Cloud MCP](#Cypress-Cloud-MCP) approach rather than replacing it:
+This pairs well with the [Cloud CLI](#Cypress-Cloud-CLI) and [Cypress Cloud MCP](#Cypress-Cloud-MCP) approaches rather than replacing them:
 
 - **Cloud MCP** is best for live, interactive querying while you work—asking follow-up questions and drilling into specific rules or views on demand.
+- **The Cloud CLI** is best when an agent in your terminal needs the full list of failing elements for the latest run, without anyone downloading a file first.
 - **A downloaded report** is best when you want the agent to work over the full dataset at once—generating a chart, producing a written summary, or diffing two runs—and when you want a fixed artifact you can re-run the same analysis against later.
 
 Each row in the file is one failed element for one rule on one view, and includes deep links back into the Cloud report. See [what's in the file](/accessibility/connect-and-extend/download-reports#Whats-in-the-file) for the full column list.
@@ -103,7 +120,7 @@ Ask the agent to keep the **Element URL** and **View URL** values in its output.
 
 Triage usually ends in tickets, and typing them out one at a time is the slowest part of the job. An agent connected to both Cypress Cloud and your issue tracker can read the accessibility report for the latest run, check what has already been filed, and open only the tickets that are missing. Nothing new has to run in your pipeline, because the data comes from runs Cypress Cloud has already recorded.
 
-Cypress supplies the read side of this workflow. Cloud MCP is read-only, so the write side comes from your tracker's own MCP server or CLI, which Jira, GitHub, and Linear all publish. Connect both to the same agent before you start.
+Cypress supplies the read side of this workflow through Cloud MCP or the [Cloud CLI](#Cypress-Cloud-CLI). Both are read-only, so the write side comes from your tracker's own MCP server or CLI, which Jira, GitHub, and Linear all publish. Connect both to the same agent before you start.
 
 :::note
 
@@ -161,7 +178,7 @@ Then list the issues you created with their keys, and tell me anything you skipp
 
 Once you trust the sequence, save both prompts as a custom instruction or skill in your AI client so the whole team refreshes the backlog the same way. Keep the approval step between them: creating issues is a write, and reading the plan first is what keeps a batch you did not intend out of your tracker.
 
-For a first sweep through a large backlog, work from a [downloaded report](#Work-with-a-downloaded-report) instead of live queries. Cloud MCP returns rule failures up to 25 at a time within a limit of 100 tool requests per hour, and a run with hundreds of failing elements can spend that budget on pagination alone. The file also carries an **Element URL** for every row, which is the link you want in the ticket body.
+For a first sweep through a large backlog, use the [Cloud CLI](#Cypress-Cloud-CLI) or a [downloaded report](#Work-with-a-downloaded-report) instead of Cloud MCP. Cloud MCP returns rule failures up to 25 at a time within a limit of 100 tool requests per hour, and a run with hundreds of failing elements can spend that budget on pagination alone. `cy-cloud accessibility element list` returns up to 200 elements per request, and a downloaded file holds the whole run. Both carry an **Element URL** for every failing element, which is the link you want in the ticket body. To run the prompts above with the CLI, replace "using Cypress Cloud MCP" with "using the cy-cloud CLI".
 
 Refresh on a cadence that matches how fast the report changes, such as weekly against the latest `main` run. This workflow is for the backlog on your main branch: catching a violation a pull request is about to introduce is a different job, and a faster one, because nobody has to file anything. See [Catch accessibility regressions](/accessibility/guides/detect-changes) and [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
 

@@ -225,18 +225,15 @@ open a pull request (PR) from your repo to the
   PR. This will make it easier for the maintainers to make minor adjustments, to
   help with tests or any other changes we may need.
   ![Allow edits from maintainers checkbox](https://user-images.githubusercontent.com/1271181/31393427-b3105d44-ada9-11e7-80f2-0dac51e3919e.png)
-- All PRs against `main` will automatically create a deploy preview URL with
-  Netlify. The deploy preview can be accessed via the PR's
-  `netlify-cypress-docs/deploy-preview` status check:
-
-![Netlify deploy preview status check](https://user-images.githubusercontent.com/11802078/113176533-36b79680-9212-11eb-8aec-898d0f5047df.png)
-
-- All branches will automatically create a branch deploy preview. The branch
-  deploy previews do not appear as a GitHub status check like deploy previews.
-  You can view your branch's deploy preview by visiting
-  `https://$BRANCH_NAME--cypress-docs.netlify.app` where `$BRANCH_NAME` is your
-  git branch name. For example, if my branch was named `my-branch`, my branch
-  preview will be available at `https://my-branch--cypress-docs.netlify.app`.
+- A PR opened from a branch in this repository gets a preview of the built
+  site, hosted on Cloudflare and updated on every push. Open it from the
+  **Details** link on the PR's `cloudflare/preview` status check, or visit
+  `https://pr-<number>-cypress-documentation.cypress-io.workers.dev`, where
+  `<number>` is the PR number.
+- A PR opened from a fork doesn't get a preview, because building one needs
+  credentials that GitHub doesn't share with forks. To check your changes, run
+  `npm run build` and then `npm run serve`, and open
+  [http://localhost:3000](http://localhost:3000).
 
 ### Contributor License Agreement
 

@@ -45,6 +45,7 @@ import ProductHeading from '@site/src/components/product-heading'
 import AppQualityConfigEditing from '@site/docs/partials/_app-quality-config-editing.mdx'
 import AppQualityConfigWhoCanEdit from '@site/docs/partials/_app-quality-config-who-can-edit.mdx'
 import Profiles from '@site/docs/partials/_profiles.mdx'
+import ReportRunChecksGithub from '@site/docs/partials/_report-run-checks-github.mdx'
 import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
 import ScrollToVsScrollIntoView from '@site/docs/partials/_scrollto-vs-scrollintoview.mdx'
 import SignificantAttributesValidation from '@site/docs/partials/_significantattributes-validation.mdx'
@@ -251,6 +252,7 @@ export default {
   AppQualityConfigEditing,
   AppQualityConfigWhoCanEdit,
   Profiles,
+  ReportRunChecksGithub,
   RecordKeyEnvVar,
   ScrollToVsScrollIntoView,
   SignificantAttributesValidation,
