@@ -1,13 +1,12 @@
-// Injects the Fullstory data capture snippet into every page's <head>, but
-// only for production builds (NODE_ENV 'production') that have
-// FULLSTORY_ORG_ID set. Local dev, and CI builds that don't set the variable,
-// get no snippet, so they never send sessions to Fullstory or load fs.js with
-// an "undefined" org ID.
+// Adds the Fullstory data capture snippet to every page's <head> in production
+// builds (NODE_ENV is 'production') that set FULLSTORY_ORG_ID. A build without
+// the org ID, such as a CI build, gets no snippet, so it never loads fs.js for
+// an org that doesn't exist. The dev server never gets the snippet.
 //
-// The snippet below is SnippetSrc from @fullstory/snippet@2.1.0, copied
-// verbatim. Its four $FS_*$ placeholders are filled with JSON.stringify, the
-// same way the package's injectSnippetArgs() does. To upgrade, copy the new
-// SnippetSrc rather than editing the minified code by hand.
+// The snippet is SnippetSrc from @fullstory/snippet@2.1.0, copied verbatim.
+// JSON.stringify fills its four $FS_*$ placeholders, as the package's own
+// injectSnippetArgs() does. To upgrade, copy the new SnippetSrc instead of
+// editing the minified code by hand.
 
 const FULLSTORY_HOST = 'fullstory.com'
 const FULLSTORY_SCRIPT = 'edge.fullstory.com/s/fs.js'
