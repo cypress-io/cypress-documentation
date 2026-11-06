@@ -15,4 +15,8 @@
   // Required for `wrangler preview`, which builds the per-branch PR previews.
   // Empty because previews reuse the assets settings above.
   "previews": {},
+  // Serves production at docs.cypress.io, keeping the domain attached on every
+  // deploy. Cloudflare can't attach it while another DNS record exists for the
+  // hostname, so deploys fail until that record is deleted.
+  "routes": [{ "pattern": "docs.cypress.io", "custom_domain": true }],
 }
