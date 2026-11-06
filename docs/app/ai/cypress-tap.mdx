@@ -48,6 +48,9 @@ output can still change in any release while we gather feedback.
 Start Cypress in open mode (`cypress open`) in your project, select your testing type and a chromium browser, then run
 `cypress tap` commands from the same project directory in another terminal.
 
+In a cloud agent or other sandbox, start the session from the agent itself. See
+[Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes).
+
 The CLI finds the running Cypress session on its own. If more than one is
 running, it prefers the one whose project matches your current directory. Use
 `--session <pid>` (or `-s`) to target a specific session.
@@ -64,7 +67,7 @@ result when passed `--json`. Agents and scripts should prefer `--json`.
 
 No Cypress Cloud account and no paid subscription are required. `cypress tap`
 ships with the Cypress App you already have and drives the open mode
-session on your own machine, so there is nothing to sign up for and no usage
+session on the same machine or sandbox as the CLI, so there is nothing to sign up for and no usage
 limits to track. That holds whether or not you record runs to Cypress Cloud.
 
 ## Available commands
@@ -1087,7 +1090,8 @@ Together these tools provide the availability for you or an AI agent to fully en
 
 - **`status` reports `not connected`.** No Cypress session was found for this
   directory. Start one with `cypress open`, and remember that headless
-  `cypress run` sessions are never discoverable.
+  `cypress run` sessions are never discoverable. In an agent sandbox, also see
+  [Troubleshooting](/app/tooling/cypress-agent-sandboxes#Troubleshooting).
 
 - **`status` stays `loading` and never reaches a verdict.** The selected spec is
   waiting on its own build. A spec that fails to compile never starts a run, so
@@ -1131,6 +1135,8 @@ Cypress does capture telemetry specifically around the usage of the CLI to infor
 - `dom`, `aria`, `inspect`, and `pin` work only on a completed run. While a
   spec is running they fail with `SPEC_IN_PROGRESS` until the run reports a
   verdict.
+- The CLI and the Cypress session must run on the same machine, container, or
+  sandbox. See [Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes).
 - Firefox and WebKit are not supported. `cypress tap` only supports Chromium-family browsers.
 - `cypress tap` drives the same session you are looking at, and there is no
   lock between the two. Starting a run from the app, switching spec, or
@@ -1140,6 +1146,8 @@ Cypress does capture telemetry specifically around the usage of the CLI to infor
 
 ## See also
 
+- [Run cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes):
+  set up Claude Code on the web, Cursor Cloud, or a local sandbox
 - [Cypress AI Skills](/app/tooling/ai-skills): teach your agent to write and
   review Cypress tests
 - [Cloud MCP](/cloud/integrations/cloud-mcp): give your agent access to
