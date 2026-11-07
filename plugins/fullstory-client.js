@@ -1,6 +1,28 @@
+import globalData from '@generated/globalData'
 import sectionTitles from '@site/src/sectionTitles'
 
-const { DEFAULT_SECTION_NAME, SECTION_NAME, titleSuffixForUrl } = sectionTitles
+const {
+  DEFAULT_SECTION_NAME,
+  SECTION_NAME,
+  productForDocId,
+  titleSuffixForUrl,
+} = sectionTitles
+
+const withoutTrailingSlash = (path) => path.replace(/(.)\/$/, '$1')
+
+// The docs plugin's global data, already in every page's bundle, pairs each
+// doc's URL with its id, which keeps the source folder the product comes from.
+const docIdByPath = new Map(
+  Object.values(globalData['docusaurus-plugin-content-docs'] || {})
+    .flatMap((plugin) => plugin.versions)
+    .flatMap((version) => version.docs)
+    .map((doc) => [withoutTrailingSlash(doc.path), doc.id])
+)
+
+function productForPath(pathname) {
+  const docId = docIdByPath.get(withoutTrailingSlash(pathname))
+  return docId === undefined ? undefined : productForDocId(docId)
+}
 
 function pageProperties(pathname) {
   const section = pathname.replace(/^\//, '').split('/')[0]
@@ -12,10 +34,15 @@ function pageProperties(pathname) {
   // The section prefix keeps pages that share a title, in different
   // sections, apart as separate Fullstory Pages.
   const sectionName = SECTION_NAME[section] || DEFAULT_SECTION_NAME
+  const product = productForPath(pathname)
   return {
     pageName: `${sectionName}: ${docTitle}`,
     section: section || '(none)',
     docTitle,
+    // www.cypress.io sends the same two properties, so one funnel can follow a
+    // reader across both sites and into Cypress Cloud.
+    pageType: 'docs',
+    ...(product && { product }),
   }
 }
 

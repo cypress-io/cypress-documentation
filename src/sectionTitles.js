@@ -10,7 +10,8 @@
  * server-rendered HTML and at runtime), and asserted by
  * cypress/e2e/page_titles.cy.ts.
  *
- * The keys are the first URL path segment of the section.
+ * A section is the first segment of a page's URL, which is how every map here
+ * is keyed except FOLDER_PRODUCT.
  */
 const DEFAULT_TITLE_SUFFIX = 'Cypress Documentation'
 
@@ -36,10 +37,43 @@ const SECTION_NAME = {
   'ui-coverage': 'UI Coverage',
 }
 
+/**
+ * The Fullstory `product` property for each folder under docs/, matched by the
+ * folder a page's source file sits in rather than by its URL, because one
+ * folder's pages publish under several paths (docs/app/ai/ publishes under
+ * /app/ai, /app/guides, and /app/tooling). The deepest listed folder wins.
+ *
+ * The values are www.cypress.io's, since the two sites and Cypress Cloud record
+ * into one Fullstory org and a funnel filters on the value they share. A page
+ * in no listed folder sends no `product`.
+ */
+const FOLDER_PRODUCT = {
+  accessibility: 'accessibility',
+  api: 'app',
+  app: 'app',
+  'app/ai': 'ai',
+  cloud: 'cloud',
+  'ui-coverage': 'ui-coverage',
+}
+
 /** The expected " | …" suffix for a given route/URL (no leading slash needed). */
 function titleSuffixForUrl(url) {
   const segment = String(url).replace(/^\//, '').split('/')[0]
   return SECTION_TITLE_SUFFIX[segment] || DEFAULT_TITLE_SUFFIX
+}
+
+/**
+ * The Fullstory `product` for a doc, from its Docusaurus doc id: the source
+ * file's path under docs/ without the extension ("app/ai/overview").
+ * Undefined when the doc is in no listed folder.
+ */
+function productForDocId(docId) {
+  const folders = String(docId).split('/').slice(0, -1)
+  for (let depth = folders.length; depth > 0; depth--) {
+    const product = FOLDER_PRODUCT[folders.slice(0, depth).join('/')]
+    if (product) return product
+  }
+  return undefined
 }
 
 module.exports = {
@@ -47,5 +81,6 @@ module.exports = {
   DEFAULT_TITLE_SUFFIX,
   SECTION_NAME,
   SECTION_TITLE_SUFFIX,
+  productForDocId,
   titleSuffixForUrl,
 }
