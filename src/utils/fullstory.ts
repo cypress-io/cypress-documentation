@@ -23,13 +23,9 @@ export interface FullStoryEvents {
   'Page Markdown Viewed': { pagePath: string }
 }
 
-export type FullStoryEventName = keyof FullStoryEvents
-
-type FullStoryApi = (method: string, options?: unknown) => unknown
-
 declare global {
   interface Window {
-    FS?: unknown
+    FS?: (method: string, options?: unknown) => unknown
   }
 }
 
@@ -38,7 +34,7 @@ declare global {
  * org ID, no Analytics consent, an ad blocker), and never throws, so tracking
  * can't break the interaction that triggered it.
  */
-export function trackFullStoryEvent<Name extends FullStoryEventName>(
+export function trackFullStoryEvent<Name extends keyof FullStoryEvents>(
   name: Name,
   properties: FullStoryEvents[Name]
 ): void {
@@ -46,7 +42,7 @@ export function trackFullStoryEvent<Name extends FullStoryEventName>(
     return
   }
   try {
-    ;(window.FS as FullStoryApi)('trackEvent', { name, properties })
+    window.FS('trackEvent', { name, properties })
   } catch {}
 }
 

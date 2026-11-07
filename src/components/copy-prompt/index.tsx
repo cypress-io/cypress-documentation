@@ -81,17 +81,15 @@ export default function CopyPrompt({
   }
 
   const copyPrompt = async () => {
-    // Read before the write: the event describes the page and card as they
-    // were when the reader clicked.
+    // Read before the write: the event names the page the reader clicked on.
     const pagePath = currentPagePath()
-    const promptWasVisible = expanded
     if (!(await copyToClipboard(prompt))) {
       return
     }
     trackFullStoryEvent('AI Prompt Copied', {
       promptTitle: title,
       pagePath,
-      promptWasVisible,
+      promptWasVisible: expanded,
     })
     setCopied(true)
     clearTimeout(resetTimeout.current)

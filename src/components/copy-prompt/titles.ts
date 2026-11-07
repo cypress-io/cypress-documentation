@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
+import { escapeMarkdownHeadingIds } from '@docusaurus/utils'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkMdx from 'remark-mdx'
@@ -12,13 +13,27 @@ export interface CopyPromptCard {
   title: string | null
 }
 
+interface Expression {
+  type: string
+  value?: unknown
+  expressions?: unknown[]
+  quasis?: Array<{ value: { cooked?: string | null } }>
+}
+
 interface MdxNode {
   type: string
   name?: string | null
   attributes?: Array<{
     type: string
     name?: string
-    value?: string | null | { type: string; value: string }
+    value?:
+      | string
+      | null
+      | {
+          data?: {
+            estree?: { body: Array<{ expression?: Expression }> }
+          }
+        }
   }>
   children?: MdxNode[]
   position?: { start: { line: number } }
@@ -26,35 +41,43 @@ interface MdxNode {
 
 const parser = unified().use(remarkParse).use(remarkMdx).use(remarkFrontmatter)
 
-// Docusaurus accepts two MDX 1 leftovers that plain MDX rejects: HTML comments
-// and `{#id}` heading anchors. Blank the first and escape the second the way
-// its preprocessor does, keeping every line where it was so the reported line
-// numbers match the file.
+// Docusaurus accepts two MDX 1 leftovers that plain MDX rejects: HTML comments,
+// which it parses with a remark plugin, and `{#id}` heading anchors, which its
+// preprocessor escapes. Comments are blanked rather than removed so every line
+// stays where it was and the reported line numbers match the file.
 function docusaurusCompatible(source: string): string {
-  return source
-    .replace(/<!--[\s\S]*?-->/g, (comment) => comment.replace(/[^\n]/g, ' '))
-    .replace(/^(#{1,6}[ \t].*?)\{#([^}]+)\}[ \t]*$/gm, '$1\\{#$2\\}')
+  return escapeMarkdownHeadingIds(
+    source.replace(/<!--[\s\S]*?-->/g, (comment) =>
+      comment.replace(/[^\n]/g, ' ')
+    )
+  )
 }
 
-// `title="…"`, or a `title={…}` expression that is a single quoted or template
-// string with no interpolation. Anything else can't be read without running
-// the page, so it counts as missing.
+// A string or a `{…}` expression that is one string literal or a template with
+// no interpolation. Anything else can't be read without running the page, so
+// it counts as missing.
 function staticTitle(node: MdxNode): string | null {
-  const attribute = node.attributes?.find(
+  const value = node.attributes?.find(
     (a) => a.type === 'mdxJsxAttribute' && a.name === 'title'
-  )
-  const value = attribute?.value
-  let title: string | null = null
-  if (typeof value === 'string') {
-    title = value
-  } else if (value && typeof value === 'object') {
-    const match = value.value
-      .trim()
-      .match(/^(['"`])((?:(?!\1)[^\\$]|\\.)*)\1$/s)
-    title = match ? match[2] : null
+  )?.value
+  if (typeof value === 'string') return nonEmpty(value)
+  const expression =
+    value && typeof value === 'object'
+      ? value.data?.estree?.body[0]?.expression
+      : undefined
+  if (expression?.type === 'Literal' && typeof expression.value === 'string') {
+    return nonEmpty(expression.value)
   }
-  return title && title.trim() ? title.trim() : null
+  if (
+    expression?.type === 'TemplateLiteral' &&
+    expression.expressions?.length === 0
+  ) {
+    return nonEmpty(expression.quasis?.[0]?.value.cooked)
+  }
+  return null
 }
+
+const nonEmpty = (title: string | null | undefined) => title?.trim() || null
 
 export function findCopyPrompts(
   source: string,
@@ -77,13 +100,6 @@ export function findCopyPrompts(
   }
   visit(parser.parse(docusaurusCompatible(source)) as MdxNode)
   return cards
-}
-
-export function mdxFiles(dir: string): string[] {
-  return readdirSync(dir, { withFileTypes: true, recursive: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.mdx'))
-    .map((entry) => path.join(entry.parentPath, entry.name))
-    .sort()
 }
 
 export function titleProblems(cards: CopyPromptCard[]): string[] {
@@ -111,8 +127,20 @@ export function titleProblems(cards: CopyPromptCard[]): string[] {
   return problems
 }
 
-export function readCopyPrompts(docsDir: string, root: string) {
-  return mdxFiles(docsDir).flatMap((file) =>
-    findCopyPrompts(readFileSync(file, 'utf8'), path.relative(root, file))
-  )
+/** Every card in `root`/docs, with paths relative to `root`. */
+export function readCopyPrompts(root: string): CopyPromptCard[] {
+  return readdirSync(path.join(root, 'docs'), {
+    withFileTypes: true,
+    recursive: true,
+  })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.mdx'))
+    .map((entry) => path.join(entry.parentPath, entry.name))
+    .sort()
+    .flatMap((file) => {
+      const source = readFileSync(file, 'utf8')
+      // Parsing is the slow part, and most pages have no card.
+      return source.includes('<CopyPrompt')
+        ? findCopyPrompts(source, path.relative(root, file))
+        : []
+    })
 }

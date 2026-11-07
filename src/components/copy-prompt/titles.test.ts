@@ -6,7 +6,7 @@ import { findCopyPrompts, readCopyPrompts, titleProblems } from './titles'
 // title merges cards that analytics needs to tell apart.
 describe('CopyPrompt titles in docs/', () => {
   const root = path.resolve(__dirname, '../../..')
-  const cards = readCopyPrompts(path.join(root, 'docs'), root)
+  const cards = readCopyPrompts(root)
 
   test('finds the cards', () => {
     expect(cards.length).toBeGreaterThan(0)
@@ -31,7 +31,7 @@ describe('findCopyPrompts', () => {
       '',
       '<CopyPrompt title="One" prompt="a" />',
       '',
-      "<CopyPrompt title={'Two'} prompt={`b <with> /> markup`} />",
+      "<CopyPrompt title={'Save $5 on Two'} prompt={`b <with> /> markup`} />",
       '',
       '<CopyPrompt',
       '  title={`Three`}',
@@ -46,7 +46,7 @@ describe('findCopyPrompts', () => {
 
     expect(findCopyPrompts(source, 'page.mdx')).toEqual([
       { file: 'page.mdx', line: 10, title: 'One' },
-      { file: 'page.mdx', line: 12, title: 'Two' },
+      { file: 'page.mdx', line: 12, title: 'Save $5 on Two' },
       { file: 'page.mdx', line: 14, title: 'Three' },
     ])
   })
@@ -58,11 +58,13 @@ describe('findCopyPrompts', () => {
       '<CopyPrompt title="  " prompt="b" />',
       '',
       '<CopyPrompt title={`${name}`} prompt="c" />',
+      '',
+      '<CopyPrompt title={label} prompt="d" />',
     ].join('\n')
 
     expect(
       findCopyPrompts(source, 'page.mdx').map((card) => card.title)
-    ).toEqual([null, null, null])
+    ).toEqual([null, null, null, null])
   })
 })
 

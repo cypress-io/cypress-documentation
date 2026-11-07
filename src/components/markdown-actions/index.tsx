@@ -7,7 +7,11 @@ import Icon from '@cypress-design/react-icon'
 import Select, { type SelectItem } from '@cypress-design/react-select'
 import { markdownPathFor } from '@site/src/utils/markdown-url'
 import { copyPendingText } from '@site/src/utils/copy-to-clipboard'
-import { currentPagePath, trackFullStoryEvent } from '@site/src/utils/fullstory'
+import {
+  currentPagePath,
+  trackFullStoryEvent,
+  type MarkdownDestination,
+} from '@site/src/utils/fullstory'
 import s from './style.module.css'
 
 /** How long the button keeps showing the result of the last copy. */
@@ -102,6 +106,14 @@ export default function MarkdownActions(): React.JSX.Element {
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
+  const openInAssistant = (destination: MarkdownDestination, url: string) => {
+    trackFullStoryEvent('Page Markdown Opened', {
+      pagePath: currentPagePath(),
+      destination,
+    })
+    openInNewTab(url)
+  }
+
   const runAction = (action: string | undefined) => {
     switch (action) {
       case 'copy':
@@ -114,20 +126,16 @@ export default function MarkdownActions(): React.JSX.Element {
         openInNewTab(markdownPath)
         return
       case 'chatgpt':
-        trackFullStoryEvent('Page Markdown Opened', {
-          pagePath: currentPagePath(),
-          destination: 'ChatGPT',
-        })
-        openInNewTab(
+        openInAssistant(
+          'ChatGPT',
           `https://chatgpt.com/?hints=search&prompt=${encodeURIComponent(prompt)}`
         )
         return
       case 'claude':
-        trackFullStoryEvent('Page Markdown Opened', {
-          pagePath: currentPagePath(),
-          destination: 'Claude',
-        })
-        openInNewTab(`https://claude.ai/new?q=${encodeURIComponent(prompt)}`)
+        openInAssistant(
+          'Claude',
+          `https://claude.ai/new?q=${encodeURIComponent(prompt)}`
+        )
     }
   }
 
