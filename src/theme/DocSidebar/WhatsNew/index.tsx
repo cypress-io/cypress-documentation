@@ -9,7 +9,6 @@ import type { WindiColor } from '@cypress-design/react-icon'
 import {
   SURFACES,
   conversionLinkAttributes,
-  labelLinkDescendants,
 } from '@site/plugins/fullstory-conversion-links'
 
 
@@ -32,18 +31,10 @@ export default function WhatsNew({ path, onLinkClick }: { path: string; onLinkCl
   const section = getSection(path)
   const [dismissed, setDismissed] = React.useState(true)
   const items = getWhatsNewItems(path)
-  const listRef = React.useRef<HTMLUListElement>(null)
 
   React.useEffect(() => {
     setDismissed(readDismissedFromLocalStorage(section))
   }, [section])
-
-  // The list renders only after the dismissed check above, so the descendants
-  // of each conversion link get its Fullstory label here rather than from the
-  // route-change pass in plugins/fullstory-conversion-links-client.js.
-  React.useEffect(() => {
-    listRef.current?.querySelectorAll('a').forEach(labelLinkDescendants)
-  })
 
   if (items.length === 0 || dismissed) {
     return null
@@ -66,7 +57,7 @@ export default function WhatsNew({ path, onLinkClick }: { path: string; onLinkCl
           <IconActionDeleteMedium strokeColor={'currentColor' as WindiColor} />
         </Button>
       </div>
-      <ul className={styles.list} ref={listRef}>
+      <ul className={styles.list}>
         {items.map((item) => (
           <li key={item.href}>
             <Link

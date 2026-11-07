@@ -17,6 +17,7 @@ const {
   SURFACES,
   conversionLinkAttributes,
 } = require('./plugins/fullstory-conversion-links')
+const rehypeFullStoryConversionLinks = require('./plugins/fullstory-conversion-links-rehype')
 
 // Adds Fullstory conversion link attributes to the links that lead toward a
 // conversion or Cypress Cloud. Every other link passes through unchanged.
@@ -96,6 +97,7 @@ const config = {
               },
             ],
           ],
+          rehypePlugins: [rehypeFullStoryConversionLinks],
           showLastUpdateTime: true,
         },
         blog: false,
@@ -215,6 +217,10 @@ const config = {
         //give id a unique value to get a new announcement bar to appear
         id: 'cypressconf-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
+        // The content is raw HTML, so nothing labels its links for Fullstory. A
+        // link to pricing, a trial, sales, a product page, or Cloud needs the
+        // attributes from conversionLinkAttributes(href, SURFACES.announcement)
+        // written into the <a>.
         content: `🌟 Join teams building and shipping quality applications with confidence at CypressConf 2026, October 20-22. <a href="https://cypress.registration.goldcast.io/events/670deb6c-06ee-4ce8-858b-8a4db3a62eb1?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=cypressconf2026">Register today</a>`,
         isCloseable: true,
       },

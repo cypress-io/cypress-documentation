@@ -1,12 +1,9 @@
 import { describe, expect, test } from 'vitest'
 import conversionLinks from './fullstory-conversion-links.js'
+import rehypeFullStoryConversionLinks from './fullstory-conversion-links-rehype.js'
 
-const {
-  classifyLink,
-  linkPlacement,
-  conversionLinkAttributes,
-  labelLinkDescendants,
-} = conversionLinks
+const { classifyLink, linkPlacement, conversionLinkAttributes } =
+  conversionLinks
 
 describe('classifyLink', () => {
   test.each([
@@ -121,60 +118,75 @@ describe('conversionLinkAttributes', () => {
   })
 })
 
-describe('labelLinkDescendants', () => {
-  // Just enough of Element for the helper. The e2e spec covers the real DOM.
-  class FakeElement {
-    constructor(attributes = {}, children = []) {
-      this.attributes = new Map(Object.entries(attributes))
-      this.children = children
-    }
-    hasAttribute(name) {
-      return this.attributes.has(name)
-    }
-    getAttribute(name) {
-      return this.attributes.has(name) ? this.attributes.get(name) : null
-    }
-    setAttribute(name, value) {
-      this.attributes.set(name, value)
-    }
-    querySelectorAll(selector) {
-      expect(selector).toBe('*')
-      return this.children.flatMap((child) => [
-        child,
-        ...child.querySelectorAll('*'),
-      ])
-    }
+describe('rehypeFullStoryConversionLinks', () => {
+  const run = (tree) => {
+    rehypeFullStoryConversionLinks()(tree)
+    return tree
   }
+  const link = (href, children = [], properties = {}) => ({
+    type: 'element',
+    tagName: 'a',
+    properties: { href, ...properties },
+    children,
+  })
+  const root = (...children) => ({
+    type: 'root',
+    children: [{ type: 'element', tagName: 'p', properties: {}, children }],
+  })
 
-  const pricing = conversionLinkAttributes(
-    'https://www.cypress.io/pricing',
-    'Docs Content'
-  )
+  test('labels a Markdown conversion link, inline code and all', () => {
+    const code = {
+      type: 'element',
+      tagName: 'code',
+      properties: {},
+      children: [{ type: 'text', value: 'cypress open' }],
+    }
+    const a = link('https://cloud.cypress.io/login?utm_medium=cli-tip', [code])
+    run(root(a))
+    expect(a.properties).toEqual({
+      href: 'https://cloud.cypress.io/login?utm_medium=cli-tip',
+      dataFsElement: 'Docs Content - Cloud Log In',
+      dataLinkPlacement: 'cli-tip',
+      dataFsPropertiesSchema: '{"data-link-placement":"str"}',
+    })
+    // pointer-events: none on descendants sends the click to the <a>.
+    expect(code.properties).toEqual({})
+  })
 
-  test('copies a conversion link’s attributes to every descendant', () => {
-    const code = new FakeElement()
-    const path = new FakeElement()
-    const svg = new FakeElement({}, [path])
-    const a = new FakeElement(pricing, [code, svg])
-    labelLinkDescendants(a)
-    ;[code, svg, path].forEach((child) => {
-      expect(Object.fromEntries(child.attributes)).toEqual(pricing)
+  test('leaves other links and existing labels alone', () => {
+    const other = link('/api/commands/visit')
+    const labeled = link('https://www.cypress.io/pricing', [], {
+      dataFsElement: 'Own Label',
+    })
+    run(root(other, labeled))
+    expect(other.properties).toEqual({ href: '/api/commands/visit' })
+    expect(labeled.properties).toEqual({
+      href: 'https://www.cypress.io/pricing',
+      dataFsElement: 'Own Label',
     })
   })
 
-  test('keeps a descendant’s own label', () => {
-    const span = new FakeElement({ 'data-fs-element': 'Own Label' })
-    labelLinkDescendants(new FakeElement(pricing, [span]))
-    expect(Object.fromEntries(span.attributes)).toEqual({
-      'data-fs-element': 'Own Label',
+  test('labels an <a> written as JSX with a literal href', () => {
+    const jsx = {
+      type: 'mdxJsxTextElement',
+      name: 'a',
+      attributes: [
+        {
+          type: 'mdxJsxAttribute',
+          name: 'href',
+          value: 'https://on.cypress.io/cloud',
+        },
+      ],
+      children: [],
+    }
+    run(root(jsx))
+    expect(
+      Object.fromEntries(jsx.attributes.map((a) => [a.name, a.value]))
+    ).toEqual({
+      href: 'https://on.cypress.io/cloud',
+      'data-fs-element': 'Docs Content - Open Cloud',
+      'data-link-placement': 'none',
+      'data-fs-properties-schema': '{"data-link-placement":"str"}',
     })
-  })
-
-  test('leaves links that are not conversion links alone', () => {
-    const code = new FakeElement()
-    labelLinkDescendants(
-      new FakeElement({ 'data-fs-element': 'Something Else' }, [code])
-    )
-    expect(code.attributes.size).toBe(0)
   })
 })

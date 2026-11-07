@@ -4,8 +4,10 @@
 // with every surface prefixed "Docs" so they stay apart from that site's own
 // labels in the shared Fullstory org.
 //
-// CommonJS so docusaurus.config.js can require it for the footer as well as
-// the client module and components importing it.
+// CommonJS so docusaurus.config.js (footer, navbar) and the rehype plugin
+// (Markdown links) can require it, as well as the components importing it.
+// Nested elements inside a labeled link are handled by a pointer-events rule
+// in src/css/custom.scss, so every click lands on the labeled <a> itself.
 
 const SURFACES = {
   content: 'Docs Content',
@@ -125,37 +127,9 @@ function conversionLinkAttributes(href, surface, base) {
   }
 }
 
-const COPIED_ATTRIBUTES = [
-  'data-fs-element',
-  'data-link-placement',
-  'data-fs-properties-schema',
-]
-
-/**
- * Copies a labeled conversion link's attributes onto every descendant without a label of
- * its own. Fullstory reports a click on a nested element that has its own
- * classes (inline code, an icon) under that element rather than the link.
- *
- * @param {Element} link
- */
-function labelLinkDescendants(link) {
-  // data-link-placement marks a conversion link; other labeled links keep
-  // whatever their own code gave their descendants.
-  if (!link.hasAttribute('data-fs-element')) return
-  if (!link.hasAttribute('data-link-placement')) return
-  link.querySelectorAll('*').forEach((child) => {
-    if (child.hasAttribute('data-fs-element')) return
-    COPIED_ATTRIBUTES.forEach((name) => {
-      const value = link.getAttribute(name)
-      if (value !== null) child.setAttribute(name, value)
-    })
-  })
-}
-
 module.exports = {
   SURFACES,
   classifyLink,
   linkPlacement,
   conversionLinkAttributes,
-  labelLinkDescendants,
 }

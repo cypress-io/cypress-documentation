@@ -1,170 +1,184 @@
 // Links toward a possible conversion, or toward an existing Cypress Cloud
 // account, carry a Fullstory label naming where on the page they sit and where
-// they lead, plus their utm_medium as a typed property. Fullstory reports a
-// click on a nested element (inline code, an icon) under that element, so
-// each descendant has to carry the same attributes as the link.
+// they lead, plus their utm_medium as a typed property. The labels are built
+// into the HTML (plugins/fullstory-conversion-links-rehype.js for Markdown,
+// the components and docusaurus.config.js for the rest), and a pointer-events
+// rule sends clicks on a link's nested elements to the labeled link.
 const SCHEMA = '{"data-link-placement":"str"}'
 
-function shouldBeLabeled(
-  $link: JQuery<HTMLElement>,
-  label: string,
-  placement: string
-) {
-  const elements = [$link[0], ...Array.from($link[0].querySelectorAll('*'))]
-  elements.forEach((element) => {
-    const name = element.tagName.toLowerCase()
-    expect(element.getAttribute('data-fs-element'), name).to.eq(label)
-    expect(element.getAttribute('data-link-placement'), name).to.eq(placement)
-    expect(element.getAttribute('data-fs-properties-schema'), name).to.eq(
-      SCHEMA
-    )
-  })
+function expectLabel(link: Element, label: string, placement: string) {
+  expect(link.getAttribute('data-fs-element'), 'label').to.eq(label)
+  expect(link.getAttribute('data-link-placement'), 'placement').to.eq(placement)
+  expect(link.getAttribute('data-fs-properties-schema'), 'schema').to.eq(SCHEMA)
 }
 
-function link(selector: string, text?: string) {
-  return text ? cy.contains(selector, text) : cy.get(selector)
+// The server-rendered HTML, which is what every client render starts from.
+function serverRendered(path: string) {
+  return cy
+    .request(path)
+    .its('body')
+    .then((html: string) => new DOMParser().parseFromString(html, 'text/html'))
+}
+
+function linkByText(doc: Document, selector: string, text: string) {
+  const link = Array.from(doc.querySelectorAll(selector)).find((a) =>
+    a.textContent?.includes(text)
+  )
+  // Not .to.exist: Cypress treats an element outside the page as missing.
+  expect(link, `${selector} "${text}"`).not.to.be.undefined
+  return link!
+}
+
+// Clear of the sticky navbar, so elementFromPoint finds the link.
+function scrollToCenter($link: JQuery<HTMLElement>) {
+  $link[0].scrollIntoView({ block: 'center' })
+  return $link
+}
+
+// A click anywhere on a visible nested element reaches the link itself.
+function expectClicksLandOnLink($link: JQuery<HTMLElement>) {
+  const visible = Array.from($link[0].querySelectorAll('*')).filter((child) => {
+    const box = child.getBoundingClientRect()
+    return box.width > 0 && box.height > 0
+  })
+  // Fails rather than passing with nothing to check.
+  expect(visible.length, 'visible nested elements').to.be.greaterThan(0)
+  visible.forEach((child) => {
+    const box = child.getBoundingClientRect()
+    const hit = child.ownerDocument.elementFromPoint(
+      box.left + box.width / 2,
+      box.top + box.height / 2
+    )
+    expect(hit, child.tagName.toLowerCase()).to.eq($link[0])
+  })
 }
 
 describe('Fullstory conversion link labels', () => {
-  it('labels a pricing link in the article body', () => {
-    cy.visit('/cloud/get-started/free-trial')
-    link('.theme-doc-markdown a', 'Enterprise plan').should(($link) =>
-      shouldBeLabeled($link, 'Docs Content - Pricing', 'free-trial')
-    )
-  })
-
-  it('labels a button link and its icon', () => {
-    cy.visit('/cloud/get-started/introduction')
-    link(
-      '.theme-doc-markdown a[href="https://cloud.cypress.io/projects/7s5okt"]'
-    )
-      .first()
-      .should(($link) => {
-        expect($link.find('svg path')).to.have.length.at.least(1)
-        shouldBeLabeled($link, 'Docs Content - Open Cloud', 'none')
-      })
-  })
-
-  // No conversion link in the docs wraps inline code today, so the test adds
-  // one to the article, then changes the route's hash so the client module's
-  // route-change pass labels it, as it would a Markdown link like
-  // [`cypress open`](https://cloud.cypress.io/login).
-  it('labels a link with inline code inside it, and its <code>', () => {
-    cy.visit('/cloud/get-started/free-trial')
-    cy.get('.theme-doc-markdown p')
-      .first()
-      .then(($p) => {
-        $p.append(
-          '<a id="code-link" href="https://cloud.cypress.io/login?utm_medium=cli-tip"><code>cypress open</code></a>'
+  describe('in the server-rendered HTML', () => {
+    it('labels Markdown links by destination and placement', () => {
+      serverRendered('/cloud/get-started/free-trial').then((doc) => {
+        expectLabel(
+          linkByText(doc, '.theme-doc-markdown a', 'Enterprise plan'),
+          'Docs Content - Pricing',
+          'free-trial'
         )
-      })
-    cy.get('#code-link').should('not.have.attr', 'data-fs-element')
-    cy.window().then((win) => {
-      win.location.hash = 'code-link'
-    })
-    cy.get('#code-link').should(($link) => {
-      expect($link.find('code')).to.have.length(1)
-      shouldBeLabeled($link, 'Docs Content - Cloud Log In', 'cli-tip')
-    })
-  })
-
-  it('labels a link to the free trial guide, without a utm_medium', () => {
-    cy.visit('/app/guides/cypress-studio')
-    link('.theme-doc-markdown a', '30-day trial').should(($link) =>
-      shouldBeLabeled($link, 'Docs Content - Free Trial Guide', 'none')
-    )
-  })
-
-  it('labels links to Cypress Cloud', () => {
-    cy.visit('/app/references/error-messages')
-    link('.theme-doc-markdown a[href="https://on.cypress.io/cloud"]')
-      .first()
-      .should(($link) =>
-        shouldBeLabeled($link, 'Docs Content - Open Cloud', 'none')
-      )
-  })
-
-  it('labels the trial button and product heading, and not the demo button', () => {
-    cy.visit('/accessibility/get-started/introduction')
-    link('.theme-doc-markdown a', 'Request trial').should(($link) =>
-      shouldBeLabeled($link, 'Docs Content - Request Trial', 'intro-cta')
-    )
-    link('.theme-doc-markdown a[href*="utm_medium=product-heading-"]').should(
-      ($link) =>
-        shouldBeLabeled(
-          $link,
-          'Docs Content - Product - Accessibility',
-          'product-heading-accessibility'
-        )
-    )
-    link('.theme-doc-markdown a', 'See a demo').should(
-      'not.have.attr',
-      'data-fs-element'
-    )
-  })
-
-  it('labels the links on a page reached by a client-side route change', () => {
-    cy.visit('/app/guides/cypress-studio')
-    cy.window().then((win) => {
-      ;(win as any).beforeRouteChange = true
-    })
-    cy.contains('.theme-doc-markdown a', '30-day trial').click()
-    cy.location('pathname').should(
-      'match',
-      /^\/cloud\/get-started\/free-trial\/?$/
-    )
-    // Still the same document, so the route-change pass did the labeling.
-    cy.window().its('beforeRouteChange').should('eq', true)
-    link('.theme-doc-markdown a', 'Cypress Cloud Savings Calculator').should(
-      ($link) =>
-        shouldBeLabeled(
-          $link,
+        expectLabel(
+          linkByText(
+            doc,
+            '.theme-doc-markdown a',
+            'Cypress Cloud Savings Calculator'
+          ),
           'Docs Content - Savings Calculator',
           'free-trial'
         )
-    )
-  })
-
-  it('labels a footer link and its external-link icon', () => {
-    cy.visit('/app/get-started/why-cypress')
-    link('.footer a', 'Cypress Cloud').should(($link) => {
-      expect($link.find('svg')).to.have.length(1)
-      shouldBeLabeled($link, 'Docs Footer - Product - Cloud', 'footer')
-    })
-    link('.footer a', 'Careers').should('not.have.attr', 'data-fs-element')
-  })
-
-  // No What's New item leads to a conversion page today, so the test swaps
-  // the first app item's href for a pricing link in the served JavaScript.
-  // What's New renders only in the browser, so there's no server-rendered
-  // HTML to disagree with.
-  it('labels a What’s New link in the sidebar and its descendants', () => {
-    const pricing =
-      'https://www.cypress.io/pricing?utm_medium=nav-promo&utm_source=docs.cypress.io'
-    cy.wrap(
-      Cypress.automation('remote:debugger:protocol', {
-        command: 'Network.clearBrowserCache',
+        // The page's own table of contents is not a link to the guide.
+        doc.querySelectorAll('a[href^="#"]').forEach((a) => {
+          expect(a.getAttribute('data-fs-element'), a.outerHTML).to.be.null
+        })
       })
-    )
-    cy.intercept('GET', '/assets/js/*.js', (req) => {
-      req.continue((res) => {
-        if (typeof res.body === 'string') {
-          res.body = res.body.replace(
-            '"/app/tooling/cypress-tap"',
-            JSON.stringify(pricing)
+      serverRendered('/app/guides/cypress-studio').then((doc) => {
+        expectLabel(
+          linkByText(doc, '.theme-doc-markdown a', '30-day trial'),
+          'Docs Content - Free Trial Guide',
+          'none'
+        )
+      })
+      serverRendered('/app/references/error-messages').then((doc) => {
+        expectLabel(
+          doc.querySelector(
+            '.theme-doc-markdown a[href="https://on.cypress.io/cloud"]'
+          )!,
+          'Docs Content - Open Cloud',
+          'none'
+        )
+      })
+    })
+
+    it('labels the trial button and product heading, and not the demo button', () => {
+      serverRendered('/accessibility/get-started/introduction').then((doc) => {
+        expectLabel(
+          linkByText(doc, '.theme-doc-markdown a', 'Request trial'),
+          'Docs Content - Request Trial',
+          'intro-cta'
+        )
+        expectLabel(
+          doc.querySelector(
+            '.theme-doc-markdown a[href*="utm_medium=product-heading-"]'
+          )!,
+          'Docs Content - Product - Accessibility',
+          'product-heading-accessibility'
+        )
+        expect(
+          linkByText(doc, '.theme-doc-markdown a', 'See a demo').getAttribute(
+            'data-fs-element'
           )
-        }
+        ).to.be.null
       })
     })
-    cy.visit('/app/get-started/why-cypress')
-    link('.theme-doc-sidebar-container a', 'Tap CLI').should(($link) => {
-      expect($link.attr('href')).to.eq(pricing)
-      expect($link.find('span')).to.have.length.at.least(3)
-      shouldBeLabeled($link, 'Docs Sidebar - Pricing', 'nav-promo')
+
+    it('labels footer and sidebar links', () => {
+      serverRendered('/cloud/get-started/introduction').then((doc) => {
+        expectLabel(
+          linkByText(doc, '.footer a', 'Cypress Cloud'),
+          'Docs Footer - Product - Cloud',
+          'footer'
+        )
+        expect(
+          linkByText(doc, '.footer a', 'Careers').getAttribute(
+            'data-fs-element'
+          )
+        ).to.be.null
+        expectLabel(
+          doc.querySelector(
+            '.theme-doc-sidebar-container a[href="/cloud/get-started/free-trial"]'
+          )!,
+          'Docs Sidebar - Free Trial Guide',
+          'none'
+        )
+      })
     })
-    link('.theme-doc-sidebar-container a', 'Cypress Studio AI').should(
-      'not.have.attr',
-      'data-fs-element'
-    )
+  })
+
+  describe('in the browser', () => {
+    it('sends clicks on a button’s icon to the labeled link', () => {
+      cy.visit('/cloud/get-started/introduction')
+      cy.get(
+        '.theme-doc-markdown a[href="https://cloud.cypress.io/projects/7s5okt"]'
+      )
+        .first()
+        .then(scrollToCenter)
+        .should(($link) => {
+          expectLabel($link[0], 'Docs Content - Open Cloud', 'none')
+          expectClicksLandOnLink($link)
+        })
+    })
+
+    it('labels links on a page reached by client-side navigation', () => {
+      cy.visit('/app/guides/cypress-studio')
+      cy.window().then((win) => {
+        ;(win as any).beforeNavigation = true
+      })
+      cy.contains('.theme-doc-markdown a', '30-day trial').click()
+      cy.location('pathname').should(
+        'match',
+        /^\/cloud\/get-started\/free-trial\/?$/
+      )
+      // Still the same document, so React rendered this page, not the server.
+      cy.window().its('beforeNavigation').should('eq', true)
+      cy.contains('.theme-doc-markdown a', 'Enterprise plan').should(($link) =>
+        expectLabel($link[0], 'Docs Content - Pricing', 'free-trial')
+      )
+    })
+
+    // The mobile drawer renders only once it's opened.
+    it('labels a sidebar link in the mobile drawer', () => {
+      cy.viewport('iphone-x')
+      cy.visit('/cloud/get-started/introduction')
+      cy.get('.navbar__toggle').click()
+      cy.get('.navbar-sidebar a[href="/cloud/get-started/free-trial"]').should(
+        ($link) =>
+          expectLabel($link[0], 'Docs Sidebar - Free Trial Guide', 'none')
+      )
+    })
   })
 })
