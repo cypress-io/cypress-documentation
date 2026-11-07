@@ -107,14 +107,14 @@
     },
     "eslint-plugin-cypress": {
       "npm": "eslint-plugin-cypress",
-      "version": "7.0.2",
-      "lastPublished": "2026-09-08T15:09:59.980Z",
-      "cypressVersion": "^16.0.0"
+      "version": "7.0.3",
+      "lastPublished": "2026-11-04T15:33:30.395Z",
+      "cypressVersion": "^16.1.1"
     },
     "TypeScript": {
       "npm": "cypress",
-      "version": "16.2.0",
-      "lastPublished": "2026-10-14T15:45:39.102Z"
+      "version": "16.2.1",
+      "lastPublished": "2026-10-28T14:20:32.633Z"
     },
     "cypress-codegen": {
       "npm": "cypress-codegen",
@@ -136,8 +136,8 @@
     },
     "cypress-watch-and-reload": {
       "npm": "cypress-watch-and-reload",
-      "version": "2.1.9",
-      "lastPublished": "2026-09-26T23:09:57.891Z",
+      "version": "2.1.10",
+      "lastPublished": "2026-10-31T22:04:17.538Z",
       "cypressVersion": "15.21.1"
     },
     "cypress-html-validate": {
@@ -154,8 +154,8 @@
     },
     "cypress-cli-select": {
       "npm": "cypress-cli-select",
-      "version": "2.1.0",
-      "lastPublished": "2026-09-13T02:20:28.222Z",
+      "version": "2.1.1",
+      "lastPublished": "2026-10-30T02:31:00.448Z",
       "cypressVersion": "^15.21.1"
     },
     "cypress-conditional-tags": {
@@ -232,9 +232,9 @@
     },
     "cypress-data-session": {
       "npm": "cypress-data-session",
-      "version": "3.0.0",
-      "lastPublished": "2026-03-06T17:22:44.554Z",
-      "cypressVersion": "15.11.0"
+      "version": "3.1.0",
+      "lastPublished": "2026-11-05T16:24:59.862Z",
+      "cypressVersion": "16.2.1"
     },
     "Puppeteer": {
       "npm": "@cypress/puppeteer",
@@ -315,8 +315,8 @@
     },
     "cypress-har-generator": {
       "npm": "@neuralegion/cypress-har-generator",
-      "version": "5.19.1",
-      "lastPublished": "2026-10-26T16:57:23.847Z",
+      "version": "5.22.2",
+      "lastPublished": "2026-10-28T15:07:51.391Z",
       "cypressVersion": ">=4.4.1 <12.12.0 || >=12.17.0"
     },
     "cypress-intercept-formdata": {
@@ -429,14 +429,14 @@
     },
     "cypress-performance-ui": {
       "npm": "cypress-performance-ui",
-      "version": "1.2.0",
-      "lastPublished": "2026-10-08T21:09:08.054Z",
+      "version": "1.4.1",
+      "lastPublished": "2026-10-29T19:17:48.953Z",
       "cypressVersion": ">=10.0.0"
     },
     "@cypress/code-coverage": {
       "npm": "@cypress/code-coverage",
-      "version": "4.0.3",
-      "lastPublished": "2026-03-23T19:07:56.555Z",
+      "version": "4.1.3",
+      "lastPublished": "2026-11-02T00:50:12.815Z",
       "cypressVersion": ">=15.10.0"
     },
     "allure-cypress": {
@@ -459,9 +459,8 @@
     },
     "cypress-slack-reporter": {
       "npm": "cypress-slack-reporter",
-      "version": "1.5.4",
-      "lastPublished": "2024-10-24T22:48:37.667Z",
-      "cypressVersion": "13.15.1"
+      "version": "2.0.1",
+      "lastPublished": "2026-11-03T13:14:00.906Z"
     },
     "cypress-terminal-report": {
       "npm": "cypress-terminal-report",
@@ -493,8 +492,8 @@
     },
     "Applitools": {
       "npm": "@applitools/eyes-cypress",
-      "version": "3.62.1",
-      "lastPublished": "2026-10-26T14:55:49.425Z",
+      "version": "3.64.0",
+      "lastPublished": "2026-11-05T19:40:40.208Z",
       "cypressVersion": "^9.7"
     },
     "Argos": {
@@ -505,9 +504,9 @@
     },
     "Happo": {
       "npm": "happo",
-      "version": "7.2.0",
-      "lastPublished": "2026-10-26T14:00:30.361Z",
-      "cypressVersion": "16.2.0"
+      "version": "7.3.0",
+      "lastPublished": "2026-11-03T17:31:31.065Z",
+      "cypressVersion": "16.2.1"
     },
     "Percy": {
       "npm": "@percy/cypress",
@@ -564,8 +563,8 @@
     },
     "Wopee.io": {
       "npm": "@wopee-io/wopee.cy",
-      "version": "4.13.2",
-      "lastPublished": "2026-10-20T15:30:59.376Z",
+      "version": "4.13.4",
+      "lastPublished": "2026-11-05T11:35:12.648Z",
       "cypressVersion": ">=13"
     },
     "@chromatic-com/cypress": {
@@ -592,8 +591,8 @@
     },
     "cypress-social-logins": {
       "npm": "cypress-social-logins",
-      "version": "1.14.7",
-      "lastPublished": "2026-06-22T15:44:39.958Z"
+      "version": "1.14.8",
+      "lastPublished": "2026-11-03T10:16:06.490Z"
     },
     "cypress-guerrillamail": {
       "npm": "cypress-guerrillamail",
@@ -603,9 +602,9 @@
     },
     "cypress-maildev": {
       "npm": "cypress-maildev",
-      "version": "2.0.0",
-      "lastPublished": "2026-06-15T12:34:28.496Z",
-      "cypressVersion": "^15.17.0"
+      "version": "3.0.0",
+      "lastPublished": "2026-10-28T21:19:29.252Z",
+      "cypressVersion": "^16.2.1"
     },
     "cypress-mailosaur": {
       "npm": "cypress-mailosaur",
@@ -645,9 +644,9 @@
     },
     "cypress-temp-mail": {
       "npm": "cypress-temp-mail",
-      "version": "3.0.1",
-      "lastPublished": "2025-03-07T09:23:33.151Z",
-      "cypressVersion": "^13.9.0"
+      "version": "3.1.0",
+      "lastPublished": "2026-10-27T19:48:05.246Z",
+      "cypressVersion": ">=10"
     },
     "cypress-temp-sms": {
       "npm": "cypress-temp-sms",
@@ -673,8 +672,8 @@
     },
     "Nx": {
       "npm": "@nx/cypress",
-      "version": "24.0.2",
-      "lastPublished": "2026-10-26T20:21:23.791Z",
+      "version": "24.0.5",
+      "lastPublished": "2026-11-06T20:20:24.748Z",
       "cypressVersion": ">= 13 < 17"
     },
     "cypress-real-events": {
