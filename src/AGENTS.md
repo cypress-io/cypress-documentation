@@ -28,7 +28,9 @@ reads it to add the video's `VideoObject` JSON-LD to `<head>`. Without an
 a valid 11-character video ID fails the build and the dev server.
 
 `sectionTitles.js` maps a section to its `<title>` suffix. Page frontmatter
-never repeats that suffix, and `cypress/e2e/page_titles.cy.ts` asserts it.
+never repeats that suffix, and `cypress/e2e/page_titles.cy.ts` asserts it. It
+also maps a section to the display name `plugins/fullstory-client.js` sends
+Fullstory as the page name.
 
 ## Adding a component
 

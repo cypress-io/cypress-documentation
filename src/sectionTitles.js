@@ -21,6 +21,20 @@ const SECTION_TITLE_SUFFIX = {
   'ui-coverage': 'Cypress UI Coverage Documentation',
 }
 
+/**
+ * Display name for each section, keyed the same way. Sent to Fullstory as the
+ * page name, so renaming one splits its history in Fullstory in two.
+ */
+const DEFAULT_SECTION_NAME = 'Cypress Documentation'
+
+const SECTION_NAME = {
+  accessibility: 'Cypress Accessibility',
+  api: 'API',
+  app: 'Cypress App',
+  cloud: 'Cypress Cloud',
+  'ui-coverage': 'UI Coverage',
+}
+
 /** The expected " | …" suffix for a given route/URL (no leading slash needed). */
 function titleSuffixForUrl(url) {
   const segment = String(url).replace(/^\//, '').split('/')[0]
@@ -28,7 +42,9 @@ function titleSuffixForUrl(url) {
 }
 
 module.exports = {
+  DEFAULT_SECTION_NAME,
   DEFAULT_TITLE_SUFFIX,
+  SECTION_NAME,
   SECTION_TITLE_SUFFIX,
   titleSuffixForUrl,
 }
