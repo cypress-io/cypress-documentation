@@ -1016,8 +1016,7 @@ A check is a pass/fail evaluation after the run records. Fetch results with
 
 Skip the bold lead when the whole call-out is one or two short sentences and a
 heading would only repeat them. Keep admonitions infrequent; a page wall-to-wall
-with call-outs dilutes them. Existing titled admonitions outside the change
-you're making can wait for a follow-up; don't expand scope just to strip them.
+with call-outs dilutes them.
 
 ## Tabs
 

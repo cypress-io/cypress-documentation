@@ -13,7 +13,9 @@ UI Coverage produces a report for every recorded run with no setup, and for most
 
 This page maps each symptom to its cause and the configuration that resolves it. Because you can [regenerate](/ui-coverage/configuration/overview#Setting-configuration) any past run with your current configuration, you can confirm every fix in minutes without re-running your Cypress tests, so the fastest path to a coverage score you trust is to make one change, regenerate a recent run, and check the result.
 
-:::tip Start here: regenerate the run after changing configuration
+:::tip
+
+**Start here: regenerate the run after changing configuration**
 
 Every run is processed with the configuration that was saved **at that moment**, so edits you make afterward don't change an existing report until you reprocess it. This timing is the single most common reason a rule "doesn't work."
 
