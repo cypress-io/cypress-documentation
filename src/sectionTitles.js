@@ -22,8 +22,9 @@ const SECTION_TITLE_SUFFIX = {
 }
 
 /**
- * Display name for each section, keyed the same way. Sent to Fullstory as the
- * page name, so renaming one splits its history in Fullstory in two.
+ * Display name for each section, keyed the same way. It starts every page's
+ * Fullstory page name ("API: cy.check()"), so renaming one splits the history
+ * of that section's pages in Fullstory in two.
  */
 const DEFAULT_SECTION_NAME = 'Cypress Documentation'
 

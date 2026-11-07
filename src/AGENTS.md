@@ -29,8 +29,8 @@ a valid 11-character video ID fails the build and the dev server.
 
 `sectionTitles.js` maps a section to its `<title>` suffix. Page frontmatter
 never repeats that suffix, and `cypress/e2e/page_titles.cy.ts` asserts it. It
-also maps a section to the display name `plugins/fullstory-client.js` sends
-Fullstory as the page name.
+also maps a section to the display name `plugins/fullstory-client.js` puts in
+front of each page's Fullstory page name.
 
 ## Adding a component
 

@@ -6,10 +6,16 @@ function pageProperties(pathname) {
   const section = pathname.replace(/^\//, '').split('/')[0]
   const suffix = ` | ${titleSuffixForUrl(pathname)}`
   const title = document.title
+  const docTitle = title.endsWith(suffix)
+    ? title.slice(0, -suffix.length)
+    : title
+  // The section prefix keeps pages that share a title, in different
+  // sections, apart as separate Fullstory Pages.
+  const sectionName = SECTION_NAME[section] || DEFAULT_SECTION_NAME
   return {
-    pageName: SECTION_NAME[section] || DEFAULT_SECTION_NAME,
+    pageName: `${sectionName}: ${docTitle}`,
     section: section || '(none)',
-    docTitle: title.endsWith(suffix) ? title.slice(0, -suffix.length) : title,
+    docTitle,
   }
 }
 

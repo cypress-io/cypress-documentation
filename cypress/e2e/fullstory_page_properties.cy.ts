@@ -34,7 +34,11 @@ describe('Fullstory page properties', () => {
     cy.get('@FS').should('have.been.calledOnce')
     cy.get('@FS').should(
       'have.been.calledWithExactly',
-      ...pageCall({ pageName: 'API', section: 'api', docTitle: 'cy.blur()' })
+      ...pageCall({
+        pageName: 'API: cy.blur()',
+        section: 'api',
+        docTitle: 'cy.blur()',
+      })
     )
   })
 
@@ -50,7 +54,11 @@ describe('Fullstory page properties', () => {
       .its('secondCall.args')
       .should(
         'deep.equal',
-        pageCall({ pageName: 'API', section: 'api', docTitle: 'cy.check()' })
+        pageCall({
+          pageName: 'API: cy.check()',
+          section: 'api',
+          docTitle: 'cy.check()',
+        })
       )
   })
 
@@ -61,5 +69,34 @@ describe('Fullstory page properties', () => {
 
     waitFrames()
     cy.get('@FS').should('have.been.calledOnce')
+  })
+})
+
+describe('Fullstory page names for a title two sections share', () => {
+  const docTitle = 'profiles: apply config overrides by run tag'
+
+  ;[
+    {
+      path: '/accessibility/configuration/profiles',
+      section: 'accessibility',
+      pageName: `Cypress Accessibility: ${docTitle}`,
+    },
+    {
+      path: '/ui-coverage/configuration/profiles',
+      section: 'ui-coverage',
+      pageName: `UI Coverage: ${docTitle}`,
+    },
+  ].forEach(({ path, section, pageName }) => {
+    it(`names the ${section} page after its section`, () => {
+      cy.visit(path, {
+        onBeforeLoad(win) {
+          ;(win as any).FS = cy.stub().as('FS')
+        },
+      })
+      cy.get('@FS').should('have.been.calledOnceWithExactly', 'setProperties', {
+        type: 'page',
+        properties: { pageName, section, docTitle },
+      })
+    })
   })
 })
