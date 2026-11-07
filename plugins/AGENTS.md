@@ -12,6 +12,12 @@ Two kinds of thing live here, and they behave differently:
   `fullstory-client.js` is the exception: a client module, not a plugin,
   that `fullstory.js` registers with `getClientModules()`. It runs in the
   browser and sends Fullstory the section and title of each page.
+  `fullstory-conversion-links-rehype.js` is a rehype plugin, registered under
+  `rehypePlugins` in `docusaurus.config.js`, that labels Markdown links toward
+  pricing, trials, sales, product pages, and Cypress Cloud at build time. It,
+  the footer and navbar config, and the components that render links take
+  their labels from `fullstory-conversion-links.js`, a plain CommonJS module
+  rather than a plugin.
 - **`cypressRemarkPlugins/` and `llm/`** are TypeScript sub-packages that
   compile to a gitignored `dist/`. Everything below is about these two.
 
@@ -42,6 +48,7 @@ npm run build:plugins   # tsc for both sub-packages
 
 - `npm run test:plugins` runs the vitest suites in both sub-packages plus the
   FAQ plugin test, the Fullstory consent gate test (`fullstory.test.js`), the
+  conversion link test (`fullstory-conversion-links.test.js`), the
   OG card sizing test (`og-image-cards.test.js`), and the
   video structured-data test in `src/components/video-youtube/`.
 - `npm run build` is the real check for `cypressRemarkPlugins`: it backs the

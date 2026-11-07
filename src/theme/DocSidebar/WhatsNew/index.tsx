@@ -6,6 +6,10 @@ import styles from './styles.module.css'
 import { getWhatsNewItems, getSection } from './whatsNewItems'
 import { IconGeneralSparkleDoubleSmall, IconChevronRightMedium, IconActionDeleteMedium } from '@cypress-design/react-icon'
 import type { WindiColor } from '@cypress-design/react-icon'
+import {
+  SURFACES,
+  conversionLinkAttributes,
+} from '@site/plugins/fullstory-conversion-links'
 
 
 const DISMISS_LOCAL_STORAGE_KEY = 'docs-whats-new-dismissed'
@@ -56,7 +60,12 @@ export default function WhatsNew({ path, onLinkClick }: { path: string; onLinkCl
       <ul className={styles.list}>
         {items.map((item) => (
           <li key={item.href}>
-            <Link className={styles.link} href={item.href} onClick={onLinkClick}>
+            <Link
+              className={styles.link}
+              href={item.href}
+              onClick={onLinkClick}
+              {...conversionLinkAttributes(item.href, SURFACES.sidebar)}
+            >
               <span className={styles.linkContent}>
                 <span className={styles.itemTitle}>
                   <span>{item.label}</span>

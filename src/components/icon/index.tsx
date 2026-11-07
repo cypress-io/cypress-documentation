@@ -2,6 +2,10 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import CypressIcon from "@cypress-design/react-icon";
+import {
+  SURFACES,
+  conversionLinkAttributes,
+} from "@site/plugins/fullstory-conversion-links";
 
 // Names resolved from the Font Awesome brands pack instead of solid
 const BRAND_ICONS = new Set([
@@ -50,7 +54,11 @@ export default function Icon({ useCypressIcon, name, color, inline, url, callout
   return (
     <>
       <FontAwesomeIcon icon={iconName} color={color} title={title}/>
-      { url ? <a href={url} style={{ marginLeft: space }}>{ content }</a> : null}
+      { url ? <a
+          href={url}
+          style={{ marginLeft: space }}
+          {...conversionLinkAttributes(url, SURFACES.content)}
+        >{ content }</a> : null}
     </>
   )
 }
