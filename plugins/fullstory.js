@@ -11,6 +11,39 @@ const FULLSTORY_HOST = 'fullstory.com'
 const FULLSTORY_SCRIPT = 'edge.fullstory.com/s/fs.js'
 const FULLSTORY_NAMESPACE = 'FS'
 
+// Capture follows the visitor's Osano Analytics choice, including a change
+// mid-session: Osano's own script blocking only takes effect on the next page
+// load, so without this, fs.js keeps recording after a visitor declines. When
+// osano.js is blocked (by an ad blocker, for example) there's no consent to
+// read, so capture never starts.
+const consentGate = `
+(function () {
+  var fs = window[${JSON.stringify(FULLSTORY_NAMESPACE)}];
+  // _v is only set when the snippet installed itself rather than backing off
+  // from another script's global of the same name.
+  if (!fs || !fs._v) return;
+  fs('init', { env: { captureOnStartup: false } });
+  var cm = window.Osano && window.Osano.cm;
+  if (!cm || !cm.addEventListener || !cm.getConsent) return;
+  var state = 'waiting';
+  function apply(consent) {
+    var granted = !!consent && consent.ANALYTICS === 'ACCEPT';
+    if (granted && state === 'waiting') {
+      fs('start');
+      state = 'capturing';
+    } else if (granted && state === 'stopped') {
+      fs('restart');
+      state = 'capturing';
+    } else if (!granted && state === 'capturing') {
+      fs('shutdown');
+      state = 'stopped';
+    }
+  }
+  cm.addEventListener('osano-cm-consent-saved', apply);
+  apply(cm.getConsent());
+})();
+`
+
 module.exports = async function fullStory({ context, options }) {
   const isProd = process.env.NODE_ENV === 'production'
   const orgId = process.env.FULLSTORY_ORG_ID
@@ -42,8 +75,15 @@ return g._w[u].apply(this,arguments)}),g("init",{env:{orgId:o,host:e,script:t}})
 }(window,document,${JSON.stringify(FULLSTORY_HOST)},${JSON.stringify(FULLSTORY_SCRIPT)},${JSON.stringify(FULLSTORY_NAMESPACE)},${JSON.stringify(orgId)});
 `,
           },
+          {
+            tagName: 'script',
+            innerHTML: consentGate,
+          },
         ],
       }
     },
   }
 }
+
+// Exported for standalone testing.
+module.exports.consentGate = consentGate
