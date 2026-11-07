@@ -1,7 +1,10 @@
 // plugins/fullstory-client.js is registered in every production build, but
 // without FULLSTORY_ORG_ID there's no snippet, so these tests provide window.FS
 // themselves and read the calls the module makes to it.
-const visitWithFS = (path: string, options: Partial<Cypress.VisitOptions> = {}) =>
+const visitWithFS = (
+  path: string,
+  options: Partial<Cypress.VisitOptions> = {}
+) =>
   cy.visit(path, {
     ...options,
     onBeforeLoad(win) {
@@ -139,8 +142,7 @@ describe('Fullstory pageType and product', () => {
     {
       path: '/app/tooling/cypress-tap',
       properties: {
-        pageName:
-          'Cypress App: Drive Cypress with AI agents using cypress tap',
+        pageName: 'Cypress App: Drive Cypress with AI agents using cypress tap',
         section: 'app',
         docTitle: 'Drive Cypress with AI agents using cypress tap',
         pageType: 'docs',
