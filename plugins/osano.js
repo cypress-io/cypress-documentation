@@ -1,13 +1,14 @@
 // Osano renders its dialog outside our HTML, so FullStory labels can't go in a
-// template. This tags the dialog's buttons once Osano shows it. Clicks on the
+// template. The labels match www.cypress.io's, which records into the same
+// Fullstory org, so one funnel covers the banner on both sites. This tags the dialog's buttons once Osano shows it. Clicks on the
 // close button land on its inner <svg>, which FullStory reports by the SVG's
 // <title> ("Close this dialog"), so every descendant gets the label too.
 const fullStoryLabels = `
 (function () {
   var LABELS = {
-    '.osano-cm-button--type_accept': 'Cookie Consent - Accept',
-    '.osano-cm-button--type_denyAll': 'Cookie Consent - Reject',
-    '.osano-cm-button--type_deny': 'Cookie Consent - Reject',
+    '.osano-cm-button--type_accept': 'Cookie Consent - Accept All',
+    '.osano-cm-button--type_denyAll': 'Cookie Consent - Deny All',
+    '.osano-cm-button--type_deny': 'Cookie Consent - Deny All',
     '.osano-cm-button--type_manage': 'Cookie Consent - Manage Preferences',
     '.osano-cm-close': 'Cookie Consent - Dismiss'
   };

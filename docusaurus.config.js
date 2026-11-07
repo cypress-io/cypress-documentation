@@ -13,6 +13,19 @@ const {
   visitMountExample,
 } = require('./plugins/cypressRemarkPlugins/dist')
 const prettierConfig = JSON.parse(fs.readFileSync('./.prettierrc', 'utf-8'))
+const {
+  SURFACES,
+  conversionLinkAttributes,
+} = require('./plugins/fullstory-conversion-links')
+
+// Adds Fullstory conversion link attributes to the links that lead toward a
+// conversion or Cypress Cloud. Every other link passes through unchanged.
+function withConversionLabels(items, surface) {
+  return items.map((item) => ({
+    ...item,
+    ...conversionLinkAttributes(item.href || item.to, surface),
+  }))
+}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -164,7 +177,7 @@ const config = {
           src: '/img/logo/cypress-logo-light.svg',
           srcDark: '/img/logo/cypress-logo-dark.svg',
         },
-        items: [
+        items: withConversionLabels([
           {
             to: '/app/get-started/why-cypress',
             label: 'App',
@@ -194,7 +207,7 @@ const config = {
             to: 'https://learn.cypress.io?utm_medium=nav&utm_source=docs.cypress.io&utm_content=Learn',
             label: 'Learn',
           },
-        ],
+        ], SURFACES.navbar),
       },
       // optional, can be commented out
       // Styles for this are controlled in src/css/announcement-bar.scss
@@ -210,7 +223,7 @@ const config = {
         links: [
            {
             title: 'Solutions',
-            items: [
+            items: withConversionLabels([
               {
                 label: 'Cypress App',
                 href: 'https://www.cypress.io/features?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Cypress App',
@@ -227,11 +240,11 @@ const config = {
                 label: 'Cypress Accessibility',
                 href: 'https://www.cypress.io/accessibility?utm_medium=footer&utm_source=docs.cypress.io&utm_content=Cypress Accessibility',
               },
-            ],
+            ], SURFACES.footer),
           },
           {
             title: 'Learn',
-            items: [
+            items: withConversionLabels([
               {
                 label: 'Real World App',
                 href: 'https://github.com/cypress-io/cypress-realworld-app',
@@ -244,11 +257,11 @@ const config = {
                 label: 'Cypress.io YouTube',
                 href: 'https://www.youtube.com/channel/UC-EOsTo2l2x39e4JmSaWNRQ',
               },
-            ],
+            ], SURFACES.footer),
           },
           {
             title: 'Community',
-            items: [
+            items: withConversionLabels([
               {
                 label: 'Discord',
                 href: 'https://on.cypress.io/discord',
@@ -261,11 +274,11 @@ const config = {
                 label: 'GitHub Discussions',
                 href: 'https://github.com/cypress-io/cypress/discussions',
               },
-            ],
+            ], SURFACES.footer),
           },
           {
             title: 'Company',
-            items: [
+            items: withConversionLabels([
               {
                 label: 'About',
                 href: 'https://www.cypress.io/about-us?utm_medium=footer&utm_source=docs.cypress.io&utm_content=About',
@@ -288,7 +301,7 @@ const config = {
                 // FullStory with the same "Cookie Consent - " prefix.
                 html: '<button type="button" class="footer__link-item osano-preferences-link" data-fs-element="Cookie Consent - Open Preferences">Cookie Preferences</button>',
               },
-            ],
+            ], SURFACES.footer),
           },
         ],
         copyright: `© ${new Date().getFullYear()} Cypress.io. All rights reserved.`,

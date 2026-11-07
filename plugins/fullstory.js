@@ -49,10 +49,16 @@ module.exports = async function fullStory({ context, options }) {
   const orgId = process.env.FULLSTORY_ORG_ID
   return {
     name: 'docusaurus-plugin-fullstory',
-    // Registered with or without an org ID so the CI build can test it with a
-    // stubbed window.FS. Without window.FS it does nothing.
+    // Registered with or without an org ID so the CI build can test them.
+    // fullstory-client.js does nothing without window.FS; the conversion link
+    // labels are plain attributes that Fullstory reads only when it records.
     getClientModules() {
-      return isProd ? [require.resolve('./fullstory-client.js')] : []
+      return isProd
+        ? [
+            require.resolve('./fullstory-client.js'),
+            require.resolve('./fullstory-conversion-links-client.js'),
+          ]
+        : []
     },
     injectHtmlTags({ content }) {
       if (!isProd || !orgId) {
