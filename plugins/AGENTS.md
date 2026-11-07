@@ -50,8 +50,9 @@ npm run build:plugins   # tsc for both sub-packages
 - `npm run test:plugins` runs the vitest suites in both sub-packages plus the
   FAQ plugin test, the Fullstory consent gate test (`fullstory.test.js`), the
   conversion link test (`fullstory-conversion-links.test.js`), the
-  OG card sizing test (`og-image-cards.test.js`), and the
-  video structured-data test in `src/components/video-youtube/`.
+  OG card sizing test (`og-image-cards.test.js`), the
+  video structured-data test in `src/components/video-youtube/`, and the
+  Fullstory product test (`src/sectionTitles.test.ts`).
 - `npm run build` is the real check for `cypressRemarkPlugins`: it backs the
   `:::cypress-config-example`, `:::cypress-config-plugin-example`, and
   `:::visit-mount-example` directives and the `copyTsToJs` and `nowrap`

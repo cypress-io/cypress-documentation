@@ -10,7 +10,8 @@
  * server-rendered HTML and at runtime), and asserted by
  * cypress/e2e/page_titles.cy.ts.
  *
- * The keys are the first URL path segment of the section.
+ * A section is the first segment of a page's URL, which is how every map here
+ * is keyed except FOLDER_PRODUCT.
  */
 const DEFAULT_TITLE_SUFFIX = 'Cypress Documentation'
 
@@ -37,22 +38,22 @@ const SECTION_NAME = {
 }
 
 /**
- * The Fullstory `product` property for each section, keyed the same way. The
- * values are www.cypress.io's, since the two sites and Cypress Cloud record into
- * one Fullstory org and a funnel filters on the value they share. A section
- * missing here is about no one product and sends no `product`.
+ * The Fullstory `product` property for each folder under docs/, matched by the
+ * folder a page's source file sits in rather than by its URL, because one
+ * folder's pages publish under several paths (docs/app/ai/ publishes under
+ * /app/ai, /app/guides, and /app/tooling). The deepest listed folder wins.
+ *
+ * The values are www.cypress.io's, since the two sites and Cypress Cloud record
+ * into one Fullstory org and a funnel filters on the value they share. A page
+ * in no listed folder sends no `product`.
  */
-const SECTION_PRODUCT = {
+const FOLDER_PRODUCT = {
   accessibility: 'accessibility',
   api: 'app',
   app: 'app',
+  'app/ai': 'ai',
   cloud: 'cloud',
   'ui-coverage': 'ui-coverage',
-}
-
-/** Paths under a section that belong to a different product than the section. */
-const PATH_PREFIX_PRODUCT = {
-  'app/ai': 'ai',
 }
 
 /** The expected " | …" suffix for a given route/URL (no leading slash needed). */
@@ -61,23 +62,25 @@ function titleSuffixForUrl(url) {
   return SECTION_TITLE_SUFFIX[segment] || DEFAULT_TITLE_SUFFIX
 }
 
-/** The Fullstory `product` for a route, or undefined when it has none. */
-function productForUrl(url) {
-  const path = String(url).replace(/^\//, '')
-  const prefix = Object.keys(PATH_PREFIX_PRODUCT).find(
-    (p) => path === p || path.startsWith(`${p}/`)
-  )
-  if (prefix) return PATH_PREFIX_PRODUCT[prefix]
-  return SECTION_PRODUCT[path.split('/')[0]]
+/**
+ * The Fullstory `product` for a doc, from its Docusaurus doc id: the source
+ * file's path under docs/ without the extension ("app/ai/overview").
+ * Undefined when the doc is in no listed folder.
+ */
+function productForDocId(docId) {
+  const folders = String(docId).split('/').slice(0, -1)
+  for (let depth = folders.length; depth > 0; depth--) {
+    const product = FOLDER_PRODUCT[folders.slice(0, depth).join('/')]
+    if (product) return product
+  }
+  return undefined
 }
 
 module.exports = {
   DEFAULT_SECTION_NAME,
   DEFAULT_TITLE_SUFFIX,
-  PATH_PREFIX_PRODUCT,
   SECTION_NAME,
-  SECTION_PRODUCT,
   SECTION_TITLE_SUFFIX,
-  productForUrl,
+  productForDocId,
   titleSuffixForUrl,
 }

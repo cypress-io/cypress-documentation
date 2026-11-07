@@ -1,6 +1,14 @@
 // plugins/fullstory-client.js is registered in every production build, but
 // without FULLSTORY_ORG_ID there's no snippet, so these tests provide window.FS
 // themselves and read the calls the module makes to it.
+const visitWithFS = (path: string, options: Partial<Cypress.VisitOptions> = {}) =>
+  cy.visit(path, {
+    ...options,
+    onBeforeLoad(win) {
+      ;(win as any).FS = cy.stub().as('FS')
+    },
+  })
+
 describe('Fullstory page properties', () => {
   const pageCall = (properties: Record<string, string>) => [
     'setProperties',
@@ -23,11 +31,7 @@ describe('Fullstory page properties', () => {
       )
 
   beforeEach(() => {
-    cy.visit('/api/commands/blur', {
-      onBeforeLoad(win) {
-        ;(win as any).FS = cy.stub().as('FS')
-      },
-    })
+    visitWithFS('/api/commands/blur')
   })
 
   it('sends the section and title on first load', () => {
@@ -94,11 +98,7 @@ describe('Fullstory page names for a title two sections share', () => {
     },
   ].forEach(({ path, section, pageName, product }) => {
     it(`names the ${section} page after its section`, () => {
-      cy.visit(path, {
-        onBeforeLoad(win) {
-          ;(win as any).FS = cy.stub().as('FS')
-        },
-      })
+      visitWithFS(path)
       cy.get('@FS').should('have.been.calledOnceWithExactly', 'setProperties', {
         type: 'page',
         properties: { pageName, section, docTitle, pageType: 'docs', product },
@@ -108,27 +108,10 @@ describe('Fullstory page names for a title two sections share', () => {
 })
 
 // www.cypress.io sends pageType and product with the same values, so one
-// Fullstory funnel can follow a reader across both sites.
+// Fullstory funnel can follow a reader across both sites. The API page case is
+// the first describe block's.
 describe('Fullstory pageType and product', () => {
-  const visitWithFS = (path: string, options = {}) =>
-    cy.visit(path, {
-      ...options,
-      onBeforeLoad(win) {
-        ;(win as any).FS = cy.stub().as('FS')
-      },
-    })
-
   ;[
-    {
-      path: '/api/commands/blur',
-      properties: {
-        pageName: 'API: cy.blur()',
-        section: 'api',
-        docTitle: 'cy.blur()',
-        pageType: 'docs',
-        product: 'app',
-      },
-    },
     {
       path: '/app/ai/overview',
       properties: {
@@ -137,6 +120,29 @@ describe('Fullstory pageType and product', () => {
         section: 'app',
         docTitle:
           'AI in Cypress: test generation, agent skills, and agentic debugging',
+        pageType: 'docs',
+        product: 'ai',
+      },
+    },
+    // Two docs/app/ai/ pages that publish outside /app/ai, so product follows
+    // the source folder rather than the URL.
+    {
+      path: '/app/guides/cypress-studio',
+      properties: {
+        pageName: 'Cypress App: Cypress Studio AI',
+        section: 'app',
+        docTitle: 'Cypress Studio AI',
+        pageType: 'docs',
+        product: 'ai',
+      },
+    },
+    {
+      path: '/app/tooling/cypress-tap',
+      properties: {
+        pageName:
+          'Cypress App: Drive Cypress with AI agents using cypress tap',
+        section: 'app',
+        docTitle: 'Drive Cypress with AI agents using cypress tap',
         pageType: 'docs',
         product: 'ai',
       },
@@ -161,7 +167,7 @@ describe('Fullstory pageType and product', () => {
     })
   })
 
-  it('sends pageType and no product for a page outside the product sections', () => {
+  it('sends pageType and no product for a page that is not a doc', () => {
     visitWithFS('/not-a-docs-page', { failOnStatusCode: false })
     cy.get('@FS').should('have.been.calledOnce')
     cy.get('@FS')
