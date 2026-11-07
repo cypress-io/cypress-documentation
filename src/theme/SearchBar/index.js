@@ -165,6 +165,11 @@ function DocSearch({ contextualSearch, externalUrlRegex, ...props }) {
   const onOpen = useCallback(() => {
     importDocSearchModalIfNeeded().then(() => {
       searchContainer.current = document.createElement('div')
+      // Visitors sometimes paste tokens or record keys into search, and the
+      // modal echoes the query in its input, highlighted results, and "no
+      // results" message. fs-mask on the portal root covers all of them, so
+      // Fullstory never records the query text.
+      searchContainer.current.className = 'fs-mask'
       document.body.insertBefore(
         searchContainer.current,
         document.body.firstChild
