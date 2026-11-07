@@ -15,7 +15,7 @@ export function fullStoryEventTypeCases(): void {
     destination: 'Claude',
   })
 
-  // A misspelled or retired event name
+  // An event name the registry doesn't list
   // @ts-expect-error
   trackFullStoryEvent('Copied AI Prompt', { promptTitle: 'x', pagePath: '/' })
 
@@ -32,7 +32,7 @@ export function fullStoryEventTypeCases(): void {
   })
 
   trackFullStoryEvent('Page Markdown Copied', {
-    // A retired property name
+    // A property under the wrong name
     // @ts-expect-error
     markdown_url: 'https://docs.cypress.io/api/commands/blur.md',
   })

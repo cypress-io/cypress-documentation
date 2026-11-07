@@ -1,4 +1,3 @@
-/** Where "Page Markdown Opened" sent the page: the AI assistant it opened in. */
 export type MarkdownDestination = 'ChatGPT' | 'Claude'
 
 // Every Fullstory event this site sends, with its properties. docs.cypress.io,
@@ -48,9 +47,7 @@ export function trackFullStoryEvent<Name extends FullStoryEventName>(
   }
   try {
     ;(window.FS as FullStoryApi)('trackEvent', { name, properties })
-  } catch {
-    // Analytics failures stay out of the reader's way.
-  }
+  } catch {}
 }
 
 /** The path of the current page, never its query string or hash. */

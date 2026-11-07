@@ -56,7 +56,6 @@ function staticTitle(node: MdxNode): string | null {
   return title && title.trim() ? title.trim() : null
 }
 
-/** Every `<CopyPrompt>` in one MDX source, with its line and title. */
 export function findCopyPrompts(
   source: string,
   file: string
@@ -80,7 +79,6 @@ export function findCopyPrompts(
   return cards
 }
 
-/** Every `.mdx` file under `dir`, partials included. */
 export function mdxFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true, recursive: true })
     .filter((entry) => entry.isFile() && entry.name.endsWith('.mdx'))
@@ -88,7 +86,6 @@ export function mdxFiles(dir: string): string[] {
     .sort()
 }
 
-/** One line per card with no title and per card that shares one. */
 export function titleProblems(cards: CopyPromptCard[]): string[] {
   const problems: string[] = []
   const byTitle = new Map<string, CopyPromptCard[]>()

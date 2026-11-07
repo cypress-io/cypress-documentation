@@ -20,14 +20,13 @@ interface CopyPromptProps {
    * Optional Markdown heading rendered as the card's title. Pass a `###`
    * heading here (as component children) when the card is one of several in a
    * section: it stays a real Markdown heading, so it feeds the page's table of
-   * contents, while the card styles it to match. Still pass `title`.
-   * When omitted, the `title` prop is rendered instead.
+   * contents, while the card styles it to match. When omitted, the `title`
+   * prop is rendered instead.
    */
   children?: React.ReactNode
   /**
    * Render no title row at all. Use for a lone card that already sits under a
-   * Markdown heading of its own. Ignored when `children` is provided. Still
-   * pass `title`.
+   * Markdown heading of its own. Ignored when `children` is provided.
    */
   hideTitle?: boolean
   /** Hide the prompt behind a Show/Hide toggle instead of showing it on load. */
