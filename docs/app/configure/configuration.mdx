@@ -257,7 +257,7 @@ See [Migrating away from the Electron browser](/app/references/migration-guide#M
 | `animationDistanceThreshold` | `5`      | The distance in pixels an element must exceed over time to be considered animating.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `waitForAnimations`          | `true`   | Whether to wait for elements to finish animating before executing commands.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `scrollBehavior`             | `top`    | Viewport position to which an element should be scrolled before executing commands. Accepts a single alignment (`'top'`, `'bottom'`, `'start'`, `'end'`, `'center'`, or `'nearest'`), an object that aligns each axis independently with `block` and `inline` (each set to `'start'`, `'end'`, `'center'`, or `'nearest'`), or `false` to disable scrolling. `'top'` and `'bottom'` align the vertical axis only, while `'start'` and `'end'` align both. See [Scrolling](/app/core-concepts/interacting-with-elements#Scrolling). |
-| `visibilityStrategy`         | `modern` | Selects the algorithm Cypress uses to check element visibility. `'modern'` (the default) delegates to the browser's native `Element.checkVisibility()` API. `'legacy'` opts back into the ancestor-walking algorithm from Cypress 15 and earlier. This option is deprecated — the `'legacy'` value and the option itself will be removed in a future major version.                                                                                                                                                                |
+| `visibilityStrategy`         | `modern` | Selects the algorithm Cypress uses to check element visibility. `'modern'` (the default) delegates to the browser's native `Element.checkVisibility()` API. `'legacy'` opts back into the ancestor-walking algorithm from Cypress 15 and earlier. This option is deprecated — the `'legacy'` value and the option itself will be removed in a future major version. It can also be set per-suite or per-test via [test configuration](#Test-Configuration).                                                                                                                                                                |
 
 For more information, see the docs on
 [actionability](/app/core-concepts/interacting-with-elements#Actionability).
@@ -463,6 +463,7 @@ readonly and cannot be changed at run time.
   while a test is executing
 - `viewportWidth` - this option cannot be overridden with `Cypress.config()`
   while a test is executing
+- `visibilityStrategy`
 - `waitForAnimations`
 
 ### `Cypress.config()`
