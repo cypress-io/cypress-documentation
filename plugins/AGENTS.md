@@ -11,7 +11,8 @@ Two kinds of thing live here, and they behave differently:
   loaded straight from `docusaurus.config.js`. No build step.
   `fullstory-client.js` is the exception: a client module, not a plugin,
   that `fullstory.js` registers with `getClientModules()`. It runs in the
-  browser and sends Fullstory the section and title of each page.
+  browser and sends Fullstory the section, title, page type, and product of
+  each page.
   `fullstory-conversion-links-rehype.js` is a rehype plugin, registered under
   `rehypePlugins` in `docusaurus.config.js`, that labels Markdown links toward
   pricing, trials, sales, product pages, and Cypress Cloud at build time. It,

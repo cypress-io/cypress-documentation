@@ -36,16 +36,48 @@ const SECTION_NAME = {
   'ui-coverage': 'UI Coverage',
 }
 
+/**
+ * The Fullstory `product` property for each section, keyed the same way. The
+ * values are www.cypress.io's, since the two sites and Cypress Cloud record into
+ * one Fullstory org and a funnel filters on the value they share. A section
+ * missing here is about no one product and sends no `product`.
+ */
+const SECTION_PRODUCT = {
+  accessibility: 'accessibility',
+  api: 'app',
+  app: 'app',
+  cloud: 'cloud',
+  'ui-coverage': 'ui-coverage',
+}
+
+/** Paths under a section that belong to a different product than the section. */
+const PATH_PREFIX_PRODUCT = {
+  'app/ai': 'ai',
+}
+
 /** The expected " | …" suffix for a given route/URL (no leading slash needed). */
 function titleSuffixForUrl(url) {
   const segment = String(url).replace(/^\//, '').split('/')[0]
   return SECTION_TITLE_SUFFIX[segment] || DEFAULT_TITLE_SUFFIX
 }
 
+/** The Fullstory `product` for a route, or undefined when it has none. */
+function productForUrl(url) {
+  const path = String(url).replace(/^\//, '')
+  const prefix = Object.keys(PATH_PREFIX_PRODUCT).find(
+    (p) => path === p || path.startsWith(`${p}/`)
+  )
+  if (prefix) return PATH_PREFIX_PRODUCT[prefix]
+  return SECTION_PRODUCT[path.split('/')[0]]
+}
+
 module.exports = {
   DEFAULT_SECTION_NAME,
   DEFAULT_TITLE_SUFFIX,
+  PATH_PREFIX_PRODUCT,
   SECTION_NAME,
+  SECTION_PRODUCT,
   SECTION_TITLE_SUFFIX,
+  productForUrl,
   titleSuffixForUrl,
 }
