@@ -7,6 +7,11 @@ import Icon from '@cypress-design/react-icon'
 import Select, { type SelectItem } from '@cypress-design/react-select'
 import { markdownPathFor } from '@site/src/utils/markdown-url'
 import { copyPendingText } from '@site/src/utils/copy-to-clipboard'
+import {
+  FULLSTORY_EVENTS,
+  trackEvent,
+  type FullstoryEventName,
+} from '@site/src/utils/fullstory'
 import s from './style.module.css'
 
 /** How long the button keeps showing the result of the last copy. */
@@ -60,8 +65,8 @@ export default function MarkdownActions(): React.JSX.Element {
   const markdownUrl = `${siteConfig.url}${markdownPath}`
   const prompt = `Read ${markdownUrl}, then help me apply it to my project.`
 
-  const track = (event: string) => {
-    ;(window as any).FS?.event?.(event, { markdown_url: markdownUrl })
+  const track = (event: FullstoryEventName) => {
+    trackEvent(event, { markdown_url: markdownUrl })
   }
 
   const flash = (state: CopyState) => {
@@ -92,7 +97,7 @@ export default function MarkdownActions(): React.JSX.Element {
           flash('error')
           return
         }
-        track('Copied Page Markdown')
+        track(FULLSTORY_EVENTS.copiedPageMarkdown)
         flash('copied')
       },
       () => flash('error')
@@ -109,17 +114,17 @@ export default function MarkdownActions(): React.JSX.Element {
         void copyMarkdown()
         return
       case 'view':
-        track('Viewed Page Markdown')
+        track(FULLSTORY_EVENTS.viewedPageMarkdown)
         openInNewTab(markdownPath)
         return
       case 'chatgpt':
-        track('Opened Page Markdown in ChatGPT')
+        track(FULLSTORY_EVENTS.openedPageMarkdownInChatGpt)
         openInNewTab(
           `https://chatgpt.com/?hints=search&prompt=${encodeURIComponent(prompt)}`
         )
         return
       case 'claude':
-        track('Opened Page Markdown in Claude')
+        track(FULLSTORY_EVENTS.openedPageMarkdownInClaude)
         openInNewTab(`https://claude.ai/new?q=${encodeURIComponent(prompt)}`)
     }
   }
@@ -177,7 +182,9 @@ export default function MarkdownActions(): React.JSX.Element {
         // internally.
         value=""
         onChange={runAction}
-        onOpenChange={(open) => open && track('Opened Page Markdown Menu')}
+        onOpenChange={(open) =>
+          open && track(FULLSTORY_EVENTS.openedPageMarkdownMenu)
+        }
         align="right"
         // The docs content column is narrow, and the longest row is
         // "Copy page as Markdown".
