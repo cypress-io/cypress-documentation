@@ -3,25 +3,31 @@ import { useColorMode } from '@docusaurus/theme-common'
 import Button from '@cypress-design/react-button'
 import Icon from '@cypress-design/react-icon'
 import { copyToClipboard } from '@site/src/utils/copy-to-clipboard'
+import { currentPagePath, trackFullStoryEvent } from '@site/src/utils/fullstory'
 import s from './style.module.css'
 
 interface CopyPromptProps {
   /** Full prompt text; the copy button always copies all of it. */
   prompt: string
-  title?: string
+  /**
+   * The card's name. Rendered as its title unless `children` or `hideTitle`
+   * replaces it, and always sent to Fullstory as `promptTitle`, so it has to
+   * be unique across the docs (`titles.test.ts` checks every card).
+   */
+  title: string
   subtext?: string
   /**
    * Optional Markdown heading rendered as the card's title. Pass a `###`
    * heading here (as component children) when the card is one of several in a
    * section: it stays a real Markdown heading, so it feeds the page's table of
-   * contents, while the card styles it to match. Still pass `title` for
-   * analytics. When omitted, the `title` prop is rendered instead.
+   * contents, while the card styles it to match. Still pass `title`.
+   * When omitted, the `title` prop is rendered instead.
    */
   children?: React.ReactNode
   /**
    * Render no title row at all. Use for a lone card that already sits under a
-   * Markdown heading of its own. Ignored when `children` is provided. `title`
-   * is still used for analytics.
+   * Markdown heading of its own. Ignored when `children` is provided. Still
+   * pass `title`.
    */
   hideTitle?: boolean
   /** Hide the prompt behind a Show/Hide toggle instead of showing it on load. */
@@ -35,7 +41,6 @@ interface CopyPromptProps {
   excludeFromLlmExport?: boolean
 }
 
-const DEFAULT_TITLE = 'Do this migration with your AI assistant'
 const DEFAULT_SUBTEXT =
   'Copies a ready-made prompt that walks your AI coding assistant through this migration. Works with any AI tool that can read and edit your project.'
 
@@ -48,7 +53,7 @@ const DEFAULT_SUBTEXT =
  */
 export default function CopyPrompt({
   prompt,
-  title = DEFAULT_TITLE,
+  title,
   subtext = DEFAULT_SUBTEXT,
   children,
   hideTitle = false,
@@ -65,11 +70,30 @@ export default function CopyPrompt({
 
   useEffect(() => () => clearTimeout(resetTimeout.current), [])
 
+  const toggleExpanded = () => {
+    const next = !expanded
+    setExpanded(next)
+    if (next) {
+      trackFullStoryEvent('AI Prompt Expanded', {
+        promptTitle: title,
+        pagePath: currentPagePath(),
+      })
+    }
+  }
+
   const copyPrompt = async () => {
+    // Read before the write: the event describes the page and card as they
+    // were when the reader clicked.
+    const pagePath = currentPagePath()
+    const promptWasVisible = expanded
     if (!(await copyToClipboard(prompt))) {
       return
     }
-    ;(window as any).FS?.event?.('Copied AI Prompt', { prompt_title: title })
+    trackFullStoryEvent('AI Prompt Copied', {
+      promptTitle: title,
+      pagePath,
+      promptWasVisible,
+    })
     setCopied(true)
     clearTimeout(resetTimeout.current)
     resetTimeout.current = setTimeout(() => setCopied(false), 3000)
@@ -133,7 +157,7 @@ export default function CopyPrompt({
               className={s.toggle}
               aria-expanded={expanded}
               aria-controls={promptId}
-              onClick={() => setExpanded((e) => !e)}
+              onClick={toggleExpanded}
             >
               {expanded ? 'Hide prompt' : 'Show prompt'}
               <Icon

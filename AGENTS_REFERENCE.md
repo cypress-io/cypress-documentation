@@ -914,20 +914,23 @@ Use a **fenced code block** for:
 ### `<CopyPrompt>` authoring rules
 
 Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
-(required), `title`, `subtext`, `hideTitle`, `defaultCollapsed`,
+and `title` (both required), `subtext`, `hideTitle`, `defaultCollapsed`,
 `excludeFromLlmExport`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx`
 and `docs/app/guides/migration/`.
 
+- **Give every card a unique `title`**, even one whose heading comes from
+  children or `hideTitle`. It is the card's `promptTitle` in Fullstory, so a
+  shared title merges two cards in analytics. `npm run test:copy-prompt-titles`
+  fails on a missing or repeated title and names its file and line.
 - **No quotes** around the prompt — the card renders it verbatim.
 - **No tool calls** unless explicitly required: prefer _"Find all failing tests
   on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
-- **For a titled card, pass `title`** — rendered as the card's heading with a
-  sparkle icon (used by the migration guides).
+- **`title` renders as the card's heading** with a sparkle icon (used by the
+  migration guides), unless children or `hideTitle` replace it.
 - **When a card is one of several in a section** (e.g. a list of example
-  prompts), pass a `###` Markdown heading as the card's **children** instead of
-  a `title`. It stays a real heading, so the workflow shows up in the page's
-  table of contents, and the card styles it to match. Keep `title` too, for
-  analytics. Use `hideTitle` only for a lone card that already sits under its
+  prompts), pass a `###` Markdown heading as the card's **children**, which
+  renders in place of the `title`. It stays a real heading, so the workflow
+  shows up in the page's table of contents, and the card styles it to match. Use `hideTitle` only for a lone card that already sits under its
   own Markdown heading.
 - **Write `subtext` as the outcome, not the mechanism.** Say what the reader gets
   from running the prompt, like the example below (_"Get a high-level summary of
