@@ -49,6 +49,11 @@ module.exports = async function fullStory({ context, options }) {
   const orgId = process.env.FULLSTORY_ORG_ID
   return {
     name: 'docusaurus-plugin-fullstory',
+    // Registered with or without an org ID so the CI build can test it with a
+    // stubbed window.FS. Without window.FS it does nothing.
+    getClientModules() {
+      return isProd ? [require.resolve('./fullstory-client.js')] : []
+    },
     injectHtmlTags({ content }) {
       if (!isProd || !orgId) {
         return {}

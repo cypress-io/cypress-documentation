@@ -9,6 +9,9 @@ Two kinds of thing live here, and they behave differently:
 - **Loose `.js` files** (`faq-structured-data.js`, `og-image-cards.js`,
   `osano.js`, `fav-icon.js`, `fullstory.js`) are plain Docusaurus plugins,
   loaded straight from `docusaurus.config.js`. No build step.
+  `fullstory-client.js` is the exception: a client module, not a plugin,
+  that `fullstory.js` registers with `getClientModules()`. It runs in the
+  browser and sends Fullstory the section and title of each page.
 - **`cypressRemarkPlugins/` and `llm/`** are TypeScript sub-packages that
   compile to a gitignored `dist/`. Everything below is about these two.
 
