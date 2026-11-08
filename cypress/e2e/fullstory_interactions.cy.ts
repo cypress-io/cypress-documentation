@@ -84,6 +84,41 @@ describe('Fullstory Code Block Copied', () => {
     settle()
     trackedEvents().should('deep.equal', [])
   })
+
+  it('sends nothing for a second copy while the button still shows Copied', () => {
+    cy.on('uncaught:exception', () => false)
+    visitWithFS(pagePath, (win) => {
+      const writeText = cy.stub(win.navigator.clipboard, 'writeText')
+      writeText.as('writeText')
+      writeText.onFirstCall().resolves()
+      writeText
+        .onSecondCall()
+        .rejects(new DOMException('Denied', 'NotAllowedError'))
+    })
+    const button = () =>
+      cy
+        .contains('.theme-code-block', 'reporterEnabled')
+        .find('button[title="Copy"]')
+
+    button().click({ force: true })
+    button().should('have.attr', 'aria-label', 'Copied')
+    button().click({ force: true })
+    cy.get('@writeText').should('have.been.calledTwice')
+
+    // The first copy's label reverts after a second; that isn't a copy.
+    button().should('not.have.attr', 'aria-label', 'Copied')
+    settle()
+    trackedEvents().should('deep.equal', [
+      {
+        name: 'Code Block Copied',
+        properties: {
+          language: 'json',
+          codeTitle: 'reporter-config.json',
+          pagePath,
+        },
+      },
+    ])
+  })
 })
 
 describe('Fullstory Tab Selected', () => {

@@ -6,19 +6,25 @@ import { currentPagePath, trackFullStoryEvent } from '@site/src/utils/fullstory'
 // listener only reads the DOM, so the click it observes runs as it would
 // without it.
 
-// Docusaurus's copy button flips its aria-label once the clipboard write has
-// resolved, and never on failure, so that change is the copy's success
-// signal. It flips back after a second; a reader who copies again inside that
-// second sends no second event.
+// Docusaurus's copy button takes its copyButtonCopied class once the clipboard
+// write has resolved, and not when the write rejects, so gaining that class is
+// the copy's success signal. The class stays for a second, and a click inside
+// that second can't be told apart from the first copy, so it sends nothing.
+// The one exception is a non-HTTPS origin: there Docusaurus falls back to a
+// copy that reports failure without rejecting, and shows the class anyway.
 const COPY_SUCCESS_TIMEOUT_MS = 5000
+
+const isShowingCopied = (button: HTMLButtonElement) =>
+  Array.from(button.classList).some((name) =>
+    name.startsWith('copyButtonCopied')
+  )
 
 function watchForCopySuccess(button: HTMLButtonElement) {
   const block = button.closest('.theme-code-block')
-  if (!block) return
-  const labelAtClick = button.getAttribute('aria-label')
+  if (!block || isShowingCopied(button)) return
 
   const observer = new MutationObserver(() => {
-    if (button.getAttribute('aria-label') === labelAtClick) return
+    if (!isShowingCopied(button)) return
     stop()
     const languageClass = Array.from(block.classList).find((name) =>
       name.startsWith('language-')
@@ -38,7 +44,7 @@ function watchForCopySuccess(button: HTMLButtonElement) {
   }
   observer.observe(button, {
     attributes: true,
-    attributeFilter: ['aria-label'],
+    attributeFilter: ['class'],
   })
 }
 

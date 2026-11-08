@@ -24,7 +24,7 @@
     "preserve": "npm run build:plugins",
     "serve": "docusaurus serve --dir dist",
     "test": "cypress run",
-    "test:plugins": "npm --prefix ./plugins/cypressRemarkPlugins run test && npm --prefix ./plugins/llm run test && npm run test:faq-plugin && npm run test:fullstory-plugin && npm run test:fullstory-conversion-links && npm run test:og-plugin && npm run test:video-structured-data && vitest run src/components/copy-prompt/titles.test.ts src/utils/fullstory.test.ts src/sectionTitles.test.ts",
+    "test:plugins": "npm --prefix ./plugins/cypressRemarkPlugins run test && npm --prefix ./plugins/llm run test && npm run test:faq-plugin && npm run test:fullstory-plugin && npm run test:fullstory-conversion-links && npm run test:og-plugin && npm run test:video-structured-data && vitest run src/components/copy-prompt/titles.test.ts src/utils/fullstory.test.ts src/sectionTitles.test.ts src/theme/DocSidebar/WhatsNew/whatsNewItems.test.ts src/components/tabs/imports.test.ts",
     "test:faq-plugin": "vitest run plugins/faq-structured-data.test.js",
     "test:fullstory-plugin": "vitest run plugins/fullstory.test.js",
     "test:fullstory-conversion-links": "vitest run plugins/fullstory-conversion-links.test.js",

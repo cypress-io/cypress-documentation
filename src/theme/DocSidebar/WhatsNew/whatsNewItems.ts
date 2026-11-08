@@ -2,7 +2,7 @@ import whatsNewData from './whats-new.json'
 import {
   SURFACES,
   conversionLinkAttributes,
-} from '@site/plugins/fullstory-conversion-links'
+} from '../../../../plugins/fullstory-conversion-links'
 
 export interface WhatsNewItem {
   label: string
@@ -25,9 +25,9 @@ export function getWhatsNewItems(path: string): WhatsNewItem[] {
 
 /**
  * The Fullstory attributes for a What's New link: its label, and its promo's
- * utm_campaign when the href has one. Every link gets this label, so its
- * clicks stay together in Fullstory, and a conversion link keeps its
- * placement property alongside the campaign.
+ * utm_campaign when the href has one. A conversion link keeps its conversion
+ * label, so it stays in the funnels built on that name, and carries the
+ * campaign alongside its placement.
  */
 export function whatsNewLinkAttributes(href: string): Record<string, string> {
   const conversion = conversionLinkAttributes(href, SURFACES.sidebar)
@@ -39,8 +39,8 @@ export function whatsNewLinkAttributes(href: string): Record<string, string> {
     'data-promo-campaign': 'str',
   }
   return {
-    ...conversion,
     'data-fs-element': 'Docs Sidebar - Whats New - Link',
+    ...conversion,
     ...(campaign && { 'data-promo-campaign': campaign }),
     'data-fs-properties-schema': JSON.stringify(schema),
   }
