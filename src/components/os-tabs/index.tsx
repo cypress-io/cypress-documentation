@@ -1,5 +1,5 @@
 import React from 'react'
-import Tabs from '@theme/Tabs'
+import Tabs from '@site/src/components/tabs'
 
 interface OsTabsProps {
   children: React.ReactNode

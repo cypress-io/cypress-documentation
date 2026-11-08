@@ -55,4 +55,18 @@ export function fullStoryEventTypeCases(): void {
   // No properties at all
   // @ts-expect-error
   trackFullStoryEvent('Page Markdown Viewed')
+
+  trackFullStoryEvent('Support Assistant Load Failed', {})
+
+  trackFullStoryEvent('Support Assistant Load Failed', {
+    // An event that takes no properties
+    // @ts-expect-error
+    pagePath: '/',
+  })
+
+  trackFullStoryEvent('Support Assistant Opened', {
+    // www.cypress.io's entry point, not the docs'
+    // @ts-expect-error
+    entryPoint: 'Floating Button',
+  })
 }

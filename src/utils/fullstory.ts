@@ -21,6 +21,20 @@ export interface FullStoryEvents {
     destination: MarkdownDestination
   }
   'Page Markdown Viewed': { pagePath: string }
+  'Code Block Copied': {
+    /** The block's language tag, such as `ts`, or an empty string. */
+    language: string
+    /** The block's title (usually a filename), or an empty string. */
+    codeTitle: string
+    pagePath: string
+  }
+  'Tab Selected': {
+    /** The tab set's groupId, or an empty string for a set without one. */
+    groupId: string
+    value: string
+  }
+  'Support Assistant Opened': { entryPoint: 'Docs Button' }
+  'Support Assistant Load Failed': Record<string, never>
 }
 
 declare global {
