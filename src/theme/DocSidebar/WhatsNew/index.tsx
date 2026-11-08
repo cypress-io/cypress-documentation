@@ -3,13 +3,13 @@ import Link from '@docusaurus/Link'
 import Button from '@cypress-design/react-button'
 import Tag from '@cypress-design/react-tag'
 import styles from './styles.module.css'
-import { getWhatsNewItems, getSection } from './whatsNewItems'
+import {
+  getWhatsNewItems,
+  getSection,
+  whatsNewLinkAttributes,
+} from './whatsNewItems'
 import { IconGeneralSparkleDoubleSmall, IconChevronRightMedium, IconActionDeleteMedium } from '@cypress-design/react-icon'
 import type { WindiColor } from '@cypress-design/react-icon'
-import {
-  SURFACES,
-  conversionLinkAttributes,
-} from '@site/plugins/fullstory-conversion-links'
 
 
 const DISMISS_LOCAL_STORAGE_KEY = 'docs-whats-new-dismissed'
@@ -49,6 +49,7 @@ export default function WhatsNew({ path, onLinkClick }: { path: string; onLinkCl
           square
           size="24"
           aria-label="Dismiss now available section"
+          data-fs-element="Docs Sidebar - Whats New - Dismiss"
           onClick={() => {
             writeDismissedToLocalStorage(section)
             setDismissed(true)
@@ -64,7 +65,7 @@ export default function WhatsNew({ path, onLinkClick }: { path: string; onLinkCl
               className={styles.link}
               href={item.href}
               onClick={onLinkClick}
-              {...conversionLinkAttributes(item.href, SURFACES.sidebar)}
+              {...whatsNewLinkAttributes(item.href)}
             >
               <span className={styles.linkContent}>
                 <span className={styles.itemTitle}>

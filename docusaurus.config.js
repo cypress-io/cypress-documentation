@@ -30,7 +30,10 @@ function withConversionLabels(items, surface) {
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  clientModules: ['./src/clientModules/prismSkill.js'],
+  clientModules: [
+    './src/clientModules/prismSkill.js',
+    './src/clientModules/fullstoryEvents.ts',
+  ],
   title: 'Cypress Documentation',
   tagline:
     'Fast, easy and reliable testing for anything that runs in a browser.',
@@ -217,10 +220,12 @@ const config = {
         //give id a unique value to get a new announcement bar to appear
         id: 'cypressconf-2026',
         // Visual content (including Cypress Design icon) is rendered in src/theme/AnnouncementBar/Content
-        // The content is raw HTML, so nothing labels its links for Fullstory. A
-        // link to pricing, a trial, sales, a product page, or Cloud needs the
-        // attributes from conversionLinkAttributes(href, SURFACES.announcement)
-        // written into the <a>.
+        // The content is raw HTML. src/clientModules/fullstoryEvents.ts labels
+        // its links "Docs Announcement - Link" with this id, unless a link
+        // already has a label: one to pricing, a trial, sales, a product page,
+        // or Cloud needs the attributes from
+        // conversionLinkAttributes(href, SURFACES.announcement) written into
+        // the <a>.
         content: `🌟 Join teams building and shipping quality applications with confidence at CypressConf 2026, October 20-22. <a href="https://cypress.registration.goldcast.io/events/670deb6c-06ee-4ce8-858b-8a4db3a62eb1?utm_medium=announcement-bar&utm_source=docs.cypress.io&utm_campaign=cypressconf2026">Register today</a>`,
         isCloseable: true,
       },
