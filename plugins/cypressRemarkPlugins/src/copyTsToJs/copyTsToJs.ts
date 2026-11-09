@@ -25,9 +25,6 @@ export function copyTsToJs(
               prettierOptions,
               typescriptCompilerOptions,
             })
-            // A parent that already renders the pair as tabs, such as the
-            // :::cypress-config-example directive, takes the two blocks as
-            // they are. Anywhere else, group them so they render as tabs.
             const result = rendersOwnTabs(node) ? blocks : [wrapInTabs(blocks)]
             node.children.splice(index, 1, ...result)
             index += result.length
@@ -51,8 +48,6 @@ function rendersOwnTabs(node: Parent): boolean {
   return hName !== undefined && OWN_TABS_COMPONENTS.has(hName)
 }
 
-// Groups the JS and TS blocks under one node that renders as the
-// CypressLangTabs component (src/components/cypress-lang-tabs).
 export function wrapInTabs(blocks: Code[]): Parent {
   return {
     type: 'copyTsToJsTabs',

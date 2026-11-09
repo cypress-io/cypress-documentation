@@ -6,8 +6,7 @@ interface CypressLangTabsProps {
   children: React.ReactNode
 }
 
-// Renders the JS and TS blocks that the copyTsToJs remark plugin emits as
-// JavaScript and TypeScript tabs. The plugin always emits the JS block first.
+// The copyTsToJs remark plugin emits the JS block first, then the TS block.
 const CypressLangTabs: React.FC<CypressLangTabsProps> = ({ children }) => {
   const blocks = React.Children.toArray(children)
   return (
