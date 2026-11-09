@@ -101,6 +101,24 @@ cy.readFile('path/to/message.txt').then((text) => {
 Hello World
 ```
 
+#### Write an array as CSV or lines of text
+
+An array is written as JSON, not as one line per item. To write a CSV file or
+other line-based text, join the array into a string first.
+
+```javascript
+const rows = ['name,email', 'Eliza,eliza@example.com']
+
+cy.writeFile('path/to/users.csv', rows.join('\n'))
+```
+
+`{projectRoot}/path/to/users.csv` is created with the following contents:
+
+```text
+name,email
+Eliza,eliza@example.com
+```
+
 ### JSON
 
 #### Write JSON to a file
@@ -140,6 +158,21 @@ Writing a file inside the [`fixturesFolder`](/app/references/configuration#Folde
 clears that file from the [`cy.fixture()`](/api/commands/fixture) cache, so a
 later `cy.fixture()` call yields the new contents.
 
+#### Stub a network request with a generated fixture
+
+Once the fixture file exists, [`cy.intercept()`](/api/commands/intercept) can
+serve it as the response to your app's request.
+
+```javascript
+cy.request('https://jsonplaceholder.cypress.io/users').then((response) => {
+  cy.writeFile('cypress/fixtures/users.json', response.body)
+})
+
+cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('getUsers')
+cy.visit('/users')
+cy.wait('@getUsers')
+```
+
 ### Encoding
 
 #### Specify the encoding as a String
@@ -163,12 +196,60 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', {
 })
 ```
 
+#### Save a binary file from a request
+
+Request the file with `encoding: 'binary'`, then write the response body with
+the same encoding so the bytes reach the disk unchanged.
+
+```javascript
+cy.request({
+  url: 'https://example.cypress.io/assets/img/javascript-logo.png',
+  encoding: 'binary',
+}).then((response) => {
+  cy.writeFile('path/to/logo.png', response.body, 'binary')
+})
+```
+
+#### Decode a base64 string into a file
+
+With the `base64` encoding, Cypress decodes the string and writes the
+resulting bytes. This example saves the image drawn on a `<canvas>` element.
+
+```javascript
+cy.get('canvas').then(($canvas) => {
+  const dataUrl = $canvas[0].toDataURL('image/png')
+  const base64 = dataUrl.split(',')[1]
+
+  cy.writeFile('path/to/chart.png', base64, 'base64')
+})
+```
+
 ### Flags
 
 #### Append contents to the end of a file
 
 ```javascript
 cy.writeFile('path/to/message.txt', 'Hello World', { flag: 'a+' })
+```
+
+#### Build a log file one line at a time
+
+Appending adds the contents exactly as passed, with no separator. End each
+entry with `\n` to keep entries on their own lines. The first write uses the
+default `w` flag, so each run starts with an empty log.
+
+```javascript
+cy.writeFile('path/to/run.log', 'Test started\n')
+cy.writeFile('path/to/run.log', 'Logged in\n', { flag: 'a+' })
+cy.writeFile('path/to/run.log', 'Checkout complete\n', { flag: 'a+' })
+```
+
+`{projectRoot}/path/to/run.log` contains:
+
+```text
+Test started
+Logged in
+Checkout complete
 ```
 
 Appending treats the file as plain text. To merge a JSON object, read the file
@@ -208,6 +289,28 @@ cy.readFile(filename, null).then((obj) => {
   // <Buffer ef 3a bf ... >
   cy.writeFile(filename, obj, null)
 })
+```
+
+### Options
+
+#### Keep a large response out of the Command Log
+
+The console output for `cy.writeFile()` includes the full contents written.
+Pass `log: false` to hide the command when the contents are large or
+sensitive.
+
+```javascript
+cy.request('https://jsonplaceholder.cypress.io/photos').then((response) => {
+  cy.writeFile('cypress/fixtures/photos.json', response.body, { log: false })
+})
+```
+
+#### Allow more time for a large write
+
+```javascript
+const largeText = 'x'.repeat(50 * 1024 * 1024)
+
+cy.writeFile('path/to/large.txt', largeText, { timeout: 15000 })
 ```
 
 ## Rules
