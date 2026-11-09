@@ -422,52 +422,10 @@ it('should transfer money between users', () => {
 
 ### Where to call `cy.visit()` after `cy.session()`
 
-It can seem natural to call [`cy.visit()`](/api/commands/visit) right after
-`cy.session()` in your login function or custom command, so the function
-behaves exactly like a login function without `cy.session()`.
-
-```javascript
-const login = (name) => {
-  cy.session(name, () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=password]').type('s3cr3t')
-    cy.get('#submit').click()
-    cy.url().should('contain', '/home')
-  })
-  cy.visit('/home')
-}
-
-beforeEach(() => {
-  login('user')
-})
-
-it('should test something on the /home page', () => {
-  // assertions
-})
-
-it('should test something else on the /home page', () => {
-  // assertions
-})
-```
-
-A test that needs a different page then calls `cy.visit()` a second time.
-`cy.visit()` waits for each page to load, so the extra visit adds time to every
-such test.
-
-```javascript
-// ...continued...
-
-it('should test something on the /other page', () => {
-  cy.visit('/other')
-  // assertions
-})
-```
-
-Instead, call `cy.visit()` only where you need it.
-[Organize your tests into suites](/app/core-concepts/writing-and-organizing-tests#Test-Structure)
-and call `cy.visit()` after logging in, inside a
+Call [`cy.visit()`](/api/commands/visit) after logging in, inside each suite's
 [`beforeEach`](/app/core-concepts/writing-and-organizing-tests#Hooks) hook.
+[Organize your tests into suites](/app/core-concepts/writing-and-organizing-tests#Test-Structure)
+by the page they test, so each test loads only the page it needs.
 
 ```javascript
 const login = (name) => {
@@ -478,7 +436,6 @@ const login = (name) => {
     cy.get('#submit').click()
     cy.url().should('contain', '/home')
   })
-  // no visit here
 }
 
 describe('home page tests', () => {
