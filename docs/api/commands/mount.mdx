@@ -86,9 +86,6 @@ of these examples:
 <Tabs groupId="frameworks">
 <TabItem value='React' active>
 
-<Tabs groupId="cypress-lang">
-<TabItem value="js" label="JavaScript">
-
 ```js title="cypress/support/component.js"
 import { mount } from 'cypress/react'
 
@@ -100,34 +97,7 @@ Cypress.Commands.add('mount', (component, options) => {
 ```
 
 </TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="cypress/support/component.ts"
-import { mount } from 'cypress/react'
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount: typeof mount
-    }
-  }
-}
-
-Cypress.Commands.add('mount', (component, options) => {
-  // Rename this file to .tsx to wrap the component in providers:
-  // return mount(<MyProvider>{component}</MyProvider>, options)
-  return mount(component, options)
-})
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
 <TabItem value='Angular'>
-
-<Tabs groupId="cypress-lang">
-<TabItem value="js" label="JavaScript">
 
 ```js title="cypress/support/component.js"
 import { mount } from 'cypress/angular'
@@ -136,35 +106,10 @@ Cypress.Commands.add('mount', (component, config) => {
   return mount(component, config)
 })
 ```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="cypress/support/component.ts"
-import { mount } from 'cypress/angular'
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount: typeof mount
-    }
-  }
-}
-
-Cypress.Commands.add('mount', (component, config) => {
-  return mount(component, config)
-})
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem value='Vue'>
 
-<Tabs groupId="cypress-lang">
-<TabItem value="js" label="JavaScript">
-
 ```js title="cypress/support/component.js"
 import { mount } from 'cypress/vue'
 
@@ -191,54 +136,10 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   return mount(component, options)
 })
 ```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="cypress/support/component.ts"
-import { mount } from 'cypress/vue'
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount: typeof mount
-    }
-  }
-}
-
-Cypress.Commands.add('mount', (component, options = {}) => {
-  // Set up the options object
-  options.global = options.global || {}
-  options.global.stubs = options.global.stubs || {}
-  if (!Array.isArray(options.global.stubs)) {
-    options.global.stubs['transition'] = false
-  }
-  options.global.components = options.global.components || {}
-  options.global.plugins = options.global.plugins || []
-
-  // Add any global plugins
-  // options.global.plugins.push({
-  //   install(app) {
-  //     app.use(MyPlugin)
-  //   },
-  // })
-
-  // Add any global components
-  // options.global.components['Button'] = Button
-
-  return mount(component, options)
-})
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem value='Svelte'>
 
-<Tabs groupId="cypress-lang">
-<TabItem value="js" label="JavaScript">
-
 ```js title="cypress/support/component.js"
 import { mount } from 'cypress/svelte'
 
@@ -246,28 +147,6 @@ Cypress.Commands.add('mount', (component, options) => {
   return mount(component, options)
 })
 ```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript">
-
-```ts title="cypress/support/component.ts"
-import { mount } from 'cypress/svelte'
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount: typeof mount
-    }
-  }
-}
-
-Cypress.Commands.add('mount', (component, options) => {
-  return mount(component, options)
-})
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 </Tabs>
@@ -275,13 +154,12 @@ Cypress.Commands.add('mount', (component, options) => {
 ## Adding TypeScript Typings for `cy.mount()` Commands
 
 When working in [TypeScript](/app/tooling/typescript-support), your custom
-command needs typings for code completion and to avoid TypeScript errors. The
-`cypress/support/component.ts` examples above declare them in the support file
-itself, which is what Cypress scaffolds.
-
-To make the typings available to any code in your project, you can move the
-declaration into a `cypress.d.ts` file in the root directory instead. Use this
-example as a starting point:
+command needs typings for code completion and to avoid TypeScript errors. Add a
+`declare global` block that types `cy.mount()` to
+`cypress/support/component.ts`, which is where Cypress scaffolds it. To make the
+typings available to any code in your project, put the block in a
+`cypress.d.ts` file in the root directory instead. Use this example as a
+starting point:
 
 <Tabs groupId="frameworks">
 <TabItem value="React" active>
