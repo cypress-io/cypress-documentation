@@ -207,6 +207,57 @@ cy.fixture('users.json', 'utf8').then((raw) => {
 })
 ```
 
+### JavaScript
+
+#### Generate values in a `.js` fixture
+
+A `.js` fixture holds a single JavaScript expression, so it can compute values
+that a JSON file can't, such as a date relative to now. Cypress evaluates the
+file the first time you load it and caches the result, so later calls yield the
+same values rather than evaluating the file again.
+
+```js title="cypress/fixtures/session.js"
+{
+  token: 'test-token',
+  expiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+}
+```
+
+```js title="cypress/e2e/session.cy.js"
+cy.fixture('session').then((session) => {
+  expect(Date.parse(session.expiresAt)).to.be.greaterThan(Date.now())
+})
+```
+
+### CSV
+
+#### Parse a CSV fixture into rows
+
+A `.csv` fixture yields the whole file as one `utf8` string. Split it into lines
+and fields to work with each row.
+
+```csv title="cypress/fixtures/users.csv"
+name,email
+Jane,jane@cypress.io
+Lee,lee@cypress.io
+```
+
+```js title="cypress/e2e/users.cy.js"
+cy.fixture('users.csv').then((csv) => {
+  const [header, ...rows] = csv.trim().split(/\r?\n/)
+  const users = rows.map((row) => {
+    const [name, email] = row.split(',')
+    return { name, email }
+  })
+
+  expect(header).to.eq('name,email')
+  expect(users[0]).to.deep.eq({ name: 'Jane', email: 'jane@cypress.io' })
+})
+```
+
+Splitting on commas works for simple files. For fields that contain quoted
+commas or line breaks, parse the string with a CSV library instead.
+
 ### Images
 
 #### Image fixtures yield `base64` strings by default
@@ -243,19 +294,6 @@ cy.fixture('images/avatar.png', null).as('avatar')
 cy.get('input[type="file"]').selectFile('@avatar')
 ```
 
-### Audio
-
-#### Play an MP3 fixture in the browser
-
-```javascript
-cy.fixture('audio/sound.mp3', 'base64').then((mp3) => {
-  const uri = 'data:audio/mp3;base64,' + mp3
-  const audio = new Audio(uri)
-
-  audio.play()
-})
-```
-
 ### Accessing fixture data
 
 #### Stub a network response with fixture data
@@ -265,6 +303,41 @@ cy.fixture('users').then((json) => {
   cy.intercept('GET', '/users/**', json)
 })
 ```
+
+#### Stub an error response with a fixture
+
+Pair the `fixture` property with `statusCode` to test how your app handles a
+failed request. Cypress sends the fixture as the response body with the status
+you set.
+
+```javascript
+cy.intercept('GET', '/api/users', {
+  statusCode: 500,
+  fixture: 'errors/server-error.json',
+}).as('getUsers')
+
+cy.visit('/users')
+cy.wait('@getUsers').its('response.statusCode').should('eq', 500)
+cy.get('[data-cy="error-banner"]').should('be.visible')
+```
+
+#### Fill in a form with fixture data
+
+Keep test account details in a fixture so every test signs in with the same
+known user. `{ log: false }` keeps the password out of the Command Log.
+
+```javascript
+cy.fixture('users/admin').then((admin) => {
+  cy.visit('/login')
+  cy.get('[data-cy="email"]').type(admin.email)
+  cy.get('[data-cy="password"]').type(admin.password, { log: false })
+  cy.get('form').submit()
+})
+cy.location('pathname').should('eq', '/dashboard')
+```
+
+Fixtures are committed with your tests, so keep real secrets out of them and
+read those with [`cy.env()`](/api/commands/env) instead.
 
 #### Load a fixture in `beforeEach()` and read it with `cy.get()`
 
@@ -287,7 +360,44 @@ describe('User list', () => {
 })
 ```
 
-#### Bootstrap your app's data with fixtures
+#### Load several fixtures for one test
+
+Alias each fixture in `beforeEach()`, then read the aliases together inside the
+test.
+
+```javascript
+describe('Order history', () => {
+  beforeEach(() => {
+    cy.fixture('users/admin').as('admin')
+    cy.fixture('orders').as('orders')
+  })
+
+  it('lists every order for the signed-in user', () => {
+    cy.visit('/orders')
+    cy.get('@admin').then((admin) => {
+      cy.get('@orders').then((orders) => {
+        cy.contains('h1', admin.name)
+        cy.get('[data-cy="order-row"]').should('have.length', orders.length)
+      })
+    })
+  })
+})
+```
+
+#### Seed your backend with fixture data
+
+Send a fixture to a test-only endpoint in your app with
+[`cy.request()`](/api/commands/request) so your real backend starts every test
+from the same records.
+
+```javascript
+beforeEach(() => {
+  cy.fixture('users').then((users) => {
+    cy.request('POST', '/api/test/seed', { users })
+  })
+  cy.visit('/users')
+})
+```
 
 :::info
 
@@ -315,6 +425,21 @@ cy.wait('@getUser').then(({ response }) => {
 ```
 
 :::
+
+#### Pass fixture data to a component as props
+
+In a component test, hand the fixture straight to the component you mount.
+
+```jsx title="src/Profile.cy.jsx"
+import Profile from './Profile'
+
+it('shows the user name', () => {
+  cy.fixture('user').then((user) => {
+    cy.mount(<Profile user={user} />)
+    cy.contains('h2', user.firstName)
+  })
+})
+```
 
 ## Notes
 
