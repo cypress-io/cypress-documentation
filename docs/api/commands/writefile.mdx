@@ -340,19 +340,21 @@ cy.writeFile('path/to/large.txt', largeText, { timeout: 15000 })
 cy.writeFile('info.log', ['foo', 'bar', 'baz'])
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <DocsImage
   src="/img/api/writefile/write-data-to-system-file-for-testing.png"
-  alt="Command Log writeFile"
+  alt="Command Log row for writeFile showing the file name info.log"
 />
 
-When clicking on the `writeFile` command within the command log, the console
-outputs the following:
+When you click the `writeFile` command in the Command Log, the console outputs
+the following. `File path` is the absolute path Cypress resolved from
+`filePath`, and `Contents` is what Cypress wrote, with the array converted to
+JSON.
 
 <DocsImage
   src="/img/api/writefile/console-log-shows-contents-written-to-file.png"
-  alt="Console Log writeFile"
+  alt="Console output for writeFile showing the command name, the resolved absolute file path, and the array written as JSON"
 />
 
 ## History
