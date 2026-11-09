@@ -62,7 +62,33 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
 ```javascript
 cy.get('button#checkout').scrollIntoView()
-cy.get('button#checkout').should('be.visible')
+```
+
+#### Check that an element is in the viewport
+
+[Visibility](/app/core-concepts/interacting-with-elements#Visibility) doesn't
+account for the viewport, so `.should('be.visible')` passes for an element that
+is scrolled out of view. To confirm the scroll worked, check the element's
+position instead. This checks that its top edge is inside the viewport.
+
+```javascript
+cy.get('button#checkout').scrollIntoView()
+cy.get('button#checkout')
+  .invoke('get', 0)
+  .invoke('getBoundingClientRect')
+  .its('top')
+  .should('be.within', 0, Cypress.config('viewportHeight'))
+```
+
+#### Scroll an item inside a scrollable container
+
+When the element sits inside a scrollable container, such as a results list,
+`.scrollIntoView()` scrolls that container to reach it. If the container is off
+screen, the page scrolls first to bring the container into view.
+
+```javascript
+cy.get('[data-cy="results"] li').eq(40).scrollIntoView()
+cy.get('[data-cy="results"]').its('0.scrollTop').should('be.greaterThan', 0)
 ```
 
 ### Options
@@ -94,7 +120,32 @@ header instead of underneath it.
 cy.get('#pricing').scrollIntoView({ offset: { top: -80, left: 0 } })
 ```
 
+### Workflows
+
+#### Test behavior that a scroll triggers
+
+Sticky headers, "back to top" buttons, and lazy-loaded images change as the
+page scrolls. Scroll to a point on the page, then assert on the change.
+
+```javascript
+cy.get('footer').scrollIntoView()
+cy.get('[data-cy="back-to-top"]').should('have.class', 'is-shown')
+```
+
 ## Notes
+
+### Skip .scrollIntoView() before action commands
+
+Action commands such as [`.click()`](/api/commands/click) and
+[`.type()`](/api/commands/type) scroll the element into view before acting on
+it, so a `.scrollIntoView()` in front of them adds nothing. The
+[`scrollBehavior`](/app/references/configuration#Actionability) option controls
+where the element lands.
+
+```javascript
+cy.get('#submit').scrollIntoView().click() // ❌ the scroll is redundant
+cy.get('#submit').click() // ✅ .click() scrolls the element into view itself
+```
 
 ### Where the element lands after scrolling
 
