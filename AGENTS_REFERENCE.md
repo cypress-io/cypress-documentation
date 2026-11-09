@@ -201,10 +201,13 @@ Guidance, not arithmetic:
   contents list into a column of near-identical entries.
 - **Lead with the distinctive term**, so the heading survives truncation in a
   search result and scans quickly in the sidebar.
-- **A question is one good shape, not the required one.** Answer engines do well
-  with `How to build a release report of Cypress runs`, and it is the natural
-  form in FAQ and troubleshooting sections. Forcing `How to` onto a section that
-  answers no question is worse than leaving it short.
+- **Name a task with an imperative verb**: `Load global styles in component
+tests`, not `Loading global styles in component tests` or `How to load global
+styles`. Keep sibling headings in the same form, so the contents list reads as
+  a set of steps. Headings that name a thing rather than a task stay nouns: the
+  API page skeleton, `## See also`, pointer sections such as `Additional mount
+command examples`, and troubleshooting headings that quote an error or name a
+  symptom. A question a reader actually asks, as in an FAQ, stays a question.
 - **Sentence case**, with the fixed API page skeleton (`## Command Log`,
   `## Syntax`), function names on
   [namespace API pages](#namespace-api-pages) (`### isVisible()`), and product
@@ -1097,9 +1100,29 @@ JavaScript tab. Only fall back to explicit
 and `<TabItem value="ts" label="TypeScript">` when the plugin can't derive one
 version from the other. When you do, keep the **JS tab first**.
 
+Hand-write the JavaScript version of a component support file
+(`cypress/support/component.js`) instead of using `copyTsToJs`. The plugin turns
+each `import` into `require()`, and a Vite-bundled support file fails on it with
+`ReferenceError: require is not defined`. Cypress scaffolds that file with ES
+`import` statements, so keep them.
+
 ### Frameworks
 
 Use `groupId="frameworks"`, ordered **React → Angular → Vue → Svelte**.
+
+### Never nest tab groups
+
+A tab group inside another tab group renders as two stacked rows of tabs, and
+the reader has to work out which row controls what. Keep every tab group at the
+top level. A `copyTsToJs` block counts as a tab group, since the plugin renders
+its JavaScript and TypeScript versions as tabs.
+
+When an example sits inside framework tabs or any other tab group, show only its
+JavaScript version, in a plain `js` block with a `title`. Cover what only
+TypeScript readers need, such as the `declare global` block that types a custom
+command, in its own section outside the tabs. In
+`docs/api/commands/mount.mdx`, the framework tabs show each
+`cypress/support/component.js`, and a separate section covers the typings.
 
 ## Cypress config examples
 
