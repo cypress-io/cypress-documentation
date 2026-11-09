@@ -157,7 +157,7 @@ Action commands such as [`.click()`](/api/commands/click) and
 [`.type()`](/api/commands/type) scroll the element into view before acting on
 it, so a `.scrollIntoView()` in front of them adds nothing. The
 [`scrollBehavior`](/app/references/configuration#Actionability) option controls
-where the element lands.
+where the element lands, and setting it to `false` turns this scrolling off.
 
 ```javascript
 cy.get('#submit').scrollIntoView().click() // ❌ the scroll is redundant
