@@ -43,10 +43,11 @@ The component to render, in the form your framework's `mount()` takes:
 
 Options for your framework's `mount()`, such as props, plus any options your
 custom command adds. Each framework's API page lists its options:
-[Angular API](/app/component-testing/angular/api),
-[React API](/app/component-testing/react/api),
-[Svelte API](/app/component-testing/svelte/api), and
-[Vue API](/app/component-testing/vue/api).
+
+- [Angular API](/app/component-testing/angular/api)
+- [React API](/app/component-testing/react/api)
+- [Svelte API](/app/component-testing/svelte/api)
+- [Vue API](/app/component-testing/vue/api)
 
 <HeaderYields />
 
@@ -59,7 +60,7 @@ custom command adds. Each framework's API page lists its options:
 | Svelte    | `{ component }`           | Call functions and read values the component exports                                                                          |
 | Vue       | `{ component, wrapper }`  | Read the component instance, or use the Vue Test Utils wrapper's methods                                                      |
 
-## Creating a New `cy.mount()` Command
+## Creating a new `cy.mount()` command
 
 When you configure Component Testing through the Cypress App, Cypress scaffolds
 the command for you in `cypress/support/component.js` (or
@@ -85,23 +86,23 @@ of these examples:
 <Tabs groupId="frameworks">
 <TabItem value='React' active>
 
-<Tabs>
-<TabItem value="cypress/support/component.js">
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
 
-```js
+```js title="cypress/support/component.js"
 import { mount } from 'cypress/react'
 
 Cypress.Commands.add('mount', (component, options) => {
-  // To wrap the component in providers, rename this file to .jsx and use:
+  // Rename this file to .jsx to wrap the component in providers:
   // return mount(<MyProvider>{component}</MyProvider>, options)
   return mount(component, options)
 })
 ```
 
 </TabItem>
-<TabItem value="cypress/support/component.ts">
+<TabItem value="ts" label="TypeScript">
 
-```ts
+```ts title="cypress/support/component.ts"
 import { mount } from 'cypress/react'
 
 declare global {
@@ -113,7 +114,7 @@ declare global {
 }
 
 Cypress.Commands.add('mount', (component, options) => {
-  // To wrap the component in providers, rename this file to .tsx and use:
+  // Rename this file to .tsx to wrap the component in providers:
   // return mount(<MyProvider>{component}</MyProvider>, options)
   return mount(component, options)
 })
@@ -125,10 +126,10 @@ Cypress.Commands.add('mount', (component, options) => {
 </TabItem>
 <TabItem value='Angular'>
 
-<Tabs>
-<TabItem value="cypress/support/component.js">
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
 
-```js
+```js title="cypress/support/component.js"
 import { mount } from 'cypress/angular'
 
 Cypress.Commands.add('mount', (component, config) => {
@@ -137,9 +138,9 @@ Cypress.Commands.add('mount', (component, config) => {
 ```
 
 </TabItem>
-<TabItem value="cypress/support/component.ts">
+<TabItem value="ts" label="TypeScript">
 
-```ts
+```ts title="cypress/support/component.ts"
 import { mount } from 'cypress/angular'
 
 declare global {
@@ -161,10 +162,10 @@ Cypress.Commands.add('mount', (component, config) => {
 </TabItem>
 <TabItem value='Vue'>
 
-<Tabs>
-<TabItem value="cypress/support/component.js">
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
 
-```js
+```js title="cypress/support/component.js"
 import { mount } from 'cypress/vue'
 
 Cypress.Commands.add('mount', (component, options = {}) => {
@@ -192,9 +193,9 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 ```
 
 </TabItem>
-<TabItem value="cypress/support/component.ts">
+<TabItem value="ts" label="TypeScript">
 
-```ts
+```ts title="cypress/support/component.ts"
 import { mount } from 'cypress/vue'
 
 declare global {
@@ -235,10 +236,10 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 </TabItem>
 <TabItem value='Svelte'>
 
-<Tabs>
-<TabItem value="cypress/support/component.js">
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
 
-```js
+```js title="cypress/support/component.js"
 import { mount } from 'cypress/svelte'
 
 Cypress.Commands.add('mount', (component, options) => {
@@ -247,9 +248,9 @@ Cypress.Commands.add('mount', (component, options) => {
 ```
 
 </TabItem>
-<TabItem value="cypress/support/component.ts">
+<TabItem value="ts" label="TypeScript">
 
-```ts
+```ts title="cypress/support/component.ts"
 import { mount } from 'cypress/svelte'
 
 declare global {
@@ -356,7 +357,7 @@ to the `include` array in each `tsconfig.json`:
 
 ## Examples
 
-### Using `cy.mount()` in a component test
+### Use `cy.mount()` in a component test
 
 Once you register the command, call `cy.mount()` from any component spec with
 the component and the options your framework's `mount()` accepts. Then query and
@@ -435,6 +436,9 @@ In React, use the `rerender()` function that `cy.mount()` yields to update the
 props of the component that's already mounted. Unlike a second `cy.mount()`, it
 keeps the component's state:
 
+<Tabs groupId="frameworks">
+<TabItem value="React" active>
+
 ```jsx title="Stepper.cy.jsx"
 import Stepper from './Stepper'
 
@@ -458,6 +462,9 @@ it('starts over when mounted again', () => {
   cy.get('[data-cy=counter]').should('have.text', '0')
 })
 ```
+
+</TabItem>
+</Tabs>
 
 ### Loading global styles in component tests
 
@@ -577,7 +584,7 @@ it('greets a signed-in user by name', () => {
 })
 ```
 
-## Additional Mount Command Examples
+## Additional mount command examples
 
 The framework example pages cover more customized mount commands, such as
 routers, state management, and app-wide providers:
@@ -633,7 +640,7 @@ to `cypress/support/component.js`.
 ## Command Log
 
 Mount a component and assert on its text, as in the React example from
-[Using `cy.mount()` in a component test](#Using-cymount-in-a-component-test):
+[Use `cy.mount()` in a component test](#Use-cymount-in-a-component-test):
 
 ```jsx title="Stepper.cy.jsx"
 cy.mount(<Stepper initial={5} />)
