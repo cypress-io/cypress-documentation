@@ -84,23 +84,17 @@ Three files at the site root index all of that, and none is hand-maintained:
   don't set a `sidebar_position`, leave it off your new page too and let it sort
   alphabetically rather than introducing positions into a folder that doesn't use
   them. Only add `sidebar_position` where the folder already relies on it.
-- **Moving, renaming, or deleting a page requires a redirect.** Add a `301` entry
-  to `netlify.toml` (it already holds ~200) so existing bookmarks and inbound
-  links keep working:
-  ```toml
-  [[redirects]]
-    from = "/old/path"
-    to = "/new/path"
-    status = 301
-    force = true
-  ```
-  Add the same rule, at the same position, to `static/_redirects`, which
-  Cloudflare reads. Netlify serves production while hosting moves to
-  Cloudflare, so the two lists must match. Both hosts use the first rule that
-  matches a path:
+- **Moving, renaming, or deleting a page requires a redirect.** Add a `301` line
+  to `static/_redirects` (it already holds ~200) so existing bookmarks and
+  inbound links keep working:
   ```text title="static/_redirects"
   /old/path /new/path 301
   ```
+  Cloudflare applies an exact-path rule before any wildcard (`*`) rule, so add
+  exact paths above the wildcards at the end of the file. Avoid a new wildcard
+  that overlaps an existing one: Cloudflare doesn't reliably pick the first of
+  two overlapping wildcards (the comment above `/app/cloud/*` explains the one
+  case we have), so check any new wildcard on the pull request's preview.
   Then update any in-repo links to the old path, since `onBrokenLinks: throw`
   will otherwise fail the build.
 
@@ -219,9 +213,9 @@ Guidance, not arithmetic:
 This applies to headings you are writing. Renaming an existing heading costs two
 published URLs, and neither is redirectable:
 
-- **Its anchor.** A URL fragment never reaches the server, so `netlify.toml`
-  cannot redirect it the way it redirects a moved page. Inbound deep links land
-  on the page and fail to scroll.
+- **Its anchor.** A URL fragment never reaches the server, so
+  `static/_redirects` cannot redirect it the way it redirects a moved page.
+  Inbound deep links land on the page and fail to scroll.
 - **Its section `.md` file.** The LLM export publishes every `##` section at
   `<page-route>/<h2-slug>.md`, so renaming an H2 moves that file and the old URL
   404s. Agents and tools that fetched it lose the link.
@@ -920,20 +914,23 @@ Use a **fenced code block** for:
 ### `<CopyPrompt>` authoring rules
 
 Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
-(required), `title`, `subtext`, `hideTitle`, `defaultCollapsed`,
+and `title` (both required), `subtext`, `hideTitle`, `defaultCollapsed`,
 `excludeFromLlmExport`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx`
 and `docs/app/guides/migration/`.
 
+- **Give every card a unique `title`**, even one whose heading comes from
+  children or `hideTitle`. It is the card's `promptTitle` in Fullstory, so a
+  shared title merges two cards in analytics. `npm run test:copy-prompt-titles`
+  fails on a missing or repeated title and names its file and line.
 - **No quotes** around the prompt — the card renders it verbatim.
 - **No tool calls** unless explicitly required: prefer _"Find all failing tests
   on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
-- **For a titled card, pass `title`** — rendered as the card's heading with a
-  sparkle icon (used by the migration guides).
+- **`title` renders as the card's heading** with a sparkle icon (used by the
+  migration guides), unless children or `hideTitle` replace it.
 - **When a card is one of several in a section** (e.g. a list of example
-  prompts), pass a `###` Markdown heading as the card's **children** instead of
-  a `title`. It stays a real heading, so the workflow shows up in the page's
-  table of contents, and the card styles it to match. Keep `title` too, for
-  analytics. Use `hideTitle` only for a lone card that already sits under its
+  prompts), pass a `###` Markdown heading as the card's **children**, which
+  renders in place of the `title`. It stays a real heading, so the workflow
+  shows up in the page's table of contents, and the card styles it to match. Use `hideTitle` only for a lone card that already sits under its
   own Markdown heading.
 - **Write `subtext` as the outcome, not the mechanism.** Say what the reader gets
   from running the prompt, like the example below (_"Get a high-level summary of
@@ -983,8 +980,7 @@ For a prompt over 350 characters, add `defaultCollapsed` and structure:
 ## Admonition blocks
 
 Call-outs use Docusaurus admonition directives: `:::type` to open, `:::` to
-close, with an optional custom title (`:::note Requirements`). Reach for these
-instead of bolded inline asides. Pick the type by intent:
+close. Reach for these instead of bolded inline asides. Pick the type by intent:
 
 - `:::info` — neutral, helpful context or background. The default workhorse and
   by far the most common in this repo.
@@ -1002,7 +998,29 @@ instead of bolded inline asides. Pick the type by intent:
   admonition type is configured. Reach for `:::tip` or `:::info` unless you
   specifically want the "good news" framing.
 
-Keep them short and infrequent; a page wall-to-wall with call-outs dilutes them.
+**Never add a custom title.** Docusaurus supports `:::note Requirements`, but
+`src/css/custom.scss` sets `[class^='admonitionHeading'] { display: none; }`, so
+the title (and the default type label) never render.
+
+When the call-out needs a visible heading, put a **bold lead line** in the body
+on its own, then a blank line, then the explanation. That layout is the stand-in
+for the hidden admonition title:
+
+```markdown
+:::tip
+
+**Run Checks evaluate runs; they don't block CI by themselves.**
+
+A check is a pass/fail evaluation after the run records. Fetch results with
+`getCheckResults()` when you need a merge gate.
+
+:::
+```
+
+Skip the bold lead when the whole call-out is one or two short sentences and a
+heading would only repeat them. Keep admonitions infrequent; a page wall-to-wall
+with call-outs dilutes them. Existing titled admonitions outside the change
+you're making can wait for a follow-up; don't expand scope just to strip them.
 
 ## Tabs
 
@@ -1062,7 +1080,8 @@ canonical tab order and labels (`npm`, `Yarn`, `pnpm`, `Bun`) when you do.
 
 Prefer **not** to hand-write a JS tab. Author a single TypeScript block tagged
 `copyTsToJs` and the `copyTsToJs` remark plugin generates the JavaScript version
-automatically, **JS tab first, then TS**:
+automatically and renders the two as JavaScript and TypeScript tabs in the
+`cypress-lang` tab group, **JS tab first, then TS**:
 
 ````mdx
 ```typescript copyTsToJs
@@ -1072,10 +1091,11 @@ export default name
 ```
 ````
 
-Only fall back to explicit `<Tabs>` with separate `.js`/`.ts` `<TabItem>`s when
-the two versions differ by more than types (e.g. a `declare global` block) and
-the plugin can't derive one from the other. When you do, keep the **JS tab
-first**.
+The plugin drops type-only code, including a `declare global` block, from the
+JavaScript tab. Only fall back to explicit
+`<Tabs groupId="cypress-lang">` with `<TabItem value="js" label="JavaScript">`
+and `<TabItem value="ts" label="TypeScript">` when the plugin can't derive one
+version from the other. When you do, keep the **JS tab first**.
 
 ### Frameworks
 
@@ -1434,6 +1454,52 @@ Use it for pages like `Cypress.dom` and `Cypress.session`, where several
 functions share a page. Leave single-function configuration APIs, such as
 `Cypress.Keyboard.defaults()` and `Cypress.Screenshot.defaults()`, on the
 single-command skeleton.
+
+## Code comments
+
+These rules cover comments in the code that builds and runs this site: `src/`,
+`plugins/`, `scripts/`, `cypress/`, and config files such as
+`docusaurus.config.js`. They don't cover comments inside the code examples on a
+docs page, which are written for the reader.
+
+- **Prefer none.** Always prefer no code comment if the code is
+  self-explanatory.
+- **Explain the why.** When a comment is necessary, use it to explain the _why_
+  and anything relevant that is not directly expressed by the code itself.
+- **Don't repeat yourself.** Do not restate the same comment multiple times in a
+  file as the code flows through each step.
+- **Present state only.** Keep comments relevant to the current state of the
+  code. Do not describe what changed or how the code used to be different.
+- **Name the reason, not the predecessor.** "Matches what the old tab component
+  did" is not a _why_, and it rots once that component is deleted. State the
+  reason the old code had, and put parity with replaced tooling in the commit
+  message or guide.
+- **No measurements.** Don't cite benchmark numbers in a comment. They depend on
+  the machine they came from and go stale with the code around them. State the
+  reason instead, and keep the numbers in the commit message or pull request.
+
+Bad examples:
+
+```tsx
+// Define the types for the props
+// These were previously authored as ##### headings, now they render as a <p>
+// Sort the tabs the same way the old hand-written OS tab sets did
+// Memoized: filtering the plugins list dropped from 40ms to 3ms
+```
+
+Good examples:
+
+```tsx
+// Seed the search from a shareable `?search=` param on load. Done in an
+// effect (not the initial state) so server and client first render agree.
+
+// Not `async`: everything up to `copyPendingText` has to run in the click's
+// own tick, or the clipboard write lands outside the user activation that
+// Safari requires. The fetch is started here and handed over still pending.
+
+// Escaping `<` keeps a value such as `</script>` in a title or description
+// from closing the tag early.
+```
 
 ## Testing
 

@@ -1,0 +1,88 @@
+This GitHub Actions workflow records a run, then posts one [commit status](https://docs.github.com/en/rest/commits/statuses) per applicable [Run Check](/cloud/features/checks) to the pull request. A failed check shows as a failing status on the pull request, and you can make the statuses required in your branch protection rules.
+
+```yaml title=".github/workflows/cypress.yml"
+name: Cypress
+on: pull_request
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    env:
+      CYPRESS_PROJECT_ID: abc123
+      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      # Failing tests fail this step, but the checks still need to be reported.
+      - run: npx cypress run --record
+        continue-on-error: true
+      - run: npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-cloud-results.tgz
+      - run: node scripts/post-check-statuses.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+```js title="scripts/post-check-statuses.js"
+const fs = require('fs')
+const { getCheckResults } = require('@cypress/extract-cloud-results')
+
+const STATES = { passed: 'success', failed: 'failure' }
+
+// On pull_request events, GITHUB_SHA is a merge commit that GitHub creates.
+// Statuses only show on the pull request when they're posted to its head commit.
+const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'))
+const sha = event.pull_request?.head.sha ?? process.env.GITHUB_SHA
+
+const main = async () => {
+  const results = await getCheckResults()
+  const checks = (results.checks ?? []).filter(
+    (check) => check.status !== 'not-applicable'
+  )
+
+  for (const check of checks) {
+    const missed = check.assertionResults
+      .filter((assertion) => assertion.status !== 'passed')
+      .map(({ type, value, status }) => `${type} ${value} (${status})`)
+
+    const response = await fetch(
+      `https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/statuses/${sha}`,
+      {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          accept: 'application/vnd.github+json',
+        },
+        body: JSON.stringify({
+          context: `Cypress check: ${check.name}`,
+          state: STATES[check.status] ?? 'error',
+          description: (missed.length
+            ? `Missed: ${missed.join('; ')}`
+            : 'All assertions passed'
+          ).slice(0, 140),
+          target_url: `${results.runUrl}/properties`,
+        }),
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`GitHub responded ${response.status}`)
+    }
+  }
+}
+
+main().catch((error) => {
+  console.error(error.message)
+  process.exit(1)
+})
+```
+
+The script skips `not-applicable` checks, so a check scoped to `release/.*` branches only appears on pull requests from those branches. GitHub limits a status description to 140 characters, so the script truncates it and links each status to the run for details.
+
+<DocsImage
+  src="/img/cloud/features/checks/github-pull-request-statuses.png"
+  alt="A GitHub pull request with one Cypress check status per applicable check: two failing with the assertions they missed, and two passing with the assertions they met"
+/>
