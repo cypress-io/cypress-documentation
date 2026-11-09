@@ -287,6 +287,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Tabs sync via a shared `groupId`. Fixed orders: package managers
   **npm → Yarn → pnpm → Bun**; frameworks **React → Angular → Vue → Svelte**; JS
   before TS.
+- Never nest one tab group inside another. Inside framework or other tabs, show
+  only the JavaScript version in a plain `js` block, never a `copyTsToJs` block,
+  which renders its own tabs.
 
 **Admonitions** — [details](./AGENTS_REFERENCE.md#admonition-blocks)
 

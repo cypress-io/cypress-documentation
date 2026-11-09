@@ -1101,6 +1101,20 @@ version from the other. When you do, keep the **JS tab first**.
 
 Use `groupId="frameworks"`, ordered **React → Angular → Vue → Svelte**.
 
+### Never nest tab groups
+
+A tab group inside another tab group renders as two stacked rows of tabs, and
+the reader has to work out which row controls what. Keep every tab group at the
+top level. A `copyTsToJs` block counts as a tab group, since the plugin renders
+its JavaScript and TypeScript versions as tabs.
+
+When an example sits inside framework tabs or any other tab group, show only its
+JavaScript version, in a plain `js` block with a `title`. Cover what only
+TypeScript readers need, such as the `declare global` block that types a custom
+command, in its own section outside the tabs. In
+`docs/api/commands/mount.mdx`, the framework tabs show each
+`cypress/support/component.js`, and a separate section covers the typings.
+
 ## Cypress config examples
 
 Whenever you show a snippet of Cypress configuration, **do not hand-write the
