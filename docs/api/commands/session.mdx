@@ -540,19 +540,9 @@ it('can create a blog post', () => {
 })
 ```
 
-:::caution
-
-Every call with a given `id` must pass `setup` and `validate` functions with the
-same source code, and the same `cacheAcrossSpecs` value. Otherwise Cypress
-throws an error instead of reusing the session.
-
-:::
-
-This applies within a single spec and, for a session cached across specs, in
-every spec that uses it. Cypress compares the functions' source code, so define
-the session once in a shared helper or custom command, as in the example above,
-and copies can't drift apart. Here, the second call reuses the `id` `user1` with
-a different `setup` function:
+Because every spec imports the same `login()`, each call with the `id` `user1`
+passes the same `setup` and `validate`. Reusing an `id` with a different `setup`
+function fails the test, as the second call here does:
 
 ```javascript
 cy.session('user1', () => {
@@ -565,7 +555,7 @@ cy.session('user1', () => {
 })
 ```
 
-The second call fails the test, and the error names the `id` to change:
+The error names the `id` to change:
 
 <DocsImage
   src="/img/api/session/session-duplicate-id-error.png"
