@@ -224,7 +224,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   engines surface them without the page around them. "Cypress Cloud MCP
   workflows to try", not "Workflows to try". Add the context that makes the
   heading this page's, keep it to roughly 40 to 60 characters, and use sentence
-  case. The fixed API page skeleton, function-name headings on
+  case. Name a task with an imperative verb ("Load global styles in component
+  tests", not "Loading…" or "How to load…"); headings that name a thing stay
+  nouns. The fixed API page skeleton, function-name headings on
   [namespace API pages](./AGENTS_REFERENCE.md#namespace-api-pages), and
   `## See also` are exempt.
 - Address the reader as **you**. Reserve "we" for Cypress speaking as a team
