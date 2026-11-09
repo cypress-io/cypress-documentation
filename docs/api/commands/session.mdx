@@ -130,7 +130,33 @@ Wrap the body of your login
 call signs in and caches the session. Later calls with the same username restore
 it and check it with `validate`.
 
-```typescript copyTsToJs title="cypress/support/commands.ts"
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/commands.js"
+Cypress.Commands.add('login', (username, password) => {
+  cy.session(
+    username,
+    () => {
+      cy.visit('/login')
+      cy.get('[data-test=name]').type(username)
+      cy.get('[data-test=password]').type(password)
+      cy.get('form').contains('Log In').click()
+      cy.url().should('contain', '/login-successful')
+    },
+    {
+      validate() {
+        cy.request('/whoami').its('status').should('eq', 200)
+      },
+    }
+  )
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -157,6 +183,9 @@ Cypress.Commands.add('login', (username, password) => {
   )
 })
 ```
+
+</TabItem>
+</Tabs>
 
 The `id` is the username alone. Cypress shows the `id` in the Command Log, so
 keep passwords out of it.
@@ -193,7 +222,26 @@ const login = (name, password) => {
 returns, so a test can't assert on the sign-in response after `cy.session()`.
 Assert on it inside `setup` instead:
 
-```typescript copyTsToJs title="cypress/support/commands.ts"
+<Tabs groupId="cypress-lang">
+<TabItem value="js" label="JavaScript">
+
+```js title="cypress/support/commands.js"
+Cypress.Commands.add('loginByApi', (username, password) => {
+  cy.session(username, () => {
+    cy.request('POST', `/api/login`, {
+      username,
+      password,
+    }).then((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+})
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="cypress/support/commands.ts"
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -213,6 +261,9 @@ Cypress.Commands.add('loginByApi', (username, password) => {
   })
 })
 ```
+
+</TabItem>
+</Tabs>
 
 The assertion runs every time `setup` signs in, so a failed sign-in still fails
 the test. On a restore, `setup` doesn't run, and `cy.session()` checks the
