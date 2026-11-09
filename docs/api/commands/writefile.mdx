@@ -1,6 +1,6 @@
 ---
 title: 'cy.writeFile()'
-description: Write to a file with the specified contents in Cypress.
+description: Write text, JSON, or binary data to a file on disk from a Cypress test.
 sidebar_label: writeFile
 ---
 
@@ -9,6 +9,26 @@ sidebar_label: writeFile
 # writeFile
 
 Write to a file with the specified contents.
+
+Your spec code runs in the browser, which can't write to the file system.
+`cy.writeFile()` sends the contents to the Cypress server, which writes the file
+to disk, resolving the path from your project root and creating any missing
+folders. That keeps file output in your test code, with no
+[`cy.task()`](/api/commands/task) to register in your config.
+
+Reach for `cy.writeFile()` when you need to:
+
+- [Turn a live response into a fixture](#Generate-a-fixture-file-and-stub-a-request-with-it)
+  and stub requests with it
+- Save output your test produces, such as a
+  [log file](#Build-a-log-file-one-line-at-a-time), a
+  [CSV file](#Write-an-array-as-CSV-or-lines-of-text), or a JSON report
+- [Save a binary file](#Save-a-binary-file-from-a-request), such as an image
+  from a request or a `<canvas>` element
+
+To read a file back, use [`cy.readFile()`](/api/commands/readfile). For file
+operations `cy.writeFile()` doesn't cover, such as deleting a file, use
+[`cy.task()`](/api/commands/task).
 
 ## Syntax
 
