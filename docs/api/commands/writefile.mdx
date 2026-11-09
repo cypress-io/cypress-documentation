@@ -24,19 +24,21 @@ cy.writeFile(filePath, contents, encoding, options)
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.writeFile('menu.json')
+cy.writeFile('menu.json', { lunch: 'soup' })
 ```
 
 ### Arguments
 
 <Icon name="angle-right" /> **filePath _(String)_**
 
-A path to a file within the project root (the directory that contains the
-[Cypress configuration file](/app/references/configuration))
+A path to a file, resolved relative to the project root (the directory that
+contains the [Cypress configuration file](/app/references/configuration)). An
+absolute path also works. Cypress creates any missing directories in the path.
 
 <Icon name="angle-right" /> **contents _(String, Array, Object or Buffer)_**
 
-The contents to be written to the file.
+The contents to write to the file. Cypress writes a String or a `Buffer` as is,
+and converts an Array or Object to JSON indented with 2 spaces.
 
 <Icon name="angle-right" /> **encoding _(String)_**
 
@@ -65,18 +67,13 @@ Pass in an options object to change the default behavior of `cy.writeFile()`.
 
 | Option     | Default                                                           | Description                                                                                         |
 | ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                 |
-| `flag`     | `w`                                                               | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
 | `encoding` | `utf8`                                                            | The encoding to be used when writing to the file                                                    |
+| `flag`     | `w`                                                               | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
+| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                 |
 | `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.writeFile()` to resolve before [timing out](#Timeouts)                           |
 
-:::info
-
-To use encoding with other options, have your options object be your third
-parameter and include encoding there. This is the same behavior as
-[`fs.writeFile`](https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback).
-
-:::
+When you pass both an `encoding` argument and an `encoding` option, the option
+takes precedence.
 
 <HeaderYields />
 
@@ -88,8 +85,8 @@ parameter and include encoding there. This is the same behavior as
 
 #### Write some text to a `txt` file
 
-If the path to the file does not exist, the file and its path will be created.
-If the file already exists, it will be over-written.
+If the file or any directory in its path doesn't exist, Cypress creates it. If
+the file already exists, Cypress overwrites it.
 
 ```javascript
 cy.writeFile('path/to/message.txt', 'Hello World')
@@ -98,10 +95,10 @@ cy.readFile('path/to/message.txt').then((text) => {
 })
 ```
 
-`{projectRoot}/path/to/message.txt` will be created with the following contents:
+`{projectRoot}/path/to/message.txt` is created with the following contents:
 
 ```text
- "Hello World"
+Hello World
 ```
 
 ### JSON
@@ -117,7 +114,7 @@ cy.readFile('path/to/data.json').then((user) => {
 })
 ```
 
-`{projectRoot}/path/to/data.json` will be created with the following contents:
+`{projectRoot}/path/to/data.json` is created with the following contents:
 
 ```json
 {
@@ -129,25 +126,29 @@ cy.readFile('path/to/data.json').then((user) => {
 #### Write response data to a fixture file
 
 ```javascript
-cy.request('https://jsonplaceholder.typicode.com/users').then((response) => {
+cy.request('https://jsonplaceholder.cypress.io/users').then((response) => {
   cy.writeFile('cypress/fixtures/users.json', response.body)
 })
 
-// our fixture file is now generated and can be used
+// the fixture file is now generated and can be used
 cy.fixture('users').then((users) => {
   expect(users[0].name).to.exist
 })
 ```
+
+Writing a file inside the [`fixturesFolder`](/app/references/configuration#Folders--Files)
+clears that file from the [`cy.fixture()`](/api/commands/fixture) cache, so a
+later `cy.fixture()` call yields the new contents.
 
 ### Encoding
 
 #### Specify the encoding as a String
 
 ```javascript
-cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
+cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii')
 ```
 
-`{projectRoot}/path/to/message.txt` will be created with the following contents:
+`{projectRoot}/path/to/ascii.txt` is created with the following contents:
 
 ```text
 Hello World
@@ -170,12 +171,11 @@ cy.writeFile('path/to/ascii.txt', 'Hello World', {
 cy.writeFile('path/to/message.txt', 'Hello World', { flag: 'a+' })
 ```
 
-Appending assumes plain text file. If you want to merge a JSON object
-for example, you need to read it first, add new properties, then write the
-combined result back.
+Appending treats the file as plain text. To merge a JSON object, read the file
+first, add the new properties, then write the combined result back.
 
 ```javascript
-const filename = '/path/to/file.json'
+const filename = 'path/to/file.json'
 
 cy.readFile(filename).then((obj) => {
   obj.id = '1234'
@@ -184,10 +184,11 @@ cy.readFile(filename).then((obj) => {
 })
 ```
 
-Similarly, if you need to push new items to an array
+To add new items to an array, read it, push the items, then write the array
+back.
 
 ```javascript
-const filename = '/path/to/list.json'
+const filename = 'path/to/list.json'
 
 cy.readFile(filename).then((list) => {
   list.push({ item: 'example' })
@@ -201,7 +202,7 @@ cy.readFile(filename).then((list) => {
 #### Write a buffer directly without encoding as a string
 
 ```javascript
-const filename = '/path/to/file.png'
+const filename = 'path/to/file.png'
 
 cy.readFile(filename, null).then((obj) => {
   // <Buffer ef 3a bf ... >
@@ -214,18 +215,19 @@ cy.readFile(filename, null).then((obj) => {
 <HeaderRequirements />
 
 - `cy.writeFile()` requires being chained off of `cy`.
+- `cy.writeFile()` must be invoked from the spec file or support file.
 - `cy.writeFile()` requires the file be successfully written to disk. Anything
-  preventing this such as OS permission issues will cause it to fail.
+  preventing this, such as OS permission issues, causes it to fail.
 
 <HeaderAssertions />
 
-- `cy.writeFile()` will only run assertions you have chained once, and will not
+- `cy.writeFile()` runs assertions you have chained once, and does not
   [retry](/app/core-concepts/retry-ability).
 
 <HeaderTimeouts />
 
-- `cy.writeFile()` can time out when the content being written takes a
-  significant amount of time to encode.
+- `cy.writeFile()` can time out when writing the file takes longer than the
+  `timeout` option.
 
 ## Command Log
 
@@ -252,12 +254,13 @@ outputs the following:
 
 ## History
 
-| Version                                  | Changes                                                  |
-| ---------------------------------------- | -------------------------------------------------------- |
-| [9.2.0](/app/references/changelog#9-2-0) | Added `timeout` option                                   |
-| [4.0.0](/app/references/changelog#4-0-0) | `cy.writeFile()` now yields `null` instead of `contents` |
-| [3.1.1](/app/references/changelog#3-1-1) | Added `flag` option and appending with `a+`              |
-| [1.0.0](/app/references/changelog#1-0-0) | `cy.writeFile()` command added                           |
+| Version                                    | Changes                                                        |
+| ------------------------------------------ | -------------------------------------------------------------- |
+| [15.0.0](/app/references/changelog#15-0-0) | Writing a fixture file clears it from the `cy.fixture()` cache |
+| [9.2.0](/app/references/changelog#9-2-0)   | Added `timeout` option                                         |
+| [4.0.0](/app/references/changelog#4-0-0)   | `cy.writeFile()` now yields `null` instead of `contents`       |
+| [3.1.1](/app/references/changelog#3-1-1)   | Added `flag` option and appending with `a+`                    |
+| [1.0.0](/app/references/changelog#1-0-0)   | `cy.writeFile()` command added                                 |
 
 ## See also
 
