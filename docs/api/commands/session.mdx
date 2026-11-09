@@ -862,54 +862,9 @@ const loginWithVariables = (name, email, params = {}) => {
     loginWith(name, email, params)
   })
 }
-
-// If your session setup code uses external constants, leave them
-// out of the id, since they never change
-const API_KEY = 'I_AM_AN_API_KEY'
-const loginWithConstants = (name, email) => {
-  cy.session([name, email], () => {
-    loginWith(name, email, API_KEY)
-  })
-}
 ```
 
-<Icon name="exclamation-triangle" color="red" /> **Incorrect Usage**
-
-This `login()` signs in with a name, a role, and a password, but its `id` uses
-only the name:
-
-```javascript
-const login = (name, role, password) => {
-  cy.session(name, () => {
-    cy.visit('/login')
-    cy.get('[data-test=name]').type(name)
-    cy.get('[data-test=role]').select(role)
-    cy.get('[data-test=password]').type(password)
-    cy.get('#submit').click()
-  })
-}
-```
-
-This call signs `user1` in as an admin and caches the session under the `id`
-`"user1"`:
-
-```javascript
-login('user1', 'admin', 'p4ssw0rd')
-```
-
-A later call for the same user with a different role expects a new session.
-Because the `id` is still `"user1"`, `cy.session()` restores the admin session
-instead of signing in as a viewer:
-
-```javascript
-login('user1', 'viewer', 'p4ssw0rd')
-```
-
-Build the `id` from every value in `setup` that can change between sessions, or
-different sessions share an `id` and restore each other's data.
-
-<Icon name="check-circle" color="green" /> **Correct Usage**
-
+Build the `id` from every value in `setup` that can change between sessions.
 Setting the `id` to `[name, role]` caches a separate session for each name and
 role, and leaves the password out.
 
