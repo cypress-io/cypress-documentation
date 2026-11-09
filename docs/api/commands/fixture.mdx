@@ -357,7 +357,9 @@ after a comma:
 cy.intercept('GET', '/media/intro.mp4', { fixture: 'media/intro.mp4,null' })
 ```
 
-You can pass any other supported encoding the same way.
+You can pass any other supported encoding the same way. As with
+`cy.fixture()`, the path has to resolve to a file inside the
+[`fixturesFolder`](/app/references/configuration#Folders--Files).
 
 ### How Cypress validates JSON and JavaScript fixtures
 
@@ -493,7 +495,8 @@ consistently to read the file only once.
 When you write to a file inside the
 [`fixturesFolder`](/app/references/configuration#Folders--Files) with
 [`cy.writeFile()`](/api/commands/writefile), Cypress clears that file from the
-cache, so the next `cy.fixture()` call reads the new contents:
+cache for every encoding, whether you loaded it with or without its extension,
+so the next `cy.fixture()` call reads the new contents:
 
 ```javascript
 cy.writeFile('cypress/fixtures/todo.json', { title: 'New data' })
@@ -555,6 +558,10 @@ cy.fixture('todo.json').then((todo) => {
   It fails if `fixturesFolder` is `false`.
 - `cy.fixture()` requires `filePath` to resolve to a file inside the
   `fixturesFolder`.
+- `cy.fixture()` requires the file to exist. If no file matches `filePath`, or
+  `filePath` with one of the
+  [supported extensions](#Omit-the-fixture-files-extension), the command fails
+  with an error listing the paths and extensions Cypress tried.
 
 <HeaderAssertions />
 
@@ -578,6 +585,7 @@ cy.fixture('todo.json').then((todo) => {
 | Version                                      | Changes                                                                                                            |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | [16.2.1](/app/references/changelog#16-2-1)   | Fails when `filePath` resolves outside the `fixturesFolder`.                                                       |
+| [16.0.0](/app/references/changelog#16-0-0)   | No longer resolves `.coffee` files when `filePath` omits the extension.                                            |
 | [15.18.0](/app/references/changelog#15-18-0) | An aliased fixture keeps its file name for `.selectFile()` when a later test loads the same fixture.               |
 | [15.0.0](/app/references/changelog#15-0-0)   | `cy.writeFile()` clears the cache for a fixture it writes. An explicit `encoding` always yields raw file contents. |
 
