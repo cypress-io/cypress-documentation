@@ -12,6 +12,7 @@ import CopyPrompt from '@site/src/components/copy-prompt'
 import TestReplayInfo from '@site/docs/partials/_test-replay-info.mdx'
 import CookieDefaultDomain from '@site/docs/partials/_cookie-default-domain.mdx'
 import CypressConfigFileTabs from '@site/src/components/cypress-config-file-tabs'
+import CypressLangTabs from '@site/src/components/cypress-lang-tabs'
 import CypressInstallCommands from '@site/docs/partials/_cypress-install-commands.mdx'
 import CypressCacheClearCommands from '@site/docs/partials/_cypress-cache-clear-commands.mdx'
 import CypressInstallBinaryCommands from '@site/docs/partials/_cypress-install-binary-commands.mdx'
@@ -219,6 +220,7 @@ export default {
   CookieDefaultDomain,
   CopyPrompt,
   CypressConfigFileTabs,
+  CypressLangTabs,
   CypressInstallCommands,
   CypressCacheClearCommands,
   CypressInstallBinaryCommands,

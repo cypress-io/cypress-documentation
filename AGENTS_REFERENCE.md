@@ -1080,7 +1080,8 @@ canonical tab order and labels (`npm`, `Yarn`, `pnpm`, `Bun`) when you do.
 
 Prefer **not** to hand-write a JS tab. Author a single TypeScript block tagged
 `copyTsToJs` and the `copyTsToJs` remark plugin generates the JavaScript version
-automatically, **JS tab first, then TS**:
+automatically and renders the two as JavaScript and TypeScript tabs in the
+`cypress-lang` tab group, **JS tab first, then TS**:
 
 ````mdx
 ```typescript copyTsToJs
@@ -1090,10 +1091,11 @@ export default name
 ```
 ````
 
-Only fall back to explicit `<Tabs>` with separate `.js`/`.ts` `<TabItem>`s when
-the two versions differ by more than types (e.g. a `declare global` block) and
-the plugin can't derive one from the other. When you do, keep the **JS tab
-first**.
+The plugin drops type-only code, including a `declare global` block, from the
+JavaScript tab. Only fall back to explicit
+`<Tabs groupId="cypress-lang">` with `<TabItem value="js" label="JavaScript">`
+and `<TabItem value="ts" label="TypeScript">` when the plugin can't derive one
+version from the other. When you do, keep the **JS tab first**.
 
 ### Frameworks
 

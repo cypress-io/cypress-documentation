@@ -1,0 +1,25 @@
+import React from 'react'
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
+interface CypressLangTabsProps {
+  children: React.ReactNode
+}
+
+// Renders the JS and TS blocks that the copyTsToJs remark plugin emits as
+// JavaScript and TypeScript tabs. The plugin always emits the JS block first.
+const CypressLangTabs: React.FC<CypressLangTabsProps> = ({ children }) => {
+  const blocks = React.Children.toArray(children)
+  return (
+    <Tabs groupId="cypress-lang">
+      <TabItem value="js" label="JavaScript">
+        {blocks[0]}
+      </TabItem>
+      <TabItem value="ts" label="TypeScript">
+        {blocks[1]}
+      </TabItem>
+    </Tabs>
+  )
+}
+
+export default CypressLangTabs
