@@ -49,6 +49,19 @@ it('leaves the blocks ungrouped inside a parent that renders its own tabs', () =
   expect(directive.children.map((c: any) => c.lang)).toEqual(['js', 'typescript'])
 })
 
+it('still groups the blocks inside an admonition, which has its own hName', () => {
+  const admonition = {
+    type: 'containerDirective',
+    data: { hName: 'admonition' },
+    children: [code('copyTsToJs', 'const a: number = 1\n')],
+  }
+  const root = { type: 'root', children: [admonition] }
+  copyTsToJs(siteOptions)(root)
+
+  expect(admonition.children).toHaveLength(1)
+  expect((admonition.children[0] as any).data).toEqual({ hName: 'CypressLangTabs' })
+})
+
 it('leaves code blocks without copyTsToJs untouched', () => {
   const block = code('title="a.ts"', 'const a: number = 1\n')
   const root = { type: 'root', children: [block] }

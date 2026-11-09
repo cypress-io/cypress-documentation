@@ -40,10 +40,15 @@ export function copyTsToJs(
   }
 }
 
-// Directives such as :::cypress-config-example set an `hName` so their own
-// tabs component renders the JS and TS blocks.
+// Components that place the JS and TS blocks in tabs themselves. The
+// :::cypress-config-example and :::cypress-config-plugin-example directives
+// set this as their `hName`. Match by name: other parents carry an `hName`
+// too, such as an admonition, and blocks inside them still need tabs.
+const OWN_TABS_COMPONENTS = new Set(['CypressConfigFileTabs'])
+
 function rendersOwnTabs(node: Parent): boolean {
-  return Boolean((node.data as { hName?: string } | undefined)?.hName)
+  const hName = (node.data as { hName?: string } | undefined)?.hName
+  return hName !== undefined && OWN_TABS_COMPONENTS.has(hName)
 }
 
 // Groups the JS and TS blocks under one node that renders as the
