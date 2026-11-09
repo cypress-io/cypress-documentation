@@ -322,11 +322,6 @@ These scenarios mark the session as invalid:
 Returning `false` directly from `validate`, without a Promise, does not mark the
 session as invalid.
 
-Cypress calls `validate` with the test's context as `this`, so a `validate`
-written as a `function` (not an arrow function) can read
-[aliases](/app/core-concepts/variables-and-aliases#Sharing-Context) such as
-`this.user`. `setup` doesn't receive the test's context.
-
 Here are a few `validate` examples:
 
 ```javascript
