@@ -101,12 +101,10 @@ After `setup` and `validate` run for the first time, Cypress saves all cookies,
 `localStorage`, and `sessionStorage`. Later calls to `cy.session()` with the
 same `id` skip `setup` and only restore and validate the cached session data.
 
-With `testIsolation` enabled, Cypress clears the page before `setup` runs. With
-it disabled, the page stays as it is.
-
-Cypress always clears cookies, `localStorage`, and `sessionStorage` in all
-domains before `setup` runs or a cached session is restored, whatever the
-`testIsolation` setting.
+`setup` starts with cookies, `localStorage`, and `sessionStorage` cleared in all
+domains, and with a blank page when test isolation is enabled, so visit the page
+it needs inside `setup`. See
+[When the page and session data are cleared](#When-the-page-and-session-data-are-cleared).
 
 <Icon name="angle-right" /> **options _(Object)_**
 
