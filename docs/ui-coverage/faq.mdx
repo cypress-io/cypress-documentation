@@ -488,6 +488,10 @@ The most common causes are:
 
 There's no dedicated "skip this run" switch in a profile. To suppress a report for certain runs, point a profile at a deliberately narrow configuration (for example, [`viewFilters`](/ui-coverage/configuration/viewfilters) that exclude every view) so Cypress Cloud produces an empty or tightly scoped report for the run instead. See [Why use profiles?](/ui-coverage/configuration/profiles#Why-use-profiles).
 
+### <Icon name="angle-right" /> Can I define Run Checks inside a UI Coverage profile?
+
+No. [Run Checks](/cloud/features/checks) live only at the root of App Quality configuration. To apply a check only to the runs a profile targets, scope the check to the same tag with `include: { "tags": ["pr-critical"] }`.
+
 ## Results API and CI
 
 ### <Icon name="angle-right" /> What are the prerequisites for using the Cypress UI Coverage Results API?
@@ -501,7 +505,7 @@ A few conditions must hold before `getUICoverageResults` can return a report:
 
 ### <Icon name="angle-right" /> How do I fail a CI build or block a pull request when Cypress UI Coverage drops?
 
-Use the [Results API](/ui-coverage/results-api). Add a step to your CI workflow that installs the `@cypress/extract-cloud-results` module and calls `getUICoverageResults()` after your Cypress run. The helper returns the run's coverage summary and per-view breakdown, and your script decides whether to fail, for example by throwing an error when `summary.coverage` is below a threshold. Because the check lives in your CI job, nothing in the Cypress run itself fails; enforcement is entirely opt-in. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) for a complete example.
+For a fixed coverage or untested-element threshold, define [Run Checks](/cloud/features/checks) in App Quality configuration and fetch them in CI with `getCheckResults()`. For custom policy logic, such as comparing against a stored baseline, use the [Results API](/ui-coverage/results-api): install `@cypress/extract-cloud-results`, call `getUICoverageResults()` after your Cypress run, and fail the job when your policy isn't met. Nothing in the Cypress run itself fails; enforcement is entirely opt-in. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests) and [Report Run Checks as GitHub pull request statuses](/ui-coverage/guides/report-run-checks-github).
 
 ### <Icon name="angle-right" /> Do I need to install anything to use the Cypress UI Coverage Results API?
 
@@ -532,7 +536,11 @@ Yes. The result object includes a `config` property containing the [App Quality 
 
 ### <Icon name="angle-right" /> Should I block pull requests on a coverage threshold or on new coverage gaps?
 
-Both are valid Cypress UI Coverage policies, and they suit different situations. A **coverage threshold** fails the build when overall or per-view coverage drops below a fixed percentage; it's simple and works well once your coverage is already where you want it, or for holding a critical flow like checkout to a high bar. A **baseline comparison** fails only when a run introduces _new_ untested elements, which is the better fit for an existing app with known coverage debt: it stops gaps from growing without blocking every pull request until all the old debt is paid down. Many teams enforce a threshold on critical views and a baseline everywhere else. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#Choose-a-policy).
+Both are valid Cypress UI Coverage policies, and they suit different situations. A **coverage threshold** fails the build when overall or per-view coverage drops below a fixed percentage; it's simple and works well once your coverage is already where you want it, or for holding a critical flow like checkout to a high bar. Encode those thresholds with [Run Checks](/cloud/features/checks). A **baseline comparison** fails only when a run introduces _new_ untested elements, which is the better fit for an existing app with known coverage debt: it stops gaps from growing without blocking every pull request until all the old debt is paid down. That pattern still needs the [Results API](/ui-coverage/results-api). Many teams enforce a threshold on critical views and a baseline everywhere else. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#Choose-a-policy).
+
+### <Icon name="angle-right" /> When should I use Run Checks instead of the UI Coverage Results API?
+
+Use [Run Checks](/cloud/features/checks) for declarative thresholds Cypress Cloud evaluates for you, such as a minimum coverage score or a maximum untested-element count. Use the [Results API](/ui-coverage/results-api) when you need custom policy logic those assertion types don't cover, especially comparing each run against a stored baseline of untested elements. See [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests).
 
 ### <Icon name="angle-right" /> How do I block a pull request only when new untested elements are introduced?
 
@@ -591,6 +599,7 @@ No. Cypress UI Coverage data returned through Cypress Cloud MCP is used only to 
 - [Troubleshooting UI Coverage](/ui-coverage/troubleshooting) maps common report problems to their causes and fixes.
 - [Monitor changes](/ui-coverage/guides/monitor-changes) sets up a repeatable workflow to track coverage trends and catch regressions before they merge.
 - [Work with AI agents](/ui-coverage/work-with-ai-agents) uses the Cypress Cloud MCP to read reports, summarize gaps, and draft tests.
+- [Run Checks](/cloud/features/checks) encode coverage thresholds in App Quality configuration.
 - [Results API](/ui-coverage/results-api) fetches a run's UI Coverage results in CI so you can enforce coverage standards.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every configuration option and what each one is for.
 - [Profiles](/ui-coverage/configuration/profiles) apply different configuration to runs based on run tags.

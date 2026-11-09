@@ -129,3 +129,11 @@
 [data-theme='dark'] .description {
   color: var(--ifm-color-gray-500);
 }
+
+/* Fullstory can name a click on a nested element after that element rather
+   than the labeled link or button around it, so every click lands on the
+   element that carries data-fs-element. */
+.dismiss *,
+.link * {
+  pointer-events: none;
+}

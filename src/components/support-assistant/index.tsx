@@ -13,6 +13,7 @@ import {
   IconGeneralSparkleDoubleSmall,
 } from '@cypress-design/react-icon'
 import type { WindiColor } from '@cypress-design/react-icon'
+import { trackFullStoryEvent } from '@site/src/utils/fullstory'
 
 // Messages exchanged with the www.cypress.io/ask/embed frame. Keep in sync with
 // src/components/CypressGPT/utilities/embedMessages.ts in cypress-io/cypress.io.
@@ -107,7 +108,16 @@ export function SupportAssistantProvider({
     [embedOrigin]
   )
 
-  const toggle = useCallback(() => setOpen(!isOpenRef.current), [setOpen])
+  // The button is the only caller, so this is always the reader's own open, never the reopen on load.
+  const toggle = useCallback(() => {
+    const open = !isOpenRef.current
+    if (open) {
+      trackFullStoryEvent('Support Assistant Opened', {
+        entryPoint: 'Docs Button',
+      })
+    }
+    setOpen(open)
+  }, [setOpen])
 
   const focusIfPending = useCallback(() => {
     if (!pendingFocus.current || !isReady.current || !isOpenRef.current) return
@@ -168,7 +178,9 @@ export function SupportAssistantProvider({
   useEffect(() => {
     if (!frameSrc) return
     const timer = window.setTimeout(() => {
-      if (!isReady.current) setHasFailed(true)
+      if (isReady.current) return
+      setHasFailed(true)
+      trackFullStoryEvent('Support Assistant Load Failed', {})
     }, LOAD_TIMEOUT_MS)
     return () => window.clearTimeout(timer)
   }, [frameSrc])

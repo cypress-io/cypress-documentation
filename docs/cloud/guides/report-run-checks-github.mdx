@@ -1,0 +1,25 @@
+---
+title: Report Run Checks as GitHub pull request statuses
+description: Post each Cypress Cloud Run Check as a GitHub commit status so failed quality gates block a pull request merge.
+sidebar_label: Report Run Checks on GitHub
+sidebar_position: 30
+sidebar_custom_props: { 'new_label': true }
+---
+
+<ProductHeading product="cloud" />
+
+# Report Run Checks as GitHub pull request statuses
+
+[Run Checks](/cloud/features/checks) evaluate recorded runs in Cypress Cloud against the thresholds you define: failed tests, flaky tests, accessibility scores, UI Coverage, and more. To turn those results into a merge gate, fetch them in CI with `getCheckResults()` and post one commit status per applicable check.
+
+Install `@cypress/extract-cloud-results` as described in the [Results API](/accessibility/connect-and-extend/results-api#Installation) guide, which also lists the [supported CI providers](/accessibility/connect-and-extend/results-api#Supported-CI-Providers). Run the status script in the same CI job that recorded the run, after `cypress run --record`. For the full `getCheckResults()` response shape and options, see [Using check results in CI](/cloud/features/checks#Using-check-results-in-CI).
+
+This is separate from the Cypress [GitHub integration](/cloud/integrations/github#Status-checks), which reports per-run-group or per-spec test pass/fail. Run Check statuses report specific thresholds that **you** configure, including Cypress Accessibility and UI Coverage assertions if relevant.
+
+<ReportRunChecksGithub />
+
+## See also
+
+- [Run Checks](/cloud/features/checks) - define assertions and scope them to branches and tags
+- [GitHub integration](/cloud/integrations/github#Status-checks) - built-in commit statuses for test results
+- [Flaky Test Management](/cloud/features/flaky-test-management) - flake detection that `run.flakyTests.max` reads

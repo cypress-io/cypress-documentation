@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="510" viewBox="0 0 800 510" role="img" aria-labelledby="t d">
+<title id="t">How cy.session() creates, restores, and recreates a session</title>
+<desc id="d">cy.session() checks whether a session with the given id is saved. If not, it creates one: it clears the page and session data, runs setup, runs validate, and saves the session, yielding 'created'. If validate fails while creating, the test fails. If a session is saved, it restores it: it clears the page and session data, restores the saved data, and runs validate. If validate passes, it yields 'restored'. If validate fails, it recreates the session the same way it creates one, yielding 'recreated', and the test fails if validate fails again. In every case it then clears the page and yields the status. The page is cleared only when testIsolation is enabled.</desc>
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#5A5F7A"/>
+  </marker>
+</defs>
+<style>
+  /* Colors are @cypress-design/css tokens: gray, indigo, and jade. */
+  .card { fill: #F3F4FA; stroke: #E1E3ED; }
+  .box { fill: #FFFFFF; stroke: #747994; stroke-width: 1.25; }
+  .hl { fill: #E4FBF2; stroke: #00814D; stroke-width: 1.5; }
+  .line { fill: none; stroke: #5A5F7A; stroke-width: 1.5; }
+  .title { font: 600 15px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #1B1E2E; }
+  .sub { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #5A5F7A; }
+  .step { font: 13px ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; fill: #1B1E2E; }
+  .lbl { font: 600 12.5px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; fill: #3A46CC; }
+  .lbl-hl { font: 600 12.5px SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; fill: #005F39; }
+</style>
+<rect class="card" x="0.5" y="0.5" width="799" height="509" rx="12"/>
+
+<!-- Entry -->
+<rect class="box" x="270" y="20" width="260" height="36" rx="8"/>
+<text class="lbl" x="400" y="43" text-anchor="middle">cy.session(id, setup, options)</text>
+<path class="line" d="M 400 56 V 78" marker-end="url(#arr)"/>
+
+<rect class="box" x="245" y="80" width="310" height="36" rx="8"/>
+<text class="title" x="400" y="103" text-anchor="middle">Is a session with this id saved?</text>
+
+<!-- No: create -->
+<path class="line" d="M 245 98 H 125 V 158" marker-end="url(#arr)"/>
+<text class="sub" x="185" y="90" text-anchor="middle">No</text>
+
+<!-- Yes: restore -->
+<path class="line" d="M 400 116 V 158" marker-end="url(#arr)"/>
+<text class="sub" x="412" y="142">Yes</text>
+
+<!-- Create -->
+<rect class="box" x="20" y="160" width="210" height="150" rx="8"/>
+<text class="title" x="125" y="188" text-anchor="middle">Create</text>
+<text class="step" x="125" y="216" text-anchor="middle">Clear page* and session data</text>
+<text class="step" x="125" y="240" text-anchor="middle">Run setup</text>
+<text class="step" x="125" y="264" text-anchor="middle">Run validate</text>
+<text class="step" x="125" y="288" text-anchor="middle">Save the session</text>
+<text class="sub" x="125" y="330" text-anchor="middle">Test fails if validate fails</text>
+
+<!-- Restore -->
+<rect class="box" x="295" y="160" width="210" height="150" rx="8"/>
+<text class="title" x="400" y="188" text-anchor="middle">Restore</text>
+<text class="step" x="400" y="216" text-anchor="middle">Clear page* and session data</text>
+<text class="step" x="400" y="240" text-anchor="middle">Restore the saved data</text>
+<text class="step" x="400" y="264" text-anchor="middle">Run validate</text>
+<text class="sub" x="400" y="330" text-anchor="middle">validate passes</text>
+
+<!-- Restore to recreate -->
+<path class="line" d="M 505 260 H 568" marker-end="url(#arr)"/>
+<text class="sub" x="537" y="232" text-anchor="middle">validate</text>
+<text class="sub" x="537" y="248" text-anchor="middle">fails</text>
+
+<!-- Recreate -->
+<rect class="box" x="570" y="160" width="210" height="150" rx="8"/>
+<text class="title" x="675" y="188" text-anchor="middle">Recreate</text>
+<text class="step" x="675" y="216" text-anchor="middle">Clear page* and session data</text>
+<text class="step" x="675" y="240" text-anchor="middle">Run setup</text>
+<text class="step" x="675" y="264" text-anchor="middle">Run validate</text>
+<text class="step" x="675" y="288" text-anchor="middle">Save the session</text>
+<text class="sub" x="675" y="330" text-anchor="middle">Test fails if validate fails</text>
+
+<!-- Statuses -->
+<rect class="hl" x="70" y="342" width="110" height="30" rx="15"/>
+<text class="lbl-hl" x="125" y="362" text-anchor="middle">'created'</text>
+<rect class="hl" x="345" y="342" width="110" height="30" rx="15"/>
+<text class="lbl-hl" x="400" y="362" text-anchor="middle">'restored'</text>
+<rect class="hl" x="615" y="342" width="120" height="30" rx="15"/>
+<text class="lbl-hl" x="675" y="362" text-anchor="middle">'recreated'</text>
+
+<!-- Converge -->
+<path class="line" d="M 125 372 V 398 H 675 V 372"/>
+<path class="line" d="M 400 372 V 418" marker-end="url(#arr)"/>
+<rect class="box" x="215" y="420" width="370" height="36" rx="8"/>
+<text class="title" x="400" y="443" text-anchor="middle">Clear page*, then yield the status</text>
+
+<text class="sub" x="400" y="488" text-anchor="middle">* Only when testIsolation is enabled. With it disabled, the page stays as it is.</text>
+</svg>

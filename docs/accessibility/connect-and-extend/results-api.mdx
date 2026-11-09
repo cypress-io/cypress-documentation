@@ -22,6 +22,7 @@ This brings the results into CI, where you review them and determine if they are
 This page focuses on how the Results API works and what kinds of information can be accessed. For examples of how this can be used, see our higher-level guides:
 
 - The [pull requests and policies guide](/accessibility/guides/block-pull-requests) shows what it looks like to use the Results API to set a policy and fail a pull request.
+- [Run Checks](/cloud/features/checks) encode score and failed-element thresholds in App Quality configuration; [report them as GitHub statuses](/accessibility/guides/report-run-checks-github) with `getCheckResults()`.
 - The guide for [catching accessibility regressions](/accessibility/guides/detect-changes#enforce-a-standard-in-ci) shows some other common use cases.
 
 :::
@@ -592,6 +593,8 @@ steps:
 
 <ResultsApiEnvVars />
 
-```
+## See also
 
-```
+- [Run Checks](/cloud/features/checks) - declarative score and failed-element thresholds evaluated in Cypress Cloud
+- [Report Run Checks as GitHub pull request statuses](/accessibility/guides/report-run-checks-github) - post each check as a required commit status
+- [Block pull requests and set policies](/accessibility/guides/block-pull-requests) - custom Results API policies

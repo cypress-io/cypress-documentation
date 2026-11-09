@@ -12,6 +12,7 @@ import CopyPrompt from '@site/src/components/copy-prompt'
 import TestReplayInfo from '@site/docs/partials/_test-replay-info.mdx'
 import CookieDefaultDomain from '@site/docs/partials/_cookie-default-domain.mdx'
 import CypressConfigFileTabs from '@site/src/components/cypress-config-file-tabs'
+import CypressLangTabs from '@site/src/components/cypress-lang-tabs'
 import CypressInstallCommands from '@site/docs/partials/_cypress-install-commands.mdx'
 import CypressCacheClearCommands from '@site/docs/partials/_cypress-cache-clear-commands.mdx'
 import CypressInstallBinaryCommands from '@site/docs/partials/_cypress-install-binary-commands.mdx'
@@ -44,13 +45,14 @@ import ProductHeading from '@site/src/components/product-heading'
 import AppQualityConfigEditing from '@site/docs/partials/_app-quality-config-editing.mdx'
 import AppQualityConfigWhoCanEdit from '@site/docs/partials/_app-quality-config-who-can-edit.mdx'
 import Profiles from '@site/docs/partials/_profiles.mdx'
+import ReportRunChecksGithub from '@site/docs/partials/_report-run-checks-github.mdx'
 import RecordKeyEnvVar from '@site/docs/partials/_record-key-env-var.mdx'
 import ScrollToVsScrollIntoView from '@site/docs/partials/_scrollto-vs-scrollintoview.mdx'
 import SignificantAttributesValidation from '@site/docs/partials/_significantattributes-validation.mdx'
 import SitemapScanExample from '@site/docs/partials/_sitemap-scan-example.mdx'
 import SourceMaps from '@site/docs/partials/_source-maps.mdx'
 import SupportFileConfiguration from '@site/docs/partials/_support-file-configuration.mdx'
-import Tabs from '@theme/Tabs'
+import Tabs from '@site/src/components/tabs'
 import TabItem from '@theme/TabItem'
 import ThenShouldAndDifference from '@site/docs/partials/_then-should-and-difference.mdx'
 import WarningSetupNodeEvents from '@site/docs/partials/_warning-setup-node-events.mdx'
@@ -217,6 +219,7 @@ export default {
   CookieDefaultDomain,
   CopyPrompt,
   CypressConfigFileTabs,
+  CypressLangTabs,
   CypressInstallCommands,
   CypressCacheClearCommands,
   CypressInstallBinaryCommands,
@@ -249,6 +252,7 @@ export default {
   AppQualityConfigEditing,
   AppQualityConfigWhoCanEdit,
   Profiles,
+  ReportRunChecksGithub,
   RecordKeyEnvVar,
   ScrollToVsScrollIntoView,
   SignificantAttributesValidation,

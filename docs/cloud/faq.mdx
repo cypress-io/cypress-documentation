@@ -539,6 +539,79 @@ the Data Extract API require an Enterprise plan, and
 [Cloud MCP](/cloud/integrations/cloud-mcp) is included on every Cypress Cloud
 plan.
 
+## Run Checks
+
+### <Icon name="angle-right" /> What are Run Checks?
+
+[Run Checks](/cloud/features/checks) are named pass/fail gates you define in App
+Quality configuration. Cypress Cloud evaluates each applicable check against a
+recorded run's results: failed tests, flaky tests, accessibility scores, failing
+accessibility elements, UI Coverage scores, and untested elements. A check
+passes only when every assertion in it passes.
+
+### <Icon name="angle-right" /> Do Run Checks fail my Cypress tests?
+
+No. Run Checks don't change how your tests run or how reports are generated.
+Cypress Cloud evaluates them after the run's results (and any Cypress
+Accessibility or UI Coverage reports they read) are available. To fail a CI job
+or block a merge on check results, fetch them with `getCheckResults()` in CI.
+See [Using check results in CI](/cloud/features/checks#Using-check-results-in-CI).
+
+### <Icon name="angle-right" /> Do I need Cypress Accessibility or UI Coverage to use Run Checks?
+
+No. `run.failedTests.max` works on every project that records to Cypress Cloud.
+`run.flakyTests.max` requires [Flaky Test Management](/cloud/features/flaky-test-management);
+without it, that assertion is
+[unavailable](/cloud/features/checks#Assertion-statuses). Accessibility and UI
+Coverage assertions read those products' reports, so they are unavailable on
+runs where the product isn't enabled or processed.
+
+### <Icon name="angle-right" /> How do I block a pull request with Run Checks?
+
+Fetch the run's check results in CI with `getCheckResults()`, then fail the job
+or post a commit status when a check fails. During Early Access, Run Checks are
+not included in automated Slack notifications or GitHub pull request comments,
+and they don't push to GitHub status checks automatically. To report each
+applicable check as a GitHub commit status today, follow
+[Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github).
+
+### <Icon name="angle-right" /> Why is my Run Check `errored` or `not-applicable`?
+
+`not-applicable` means the check's `include` and `exclude` rules don't select
+this run, so Cypress Cloud didn't evaluate it. `errored` means no assertion
+failed, but at least one is `errored` or `unavailable`, so the check couldn't
+confirm a pass, for example an accessibility assertion on a run that has no
+Accessibility report. An `unavailable` assertion makes its check `errored`, not
+`passed`. Scope mixed-product checks with `include` and `exclude`, or split them
+into one check per product. See
+[Check statuses](/cloud/features/checks#Check-statuses).
+
+### <Icon name="angle-right" /> Can I define Run Checks inside a profile?
+
+No. The `checks` array is valid only at the root of App Quality configuration. To
+apply a check only to the runs a [profile](/accessibility/configuration/profiles)
+targets, scope the check with the same tag:
+`include: { "tags": ["aq-config-pr"] }`.
+
+### <Icon name="angle-right" /> When should I use Run Checks instead of the Results API?
+
+Use [Run Checks](/cloud/features/checks) for declarative thresholds Cypress Cloud
+can evaluate for you: a maximum failed-test or flaky-test count, a minimum
+accessibility or UI Coverage score, or a maximum failed-element or
+untested-element count. Use the
+[Accessibility](/accessibility/connect-and-extend/results-api) or
+[UI Coverage](/ui-coverage/results-api) Results API when you need custom policy
+logic those assertion types don't cover, such as allowlisting known failing
+rules or comparing against a stored baseline.
+
+### <Icon name="angle-right" /> Can Run Checks quarantine failing or flaky specs?
+
+No built-in quarantine mode exists. Specs still run and still affect the run's
+own pass/fail. You can approximate a quarantine workflow by excluding parked
+specs from a `run.failedTests.max` or `run.flakyTests.max` assertion, then
+gating CI on that check instead of on the run alone. See
+[Quarantine problematic specs with Run Checks](/cloud/guides/quarantine-problematic-specs).
+
 ## Cypress Cloud Account
 
 ### <Icon name="angle-right" /> What is a Cypress Cloud organization?
