@@ -33,6 +33,7 @@ cy.get('footer').scrollIntoView() // Scrolls 'footer' into view
 ```javascript
 cy.scrollIntoView('footer') // Errors, cannot be chained off 'cy'
 cy.window().scrollIntoView() // Errors, 'window' does not yield DOM element
+cy.get('li').scrollIntoView() // Errors, 'li' yields more than one element
 ```
 
 ### Arguments
@@ -41,13 +42,13 @@ cy.window().scrollIntoView() // Errors, 'window' does not yield DOM element
 
 Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
-| Option     | Default                                                           | Description                                                                         |
-| ---------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `duration` | `0`                                                               | Scrolls over the duration (in ms)                                                   |
-| `easing`   | `swing`                                                           | Will scroll with the easing animation                                               |
-| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
-| `offset`   | `{top: 0, left: 0}`                                               | Amount to scroll after the element has been scrolled into view                      |
-| `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollIntoView()` to resolve before [timing out](#Timeouts)      |
+| Option     | Default                                                           | Description                                                                                                                                                                     |
+| ---------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `duration` | `0`                                                               | Time in ms to animate the scroll over, as a number or a numeric string such as `'500'`                                                                                          |
+| `easing`   | `swing`                                                           | Easing animation for the scroll: `swing` or `linear`. Any other value throws an error                                                                                           |
+| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                             |
+| `offset`   | `{top: 0, left: 0}`                                               | Pixels to scroll past the element's position. A negative value stops short of it, leaving room above or to the left. Either key can be given alone, and the other defaults to 0 |
+| `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for assertions chained after `.scrollIntoView()` to pass before [timing out](#Timeouts)                                                                            |
 
 <HeaderYields />
 
@@ -78,13 +79,31 @@ cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 cy.get('footer').scrollIntoView({ duration: 2000 })
 ```
 
-#### Scroll 150px below an element
+#### Scroll 150px past the top of an element
 
 ```js
 cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
 ```
 
+#### Leave room for a fixed header
+
+A negative `offset` stops short of the element, so it lands below a fixed
+header instead of underneath it.
+
+```js
+cy.get('#pricing').scrollIntoView({ offset: { top: -80, left: 0 } })
+```
+
 ## Notes
+
+### Where the element lands after scrolling
+
+`.scrollIntoView()` scrolls the element's nearest scrollable ancestor, or the
+window when there isn't one, until the element's top-left corner lines up with
+the top-left of that container, as far as the container can scroll. Use the
+`offset` option to adjust where it lands. When the scrollable ancestor is a
+container inside the page, Cypress first scrolls that container into view, then
+scrolls the element within it.
 
 ### Choosing between .scrollTo() and .scrollIntoView()
 
@@ -104,13 +123,14 @@ or
 
 <HeaderRequirements />
 
-- `.scrollIntoView()` requires being chained off a command that yields DOM
-  element(s).
+- `.scrollIntoView()` requires being chained off a command that yields a single
+  DOM element. It throws an error when the subject contains more than one
+  element.
 
 <HeaderAssertions />
 
-- `.scrollIntoView()` itself will not be retried — it fires once. Assertions
-  chained after `.scrollIntoView()` will be retried until they pass or time out.
+- `.scrollIntoView()` runs once and is not retried. Assertions chained after
+  `.scrollIntoView()` retry until they pass or time out.
   See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
