@@ -572,6 +572,11 @@ machine. Cypress doesn't write it to disk or share it between machines, so:
 In the [Instrument Panel](#The-Instrument-Panel), a globe icon marks each
 session cached across specs.
 
+<DocsImage
+  src="/img/api/session/sessions-panel.png"
+  alt="Sessions Instrument Panel listing user1, marked with a globe icon as cached across specs, and user2, which has no icon"
+/>
+
 ### Caching sessions from multiple login commands
 
 A more complex app can need several login commands, each with its own
@@ -580,9 +585,9 @@ session needs an `id` of its own.
 
 In this example, `loginByForm` and `loginByApi` can create different session
 data for the same user. If both used `name` as the `id`, `cy.session()` couldn't
-tell `loginByForm('user', 'p4ssw0rd')` apart from
-`loginByApi('user', 'p4ssw0rd')`. Adding the login method to the `id` caches
-each one separately.
+tell the session `loginByForm` creates for `'user'` apart from the one
+`loginByApi` creates. Adding the login method to the `id` caches each one
+separately.
 
 ```javascript
 const loginByForm = (name, password) => {
