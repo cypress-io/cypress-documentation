@@ -1062,3 +1062,11 @@ body ul.guidesList li.card {
     }
   }
 }
+
+/* Fullstory reports a click on a nested element with classes of its own
+   (inline code, an icon) under that element instead of the labeled link, so
+   clicks on a conversion link's descendants go to the link itself. The labels
+   come from plugins/fullstory-conversion-links.js. */
+a[data-link-placement] * {
+  pointer-events: none;
+}

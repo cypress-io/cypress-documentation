@@ -141,11 +141,7 @@ Type that the `mount` function yields
   <tr>
     <td>component</td>
     <td>React.ReactNode</td>
-    <td>
-      Render component in React
-      <a href="https://reactjs.org/docs/strict-mode.html">strict mode</a>
-      It activates additional checks and warnings for child components.
-    </td>
+    <td>The component that was rendered.</td>
   </tr>
   <tr>
     <td>rerender</td>
@@ -153,6 +149,10 @@ Type that the `mount` function yields
       (component: React.ReactNode) =>
       globalThis.Cypress.Chainable&lt;MountReturn&gt;
     </td>
-    <td>The component that was rendered.</td>
+    <td>
+      Rerenders the mounted component with new props and keeps its state. Use it
+      to test components that store state or update asynchronously, such as with
+      `useEffect`.
+    </td>
   </tr>
 </table>

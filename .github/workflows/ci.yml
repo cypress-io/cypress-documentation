@@ -316,9 +316,9 @@ jobs:
     name: Cloudflare preview
     needs: build
     # Uploads this pull request's build as a Cloudflare Worker Preview and posts
-    # a `cloudflare/preview` commit status whose Details link opens it, the way
-    # Netlify's deploy-preview status does. Cloudflare's own Workers Builds
-    # check links to its dashboard instead, which needs a Cloudflare login.
+    # a `cloudflare/preview` commit status whose Details link opens it.
+    # Cloudflare's own Workers Builds check links to its dashboard instead,
+    # which needs a Cloudflare login.
     #
     # Same condition as `e2e`, minus pushes: it needs the Cloudflare secrets,
     # which GitHub withholds from a pull request opened from a fork. This job
@@ -340,7 +340,7 @@ jobs:
       # is the temporary merge commit, which the pull request never shows.
       HEAD_SHA: ${{ github.event.pull_request.head.sha }}
       # `pr-<number>` keeps one stable, short URL per pull request across
-      # pushes, like Netlify's `deploy-preview-<number>`.
+      # pushes.
       PREVIEW_NAME: pr-${{ github.event.pull_request.number }}
     steps:
       # Until both secrets exist, skip with a notice rather than fail the run.
@@ -383,6 +383,9 @@ jobs:
 
       # Reads wrangler.jsonc and uploads dist/ as-is: no second build.
       #
+      # This job skips `npm ci`, so it fetches the Wrangler version locked in
+      # package-lock.json, the same one Workers Builds deploys production with.
+      #
       # Even with `--json`, Wrangler prints its upload progress to stdout ahead
       # of the JSON, so parse from the first line that opens an object. Print
       # only the URL: the JSON carries the token owner's email address, and
@@ -392,7 +395,8 @@ jobs:
         if: steps.credentials.outputs.ready == 'true'
         run: |
           set -o pipefail
-          output="$(npx --yes wrangler@4.151.3 preview --name "$PREVIEW_NAME" --json)"
+          version="$(jq -er '.packages["node_modules/wrangler"].version' package-lock.json)"
+          output="$(npx --yes "wrangler@$version" preview --name "$PREVIEW_NAME" --json)"
           url="$(printf '%s\n' "$output" | sed -n '/^{$/,$p' | jq -er '.preview.urls[0]')"
           echo "Preview: $url"
           echo "url=$url" >> "$GITHUB_OUTPUT"

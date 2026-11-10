@@ -43,21 +43,28 @@ describe('Cookie consent (Osano)', () => {
   // every descendant, since clicks on the close button land on its inner <svg>.
   // Which controls render is geo-gated too: some regions get a close button,
   // others get consent buttons instead, so check whichever this runner gets.
+  // The labels match www.cypress.io's, so Fullstory funnels cover both sites.
   it('labels the banner controls for FullStory', () => {
+    const labels: Record<string, string> = {
+      'osano-cm-close': 'Cookie Consent - Dismiss',
+      'osano-cm-button--type_accept': 'Cookie Consent - Accept All',
+      'osano-cm-button--type_denyAll': 'Cookie Consent - Deny All',
+      'osano-cm-button--type_deny': 'Cookie Consent - Deny All',
+      'osano-cm-button--type_manage': 'Cookie Consent - Manage Preferences',
+    }
     cy.visit('/')
     cy.get(
-      [
-        '.osano-cm-dialog .osano-cm-close',
-        '.osano-cm-dialog .osano-cm-button--type_accept',
-        '.osano-cm-dialog .osano-cm-button--type_denyAll',
-        '.osano-cm-dialog .osano-cm-button--type_deny',
-        '.osano-cm-dialog .osano-cm-button--type_manage',
-      ].join(', '),
+      Object.keys(labels)
+        .map((className) => `.osano-cm-dialog .${className}`)
+        .join(', '),
       { timeout: 20000 }
     ).should(($controls) => {
       $controls.each((_, control) => {
+        const className = Object.keys(labels).find((name) =>
+          control.classList.contains(name)
+        )
         const label = control.getAttribute('data-fs-element')
-        expect(label, control.className).to.match(/^Cookie Consent - /)
+        expect(label, control.className).to.eq(labels[className!])
         control.querySelectorAll('*').forEach((child) => {
           expect(child.getAttribute('data-fs-element'), child.tagName).to.eq(
             label

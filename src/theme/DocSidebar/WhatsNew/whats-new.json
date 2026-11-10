@@ -30,19 +30,26 @@
   ],
   "cloud": [
     {
-      "label": "Cloud CLI",
-      "href": "/cloud/integrations/cloud-cli?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-cli",
-      "description": "Query and script your Cypress Cloud data from the terminal.",
+      "label": "Run Checks",
+      "href": "/cloud/features/checks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=run-checks",
+      "description": "Pass/fail quality gates for failed tests, flake, accessibility, and UI Coverage.",
       "isNew": true
     },
     {
-      "label": "Webhooks",
-      "href": "/cloud/integrations/webhooks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=webhooks",
-      "description": "Send run events to your own HTTPS endpoints.",
+      "label": "Cloud CLI Accessibility commands",
+      "href": "/cloud/integrations/cloud-cli?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-cli-accessibility#Accessibility-and-App-Quality",
+      "description": "Pull Accessibility reports and failing elements into your terminal or agent.",
+      "showAISparkle": true,
       "isNew": true
     }
   ],
   "ui-coverage": [
+    {
+      "label": "Run Checks",
+      "href": "/cloud/features/checks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=run-checks",
+      "description": "Encode UI Coverage score and untested-element thresholds as Cloud gates.",
+      "isNew": true
+    },
     {
       "label": "Webhooks",
       "href": "/cloud/guides/webhooks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=webhooks",
@@ -52,15 +59,16 @@
   ],
   "accessibility": [
     {
-      "label": "Download Reports",
-      "href": "/accessibility/connect-and-extend/download-reports?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=download-reports",
-      "description": "Export violations as CSV or JSON.",
+      "label": "Run Checks",
+      "href": "/cloud/features/checks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=run-checks",
+      "description": "Encode accessibility score and failed-element thresholds as Cloud gates.",
       "isNew": true
     },
     {
-      "label": "Webhooks",
-      "href": "/accessibility/connect-and-extend/webhooks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=webhooks",
-      "description": "Send Accessibility report complete events to your HTTPS endpoints.",
+      "label": "Cloud CLI Accessibility commands",
+      "href": "/cloud/integrations/cloud-cli?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-cli-accessibility#Accessibility-and-App-Quality",
+      "description": "Pull Accessibility reports and failing elements into your terminal or agent.",
+      "showAISparkle": true,
       "isNew": true
     }
   ]

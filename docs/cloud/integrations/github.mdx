@@ -392,7 +392,12 @@ The Cypress GitHub App reports commit status checks in two distinct styles:
 Each status check will report the number of test failures or passes, and the
 associated **Details** link will direct you to the test run's page within
 Cypress Cloud to help you dig deeper into the problem via error messages, stack
-traces, screenshots, and video recordings:
+traces, screenshots, and video recordings.
+
+To report [Run Checks](/cloud/features/checks) (failed-test, flake, accessibility,
+and UI Coverage thresholds you define in App Quality) as separate commit
+statuses, see
+[Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github).
 
 <DocsImage
   src="/img/cloud/integrations/github/cloud-details-specs-tab.jpg"
@@ -473,5 +478,6 @@ See
 
 ## See also
 
+- [Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github) - post App Quality Run Checks as commit statuses, including accessibility and UI Coverage gates
 - [Cypress GitHub Action + Examples](https://github.com/cypress-io/github-action)
 - [Example project that uses both Cypress GitHub Action and Cypress GitHub Integration](https://github.com/cypress-io/gh-action-and-gh-integration)

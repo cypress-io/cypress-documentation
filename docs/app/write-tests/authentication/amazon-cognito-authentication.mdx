@@ -426,9 +426,6 @@ user is logged into the application.
 
   <TabItem value="v5" label="Amplify v5.x.x" default>
 
-<Tabs>
-<TabItem value="cypress/support/commands.js">
-
 ```js title="cypress/support/auth-provider-commands/cognito.js"
 import Amplify, { Auth } from 'aws-amplify'
 
@@ -483,78 +480,6 @@ Cypress.Commands.add('loginByCognitoApi', (username, password) => {
   cy.visit('/')
 })
 ```
-
-</TabItem>
-<TabItem value="cypress/support/commands.ts">
-
-```ts
-import Amplify, { Auth } from 'aws-amplify'
-
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      loginByCognitoApi(username: string, password: string): Chainable<void>
-    }
-  }
-}
-
-Amplify.configure(Cypress.expose('awsConfig'))
-
-// Amazon Cognito
-Cypress.Commands.add(
-  'loginByCognitoApi',
-  (username: string, password: string) => {
-    const log = Cypress.log({
-      displayName: 'COGNITO LOGIN',
-      message: [`🔐 Authenticating | ${username}`],
-      // @ts-ignore
-      autoEnd: false,
-    })
-
-    log.snapshot('before')
-
-    const signIn = Auth.signIn({ username, password })
-
-    cy.wrap(signIn, { log: false }).then((cognitoResponse) => {
-      const keyPrefixWithUsername = `${cognitoResponse.keyPrefix}.${cognitoResponse.username}`
-
-      window.localStorage.setItem(
-        `${keyPrefixWithUsername}.idToken`,
-        cognitoResponse.signInUserSession.idToken.jwtToken
-      )
-
-      window.localStorage.setItem(
-        `${keyPrefixWithUsername}.accessToken`,
-        cognitoResponse.signInUserSession.accessToken.jwtToken
-      )
-
-      window.localStorage.setItem(
-        `${keyPrefixWithUsername}.refreshToken`,
-        cognitoResponse.signInUserSession.refreshToken.token
-      )
-
-      window.localStorage.setItem(
-        `${keyPrefixWithUsername}.clockDrift`,
-        cognitoResponse.signInUserSession.clockDrift
-      )
-
-      window.localStorage.setItem(
-        `${cognitoResponse.keyPrefix}.LastAuthUser`,
-        cognitoResponse.username
-      )
-
-      window.localStorage.setItem('amplify-authenticator-authState', 'signedIn')
-      log.snapshot('after')
-      log.end()
-    })
-
-    cy.visit('/')
-  }
-)
-```
-
-</TabItem>
-</Tabs>
 
   </TabItem>
 
