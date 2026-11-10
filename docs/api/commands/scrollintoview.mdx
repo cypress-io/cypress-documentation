@@ -8,7 +8,8 @@ sidebar_label: scrollIntoView
 
 # scrollIntoView
 
-Scroll an element into view.
+Scroll the nearest scrollable container, or the window, until an element is in
+view.
 
 It is [unsafe](/app/core-concepts/retry-ability#Only-queries-are-retried) to
 chain further commands that rely on the subject after `.scrollIntoView()`.
@@ -32,7 +33,8 @@ cy.get('footer').scrollIntoView() // Scrolls 'footer' into view
 
 ```javascript
 cy.scrollIntoView('footer') // Errors, cannot be chained off 'cy'
-cy.window().scrollIntoView() // Errors, 'window' does not yield DOM element
+cy.window().scrollIntoView() // Errors, 'window' doesn't yield a DOM element
+cy.get('li').scrollIntoView() // Errors, 'li' yields more than one element
 ```
 
 ### Arguments
@@ -41,13 +43,13 @@ cy.window().scrollIntoView() // Errors, 'window' does not yield DOM element
 
 Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
-| Option     | Default                                                           | Description                                                                         |
-| ---------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `duration` | `0`                                                               | Scrolls over the duration (in ms)                                                   |
-| `easing`   | `swing`                                                           | Will scroll with the easing animation                                               |
-| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log) |
-| `offset`   | `{top: 0, left: 0}`                                               | Amount to scroll after the element has been scrolled into view                      |
-| `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.scrollIntoView()` to resolve before [timing out](#Timeouts)      |
+| Option     | Default                                                           | Description                                                                                                                         |
+| ---------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `duration` | `0`                                                               | Time in ms to animate the scroll over, as a number or a numeric string such as `'500'`                                              |
+| `easing`   | `swing`                                                           | Easing animation for the scroll: `swing` or `linear` (any other value throws an error)                                              |
+| `log`      | `true`                                                            | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                                                 |
+| `offset`   | `{top: 0, left: 0}`                                               | Pixels to scroll past the element, or short of it when negative, to leave room above or to the left; a key left out defaults to `0` |
+| `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for assertions chained after `.scrollIntoView()` to pass before [timing out](#Timeouts)                                |
 
 <HeaderYields />
 
@@ -61,7 +63,33 @@ Pass in an options object to change the default behavior of `.scrollIntoView()`.
 
 ```javascript
 cy.get('button#checkout').scrollIntoView()
-cy.get('button#checkout').should('be.visible')
+```
+
+#### Check that an element is in the viewport
+
+[Visibility](/app/core-concepts/interacting-with-elements#Visibility) doesn't
+account for the viewport, so `.should('be.visible')` passes for an element that
+is scrolled out of view. To confirm the scroll worked, check the element's
+position instead. This checks that its top edge is inside the viewport.
+
+```javascript
+cy.get('button#checkout').scrollIntoView()
+cy.get('button#checkout')
+  .invoke('get', 0)
+  .invoke('getBoundingClientRect')
+  .its('top')
+  .should('be.within', 0, Cypress.config('viewportHeight'))
+```
+
+#### Scroll an item inside a scrollable container
+
+When the element sits inside a scrollable container, such as a results list,
+`.scrollIntoView()` scrolls that container to reach it, as described in
+[Where the element lands after scrolling](#Where-the-element-lands-after-scrolling).
+
+```javascript
+cy.get('[data-cy="results"] li').eq(40).scrollIntoView()
+cy.get('[data-cy="results"]').its('0.scrollTop').should('be.greaterThan', 0)
 ```
 
 ### Options
@@ -72,45 +100,92 @@ cy.get('button#checkout').should('be.visible')
 cy.get('.next-page').scrollIntoView({ easing: 'linear' })
 ```
 
-#### Scroll to element over 2000ms
+#### Animate the scroll to an element over 2000ms
 
 ```javascript
 cy.get('footer').scrollIntoView({ duration: 2000 })
 ```
 
-#### Scroll 150px below an element
+#### Scroll 150px past the top of an element
 
 ```js
 cy.get('#nav').scrollIntoView({ offset: { top: 150, left: 0 } })
 ```
 
+#### Leave room for a fixed header
+
+A negative `offset` stops short of the element, so it lands below a fixed
+header instead of underneath it.
+
+```js
+cy.get('#pricing').scrollIntoView({ offset: { top: -80, left: 0 } })
+```
+
+### Workflows
+
+#### Show a back-to-top button after scrolling
+
+Sticky headers, "back to top" buttons, and lazy-loaded images change as the
+page scrolls. Scroll to a point on the page, then assert on the change.
+
+```javascript
+cy.get('footer').scrollIntoView()
+cy.get('[data-cy="back-to-top"]').should('have.class', 'is-shown')
+```
+
 ## Notes
+
+### Where the element lands after scrolling
+
+`.scrollIntoView()` scrolls the element's nearest scrollable ancestor, or the
+window when there isn't one, until the element's top-left corner lines up with
+the top-left of that container, as far as the container can scroll. Use the
+`offset` option to adjust where it lands. When the scrollable ancestor is a
+container inside the page, Cypress first scrolls that container into view, then
+scrolls the element within it.
+
+### Actionability
+
+`.scrollIntoView()` doesn't run the
+[actionability](/app/core-concepts/interacting-with-elements) checks that
+commands like [`.click()`](/api/commands/click) do. It scrolls an element even
+when the element is hidden, disabled, or covered by another element.
+
+### Skip .scrollIntoView() before action commands
+
+Action commands such as [`.click()`](/api/commands/click) and
+[`.type()`](/api/commands/type) scroll the element into view before acting on
+it, so a `.scrollIntoView()` in front of them adds nothing. The
+[`scrollBehavior`](/app/references/configuration#Actionability) option controls
+where the element lands, and setting it to `false` turns this scrolling off.
+
+```javascript
+cy.get('#submit').scrollIntoView().click() // ❌ the scroll is redundant
+cy.get('#submit').click() // ✅ .click() scrolls the element into view itself
+```
 
 ### Choosing between .scrollTo() and .scrollIntoView()
 
 <ScrollToVsScrollIntoView />
 
-### Snapshots
+### Snapshots don't show scroll positions
 
-#### Snapshots do not reflect scroll behavior
-
-_Cypress does not reflect the accurate scroll positions of any elements within
-snapshots._ If you want to see the actual scrolling behavior in action, we
-recommend using [`.pause()`](/api/commands/pause) to walk through each command
-or
-[watching the video of the test run](/app/guides/screenshots-and-videos#Videos).
+Snapshots don't capture scroll positions. To watch the scrolling, step through
+the commands with [`.pause()`](/api/commands/pause) or
+[watch the video of the test run](/app/guides/screenshots-and-videos#Videos).
 
 ## Rules
 
 <HeaderRequirements />
 
-- `.scrollIntoView()` requires being chained off a command that yields DOM
-  element(s).
+- `.scrollIntoView()` requires being chained off a command that yields a single
+  DOM element. It throws an error when the subject contains more than one
+  element.
 
 <HeaderAssertions />
 
-- `.scrollIntoView()` itself will not be retried — it fires once. Assertions
-  chained after `.scrollIntoView()` will be retried until they pass or time out.
+- `.scrollIntoView()` runs once and is not retried. Assertions chained after
+  `.scrollIntoView()` retry until they pass or time out.
   See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
@@ -120,29 +195,37 @@ or
 
 ## Command Log
 
-**_Assert element is visible after scrolling it into view_**
+**_Scroll a button into view inside a horizontal container_**
 
 ```javascript
 cy.get('#scroll-horizontal button').scrollIntoView()
-cy.get('#scroll-horizontal button').should('be.visible')
+cy.get('#scroll-horizontal').its('0.scrollLeft').should('be.greaterThan', 0)
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/scrollintoview/command-log-for-scrollintoview.png"
-  alt="command log scrollintoview"
+  alt="Command Log rows for getting the button, scrolling it into view, and asserting the container's scrollLeft of 245 is above 0"
 />
 
-When clicking on the `scrollintoview` command within the command log, the
-console outputs the following:
+Clicking the `scrollIntoView` command in the Command Log prints the following
+to the console:
 
 <DocsImage
   src="/img/api/scrollintoview/console-log-for-scrollintoview.png"
-  alt="console.log scrollintoview"
+  alt="DevTools console output for scrollIntoView, listing the command and the button it was applied to and scrolled"
 />
+
+## History
+
+| Version                                    | Changes                           |
+| ------------------------------------------ | --------------------------------- |
+| [0.20.0](/app/references/changelog#0-20-0) | `.scrollIntoView()` command added |
 
 ## See also
 
+- [`.click()`](/api/commands/click) - Scrolls the element into view before clicking it
 - [`cy.scrollTo()`](/api/commands/scrollto)
+- [`cy.viewport()`](/api/commands/viewport) - Set the window size, which decides what counts as in view
 - [Scrolling in Interacting with Elements](/app/core-concepts/interacting-with-elements#Scrolling) - How action commands scroll elements into view on their own

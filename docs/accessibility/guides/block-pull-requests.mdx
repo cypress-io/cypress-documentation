@@ -11,6 +11,12 @@ sidebar_position: 120
 
 Cypress Accessibility reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs, but also means that nothing in your Cypress pipeline will fail due to accessibility issues that are detected. Failing a build is a fully opt-in step based on your handling of the results in your CI process.
 
+:::tip
+
+For declarative thresholds such as a minimum accessibility score or a maximum failed-element count, define [Run Checks](/cloud/features/checks) in App Quality configuration and [report them as GitHub statuses](/accessibility/guides/report-run-checks-github). Use the Results API approach below when you need custom policy logic the built-in assertion types don't cover.
+
+:::
+
 ## Using the Results API
 
 The [Cypress Accessibility Results API](/accessibility/connect-and-extend/results-api) returns accessibility results after a test run, enabling workflows like blocking pull requests or triggering alerts based on specific accessibility criteria. This involves adding a dedicated accessibility verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context. Below is an example of how to block a pull request in GitHub Actions if accessibility violations occur:
@@ -389,3 +395,9 @@ Common approaches for storing baselines:
 
 - **Version control**: Commit the baseline JSON file to your repository
 - **CI artifacts**: Store baselines as build artifacts that can be retrieved in subsequent runs
+
+## See also
+
+- [Run Checks](/cloud/features/checks) - declarative accessibility score and failed-element thresholds
+- [Report Run Checks as GitHub pull request statuses](/accessibility/guides/report-run-checks-github) - post each check as a required commit status
+- [Results API](/accessibility/connect-and-extend/results-api) - fetch per-rule and per-view results for custom policies

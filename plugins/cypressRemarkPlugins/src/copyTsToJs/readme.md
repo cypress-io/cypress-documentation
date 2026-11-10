@@ -28,5 +28,12 @@ export default name
 
 > Note that the JS code block is the first one
 
-From here, a custom MDX component can do what it wishes with the outputted code
-blocks.
+The plugin groups the two blocks under a node that renders as the
+`CypressLangTabs` component (`src/components/cypress-lang-tabs`), so they show as
+JavaScript and TypeScript tabs in the `cypress-lang` tab group.
+
+When the block sits inside a `:::cypress-config-example` or
+`:::cypress-config-plugin-example` directive, whose `CypressConfigFileTabs`
+component places the JS and TS blocks in tabs itself, the plugin leaves the two
+blocks ungrouped. Blocks anywhere else, including inside an admonition, are
+grouped.

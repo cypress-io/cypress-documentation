@@ -6,6 +6,10 @@ import E2EOnlyBadge from "@site/src/components/e2e-only-badge";
 import ComponentOnlyBadge from "@site/src/components/component-only-badge";
 
 import React from 'react';
+import {
+    SURFACES,
+    conversionLinkAttributes,
+} from '@site/plugins/fullstory-conversion-links'
 
 interface ProductHeadingProps {
     product: 'app' | 'cloud' | 'accessibility' | 'ui-coverage'
@@ -29,6 +33,8 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
         badgeContent = plan === 'team' ? 'Team Plan' : plan === 'business' ? 'Business Plan' : 'Enterprise Plan'
     }
 
+    const href = `https://www.cypress.io/${linkPath}?utm_source=docs&utm_medium=product-heading-${product}&utm_content=${badgeContent}`
+
     return (
     <div className={s.productHeading} style={{display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
         <Icon 
@@ -39,7 +45,8 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
           {productName}
         </span>
         <a 
-          href={`https://www.cypress.io/${linkPath}?utm_source=docs&utm_medium=product-heading-${product}&utm_content=${badgeContent}`}
+          href={href}
+          {...conversionLinkAttributes(href, SURFACES.content)}
           target="_blank"
           title="Learn more"
           className={s.productHeadingLink}
