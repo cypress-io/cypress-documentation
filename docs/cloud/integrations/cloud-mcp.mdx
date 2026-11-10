@@ -93,24 +93,28 @@ Cypress publishes Cloud MCP to the marketplaces built into popular AI clients. I
 
 | Where Cypress is listed                                                                                        | What it installs                                                                     | Works with                                                       |
 | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Cypress-io.vscode-cypress-cloud-mcp) | The Cypress Cloud MCP extension (`Cypress-io.vscode-cypress-cloud-mcp`)              | GitHub Copilot and other agents in VS Code                       |
-| [Claude plugin directory](https://claude.com/plugins/cypress)                                                  | The `cypress` plugin: Cloud MCP plus the [Cypress AI Skills](/app/tooling/ai-skills) | Claude Cowork and Claude Code                                    |
+| [Claude connector directory](https://claude.ai/directory/cypress-cloud)                                        | The Cypress Cloud connector: Cloud MCP only                                          | Claude on the web, desktop, and mobile                           |
+| [Claude plugin directory](https://claude.com/plugins/cypress)                                                  | The `cypress` plugin: Cloud MCP plus the [Cypress AI Skills](/app/tooling/ai-skills) | Claude Code and Claude Cowork                                    |
 | [Cursor Directory](https://cursor.directory/plugins/cypress)                                                   | The `cypress` plugin: Cloud MCP plus the Cypress AI Skills                           | Cursor                                                           |
 | [MCP Registry](https://registry.modelcontextprotocol.io/v0/servers?search=io.cypress.mcp/cypress-cloud)        | The `io.cypress.mcp/cypress-cloud` server entry                                      | Clients and directories that read from the official MCP Registry |
+| [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Cypress-io.vscode-cypress-cloud-mcp) | The Cypress Cloud MCP extension (`Cypress-io.vscode-cypress-cloud-mcp`)              | GitHub Copilot and other agents in VS Code                       |
 
-#### Install the VS Code extension
+#### Choose the Claude connector or the Claude plugin for Cloud MCP
 
-1. In VS Code, open the **Extensions** view and search for `Cypress Cloud MCP`, or install it from the [VS Code Marketplace listing](https://marketplace.visualstudio.com/items?itemName=Cypress-io.vscode-cypress-cloud-mcp).
-2. Select **Connect** in the welcome message, or run **Cypress Cloud MCP: Connect** from the Command Palette.
-3. Select **Cypress Cloud** from the MCP server list and start it.
-4. Confirm the trust and sign-in prompts, then sign in to Cypress Cloud in your browser.
-5. Open Chat and select agent mode.
+Cypress has two Claude listings. Both connect Claude to the same Cloud MCP server, so they return the same Cypress Cloud data. They differ in what else they install and where you use them:
 
-The extension connects only to `https://mcp.cypress.io/mcp`, and VS Code manages the OAuth session.
+- **The connector** adds Cloud MCP to your Claude account. Use it to ask Claude about your runs, failures, and flaky tests in Claude chat. There is nothing to install or update locally: the server is hosted by Cypress, and new tools appear the next time Claude connects.
+- **The plugin** adds Cloud MCP and the Cypress AI Skills to Claude Code or Claude Cowork. The skills teach Claude how to write, explain, and debug Cypress tests, so use the plugin when Claude works in your test code as well as reading your Cloud data.
 
-#### Install the Claude plugin
+Install one or the other for a given Claude app, not both, so Claude sees one Cypress Cloud server instead of two.
 
-The `cypress` plugin bundles Cloud MCP with the Cypress AI Skills, so one install gives Claude both your Cypress Cloud data and Cypress testing conventions.
+#### Add the Cypress Cloud connector to Claude
+
+1. Sign in to Claude and open the [Cypress Cloud listing](https://claude.ai/directory/cypress-cloud) in the connector directory. In Claude Desktop, you can also find it under **Customize** > **Connectors**.
+2. Add the connector.
+3. Sign in to Cypress Cloud in the browser window that opens.
+
+#### Install the Cypress plugin in Claude Code or Cowork
 
 - **Claude Cowork:** open the [Cypress listing](https://claude.com/plugins/cypress) in the Claude plugin directory and install it.
 - **Claude Code:** add the community marketplace, then install the plugin:
@@ -122,7 +126,7 @@ The `cypress` plugin bundles Cloud MCP with the Cypress AI Skills, so one instal
 
 To sign in from Claude Code, run `/mcp`, select the Cypress Cloud server, and complete the Cypress Cloud sign-in in your browser.
 
-#### Install from the Cursor Directory
+#### Install the Cypress plugin from the Cursor Directory
 
 The [Cypress listing](https://cursor.directory/plugins/cypress) in the Cursor Directory carries the same `cypress` plugin, with Cloud MCP and the Cypress AI Skills.
 
@@ -131,6 +135,16 @@ The [Cypress listing](https://cursor.directory/plugins/cypress) in the Cursor Di
 3. Confirm the install in Cursor. Cursor opens a browser window to sign in to Cypress Cloud on first use.
 
 To add the skills as well, copy them from the listing's **Skills** tab, or install them with the [Cypress AI Skills](/app/tooling/ai-skills) instructions.
+
+#### Install the Cypress Cloud MCP extension for VS Code
+
+1. In VS Code, open the **Extensions** view and search for `Cypress Cloud MCP`, or install it from the [VS Code Marketplace listing](https://marketplace.visualstudio.com/items?itemName=Cypress-io.vscode-cypress-cloud-mcp).
+2. Select **Connect** in the welcome message, or run **Cypress Cloud MCP: Connect** from the Command Palette.
+3. Select **Cypress Cloud** from the MCP server list and start it.
+4. Confirm the trust and sign-in prompts, then sign in to Cypress Cloud in your browser.
+5. Open Chat and select agent mode.
+
+The extension connects only to `https://mcp.cypress.io/mcp`, and VS Code manages the OAuth session.
 
 ### Configure AI Assistant
 
@@ -183,6 +197,8 @@ See [Antigravity's documentation](https://antigravity.google/docs/mcp) for more 
 </AccordionBlock>
 
 <AccordionBlock title="Claude Desktop" icon={<Icon name="claude" />}>
+
+To connect without a custom connector, add the [Cypress Cloud connector](#Add-the-Cypress-Cloud-connector-to-Claude) from the Claude connector directory.
 
 **OAuth (Recommended)**
 
@@ -268,7 +284,7 @@ See [Claude Code's documentation](https://code.claude.com/docs/en/mcp) for more 
 
 <AccordionBlock title="Cursor" icon={<Icon name="hexagon-nodes" />}>
 
-To install without editing a config file, use the [Cursor Directory listing](#Install-from-the-Cursor-Directory).
+To install without editing a config file, use the [Cursor Directory listing](#Install-the-Cypress-plugin-from-the-Cursor-Directory).
 
 **OAuth (Recommended)**
 
@@ -313,7 +329,7 @@ See [Cursor's documentation](https://cursor.com/docs/mcp) for more details.
 
 <AccordionBlock title="GitHub Copilot in VS Code" icon={<Icon name="github" />}>
 
-To install without editing a config file, use the [VS Code extension](#Install-the-VS-Code-extension).
+To install without editing a config file, use the [VS Code extension](#Install-the-Cypress-Cloud-MCP-extension-for-VS-Code).
 
 You can install the Cloud MCP server in your user profile or a specific workspace. See [VS Code's MCP installation options](https://code.visualstudio.com/docs/copilot/customization/mcp-servers).
 
