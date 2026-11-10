@@ -1,0 +1,15 @@
+- **Check Executions, not only the delivery status.** Apps Script can't choose
+  the response status, so a delivery's status in **Recent deliveries** doesn't
+  tell you whether the rows were written, and Cypress Cloud can't rely on it to
+  retry. When a run is missing from the sheet, open **Executions** in the Apps
+  Script editor, fix the cause, and use **Redeliver** in **Recent deliveries** to
+  send the delivery again. Because rows are keyed by run, redelivering never
+  creates a duplicate.
+- **The history starts with the webhook.** It covers runs that finish after you
+  add it, so earlier runs don't appear in the sheet.
+- **Use one spreadsheet per project.** The trend queries filter by branch, not
+  by project. If you point webhooks from several projects at one deployment, add
+  a `B = '<project-id>'` condition to each `QUERY` in `setup`.
+- **Change the branch in one place.** The trend tabs follow `TREND_BRANCH`. To
+  chart another branch, change it, save, and run `setup` again. Recorded rows
+  stay, and the charts rebuild from them.

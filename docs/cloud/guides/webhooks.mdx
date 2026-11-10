@@ -309,9 +309,16 @@ run, use the [Cloud CLI](/cloud/integrations/cloud-cli) or
   isn't `passed`, or only when `totalFailed` is greater than zero.
 - A no-code platform such as Zapier, Make, or n8n can use one delivery to post to
   a channel, open a Jira ticket, and append a row to a reporting sheet.
+- To chart test results over time, see
+  [Chart Cypress test results over time in Google Sheets](/cloud/guides/google-sheets-trends),
+  which receives `run.completed` with a Google Apps Script web app. The
+  matching guides chart
+  [accessibility scores](/accessibility/guides/google-sheets-trends) and
+  [UI Coverage](/ui-coverage/guides/google-sheets-trends).
 
 ## See also
 
+- [Chart test results in Google Sheets](/cloud/guides/google-sheets-trends) - record every run in a spreadsheet and chart trends
 - [Webhooks Integration](/cloud/integrations/webhooks) - headers, security, and retries
 - [Webhook events](/cloud/integrations/webhooks#Events) - `run.completed`, `run.accessibility.completed`, `run.uiCoverage.completed`, and `run.allSettled`
 - [Webhook payloads](/cloud/integrations/webhooks#Payload) - fields for each event

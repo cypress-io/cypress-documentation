@@ -32,9 +32,10 @@ Run Checks don't change how your tests run or how reports are generated. They on
 Run Checks have launched as **Early Access** with a **gradual rollout** starting November 5, 2026. There are no limitations on usage and no breaking changes are expected, but Checks do not yet flow into all the usual places your Cypress test results are populated, as outlined below. If a feature is not active yet that you are interested in, please reach out to your usual Cypress point of contact. Feedback and requests are appreciated.
 
 Check results appear on the run's page, in its **Properties** tab, in the
-project's runs list, and through the [Results API](#Using-check-results-in-CI)
-(`getCheckResults()`). Support in [Cypress Cloud webhooks](/cloud/integrations/webhooks)
-is planned soon.
+project's runs list, through the [Results API](#Using-check-results-in-CI)
+(`getCheckResults()`), and in [Cypress Cloud webhook](/cloud/integrations/webhooks#Run-Checks-in-webhook-payloads)
+payloads. To chart check results over time, see
+[Chart Cypress test results over time in Google Sheets](/cloud/guides/google-sheets-trends).
 
 Run Checks are **not** yet included in automated [Slack](/cloud/integrations/slack) notifications or [GitHub](/cloud/integrations/github#Pull-request-comments) pull request comments, and they don't push to GitHub status checks automatically. To report them as commit statuses today, follow [Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github).
 

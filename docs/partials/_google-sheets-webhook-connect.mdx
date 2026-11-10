@@ -1,0 +1,25 @@
+1. In Cypress Cloud, open your project's **Settings**, find the **Webhooks**
+   panel, and click **Add webhook**. See
+   [Create a webhook](/cloud/integrations/webhooks#Create-a-webhook).
+2. For **Payload URL**, enter the web app URL you copied in
+   [Step 4](#Step-4-Deploy-the-script-as-a-web-app), with the token from
+   [Step 3](#Step-3-Store-a-token-that-authenticates-Cypress-Cloud) appended as
+   a `token` query parameter. To find the URL again, open **Deploy** >
+   **Manage deployments** in the Apps Script editor.
+
+   ```text
+   https://script.google.com/macros/s/<deployment-id>/exec?token=<your-token>
+   ```
+
+3. Leave **Secret** and **Custom Authorization header** empty. The script can't
+   read either one.
+4. Under **Events that will trigger webhook**, select <code>{props.event}</code>{' '}
+   and clear every other event.
+5. Save the webhook.
+
+:::caution
+
+Treat the full Payload URL as a secret. Anyone who has it can write rows to your
+sheet. Don't paste it in a channel or commit it to a repository.
+
+:::

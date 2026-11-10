@@ -1,0 +1,20 @@
+Apps Script web apps have three traits that shape the script:
+
+- **`doPost` can't read request headers.** The script never sees
+  `X-Cypress-Signature`, `X-Cypress-Event`, or `X-Cypress-Event-Id`, so it can't
+  [verify the signature](/cloud/integrations/webhooks#Verify-webhook-signatures).
+  Instead, the Payload URL carries a long random `token` query parameter that
+  the script compares against a value stored in the script's properties. This is
+  the secret-URL approach described in
+  [Send to a no-code destination](/cloud/integrations/webhooks#Send-to-a-no-code-destination).
+  Because the script can't read `X-Cypress-Event` either, give this webhook only
+  the <code>{props.event}</code> event.
+- **The script deduplicates by run, not by event ID.** Rows are keyed on the
+  Project ID and run number. A retry, a manual redelivery, or a regenerated
+  report for a run that already has rows replaces those rows, so the sheet holds
+  one row per run without tracking `X-Cypress-Event-Id`.
+- **The response type decides the delivery status.** Cypress Cloud doesn't
+  follow redirects. An Apps Script `ContentService` response answers with a
+  `302` redirect, which Cypress Cloud records as a failed delivery even though
+  the script ran. The script replies through `HtmlService`, which answers with a
+  `200`.

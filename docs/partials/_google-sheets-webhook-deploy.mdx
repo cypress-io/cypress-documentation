@@ -1,0 +1,14 @@
+1. Click **Deploy** > **New deployment**.
+2. Click the gear icon next to **Select type** and choose **Web app**.
+3. Set **Execute as** to **Me**, so the script writes to the sheet with your
+   access.
+4. Set **Who has access** to **Anyone**. Cypress Cloud can't sign in to Google,
+   so any other setting turns its deliveries away. The token from
+   [Step 3](#Step-3-Store-a-token-that-authenticates-Cypress-Cloud) is what
+   keeps other callers out.
+5. Click **Deploy** and copy the **Web app** URL. It ends in `/exec`.
+
+When you edit the script later, open **Deploy** > **Manage deployments**, edit
+this deployment, and choose **New version**. The URL stays the same, so the
+Cypress Cloud webhook needs no change. **New deployment** creates a different
+URL.

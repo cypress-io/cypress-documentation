@@ -246,37 +246,38 @@ delivery as **at-least-once** and make your handler idempotent by keying on
 The `run.completed` payload (version `1`) is a flat JSON object with the
 following fields:
 
-| Field               | Type               | Description                                                                                                    |
-| ------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `runNumber`         | `number`           | The run's number in Cypress Cloud.                                                                             |
-| `runUrl`            | `string`           | Link to the run in Cypress Cloud.                                                                              |
-| `projectId`         | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run.                              |
-| `projectName`       | `string`           | The project name, which can be chosen in your Cypress Cloud settings.                                          |
-| `status`            | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.                                         |
-| `statusReason`      | `string`           | Human-readable explanation of the status.                                                                      |
-| `createdAt`         | `string`           | ISO 8601 timestamp when the run started.                                                                       |
-| `completedAt`       | `string` \| `null` | ISO 8601 timestamp when the run finished.                                                                      |
-| `totalDuration`     | `number` \| `null` | Total run duration in milliseconds.                                                                            |
-| `totalTests`        | `number` \| `null` | Total number of tests.                                                                                         |
-| `totalPassed`       | `number` \| `null` | Number of passed tests.                                                                                        |
-| `totalFailed`       | `number` \| `null` | Number of failed tests.                                                                                        |
-| `totalPending`      | `number` \| `null` | Number of pending tests.                                                                                       |
-| `totalSkipped`      | `number` \| `null` | Number of skipped tests.                                                                                       |
-| `flakyTestCount`    | `number` \| `null` | Number of passing tests that failed at least one attempt and passed using [retries](/app/guides/test-retries). |
-| `totalSpecs`        | `number` \| `null` | Number of spec files.                                                                                          |
-| `commitSha`         | `string` \| `null` | The commit SHA the run was recorded against.                                                                   |
-| `commitBranch`      | `string` \| `null` | The branch name.                                                                                               |
-| `commitMessage`     | `string` \| `null` | The commit message.                                                                                            |
-| `commitAuthorName`  | `string` \| `null` | The commit author's name.                                                                                      |
-| `commitAuthorEmail` | `string` \| `null` | The commit author's email.                                                                                     |
-| `commitUrl`         | `string` \| `null` | Link to the commit.                                                                                            |
-| `ciProvider`        | `string` \| `null` | The detected CI provider, for example `circleci`.                                                              |
-| `ciBuildId`         | `string` \| `null` | The CI build ID.                                                                                               |
-| `ciUrl`             | `string` \| `null` | Link to the CI build.                                                                                          |
-| `ciPullRequestId`   | `string` \| `null` | The pull request ID, when available.                                                                           |
-| `ciPullRequestUrl`  | `string` \| `null` | Link to the pull request, when available.                                                                      |
-| `tags`              | `string[]`         | The tags the run was recorded with (sorted).                                                                   |
-| `groups`            | `string[]`         | The run groups (sorted).                                                                                       |
+| Field               | Type               | Description                                                                                                                                                                   |
+| ------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `runNumber`         | `number`           | The run's number in Cypress Cloud.                                                                                                                                            |
+| `runUrl`            | `string`           | Link to the run in Cypress Cloud.                                                                                                                                             |
+| `projectId`         | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run.                                                                                             |
+| `projectName`       | `string`           | The project name, which can be chosen in your Cypress Cloud settings.                                                                                                         |
+| `status`            | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.                                                                                                        |
+| `statusReason`      | `string`           | Human-readable explanation of the status.                                                                                                                                     |
+| `createdAt`         | `string`           | ISO 8601 timestamp when the run started.                                                                                                                                      |
+| `completedAt`       | `string` \| `null` | ISO 8601 timestamp when the run finished.                                                                                                                                     |
+| `totalDuration`     | `number` \| `null` | Total run duration in milliseconds.                                                                                                                                           |
+| `totalTests`        | `number` \| `null` | Total number of tests.                                                                                                                                                        |
+| `totalPassed`       | `number` \| `null` | Number of passed tests.                                                                                                                                                       |
+| `totalFailed`       | `number` \| `null` | Number of failed tests.                                                                                                                                                       |
+| `totalPending`      | `number` \| `null` | Number of pending tests.                                                                                                                                                      |
+| `totalSkipped`      | `number` \| `null` | Number of skipped tests.                                                                                                                                                      |
+| `flakyTestCount`    | `number` \| `null` | Number of passing tests that failed at least one attempt and passed using [retries](/app/guides/test-retries).                                                                |
+| `totalSpecs`        | `number` \| `null` | Number of spec files.                                                                                                                                                         |
+| `commitSha`         | `string` \| `null` | The commit SHA the run was recorded against.                                                                                                                                  |
+| `commitBranch`      | `string` \| `null` | The branch name.                                                                                                                                                              |
+| `commitMessage`     | `string` \| `null` | The commit message.                                                                                                                                                           |
+| `commitAuthorName`  | `string` \| `null` | The commit author's name.                                                                                                                                                     |
+| `commitAuthorEmail` | `string` \| `null` | The commit author's email.                                                                                                                                                    |
+| `commitUrl`         | `string` \| `null` | Link to the commit.                                                                                                                                                           |
+| `ciProvider`        | `string` \| `null` | The detected CI provider, for example `circleci`.                                                                                                                             |
+| `ciBuildId`         | `string` \| `null` | The CI build ID.                                                                                                                                                              |
+| `ciUrl`             | `string` \| `null` | Link to the CI build.                                                                                                                                                         |
+| `ciPullRequestId`   | `string` \| `null` | The pull request ID, when available.                                                                                                                                          |
+| `ciPullRequestUrl`  | `string` \| `null` | Link to the pull request, when available.                                                                                                                                     |
+| `tags`              | `string[]`         | The tags the run was recorded with (sorted).                                                                                                                                  |
+| `groups`            | `string[]`         | The run groups (sorted).                                                                                                                                                      |
+| `checks`            | `object`           | [Run Checks](/cloud/features/checks) results for the run. Present only when the run has check results. See [Run Checks in webhook payloads](#Run-Checks-in-webhook-payloads). |
 
 :::caution
 
@@ -328,17 +329,18 @@ following fields:
 
 Sent when a run's Accessibility report finishes processing.
 
-| Field          | Type               | Description                                                                       |
-| -------------- | ------------------ | --------------------------------------------------------------------------------- |
-| `runNumber`    | `number`           | The run's number in Cypress Cloud.                                                |
-| `runUrl`       | `string`           | Link to the run in Cypress Cloud.                                                 |
-| `projectId`    | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run. |
-| `projectName`  | `string`           | The project name, which can be chosen in your Cypress Cloud settings.             |
-| `status`       | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.            |
-| `createdAt`    | `string`           | ISO 8601 timestamp when the run started.                                          |
-| `completedAt`  | `string` \| `null` | ISO 8601 timestamp when the run finished.                                         |
-| `commitSha`    | `string` \| `null` | The commit SHA the run was recorded against.                                      |
-| `commitBranch` | `string` \| `null` | The branch name.                                                                  |
+| Field          | Type               | Description                                                                                                                                                                   |
+| -------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `runNumber`    | `number`           | The run's number in Cypress Cloud.                                                                                                                                            |
+| `runUrl`       | `string`           | Link to the run in Cypress Cloud.                                                                                                                                             |
+| `projectId`    | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run.                                                                                             |
+| `projectName`  | `string`           | The project name, which can be chosen in your Cypress Cloud settings.                                                                                                         |
+| `status`       | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.                                                                                                        |
+| `createdAt`    | `string`           | ISO 8601 timestamp when the run started.                                                                                                                                      |
+| `completedAt`  | `string` \| `null` | ISO 8601 timestamp when the run finished.                                                                                                                                     |
+| `commitSha`    | `string` \| `null` | The commit SHA the run was recorded against.                                                                                                                                  |
+| `commitBranch` | `string` \| `null` | The branch name.                                                                                                                                                              |
+| `checks`       | `object`           | [Run Checks](/cloud/features/checks) results for the run. Present only when the run has check results. See [Run Checks in webhook payloads](#Run-Checks-in-webhook-payloads). |
 
 `accessibility` object:
 
@@ -406,17 +408,18 @@ example a passed run whose Accessibility report `processing_failed`).
 
 Sent when a run's UI Coverage report finishes processing.
 
-| Field          | Type               | Description                                                                       |
-| -------------- | ------------------ | --------------------------------------------------------------------------------- |
-| `runNumber`    | `number`           | The run's number in Cypress Cloud.                                                |
-| `runUrl`       | `string`           | Link to the run in Cypress Cloud.                                                 |
-| `projectId`    | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run. |
-| `projectName`  | `string`           | The project name, which can be chosen in your Cypress Cloud settings.             |
-| `status`       | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.            |
-| `createdAt`    | `string`           | ISO 8601 timestamp when the run started.                                          |
-| `completedAt`  | `string` \| `null` | ISO 8601 timestamp when the run finished.                                         |
-| `commitSha`    | `string` \| `null` | The commit SHA the run was recorded against.                                      |
-| `commitBranch` | `string` \| `null` | The branch name.                                                                  |
+| Field          | Type               | Description                                                                                                                                                                   |
+| -------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `runNumber`    | `number`           | The run's number in Cypress Cloud.                                                                                                                                            |
+| `runUrl`       | `string`           | Link to the run in Cypress Cloud.                                                                                                                                             |
+| `projectId`    | `string`           | The [Project ID](/cloud/account-management/projects#Project-ID) used for the run.                                                                                             |
+| `projectName`  | `string`           | The project name, which can be chosen in your Cypress Cloud settings.                                                                                                         |
+| `status`       | `string`           | Run status: `passed`, `failed`, `errored`, `timedOut`, or `cancelled`.                                                                                                        |
+| `createdAt`    | `string`           | ISO 8601 timestamp when the run started.                                                                                                                                      |
+| `completedAt`  | `string` \| `null` | ISO 8601 timestamp when the run finished.                                                                                                                                     |
+| `commitSha`    | `string` \| `null` | The commit SHA the run was recorded against.                                                                                                                                  |
+| `commitBranch` | `string` \| `null` | The branch name.                                                                                                                                                              |
+| `checks`       | `object`           | [Run Checks](/cloud/features/checks) results for the run. Present only when the run has check results. See [Run Checks in webhook payloads](#Run-Checks-in-webhook-payloads). |
 
 `uiCoverage` object:
 
@@ -494,6 +497,10 @@ The payload contains every `run.completed` field, plus two optional objects:
 
 When an object does not apply, it is left out of the payload rather than set to
 `null`.
+
+The `checks` object is read once every report has settled, so its
+`accessibility.*` and `uiCoverage.*` assertions have their final results rather
+than `pending`.
 
 **Errors.** On this event only, a section's `status` can also be
 `fetch_failed`. That value means Cypress Cloud could not read the report after
@@ -580,6 +587,91 @@ section.
 ```
 </details>
 
+</details>
+
+### Run Checks in webhook payloads
+
+When a project defines [Run Checks](/cloud/features/checks), every event's
+payload carries a top-level `checks` object with the result of each check that
+applies to the run, and of each assertion in it. The object is left out when the
+run has no check results.
+
+| Field    | Type     | Description                                                                               |
+| -------- | -------- | ----------------------------------------------------------------------------------------- |
+| `status` | `string` | Evaluation status for the run: `processing`, `processed`, `not-configured`, or `errored`. |
+| `checks` | `array`  | One entry per check that applies to the run. Fields below.                                |
+
+Each entry in `checks`:
+
+| Field              | Type     | Description                                                                                                                                                                        |
+| ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`             | `string` | The check's `name`.                                                                                                                                                                |
+| `status`           | `string` | `passed`, `failed`, `failing`, `pending`, `errored`, or `not-applicable`. `failing` means an assertion has failed while others are pending; a failed assertion never passes later. |
+| `assertionResults` | `array`  | One entry per assertion in the check. Fields below.                                                                                                                                |
+
+Each entry in `assertionResults`:
+
+| Field        | Type               | Description                                                                                                                                                                                                                                                                                                                               |
+| ------------ | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`       | `string`           | The [assertion type](/cloud/features/checks#Assertion-types), for example `run.failedTests.max` or `accessibility.score.min`.                                                                                                                                                                                                             |
+| `status`     | `string`           | `passed`, `failed`, `pending`, `errored`, or `unavailable`.                                                                                                                                                                                                                                                                               |
+| `threshold`  | `number`           | The assertion's `value` from your configuration.                                                                                                                                                                                                                                                                                          |
+| `comparison` | `string`           | `atLeast` for a `.min` assertion, `atMost` for a `.max` assertion.                                                                                                                                                                                                                                                                        |
+| `unit`       | `string`           | `percent` for scores, `count` for counts.                                                                                                                                                                                                                                                                                                 |
+| `filter`     | `object` \| `null` | The spec or view filter the assertion applies to: `entity` (`spec` or `view`), `pattern`, and a readable `label`. `null` when the assertion applies to the whole run.                                                                                                                                                                     |
+| `matched`    | `object` \| `null` | What the assertion measured: `entity` (`test` or `view`), `count` of matched entities, and `mode`. With `mode: "total"`, `measuredValue` is the one value held to the threshold. With `mode: "each"`, each matched view is held to the threshold on its own, and `failedCount` is how many failed. `null` until there is data to measure. |
+
+Each event reads the check results stored when it is sent. A check's `run.*`
+assertions are final in `run.completed`, its `accessibility.*` assertions in
+`run.accessibility.completed`, and its `uiCoverage.*` assertions in
+`run.uiCoverage.completed`. Assertions about a report that hasn't finished yet
+are `pending`. `run.allSettled` has every assertion's final result.
+
+<details>
+<summary>Example <code>checks</code> object</summary>
+```json
+{
+  "checks": {
+    "status": "processed",
+    "checks": [
+      {
+        "name": "Quality gate",
+        "status": "failed",
+        "assertionResults": [
+          {
+            "type": "run.failedTests.max",
+            "status": "passed",
+            "threshold": 0,
+            "comparison": "atMost",
+            "unit": "count",
+            "filter": null,
+            "matched": {
+              "entity": "test",
+              "count": 24,
+              "mode": "total",
+              "measuredValue": 0
+            }
+          },
+          {
+            "type": "accessibility.score.min",
+            "status": "failed",
+            "threshold": 95,
+            "comparison": "atLeast",
+            "unit": "percent",
+            "filter": null,
+            "matched": {
+              "entity": "view",
+              "count": 12,
+              "mode": "total",
+              "measuredValue": 91
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 </details>
 
 ## Verify webhook signatures

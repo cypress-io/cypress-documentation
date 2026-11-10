@@ -1,0 +1,28 @@
+Every <code>{props.event}</code> payload carries a
+[`checks` object](/cloud/integrations/webhooks#Run-Checks-in-webhook-payloads)
+when your project defines [Run Checks](/cloud/features/checks). It holds the
+result of each check and each of its assertions.
+
+The script records each <code>{props.prefix}</code> assertion on the **Checks**
+tab, since those are final when this event is sent:
+
+| Column           | What it holds                                                                                                                 |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Check            | The check's `name` from your App Quality configuration.                                                                       |
+| Check status     | The whole check: `passed`, `failed`, `failing`, `pending`, `errored`, or `not-applicable`.                                    |
+| Assertion        | The assertion type, for example <code>{props.example}</code>.                                                                 |
+| Assertion status | This assertion alone: `passed`, `failed`, `pending`, `errored`, or `unavailable`.                                             |
+| Threshold        | The assertion's `value` from your configuration.                                                                              |
+| Measured         | The measured value, when the assertion is held to one total.                                                                  |
+| Matched          | How many tests or views the assertion matched.                                                                                |
+| Failed matches   | How many matched views failed, when each view is held to the threshold on its own (`viewMatch`).                              |
+| Scope            | The spec or view filter the assertion applies to, or `All`.                                                                   |
+| Investigate      | For a failed assertion, where to look next. See [Investigate a failed check](#Investigate-a-failed-Run-Check-from-the-sheet). |
+
+The check status can differ from the assertion statuses on this tab, since a
+check can also hold assertions about other data. `failing` means one of the
+check's assertions has failed while others are still pending. A failed assertion
+never passes later, so `failing` already means the check fails.
+
+The **Runs** tab counts these checks in its **Failing checks** column. The
+column is empty when the project has no Run Checks configured.

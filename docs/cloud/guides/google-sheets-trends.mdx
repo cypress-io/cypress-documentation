@@ -1,0 +1,460 @@
+---
+title: Chart Cypress test results over time in Google Sheets with webhooks
+description: Record every Cypress Cloud run and its Run Checks in a Google Sheet with a Google Apps Script webhook receiver, then chart failed tests, flaky tests, and run duration for your main branch.
+sidebar_label: Chart Results in Google Sheets
+sidebar_position: 50
+---
+
+<ProductHeading product="cloud" />
+
+# Chart Cypress test results over time in Google Sheets
+
+A Google Sheet that fills itself in after every recorded run gives you a running
+history of your test suite that anyone on the team can open, filter, and chart.
+This guide builds one with a [Cypress Cloud webhook](/cloud/integrations/webhooks)
+and a short [Google Apps Script](https://developers.google.com/apps-script) that
+receives each `run.completed` delivery and writes it to the sheet. No server to
+host, and no third-party automation platform in between.
+
+The finished spreadsheet has four tabs:
+
+- **Runs**: one row per recorded run on every branch, with the run status, test
+  counts, flaky tests, duration, the commit, the number of failing
+  [Run Checks](/cloud/features/checks), and a link back to Cypress Cloud
+- **Checks**: one row per Run Checks assertion about test results, with its
+  threshold, the measured value, and a Cloud CLI command to investigate a
+  failure
+- **Main branch**: a line chart of failed and flaky tests, and a line chart of
+  run duration, for runs on `main`
+- **Main branch data**: the `QUERY` formulas that feed those charts
+
+To track scores instead of test results, see the matching guides for
+[Cypress Accessibility](/accessibility/guides/google-sheets-trends) and
+[UI Coverage](/ui-coverage/guides/google-sheets-trends). Each uses its own
+webhook, so you can run any combination of them.
+
+## Prerequisites for the Google Sheets webhook receiver
+
+- A Cypress Cloud project that records runs. For the **Checks** tab, the project
+  needs [Run Checks](/cloud/features/checks) with `run.failedTests.max` or
+  `run.flakyTests.max` assertions. Without them, the tab stays empty.
+- Permission to manage webhooks on the project: **Owner**, **Org Admin**, or
+  **Team Admin**. See [Getting started](/cloud/integrations/webhooks#Getting-started).
+- A Google account that can deploy an Apps Script web app with access set to
+  **Anyone**. Some Google Workspace admins turn that setting off for their
+  domain.
+
+## How the Apps Script receiver handles Cypress Cloud deliveries
+
+The webhook subscribes to `run.completed`, which Cypress Cloud sends once per
+run as soon as the run finishes. See the
+[`run.completed` payload](/cloud/integrations/webhooks#Payload) for every field.
+
+<GoogleSheetsWebhookReceiver event="run.completed" />
+
+## Step 1: Create the spreadsheet and add the script
+
+1. Create a new Google Sheet. Name it after your project, for example
+   "Cypress Cloud test results".
+2. Click **Extensions** > **Apps Script**. The editor opens with an empty
+   `Code.gs` file bound to the spreadsheet.
+3. Replace the contents of `Code.gs` with the following script and click
+   **Save**.
+
+```js title="Code.gs"
+const RUNS_SHEET = 'Runs'
+const CHECKS_SHEET = 'Checks'
+const CHARTS_SHEET = 'Main branch'
+const DATA_SHEET = 'Main branch data'
+const TREND_BRANCH = 'main'
+
+// run.completed carries final results for the run.* assertions in your Run
+// Checks. Accessibility and UI Coverage assertions are still pending.
+const ASSERTION_PREFIX = 'run.'
+
+const RUN_HEADERS = [
+  'Completed at',
+  'Project ID',
+  'Run number',
+  'Branch',
+  'Run status',
+  'Tests',
+  'Passed',
+  'Failed',
+  'Flaky',
+  'Pending',
+  'Skipped',
+  'Specs',
+  'Duration (min)',
+  'Failing checks',
+  'Commit',
+  'Author',
+  'Run URL',
+]
+
+const CHECK_HEADERS = [
+  'Completed at',
+  'Project ID',
+  'Run number',
+  'Branch',
+  'Check',
+  'Check status',
+  'Assertion',
+  'Assertion status',
+  'Threshold',
+  'Measured',
+  'Matched',
+  'Failed matches',
+  'Scope',
+  'Investigate',
+]
+
+// Cypress Cloud POSTs each run.completed delivery here.
+function doPost(e) {
+  const token =
+    PropertiesService.getScriptProperties().getProperty('WEBHOOK_TOKEN')
+  if (!token || e.parameter.token !== token) {
+    console.warn('Ignored a request with a missing or wrong token')
+    return reply('ignored')
+  }
+
+  const run = JSON.parse(e.postData.contents)
+  if (
+    typeof run.runNumber !== 'number' ||
+    !run.projectId ||
+    !('totalTests' in run)
+  ) {
+    console.warn('Ignored a body that is not a run.completed delivery')
+    return reply('ignored')
+  }
+
+  // Two deliveries can arrive at once. The lock keeps them from writing
+  // the same rows twice.
+  const lock = LockService.getScriptLock()
+  lock.waitLock(5000)
+  try {
+    upsertRun(run)
+    replaceChecks(run)
+  } finally {
+    lock.releaseLock()
+  }
+
+  return reply('ok')
+}
+
+function runRow(run) {
+  return [
+    completedAt(run),
+    run.projectId,
+    run.runNumber,
+    run.commitBranch || '',
+    run.status,
+    cell(run.totalTests),
+    cell(run.totalPassed),
+    cell(run.totalFailed),
+    cell(run.flakyTestCount),
+    cell(run.totalPending),
+    cell(run.totalSkipped),
+    cell(run.totalSpecs),
+    run.totalDuration == null ? '' : Math.round(run.totalDuration / 6000) / 10,
+    failingChecks(run),
+    run.commitMessage || '',
+    run.commitAuthorName || '',
+    run.runUrl,
+  ]
+}
+
+// A command for the Cypress Cloud CLI that lists the tests behind a failed
+// assertion. Copy it from the sheet and run it in a terminal.
+function investigate(run, assertion) {
+  const target = `--projectId ${run.projectId} --runNumber ${run.runNumber}`
+  return assertion.type === 'run.flakyTests.max'
+    ? `cy-cloud test list ${target} --onlyFlaky`
+    : `cy-cloud test list ${target} --status failed`
+}
+
+// ---- Shared by every Cypress Cloud webhook sheet ----
+
+// One row per run. A retry, a redelivery, or a reprocessed report for a run
+// that already has a row overwrites that row instead of adding another.
+function upsertRun(run) {
+  const sheet = sheetNamed(RUNS_SHEET)
+  const row = runRow(run)
+  const index = runRowIndexes(sheet, run)[0]
+
+  if (index === undefined) {
+    sheet.appendRow(row)
+  } else {
+    sheet.getRange(index, 1, 1, row.length).setValues([row])
+  }
+}
+
+// One row per assertion. A later delivery for the same run replaces them.
+function replaceChecks(run) {
+  const sheet = sheetNamed(CHECKS_SHEET)
+  runRowIndexes(sheet, run)
+    .reverse()
+    .forEach((index) => sheet.deleteRow(index))
+
+  const rows = checkRows(run)
+  if (rows.length) {
+    sheet
+      .getRange(sheet.getLastRow() + 1, 1, rows.length, rows[0].length)
+      .setValues(rows)
+  }
+}
+
+function checkRows(run) {
+  const checks = (run.checks && run.checks.checks) || []
+  const rows = []
+
+  checks.forEach((check) => {
+    check.assertionResults
+      .filter((assertion) => assertion.type.startsWith(ASSERTION_PREFIX))
+      .forEach((assertion) => {
+        const matched = assertion.matched || {}
+        rows.push([
+          completedAt(run),
+          run.projectId,
+          run.runNumber,
+          run.commitBranch || '',
+          check.name,
+          check.status,
+          assertion.type,
+          assertion.status,
+          assertion.threshold,
+          cell(matched.measuredValue),
+          cell(matched.count),
+          cell(matched.failedCount),
+          assertion.filter ? assertion.filter.label : 'All',
+          assertion.status === 'failed' ? investigate(run, assertion) : '',
+        ])
+      })
+  })
+
+  return rows
+}
+
+// Checks that have already failed. `failing` means an assertion failed while
+// others are still pending, and a failed assertion never passes later.
+function failingChecks(run) {
+  if (!run.checks || run.checks.status === 'not-configured') {
+    return ''
+  }
+  return run.checks.checks.filter(
+    (check) => check.status === 'failed' || check.status === 'failing'
+  ).length
+}
+
+// Row numbers whose Project ID (column B) and Run number (column C) match.
+function runRowIndexes(sheet, run) {
+  const lastRow = sheet.getLastRow()
+  if (lastRow < 2) {
+    return []
+  }
+
+  const indexes = []
+  sheet
+    .getRange(2, 2, lastRow - 1, 2)
+    .getValues()
+    .forEach(([projectId, runNumber], i) => {
+      if (projectId === run.projectId && Number(runNumber) === run.runNumber) {
+        indexes.push(i + 2)
+      }
+    })
+  return indexes
+}
+
+function completedAt(run) {
+  return new Date(run.completedAt || run.createdAt)
+}
+
+// A null metric becomes an empty cell, which QUERY treats as no value
+// rather than as zero.
+function cell(value) {
+  return value === null || value === undefined ? '' : value
+}
+
+function sheetNamed(name) {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+  return spreadsheet.getSheetByName(name) || spreadsheet.insertSheet(name)
+}
+
+// HtmlService answers the request with a 200. ContentService answers with
+// a 302 redirect, which Cypress Cloud records as a failed delivery.
+function reply(message) {
+  return HtmlService.createHtmlOutput(message)
+}
+
+// ---- Setup: run once from the editor ----
+
+// Creates the sheets, the trend queries, and the charts. Running it again
+// rebuilds the charts and their data, and leaves recorded rows alone.
+function setup() {
+  writeHeaders(RUNS_SHEET, RUN_HEADERS)
+  writeHeaders(CHECKS_SHEET, CHECK_HEADERS)
+
+  const data = sheetNamed(DATA_SHEET)
+  data.clear()
+  const where = `D = '${TREND_BRANCH}' and F is not null order by A`
+  data
+    .getRange('A1')
+    .setFormula(`=QUERY(${RUNS_SHEET}!A:Q, "select A, H, I where ${where}", 1)`)
+  data
+    .getRange('E1')
+    .setFormula(`=QUERY(${RUNS_SHEET}!A:Q, "select A, M where ${where}", 1)`)
+
+  const charts = sheetNamed(CHARTS_SHEET)
+  charts.getCharts().forEach((chart) => charts.removeChart(chart))
+  addChart(charts, data.getRange('A:C'), 1, {
+    type: Charts.ChartType.LINE,
+    title: `Failed and flaky tests on ${TREND_BRANCH}`,
+  })
+  addChart(charts, data.getRange('E:F'), 20, {
+    type: Charts.ChartType.LINE,
+    title: `Run duration in minutes on ${TREND_BRANCH}`,
+  })
+  SpreadsheetApp.getActiveSpreadsheet().setActiveSheet(charts)
+}
+
+function writeHeaders(name, headers) {
+  const sheet = sheetNamed(name)
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers])
+  sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold')
+  sheet.setFrozenRows(1)
+}
+
+// Anchors the chart in column A, so it starts at the left edge of the sheet.
+function addChart(sheet, range, row, { type, title, options = {} }) {
+  let builder = sheet
+    .newChart()
+    .setChartType(type)
+    .addRange(range)
+    .setNumHeaders(1)
+    .setPosition(row, 1, 0, 0)
+    .setOption('title', title)
+    .setOption('width', 900)
+    .setOption('height', 360)
+  Object.entries(options).forEach(([key, value]) => {
+    builder = builder.setOption(key, value)
+  })
+  sheet.insertChart(builder.build())
+}
+```
+
+If your default branch has another name, such as `master` or `develop`, change
+`TREND_BRANCH` before the next step.
+
+## Step 2: Run the setup function to build the sheets and charts
+
+1. In the editor toolbar, choose `setup` from the function menu and click
+   **Run**.
+2. Google asks you to authorize the script to edit your spreadsheets. Review
+   the request and allow it.
+
+The spreadsheet now has **Runs** and **Checks** tabs with frozen headers, a
+**Main branch data** tab with two `QUERY` formulas, and a **Main branch** tab
+with two empty charts anchored at its left edge. The queries select the `main`
+runs that report a test count, in date order:
+
+- Columns A to C: the completion time and the failed and flaky test counts,
+  which feed the first chart
+- Columns E and F: the completion time and the run duration in minutes, which
+  feed the second chart
+
+The charts fill in as rows arrive. Running `setup` again rebuilds both charts
+and their data, so make lasting style changes in the script's `addChart` calls,
+or stop running `setup` once the charts look the way you want.
+
+## Step 3: Store a token that authenticates Cypress Cloud
+
+<GoogleSheetsWebhookToken />
+
+## Step 4: Deploy the script as a web app
+
+<GoogleSheetsWebhookDeploy />
+
+## Step 5: Add the Cypress Cloud webhook
+
+<GoogleSheetsWebhookConnect event="run.completed" />
+
+## Step 6: Send a test delivery to the spreadsheet
+
+1. On the webhook row, click **Send test** and choose `run.completed`.
+2. Open **Recent deliveries** from the webhook's **Options (⋯)** menu. The test
+   delivery shows **Delivered**.
+3. In the spreadsheet, the **Runs** tab has a row for run `42` of project
+   `abc123`, and the **Main branch** charts show one point. When the sample
+   includes Run Checks results, the **Checks** tab has a row for each
+   `run.*` assertion in them.
+
+The test uses sample data recorded against `main`. Delete its rows from **Runs**
+and **Checks** once you've confirmed they arrived, so they don't sit in your
+trend.
+
+If no row appears, open **Executions** in the Apps Script editor's sidebar to
+see the request and any error the script logged. A
+`Ignored a request with a missing or wrong token` warning means the `token` in
+the Payload URL doesn't match the `WEBHOOK_TOKEN` property.
+
+From here, every recorded run adds a row, and every `main` run adds a point to
+the charts.
+
+## Track Run Checks for test results in Google Sheets
+
+<GoogleSheetsWebhookChecks
+  event="run.completed"
+  prefix="run.*"
+  example="run.failedTests.max"
+/>
+
+Cypress Cloud sends `run.completed` before Cypress Accessibility and UI
+Coverage reports finish processing, so those assertions are still `pending` at
+this point and this sheet leaves them out. To record them, add the
+[Accessibility](/accessibility/guides/google-sheets-trends) or
+[UI Coverage](/ui-coverage/guides/google-sheets-trends) sheet.
+
+## Investigate a failed Run Check from the sheet
+
+Apps Script runs in Google's cloud, with no terminal and no Node.js, so it can't
+run the [Cypress Cloud CLI](/cloud/integrations/cloud-cli). Instead, for each
+failed assertion, the script writes the CLI command that lists the tests behind
+it in the **Investigate** column:
+
+- `run.failedTests.max`: `cy-cloud test list --projectId <id> --runNumber <n> --status failed`
+- `run.flakyTests.max`: `cy-cloud test list --projectId <id> --runNumber <n> --onlyFlaky`
+
+Copy the command from the cell and run it in a terminal where the CLI is
+[authenticated](/cloud/integrations/cloud-cli#Authenticate). Each test in the
+result includes its error, stack trace, and Test Replay URL. To hand the failure
+to an AI assistant instead, give it the run URL from the **Runs** tab and use
+[Cloud MCP](/cloud/integrations/cloud-mcp).
+
+## Keep these behaviors in mind
+
+<GoogleSheetsWebhookBehaviors />
+
+- **Cancelled runs can have no test counts.** The trend queries skip a run
+  whose **Tests** cell is empty, rather than charting it as zero failures.
+
+## Extend the Google Sheets dashboard
+
+The **Runs** tab is plain data, so most extensions need only a formula:
+
+- **Chart the failure rate.** Add a column that divides **Failed** by **Tests**,
+  query it on **Main branch data**, and add it to a chart.
+- **Highlight slow runs.** Add a conditional-format rule to **Duration (min)**
+  that colors a run more than 20% slower than the median.
+- **Compare branches.** Build a pivot table on **Runs** with **Branch** as rows
+  and the average **Failed** and **Flaky** counts as values.
+- **List the worst checks.** Build a pivot table on **Checks** that counts
+  failed assertions by **Check**.
+
+## See also
+
+- [Build custom integrations with Cypress webhooks](/cloud/guides/webhooks) - more webhook use cases, including a custom Slack message
+- [Webhooks Integration](/cloud/integrations/webhooks) - events, payloads, headers, security, and retries
+- [Run Checks](/cloud/features/checks) - define the thresholds this sheet records
+- [Cloud CLI](/cloud/integrations/cloud-cli) - inspect a failed run from the terminal
+- [Chart accessibility scores in Google Sheets](/accessibility/guides/google-sheets-trends) - the same sheet for Cypress Accessibility
+- [Chart UI Coverage in Google Sheets](/ui-coverage/guides/google-sheets-trends) - the same sheet for UI Coverage

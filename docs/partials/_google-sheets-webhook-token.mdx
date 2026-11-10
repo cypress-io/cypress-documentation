@@ -1,0 +1,13 @@
+The token stands in for a signing secret. Only requests whose Payload URL
+includes it get written to the sheet.
+
+1. Generate a long random value, for example with `openssl rand -hex 32` in a
+   terminal.
+2. In the Apps Script editor, click **Project Settings** (the gear icon), scroll
+   to **Script Properties**, and click **Add script property**.
+3. Set **Property** to `WEBHOOK_TOKEN` and **Value** to the random value, then
+   click **Save script properties**.
+
+Keep the value out of the script itself. To rotate it later, change the
+property here and update the Payload URL in Cypress Cloud; the deployment stays
+the same.

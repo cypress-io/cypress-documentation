@@ -76,6 +76,12 @@ import UICovPremiumNote from '@site/docs/partials/_ui-coverage-premium-note.mdx'
 import ResultsApiEnvVars from '@site/docs/partials/_results-api-env-vars.mdx'
 import FixtureVsReadFile from '@site/docs/partials/_fixture-vs-readfile.mdx'
 import UrlPartsDiagram from '@site/docs/partials/_url-parts-diagram.mdx'
+import GoogleSheetsWebhookReceiver from '@site/docs/partials/_google-sheets-webhook-receiver.mdx'
+import GoogleSheetsWebhookChecks from '@site/docs/partials/_google-sheets-webhook-checks.mdx'
+import GoogleSheetsWebhookToken from '@site/docs/partials/_google-sheets-webhook-token.mdx'
+import GoogleSheetsWebhookDeploy from '@site/docs/partials/_google-sheets-webhook-deploy.mdx'
+import GoogleSheetsWebhookConnect from '@site/docs/partials/_google-sheets-webhook-connect.mdx'
+import GoogleSheetsWebhookBehaviors from '@site/docs/partials/_google-sheets-webhook-behaviors.mdx'
 
 // Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -282,4 +288,10 @@ export default {
   ResultsApiEnvVars,
   FixtureVsReadFile,
   UrlPartsDiagram,
+  GoogleSheetsWebhookReceiver,
+  GoogleSheetsWebhookChecks,
+  GoogleSheetsWebhookToken,
+  GoogleSheetsWebhookDeploy,
+  GoogleSheetsWebhookConnect,
+  GoogleSheetsWebhookBehaviors,
 }
