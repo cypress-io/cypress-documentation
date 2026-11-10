@@ -40,7 +40,8 @@ cy.clock().type('www.cypress.io') // Errors, 'clock' does not yield DOM elements
 
 <Icon name="angle-right" /> **text _(String)_**
 
-The text to be typed into the DOM element.
+The text to be typed into the DOM element. `.type()` errors if `text` is an
+empty string.
 
 Text passed to `.type()` may include any of the special character sequences
 below. These characters will pass along the correct `keyCode`, `key`, and
@@ -60,7 +61,7 @@ To disable parsing special characters sequences, set the
 | `{{}`           | Types the literal `{` key                        |
 | `{backspace}`   | Deletes character to the left of the cursor      |
 | `{del}`         | Deletes character to the right of the cursor     |
-| `{downArrow}`   | Moves cursor down                                |
+| `{downArrow}`   | Moves cursor down, or decrements a stepped input |
 | `{end}`         | Moves cursor to the end of the line              |
 | `{enter}`       | Types the Enter key                              |
 | `{esc}`         | Types the Escape key                             |
@@ -73,7 +74,12 @@ To disable parsing special characters sequences, set the
 | `{pageUp}`      | Scrolls up                                       |
 | `{rightArrow}`  | Moves cursor right                               |
 | `{selectAll}`   | Selects all text by creating a `selection range` |
-| `{upArrow}`     | Moves cursor up                                  |
+| `{upArrow}`     | Moves cursor up, or increments a stepped input   |
+
+On `number`, `range`, `date`, `month`, `week`, `time`, and `datetime-local`
+inputs, `{upArrow}` and `{downArrow}` call the input's `stepUp()` and
+`stepDown()` methods instead of moving the cursor, then fire `input` and
+`change` events.
 
 :::info
 
@@ -98,11 +104,11 @@ Pass in an options object to change the default behavior of `.type()`.
 | Option                       | Default                                                                     | Description                                                                                                                                                                                                                     |
 | ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                  |
-| `delay`                      | `0`                                                                         | Delay after each keypress                                                                                                                                                                                                       |
+| `delay`                      | [`keystrokeDelay`](/app/references/configuration#Keyboard)                  | Delay in milliseconds after each keypress. When not set, Cypress uses `keystrokeDelay`, then [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), then `0`                                                           |
 | `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                            |
 | `log`                        | `true`                                                                      | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                             |
 | `parseSpecialCharSequences`  | `true`                                                                      | Parse special characters for strings surrounded by `{}`, such as `{esc}`. Set to `false` to type the literal characters instead                                                                                                 |
-| `release`                    | `true`                                                                      | Keep a modifier activated between commands                                                                                                                                                                                      |
+| `release`                    | `true`                                                                      | Release activated modifiers when the command finishes. Set to `false` to keep a modifier activated between commands                                                                                                             |
 | `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`. |
 | `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.type()` to resolve before [timing out](#Timeouts)                                                                                                                                                            |
 | `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                       |
@@ -178,6 +184,8 @@ valid date in the format:
 
 - `yyyy-MM-dd` (e.g. `1999-12-31`)
 
+The date must exist on the calendar, so a value such as `2023-02-30` errors.
+
 This isn't exactly how a user would type into a date input, but is a workaround
 since date input support varies between browsers and the format varies based on
 locale. `yyyy-MM-dd` is the format required by
@@ -188,7 +196,8 @@ and is what the input's `value` will be set to regardless of browser or locale.
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
 mimics behavior of `stepUp` and `stepDown` input methods.
 
-Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
+Special characters other than `{upArrow}` and `{downArrow}` (such as
+`{leftArrow}` or `{selectAll}`) are not permitted.
 
 ### Month Inputs
 
@@ -207,7 +216,8 @@ the input's `value` will be set to regardless of browser or locale.
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
 mimics behavior of `stepUp` and `stepDown` input methods.
 
-Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
+Special characters other than `{upArrow}` and `{downArrow}` (such as
+`{leftArrow}` or `{selectAll}`) are not permitted.
 
 ### Week Inputs
 
@@ -225,7 +235,8 @@ locale. `yyyy-Www` is the format required by
 [the W3 spec](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-week-string)
 and is what the input's `value` will be set to regardless of browser or locale.
 
-Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
+Special characters other than `{upArrow}` and `{downArrow}` (such as
+`{leftArrow}` or `{selectAll}`) are not permitted.
 
 `{upArrow}` and `{downArrow}` can increase and decrease the week value,
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
@@ -242,11 +253,29 @@ valid time in the format:
 
 Where `HH` is 00-23, `mm` is 00-59, `ss` is 00-59, and `SSS` is 000-999.
 
-`{upArrow}` and `{downArrow}` can increase and decrease the seconds value,
-depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
+`{upArrow}` and `{downArrow}` increase and decrease the value by the input's
+`step`. Without a `step` attribute, a time input steps by one minute; set
+`step="1"` to step by seconds. Using `.type()` with `{upArrow}` and `{downArrow}`
 mimics behavior of `stepUp` and `stepDown` input methods.
 
-Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
+Special characters other than `{upArrow}` and `{downArrow}` (such as
+`{leftArrow}` or `{selectAll}`) are not permitted.
+
+### Datetime-local Inputs
+
+Using `.type()` on a datetime-local input (`<input type="datetime-local">`)
+requires specifying a valid date and time in the format:
+
+- `yyyy-MM-ddTHH:mm` (e.g. `2017-06-01T08:30`)
+- `yyyy-MM-ddTHH:mm:ss` (e.g. `2017-06-01T08:30:15`)
+
+Where `T` is the literal character 'T'.
+
+`{upArrow}` and `{downArrow}` increase and decrease the value by the input's
+`step`, mimicking the `stepUp` and `stepDown` input methods.
+
+Special characters other than `{upArrow}` and `{downArrow}` (such as
+`{leftArrow}` or `{selectAll}`) are not permitted.
 
 ### Key Combinations
 
@@ -437,7 +466,9 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 - ^HTML `<body>` and `<textarea>` elements.
 - Elements with a defined `tabindex` attribute.
-- Elements with a defined `contenteditable` attribute.
+- Elements with a defined `contenteditable` attribute, and their child nodes.
+- Other focusable elements, such as `<a href>`, `<area href>`, `<button>`,
+  `<iframe>`, and `<select>`.
 - ^HTML `<input>` elements with a defined `type` attribute of one of the
   following:
   - `text`
@@ -455,27 +486,23 @@ cy.get('input[type=text]').type('Test all the things', { force: true })
 
 ### Contenteditable Elements
 
-`.type()` supports `contenteditable` elements, but you must target the element
-that actually has the `contenteditable` attribute, not one of its child nodes,
-and that element must be focusable. Targeting a child node causes `.type()` to
-fail because the child is not itself editable.
+`.type()` supports `contenteditable` elements and the child nodes inside them.
+When the subject isn't focused, Cypress clicks it to place the cursor, then
+types into the editable host element at that position.
 
-A common fix is to [`.click()`](/api/commands/click) the editable element first
-to place the cursor, then [`.type()`](/api/commands/type) into it:
+```html title="index.html"
+<div class="editor" contenteditable="true"><p>Hello</p></div>
+```
 
-```javascript
-// ✗ Targets a child node, which is not contenteditable
-cy.get('.editor p').type('Hello, World')
-
-// ✓ Targets the element with the contenteditable attribute
-cy.get('[contenteditable]').click()
-cy.get('[contenteditable]').type('Hello, World')
+```javascript title="spec.cy.js"
+// Clicks the paragraph to place the cursor, then types into the editor
+cy.get('.editor p').type(', World')
+cy.get('.editor').should('contain.text', 'World')
 ```
 
 Rich text editors such as CKEditor, Quill, Draft.js, and ProseMirror often
-manage their own selection and DOM. For these editors, clicking to place the
-cursor first (as shown above) or dispatching input through the editor's own API
-may be necessary.
+manage their own selection and DOM. For these editors, dispatching input
+through the editor's own API may be necessary.
 
 ### Actionability
 
@@ -489,6 +516,9 @@ may be necessary.
 If the element is currently not in focus, before issuing any keystrokes Cypress
 will first issue a [`.click()`](/api/commands/click) to the element to bring it
 into focus.
+
+If the element already has focus, Cypress skips the other actionability checks
+and only checks that the element isn't `readonly` before typing.
 
 #### Events that fire
 
@@ -511,6 +541,14 @@ element loses focus. This matches browser behavior.
 Events that should not fire on non input types such as elements with `tabindex`
 do not fire their `textInput` or `input` events. Only typing into elements which
 cause the actual value or text to change will fire those events.
+
+Cypress also fires a `click` event to match browser behavior in two cases:
+
+- Typing a space into a button-like element, such as a `<button>` or an
+  `<input type="checkbox">`, fires `click` after `keyup`, unless `keyup` was
+  cancelled or the element is a radio button that's already checked.
+- Typing `{enter}` into an `<input>` of type `button`, `image`, `submit`, or
+  `reset` fires `click`.
 
 #### Event Firing
 
@@ -553,19 +591,20 @@ need this to be fixed.
 #### Key Events Table
 
 Cypress prints out a table of key events that detail the keys that were pressed
-when clicking on type within the [Command Log](#Command-Log). Each character
-will contain the `which` character code and the events that happened as a result
-of that key press.
+when clicking on type within the [Command Log](#Command-Log). Each row is one
+key and has these columns:
 
-Events that were `defaultPrevented` may prevent other events from firing and
-those will show up as empty. For instance, cancelling `keydown` will not fire
+- `Typed`: the key or special character sequence typed
+- `Target Element`: the element that received the events
+- `Events Fired`: the events fired for that key, in order
+- `Details`: the key's `code` and `which` values
+- `Prevented Default`: `true` when one of the key's events was cancelled
+- `Active Modifiers`: any modifiers activated for the key
+
+Cancelling an event may prevent later events from firing, and those events are
+left out of `Events Fired`. For instance, cancelling `keydown` will not fire
 `keypress` or `textInput` or `input`, but will fire `keyup` (which matches the
 spec).
-
-Additionally, events that cause a `change` event to fire (such as typing
-`{enter}`) will display with the `change` event column as `true`.
-
-Any modifiers activated for the event are also listed in a `modifiers` column.
 
 <DocsImage
   src="/img/api/type/key-events-table-shown-in-console-for-testing-typing.png"
@@ -670,8 +709,10 @@ Because there are multiple `inputs` and one `submit` button, Cypress submits the
 form (and fires submit events) as well as a synthetic `click` event to the
 `button`.
 
-The spec defines the "submit" button as the first `input[type=submit]` or
-`button[type!=button]` from the form.
+The spec defines the "submit" button as the first `input[type=submit]`, or
+`<button>` whose type isn't `button` or `reset`, that belongs to the form. This
+includes a button outside the `<form>` element that names the form in its
+`form` attribute.
 
 Additionally Cypress handles these 4 other situations as defined in the spec:
 
@@ -690,6 +731,8 @@ submitted.
 <HeaderRequirements />
 
 - `.type()` requires being chained off a command that yields DOM element(s).
+- `.type()` requires its subject to be a single element, and errors if the
+  subject contains more than one.
 
 <HeaderAssertions />
 
@@ -703,6 +746,9 @@ submitted.
 - `.type()` can time out waiting for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
 - `.type()` can time out waiting for assertions you've added to pass.
+- When a `delay` applies, `.type()` extends its timeout by the delay multiplied
+  by the number of keys typed, so a long string doesn't time out from the
+  delay alone.
 
 ## Command Log
 
