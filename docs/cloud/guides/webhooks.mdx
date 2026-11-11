@@ -30,9 +30,11 @@ for passing and failing `run.completed` deliveries.
 `run.completed`, `run.accessibility.completed`, `run.uiCoverage.completed`, and
 `run.allSettled` can each drive a downstream action. Point the **Payload URL**
 at a tool that accepts an inbound webhook, map the
-[payload fields](/cloud/integrations/webhooks#Payload) you care about, and
-filter in the destination if you only want certain deliveries. The outcomes
-in this table use `run.completed`.
+[payload fields](/cloud/integrations/webhooks#Payload) you care about. To send
+only runs on certain branches, set the webhook's
+[branch filter](/cloud/integrations/webhooks#Filter-webhook-deliveries-by-branch).
+For other conditions, filter in the destination. The outcomes in this table use
+`run.completed`.
 
 [Slack's built-in Workflow Builder](https://slack.com/help/articles/360053571454) works
 this way. Some destinations use a no-code platform or a short script that
