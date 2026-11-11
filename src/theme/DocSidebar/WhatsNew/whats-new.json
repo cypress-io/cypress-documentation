@@ -32,7 +32,7 @@
     {
       "label": "Run Checks",
       "href": "/cloud/features/checks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=run-checks",
-      "description": "Pass/fail quality gates for failed tests, flake, accessibility, and UI Coverage.",
+      "description": "Encode quality gates for failed tests, flake, Accessibility, and UI Coverage.",
       "isNew": true
     },
     {
