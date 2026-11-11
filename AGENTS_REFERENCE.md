@@ -392,11 +392,15 @@ browser's own APIs, with Cypress commands doing the reading and the clicking.
 Tests written that way keep passing when the app's internals change, and every
 step shows up in the Command Log.
 
-Each preference gives way only when the example exists to show the thing it
-steers away from. The `.trigger()` page explains what the default `Event` does,
-the `cy.window()` page shows why its two windows differ, and an FAQ answers how
-to detect `window.Cypress`. Those examples stay as they are. Everywhere else,
-follow these:
+These preferences cover test code only: specs, custom commands, support files,
+and config. They never apply to app code in an example, such as the HTML,
+component, or `app.js` a test runs against. App code is there to give the test
+something to act on, so write it however the example reads most clearly.
+
+Within test code, each preference also gives way when the example exists to
+show the thing it steers away from. The `.trigger()` page explains what the
+default `Event` does, and the `cy.window()` page shows why its two windows
+differ. Those examples stay as they are. Everywhere else, follow these:
 
 - **Drive the app through its UI or its API.** Click, type, and visit to reach
   a state, or set it up with `cy.request()` and `cy.intercept()`. Don't call
@@ -405,9 +409,9 @@ follow these:
   framework internals such as React fibers are implementation details. Use
   `cy.window()` for `cy.stub()` and `cy.spy()`, and for browser APIs such as
   `localStorage`, `sessionStorage`, and `indexedDB`.
-- **Don't depend on `window.Cypress`.** App code that changes its behavior under
-  test, or exposes itself only when Cypress runs, means the test checks a
-  different app than users get.
+- **Don't depend on `window.Cypress` in the test.** A test that branches on it
+  or reaches the app through it ties itself to the runner's internals rather
+  than to what the app does.
 - **Read the DOM with `.invoke()` and `.its()`.** They retry with the assertion
   that follows and log what they read, while a `.then()` callback runs once and
   logs nothing. jQuery methods work through `.invoke()`, and DOM properties
