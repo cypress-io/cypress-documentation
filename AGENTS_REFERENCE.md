@@ -384,6 +384,68 @@ same change. `## See also` always stays as it is.
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
 
+## Code example preferences
+
+A reader copies an example as the way Cypress tests are written. So write
+examples the way a user drives the app: through its UI, its network, and the
+browser's own APIs, with Cypress commands doing the reading and the clicking.
+Tests written that way keep passing when the app's internals change, and every
+step shows up in the Command Log.
+
+Each preference gives way only when the example exists to show the thing it
+steers away from. The `.trigger()` page explains what the default `Event` does,
+the `cy.window()` page shows why its two windows differ, and an FAQ answers how
+to detect `window.Cypress`. Those examples stay as they are. Everywhere else,
+follow these:
+
+- **Drive the app through its UI or its API.** Click, type, and visit to reach
+  a state, or set it up with `cy.request()` and `cy.intercept()`. Don't call
+  the app's JavaScript to get there.
+- **Leave app objects on `window` alone.** Stores, services, routers, and
+  framework internals such as React fibers are implementation details. Use
+  `cy.window()` for `cy.stub()` and `cy.spy()`, and for browser APIs such as
+  `localStorage`, `sessionStorage`, and `indexedDB`.
+- **Don't depend on `window.Cypress`.** App code that changes its behavior under
+  test, or exposes itself only when Cypress runs, means the test checks a
+  different app than users get.
+- **Read the DOM with `.invoke()` and `.its()`.** They retry with the assertion
+  that follows and log what they read, while a `.then()` callback runs once and
+  logs nothing. jQuery methods work through `.invoke()`, and DOM properties
+  through `.invoke('prop', name)`.
+- **Prefer Cypress actions to hand-built events.** `.click()`, `.type()`,
+  `.check()`, `.select()`, and `cy.press()` fire the events a user's input
+  does, in order, after the actionability checks. Reach for `.trigger()` only
+  when no action fits, and when it passes event properties, pass the matching
+  `eventConstructor`. The default plain `Event` attaches those properties as-is,
+  so a handler that checks the event's type, or reads a property the browser
+  calculates, gets something no real input produces.
+
+**❌ Reaches into the app, reads the DOM in a callback, and hand-builds an
+event:**
+
+```js
+cy.window().its('store').invoke('dispatch', { type: 'cart/clear' })
+
+cy.get('.sidebar').then(($el) => {
+  expect($el.outerWidth()).to.be.greaterThan(200)
+})
+
+cy.get('.target').trigger('mousedown', { button: 0 })
+```
+
+**✅ Drives the UI, reads through Cypress, and builds the right event:**
+
+```js
+cy.get('[data-cy=clear-cart]').click()
+
+cy.get('.sidebar').invoke('outerWidth').should('be.greaterThan', 200)
+
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 0,
+})
+```
+
 ## Domains in code examples
 
 A code example is code the reader runs. When it visits, requests, or intercepts

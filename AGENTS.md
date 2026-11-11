@@ -173,7 +173,25 @@ Each rule is a hard convention. See the linked section for the how and why.
   now: no change history, no "matches the old tool", and no benchmark numbers.
 
 **Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples),
-[domains](./AGENTS_REFERENCE.md#domains-in-code-examples)
+[domains](./AGENTS_REFERENCE.md#domains-in-code-examples),
+[preferences](./AGENTS_REFERENCE.md#code-example-preferences)
+
+- Write examples the way a user drives the app. Each preference below gives way
+  only when the example exists to show the thing it steers away from, such as
+  the `.trigger()` page explaining the default `Event`:
+  - Drive the application under test through its UI or its API (`cy.request()`,
+    `cy.intercept()`), not by calling into its JavaScript.
+  - Don't call app objects reached through `cy.window()`, such as stores,
+    services, or React internals. Keep `cy.window()` for `cy.stub()` and
+    `cy.spy()`, and for browser APIs such as `localStorage`.
+  - Don't depend on `window.Cypress`, in the app or in the test.
+  - Read the DOM with `.invoke()` and `.its()`, not with element callbacks.
+    jQuery methods work through `.invoke()`: `.invoke('outerWidth')`,
+    `.invoke('prop', 'scrollHeight')`.
+  - Prefer Cypress actions such as `.click()` and `.type()` to hand-built
+    events. When `.trigger()` has to pass event properties, pass the matching
+    `eventConstructor` (such as `'MouseEvent'`), since the default plain `Event`
+    attaches them as-is to an event that is the wrong type.
 
 - Every host an example runs against is `cypress.io` or a subdomain, as if
   Cypress only runs code it controls. When it should run as written, use a

@@ -149,7 +149,10 @@ By default, the event bubbles up the DOM tree. Set `bubbles: false` to stop it
 at the element.
 
 ```javascript
-cy.get('button').trigger('mouseover', { bubbles: false })
+cy.get('button').trigger('mouseover', {
+  eventConstructor: 'MouseEvent',
+  bubbles: false,
+})
 ```
 
 A [`cy.spy()`](/api/commands/spy) added as a listener on the document confirms
@@ -161,7 +164,10 @@ cy.document().then((doc) => {
   doc.addEventListener('mouseover', onDocumentMouseover)
 })
 
-cy.get('button').trigger('mouseover', { bubbles: false })
+cy.get('button').trigger('mouseover', {
+  eventConstructor: 'MouseEvent',
+  bubbles: false,
+})
 cy.get('@documentMouseover').should('not.have.been.called')
 ```
 
@@ -172,7 +178,11 @@ from the element. Use it for events like `mousemove`, where the position needs
 to be outside the element.
 
 ```javascript
-cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
+cy.get('button').trigger('mousemove', {
+  eventConstructor: 'MouseEvent',
+  clientX: 200,
+  clientY: 300,
+})
 ```
 
 To check the properties a listener receives, add a
@@ -184,7 +194,11 @@ cy.get('button').then(($button) => {
   $button[0].addEventListener('mousemove', onMousemove)
 })
 
-cy.get('button').trigger('mousemove', { clientX: 200, clientY: 300 })
+cy.get('button').trigger('mousemove', {
+  eventConstructor: 'MouseEvent',
+  clientX: 200,
+  clientY: 300,
+})
 cy.get('@mousemove').should('have.been.calledWithMatch', {
   clientX: 200,
   clientY: 300,
@@ -199,9 +213,7 @@ Custom controls often hide the native input they're built on. Without `force`,
 into view, and dispatches the event right away.
 
 ```typescript copyTsToJs
-cy.get<HTMLInputElement>('[data-cy=volume-input]').then(($input) => {
-  $input[0].value = '60'
-})
+cy.get('[data-cy=volume-input]').invoke('val', '60')
 cy.get('[data-cy=volume-input]').trigger('change', { force: true })
 
 cy.get('[data-cy=volume-label]').should('have.text', '60')
@@ -247,11 +259,20 @@ cy.get('.target').trigger('mouseup')
 
 ```js
 // Main button pressed (usually the left button)
-cy.get('.target').trigger('mousedown', { button: 0 })
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 0,
+})
 // Auxiliary button pressed (usually the middle button)
-cy.get('.target').trigger('mousedown', { button: 1 })
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 1,
+})
 // Secondary button pressed (usually the right button)
-cy.get('.target').trigger('mousedown', { button: 2 })
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 2,
+})
 ```
 
 ### Keyboard Events
@@ -260,10 +281,15 @@ cy.get('.target').trigger('mousedown', { button: 2 })
 
 `.trigger()` fires one keyboard event with exactly the properties you pass,
 including modifier keys, without moving focus. Trigger it on the document to
-reach a global shortcut handler.
+reach a global shortcut handler, and pass `eventConstructor: 'KeyboardEvent'`
+so the handler receives a keyboard event.
 
 ```javascript
-cy.document().trigger('keydown', { key: 'k', ctrlKey: true })
+cy.document().trigger('keydown', {
+  eventConstructor: 'KeyboardEvent',
+  key: 'k',
+  ctrlKey: true,
+})
 cy.get('[data-cy=command-palette]').should('be.visible')
 ```
 
@@ -291,10 +317,8 @@ the `change` event to signal it changed.
 Some implementations listen for the `input` event instead, which fires as the
 user moves the slider.
 
-```typescript copyTsToJs
-cy.get<HTMLInputElement>('input[type=range]').then(($range) => {
-  $range[0].value = '25'
-})
+```javascript
+cy.get('input[type=range]').invoke('val', 25)
 cy.get('input[type=range]').trigger('change')
 
 cy.get('input[type=range]').siblings('p').should('have.text', '25')
@@ -338,16 +362,18 @@ HTML drag and drop handlers pass data through the event's `dataTransfer`
 property. Create one
 [`DataTransfer`](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer)
 and pass the same object to every event, so the data the `dragstart` handler
-sets is there when the `drop` handler reads it.
+sets is there when the `drop` handler reads it. With
+`eventConstructor: 'DragEvent'`, each event is a real drag event that carries
+it.
 
 ```javascript
-const dataTransfer = new DataTransfer()
+const drag = { eventConstructor: 'DragEvent', dataTransfer: new DataTransfer() }
 
-cy.get('[data-cy=card]').trigger('dragstart', { dataTransfer })
-cy.get('[data-cy=done-column]').trigger('dragenter', { dataTransfer })
-cy.get('[data-cy=done-column]').trigger('dragover', { dataTransfer })
-cy.get('[data-cy=done-column]').trigger('drop', { dataTransfer })
-cy.get('[data-cy=card]').trigger('dragend', { dataTransfer })
+cy.get('[data-cy=card]').trigger('dragstart', drag)
+cy.get('[data-cy=done-column]').trigger('dragenter', drag)
+cy.get('[data-cy=done-column]').trigger('dragover', drag)
+cy.get('[data-cy=done-column]').trigger('drop', drag)
+cy.get('[data-cy=card]').trigger('dragend', drag)
 
 cy.get('[data-cy=done-column]').should('contain', 'Write docs')
 ```
@@ -378,21 +404,26 @@ With `cancelable: false`, `preventDefault()` has no effect and
 
 Many drag handlers listen for `mousedown` on the element, then follow
 `mousemove` and `mouseup` on the document. The events bubble, so triggering them
-on the element reaches document listeners too. Pass the position properties the
-handler reads at each step. With the default `Event` constructor, `pageX` and
-`pageY` reach the handler exactly as you pass them.
+on the element reaches document listeners too. Pass `clientX` and `clientY` at
+each step. With `eventConstructor: 'MouseEvent'`, the browser calculates `pageX`
+and `pageY` from them, so a handler that reads either pair gets the same
+position a real mouse reports.
 
 ```javascript
 cy.get('[data-cy=draggable]').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
   button: 0,
-  pageX: 100,
-  pageY: 100,
+  clientX: 100,
+  clientY: 100,
 })
 cy.get('[data-cy=draggable]').trigger('mousemove', {
-  pageX: 300,
-  pageY: 150,
+  eventConstructor: 'MouseEvent',
+  clientX: 300,
+  clientY: 150,
 })
-cy.get('[data-cy=draggable]').trigger('mouseup')
+cy.get('[data-cy=draggable]').trigger('mouseup', {
+  eventConstructor: 'MouseEvent',
+})
 
 cy.get('[data-cy=draggable]')
   .should('have.css', 'left', '200px')
@@ -403,10 +434,16 @@ cy.get('[data-cy=draggable]')
 
 Many drag and gesture libraries listen for pointer events and ignore pointers
 that aren't primary. Pass the same `pointerId` with every event so the library
-tracks one pointer from press to release.
+tracks one pointer from press to release, and pass
+`eventConstructor: 'PointerEvent'` so the browser keeps those properties.
 
 ```javascript
-const pointer = { pointerId: 1, pointerType: 'mouse', isPrimary: true }
+const pointer = {
+  eventConstructor: 'PointerEvent',
+  pointerId: 1,
+  pointerType: 'mouse',
+  isPrimary: true,
+}
 
 cy.get('[data-cy=volume-thumb]').trigger('pointerdown', {
   ...pointer,
@@ -462,16 +499,17 @@ to these events.
 
 #### Trigger a custom event with a `detail` payload
 
-`.trigger()` fires any event name, including your app's own events. With the
-default `Event` constructor, the `detail` you pass is attached as is.
+`.trigger()` fires any event name, including your app's own events. Pass
+`eventConstructor: 'CustomEvent'` so the event carries `detail` the way the
+app's own `dispatchEvent(new CustomEvent(...))` does.
 
 ```javascript
-cy.get('[data-cy=cart]').trigger('cart:updated', { detail: { count: 3 } })
+cy.get('[data-cy=cart]').trigger('cart:updated', {
+  eventConstructor: 'CustomEvent',
+  detail: { count: 3 },
+})
 cy.get('[data-cy=cart-count]').should('have.text', '3')
 ```
-
-If the handler checks `event instanceof CustomEvent`, add
-`eventConstructor: 'CustomEvent'`, which also accepts `detail`.
 
 ### Window and Document
 
@@ -541,9 +579,9 @@ event's `view` property to the application's `window`.
 
 With the default `Event` constructor, `.trigger()` attaches every property you
 pass to the event as is, including ones like `pageX` and `pageY` that a real
-mouse event calculates for itself. Handlers that only read properties, like the
-one in [Drag an element with mouse events](#Drag-an-element-with-mouse-events),
-work with this default.
+mouse event calculates for itself. A handler that only reads properties works
+with this default, but one that checks the event's type doesn't, so pass the
+matching constructor whenever you pass event properties.
 
 When you set `eventConstructor` to a class such as
 [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent), the

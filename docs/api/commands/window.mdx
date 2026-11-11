@@ -140,14 +140,13 @@ it('equals bar', () => {
 ### Start tests when app is ready
 
 If an application takes a while to start, it might "signal" its readiness by
-setting a property that Cypress can wait for.
+setting a property that Cypress can wait for. Set it the same way whether or
+not Cypress is running, so the test checks the app your users get.
 
 ```javascript
 // app.js
-// only set property "appReady" if Cypress is running tests
-if (window.Cypress) {
-  window.appReady = true
-}
+// signal that the app has finished starting up
+window.appReady = true
 ```
 
 Cypress can wait for the property `window.appReady` to be `true` before every
