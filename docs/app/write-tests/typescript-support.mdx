@@ -473,12 +473,12 @@ declare global {
 }
 ```
 
-TypeScript will now recognize those properties inside `cy.window()` callbacks:
+TypeScript now recognizes those properties, so `.its()` autocompletes them and
+yields their types:
 
 ```typescript
-cy.window().then((win) => {
-  win.env.DISABLE = true // no TypeScript error
-})
+// .its('env') yields { DISABLE: boolean }, and .its('DISABLE') yields boolean
+cy.window().its('env').its('DISABLE').should('be.false')
 ```
 
 ### Types for custom assertions

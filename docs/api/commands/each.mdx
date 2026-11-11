@@ -133,13 +133,15 @@ const broken = []
 
 cy.get('footer a')
   .each(($link) => {
-    const href = $link.prop('href')
-
-    cy.request({ url: href, failOnStatusCode: false }).then((response) => {
-      if (response.status >= 400) {
-        broken.push(`${href} (${response.status})`)
-      }
-    })
+    cy.wrap($link)
+      .invoke('prop', 'href')
+      .then((href) => {
+        cy.request({ url: href, failOnStatusCode: false }).then((response) => {
+          if (response.status >= 400) {
+            broken.push(`${href} (${response.status})`)
+          }
+        })
+      })
   })
   .then(() => {
     // list the links in the message, since Chai shortens long arrays

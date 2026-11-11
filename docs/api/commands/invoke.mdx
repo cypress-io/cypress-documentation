@@ -193,28 +193,22 @@ cy.get('.sidebar').invoke('outerWidth').should('be.gt', 200)
 cy.get('#terms').invoke('prop', 'checked').should('eq', true)
 ```
 
-### Application code on `window`
+### Browser APIs on `window`
 
 Use [`cy.window()`](/api/commands/window) and [`.its()`](/api/commands/its) to
-reach functions your app exposes on `window`, such as a Redux store, then call
-them with `.invoke()`. Because `dispatch` changes app state, end the chain at
-`.invoke()` so it runs once, and read the result in a new chain.
+reach a browser API, such as `localStorage`, then call its functions with
+`.invoke()`. Because `setItem` changes state, end the chain at `.invoke()` so it
+runs once, and read the result in a new chain.
 
 ```javascript
-cy.window().its('store').invoke('dispatch', { type: 'cart/clear' })
+cy.window().its('localStorage').invoke('setItem', 'theme', 'dark')
 
-cy.window()
-  .its('store')
-  .invoke('getState')
-  .its('cart.items')
-  .should('have.length', 0)
+cy.window().its('localStorage').invoke('getItem', 'theme').should('eq', 'dark')
 ```
 
-Browser APIs work the same way, such as `localStorage.getItem`:
-
-```javascript
-cy.window().its('localStorage').invoke('getItem', 'token').should('exist')
-```
+To change what your app shows, drive it through its UI rather than calling the
+app's own objects on `window`, such as a store. The test then checks what a
+user sees.
 
 ### Options
 

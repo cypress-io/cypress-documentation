@@ -254,12 +254,14 @@ With the `base64` encoding, Cypress decodes the string and writes the
 resulting bytes. This example saves the image drawn on a `<canvas>` element.
 
 ```javascript
-cy.get('canvas').then(($canvas) => {
-  const dataUrl = $canvas[0].toDataURL('image/png')
-  const base64 = dataUrl.split(',')[1]
+cy.get('canvas')
+  .invoke('get', 0)
+  .invoke('toDataURL', 'image/png')
+  .then((dataUrl) => {
+    const base64 = dataUrl.split(',')[1]
 
-  cy.writeFile('path/to/chart.png', base64, 'base64')
-})
+    cy.writeFile('path/to/chart.png', base64, 'base64')
+  })
 ```
 
 ### Flags

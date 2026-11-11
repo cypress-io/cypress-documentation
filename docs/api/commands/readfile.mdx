@@ -145,9 +145,7 @@ cy.readFile('languages/en.yml').then((str) => {
   cy.get('#sidebar')
     .find('.sidebar-title')
     .each(($el, i) => {
-      const englishTitle = english.sidebar[i]
-
-      expect($el.text()).to.eq(englishTitle)
+      cy.wrap($el).should('have.text', english.sidebar[i])
     })
 })
 ```
