@@ -402,13 +402,15 @@ show the thing it steers away from. The `.trigger()` page explains what the
 default `Event` does, and the `cy.window()` page shows why its two windows
 differ. Those examples stay as they are. Everywhere else, follow these:
 
-- **Drive the app through its UI or its API.** Click, type, and visit to reach
-  a state, or set it up with `cy.request()` and `cy.intercept()`. Don't call
-  the app's JavaScript to get there.
-- **Leave app objects on `window` alone.** Stores, services, routers, and
-  framework internals such as React fibers are implementation details. Use
-  `cy.window()` for `cy.stub()` and `cy.spy()`, and for browser APIs such as
-  `localStorage`, `sessionStorage`, and `indexedDB`.
+- **Drive the app through its UI or its API where you can.** Click, type, and
+  visit to reach a state, or set it up with `cy.request()` and
+  `cy.intercept()`.
+- **Chain to app code on `window`; don't call it in a callback.** When a test
+  does need app code the app exposes on `window`, such as a store or a factory
+  function, reach it with `cy.window().its()` and call it with `.invoke()`.
+  The chain retries until the property exists and logs each step, while
+  `cy.window().then((win) => win.store.dispatch(...))` runs once, fails if the
+  app hasn't set the property yet, and logs nothing.
 - **Don't depend on `window.Cypress` in the test.** A test that branches on it
   or reaches the app through it ties itself to the runner's internals rather
   than to what the app does.
@@ -433,11 +435,13 @@ differ. Those examples stay as they are. Everywhere else, follow these:
   an endpoint that has nothing else to wait on, such as a background job's
   status, so the loop doesn't hammer the server.
 
-**❌ Reaches into the app, waits a fixed time, reads the DOM in a callback, and
-hand-builds an event:**
+**❌ Calls the app in a callback, waits a fixed time, reads the DOM in a
+callback, and hand-builds an event:**
 
 ```js
-cy.window().its('store').invoke('dispatch', { type: 'cart/clear' })
+cy.window().then((win) => {
+  win.store.dispatch({ type: 'cart/clear' })
+})
 cy.wait(2000)
 
 cy.get('.sidebar').then(($el) => {

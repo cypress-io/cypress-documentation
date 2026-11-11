@@ -183,10 +183,11 @@ Each rule is a hard convention. See the linked section for the how and why.
   steers away from, such as the `.trigger()` page explaining the default
   `Event`:
   - Drive the application under test through its UI or its API (`cy.request()`,
-    `cy.intercept()`), not by calling into its JavaScript.
-  - Don't call app objects reached through `cy.window()`, such as stores,
-    services, or React internals. Keep `cy.window()` for `cy.stub()` and
-    `cy.spy()`, and for browser APIs such as `localStorage`.
+    `cy.intercept()`) where you can.
+  - When a test does reach app code on `window`, such as a store or a function
+    the app exposes, chain to it with `.its()` and `.invoke()`
+    (`cy.window().its('store').invoke('getState')`). Don't call it directly on
+    `win` inside a `.then()` callback.
   - Don't depend on `window.Cypress` in the test.
   - Read the DOM with `.invoke()` and `.its()`, not with element callbacks.
     jQuery methods work through `.invoke()`: `.invoke('outerWidth')`,
