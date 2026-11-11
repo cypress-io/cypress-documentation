@@ -680,10 +680,8 @@ command fires.
 
 **_Trigger a `change` event on input type='range'_**
 
-```typescript copyTsToJs
-cy.get<HTMLInputElement>('.trigger-input-range').then(($range) => {
-  $range[0].value = '25'
-})
+```javascript
+cy.get('.trigger-input-range').invoke('val', 25)
 cy.get('.trigger-input-range').trigger('change')
 ```
 
@@ -691,7 +689,7 @@ The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/trigger/command-log-trigger.png"
-  alt="Command Log showing two get commands for .trigger-input-range, followed by a trigger command for the change event"
+  alt="Command Log showing a get and an invoke that set the value of .trigger-input-range, followed by a get and a trigger command for the change event"
 />
 
 When you click `trigger` in the Command Log, the console outputs the following:

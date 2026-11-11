@@ -94,12 +94,12 @@ declare namespace Cypress {
 }
 ```
 
-After augmenting the interface, TypeScript will recognize the custom property:
+After augmenting the interface, TypeScript recognizes the custom property, so
+`.its()` autocompletes it and yields its type:
 
 ```typescript
-cy.window().then((win) => {
-  win.env.DISABLE = true // no TypeScript error
-})
+// .its('env') yields { DISABLE: boolean }, and .its('DISABLE') yields boolean
+cy.window().its('env').its('DISABLE').should('be.false')
 ```
 
 **Note:** Cypress commands are asynchronous, so you cannot check a property
