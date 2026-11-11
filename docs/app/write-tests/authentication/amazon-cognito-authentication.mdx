@@ -227,11 +227,9 @@ const loginToCognito = (username, password) => {
     }
   )
 
-  // give a few seconds for redirect to settle
-  cy.wait(2000)
-
-  // verify we have made it passed the login screen
-  cy.contains('Get Started').should('be.visible')
+  // verify we have made it past the login screen, retrying while the
+  // redirect settles
+  cy.contains('Get Started', { timeout: 10000 }).should('be.visible')
 }
 
 // right now our custom command is light. More on this later!
@@ -283,11 +281,9 @@ const loginToCognito = (username: string, password: string) => {
     }
   )
 
-  // give a few seconds for redirect to settle
-  cy.wait(2000)
-
-  // verify we have made it passed the login screen
-  cy.contains('Get Started').should('be.visible')
+  // verify we have made it past the login screen, retrying while the
+  // redirect settles
+  cy.contains('Get Started', { timeout: 10000 }).should('be.visible')
 }
 
 // right now our custom command is light. More on this later!

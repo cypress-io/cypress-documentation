@@ -419,12 +419,22 @@ follow these:
   `eventConstructor`. The default plain `Event` attaches those properties as-is,
   so a handler that checks the event's type, or reads a property the browser
   calculates, gets something no real input produces.
+- **Wait for the app, not the clock.** `cy.wait(ms)` guesses how long the app
+  takes: too short and the test flakes, too long and every run pays for it.
+  Wait for the state the next step needs instead. An assertion on the UI
+  retries until it passes, and `cy.wait('@alias')` waits for a request routed
+  through `cy.intercept()`. `cy.visit()` and `cy.request()` already wait for
+  their responses. Pass `timeout` when the state takes longer than
+  `defaultCommandTimeout`. The one exception is a short pause between polls of
+  an endpoint that has nothing else to wait on, such as a background job's
+  status, so the loop doesn't hammer the server.
 
-**❌ Reaches into the app, reads the DOM in a callback, and hand-builds an
-event:**
+**❌ Reaches into the app, waits a fixed time, reads the DOM in a callback, and
+hand-builds an event:**
 
 ```js
 cy.window().its('store').invoke('dispatch', { type: 'cart/clear' })
+cy.wait(2000)
 
 cy.get('.sidebar').then(($el) => {
   expect($el.outerWidth()).to.be.greaterThan(200)
@@ -433,10 +443,13 @@ cy.get('.sidebar').then(($el) => {
 cy.get('.target').trigger('mousedown', { button: 0 })
 ```
 
-**✅ Drives the UI, reads through Cypress, and builds the right event:**
+**✅ Drives the UI, waits for the request, reads through Cypress, and builds
+the right event:**
 
 ```js
+cy.intercept('DELETE', '/api/cart').as('clearCart')
 cy.get('[data-cy=clear-cart]').click()
+cy.wait('@clearCart')
 
 cy.get('.sidebar').invoke('outerWidth').should('be.greaterThan', 200)
 

@@ -192,6 +192,10 @@ Each rule is a hard convention. See the linked section for the how and why.
     events. When `.trigger()` has to pass event properties, pass the matching
     `eventConstructor` (such as `'MouseEvent'`), since the default plain `Event`
     attaches them as-is to an event that is the wrong type.
+  - Don't wait a fixed time with `cy.wait(ms)`. Wait for what the test needs:
+    an assertion on the UI, which retries, or `cy.wait('@alias')` on a request
+    from `cy.intercept()`. The one exception is a short pause between polls of
+    an endpoint that has nothing else to wait on, such as a job status.
 
 - Every host an example runs against is `cypress.io` or a subdomain, as if
   Cypress only runs code it controls. When it should run as written, use a
