@@ -364,12 +364,23 @@ cy.get('div')
   })
 ```
 
-jQuery's `.text()` method automatically calls `elem.textContent` under the hood.
-If you'd like to instead use `innerText`, read the DOM property with
-`.invoke('prop')`:
+jQuery's `.text()` method automatically calls `elem.textContent` under the hood,
+which returns the text as it's written in the markup. `innerText` returns the
+text as the page renders it, after CSS such as `text-transform` and
+`display: none` applies. To read it, use `.invoke('prop')`:
 
-```javascript
-cy.get('div').invoke('prop', 'innerText').should('eq', 'foobarbaz')
+```html title="index.html"
+<button data-cy="checkout" style="text-transform: uppercase">Checkout</button>
+```
+
+```javascript title="spec.cy.js"
+// textContent: the text in the markup
+cy.get('[data-cy=checkout]').should('have.text', 'Checkout')
+
+// innerText: the text a user sees
+cy.get('[data-cy=checkout]')
+  .invoke('prop', 'innerText')
+  .should('eq', 'CHECKOUT')
 ```
 
 This is the equivalent of Selenium's `getText()` method, which returns the
