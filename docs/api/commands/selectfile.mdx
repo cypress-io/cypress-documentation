@@ -217,9 +217,8 @@ cy.get('input[type=file][multiple]')
       lastModified: new Date('Feb 18 1989').valueOf(),
     },
   ])
-  .then(($input) => {
-    const files = $input[0].files
-
+  .invoke('prop', 'files')
+  .then((files) => {
     // If nothing is specified, the fileName and MIME type will be inferred from the path on disk.:
     expect(files[0].name).to.eq('example.json')
     expect(files[0].type).to.eq('application/json')

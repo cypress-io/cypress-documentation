@@ -74,12 +74,12 @@ cy.get('form').find('input[name="email"]').debug().type('user@example.com')
 
 #### Inspect a subject that isn't a DOM element
 
-`.debug()` works on any subject, such as a response object or your application's
-state.
+`.debug()` works on any subject, such as a response object or the data your
+application saves in the browser.
 
 ```javascript
 cy.request('/api/users').debug() // inspect the full response object
-cy.window().its('store').invoke('getState').debug() // inspect app state
+cy.getAllLocalStorage().debug() // inspect localStorage for every origin
 ```
 
 ### Network requests

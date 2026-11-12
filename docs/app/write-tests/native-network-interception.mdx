@@ -274,9 +274,7 @@ cy.get('#content').should('contain.text', 'hello from brotli')
 
 // the br script and stylesheet still hit the browser's insecure-origin policy
 cy.get('#from-script').should('have.text', '')
-cy.get('#content').then(($el) => {
-  expect(getComputedStyle($el[0]).fontSize).not.to.eq('42px')
-})
+cy.get('#content').should('not.have.css', 'font-size', '42px')
 ```
 
 When you update these tests, assert on both the document and the subresources. Only the

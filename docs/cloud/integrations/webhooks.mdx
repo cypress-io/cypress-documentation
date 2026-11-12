@@ -240,6 +240,31 @@ delivery as **at-least-once** and make your handler idempotent by keying on
 
 :::
 
+:::caution
+
+The [signature](#Verify-webhook-signatures) covers only `X-Cypress-Timestamp`
+and the request body. The other `X-Cypress-*` headers, including
+`X-Cypress-Event`, `X-Cypress-Event-Id`, and `X-Cypress-Idempotency-Key`, are
+not signed, so anyone who has seen a delivery can send it again with new values
+in them and the signature still verifies.
+
+- To ignore a delivery sent a second time, remember each `X-Cypress-Signature`
+  you accept until its timestamp falls outside your tolerance window, and answer
+  a repeated one with `200` without processing it again. Keep deduplicating on
+  `X-Cypress-Event-Id` as well: a retry from Cypress Cloud carries a new
+  timestamp, and so a new signature. The two do different jobs: the signature
+  catches a captured request sent again with new unsigned headers, and
+  `X-Cypress-Event-Id` catches Cypress Cloud's own retries. `X-Cypress-Event-Id`
+  is idempotency for at-least-once delivery, not a security boundary.
+- Don't decide which event a request carries from `X-Cypress-Event` alone. The
+  body does not always tell events apart either: a `run.allSettled` body for a
+  run without Accessibility or UI Coverage has the same fields as a
+  `run.completed` body. If your handler treats events differently, give each
+  event its own webhook, with its own Payload URL and signing secret. A request
+  that verifies with that secret can only be that webhook's event.
+
+:::
+
 <details>
 <summary><code>run.completed</code> payload</summary>
 
@@ -719,11 +744,15 @@ To verify a request:
 1. Read the `X-Cypress-Signature` and `X-Cypress-Timestamp` headers and the
    **raw** request body (before any JSON parsing; parsing and re-serializing can
    change the body and break verification).
-2. Optionally reject the request if the timestamp is too old (for example, more
-   than five minutes) to guard against replay attacks.
+2. Reject the request if the timestamp is too old (for example, more than five
+   minutes) to guard against replay attacks. Step 5 depends on this window:
+   without it, the record of accepted signatures has no natural bound.
 3. Recompute `HMAC-SHA256(secret, "${timestamp}.${rawBody}")`, hex-encode it, and
    prefix `sha256=`.
 4. Compare it to `X-Cypress-Signature` using a **constant-time** comparison.
+5. Ignore a signature you have already accepted within the tolerance window.
+   The headers other than the timestamp and the signature are not signed (see
+   [Request headers](#Request-headers)).
 
 :::note
 
@@ -736,8 +765,13 @@ verification.
 ### Verify a signature in your handler
 
 The following example handlers add a route to an existing Express or Flask app.
-They read the raw body, reject stale timestamps, recompute the HMAC, and compare
-it in constant time.
+They read the raw body, reject stale timestamps, recompute the HMAC, compare it
+in constant time, and ignore a signature they have already accepted. They do
+not show deduplication on `X-Cypress-Event-Id` (or `X-Cypress-Idempotency-Key`),
+which a real handler still needs for retries. The record of accepted signatures
+is kept in memory, in one process: with several worker processes (for example,
+`gunicorn --workers`) or more than one instance, keep it in a store they share,
+and with a threaded server, check and record a signature under one lock.
 
 <details>
 <summary>Node.js and Python examples</summary>
@@ -749,6 +783,10 @@ it in constant time.
 const crypto = require('crypto')
 
 const SIGNING_SECRET = process.env.CYPRESS_WEBHOOK_SECRET
+const TOLERANCE_SECONDS = 300
+
+// Signatures accepted within the tolerance window, with their timestamps.
+const acceptedSignatures = new Map()
 
 // Register this route before express.json() or any other body parser.
 // Those parsers consume the body and would break signature verification.
@@ -765,7 +803,13 @@ app.post(
     }
 
     // Reject stale requests to protect against replay attacks (5 minute window).
-    if (Math.abs(Date.now() / 1000 - Number(timestamp)) > 300) {
+    // Check the format first: Number() turns anything else into NaN, and NaN
+    // passes the comparison. A timestamp in seconds has at most 10 digits.
+    const now = Date.now() / 1000
+    if (
+      !/^\d{1,10}$/.test(timestamp) ||
+      Math.abs(now - Number(timestamp)) > TOLERANCE_SECONDS
+    ) {
       return res.status(400).send('Timestamp outside of tolerance')
     }
 
@@ -783,6 +827,18 @@ app.post(
     if (!valid) {
       return res.status(401).send('Invalid signature')
     }
+
+    // The X-Cypress-Event-Id header is not signed, so a delivery sent again
+    // with a new ID still verifies. Its signature is the same, though.
+    for (const [seen, seenTimestamp] of acceptedSignatures) {
+      if (now - seenTimestamp > TOLERANCE_SECONDS) {
+        acceptedSignatures.delete(seen)
+      }
+    }
+    if (acceptedSignatures.has(signature)) {
+      return res.status(200).send('Already received')
+    }
+    acceptedSignatures.set(signature, Number(timestamp))
 
     const event = JSON.parse(rawBody.toString('utf8'))
     // ...handle the event...
@@ -804,6 +860,10 @@ import time
 from flask import abort, request
 
 SIGNING_SECRET = os.environ["CYPRESS_WEBHOOK_SECRET"].encode()
+TOLERANCE_SECONDS = 300
+
+# Signatures accepted within the tolerance window, with their timestamps.
+accepted_signatures = {}
 
 
 @app.post("/receive-webhook")
@@ -818,7 +878,15 @@ def receive_webhook():
         abort(400, "Missing signature headers")
 
     # Reject stale requests to protect against replay attacks (5 minute window).
-    if abs(time.time() - int(timestamp)) > 300:
+    # Check the format first: int() raises on anything else, and on a very
+    # long digit string, which Flask would answer with a 500. A timestamp in
+    # seconds has at most 10 digits.
+    now = time.time()
+    if (
+        not timestamp.isdecimal()
+        or len(timestamp) > 10
+        or abs(now - int(timestamp)) > TOLERANCE_SECONDS
+    ):
         abort(400, "Timestamp outside of tolerance")
 
     signed = f"{timestamp}.".encode() + raw_body
@@ -827,6 +895,15 @@ def receive_webhook():
 
     if not hmac.compare_digest(signature, expected):
         abort(401, "Invalid signature")
+
+    # The X-Cypress-Event-Id header is not signed, so a delivery sent again
+    # with a new ID still verifies. Its signature is the same, though.
+    for seen, seen_timestamp in list(accepted_signatures.items()):
+        if now - seen_timestamp > TOLERANCE_SECONDS:
+            del accepted_signatures[seen]
+    if signature in accepted_signatures:
+        return "Already received", 200
+    accepted_signatures[signature] = int(timestamp)
 
     # event = json.loads(raw_body)
     # ...handle the event...
