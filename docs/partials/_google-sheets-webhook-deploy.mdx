@@ -8,7 +8,14 @@
    keeps other callers out.
 5. Click **Deploy** and copy the **Web app** URL. It ends in `/exec`.
 
-When you edit the script later, open **Deploy** > **Manage deployments**, edit
-this deployment, and choose **New version**. The URL stays the same, so the
-Cypress Cloud webhook needs no change. **New deployment** creates a different
-URL.
+:::caution
+
+**Publish a new version after every edit.** Deliveries run the version you
+deployed, not the code in the editor, even after you save and run `setup`. If
+new rows don't match the headers, the deployment is still on an older version.
+Open **Deploy** > **Manage deployments**, edit this deployment, choose **New
+version** under **Version**, and click **Deploy**. The URL stays the same, so
+the Cypress Cloud webhook needs no change. **New deployment** creates a
+different URL.
+
+:::

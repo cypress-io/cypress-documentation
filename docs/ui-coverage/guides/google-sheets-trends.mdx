@@ -21,12 +21,13 @@ The finished spreadsheet has four tabs:
 
 - **Runs**: one row per report on every branch, with the report status, the UI
   Coverage score, tested and untested elements and links, the number of views,
-  the number of failing [Run Checks](/cloud/features/checks), and a link to the
-  report
+  whether the run passed its [Run Checks](/cloud/features/checks) on UI
+  Coverage and which checks failed, and a link to the report
 - **Checks**: one row per Run Checks assertion about UI Coverage, with its
   threshold, the measured value, and a link to investigate a failure
-- **Main branch**: a line chart of the UI Coverage score and a line chart of
-  untested elements and links, for runs on `main`
+- **Main branch**: a line chart of the UI Coverage score that marks each run
+  that failed a UI Coverage check, a line chart of untested elements and links,
+  and a table of the latest runs, for runs on `main`
 - **Main branch data**: the `QUERY` formulas that feed those charts
 
 The matching guides for [test results](/cloud/guides/google-sheets-trends) and
@@ -90,7 +91,8 @@ const RUN_HEADERS = [
   'Tested links',
   'Views',
   'Partial report',
-  'Failing checks',
+  'UI Coverage checks',
+  'Failed checks',
   'Report URL',
 ]
 
@@ -159,7 +161,7 @@ function runRow(run) {
     cell(report.testedLinksCount),
     cell(report.viewCount),
     report.isPartialReport,
-    failingChecks(run),
+    ...checkSummary(run),
     report.reportUrl,
   ]
 }
@@ -202,45 +204,57 @@ function replaceChecks(run) {
 }
 
 function checkRows(run) {
-  const checks = (run.checks && run.checks.checks) || []
-  const rows = []
-
-  checks.forEach((check) => {
-    check.assertionResults
-      .filter((assertion) => assertion.type.startsWith(ASSERTION_PREFIX))
-      .forEach((assertion) => {
-        const matched = assertion.matched || {}
-        rows.push([
-          completedAt(run),
-          run.projectId,
-          run.runNumber,
-          run.commitBranch || '',
-          check.name,
-          check.status,
-          assertion.type,
-          assertion.status,
-          assertion.threshold,
-          cell(matched.measuredValue),
-          cell(matched.count),
-          cell(matched.failedCount),
-          assertion.filter ? assertion.filter.label : 'All',
-          assertion.status === 'failed' ? investigate(run, assertion) : '',
-        ])
-      })
+  return sheetAssertions(run).map(({ check, assertion }) => {
+    const matched = assertion.matched || {}
+    return [
+      completedAt(run),
+      run.projectId,
+      run.runNumber,
+      run.commitBranch || '',
+      check.name,
+      check.status,
+      assertion.type,
+      assertion.status,
+      assertion.threshold,
+      cell(matched.measuredValue),
+      cell(matched.count),
+      cell(matched.failedCount),
+      assertion.filter ? assertion.filter.label : 'All',
+      assertion.status === 'failed' ? investigate(run, assertion) : '',
+    ]
   })
-
-  return rows
 }
 
-// Checks that have already failed. `failing` means an assertion failed while
-// others are still pending, and a failed assertion never passes later.
-function failingChecks(run) {
-  if (!run.checks || run.checks.status === 'not-configured') {
-    return ''
+// Every assertion this sheet records, paired with the check it belongs to.
+function sheetAssertions(run) {
+  const checks = (run.checks && run.checks.checks) || []
+  return checks.flatMap((check) =>
+    check.assertionResults
+      .filter((assertion) => assertion.type.startsWith(ASSERTION_PREFIX))
+      .map((assertion) => ({ check, assertion }))
+  )
+}
+
+// The run's result on this sheet's assertions, whatever the score, and the
+// checks that failed one. Checks that don't apply to the run are left out.
+function checkSummary(run) {
+  const results = sheetAssertions(run).filter(
+    ({ check }) => check.status !== 'not-applicable'
+  )
+  if (!results.length) {
+    return ['', '']
   }
-  return run.checks.checks.filter(
-    (check) => check.status === 'failed' || check.status === 'failing'
-  ).length
+
+  const statuses = results.map(({ assertion }) => assertion.status)
+  const result =
+    ['failed', 'errored', 'unavailable', 'pending'].find((status) =>
+      statuses.includes(status)
+    ) || 'passed'
+  const failedChecks = results
+    .filter(({ assertion }) => assertion.status === 'failed')
+    .map(({ check }) => check.name)
+
+  return [result, [...new Set(failedChecks)].join(', ')]
 }
 
 // Row numbers whose Project ID (column B) and Run number (column C) match.
@@ -291,27 +305,41 @@ function setup() {
   writeHeaders(RUNS_SHEET, RUN_HEADERS)
   writeHeaders(CHECKS_SHEET, CHECK_HEADERS)
 
+  // A and B: UI Coverage. C: UI Coverage again, only where the run failed a
+  // UI Coverage check. D: the check result. F to H: untested elements and links.
   const data = sheetNamed(DATA_SHEET)
   data.clear()
   const where = `D = '${TREND_BRANCH}' and G is not null order by A`
   data
     .getRange('A1')
-    .setFormula(`=QUERY(${RUNS_SHEET}!A:O, "select A, G where ${where}", 1)`)
+    .setFormula(`=QUERY(${runsRange()}, "select A, G where ${where}", 1)`)
+  data.getRange('C1').setValue('Failed a UI Coverage check')
+  data
+    .getRange('C2')
+    .setFormula(
+      '=ARRAYFORMULA(IF(A2:A = "", , IF(D2:D = "failed", B2:B, NA())))'
+    )
   data
     .getRange('D1')
-    .setFormula(`=QUERY(${RUNS_SHEET}!A:O, "select A, H, I where ${where}", 1)`)
+    .setFormula(`=QUERY(${runsRange()}, "select N where ${where}", 1)`)
+  data
+    .getRange('F1')
+    .setFormula(`=QUERY(${runsRange()}, "select A, H, I where ${where}", 1)`)
 
   const charts = sheetNamed(CHARTS_SHEET)
   charts.getCharts().forEach((chart) => charts.removeChart(chart))
-  addChart(charts, data.getRange('A:B'), 1, {
-    type: Charts.ChartType.LINE,
-    title: `UI Coverage on ${TREND_BRANCH}`,
-    options: { 'vAxis.minValue': 0, 'vAxis.maxValue': 100 },
+  addChart(charts, data.getRange('A:C'), 1, {
+    title: `UI Coverage and failed checks on ${TREND_BRANCH}`,
+    vAxisTitle: 'UI Coverage',
+    series: [{}, FAILED_CHECK_MARKER],
+    options: { vAxis: { minValue: 0, maxValue: 100 } },
   })
-  addChart(charts, data.getRange('D:F'), 20, {
-    type: Charts.ChartType.LINE,
+  addChart(charts, data.getRange('F:H'), 20, {
     title: `Untested elements and links on ${TREND_BRANCH}`,
+    vAxisTitle: 'Untested',
+    series: [{}, {}],
   })
+  addLatestRuns(charts, 39, 'A, C, G, H, I, N, O')
   SpreadsheetApp.getActiveSpreadsheet().setActiveSheet(charts)
 }
 
@@ -323,20 +351,85 @@ function writeHeaders(name, headers) {
 }
 
 // Anchors the chart in column A, so it starts at the left edge of the sheet.
-function addChart(sheet, range, row, { type, title, options = {} }) {
-  let builder = sheet
+// Each series gets its own marker shape and line style as well as a color,
+// so the chart reads without color.
+function addChart(
+  sheet,
+  range,
+  row,
+  { title, vAxisTitle, series, options = {} }
+) {
+  const builder = sheet
     .newChart()
-    .setChartType(type)
+    .setChartType(Charts.ChartType.LINE)
     .addRange(range)
     .setNumHeaders(1)
     .setPosition(row, 1, 0, 0)
     .setOption('title', title)
     .setOption('width', 900)
     .setOption('height', 360)
-  Object.entries(options).forEach(([key, value]) => {
-    builder = builder.setOption(key, value)
-  })
+    .setOption('legend', { position: 'top' })
+    .setOption('hAxis', { title: 'Run completed' })
+    .setOption('vAxis', { title: vAxisTitle, ...options.vAxis })
+    .setOption(
+      'series',
+      Object.fromEntries(
+        series.map((style, i) => [i, { ...SERIES_STYLES[i], ...style }])
+      )
+    )
   sheet.insertChart(builder.build())
+}
+
+// Each color reaches at least 3:1 contrast against the white chart
+// background. The marker shapes and dash patterns differ too.
+const SERIES_STYLES = [
+  { color: '#0072B2', pointShape: 'circle', pointSize: 6 },
+  {
+    color: '#D55E00',
+    pointShape: 'triangle',
+    pointSize: 7,
+    lineDashStyle: [8, 4],
+  },
+  {
+    color: '#007A5A',
+    pointShape: 'square',
+    pointSize: 6,
+    lineDashStyle: [2, 3],
+  },
+  {
+    color: '#A8326E',
+    pointShape: 'diamond',
+    pointSize: 7,
+    lineDashStyle: [8, 3, 2, 3],
+  },
+]
+
+// Marks each run that failed one of this sheet's Run Checks assertions: a
+// large dark triangle with no line, plotted at the run's score.
+const FAILED_CHECK_MARKER = {
+  color: '#202124',
+  pointShape: 'triangle',
+  pointSize: 12,
+  lineWidth: 0,
+}
+
+// The latest runs as plain text under the charts, so every result, including
+// the Run Checks outcome, can be read without the charts.
+function addLatestRuns(sheet, row, columns) {
+  sheet
+    .getRange(`A${row}`)
+    .setValue(`Latest runs on ${TREND_BRANCH}`)
+    .setFontWeight('bold')
+  sheet
+    .getRange(`A${row + 1}`)
+    .setFormula(
+      `=QUERY(${runsRange()}, "select ${columns} where D = '${TREND_BRANCH}' order by A desc limit 20", 1)`
+    )
+}
+
+// Runs!A:<last column>, from the number of headers.
+function runsRange() {
+  return `${RUNS_SHEET}!A:${String.fromCharCode(64 + RUN_HEADERS.length)}`
 }
 ```
 
@@ -351,14 +444,18 @@ If your default branch has another name, such as `master` or `develop`, change
    the request and allow it.
 
 The spreadsheet now has **Runs** and **Checks** tabs with frozen headers, a
-**Main branch data** tab with two `QUERY` formulas, and a **Main branch** tab
-with two empty charts anchored at its left edge. The queries select the `main`
-runs that have a UI Coverage score, in date order:
+**Main branch data** tab, and a **Main branch** tab with two empty charts
+anchored at its left edge. The data tab selects the `main` runs that have a UI
+Coverage score, in date order:
 
-- Columns A and B: the completion time and the UI Coverage score, which feed
-  the first chart
-- Columns D to F: the completion time and the untested element and link
+- Columns A to C: the completion time, the UI Coverage score, and the score
+  again for each run that failed a UI Coverage check, which the first chart
+  draws as a line with a large triangle on each failed run
+- Column D: each run's **UI Coverage checks** result, which column C reads
+- Columns F to H: the completion time and the untested element and link
   counts, which feed the second chart
+
+<GoogleSheetsChartAccessibility />
 
 The charts fill in as rows arrive. Running `setup` again rebuilds both charts
 and their data, so make lasting style changes in the script's `addChart` calls,
@@ -387,9 +484,11 @@ or stop running `setup` once the charts look the way you want.
    includes Run Checks results with `uiCoverage.*` assertions, the **Checks**
    tab has a row for each.
 
-The test uses sample data recorded against `main`. Delete its rows from **Runs**
-and **Checks** once you've confirmed they arrived, so they don't sit in your
-trend.
+Every test delivery carries the same sample run, recorded against `main`, so
+sending another test updates that row instead of adding one. New rows arrive
+with real runs, each under its own run number. Delete the test rows from
+**Runs** and **Checks** once you've confirmed they arrived, so they don't sit in
+your trend.
 
 If no row appears, open **Executions** in the Apps Script editor's sidebar to
 see the request and any error the script logged. A
@@ -405,6 +504,7 @@ score adds a point to the charts.
   event="run.uiCoverage.completed"
   prefix="uiCoverage.*"
   example="uiCoverage.score.min"
+  column="UI Coverage checks"
 />
 
 ## Investigate a failed Run Check from the sheet
@@ -431,6 +531,25 @@ To hand the report to an AI assistant, give it that URL and use
   Add `and M = false` to the trend queries to leave those runs out.
 - **A regenerated report replaces the original.** Its delivery carries the same
   run number, so its row and its **Checks** rows overwrite the earlier ones.
+
+## Google Sheets trends and Enterprise Reporting
+
+The sheet records one project as each report arrives, along with the Run Checks
+results that Enterprise Reporting doesn't show. On an Enterprise plan,
+[Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage)
+covers what a webhook payload can't:
+
+- UI Coverage for every project in your organization, compared side by side
+  and filtered by project and branch
+- History for your whole data retention period, including runs from before you
+  added the webhook
+- No script, deployment, or token to maintain
+
+To fill in the sheet's history, the
+[Data Extract API](/cloud/integrations/data-extract-api#UI-Coverage)
+`ui-coverage-details` report returns the UI Coverage of every earlier run, with
+its run number and branch. Enterprise Reporting includes runs through the end
+of the previous day (UTC), so the sheet is where today's reports show up first.
 
 ## Extend the Google Sheets dashboard
 

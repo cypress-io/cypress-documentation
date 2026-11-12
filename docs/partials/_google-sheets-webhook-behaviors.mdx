@@ -6,7 +6,8 @@
   send the delivery again. Because rows are keyed by run, redelivering never
   creates a duplicate.
 - **The history starts with the webhook.** It covers runs that finish after you
-  add it, so earlier runs don't appear in the sheet.
+  add it. For earlier runs, see
+  [Google Sheets trends and Enterprise Reporting](#Google-Sheets-trends-and-Enterprise-Reporting).
 - **Use one spreadsheet per project.** The trend queries filter by branch, not
   by project. If you point webhooks from several projects at one deployment, add
   a `B = '<project-id>'` condition to each `QUERY` in `setup`.

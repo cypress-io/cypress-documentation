@@ -19,13 +19,15 @@ host, and no third-party automation platform in between.
 The finished spreadsheet has four tabs:
 
 - **Runs**: one row per recorded run on every branch, with the run status, test
-  counts, flaky tests, duration, the commit, the number of failing
-  [Run Checks](/cloud/features/checks), and a link back to Cypress Cloud
+  counts, flaky tests, duration, the commit, whether the run passed its
+  [Run Checks](/cloud/features/checks) on test results and which checks failed,
+  and a link back to Cypress Cloud
 - **Checks**: one row per Run Checks assertion about test results, with its
   threshold, the measured value, and a Cloud CLI command to investigate a
   failure
-- **Main branch**: a line chart of failed and flaky tests, and a line chart of
-  run duration, for runs on `main`
+- **Main branch**: a line chart of failed and flaky tests, a line chart of run
+  duration, and a table of the latest runs with their Run Checks results, for
+  runs on `main`
 - **Main branch data**: the `QUERY` formulas that feed those charts
 
 To track scores instead of test results, see the matching guides for
@@ -86,7 +88,8 @@ const RUN_HEADERS = [
   'Skipped',
   'Specs',
   'Duration (min)',
-  'Failing checks',
+  'Test result checks',
+  'Failed checks',
   'Commit',
   'Author',
   'Run URL',
@@ -157,7 +160,7 @@ function runRow(run) {
     cell(run.totalSkipped),
     cell(run.totalSpecs),
     run.totalDuration == null ? '' : Math.round(run.totalDuration / 6000) / 10,
-    failingChecks(run),
+    ...checkSummary(run),
     run.commitMessage || '',
     run.commitAuthorName || '',
     run.runUrl,
@@ -205,45 +208,57 @@ function replaceChecks(run) {
 }
 
 function checkRows(run) {
-  const checks = (run.checks && run.checks.checks) || []
-  const rows = []
-
-  checks.forEach((check) => {
-    check.assertionResults
-      .filter((assertion) => assertion.type.startsWith(ASSERTION_PREFIX))
-      .forEach((assertion) => {
-        const matched = assertion.matched || {}
-        rows.push([
-          completedAt(run),
-          run.projectId,
-          run.runNumber,
-          run.commitBranch || '',
-          check.name,
-          check.status,
-          assertion.type,
-          assertion.status,
-          assertion.threshold,
-          cell(matched.measuredValue),
-          cell(matched.count),
-          cell(matched.failedCount),
-          assertion.filter ? assertion.filter.label : 'All',
-          assertion.status === 'failed' ? investigate(run, assertion) : '',
-        ])
-      })
+  return sheetAssertions(run).map(({ check, assertion }) => {
+    const matched = assertion.matched || {}
+    return [
+      completedAt(run),
+      run.projectId,
+      run.runNumber,
+      run.commitBranch || '',
+      check.name,
+      check.status,
+      assertion.type,
+      assertion.status,
+      assertion.threshold,
+      cell(matched.measuredValue),
+      cell(matched.count),
+      cell(matched.failedCount),
+      assertion.filter ? assertion.filter.label : 'All',
+      assertion.status === 'failed' ? investigate(run, assertion) : '',
+    ]
   })
-
-  return rows
 }
 
-// Checks that have already failed. `failing` means an assertion failed while
-// others are still pending, and a failed assertion never passes later.
-function failingChecks(run) {
-  if (!run.checks || run.checks.status === 'not-configured') {
-    return ''
+// Every assertion this sheet records, paired with the check it belongs to.
+function sheetAssertions(run) {
+  const checks = (run.checks && run.checks.checks) || []
+  return checks.flatMap((check) =>
+    check.assertionResults
+      .filter((assertion) => assertion.type.startsWith(ASSERTION_PREFIX))
+      .map((assertion) => ({ check, assertion }))
+  )
+}
+
+// The run's result on this sheet's assertions, whatever the score, and the
+// checks that failed one. Checks that don't apply to the run are left out.
+function checkSummary(run) {
+  const results = sheetAssertions(run).filter(
+    ({ check }) => check.status !== 'not-applicable'
+  )
+  if (!results.length) {
+    return ['', '']
   }
-  return run.checks.checks.filter(
-    (check) => check.status === 'failed' || check.status === 'failing'
-  ).length
+
+  const statuses = results.map(({ assertion }) => assertion.status)
+  const result =
+    ['failed', 'errored', 'unavailable', 'pending'].find((status) =>
+      statuses.includes(status)
+    ) || 'passed'
+  const failedChecks = results
+    .filter(({ assertion }) => assertion.status === 'failed')
+    .map(({ check }) => check.name)
+
+  return [result, [...new Set(failedChecks)].join(', ')]
 }
 
 // Row numbers whose Project ID (column B) and Run number (column C) match.
@@ -294,26 +309,30 @@ function setup() {
   writeHeaders(RUNS_SHEET, RUN_HEADERS)
   writeHeaders(CHECKS_SHEET, CHECK_HEADERS)
 
+  // A to C: failed and flaky tests. E and F: run duration.
   const data = sheetNamed(DATA_SHEET)
   data.clear()
   const where = `D = '${TREND_BRANCH}' and F is not null order by A`
   data
     .getRange('A1')
-    .setFormula(`=QUERY(${RUNS_SHEET}!A:Q, "select A, H, I where ${where}", 1)`)
+    .setFormula(`=QUERY(${runsRange()}, "select A, H, I where ${where}", 1)`)
   data
     .getRange('E1')
-    .setFormula(`=QUERY(${RUNS_SHEET}!A:Q, "select A, M where ${where}", 1)`)
+    .setFormula(`=QUERY(${runsRange()}, "select A, M where ${where}", 1)`)
 
   const charts = sheetNamed(CHARTS_SHEET)
   charts.getCharts().forEach((chart) => charts.removeChart(chart))
   addChart(charts, data.getRange('A:C'), 1, {
-    type: Charts.ChartType.LINE,
     title: `Failed and flaky tests on ${TREND_BRANCH}`,
+    vAxisTitle: 'Tests',
+    series: [{}, {}],
   })
   addChart(charts, data.getRange('E:F'), 20, {
-    type: Charts.ChartType.LINE,
     title: `Run duration in minutes on ${TREND_BRANCH}`,
+    vAxisTitle: 'Minutes',
+    series: [{}],
   })
+  addLatestRuns(charts, 39, 'A, C, E, H, I, N, O')
   SpreadsheetApp.getActiveSpreadsheet().setActiveSheet(charts)
 }
 
@@ -325,20 +344,85 @@ function writeHeaders(name, headers) {
 }
 
 // Anchors the chart in column A, so it starts at the left edge of the sheet.
-function addChart(sheet, range, row, { type, title, options = {} }) {
-  let builder = sheet
+// Each series gets its own marker shape and line style as well as a color,
+// so the chart reads without color.
+function addChart(
+  sheet,
+  range,
+  row,
+  { title, vAxisTitle, series, options = {} }
+) {
+  const builder = sheet
     .newChart()
-    .setChartType(type)
+    .setChartType(Charts.ChartType.LINE)
     .addRange(range)
     .setNumHeaders(1)
     .setPosition(row, 1, 0, 0)
     .setOption('title', title)
     .setOption('width', 900)
     .setOption('height', 360)
-  Object.entries(options).forEach(([key, value]) => {
-    builder = builder.setOption(key, value)
-  })
+    .setOption('legend', { position: 'top' })
+    .setOption('hAxis', { title: 'Run completed' })
+    .setOption('vAxis', { title: vAxisTitle, ...options.vAxis })
+    .setOption(
+      'series',
+      Object.fromEntries(
+        series.map((style, i) => [i, { ...SERIES_STYLES[i], ...style }])
+      )
+    )
   sheet.insertChart(builder.build())
+}
+
+// Each color reaches at least 3:1 contrast against the white chart
+// background. The marker shapes and dash patterns differ too.
+const SERIES_STYLES = [
+  { color: '#0072B2', pointShape: 'circle', pointSize: 6 },
+  {
+    color: '#D55E00',
+    pointShape: 'triangle',
+    pointSize: 7,
+    lineDashStyle: [8, 4],
+  },
+  {
+    color: '#007A5A',
+    pointShape: 'square',
+    pointSize: 6,
+    lineDashStyle: [2, 3],
+  },
+  {
+    color: '#A8326E',
+    pointShape: 'diamond',
+    pointSize: 7,
+    lineDashStyle: [8, 3, 2, 3],
+  },
+]
+
+// Marks each run that failed one of this sheet's Run Checks assertions: a
+// large dark triangle with no line, plotted at the run's score.
+const FAILED_CHECK_MARKER = {
+  color: '#202124',
+  pointShape: 'triangle',
+  pointSize: 12,
+  lineWidth: 0,
+}
+
+// The latest runs as plain text under the charts, so every result, including
+// the Run Checks outcome, can be read without the charts.
+function addLatestRuns(sheet, row, columns) {
+  sheet
+    .getRange(`A${row}`)
+    .setValue(`Latest runs on ${TREND_BRANCH}`)
+    .setFontWeight('bold')
+  sheet
+    .getRange(`A${row + 1}`)
+    .setFormula(
+      `=QUERY(${runsRange()}, "select ${columns} where D = '${TREND_BRANCH}' order by A desc limit 20", 1)`
+    )
+}
+
+// Runs!A:<last column>, from the number of headers.
+function runsRange() {
+  return `${RUNS_SHEET}!A:${String.fromCharCode(64 + RUN_HEADERS.length)}`
 }
 ```
 
@@ -361,6 +445,8 @@ runs that report a test count, in date order:
   which feed the first chart
 - Columns E and F: the completion time and the run duration in minutes, which
   feed the second chart
+
+<GoogleSheetsChartAccessibility />
 
 The charts fill in as rows arrive. Running `setup` again rebuilds both charts
 and their data, so make lasting style changes in the script's `addChart` calls,
@@ -388,9 +474,11 @@ or stop running `setup` once the charts look the way you want.
    includes Run Checks results, the **Checks** tab has a row for each
    `run.*` assertion in them.
 
-The test uses sample data recorded against `main`. Delete its rows from **Runs**
-and **Checks** once you've confirmed they arrived, so they don't sit in your
-trend.
+Every test delivery carries the same sample run, recorded against `main`, so
+sending another test updates that row instead of adding one. New rows arrive
+with real runs, each under its own run number. Delete the test rows from
+**Runs** and **Checks** once you've confirmed they arrived, so they don't sit in
+your trend.
 
 If no row appears, open **Executions** in the Apps Script editor's sidebar to
 see the request and any error the script logged. A
@@ -406,6 +494,7 @@ the charts.
   event="run.completed"
   prefix="run.*"
   example="run.failedTests.max"
+  column="Test result checks"
 />
 
 Cypress Cloud sends `run.completed` before Cypress Accessibility and UI
@@ -436,6 +525,27 @@ to an AI assistant instead, give it the run URL from the **Runs** tab and use
 
 - **Cancelled runs can have no test counts.** The trend queries skip a run
   whose **Tests** cell is empty, rather than charting it as zero failures.
+
+## Google Sheets trends and Enterprise Reporting
+
+The sheet records one project as each run finishes, along with the Run Checks
+results that Enterprise Reporting doesn't show. On an Enterprise plan,
+[Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) covers
+what a webhook payload can't:
+
+- Every project in your organization, with filters for project and branch
+- Pass and failure rates by spec and by test, not only by run
+- Flake rates compared across projects, and the top flaky tests in each
+- The browsers and Cypress versions your runs use, and your mix of end-to-end
+  and component tests
+- History for your whole data retention period, including runs from before you
+  added the webhook
+- No script, deployment, or token to maintain
+
+To bring that data into your own tools, the
+[Data Extract API](/cloud/integrations/data-extract-api) returns each report as
+CSV, JSON, or Excel. Enterprise Reporting includes runs through the end of the
+previous day (UTC), so the sheet is where today's runs show up first.
 
 ## Extend the Google Sheets dashboard
 

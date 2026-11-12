@@ -24,5 +24,13 @@ check can also hold assertions about other data. `failing` means one of the
 check's assertions has failed while others are still pending. A failed assertion
 never passes later, so `failing` already means the check fails.
 
-The **Runs** tab counts these checks in its **Failing checks** column. The
-column is empty when the project has no Run Checks configured.
+The **Runs** tab sums up these assertions for each run in two columns:
+
+- **{props.column}** holds `failed` when any check failed one of these
+  assertions, and `passed` when every one passed. Otherwise it holds the first
+  of `errored`, `unavailable`, or `pending` that applies.
+- **Failed checks** lists the name of each check that failed one of them.
+
+Checks that are `not-applicable` to the run don't count. Both cells are empty
+when the project has no Run Checks configured, or when none of its checks hold
+one of these assertions.
