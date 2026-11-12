@@ -347,13 +347,13 @@ If for any reason the two above methods cannot be used,
 
 ```javascript
 cy.visit('http://localhost:8080')
-cy.get('a').then(($a) => {
-  // pull off the fully qualified href from the <a>
-  const url = $a.prop('href')
-
-  // make a cy.request to it
-  cy.request(url).its('body').should('include', '</html>')
-})
+// read the fully qualified href from the <a>
+cy.get('a')
+  .invoke('prop', 'href')
+  .then((url) => {
+    // make a cy.request to it
+    cy.request(url).its('body').should('include', '</html>')
+  })
 ```
 
 ### Form Submission Redirects

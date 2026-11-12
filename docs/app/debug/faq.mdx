@@ -327,13 +327,13 @@ cy.contains('div', 'Hello world')
 If you'd like to work with the text prior to an assertion:
 
 ```javascript
-cy.get('div').should(($div) => {
-  const text = $div.text()
-
-  expect(text).to.match(/foo/)
-  expect(text).to.include('foo')
-  expect(text).not.to.include('bar')
-})
+cy.get('div')
+  .invoke('text')
+  .should((text) => {
+    expect(text).to.match(/foo/)
+    expect(text).to.include('foo')
+    expect(text).not.to.include('bar')
+  })
 ```
 
 If you need to convert text to a number before checking if it is greater than
@@ -364,14 +364,23 @@ cy.get('div')
   })
 ```
 
-jQuery's `.text()` method automatically calls `elem.textContent` under the hood.
-If you'd like to instead use `innerText` you can do the following:
+jQuery's `.text()` method automatically calls `elem.textContent` under the hood,
+which returns the text as it's written in the markup. `innerText` returns the
+text as the page renders it, after CSS such as `text-transform` and
+`display: none` applies. To read it, use `.invoke('prop')`:
 
-```javascript
-cy.get('div').should(($div) => {
-  // access the native DOM element
-  expect($div.get(0).innerText).to.eq('foobarbaz')
-})
+```html title="index.html"
+<button data-cy="checkout" style="text-transform: uppercase">Checkout</button>
+```
+
+```javascript title="spec.cy.js"
+// textContent: the text in the markup
+cy.get('[data-cy=checkout]').should('have.text', 'Checkout')
+
+// innerText: the text a user sees
+cy.get('[data-cy=checkout]')
+  .invoke('prop', 'innerText')
+  .should('eq', 'CHECKOUT')
 ```
 
 This is the equivalent of Selenium's `getText()` method, which returns the
@@ -391,13 +400,13 @@ cy.get('input').should('have.value', 'abc')
 If you'd like to massage or work with the text prior to an assertion:
 
 ```javascript
-cy.get('input').should(($input) => {
-  const val = $input.val()
-
-  expect(val).to.match(/foo/)
-  expect(val).to.include('foo')
-  expect(val).not.to.include('bar')
-})
+cy.get('input')
+  .invoke('val')
+  .should((val) => {
+    expect(val).to.match(/foo/)
+    expect(val).to.include('foo')
+    expect(val).not.to.include('bar')
+  })
 ```
 
 If you need to hold a reference or compare values of text:
@@ -1709,9 +1718,9 @@ You certainly can.
 ```js
 cy.get('[type="submit"]').click()
 cy.get('input:invalid').should('have.length', 1)
-cy.get('#name').then(($input) => {
-  expect($input[0].validationMessage).to.eq('Please fill out this field.')
-})
+cy.get('#name')
+  .invoke('prop', 'validationMessage')
+  .should('eq', 'Please fill out this field.')
 ```
 
 **Test custom validation error**
@@ -1741,9 +1750,9 @@ cy.get('input:invalid').should('have.length', 0)
 cy.get('[type="email"]').type('not_an_email')
 cy.get('[type="submit"]').click()
 cy.get('input:invalid').should('have.length', 1)
-cy.get('[type="email"]').then(($input) => {
-  expect($input[0].validationMessage).to.eq('I expect an email!')
-})
+cy.get('[type="email"]')
+  .invoke('prop', 'validationMessage')
+  .should('eq', 'I expect an email!')
 ```
 
 ### <Icon name="angle-right" /> Can Cypress be used for model-based testing?

@@ -2,6 +2,10 @@ import * as React from 'react'
 import Tag from '@cypress-design/react-tag'
 import { IconGeneralSparkleDoubleSmall } from '@cypress-design/react-icon'
 import Link from '@docusaurus/Link'
+import {
+  SURFACES,
+  conversionLinkAttributes,
+} from '@site/plugins/fullstory-conversion-links'
 
 interface SidebarLinkProps {
   children: React.ReactNode
@@ -51,7 +55,10 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({
   onClick,
 }) => {
   return (
-    <Link {...{ className, href, style, onClick }}>
+    <Link
+      {...{ className, href, style, onClick }}
+      {...conversionLinkAttributes(href, SURFACES.sidebar)}
+    >
       {children} <SidebarAdornments customProps={customProps} />
     </Link>
   )

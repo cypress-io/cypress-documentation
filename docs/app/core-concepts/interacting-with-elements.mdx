@@ -191,13 +191,17 @@ The modern algorithm reports elements scrolled out of an `overflow: auto` ancest
 cy.get('#scroll-container button').should('not.be.visible')
 
 // After
-cy.get('#scroll-container button').should(($el) => {
-  const container = $el[0].closest('#scroll-container')
-
-  expect($el[0].getBoundingClientRect().top).to.be.greaterThan(
-    container.getBoundingClientRect().bottom
-  )
-})
+cy.get('#scroll-container')
+  .invoke('get', 0)
+  .invoke('getBoundingClientRect')
+  .its('bottom')
+  .then((containerBottom) => {
+    cy.get('#scroll-container button')
+      .invoke('get', 0)
+      .invoke('getBoundingClientRect')
+      .its('top')
+      .should('be.greaterThan', containerBottom)
+  })
 ```
 
 ##### Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`
@@ -239,9 +243,13 @@ The browser renders truncated text with an ellipsis, but still considers the und
 Assert that the truncating ancestor's `scrollWidth` exceeds its `clientWidth`:
 
 ```javascript title="cypress/e2e/spec.cy.js"
-cy.get('.truncate-container').should(($el) => {
-  expect($el[0].scrollWidth).to.be.greaterThan($el[0].clientWidth)
-})
+cy.get('.truncate-container')
+  .invoke('prop', 'clientWidth')
+  .then((clientWidth) => {
+    cy.get('.truncate-container')
+      .invoke('prop', 'scrollWidth')
+      .should('be.greaterThan', clientWidth)
+  })
 ```
 
 ## Actionability

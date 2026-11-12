@@ -201,10 +201,13 @@ Guidance, not arithmetic:
   contents list into a column of near-identical entries.
 - **Lead with the distinctive term**, so the heading survives truncation in a
   search result and scans quickly in the sidebar.
-- **A question is one good shape, not the required one.** Answer engines do well
-  with `How to build a release report of Cypress runs`, and it is the natural
-  form in FAQ and troubleshooting sections. Forcing `How to` onto a section that
-  answers no question is worse than leaving it short.
+- **Name a task with an imperative verb**: `Load global styles in component
+tests`, not `Loading global styles in component tests` or `How to load global
+styles`. Keep sibling headings in the same form, so the contents list reads as
+  a set of steps. Headings that name a thing rather than a task stay nouns: the
+  API page skeleton, `## See also`, pointer sections such as `Additional mount
+command examples`, and troubleshooting headings that quote an error or name a
+  symptom. A question a reader actually asks, as in an FAQ, stays a question.
 - **Sentence case**, with the fixed API page skeleton (`## Command Log`,
   `## Syntax`), function names on
   [namespace API pages](#namespace-api-pages) (`### isVisible()`), and product
@@ -380,6 +383,89 @@ same change. `## See also` always stays as it is.
   [`:::cypress-config-example`](#cypress-config-examples) directive, and for
   TypeScript examples prefer the `copyTsToJs` plugin rather than maintaining a
   separate JS block (see [Tabs](#tabs)).
+
+## Code example preferences
+
+A reader copies an example as the way Cypress tests are written. So write
+examples the way a user drives the app: through its UI, its network, and the
+browser's own APIs, with Cypress commands doing the reading and the clicking.
+Tests written that way keep passing when the app's internals change, and every
+step shows up in the Command Log.
+
+These preferences cover test code only: specs, custom commands, support files,
+and config. They never apply to app code in an example, such as the HTML,
+component, or `app.js` a test runs against. App code is there to give the test
+something to act on, so write it however the example reads most clearly.
+
+Within test code, each preference also gives way when the example exists to
+show the thing it steers away from. The `.trigger()` page explains what the
+default `Event` does, and the `cy.window()` page shows why its two windows
+differ. Those examples stay as they are. Everywhere else, follow these:
+
+- **Drive the app through its UI or its API where you can.** Click, type, and
+  visit to reach a state, or set it up with `cy.request()` and
+  `cy.intercept()`.
+- **Chain to app code on `window`; don't call it in a callback.** When a test
+  does need app code the app exposes on `window`, such as a store or a factory
+  function, reach it with `cy.window().its()` and call it with `.invoke()`.
+  The chain retries until the property exists and logs each step, while
+  `cy.window().then((win) => win.store.dispatch(...))` runs once, fails if the
+  app hasn't set the property yet, and logs nothing.
+- **Don't depend on `window.Cypress` in the test.** A test that branches on it
+  or reaches the app through it ties itself to the runner's internals rather
+  than to what the app does.
+- **Read the DOM with `.invoke()` and `.its()`.** They retry with the assertion
+  that follows and log what they read, while a `.then()` callback runs once and
+  logs nothing. jQuery methods work through `.invoke()`, and DOM properties
+  through `.invoke('prop', name)`.
+- **Prefer Cypress actions to hand-built events.** `.click()`, `.type()`,
+  `.check()`, `.select()`, and `cy.press()` fire the events a user's input
+  does, in order, after the actionability checks. Reach for `.trigger()` only
+  when no action fits, and when it passes event properties, pass the matching
+  `eventConstructor`. The default plain `Event` attaches those properties as-is,
+  so a handler that checks the event's type, or reads a property the browser
+  calculates, gets something no real input produces.
+- **Wait for the app, not the clock.** `cy.wait(ms)` guesses how long the app
+  takes: too short and the test flakes, too long and every run pays for it.
+  Wait for the state the next step needs instead. An assertion on the UI
+  retries until it passes, and `cy.wait('@alias')` waits for a request routed
+  through `cy.intercept()`. `cy.visit()` and `cy.request()` already wait for
+  their responses. Pass `timeout` when the state takes longer than
+  `defaultCommandTimeout`. The one exception is a short pause between polls of
+  an endpoint that has nothing else to wait on, such as a background job's
+  status, so the loop doesn't hammer the server.
+
+**❌ Calls the app in a callback, waits a fixed time, reads the DOM in a
+callback, and hand-builds an event:**
+
+```js
+cy.window().then((win) => {
+  win.store.dispatch({ type: 'cart/clear' })
+})
+cy.wait(2000)
+
+cy.get('.sidebar').then(($el) => {
+  expect($el.outerWidth()).to.be.greaterThan(200)
+})
+
+cy.get('.target').trigger('mousedown', { button: 0 })
+```
+
+**✅ Drives the UI, waits for the request, reads through Cypress, and builds
+the right event:**
+
+```js
+cy.intercept('DELETE', '/api/cart').as('clearCart')
+cy.get('[data-cy=clear-cart]').click()
+cy.wait('@clearCart')
+
+cy.get('.sidebar').invoke('outerWidth').should('be.greaterThan', 200)
+
+cy.get('.target').trigger('mousedown', {
+  eventConstructor: 'MouseEvent',
+  button: 0,
+})
+```
 
 ## Domains in code examples
 
@@ -914,20 +1000,23 @@ Use a **fenced code block** for:
 ### `<CopyPrompt>` authoring rules
 
 Registered globally in `src/theme/MDXComponents.js` (no import). Props: `prompt`
-(required), `title`, `subtext`, `hideTitle`, `defaultCollapsed`,
+and `title` (both required), `subtext`, `hideTitle`, `defaultCollapsed`,
 `excludeFromLlmExport`. Live examples: `docs/cloud/integrations/cloud-mcp.mdx`
 and `docs/app/guides/migration/`.
 
+- **Give every card a unique `title`**, even one whose heading comes from
+  children or `hideTitle`. It is the card's `promptTitle` in Fullstory, so a
+  shared title merges two cards in analytics. `npm run test:copy-prompt-titles`
+  fails on a missing or repeated title and names its file and line.
 - **No quotes** around the prompt — the card renders it verbatim.
 - **No tool calls** unless explicitly required: prefer _"Find all failing tests
   on this branch"_ over _"`cypress_get_runs` Find all failing tests…"_.
-- **For a titled card, pass `title`** — rendered as the card's heading with a
-  sparkle icon (used by the migration guides).
+- **`title` renders as the card's heading** with a sparkle icon (used by the
+  migration guides), unless children or `hideTitle` replace it.
 - **When a card is one of several in a section** (e.g. a list of example
-  prompts), pass a `###` Markdown heading as the card's **children** instead of
-  a `title`. It stays a real heading, so the workflow shows up in the page's
-  table of contents, and the card styles it to match. Keep `title` too, for
-  analytics. Use `hideTitle` only for a lone card that already sits under its
+  prompts), pass a `###` Markdown heading as the card's **children**, which
+  renders in place of the `title`. It stays a real heading, so the workflow
+  shows up in the page's table of contents, and the card styles it to match. Use `hideTitle` only for a lone card that already sits under its
   own Markdown heading.
 - **Write `subtext` as the outcome, not the mechanism.** Say what the reader gets
   from running the prompt, like the example below (_"Get a high-level summary of
@@ -1077,7 +1166,8 @@ canonical tab order and labels (`npm`, `Yarn`, `pnpm`, `Bun`) when you do.
 
 Prefer **not** to hand-write a JS tab. Author a single TypeScript block tagged
 `copyTsToJs` and the `copyTsToJs` remark plugin generates the JavaScript version
-automatically, **JS tab first, then TS**:
+automatically and renders the two as JavaScript and TypeScript tabs in the
+`cypress-lang` tab group, **JS tab first, then TS**:
 
 ````mdx
 ```typescript copyTsToJs
@@ -1087,14 +1177,35 @@ export default name
 ```
 ````
 
-Only fall back to explicit `<Tabs>` with separate `.js`/`.ts` `<TabItem>`s when
-the two versions differ by more than types (e.g. a `declare global` block) and
-the plugin can't derive one from the other. When you do, keep the **JS tab
-first**.
+The plugin drops type-only code, including a `declare global` block, from the
+JavaScript tab. Only fall back to explicit
+`<Tabs groupId="cypress-lang">` with `<TabItem value="js" label="JavaScript">`
+and `<TabItem value="ts" label="TypeScript">` when the plugin can't derive one
+version from the other. When you do, keep the **JS tab first**.
+
+Hand-write the JavaScript version of a component support file
+(`cypress/support/component.js`) instead of using `copyTsToJs`. The plugin turns
+each `import` into `require()`, and a Vite-bundled support file fails on it with
+`ReferenceError: require is not defined`. Cypress scaffolds that file with ES
+`import` statements, so keep them.
 
 ### Frameworks
 
 Use `groupId="frameworks"`, ordered **React → Angular → Vue → Svelte**.
+
+### Never nest tab groups
+
+A tab group inside another tab group renders as two stacked rows of tabs, and
+the reader has to work out which row controls what. Keep every tab group at the
+top level. A `copyTsToJs` block counts as a tab group, since the plugin renders
+its JavaScript and TypeScript versions as tabs.
+
+When an example sits inside framework tabs or any other tab group, show only its
+JavaScript version, in a plain `js` block with a `title`. Cover what only
+TypeScript readers need, such as the `declare global` block that types a custom
+command, in its own section outside the tabs. In
+`docs/api/commands/mount.mdx`, the framework tabs show each
+`cypress/support/component.js`, and a separate section covers the typings.
 
 ## Cypress config examples
 

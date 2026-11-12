@@ -941,6 +941,19 @@
           ],
           "badge": "vendor",
           "vendor": "Qualflare"
+        },
+        {
+          "name": "cypress-qase-reporter",
+          "description": "Reporter that sends Cypress test results, steps and screenshots to Qase test management, linked to test cases.",
+          "link": "https://github.com/qase-tms/qase-javascript/tree/main/qase-cypress",
+          "keywords": [
+            "reporter",
+            "qase",
+            "test-management",
+            "screenshot"
+          ],
+          "badge": "vendor",
+          "vendor": "Qase"
         }
       ]
     },

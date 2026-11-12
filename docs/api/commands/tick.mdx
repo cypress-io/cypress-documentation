@@ -70,7 +70,7 @@ You can also access the `clock` object via `this.clock` in a
 
 #### Create a clock and move time to trigger a `setTimeout`
 
-```javascript
+```javascript title="app.js"
 // app code loaded by index.html
 window.addIntro = () => {
   setTimeout(() => {
@@ -79,7 +79,7 @@ window.addIntro = () => {
 }
 ```
 
-```javascript
+```javascript title="spec.cy.js"
 cy.clock()
 cy.visit('/index.html')
 cy.window().invoke('addIntro')

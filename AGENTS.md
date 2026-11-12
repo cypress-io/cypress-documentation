@@ -173,7 +173,33 @@ Each rule is a hard convention. See the linked section for the how and why.
   now: no change history, no "matches the old tool", and no benchmark numbers.
 
 **Code examples** — [details](./AGENTS_REFERENCE.md#verifying-code-examples),
-[domains](./AGENTS_REFERENCE.md#domains-in-code-examples)
+[domains](./AGENTS_REFERENCE.md#domains-in-code-examples),
+[preferences](./AGENTS_REFERENCE.md#code-example-preferences)
+
+- Write test code the way a user drives the app. These preferences cover test
+  code only: specs, custom commands, support files, and config. They never
+  apply to app code in an example, such as the markup or source a test runs
+  against. Each one also gives way when the example exists to show the thing it
+  steers away from, such as the `.trigger()` page explaining the default
+  `Event`:
+  - Drive the application under test through its UI or its API (`cy.request()`,
+    `cy.intercept()`) where you can.
+  - When a test does reach app code on `window`, such as a store or a function
+    the app exposes, chain to it with `.its()` and `.invoke()`
+    (`cy.window().its('store').invoke('getState')`). Don't call it directly on
+    `win` inside a `.then()` callback.
+  - Don't depend on `window.Cypress` in the test.
+  - Read the DOM with `.invoke()` and `.its()`, not with element callbacks.
+    jQuery methods work through `.invoke()`: `.invoke('outerWidth')`,
+    `.invoke('prop', 'scrollHeight')`.
+  - Prefer Cypress actions such as `.click()` and `.type()` to hand-built
+    events. When `.trigger()` has to pass event properties, pass the matching
+    `eventConstructor` (such as `'MouseEvent'`), since the default plain `Event`
+    attaches them as-is to an event that is the wrong type.
+  - Don't wait a fixed time with `cy.wait(ms)`. Wait for what the test needs:
+    an assertion on the UI, which retries, or `cy.wait('@alias')` on a request
+    from `cy.intercept()`. The one exception is a short pause between polls of
+    an endpoint that has nothing else to wait on, such as a job status.
 
 - Every host an example runs against is `cypress.io` or a subdomain, as if
   Cypress only runs code it controls. When it should run as written, use a
@@ -224,7 +250,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   engines surface them without the page around them. "Cypress Cloud MCP
   workflows to try", not "Workflows to try". Add the context that makes the
   heading this page's, keep it to roughly 40 to 60 characters, and use sentence
-  case. The fixed API page skeleton, function-name headings on
+  case. Name a task with an imperative verb ("Load global styles in component
+  tests", not "Loading…" or "How to load…"); headings that name a thing stay
+  nouns. The fixed API page skeleton, function-name headings on
   [namespace API pages](./AGENTS_REFERENCE.md#namespace-api-pages), and
   `## See also` are exempt.
 - Address the reader as **you**. Reserve "we" for Cypress speaking as a team
@@ -287,6 +315,9 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Tabs sync via a shared `groupId`. Fixed orders: package managers
   **npm → Yarn → pnpm → Bun**; frameworks **React → Angular → Vue → Svelte**; JS
   before TS.
+- Never nest one tab group inside another. Inside framework or other tabs, show
+  only the JavaScript version in a plain `js` block, never a `copyTsToJs` block,
+  which renders its own tabs.
 
 **Admonitions** — [details](./AGENTS_REFERENCE.md#admonition-blocks)
 

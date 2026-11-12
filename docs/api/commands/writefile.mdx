@@ -1,6 +1,6 @@
 ---
 title: 'cy.writeFile()'
-description: Write to a file with the specified contents in Cypress.
+description: Write text, JSON, or binary data to a file on disk from a Cypress test.
 sidebar_label: writeFile
 ---
 
@@ -8,7 +8,26 @@ sidebar_label: writeFile
 
 # writeFile
 
-Write to a file with the specified contents.
+`cy.writeFile()` writes text, JSON, or binary data to a file on disk from your
+test. Your spec code runs in the browser, which can't reach the file system, so
+Cypress hands the contents to its server, which writes the file. It resolves the
+path from your project root and creates any missing folders, so file output
+stays in your test code, with no [`cy.task()`](/api/commands/task) to register
+in your config.
+
+Reach for `cy.writeFile()` when you need to:
+
+- [Turn a live response into a fixture](#Generate-a-fixture-file-and-stub-a-request-with-it)
+  and stub requests with it
+- Save output your test produces, such as a
+  [log file](#Build-a-log-file-one-line-at-a-time), a
+  [CSV file](#Write-an-array-as-CSV-or-lines-of-text), or a JSON report
+- [Save a binary file](#Save-a-binary-file-from-a-request), such as an image
+  from a request or a `<canvas>` element
+
+To read a file back, use [`cy.readFile()`](/api/commands/readfile). For file
+operations `cy.writeFile()` doesn't cover, such as deleting a file, use
+[`cy.task()`](/api/commands/task).
 
 ## Syntax
 
@@ -24,23 +43,25 @@ cy.writeFile(filePath, contents, encoding, options)
 <Icon name="check-circle" color="green" /> **Correct Usage**
 
 ```javascript
-cy.writeFile('menu.json')
+cy.writeFile('menu.json', { lunch: 'soup' })
 ```
 
 ### Arguments
 
 <Icon name="angle-right" /> **filePath _(String)_**
 
-A path to a file within the project root (the directory that contains the
-[Cypress configuration file](/app/references/configuration))
+A path to a file, resolved relative to the project root (the directory that
+contains the [Cypress configuration file](/app/references/configuration)). An
+absolute path also works. Cypress creates any missing directories in the path.
 
-<Icon name="angle-right" /> **contents _(String, Array, Object or Buffer)_**
+<Icon name="angle-right" /> **contents _(String, Array, Object, or Buffer)_**
 
-The contents to be written to the file.
+The contents to write to the file. Cypress writes a String or a `Buffer` as is,
+and converts an Array or Object to JSON indented with 2 spaces.
 
 <Icon name="angle-right" /> **encoding _(String)_**
 
-The encoding to be used when writing to the file. The following encodings are
+The encoding Cypress uses to write the file. The following encodings are
 supported:
 
 - `'ascii'`
@@ -65,18 +86,10 @@ Pass in an options object to change the default behavior of `cy.writeFile()`.
 
 | Option     | Default                                                           | Description                                                                                         |
 | ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `log`      | `true`                                                            | Displays the command in the [Command log](/app/core-concepts/open-mode#Command-Log)                 |
+| `encoding` | `utf8`                                                            | The encoding Cypress uses to write the file                                                         |
 | `flag`     | `w`                                                               | File system flag as used with [`fs.writeFile`](https://nodejs.org/api/fs.html#fs_file_system_flags) |
-| `encoding` | `utf8`                                                            | The encoding to be used when writing to the file                                                    |
-| `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `.writeFile()` to resolve before [timing out](#Timeouts)                           |
-
-:::info
-
-To use encoding with other options, have your options object be your third
-parameter and include encoding there. This is the same behavior as
-[`fs.writeFile`](https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback).
-
-:::
+| `log`      | `true`                                                            | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                 |
+| `timeout`  | [`defaultCommandTimeout`](/app/references/configuration#Timeouts) | Time to wait for `cy.writeFile()` to resolve before [timing out](#Timeouts)                         |
 
 <HeaderYields />
 
@@ -86,38 +99,60 @@ parameter and include encoding there. This is the same behavior as
 
 ### Text
 
-#### Write some text to a `txt` file
+#### Write text to a `.txt` file
 
-If the path to the file does not exist, the file and its path will be created.
-If the file already exists, it will be over-written.
+If the file or any directory in its path doesn't exist, Cypress creates it. If
+the file already exists, Cypress overwrites it.
 
 ```javascript
 cy.writeFile('path/to/message.txt', 'Hello World')
 cy.readFile('path/to/message.txt').then((text) => {
-  expect(text).to.equal('Hello World') // true
+  expect(text).to.equal('Hello World')
 })
 ```
 
-`{projectRoot}/path/to/message.txt` will be created with the following contents:
+`{projectRoot}/path/to/message.txt` is created with the following contents:
 
 ```text
- "Hello World"
+Hello World
+```
+
+#### Write an array as CSV or lines of text
+
+An array is written as JSON, not as one line per item. To write a CSV file or
+other line-based text, join the array into a string first.
+
+```javascript
+const rows = ['name,email', 'Eliza,eliza@example.com']
+
+cy.writeFile('path/to/users.csv', rows.join('\n'))
+```
+
+`{projectRoot}/path/to/users.csv` is created with the following contents:
+
+```text
+name,email
+Eliza,eliza@example.com
 ```
 
 ### JSON
 
 #### Write JSON to a file
 
-JavaScript arrays and objects are stringified and formatted into text.
+Cypress converts arrays and objects to JSON indented with 2 spaces.
 
-```javascript
-cy.writeFile('path/to/data.json', { name: 'Eliza', email: 'eliza@example.com' })
-cy.readFile('path/to/data.json').then((user) => {
-  expect(user.name).to.equal('Eliza') // true
+```typescript copyTsToJs title="spec.cy.ts"
+type User = { name: string; email: string }
+
+const user: User = { name: 'Eliza', email: 'eliza@example.com' }
+
+cy.writeFile('path/to/data.json', user)
+cy.readFile<User>('path/to/data.json').then((saved) => {
+  expect(saved.name).to.equal('Eliza')
 })
 ```
 
-`{projectRoot}/path/to/data.json` will be created with the following contents:
+`{projectRoot}/path/to/data.json` is created with the following contents:
 
 ```json
 {
@@ -126,28 +161,68 @@ cy.readFile('path/to/data.json').then((user) => {
 }
 ```
 
-#### Write response data to a fixture file
+#### Generate a fixture file and stub a request with it
+
+Save response data under `cypress/fixtures/`, and the file works like any other
+fixture. Here [`cy.intercept()`](/api/commands/intercept) serves it as the
+response to your app's request.
 
 ```javascript
-cy.request('https://jsonplaceholder.typicode.com/users').then((response) => {
+cy.request('https://jsonplaceholder.cypress.io/users').then((response) => {
   cy.writeFile('cypress/fixtures/users.json', response.body)
 })
 
-// our fixture file is now generated and can be used
-cy.fixture('users').then((users) => {
-  expect(users[0].name).to.exist
+cy.intercept('GET', '/api/users', { fixture: 'users.json' }).as('getUsers')
+cy.visit('/users')
+cy.wait('@getUsers')
+```
+
+Write the file before you add the intercept. `cy.intercept()` reads a fixture
+when it registers the route, so writing the file afterwards doesn't change the
+response. See
+[How Cypress caches fixture data](/api/commands/fixture#How-Cypress-caches-fixture-data).
+
+#### Add properties to an existing JSON file
+
+The `a+` flag appends text, so it can't merge JSON. Read the file, add the new
+properties, then write the combined result back. In TypeScript, pass a type
+argument to `cy.readFile()` so the yielded object has the file's shape.
+
+```typescript copyTsToJs title="spec.cy.ts"
+type User = { name: string; id?: string }
+
+const filename = 'path/to/file.json'
+
+cy.readFile<User>(filename).then((user) => {
+  user.id = '1234'
+  // write the merged object
+  cy.writeFile(filename, user)
+})
+```
+
+#### Add items to an existing JSON array
+
+```typescript copyTsToJs title="spec.cy.ts"
+type Item = { item: string }
+
+const filename = 'path/to/list.json'
+
+cy.readFile<Item[]>(filename).then((list) => {
+  list.push({ item: 'example' })
+  // write the merged array
+  cy.writeFile(filename, list)
 })
 ```
 
 ### Encoding
 
-#### Specify the encoding as a String
+#### Specify the encoding as a string argument
 
 ```javascript
-cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii'))
+cy.writeFile('path/to/ascii.txt', 'Hello World', 'ascii')
 ```
 
-`{projectRoot}/path/to/message.txt` will be created with the following contents:
+`{projectRoot}/path/to/ascii.txt` is created with the following contents:
 
 ```text
 Hello World
@@ -156,76 +231,135 @@ Hello World
 #### Specify the encoding as part of the options object
 
 ```javascript
-cy.writeFile('path/to/ascii.txt', 'Hello World', {
-  encoding: 'ascii',
-  flag: 'a+',
+cy.writeFile('path/to/ascii.txt', 'Hello World', { encoding: 'ascii' })
+```
+
+#### Save a binary file from a request
+
+Request the file with `encoding: 'binary'`, then write the response body with
+the same encoding so the bytes reach the disk unchanged.
+
+```javascript
+cy.request({
+  url: 'https://example.cypress.io/assets/img/javascript-logo.png',
+  encoding: 'binary',
+}).then((response) => {
+  cy.writeFile('path/to/logo.png', response.body, 'binary')
 })
+```
+
+#### Decode a base64 string into a file
+
+With the `base64` encoding, Cypress decodes the string and writes the
+resulting bytes. This example saves the image drawn on a `<canvas>` element.
+
+```javascript
+cy.get('canvas')
+  .invoke('get', 0)
+  .invoke('toDataURL', 'image/png')
+  .then((dataUrl) => {
+    const base64 = dataUrl.split(',')[1]
+
+    cy.writeFile('path/to/chart.png', base64, 'base64')
+  })
 ```
 
 ### Flags
 
-#### Append contents to the end of a file
+#### Build a log file one line at a time
+
+Pass `flag: 'a+'` to add contents to the end of the file instead of
+overwriting it. Appending adds the contents exactly as passed, with no
+separator, so end each entry with `\n` to keep entries on their own lines. The
+first write uses the default `w` flag, so each run starts with an empty log.
 
 ```javascript
-cy.writeFile('path/to/message.txt', 'Hello World', { flag: 'a+' })
+cy.writeFile('path/to/run.log', 'Test started\n')
+cy.writeFile('path/to/run.log', 'Logged in\n', { flag: 'a+' })
+cy.writeFile('path/to/run.log', 'Checkout complete\n', { flag: 'a+' })
 ```
 
-Appending assumes plain text file. If you want to merge a JSON object
-for example, you need to read it first, add new properties, then write the
-combined result back.
+`{projectRoot}/path/to/run.log` contains:
 
-```javascript
-const filename = '/path/to/file.json'
-
-cy.readFile(filename).then((obj) => {
-  obj.id = '1234'
-  // write the merged object
-  cy.writeFile(filename, obj)
-})
-```
-
-Similarly, if you need to push new items to an array
-
-```javascript
-const filename = '/path/to/list.json'
-
-cy.readFile(filename).then((list) => {
-  list.push({ item: 'example' })
-  // write the merged array
-  cy.writeFile(filename, list)
-})
+```text
+Test started
+Logged in
+Checkout complete
 ```
 
 ### Buffer
 
 #### Write a buffer directly without encoding as a string
 
-```javascript
-const filename = '/path/to/file.png'
+Read a file with a `null` encoding to get a `Buffer`, then write it with a
+`null` encoding to copy the bytes unchanged.
 
-cy.readFile(filename, null).then((obj) => {
-  // <Buffer ef 3a bf ... >
-  cy.writeFile(filename, obj, null)
+```javascript
+cy.readFile('path/to/logo.png', null).then((buffer) => {
+  // <Buffer 89 50 4e 47 ... >
+  cy.writeFile('path/to/logo-copy.png', buffer, null)
 })
 ```
+
+### Options
+
+#### Keep a large response out of the Command Log
+
+The console output for `cy.writeFile()` includes the full contents written.
+Pass `log: false` to hide the command when the contents are large or
+sensitive.
+
+```javascript
+cy.request('https://jsonplaceholder.cypress.io/photos').then((response) => {
+  cy.writeFile('cypress/fixtures/photos.json', response.body, { log: false })
+})
+```
+
+#### Allow more time for a large write
+
+```javascript
+const largeText = 'x'.repeat(50 * 1024 * 1024)
+
+cy.writeFile('path/to/large.txt', largeText, { timeout: 15000 })
+```
+
+## Notes
+
+### How the `encoding` argument and option combine
+
+When you pass both an `encoding` argument and an `encoding` option, the option
+takes precedence. This call writes the string as UTF-8 text, not as decoded
+hex:
+
+```javascript
+cy.writeFile('path/to/message.txt', '48656c6c6f', 'hex', { encoding: 'utf8' })
+```
+
+### How `cy.writeFile()` updates the fixture cache
+
+Writing a file inside the
+[`fixturesFolder`](/app/references/configuration#Folders--Files) clears that
+file from the [`cy.fixture()`](/api/commands/fixture) cache, so a later
+`cy.fixture()` call yields the new contents.
 
 ## Rules
 
 <HeaderRequirements />
 
 - `cy.writeFile()` requires being chained off of `cy`.
+- `cy.writeFile()` must be invoked from the spec file or support file.
 - `cy.writeFile()` requires the file be successfully written to disk. Anything
-  preventing this such as OS permission issues will cause it to fail.
+  preventing this, such as OS permission issues, causes it to fail.
 
 <HeaderAssertions />
 
-- `cy.writeFile()` will only run assertions you have chained once, and will not
+- `cy.writeFile()` runs assertions you have chained once, and does not
   [retry](/app/core-concepts/retry-ability).
 
 <HeaderTimeouts />
 
-- `cy.writeFile()` can time out when the content being written takes a
-  significant amount of time to encode.
+- `cy.writeFile()` can time out when writing the file takes longer than the
+  `timeout` option.
 
 ## Command Log
 
@@ -235,30 +369,38 @@ cy.readFile(filename, null).then((obj) => {
 cy.writeFile('info.log', ['foo', 'bar', 'baz'])
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <DocsImage
   src="/img/api/writefile/write-data-to-system-file-for-testing.png"
-  alt="Command Log writeFile"
+  alt="Command Log row for writeFile showing the file name info.log"
 />
 
-When clicking on the `writeFile` command within the command log, the console
-outputs the following:
+When you click the `writeFile` command in the Command Log, the console outputs
+the following. `File path` is the absolute path Cypress resolved from
+`filePath`, and `Contents` is what Cypress wrote, with the array converted to
+JSON.
 
 <DocsImage
   src="/img/api/writefile/console-log-shows-contents-written-to-file.png"
-  alt="Console Log writeFile"
+  alt="Console output for writeFile showing the command name, the resolved absolute file path, and the array written as JSON"
 />
 
 ## History
 
-| Version                                  | Changes                                                  |
-| ---------------------------------------- | -------------------------------------------------------- |
-| [9.2.0](/app/references/changelog#9-2-0) | Added `timeout` option                                   |
-| [4.0.0](/app/references/changelog#4-0-0) | `cy.writeFile()` now yields `null` instead of `contents` |
-| [3.1.1](/app/references/changelog#3-1-1) | Added `flag` option and appending with `a+`              |
-| [1.0.0](/app/references/changelog#1-0-0) | `cy.writeFile()` command added                           |
+| Version                                    | Changes                                                        |
+| ------------------------------------------ | -------------------------------------------------------------- |
+| [15.0.0](/app/references/changelog#15-0-0) | Writing a fixture file clears it from the `cy.fixture()` cache |
+| [9.2.0](/app/references/changelog#9-2-0)   | Added `timeout` option                                         |
+| [4.0.0](/app/references/changelog#4-0-0)   | `cy.writeFile()` now yields `null` instead of `contents`       |
+| [3.1.1](/app/references/changelog#3-1-1)   | Added `flag` option and appending with `a+`                    |
+| [1.0.0](/app/references/changelog#1-0-0)   | `cy.writeFile()` command added                                 |
 
 ## See also
 
-- [`cy.readFile()`](/api/commands/readfile)
+- [`cy.fixture()`](/api/commands/fixture) to load the test data a file holds,
+  with caching
+- [`cy.readFile()`](/api/commands/readfile) to read a file, retrying until it
+  exists
+- [`cy.task()`](/api/commands/task) for file operations `cy.writeFile()`
+  doesn't cover, such as deleting a file
