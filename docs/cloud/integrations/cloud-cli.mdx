@@ -220,7 +220,7 @@ Access ends when the add-on is removed or the trial expires, even for runs recor
 
 :::
 
-Identify the run with `--projectId` and `--runNumber`, or paste a Cypress Cloud run URL with `--runUrl`. Only the project and run number are read from the URL, so you can paste the URL of any page in the run, including a view in its Accessibility report:
+Identify the run with `--projectId` and `--runNumber`, or [pass its URL with `--runUrl`](#Identify-a-run-by-URL). The URL can point to any page in the run, including a view in its Accessibility report:
 
 ```bash
 cy-cloud accessibility report get --runUrl https://cloud.cypress.io/projects/abc123/runs/4021/accessibility
@@ -254,6 +254,16 @@ Most data commands live under a top-level noun (`org`, `project`, `run`, `spec`,
 | [`cy-cloud cache info`](#cy-cloud-cache-info)                                 | Print the local Test Replay cache location and size.                                     |
 | [`cy-cloud cache clear`](#cy-cloud-cache-clear)                               | Remove everything from the cache.                                                        |
 | [`cy-cloud cache cleanup`](#cy-cloud-cache-cleanup)                           | Delete expired and oversized cache entries.                                              |
+
+### Identify a run by URL
+
+Commands that read a run ([`run get`](#cy-cloud-run-get), [`spec list`](#cy-cloud-spec-list), [`test list`](#cy-cloud-test-list), and the [`accessibility`](#Accessibility-and-App-Quality) and [`app-quality`](#cy-cloud-app-quality-config-get) commands) accept `--runUrl` in place of `--projectId` and `--runNumber`. Copy the URL from your browser or from a CI comment and pass it as-is:
+
+```bash
+cy-cloud run get --runUrl https://cloud.cypress.io/projects/abc123/runs/4021
+```
+
+The CLI reads only the project ID and run number from the URL, so a URL for any page in the run works, such as its test results or a single spec. Pass either `--runUrl` or `--projectId` with `--runNumber`. Passing `--runUrl` together with `--projectId` or `--runNumber` fails with an error.
 
 ### Pagination and filtering
 
@@ -369,6 +379,12 @@ Get details for a specific run by project ID and run number:
 cy-cloud run get --projectId <projectId> --runNumber <runNumber>
 ```
 
+Or by its [Cypress Cloud URL](#Identify-a-run-by-URL):
+
+```bash
+cy-cloud run get --runUrl <runUrl>
+```
+
 The details surface the commit SHA, per-status test counts, and duration in milliseconds:
 
 ```json
@@ -389,7 +405,7 @@ The details surface the commit SHA, per-status test counts, and duration in mill
 
 ### cy-cloud spec list
 
-List specs for a run, or look up specs by ID. Provide a project ID together with a run number, or one or more spec IDs. Listed by run, specs come back in the order they ran; looked up by `--specId`, they follow the order of the IDs you pass.
+List specs for a run, or look up specs by ID. Provide a project ID together with a run number, a [run URL](#Identify-a-run-by-URL) with `--runUrl`, or one or more spec IDs. Listed by run, specs come back in the order they ran; looked up by `--specId`, they follow the order of the IDs you pass.
 
 List the failing specs in a run:
 
@@ -418,6 +434,12 @@ Filter to only flaky specs with `--onlyFlaky`. This requires a Cypress Cloud pla
 
 ```bash
 cy-cloud spec list --projectId <projectId> --runNumber <runNumber> --onlyFlaky
+```
+
+List the failing specs in a run from its URL:
+
+```bash
+cy-cloud spec list --runUrl <runUrl> --status failed
 ```
 
 Or look up specific specs by ID:
@@ -449,7 +471,7 @@ cy-cloud spec get --specId <specId>
 
 ### cy-cloud test list
 
-List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`. Tests are returned in the order they ran within the run.
+List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number or a [run URL](#Identify-a-run-by-URL) with `--runUrl`, or narrow with `--specId` or `--testId`. Tests are returned in the order they ran within the run.
 
 List the failing tests in a run:
 
@@ -484,6 +506,12 @@ Each test includes its title parts, spec, status, whether Cypress Cloud has flag
     }
   ]
 }
+```
+
+Or list the failing tests in a run from its URL:
+
+```bash
+cy-cloud test list --runUrl <runUrl> --status failed
 ```
 
 Or list tests within specific specs:
