@@ -813,21 +813,19 @@ it('login link should be active when url is "/login"', () => {
 })
 ```
 
-:::info
-
-Calling `router.push()` in the router for Vue 3 is an asynchronous operation.
-Use the [cy.wrap](/api/commands/wrap) command to have Cypress await the
-promise's resolve before it continues with other commands:
-
-:::
-
 </TabItem>
 </Tabs>
+
+In the Vue 3 router, `router.push()` is asynchronous and returns a promise.
+Wrapping it in [`cy.wrap()`](/api/commands/wrap) makes Cypress wait for the
+promise to resolve before it runs the next command.
 
 ### Vuex
 
 To use a component that uses [Vuex](https://vuex.vuejs.org/), create a `mount`
-command that configures a Vuex store for your component.
+command that configures a Vuex store for your component. The `getStore()`
+factory method initializes Vuex and creates a new store. Create a new store for
+each test so changes to the store in one test don't affect other tests.
 
 <Tabs>
 <TabItem value="cypress/support/component.js">
@@ -857,14 +855,6 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   return mount(component, mountOptions)
 })
 ```
-
-:::info
-
-The `getStore` method is a factory method that initializes Vuex and creates a
-new store. It is important that the store be initialized with each new test to
-ensure changes to the store don't affect other tests.
-
-:::
 
 </TabItem>
 <TabItem value="cypress/support/component.ts">
