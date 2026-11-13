@@ -280,6 +280,20 @@ Refer to the [16 Migration Guide](/app/references/migration-guide#Migrating-to-C
 - Upgraded bundled Chromium version to `146.0.7680.216`.
 - Upgraded dayjs from 1.10.4 to 1.11.23. Date comparisons are significantly faster, reducing background work while a run is in progress. Addressed in [#34748](https://github.com/cypress-io/cypress/pull/34748).
 
+## 15.21.2
+
+_Released Nov 12, 2026_
+
+**Bugfixes:**
+
+- Fixed an issue where, in Chrome 158 and later, `cypress run` stopped with the error `* is not a valid URL` when it opened a second spec. Fixes [#35195](https://github.com/cypress-io/cypress/issues/35195).
+- Fixed an issue where, in Chrome 158 and later with [`injectDocumentDomain`](/app/references/configuration#e2e) enabled, navigating the application under test within [`cy.origin()`](/api/commands/origin) could fail with errors such as `Blocked a frame with origin` or `does not have permission to navigate the target frame`. Chrome 158 stopped firing `unload` events, which Cypress uses to track navigations. Fixed in [#35198](https://github.com/cypress-io/cypress/pull/35198).
+- Fixed an issue where `cypress tap specs` and `cypress tap run` failed against a Cypress session whose project sets the internal `namespace` configuration option, reporting that the session was older than the CLI when it was not. Addresses [#34660](https://github.com/cypress-io/cypress/pull/34660).
+
+**Misc:**
+
+- The editor chooser now lists only the editors Cypress detects, and the **Custom** option has been removed. To use an editor that isn't listed, set the `LAUNCH_EDITOR` environment variable before starting Cypress. Addressed in [#35208](https://github.com/cypress-io/cypress/pull/35208).
+
 ## 15.21.1
 
 _Released Aug 25, 2026_
