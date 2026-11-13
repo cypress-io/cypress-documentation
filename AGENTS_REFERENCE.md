@@ -1207,6 +1207,28 @@ command, in its own section outside the tabs. In
 `docs/api/commands/mount.mdx`, the framework tabs show each
 `cypress/support/component.js`, and a separate section covers the typings.
 
+### Keep prose out of tabs
+
+A `<TabItem>` holds code: code blocks, plus components that render as code, such
+as `<PackageManagerTabs>`. Leave paragraphs, lists, and admonitions out. The site
+styles the whole tab container as a code surface (`.tabs-container` in
+`src/css/custom.scss`), so anything else inside it breaks:
+
+- Body text renders in the page's text color on the dark code background. It is
+  low-contrast in dark mode and close to invisible in light mode.
+- Code blocks inside a list item run flush to the panel's right edge, so long
+  lines look clipped.
+
+None of the build, lint, or test commands catch this, so render the page in
+both light and dark mode whenever you add or change a tab group.
+
+When each option needs its own explanation or steps, give each option an H3
+instead of a tab, with a heading that stands on its own ("Configure Cursor Cloud
+for Cypress"). Readers scroll past the options they don't need, which costs less
+than text they can't read. Keep what all options share in the prose above or
+below the tab group, and when a tab group is still the right fit, keep a sentence
+of lead-in outside it rather than inside each tab.
+
 ## Cypress config examples
 
 Whenever you show a snippet of Cypress configuration, **do not hand-write the

@@ -315,6 +315,11 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Tabs sync via a shared `groupId`. Fixed orders: package managers
   **npm → Yarn → pnpm → Bun**; frameworks **React → Angular → Vue → Svelte**; JS
   before TS.
+- A `<TabItem>` holds only code blocks and code components, never paragraphs,
+  lists, or admonitions: the site styles tab panels as a dark code surface, so
+  prose inside one renders unreadable and its code blocks run flush to the
+  edge. When each option needs its own steps, give each an H3 instead
+  ([details](./AGENTS_REFERENCE.md#keep-prose-out-of-tabs)).
 - Never nest one tab group inside another. Inside framework or other tabs, show
   only the JavaScript version in a plain `js` block, never a `copyTsToJs` block,
   which renders its own tabs.
