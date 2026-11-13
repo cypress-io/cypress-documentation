@@ -533,11 +533,14 @@ You don't need to construct them yourself.
   const runUrl = results.runUrl
   ```
 
-- **From the [`after:run`](/api/node-events/after-run-api) or [`before:run`](/api/node-events/before-run-api) Node event:** the
+- **From the [`before:run`](/api/node-events/before-run-api) Node event:** the
+  `details` argument includes `runUrl` when the run is recorded, so you can call
+  this API at the start of the run if you choose. See the
+  [`before:run` example](#before-run-example).
+- **From the [`after:run`](/api/node-events/after-run-api) Node event:** the
   `results` argument is the same object resolved by the Module API, so
   `results.runUrl` is available there as well. See the
-  [example below](#after-run-example) for a full `after:run` handler that calls
-  this API.
+  [`after:run` example](#after-run-example).
 
 Pass that value as `runUrl`. If you'd rather send `runNumber`, it's the trailing
 segment of the run URL: `.../runs/42` corresponds to `runNumber: 42`.
@@ -553,23 +556,73 @@ recorded aren't tracked by Cypress Cloud and can't be completed through this API
 
 :::caution
 
-`after:run` fires **once per machine**, so every machine sees the same `runUrl` and would each call the endpoint. Read this section to ensure consistent, expected outcomes in CI.
+`before:run` and `after:run` each fire **once per machine**, so every machine sees the same `runUrl` and would each call the endpoint. Read this section to ensure consistent, expected outcomes in CI.
 
 :::
 
-Calling from inside `after:run` is fine **when you pass a known
+Calling from inside `before:run` or `after:run` is fine **when you pass a known
 `expectedGroupCount`** with every call. Because the API defers until that many
 groups have finished (and absorbs any still joining), it doesn't matter which machine
-finishes first or how often the API is called from the run.
+starts or finishes first, or how often the API is called from the run.
 The run only completes once all expected groups
 are in. Use this pattern when your group count is fixed and available to the
 handler (for example, injected as an environment variable by CI).
 
-Firing a bare "complete now" request from all of them is different: whichever machine finishes
+Both hooks work. Choose based on when you want the request on record:
+
+- **`before:run`** records the request as soon as each machine starts, before
+  any spec runs. The response is normally `deferred`, and the run completes
+  without the delay once the expected groups have finished.
+- **`after:run`** sends the request as each machine finishes its own specs.
+
+Send the same `expectedGroupCount` on every call. A request without
+`expectedGroupCount` will clear a count sent earlier for the same run, so don't mix
+calls that include the count with calls that leave it out.
+
+Firing a bare "complete now" request from every machine is different: whichever machine finishes
 its own specs first would ask to complete a run whose other groups may not have joined yet.
 For that reason, if you do not pass `expectedGroupCount`, the most reliable place to make the call is a **dedicated
 post-run step in your CI pipeline** that runs after all parallel jobs have
 finished: one machine, one call, once you truly know the run is done.
+
+#### Example: calling from `before:run` with `expectedGroupCount` {#before-run-example}
+
+The example below requests completion from inside `before:run`, before any spec
+runs. It's safe to fire from every machine **only because**
+`expectedGroupCount` is supplied from an environment variable that CI sets to
+the run's fixed number of groups.
+
+:::cypress-config-plugin-example
+
+```ts
+on('before:run', async (details) => {
+  // `runUrl` is only set when the run was recorded. Bail out otherwise.
+  if (!details.runUrl) {
+    return
+  }
+
+  // The total number of `--group` names in this run, provided by CI.
+  // Passing this is what makes the call safe to fire from every machine.
+  const expectedGroupCount = Number(process.env.EXPECTED_GROUP_COUNT)
+
+  if (!expectedGroupCount) {
+    return
+  }
+
+  await fetch('https://api.cypress.io/runs/complete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      projectId: details.config.projectId,
+      recordKey: process.env.CYPRESS_RECORD_KEY,
+      runUrl: details.runUrl,
+      expectedGroupCount,
+    }),
+  })
+})
+```
+
+:::
 
 #### Example: calling from `after:run` with `expectedGroupCount` {#after-run-example}
 
