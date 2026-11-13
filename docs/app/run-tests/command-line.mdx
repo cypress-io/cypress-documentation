@@ -858,8 +858,8 @@ cypress open --global
 #### `cypress open --headless` {#cypress-open-headless}
 
 Starts a session with no visible window, for
-[`cypress tap`](/app/tooling/cypress-tap) to drive — such as when an AI coding
-agent runs your tests while you keep working in other apps. The browser
+[`cypress tap`](/app/tooling/cypress-tap) to drive (such as when an AI coding
+agent runs your tests while you keep working in other apps). The browser
 Cypress launches runs headless too, so neither it nor the Cypress window takes
 focus or appears on screen.
 
@@ -870,8 +870,8 @@ since there's no window to choose them in:
 cypress open --headless --e2e --browser chrome --project .
 ```
 
-Pass a Chromium-based browser with `--browser` — Chrome, Chromium, Edge, or
-Electron — since those are the only browsers
+Pass a Chromium-based browser with `--browser` (Chrome, Chromium, Edge, or
+Electron), since those are the only browsers
 [`cypress tap`](/app/tooling/cypress-tap) can drive. If the session can't
 start, such as from a browser it cannot drive or component testing that isn't
 set up yet, Cypress prints the reason and
