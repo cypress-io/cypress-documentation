@@ -316,18 +316,19 @@ node e2e-open-tests.js
 Just like the [Command Line options](/app/references/command-line), you can pass
 options that modify how Cypress runs.
 
-| Option        | Type      | Description                                                                          |
-| ------------- | --------- | ------------------------------------------------------------------------------------ |
-| `browser`     | _string_  | Specify a filesystem path to a custom browser                                        |
-| `config`      | _object_  | Specify [configuration](/app/references/configuration)                               |
-| `configFile`  | _string_  | Path to the [configuration file](/app/references/configuration) to be used.          |
-| `detached`    | _boolean_ | Open Cypress in detached mode                                                        |
-| `env`         | _object_  | Specify secret [environment variables](/app/guides/environment-variables)            |
-| `expose`      | _object_  | Specify public [exposed variables](/api/cypress-api/expose)                          |
-| `global`      | _boolean_ | Run in global mode                                                                   |
-| `port`        | _number_  | Override default port                                                                |
-| `project`     | _string_  | Path to a specific project                                                           |
-| `testingType` | _string_  | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e` |
+| Option        | Type      | Description                                                                                                                                          |
+| ------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `browser`     | _string_  | Specify a filesystem path to a custom browser                                                                                                        |
+| `config`      | _object_  | Specify [configuration](/app/references/configuration)                                                                                               |
+| `configFile`  | _string_  | Path to the [configuration file](/app/references/configuration) to be used.                                                                          |
+| `detached`    | _boolean_ | Open Cypress in detached mode                                                                                                                        |
+| `env`         | _object_  | Specify secret [environment variables](/app/guides/environment-variables)                                                                            |
+| `expose`      | _object_  | Specify public [exposed variables](/api/cypress-api/expose)                                                                                          |
+| `global`      | _boolean_ | Run in global mode                                                                                                                                   |
+| `headless`    | _boolean_ | [Start a session for `cypress tap` with no visible window](/app/references/command-line#cypress-open-headless). Requires `testingType` and `browser` |
+| `port`        | _number_  | Override default port                                                                                                                                |
+| `project`     | _string_  | Path to a specific project                                                                                                                           |
+| `testingType` | _string_  | Specify the type of tests to execute; either `e2e` or `component`. Defaults to `e2e`                                                                 |
 
 ### Example
 
