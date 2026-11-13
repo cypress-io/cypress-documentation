@@ -107,6 +107,10 @@ Prefer the provided MDX components over raw HTML:
 - `<DocsVideo src="..." title="..." />` — supports local files, YouTube, Vimeo.
 - `<Icon name="..." />` — the Font Awesome icon must be imported under the
   `fontawesome` key in `src/theme/MDXComponents.js`.
+- `<AccordionBlock title="..." icon={<Icon name="..." />}>` — a collapsible
+  section, collapsed unless you pass `open`. Use one per tool or variation when
+  each needs its own prose (see
+  [use accordions for prose that varies by tool](#use-accordions-for-prose-that-varies-by-tool)).
 
 Images go in `static/img/...` and are referenced via `/img/...`.
 
@@ -1222,12 +1226,54 @@ styles the whole tab container as a code surface (`.tabs-container` in
 None of the build, lint, or test commands catch this, so render the page in
 both light and dark mode whenever you add or change a tab group.
 
-When each option needs its own explanation or steps, give each option an H3
-instead of a tab, with a heading that stands on its own ("Configure Cursor Cloud
-for Cypress"). Readers scroll past the options they don't need, which costs less
-than text they can't read. Keep what all options share in the prose above or
-below the tab group, and when a tab group is still the right fit, keep a sentence
-of lead-in outside it rather than inside each tab.
+#### Use accordions for prose that varies by tool
+
+When the same kind of instructions repeats for different tools or variations,
+and each one needs its own prose, lists, or steps, give each variation an
+[`<AccordionBlock>`](#mdx-components) instead of a tab. Typical cases are setup
+per agent sandbox, environment variables per CI provider, and configuration per
+AI client. The accordion renders its content on the page background, so text and
+code blocks keep their normal styling, and readers expand only the variation
+they use.
+
+```mdx
+## Configure your sandbox
+
+Expand your sandbox below for the setup it needs.
+
+<AccordionBlock title="Claude Code on the web" icon={<Icon name="claude" />}>
+
+1. In the environment's network settings, allow the hosts in
+   [Network access](#Network-access).
+
+</AccordionBlock>
+
+<AccordionBlock title="Cursor Cloud" icon={<Icon name="hexagon-nodes" />}>
+
+Cursor Cloud builds the environment from a Dockerfile.
+
+</AccordionBlock>
+```
+
+- Lead with a sentence outside the accordions that tells the reader to expand
+  the one they use, and keep what every variation shares in prose above or
+  below them rather than repeating it in each.
+- Title each accordion with the tool's name alone ("Cursor Cloud"); the section
+  heading above carries the context.
+- Leave a blank line after the opening tag and before the closing tag, or the
+  Markdown inside doesn't render.
+- Give each one an `icon` and check that the icon is registered (see
+  [MDX components](#mdx-components)). Use the brand icon when one exists.
+- Content inside an accordion is collapsed by default, so don't put a heading
+  that other pages link to inside one; keep linked anchors outside.
+
+Precedents: `docs/cloud/integrations/cloud-mcp.mdx` (one per AI client),
+`docs/partials/_results-api-env-vars.mdx` (one per CI provider), and
+`docs/app/ai/cypress-agent-sandboxes.mdx` (one per agent sandbox).
+
+Tabs stay the right fit when each variation is a code sample, such as one config
+file per framework. Keep any lead-in sentence outside the tab group rather than
+inside each tab.
 
 ## Cypress config examples
 
