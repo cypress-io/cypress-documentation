@@ -107,6 +107,10 @@ Prefer the provided MDX components over raw HTML:
 - `<DocsVideo src="..." title="..." />` — supports local files, YouTube, Vimeo.
 - `<Icon name="..." />` — the Font Awesome icon must be imported under the
   `fontawesome` key in `src/theme/MDXComponents.js`.
+- `<AccordionBlock title="..." icon={<Icon name="..." />}>` — a collapsible
+  section, collapsed unless you pass `open`. Use one per tool or variation when
+  each needs its own prose (see
+  [use accordions for prose that varies by tool](#use-accordions-for-prose-that-varies-by-tool)).
 
 Images go in `static/img/...` and are referenced via `/img/...`.
 
@@ -1206,6 +1210,75 @@ TypeScript readers need, such as the `declare global` block that types a custom
 command, in its own section outside the tabs. In
 `docs/api/commands/mount.mdx`, the framework tabs show each
 `cypress/support/component.js`, and a separate section covers the typings.
+
+### Keep prose out of tabs
+
+A `<TabItem>` holds code: code blocks, plus components that render as code, such
+as `<PackageManagerTabs>`. Leave plain paragraphs and lists out. The site styles
+the whole tab container as a code surface (`.tabs-container` in
+`src/css/custom.scss`), so plain prose inside it breaks:
+
+- In light mode, body text renders in the page's dark text color on the dark
+  code background, at about 2:1 contrast, well under the 4.5:1 that WCAG AA
+  requires.
+- Code blocks nested in a list item run flush to the panel's right edge, so long
+  lines look clipped.
+
+An admonition is the exception: it brings its own background, so a short
+`:::info` inside a tab stays readable.
+
+None of the build, lint, or test commands catch this, so render the page in
+both light and dark mode whenever you add or change a tab group.
+
+#### Use accordions for prose that varies by tool
+
+When the same kind of instructions repeats for different tools or variations,
+and each one needs its own prose, lists, or steps, give each variation an
+[`<AccordionBlock>`](#mdx-components) instead of a tab. Typical cases are setup
+per agent sandbox, environment variables per CI provider, and configuration per
+AI client. The accordion renders its content on the page background, so text and
+code blocks keep their normal styling, and readers expand only the variation
+they use.
+
+```mdx
+## Configure your sandbox
+
+Expand your sandbox below for the setup it needs.
+
+<AccordionBlock title="Claude Code on the web" icon={<Icon name="claude" />}>
+
+1. In the environment's network settings, allow the hosts in
+   [Network access](#Network-access).
+
+</AccordionBlock>
+
+<AccordionBlock title="Cursor Cloud" icon={<Icon name="hexagon-nodes" />}>
+
+Cursor Cloud builds the environment from a Dockerfile.
+
+</AccordionBlock>
+```
+
+- Lead with a sentence outside the accordions that tells the reader to expand
+  the one they use, and keep what every variation shares in prose above or
+  below them rather than repeating it in each.
+- Title each accordion with the tool's name alone ("Cursor Cloud"); the section
+  heading above carries the context.
+- Leave a blank line after the opening tag and before the closing tag, as the
+  existing pages do.
+- Give each one an `icon` and check that the icon is registered (see
+  [MDX components](#mdx-components)). Use the brand icon when one exists.
+- Don't put headings inside an accordion. Its title already names the
+  variation, and a heading that other pages link to belongs where readers can
+  see it without expanding anything.
+
+Precedents: `docs/cloud/integrations/cloud-mcp.mdx` (one per AI client),
+`docs/partials/_results-api-env-vars.mdx` (one per CI provider), and
+`docs/app/ai/cypress-agent-sandboxes.mdx` (one per agent sandbox).
+
+Tabs stay the right fit when each variation is a code sample, such as one config
+file per framework. Keep any lead-in sentence outside the tab group rather than
+inside each tab.
 
 ## Cypress config examples
 

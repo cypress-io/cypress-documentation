@@ -220,12 +220,9 @@ from, so pass `--browser` instead.
 
 ## Configure your sandbox
 
-<Tabs groupId="agent-sandbox" defaultValue="claude" values={[
-  { label: 'Claude Code on the web', value: 'claude' },
-  { label: 'Cursor Cloud', value: 'cursor' },
-  { label: 'Other sandboxes', value: 'other' },
-]}>
-<TabItem value="claude">
+Expand your sandbox below for the setup it needs.
+
+<AccordionBlock title="Claude Code on the web" icon={<Icon name="claude" />}>
 
 1. In the environment's network settings, allow the hosts in
    [Network access](#Network-access).
@@ -265,11 +262,6 @@ from, so pass `--browser` instead.
    npx cypress verify >&2 || { npx cypress install >&2; npx cypress verify >&2; }
    ```
 
-   By default most agents will not persist the sandbox filesystem - this means Cypress and your
-   dependencies will be re-downloaded each time which can have substantial time and bandwidth
-   costs. Review your agent's documentation to determine if it is appropriate to cache the
-   Cypress binary (see [Environment variables](#Environment-variables)) and other dependencies.
-
 3. Claude's sandbox environments already have `xvfb` and a Chromium build
    installed, but `DISPLAY` is left unset and that Chromium isn't on `PATH`.
    If you have a display of your own, set `DISPLAY` yourself; otherwise
@@ -285,8 +277,9 @@ from, so pass `--browser` instead.
    PATH="$HOME/bin:$PATH" nohup npx cypress open --e2e --browser chromium --project . > cypress-open.log 2>&1 &
    ```
 
-</TabItem>
-<TabItem value="cursor">
+</AccordionBlock>
+
+<AccordionBlock title="Cursor Cloud" icon={<Icon name="hexagon-nodes" />}>
 
 Cursor Cloud builds the environment from a Dockerfile and runs commands from
 `.cursor/environment.json`.
@@ -309,8 +302,9 @@ Chrome, Firefox, and Edge, but not Chromium, so pass `--browser chrome` when
 you [start Cypress](#Start-Cypress-in-the-background). Allow the hosts in
 [Network access](#Network-access) in the environment's network settings.
 
-</TabItem>
-<TabItem value="other">
+</AccordionBlock>
+
+<AccordionBlock title="Other sandboxes" icon={<Icon name="laptop-code" />}>
 
 Any other sandbox that meets the [requirements](#Requirements) can work, including a
 local Docker container or an agent sandbox on your own machine. However, it may require
@@ -319,8 +313,12 @@ custom configuration, dependency installation, or setup steps.
 - If the sandbox restricts where processes can write or which ports they can
   open, allow writes to the cache folder and connections on `127.0.0.1`.
 
-</TabItem>
-</Tabs>
+</AccordionBlock>
+
+Most agents don't persist the sandbox filesystem, so each session downloads
+Cypress and your dependencies again, which costs time and bandwidth. Check
+your agent's documentation to see whether you can cache the Cypress binary
+(see [Environment variables](#Environment-variables)) and other dependencies.
 
 ## Add the recipe to your agent's instructions
 
