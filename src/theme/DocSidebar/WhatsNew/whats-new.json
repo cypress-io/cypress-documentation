@@ -32,13 +32,13 @@
     {
       "label": "Run Checks",
       "href": "/cloud/features/checks?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=run-checks",
-      "description": "Pass/fail quality gates for failed tests, flake, accessibility, and UI Coverage.",
+      "description": "Encode quality gates for failed tests, flake, Accessibility, and UI Coverage.",
       "isNew": true
     },
     {
-      "label": "Cloud CLI Accessibility commands",
+      "label": "Cloud CLI",
       "href": "/cloud/integrations/cloud-cli?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-cli-accessibility#Accessibility-and-App-Quality",
-      "description": "Pull Accessibility reports and failing elements into your terminal or agent.",
+      "description": "Pull test and Accessibility data into your terminal or agent.",
       "showAISparkle": true,
       "isNew": true
     }
@@ -65,7 +65,7 @@
       "isNew": true
     },
     {
-      "label": "Cloud CLI Accessibility commands",
+      "label": "Cloud CLI",
       "href": "/cloud/integrations/cloud-cli?utm_medium=nav-promo&utm_source=docs.cypress.io&utm_campaign=cloud-cli-accessibility#Accessibility-and-App-Quality",
       "description": "Pull Accessibility reports and failing elements into your terminal or agent.",
       "showAISparkle": true,
