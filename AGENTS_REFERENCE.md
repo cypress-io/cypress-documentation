@@ -1214,14 +1214,18 @@ command, in its own section outside the tabs. In
 ### Keep prose out of tabs
 
 A `<TabItem>` holds code: code blocks, plus components that render as code, such
-as `<PackageManagerTabs>`. Leave paragraphs, lists, and admonitions out. The site
-styles the whole tab container as a code surface (`.tabs-container` in
-`src/css/custom.scss`), so anything else inside it breaks:
+as `<PackageManagerTabs>`. Leave plain paragraphs and lists out. The site styles
+the whole tab container as a code surface (`.tabs-container` in
+`src/css/custom.scss`), so plain prose inside it breaks:
 
-- Body text renders in the page's text color on the dark code background. It is
-  low-contrast in dark mode and close to invisible in light mode.
-- Code blocks inside a list item run flush to the panel's right edge, so long
+- In light mode, body text renders in the page's dark text color on the dark
+  code background, at about 2:1 contrast, well under the 4.5:1 that WCAG AA
+  requires.
+- Code blocks nested in a list item run flush to the panel's right edge, so long
   lines look clipped.
+
+An admonition is the exception: it brings its own background, so a short
+`:::info` inside a tab stays readable.
 
 None of the build, lint, or test commands catch this, so render the page in
 both light and dark mode whenever you add or change a tab group.
@@ -1260,12 +1264,13 @@ Cursor Cloud builds the environment from a Dockerfile.
   below them rather than repeating it in each.
 - Title each accordion with the tool's name alone ("Cursor Cloud"); the section
   heading above carries the context.
-- Leave a blank line after the opening tag and before the closing tag, or the
-  Markdown inside doesn't render.
+- Leave a blank line after the opening tag and before the closing tag, as the
+  existing pages do.
 - Give each one an `icon` and check that the icon is registered (see
   [MDX components](#mdx-components)). Use the brand icon when one exists.
-- Content inside an accordion is collapsed by default, so don't put a heading
-  that other pages link to inside one; keep linked anchors outside.
+- Don't put headings inside an accordion. Its title already names the
+  variation, and a heading that other pages link to belongs where readers can
+  see it without expanding anything.
 
 Precedents: `docs/cloud/integrations/cloud-mcp.mdx` (one per AI client),
 `docs/partials/_results-api-env-vars.mdx` (one per CI provider), and

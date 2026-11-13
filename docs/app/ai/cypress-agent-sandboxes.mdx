@@ -262,11 +262,6 @@ Expand your sandbox below for the setup it needs.
    npx cypress verify >&2 || { npx cypress install >&2; npx cypress verify >&2; }
    ```
 
-   Most agents don't persist the sandbox filesystem, so each session downloads
-   Cypress and your dependencies again, which costs time and bandwidth. Check
-   your agent's documentation to see whether you can cache the Cypress binary
-   (see [Environment variables](#Environment-variables)) and other dependencies.
-
 3. Claude's sandbox environments already have `xvfb` and a Chromium build
    installed, but `DISPLAY` is left unset and that Chromium isn't on `PATH`.
    If you have a display of your own, set `DISPLAY` yourself; otherwise
@@ -319,6 +314,11 @@ custom configuration, dependency installation, or setup steps.
   open, allow writes to the cache folder and connections on `127.0.0.1`.
 
 </AccordionBlock>
+
+Most agents don't persist the sandbox filesystem, so each session downloads
+Cypress and your dependencies again, which costs time and bandwidth. Check
+your agent's documentation to see whether you can cache the Cypress binary
+(see [Environment variables](#Environment-variables)) and other dependencies.
 
 ## Add the recipe to your agent's instructions
 
