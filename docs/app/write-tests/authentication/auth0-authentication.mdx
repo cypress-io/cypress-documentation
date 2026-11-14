@@ -13,12 +13,12 @@ slug: /app/guides/authentication-testing/auth0-authentication
 This guide is setup for testing against an [Auth0](https://auth0.com) Single
 Page Application using the
 [Classic Universal Login Experience](https://auth0.com/docs/universal-login/classic).
-This configuration is recommended for a "Test Tenant" and/or "Test API" setup
+We recommend this configuration for a "Test Tenant" and/or "Test API" setup
 for automated end-to-end testing.
 
 ## Auth0 Application Setup
 
-To get started with Auth0, an application needs to be setup within the
+To get started with Auth0, set up an application within the
 [Auth0 Dashboard](https://auth0.com/docs/get-started/auth0-overview/dashboard) via the following steps:
 
 1. Visit the [Auth0 Dashboard](https://auth0.com/docs/get-started/auth0-overview/dashboard) and click the
@@ -340,7 +340,7 @@ The `loginByAuth0Api` command executes the following steps:
 1. Use the
    [/oauth/token endpoint](https://auth0.com/docs/protocols/protocol-oauth2#token-endpoint)
    to perform the programmatic login.
-2. Finally the `auth0Cypress` `localStorage` item is set with the
+2. Finally, the command sets the `auth0Cypress` `localStorage` item with the
    `access token`, `id_token`, and user profile.
 
 <Tabs>
@@ -517,14 +517,14 @@ describe('Auth0', function () {
 <strong>Note</strong>
 
 The previous sections focused on the recommended Auth0 authentication practice
-within Cypress tests. To use this practice it is assumed you are testing an app
+within Cypress tests. This practice assumes you are testing an app
 appropriately built or adapted to use Auth0.
 
 The following sections provide guidance on building or adapting an app to use
 Auth0 authentication. If you are
 [logging in with `cy.origin()`](#Login-with-cyorigin) and your app is already
 successfully integrated with Auth0, you don't need to make any further changes
-to your app and the remainder of this guide should be regarded as purely
+to your app and you can regard the remainder of this guide as purely
 informational.
 
 :::
@@ -605,9 +605,9 @@ if (process.env.REACT_APP_AUTH0) {
 ### Adapting the front end
 
 We need to update our front end React app to allow for authentication with
-[Auth0](https://auth0.com). As mentioned above, the
+[Auth0](https://auth0.com). As mentioned above, the app uses the
 [auth0-react SDK](https://github.com/auth0/auth0-react) for React Single Page
-Applications (SPA) is used.
+Applications (SPA).
 
 First, we create a `AppAuth0.tsx` container to render our application as it is
 authenticated with [Auth0](https://auth0.com). The component is identical to the
@@ -615,7 +615,7 @@ authenticated with [Auth0](https://auth0.com). The component is identical to the
 the Sign Up and Sign In routes and wraps the component with the
 `withAuthenticationRequired` higher order function (HOC).
 
-A `useEffect` hook is added to get the access token for the authenticated user
+We add a `useEffect` hook to get the access token for the authenticated user
 and send an `AUTH0` event with the `user` and `token` objects to work with the
 existing authentication layer (`authMachine.ts`).
 
@@ -773,11 +773,11 @@ export default appAuth0
 
 Be aware of the rate limit in [Auth0's documentation](https://auth0.com/docs/connections/database/rate-limits) -
 
-This limit can be reached as the size of a test suite grows along with enabling
+You can reach this limit as the size of a test suite grows along with enabling
 [parallelized runs](/cloud/features/smart-orchestration/parallelization) to speed up test run
 duration.
 
-If you run into this rate limit, a programmatic approach can be added to the
+If you run into this rate limit, you can add a programmatic approach to the
 `loginByAuth0` command to clear a blocked IP prior to the test run.
 
 You need to obtain an

@@ -57,7 +57,7 @@ following development servers and frameworks:
 | [Svelte with Vite](/app/component-testing/svelte/overview#Svelte-with-Vite) <Badge type="info">Alpha</Badge>       | Svelte 5      | Vite 8    |
 | [Svelte with Webpack](/app/component-testing/svelte/overview#Svelte-with-Webpack) <Badge type="info">Alpha</Badge> | Svelte 5      | Webpack 5 |
 
-The following integrations are built and maintained by Cypress community members.
+Cypress community members build and maintain the following integrations.
 
 | Framework                                                                               | UI Library | Bundler |
 | --------------------------------------------------------------------------------------- | ---------- | ------- |
@@ -153,7 +153,7 @@ In addition to our official framework support there are many community plugins s
 ### Your First Component Test
 
 Though every framework is different and has its own unique nuances, in general, writing tests is very similar.
-Let's look at how a basic test is written for a `StepperComponent`.
+Let's look at how to write a basic test for a `StepperComponent`.
 
 Let's assume the Stepper Component consists of two `buttons`, one used to **decrement** the counter and one
 to **increment** it as well as a `span` tag that sits in the middle of the buttons to show the
@@ -279,7 +279,7 @@ the component is correct.
 
 ### Selectors & Assertions
 
-By default, the Stepper's counter is initialized to "0". We can override that
+By default, the Stepper initializes its counter to "0". We can override that
 value by specifying an initial count. Let's write a couple of tests that
 verify both these states.
 
@@ -571,8 +571,8 @@ tests pass, but we can visually see the results in a browser!
 
 ## Testing Components with Events
 
-All the state of the `Stepper` Component (ie: the count) is handled internally in the
-component and then consumers are then alerted to changes to the state.
+The `Stepper` Component handles all of its state (ie: the count) internally and
+then alerts consumers to changes to the state.
 
 As the developer of the `Stepper` Component, you want to make sure when the
 end-user clicks the **increment** and **decrement** buttons, that the appropriate event is
@@ -581,7 +581,7 @@ triggered with the proper values in the consuming component.
 ### Using Spies
 
 We can use [Cypress Spies](/app/guides/stubs-spies-and-clocks#Spies) to
-validate these events are being called correctly. A spy is a special function that
+validate that the component calls these events correctly. A spy is a special function that
 keeps track of how many times it was called and any parameters that it was
 called with. We can then assign a spy to our event, interact with the
 component, and then query the spy to validate it was called with the parameters

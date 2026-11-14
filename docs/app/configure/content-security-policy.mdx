@@ -107,11 +107,11 @@ enforces your policy during the test, configure the
 [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
 option. The option accepts three kinds of value:
 
-| Value      | Behavior                                                                                                           |
-| ---------- | ------------------------------------------------------------------------------------------------------------------ |
+| Value      | Behavior                                                                                                                |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `false`    | _(default)_ Strip the entire CSP header. Cypress removes the policy completely before the response reaches the browser. |
-| `true`     | Keep the header, stripping only the directives that would interfere with Cypress (see below).                      |
-| `string[]` | Keep the header and the named directives, stripping everything else that Cypress would otherwise allow.            |
+| `true`     | Keep the header, stripping only the directives that would interfere with Cypress (see below).                           |
+| `string[]` | Keep the header and the named directives, stripping everything else that Cypress would otherwise allow.                 |
 
 When you use the array form, Cypress validates the values, which must come from
 exactly these six allowable directives:

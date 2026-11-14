@@ -15,7 +15,7 @@ By default, UI Coverage tracks every [interactive element](/ui-coverage/core-con
 
 ## Why use elementFilters?
 
-- **Ignore third-party components**: Chat widgets, cookie banners, embedded media players, and other elements rendered by libraries or services you don't control can be excluded, since your team isn't responsible for testing them.
+- **Ignore third-party components**: Exclude chat widgets, cookie banners, embedded media players, and other elements that libraries or services you don't control render, since your team isn't responsible for testing them.
 - **Exclude elements you've decided not to test**: Remove test-only controls, decorative elements, or areas of the application that are out of scope for your testing strategy.
 - **Keep reports actionable**: A score and untested-elements list that only contain elements you could realistically test make coverage gaps easier to spot and prioritize.
 
@@ -25,7 +25,7 @@ Excluding an element removes it from the report entirely. If your goal is differ
 
 :::info
 
-**Note:** setting `elementFilters` at the root of your configuration impacts both UI Coverage and Cypress Accessibility reports. To configure the products separately, nest the property under a `uiCoverage` or `accessibility` key. A nested `elementFilters` completely replaces a root-level one for that product; the two lists are not merged.
+**Note:** setting `elementFilters` at the root of your configuration impacts both UI Coverage and Cypress Accessibility reports. To configure the products separately, nest the property under a `uiCoverage` or `accessibility` key. A nested `elementFilters` completely replaces a root-level one for that product; Cypress Cloud doesn't merge the two lists.
 
 :::
 
@@ -75,14 +75,14 @@ To apply rules to UI Coverage only, nest the property under the `uiCoverage` key
 | `selector`      | Required |         | A CSS selector that matches the elements to include or exclude. Supports standard CSS selector syntax, including IDs, classes, attributes, combinators, and functional pseudo-classes like `:has()`. The selector must match the interactive element itself, not just a container around it.        |
 | `include`       | Required |         | Whether elements matched by this rule appear in the report. Use `false` to exclude the matched elements. Use `true` to protect elements from broader exclude rules later in the list. See [When to use include: true](#When-to-use-include-true).                                                   |
 | `documentScope` | Optional |         | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to limit a rule to elements inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are. |
-| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. Comments have no effect on filtering and are not displayed in reports.                                                                                                                |
+| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. Comments have no effect on filtering and reports don't display them.                                                                                                                  |
 
 ### How are elementFilters rules applied?
 
-- **The first matching rule wins.** Rules are evaluated in the order they are defined, and each element is included or excluded by the first rule whose `selector` (and `documentScope`, when present) matches it. Later rules never apply to that element, so an early `include: true` rule protects its elements from a broader exclude rule below it. List specific rules before general ones.
-- **Elements that match no rule are included.** Everything is included by default, so a rule with `include: true` on its own changes nothing. To limit the report to only certain elements, pair include rules with a catch-all exclude rule like `{ "selector": "*", "include": false }` at the end of the list.
-- **The selector must match the interactive element itself.** Filters are evaluated against the [interactive elements](/ui-coverage/core-concepts/interactivity) UI Coverage tracks, using standard CSS matching. A rule with the selector `footer` matches only a `<footer>` element, not the buttons and links inside it. To exclude everything within a container, use a descendant selector such as `footer *`.
-- **Excluded elements are removed everywhere.** Excluded elements don't appear in any view, don't count toward the totals or the coverage score, and aren't considered by [`elementGroups`](/ui-coverage/configuration/elementgroups) or [`elements`](/ui-coverage/configuration/elements) rules. Interactions with excluded elements are removed as well.
+- **The first matching rule wins.** UI Coverage evaluates rules in the order you define them, and the first rule whose `selector` (and `documentScope`, when present) matches an element decides whether UI Coverage includes or excludes it. Later rules never apply to that element, so an early `include: true` rule protects its elements from a broader exclude rule below it. List specific rules before general ones.
+- **Elements that match no rule are included.** UI Coverage includes everything by default, so a rule with `include: true` on its own changes nothing. To limit the report to only certain elements, pair include rules with a catch-all exclude rule like `{ "selector": "*", "include": false }` at the end of the list.
+- **The selector must match the interactive element itself.** UI Coverage evaluates filters against the [interactive elements](/ui-coverage/core-concepts/interactivity) it tracks, using standard CSS matching. A rule with the selector `footer` matches only a `<footer>` element, not the buttons and links inside it. To exclude everything within a container, use a descendant selector such as `footer *`.
+- **Excluded elements are removed everywhere.** Excluded elements don't appear in any view, don't count toward the totals or the coverage score, and [`elementGroups`](/ui-coverage/configuration/elementgroups) or [`elements`](/ui-coverage/configuration/elements) rules don't consider them. UI Coverage removes interactions with excluded elements as well.
 - **Rules match in any document unless scoped.** A rule without `documentScope` can match elements in the main document, in iframes, and in shadow DOMs. Add `documentScope` to restrict a rule to one of those documents.
 
 If a rule doesn't seem to take effect, see [Why isn't my elementFilters rule excluding an element?](/ui-coverage/faq#Why-isnt-my-UI-Coverage-elementFilters-rule-excluding-an-element) in the UI Coverage FAQ.
@@ -91,7 +91,7 @@ If a rule doesn't seem to take effect, see [Why isn't my elementFilters rule exc
 
 Cypress Cloud rejects a configuration when:
 
-- Two rules have the same `selector` (with the same `documentScope`). Only the first could ever apply, so duplicates are treated as mistakes.
+- Two rules have the same `selector` (with the same `documentScope`). Only the first could ever apply, so Cypress Cloud treats duplicates as mistakes.
 - A rule is missing `selector` or `include`.
 - A `selector` or `documentScope` entry isn't valid CSS selector syntax.
 - `documentScope` is present but empty. Omit the property to match in any document.
@@ -414,7 +414,7 @@ A wildcard selector combined with `documentScope` excludes all elements within a
 
 Because the first matching rule wins, an `include: true` rule placed before a broader exclude rule keeps its elements in the report. [Include only elements in a specific container](#Include-only-elements-in-a-specific-container) above uses this with a catch-all exclude rule, and the same protection works with narrower exclude rules.
 
-This protection is specific to UI Coverage. When a root-level `elementFilters` list is shared with Cypress Accessibility, that product treats include rules as inert, so the same list can behave differently per product.
+This protection is specific to UI Coverage. When you share a root-level `elementFilters` list with Cypress Accessibility, that product treats include rules as inert, so the same list can behave differently per product.
 
 #### Config
 
@@ -454,7 +454,7 @@ This protection is specific to UI Coverage. When a root-level `elementFilters` l
 /home
 ```
 
-The Home link matches both rules, but the include rule matches first, so the link stays in the report while the sponsored link is excluded. In Cypress Accessibility, reading the same root-level list, the exclude rule ignores both links, because include rules have no effect there.
+The Home link matches both rules, but the include rule matches first, so the link stays in the report while the exclude rule removes the sponsored link. In Cypress Accessibility, reading the same root-level list, the exclude rule ignores both links, because include rules have no effect there.
 
 To get different outcomes per product, nest a separate `elementFilters` list under each product key instead of sharing one root-level list.
 

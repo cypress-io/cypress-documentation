@@ -5,7 +5,7 @@ Both [`cy.env()`](/api/commands/env) and [`Cypress.expose()`](/api/cypress-api/e
 Recommended when:
 
 - **Values are public or non-sensitive** - Examples include feature flags, API versions, environment labels, or plugin configuration that is safe to appear in browser state.
-- **Synchronous access is needed** - `Cypress.expose()` returns values immediately, without requiring Cypress command chaining.
+- **You need synchronous access** - `Cypress.expose()` returns values immediately, without requiring Cypress command chaining.
 
 #### Use `cy.env()` for sensitive or secret values
 
@@ -13,7 +13,7 @@ Choose `cy.env()` when security, scoping, and controlled access matter. Recommen
 
 - **Values are sensitive** - API keys, passwords, tokens, or any data that should not be broadly exposed to the browser.
 - **Security is a priority** - `cy.env()` only exposes the variables you explicitly request and does not automatically serialize them into browser state.
-- **You're already working within Cypress command chains**: `cy.env()` is asynchronous and designed to be used inside Cypress tests and hooks.
+- **You're already working within Cypress command chains**: `cy.env()` is asynchronous and designed for use inside Cypress tests and hooks.
 
 **Example: choosing the right API**
 

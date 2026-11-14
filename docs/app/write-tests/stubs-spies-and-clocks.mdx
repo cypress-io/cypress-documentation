@@ -79,7 +79,7 @@ control.
 - Your function returns a `Promise`, and you want to automatically resolve or
   reject it.
 - You have a function that wraps `window.location` and don't want your
-  application to be navigated.
+  application to navigate.
 - You're trying to test your application's "failure path" by forcing things to
   fail.
 - You're trying to test your application's "happy path" by forcing things to
@@ -103,8 +103,8 @@ then assert that the function was called with the right arguments, or that the
 function was called a certain number of times, or even what the return value was
 or what context the function was called with.
 
-A spy does **not** modify the behavior of the function - it is left perfectly
-intact. A spy is most useful when you are testing the contract between multiple
+A spy does **not** modify the behavior of the function - the function stays
+perfectly intact. A spy is most useful when you are testing the contract between multiple
 functions and you don't care about the side effects the real function may create
 (if any).
 
@@ -152,8 +152,8 @@ cy.tick(1000)
 You can call [`cy.clock()`](/api/commands/clock) **prior** to visiting your
 application and Cypress automatically binds it to the application on the next
 [`cy.visit()`](/api/commands/visit). The same concept applies to mounting a
-component with [`cy.mount()`](/api/commands/mount). We bind **before** any
-timers from your code can be invoked.
+component with [`cy.mount()`](/api/commands/mount). We bind **before** your
+code can invoke any timers.
 
 ##### Restore the clock
 
@@ -245,7 +245,7 @@ collaboration between these tools.
 
 - We replaced Sinon's argument stringifier for a much less noisy, more
   performant, custom version.
-- We improved the `sinon-chai` assertion output by changing what is displayed
+- We improved the `sinon-chai` assertion output by changing what Cypress displays
   during a passing vs. failing test.
 - We added aliasing support to `stub` and `spy` APIs.
 - We automatically restore and tear down `stub`, `spy`, and `clock` between
@@ -264,7 +264,7 @@ When you use aliasing with the [`.as()`](/api/commands/as) command, we also
 correlate those aliases with the calls. Aliasing works identically to aliasing
 [`cy.intercept()`](/api/commands/intercept).
 
-When stubs are created by calling the method `.withArgs(...)` we also visually
+When you create stubs by calling the method `.withArgs(...)`, we also visually
 link these together.
 
 When you click on a stub or spy, we also output **remarkably** helpful debugging
