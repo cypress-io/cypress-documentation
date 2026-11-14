@@ -11,9 +11,13 @@ sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 
 # Run Cypress in an AI agent sandbox
 
-An agent can start Cypress, run a spec, and read the result without anyone at the keyboard.
+An AI agent can write a Cypress test, but without Cypress running in its
+sandbox, it can't tell whether that test passes. It hands you unverified
+changes, and you're the one who runs the specs and digs into the failures. Run
+Cypress in the sandbox, and the agent runs specs, reads the failures through
+`cypress tap`, and fixes them before it hands the work back.
 
-Cloud coding agents such as Claude Code on the web and Cursor Cloud run in a
+Agents such as Claude Code on the web and Cursor Cloud run in a
 sandbox: an isolated container or virtual machine with no screen and no person to click
 through the Cypress App. [`cypress tap`](/app/tooling/cypress-tap) reads from a
 running Cypress App in open mode, so the sandbox has to run that app too. This
