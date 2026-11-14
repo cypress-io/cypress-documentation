@@ -360,6 +360,106 @@ same change. `## See also` always stays as it is.
   button in a sample table). This keeps invented example labels visually distinct
   from the real UI the tutorial navigates.
 
+## Reviewing a new or rewritten page
+
+Lint and Bugbot catch the mechanical writing rules. The judgment rules need a
+reader, and a whole new page is where they slip most. In Claude Code, the first
+`git commit` after a page under `docs/` is added, or has more than about 40% of
+its prose lines rewritten, stops once and lists it. Review each listed page with
+these steps, report in the thread, then commit again. If a page doesn't need a
+review (it moved, or Prettier only rewrapped it), say so and why.
+
+This section is the procedure, not the rules. Read the linked rule before
+judging each question, so [`AGENTS.md`](./AGENTS.md#rules) and
+[Writing style](#writing-style) stay the one source of truth.
+
+### Step 1: clear the mechanical rules first
+
+If `package.json` defines `lint:prose`, run `npm run lint:prose` and fix what it
+reports. If it doesn't, check the page by hand against the hard rules in
+[`.cursor/BUGBOT.md` section 4](./.cursor/BUGBOT.md), treating every line of a
+new page, and every rewritten line of a changed page, as added prose. List these
+fixes under their own heading in the report.
+
+### Step 2: read the whole page once before changing anything
+
+Repetition, the lead, and `See also` are questions about the whole page, so they
+can't be answered section by section. Note what kind of page it is: an `/api`
+page keeps its fixed skeleton ([`docs/api/AGENTS.md`](./docs/api/AGENTS.md)).
+
+### Step 3: ask each question
+
+1. **Does the page lead with the feature's value?** [Lead with the
+   value](#lead-with-the-value). A version or prerequisite admonition in the
+   first screen pushes the value down.
+2. **Does each heading stand on its own, at roughly 40 to 60 characters?**
+   [Headings](#headings). Weigh the renaming cost only for a heading published
+   at this page's path at `HEAD`. A new page has none, even when it starts as a
+   copy of another.
+3. **Is any explanation repeated?** Look across the body, tables,
+   troubleshooting, and limitations. Keep the full explanation in the body
+   section that owns it. Troubleshooting keeps a short symptom and fix that links
+   there, and so do tables and limitations.
+4. **Are behaviors framed positively and reader-first?** The framing rule in
+   [`AGENTS.md`](./AGENTS.md#rules). Watch for "you will need to" chains that
+   describe the burden instead of the step.
+5. **Does it say what something does, not what it lets or allows?** [Person and
+   tense](#person-and-tense), which also covers "you", present tense, active
+   voice, a named subject in every sentence, and keeping body text current.
+6. **Are minimizing words and hedges gone?** [Word choice](#word-choice). "May",
+   "can", and "it is recommended" often hedge a fact the page could state.
+7. **Does a reusable agent recipe sit in a code block or prose?**
+   [`<CopyPrompt>` vs a code block](#ai-prompts-copyprompt-vs-a-code-block).
+8. **Is there prose or a list inside a `<TabItem>`?** [Keep prose out of
+   tabs](#keep-prose-out-of-tabs).
+9. **Is `## See also` warranted, and not padded?** The `See also` rule in
+   [`AGENTS.md`](./AGENTS.md#rules).
+
+The nine are the minimum. Read the rest of the `AGENTS.md` **Writing style** and
+**Authoring** rules against the page once more.
+
+### Step 4: edit the page
+
+- **Keep the facts.** Reword and restructure, but don't change a claim. When a
+  fix needs a fact you can't confirm from the page, the
+  [source](#api-source-of-truth), or the author, flag it instead.
+- **Move code examples, don't change them.** A changed one falls under
+  [verifying code examples](#verifying-code-examples).
+- **Update every link to an anchor you rename**, on the page and across the repo.
+- **Fix links the build reports as broken even when the review didn't cause
+  them**, if the new target is clear, and list them separately in the report.
+
+### Step 5: verify the edited page
+
+1. Run `npm run lint:fix`, then `npm run build`.
+2. If you added a `<CopyPrompt>`, run `npm run test:copy-prompt-titles`.
+3. If you added or changed tabs, accordions, or a `<CopyPrompt>`, render the page
+   in both modes. Run `npm run serve`, then capture it with Playwright at
+   `colorScheme: 'light'` and `'dark'`. The site follows the reader's system
+   setting.
+
+### Step 6: report the review in the thread
+
+Group the changes by rule, with a link to each rule, then list what you flagged
+without changing and the verification results:
+
+```md
+## Style review: `docs/app/ai/example.mdx`
+
+**Headings** ([rule](AGENTS_REFERENCE.md#headings))
+
+- `## Requirements` → `## Agent sandbox requirements for Cypress`
+
+**Repetition**
+
+- Agent detection was explained in three places. Kept it in "How Cypress
+  detects an AI agent" and cut the others to a sentence and a link.
+
+**Flagged, not changed**
+
+- "About 2 GB of memory" has no source on the page.
+```
+
 ## Code blocks
 
 - Always tag a fenced block with its language (`ts`, `js`, `jsx`, `shell`,
