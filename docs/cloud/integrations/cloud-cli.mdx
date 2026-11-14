@@ -1215,7 +1215,7 @@ cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --networ
 
 At this point you have the error, the screenshot, the commands that led up to it, and the network and console activity around it, all in your terminal. From here you can fix the test, or hand the JSON to an [agent](#Use-with-AI-agents) and ask it to propose a fix.
 
-**6. Verify the fix before you push.** The best way to confirm the fix is to run the test locally. Start Cypress with `cypress open`, then use [`cypress tap`](/app/tooling/cypress-tap) to start the spec: pass the `specFilepath` returned from [`cy-cloud test list`](#cy-cloud-test-list) to [`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). Then run [`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status) to verify the updated test passed; if it isn't, your agent can use `cypress tap` to inspect the full report, dig into the command logs, and inspect the DOM to make corrections before recording to the Cloud.
+**6. Verify the fix before you push.** The best way to confirm the fix is to run the test locally. Start Cypress with `cypress open`, then use [`cypress tap`](/app/tooling/cypress-tap) to start the spec: pass the `specFilepath` returned from [`cy-cloud test list`](#cy-cloud-test-list) to [`cypress tap run`](/app/tooling/cypress-tap#cypress-tap-run). Then run [`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status) to verify the updated test passed; if it isn't, your agent can use `cypress tap` to inspect the full report, dig into the command logs, and inspect the DOM to make corrections before recording to the Cloud. If your agent runs in a cloud sandbox, such as Claude Code on the web or Cursor Cloud, see [Run Cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes) to start Cypress there.
 
 ```bash
 npx cypress tap run cypress/e2e/checkout.cy.ts
@@ -1450,7 +1450,7 @@ Test Replay data can cover an entire spec, so the CLI downloads the replay once 
 Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
 
 :::tip
-Some AI agents automatically run inside sandbox environments, which causes them to build a fresh cache for each session. This can slow things down and affect your rate limits. Review your agent's documentation to configure the `CYCLOUD_CACHE_DIR` environment variable to a persistent filesystem location shared across agent invocations.
+Some AI agents automatically run inside sandbox environments, which causes them to build a fresh cache for each session. This can slow things down and affect your rate limits. Review your agent's documentation to configure the `CYCLOUD_CACHE_DIR` environment variable to a persistent filesystem location shared across agent invocations. The Cypress binary cache has the same problem in a sandbox; see [Limitations of Cypress in agent sandboxes](/app/tooling/cypress-agent-sandboxes#Limitations-of-Cypress-in-agent-sandboxes).
 :::
 
 ## Configuration

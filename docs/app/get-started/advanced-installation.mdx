@@ -356,6 +356,10 @@ following to your allowlist so the binary can be downloaded during `npm install`
 | `https://cdn.cypress.io`      | Serves the actual binary `.zip` (download requests redirect here, and pre-release binaries are hosted here) |
 | `https://registry.npmjs.org`  | Installs the `cypress` npm package (or your configured npm registry)                                        |
 
+AI agent sandboxes often block these hosts by default. See
+[Network hosts to allow in an agent sandbox](/app/tooling/cypress-agent-sandboxes#Network-hosts-to-allow-in-an-agent-sandbox)
+for the full list a sandbox needs.
+
 If you also run tests against Cypress Cloud, you'll need to allow additional
 URLs. See the full list of
 [subdomains to allow on a restrictive VPN](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).

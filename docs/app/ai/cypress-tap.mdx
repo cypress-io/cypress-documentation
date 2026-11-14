@@ -136,7 +136,7 @@ SESSIONS (2)
 ### cypress tap status {#cypress-tap-status}
 
 Reports where a running Cypress session is in its lifecycle. It is built for
-polling, see [Polling for a verdict](#polling).
+polling, see [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict).
 
 | Stage                  | Meaning                                                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -205,7 +205,7 @@ SPECS (2)
 Runs (or reruns) a spec by its project-relative path, as listed by the
 [`specs`](#cypress-tap-specs). If no browser is open, Cypress launches
 one. The command requests the spec starts and returns immediately, returning does not mean the run started. Poll the
-[`status`](#cypress-tap-status) command for progress; see [Polling for a verdict](#polling).
+[`status`](#cypress-tap-status) command for progress; see [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict).
 
 ```shell title="Command"
 cypress tap run cypress/e2e/login.cy.ts
@@ -477,7 +477,7 @@ STYLES (2)
 
 ## How to use the commands
 
-### Getting Started
+### Get started with the cypress tap commands
 
 :::note
 
@@ -521,7 +521,7 @@ npx cypress tap run cypress/e2e/checkout.cy.ts
 ```
 
 Poll `status` until it reports a verdict. `status` always exits 0 for a
-determinable stage, so a poller branches on the output, not the exit code. See [Polling for a verdict](#polling) for the traps (stale verdicts, empty specs that still pass, and builds that never leave loading).
+determinable stage, so a poller branches on the output, not the exit code. See [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict) for the traps (stale verdicts, empty specs that still pass, and builds that never leave loading).
 
 ```shell title="Command"
 npx cypress tap status
@@ -555,7 +555,7 @@ Checkout
 The ids on the left (`r5`) are how every other command addresses a test. From
 here, debugging is three commands away.
 
-### Polling for a verdict {#polling}
+### Poll cypress tap status for a verdict
 
 `cypress tap run` returns immediately, so you learn a run's outcome by polling its status. Four things to know before you trust what it reports:
 
@@ -1091,7 +1091,7 @@ Together these tools provide the availability for you or an AI agent to fully en
 - **`status` reports `not connected`.** No Cypress session was found for this
   directory. Start one with `cypress open`, and remember that headless
   `cypress run` sessions are never discoverable. In an agent sandbox, also see
-  [Troubleshooting](/app/tooling/cypress-agent-sandboxes#Troubleshooting).
+  [Troubleshoot Cypress in an agent sandbox](/app/tooling/cypress-agent-sandboxes#Troubleshoot-Cypress-in-an-agent-sandbox).
 
 - **`status` stays `loading` and never reaches a verdict.** The selected spec is
   waiting on its own build. A spec that fails to compile never starts a run, so
@@ -1125,7 +1125,7 @@ The data exposed from the `cypress tap` CLI into your terminal is strictly local
 
 Cypress does capture telemetry specifically around the usage of the CLI to inform usage patterns. The data collected includes the command name, the flags used and whether it errored. To opt-out of this behavior, set `CYPRESS_DISABLE_GUEST_TELEMETRY=0` in your terminal.
 
-### CLI Limitations
+### Limitations of the cypress tap CLI
 
 - You must be on Cypress v15.21.0+ or higher to use the CLI. You cannot use `cypress tap` to interact with older versions.
 - `cypress tap` reads the most recent run of the open session. Command details

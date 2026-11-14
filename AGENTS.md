@@ -267,6 +267,10 @@ Each rule is a hard convention. See the linked section for the how and why.
   upgrade.
 - **Say what something does**, not what it lets the reader do. "`cy.session()`
   caches and restores session state", not "allows you to cache…".
+- **Name the subject in every sentence.** Repeat the noun instead of pointing
+  back to an earlier sentence with "it", "this", or "they" ("The agent runs
+  your specs", not "It runs your specs"), so each sentence stands on its own.
+  A pronoun for a noun in the same sentence is fine.
 - Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
 - Cut filler. `please`, `note that`, and hedges that carry no information.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
@@ -315,6 +319,13 @@ Each rule is a hard convention. See the linked section for the how and why.
 - Tabs sync via a shared `groupId`. Fixed orders: package managers
   **npm → Yarn → pnpm → Bun**; frameworks **React → Angular → Vue → Svelte**; JS
   before TS.
+- A `<TabItem>` holds code blocks, code components, and admonitions, never
+  plain paragraphs or lists: the site styles tab panels as a dark code surface,
+  so plain prose inside one is unreadable in light mode and code blocks nested
+  in a list run flush to the edge. When the same kind of instructions repeats
+  for different tools or variations (an agent sandbox, a CI provider, an AI
+  client) and each needs its own prose or steps, put each variation in an
+  `<AccordionBlock>` instead ([details](./AGENTS_REFERENCE.md#keep-prose-out-of-tabs)).
 - Never nest one tab group inside another. Inside framework or other tabs, show
   only the JavaScript version in a plain `js` block, never a `copyTsToJs` block,
   which renders its own tabs.
