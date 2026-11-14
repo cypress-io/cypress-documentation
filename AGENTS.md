@@ -230,7 +230,8 @@ Each rule is a hard convention. See the linked section for the how and why.
   reason.
 - In Claude Code, the first `git commit` after examples change stops once with
   a reminder listing them. Run them and report (or say in your report why one
-  doesn't need a run), then commit again. The judgment is yours.
+  doesn't need a run), then commit again. The judgment is yours. A new or
+  mostly rewritten page stops it the same way, for the `docs-style-review` skill.
 
 **API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
 
