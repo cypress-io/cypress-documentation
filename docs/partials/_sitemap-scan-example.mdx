@@ -14,7 +14,7 @@ suite doesn't reach yet.
 ### Example: Visit every sitemap URL in a single test
 
 The example below fetches your `sitemap.xml` at runtime and visits every URL it
-finds in a single test. This is the quickest way to get started, with no list to
+finds in a single test. Fetching the sitemap at runtime is the quickest way to get started, with no list to
 maintain:
 
 <CodeBlock language="js">{singleTestCode[props.product]}</CodeBlock>
@@ -25,9 +25,9 @@ maintain:
   The <code>scrollIntoView</code> call is optional. Test Replay captures the
   full page for accessibility analysis on load, so you only need it when content
   appears through progressive scrolling, such as lazy-loaded images or infinite
-  lists. It can also be worth keeping to exercise scrolling itself, since a page
-  that cannot be scrolled to reach its content is an accessibility problem in
-  its own right.
+  lists. The <code>scrollIntoView</code> call can also be worth keeping to
+  exercise scrolling itself, since a page that cannot be scrolled to reach its
+  content is an accessibility problem in its own right.
 </p>
 
 ) : null}

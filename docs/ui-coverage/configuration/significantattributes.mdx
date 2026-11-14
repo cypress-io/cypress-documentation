@@ -117,7 +117,7 @@ Your configured attribute outranks the defaults, so the button is identified by 
 
 ### List several attributes in priority order
 
-`significantAttributes` is a list, so you can prioritize more than one attribute. They're checked in the order you write them, and each element is identified by the first attribute it has. This helps when different parts of your application use different conventions.
+`significantAttributes` is a list, so you can prioritize more than one attribute. The attributes are checked in the order you write them, and each element is identified by the first attribute it has. A priority list helps when different parts of your application use different conventions.
 
 #### Config
 
@@ -151,7 +151,7 @@ The Save button has both attributes, so `data-qa`, listed first, identifies it. 
 
 Significant attributes aren't limited to `data-*` attributes; any HTML attribute qualifies, including semantic ones like `aria-label`. Icon-only controls often carry no test attribute, so listing `aria-label` gives them a readable identity in reports instead of a generated selector.
 
-This does double duty. Automated accessibility tools confirm only that a control _has_ an accessible name, not that the name is clear, so `aria-label="button"` passes the same check as `aria-label="Close dialog"`. Because UI Coverage lists every interactive element, identifying elements by `aria-label` turns the report into an inventory of your label text, where a person can catch a vague label that passes automated checks but wouldn't help someone relying on it.
+Listing `aria-label` does double duty. Automated accessibility tools confirm only that a control _has_ an accessible name, not that the name is clear, so `aria-label="button"` passes the same check as `aria-label="Close dialog"`. Because UI Coverage lists every interactive element, identifying elements by `aria-label` turns the report into an inventory of your label text, where a person can catch a vague label that passes automated checks but wouldn't help someone relying on it.
 
 #### Config
 

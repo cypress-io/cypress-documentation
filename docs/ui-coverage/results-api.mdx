@@ -118,8 +118,8 @@ This script runs in CI.
 
 #### Basic example
 
-This snippet uses the `getUICoverageResults()` helper to log out the results. It
-assumes your Project ID and Record Key are set as environment variables. It
+This snippet uses the `getUICoverageResults()` helper to log out the results. The snippet
+assumes your Project ID and Record Key are set as environment variables. The snippet
 works in any of the supported CI providers out of the box:
 
 ```javascript title="scripts/verifyUICoverageResults.js"
@@ -568,7 +568,7 @@ steps:
 
 If you record multiple runs in a single CI build, you must record each run with
 the `--tag` parameter and then call `getUICoverageResults` with the matching
-`runTags` argument for each run. This is how each run is uniquely identified so
+`runTags` argument for each run. The tag is how each run is uniquely identified so
 the correct results are returned. Tags can also activate
 [Profiles](/ui-coverage/configuration/profiles) that apply different
 configuration to different runs.

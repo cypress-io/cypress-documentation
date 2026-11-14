@@ -29,7 +29,7 @@ Monitoring only works when there is something to compare. Two recording
 patterns give you that:
 
 - **On every pull request**: record a run for each PR so you can compare it
-  against your base branch. This is what surfaces coverage regressions while
+  against your base branch. The PR comparison is what surfaces coverage regressions while
   they can still be fixed cheaply.
 - **On a schedule**: add a recurring job to your CI (for example, a nightly
   cron workflow) that records a run against a stable environment. Scheduled
@@ -74,7 +74,7 @@ exact coverage impact of the change.
 ## Step 3: Investigate a specific change
 
 When a monitoring run or a PR shows an unexpected shift, use
-[Branch Review](/ui-coverage/guides/compare-reports) to pin down the cause. Its
+[Branch Review](/ui-coverage/guides/compare-reports) to pin down the cause. Branch Review's
 dropdowns let you compare any two runs, so you can:
 
 - Compare a nightly run against the previous night's to catch drift in the
@@ -96,7 +96,7 @@ When you find a real gap, follow
 Individual comparisons answer "what changed between these two runs?" To answer
 "how is coverage trending over weeks and months?", use the
 [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting#UI-Coverage)
-area of Cypress Cloud. It rolls trends up
+area of Cypress Cloud. Enterprise Reporting rolls trends up
 across every project in your organization, not just one, so you can view
 high-level UI Coverage trends across all projects and runs, download reports, or
 pull the data through the [data extract API](/cloud/integrations/data-extract-api)

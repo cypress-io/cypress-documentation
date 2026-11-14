@@ -11,7 +11,7 @@ sidebar_position: 20
 
 Every recorded run gives UI Coverage a ranked map of your application: the interactive elements and links your tests exercised, the ones they missed, and a coverage score that tracks the trend. The [Identify coverage gaps workflow](/ui-coverage/guides/identify-coverage-gaps) is where you find that list and make it trustworthy. This guide is the other half of the workflow: turning those gaps into tests, and keeping them closed.
 
-It's a loop you run each time you record:
+Closing gaps is a loop you run each time you record:
 
 - **Confirm the gap** is real, so you only spend effort on gaps worth testing.
 - **Close the gap** with an AI-generated or hand-written test.
@@ -54,7 +54,7 @@ If you use an AI coding assistant, [Cypress Cloud MCP](/cloud/integrations/cloud
 
 Test Generation uses AI to draft a Cypress test for an untested interactive element, following the setup and conventions your existing specs already use.
 
-It works in three steps:
+Test Generation works in three steps:
 
 1. In your UI Coverage report, select an interactive element (tested or untested), from any view or snapshot where it appears.
 2. Click **Generate test code**.
@@ -65,7 +65,7 @@ It works in three steps:
   alt="Cypress Cloud screenshot showing the generated test after clicking the 'Generate test code' button for an untested element"
 />
 
-The generated test reproduces the setup needed to reach the element, reusing the same navigation and custom commands your specs rely on (such as `cy.login()` or `cy.setupCart()`) rather than inlining their steps. It then performs an interaction appropriate to the element type, adds an "Insert near line ..." hint for where the code belongs, and ends with a `TODO` comment marking where to add the assertions that verify behavior.
+The generated test reproduces the setup needed to reach the element, reusing the same navigation and custom commands your specs rely on (such as `cy.login()` or `cy.setupCart()`) rather than inlining their steps. The generated test then performs an interaction appropriate to the element type, adds an "Insert near line ..." hint for where the code belongs, and ends with a `TODO` comment marking where to add the assertions that verify behavior.
 
 Copy the snippet into the suggested spec and continue from there. Treat it as a reviewed starting point, not a finished test: it exercises the element so UI Coverage counts it, and you add the assertions that prove the flow actually works.
 

@@ -70,7 +70,7 @@ Several options change what appears in reports and how it's organized. Pick the 
 
 ### Comments
 
-Most configuration rules support an optional `comment` property that you can use to record why a value is set. This makes your configuration easier to understand and maintain, especially when working in a team or revisiting configuration after some time. Any rule defined as an object accepts a `comment`; the options that are plain lists of strings, such as [`significantAttributes`](/ui-coverage/configuration/significantattributes) and [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands), do not take a per-entry comment.
+Most configuration rules support an optional `comment` property that you can use to record why a value is set. Recording the reason makes your configuration easier to understand and maintain, especially when working in a team or revisiting configuration after some time. Any rule defined as an object accepts a `comment`; the options that are plain lists of strings, such as [`significantAttributes`](/ui-coverage/configuration/significantattributes) and [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands), do not take a per-entry comment.
 
 A `comment` lives inside the rule and has no effect on behavior. Comments appear only in the configuration itself and are never displayed in reports. Because Cypress Cloud validates every rule and rejects properties it doesn't recognize, `comment` is the supported place to keep notes.
 
@@ -216,7 +216,7 @@ Every run permanently records the exact configuration it was processed with, so 
 
 ### In Cypress Cloud
 
-To review the configuration a specific run used, open its **Properties** tab, as shown below. This displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-configuration) the run to reprocess it with the current configuration.
+To review the configuration a specific run used, open its **Properties** tab, as shown below. The **Properties** tab displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-configuration) the run to reprocess it with the current configuration.
 
 <DocsImage
   src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"

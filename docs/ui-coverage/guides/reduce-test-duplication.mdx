@@ -43,13 +43,13 @@ However you prefer to work, the goal of this step is the same: a list of the
 elements your tests exercise, ranked so the most-tested rise to the top.
 
 - **In Cypress Cloud**, open the run's **UI Coverage** tab and go to the
-  **Tested elements** section. It lists every interactive element your tests
+  **Tested elements** section. The section lists every interactive element your tests
   exercised, one row per element or
   [group](/ui-coverage/core-concepts/element-grouping), sorted by
   **Interactions** with the highest first.
 - **From your editor**, ask an AI agent connected to
   [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) to pull the tested elements
-  for the run and rank the most-exercised controls. It reads the same data, so
+  for the run and rank the most-exercised controls. The agent reads the same data, so
   you get the same ranked list without opening a browser tab. See
   [Work with AI agents](/ui-coverage/work-with-ai-agents) for prompts.
 
@@ -107,8 +107,8 @@ Open [Test Replay](/cloud/features/test-replay) on a few of the tests. Ask:
 
 In the example above, the "Continue" button on the welcome screen is
 interacted with by most of the suite, but Test Replay shows almost none of those
-tests care about the welcome screen. They're just getting past it to reach the
-projects page. That's the duplication to remove.
+tests care about the welcome screen. Those tests are just getting past it to reach the
+projects page. That repeated click is the duplication to remove.
 
 ## Step 4: Consolidate the repeated setup
 

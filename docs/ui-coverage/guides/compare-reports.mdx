@@ -10,7 +10,7 @@ sidebar_position: 70
 # Compare reports
 
 A single UI Coverage report tells you which parts of your UI are untested
-_today_. It can't tell you whether your latest change made that better or worse.
+_today_. A single report can't tell you whether your latest change made that better or worse.
 Comparing two reports answers the question that matters in a pull request:
 **did this change leave any part of the UI newly untested?**
 
@@ -106,11 +106,11 @@ runs. Branch Review shows the delta as a badge: a positive value when the score
 rose and a negative one when it fell, comparing the changed run's score against
 the base run's.
 
-This gives you a sense of whether the overall ratio of tested to untested elements has changed.
-It is a useful high-level signal, but it does not describe _what_ changed in the set of tested or untested items.
+The score delta gives you a sense of whether the overall ratio of tested to untested elements has changed.
+The score delta is a useful high-level signal, but it does not describe _what_ changed in the set of tested or untested items.
 
 Even if the score has not changed, review any new untested elements.
-They may represent missing coverage on new features.
+New untested elements may represent missing coverage on new features.
 
 For example, if a code change adds 2 buttons and you only test one of them, that would introduce
 one new tested element and one new untested element at the same time, keeping the ratio, and the score, flat.
@@ -118,8 +118,8 @@ one new tested element and one new untested element at the same time, keeping th
 ### Step 3: Review new untested elements and links
 
 Two sections surface coverage that **regressed**: parts of the UI that are
-untested in the changed run but weren't a gap in the base run. These are the
-sections to watch on a pull request.
+untested in the changed run but weren't a gap in the base run. These two sections are the
+ones to watch on a pull request.
 
 :::tip
 
@@ -140,8 +140,8 @@ sections to watch on a pull request.
 
 The **Untested elements** section separates the interactive elements into:
 
-- **New untested elements**: elements that are untested in the changed run and were either tested in the base run or didn't exist there. This is the bucket a pull request review focuses on.
-- **Resolved untested elements**: elements that were untested in the base run and are now tested. This is your proof that a gap was closed.
+- **New untested elements**: elements that are untested in the changed run and were either tested in the base run or didn't exist there. New untested elements are the bucket a pull request review focuses on.
+- **Resolved untested elements**: elements that were untested in the base run and are now tested. Resolved untested elements are your proof that a gap was closed.
 - **Existing untested elements**: a link to the elements that are untested in both runs, so you can jump to the full report when you want the complete picture rather than only the diff.
 
 A **new untested element** appears for one of three reasons, and all are worth
@@ -188,7 +188,7 @@ untested elements to work through.
 The **Added** section summarizes everything that is new in the changed run and
 wasn't present in the base run. Unlike the untested sections, it includes both
 tested and untested items, so it's the clearest view of how the application
-itself changed between the two runs, and whether your tests kept pace. It's
+itself changed between the two runs, and whether your tests kept pace. The **Added** section is
 grouped into:
 
 - **Added links**: new links the change introduced, showing where new navigation paths appear in your app.

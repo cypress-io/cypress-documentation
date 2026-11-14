@@ -9,7 +9,7 @@ sidebar_position: 110
 
 # Work with AI agents
 
-UI Coverage gives your AI agent the grounded context it needs to improve your tests. For every recorded Cypress run, it reports which interactive elements and links your tests exercised, assigns a coverage score to each view, and names the exact untested controls to go after. It's all built from what really ran in the browser during [Test Replay](/cloud/features/test-replay), and filtered through your configuration to focus on what already matters to you. Working from that report, an agent can find real coverage gaps and write tests that target them, rather than guessing at your app's structure.
+UI Coverage gives your AI agent the grounded context it needs to improve your tests. For every recorded Cypress run, UI Coverage reports which interactive elements and links your tests exercised, assigns a coverage score to each view, and names the exact untested controls to go after. The report is built entirely from what really ran in the browser during [Test Replay](/cloud/features/test-replay), and filtered through your configuration to focus on what already matters to you. Working from that report, an agent can find real coverage gaps and write tests that target them, rather than guessing at your app's structure.
 
 ## What an AI agent can do with UI Coverage
 
@@ -215,7 +215,7 @@ A few high-value changes make the report sharper for both people and agents:
 
 See the [configuration overview](/ui-coverage/configuration/overview) to get started. The goal is the same as for human review: a high-signal list of views and elements tied to ownership and critical flows, not an exhaustive list of every control on every page.
 
-You can also let the agent draft that configuration for you. It reads the untested elements over MCP, spots the noise, and hands back rules to paste into your App Quality Config. To review the configuration a run actually used before changing it, open the run's **Properties** tab or read the `config` property from the [Results API](/ui-coverage/results-api).
+You can also let the agent draft that configuration for you. The agent reads the untested elements over MCP, spots the noise, and hands back rules to paste into your App Quality Config. To review the configuration a run actually used before changing it, open the run's **Properties** tab or read the `config` property from the [Results API](/ui-coverage/results-api).
 
 <CopyPrompt
   title="Draft configuration to cut noise"
@@ -238,7 +238,7 @@ Ensure tests include assertions about the state of the application and the readi
 
 For areas where assertions on non-interactive elements are critical to track, your code can use the [`data-cy-ui-interactive`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) attribute to bring those elements into your coverage report.
 
-Combine this with [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) configuration to allow assertions to count as coverage for those elements. This adds an extra layer of guidance for your agent about what must be included in your tests.
+Combine the attribute with [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) configuration to allow assertions to count as coverage for those elements. Pairing the two adds an extra layer of guidance for your agent about what must be included in your tests.
 
 :::
 

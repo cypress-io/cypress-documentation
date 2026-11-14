@@ -26,14 +26,14 @@ UI Coverage analyzes the snapshots in a recorded run: it detects the [interactiv
 
 ## How an element is identified
 
-For each interactive element it tracks, UI Coverage looks for an **identifying attribute**. It checks a single prioritized list and uses the first attribute that is present with a usable value:
+For each interactive element it tracks, UI Coverage looks for an **identifying attribute**. UI Coverage checks a single prioritized list and uses the first attribute that is present with a usable value:
 
 1. The markup attribute `data-cy-ui-id`, which outranks every other option. `data-cy-ui-id` replaces the element's identity outright: its value becomes the identity, with no tag or selector appended.
 2. Your [`significantAttributes`](/ui-coverage/configuration/significantattributes), in the order you list them
 3. The default test attributes, in order: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id` (data grids)
 4. `id`, then `name`, as fallbacks
 
-The first attribute in this list that the element has, with a value that isn't excluded by an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule, becomes the element's **identifying attribute**. That single attribute-value pair drives how the element is identified across snapshots and named in reports. It also drives [grouping](/ui-coverage/core-concepts/element-grouping), with one exception: the `id` and `name` fallbacks identify an element but never group it.
+The first attribute in this list that the element has, with a value that isn't excluded by an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule, becomes the element's **identifying attribute**. That single attribute-value pair drives how the element is identified across snapshots and named in reports. The identifying attribute also drives [grouping](/ui-coverage/core-concepts/element-grouping), with one exception: the `id` and `name` fallbacks identify an element but never group it.
 
 For example, both attributes below can identify this button, but `data-cy` outranks `id`, so it wins:
 
@@ -52,7 +52,7 @@ In reports, elements appear under their identifying selector, and the **Snapshot
 
 ## When an element has no identifying attribute
 
-Not every interactive element carries a useful attribute. When none of the attributes above apply, UI Coverage falls back to identifying the element by its structure and position in the DOM, such as its tag and where it sits among sibling elements. Its visible text content is never used, so a button labeled "Save" that briefly becomes "Saving…" during a request stays one element.
+Not every interactive element carries a useful attribute. When none of the attributes above apply, UI Coverage falls back to identifying the element by its structure and position in the DOM, such as its tag and where it sits among sibling elements. The element's visible text content is never used, so a button labeled "Save" that briefly becomes "Saving…" during a request stays one element.
 
 A structural identity like this is less stable than an attribute you control: a change to the surrounding markup can shift it, so the same element can appear as new and untested when you [compare two runs in Branch Review](/ui-coverage/guides/compare-reports). Adding a stable test attribute is the reliable fix.
 

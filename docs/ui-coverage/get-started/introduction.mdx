@@ -11,7 +11,7 @@ sidebar_position: 10
 
 UI Coverage shows you which interactive parts of your application your tests actually exercise, and which they miss. Part of Cypress Cloud, it turns every run you already record into a visual map of the buttons, inputs, links, and controls your users touch, scores how much of that surface your suite covers, and lets you track the score over time.
 
-It answers a question code coverage can't: not _which code ran_, but _whether the things a user can actually do are tested_. And it does it with **no code changes, no plugin, and no instrumentation**. Reports are generated in Cypress Cloud from the [Test Replay](/cloud/features/test-replay) data your runs already capture.
+UI Coverage answers a question code coverage can't: not _which code ran_, but _whether the things a user can actually do are tested_. And UI Coverage does it with **no code changes, no plugin, and no instrumentation**. Reports are generated in Cypress Cloud from the [Test Replay](/cloud/features/test-replay) data your runs already capture.
 
 <Btn
   label="Request trial ➜"
@@ -40,9 +40,9 @@ It answers a question code coverage can't: not _which code ran_, but _whether th
 
 ## Why UI Coverage
 
-A passing suite only tells you the flows you _wrote tests for_ work. It says nothing about the parts of your app no test touches: the buttons your tests never click, the forms they never submit, and the pages they never open. Because these gaps never produce a failing test, they stay invisible until a user hits them in production.
+A passing suite only tells you the flows you _wrote tests for_ work. A passing suite says nothing about the parts of your app no test touches: the buttons your tests never click, the forms they never submit, and the pages they never open. Because these gaps never produce a failing test, they stay invisible until a user hits them in production.
 
-Code coverage doesn't catch these gaps either. It reports which lines of your source code ran, which says little about whether the features those lines power actually work for the people using them. UI Coverage takes the opposite view: it measures your application the way your users meet it, by the interactive elements on each page and whether your tests exercise them.
+Code coverage doesn't catch these gaps either. Code coverage reports which lines of your source code ran, which says little about whether the features those lines power actually work for the people using them. UI Coverage takes the opposite view: it measures your application the way your users meet it, by the interactive elements on each page and whether your tests exercise them.
 
 With UI Coverage you can:
 
