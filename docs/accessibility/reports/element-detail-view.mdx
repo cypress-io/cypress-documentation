@@ -30,7 +30,7 @@ The panels are linked. Selecting an element on the left highlights it on the rig
 Every route into this view starts from a [run-level report](/accessibility/reports/run-level-reports), and each one preselects something different:
 
 - **A view row on the Views tab** opens that view with all of its rules listed, which is the right entry point when you're working through one page or component.
-- **A rule row on the Rules tab** opens **All Views** with that rule expanded, which collects every failing element for the rule across the whole run. This is the fastest way to work a rule-focused backlog.
+- **A rule row on the Rules tab** opens **All Views** with that rule expanded, which collects every failing element for the rule across the whole run. The rule row is the fastest way to work a rule-focused backlog.
 - **A failed, inconclusive, or ignored element count** opens the same view with the **Element status** filter preset to the status you clicked, so you land on exactly the elements the number referred to.
 - **New failed elements in [Branch Review](/accessibility/guides/compare-reports)** opens the same detail view scoped to the violations your branch introduced. Elements that are new since the base run carry an **Added** tag.
 
@@ -64,7 +64,7 @@ Expanding a rule reveals:
 Element rows carry two visual signals worth knowing:
 
 - **A status icon** marks each element as failed, inconclusive, or ignored, so a mixed rule is readable at a glance. Statuses are defined in [run-level reports](/accessibility/reports/run-level-reports#Elements).
-- **Dimmed rows** are elements that exist in this view but not in the snapshot currently displayed. They are still selectable, and selecting one moves the snapshot to a page state that contains it.
+- **Dimmed rows** are elements that exist in this view but not in the snapshot currently displayed. Dimmed rows are still selectable, and selecting one moves the snapshot to a page state that contains it.
 
 ## Pin an element to inspect it
 
@@ -77,7 +77,7 @@ Selecting an element pins it. The row gets a pin icon, the element is highlighte
 
 The expanded detail has three parts:
 
-- **The result status**, which reads **Failed result**, **Inconclusive result**, or **Ignored result**. This is the same status as the row icon, spelled out.
+- **The result status**, which reads **Failed result**, **Inconclusive result**, or **Ignored result**. The result status is the same status as the row icon, spelled out.
 - **Actions**, which are [Share issue](#Share-issue) and, when your organization has the Jira integration installed, [Create Jira issue](#Create-Jira-issue).
 - **Solutions**, which lists the specific checks that failed on this element.
 
@@ -97,7 +97,7 @@ Two icon buttons sit on the pinned row itself:
 
 Snapshots are the reason this view can replace reproducing a bug. Each one is a rehydrated copy of the DOM and CSS as they existed at a moment during a recorded test, not a screenshot or a video frame. The markup is real, the styles are real, and it renders in your browser.
 
-That has a few practical consequences:
+Real markup and styles have a few practical consequences:
 
 - **Your browser's DevTools work on it.** You can inspect elements, read computed styles, and open the accessibility pane against the captured page without running the application locally. The snapshot options menu, opened from the icon at the top right of the snapshot, shows the DevTools inspect shortcut for your browser.
 
@@ -107,7 +107,7 @@ That has a few practical consequences:
   caption="The snapshot is real DOM, so DevTools inspects it like any other page. Print to Console followed by Reveal in Elements panel jumps straight to the failing element."
 />
 
-- **Highlights are deliberate, not exhaustive.** The snapshot outlines the element you have pinned, or the element you are hovering in the rules list, and nothing else. This keeps a page with hundreds of failing images readable. The same snapshot options menu has a **Show DOM highlights** toggle that turns the outline off when it covers something you want to see.
+- **Highlights are deliberate, not exhaustive.** The snapshot outlines the element you have pinned, or the element you are hovering in the rules list, and nothing else. Outlining only one element keeps a page with hundreds of failing images readable. The same snapshot options menu has a **Show DOM highlights** toggle that turns the outline off when it covers something you want to see.
 - **The snapshot counter is scoped to your selection.** With nothing pinned, you can page through every snapshot the filtered rules appear in. Pin an element and the counter narrows to the snapshots containing that element, so **6 of 9** means the element you pinned was captured nine times in this run. Clearing the pin from the counter restores the full set.
 - **Hovering an element that isn't on screen tells you so.** The snapshot dims and shows **Element is not in this snapshot**, followed by **Click to change to a snapshot containing this element** and the element's selector. Clicking the row moves the snapshot to a page state where the element exists.
 
@@ -131,7 +131,7 @@ The filter button in the header of the left panel narrows both the rules list an
   alt="The filter menu for the violation detail view, with four groups. Include elements holds a single toggle, Only on this snapshot, switched off. Rule severity lists Critical, Serious, Moderate, and Minor, all on. Rules lists WCAG 2.1 A, WCAG 2.1 AA, and Best practices, all on. Element status lists Failed and Inconclusive switched on and Ignored switched off. Each option shows a count beside it."
 />
 
-- **Include elements** holds one toggle, **Only on this snapshot**, which limits the list to the snapshot currently displayed. It is off by default, so elements from every snapshot in the view are shown.
+- **Include elements** holds one toggle, **Only on this snapshot**, which limits the list to the snapshot currently displayed. The toggle is off by default, so elements from every snapshot in the view are shown.
 - **Rule severity** filters to critical, serious, moderate, or minor rules.
 - **Rules** filters by ruleset: WCAG 2.1 A, WCAG 2.1 AA, or Best practices.
 - **Element status** filters to failed, inconclusive, or ignored elements. Failed and inconclusive are on by default; ignored is off, so elements you have excluded through [`elementFilters`](/accessibility/configuration/elementfilters) or [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) stay out of your way until you go looking for them.
@@ -196,7 +196,7 @@ When your organization has the [Cypress Cloud Jira integration](/cloud/integrati
 
 Cypress Cloud confirms with a link to the new issue key. Because the description carries the deep link, anyone working the ticket lands back on the failing element and its snapshot.
 
-This is the fastest route for a violation you are already looking at. To file a whole report's worth at once, hand the job to an AI agent instead: it can read the report, check your tracker for issues that already exist, and open only what is missing. See [File issues in your issue tracker](/accessibility/work-with-ai-agents#File-issues-in-your-issue-tracker).
+Creating a Jira issue from the detail view is the fastest route for a violation you are already looking at. To file a whole report's worth at once, hand the job to an AI agent instead: it can read the report, check your tracker for issues that already exist, and open only what is missing. See [File issues in your issue tracker](/accessibility/work-with-ai-agents#File-issues-in-your-issue-tracker).
 
 ## Make selectors readable before you triage
 

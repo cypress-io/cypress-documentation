@@ -108,7 +108,7 @@ describe('My First Test', () => {
 Once you save again, you'll see Cypress display the failing test in red since
 `true` does not equal `false`.
 
-Cypress displays a detailed error view that includes the stack trace and the exact code frame where the assertion failed. This helps you quickly identify and fix the issue.
+Cypress displays a detailed error view that includes the stack trace and the exact code frame where the assertion failed. The error view helps you quickly identify and fix the issue.
 
 :::info
 
@@ -236,17 +236,17 @@ describe('My First Test', () => {
 Our test should now display `CONTAINS` in the
 [Command Log](/app/core-concepts/open-mode#Command-Log) and still be green.
 
-Even without adding an assertion, we know that everything is okay! This is
+Even without adding an assertion, we know that everything is okay! The test passes
 because many of Cypress' commands are built to fail if they don't find what
-they're expecting to find. This is known as an
+they're expecting to find. This built-in check is known as an
 [Implicit Assertion](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
 
 To verify this, replace `type` with something not on the page, like `hype`.
 You'll notice the test goes red, but only after about 4 seconds!
 
-Can you see what Cypress is doing under the hood? It's automatically waiting and
+Can you see what Cypress is doing under the hood? Cypress is automatically waiting and
 retrying because it expects the content to **eventually** be found in the DOM.
-It doesn't immediately fail!
+Cypress doesn't immediately fail!
 
 <!--
 To reproduce the following screenshot:

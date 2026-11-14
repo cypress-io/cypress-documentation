@@ -9,7 +9,7 @@ sidebar_position: 10
 
 # Run-level reports
 
-This guide highlights the three main areas to focus on when reviewing an accessibility report for a Cypress run. It also explains key terms and definitions used in these reports.
+This guide highlights the three main areas to focus on when reviewing an accessibility report for a Cypress run. The guide also explains key terms and definitions used in these reports.
 
 ## Run summary
 
@@ -47,15 +47,15 @@ The number of snapshots captured for a View. A Snapshot represents the live HTML
 
 ### Score
 
-The overall score for a View is a weighted ratio of passed versus failed checks across all snapshots, reflecting the general accessibility level for that segment of the application. This produces a top-line percentage score that indicates a general sense of accessibility for a project. Learn more in the [Accessibility Score section](/accessibility/core-concepts/accessibility-score)..
+The overall score for a View is a weighted ratio of passed versus failed checks across all snapshots, reflecting the general accessibility level for that segment of the application. The weighted ratio produces a top-line percentage score that indicates a general sense of accessibility for a project. Learn more in the [Accessibility Score section](/accessibility/core-concepts/accessibility-score)..
 
 ### Elements
 
 The count of elements in a View categorized as:
 
-- **Failed:** Elements violating at least one rule. These affect your accessibility score.
-- **Inconclusive:** Elements had at least one check marked "incomplete" by Axe Core® during the run. These represent checks that couldn't be completed for technical reasons, or items that need manual review to confirm if there is an accessibility issue. These do not affect your accessibility score.
-- **Ignored:** Elements with failed or incomplete checks that were excluded via CSS selectors in your [configuration](/accessibility/configuration/elementfilters), or through the `data-a11y-ignore` attribute. These elements are still processed to support your understanding of what is ignored. They do not affect your accessibility score.
+- **Failed:** Elements violating at least one rule. Failed elements affect your accessibility score.
+- **Inconclusive:** Elements had at least one check marked "incomplete" by Axe Core® during the run. Inconclusive elements represent checks that couldn't be completed for technical reasons, or items that need manual review to confirm if there is an accessibility issue. Inconclusive elements do not affect your accessibility score.
+- **Ignored:** Elements with failed or incomplete checks that were excluded via CSS selectors in your [configuration](/accessibility/configuration/elementfilters), or through the `data-a11y-ignore` attribute. These elements are still processed to support your understanding of what is ignored. Ignored elements do not affect your accessibility score.
 
 Each of these numbers can be clicked to navigate to a report filtered to just that set of findings.
 
@@ -97,7 +97,7 @@ You can filter Views and Rules in accessibility reports by:
 - **Element status**: Failed, inconclusive, or other (other includes ignored elements and rules, 100% passing views and rules, and inapplicable rules).
 - **Name**: Search for specific URLs or paths to filter the views or specific names to filter rules.
 
-This allows a full understanding of what Cypress evaluated during the run, while enabling targeted analysis of critical issues.
+Filtering allows a full understanding of what Cypress evaluated during the run, while enabling targeted analysis of critical issues.
 
 <DocsImage
   src="/img/accessibility/core-concepts/cypress-accessibility-filter-views-and-rules.png"

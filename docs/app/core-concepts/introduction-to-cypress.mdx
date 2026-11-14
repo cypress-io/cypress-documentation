@@ -62,7 +62,7 @@ Can you read this? If you did, it might sound something like this:
 
 :::
 
-This is a relatively straightforward test, but consider how much code has been
+This test is relatively straightforward, but consider how much code has been
 covered by it, both on the client and the server!
 
 For the remainder of this guide, we'll explore the basics of Cypress that make
@@ -175,7 +175,7 @@ cy
   })
 ```
 
-This makes Cypress robust and immune to dozens of common problems that occur in
+This behavior makes Cypress robust and immune to dozens of common problems that occur in
 other testing tools. Consider all the circumstances that could cause querying a
 DOM element to fail:
 
@@ -226,9 +226,9 @@ cy.contains('New Post')
 cy.get('.main').contains('New Post')
 ```
 
-This is helpful when writing tests from the perspective of a user interacting
-with your app. They only know that they want to click the button labeled
-"Submit". They have no idea that it has a `type` attribute of `submit`, or a CSS
+Querying by text content is helpful when writing tests from the perspective of a user interacting
+with your app. The user only knows that they want to click the button labeled
+"Submit". The user has no idea that it has a `type` attribute of `submit`, or a CSS
 class of `my-submit-button`.
 
 :::caution
@@ -247,7 +247,7 @@ applications and doesn't fail immediately the first time an element is not
 found. Instead, Cypress gives your app a window of time to finish whatever it
 may be doing!
 
-This is known as a `timeout`, and most commands can be customized with specific
+This window of time is known as a `timeout`, and most commands can be customized with specific
 timeout periods
 ([the default timeout is 4 seconds](/app/references/configuration#Timeouts)).
 These Commands will list a `timeout` option in their API documentation,
@@ -280,7 +280,7 @@ There is a performance tradeoff here: **tests that have longer timeout periods
 take longer to fail**. Commands always proceed as soon as their expected
 criteria is met, so working tests will be performed as fast as your application
 allows. A test that fails due to timeout will consume the entire timeout period,
-by design. This means that while you _may_ want to increase your timeout period
+by design. Consuming the full timeout means that while you _may_ want to increase your timeout period
 to suit specific parts of your app, you _don't_ want to make it "extra long,
 just in case".
 
@@ -292,7 +292,7 @@ Later in this guide we'll go into much more detail about
 ## Chains of Commands
 
 It's very important to understand the mechanism Cypress uses to chain commands
-together. It manages a Promise chain on your behalf, with each command yielding
+together. Cypress manages a Promise chain on your behalf, with each command yielding
 a 'subject' to the next command, until the chain ends or an error is
 encountered. The developer should not need to use Promises directly, but
 understanding how they work is helpful!
@@ -303,7 +303,7 @@ As we saw in the initial example, Cypress clicks on and types into elements on
 the page with [`.click()`](/api/commands/click) and
 [`.type()`](/api/commands/type) action commands with a
 [`cy.get()`](/api/commands/get) or [`cy.contains()`](/api/commands/contains)
-query command. This is a great example of chaining in action. Let's see it
+query command. This pairing is a great example of chaining in action. Let's see it
 again:
 
 ```js
@@ -332,14 +332,14 @@ the state of the elements should be prior to performing their actions.
 
 For example, when writing a [`.click()`](/api/commands/click) command, Cypress
 ensures that the element is able to be interacted with (like a real user would).
-It will automatically wait until the element reaches an "actionable" state by:
+Cypress will automatically wait until the element reaches an "actionable" state by:
 
 - Not being hidden
 - Not being covered
 - Not being disabled
 - Not animating
 
-This also helps prevent flake when interacting with your application in tests.
+Waiting for actionability also helps prevent flake when interacting with your application in tests.
 You can usually override this behavior with a `force` option.
 
 :::tip
@@ -368,7 +368,7 @@ cy.get('input').should('not.have.value', 'US')
 ```
 
 In each of these examples, Cypress will
-automatically _wait_ until these assertions pass. This prevents you from having
+automatically _wait_ until these assertions pass. This automatic waiting prevents you from having
 to know or care about the precise moment your elements eventually do reach this
 state.
 
@@ -407,7 +407,7 @@ Each command specifies what value it yields. For example,
 
 #### Examples:
 
-This is actually much more intuitive than it sounds.
+Subject chaining is actually much more intuitive than it sounds.
 
 ```js
 cy.clearCookies() // Yields null
@@ -500,7 +500,7 @@ and what aliasing is.
 #### Using Aliases to Refer to Previous Subjects
 
 Cypress has some added functionality for quickly referring back to past subjects
-called [Aliases](/app/core-concepts/variables-and-aliases). It looks
+called [Aliases](/app/core-concepts/variables-and-aliases). An alias looks
 something like this:
 
 ```js
@@ -514,14 +514,14 @@ cy.get('@myElement') // re-queries the DOM as before
   .click()
 ```
 
-This lets us reuse our queries for more readable tests, and it automatically
-handles re-querying the DOM for us as it updates. This is particularly helpful
+Aliasing lets us reuse our queries for more readable tests, and it automatically
+handles re-querying the DOM for us as it updates. Automatic re-querying is particularly helpful
 when dealing with front end frameworks that do a lot of re-rendering!
 
 ### Commands Are Asynchronous
 
 It is very important to understand that Cypress commands don't do anything at
-the moment they are invoked, but rather enqueue themselves to be run later. This
+the moment they are invoked, but rather enqueue themselves to be run later. This deferred execution
 is what we mean when we say Cypress commands are asynchronous.
 
 #### Take this short test, for example:
@@ -889,7 +889,7 @@ designed to deliver deterministic, repeatable, and consistent tests.
 Almost all commands come with built-in
 **[retry-ability](/app/core-concepts/retry-ability)**. Without
 **[retry-ability](/app/core-concepts/retry-ability)**, assertions would
-randomly fail. This would lead to flaky, inconsistent results.
+randomly fail. Random failures would lead to flaky, inconsistent results.
 
 :::info
 
@@ -901,7 +901,7 @@ about handling asynchronous Cypress Commands, read our
 :::
 
 Commands also have some design choices that developers who are used to
-promise-based testing may find unexpected. They are intentional decisions on
+promise-based testing may find unexpected. These design choices are intentional decisions on
 Cypress' part, not technical limitations.
 
 1. You cannot **race** or run multiple commands at the same time (in parallel).
@@ -1065,7 +1065,7 @@ With Cypress, you don't have to write explicit assertions to have a useful test.
 Without a single `expect()` or `.should()`, a few lines of Cypress can ensure
 thousands of lines of code are working properly across the client and server.
 
-This is because many commands have built in Implicit Assertions which offer
+These few lines are enough because many commands have built in Implicit Assertions which offer
 you a high level of confidence that your application is working as expected.
 
 :::
@@ -1208,7 +1208,7 @@ There are two ways to write assertions in Cypress:
 ### Command Assertions
 
 Using [`.should()`](/api/commands/should) or [`.and()`](/api/commands/and)
-commands is the preferred way of making assertions in Cypress. These are typical
+commands is the preferred way of making assertions in Cypress. `.should()` and `.and()` are typical
 Cypress commands, which means they apply to the currently yielded subject in the
 command chain.
 
@@ -1230,12 +1230,12 @@ cy.get('#header a')
 
 Because [`.should('have.class')`](/api/commands/should) does not change the
 subject, [`.and('have.attr')`](/api/commands/and) is executed against the same
-element. This is handy when you need to assert multiple things against a single
+element. Chaining `.and()` is handy when you need to assert multiple things against a single
 subject quickly.
 
 ### Mocha Assertions
 
-`expect` asserts on any JavaScript object, not just the current subject. This is
+`expect` asserts on any JavaScript object, not just the current subject. This style is
 probably how you're used to seeing assertions written in unit tests:
 
 ```js
@@ -1258,7 +1258,7 @@ Mocha assertions are great when you want to:
 - Make multiple assertions against the same subject.
 
 The [`.should()`](/api/commands/should) assertion allows us to pass a callback
-function that takes the yielded subject as its first argument. This works like
+function that takes the yielded subject as its first argument. The callback works like
 [`.then()`](/api/commands/then), except Cypress automatically **waits and
 retries** for everything inside of the callback function to pass.
 
@@ -1309,7 +1309,7 @@ When using a callback function with [`.should()`](/api/commands/should), be sure
 that the entire function can be executed multiple times without side effects.
 Cypress applies its [retry logic](/app/core-concepts/retry-ability) to these
 functions: if there's a failure, it will repeatedly rerun the assertions until
-the timeout is reached. That means your code should be retry-safe. The technical
+the timeout is reached. This retrying means your code should be retry-safe. The technical
 term for this means your code must be **idempotent**.
 
 :::
@@ -1412,7 +1412,7 @@ actions to take.
 For instance:
 
 - [`cy.visit()`](/api/commands/visit) loads a remote page and does not resolve
-  _until all of the external resources complete their loading phase_. This may
+  _until all of the external resources complete their loading phase_. Loading may
   take awhile, so its default timeout is set to `60000ms`.
 - [`cy.task()`](/api/commands/task) runs code in Node such as _seeding a
   database_. We expect this to potentially take a long time, and its default
@@ -1424,7 +1424,7 @@ For instance:
   response for `30000ms`. We expect your application to make a matching request
   quickly, but we expect the server's response to potentially take much longer.
 
-That leaves most other commands including all DOM queries to time out by default
+These exceptions leave most other commands including all DOM queries to time out by default
 after 4000ms.
 
 ## Next steps

@@ -66,7 +66,7 @@ Cypress runs in two contexts:
 
 ### Use `cy.env()` for Sensitive Values in Tests
 
-`cy.env()` is the recommended way to access sensitive environment variables in your tests. It provides privileged access that doesn't automatically expose values to the browser context.
+`cy.env()` is the recommended way to access sensitive environment variables in your tests. `cy.env()` provides privileged access that doesn't automatically expose values to the browser context.
 
 **When to use:**
 
@@ -514,7 +514,7 @@ Other services, such as social logins through popular media providers, are not
 recommended. Testing social logins may work, especially if run locally. However,
 we consider this a bad practice and do not recommend it because:
 
-- It's incredibly time consuming and slows down your tests (unless using
+- Testing social logins is incredibly time consuming and slows down your tests (unless using
   [`cy.session()`](/api/commands/session)).
 - The 3rd party site may have changed or updated its content.
 - The 3rd party site may be having issues outside of your control.
@@ -523,7 +523,7 @@ we consider this a bad practice and do not recommend it because:
   banning of accounts.
 - The 3rd party site might detect you are a bot, and provide mechanisms such as
   two-factor authentication, captchas, and other means to prevent automation.
-  This is common with continuous integration platforms and general automation.
+  This bot detection is common with continuous integration platforms and general automation.
 - The 3rd party site may be running A/B campaigns.
 
 Let's look at a few strategies for dealing with these situations.
@@ -531,7 +531,7 @@ Let's look at a few strategies for dealing with these situations.
 ### When logging in
 
 Many OAuth providers, especially social logins, run A/B experiments, which means
-that their login screen is dynamically changing. This makes automated testing
+that their login screen is dynamically changing. A changing login screen makes automated testing
 difficult.
 
 Many OAuth providers also throttle the number of web requests you can make to
@@ -546,7 +546,7 @@ affect other tests downstream.
 **Here are solutions you may choose to use to alleviate these problems:**
 
 1. Use another platform that you control to log in with username and password
-   via [`cy.origin()`](/api/commands/origin). This likely guarantees that you
+   via [`cy.origin()`](/api/commands/origin). Using a platform you control likely guarantees that you
    will not run into the problems listed above, while still being able to
    automate your login flow. You can reduce the amount of authentication
    requests by using [`cy.session()`](/api/commands/session).
@@ -587,7 +587,7 @@ After running your test, instead of trying to
 [`cy.request()`](/api/commands/request) to programmatically interact with
 GitHub's APIs directly.
 
-This avoids ever needing to touch the UI of another application.
+Using `cy.request()` avoids ever needing to touch the UI of another application.
 
 ### Verifying sent emails
 
@@ -616,7 +616,7 @@ email's functionality and visual style:
 
 3. In other cases, you should try using [`cy.request()`](/api/commands/request)
    command to query the endpoint on your server that tells you what email has
-   been queued or delivered. That would give you a programmatic way to know
+   been queued or delivered. That endpoint would give you a programmatic way to know
    without involving the UI. Your server would have to expose this endpoint.
 4. You could also use `cy.request()` to a 3rd party email recipient server that
    exposes an API to read off emails. You will then need the proper
@@ -683,7 +683,7 @@ describe('my form', () => {
 
 :::
 
-What's wrong with the above tests? They are all coupled together!
+What's wrong with the above tests? The tests are all coupled together!
 
 If you were to change `it` to
 [`it.only`](https://jestjs.io/docs/api#testonlyname-fn-timeout) on any of the
@@ -846,7 +846,7 @@ Grouping assertions has a limit in the other direction. A single test that walks
 an entire checkout flow (browse, add to cart, apply a coupon, enter shipping,
 pay, see the confirmation) reports one failure under one title, and a title like
 "completes checkout" tells the person debugging almost nothing about which part
-of the application broke. They have to open the run to find out.
+of the application broke. The person debugging has to open the run to find out.
 
 The most useful way to think about where a test starts and stops is the signal
 its failure sends. Both extremes weaken that signal:
@@ -909,8 +909,8 @@ One of the **best** parts of Cypress is its emphasis on debuggability. Unlike
 other testing tools - when your tests end - you are left with your working
 application at the exact point where your test finished.
 
-This is an **excellent** opportunity for you to **use** your application in the
-state the tests finished! This enables you to write **partial tests** that drive
+Leaving the application in that state is an **excellent** opportunity for you to **use** your application in the
+state the tests finished! Using the application in that state enables you to write **partial tests** that drive
 your application step by step, writing your test and application code at the
 same time.
 
@@ -918,7 +918,7 @@ We have built Cypress to support this use case. In fact, Cypress **does not**
 clean up its own internal state when the test ends. We **want** you to have
 dangling state at the end of the test! Things like [stubs](/api/commands/stub),
 [spies](/api/commands/spy), even [intercepts](/api/commands/intercept) are
-**not** removed at the end of the test. This means your application will behave
+**not** removed at the end of the test. Keeping them in place means your application will behave
 identically while it is running Cypress commands or when you manually work with
 it after a test ends.
 
@@ -934,7 +934,7 @@ For the moment, let's assume that for some reason your application desperately
 **needs** that last bit of `after` or `afterEach` code to run. Let's assume that
 if that code is not run - all is lost.
 
-That is fine - but even if this is the case, it should not go in an `after` or
+That requirement is fine - but even if this is the case, it should not go in an `after` or
 `afterEach` hook. Why? So far we have been talking about logging out, but let's
 use a different example. Let's use the pattern of needing to reset your
 database.
@@ -974,7 +974,7 @@ runs.
 Code put in a `before` or `beforeEach` hook will **always** run prior to the
 test - even if you refreshed Cypress in the middle of an existing one!
 
-This is also a great opportunity to use
+Moving reset code to a `before` hook is also a great opportunity to use
 [root level hooks in mocha](https://github.com/mochajs/mochajs.github.io/blob/master/index.md#root-level-hooks).
 
 <SupportFileConfiguration />
@@ -1012,7 +1012,7 @@ state cleanup.
 
 The <Icon name="github" inline="true" contentType="rwa" /> resets and re-seeds
 its database via a custom [Cypress task](/api/commands/task) called `db:seed` in
-a `beforeEach` hook. This allows each test to start from a clean slate and a
+a `beforeEach` hook. This reset allows each test to start from a clean slate and a
 deterministic state. For example:
 
 ```ts
@@ -1121,7 +1121,7 @@ Waiting for the [`cy.get()`](/api/commands/get) below is unnecessary because
 a length of 2.
 
 Whenever commands have an assertion they will not resolve until their associated
-assertions pass. This enables you to describe the state of your application
+assertions pass. Waiting on assertions enables you to describe the state of your application
 without having to worry about when it gets there.
 
 ```javascript
@@ -1233,7 +1233,7 @@ commands like [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) that are not fully qualified domain name
 (FQDN) URLs.
 
-This removes the need to hard-code fully qualified domain name (FQDN) URLs in
+Setting a `baseUrl` removes the need to hard-code fully qualified domain name (FQDN) URLs in
 commands. For example,
 
 ```javascript
@@ -1263,7 +1263,7 @@ port.
 />
 
 As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
-switches to the url of the main window to the url specified in your visit. This
+switches to the url of the main window to the url specified in your visit. This switch
 can result in a 'flash' or 'reload' when your tests first start.
 
 By setting the `baseUrl`, you can avoid this reload altogether. Cypress will

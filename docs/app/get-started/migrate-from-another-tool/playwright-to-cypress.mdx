@@ -17,7 +17,7 @@ slug: /app/guides/migration/playwright-to-cypress
   prompt={`Migrate this project's tests from Playwright to Cypress. First read https://docs.cypress.io/app/guides/migration/playwright-to-cypress.md for the syntax mappings and patterns, then work through these steps:\n\n1. Take inventory. Detect my package manager, find my Playwright config and test files, and summarize the patterns I use: locators, assertions, network mocking, authentication, fixtures/page objects, web server startup, and CI configuration.\n\n2. Agree on a selector strategy. Translate getByRole to the built-in cy.getByRole(), using a regular expression for the name wherever Playwright relied on its default case-insensitive substring match. For a role that HTML has an element for, cy.getByRole() matches only the native element by default, so it skips an element such as a <div role="button"> that Playwright finds. Don't add native: false to every call: list each of these elements with its spec file and line so I can decide whether the app should use the native element or the test should pass native: false. If my tests also rely on getByLabel/getByText and I have no test attributes, recommend installing @testing-library/cypress for those instead of editing my app to add data-testid attributes.\n\n3. Install Cypress alongside Playwright. Configure them to coexist, and do not modify or delete my Playwright config or specs until the Cypress equivalents pass.\n\n4. Migrate one spec at a time. Translate async/await and the locator API to Cypress command chaining and retry-ability (never assign a cy.* return value to a variable), map expect() assertions to Cypress assertions, convert page.route() mocks to cy.intercept(), and port authentication, fixtures, and page objects. If my Playwright config uses a webServer block, set up start-server-and-test so Cypress has a running app.\n\n5. Flag gaps. Call out anything with no direct Cypress equivalent (visual snapshots, soft assertions, test.step) instead of guessing.\n\n6. Verify. Show me the proposed changes before applying them, then install and run eslint-plugin-cypress and my migrated Cypress tests to confirm they pass.\n\nFinish with a summary of what changed and anything you couldn't safely automate.`}
 />
 
-This guide helps you translate Playwright tests to Cypress. It covers the
+This guide helps you translate Playwright tests to Cypress. The guide covers the
 core execution model differences, syntax mappings, and patterns for auth,
 networking, and CI.
 
@@ -83,7 +83,7 @@ Before migrating your tests, add Cypress to your project as a dev dependency.
 
 <CypressInstallCommands />
 
-Unlike Playwright, Cypress does not download its own browser binaries. It uses the browsers already installed on your machine, such as Chrome.
+Unlike Playwright, Cypress does not download its own browser binaries. Cypress uses the browsers already installed on your machine, such as Chrome.
 Once installed, open the Cypress app to complete initial configuration:
 
 <CypressOpenCommands />
@@ -231,7 +231,7 @@ section covers the most common translations.
 
 In Cypress, use `cy.env()` for sensitive values (credentials, tokens, secrets)
 or `Cypress.expose()` for non-sensitive configuration (feature flags, public
-URLs, API versions). These are set via the top-level `env` and `expose` keys in
+URLs, API versions). These values are set via the top-level `env` and `expose` keys in
 your Cypress configuration file. Both APIs require Cypress 15.10.0 or newer.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -285,7 +285,7 @@ on your system.
 
 Cypress uses browsers already installed on the machine. There are no
 browser binaries to download. If Chrome is installed locally, Cypress will
-find and use it. This means browser setup is a CI concern rather than a
+find and use it. Using installed browsers means browser setup is a CI concern rather than a
 per-project dependency.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -552,7 +552,7 @@ which you install as the `@testing-library/cypress` package:
 **Option B — `data-*` attributes (Cypress best practice for new code).**
 Add `data-testid` (or `data-cy`) attributes to your application and select with
 `cy.get('[data-testid="..."]')`, as described in
-[Best Practices](/app/core-concepts/best-practices#Selecting-Elements). This is
+[Best Practices](/app/core-concepts/best-practices#Selecting-Elements). Adding test attributes is
 the most resilient long-term strategy, but it requires editing your application
 source.
 
@@ -943,7 +943,7 @@ See [`cy.readFile()`](/api/commands/readfile).
 
 ## Clock and time control
 
-Both Playwright and Cypress let you replace native browser time functions with a fake clock that you control. This allows tests to set a specific date, skip waiting for timers, and test time-sensitive UI behavior without real delays. The two tools take different approaches to time control.
+Both Playwright and Cypress let you replace native browser time functions with a fake clock that you control. A fake clock allows tests to set a specific date, skip waiting for timers, and test time-sensitive UI behavior without real delays. The two tools take different approaches to time control.
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -1068,7 +1068,7 @@ cy.clock().then((clock) => {
 
 ### Overriding only specific functions
 
-Cypress replaces only the native functions you name. This is useful when you only need to control `Date` without affecting timer behavior, or vice versa.
+Cypress replaces only the native functions you name. Naming specific functions is useful when you only need to control `Date` without affecting timer behavior, or vice versa.
 
 ```ts
 // Override only Date, leave setTimeout and setInterval running normally
@@ -1081,7 +1081,7 @@ cy.clock(null, ['setTimeout', 'clearTimeout', 'setInterval', 'clearInterval'])
 ## Multiple tabs and windows
 
 Cypress drives one tab, and the `@cypress/puppeteer` plugin handles the others.
-It runs Puppeteer code against the browser Cypress launched and bundles its own
+The plugin runs Puppeteer code against the browser Cypress launched and bundles its own
 copy of Puppeteer, so installing the plugin is all you need:
 
 <PackageManagerTabs install="@cypress/puppeteer" dev />
@@ -1215,7 +1215,7 @@ cy.getIframeBody('#payment-frame').within(() => {
 })
 ```
 
-This works for **same-origin** iframes. Unlike Playwright's `frameLocator`,
+This approach works for **same-origin** iframes. Unlike Playwright's `frameLocator`,
 Cypress cannot reach into a **cross-origin** iframe unless you set
 [`chromeWebSecurity`](/app/references/configuration#Browser) to `false` in
 Chromium-family browsers. See
@@ -1306,7 +1306,7 @@ cy.get('button').contains('Delete account').click()
 ```
 
 For tests that need to verify the stub was called, use `cy.stub()` instead of
-`cy.on()`. This lets you use Sinon assertions to confirm the dialog was
+`cy.on()`. `cy.stub()` lets you use Sinon assertions to confirm the dialog was
 triggered the expected number of times.
 
 ```ts
@@ -1320,7 +1320,7 @@ cy.get('@confirmDialog').should('have.been.calledOnce')
 ### prompt()
 
 In Cypress, you must stub `window.prompt` before
-the page loads using the `onBeforeLoad` callback in `cy.visit()`. This gives
+the page loads using the `onBeforeLoad` callback in `cy.visit()`. Stubbing before the page loads gives
 you full control over the return value and lets you assert that the prompt
 was called.
 
@@ -1442,7 +1442,7 @@ See [`cy.request()`](/api/commands/request).
 ## Test generation
 
 [Cypress Studio](/app/guides/cypress-studio) lets you generate test code
-by interacting with your application in the Cypress app. It records
+by interacting with your application in the Cypress app. Cypress Studio records
 actions like clicks and form inputs and writes the corresponding Cypress
 commands. Cypress Studio is a replacement for Playwright's `playwright codegen`. With a [Cypress Cloud](/cloud/get-started/introduction) account, you also get **Studio AI**, AI-powered assertion recommendations as you record.
 
@@ -1622,7 +1622,7 @@ playwright test --shard=4/4 # Machine 4
 
 Cypress parallelizes tests across machines through
 [Cypress Cloud](/cloud/get-started/introduction), which distributes specs dynamically based
-on historical run durations. This requires a Cypress Cloud account.
+on historical run durations. Cloud parallelization requires a Cypress Cloud account.
 
 - Parallelization happens in CI through Cypress Cloud.
 - Specs are distributed dynamically based on historical run data.
@@ -1660,7 +1660,7 @@ See [Parallelization](/cloud/features/smart-orchestration/parallelization) for s
 
 ### Debugging with Test Replay
 
-Test Replay is available on all Cypress Cloud plans at no additional cost. It records a
+Test Replay is available on all Cypress Cloud plans at no additional cost. Test Replay records a
 full, interactive replay of every test run, including network requests,
 console output, and DOM snapshots. Replays are shareable via link and do
 not require a local trace file.
@@ -1726,7 +1726,7 @@ Beyond basic retries, Cypress Cloud provides:
 
 If you record test runs to Cypress Cloud, [Cypress Accessibility](/accessibility/get-started/introduction) provides automated accessibility scanning across your entire test suite with no changes to your test code.
 
-Rather than requiring `checkA11y()` calls in each test, Cypress Accessibility captures DOM snapshots during test execution server-side, using the same protocol as Test Replay. Every distinct state your tests interact with is scanned automatically. This means pages and components that your tests visit but do not explicitly instrument are still checked.
+Rather than requiring `checkA11y()` calls in each test, Cypress Accessibility captures DOM snapshots during test execution server-side, using the same protocol as Test Replay. Every distinct state your tests interact with is scanned automatically. Scanning every state means pages and components that your tests visit but do not explicitly instrument are still checked.
 
 Learn more about [Accessibility testing](/accessibility/get-started/introduction).
 

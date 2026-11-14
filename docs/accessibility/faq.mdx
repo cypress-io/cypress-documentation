@@ -37,7 +37,7 @@ Configure [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) so your agent can r
 
 ### <Icon name="angle-right" /> How do I stop a Cypress Accessibility rule I already fixed from regressing?
 
-Keep a list of remediated rules in your CI verification script and fail the build when any of them appear in a run's results, using the [Results API](/accessibility/connect-and-extend/results-api). This inverts the more common pattern of allowlisting known failures: instead of tracking what's still broken, you lock in each rule the day it reaches zero violations. Add a rule to the list as soon as it passes, and the list becomes a record of the barriers your application no longer has.
+Keep a list of remediated rules in your CI verification script and fail the build when any of them appear in a run's results, using the [Results API](/accessibility/connect-and-extend/results-api). A remediated-rules list inverts the more common pattern of allowlisting known failures: instead of tracking what's still broken, you lock in each rule the day it reaches zero violations. Add a rule to the list as soon as it passes, and the list becomes a record of the barriers your application no longer has.
 
 ## Inspecting a violation
 
@@ -59,7 +59,7 @@ The element failed the rule somewhere in the view, but not in the page state cur
 
 ### <Icon name="angle-right" /> What does "One of these must be fixed" mean in a Cypress Accessibility violation?
 
-It means the listed checks are alternatives, and satisfying any one of them clears the violation. A button failing `button-name`, for example, can be fixed with inner text, an `aria-label`, an `aria-labelledby` reference, or a `title` attribute. **All of these must be fixed** means every listed check has to pass, **This must be fixed** means there is a single check, and **This element is failing for multiple reasons** introduces more than one group, each with its own rule. See [inspect violation details](/accessibility/reports/element-detail-view#Pin-an-element-to-inspect-it).
+"One of these must be fixed" means the listed checks are alternatives, and satisfying any one of them clears the violation. A button failing `button-name`, for example, can be fixed with inner text, an `aria-label`, an `aria-labelledby` reference, or a `title` attribute. **All of these must be fixed** means every listed check has to pass, **This must be fixed** means there is a single check, and **This element is failing for multiple reasons** introduces more than one group, each with its own rule. See [inspect violation details](/accessibility/reports/element-detail-view#Pin-an-element-to-inspect-it).
 
 ### <Icon name="angle-right" /> How do I share a specific accessibility violation with my team?
 
@@ -67,7 +67,7 @@ Three ways, from fastest to most durable. Copy the URL, which encodes the view, 
 
 ### <Icon name="angle-right" /> How do I create a Jira issue from a Cypress Accessibility violation?
 
-Select the failing element to expand its detail, choose **Create Jira issue**, and pick a Jira project. **Summary** is prefilled with the rule name and **Description** with the Markdown issue snippet, including a link back to the violation in Cypress Cloud. Both are editable before you submit, so it's the right moment to add context a triager will want. Choose an issue type, complete any fields your Jira project requires, and submit. This requires the [Cypress Cloud Jira integration](/cloud/integrations/jira) to be installed for your organization; without it, the button doesn't appear.
+Select the failing element to expand its detail, choose **Create Jira issue**, and pick a Jira project. **Summary** is prefilled with the rule name and **Description** with the Markdown issue snippet, including a link back to the violation in Cypress Cloud. Both are editable before you submit, so it's the right moment to add context a triager will want. Choose an issue type, complete any fields your Jira project requires, and submit. Creating Jira issues requires the [Cypress Cloud Jira integration](/cloud/integrations/jira) to be installed for your organization; without it, the button doesn't appear.
 
 ### <Icon name="angle-right" /> Can I file issues for a whole accessibility report at once?
 
@@ -87,7 +87,7 @@ The **Element status** filter defaults to failed and inconclusive elements, with
 
 ### <Icon name="angle-right" /> How do I get from an accessibility violation to the test that found it?
 
-Use the **Test Replay** button above the snapshot. It shows how many tests reached that page state and opens [Test Replay](/cloud/features/test-replay) for any of them, so you can see which spec ran, which commands led there, and what the application was doing just before the element was captured.
+Use the **Test Replay** button above the snapshot. The **Test Replay** button shows how many tests reached that page state and opens [Test Replay](/cloud/features/test-replay) for any of them, so you can see which spec ran, which commands led there, and what the application was doing just before the element was captured.
 
 ## Local development
 
@@ -159,7 +159,7 @@ The two runs most likely did not cover the same ground. Cypress Accessibility co
 
 ### <Icon name="angle-right" /> What are existing failed elements in a Cypress Accessibility comparison?
 
-They are the violations present in both runs, which is everything the change neither introduced nor fixed. Cypress Accessibility keeps them out of the Branch Review diff and links to the full report for the Changed run instead, so new and pre-existing findings are never mixed together in the same list. See [Compare reports](/accessibility/guides/compare-reports).
+Existing failed elements are the violations present in both runs, which is everything the change neither introduced nor fixed. Cypress Accessibility keeps them out of the Branch Review diff and links to the full report for the Changed run instead, so new and pre-existing findings are never mixed together in the same list. See [Compare reports](/accessibility/guides/compare-reports).
 
 ### <Icon name="angle-right" /> Why does Branch Review say my Cypress Accessibility changes are not ready yet?
 
@@ -171,7 +171,7 @@ Four things move a score without a code change: someone edited the App Quality C
 
 ### <Icon name="angle-right" /> How do I detect accessibility regressions with Cypress on a site that isn't tied to pull requests?
 
-Record the Cypress project on a schedule against staging or production and compare consecutive runs in Branch Review, which works even when every run is on the same branch. This catches the changes no pull request would show, such as published content, a new version of an embedded third-party widget, or a feature flag enabling untested UI. See [Production monitoring](/accessibility/guides/production-monitoring).
+Record the Cypress project on a schedule against staging or production and compare consecutive runs in Branch Review, which works even when every run is on the same branch. Scheduled monitoring catches the changes no pull request would show, such as published content, a new version of an embedded third-party widget, or a feature flag enabling untested UI. See [Production monitoring](/accessibility/guides/production-monitoring).
 
 ### <Icon name="angle-right" /> Can Cypress notify my team when accessibility results are ready?
 
@@ -185,11 +185,11 @@ Use the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#C
 
 ### <Icon name="angle-right" /> How do I exclude elements from Cypress Accessibility?
 
-Add an [`elementFilters`](/accessibility/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. Their failed and incomplete checks move to the **Ignored** status and stop counting against your views and your [accessibility score](/accessibility/core-concepts/accessibility-score). This is the standard way to handle third-party widgets whose violations you can't fix. To ignore only specific rules for an element, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) instead, and to ignore entire pages, use [`viewFilters`](/accessibility/configuration/viewfilters).
+Add an [`elementFilters`](/accessibility/configuration/elementfilters) rule with `include: false` for a CSS selector that matches the elements. The matched elements' failed and incomplete checks move to the **Ignored** status and stop counting against your views and your [accessibility score](/accessibility/core-concepts/accessibility-score). An `elementFilters` rule is the standard way to handle third-party widgets whose violations you can't fix. To ignore only specific rules for an element, use the [`data-a11y-ignore` attribute](/accessibility/configuration/ignoring-rules-per-element) instead, and to ignore entire pages, use [`viewFilters`](/accessibility/configuration/viewfilters).
 
 ### <Icon name="angle-right" /> Do ignored elements affect my Cypress Accessibility score?
 
-No. An element ignored by [`elementFilters`](/accessibility/configuration/elementfilters) doesn't count as a failed or incomplete element, and its results don't affect the score. It stays visible in the report under the **Ignored** status so you can always audit what your configuration ignores.
+No. An element ignored by [`elementFilters`](/accessibility/configuration/elementfilters) doesn't count as a failed or incomplete element, and its results don't affect the score. The ignored element stays visible in the report under the **Ignored** status so you can always audit what your configuration ignores.
 
 ### <Icon name="angle-right" /> Why didn't my Cypress Accessibility score improve after ignoring an element?
 
@@ -205,7 +205,7 @@ The most common causes are:
 
 ### <Icon name="angle-right" /> Why do ignored elements still appear in my Cypress Accessibility report?
 
-This is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. They don't count as failed or incomplete elements, and they don't affect your score.
+Keeping ignored elements in the report is by design. Ignored elements appear under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) rather than being removed, so the report always shows what your configuration is hiding. Ignored elements don't count as failed or incomplete elements, and they don't affect your score.
 
 ### <Icon name="angle-right" /> Can I ignore elements in Cypress Accessibility without affecting UI Coverage?
 
@@ -235,7 +235,7 @@ Not your run-level score. The [run score](/accessibility/core-concepts/accessibi
 
 ### <Icon name="angle-right" /> What's the difference between views and viewFilters in Cypress Accessibility?
 
-They do opposite things. [`views`](/accessibility/configuration/views) _keeps_ URLs but changes how they're grouped and named, so related pages collapse into a single view or a dynamic route splits into several. [`viewFilters`](/accessibility/configuration/viewfilters) _removes_ URLs, so matching snapshots are never scanned and don't appear in your report or score. Use `views` to organize the pages you scan, and `viewFilters` for pages you don't own or intend to remediate.
+`views` and `viewFilters` do opposite things. [`views`](/accessibility/configuration/views) _keeps_ URLs but changes how they're grouped and named, so related pages collapse into a single view or a dynamic route splits into several. [`viewFilters`](/accessibility/configuration/viewfilters) _removes_ URLs, so matching snapshots are never scanned and don't appear in your report or score. Use `views` to organize the pages you scan, and `viewFilters` for pages you don't own or intend to remediate.
 
 ### <Icon name="angle-right" /> Can I configure views for Cypress Accessibility without affecting UI Coverage?
 
@@ -245,7 +245,7 @@ No. Unlike [`viewFilters`](/accessibility/configuration/viewfilters) and [`eleme
 
 ### <Icon name="angle-right" /> How do I exclude URLs from Cypress Accessibility?
 
-Add a [`viewFilters`](/accessibility/configuration/viewfilters) rule with `include: false` for a URL pattern. Snapshots from matching URLs are not scanned for accessibility violations and don't appear in your report. This is the standard way to keep third-party pages your tests pass through, such as an OAuth provider's login page, out of your results.
+Add a [`viewFilters`](/accessibility/configuration/viewfilters) rule with `include: false` for a URL pattern. Snapshots from matching URLs are not scanned for accessibility violations and don't appear in your report. A `viewFilters` rule is the standard way to keep third-party pages your tests pass through, such as an OAuth provider's login page, out of your results.
 
 ### <Icon name="angle-right" /> Can I exclude URLs from Cypress Accessibility without affecting UI Coverage?
 
@@ -277,11 +277,11 @@ No. Your attributes are checked first, and the defaults still apply after them, 
 
 ### <Icon name="angle-right" /> Can I use aria-label as a significant attribute to review my labels?
 
-Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/accessibility/configuration/significantattributes) identifies elements by their label text, so the elements you triage are shown by their labels. This adds a manual check on top of the automated one: Cypress Accessibility confirms that a control has an accessible name, but not that the name is understandable, so `aria-label="button"` passes the same name-presence rules as `aria-label="Close dialog"`. Seeing the label as the identifier makes an unclear one easy to catch.
+Yes. Any valid HTML attribute qualifies, not only `data-*` attributes. Listing [`aria-label`](/accessibility/configuration/significantattributes) identifies elements by their label text, so the elements you triage are shown by their labels. Identifying elements by `aria-label` adds a manual check on top of the automated one: Cypress Accessibility confirms that a control has an accessible name, but not that the name is understandable, so `aria-label="button"` passes the same name-presence rules as `aria-label="Close dialog"`. Seeing the label as the identifier makes an unclear one easy to catch.
 
 ### <Icon name="angle-right" /> How do I add component or team context to my Cypress Accessibility violation selectors?
 
-Use [`components`](/accessibility/configuration/components), a Cypress Accessibility-only option that adds attributes like `data-component` or `data-team` to the violation target selector when they're present on the element or one of its ancestors. Instead of a bare `[data-cy="signup"]`, the target reads as `[data-cy="signup"][data-component="IconButton"]`, so whoever picks up the issue, whether a developer, a Jira ticket, or an AI agent triaging through [Cypress Cloud MCP](/accessibility/work-with-ai-agents), can see which component or team it belongs to without opening the page HTML. This differs from [`significantAttributes`](/accessibility/configuration/significantattributes), which chooses the single attribute that _identifies_ the element, whereas `components` adds context on top of that identifier.
+Use [`components`](/accessibility/configuration/components), a Cypress Accessibility-only option that adds attributes like `data-component` or `data-team` to the violation target selector when they're present on the element or one of its ancestors. Instead of a bare `[data-cy="signup"]`, the target reads as `[data-cy="signup"][data-component="IconButton"]`, so whoever picks up the issue, whether a developer, a Jira ticket, or an AI agent triaging through [Cypress Cloud MCP](/accessibility/work-with-ai-agents), can see which component or team it belongs to without opening the page HTML. The `components` option differs from [`significantAttributes`](/accessibility/configuration/significantattributes), which chooses the single attribute that _identifies_ the element, whereas `components` adds context on top of that identifier.
 
 ### <Icon name="angle-right" /> What's the difference between significantAttributes and components in Cypress Accessibility?
 
@@ -298,7 +298,7 @@ The most common causes are:
 
 ### <Icon name="angle-right" /> Can I keep certain component attribute values out of my Cypress Accessibility selectors?
 
-Yes. Add a [`componentAttributeFilters`](/accessibility/configuration/components#componentAttributeFilters) rule with `include: false` for the values you don't want appended, matched by regex. This is useful when an attribute is meaningful on some elements but generic on others, such as a `data-component` that's a specific component in most places but a layout primitive like `Box` elsewhere. The default attribute filters that drop dynamic values from _identifying_ selectors don't apply to component attributes, so `componentAttributeFilters` are the only way to filter them.
+Yes. Add a [`componentAttributeFilters`](/accessibility/configuration/components#componentAttributeFilters) rule with `include: false` for the values you don't want appended, matched by regex. A `componentAttributeFilters` rule is useful when an attribute is meaningful on some elements but generic on others, such as a `data-component` that's a specific component in most places but a layout primitive like `Box` elsewhere. The default attribute filters that drop dynamic values from _identifying_ selectors don't apply to component attributes, so `componentAttributeFilters` are the only way to filter them.
 
 ## Configuration
 
@@ -308,7 +308,7 @@ In the **App Quality** tab of your project settings in Cypress Cloud. See [Setti
 
 ### <Icon name="angle-right" /> Do I need to rerun my tests after changing configuration?
 
-No. You can regenerate any historical run from its **Properties** tab, and the report is reprocessed with the current configuration. This lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
+No. You can regenerate any historical run from its **Properties** tab, and the report is reprocessed with the current configuration. Regenerating lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
 
 ### <Icon name="angle-right" /> How do I apply a setting to Cypress Accessibility without changing UI Coverage?
 
@@ -332,7 +332,7 @@ Determining conformance with the Web Content Accessibility Guidelines (WCAG), pu
 
 ### <Icon name="angle-right" /> Which WCAG version and level do the Cypress Accessibility rules cover?
 
-By default, a run evaluates Axe-Core®'s default ruleset: rules tagged for WCAG 2.0 and WCAG 2.1 Level A and AA, plus Deque's Best Practices rules. Three WCAG-tagged rules are turned off by default in Cypress Accessibility, and Axe-Core®'s WCAG 2.2, Level AAA, experimental, and deprecated rule groups are off unless you enable them with [`axeConfig`](/accessibility/configuration/axe-core-configuration). This means the default report is broader than any single WCAG level in one sense, because Best Practices findings are Deque recommendations rather than WCAG success criteria, and narrower in another, because it doesn't run every WCAG-tagged rule. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
+By default, a run evaluates Axe-Core®'s default ruleset: rules tagged for WCAG 2.0 and WCAG 2.1 Level A and AA, plus Deque's Best Practices rules. Three WCAG-tagged rules are turned off by default in Cypress Accessibility, and Axe-Core®'s WCAG 2.2, Level AAA, experimental, and deprecated rule groups are off unless you enable them with [`axeConfig`](/accessibility/configuration/axe-core-configuration). These defaults mean the default report is broader than any single WCAG level in one sense, because Best Practices findings are Deque recommendations rather than WCAG success criteria, and narrower in another, because it doesn't run every WCAG-tagged rule. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
 
 ### <Icon name="angle-right" /> Can Cypress Accessibility run WCAG 2.2 or Level AAA rules?
 
@@ -346,13 +346,13 @@ What Cypress Accessibility contributes is a durable, dated record: every run per
 
 ### <Icon name="angle-right" /> Does a 100% Cypress Accessibility score mean my application is accessible?
 
-No. A 100% score means Axe-Core® detected no violations in the scope your tests covered, with the rules that were enabled for that run. It says nothing about criteria automated checks can't evaluate, such as whether a label is understandable, whether focus order matches the visual layout, or whether the experience works for someone using a screen reader end to end. Automated checks detect around [57% of the issues a manual audit surfaces](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/). Treat a clean report as a solid foundation and a signal that your team is actively managing accessibility, not as a finished state. See [What a 100% score means](/accessibility/core-concepts/accessibility-score#What-a-100-score-means).
+No. A 100% score means Axe-Core® detected no violations in the scope your tests covered, with the rules that were enabled for that run. A 100% score says nothing about criteria automated checks can't evaluate, such as whether a label is understandable, whether focus order matches the visual layout, or whether the experience works for someone using a screen reader end to end. Automated checks detect around [57% of the issues a manual audit surfaces](https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/). Treat a clean report as a solid foundation and a signal that your team is actively managing accessibility, not as a finished state. See [What a 100% score means](/accessibility/core-concepts/accessibility-score#What-a-100-score-means).
 
 ## Axe Core® rules
 
 ### <Icon name="angle-right" /> Which accessibility rules does Cypress Accessibility run?
 
-Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every captured snapshot, plus a few [custom Cypress rules](/accessibility/core-concepts/cypress-rules). That covers WCAG 2.0 and 2.1 Level A and AA, along with Deque's Best Practices rules, which are recommendations rather than WCAG success criteria. Rule groups that Axe-Core® keeps off by default, including WCAG 2.2, Level AAA, experimental, and deprecated rules, don't run unless you enable them with [`axeConfig`](/accessibility/configuration/axe-core-configuration). Three further rules are [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default) in Cypress Accessibility: `color-contrast`, `no-autoplay-audio`, and `meta-refresh`. You don't add any assertions or `cy.` commands to your tests to run these checks; they run automatically when Cypress Accessibility is enabled. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
+Cypress Accessibility runs [Axe-Core®](https://github.com/dequelabs/axe-core)'s default ruleset against every captured snapshot, plus a few [custom Cypress rules](/accessibility/core-concepts/cypress-rules). The default ruleset covers WCAG 2.0 and 2.1 Level A and AA, along with Deque's Best Practices rules, which are recommendations rather than WCAG success criteria. Rule groups that Axe-Core® keeps off by default, including WCAG 2.2, Level AAA, experimental, and deprecated rules, don't run unless you enable them with [`axeConfig`](/accessibility/configuration/axe-core-configuration). Three further rules are [off by default](/accessibility/configuration/axe-core-configuration#rules-that-are-off-by-default) in Cypress Accessibility: `color-contrast`, `no-autoplay-audio`, and `meta-refresh`. You don't add any assertions or `cy.` commands to your tests to run these checks; they run automatically when Cypress Accessibility is enabled. See [What the default ruleset covers](/accessibility/configuration/axe-core-configuration#what-the-default-ruleset-covers).
 
 ### <Icon name="angle-right" /> Can I change which Axe-Core® rules Cypress Accessibility runs?
 
@@ -360,7 +360,7 @@ Yes. Set [`axeConfig`](/accessibility/configuration/axe-core-configuration) unde
 
 ### <Icon name="angle-right" /> Why isn't color contrast reported in my Cypress Accessibility results?
 
-Color contrast checking is off by default in Cypress Accessibility because it's the slowest Axe-Core® rule and the most likely to produce false positives or incomplete results. It works well in many projects; enable it with [`axeConfig`](/accessibility/configuration/axe-core-configuration):
+Color contrast checking is off by default in Cypress Accessibility because it's the slowest Axe-Core® rule and the most likely to produce false positives or incomplete results. The color contrast rule works well in many projects; enable it with [`axeConfig`](/accessibility/configuration/axe-core-configuration):
 
 ```json title="App Quality Config"
 {

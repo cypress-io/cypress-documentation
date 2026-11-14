@@ -62,7 +62,7 @@ Several options change what appears in reports and how it's organized. Pick the 
 
 ### Comments
 
-Most configuration rules support an optional `comment` property that you can use to record why a value is set. This makes your configuration easier to understand and maintain, especially when working in a team or revisiting configuration after some time. Any rule defined as an object accepts a `comment`; the options that are plain lists of strings, such as [`significantAttributes`](/accessibility/configuration/significantattributes), do not take a per-entry comment.
+Most configuration rules support an optional `comment` property that you can use to record why a value is set. Comments make your configuration easier to understand and maintain, especially when working in a team or revisiting configuration after some time. Any rule defined as an object accepts a `comment`; the options that are plain lists of strings, such as [`significantAttributes`](/accessibility/configuration/significantattributes), do not take a per-entry comment.
 
 A `comment` lives inside the rule and has no effect on behavior. Comments appear only in the configuration itself and are never displayed in reports. Because Cypress Cloud validates every rule and rejects properties it doesn't recognize, `comment` is the supported place to keep notes.
 
@@ -187,7 +187,7 @@ One accessibility-specific control lives outside this JSON: the per-element [`da
 A few behaviors govern the rules you write, and some of them differ from [UI Coverage](/ui-coverage/configuration/overview):
 
 - **`viewFilters`: first match wins.** URLs are compared against your rules top to bottom, and the first rule whose `pattern` matches decides whether that URL is included. List specific rules before broad, catch-all rules. URLs that match no rule are included by default.
-- **`elementFilters`: any exclude wins.** In Cypress Accessibility, an element is ignored when any `include: false` rule matches it, regardless of where the rule sits in the list, and an `include: true` rule can't protect an element from an exclusion elsewhere. This is different from UI Coverage, where the first matching rule wins. See [When to use include: true](/accessibility/configuration/elementfilters#When-to-use-include-true).
+- **`elementFilters`: any exclude wins.** In Cypress Accessibility, an element is ignored when any `include: false` rule matches it, regardless of where the rule sits in the list, and an `include: true` rule can't protect an element from an exclusion elsewhere. This any-exclude-wins behavior is different from UI Coverage, where the first matching rule wins. See [When to use include: true](/accessibility/configuration/elementfilters#When-to-use-include-true).
 - **`significantAttributes`: order sets priority.** The attributes you list are checked before the default attributes, in the order you list them, and the first one that uniquely identifies an element becomes its violation-target selector.
 - **Unknown properties are rejected.** When you save, Cypress Cloud validates your configuration against a strict schema and rejects anything it doesn't recognize, such as a misspelled property, a value of the wrong type, or a note on a property that doesn't accept one. Correct the flagged property to save, and keep freeform notes in a [`comment`](#Comments).
 
@@ -205,7 +205,7 @@ Every run permanently records the exact configuration it was processed with, so 
 
 ### In Cypress Cloud
 
-To review the configuration a specific run used, open its **Properties** tab, shown in the [Setting Configuration](#Setting-Configuration) screenshot above. This displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-Configuration) the run to reprocess it with the current configuration.
+To review the configuration a specific run used, open its **Properties** tab, shown in the [Setting Configuration](#Setting-Configuration) screenshot above. The **Properties** tab displays the configuration as it was applied when the run was processed. When you open a run that was processed with an older configuration than the one currently saved, the report flags it with a "configuration updated" message, and you can [regenerate](#Setting-Configuration) the run to reprocess it with the current configuration.
 
 ### From the Results API
 

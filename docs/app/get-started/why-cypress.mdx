@@ -10,13 +10,13 @@ slug: /app/get-started/why-cypress
 
 Cypress is a quality platform for teams shipping modern web applications. We bring together end-to-end testing, component testing, accessibility checks, and a clear view of test coverage into a connected workflow that runs locally and in CI, so you can catch problems before your users do.
 
-Most teams come to Cypress looking for a better way to write tests for their front end. They stay because, as the team and the application grow, **Cypress does more than a testing tool would.**
+Most teams come to Cypress looking for a better way to write tests for their front end. Teams stay because, as the team and the application grow, **Cypress does more than a testing tool would.**
 
 The same platform helps a single developer write their first test, a QA team manage thousands of specs, an accessibility partner track regressions, and an engineering lead see whether a release is safe to ship.
 
 **What you write in Cypress becomes part of how your team ships software.** Tests run while you build. Results flow into CI. Failures, flake patterns, accessibility issues, and untested areas of your app surface in one place the whole team can act on.
 
-**By the time a change is ready to merge, your team should already know whether it's safe to ship.** That's how Cypress reduces the cost and risk of releasing software: fewer surprises in production, fewer hours lost to test maintenance, and a release cadence you can trust.
+**By the time a change is ready to merge, your team should already know whether it's safe to ship.** Knowing before merge is how Cypress reduces the cost and risk of releasing software: fewer surprises in production, fewer hours lost to test maintenance, and a release cadence you can trust.
 
 Cypress provides solutions for:
 
@@ -42,7 +42,7 @@ of your test suite and the quality of your application.
 
 **Install the Cypress app and start writing tests as you build.** The app is free and open source.
 
-This is where the day-to-day cost of testing lives. Most teams spend more time debugging broken tests than writing new ones, and most of that time goes to one question: what was the state of the app when the test failed?
+Local development is where the day-to-day cost of testing lives. Most teams spend more time debugging broken tests than writing new ones, and most of that time goes to one question: what was the state of the app when the test failed?
 
 Cypress is built around making that question fast to answer:
 
@@ -158,7 +158,7 @@ Cypress can be used to ensure several different types of tests. Used together, t
 
 Cypress was originally designed to run [end-to-end (E2E) tests](/app/end-to-end-testing/writing-your-first-end-to-end-test) on anything that
 runs in a browser. A typical E2E test visits the application in a browser and
-performs actions via the UI just like a real user would. They catch the failures your users would actually see, which is what makes them so valuable in the moments before code ships.
+performs actions via the UI just like a real user would. E2E tests catch the failures your users would actually see, which is what makes them so valuable in the moments before code ships.
 
 ```js
 it('adds todos', () => {
@@ -291,7 +291,7 @@ productivity, makes testing an enjoyable experience, and generates developer
 happiness. We hold ourselves accountable to champion a testing process **that
 actually works**.
 
-We believe our documentation should be approachable. This means enabling our
+We believe our documentation should be approachable. Approachable documentation means enabling our
 readers to understand fully not just the **what** but the **why** as well.
 
 We want to help developers build a new generation of modern applications faster,
@@ -327,12 +327,12 @@ browser for tasks that require a higher privilege.
 
 Cypress ultimately controls the entire automation process from top to bottom,
 which puts it in the unique position of being able to understand everything
-happening in and outside of the browser. This means Cypress is capable of
+happening in and outside of the browser. This full control means Cypress is capable of
 delivering more consistent results than any other testing tool.
 
 Because Cypress is
 [installed locally](/app/get-started/install-cypress) on your machine,
-it can additionally tap into the operating system for automation tasks. This
+it can additionally tap into the operating system for automation tasks. Access to the operating system
 makes performing tasks such as
 [taking screenshots, recording videos](/app/guides/screenshots-and-videos),
 general [file system operations](/api/commands/task), and
@@ -378,9 +378,9 @@ For instance you can:
 ### Shortcuts
 
 Cypress allows for browser context to be cached with
-[`cy.session()`](/api/commands/session). This means as a user, you only need to
+[`cy.session()`](/api/commands/session). Caching the browser context means as a user, you only need to
 perform authentication once for the entirety of your test suite, and restore the
-saved session between each test. That means you do not have to visit a login
+saved session between each test. Restoring the session means you do not have to visit a login
 page, type in a username and password and wait for the page to load and/or
 redirect for every test you run. You can accomplish this once with
 [`cy.session()`](/api/commands/session) and if needed,
@@ -391,7 +391,7 @@ redirect for every test you run. You can accomplish this once with
 Flake is one of the largest hidden costs in any test suite. Reducing it is one of the most direct ways Cypress keeps a suite trustworthy over time.
 
 Cypress knows and understands everything that happens in your application
-synchronously. It is notified the moment the page loads and the moment the page
+synchronously. Cypress is notified the moment the page loads and the moment the page
 unloads. Cypress even knows how fast an element is animating and will
 [wait for it to stop animating](/app/core-concepts/interacting-with-elements#Animations).
 Additionally, it
@@ -415,7 +415,7 @@ Above all else Cypress is built for usability.
   to the state it was in when commands ran.
 - You can use the Developer Tools while your tests run to see every console
   message or network request. You can inspect elements and use
-  debugger statements in your spec or application code - you can use all the tools you're already comfortable with. This
+  debugger statements in your spec or application code - you can use all the tools you're already comfortable with. Using the Developer Tools during a run
   enables you to test and develop all at the same time.
 
 ### Trade offs

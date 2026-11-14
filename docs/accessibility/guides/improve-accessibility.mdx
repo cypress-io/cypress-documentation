@@ -72,7 +72,7 @@ When a single rule misfires on an element you otherwise want reported, keep the 
 
 Two things make this safe to do early:
 
-- **Ignoring is visible, not silent.** Ignored elements stay in the report under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) instead of disappearing, so you can always audit what your configuration hides. They stop counting as failures and stop affecting your [accessibility score](/accessibility/core-concepts/accessibility-score).
+- **Ignoring is visible, not silent.** Ignored elements stay in the report under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) instead of disappearing, so you can always audit what your configuration hides. Ignored elements stop counting as failures and stop affecting your [accessibility score](/accessibility/core-concepts/accessibility-score).
 - **You don't have to re-run your tests to see the effect.** Save the configuration, then regenerate a past run from its **Properties** tab in Cypress Cloud. The report is reprocessed with your current configuration in place, so you can iterate on scope in minutes.
 
 <DocsImage
@@ -82,9 +82,9 @@ Two things make this safe to do early:
 
 ### Inconclusive elements are not part of the backlog
 
-Some checks come back **Inconclusive** rather than passed or failed. Axe-Core® either couldn't complete them for technical reasons, or the answer depends on judgment an automated scanner can't make. They don't count as failures, they don't affect your [accessibility score](/accessibility/core-concepts/accessibility-score), and they never keep a rule from reaching zero violations.
+Some checks come back **Inconclusive** rather than passed or failed. Axe-Core® either couldn't complete them for technical reasons, or the answer depends on judgment an automated scanner can't make. Inconclusive checks don't count as failures, they don't affect your [accessibility score](/accessibility/core-concepts/accessibility-score), and they never keep a rule from reaching zero violations.
 
-Treat them as a separate review queue rather than remediation work. They make a poor first goal precisely because "done" isn't something the report can confirm for you, so pick a rule with clear failures first and come back to the inconclusive list once your team has the accessibility experience to judge them.
+Treat inconclusive checks as a separate review queue rather than remediation work. Inconclusive checks make a poor first goal precisely because "done" isn't something the report can confirm for you, so pick a rule with clear failures first and come back to the inconclusive list once your team has the accessibility experience to judge them.
 
 ## Choose a first goal you can finish
 
@@ -95,7 +95,7 @@ A goal with a finish line is worth more than a broad one, because reaching it te
 
 Rule-focused goals tend to be the better first choice. The fix is the same shape every time, so the second element takes a fraction of the time the first one did, and whoever picks up the work only has to learn one accessibility concept to finish it.
 
-In a component-driven codebase the leverage is larger than the element count suggests. One shared button, form field, or dialog can be responsible for a rule's failures across dozens of views, so a single file can clear the rule everywhere at once. This cuts both ways when you're sizing the work: check whether the failing elements trace back to one component before you estimate, because 200 failing elements and 200 places to edit are rarely the same number. Adding [`components`](/accessibility/configuration/components) attributes to your violation selectors makes that grouping visible in the report itself.
+In a component-driven codebase the leverage is larger than the element count suggests. One shared button, form field, or dialog can be responsible for a rule's failures across dozens of views, so a single file can clear the rule everywhere at once. This leverage cuts both ways when you're sizing the work: check whether the failing elements trace back to one component before you estimate, because 200 failing elements and 200 places to edit are rarely the same number. Adding [`components`](/accessibility/configuration/components) attributes to your violation selectors makes that grouping visible in the report itself.
 
 <DocsImage
   src="/img/accessibility/guides/a11y-standards.png"
@@ -105,18 +105,18 @@ In a component-driven codebase the leverage is larger than the element count sug
 
 Open the **Rules** list in a run's [accessibility report](/accessibility/reports/run-level-reports#Rules) and read it as three groups. The passing rules are the standard you already meet. The failing rules are your backlog. The failing rules with the fewest failing elements are your next tasks, because they're closest to moving into the first group.
 
-Expect the first report to include concepts your team hasn't worked with before, such as [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) or [nesting interactive controls inside each other](https://dequeuniversity.com/rules/axe/4.12/nested-interactive). That's a reason to start small, not a reason to wait: every Axe-Core® violation in Cypress Cloud links to a Deque University page explaining the barrier and how to fix it, so the context an engineer or agent needs is one click from the failing element.
+Expect the first report to include concepts your team hasn't worked with before, such as [ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) or [nesting interactive controls inside each other](https://dequeuniversity.com/rules/axe/4.12/nested-interactive). Unfamiliar concepts are a reason to start small, not a reason to wait: every Axe-Core® violation in Cypress Cloud links to a Deque University page explaining the barrier and how to fix it, so the context an engineer or agent needs is one click from the failing element.
 
 ### What makes a good first rule
 
 Look for a rule where the fix is local, unambiguous, and easy to confirm:
 
-- It appears often enough that finishing it visibly changes the report.
-- Axe-Core® flags it as critical or serious, so the work is defensible.
+- The rule appears often enough that finishing it visibly changes the report.
+- Axe-Core® flags the rule as critical or serious, so the work is defensible.
 - The fix is contained in one component or file, with no design or content decision blocking it.
 - You can confirm the fix by hand, with a screen reader or the browser's accessibility inspector.
 
-Rules that support [WCAG SC 4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html) usually fit all four. They cover whether interactive controls expose a name and a role to assistive technology, they're common in component-driven interfaces, and they directly change whether a screen reader user can tell what a control does.
+Rules that support [WCAG SC 4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html) usually fit all four. These rules cover whether interactive controls expose a name and a role to assistive technology, they're common in component-driven interfaces, and they directly change whether a screen reader user can tell what a control does.
 
 ### Example: buttons must have discernible text
 
@@ -124,7 +124,7 @@ Icon-only buttons with no text label are one of the most common findings in a fi
 
 - The fix is usually one attribute or one piece of visually hidden text.
 - A screen reader user goes from hearing "button" to hearing something meaningful, for example "Delete invoice".
-- It rarely needs a decision from outside the team, as long as the correct label is obvious from the surrounding UI.
+- The fix rarely needs a decision from outside the team, as long as the correct label is obvious from the surrounding UI.
 - New code is easy to hold to the same standard, because "what does this control announce?" is a question a designer or product manager can answer during the ticket, not after the pull request.
 
 :::note
@@ -139,7 +139,7 @@ If `button-name` isn't in your report, choose another rule with the same propert
 
 The [accessibility score](/accessibility/core-concepts/accessibility-score) is a useful trend line, but it's a poor progress bar for a single rule. Two behaviors surprise teams that watch it during remediation.
 
-**A rule counts once per snapshot, however many elements fail it.** Each snapshot's score is a weighted ratio of passing to failing rules, and severity sets the weight. So if `button-name` fails on 10 buttons in one snapshot and you fix nine of them, that snapshot's score doesn't move at all. It moves when the last failing element is fixed and the rule flips to passing.
+**A rule counts once per snapshot, however many elements fail it.** Each snapshot's score is a weighted ratio of passing to failing rules, and severity sets the weight. So if `button-name` fails on 10 buttons in one snapshot and you fix nine of them, that snapshot's score doesn't move at all. The score moves when the last failing element is fixed and the rule flips to passing.
 
 **The run score averages every snapshot in the run.** A rule that fails on one page in a suite that captures hundreds of snapshots barely registers, even though the barrier on that page might be severe.
 
@@ -155,7 +155,7 @@ The most expensive outcome in accessibility work is fixing one issue and introdu
 
 When you review your remediation branch, check both directions:
 
-- **Resolved elements** should list the rule you worked on, with the elements you fixed counted against the views they appear on. This is your evidence that the fix reached everywhere the rule was failing, not only the example you tested by hand.
+- **Resolved elements** should list the rule you worked on, with the elements you fixed counted against the views they appear on. The resolved list is your evidence that the fix reached everywhere the rule was failing, not only the example you tested by hand.
 - **New failed elements** should be empty. Accessibility fixes commonly introduce new findings, such as an added `aria-label` that duplicates visible text or a new landmark that leaves other content outside it.
 
 <DocsImage
@@ -167,11 +167,11 @@ Comparisons are cleanest when both runs execute a similar test suite against sim
 
 ## Work through repeated violations with an AI agent
 
-Once you've fixed the first few elements of a rule by hand, the remaining ones follow the same pattern. That's the point where handing the work to an agent pays off.
+Once you've fixed the first few elements of a rule by hand, the remaining ones follow the same pattern, which is the point where handing the work to an agent pays off.
 
 With [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) configured, an agent reads your accessibility results directly from Cypress Cloud through three tools: `cypress_get_accessibility_report` for a run's failing rules and worst views, `cypress_get_accessibility_views` to page through every view, and `cypress_get_accessibility_rule_failures` for the failing elements of one rule, optionally scoped to a single view.
 
-This prompt scopes the work to a single rule and asks for a plan before any edits. It works as written on any project with Cypress Cloud MCP configured: name a rule if you have one in mind, or let the agent pick the rule with the most failing elements.
+This prompt scopes the work to a single rule and asks for a plan before any edits. The prompt works as written on any project with Cypress Cloud MCP configured: name a rule if you have one in mind, or let the agent pick the rule with the most failing elements.
 
 <CopyPrompt
   title="Work through one accessibility rule"

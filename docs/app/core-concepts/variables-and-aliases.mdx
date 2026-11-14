@@ -18,7 +18,7 @@ could do synchronously, without your code doing any backflips.
 This guide explores many common patterns for writing good Cypress code that can
 handle even the most complex situations.
 
-Asynchronous APIs are here to stay in JavaScript. They are found everywhere in
+Asynchronous APIs are here to stay in JavaScript. Asynchronous APIs are found everywhere in
 modern code. In fact, most new browser APIs are asynchronous and many core Node
 modules are asynchronous as well.
 
@@ -56,7 +56,7 @@ If you're familiar with
 the Cypress `.then()` works similarly. You can continue to nest more Cypress
 commands inside of the `.then()`.
 
-Each nested command has access to the work done in previous commands. This ends
+Each nested command has access to the work done in previous commands. This nesting ends
 up reading very nicely.
 
 ```js
@@ -96,7 +96,7 @@ commands.
 
 Using `.then()` functions is an excellent opportunity to use
 [`debugger`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger).
-This can help you understand the order in which commands are run. This also
+A `debugger` statement can help you understand the order in which commands are run. The statement also
 enables you to inspect the objects that Cypress yields you in each command.
 
 ```js
@@ -362,7 +362,7 @@ Accessing aliases as properties with `this.*` will not work if you use
 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 for your tests or hooks.
 
-This is why all of our examples use the regular `function () {}` syntax as
+This limitation is why all of our examples use the regular `function () {}` syntax as
 opposed to the lambda "fat arrow" syntax `() => {}`.
 
 :::
@@ -546,7 +546,7 @@ request that matches it — not just the most recent one. By default,
 matching request. The `.all` suffix and numeric index notation expose the full
 history Cypress was already keeping.
 
-This is useful in several situations:
+The full request history is useful in several situations:
 
 **Asserting request count.** The most common need is proving your app made
 _exactly_ the expected number of requests — not just that it made at least one.
