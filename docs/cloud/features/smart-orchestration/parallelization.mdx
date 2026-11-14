@@ -36,9 +36,9 @@ CI strategies when using parallelization.
 ## Splitting up your test suite
 
 Cypress' parallelization strategy is file-based, so to use
-parallelization, your tests will need to be split across separate files.
+parallelization, your tests need to be split across separate files.
 
-Cypress will assign each spec file to an available machine based on our
+Cypress assigns each spec file to an available machine based on our
 [balance strategy](/cloud/features/smart-orchestration/load-balancing#Balance-strategy).
 Due to this balance strategy, the run order of the spec files is not guaranteed
 when parallelized.
@@ -232,7 +232,7 @@ within the associated test run.
 
 For multiple runs to be grouped into a single run, it is required for CI
 machines to share a common CI build ID environment variable. Typically these CI
-machines will run in parallel or within the same build workflow or pipeline, but
+machines run in parallel or within the same build workflow or pipeline, but
 **it is not required to use Cypress parallelization to group runs**. Grouping of
 runs can be used independently of Cypress parallelization.
 
@@ -396,7 +396,7 @@ cypress run --record --parallel --ci-build-id $BUILD_TAG
 
 ## Run Completion Delay
 
-During parallelization mode or when grouping runs, Cypress will wait for a
+During parallelization mode or when grouping runs, Cypress waits for a
 specified amount of time before completing the test run in case any more
 relevant work remains. The wait compensates for various scenarios where CI
 machines could be backed-up in a queue.
@@ -622,12 +622,12 @@ The endpoint always responds with a JSON body containing an `outcome` field. The
 HTTP status reflects whether the run reached a terminal state as a result of the
 request.
 
-| Status | `outcome`          | Meaning                                                                                                                                    |
-| ------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `200`  | `completed`        | The run was ready and has been completed immediately, skipping the completion delay.                                                       |
-| `200`  | `already-complete` | The run had already completed. The request is idempotent: no change was made.                                                              |
-| `202`  | `deferred`         | The run is not ready yet (groups are still in progress). The request was recorded; the run will complete with no delay once it stabilizes. |
-| `202`  | `run-not-active`   | There is no live recording session for the run. The run will finalize on its own.                                                          |
+| Status | `outcome`          | Meaning                                                                                                                                |
+| ------ | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `200`  | `completed`        | The run was ready and has been completed immediately, skipping the completion delay.                                                   |
+| `200`  | `already-complete` | The run had already completed. The request is idempotent: no change was made.                                                          |
+| `202`  | `deferred`         | The run is not ready yet (groups are still in progress). The request was recorded; the run completes with no delay once it stabilizes. |
+| `202`  | `run-not-active`   | There is no live recording session for the run. The run finalizes on its own.                                                          |
 
 When a `deferred` response is returned for a request that included an
 `expectedGroupCount`, the body also echoes the progress toward that target:

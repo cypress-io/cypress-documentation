@@ -30,7 +30,7 @@ your project and automatically insert it into your Cypress configuration file.
 :::
 
 The `projectId` helps us uniquely identify your project. If you manually alter the `projectId`,
-**Cypress will no longer be able to identify your project or find the recorded
+**Cypress can no longer identify your project or find the recorded
 builds for it**.
 
 If you're using source control, we recommend that you check your Cypress
@@ -46,8 +46,8 @@ export CYPRESS_PROJECT_ID={projectId}
 ## Record key
 
 The record key is used to authenticate that your project is _allowed_ to record
-tests to Cypress Cloud. As long as your record key stays _private_, no one will
-be able to record test runs for your project - even if they have your
+tests to Cypress Cloud. As long as your record key stays _private_, no one
+can record test runs for your project - even if they have your
 `projectId`.
 
 Think of your record key as the key that enables you to _write, create, and
@@ -75,8 +75,8 @@ can record or cancel runs to that organization's project in Cypress Cloud.
    so anyone holding it could cancel in-progress runs and disrupt your CI.
 
 If a record key is exposed you should [delete it](#Delete-record-key) and
-[create a new record key](#Create-new-record-key). Deleted keys will be invalid;
-If a project is run with a deleted key it will not be able to record.
+[create a new record key](#Create-new-record-key). Deleted keys are invalid;
+If a project is run with a deleted key it cannot record.
 
 You can set your record key as an environment variable to help protect it.
 Learn more about
@@ -114,8 +114,8 @@ App.
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
 3. Go to the project's **Settings** page.
-4. Here you will see a **Record Keys** section
-5. Click **Create New Key**. A new key will be automatically generated for your
+4. Here you see a **Record Keys** section
+5. Click **Create New Key**. Cypress Cloud automatically generates a new key for your
    project.
 
 ### Delete record key
@@ -123,7 +123,7 @@ App.
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
 3. Go to the project's **Settings** page.
-4. Here you will see a **Record Keys** section
+4. Here you see a **Record Keys** section
 5. Click **Delete** beside the record key you want to delete.
 
 ## Access to Runs
@@ -134,13 +134,13 @@ Visit your project settings to see who has access to your project's runs.
 
 - **Public** means that anyone can see the recorded test runs for the project.
   Public visibility is similar to how public projects on GitHub, Travis CI, or CircleCI are
-  handled. Anyone who knows your `projectId` will be able to see the recorded
+  handled. Anyone who knows your `projectId` can see the recorded
   runs for public projects.
 
 - **Private** means that only [users](/cloud/account-management/users)
   you invite to your
   [organization](/cloud/account-management/organizations) can see its
-  recorded runs. Even if someone knows your `projectId`, they will not have
+  recorded runs. Even if someone knows your `projectId`, they do not have
   access to your runs unless you have invited them.
 
 ### Change project access
@@ -148,7 +148,7 @@ Visit your project settings to see who has access to your project's runs.
 1. Go to your organization's projects page.
 2. Select the project you want to change access to.
 3. Go to the project's **Settings** page.
-4. Here you will see a section displaying **Access**. Choose the appropriate
+4. Here you see a section displaying **Access**. Choose the appropriate
    access you'd like to assign.
    <DocsImage
      src="/img/cloud/projects/access-to-runs.jpg"
@@ -184,7 +184,7 @@ not all start simultaneously. For example:
 - [Parallelization](/cloud/features/smart-orchestration/parallelization) across multiple machines
 - Flaky network conditions that might delay some test groups from connecting
 
-The default is **60 seconds**. Increasing this value gives your test groups more time to join the run; decreasing it will make runs complete faster when no new groups are joining.
+The default is **60 seconds**. Increasing this value gives your test groups more time to join the run; decreasing it makes runs complete faster when no new groups are joining.
 
 See our
 [Parallelization guide](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay)
@@ -203,9 +203,9 @@ If you set a long run completion delay to allow more time for groups to join, us
 
 ## Run Timeout
 
-**Run timeout** is the number of minutes that Cypress Cloud will
-wait to receive a signal from a run before marking the spec and run as **Timed Out**.
-The run timeout is the maximum time Cypress Cloud will wait for activity from your tests before
+**Run timeout** is the number of minutes that Cypress Cloud
+waits to receive a signal from a run before marking the spec and run as **Timed Out**.
+The run timeout is the maximum time Cypress Cloud waits for activity from your tests before
 considering them hung or failed.
 
 Use run timeout when you have long-running tests that might exceed the default. For
@@ -277,8 +277,8 @@ organization's projects and clicking **Cancel Transfer**.
 
 ### Accept or reject transferred project
 
-When a project is transferred to you, you will receive an email notifying you.
-You will be able to accept or reject the transferred project by clicking the
+When a project is transferred to you, you receive an email notifying you.
+You can accept or reject the transferred project by clicking the
 notification in the sidebar and clicking 'Accept' or 'Reject'.
 
 <DocsImage
@@ -322,16 +322,16 @@ developers viewing your project's README file.
 
 :::
 
-3. A configuration modal will appear. The Project ID will be pre-filled with the
+3. A configuration modal appears. The Project ID is pre-filled with the
    ID associated with the project you selected. You can choose to designate a
    specific branch, or leave this field blank to always use the latest build in
    the project.
 4. Next, style your badge. Flat is the default styling and is most commonly
    used, but 5 style options are available.
 5. Select the badge type to change the amount and type of information that's
-   displayed. Simple status will show only whether tests are passing or failing.
-   Detailed status will show the number of tests that were passed, failed, or
-   skipped. Test count will show how many tests are included in your project.
+   displayed. Simple status shows only whether tests are passing or failing.
+   Detailed status shows the number of tests that were passed, failed, or
+   skipped. Test count shows how many tests are included in your project.
 6. Once you've selected all your settings, check out the preview and make sure
    everything looks just the way you like it.
 7. 🎉 Your badge is ready to be embedded. Copy the markdown at the bottom of the

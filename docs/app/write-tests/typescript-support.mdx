@@ -65,8 +65,8 @@ manual synchronization.
 
 ### Install TypeScript
 
-To use TypeScript with Cypress, you will need TypeScript 5.x, 6.x, or 7.x. If you do not
-already have TypeScript installed as a part of your framework, you will need to
+To use TypeScript with Cypress, you need TypeScript 5.x, 6.x, or 7.x. If you do not
+already have TypeScript installed as a part of your framework, you need to
 install it:
 
 <Tabs>
@@ -120,12 +120,12 @@ with the following configuration:
 }
 ```
 
-The `"types"` will tell the TypeScript compiler to only include type definitions
-from Cypress. Limiting the types will address instances where the project also uses
+The `"types"` tells the TypeScript compiler to only include type definitions
+from Cypress. Limiting the types addresses instances where the project also uses
 `@types/chai` or `@types/jquery`. Since
 [Chai](/app/references/bundled-libraries#Chai) and
 [jQuery](/app/references/bundled-libraries#Utility-libraries) are
-namespaces (globals), incompatible versions will cause the package manager
+namespaces (globals), incompatible versions cause the package manager
 (`yarn` or `npm`) to nest and include multiple definitions and cause conflicts.
 
 :::caution
@@ -222,7 +222,7 @@ TypeScript distinguishes between two kinds of files:
 - **Script (ambient)** — a file with no imports or exports
 
 `declare global { ... }` is only valid inside a **module** file. If your
-`commands.ts` has no imports, TypeScript will raise an error such as:
+`commands.ts` has no imports, TypeScript raises an error such as:
 _"Augmentations for the global scope can only be directly nested in external
 modules or ambient module declarations."_
 
@@ -246,13 +246,13 @@ Alternatively, move your type declarations into a standalone
 `export` is needed.
 
 Conversely, if you use `declare namespace Cypress { ... }` **without** the
-`declare global` wrapper inside a file that _does_ have imports, TypeScript will
-**not** augment the global `Cypress` namespace — your custom commands will still
+`declare global` wrapper inside a file that _does_ have imports, TypeScript does
+**not** augment the global `Cypress` namespace — your custom commands still
 appear as unknown.
 
 :::info
 
-A nice detailed JSDoc comment above the method type will be really appreciated
+A nice detailed JSDoc comment above the method type is really appreciated
 by any users of your custom command.
 
 :::
@@ -261,7 +261,7 @@ by any users of your custom command.
 
 Types of all the parameters taken by the implementation callback are inferred
 automatically based on the declared interface. Thus, in the example above, the
-`value` will be of type `string` implicitly.
+`value` is of type `string` implicitly.
 
 :::
 
@@ -284,7 +284,7 @@ it('works', () => {
 
 #### Adding child or dual commands
 
-When you add a custom command with `prevSubject`, Cypress will infer the subject
+When you add a custom command with `prevSubject`, Cypress infers the subject
 type automatically based on the specified `prevSubject`.
 
 ```typescript title="cypress/support/commands.ts"

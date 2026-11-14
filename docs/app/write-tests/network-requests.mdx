@@ -70,7 +70,7 @@ include user login, signup, and billing.
   stubbed responses.
 
 If you are writing a traditional server-side application where most of the
-responses are HTML you will likely have few stubbed responses. However, most
+responses are HTML you likely have few stubbed responses. However, most
 modern applications that serve JSON can take advantage of stubbing.
 
 :::tip
@@ -107,7 +107,7 @@ modern applications that serve JSON can take advantage of stubbing.
 
 Stubbing responses enables you to control every aspect of the response,
 including the response `body`, the `status`, `headers`, and even network
-`delay`. Stubbing is extremely fast, most responses will be returned in less
+`delay`. Stubbing is extremely fast, most responses return in less
 than 20ms.
 
 :::note
@@ -117,7 +117,7 @@ client.
 
 :::
 
-You don't have to do any work on the server. Your application will have no idea
+You don't have to do any work on the server. Your application has no idea
 its requests are being stubbed, so there are _no code changes_ needed.
 
 :::tip
@@ -208,7 +208,7 @@ Cypress displays this under "Routes" in the Command Log.
   alt="Routing Table"
 />
 
-When a new test runs, Cypress will restore the default behavior and remove all
+When a new test runs, Cypress restores the default behavior and removes all
 routes and stubs. For a complete reference of the API and options, refer to the
 documentation for [`cy.intercept()`](/api/commands/intercept).
 
@@ -234,7 +234,7 @@ cy.intercept('GET', '/activities/*', { fixture: 'activities.json' })
 ### Organizing
 
 Cypress automatically scaffolds out a suggested folder structure for organizing
-your fixtures on every new project. By default it will create an `example.json`
+your fixtures on every new project. By default it creates an `example.json`
 file when you add your project to Cypress.
 
 ```text
@@ -344,8 +344,8 @@ initially delayed.
 
 **_Auto-complete Example:_**
 
-What makes this example below so powerful is that Cypress will automatically
-wait for a request that matches the `getSearch` alias. Instead of forcing
+What makes this example below so powerful is that Cypress automatically
+waits for a request that matches the `getSearch` alias. Instead of forcing
 Cypress to test the _side effect_ of a successful request (the display of the
 Book results), you can test the actual _cause_ of the results.
 
@@ -420,7 +420,7 @@ an attribute such as an `id` or `class` on an element? Perhaps our server sent
 us different Book items.
 
 With Cypress, by adding a [`cy.wait()`](/api/commands/wait), you can pinpoint
-your specific problem. If the response never came back, you'll receive
+your specific problem. If the response never came back, you receive
 an error like this:
 
 <!--
@@ -527,7 +527,7 @@ cy.wait('@new-user').then(console.log)
 
 ## Working with WebSockets
 
-Your application's WebSocket traffic will work as expected during tests.
+Your application's WebSocket traffic works as expected during tests.
 
 ### Limitations
 
@@ -565,11 +565,11 @@ test or closer to the expectation.
 
 ### Alias multiple queries or mutations
 
-In the `beforeEach`, we will use [cy.intercept()](/api/commands/intercept) to
+In the `beforeEach`, use [cy.intercept()](/api/commands/intercept) to
 capture all requests for a GraphQL endpoint (e.g. `/graphql`), use conditionals
 to match the query or mutation and set an alias for using `req.alias`.
 
-First, we'll create a set of utility functions to help match and alias our
+First, create a set of utility functions to help match and alias our
 queries and mutations.
 
 ```js
@@ -749,7 +749,7 @@ changes. After adding the following line:
 cy.intercept('/users*', ['user1', 'user2']).as('getUsers')
 ```
 
-The Command Log will look like this:
+The Command Log looks like this:
 
 <!-- Code to reproduce screenshot:
     cy.intercept('/users*', ['user1', 'user2']).as('getUsers')
@@ -775,7 +775,7 @@ more information about how the request was handled:
   alt="Screenshot of stubbed fetch request with tooltip and unstubbed XHR request"
 />
 
-Additionally, the request will be flagged if the request and/or response was
+Additionally, the Command Log flags the request if the request and/or response was
 modified by a `cy.intercept()` handler function. If we add this code to modify
 outgoing requests to `/users`:
 
@@ -785,7 +785,7 @@ cy.intercept('/users*', (req) => {
 }).as('addAuthHeader')
 ```
 
-The request log for `/users` will reflect that the `req` object was modified,
+The request log for `/users` reflects that the `req` object was modified,
 but the request was still fulfilled from the destination (filled indicator):
 
 <!-- Code to reproduce screenshot:

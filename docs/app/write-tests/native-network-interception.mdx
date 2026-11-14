@@ -167,7 +167,7 @@ If a cross-browser suite needs the assertion for browsers on the legacy network 
 ### Responses the browser rejects are not observable
 
 When the browser's network stack refuses a response before delivering it (for example, a
-response it will not decode), the response never reaches Cypress. The interception still
+response it does not decode), the response never reaches Cypress. The interception still
 records the request, and `interception.response` is `undefined`.
 
 On the legacy network path, Cypress used to receive that response itself, so it could
@@ -222,7 +222,7 @@ cy.get('@config.all').should('have.length', 2)
 ```
 
 Tests that assert a resource was served from cache, rather than asserting on what your
-application rendered, will be affected.
+application rendered, are affected.
 
 ### Stubbed bodies are decoded from their declared `content-encoding`
 

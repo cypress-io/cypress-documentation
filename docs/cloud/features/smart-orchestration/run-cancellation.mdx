@@ -25,7 +25,7 @@ you already know the outcome.
 
 **Auto Cancellation stops that waste.** When the number of failed tests crosses
 a threshold you set, Cypress Cloud cancels the entire run automatically. You get
-the signal you need, you stop paying for tests you'll never look at, and your CI
+the signal you need, you stop paying for tests you never look at, and your CI
 pipeline is freed up to validate the fix.
 
 The value compounds with the size of your suite and the size of your team:
@@ -44,11 +44,11 @@ run as cancelled, and reports how much CI time the cancellation saved.
 - Only genuinely failed tests count toward the threshold. **Flaky tests are not
   considered at all.** A test that fails an attempt but then passes on retry is
   recorded as flaky, not failed, so it never contributes to auto cancellation.
-- Any specs that are already in progress when the threshold is reached will
+- Any specs that are already in progress when the threshold is reached
   **finish running** so you still get their complete results.
 - The cancellation applies to the whole run, across every machine, not just the
   one that reported the failure. In a parallelized run, machines that are already
-  mid-spec will finish those specs, but **no machine starts a new spec** once the
+  mid-spec finish those specs, but **no machine starts a new spec** once the
   run is cancelled.
 
 Auto Cancellation means the slower and more expensive your suite is, the more each
@@ -270,8 +270,8 @@ this in mind when reading the scores:
   only the pages and states that ran, and is not directly comparable to a score
   from a complete run of the same suite.
 - **UI Coverage** measures the interactive elements your tests exercised. Skipped
-  specs mean those elements are never visited, so coverage will appear lower than
-  a full run and will not represent your suite's true coverage.
+  specs mean those elements are never visited, so coverage appears lower than
+  a full run and does not represent your suite's true coverage.
 
 For this reason, treat scores from a cancelled run as a partial sample rather than
 the run-over-run trend you compare against. If you rely on these scores to

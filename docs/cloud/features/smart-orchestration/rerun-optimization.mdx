@@ -12,7 +12,7 @@ sidebar_position: 60
 When a CI run fails, it's common to re-run the job before investigating the failure deeply, especially if the failure is unexplained or seems like the result of typical flake or some known instability in the CI environment.
 
 That CI rerun usually executes your entire test suite again,
-including the specs that already passed. When re-run optimization is in enabled and you are recording to Cypress Cloud, Cypress will automatically detect when a CI re-run is happening, and avoid re-running what already passed.
+including the specs that already passed. When re-run optimization is in enabled and you are recording to Cypress Cloud, Cypress automatically detects when a CI re-run is happening, and avoids re-running what already passed.
 
 Skipping passed work speeds up your CI process and removes redundant testing, and makes your runs more resilient to inherently unstable environments or services.
 
@@ -233,7 +233,7 @@ Do not use `CYPRESS_RERUN_ALL_TESTS` to "reset" a re-run chain. Instead,
 modify the `CYPRESS_RERUN_GROUP_ID`.
 :::
 
-## What a rerun will execute
+## What a rerun executes
 
 Every rerun is compared against your **most recent completed run** in the rerun
 group. **Run only failed specs** re-executes the specs that were still failing
@@ -243,7 +243,7 @@ the [depth limit](#Behavior-and-limitations) it does not re-run work that alread
 passed, and it does not revert to an older, larger set of failures. That
 most-recent completed run is called the **anchor run**.
 
-Knowing this lets you predict exactly what a rerun will do:
+Knowing this lets you predict exactly what a rerun does:
 
 - **You rerun a completed run** → it retries that run's failing specs or tests.
   The common case, and where you see the biggest time and cost savings.
@@ -267,11 +267,11 @@ before enabling Re-run optimization on critical pipelines:
   filters out specs and tests that passed in earlier runs in the group, looking back up to
   5 runs. A 6th rerun re-executes the passing work from the original run.
 - **Reporter output reflects only the re-executed work.** CI guardrails based on
-  test counts (JUnit/XML reporters, custom reporters, threshold checks) will see
+  test counts (JUnit/XML reporters, custom reporters, threshold checks) see
   fewer specs and tests than a full run. You may need to adjust these on your end.
 - **CLI messaging is limited.** The CLI prints a notice for the specs or tests being
   re-run, but the skipped work is not listed in the output.
-- **Analytics may be incomplete.** Analytics features such as App Quality won't be fully accurate for rerun-optimized runs, because those runs contain only a subset of specs and tests.
+- **Analytics may be incomplete.** Analytics features such as App Quality aren't fully accurate for rerun-optimized runs, because those runs contain only a subset of specs and tests.
 - **[Cypress Accessibility](/accessibility/get-started/introduction) and [UI Coverage](/ui-coverage/get-started/introduction) reports may be incomplete.** Rerun-optimized runs reflect only the specs and tests that were re-executed, not the full suite from the anchor run.
 
 :::tip

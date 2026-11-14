@@ -51,8 +51,8 @@ this change and assume the state was always the same. To a robot - even 10ms rep
 difference is incredible.
 
 A human also has intuition. If you click a button and see a loading spinner, you
-will assume the state is in flux and will automatically wait for it to finish.
-A robot has no intuition - it will do exactly as it's programmed to do.
+assume the state is in flux and automatically wait for it to finish.
+A robot has no intuition - it does exactly as it's programmed to do.
 
 To illustrate this, let's take a straightforward example of trying to
 conditionally test unstable state.
@@ -87,8 +87,8 @@ it('does something different based on the class of the button', () => {
 })
 ```
 
-Do you see the problem here? This test is non-deterministic. The `<button>` will
-sometimes have the class `active` and sometimes not. In **most** cases, you
+Do you see the problem here? This test is non-deterministic. The `<button>`
+sometimes has the class `active` and sometimes not. In **most** cases, you
 can't rely on the state of the DOM to determine what you should conditionally
 do.
 
@@ -100,7 +100,7 @@ this type of flakiness at every step.
 The **only** way to do conditional testing on the DOM is if you're 100% sure
 that the state has "settled" and there is no possible way for it to change.
 
-That is it! In any other circumstance you will have flaky tests if you try to
+That is it! In any other circumstance you have flaky tests if you try to
 rely on the state of the DOM for conditional testing.
 
 **Let's explore a few examples.**
@@ -151,12 +151,12 @@ with it.
 - Embed data into other places (cookies / local storage) to evaluate.
 - Add data to the DOM that you can evaluate to know how to proceed.
 
-Let's explore some examples of conditional testing that will pass or fail 100%
+Let's explore some examples of conditional testing that pass or fail 100%
 of the time.
 
 ### A/B campaign <E2EOnlyBadge />
 
-In this example let's assume you visit your website and the content will be
+In this example let's assume you visit your website and the content is
 different based on which A/B campaign your server decides to send. Perhaps it's
 based on geo-location, IP address, time of day, locale, or other factors that
 are difficult to control. How can you write tests in this manner?
@@ -240,7 +240,7 @@ if it is not.
 The problem with this is that if the wizard renders asynchronously (as it likely
 does) you cannot use the DOM to conditionally dismiss it.
 
-Once again - we will need another reliable way to achieve this without involving
+Once again - you need another reliable way to achieve this without involving
 the DOM.
 
 These patterns are pretty much the same as before:
@@ -258,7 +258,7 @@ cy.visit('https://example.cypress.io?wizard=1')
 ```
 
 We'd likely need to update our client side code to check whether this query
-param is present. Now we know ahead of time whether it will or will not be
+param is present. Now we know ahead of time whether it is or is not
 shown.
 
 #### Use Cookies to know ahead of time:
@@ -325,15 +325,15 @@ create control flow.
 
 :::caution
 
-In the event you didn't read a word above and skipped down here, we'll
-reiterate it one more time:
+In the event you didn't read a word above and skipped down here, here is the
+point one more time:
 
 You cannot do conditional testing on the DOM unless you are either:
 
 - Server side rendering with no asynchronous JavaScript.
 - Using client side JavaScript that **only** ever does synchronous rendering.
 
-It's crucial that you understand how your application works else you will write
+It's crucial that you understand how your application works else you write
 flaky tests.
 
 :::
@@ -341,7 +341,7 @@ flaky tests.
 Let's imagine we have a scenario where our application may do two separate
 things that we're unable to control. In other words you tried every strategy
 above and for whatever reason you were unable to know ahead of time what your
-application will do.
+application does.
 
 Testing this in Cypress is possible.
 
@@ -380,10 +380,10 @@ cy.get('body')
   })
 ```
 
-We'll reiterate one more time. Had the `<input>` or the `<textarea>` been
+To reiterate one more time: had the `<input>` or the `<textarea>` been
 rendered asynchronously, you couldn't use the pattern above. You'd have to
-involve arbitrary delays which won't work in every situation, will slow down
-your tests, and will still leave chances that your tests are flaky.
+involve arbitrary delays which don't work in every situation, slow down
+your tests, and still leave chances that your tests are flaky.
 
 Cypress is built around creating **reliable tests**. The secret to writing good
 tests is to provide as much "state" and "facts" to Cypress and to "guard it"
@@ -391,15 +391,15 @@ from issuing new commands until your application has reached the desired state
 it needs to proceed.
 
 Doing conditional testing adds a huge problem - that the test writers themselves
-are unsure what the given state will be. In those situations, the only reliable
+are unsure what the given state is. In those situations, the only reliable
 way to have accurate tests is to embed this dynamic state in a reliable and
 consistent way.
 
 If you're not sure if you've written a potentially flaky test, there's a way
 to figure it out. Repeat the test an excessive number of times, and then repeat
-by modifying the Developer Tools to throttle the Network and the CPU. Throttling will
-create different loads that simulate different environments (like CI). If you've
-written a good test, it will pass or fail 100% of the time.
+by modifying the Developer Tools to throttle the Network and the CPU. Throttling
+creates different loads that simulate different environments (like CI). If you've
+written a good test, it passes or fail 100% of the time.
 
 ```js
 Cypress._.times(100, (i) => {
