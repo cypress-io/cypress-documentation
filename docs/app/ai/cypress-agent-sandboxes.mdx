@@ -31,7 +31,7 @@ Three things run in the same sandbox:
 3. `cypress tap` commands, which the agent runs to start specs and read results
 
 `cypress tap` finds the Cypress session through files on the same machine and
-talks to it over local connections. It cannot reach a Cypress App running on
+talks to it over local connections. `cypress tap` cannot reach a Cypress App running on
 another machine, so the agent and Cypress have to share one sandbox.
 
 ## Requirements for running Cypress in an agent sandbox
@@ -190,7 +190,7 @@ Cypress checks the browser's `--version` output against the versions it knows,
 such as `Chromium 123.0.6312.4`. A name is checked only against that browser's
 pattern, while a path is checked against every pattern Cypress knows, so if a
 name isn't recognized, try the full path. If neither works, Cypress doesn't
-recognize that build. It writes the reason and the raw `--version` output to
+recognize that build. Cypress writes the reason and the raw `--version` output to
 `cypress-open.log`, and `cypress tap status` stays at `browser not selected`.
 
 Many sandboxes come with a Chromium build that a browser-automation tool
@@ -341,11 +341,11 @@ config first, and check them with \`npx cypress run --component --spec <spec>\`.
 
 ## Environment variables
 
-| Name                     | Description                                                                                                                                                                                                                                            |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `CYPRESS_AGENT_MODE`     | Set to `1` or `true` to make Cypress recognize this run as an AI agent, or to `0` or `false` to turn that off. It only controls recognition: skipping the welcome screen still needs `--project`, a browser (or `defaultBrowser`), and a testing type. |
-| `CYPRESS_CACHE_FOLDER`   | [Changes the location of the Cypress binary cache](/app/references/advanced-installation#Binary-cache)                                                                                                                                                 |
-| `CYPRESS_INSTALL_BINARY` | [Sets which Cypress binary to install: a version, URL, or local file](/app/references/advanced-installation#Install-binary)                                                                                                                            |
+| Name                     | Description                                                                                                                                                                                                                                                              |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `CYPRESS_AGENT_MODE`     | Set to `1` or `true` to make Cypress recognize this run as an AI agent, or to `0` or `false` to turn that off. `CYPRESS_AGENT_MODE` only controls recognition: skipping the welcome screen still needs `--project`, a browser (or `defaultBrowser`), and a testing type. |
+| `CYPRESS_CACHE_FOLDER`   | [Changes the location of the Cypress binary cache](/app/references/advanced-installation#Binary-cache)                                                                                                                                                                   |
+| `CYPRESS_INSTALL_BINARY` | [Sets which Cypress binary to install: a version, URL, or local file](/app/references/advanced-installation#Install-binary)                                                                                                                                              |
 
 ## Troubleshoot Cypress in an agent sandbox
 
