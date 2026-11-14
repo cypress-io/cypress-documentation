@@ -87,6 +87,11 @@ site-wide consistency and TS/JS parity. Flag and name the replacement:
   more than one render site; otherwise inline the content.
 - A new `<Icon name="..." />` whose icon is not imported under the
   `fontawesome` key in `src/theme/MDXComponents.js` (this one renders blank).
+- A fenced code block with no language tag (` ``` ` on its own), or a file
+  snippet with no `title="file.ext"` → tag the language and title the file.
+- A tab group nested inside another `<Tabs>`, or a `copyTsToJs` block inside
+  framework tabs (it renders its own tabs) → one level of tabs, with a plain
+  `js` block inside.
 
 ### 3. Accuracy of what is documented
 
@@ -97,6 +102,15 @@ repo rather than accepting them:
   a `cy.*` command that does not exist, `await` on a Cypress chain, assertions
   chained off a command that yields nothing, a `cy.origin()` callback closing
   over outer-scope variables, syntax errors.
+- **A fixed `cy.wait(ms)` in added test code** (`cy.wait(2000)`). Wait on a
+  retrying assertion or `cy.wait('@alias')` instead. Exempt a short pause
+  between polls of an endpoint with nothing else to wait on, and pages that
+  exist to show the pattern.
+- **Hosts outside `cypress.io` in examples.** `example.com`, a third-party site,
+  or an invented domain in a code block or a sample URL in prose
+  (`https://example.com/products/123`) → a real Cypress site or a stand-in such
+  as `app.cypress.io`. `localhost` is fine. Exempt alt text that describes a
+  diagram of a literal URL.
 - **Config options, CLI flags, and env vars that do not match the reference.**
   Cross-check names, defaults, and types against
   `docs/app/references/configuration.mdx` and
@@ -111,9 +125,10 @@ repo rather than accepting them:
   `product` / `plan` value.
 - **Frontmatter content** (not shape): a `description` copy-pasted from another
   page, a `title` that ignores the section's house style (API reference pages
-  are terse `'name | Cypress Documentation'`; guides are descriptive), a
-  `keywords` field (banned), or a `sidebar_position` introduced into a folder
-  whose siblings don't use one.
+  are terse, `'cy.blur()'`; guides are descriptive), a `title` ending in
+  `| Cypress Documentation` (the build appends the section suffix, and
+  `page_titles.cy.ts` asserts it), a `keywords` field (banned), or a
+  `sidebar_position` introduced into a folder whose siblings don't use one.
 - **Weak `alt` text** on `<DocsImage>`: "screenshot", "image of…", or text that
   just repeats the adjacent caption. Alt text should name what the reader is
   meant to notice.
@@ -152,6 +167,16 @@ repo rather than accepting them:
   once. Example-specific prompts and commands stay in code blocks.
 - **Custom admonition titles.** `:::tip Do this` or `:::note Requirements`. Site
   CSS hides every admonition heading; use a bold lead line in the body instead.
+- **`:::warning`.** Use `:::caution`.
+- **Single-`l` cancel forms.** "canceled", "canceling", "cancelation" in prose →
+  "cancelled", "cancelling", "cancellation". Exempt quoted API values and UI
+  strings.
+- **Formal words and filler.** "leverage", "utilize", "in order to", "please",
+  "note that".
+- **"a11y" in prose** ("partial a11y coverage") → "accessibility". Exempt names
+  such as `checkA11y()`, `data-a11y-ignore`, and identifiers.
+- **Generic link text.** `[here]`, `[this link]`, `[learn more]`, `[click here]`.
+  Link text names its destination.
 
 ### 5. Code changes: `plugins/`, `scripts/`, `src/`, `cypress/`
 
