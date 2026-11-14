@@ -64,9 +64,9 @@ cypress run --record --key=abc123 --parallel
 :::info
 
 Running tests in parallel requires the
-[`--record` flag](/app/references/command-line#cypress-run) be passed. This
+[`--record` flag](/app/references/command-line#cypress-run) be passed. The flag
 ensures Cypress can properly collect the data needed to parallelize future runs.
-This also gives you the full benefit of seeing the results of your parallelized
+The flag also gives you the full benefit of seeing the results of your parallelized
 tests in [Cypress Cloud](/cloud/get-started/introduction). If you have not set up
 your project to record, check out our
 [setup guide](/cloud/get-started/setup#Setup).
@@ -94,7 +94,7 @@ across available CI machines by the following process:
    complete.
 6. Upon completion of all spec files, Cypress
    [waits for a configurable amount of time](#Run-Completion-Delay) before
-   considering the test run as fully complete. This is done to better support
+   considering the test run as fully complete. The delay exists to better support
    [grouping of runs](#Grouping-test-runs).
 
 In short: each Cypress instance sends a list of the spec files to Cypress Cloud,
@@ -132,7 +132,7 @@ workflows:
           cypress-command: 'npx cypress run --record --browser chrome'
 ```
 
-Cypress runs all 19 spec files one by one alphabetically. It takes **1:51** to
+Cypress runs all 19 spec files one by one alphabetically. The run takes **1:51** to
 complete all of the tests.
 
 ```text
@@ -190,7 +190,7 @@ workflows:
           cypress-command: 'npx cypress run --record --parallel --browser chrome'
 ```
 
-It finished in **59 seconds**.
+The parallel run finished in **59 seconds**.
 
 ```text nowrap
 2x-chrome, Machine #1, 9 specs            2x-chrome, Machine #2, 10 specs
@@ -349,7 +349,7 @@ parallelized to speed up their testing.
 
 ## Linking CI machines for parallelization or grouping
 
-A CI build ID is used to associate multiple CI machines to one test run. This
+A CI build ID is used to associate multiple CI machines to one test run. The
 identifier is based on environment variables that are unique to each CI build,
 and vary based on CI provider. Cypress has out-of-the-box support for most of
 the commonly-used CI providers, so you would typically not need to directly set
@@ -398,7 +398,7 @@ cypress run --record --parallel --ci-build-id $BUILD_TAG
 
 During parallelization mode or when grouping runs, Cypress will wait for a
 specified amount of time before completing the test run in case any more
-relevant work remains. This is to compensate for various scenarios where CI
+relevant work remains. The wait compensates for various scenarios where CI
 machines could be backed-up in a queue.
 
 This waiting period is called the **Run Completion Delay** and it begins after
@@ -436,7 +436,7 @@ depends on a finished run can proceed:
   [Complete a run so the next rerun can anchor](#Complete-a-run-so-the-next-rerun-can-anchor).
 
 As described above, the [Run Completion Delay](#Run-Completion-Delay) keeps parallel and grouped runs open after the last-known spec finishes so a late
-group can still join. It is often long on purpose.
+group can still join. The delay is often long on purpose.
 Teams with non-deterministic build timing (for example, when running Cypress
 tests using Nx) rely on that extra wait so pauses between groups do not
 complete the run early and lead to an error.
@@ -579,7 +579,7 @@ To try this API without changing your CI pipeline, you can hard-code `expectedGr
 
 :::
 
-The example below completes the run from inside `after:run`. It's safe to fire
+The example below completes the run from inside `after:run`. The example is safe to fire
 from every machine **only because** `expectedGroupCount` is supplied from an
 environment variable that CI sets to the run's fixed number of groups.
 
@@ -627,7 +627,7 @@ request.
 | `200`  | `completed`        | The run was ready and has been completed immediately, skipping the completion delay.                                                       |
 | `200`  | `already-complete` | The run had already completed. The request is idempotent: no change was made.                                                              |
 | `202`  | `deferred`         | The run is not ready yet (groups are still in progress). The request was recorded; the run will complete with no delay once it stabilizes. |
-| `202`  | `run-not-active`   | There is no live recording session for the run. It will finalize on its own.                                                               |
+| `202`  | `run-not-active`   | There is no live recording session for the run. The run will finalize on its own.                                                          |
 
 When a `deferred` response is returned for a request that included an
 `expectedGroupCount`, the body also echoes the progress toward that target:
@@ -652,7 +652,7 @@ are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
 ### Timeline View
 
 The Timeline View charts your spec files as they ran relative to each other.
-This is especially helpful when you want to visualize how your tests ran
+The Timeline View is especially helpful when you want to visualize how your tests ran
 chronologically across all available machines.
 
 <DocsImage
@@ -672,8 +672,8 @@ each other.
 
 ### Machines View
 
-The Machines View charts spec files by the machines that executed them. This
-view enables you to evaluate the contribution of each machine to the overall
+The Machines View charts spec files by the machines that executed them. The Machines
+View enables you to evaluate the contribution of each machine to the overall
 test run.
 
 <DocsImage

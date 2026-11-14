@@ -24,9 +24,9 @@ The [`accessibility`](#cy-cloud-accessibility-report-get) and [`app-quality`](#c
 
 ## Why the Cloud CLI
 
-Getting to the root cause of a CI failure is the slow part. Before you can fix a failing test you have to triage it: find the run, open the right test, read the error, and reconstruct what the app was doing when it broke. That usually means leaving your editor, signing in to Cypress Cloud, clicking to the run, finding the failing spec and test, then piecing the story together from Test Replay.
+Getting to the root cause of a CI failure is the slow part. Before you can fix a failing test you have to triage it: find the run, open the right test, read the error, and reconstruct what the app was doing when it broke. Triage usually means leaving your editor, signing in to Cypress Cloud, clicking to the run, finding the failing spec and test, then piecing the story together from Test Replay.
 
-The Cloud CLI removes that round trip. It exposes the same Cloud data you would click through, as commands you can pipe, script, and compose:
+The Cloud CLI removes that round trip. The Cloud CLI exposes the same Cloud data you would click through, as commands you can pipe, script, and compose:
 
 - **Stay in your terminal.** List failing runs, drill into failing tests, and read errors and stack traces from the shell.
 - **Review what a test did.** Query the [Test Replay](/cloud/features/test-replay) timeline for a specific attempt, scoped to the commands, network requests, and logs around the point of failure.
@@ -103,7 +103,7 @@ You can authenticate in three ways. OAuth is recommended for local use; a token 
 
 #### OAuth (recommended)
 
-Running `login` with no arguments starts a browser-based sign-in. It opens Cypress Cloud in your browser, you approve the request, and your session is stored securely on your machine. OAuth sessions refresh automatically, so you do not manage token expiry yourself.
+Running `login` with no arguments starts a browser-based sign-in. The sign-in opens Cypress Cloud in your browser, you approve the request, and your session is stored securely on your machine. OAuth sessions refresh automatically, so you do not manage token expiry yourself.
 
 ```bash
 cy-cloud login
@@ -139,7 +139,7 @@ Pass the token to `login` to store it. The CLI checks the token with Cypress Clo
 cy-cloud login --token <YOUR_PERSONAL_ACCESS_TOKEN>
 ```
 
-For CI and other non-interactive environments, set the token as the `CYPRESS_CLOUD_TOKEN` environment variable instead. This authenticates without a `login` step and without writing any credentials to disk, and it takes precedence over any stored credentials:
+For CI and other non-interactive environments, set the token as the `CYPRESS_CLOUD_TOKEN` environment variable instead. The environment variable authenticates without a `login` step and without writing any credentials to disk, and it takes precedence over any stored credentials:
 
 <OsTabs>
   <TabItem value="macos" label="macOS / Linux">
@@ -167,7 +167,7 @@ cy-cloud run list --projectId <projectId>
 
 :::note
 
-`cy-cloud logout` clears credentials stored by `login`. It does not unset `CYPRESS_CLOUD_TOKEN`. If that variable is set, you remain authenticated through it until you unset it.
+`cy-cloud logout` clears credentials stored by `login`. `logout` does not unset `CYPRESS_CLOUD_TOKEN`. If that variable is set, you remain authenticated through it until you unset it.
 
 :::
 
@@ -414,7 +414,7 @@ Each spec includes its id, status, filepath, and whether Cypress Cloud has flagg
 
 `--status` accepts `passed`, `failed`, `running`, `errored`, `timedOut`, `cancelled`, and `noTests` (comma-separate to combine).
 
-Filter to only flaky specs with `--onlyFlaky`. This requires a Cypress Cloud plan with [Flaky Test Management](/cloud/features/flaky-test-management); without one, the command returns an error.
+Filter to only flaky specs with `--onlyFlaky`. `--onlyFlaky` requires a Cypress Cloud plan with [Flaky Test Management](/cloud/features/flaky-test-management); without one, the command returns an error.
 
 ```bash
 cy-cloud spec list --projectId <projectId> --runNumber <runNumber> --onlyFlaky
@@ -494,7 +494,7 @@ cy-cloud test list --specId <specId>
 
 `--status` accepts `passed`, `failed`, `pending`, `skipped`, `running`, `errored`, `timedOut`, and `cancelled` (comma-separate to combine).
 
-Filter to only flaky tests with `--onlyFlaky`. This requires a Cypress Cloud plan with [Flaky Test Management](/cloud/features/flaky-test-management); without one, the command returns an error.
+Filter to only flaky tests with `--onlyFlaky`. `--onlyFlaky` requires a Cypress Cloud plan with [Flaky Test Management](/cloud/features/flaky-test-management); without one, the command returns an error.
 
 ```bash
 cy-cloud test list --projectId <projectId> --runNumber <runNumber> --onlyFlaky
@@ -800,7 +800,7 @@ Once you are at the moment of interest, you can query the replay for information
 Subcommands that target an element require a `--selector` flag with a valid CSS Selector value. The selector will be evaluated against your app and will return one of three responses:
 
 - A "no items found" response if no matches exist.
-- An "ambiguous" response if multiple matches are found. This will include generated unique selectors for the first 10 matches to assist identifying the specific instance you're interested in.
+- An "ambiguous" response if multiple matches are found. The ambiguous response will include generated unique selectors for the first 10 matches to assist identifying the specific instance you're interested in.
 - A "match" response if a single match is found, with the requested data.
 
 You can also request a visual record
@@ -921,7 +921,7 @@ cy-cloud accessibility element list --projectId <projectId> --runNumber <runNumb
 | `--impact`           | Only elements of rules with these impacts: `critical`, `serious`, `moderate`, `minor` (comma-separate). |
 | `--page` / `--limit` | Paginate through the elements. `--limit` defaults to 30, up to 200.                                     |
 
-Each element is one element for one rule in one view, so an element that fails a rule on several views has one entry per view. That is why `pagination.total` can be higher than the report's `failedElementCount` or `elementCountsByStatus.fail`.
+Each element is one element for one rule in one view, so an element that fails a rule on several views has one entry per view. The per-view entries are why `pagination.total` can be higher than the report's `failedElementCount` or `elementCountsByStatus.fail`.
 
 The list includes failing elements only. If the report is still processing, the command fails with an error asking you to try again shortly; run [`accessibility report get`](#cy-cloud-accessibility-report-get) to check `reportStatus` first.
 
@@ -985,7 +985,7 @@ Print the CLI version and whether an upgrade is required.
 cy-cloud version
 ```
 
-It reports your installed version, the latest published version, and whether your version is still supported:
+`cy-cloud version` reports your installed version, the latest published version, and whether your version is still supported:
 
 ```json
 {
@@ -1012,7 +1012,7 @@ On success it prints:
 
 ### cy-cloud logout
 
-Clear the credentials stored by `login`. This does not unset the `CYPRESS_CLOUD_TOKEN` environment variable.
+Clear the credentials stored by `login`. `logout` does not unset the `CYPRESS_CLOUD_TOKEN` environment variable.
 
 ```bash
 cy-cloud logout
@@ -1054,13 +1054,13 @@ cy-cloud cache clear
 
 ### cy-cloud cache cleanup
 
-Delete expired and oversized entries. This runs automatically as a maintenance task after commands, but you can trigger it manually. See [Test Replay Caching](#Test-Replay-Caching) for the size and age limits.
+Delete expired and oversized entries. Cleanup runs automatically as a maintenance task after commands, but you can trigger it manually. See [Test Replay Caching](#Test-Replay-Caching) for the size and age limits.
 
 ```bash
 cy-cloud cache cleanup
 ```
 
-It reports the cache size before and after, and how many entries it removed:
+`cy-cloud cache cleanup` reports the cache size before and after, and how many entries it removed:
 
 ```json
 {
@@ -1075,7 +1075,7 @@ It reports the cache size before and after, and how many entries it removed:
 
 Because every command returns structured JSON and exposes its output schema with `--schema`, the Cloud CLI is a natural tool for AI coding agents. An agent can list failing tests, read errors, and pull Test Replay timelines, then use that context to propose a fix in your editor. The workflows below are written to run by hand or to hand to an agent.
 
-The easiest way to hand this to an agent is the [`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) from the Cypress AI Toolkit. It gives your agent the debugging know-how for `cy-cloud`: which attempt to replay for a flaky test, how to navigate the Test Replay timeline, and how to correlate the failed command with the network and console events around it, so it reaches a root cause instead of restating the error.
+The easiest way to hand the Cloud CLI to an agent is the [`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) from the Cypress AI Toolkit. The skill gives your agent the debugging know-how for `cy-cloud`: which attempt to replay for a flaky test, how to navigate the Test Replay timeline, and how to correlate the failed command with the network and console events around it, so it reaches a root cause instead of restating the error.
 
 Install it with the [`skills`](https://skills.sh/) CLI:
 
@@ -1153,7 +1153,7 @@ For a conversational, in-editor alternative that speaks the Model Context Protoc
 
 ## Workflow: triage a failing run
 
-This walkthrough puts the commands together on a common situation: the nightly run on `main` failed, and a checkout test is red. It takes you from a failing run to the exact cause, without opening a browser.
+This walkthrough puts the commands together on a common situation: the nightly run on `main` failed, and a checkout test is red. The walkthrough takes you from a failing run to the exact cause, without opening a browser.
 
 **1. Find the failing run.** Grab the most recent failed run on `main` and note its run number.
 
@@ -1179,7 +1179,7 @@ cy-cloud test get --testId <testId> --screenshot ./screenshots
 cy-cloud replay info --testId <testId>
 ```
 
-**5. Reconstruct the moment of failure.** Pull the commands right before the failure, plus the network calls and console logs for the attempt. This is the same context you would scrub through in Test Replay, delivered as JSON.
+**5. Reconstruct the moment of failure.** Pull the commands right before the failure, plus the network calls and console logs for the attempt. That output is the same context you would scrub through in Test Replay, delivered as JSON.
 
 ```bash
 cy-cloud replay timeline --testId <testId> --commands --aroundFailure 5 --network --logs
@@ -1202,7 +1202,7 @@ Wrap this sequence in a [shell script](#Use-in-a-shell-script) that takes a proj
 
 ## Workflow: debug a flaky test
 
-A [flaky test](/cloud/features/flaky-test-management) failed and then passed on retry, so its status is `passed` but it has more than one attempt. This requires [test retries](/app/guides/test-retries).
+A [flaky test](/cloud/features/flaky-test-management) failed and then passed on retry, so its status is `passed` but it has more than one attempt. Detecting flake this way requires [test retries](/app/guides/test-retries).
 
 **1. Find the flaky tests in a run.** If your plan includes Flaky Test Management, list only the tests Cypress Cloud has flagged as flaky with `--onlyFlaky`:
 
@@ -1289,11 +1289,11 @@ cy-cloud replay view inspect --testId <testId> --selector '[data-cy="cart-total"
 cy-cloud replay view close --testId <testId>
 ```
 
-This is a different kind of answer than a failure screenshot or a broad timeline window gives you: instead of a general sense of "sometime around here," you get the state immediately before and after one specific command, so you can point at the exact step that broke your app. Hand the two `inspect` JSON blobs to an [agent](#Use-with-AI-agents) and ask it to explain the difference and propose a fix.
+The before-and-after comparison is a different kind of answer than a failure screenshot or a broad timeline window gives you: instead of a general sense of "sometime around here," you get the state immediately before and after one specific command, so you can point at the exact step that broke your app. Hand the two `inspect` JSON blobs to an [agent](#Use-with-AI-agents) and ask it to explain the difference and propose a fix.
 
 ## Workflow: fix an accessibility rule everywhere
 
-A run's [Cypress Accessibility](/accessibility/get-started/introduction) report shows dozens of failing elements across many views. Fixing them one rule at a time, starting with the rules that fail on the most elements, gets the biggest improvement for the least work. This requires an active Cypress Accessibility add-on or trial.
+A run's [Cypress Accessibility](/accessibility/get-started/introduction) report shows dozens of failing elements across many views. Fixing them one rule at a time, starting with the rules that fail on the most elements, gets the biggest improvement for the least work. The workflow requires an active Cypress Accessibility add-on or trial.
 
 **1. Find the latest run.** Note the project's `latestCompletedRunNumber`.
 
@@ -1332,13 +1332,13 @@ cy-cloud run list --projectId <projectId> --branch main --status failed --limit 
   | jq '.runs[].runNumber'
 ```
 
-To see the exact shape of a command's output before you parse it, add `--schema`. It prints the Zod-compliant JSON schema for that command's output and makes no network call:
+To see the exact shape of a command's output before you parse it, add `--schema`. `--schema` prints the Zod-compliant JSON schema for that command's output and makes no network call:
 
 ```bash
 cy-cloud test get --schema
 ```
 
-It returns a JSON Schema describing the output fields and their types, which begins like this (abbreviated):
+The command returns a JSON Schema describing the output fields and their types, which begins like this (abbreviated):
 
 ```json
 {
@@ -1354,11 +1354,11 @@ It returns a JSON Schema describing the output fields and their types, which beg
 }
 ```
 
-This is especially useful when generating parsing code or briefing an agent on what to expect.
+The schema is especially useful when generating parsing code or briefing an agent on what to expect.
 
 ## Exit codes
 
-Every command exits `0` on success and a non-zero code on failure, with the error message written to standard error. Failures include authentication errors, a resource that is not found or not accessible, an exceeded rate limit, and network problems. This makes the CLI safe to gate CI steps on and to use with `set -e` in scripts.
+Every command exits `0` on success and a non-zero code on failure, with the error message written to standard error. Failures include authentication errors, a resource that is not found or not accessible, an exceeded rate limit, and network problems. Consistent exit codes make the CLI safe to gate CI steps on and to use with `set -e` in scripts.
 
 ## Use in a shell script
 
@@ -1422,7 +1422,7 @@ Test Replay data can cover an entire spec, so the CLI downloads the replay once 
 Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
 
 :::tip
-Some AI agents automatically run inside sandbox environments, which causes them to build a fresh cache for each session. This can slow things down and affect your rate limits. Review your agent's documentation to configure the `CYCLOUD_CACHE_DIR` environment variable to a persistent filesystem location shared across agent invocations. The Cypress binary cache has the same problem in a sandbox; see [Limitations of Cypress in agent sandboxes](/app/tooling/cypress-agent-sandboxes#Limitations-of-Cypress-in-agent-sandboxes).
+Some AI agents automatically run inside sandbox environments, which causes them to build a fresh cache for each session. A fresh cache per session can slow things down and affect your rate limits. Review your agent's documentation to configure the `CYCLOUD_CACHE_DIR` environment variable to a persistent filesystem location shared across agent invocations. The Cypress binary cache has the same problem in a sandbox; see [Limitations of Cypress in agent sandboxes](/app/tooling/cypress-agent-sandboxes#Limitations-of-Cypress-in-agent-sandboxes).
 :::
 
 ## Configuration
@@ -1453,7 +1453,7 @@ Usage limits are separate from data availability. What data you can retrieve fol
 
 ### Security and privacy
 
-- **Read-only.** The CLI only retrieves data. It cannot modify your test code, delete runs, or change any Cloud settings, including your App Quality configuration.
+- **Read-only.** The CLI only retrieves data. The CLI cannot modify your test code, delete runs, or change any Cloud settings, including your App Quality configuration.
 - **Scoped to your access.** Every request runs as your Cypress Cloud user, so you only ever see the organizations, teams, and projects you can already access in the Cloud UI.
 - **Local credentials.** Credentials from `cy-cloud login` are stored on your machine under `~/.config/cy-cloud`, in files readable only by your user. The `CYPRESS_CLOUD_TOKEN` environment variable is never written to disk.
 

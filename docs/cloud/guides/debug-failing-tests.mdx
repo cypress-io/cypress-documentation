@@ -10,7 +10,7 @@ sidebar_position: 10
 # Debug Failing Tests in CI with Cypress Cloud
 
 When a Cypress test fails in continuous integration (CI), the hard part is rarely
-the fix. It's the investigation: the failure happened on a machine you can't see,
+the fix. The hard part is the investigation: the failure happened on a machine you can't see,
 in a browser session that no longer exists, on a commit you may have already moved
 past. The traditional answer (a screenshot, a video, and a stack trace) tells you
 _that_ a test failed, but rarely _why_.
@@ -152,7 +152,7 @@ of tests that matter.
 
 Clicking a test opens the
 [test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar), your
-home base for debugging a single failure. It surfaces the error, every retry
+home base for debugging a single failure. The sidebar surfaces the error, every retry
 attempt, artifacts, the test's recent pass/fail history, and the
 [git commits that changed the test](/cloud/features/recorded-runs#Test-Code-History),
 all in one place.
@@ -195,7 +195,7 @@ attempt sit directly below the summary in the
 
 ## Step 4: Replay the exact failure with Test Replay
 
-This is the core of debugging in Cypress Cloud.
+Replaying the exact failure is the core of debugging in Cypress Cloud.
 [**Test Replay**](/cloud/features/test-replay) lets you replay the test _exactly_
 as it ran in CI, with full debugging capability. You are not looking at a video
 recording, you are stepping through the real run.
@@ -256,7 +256,7 @@ what your change broke, without re-running anything locally.
   alt="Branch Review test comparison showing the base branch and feature branch results side by side, with Test Replay, artifacts, and code change diffs"
 />
 
-This is also the fastest way to **stop chasing pre-existing flake**: if a test was
+Branch Review is also the fastest way to **stop chasing pre-existing flake**: if a test was
 already failing intermittently on the base branch, Branch Review makes that
 obvious so you don't waste time on noise you didn't create.
 
@@ -286,7 +286,7 @@ behind the flake.
 :::caution
 
 A test can pass after retries and still be flaky. The build goes green, but the
-underlying instability (and its cost) is still there. This is exactly why flake
+underlying instability (and its cost) is still there. That hidden instability is exactly why flake
 is so easy to miss without dedicated tracking. See
 [failure rate vs. flake rate](/cloud/features/flaky-test-management#Failure-rate-vs-flake-rate).
 

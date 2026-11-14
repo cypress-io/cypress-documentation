@@ -12,11 +12,11 @@ sidebar_custom_props: { 'ai_icon': true }
 
 Cypress Cloud's Model Context Protocol (MCP) server connects your AI coding assistants directly to Cypress Cloud, giving them a window into your application's health and stability.
 
-By eliminating the context gap between CI and your editor, you remove the manual triage that makes testing a bottleneck. Cloud MCP gives your AI agent real-time access to your test results. It allows agents to query run statuses, identify flaky tests, and retrieve failure details—including Test Replay links—directly within your agentic workflow.
+By eliminating the context gap between CI and your editor, you remove the manual triage that makes testing a bottleneck. Cloud MCP gives your AI agent real-time access to your test results. Cloud MCP allows agents to query run statuses, identify flaky tests, and retrieve failure details—including Test Replay links—directly within your agentic workflow.
 
 :::note
 
-Cloud MCP reached general availability on May 20, 2026. It is included on every Cypress Cloud plan at no additional cost.
+Cloud MCP reached general availability on May 20, 2026. Cloud MCP is included on every Cypress Cloud plan at no additional cost.
 
 :::
 
@@ -55,7 +55,7 @@ There are two options for authenticating the Cloud MCP server with your Cloud ac
 
 #### OAuth (Recommended)
 
-OAuth is the recommended authentication method for Cloud MCP. It uses a browser-based sign-in flow, so no manual token generation or rotation is needed — your AI client manages the session automatically.
+OAuth is the recommended authentication method for Cloud MCP. OAuth uses a browser-based sign-in flow, so no manual token generation or rotation is needed — your AI client manages the session automatically.
 
 When you configure your AI client with the Cloud MCP server URL (`https://mcp.cypress.io/mcp`) and your client supports OAuth, it will:
 
@@ -101,7 +101,7 @@ Cypress publishes Cloud MCP to the marketplaces built into popular AI clients. I
 
 #### Choose the Claude connector or the Claude plugin for Cloud MCP
 
-Cypress has two Claude listings. Both connect Claude to the same Cloud MCP server, so they return the same Cypress Cloud data. They differ in what else they install and where you use them:
+Cypress has two Claude listings. Both connect Claude to the same Cloud MCP server, so they return the same Cypress Cloud data. The two listings differ in what else they install and where you use them:
 
 - **The connector** adds Cloud MCP to your Claude account. Use it to ask Claude about your runs, failures, and flaky tests in Claude chat. There is nothing to install or update locally: the server is hosted by Cypress, and new tools appear the next time Claude connects.
 - **The plugin** adds Cloud MCP and the Cypress AI Skills to Claude Code or Claude Cowork. The skills teach Claude how to write, explain, and debug Cypress tests, so use the plugin when Claude works in your test code as well as reading your Cloud data.
@@ -457,7 +457,7 @@ Once connected, your AI agent can autonomously use the following tools. You don'
 
 Each time the Cloud MCP connection is established, any new tools become immediately available.
 
-Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These are only available if your organization has subscriptions for the plans and products that would provide the underlying data.
+Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These plan- and product-specific tools are only available if your organization has subscriptions for the plans and products that would provide the underlying data.
 
 | Tool                                      | Capability                                                                                                                                                                                                                                                                                                                                                                 | Example usage                                                           |
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
@@ -554,7 +554,7 @@ To get the most out of Cloud MCP, follow these four principles:
 
 </CopyPrompt>
 
-The agent finds the run with `cypress_get_runs`, then adds up each spec's duration from `cypress_get_specs` to get the time your suite takes back to back. It works from the spec durations rather than the run's own duration because a run that is already parallelized reports its parallel time. For example, a 15-spec run whose specs add up to about 5.1 minutes finished in about 2.3 minutes across its machines. The slowest spec sets a floor on how short each machine can get, which is why adding machines past a certain point stops paying off. See [Parallelization](/cloud/features/smart-orchestration/parallelization) for how Cypress Cloud balances specs across machines.
+The agent finds the run with `cypress_get_runs`, then adds up each spec's duration from `cypress_get_specs` to get the time your suite takes back to back. The agent works from the spec durations rather than the run's own duration because a run that is already parallelized reports its parallel time. For example, a 15-spec run whose specs add up to about 5.1 minutes finished in about 2.3 minutes across its machines. The slowest spec sets a floor on how short each machine can get, which is why adding machines past a certain point stops paying off. See [Parallelization](/cloud/features/smart-orchestration/parallelization) for how Cypress Cloud balances specs across machines.
 
 <CopyPrompt
   title="Audit skipped and pending tests in a run"
@@ -594,12 +594,12 @@ For more patterns, example prompts, and governance ideas when using UI Coverage 
 
 ### Cloud MCP vs the Cloud CLI
 
-Cloud MCP and the [Cloud CLI](/cloud/integrations/cloud-cli) both give programmatic access to your Cypress Cloud data. They solve related problems in different ways:
+Cloud MCP and the [Cloud CLI](/cloud/integrations/cloud-cli) both give programmatic access to your Cypress Cloud data. The two tools solve related problems in different ways:
 
 - **Cloud MCP** is a remote server your AI client connects to. The agent selects Cypress tools automatically based on your prompt, which makes it the best fit for conversational, in-editor debugging.
-- **The Cloud CLI** (`cy-cloud`) is a command-line tool for humans, scripts, and agents that run shell commands. It returns JSON and provides direct access to Test Replay data, which makes it the best fit for deeper triage from the terminal, automation, custom tooling, and agents that run shell commands.
+- **The Cloud CLI** (`cy-cloud`) is a command-line tool for humans, scripts, and agents that run shell commands. The Cloud CLI returns JSON and provides direct access to Test Replay data, which makes it the best fit for deeper triage from the terminal, automation, custom tooling, and agents that run shell commands.
 
-Many teams use both. If your assistant speaks MCP, connect it to Cloud MCP. If it works through a terminal, or you are scripting, reach for the Cloud CLI. Use both when running agents in your terminal.
+Many teams use both. If your assistant speaks MCP, connect it to Cloud MCP. If your assistant works through a terminal, or you are scripting, reach for the Cloud CLI. Use both when running agents in your terminal.
 
 Both are available on every Cypress Cloud plan at no additional cost. See the [Cloud CLI documentation](/cloud/integrations/cloud-cli) for its setup and command reference.
 
@@ -653,11 +653,11 @@ Cloud MCP is an API for AI agents. When your AI assistant needs information abou
 
 **How access is controlled:**
 
-- **Read-only:** Cloud MCP is designed for data retrieval and debugging. It cannot modify your test code or delete runs.
-- **User-scoped:** Your AI assistant can only access the projects and data your Cypress Cloud user has permission to see. It operates within the same access boundaries as you do.
+- **Read-only:** Cloud MCP is designed for data retrieval and debugging. Cloud MCP cannot modify your test code or delete runs.
+- **User-scoped:** Your AI assistant can only access the projects and data your Cypress Cloud user has permission to see. Your AI assistant operates within the same access boundaries as you do.
 - **Locally managed:** You control when the server is active by managing the configuration in your local AI client.
 
-Cloud MCP implements the standard MCP authorization specification with OAuth 2.0 and uses streamable HTTP transport. It falls under our [AI security practices →](https://on.cypress.io/ai-security?utm_source=docs.cypress.io&utm_medium=cloud-mcp)
+Cloud MCP implements the standard MCP authorization specification with OAuth 2.0 and uses streamable HTTP transport. Cloud MCP falls under our [AI security practices →](https://on.cypress.io/ai-security?utm_source=docs.cypress.io&utm_medium=cloud-mcp)
 
 ### Remove the integration
 

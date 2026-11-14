@@ -9,7 +9,7 @@ sidebar_position: 50
 
 # Billing & Usage
 
-The **Billing & Usage** section of [Cypress Cloud](https://on.cypress.io/cloud) shows your current plan, what it includes, and how much your team has used in the current billing period. It is more than a receipt: it tells you whether your plan still fits how your team works, so you can upgrade before you hit a limit, attribute usage to the right projects, and see where your team is adopting AI.
+The **Billing & Usage** section of [Cypress Cloud](https://on.cypress.io/cloud) shows your current plan, what it includes, and how much your team has used in the current billing period. The **Billing & Usage** section is more than a receipt: it tells you whether your plan still fits how your team works, so you can upgrade before you hit a limit, attribute usage to the right projects, and see where your team is adopting AI.
 
 Your plan meters two things that matter day to day: how many **test results** you can record per billing period, and the limits on **AI** capabilities. Test results are counted across three tiers: **included**, **bundled**, and **on-demand** (explained in [Cloud test results](#Cloud-test-results)). Depending on your plan, the test results allowance may be monthly or annual. Watching both here keeps the value of Cloud flowing without surprises.
 
@@ -41,7 +41,7 @@ Use the **Subscribe**, **Change plan**, or **Contact us** buttons to subscribe, 
 
 ## Cloud test results
 
-A **test result** is each passed or failed test recorded when you run [`cypress run --record`](/app/references/command-line#cypress-run); pending and skipped tests are not counted (see [what counts as a test result](/cloud/faq#What-counts-as-a-test-result)). It is the core unit Cypress Cloud meters, and it is what unlocks everything Cloud does for your team. In exchange for recording, each run becomes debuggable and measurable: you get [Test Replay](/cloud/features/test-replay) to reproduce failures exactly as they happened in CI, [Flaky Test Management](/cloud/features/flaky-test-management) to catch unreliable tests, [analytics](/cloud/features/analytics/overview) to track quality over time, and [Smart Orchestration](/cloud/features/smart-orchestration/overview) to run specs in parallel and cut CI time. Test results are the meter behind all of that value.
+A **test result** is each passed or failed test recorded when you run [`cypress run --record`](/app/references/command-line#cypress-run); pending and skipped tests are not counted (see [what counts as a test result](/cloud/faq#What-counts-as-a-test-result)). The test result is the core unit Cypress Cloud meters, and it is what unlocks everything Cloud does for your team. In exchange for recording, each run becomes debuggable and measurable: you get [Test Replay](/cloud/features/test-replay) to reproduce failures exactly as they happened in CI, [Flaky Test Management](/cloud/features/flaky-test-management) to catch unreliable tests, [analytics](/cloud/features/analytics/overview) to track quality over time, and [Smart Orchestration](/cloud/features/smart-orchestration/overview) to run specs in parallel and cut CI time. Test results are the meter behind all of that value.
 
 Cypress Cloud counts test results across three tiers, consumed in this order:
 
@@ -49,7 +49,7 @@ Cypress Cloud counts test results across three tiers, consumed in this order:
 - **Bundled:** extra test results you purchase up front, mid-term, to top up your allowance before any on-demand usage begins.
 - **On-demand:** unexpected, non-prepaid test results recorded beyond your included and bundled amounts, generally billed at a higher per-unit price point.
 
-The **Test results** card highlights the number of used and included test results in your current billing period. It also shows how many **bundled** test results you have purchased and used, and any **on-demand** test results recorded beyond those amounts, if applicable.
+The **Test results** card highlights the number of used and included test results in your current billing period. The card also shows how many **bundled** test results you have purchased and used, and any **on-demand** test results recorded beyond those amounts, if applicable.
 
 Keeping an eye on this card matters because of what happens once you exhaust your included and bundled test results. If your plan does not allow on-demand usage, recording keeps working but [parallelization is disabled and new results are hidden from the dashboard](/cloud/faq#What-happens-once-I-reach-the-test-results-limit) until you upgrade or the cycle resets:
 
@@ -85,7 +85,7 @@ The **By project** tab shows your usage per project during the selected billing 
 
 ## Prompt executions
 
-The **AI Prompts** card tracks [cy.prompt](/api/commands/prompt) usage in your organization for the current billing period, both the number of prompt executions and the number of steps those prompts ran. `cy.prompt` is the AI capability that turns natural-language steps into executable Cypress commands and can [self-heal](/api/commands/prompt) tests when selectors change. Its value is in the manual work it removes: faster test authoring from plain English, and fewer broken tests to fix when your UI evolves. This card shows you how broadly that value is being adopted across your organization.
+The **AI Prompts** card tracks [cy.prompt](/api/commands/prompt) usage in your organization for the current billing period, both the number of prompt executions and the number of steps those prompts ran. `cy.prompt` is the AI capability that turns natural-language steps into executable Cypress commands and can [self-heal](/api/commands/prompt) tests when selectors change. The value of `cy.prompt` is in the manual work it removes: faster test authoring from plain English, and fewer broken tests to fix when your UI evolves. This card shows you how broadly that value is being adopted across your organization.
 
 The "Prompt execution" information conveys how many times the [cy.prompt](/api/commands/prompt) command has been executed in your organization, either on developer machines or in CI. Each [cy.prompt](/api/commands/prompt) command can define more than one step to be executed. We also break down the number of commands that took place in "Open mode" or in "Run mode". Together this tells you not just how much AI is being used, but _where_: whether developers are authoring tests interactively, or whether self-healing is running in CI, so you can see how your team is putting AI to work.
 
@@ -153,7 +153,7 @@ To update other billing details, such as your billing address or company name, c
 
 Every invoice for your organization is listed at the bottom of the **Billing & Usage** page, giving owners and admins self-serve access to a complete billing history for expense reporting, audits, and accounting, without having to request copies from support. Each row shows the invoice **status** (such as _Paid_ and the date it was paid), the invoice **ID**, the **invoice date**, the **amount invoiced**, any **credits** applied, and the **amount paid**.
 
-To download a past invoice, click **Download** on its row. This gives you a PDF you can forward to finance or attach to an expense report at any time, including for older billing periods.
+To download a past invoice, click **Download** on its row. The download gives you a PDF you can forward to finance or attach to an expense report at any time, including for older billing periods.
 
 <DocsImage
   src="/img/cloud/billing/billing-and-usage-invoices.png"
@@ -162,7 +162,7 @@ To download a past invoice, click **Download** on its row. This gives you a PDF 
 
 ## Open Source Plan
 
-The Open Source Software (OSS) plan is a free upgrade for qualifying public, non-commercial projects. It includes 5 free users, 100k test results/month, [parallelization with load balancing](/cloud/features/smart-orchestration/parallelization) to keep CI fast as your suite grows, and access to numerous [integrations](/cloud/integrations/github), so open source maintainers get the orchestration and debugging power that helps commercial teams ship faster, without the cost.
+The Open Source Software (OSS) plan is a free upgrade for qualifying public, non-commercial projects. The OSS plan includes 5 free users, 100k test results/month, [parallelization with load balancing](/cloud/features/smart-orchestration/parallelization) to keep CI fast as your suite grows, and access to numerous [integrations](/cloud/integrations/github), so open source maintainers get the orchestration and debugging power that helps commercial teams ship faster, without the cost.
 
 To qualify, all Projects in your Organization must meet the following criteria:
 

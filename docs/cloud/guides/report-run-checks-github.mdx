@@ -14,7 +14,7 @@ sidebar_custom_props: { 'new_label': true }
 
 Install `@cypress/extract-cloud-results` as described in the [Results API](/accessibility/connect-and-extend/results-api#Installation) guide, which also lists the [supported CI providers](/accessibility/connect-and-extend/results-api#Supported-CI-Providers). Run the status script in the same CI job that recorded the run, after `cypress run --record`. For the full `getCheckResults()` response shape and options, see [Using check results in CI](/cloud/features/checks#Using-check-results-in-CI).
 
-This is separate from the Cypress [GitHub integration](/cloud/integrations/github#Status-checks), which reports per-run-group or per-spec test pass/fail. Run Check statuses report specific thresholds that **you** configure, including Cypress Accessibility and UI Coverage assertions if relevant.
+Reporting Run Check statuses is separate from the Cypress [GitHub integration](/cloud/integrations/github#Status-checks), which reports per-run-group or per-spec test pass/fail. Run Check statuses report specific thresholds that **you** configure, including Cypress Accessibility and UI Coverage assertions if relevant.
 
 <ReportRunChecksGithub />
 
