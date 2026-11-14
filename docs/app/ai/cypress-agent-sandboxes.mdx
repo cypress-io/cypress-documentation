@@ -11,11 +11,9 @@ sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 
 # Run Cypress in an AI agent sandbox
 
-An AI agent can write a Cypress test, but without Cypress running in its
-sandbox, it can't tell whether that test passes. It hands you unverified
-changes, and you're the one who runs the specs and digs into the failures. Run
-Cypress in the sandbox, and the agent runs specs, reads the failures through
-`cypress tap`, and fixes them before it hands the work back.
+Run Cypress in your AI agent's sandbox, and the agent tests its own changes
+before it hands them back. It runs your specs with `cypress tap`, reads the
+failures, and fixes them, instead of leaving that work to you.
 
 Agents such as Claude Code on the web and Cursor Cloud run in a
 sandbox: an isolated container or virtual machine with no screen and no person to click
