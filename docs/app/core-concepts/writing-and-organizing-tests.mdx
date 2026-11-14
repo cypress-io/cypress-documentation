@@ -1140,10 +1140,10 @@ can be fixed.
 A **pending** test is one that Cypress intentionally doesn't run because you
 told it not to. A test ends up pending in three ways:
 
-- **It has no body**: a placeholder for a test you haven't written yet, such
+- **The test has no body**: a placeholder for a test you haven't written yet, such
   as `it('is not written yet')`.
-- **It's explicitly skipped**: using `it.skip()` or the `xit()` alias.
-- **It's excluded from the current browser**: a test configured with the
+- **The test is explicitly skipped**: using `it.skip()` or the `xit()` alias.
+- **The test is excluded from the current browser**: a test configured with the
   `browser` option to run only in a browser you aren't currently using.
 
 Each of the four tests below is pending (the browser-specific one is pending

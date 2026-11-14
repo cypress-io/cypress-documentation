@@ -80,7 +80,7 @@ If an object is provided, it can have the following properties.
 | `contents`     | The contents of the file. The contents can be a string shorthand as described above, a `TypedArray` instance containing binary data (such as a `Cypress.Buffer` instance) or a non-TypedArray object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded. |
 | `fileName`     | The name of the file. If `contents` is a path on disk or an alias from `cy.readFile()` or `cy.fixture()`, `fileName` defaults to the actual filename. In any other case, `fileName` defaults to an empty string.                                                                        |
 | `mimeType`     | The [mimeType](https://developer.mozilla.org/en-US/docs/Web/API/File/type) of the file. If omitted, it will be [inferred](https://github.com/jshttp/mime-types#mimelookuppath) from the file extension. If one cannot be inferred, it will default to an empty string.                  |
-| `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`.                                      |
+| `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). `lastModified` defaults to `Date.now()`.                            |
 
 <Icon name="angle-right" /> **options _(Object)_**
 

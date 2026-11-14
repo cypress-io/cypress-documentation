@@ -59,8 +59,8 @@ UI Coverage is built entirely on [Test Replay](/cloud/features/test-replay), the
 
 1. **You record a run** to Cypress Cloud with Test Replay enabled, exactly as you do today.
 2. **Cypress Cloud analyzes the DOM snapshots** Test Replay captured for every unique state your tests reached, in both end-to-end and component testing.
-3. **It finds every interactive element** in those snapshots and checks whether a [recognized Cypress command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) interacted with it.
-4. **It produces a report** on the run's **UI Coverage** tab, with a coverage score, per-view breakdowns, and the specific untested elements and links.
+3. **Cypress Cloud finds every interactive element** in those snapshots and checks whether a [recognized Cypress command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) interacted with it.
+4. **Cypress Cloud produces a report** on the run's **UI Coverage** tab, with a coverage score, per-view breakdowns, and the specific untested elements and links.
 
 Because the report is generated after the run finishes recording, nothing in your Cypress pipeline waits on or fails because of UI Coverage.
 

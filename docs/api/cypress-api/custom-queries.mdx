@@ -17,7 +17,7 @@ Queries are a type of command, used for _querying_ the state of your
 application. Queries are different from other commands in that they follow three
 important rules:
 
-1. Queries are _synchronous._ They do not return or await promises.
+1. Queries are _synchronous._ Queries do not return or await promises.
 2. Queries are _retriable._ Once you return the inner function, Cypress takes
    control, handling retries on your behalf.
 3. Queries are _idempotent._ Once you return the inner function, Cypress will
@@ -125,7 +125,7 @@ The callback function can be thought of as two separate parts. The _outer
 function_, which is invoked once, where you perform setup and state management,
 and the _query function_, which might be called repeatedly.
 
-Let's look at an example. This is actual Cypress code — how `.focused()` is
+Let's look at an example. The example below is actual Cypress code — how `.focused()` is
 implemented internally, with some small adjustments to make it work from a
 support file. Use the TypeScript tab for a version that type-checks under strict
 TypeScript, or see [Types for Custom Queries](/app/tooling/typescript-support#Types-for-Custom-Queries)

@@ -167,9 +167,9 @@ That single fact explains the behaviors below.
 
 | Behavior                                                             | Why                                                                                                               |
 | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| The request never appears in the browser DevTools **Network** tab    | It is not a browser request, so the browser has nothing to report                                                 |
+| The request never appears in the browser DevTools **Network** tab    | The request is not a browser request, so the browser has nothing to report                                        |
 | [`cy.intercept()`](/api/commands/intercept) cannot spy on or stub it | Interception works on browser traffic flowing through the Cypress proxy, and this request never enters that proxy |
-| CORS and same-origin policy do not apply                             | Those are browser rules, and no browser is involved. You can request any host                                     |
+| CORS and same-origin policy do not apply                             | CORS and same-origin policy are browser rules, and no browser is involved. You can request any host               |
 | Cookies still work, against the real browser jar                     | See [cookies are shared with the browser](#Cookies-are-shared-with-the-browser)                                   |
 | The `User-Agent` matches the browser under test                      | Cypress forwards the browser's user agent so the server sees a consistent client                                  |
 | Invalid or self-signed TLS certificates do not fail the request      | Certificate verification is relaxed, which keeps requests against staging environments working                    |

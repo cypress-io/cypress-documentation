@@ -408,7 +408,7 @@ being chained off an existing series.
 
 #### When starting a series of commands
 
-This queries the `<body>` element for the content, so elements in the
+`cy.contains()` queries the `<body>` element for the content, so elements in the
 `<head>`, such as `<title>`, never match. Inside a
 [`.within()`](/api/commands/within) callback, it queries the `.within()` subject
 instead.
