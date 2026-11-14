@@ -267,6 +267,10 @@ Each rule is a hard convention. See the linked section for the how and why.
   upgrade.
 - **Say what something does**, not what it lets the reader do. "`cy.session()`
   caches and restores session state", not "allows you to cache…".
+- **Name the subject in every sentence.** Repeat the noun instead of pointing
+  back to an earlier sentence with "it", "this", or "they" ("The agent runs
+  your specs", not "It runs your specs"), so each sentence stands on its own.
+  A pronoun for a noun in the same sentence is fine.
 - Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
 - Cut filler. `please`, `note that`, and hedges that carry no information.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in

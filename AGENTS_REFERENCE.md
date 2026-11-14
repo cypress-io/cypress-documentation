@@ -245,6 +245,22 @@ same change. `## See also` always stays as it is.
   almost always hides a simpler sentence.
   - Yes: "`cy.session()` caches and restores session state between tests."
   - No: "`cy.session()` allows you to cache and restore session state."
+- **Name the subject in every sentence.** Readers skim, search results quote a
+  single sentence, and answer engines lift one out of the page, so a sentence
+  that opens with a pronoun for something named earlier loses its meaning out
+  of context. Repeat the noun instead of reaching back with "it", "this",
+  "that", or "they" on their own.
+  - Yes: "Run Cypress in your AI agent's sandbox, so the agent tests its own
+    changes before it hands them back. The agent runs your specs with
+    `cypress tap`."
+  - No: "Run Cypress in your AI agent's sandbox, and the agent tests its own
+    changes. It runs your specs with `cypress tap`."
+  - No: "Cypress caches the binary. This speeds up later installs."
+
+  A pronoun that refers to a noun in the same sentence is fine ("Cypress retries
+  the assertion until it passes"), and so is "this" or "that" followed by its
+  noun ("This command…").
+
 - **Keep body text current.** The docs describe the product as it works today,
   so a reader on the current release never has to work out whether a sentence
   still applies. Leave out the Cypress release that added or changed a feature.
