@@ -87,8 +87,10 @@ site-wide consistency and TS/JS parity. Flag and name the replacement:
   more than one render site; otherwise inline the content.
 - A new `<Icon name="..." />` whose icon is not imported under the
   `fontawesome` key in `src/theme/MDXComponents.js` (this one renders blank).
-- A fenced code block with no language tag (` ``` ` on its own), or a file
-  snippet with no `title="file.ext"` → tag the language and title the file.
+- A fenced code block with no language tag (` ``` ` on its own) → tag the
+  language. A block the prose presents as a file's contents ("add this to
+  `cypress.config.ts`") with no `title="file.ext"` → title it with the file.
+  Commands and fragments don't need a title.
 - A tab group nested inside another `<Tabs>`, or a `copyTsToJs` block inside
   framework tabs (it renders its own tabs) → one level of tabs, with a plain
   `js` block inside.
@@ -107,17 +109,20 @@ repo rather than accepting them:
   between polls of an endpoint with nothing else to wait on, and pages that
   exist to show the pattern.
 - **Hosts outside `cypress.io` in examples.** `example.com`, a third-party site,
-  or an invented domain in a code block or a sample URL in prose
+  or an invented domain as a host a test runs against (`cy.visit`, `cy.request`,
+  `cy.origin`, `cy.intercept`, `baseUrl`) or as a sample URL in prose
   (`https://example.com/products/123`) → a real Cypress site or a stand-in such
-  as `app.cypress.io`. `localhost` is fine. Exempt alt text that describes a
-  diagram of a literal URL.
+  as `app.cypress.io`. `localhost` is fine. Exempt guides about a named
+  third-party service (the Okta, Auth0, and Google authentication guides), and
+  alt text that describes a diagram of a literal URL.
 - **Config options, CLI flags, and env vars that do not match the reference.**
   Cross-check names, defaults, and types against
   `docs/app/references/configuration.mdx` and
   `docs/app/references/command-line.mdx`. A new option documented in a guide but
   missing from the reference table (or vice versa) is a real defect.
-- **Version claims.** "Added in", "deprecated in", and minimum-version
-  statements should match the changelog entry in the same PR or an existing one.
+- **Version claims.** "Added in" and "deprecated in" claims in a `## History`
+  table, a changelog, or a migration note should match the changelog entry in
+  the same PR or an existing one. A version in body text is a section 4 issue.
 - **Contradictions with the rest of the site.** If a PR changes how a behavior
   is described, look for other pages still describing the old behavior and name
   them.
@@ -150,12 +155,17 @@ repo rather than accepting them:
 - **Product names in frontmatter.** The product-name and terminology rules
   above apply to frontmatter `title` and `description` values too. Flag a
   lowercase "cypress" or "Cypress app" there (`title: 'Run cypress in…'`).
+  Exempt CLI commands and package names (`cypress tap`, `@cypress/grep`), which
+  can't take backticks in frontmatter.
 - **Heading case and form.** An added H2 or H3 in Title Case
-  (`## Running Cypress Tests Interactively`), or one that opens with a gerund
-  (`## Running…`, `## Configuring…`). Headings are sentence case and name a task
-  with an imperative verb. Exempt the fixed API page skeleton, function-name
-  headings on namespace API pages, and `## See also`. Don't judge whether a
-  heading stands on its own; that's a human call.
+  (`## Running Cypress Tests Interactively`), or a task heading that opens with
+  a gerund and its object (`## Running the tests`, `## Configuring a proxy`).
+  Headings are sentence case and name a task with an imperative verb. Product
+  names and other proper nouns keep their capitals (`## UI Coverage reports`),
+  and one-word topic nouns are fine (`## Troubleshooting`, `## Debugging`).
+  Exempt the fixed API page skeleton, function-name headings on namespace API
+  pages, and `## See also`. Don't judge whether a heading stands on its own;
+  that's a human call.
 - **Release numbers in body text.** An added Cypress version in prose or an
   admonition ("in Cypress 16.3.0 and later", a `:::info` naming the release that
   added a feature). Exempt `## History` tables, changelogs, and migration,
@@ -167,12 +177,13 @@ repo rather than accepting them:
   once. Example-specific prompts and commands stay in code blocks.
 - **Custom admonition titles.** `:::tip Do this` or `:::note Requirements`. Site
   CSS hides every admonition heading; use a bold lead line in the body instead.
-- **`:::warning`.** Use `:::caution`.
+- **`:::warning`.** Prefer `:::caution`.
 - **Single-`l` cancel forms.** "canceled", "canceling", "cancelation" in prose →
-  "cancelled", "cancelling", "cancellation". Exempt quoted API values and UI
-  strings.
+  "cancelled", "cancelling", "cancellation". This is the one deliberate
+  exception to American spelling (see AGENTS.md). Exempt quoted API values and
+  UI strings.
 - **Formal words and filler.** "leverage", "utilize", "in order to", "please",
-  "note that".
+  "note that". Exempt quoted error messages, UI strings, and code.
 - **"a11y" in prose** ("partial a11y coverage") → "accessibility". Exempt names
   such as `checkA11y()`, `data-a11y-ignore`, and identifiers.
 - **Generic link text.** `[here]`, `[this link]`, `[learn more]`, `[click here]`.
