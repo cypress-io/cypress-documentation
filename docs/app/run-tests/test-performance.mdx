@@ -917,7 +917,7 @@ A suite that normally surfaces a failure at the 20-minute mark can surface it in
 
 ### Disable video: use Test Replay instead
 
-Video recording is one of the most common sources of hidden CI overhead. When `video: true` is set and you're recording to Cypress Cloud, Cypress captures a video for every spec file, then compresses it and uploads it before the next spec can start. On machines with limited CPU (typical of CI environments), the compression step is the most expensive part. This overhead is paid even for specs where every test passed and no one will ever watch the recording.
+Video recording is one of the most common sources of hidden CI overhead. When `video: true` is set and you're recording to Cypress Cloud, Cypress captures a video for every spec file, then compresses it and uploads it before the next spec can start. On machines with limited CPU (typical of CI environments), the compression step is the most expensive part. This overhead is paid even for specs where every test passed and no one ever watches the recording.
 
 :::info
 
