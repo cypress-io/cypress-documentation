@@ -12,7 +12,7 @@ The `views` configuration groups the URLs your tests visit into views using URL 
 :::info
 
 **Note:** setting `views` impacts both Accessibility and UI Coverage reports.
-It is defined at the root of your configuration and, unlike `viewFilters` and
+The `views` property is defined at the root of your configuration and, unlike `viewFilters` and
 `elementFilters`, it cannot be nested under an `accessibility` or `uiCoverage`
 key to configure each product separately.
 
@@ -67,7 +67,7 @@ Pattern matching follows [URL Pattern API](https://developer.mozilla.org/en-US/d
 
 The `groupBy` property creates distinct views based on named parameters in your URL pattern. For example, if your pattern is `/analytics/:type/:id`, using `groupBy: ["type"]` creates a separate view for each unique value of `type` (like `/analytics/performance/:id` and `/analytics/usage/:id`).
 
-This is particularly useful when:
+The `groupBy` property is particularly useful when:
 
 - Different parameter values represent distinct functional areas
 - You want to track coverage separately for different categories of content

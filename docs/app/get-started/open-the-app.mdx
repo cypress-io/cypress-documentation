@@ -87,7 +87,7 @@ Use a descriptive, non-ambiguous name such as `cy:open` or `cy:run`.
 
 ## The Launchpad
 
-When Cypress opens, the Launchpad is the first thing you'll see. It walks you
+When Cypress opens, the Launchpad is the first thing you'll see. The Launchpad walks you
 through the decisions and configuration a new project needs (choosing a
 testing type, generating configuration files, and picking a browser) so you
 don't have to set any of this up manually. If your project is already
@@ -115,16 +115,16 @@ you want to do?
 
 - **[E2E Testing](/app/core-concepts/testing-types#What-is-E2E-Testing)** runs
   your whole application in the browser and visits pages the way a user would.
-  It's the best way to verify complete user journeys across your entire
+  E2E testing is the best way to verify complete user journeys across your entire
   stack, like logging in, filling out forms, and checking out.
 - **[Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing)**
-  mounts individual components of your app in isolation. It's a fast, focused
+  mounts individual components of your app in isolation. Component testing is a fast, focused
   way to test a component's behavior across many states and props without
   running your whole application.
 
 For more background on this decision, read
 [Testing Types](/app/core-concepts/testing-types). If you're not sure which to
-pick, choose **E2E Testing** for now. This isn't a permanent choice, and you
+pick, choose **E2E Testing** for now. This choice isn't permanent, and you
 can set up the other testing type at any time later.
 
 ### Step 2: Review the generated configuration
@@ -210,7 +210,7 @@ bunx cypress open --e2e --browser chrome
   </TabItem>
 </Tabs>
 
-This is a handy addition to your npm scripts for the testing type you use most.
+This command is a handy addition to your npm scripts for the testing type you use most.
 
 ## Connect the Cypress app to Cypress Cloud
 

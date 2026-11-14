@@ -78,7 +78,7 @@ interactive browser environment in real time. Cypress's
 from your test suite and their assertions. When you
 [click on a command or assertion](/app/core-concepts/open-mode#Command-Log)
 in the command log, a DOM snapshot displays so you can see what the application
-under test looked like at the time of the test's execution. This shows the
+under test looked like at the time of the test's execution. The DOM snapshot shows the
 **real rendered UI** and the behavior of the app under **real user
 interactions.** Since the app is loaded within a real browser, you can also
 manually explore its behavior while it is under the state of a desired test
@@ -103,7 +103,7 @@ is critical to iterating quickly and with confidence. With Cypress, your
 tests are automatically re-run upon file save as you are iterating on them.
 
 Having your code editor and application under test within a browser side-by-side
-(shown below) while re-running tests on save is a highly productive workflow. It
+(shown below) while re-running tests on save is a highly productive workflow. The side-by-side setup
 provides an instant feedback loop that keeps each iteration fast and
 confident.
 
@@ -117,7 +117,7 @@ confident.
 Cypress gives you time travel capabilities to see exactly how your app was
 behaving at any point during test execution. Cypress takes DOM snapshots of your
 application under test as the commands and assertions in your tests are
-executed. This enables you to view the **real UI** of your application at any
+executed. These snapshots enable you to view the **real UI** of your application at any
 point during your tests' execution. By clicking from one command to another in
 the [command log](/app/core-concepts/open-mode#Command-Log), you can see
 which elements Cypress acted upon and how your application responded to the
@@ -172,7 +172,7 @@ to add Cypress to your Angular project:
 ng add @cypress/schematic
 ```
 
-This will install Cypress, add scripts for running Cypress in `run` and `open`
+This command will install Cypress, add scripts for running Cypress in `run` and `open`
 mode, scaffold base Cypress files and directories, and (optional) prompt you to
 remove Protractor and reconfigure the default `ng e2e` command to use Cypress.
 
@@ -233,7 +233,7 @@ Cypress manually.
 
 Then, since Cypress can run in parallel with your application, let's install
 [concurrently](https://www.npmjs.com/package/concurrently) to simplify our npm
-script. This is optional; however, you will need another way to serve your
+script. Installing concurrently is optional; however, you will need another way to serve your
 Angular app for Cypress to run tests against your application.
 
 <Tabs>
@@ -313,7 +313,7 @@ bun run cy:open
   </TabItem>
 </Tabs>
 
-It will start up Cypress and our Angular app at the same time.
+The `cy:open` script will start up Cypress and our Angular app at the same time.
 
 Again, we highly recommend using our
 [Angular Schematic](https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic)
@@ -375,7 +375,7 @@ cy.get('.my-class').contains('text')
 cy.contains('text')
 ```
 
-You can also get elements by their text value. This can be accomplished using
+You can also get elements by their text value. Getting elements by text can be accomplished using
 [`cy.contains`](/api/commands/contains) while using CSS selectors to account for
 all use cases.
 
@@ -435,7 +435,7 @@ cy.get('input[name="field-name"]')
 
 Another plugin that we recommend for selecting multiple elements is the
 [Cypress Testing Library](https://github.com/testing-library/cypress-testing-library).
-This extends Cypress by adding `findBy` and `findAllBy` commands.
+Cypress Testing Library extends Cypress by adding `findBy` and `findAllBy` commands.
 
 :::
 
@@ -899,7 +899,7 @@ If an element is not
 [actionable](/app/core-concepts/interacting-with-elements#Actionability)
 within the
 [`defaultCommandTimeout`](/app/core-concepts/retry-ability#Timeouts) setting,
-the command will fail. This enables you to write tests without the need for
+the command will fail. This automatic retrying enables you to write tests without the need for
 arbitrary timeouts, enabling you to write more predictable tests.
 
 <Badge type="danger">Before: Protractor</Badge>
@@ -931,8 +931,8 @@ and are enqueued to run serially at a later time. Cypress commands might look
 like promises, but the
 [Cypress API is not an exact implementation of Promises](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue).
 The modern web is asynchronous, therefore you need to interact with modern web
-apps in an asynchronous fashion. This is why the Cypress API is asynchronous.
-This keeps your tests deterministic since all of your commands are executed
+apps in an asynchronous fashion. The asynchronous web is why the Cypress API is asynchronous.
+The asynchronous API keeps your tests deterministic since all of your commands are executed
 serially, enabling your tests to run predictably each time.
 
 In comparison, Protractor's WebDriverJS API is based on promises, which is
@@ -1102,7 +1102,7 @@ parallel across multiple CI machines.
 
 With Cypress, your tests can be
 [parallelized on a per spec file basis](/cloud/features/smart-orchestration/parallelization).
-This is an important distinction between Protractor and Cypress parallelization.
+Per-spec parallelization is an important distinction between Protractor and Cypress parallelization.
 One of the reasons why Cypress parallelizes tests per file is because some users
 may write tests that build up state that subsequent tests, although we
 [do not recommend relying on the state of previous tests](/app/core-concepts/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests).

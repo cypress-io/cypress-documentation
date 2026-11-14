@@ -51,8 +51,8 @@ The key to understanding the run comparison report is that the Changed run is th
 
 The Branch Review report is divided into two sections:
 
-- **New failed elements**: Counts of elements that have failures in the Changed run, where matching failures were not found on the Base run. These are listed by View, for each accessibility rule where new failures were detected.
-- **Resolved elements**: Counts of elements that had failures detected in the Base run which are no longer detected in the Changed run. These are also listed as improvements in each View, under the accessibility rules that had improvements.
+- **New failed elements**: Counts of elements that have failures in the Changed run, where matching failures were not found on the Base run. New failed elements are listed by View, for each accessibility rule where new failures were detected.
+- **Resolved elements**: Counts of elements that had failures detected in the Base run which are no longer detected in the Changed run. Resolved elements are also listed as improvements in each View, under the accessibility rules that had improvements.
 
 If the Changed run is associated with a Pull Request and runs the same overall test suite as the Base run, the changes in the report are likely due to code changes in the pull request.
 
@@ -96,7 +96,7 @@ A **resolved element** is an element that had a failed accessibility rule in the
   alt="A list of accessibility rules with resolved elements in the new run"
 />
 
-Resolved elements are calculated for every rule and View, but are not displayed individually. This is because, as far as the Changed report is concerned, the failures do not exists, so there is not a guarantee the element is still present in the "new" report.
+Resolved elements are calculated for every rule and View, but are not displayed individually. Resolved elements are not displayed because, as far as the Changed report is concerned, the failures do not exists, so there is not a guarantee the element is still present in the "new" report.
 
 If you have a use case for seeing the specific elements that are no longer detected to have failures, reach out to your Cypress representative for further discussion. For the time being the focus of Branch Review is on **new problems** - we avoid mixing old and new data in the same report to minimize the chances of confusion.
 
@@ -109,11 +109,11 @@ If there are no changes, the Accessibility Branch Review report still displays a
   alt="The new and resolved elements sections each showing a message to explain that there are no findings"
 />
 
-This means the reports are identical, and that the Changed run has not had any impact on accessibility.
+An empty Branch Review report means the reports are identical, and that the Changed run has not had any impact on accessibility.
 
 ## Ensuring a good comparison
 
-The easiest subjects to compare are **passing runs** that ran **similar tests** on the **similar content**. This means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. This is usually what happens out-of-the box when comparing a pull-request branch with your main branch, for example - assuming the same tests run on both branches.
+The easiest subjects to compare are **passing runs** that ran **similar tests** on the **similar content**. Comparing such runs means that each run visited roughly the same pages and completed the same kinds of workflows. In this situation, any diff in the results is likely the result of changes present in the newer run. Comparable runs are usually what you get out-of-the box when comparing a pull-request branch with your main branch, for example - assuming the same tests run on both branches.
 
 That said, it still possible and valid to compare runs from different points in time with different sets of test results, as long as you bear in mind all the potential sources of difference between the two runs, which you can evaluate for yourself as you explore the results.
 
@@ -147,7 +147,7 @@ These changes in Views may be because a new page was actually added to the appli
 
 ### Stable Elements
 
-Cypress stores a string that represents each failed element in a report, determined using a standardized [element identification process](/accessibility/core-concepts/element-identification). This operates in a different way to the standard Axe-Core® element identification algorithm, to support the comparison of runs from different builds of the application, and make use of the testing-related attributes you may already have created in the DOM.
+Cypress stores a string that represents each failed element in a report, determined using a standardized [element identification process](/accessibility/core-concepts/element-identification). This identification process operates in a different way to the standard Axe-Core® element identification algorithm, to support the comparison of runs from different builds of the application, and make use of the testing-related attributes you may already have created in the DOM.
 
 Where possible, we prioritize known stable locators like `data-cy` or `data-testid`. In some cases the identification strings will contain dynamic values that change on every build of your application, introducing noise in a diff. The element identification behavior is flexible and can be configured to meet your needs and fully avoid dynamic values as identifiers.
 
@@ -171,9 +171,9 @@ If you plan to use branch comparison for investigating Pull Requests that have b
 
 Choose a scope of rules, page, and elements that reduces ambiguity. A good starting point is something like "We will fail a build if it introduces new critical issues on the login or checkout page."
 
-If your application is unstable between runs in terms of content, pages, or different states reached, fine tune your configuration to ignore the unstable parts of the DOM that have issues already. These can be documented and dealt with on their own.
+If your application is unstable between runs in terms of content, pages, or different states reached, fine tune your configuration to ignore the unstable parts of the DOM that have issues already. These unstable parts can be documented and dealt with on their own.
 
-When everything is dialled in correctly, the Branch Review diff will be 100% clean, unless something has actually changed in an area you didn't already know about. This gives you the highest confidence that if an issue is blocking a merge, it is genuinely a new problem introduced by the incoming Pull Request.
+When everything is dialled in correctly, the Branch Review diff will be 100% clean, unless something has actually changed in an area you didn't already know about. A clean diff gives you the highest confidence that if an issue is blocking a merge, it is genuinely a new problem introduced by the incoming Pull Request.
 
 If the team is not already familiar with accessibility, it's useful to consider which rules to start with. See [Fix accessibility violations](/accessibility/guides/improve-accessibility) for how to choose a first rule and scope the report around it.
 

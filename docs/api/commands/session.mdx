@@ -256,8 +256,8 @@ cy.session('admin', loginAsAdmin).then((status) => {
 
 ### Validating a restored session with `validate`
 
-The `validate` function checks that the session is established correctly. This
-matters most when Cypress restores a cached session: if the session is no longer
+The `validate` function checks that the session is established correctly.
+Validation matters most when Cypress restores a cached session: if the session is no longer
 valid, `cy.session()` recreates it by running `setup` again.
 
 These scenarios mark the session as invalid:
@@ -606,7 +606,7 @@ it('logs out', () => {
 ```
 
 To test what a signed-out user sees without logging out on the server, clear
-the browser's session data instead. This leaves the cached session as it is.
+the browser's session data instead. Clearing that data leaves the cached session as it is.
 
 ```javascript
 it('redirects a signed-out user to the login page', () => {
@@ -860,7 +860,7 @@ the session and recreate it when needed.
 
 <HeaderTimeouts />
 
-- `cy.session()` has no `timeout` option. It runs for as long as the commands in
+- `cy.session()` has no `timeout` option. `cy.session()` runs for as long as the commands in
   `setup` and `validate` run, and each of those commands uses its own timeout.
 - If `setup` or `validate` returns a Promise, `cy.session()` waits up to 20
   seconds for it to settle, then fails the test.
@@ -961,7 +961,7 @@ with an error.
 Expanding the session group in the Command Log shows each step Cypress ran. In
 the third test, Cypress clears the page and session data and restores the saved
 session. In **Validate session**, `/whoami` returns `401`, so the assertion
-fails and Cypress reports that it will recreate the session. It then clears the
+fails and Cypress reports that it will recreate the session. Cypress then clears the
 page and session data again, runs **Recreate session** and **Validate session**, and
 clears the page.
 

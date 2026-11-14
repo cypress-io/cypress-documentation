@@ -418,7 +418,7 @@ Group recorded tests together under a single run.
 cypress run --group develop-env
 ```
 
-You can add multiple groups to the same run by passing a different name. This
+You can add multiple groups to the same run by passing a different name. Multiple groups
 can help distinguish groups of specs from each other.
 
 ```shell
@@ -437,7 +437,7 @@ Specifying the `--ci-build-id` may also be necessary.
 
 By default, Cypress will run tests headlessly during `cypress run`.
 
-Passing `--headed` will force the browser to be shown. This matches how you run
+Passing `--headed` will force the browser to be shown, which matches how you run
 any browser via `cypress open`.
 
 ```shell
@@ -501,7 +501,7 @@ cypress run --port 8080
 
 #### `cypress run --posix-exit-codes` {#cypress-run-posix-exit-codes}
 
-This changes the default behavior of Cypress regarding exit codes. This flag causes Cypress to exit with POSIX exit code of 1 when there are test failures or if Cypress could not run, rather than the number of tests that failed. It can return additional POSIX-compliant exit codes for other scenarios as well. See the [Exit Code section](/app/references/command-line#Exit-code) for a comprehensive reference of Cypress exit codes.
+The `--posix-exit-codes` flag changes the default behavior of Cypress regarding exit codes. This flag causes Cypress to exit with POSIX exit code of 1 when there are test failures or if Cypress could not run, rather than the number of tests that failed. Cypress can return additional POSIX-compliant exit codes for other scenarios as well. See the [Exit Code section](/app/references/command-line#Exit-code) for a comprehensive reference of Cypress exit codes.
 
 ```shell
 cypress run --posix-exit-codes
@@ -511,7 +511,7 @@ cypress run --posix-exit-codes
 
 By default, Cypress expects your `cypress.config.js` (or `cypress.config.ts`) to
 be found in the current working directory. Use `--project` to point Cypress at a
-different directory. This is useful when you have multiple Cypress projects in
+different directory. The `--project` flag is useful when you have multiple Cypress projects in
 one repository and want to run a specific one without changing your working
 directory.
 
@@ -648,7 +648,7 @@ cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.cy.js
 
 #### `cypress run --tag <tag>` {#cypress-run-tag-lt-tag-gt}
 
-Add a tag or tags to the recorded run. This can be used to help identify
+Add a tag or tags to the recorded run. Tags can be used to help identify
 separate runs when displayed in Cypress Cloud.
 
 ```shell
@@ -678,7 +678,7 @@ multiple Node.js versions in CI you can include the version in the tags:
 cypress run --record --tag "node-${nodeVersion}"
 ```
 
-This makes runs that use the same spec set but a different Node.js version (or
+The version tag makes runs that use the same spec set but a different Node.js version (or
 any other build/environment detail Cypress Cloud does not capture) easy to tell
 apart in Cypress Cloud.
 
@@ -715,7 +715,7 @@ cypress open [options]
 #### Options:
 
 Options passed to `cypress open` will automatically be applied to the project
-you open. These persist on all projects until you quit Cypress. These options
+you open. These options persist on all projects until you quit Cypress. These options
 will also override values in the Cypress configuration file.
 
 By passing `--browser` and `--e2e` or `--component` when launching a project,
@@ -864,7 +864,7 @@ cypress open --port 8080
 
 By default, Cypress looks for your `cypress.config.js` (or `cypress.config.ts`)
 in the current working directory. Use `--project` to open Cypress for a project
-located in a different directory. This is useful when you have multiple Cypress
+located in a different directory. The `--project` flag is useful when you have multiple Cypress
 projects in one repository and want to open a specific one without changing your
 working directory.
 
@@ -876,7 +876,7 @@ cypress open --project ./some/nested/folder
 
 :::warning
 
-`cypress tap` is in [beta](/app/references/release-stages#Beta). Its commands and
+`cypress tap` is in [beta](/app/references/release-stages#Beta). The `cypress tap` commands and
 output can still change in any release.
 
 :::
@@ -885,7 +885,7 @@ output can still change in any release.
 session and read its context from the terminal. You can list the
 specs Cypress can run, start a run, poll its status, read test results the way
 the Cypress Command Log shows them, and inspect the DOM and accessibility tree
-of the application under test. It is built for you, or for an AI agent working in
+of the application under test. `cypress tap` is built for you, or for an AI agent working in
 your terminal.
 
 To get started, start Cypress in open mode (`cypress open`) in your project, then use the `cypress tap` commands from the same project directory in another terminal.
@@ -1132,7 +1132,7 @@ cypress cache list --size
 
 #### `cypress cache clear`
 
-Clear the contents of the Cypress cache. This is useful when you want Cypress to
+Clear the contents of the Cypress cache. Clearing the cache is useful when you want Cypress to
 clear out all installed versions of Cypress that may be cached on your machine.
 After running this command, you will need to run `cypress install` before
 running Cypress again.

@@ -73,7 +73,7 @@ cy.origin('https://example.cypress.io', () => {
 <Icon name="angle-right" /> **url _(String)_**
 
 The URL (`https://example.cypress.io/commands/actions`) or domain name
-(`example.cypress.io`) of the secondary origin, where the callback runs. It needs
+(`example.cypress.io`) of the secondary origin, where the callback runs. The URL or domain needs
 at least a hostname, and can include a scheme and port. The scheme defaults to
 `https`. A path or hash is fine, but query parameters are not.
 
@@ -89,9 +89,9 @@ Inside the callback, the URL replaces your configured
 
 Pass in an options object to control the behavior of `cy.origin()`.
 
-| option | description                                                                                                                                                                |
-| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `args` | A plain object that Cypress serializes, sends to the secondary origin, and passes to the callback as its only argument. Its values must be [serializable](#Serialization). |
+| option | description                                                                                                                                                                         |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `args` | A plain object that Cypress serializes, sends to the secondary origin, and passes to the callback as its only argument. The object's values must be [serializable](#Serialization). |
 
 `args` is the only supported option. Passing any other key throws an error.
 
@@ -369,7 +369,7 @@ cy.wait('@authConfig')
 
 When signing in isn't what a test is about, wrap the sign-in flow in a `login`
 [custom command](/api/cypress-api/custom-commands), so each test signs in with
-one line. This command signs in on a separate auth origin. It reads the password
+one line. This command signs in on a separate auth origin. The command reads the password
 with [`cy.env()`](/api/commands/env) inside the callback, so the secret never
 passes through `args`:
 
@@ -725,12 +725,12 @@ For other browsing contexts, use these approaches:
 
 <HeaderTimeouts />
 
-- `cy.origin()` has no timeout of its own. It runs for as long as the commands
+- `cy.origin()` has no timeout of its own. `cy.origin()` runs for as long as the commands
   in the callback run, and each of those commands uses its own timeout.
 - `cy.origin()` fails if Cypress can't set up communication with the secondary
   origin within the
-  [`defaultCommandTimeout`](/app/references/configuration#Timeouts). This can
-  happen when an `https` page tries to reach an insecure `http` origin.
+  [`defaultCommandTimeout`](/app/references/configuration#Timeouts). This failure
+  can happen when an `https` page tries to reach an insecure `http` origin.
 
 ## Command Log
 

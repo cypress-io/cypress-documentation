@@ -263,7 +263,7 @@ To set notification preferences:
 
 ### Flaky test alerts
 
-The **Flaky tests** preference works independently from the run status preferences. This means you can configure a channel to receive notifications _only_ when flaky tests are detected — even if you don't subscribe to passed or failed runs. See [Example configurations](#Example-configurations) for a concrete setup.
+The **Flaky tests** preference works independently from the run status preferences. Independent preferences mean you can configure a channel to receive notifications _only_ when flaky tests are detected — even if you don't subscribe to passed or failed runs. See [Example configurations](#Example-configurations) for a concrete setup.
 
 When flaky test alerts are enabled, the Teams message includes flaky test counts in the test results section and lists flaky specs alongside failed specs in the specs for review section.
 
@@ -280,7 +280,7 @@ Flaky test detection requires the flaky test management feature to be enabled fo
 When configuring at the project-level, you can filter notifications posted to Teams based on a
 [tag](/app/references/command-line#cypress-run-tag-lt-tag-gt),
 [group](/app/references/command-line#cypress-run-group-lt-name-gt), or branch the run was
-recorded with. This is helpful for posting notifications only for certain runs,
+recorded with. Filtering by tag, group, or branch is helpful for posting notifications only for certain runs,
 like those to a staging or release environment, or only for runs on your main branch.
 
 1. Navigate to the **Teams** configuration page.
@@ -347,7 +347,7 @@ To configure message content:
 
 You can choose between two display modes for your Teams messages:
 
-- **Stacked** (default): Each test result status appears on its own line with an icon and count. This is easier to scan when there are many statuses.
+- **Stacked** (default): Each test result status appears on its own line with an icon and count. Stacked mode is easier to scan when there are many statuses.
 - **Compact**: All status counts appear on a single line, saving vertical space in your Teams channel.
 
 The display mode applies to the test results, UI Coverage, and accessibility sections.
@@ -394,7 +394,7 @@ Add a channel like `#flaky-triage` with only the **Flaky tests** preference enab
 
 ### Slim CI bridge for high-volume projects
 
-For projects with frequent CI runs, set up a channel with only the **Test results** content section enabled in **Compact** display mode. This gives your team a single-line pass/fail summary per run with a direct link to the CI build, keeping the channel scannable even at high volume.
+For projects with frequent CI runs, set up a channel with only the **Test results** content section enabled in **Compact** display mode. This setup gives your team a single-line pass/fail summary per run with a direct link to the CI build, keeping the channel scannable even at high volume.
 
 ### Cross-team visibility with focused project channels
 
@@ -414,7 +414,7 @@ in place.
 
 #### Per-project muting for organization channels
 
-If you have an organization-level Teams channel, you can mute it for specific projects without affecting other projects. This is useful when you want most projects to post to a shared channel but need to silence notifications for a particular project temporarily.
+If you have an organization-level Teams channel, you can mute it for specific projects without affecting other projects. Per-project muting is useful when you want most projects to post to a shared channel but need to silence notifications for a particular project temporarily.
 
 1. Navigate to the **Project Settings** page for the project you want to mute.
 2. Click the **Integrations** tab.

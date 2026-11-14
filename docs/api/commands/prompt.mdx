@@ -214,7 +214,7 @@ Several of these examples use [placeholders](/app/guides/ai-test-generation#Plac
 
 ### Gherkin-style tests
 
-`cy.prompt` can execute Gherkin-style tests, making test automation accessible to a broader audience including product managers, QA engineers, and stakeholders who are familiar with behavior-driven development (BDD) patterns. This expands the pool of people who can write and maintain tests without requiring deep technical knowledge of Cypress APIs. This is also a great way to get started with test automation and get buy-in from stakeholders who are familiar with BDD patterns.
+`cy.prompt` can execute Gherkin-style tests, making test automation accessible to a broader audience including product managers, QA engineers, and stakeholders who are familiar with behavior-driven development (BDD) patterns. Gherkin support expands the pool of people who can write and maintain tests without requiring deep technical knowledge of Cypress APIs. Gherkin-style tests are also a great way to get started with test automation and get buy-in from stakeholders who are familiar with BDD patterns.
 
 #### Benefits for Cucumber users:
 
@@ -429,7 +429,7 @@ cy.prompt([
 
 ### Dynamic testing with loops
 
-If you need to test a loop of steps, you can use the `placeholders` option to pass in the dynamic values. This optimizes caching so that the prompt does not need to be called out to AI for each iteration of the loop.
+If you need to test a loop of steps, you can use the `placeholders` option to pass in the dynamic values. Passing `placeholders` optimizes caching so that the prompt does not need to be called out to AI for each iteration of the loop.
 
 ```javascript
 const matchingSearchTerms = ['cypress', 'testing', 'automation']

@@ -27,7 +27,7 @@ To ignore a specific rule for individual elements, add the [`data-a11y-ignore`](
 
 ## Scope
 
-`axeConfig` is only valid under an `accessibility` key in your App Quality configuration. It can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply different rulesets to tagged runs.
+`axeConfig` is only valid under an `accessibility` key in your App Quality configuration. `axeConfig` can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply different rulesets to tagged runs.
 
 ## Setting axeConfig
 
@@ -224,14 +224,14 @@ Runs recorded with the `aq-config-pr` tag use the scoped ruleset. Runs recorded 
 
 Cypress applies no conformance filter of its own, so a run evaluates whatever Axe-Core® enables by default, minus the [three rules Cypress turns off by default](#rules-that-are-off-by-default):
 
-| Axe-Core® rule group        | Runs by default | Notes                                                                                                       |
-| --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------- |
-| WCAG 2.0 Level A and AA     | Yes             | Minus `color-contrast`, `no-autoplay-audio`, and `meta-refresh`, which are WCAG-tagged but off by default   |
-| WCAG 2.1 Level A and AA     | Yes             |                                                                                                             |
-| Best Practices              | Yes             | Deque's own recommendations, such as `region` and `landmark-one-main`. These are not WCAG success criteria. |
-| WCAG 2.2 Level A and AA     | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.       |
-| WCAG Level AAA              | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.       |
-| Experimental and deprecated | No              | Off by default in Axe-Core® itself.                                                                         |
+| Axe-Core® rule group        | Runs by default | Notes                                                                                                                |
+| --------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------- |
+| WCAG 2.0 Level A and AA     | Yes             | Minus `color-contrast`, `no-autoplay-audio`, and `meta-refresh`, which are WCAG-tagged but off by default            |
+| WCAG 2.1 Level A and AA     | Yes             |                                                                                                                      |
+| Best Practices              | Yes             | Deque's own recommendations, such as `region` and `landmark-one-main`. Best practices are not WCAG success criteria. |
+| WCAG 2.2 Level A and AA     | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.                |
+| WCAG Level AAA              | No              | Off by default in Axe-Core® itself. Enable these for your project with `runOnly` or per-rule `rules`.                |
+| Experimental and deprecated | No              | Off by default in Axe-Core® itself.                                                                                  |
 
 Keep these behaviors in mind if you're measuring against a formal standard:
 
@@ -242,11 +242,11 @@ Keep these behaviors in mind if you're measuring against a formal standard:
 
 A small number of Axe-Core® rules are turned off in Cypress Accessibility by default. Color contrast can be enabled per project with `axeConfig`. The other two depend on live runtime behavior that isn't reproduced when Cypress re-renders a captured snapshot for analysis, so they can't be evaluated reliably even if you enable them.
 
-| Rule                                                        | Why it's off by default                                                                                                                                                                                             |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Elements must meet minimum color contrast ratio thresholds  | This is the slowest rule in the Axe-Core® ruleset and the one most likely to produce false positives or incomplete results. It works well in many projects; enable it with `"color-contrast": { "enabled": true }`. |
-| `<video>` or `<audio>` elements must not play automatically | Detecting a violation requires loading and playing the media to measure how long it plays. Cypress analyzes a reconstructed snapshot of the page without playable media, so this rule can't be evaluated.           |
-| Delayed refresh under 20 hours must not be used             | This rule reads a page's meta refresh directive, which Cypress disables while it analyzes a run so the reconstructed page doesn't navigate away. With the directive disabled, the rule can't be evaluated.          |
+| Rule                                                        | Why it's off by default                                                                                                                                                                                                                      |
+| ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Elements must meet minimum color contrast ratio thresholds  | The color contrast rule is the slowest rule in the Axe-Core® ruleset and the one most likely to produce false positives or incomplete results. The rule works well in many projects; enable it with `"color-contrast": { "enabled": true }`. |
+| `<video>` or `<audio>` elements must not play automatically | Detecting a violation requires loading and playing the media to measure how long it plays. Cypress analyzes a reconstructed snapshot of the page without playable media, so this rule can't be evaluated.                                    |
+| Delayed refresh under 20 hours must not be used             | This rule reads a page's meta refresh directive, which Cypress disables while it analyzes a run so the reconstructed page doesn't navigate away. With the directive disabled, the rule can't be evaluated.                                   |
 
 In addition, the custom [Cypress rule](/accessibility/core-concepts/cypress-rules) _Interactive elements should be semantically correct_ is available in all projects but is not enabled by default. Reach out to Cypress if you'd like it turned on.
 
@@ -258,7 +258,7 @@ Cypress Accessibility works with [component testing](/app/component-testing/get-
 
 Rules skipped for component tests include page-structure and document-level checks, such as whether the page has a main landmark, a single top-level heading, a language attribute, and a document title. Rules that evaluate the components themselves, such as color contrast (when enabled), button naming, and image alternative text, run as normal.
 
-The exact set of skipped rules isn't a fixed list Cypress maintains. It's derived from which rules Axe-Core® classifies as page-level, so it can shift when Cypress updates its Axe-Core® version. In a component's report, these page-structure rules are reported as not applicable rather than as failures. An `axeConfig` rule override can't force a page-level rule to run for component tests.
+The exact set of skipped rules isn't a fixed list Cypress maintains. The set is derived from which rules Axe-Core® classifies as page-level, so it can shift when Cypress updates its Axe-Core® version. In a component's report, these page-structure rules are reported as not applicable rather than as failures. An `axeConfig` rule override can't force a page-level rule to run for component tests.
 
 ## Axe-Core® library version and updates {#axe-core-library-version-and-updates}
 

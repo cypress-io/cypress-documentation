@@ -59,7 +59,7 @@ Below are some steps you can take to troubleshoot common issues with Cypress.
 If you're having an issue during installation of Cypress, try removing the
 contents of the Cypress cache.
 
-This will clear out all installed versions of Cypress that may be cached on your
+Clearing the cache will clear out all installed versions of Cypress that may be cached on your
 machine.
 
 <CypressCacheClearCommands />
@@ -110,7 +110,7 @@ an issue you have by clearing this app data.
 
 1. Open Cypress via `cypress open`
 2. Go to `Developer Tools` -> `View App Data`
-3. This will take you to the directory in your file system where your App Data
+3. `View App Data` will take you to the directory in your file system where your App Data
    is stored. If you cannot open Cypress, search your file system for a
    directory named `cy` whose content should look something like this:
 
@@ -130,12 +130,12 @@ an issue you have by clearing this app data.
 
 ### Print DEBUG logs
 
-Cypress uses the [debug](https://github.com/debug-js/debug) module.
-That means you can receive helpful debugging output by running Cypress with a system-level environment variable `DEBUG` set to `cypress:*` prior to running `cypress run` or `cypress open`.
+Cypress uses the [debug](https://github.com/debug-js/debug) module, so
+you can receive helpful debugging output by running Cypress with a system-level environment variable `DEBUG` set to `cypress:*` prior to running `cypress run` or `cypress open`.
 
 :::tip
 
-Enabling debug output can generate a large amount of data. This may also impact performance.
+Enabling debug output can generate a large amount of data and may also impact performance.
 Only enable debug output when you need it.
 
 To reduce the amount of debug output data generated, replace `cypress:*` using a more selective value for `DEBUG`.
@@ -222,7 +222,7 @@ DEBUG=cypress:server* ...
 DEBUG=cypress:server:project ...
 ```
 
-This isolates the problem a little better
+Narrowing the `DEBUG` namespace isolates the problem a little better
 
 #### Log sources
 
@@ -413,7 +413,7 @@ You can see the full list of found browsers and their properties within the
 in the **Settings** tab of Cypress.
 
 Another way to log what is found by Cypress is to run Cypress with the
-[DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher:*`. This
+[DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher:*`. The launcher logs
 will print information about the found browsers and their properties to the
 terminal.
 
@@ -536,7 +536,7 @@ Cypress failed to make a connection to the Chrome DevTools Protocol
 after retrying for 50 seconds.
 ```
 
-This means the browser launched but Cypress could not reach it on the remote
+The error means the browser launched but Cypress could not reach it on the remote
 debugging port.
 
 #### Check for a remote debugging policy
@@ -599,22 +599,22 @@ at TCP.onStreamRead (node:internal/stream_base_commons:217:20) {
 ```
 
 …the connection between the browser and Cypress is being
-**forcibly reset by software outside of Cypress**. This is an OS/network-layer
+**forcibly reset by software outside of Cypress**. The reset is an OS/network-layer
 reset, not a Cypress defect — Cypress cannot keep a connection alive that a
 third-party product tears down.
 
 Typical signals that point to this class of problem:
 
-- It "started out of nowhere" without any change to your tests.
-- It happens in Chrome / Edge / Firefox, but the **Electron** browser still works.
-- It reproduces on Windows but not on macOS, or locally but not in CI.
+- The problem "started out of nowhere" without any change to your tests.
+- The problem happens in Chrome / Edge / Firefox, but the **Electron** browser still works.
+- The problem reproduces on Windows but not on macOS, or locally but not in CI.
 
 Work through some potential causes below.
 
 #### 1. Security / antivirus software intercepting loopback traffic
 
 Endpoint-protection products that scan local network traffic are the most
-common cause. They inspect the loopback (`127.0.0.1`) connections Cypress uses
+common cause. These products inspect the loopback (`127.0.0.1`) connections Cypress uses
 and reset them.
 
 If you use antivirus software, temporarily disable its **web/network
@@ -748,7 +748,7 @@ ldd ~/.cache/Cypress/13.15.0/Cypress/Cypress
   ...
 ```
 
-**Tip:** If you are having problems with dependencies, use a [Cypress Docker image](/app/get-started/install-cypress#Docker-Prerequisites). These have all Cypress dependencies pre-installed.
+**Tip:** If you are having problems with dependencies, use a [Cypress Docker image](/app/get-started/install-cypress#Docker-Prerequisites). These images have all Cypress dependencies pre-installed.
 
 On Ubuntu `24.04` you may receive a fatal error including the text `FATAL:setuid_sandbox_host.cc` due to added security in this version of Ubuntu.
 Refer to the [Ubuntu 24.04 Release notes](https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890) in the section [Unprivileged user namespace restrictions](https://discourse.ubuntu.com/t/noble-numbat-release-notes/39890#unprivileged-user-namespace-restrictions-15) and apply one of the workarounds to disable unprivileged user namespace restrictions for the entire system, either for one boot or persistently, as described.
@@ -879,7 +879,7 @@ patch-package 8.0.0
 
 If you find a patch for an error,
 add a comment to the relevant Cypress GitHub issue explaining your workaround.
-It can help us release an official fix faster.
+Your comment can help us release an official fix faster.
 Alternatively you can use the following command to create a new issue based on your patch contents.
 
 ```shell

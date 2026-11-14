@@ -10,7 +10,7 @@ sidebar_label: writeFile
 
 `cy.writeFile()` writes text, JSON, or binary data to a file on disk from your
 test. Your spec code runs in the browser, which can't reach the file system, so
-Cypress hands the contents to its server, which writes the file. It resolves the
+Cypress hands the contents to its server, which writes the file. `cy.writeFile()` resolves the
 path from your project root and creates any missing folders, so file output
 stays in your test code, with no [`cy.task()`](/api/commands/task) to register
 in your config.

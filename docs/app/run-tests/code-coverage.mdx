@@ -27,8 +27,8 @@ branches, error handlers, edge cases — that never had a test written for
 it. The difference matters, because untested logic that reaches production is a
 primary source of expensive, hard-to-diagnose bugs.
 
-Code coverage makes the gap visible. It tells you precisely which lines,
-branches, and functions were executed during your test run. It turns "do we have
+Code coverage makes the gap visible. Code coverage tells you precisely which lines,
+branches, and functions were executed during your test run. The coverage data turns "do we have
 enough tests?" from a matter of opinion into a measurable, trackable signal —
 one you can enforce as a quality gate on every pull request and trend over time.
 
@@ -66,7 +66,7 @@ This document will be focused on code coverage and the instrumentation required 
 ## UI Coverage
 
 UI Coverage is a visual test coverage report based on the interactive elements that make up your application.
-It highlights areas of missed test coverage directly within every page of your application,
+UI Coverage highlights areas of missed test coverage directly within every page of your application,
 that you can use to make data-driven testing decisions.
 
 UI Coverage also seamlessly integrates with your Cypress tests, building on the tests you've already
@@ -397,7 +397,7 @@ for community example projects covering Vite, Vue, Angular, and other setups.
 
 To handle code coverage collected during each test, there is a
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) Cypress
-plugin. It merges coverage from each test and saves the combined result. It also
+plugin. The plugin merges coverage from each test, saves the combined result, and
 calls `nyc` (its peer dependency) to generate static HTML reports for human
 consumption.
 
@@ -448,7 +448,7 @@ tests finish. We have highlighted these commands using a green rectangle below.
 />
 
 After the tests complete, the final code coverage is saved to a `.nyc_output`
-folder. It is a JSON file from which we can generate a report in a variety of
+folder. The folder holds a JSON file from which we can generate a report in a variety of
 formats. The
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
 generates the HTML report automatically - you can open the `coverage/index.html`
@@ -634,7 +634,7 @@ You can find an example of merging partial reports in our
 
 ## E2E and unit code coverage
 
-Let's look at the one file that has a "missed" line. It is the
+Let's look at the one file that has a "missed" line, the
 `src/selectors/index.js` file shown below.
 
 <DocsImage

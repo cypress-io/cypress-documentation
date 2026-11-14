@@ -29,7 +29,7 @@ your project and automatically insert it into your Cypress configuration file.
 
 :::
 
-This helps us uniquely identify your project. If you manually alter this,
+The `projectId` helps us uniquely identify your project. If you manually alter the `projectId`,
 **Cypress will no longer be able to identify your project or find the recorded
 builds for it**.
 
@@ -63,14 +63,14 @@ can record or cancel runs to that organization's project in Cypress Cloud.
 
 **You would not want people outside of your team running tests because:**
 
-1. **This could drive up the number of tests you've run.** Since Cypress bills
+1. **Outside test runs could drive up the number of tests you've run.** Since Cypress bills
    based on the number of recorded tests - this means they can use up all
    allotted tests and there would be consequences to that.
-2. **They can write any data they want to your Cypress Cloud.** They could edit
+2. **Outsiders can write any data they want to your Cypress Cloud.** Outsiders could edit
    the test suite so that recorded tests record different things than the
-   project's original intent. This could including visiting different websites
+   project's original intent. Those changes could include visiting different websites
    and generating videos of visiting those websites, for example.
-3. **They can cancel your runs.** The record key is also accepted by the
+3. **Outsiders can cancel your runs.** The record key is also accepted by the
    [Run Cancellation API](/cloud/features/smart-orchestration/run-cancellation-api),
    so anyone holding it could cancel in-progress runs and disrupt your CI.
 
@@ -133,7 +133,7 @@ Visit your project settings to see who has access to your project's runs.
 ### Public vs Private
 
 - **Public** means that anyone can see the recorded test runs for the project.
-  It is similar to how public projects on GitHub, Travis CI, or CircleCI are
+  Public visibility is similar to how public projects on GitHub, Travis CI, or CircleCI are
   handled. Anyone who knows your `projectId` will be able to see the recorded
   runs for public projects.
 
@@ -175,7 +175,7 @@ and [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) gu
 
 ### Run Completion Delay
 
-Control how long Cypress Cloud should wait for new groups to join a run before transitioning a run to a _completed_ status with the **Run Completion Delay**. This gives your test groups a grace period to join an existing run before the run is considered complete.
+Control how long Cypress Cloud should wait for new groups to join a run before transitioning a run to a _completed_ status with the **Run Completion Delay**. The delay gives your test groups a grace period to join an existing run before the run is considered complete.
 
 Use Run Completion Delay when you have a distributed test setup where test groups might
 not all start simultaneously. For example:
@@ -205,7 +205,7 @@ If you set a long run completion delay to allow more time for groups to join, us
 
 **Run timeout** is the number of minutes that Cypress Cloud will
 wait to receive a signal from a run before marking the spec and run as **Timed Out**.
-This is the maximum time Cypress Cloud will wait for activity from your tests before
+The run timeout is the maximum time Cypress Cloud will wait for activity from your tests before
 considering them hung or failed.
 
 Use run timeout when you have long-running tests that might exceed the default. For
@@ -288,7 +288,7 @@ notification in the sidebar and clicking 'Accept' or 'Reject'.
 
 ## Delete Project
 
-You can delete projects you own. This will also delete all of their recorded
+You can delete projects you own. Deleting a project also deletes all of its recorded
 test runs. Deleting projects can only be done from
 [Cypress Cloud](https://on.cypress.io/cloud).
 

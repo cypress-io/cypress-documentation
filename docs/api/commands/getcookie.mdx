@@ -62,8 +62,8 @@ Pass in an options object to change the default behavior of `cy.getCookie()`.
 - `secure`: _(Boolean)_
 - `value`: _(String)_
 
-`cy.getCookie()` is a query, and it is _safe_ to chain further commands. It
-re-reads the cookie on each [retry](/app/core-concepts/retry-ability), and the
+`cy.getCookie()` is a query, and it is _safe_ to chain further commands.
+`cy.getCookie()` re-reads the cookie on each [retry](/app/core-concepts/retry-ability), and the
 assertions you chain with [`.should()`](/api/commands/should) drive those
 retries. If an assertion fails, because the cookie is `null` or because a
 property doesn't match yet, the query reads the cookie again and re-runs the
@@ -238,7 +238,7 @@ To confirm that your server still accepts a restored session, see
 
 `cy.getCookie()` looks for the cookie on the requested domain: the `domain`
 option if you pass one, otherwise the hostname of the application under test.
-It matches the same domain and any parent domain the cookie was set on, but not
+`cy.getCookie()` matches the same domain and any parent domain the cookie was set on, but not
 a subdomain or a sibling domain. When the application under test is on
 `app.example.com`, or you pass `domain: 'app.example.com'`:
 

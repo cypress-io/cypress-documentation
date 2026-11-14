@@ -11,11 +11,13 @@
 // rewrites the page again does.
 
 import { basename } from 'node:path'
+import { findPronounSubjects } from '../../scripts/pronoun-subjects.mjs'
 import { changedDocs, codeBlocks, hash, isCommit, read, reminded, show } from './lib.mjs'
 
 const REWRITTEN_SHARE = 0.4
 // A rewrite this small is an edit, whatever its share of a short page.
 const MIN_LINES = 10
+const MAX_PRONOUNS = 10
 
 // Fenced code is left out: code examples have their own reminder, and the
 // review is about prose.
@@ -44,19 +46,35 @@ function changedPages() {
     // Partials (`_name.mdx`) aren't pages: they render inside other pages.
     if (basename(path).startsWith('_')) continue
     const base = show(`HEAD:${headPath}`)
-    const after = proseLines(read(path) || show(`:${path}`))
+    const source = read(path) || show(`:${path}`)
+    const after = proseLines(source)
     // A page with no HEAD version may have moved with a plain `mv`, so compare
     // it with the deleted pages and keep the closest match.
     const bases = base ? [base] : gone.map((p) => show(`HEAD:${p}`))
     const count = Math.min(after.length, ...bases.map((b) => rewritten(proseLines(b), after)))
     if (count < MIN_LINES || count <= after.length * REWRITTEN_SHARE) continue
+    // The check is for the sentences this change wrote, so a rewritten page
+    // doesn't list the lines it kept.
+    const kept = new Set(proseLines(base))
+    const lines = source.split('\n')
+    const pronouns = findPronounSubjects(source).filter((hit) => !kept.has(lines[hit.line - 1].trim()))
     pages.push({
       path,
+      pronouns,
       key: hash(path, base),
       why: base ? `${Math.round((count / after.length) * 100)}% of its prose lines rewritten` : 'new page',
     })
   }
   return pages
+}
+
+function describe(page) {
+  const head = `  ${page.path}  (${page.why})`
+  if (!page.pronouns.length) return head
+  const shown = page.pronouns.slice(0, MAX_PRONOUNS).map((hit) => `      ${hit.line}: ${hit.sentence}`)
+  const more = page.pronouns.length - shown.length
+  if (more) shown.push(`      …and ${more} more: npm run lint:pronouns -- ${page.path}`)
+  return [head, '    Sentences that open with a pronoun (step 3, question 6):', ...shown].join('\n')
 }
 
 if (process.argv[2] !== 'gate') {
@@ -72,7 +90,7 @@ memory.save(pages.map((p) => p.key))
 process.stderr.write(
   `Reminder: these docs pages are new or mostly rewritten since the last commit.
 
-${unmentioned.map((p) => `  ${p.path}  (${p.why})`).join('\n')}
+${unmentioned.map(describe).join('\n')}
 
 Before committing, review each page following AGENTS_REFERENCE.md#reviewing-a-new-or-rewritten-page
 and report the results in the thread: each change you made and the rule behind it. If you judge that

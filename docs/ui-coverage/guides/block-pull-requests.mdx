@@ -122,7 +122,7 @@ on untested navigation links, and ratcheting the floor up as coverage improves.
 A threshold treats all untested elements the same, whether they've been untested
 for a year or arrived in the pull request under review. Comparing a run against a
 stored **baseline** lets you ignore existing gaps and fail only when a change
-introduces _new_ untested elements. This is what makes UI Coverage enforceable on
+introduces _new_ untested elements. Baseline comparison is what makes UI Coverage enforceable on
 a real codebase: you stop the debt from growing today, and pay it down on your own
 schedule without blocking every merge.
 
@@ -136,12 +136,12 @@ coverage improved.
 The **untested element and link counts per view** provide a more direct signal for "did this
 change add gaps?" If a view's untested count rises above its baseline,
 or a brand-new view arrives carrying untested elements, the change introduced
-gaps, regardless of what the percentage did. That's the number the script below
+gaps, regardless of what the percentage did. The per-view untested count is the number the script below
 compares.
 
 ### Baseline structure
 
-The baseline is a small JSON file you commit alongside your code. It records, for
+The baseline is a small JSON file you commit alongside your code. The baseline records, for
 a known-good run, how many untested items each view
 had:
 
@@ -315,7 +315,7 @@ MCP with UI Coverage.
 
 A view has **new untested elements** when its combined untested count
 (`untestedElementsCount` plus `untestedLinksCount`) is higher than the baseline,
-or when a view absent from the baseline appears with untested elements. This is a
+or when a view absent from the baseline appears with untested elements. New untested elements are a
 coverage regression: the change added interactive elements or link destinations no
 test reaches. The script fails the build so the pull request can't merge until
 you cover them or exclude them.
@@ -323,7 +323,7 @@ you cover them or exclude them.
 #### Resolved gaps
 
 A view has **resolved gaps** when its combined untested count is lower than the
-baseline. This is an improvement: a change added coverage. The script reports
+baseline. A lower count is an improvement: a change added coverage. The script reports
 these but doesn't fail the build, so progress is visible without blocking anyone.
 
 #### View-level comparison

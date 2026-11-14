@@ -9,7 +9,7 @@ sidebar_position: 60
 
 # Group related elements - `elementGroups`
 
-The `elementGroups` configuration combines related elements into a single unit in your UI Coverage report. A group counts once toward your coverage score, and an interaction with any element in the group marks the whole group as tested. This means a list of 50 untested product cards no longer appears as 50 untested elements dragging down your score. Instead, it appears as one clearly named group that a single test can cover.
+The `elementGroups` configuration combines related elements into a single unit in your UI Coverage report. A group counts once toward your coverage score, and an interaction with any element in the group marks the whole group as tested. Grouping means a list of 50 untested product cards no longer appears as 50 untested elements dragging down your score. Instead, it appears as one clearly named group that a single test can cover.
 
 Without meaningful groups, a report can fill up with elements listed under machine-generated names that are hard to act on:
 
@@ -70,7 +70,7 @@ Rules are evaluated in order, and each element joins the group of the **first** 
 
 A few behaviors are worth knowing:
 
-- **Custom groups override automatic grouping.** An element that matches an `elementGroups` rule is grouped by that rule alone. This includes links, which would otherwise be grouped by their `href` patterns.
+- **Custom groups override automatic grouping.** An element that matches an `elementGroups` rule is grouped by that rule alone. This override includes links, which would otherwise be grouped by their `href` patterns.
 - **A group forms even with one match.** Unlike the automatic rules, which require at least two similar elements, an `elementGroups` rule that matches a single element still produces a named group in the report.
 - **Filtered elements are never grouped.** Elements excluded from reports by [`elementFilters`](/ui-coverage/configuration/elementfilters) are not considered for grouping.
 - **The `data-cy-ui-group` attribute wins.** Elements that declare a group directly in your markup with the [`data-cy-ui-group` attribute](/ui-coverage/core-concepts/element-grouping#Grouping-with-markup-attributes) keep that group, even if they also match an `elementGroups` rule.

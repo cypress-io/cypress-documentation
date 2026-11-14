@@ -14,15 +14,15 @@ When a CI run fails, it's common to re-run the job before investigating the fail
 That CI rerun usually executes your entire test suite again,
 including the specs that already passed. When re-run optimization is in enabled and you are recording to Cypress Cloud, Cypress will automatically detect when a CI re-run is happening, and avoid re-running what already passed.
 
-This speeds up your CI process and removes redundant testing, and makes your runs more resilient to inherently unstable environments or services.
+Skipping passed work speeds up your CI process and removes redundant testing, and makes your runs more resilient to inherently unstable environments or services.
 
 You choose the granularity in project or organization settings:
 
 - **Run only failed tests** re-executes only the tests that did not pass. Specs
   that were fully green are still skipped, and passing tests inside a failing
-  spec are skipped too. **This option requires Cypress 15.21.0 or later.** Use this if you are confident that each `it` block is fully independent. If it would work using `.only`, it should work here.
+  spec are skipped too. **This option requires Cypress 15.21.0 or later.** Use this option if you are confident that each `it` block is fully independent. If a test would work using `.only`, the test should work here.
 - **Run only failed specs** re-executes every spec that contained a failure,
-  including tests in those specs that already passed. This reduces redundant re-runs but allows for cases where tests may rely on existing state from other tests. This is the default for new Cypress Cloud organizations.
+  including tests in those specs that already passed. Re-running whole specs reduces redundant re-runs but allows for cases where tests may rely on existing state from other tests. **Run only failed specs** is the default for new Cypress Cloud organizations.
 
 ## Example
 
@@ -45,7 +45,7 @@ Enabling Re-run optimization gives you:
 :::caution
 
 Review the [behavior and limitations](#Behavior-and-limitations) section before
-enabling Re-run Optimization on critical pipelines for existing projects. It
+enabling Re-run Optimization on critical pipelines for existing projects. Re-run Optimization
 may change CI behavior your team is already used to.
 
 :::
@@ -150,10 +150,10 @@ Each project can inherit the organization default or override it.
 
 Sets the default behavior for every project in the organization.
 
-- **Run everything again** rebuilds the full suite on a rerun. This is the default
+- **Run everything again** rebuilds the full suite on a rerun. **Run everything again** is the default
   for existing organizations.
 - **Run only failed specs** re-executes spec files that contained any failure.
-  This will be the default for newly created organizations.
+  **Run only failed specs** will be the default for newly created organizations.
 - **Run only failed tests** re-executes tests that failed. Requires Cypress
   15.21.0 or later.
 
@@ -218,7 +218,7 @@ To force a full run and skip the optimization, set the `CYPRESS_RERUN_ALL_TESTS`
 environment variable to `true` (requires Cypress v15.15.0 or later).
 
 Cloud then treats the run as a full run and runs every spec, even if a matching anchor run
-exists. This is useful for specific branches or pipelines where you always want
+exists. Forcing a full run is useful for specific branches or pipelines where you always want
 the complete suite to run.
 
 ```yaml
@@ -238,7 +238,7 @@ modify the `CYPRESS_RERUN_GROUP_ID`.
 Every rerun is compared against your **most recent completed run** in the rerun
 group. **Run only failed specs** re-executes the specs that were still failing
 there. **Run only failed tests** re-executes the tests that did not pass there.
-That means you can trust a rerun to always work from your latest results: within
+Comparing against the most recent completed run means you can trust a rerun to always work from your latest results: within
 the [depth limit](#Behavior-and-limitations) it does not re-run work that already
 passed, and it does not revert to an older, larger set of failures. That
 most-recent completed run is called the **anchor run**.

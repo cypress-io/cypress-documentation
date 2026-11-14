@@ -12,13 +12,13 @@ sidebar_custom_props: { 'new_label': true }
 
 **Run Checks** evaluate recorded runs in Cypress Cloud against thresholds you define: failed tests, flaky tests, accessibility scores, UI Coverage, and more.
 
-Run Checks represent your team's opinion about what counts as "acceptable" or "needs attention" in your project. With customization to target specific specs, tags, branches, or pages for your checks, a huge amount of flexibility is possible to ensure each check produces useful signals that match the specific purpose of that run. This creates easy visibility for potential issues in Cypress Cloud itself, and allows for automatically flagging runs that miss the mark.
+Run Checks represent your team's opinion about what counts as "acceptable" or "needs attention" in your project. With customization to target specific specs, tags, branches, or pages for your checks, a huge amount of flexibility is possible to ensure each check produces useful signals that match the specific purpose of that run. This flexibility creates easy visibility for potential issues in Cypress Cloud itself, and allows for automatically flagging runs that miss the mark.
 
 - **Declarative thresholds**: Encode limits on failed tests, flaky tests, accessibility scores, failing accessibility elements, UI Coverage scores, and untested elements, without maintaining parallel threshold logic in each CI pipeline.
 - **Cross-product gates**: One check can combine assertions about a run's test results, its [Cypress Accessibility](/accessibility/get-started/introduction) report, and its [UI Coverage](/ui-coverage/get-started/introduction) report.
 - **Customized for your tags and branches**: Apply a check only to runs on certain branches or with certain [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt), so a release gate on `main` doesn't fail every feature-branch run. Include and exclude specs or pages to fine tune the results for your specific needs.
 
-Run Checks don't change how your tests run or how reports are generated. They only define how Cypress Cloud evaluates a run's results once they're available. Here's an example of how they are presented:
+Run Checks don't change how your tests run or how reports are generated. Run Checks only define how Cypress Cloud evaluates a run's results once they're available. Here's an example of how Run Checks are presented:
 
 <DocsImage
   src="/img/cloud/features/checks/runs-list-check-results.png"
@@ -284,11 +284,11 @@ Keep these behaviors in mind when designing checks:
 
 To act on check results outside Cypress Cloud, such as blocking a merge or a deploy, fetch them in CI with `getCheckResults()` from the `@cypress/extract-cloud-results` module. Install it as described in the [Results API](/accessibility/connect-and-extend/results-api#Installation) guide, which also lists the [supported CI providers](/accessibility/connect-and-extend/results-api#Supported-CI-Providers). During Early Access, `getCheckResults()` is the supported way to access these results in CI, and matches how many teams already access UI Coverage or Cypress Accessibility results. Cypress Cloud CLI and MCP support are planned.
 
-Run it in the same CI job that recorded the run, after `cypress run --record`:
+Run `getCheckResults()` in the same CI job that recorded the run, after `cypress run --record`:
 
-1. It identifies the run from the CI provider's environment variables, so you don't pass a run number.
-2. It waits until Cypress Cloud has finished evaluating the run's checks, including any Cypress Accessibility and UI Coverage reports they read. It checks every 30 seconds for up to 15 minutes.
-3. It returns each check with its status and the status of each assertion, in the order your configuration lists them.
+1. `getCheckResults()` identifies the run from the CI provider's environment variables, so you don't pass a run number.
+2. `getCheckResults()` waits until Cypress Cloud has finished evaluating the run's checks, including any Cypress Accessibility and UI Coverage reports they read. The function checks every 30 seconds for up to 15 minutes.
+3. `getCheckResults()` returns each check with its status and the status of each assertion, in the order your configuration lists them.
 
 Results include each assertion's configured threshold and its status, but not the measured value. To show the score or count, link to the run's **Properties** tab in Cypress Cloud.
 

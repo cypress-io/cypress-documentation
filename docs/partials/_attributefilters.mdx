@@ -47,12 +47,12 @@ To scope rules to a single product, nest the property under a `uiCoverage` or `a
 
 ### Options
 
-| Option      | Required | Default | Description                                                                                                                                                                           |
-| ----------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `attribute` | Required |         | A regular expression matched against attribute names. Must be a valid HTML attribute name.                                                                                            |
-| `value`     | Optional | `.*`    | A regular expression matched against the attribute's value.                                                                                                                           |
-| `include`   | Optional | `true`  | Whether the matched attribute may be used for identification (`true`) or is ignored (`false`).                                                                                        |
-| `comment`   | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on identification and are not displayed in reports. |
+| Option      | Required | Default | Description                                                                                                                                                                               |
+| ----------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `attribute` | Required |         | A regular expression matched against attribute names. Must be a valid HTML attribute name.                                                                                                |
+| `value`     | Optional | `.*`    | A regular expression matched against the attribute's value.                                                                                                                               |
+| `include`   | Optional | `true`  | Whether the matched attribute may be used for identification (`true`) or is ignored (`false`).                                                                                            |
+| `comment`   | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. Comments have no effect on identification and are not displayed in reports. |
 
 Each rule accepts only these four properties. Cypress Cloud validates your configuration and rejects any unrecognized property, as well as two rules that are exactly identical.
 

@@ -80,7 +80,7 @@ components adds context on top of whatever already identifies an element. To cha
 
 ## Scope
 
-The components object is only valid under an `accessibility` key in your App Quality configuration. Unlike [`significantAttributes`](/accessibility/configuration/significantattributes) or [`attributeFilters`](/accessibility/configuration/attributefilters), it has no root-level or UI Coverage form. It can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply to tagged runs.
+The components object is only valid under an `accessibility` key in your App Quality configuration. Unlike [`significantAttributes`](/accessibility/configuration/significantattributes) or [`attributeFilters`](/accessibility/configuration/attributefilters), it has no root-level or UI Coverage form. The components object can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply to tagged runs.
 
 ## Setting components
 
@@ -132,7 +132,7 @@ When `includeInSelector` is `false`, the entry is kept for documentation or futu
 
 ### `componentAttributeFilters`
 
-These filters fine-tune **which attribute values** are appended. They apply only to the attributes in `componentAttributes`, using the same regular-expression style as [`attributeFilters`](/accessibility/configuration/attributefilters): `attribute` and `value` are regex patterns. For a given attribute value, **the first rule whose `attribute` and `value` both match** decides whether it's appended. A filter with no matching `componentAttributes` entry does nothing.
+These filters fine-tune **which attribute values** are appended. The filters apply only to the attributes in `componentAttributes`, using the same regular-expression style as [`attributeFilters`](/accessibility/configuration/attributefilters): `attribute` and `value` are regex patterns. For a given attribute value, **the first rule whose `attribute` and `value` both match** decides whether it's appended. A filter with no matching `componentAttributes` entry does nothing.
 
 | Option      | Required | Default | Description                                                     |
 | ----------- | -------- | ------- | --------------------------------------------------------------- |
@@ -150,8 +150,8 @@ You can also add a `comment` to the components object itself to document the who
 Keep these behaviors in mind when building your configuration:
 
 - **Listed attributes are kept wherever they appear.** A component attribute on the element is appended to its selector; the same attribute on an ancestor is added in front as descendant-combinator context. An element whose ancestor chain has none of the listed attributes is unaffected.
-- **They're added on top of the identifier, not instead of it.** The element is still identified by `significantAttributes` and the defaults; component attributes add context. They're added even when the selector is already unique.
-- **They help with uniqueness and deduplication.** Because a required attribute is part of the selector, one that distinguishes the element can make the selector shorter and more stable than the positional fallback Cypress would use otherwise, which keeps the same element from splitting into several across snapshots.
+- **Component attributes are added on top of the identifier, not instead of it.** The element is still identified by `significantAttributes` and the defaults; component attributes add context. Component attributes are added even when the selector is already unique.
+- **Component attributes help with uniqueness and deduplication.** Because a required attribute is part of the selector, one that distinguishes the element can make the selector shorter and more stable than the positional fallback Cypress would use otherwise, which keeps the same element from splitting into several across snapshots.
 - **On one element, appended attributes follow your list order.** Multiple attributes appended to the same element appear in the order you list them in `componentAttributes`. An attribute that already identifies the element isn't added a second time.
 - **Default attribute filters don't apply here.** The [default filters](/accessibility/configuration/attributefilters) that keep dynamic, UUID-like values out of _identifying_ selectors don't touch component attributes. `componentAttributeFilters` are the only way to exclude component-attribute values, so list a rule if an attribute's value is sometimes noisy.
 - **`class` is supported.** Listing `class` as a component attribute appends the element's class value; `componentAttributeFilters` apply to it the same way.
@@ -169,7 +169,7 @@ Cypress Cloud validates the whole configuration before saving it and rejects a c
 
 ### Append the design-system component name
 
-The button below fails `button-name` because its label is hidden. It carries a `data-cy` test id and a `data-component` name from the design system. Listing `data-component` appends the component name to the selector, so the finding names the component instead of a generic id.
+The button below fails `button-name` because its label is hidden. The button carries a `data-cy` test id and a `data-component` name from the design system. Listing `data-component` appends the component name to the selector, so the finding names the component instead of a generic id.
 
 #### Config
 

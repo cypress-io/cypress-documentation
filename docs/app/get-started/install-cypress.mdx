@@ -12,11 +12,11 @@ slug: /app/get-started/install-cypress
 
 1. **Check Requirements:** make sure you meet the [system requirements](#System-requirements) including
    operating system, installation of Node.js, and a supported package manager.
-2. **Run in your project root:** This will install Cypress locally as a dev dependency for your project.
+2. **Run in your project root:** The following command installs Cypress locally as a dev dependency for your project.
 
 <CypressInstallCommands />
 
-3. **Open Cypress:** This launches the Cypress App so you can choose end-to-end (E2E) or component testing (CT) and start writing tests.
+3. **Open Cypress:** The following command launches the Cypress App so you can choose end-to-end (E2E) or component testing (CT) and start writing tests.
 
 <CypressOpenCommands />
 
@@ -150,7 +150,7 @@ Cypress is detected automatically from a `bun.lock` (text, Bun >=1.2) or `bun.lo
 
 When restoring dependencies from an existing manifest with `bun install` (for example in CI), Bun does not run `postinstall` scripts for packages that aren't in its [trustedDependencies](https://bun.sh/docs/install/lifecycle) allowlist. To install the Cypress binary, use one of the following approaches:
 
-**Recommended:** Skip lifecycle scripts and install the binary explicitly. This avoids running `postinstall` scripts from dependencies and is the more secure approach:
+**Recommended:** Skip lifecycle scripts and install the binary explicitly. Skipping lifecycle scripts avoids running `postinstall` scripts from dependencies and is the more secure approach:
 
 ```shell
 bun install --ignore-scripts
@@ -211,7 +211,7 @@ Some issues you might run into in CI that could be a sign of insufficient resour
 
 ### Linux Prerequisites
 
-Install required dependencies. See below under [Docker Prerequisites](#Docker-Prerequisites) for information on [Cypress Docker images](https://github.com/cypress-io/cypress-docker-images). These already include the necessary dependencies.
+Install required dependencies. See below under [Docker Prerequisites](#Docker-Prerequisites) for information on [Cypress Docker images](https://github.com/cypress-io/cypress-docker-images). These images already include the necessary dependencies.
 
 #### Ubuntu/Debian
 
@@ -252,7 +252,7 @@ generates your own customized Docker image.
 
 If you are not using a Cypress Docker image, make sure that your base operating system is a Linux system listed in the supported
 [Operating Systems](#Operating-System) above and that Node.js is installed in the image.
-It is recommended to have `unzip` installed. This avoids the Cypress binary installation falling back to a slower unzip method using Node.js.
+It is recommended to have `unzip` installed. Having `unzip` avoids the Cypress binary installation falling back to a slower unzip method using Node.js.
 
 ## <Icon name="cog" /> Advanced Installation
 

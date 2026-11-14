@@ -706,7 +706,7 @@ In the code below, we conditionally apply a `useEffect` block based on being
 under test with Cypress (using `window.Cypress`).
 
 In addition, we will update the export to be wrapped with
-`withAuthenticationRequired` if we are not under test in Cypress. This allows
+`withAuthenticationRequired` if we are not under test in Cypress. The wrapper allows
 our application to work with the [Auth0](https://auth0.com) redirect login flow
 in development/production but not when under test in Cypress.
 
@@ -798,7 +798,7 @@ AUTH0_MGMT_API_TOKEN = 'YOUR-MANAGEMENT-API-TOKEN'
 
 With this token in place, we can add interaction with the
 [Auth0 Anomaly remove the blocked IP address endpoint](https://auth0.com/docs/api/management/v2#!/Anomaly/delete_ips_by_id)
-to our `loginByAuth0Api` command. This will send a delete request to
+to our `loginByAuth0Api` command. The updated command sends a delete request to
 [Auth0 Management API](https://auth0.com/docs/api/management/v2) anomaly
 endpoint to unblock an IP that may become blocked during the test run.
 

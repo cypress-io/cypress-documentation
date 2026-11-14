@@ -14,7 +14,7 @@ Cypress Component Testing mounts your components directly in a **real browser** 
 
 ## Why Cypress for Component Testing?
 
-Teams that adopt Cypress for component testing typically come looking for faster feedback on their UI components. They stay because Cypress brings together capabilities that would otherwise require assembling several separate tools:
+Teams that adopt Cypress for component testing typically come looking for faster feedback on their UI components. Teams stay because Cypress brings together capabilities that would otherwise require assembling several separate tools:
 
 - **See your component in action.** Components render visually inside the Cypress App as each test runs. You can interact with them manually, inspect elements with DevTools, and use [Time Travel](/app/core-concepts/open-mode#Command-Log) to step back through exactly what happened at each point in the test — no guessing, no `console.log` archaeology.
 - **Write less test boilerplate.** [Automatic waiting](/app/core-concepts/introduction-to-cypress#Cypress-is-Not-Like-jQuery) means your assertions run only after your component has rendered and updated. There is no need for `waitFor`, `act()`, or manual timeouts. You describe what should be true; Cypress waits until it is.
@@ -228,7 +228,7 @@ describe('Stepper', () => {
 
 Let's break down the spec. First, we import the `Stepper` component. Then, we
 organize our tests using the functions `describe` and `it`, which allows us to
-group tests into sections by using method blocks. These are global functions
+group tests into sections by using method blocks. `describe` and `it` are global functions
 provided by Cypress, which means you don't have to import them directly to use
 them. The top-level `describe` block will be the container for all our tests in
 a file, and each `it` represents an individual test. The `describe` function

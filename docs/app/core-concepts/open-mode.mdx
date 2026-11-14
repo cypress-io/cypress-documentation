@@ -19,7 +19,7 @@ The Cypress app includes an interactive workflow called open mode. In Cypress op
   alt="The Launchpad"
 />
 
-The Launchpad helps you choose a testing type, pick a browser, and open your project. It also guides first time setup when needed so you can start running specs with the right configuration.
+The Launchpad helps you choose a testing type, pick a browser, and open your project. The Launchpad also guides first time setup when needed so you can start running specs with the right configuration.
 
 To bypass the Launchpad's manual selection steps, run
 [`cypress open`](/app/references/command-line#cypress-open) with `--browser` and either `--component` or `--e2e`. The Launchpad will still open briefly (it handles configuration errors and other edge cases), but you'll land directly on the Specs page without having to click through the testing type and browser prompts.
@@ -78,10 +78,10 @@ You can run multiple specs sequentially using [`experimentalRunAllSpecs`](/app/r
 
 ## Runs
 
-When your project records to [Cypress Cloud](/cloud/get-started/introduction), the app shows your latest [recorded runs](/cloud/features/recorded-runs#Latest-Runs) directly in open mode. This gives branch scoped results in context while you debug locally.
+When your project records to [Cypress Cloud](/cloud/get-started/introduction), the app shows your latest [recorded runs](/cloud/features/recorded-runs#Latest-Runs) directly in open mode. Showing recorded runs in open mode gives branch scoped results in context while you debug locally.
 
 - **Authentication:** Sign in to Cypress Cloud using the profile in the top right.
-- **Branch scoping:** Cypress reads your current git branch to scope results. It first shows runs from that branch. If no runs are found, it falls back to the default branch, then to all branches.
+- **Branch scoping:** Cypress reads your current git branch to scope results. Cypress first shows runs from that branch. If no runs are found, it falls back to the default branch, then to all branches.
 - **Git information:** To scope runs correctly, the app needs git metadata. Ensure git is available and that you send git information to Cypress Cloud. In some environments, such as `docker` or `docker-compose`, pass git information with [custom system environment variables](/app/continuous-integration/overview#Git-information).
 - **Run titles:** Each run title comes from the git commit message. Click a run to open it in Cypress Cloud.
 
@@ -121,7 +121,7 @@ Get notifications in the Cypress app for recorded runs from [Cypress Cloud](/clo
 
 ## Test Runner
 
-The Cypress Test Runner is where you run and debug specs in open mode. It executes commands step by step, renders the Application or Component Under Test, and streams details to the Command Log so you can see what happened and why. Use the Test Runner to reproduce failures, inspect the DOM, and iterate quickly during development.
+The Cypress Test Runner is where you run and debug specs in open mode. The Test Runner executes commands step by step, renders the Application or Component Under Test, and streams details to the Command Log so you can see what happened and why. Use the Test Runner to reproduce failures, inspect the DOM, and iterate quickly during development.
 
 :::tip
 
@@ -200,7 +200,7 @@ Action commands like [`.click()`](/api/commands/click) show a red hitbox at the 
 
 #### 3. Snapshot menu
 
-Some commands capture multiple snapshots, for example action commands capture both before and after. Use the snapshot menu to switch between them. This is useful when an action triggers a visible change, such as typing into an input.
+Some commands capture multiple snapshots, for example action commands capture both before and after. Use the snapshot menu to switch between them. Switching snapshots is useful when an action triggers a visible change, such as typing into an input.
 
 :::info
 
@@ -228,9 +228,9 @@ The Command Log also records application events. These entries appear in gray wi
 
 ### Hide HTTP Requests
 
-When you do not need to inspect network calls, you can hide HTTP requests in the Command Log to reduce noise. Deselect the "Show HTTP Requests" toggle in the Options menu in the Command Log header to collapse entries for XHR and fetch requests. This makes it easier to focus on the commands that interact with the page.
+When you do not need to inspect network calls, you can hide HTTP requests in the Command Log to reduce noise. Deselect the "Show HTTP Requests" toggle in the Options menu in the Command Log header to collapse entries for XHR and fetch requests. Hiding requests makes it easier to focus on the commands that interact with the page.
 
-Hiding HTTP requests does not change how your tests run. It only affects what is displayed in the Command Log. Requests still execute and remain available to assertions and tooling like [`cy.intercept()`](/api/commands/intercept).
+Hiding HTTP requests does not change how your tests run. The toggle only affects what is displayed in the Command Log. Requests still execute and remain available to assertions and tooling like [`cy.intercept()`](/api/commands/intercept).
 
 <DocsVideo
   src="/img/app/core-concepts/open-mode/hide-http-fetch-requests-cypress.mp4"
@@ -240,7 +240,7 @@ Hiding HTTP requests does not change how your tests run. It only affects what is
 
 ### Instrument panel
 
-When you use [`cy.intercept()`](/api/commands/intercept), [`cy.stub()`](/api/commands/stub), or [`cy.spy()`](/api/commands/spy), the instrument panel appears above the test. It summarizes routes, stubs, and spies so you can quickly inspect network traffic and function calls while you debug.
+When you use [`cy.intercept()`](/api/commands/intercept), [`cy.stub()`](/api/commands/stub), or [`cy.spy()`](/api/commands/spy), the instrument panel appears above the test. The instrument panel summarizes routes, stubs, and spies so you can quickly inspect network traffic and function calls while you debug.
 
 #### Routes
 
@@ -324,7 +324,7 @@ The image below shows an application at `1000px` by `660px`, scaled to `90%`.
 
 #### Errors
 
-Cypress surfaces syntax errors in your spec file directly in the preview so you can fix them when tests run. This helps catch typos and missing imports early.
+Cypress surfaces syntax errors in your spec file directly in the preview so you can fix them when tests run. Surfacing errors in the preview helps catch typos and missing imports early.
 
 <DocsImage
   src="/img/app/core-concepts/open-mode/aut-error-e2e.png"

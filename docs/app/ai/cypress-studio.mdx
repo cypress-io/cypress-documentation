@@ -98,8 +98,8 @@ You can start Studio three ways:
 ## Create a new test
 
 1. Click **New Test** on the spec file or suite you want to work in.
-2. Give the test a descriptive name. This is used by Studio AI to help generate more meaningful assertions.
-3. When prompted, enter the URL you want Studio to visit. This writes a `cy.visit()` command to your test file, which Studio uses to load the app before recording can begin.
+2. Give the test a descriptive name. Studio AI uses the test name to help generate more meaningful assertions.
+3. When prompted, enter the URL you want Studio to visit. Studio writes a `cy.visit()` command to your test file and uses it to load the app before recording can begin.
 
 Studio creates the test definition and opens the Studio panel and is ready to record interactions.
 
@@ -192,7 +192,7 @@ For each recorded interaction:
 />
 
 :::note
-Recommendations are added to your test code immediately when generated. This means you can **save or run the test with AI recommendations included** before deciding to keep them. This is intentional: it lets you verify whether a recommended assertion actually passes against your app before committing it.
+Recommendations are added to your test code immediately when generated, so you can **save or run the test with AI recommendations included** before deciding to keep them. Adding them immediately is intentional: it lets you verify whether a recommended assertion actually passes against your app before committing it.
 :::
 
 ### Accept, reject, or edit
@@ -213,7 +213,7 @@ Hover over any recommendation to see:
 - The specific element being asserted on will be highlighted in the DOM.
 - You can save the code to verify the assertion passes before accepting or rejecting it.
 
-This gives you enough context to decide whether the assertion reflects something meaningful to your team and not just something that changed.
+The hover details give you enough context to decide whether the assertion reflects something meaningful to your team and not just something that changed.
 
 <DocsVideo
   src="/img/app/cypress-studio/studio-ai-run-recommendations-before-save.mp4"
@@ -223,7 +223,7 @@ This gives you enough context to decide whether the assertion reflects something
 
 ### Failing tests
 
-If a test is failing, AI recommendations and recording are both disabled. This is intentional - you don't want to take actions or add assertions when the test is already in a bad state.
+If a test is failing, AI recommendations and recording are both disabled. Disabling them is intentional - you don't want to take actions or add assertions when the test is already in a bad state.
 
 **To recover from a failing test:**
 
@@ -250,7 +250,7 @@ Studio AI suggests assertions based on visible UI changes after each interaction
 - Element attributes including CSS classes and aria attributes
 - Current URL and page title
 
-Studio AI does not have access to your application code, business logic, or backend rules. Its recommendations reflect what actually changed in the visible UI.
+Studio AI does not have access to your application code, business logic, or backend rules. Studio AI's recommendations reflect what actually changed in the visible UI.
 
 ## Sensitive data handling
 
@@ -268,7 +268,7 @@ For full details on how Cypress handles data and AI model security, see the [Sec
 
 ### For an individual session
 
-You can disable Studio AI for any individual session by clicking the AI status indicator in the status bar at the bottom of the Studio panel. This disables AI recommendations for your current session only. It does not affect other users, other projects, or your organization's AI settings.
+You can disable Studio AI for any individual session by clicking the AI status indicator in the status bar at the bottom of the Studio panel. Disabling Studio AI this way turns off AI recommendations for your current session only and does not affect other users, other projects, or your organization's AI settings.
 
 <DocsVideo
   src="/img/app/cypress-studio/disable-studio-ai-for-session.mp4"
@@ -282,7 +282,7 @@ If you're trying Studio AI without logging in, you can decline the trial prompt 
 
 ### For an entire organization
 
-Organization admins and owners can disable AI capabilities for their entire organization from Cypress Cloud organization settings. This affects all users in the organization.
+Organization admins and owners can disable AI capabilities for their entire organization from Cypress Cloud organization settings. Disabling AI at the organization level affects all users in the organization.
 
 For more information, see [Disabling AI features](/cloud/features/cypress-ai-features#Disabling-AI-features).
 
@@ -321,7 +321,7 @@ See [open issues labeled `topic: studio`](https://github.com/cypress-io/cypress/
 
 ## Send feedback
 
-There's a feedback button at the bottom of the Studio panel. Use it. This is a beta and your input directly shapes what we prioritize next.
+There's a feedback button at the bottom of the Studio panel, so use it. Studio is in beta and your input directly shapes what we prioritize next.
 
 ## See also
 

@@ -32,7 +32,7 @@ The differences between queries and other commands are outline in the
 
 ### Queries
 
-Queries are Cypress commands that read the state of your application. They
+Queries are Cypress commands that read the state of your application. Queries
 return a subject for further commands to act or assert on, and retry as needed
 to make sure the DOM element or other data they yield is always up to date.
 
@@ -80,7 +80,8 @@ to make sure the DOM element or other data they yield is always up to date.
 ### Assertions
 
 Assertions are Cypress commands that assert on the state of your application.
-They pause your test until the given condition is met, or until they time out.
+Assertions pause your test until the given condition is met, or until they time
+out.
 Learn more about Cypress assertions in the
 [Introduction to Assertions](/app/core-concepts/introduction-to-cypress#Assertions)
 and the [Assertions Reference](/app/references/assertions).
@@ -93,7 +94,7 @@ and the [Assertions Reference](/app/references/assertions).
 ### Actions
 
 Actions are Cypress commands that interact with your application as a user
-would. They wait for elements to be actionable before interacting with the page.
+would. Actions wait for elements to be actionable before interacting with the page.
 
 Learn more about action commands in our
 [Actionability Guide](/app/core-concepts/interacting-with-elements).
@@ -200,7 +201,7 @@ later time.
 | [`Cypress.Cookies.debug()`](/api/cypress-api/cookies)              | Generate console logs whenever a cookie is modified.                                                                           |
 | [`Cypress.currentRetry`](/api/cypress-api/currentretry)            | A number representing the current test retry count.                                                                            |
 | [`Cypress.currentTest`](/api/cypress-api/currenttest)              | An object with information about the currently executing test.                                                                 |
-| [`Cypress.log`](/api/cypress-api/cypress-log)                      | This is the internal API for controlling what gets printed to the Command Log. Useful when writing your own custom commands.   |
+| [`Cypress.log`](/api/cypress-api/cypress-log)                      | The internal API for controlling what gets printed to the Command Log. Useful when writing your own custom commands.           |
 | [`Cypress.dom`](/api/cypress-api/dom)                              | Check elements the way Cypress does: visible, attached, focusable, and more.                                                   |
 | [`Cypress.ElementSelector`](/api/cypress-api/element-selector-api) | Configure selector priority used by [Cypress Studio](/app/guides/cypress-studio) and [cy.prompt()](/api/commands/prompt).      |
 | [`Cypress.expose`](/api/cypress-api/expose)                        | Expose configuration values to the browser context.                                                                            |

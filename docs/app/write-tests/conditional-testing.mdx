@@ -39,7 +39,7 @@ Let's investigate why and how you can overcome these problems.
 
 ## The problem
 
-Web applications are often highly dynamic and mutable. Their
+Web applications are often highly dynamic and mutable. Web applications'
 state and the DOM are continuously changing over a period of time.
 
 The problem with conditional testing is that it can only be used when the
@@ -92,7 +92,7 @@ sometimes have the class `active` and sometimes not. In **most** cases, you
 can't rely on the state of the DOM to determine what you should conditionally
 do.
 
-This is the heart of flaky tests. At Cypress we've designed our API to combat
+Relying on the state of the DOM is the heart of flaky tests. At Cypress we've designed our API to combat
 this type of flakiness at every step.
 
 ## The situations
@@ -129,7 +129,7 @@ application has finished all asynchronous rendering and that there are no
 pending network requests, setTimeouts, intervals, postMessage, or async/await
 code.
 
-This is difficult to do without making changes to your
+That guarantee is difficult to achieve without making changes to your
 application. In other words, you cannot do conditional testing safely if you want your tests
 to run 100% consistently.
 
@@ -218,7 +218,7 @@ cy.getCookie('campaign').then((campaign) => {
 #### Embed data in the DOM:
 
 Another valid strategy would be to embed data directly into the DOM - but do so
-in a way where this data is **always** present and query-able. It would have to
+in a way where this data is **always** present and query-able. The data would have to
 be present 100% of the time, else this would not work.
 
 ```js
@@ -296,7 +296,7 @@ cy.request('https://example.cypress.io/me')
 ```
 
 Alternatively, if you are creating users, it might take less time to create the
-user and set whether you want the wizard to be shown ahead of time. That would
+user and set whether you want the wizard to be shown ahead of time. Setting the wizard preference up front would
 avoid this check later.
 
 #### Embed data in DOM:
@@ -397,7 +397,7 @@ consistent way.
 
 If you're not sure if you've written a potentially flaky test, there's a way
 to figure it out. Repeat the test an excessive number of times, and then repeat
-by modifying the Developer Tools to throttle the Network and the CPU. This will
+by modifying the Developer Tools to throttle the Network and the CPU. Throttling will
 create different loads that simulate different environments (like CI). If you've
 written a good test, it will pass or fail 100% of the time.
 
@@ -475,7 +475,7 @@ it('stops once it finds the Dashboard link', () => {
 :::caution
 
 Returning out of a `.then()` callback only prevents commands inside that callback
-from being queued. It does **not** cancel commands that were already enqueued at
+from being queued. Returning does **not** cancel commands that were already enqueued at
 the top level of the test. Structure the test so the steps you may want to skip
 are only added from within the conditional.
 

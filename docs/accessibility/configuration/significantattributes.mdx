@@ -114,7 +114,7 @@ The violation target selector displayed in the report:
 
 ### List several attributes in priority order
 
-`significantAttributes` is a list, so you can prioritize more than one attribute. They're checked in the order you write them, and each element is identified by the first attribute it has. This helps when different parts of your application use different conventions.
+`significantAttributes` is a list, so you can prioritize more than one attribute. The attributes are checked in the order you write them, and each element is identified by the first attribute it has. A priority list helps when different parts of your application use different conventions.
 
 #### Config
 
@@ -146,9 +146,9 @@ The Save button has both attributes, so `data-qa`, listed first, identifies it. 
 
 ### Review `aria-label` wording while you triage
 
-Significant attributes aren't limited to `data-*` attributes; any HTML attribute qualifies, including `aria-label`. Listing it identifies elements by their label text throughout the report.
+Significant attributes aren't limited to `data-*` attributes; any HTML attribute qualifies, including `aria-label`. Listing `aria-label` identifies elements by their label text throughout the report.
 
-This adds a manual check on top of the automated one. Cypress Accessibility can confirm that a control _has_ an accessible name, but not that the name is understandable, so `aria-label="button"` satisfies the name-presence rules exactly like `aria-label="Close dialog"`. When `aria-label` is a significant attribute, the elements you review are shown by their label text, so an unclear label is visible as you triage rather than hidden behind a generated selector. To read the wording of every labeled control, not only those with accessibility results, set `aria-label` at the root of your configuration so [UI Coverage](/ui-coverage/configuration/significantattributes) lists them all.
+Identifying elements by `aria-label` adds a manual check on top of the automated one. Cypress Accessibility can confirm that a control _has_ an accessible name, but not that the name is understandable, so `aria-label="button"` satisfies the name-presence rules exactly like `aria-label="Close dialog"`. When `aria-label` is a significant attribute, the elements you review are shown by their label text, so an unclear label is visible as you triage rather than hidden behind a generated selector. To read the wording of every labeled control, not only those with accessibility results, set `aria-label` at the root of your configuration so [UI Coverage](/ui-coverage/configuration/significantattributes) lists them all.
 
 #### Config
 

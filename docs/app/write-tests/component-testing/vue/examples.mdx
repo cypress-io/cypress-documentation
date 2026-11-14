@@ -327,7 +327,7 @@ Cypress.Commands.add('mount', (...args) => {
 cy.mount(Stepper).doStuff().get('@vue') // The subject is now the Vue Wrapper
 ```
 
-This means that you are able to get to the resulting `wrapper` returned from the
+The `@vue` alias means that you are able to get to the resulting `wrapper` returned from the
 `mount` command and use `wrapper.emitted()` to gain access to Native
 DOM events that were fired, as well as custom events that were emitted by your
 component under test.
@@ -421,7 +421,7 @@ Cypress.Commands.add('mount', mount)
 </TabItem>
 </Tabs>
 
-This registers `cy.mount()` for any test without having to import the `mount()`
+The support file registers `cy.mount()` for any test without having to import the `mount()`
 function in each and every spec file.
 
 By default, `cy.mount()` is a simple passthrough to `mount()`, however, you can
@@ -579,7 +579,7 @@ Some Vue applications, most famously Vue apps built on top of Vuetify, require
 certain components to be structured in a specific hierarchy.
 
 All Vuetify applications require that you wrap your app in a `VApp` component
-when you build it. This is an implementation detail of Vuetify, but once users
+when you build it. The `VApp` wrapper is an implementation detail of Vuetify, but once users
 try to test components that depend on Vuetify, they get Vuetify-specific
 compilation errors and quickly find out that **they need to replicate that
 component hierarchy any time they need to mount a component that uses a Vuetify

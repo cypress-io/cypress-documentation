@@ -69,7 +69,7 @@ application.
 
 ### Inside the browser
 
-In case you missed it before - Cypress tests run inside of the browser! This
+In case you missed it before - Cypress tests run inside of the browser! Running in the browser
 means we can do things nobody else can. There is no object serialization or JSON
 wire protocols. You have real, native access to everything in your application
 under test.
@@ -89,8 +89,8 @@ ability to use Node to import or talk directly to your back end scripts using
 
 To talk to your database or server you need to use the
 [`cy.task()`](/api/commands/task) or [`cy.request()`](/api/commands/request)
-commands. That means you will need to
-expose a way to seed and setup your database. It might take a bit more elbow grease
+commands. Using these commands means you will need to
+expose a way to seed and setup your database. This setup might take a bit more elbow grease
 than other testing tools written in your back end language.
 
 The trade-off here is that doing everything in the browser is a much better
@@ -165,14 +165,14 @@ server → browser
 ```
 
 Use your server to receive messages from the browser, and simulate "the other
-participant" by sending messages as that participant. This is certainly
+participant" by sending messages as that participant. This approach is certainly
 application specific, but generally you could insert records into the database
 or do whatever it takes for your server to act as if a message of one client
 needs to be sent back to the browser.
 
 Typically this pattern enables you to avoid making a secondary WebSocket
 connection and yet still fulfills the bidirectional browser and server contract.
-This means you could also test edge cases (disconnections, etc) without actually
+This pattern means you could also test edge cases (disconnections, etc) without actually
 handling real connections.
 
 #### 3: Introduce another connection:
@@ -248,6 +248,6 @@ app.get('/disconnect', (req, res) => {
 app.listen(8081, () => {})
 ```
 
-This avoids ever needing a second open browser, but still gives you an
+This approach avoids ever needing a second open browser, but still gives you an
 end-to-end test that provides 100% confidence that the two clients can
 communicate with each other.

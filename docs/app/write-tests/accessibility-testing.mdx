@@ -60,15 +60,15 @@ In-test automated accessibility checks are so valuable because they bundle a lar
 
 Generally this is not a problem if you have a small number of accessibility checks, but it can become a big contributor to your pipeline's overall execution time as you scale up your accessibility testing and want to run checks against hundreds or even thousands of unique states of complex applications and workflows. Since accessibility checks tend to be added gradually over time, the time taken is often not obvious, but it is definitely worth paying attention to.
 
-To avoid performance bloat, you will want to actively manage the tradeoff between test performance and how often tests are executed. This is sometimes solved by testing only the initial pageload, or the state at the end of a test, but this approach misses many important states like modals, multistep workflows, error states in forms, open states of menus, and more. And since many tests may begin or end at the same page state as other tests, there can be a lot of redundant scans, so it pays to be more precise and intentional in what you test.
+To avoid performance bloat, you will want to actively manage the tradeoff between test performance and how often tests are executed. This tradeoff is sometimes solved by testing only the initial pageload, or the state at the end of a test, but this approach misses many important states like modals, multistep workflows, error states in forms, open states of menus, and more. And since many tests may begin or end at the same page state as other tests, there can be a lot of redundant scans, so it pays to be more precise and intentional in what you test.
 
 Performance can also be managed by targeting the accessibility checks to only certain rules or certain parts of the page, or confining them to component tests. Testers should be trained on how and when to run accessibility checks to get the best feedback possible while eliminating redundant checks that don't add value, and minimizing the disruption to the test pipeline.
 
-It is best to proactively manage this, because unnecessary flake, failures, or timeouts related to accessibility checks can cause frustration and lead to resistance in adopting this form of testing, which in turn makes it harder to gain momentum towards meeting your accessibility goals.
+It is best to proactively manage performance, because unnecessary flake, failures, or timeouts related to accessibility checks can cause frustration and lead to resistance in adopting this form of testing, which in turn makes it harder to gain momentum towards meeting your accessibility goals.
 
 ### Cypress Accessibility
 
-In-test accessibility checks are the only kind available in typical testing scenarios. They come with some limitations and tradeoffs that [Cypress Accessibility](/accessibility/get-started/introduction), available in Cypress Cloud, is designed to solve. By moving the checks outside of the test context and running them in Cypress Cloud as tests are recorded, Cypress Accessibility removes adoption, training, and test performance hurdles that can hinder the effective implementation of in-test checks. Cypress automatically detects all the steps within user flows, requiring no test code to be written.
+In-test accessibility checks are the only kind available in typical testing scenarios. In-test checks come with some limitations and tradeoffs that [Cypress Accessibility](/accessibility/get-started/introduction), available in Cypress Cloud, is designed to solve. By moving the checks outside of the test context and running them in Cypress Cloud as tests are recorded, Cypress Accessibility removes adoption, training, and test performance hurdles that can hinder the effective implementation of in-test checks. Cypress automatically detects all the steps within user flows, requiring no test code to be written.
 
 To learn more, you can read our [dedicated docs](/accessibility/get-started/introduction), or review a [public live example of an automatically-generated accessibility report](https://on.cypress.io/rwa-accessibility-views?utm_source=docs.cypress.io&utm_medium=app-docs-a11y-article) in our Cypress Realworld App demo project.
 
@@ -81,11 +81,11 @@ To learn more, you can read our [dedicated docs](/accessibility/get-started/intr
 
 ## Accessibility-specific tests
 
-While automation like Axe Core® can detect missing attributes and other aspects of code quality that impact the experience of people with disabilities using the web, this kind of automation doesn't know anything about your specific application and the expectations you have for your users. That's where including accessibility in your specs comes in.
+While automation like Axe Core® can detect missing attributes and other aspects of code quality that impact the experience of people with disabilities using the web, this kind of automation doesn't know anything about your specific application and the expectations you have for your users. That gap is where including accessibility in your specs comes in.
 
 ### Keyboard navigation
 
-To test in-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events. This can also be used to test custom behavior like autocomplete.
+To test in-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events. `cy.press()` can also be used to test custom behavior like autocomplete.
 
 ### Asserting alt text of images
 
@@ -99,7 +99,7 @@ it('adds todos', () => {
 })
 ```
 
-It's also possible to use an accessibility-aware locator approach to find the element while performing some other assertion. Here instead of using the element's test ID, we locate the image by its `alt` text. This is more concise, and the decision of which format to prefer is up to your team's preferences:
+It's also possible to use an accessibility-aware locator approach to find the element while performing some other assertion. Here instead of using the element's test ID, we locate the image by its `alt` text. This approach is more concise, and the decision of which format to prefer is up to your team's preferences:
 
 ```js
 // use the `alt` content to target the image
@@ -149,18 +149,18 @@ There is much more to this topic than we can cover here, but we will provide a s
 
 The native HTML `button` element has a complex accessibility contract implemented by the browser for keyboard and screen reader users. Here is a partial list of ways a button element is automatically managed by the browser:
 
-- It has the implicit `role` of `button` so that users know what it is - a screen reader, for example, would announce it as a button
-- It has a default browser button style to visually distinguish it from surrounding content
-- It has default browser styles for hover and "pressed" states
-- It is placed in the tab order of the document and can be focused with the keyboard
-- When focused it receives a focus outline style
-- It can be activated with a mouse click, or the enter key, or the space bar
+- The button has the implicit `role` of `button` so that users know what it is - a screen reader, for example, would announce it as a button
+- The button has a default browser button style to visually distinguish it from surrounding content
+- The button has default browser styles for hover and "pressed" states
+- The button is placed in the tab order of the document and can be focused with the keyboard
+- When focused, the button receives a focus outline style
+- The button can be activated with a mouse click, or the enter key, or the space bar
 - If placed inside a `form` element, activating the button by any of these methods will submit the form (because its default type is `submit`)
-- It will receive specific styling, customizable by the user, in Windows High Contrast Mode (used by people with certain visual disabilities)
+- The button receives specific styling, customizable by the user, in Windows High Contrast Mode (used by people with certain visual disabilities)
 
 On the other hand, a `div` with `role` of `button` does not get any default browser accessibility behavior, and is **not accessible** without custom JavaScript and CSS replacing the browser contract.
 
-This means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though a role-based locator such as Testing Library's `findByRole()` treats each as the same. This is because, much like test IDs, the role-based approach is intended to _avoid_ testing the implementation directly, to keep tests resilient when code is refactored.
+The missing browser contract means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though a role-based locator such as Testing Library's `findByRole()` treats each as the same. Role-based locators treat both alike because, much like test IDs, the role-based approach is intended to _avoid_ testing the implementation directly, to keep tests resilient when code is refactored.
 
 Developers who are unfamiliar with accessibility may assume that if a role-based locator can be made to pass before and after a code change, there has been no functional or accessibility-related change in the underlying element. As we've seen, this is not actually the case, because of the extra behavior browsers only implement for native HTML elements. For more about this difference and why semantic HTML elements are preferred, see the [first rule of Accessible Rich Internet Applications (ARIA)](https://www.w3.org/TR/using-aria/#rule1).
 
@@ -181,7 +181,7 @@ cy.getByRole('button', { name: 'Submit' }).click()
 cy.getByRole('button', { name: 'Cancel' }).should('not.exist')
 ```
 
-This applies to any role that HTML has an element for, such as `button`, `link`, `heading`, `checkbox`, or `navigation`. Widget roles that HTML has no element for, such as `tab` or `menuitem`, are matched by their `role` attribute, since that's the only way to give an element those roles. When a component library renders a role on a generic element, such as a `<div role="dialog">`, pass `native: false` to match it, and test its keyboard and focus behavior explicitly.
+Native role matching applies to any role that HTML has an element for, such as `button`, `link`, `heading`, `checkbox`, or `navigation`. Widget roles that HTML has no element for, such as `tab` or `menuitem`, are matched by their `role` attribute, since that's the only way to give an element those roles. When a component library renders a role on a generic element, such as a `<div role="dialog">`, pass `native: false` to match it, and test its keyboard and focus behavior explicitly.
 
 ## Where to test accessibility
 

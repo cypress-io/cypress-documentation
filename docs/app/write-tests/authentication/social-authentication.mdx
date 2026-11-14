@@ -15,7 +15,7 @@ slug: /app/guides/authentication-testing/social-authentication
 <Icon name="exclamation-triangle" /> **Not recommended in CI**
 
 Cypress does **not** recommend testing social connection authentication as a
-primary means of authentication testing. This is due to the
+primary means of authentication testing. This recommendation is due to the
 [challenges](/app/core-concepts/best-practices#Potential-Challenges-Authenticating-with-Social-Platforms)
 mentioned in our
 [Best Practices Guide](/app/core-concepts/best-practices).
@@ -35,7 +35,7 @@ will authenticate users on our behalf to our application.
 ### Set up the Auth0 tenant
 
 To get started, first create a free [Auth0](https://auth0.com/signup)
-account and select the **I am a new Auth0 User** flow. This will have 4 steps:
+account and select the **I am a new Auth0 User** flow. The flow has 4 steps:
 
 - **Step 1:** When configuring your Sample App, select the
   **Single-Page App** for you platform and **React** for the technology.
@@ -56,7 +56,7 @@ Select the dropdown and go to **Applications**.
 
 - Select the **Default Application**.
 - Visit the **Settings** tab.
-  - Copy the `domain` and `client ID` fields inside **Basic Information**. These
+  - Copy the `domain` and `client ID` fields inside **Basic Information**. These values
     will be needed shortly.
   - The **Application Properties** should have **Single Page Application** selected
     for **Application Type**,
@@ -76,7 +76,7 @@ Select the dropdown and go to **Applications**.
 - Verify the application is running correctly by visiting
   `http://localhost:3000` and clicking the **Log in** button in the top right
   corner. Select one of our social connections and log in and make sure to
-  complete the **Authorize App** prompt. This only needs to be done once. This
+  complete the **Authorize App** prompt. Authorization only needs to be done once. Completing the prompt
   should take you back to the sample app authenticated as the test user. When
   finished, click the **Log Out** dropdown button. Repeat for Google, Microsoft,
   and Facebook or the accounts you would like to test.
@@ -351,7 +351,7 @@ Here's a sample of what all 3 should look like in order.
 
 Lastly, we can refactor our login command to take advantage of
 [`cy.session()`](/api/commands/session) to store our logged in user so we don't
-have to reauthenticate before every test. This also largely cuts down on the
+have to reauthenticate before every test. Caching the session also largely cuts down on the
 likelihood your account is blocked for frequent authentication attempts. Feel
 free to DRY this up a bit!
 

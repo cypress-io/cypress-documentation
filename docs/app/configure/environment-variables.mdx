@@ -20,7 +20,7 @@ This guide helps you choose the right API for your use case.
 
 **Use [`cy.env()`](/api/commands/env)** for sensitive values like API keys, passwords, tokens, or credentials.
 
-`cy.env()` retrieves only the values you explicitly request, when you need them, and avoids exposing all environment variables in browser state. This provides privileged access that doesn't automatically serialize values into browser context.
+`cy.env()` retrieves only the values you explicitly request, when you need them, and avoids exposing all environment variables in browser state. This approach provides privileged access that doesn't automatically serialize values into browser context.
 
 **Examples of secrets:**
 
@@ -143,7 +143,7 @@ Cloud rather than being treated as test environment variables. Most notably,
 [`CYPRESS_RECORD_KEY`](/app/references/command-line#cypress-run-record-key-lt-record-key-gt)
 and [`CYPRESS_PROJECT_ID`](/cloud/account-management/projects#Project-ID) are
 read directly from your operating system environment when recording to Cypress
-Cloud. They must be set as OS-level environment variables (as shown above) and
+Cloud. Both variables must be set as OS-level environment variables (as shown above) and
 **cannot** be supplied through `cypress.env.json` or the `env` block of your
 Cypress configuration.
 
@@ -158,7 +158,7 @@ cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
 ```
 
 To pass a complex value, such as an object with nested fields, provide it as a
-JSON string. This is also the way to include values that contain commas, spaces,
+JSON string. A JSON string is also the way to include values that contain commas, spaces,
 or quotes, since those characters would otherwise be interpreted by the shell or
 as delimiters.
 

@@ -56,8 +56,8 @@ Being explicit this way helps avoid accidentally changing or removing a tag that
 
 ### Options
 
-| Option    | Required | Description                                                                                                                                                                                                                    |
-| --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `name`    | Required | Identifies the profile so a run can select it. Its only purpose is matching: the profile applies when one of the run's tags is an exact, case-sensitive match for this value. It isn't shown in reports or used anywhere else. |
-| `config`  | Required | An object containing any App Quality configuration options, except a nested `profiles` array. These values override the root configuration.                                                                                    |
-| `comment` | Optional | A note about why this profile exists, for your team's benefit. Comments appear only in the configuration itself. They have no effect on behavior and are not displayed in reports.                                             |
+| Option    | Required | Description                                                                                                                                                                                                                                 |
+| --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`    | Required | Identifies the profile so a run can select it. The name's only purpose is matching: the profile applies when one of the run's tags is an exact, case-sensitive match for this value. The name isn't shown in reports or used anywhere else. |
+| `config`  | Required | An object containing any App Quality configuration options, except a nested `profiles` array. These values override the root configuration.                                                                                                 |
+| `comment` | Optional | A note about why this profile exists, for your team's benefit. Comments appear only in the configuration itself. Comments have no effect on behavior and are not displayed in reports.                                                      |

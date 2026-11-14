@@ -18,7 +18,7 @@ Assuming you've successfully
 first thing you'll want to do is start your local development server that hosts
 the application.
 
-It should look something like **http://localhost:8080**.
+The server's URL should look something like **http://localhost:8080**.
 
 :::caution
 
@@ -135,7 +135,7 @@ application. Luckily, Cypress provides a
 [configuration option](/app/references/configuration) for this. Let's
 use that now.
 
-Open up your [configuration file](/app/references/configuration). It starts
+Open up your [configuration file](/app/references/configuration). The file starts
 out empty, but let's add the `baseUrl` option.
 
 :::cypress-config-example
@@ -150,13 +150,13 @@ out empty, but let's add the `baseUrl` option.
 
 :::
 
-This will automatically **prefix** [`cy.visit()`](/api/commands/visit) and
+The `baseUrl` option will automatically **prefix** [`cy.visit()`](/api/commands/visit) and
 [`cy.request()`](/api/commands/request) commands with this baseUrl.
 
 :::info
 
 Whenever you modify your configuration file, Cypress will automatically reboot
-itself and kill any open browsers. This is normal. Click on the spec file again
+itself and kill any open browsers. The reboot is normal. Click on the spec file again
 to relaunch the browser.
 
 :::
@@ -301,7 +301,7 @@ your browser - and you'll always need to set up / tear down this state before
 tests (which is slow).
 
 The good news is that we aren't Selenium, nor are we a traditional e2e testing
-tool. That means we're not bound to the same restrictions.
+tool. Being a different kind of tool means we're not bound to the same restrictions.
 
 **With Cypress, there are several other approaches that can offer an arguably
 better and faster experience.**
@@ -315,10 +315,10 @@ While you'll still receive all of the regular HTML / JS / CSS assets from your
 server and you'll continue to [`cy.visit()`](/api/commands/visit) it in the same
 way - you can instead **stub** the JSON responses coming from it.
 
-This means that instead of resetting the database, or seeding it with the state
+Stubbing means that instead of resetting the database, or seeding it with the state
 we want, you can force the server to respond with **whatever** you want it to.
 In this way, we not only prevent needing to synchronize the state between the
-server and browser, but we also prevent mutating state from our tests. That
+server and browser, but we also prevent mutating state from our tests. Avoiding mutation
 means tests won't build up state that may affect other tests.
 
 Another upside is that this enables you to **build out your application**
@@ -336,19 +336,19 @@ still many valid ways to get around this:
 #### Generate the fixture stubs ahead of time
 
 You could have the server generate all of the fixture stubs for you ahead of
-time. This means their data will reflect what the server will actually send.
+time. Server-generated stubs mean their data will reflect what the server will actually send.
 
 #### Write a single e2e test without stubs, and then stub the rest
 
 Another more balanced approach is to integrate both strategies. You likely want
 to have a **single test** that takes a true `e2e` approach and stubs nothing.
-It'll use the feature for real - including seeding the database and setting up
+That test uses the feature for real - including seeding the database and setting up
 state.
 
 Once you've established it's working you can then use stubs to test all of the
 edge cases and additional scenarios. There are no benefits to using real data in
 the vast majority of cases. We recommend that the vast majority of tests use
-stub data. They will be orders of magnitude faster, and much less complex.
+stub data. Stubbed tests will be orders of magnitude faster, and much less complex.
 
 :::info
 
@@ -433,7 +433,7 @@ maintainable, and they're certainly not very elegant. A much better solution is
 to write a custom `cy.login()` [command](/api/cypress-api/custom-commands).
 
 Custom commands encapsulate and reuse Cypress test logic.
-They let you add your own functionality to your test suite and then use it with
+Custom commands let you add your own functionality to your test suite and then use it with
 the same
 [chainable and asynchronous API](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 as the built-in Cypress commands. Lets make the above login example a custom
@@ -619,17 +619,17 @@ The point of Cypress is to be a tool you use every day to build and test your ow
 
 Why?
 
-- They may have security features enabled which prevent Cypress from working,
-  such as detecting Cypress script usage. This can block your access and make it
+- Sites you don't control may have security features enabled which prevent Cypress from working,
+  such as detecting Cypress script usage. Such detection can block your access and make it
   appear that the application website is unresponsive.
-- They have the potential to change at any moment which will break tests.
-- They may do A/B testing which makes it impossible to get consistent results.
+- Sites you don't control have the potential to change at any moment which will break tests.
+- Sites you don't control may do A/B testing which makes it impossible to get consistent results.
 
 However, this is a guideline rather than a hard-and-fast rule. There are legitimate exceptions:
 
-- They are specifically designed to integrate with third parties, e.g. SSO providers.
-- They provide you with a complementary service, e.g. SaaS control panels or analytics.
-- They reuse your content or provide plugins for an app you control.
+- The sites are specifically designed to integrate with third parties, e.g. SSO providers.
+- The sites provide you with a complementary service, e.g. SaaS control panels or analytics.
+- The sites reuse your content or provide plugins for an app you control.
 
 The key is to carefully weigh the benefits of the tests against the possible disruption and flake these sorts of tests can introduce. See also [Visiting External Sites](/app/core-concepts/best-practices#Visiting-External-Sites) for strategies when this is necessary.
 

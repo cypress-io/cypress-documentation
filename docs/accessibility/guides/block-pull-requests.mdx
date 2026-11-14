@@ -9,7 +9,7 @@ sidebar_position: 120
 
 # Block pull requests and set policies
 
-Cypress Accessibility reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. This ensures there is no performance impact on your Cypress test runs, but also means that nothing in your Cypress pipeline will fail due to accessibility issues that are detected. Failing a build is a fully opt-in step based on your handling of the results in your CI process.
+Cypress Accessibility reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. Server-side generation ensures there is no performance impact on your Cypress test runs, but also means that nothing in your Cypress pipeline will fail due to accessibility issues that are detected. Failing a build is a fully opt-in step based on your handling of the results in your CI process.
 
 :::tip
 
@@ -19,7 +19,7 @@ For declarative thresholds such as a minimum accessibility score or a maximum fa
 
 ## Using the Results API
 
-The [Cypress Accessibility Results API](/accessibility/connect-and-extend/results-api) returns accessibility results after a test run, enabling workflows like blocking pull requests or triggering alerts based on specific accessibility criteria. This involves adding a dedicated accessibility verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context. Below is an example of how to block a pull request in GitHub Actions if accessibility violations occur:
+The [Cypress Accessibility Results API](/accessibility/connect-and-extend/results-api) returns accessibility results after a test run, enabling workflows like blocking pull requests or triggering alerts based on specific accessibility criteria. Using the Results API involves adding a dedicated accessibility verification step to your CI pipeline. With a Cypress helper function, you can automatically fetch the report for the relevant test run within the CI build context. Below is an example of how to block a pull request in GitHub Actions if accessibility violations occur:
 
 <DocsImage
   src="/img/accessibility/guides/github-actions-a11y-block.png"
@@ -30,7 +30,7 @@ The [Cypress Accessibility Results API](/accessibility/connect-and-extend/result
 
 ## Implementing a status check
 
-The Results API offers full flexibility to analyze results and take tailored actions. It can also integrate with status checks on pull requests. Below is an example of a passing accessibility verification step:
+The Results API offers full flexibility to analyze results and take tailored actions. The Results API can also integrate with status checks on pull requests. Below is an example of a passing accessibility verification step:
 
 <DocsImage
   src="/img/accessibility/guides/status-check.png"
@@ -52,7 +52,7 @@ For a policy that tracks violations per view rather than per rule, see [comparin
 
 ### Policy: block any rule that isn't already failing {#Policy-block-any-rule-that-isnt-already-failing}
 
-This enforces "no new failing accessibility rules". You keep a list of the rules you already know about, and anything outside it fails the build:
+This policy enforces "no new failing accessibility rules". You keep a list of the rules you already know about, and anything outside it fails the build:
 
 ```js
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
@@ -83,7 +83,7 @@ The list shrinks as you fix things, and every entry you remove raises the standa
 
 ### Policy: block regressions in rules you've fixed {#Policy-block-regressions-in-rules-youve-fixed}
 
-This is the inverse, and it suits a project still working through a large backlog. Rather than listing what's broken, you list what you've finished, and only a reappearance of those rules fails the build:
+This policy is the inverse, and it suits a project still working through a large backlog. Rather than listing what's broken, you list what you've finished, and only a reappearance of those rules fails the build:
 
 ```javascript title="scripts/verifyAccessibilityResults.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
@@ -115,7 +115,7 @@ getAccessibilityResults().then((results) => {
 })
 ```
 
-Here the list grows as you work. It never blocks a merge for a rule you haven't gotten to yet, which keeps the gate credible while the backlog is still large. See [Fix accessibility violations](/accessibility/guides/improve-accessibility) for how to work through that backlog one rule at a time.
+Here the list grows as you work. The list never blocks a merge for a rule you haven't gotten to yet, which keeps the gate credible while the backlog is still large. See [Fix accessibility violations](/accessibility/guides/improve-accessibility) for how to work through that backlog one rule at a time.
 
 By examining the results and customizing your response, you gain maximum control over how to handle accessibility violations. Use CI environment context, such as tags, to fine-tune responses to specific accessibility outcomes.
 
@@ -164,13 +164,13 @@ This approach ensures that PR checks are fast and focused, while still maintaini
 
 Comparing current results against a stored baseline surfaces only the new violations that have been introduced, while ignoring existing known issues. This approach is more sophisticated than simply maintaining a list of known failing rules, as it tracks violations at the view level and can detect both regressions (new violations) and improvements (resolved violations).
 
-This is particularly useful in CI/CD pipelines where you want to fail builds only when new accessibility violations are introduced, so existing issues can be addressed incrementally without blocking deployments.
+Baseline comparison is particularly useful in CI/CD pipelines where you want to fail builds only when new accessibility violations are introduced, so existing issues can be addressed incrementally without blocking deployments.
 
 ### Baseline structure
 
 You can use any format you like as baseline for comparing reports. In the example code below we generate a baseline in a simplified format, which captures the state of accessibility violations from a specific run. The Results API handler code logs this for every run so that it can be copied as a new reference point.
 
-It includes:
+The baseline includes:
 
 - **runNumber**: The run number used as the baseline reference
 - **severityLevels**: The severity levels to track (e.g., `['critical', 'serious', 'moderate', 'minor']`)
@@ -356,15 +356,15 @@ function generateBaseline(results) {
 
 #### New failing rules
 
-A **new failing rule** is a rule that has violations on a View in the current run that were not present in the baseline. These represent regressions that need to be addressed. The script will fail the build if any new failing rules are detected.
+A **new failing rule** is a rule that has violations on a View in the current run that were not present in the baseline. New failing rules represent regressions that need to be addressed. The script will fail the build if any new failing rules are detected.
 
 #### Resolved rules
 
-A **resolved rule** is a rule that was present in the baseline but no longer has violations in the current run. These represent improvements in accessibility. The script reports these but does not fail the build, tracking your progress and printing out an updated baseline to copy over when things are fixed.
+A **resolved rule** is a rule that was present in the baseline but no longer has violations in the current run. Resolved rules represent improvements in accessibility. The script reports these but does not fail the build, tracking your progress and printing out an updated baseline to copy over when things are fixed.
 
 #### Severity filtering
 
-The baseline comparison only tracks rules at the severity levels you specify in `TARGET_SEVERITY_LEVELS`. This keeps the comparison focused on the severity levels that matter most to your team. Rules at other severity levels are ignored during comparison.
+The baseline comparison only tracks rules at the severity levels you specify in `TARGET_SEVERITY_LEVELS`. Severity filtering keeps the comparison focused on the severity levels that matter most to your team. Rules at other severity levels are ignored during comparison.
 
 #### View-level comparison
 
@@ -379,7 +379,7 @@ Update your baseline when:
 - You've fixed accessibility violations and want to prevent regressions
 - You've accepted certain violations as known issues that won't block deployments
 
-We recommend storing the baseline in version control so it's versioned alongside your code and accessible in CI environments, but some users prefer updating the baseline automatically based on the newest results from a full passing test run on the main branch of the project. This means any PRs will be compared against the reference run that makes sense at the time the results are analyzed, and avoids needing to manually own the standard.
+We recommend storing the baseline in version control so it's versioned alongside your code and accessible in CI environments, but some users prefer updating the baseline automatically based on the newest results from a full passing test run on the main branch of the project. Updating the baseline automatically means any PRs will be compared against the reference run that makes sense at the time the results are analyzed, and avoids needing to manually own the standard.
 
 #### Handling partial reports
 

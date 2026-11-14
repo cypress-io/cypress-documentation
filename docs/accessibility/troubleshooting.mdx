@@ -25,11 +25,11 @@ After saving configuration in the **App Quality** tab of your project settings, 
 
 The run recorded to Cypress Cloud, but its **Accessibility** tab is empty or absent.
 
-**Cause.** Reports are built in Cypress Cloud from the run's [Test Replay](/cloud/features/test-replay) data. When that data wasn't captured or wasn't uploaded, there is nothing to scan, so no report is produced. This is a different problem from a report that looks wrong, and none of the configuration fixes on this page apply to it.
+**Cause.** Reports are built in Cypress Cloud from the run's [Test Replay](/cloud/features/test-replay) data. When that data wasn't captured or wasn't uploaded, there is nothing to scan, so no report is produced. A missing report is a different problem from a report that looks wrong, and none of the configuration fixes on this page apply to it.
 
 **Fixes.** A recorded run produces an accessibility report when all of the following are true:
 
-- **Cypress Accessibility is enabled for the project.** It's a paid premium solution, so a project on a plan without it records normally and produces no accessibility report.
+- **Cypress Accessibility is enabled for the project.** Cypress Accessibility is a paid premium solution, so a project on a plan without it records normally and produces no accessibility report.
 - **The run was recorded** with `cypress run --record` and a valid record key, against a project with a `projectId`. Interactive mode (`cypress open`) never records a run, so it never generates results.
 - **Cypress v13 or later** was used. Test Replay was introduced in Cypress 13.
 - **Test Replay is enabled** in the project's settings in Cypress Cloud. A run recorded while it's turned off uploads no data to process.
@@ -45,7 +45,7 @@ You added an [`elementFilters`](/accessibility/configuration/elementfilters) rul
 
 **Fixes.**
 
-- **Regenerate the run** so the new rule is applied. This is by far the most common cause.
+- **Regenerate the run** so the new rule is applied. A run processed before the rule was saved is by far the most common cause.
 - **Check the selector** against the exact node in the violation's HTML snapshot. A rule like `footer` matches only the `<footer>` element itself, while `footer *` matches the controls inside it.
 - **Order rules from specific to broad**, and place any `include: true` exception before the `include: false` rule it should override, because the first matching rule wins.
 
@@ -133,7 +133,7 @@ You saved a rule, but the report looks the same.
 
 Work through these causes in order:
 
-- **The run predates the change.** Reports use the configuration saved when they were processed. [Regenerate](/accessibility/configuration/overview#Setting-Configuration) the run to apply your current configuration. This is by far the most common cause.
+- **The run predates the change.** Reports use the configuration saved when they were processed. [Regenerate](/accessibility/configuration/overview#Setting-Configuration) the run to apply your current configuration. A run that predates the change is by far the most common cause.
 - **An earlier rule matched first.** For [`elementFilters`](/accessibility/configuration/elementfilters) and [`viewFilters`](/accessibility/configuration/viewfilters), the **first** matching rule wins, so a broad rule above your specific one prevents it from applying. List specific rules first, and place `include: true` exceptions before the `include: false` rule they should override.
 - **A nested list replaced a root one.** Nesting a shared property such as `elementFilters` or `attributeFilters` under an `accessibility` or `uiCoverage` key **completely replaces** the root-level list for that product; the two are never merged. Repeat any root rules you still want in the nested list.
 - **The pattern or selector doesn't match.** `attributeFilters` patterns are anchored to the whole value, so `value: "user"` matches only the exact string `user`; use `value: "user-.*"` for a prefix. Selectors must match the element Axe Core® reports, not a wrapper around it.

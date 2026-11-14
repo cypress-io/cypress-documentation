@@ -137,7 +137,7 @@ cy.get('[data-cy=context-menu]').should('not.exist')
 `.rightclick()` never opens the browser's own context menu, so a test can pass
 even when your app forgets to call `preventDefault()` and real users see two
 menus. To check, add a `contextmenu` listener on the window after the page
-loads. It runs after your app's own handlers, so the event it receives shows
+loads. The listener runs after your app's own handlers, so the event it receives shows
 whether one of them called `preventDefault()`.
 
 ```javascript
@@ -355,7 +355,7 @@ Both commands wait for the element to reach an
 
 - `.rightclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.rightclick()` itself is not retried. It fires once when the element is
+- `.rightclick()` itself is not retried. `.rightclick()` fires once when the element is
   actionable. Assertions chained after `.rightclick()` are retried until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).

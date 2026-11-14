@@ -16,7 +16,7 @@ UI Coverage marks an [interactive element](/ui-coverage/core-concepts/interactiv
 ## Why use additionalInteractionCommands?
 
 - **Get credit for custom commands**: If your team wraps interactions in [custom commands](/api/cypress-api/custom-commands), such as a `login()` helper that types and clicks, list them so the elements they touch count as tested.
-- **Support third-party interaction plugins**: Plugins like [`cypress-real-events`](#Track-cypress-real-events-commands) add commands (`realClick`, `realType`, `realHover`) that fire native browser events. These aren't built-in Cypress commands, so UI Coverage doesn't recognize them until you list them.
+- **Support third-party interaction plugins**: Plugins like [`cypress-real-events`](#Track-cypress-real-events-commands) add commands (`realClick`, `realType`, `realHover`) that fire native browser events. These commands aren't built-in Cypress commands, so UI Coverage doesn't recognize them until you list them.
 - **Keep your score accurate**: Every command your tests rely on that UI Coverage doesn't recognize leaves real coverage unreported. Declaring them removes false gaps from your reports.
 
 ## Scope

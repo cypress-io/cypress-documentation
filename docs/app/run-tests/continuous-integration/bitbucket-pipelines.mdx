@@ -64,7 +64,7 @@ pipelines:
 **How this `bitbucket-pipelines.yml` works:**
 
 - On _push_ to this repository, this job will provision and start Bitbucket
-  Pipelines using the Cypress Docker image. It will run the pipelines defined in the
+  Pipelines using the Cypress Docker image. The job will run the pipelines defined in the
   `pipelines` section of the configuration.
 - The code is checked out from the Bitbucket repository.
 - Finally, our scripts will:
@@ -138,11 +138,11 @@ understand the two different types of jobs that we will declare:
 ### Install Job
 
 The separation of installation from test running is necessary when running
-parallel jobs. It allows for reuse of various build steps aided by caching.
+parallel jobs. Separating installation allows for reuse of various build steps aided by caching.
 
 First, we break the pipeline up into reusable chunks of configuration using a
 [YAML anchor](https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/),
-`&e2e`. This will be used by the worker jobs.
+`&e2e`. The worker jobs use this anchor.
 
 :::info
 
@@ -179,7 +179,7 @@ in parallel.
 We can use the `e2e`
 [YAML anchor](https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/)
 in our definition of the pipeline to execute parallel jobs using the `parallel`
-attribute. This will allow us to run multiples instances of Cypress at same
+attribute. The `parallel` attribute will allow us to run multiples instances of Cypress at same
 time.
 
 ```yaml title="bitbucket-pipelines.yml"

@@ -14,7 +14,7 @@ Starting in Cypress 16, Chrome, Chromium, and Edge intercept test traffic on the
 browser network. Your application connects to your server directly and negotiates
 whatever protocol the server supports, exactly as it does in production.
 
-That closes the biggest remaining gap between how your application behaves under test and
+Connecting directly closes the biggest remaining gap between how your application behaves under test and
 how it behaves for your users:
 
 - **Your production protocol is the one under test.** HTTP/2 and HTTP/3 connections are
@@ -53,8 +53,8 @@ example:
 | [Revalidated responses report `200` instead of `304`](#Revalidated-responses-report-200-instead-of-304)                                | Use [`cy.request()`](/api/commands/request) to assert on caching behavior. |
 | [`responseTimeout` does not apply to response handlers](#responseTimeout-does-not-apply-to-response-handlers)                          | Bound the wait with a `timeout` on [`cy.wait()`](/api/commands/wait).      |
 | [Request `content-length` is not reported](#Request-content-length-is-not-reported)                                                    | Assert on the body you set.                                                |
-| [Your application's certificate is used](#Your-applications-certificate-is-used)                                                       | Nothing. This is the improvement.                                          |
-| [`cy.intercept()` changes are visible in the browser](#cyintercept-changes-are-visible-in-the-browser)                                 | Nothing. This is the improvement.                                          |
+| [Your application's certificate is used](#Your-applications-certificate-is-used)                                                       | Nothing. The new behavior is the improvement.                              |
+| [`cy.intercept()` changes are visible in the browser](#cyintercept-changes-are-visible-in-the-browser)                                 | Nothing. The new behavior is the improvement.                              |
 
 ## Which browsers are affected
 
@@ -142,7 +142,7 @@ path and still report `'1.1'`.
 On the legacy network path, the value was always `'1.1'`, because it described the hop
 between the browser and Cypress rather than the protocol your server used. The browser
 now negotiates directly with your server on the native browser network, so the protocol
-depends on what that server supports (HTTP/1.1, HTTP/2, or HTTP/3). It is not known at
+depends on what that server supports (HTTP/1.1, HTTP/2, or HTTP/3). The protocol is not known at
 the point the request is intercepted, so Cypress reports no value instead of one that
 could be wrong.
 
@@ -355,7 +355,7 @@ computes that header when it sends the request, which happens after your interce
 so the value does not exist yet at the point Cypress hands you the request. Your server
 still receives an accurate `content-length`.
 
-This also means Cypress no longer recalculates the header when a handler replaces
+Leaving the header to the browser also means Cypress no longer recalculates the header when a handler replaces
 `req.body`. The browser sends the real length of whatever body your handler set.
 
 ```js

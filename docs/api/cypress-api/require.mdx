@@ -10,10 +10,10 @@ e2eSpecific: true
 # Cypress.require
 
 `Cypress.require` lets you use dependencies within the
-[`cy.origin()`](/api/commands/origin) callback function. It is used to require
+[`cy.origin()`](/api/commands/origin) callback function. `Cypress.require` is used to require
 modules such as [npm](https://www.npmjs.com/) packages and other local files.
 
-It is functionally the same as using
+`Cypress.require` is functionally the same as using
 [CommonJS `require()`](https://nodejs.org/api/modules.html#requireid)
 in browser-targeted code.
 
@@ -104,7 +104,7 @@ cy.origin('cypress.io', async () => {
 ## Limitations / Requirements
 
 - `Cypress.require` only works when called within the
-  [`cy.origin()`](/api/commands/origin) callback function. It will error if used
+  [`cy.origin()`](/api/commands/origin) callback function. `Cypress.require` will error if used
   elsewhere.
 - Only the following file extensions are supported for dependencies required
   (either directly or indirectly):
@@ -147,11 +147,11 @@ Cypress.require(lodashPkgName)
 ## Why not `require` or `import`?
 
 Cypress runs test code in the browser, so any dependencies have to be bundled
-with the test code before it is run. This is accomplished for the majority of
+with the test code before it is run. Bundling is accomplished for the majority of
 test code via a [preprocessor](/api/node-events/preprocessors-api). However, due to
 the way that [`cy.origin()`](/api/commands/origin) works, the callback passed to
 it is extracted from the test code where it is defined and run in a different
-context. This also separates it from any dependencies that are included in the
+context. Running the callback in that context also separates it from any dependencies that are included in the
 test code bundle.
 
 To solve this, we replace all instances of `Cypress.require` with `require` at

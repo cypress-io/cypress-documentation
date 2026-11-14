@@ -45,7 +45,7 @@ Reach for an exclusion when an untested element isn't a gap you'd ever close:
   in an iframe or shadow DOM.
 
 If an element is a real part of your product that you haven't tested _yet_,
-don't exclude it. That's a gap worth keeping. See
+don't exclude it. An untested product element is a real coverage gap, so keep it in the report. See
 [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps) for how to
 close it instead.
 
@@ -152,7 +152,7 @@ for details.
 ### Keep specific elements out of a broad exclusion
 
 Because the first matching rule wins, an `include: true` rule placed _before_ a
-broader exclude rule protects the elements it matches. This is useful when a
+broader exclude rule protects the elements it matches. Protecting elements this way is useful when a
 third-party container also holds elements you _do_ want to test, such as your own
 navigation links inside a vendor toolbar:
 
@@ -174,7 +174,7 @@ navigation links inside a vendor toolbar:
 ```
 
 On its own, an `include: true` rule changes nothing, since everything is included
-by default. It only matters as an exception ordered ahead of an exclude rule. For
+by default. An `include: true` rule only matters as an exception ordered ahead of an exclude rule. For
 the full evaluation model, see
 [How are elementFilters rules applied?](/ui-coverage/configuration/elementfilters#How-are-elementFilters-rules-applied).
 

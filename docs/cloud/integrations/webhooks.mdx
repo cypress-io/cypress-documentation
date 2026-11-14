@@ -115,7 +115,7 @@ In the **Add webhook** dialog, configure the following:
 - **Secret** _(optional, recommended)_: A signing secret used to verify that a
   request genuinely came from Cypress Cloud. Provide your own value (at least 16
   characters) or click **Generate secret** to create a random one. **Copy and
-  store the secret somewhere safe. It is shown only once and cannot be viewed
+  store the secret somewhere safe. The secret is shown only once and cannot be viewed
   again**. If you lose it, you can rotate it later by editing the webhook. See
   [Verify webhook signatures](#Verify-webhook-signatures).
 - **Custom Authorization header** _(optional)_: A header name and value sent
@@ -173,7 +173,7 @@ manage it:
   - **Generate new secret**: Leaving the **Secret** field blank keeps the
     existing secret. To rotate it, enter a new value (at least 16 characters) or
     click **Generate new secret**. Copy the new secret and store it somewhere
-    safe. It is shown only once. After you save, the previous secret no longer
+    safe. The new secret is shown only once. After you save, the previous secret no longer
     verifies requests, so update your endpoint to use the new value.
   - **Custom Authorization header**: Leaving the fields blank keeps the existing
     header. Enter a new name and value to set or rotate it. The value is shown
@@ -181,8 +181,8 @@ manage it:
     later deliveries no longer include it.
 - **Recent deliveries**: Open the Options menu and select **Recent deliveries** to
   review delivery history. See [Delivery history and retries](#Delivery-history-and-retries).
-- **Delete**: Open the Options menu and select **Delete**. This permanently
-  removes the webhook **and its delivery history**. This cannot be undone.
+- **Delete**: Open the Options menu and select **Delete**. Deleting permanently
+  removes the webhook **and its delivery history**. Deletion cannot be undone.
 
 <DocsImage
   src="/img/cloud/integrations/webhooks/webhook-row.png"
@@ -504,7 +504,7 @@ Sent when everything expected for the run has settled: `run.completed`, plus any
 Accessibility or UI Coverage report that the run produces. Subscribe to this
 event if you want a single delivery per run instead of matching
 `run.completed`, `run.accessibility.completed`, and `run.uiCoverage.completed`
-independently. It also covers future post-run reporting without requiring you
+independently. `run.allSettled` also covers future post-run reporting without requiring you
 to subscribe to each product event as it appears.
 
 If the run does not use Accessibility or UI Coverage, `run.allSettled` still
@@ -673,8 +673,8 @@ verification.
 ### Verify a signature in your handler
 
 The following example handlers add a route to an existing Express or Flask app.
-They read the raw body, reject stale timestamps, recompute the HMAC, compare it
-in constant time, and ignore a signature they have already accepted. They do
+The handlers read the raw body, reject stale timestamps, recompute the HMAC, compare it
+in constant time, and ignore a signature they have already accepted. The handlers do
 not show deduplication on `X-Cypress-Event-Id` (or `X-Cypress-Idempotency-Key`),
 which a real handler still needs for retries. The record of accepted signatures
 is kept in memory, in one process: with several worker processes (for example,

@@ -164,7 +164,7 @@ Cypress locally and in CI.
 
 GitHub Actions
 [requires using a Linux runner](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idcontainer) when specifying a container image.
-It does not support running Docker images on Windows or macOS runners.
+GitHub Actions does not support running Docker images on Windows or macOS runners.
 
 Below, we extend the previous example by adding the `container` attribute using a
 [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers)
@@ -309,7 +309,7 @@ understand the two different types of GitHub Action jobs that we will declare:
 ### Install Job
 
 The separation of installation from test running is necessary when running
-parallel jobs. It allows for the reuse of various build steps aided by caching.
+parallel jobs. Separating installation allows for the reuse of various build steps aided by caching.
 
 First, we'll define the `install` step that will be used by the worker jobs
 defined in the matrix strategy.
@@ -422,7 +422,7 @@ Your test run might fail if Cypress Cloud detects differences in the browser ver
 
 To work around this issue, we recommend using a
 [cypress/browsers](#Testing-with-Cypress-Docker-Images) Docker image, which uses one consistent browser version.
-This shields the workflow from browser version changes due to possible incomplete GitHub runner image deployments.
+The image shields the workflow from browser version changes due to possible incomplete GitHub runner image deployments.
 
 As mentioned in [Testing with Cypress Docker Images](#Testing-with-Cypress-Docker-Images),
 this option is only available with GitHub Actions Linux runners.
@@ -491,7 +491,7 @@ To see additional how-to examples, you can also refer to our
 ### Re-run jobs passing with empty tests
 
 We recommend passing the `GITHUB_TOKEN` secret (created by the GH Action
-automatically) as a system environment variable in CI/CD. This will allow the accurate
+automatically) as a system environment variable in CI/CD. The token will allow the accurate
 identification of each build to avoid confusion when re-running a build.
 
 ```yml

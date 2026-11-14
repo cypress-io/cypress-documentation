@@ -76,7 +76,7 @@ Pass in an options object to change the default behavior of `.contains()`.
 
 <HeaderYields />
 
-- `.contains()` yields the new DOM element it found. It yields at most one
+- `.contains()` yields the new DOM element it found. `.contains()` yields at most one
   element, so asserting a `length` greater than `1` throws an error.
 - `.contains()` is a query, and it is _safe_ to chain further commands.
 
@@ -408,7 +408,7 @@ being chained off an existing series.
 
 #### When starting a series of commands
 
-This queries the `<body>` element for the content, so elements in the
+`cy.contains()` queries the `<body>` element for the content, so elements in the
 `<head>`, such as `<title>`, never match. Inside a
 [`.within()`](/api/commands/within) callback, it queries the `.within()` subject
 instead.

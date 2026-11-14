@@ -158,7 +158,7 @@ you pass to Cypress:
   Declare the ones your components use via `viteConfig`. See
   [Meta-frameworks that own the bundler config](/app/component-testing/component-framework-configuration#Meta-frameworks-that-own-the-bundler-config).
 - **Auto-imports** — Nuxt auto-imports components and composables (such as `ref`,
-  `useRoute`, and `useRuntimeConfig`). These are not available when a component is
+  `useRoute`, and `useRuntimeConfig`). Auto-imported components and composables are not available when a component is
   mounted in isolation, so either import what your component relies on explicitly
   or add the equivalent Vite plugin to your `viteConfig`.
 

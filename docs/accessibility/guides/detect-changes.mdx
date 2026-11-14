@@ -33,9 +33,9 @@ Each channel below answers a different question, and most teams end up using mor
 An accessibility comparison in Branch Review contains:
 
 - **The score, with its change.** The [accessibility score](/accessibility/core-concepts/accessibility-score) for the Changed run, and how many percentage points it moved against the Base run.
-- **New failed elements.** Elements failing a rule in the Changed run that either did not exist in the Base run, or existed there and were passing. These are grouped by rule and then by [view](/accessibility/configuration/views), so you can open one rule and see every page it broke on.
-- **Resolved elements.** Elements that failed in the Base run and are either gone or passing in the Changed run. This is the half that proves a fix landed everywhere, not just on the one element you tested by hand.
-- **Existing failed elements.** A link out to the full report for the Changed run, for the violations that were already there. They are deliberately kept out of the diff so old and new findings never blend together.
+- **New failed elements.** Elements failing a rule in the Changed run that either did not exist in the Base run, or existed there and were passing. New failed elements are grouped by rule and then by [view](/accessibility/configuration/views), so you can open one rule and see every page it broke on.
+- **Resolved elements.** Elements that failed in the Base run and are either gone or passing in the Changed run. The resolved list is the half that proves a fix landed everywhere, not just on the one element you tested by hand.
+- **Existing failed elements.** A link out to the full report for the Changed run, for the violations that were already there. Existing failed elements are deliberately kept out of the diff so old and new findings never blend together.
 
 Cypress matches elements across runs by the identifier described in [element identification](/accessibility/core-concepts/element-identification), evaluated per rule and per view, and matches views by their URL pattern. Views that appear in only one of the two runs are marked as added or removed rather than being counted as accessibility changes.
 
@@ -43,7 +43,7 @@ Cypress matches elements across runs by the identifier described in [element ide
 
 Compare the run from the pull request branch against the run from your base branch. The diff is scoped to what your code touched, so a clean comparison is a genuine signal that the change is safe to merge, and a short list of new failures is a short review.
 
-This is the fastest way to use Branch Review, because there is nothing to configure: if both branches record runs, the comparison exists. See [Compare reports](/accessibility/guides/compare-reports) for a video walkthrough of this review.
+Comparing against the base branch is the fastest way to use Branch Review, because there is nothing to configure: if both branches record runs, the comparison exists. See [Compare reports](/accessibility/guides/compare-reports) for a video walkthrough of this review.
 
 ### See what changed between scheduled runs
 
@@ -132,7 +132,7 @@ The full field list lives in the [Results API reference](/accessibility/connect-
 
 Rules are the most stable thing to gate on. Element counts move around on their own as tests reach different states and shared components get reused, but a rule that goes from zero failures to any failures is a real change in what your application does, traceable to the code in the build.
 
-Keep a list of the rules you already know about and fail on anything outside it. This is the policy most teams start with, and it is written out in full, along with its mirror image for teams working through a large backlog, in [Block pull requests and set policies](/accessibility/guides/block-pull-requests#Defining-policies-in-the-verification-step).
+Keep a list of the rules you already know about and fail on anything outside it. This known-rules policy is the one most teams start with, and it is written out in full, along with its mirror image for teams working through a large backlog, in [Block pull requests and set policies](/accessibility/guides/block-pull-requests#Defining-policies-in-the-verification-step).
 
 ### Block a build when the score drops
 
@@ -176,7 +176,7 @@ The partial report guard matters more than it looks. A cancelled or partially re
 
 ### Route new failures to the team that owns them
 
-Failures are also listed per view, and a view maps to a URL pattern or a component test, which in most applications maps to an owning team. That makes it possible to notify the team that can act instead of a shared channel everyone mutes.
+Failures are also listed per view, and a view maps to a URL pattern or a component test, which in most applications maps to an owning team. The view-to-team mapping makes it possible to notify the team that can act instead of a shared channel everyone mutes.
 
 ```javascript title="scripts/notifyViewOwners.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
@@ -269,7 +269,7 @@ Failed elements per rule over time, which separates lasting changes from brief o
   alt="Stacked bar chart titled Accessibility - Weekly average rule violations per run by impact, February through April 2026, with bars segmented by critical, minor, moderate, and serious impact."
 />
 
-How many distinct rules fail per run on average, stacked by impact. This tracks the breadth of the problem, where the chart above tracks its depth.
+How many distinct rules fail per run on average, stacked by impact. This chart tracks the breadth of the problem, where the chart above tracks its depth.
 
 #### Weekly average element violations per run by impact
 
@@ -330,13 +330,13 @@ See [Work with AI agents](/accessibility/work-with-ai-agents) for more prompt pa
 These channels are most useful together, because each one answers the next question the previous one raises. A regression on a feature branch usually reads like this:
 
 1. **The Results API fails your build** on a pull request, naming `link-name` as a rule that was passing and now is not.
-2. **Branch Review shows you what broke.** Comparing the pull request run against the base branch shows four new failed elements under that rule, all in one view, with a snapshot of each. That is enough to fix it, and often enough to see it was a shared component rather than the page.
+2. **Branch Review shows you what broke.** Comparing the pull request run against the base branch shows four new failed elements under that rule, all in one view, with a snapshot of each. The snapshots are enough to fix it, and often enough to see it was a shared component rather than the page.
 3. **If the base branch is failing too**, the problem predates the pull request. Analytics tells you when the score moved, which narrows the search to a few days.
 4. **Branch Review again**, comparing two runs from either side of that date, gives you the exact run and commit that introduced it.
 
 The same path works from the other direction: a Slack notification showing an unexpected score, or a chart with a step change in it, leads into Branch Review the same way.
 
-As you work through this, use the **Submit Feedback** button in Cypress Cloud whenever something could be clearer. It is read by the team that builds these reports.
+As you work through this, use the **Submit Feedback** button in Cypress Cloud whenever something could be clearer. Feedback is read by the team that builds these reports.
 
 ## See also
 

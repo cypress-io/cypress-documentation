@@ -16,20 +16,20 @@ flaky tests that matter most.
 
 ## Why Flaky Test Management
 
-A **flaky test** passes and fails across retries without any code change. It
+A **flaky test** passes and fails across retries without any code change. A flaky test
 "fails" once, runs again on the same code, and passes. A single flaky test
 seems harmless. At scale, flake is one of the most expensive and corrosive
 problems a software organization faces:
 
-- **It erodes trust in the entire test suite.** Once developers learn that a
+- **Flake erodes trust in the entire test suite.** Once developers learn that a
   red build might just be "the flaky one," they start ignoring failures, and
   real regressions slip through to production.
-- **It drains engineering time.** Teams burn hours re-running pipelines,
+- **Flake drains engineering time.** Teams burn hours re-running pipelines,
   investigating failures that aren't real, and manually triaging which tests can
-  be trusted. That's velocity spent on noise instead of shipping.
-- **It slows down delivery.** Flake blocks merges, delays releases, and forces
+  be trusted. That time is velocity spent on noise instead of shipping.
+- **Flake slows down delivery.** Flake blocks merges, delays releases, and forces
   developers to context-switch away from feature work to babysit CI.
-- **It hides the real picture.** Without data, "the tests are flaky" is just a
+- **Flake hides the real picture.** Without data, "the tests are flaky" is just a
   vague complaint. There's no way to know whether reliability is improving or
   degrading over time, or which tests are actually responsible.
 
@@ -108,7 +108,7 @@ Cypress Cloud **Latest Runs** page.
 />
 
 Runs containing flaky tests can be filtered in or out with the
-**Flaky** filter. This gives teams an at-a-glance view of how much flake is
+**Flaky** filter. The filter gives teams an at-a-glance view of how much flake is
 reaching their pipeline on any given day.
 
 <DocsImage
@@ -248,7 +248,7 @@ on it without leaving your workflow.
 For flake, the agent can use the `cypress_get_flaky_tests` tool to list the
 flaky tests in a run, with the error, stack trace, and Test Replay link for each
 attempt. The agent can also call `cypress_get_test_screenshots` to see what the
-page showed when a flaky attempt failed. This lets an agent jump straight to a
+page showed when a flaky attempt failed. These tools let an agent jump straight to a
 root-cause investigation.
 
 :::info
@@ -274,7 +274,7 @@ For example, to audit recent flake and look for patterns:
 > "List all flaky tests from the last 5 runs in Cypress Cloud. Are there any
 > common patterns in the error messages?"
 
-This turns flake triage into a conversation: the agent surfaces the flaky tests,
+Asking the agent turns flake triage into a conversation: the agent surfaces the flaky tests,
 groups the errors, and can follow up with the Test Replay context needed to fix
 them.
 
@@ -294,7 +294,7 @@ The **Flaky** tab lists every spec that flaked, marking each result as:
 - **existing**: flake already present on the base branch
 - **resolved**: flake that was present before but no longer appears
 
-This lets reviewers focus only on the flake a branch is responsible for, and
+The new and resolved labels let reviewers focus only on the flake a branch is responsible for, and
 confirm that a stability fix actually took effect. From there you can open a
 test to compare attempts side by side with
 [Test Replay](/cloud/features/test-replay) and the code diff to track down the
@@ -316,7 +316,7 @@ root cause.
 
 The flaky test analytics page gives a bird's-eye view of flake across your
 project, making it easy to understand reliability at a glance and back it up
-with data. It includes:
+with data. The page includes:
 
 - A plot of the **number of flaky tests over time**, so you can see reliability
   trending up or down release over release.
@@ -390,7 +390,7 @@ fail the first two attempts and pass on the third, a final status of passing.
 Because of this, a test can show a **zero final failure rate while still
 exhibiting flake**.
 
-This is exactly why flake is so easy to
+A final status that hides earlier failures is exactly why flake is so easy to
 miss without dedicated tracking: the build goes green, but the underlying
 instability, and its cost, is still there.
 
@@ -425,7 +425,7 @@ your own tools.
 
 The in-app analytics answer "how healthy is this project?" The
 [Data Extract API](/cloud/integrations/data-extract-api) answers the same
-question across your _entire organization_, in a format you own. It lets you
+question across your _entire organization_, in a format you own. The Data Extract API lets you
 pull flake metrics into your own dashboards and reports, so test reliability
 sits alongside the other metrics your team tracks and trends can be followed
 release over release without anyone logging into Cypress Cloud.
@@ -453,7 +453,7 @@ The API exposes five flake-focused reports. Each is requested with its
 :::info
 
 **Flaky rate** is reported as a whole number. For example, 1 flaky test over 4
-runs has a flaky rate of `25`. This mirrors the
+runs has a flaky rate of `25`. The flaky rate mirrors the
 [flake rate](#Flaky-test-analytics) used in the in-app analytics.
 
 :::

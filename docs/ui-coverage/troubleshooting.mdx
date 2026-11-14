@@ -46,7 +46,7 @@ UI Coverage already ignores the most common unstable values, including UUIDs and
   }
   ```
 
-- **Pin one specific element's identity** with an [`elements`](/ui-coverage/configuration/elements) rule that identifies it by a selector that stays the same across snapshots. This is the right tool for a single control; if many elements share the same generated attribute, filter the attribute instead.
+- **Pin one specific element's identity** with an [`elements`](/ui-coverage/configuration/elements) rule that identifies it by a selector that stays the same across snapshots. An `elements` rule is the right tool for a single control; if many elements share the same generated attribute, filter the attribute instead.
 
   ```json title="App Quality Config"
   {
@@ -71,7 +71,7 @@ Two or more controls that should each be tracked appear as a single element, so 
 
 **Fixes.**
 
-- **Add distinct identifiers** in your application, giving each control its own `data-cy` or `data-test` value. This is the most durable fix.
+- **Add distinct identifiers** in your application, giving each control its own `data-cy` or `data-test` value. Distinct identifiers are the most durable fix.
 - **Prefer a distinguishing attribute** your markup already has with [`significantAttributes`](/ui-coverage/configuration/significantattributes). Attributes you list are checked before the defaults, so an attribute whose value differs between the elements gives each a distinct identity. Icon-only controls, for example, are often distinguishable by their `aria-label`.
 
   ```json title="App Quality Config"
@@ -202,7 +202,7 @@ You saved a rule, but the report looks the same.
 
 Work through these causes in order:
 
-- **The run predates the change.** Reports use the configuration saved when they were processed. [Regenerate](/ui-coverage/configuration/overview#Setting-configuration) the run to apply your current configuration. This is by far the most common cause.
+- **The run predates the change.** Reports use the configuration saved when they were processed. [Regenerate](/ui-coverage/configuration/overview#Setting-configuration) the run to apply your current configuration. A stale run is by far the most common cause.
 - **An earlier rule matched first.** For [`elementFilters`](/ui-coverage/configuration/elementfilters), [`viewFilters`](/ui-coverage/configuration/viewfilters), [`elementGroups`](/ui-coverage/configuration/elementgroups), and [`attributeFilters`](/ui-coverage/configuration/attributefilters), the **first** matching rule wins, so a broad rule above your specific one prevents it from applying. List specific rules first, and place `include: true` exceptions before the `include: false` rule they should override. ([`elements`](/ui-coverage/configuration/elements) is the exception: when several rules match one element, the **last** one wins.).
 - **A nested list replaced a root one.** Nesting a shared property such as `elementFilters` or `attributeFilters` under a `uiCoverage` or `accessibility` key **completely replaces** the root-level list for that product; the two are never merged. Repeat any root rules you still want in the nested list. See [Configuration scope](/ui-coverage/configuration/overview#Configuration-scope).
 - **The property is in the wrong place.** `elementGroups`, `elements`, `additionalInteractionCommands`, and `allowedInteractionCommands` are UI Coverage–only and must live under the `uiCoverage` key, while `views` is set at the root. A misplaced property is rejected by the schema.

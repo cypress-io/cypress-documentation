@@ -166,7 +166,7 @@ module.exports = defineFrameworkDefinition({
 })
 ```
 
-Our Framework Definition shows up in Cypress! It has the "community" label,
+Our Framework Definition shows up in Cypress! The Framework Definition has the "community" label,
 indicating it's a third party definition.
 
 <DocsImage
@@ -184,11 +184,11 @@ installed them all, so Cypress is prompting us to do so:
 
 ## Mount Adapter
 
-The second part of defining a Framework Definition is the Mount Adapter. This is
+The second part of defining a Framework Definition is the Mount Adapter. The Mount Adapter is
 the function that renders the component in your tests using `cy.mount()`.
 
-By default, Cypress will look for this as a `mount` function that is a **named
-export** from the package. This should be written in a `index.mjs` file. This
+By default, Cypress will look for the Mount Adapter as a `mount` function that is a **named
+export** from the package. The `mount` function should be written in a `index.mjs` file. This
 example is for a [Solid.js](https://www.solidjs.com/) mount adapter:
 
 ```js
@@ -225,7 +225,7 @@ export function mount(component, options = {}) {
 setupHooks(cleanup)
 ```
 
-This is different for each library, but the concept is the same - identify how
+The mount implementation is different for each library, but the concept is the same - identify how
 to mount or render a component in your library, and implement it in a function
 named `mount` in `index.mjs`.
 

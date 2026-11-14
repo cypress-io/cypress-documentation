@@ -74,7 +74,7 @@ browser state for each test.
 
 Additionally, the [`cy.session()`](/api/commands/session) command will inherit
 this configuration and will clear the page and current browser context when
-establishing a browser session. This is so tests can reliably pass when run
+establishing a browser session. Cypress clears this state so tests can reliably pass when run
 standalone or in a randomized order.
 
 ### Test Isolation Disabled
@@ -243,7 +243,7 @@ this approach.
 
 Disabling test isolation may improve the overall
 performance of end-to-end tests, however, it can also cause state to "leak"
-between tests. This can make later tests dependent on the results of earlier
+between tests. Leaking state can make later tests dependent on the results of earlier
 tests, and potentially cause misleading test failures. It is important to be
 extremely mindful of how tests are written when using this mode, and ensure that
 tests continue to run independently of one another.

@@ -52,8 +52,8 @@ following properties:
 - `secure`: _(Boolean)_
 - `value`: _(String)_
 
-`cy.getCookies()` is a query, and it is _safe_ to chain further commands. It will
-automatically [retry](/app/core-concepts/retry-ability) until all chained
+`cy.getCookies()` is a query, and it is _safe_ to chain further commands. The query
+will automatically [retry](/app/core-concepts/retry-ability) until all chained
 assertions have passed, or until it times out, re-querying the list of cookies
 on each retry so the yielded array stays up to date.
 

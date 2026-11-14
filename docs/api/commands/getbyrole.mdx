@@ -29,7 +29,7 @@ By default, `cy.getByRole()` skips two kinds of elements:
    such as a `<div role="button">`
 
 The command has options to find both, but the defaults favor the elements most
-likely to be accessible to users. This follows the
+likely to be accessible to users. These defaults follow the
 [first rule of ARIA](https://www.w3.org/TR/using-aria/#rule1), which advises
 using native browser elements over a custom re-implementation. To change the
 defaults for your project, [overwrite the query](#Change-the-native-default-for-your-project)
@@ -73,10 +73,10 @@ cy.getByRole('heading', { level: 2 }) // Errors, narrow by level with .filter()
 The role to find, such as `'button'`, `'heading'`, `'navigation'`, or
 `'tab'`. An element has a role when:
 
-- Its tag implies one, such as `<button>` for `button`, `<nav>` for
+- The element's tag implies one, such as `<button>` for `button`, `<nav>` for
   `navigation`, or `<input type="checkbox">` for `checkbox`.
-- Its `role` attribute sets one, such as `<div role="tab">`. The attribute
-  replaces the implied role. When it lists several roles as fallbacks, the
+- The element's `role` attribute sets one, such as `<div role="tab">`. The attribute
+  replaces the implied role. When the attribute lists several roles as fallbacks, the
   first valid one counts, as in browsers: `role="switch checkbox"` is a
   `switch`, and `role="foo button"` is a `button`. With no valid role in the
   attribute, the element keeps its implied role.
@@ -276,7 +276,7 @@ reach:
 
 - The element or an ancestor has the `hidden` attribute, `aria-hidden="true"`,
   or `display: none`.
-- The element's computed `visibility` is `hidden`. It inherits this from a
+- The element's computed `visibility` is `hidden`. The element inherits this value from a
   `visibility: hidden` ancestor unless it sets `visibility: visible` itself.
 
 Pass `hidden: true` to include them, such as to find a closed menu.
@@ -370,7 +370,7 @@ Cypress.Commands.overwriteQuery(
 #### Search inside another element
 
 Chained off a command that yields DOM elements, `cy.getByRole()` searches the
-descendants of each of them. It never matches the subject element(s) it is
+descendants of each of them. `cy.getByRole()` never matches the subject element(s) it is
 chained off.
 
 ```html title="index.html"

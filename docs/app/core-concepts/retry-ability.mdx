@@ -91,7 +91,7 @@ of found elements (in our case, that it has a length of 1).
 
 - ✅ If the assertion passes, then `.should()` finishes successfully.
 - 🚨 If the assertion fails, then Cypress will requery the application's DOM
-  again - starting from the top of the chain of linked queries. It will look for
+  again - starting from the top of the chain of linked queries. Cypress will look for
   elements that match `.get().find()` again, and re-run the assertion. If the
   assertion still fails, Cypress continues retrying until the timeout is
   reached.
@@ -179,7 +179,7 @@ assertion passes, Cypress locks in the subject at that point and advances
 through the command queue. Queries that follow the assertion will retry from
 that locked-in subject, **not** from the beginning of the chain.
 
-This becomes a problem when the application re-renders the DOM after the
+This retry boundary becomes a problem when the application re-renders the DOM after the
 mid-chain assertion passes. The element passed to the subsequent queries may
 already be detached from the DOM, and Cypress cannot requery from the top of
 the chain because the prior assertion already succeeded. You may see an error
@@ -478,7 +478,7 @@ const Clicker = ({ click }) => (
 The test finishes before the component calls the `click` prop twice, and without
 retrying the assertion `expect(onClick).to.be.calledTwice`.
 
-It could also fail if React or another JavaScript library decided to rerender
+The test could also fail if React or another JavaScript library decided to rerender
 the DOM between clicks.
 
 #### <Icon name="check-circle" color="green" /> Correctly waiting for the stub to be called

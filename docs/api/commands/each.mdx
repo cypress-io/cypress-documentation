@@ -284,7 +284,7 @@ cy.get('ul>li').each(($li) => {
 **The callback is not invoked for an empty collection**
 
 When the subject has a `length` of `0`, `.each()` skips the callback entirely
-and yields the empty subject. It does not fail or wait for items to appear.
+and yields the empty subject. `.each()` does not fail or wait for items to appear.
 
 A DOM query such as [`cy.get()`](/api/commands/get) fails when no elements
 match, so an empty subject usually comes from non-DOM data, such as

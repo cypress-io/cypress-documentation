@@ -390,7 +390,7 @@ cy.get('@consoleError').should('not.have.been.called')
 
 When using [`cy.intercept()`](/api/commands/intercept) with an alias, you can
 retrieve **all** intercepted requests for that alias by appending `.all` to the
-alias name. This returns an array of
+alias name. The `.all` alias returns an array of
 [interception objects](/api/commands/intercept#Using-the-yielded-object).
 
 <InterceptAliasIndex />

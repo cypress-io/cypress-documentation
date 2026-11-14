@@ -26,9 +26,9 @@ particular stages of the Cypress lifecycle.
 
 The [`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
 function receives 2
-arguments: [`on`](#on) and [`config`](#config). It can return a synchronous
+arguments: [`on`](#on) and [`config`](#config). The function can return a synchronous
 value or can also return a Promise, which will be awaited until it resolves.
-This enables you to perform asynchronous actions such as reading files in from
+Awaiting a Promise enables you to perform asynchronous actions such as reading files in from
 the filesystem.
 
 If you return or resolve with an object, Cypress will then merge this object
@@ -100,7 +100,7 @@ modified from the plugins file.**
   value.
 - `projectRoot`: The absolute path to the root of the project (e.g.
   `/Users/me/dev/my-project`).
-- `version`: The version number of Cypress. This can be used to handle breaking
+- `version`: The version number of Cypress. The version can be used to handle breaking
   changes.
 
 :::
@@ -118,7 +118,7 @@ environment variables that come from the
 the [command line](/app/references/command-line), or system environment
 variables.
 
-This enables you to do things like:
+Altering the configuration enables you to do things like:
 
 - Use multiple environments with their own configurations
 - Swap out environment variables based on an environment
@@ -177,7 +177,7 @@ You can use [`after:spec`](/api/node-events/after-spec-api) to do things like:
 
 - Finish up reporting set up in `before:spec`.
 - Stop the timer for the spec set up in `before:spec`.
-- Delete the video recorded for the spec. This prevents it from taking time and
+- Delete the video recorded for the spec. Deleting the video prevents it from taking time and
   computing resources for compressing and uploading the video. You can do this
   conditionally based on the results of the spec, such as if it passes (so
   videos for failing tests are preserved for debugging purposes).
@@ -203,7 +203,7 @@ You can use the `before:browser:launch` event to do things like:
 
 Standard, Chrome-branded browsers (for example, regular Google Chrome) version
 137 and above can no longer load extensions through the `before:browser:launch`
-event. This is because Chrome removed support for the `--load-extension` command
+event. The change is because Chrome removed support for the `--load-extension` command
 line flag that Cypress relied on to load extensions.
 
 To continue loading extensions, run your tests in
@@ -232,7 +232,7 @@ which describe how to use this event.
 ### cy.task
 
 The event `task` is used in conjunction with the
-[`cy.task()`](/api/commands/task) command. It runs arbitrary code in Node to
+[`cy.task()`](/api/commands/task) command. The `task` event runs arbitrary code in Node to
 accomplish tasks that aren't possible in the browser.
 
 You can use the `task` event to do things like:
@@ -253,7 +253,7 @@ when Cypress opens a project.
 
 Cypress does this by spawning an independent `child_process` which then
 `requires` the [Cypress configuration file](/app/references/configuration).
-This is similar to the way Visual Studio Code or Atom works.
+This child process is similar to the way Visual Studio Code or Atom works.
 
 This code will be executed using the Node version that launched Cypress.
 
@@ -300,7 +300,7 @@ console.log(process.cwd()) // /Users/janelane/Dev/my-project
 
 The [Cypress configuration file](/app/references/configuration) is loaded in
 its own child process so it is isolated away from the context that Cypress
-itself runs in. That means you cannot accidentally modify or change Cypress's
+itself runs in. That isolation means you cannot accidentally modify or change Cypress's
 own execution in any way.
 
 If your [`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
@@ -321,7 +321,7 @@ Cypress automatically watches your
 made will take effect immediately. We will read the file in and execute the
 exported function again.
 
-This enables you to iterate on plugin code even with Cypress already running.
+Watching the file enables you to iterate on plugin code even with Cypress already running.
 
 ## <Icon name="graduation-cap" /> Real World Example
 

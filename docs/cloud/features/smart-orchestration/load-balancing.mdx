@@ -85,7 +85,7 @@ fill in any remaining gaps at the end of the run.
 :::info
 
 Duration estimation is done separately for every browser the spec file is tested
-against. This is helpful since performance characteristics vary by browser, and
+against. Per-browser estimation is helpful since performance characteristics vary by browser, and
 therefore it is perfectly acceptable to see different duration estimates for
 each browser a spec file was tested against.
 
@@ -100,7 +100,7 @@ behaviors can modify it:
   moves specs that failed in the previous run to the front of the queue, so you
   get fast feedback on the specs most likely to be broken.
 - **[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation)**
-  cancels the remaining specs once a configured number of tests fail. It works
+  cancels the remaining specs once a configured number of tests fail. Auto Cancellation works
   alongside load balancing and is configured separately.
 
 Both are complementary to load balancing: prioritization changes _which_ specs
@@ -146,7 +146,7 @@ balancing based on your suite size and run frequency.
 
 The [Run Duration report](/cloud/features/analytics/project-analytics#Run-duration)
 shows your **average run duration**, **average parallelization (concurrency)**,
-and the **time saved from parallelization** over time. This is the most direct
+and the **time saved from parallelization** over time. The Run Duration report is the most direct
 way to confirm that load balancing is paying off, and to watch the trend as
 your suite and machine count change. (Only passing runs are included, so
 failures don't skew the numbers.)

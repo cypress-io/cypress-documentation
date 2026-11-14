@@ -632,7 +632,7 @@ In the code below, we conditionally apply a `useEffect` block based on being
 under test with Cypress (using `window.Cypress`).
 
 In addition, we will update the export to be wrapped with the `withOktaAuth`
-higher order component only if we are not under test in Cypress. This allows our
+higher order component only if we are not under test in Cypress. The wrapper allows our
 application to work with the [Okta](https://okta.com) redirect login flow in
 development/production but not when under test in Cypress.
 

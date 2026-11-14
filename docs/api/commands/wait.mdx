@@ -326,7 +326,7 @@ duration is configured by the
 [`requestTimeout`](/app/references/configuration#Timeouts) option - which has
 a default of `5000` ms.
 
-This means that when you begin waiting for an aliased request, Cypress will wait
+This default means that when you begin waiting for an aliased request, Cypress will wait
 up to 5 seconds for a matching request to be created. If no matching request is
 found, you will get an error message that looks like this:
 
@@ -340,7 +340,7 @@ switches over to the 2nd waiting period. This duration is configured by the
 [`responseTimeout`](/app/references/configuration#Timeouts) option - which
 has a default of `30000` ms.
 
-This means Cypress will now wait up to 30 seconds for the external server to
+This default means Cypress will now wait up to 30 seconds for the external server to
 respond to this request. If no response is detected, you will get an error
 message that looks like this:
 
@@ -349,7 +349,7 @@ message that looks like this:
   alt="Timeout error for request wait"
 />
 
-This gives you the best of both worlds - a fast error feedback loop when
+The two timeouts give you the best of both worlds - a fast error feedback loop when
 requests never go out and a much longer duration for the actual external
 response.
 

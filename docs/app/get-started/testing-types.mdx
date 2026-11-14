@@ -97,7 +97,7 @@ Cypress Component Testing comes into play.
 
 Component tests differ from end-to-end tests in that instead of visiting a URL
 to pull up an entire app, a component can be "mounted" and tested on its own.
-This narrows the test to the component's functionality, leaving out the other
+Mounting narrows the test to the component's functionality, leaving out the other
 nuances of testing a component as part of the larger application.
 
 Typically, a component test is written by the developers working on the
@@ -157,10 +157,10 @@ real HTTP request and yields the response. Because these tests live in the same
 specs, the same configuration, and the same CI job as the rest of your suite,
 adding API coverage does not mean adopting and maintaining a second tool.
 
-API tests sit between the other two types in both speed and scope. They run
+API tests sit between the other two types in both speed and scope. API tests run
 faster than end-to-end tests because there is no page to render and no user
 interaction to simulate, and they reach further than component tests because
-they exercise your real backend, database, and business logic. They are also
+they exercise your real backend, database, and business logic. API tests are also
 precise about failure: when an API test fails, the contract changed. A failing
 end-to-end test could mean the same thing, or a moved selector, or a race
 condition.
@@ -170,7 +170,7 @@ Creating a user or seeding an order over HTTP takes milliseconds, where doing
 the same through a form takes seconds and re-tests code paths you already cover
 elsewhere.
 
-What API tests cannot tell you is whether your interface works. They say nothing
+What API tests cannot tell you is whether your interface works. API tests say nothing
 about rendering, styling, or whether a control is reachable. As with the other
 types, a well-tested app combines them, with each set of tests specializing in
 what it does best.
@@ -222,10 +222,10 @@ disabilities. The baseline is the
 (WCAG), which describe what your users need to perceive your content,
 navigate your pages, and complete the actions you offer.
 
-It relates to the three types above differently than they relate to each other.
+Accessibility testing relates to the three types above differently than they relate to each other.
 Accessibility testing is a layer rather than an alternative: you do not pick it
 instead of end-to-end or component testing, you add it to the tests you already
-have. That is why it fits naturally on top of all three.
+have, so it fits naturally on top of all three.
 
 Cypress supports it in three ways. Community plugins such as
 [`cypress-axe`](https://www.npmjs.com/package/cypress-axe) run an Axe Core®

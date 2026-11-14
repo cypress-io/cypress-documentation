@@ -96,7 +96,7 @@ cy.get('nav') // yields <nav>
   .and('match', /serif/) // yields 'sans-serif'
 ```
 
-It is _safe_ to chain further commands that rely on the subject after `.should()`. This is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
+It is _safe_ to chain further commands that rely on the subject after `.should()`. This behavior is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
 
 Queries chained after `.should()` do not retry from the start of the chain. If the DOM re-renders, they retry from the subject `.should()` yielded. See [Retry boundaries](#Retry-boundaries).
 
@@ -180,7 +180,7 @@ cy.get('#input-receives-focus').should('have.focus') // equivalent to should('be
 ### Function
 
 Passing a function to `.should()` enables you to make multiple assertions on the
-yielded subject. This also gives you the opportunity to _massage_ what you'd
+yielded subject. The function also gives you the opportunity to _massage_ what you'd
 like to assert on.
 
 Be sure _not_ to include any code that has side effects in your callback

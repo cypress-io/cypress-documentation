@@ -291,7 +291,7 @@ element is actually not interactable in your application._
 
 By default Cypress detects if an element you're trying to interact with is
 animating. This check ensures that an element is not animating too quickly for a
-real user to interact with the element. This also prevents some edge cases where
+real user to interact with the element. The check also prevents some edge cases where
 actions, such as [`.type()`](/api/commands/type) or
 [`.click()`](/api/commands/click), happened too fast during a transition.
 
@@ -299,7 +299,7 @@ Cypress will continuously attempt to interact with the element until it
 eventually times out. If you'd like to force Cypress to interact with the
 element there are a few options:
 
-- Pass `{force: true}`. This disables _all_ error checking.
+- Pass `{force: true}`. Forcing the action disables _all_ error checking.
 - Pass `{waitForAnimations: false}` to disable animation error checking.
 - Pass `{animationDistanceThreshold: 20}` to decrease the sensitivity of
   detecting if an element is animating. By increasing the threshold this enables
@@ -421,8 +421,8 @@ it('does not cause commands to bleed into the next test', (done) => {
 
 #### Complex Promise Example
 
-In the example below, we forget to return the `Promise` in our test. This means
-the test passes synchronously but our `Promise` resolves in the next test. This
+In the example below, we forget to return the `Promise` in our test, so
+the test passes synchronously but our `Promise` resolves in the next test. The missing return
 also causes the commands to be queued on the wrong test. We will get the error
 in the next test that Cypress detected it had commands in its command queue.
 
@@ -606,12 +606,12 @@ if you've exhausted all other possibilities.
 ## CLI Errors
 
 Errors in this section may occur when using the [Cypress command line (CLI)](/app/references/command-line).
-They may also apply to running Cypress programmatically through the [Cypress Module API](/app/references/module-api).
+These errors may also apply to running Cypress programmatically through the [Cypress Module API](/app/references/module-api).
 
 ### <Icon name="exclamation-triangle" color="red" /> You passed the `--record` flag but did not provide us your Record Key.
 
 You may receive this error when trying to run Cypress tests in
-[Continuous Integration](/app/continuous-integration/overview). This
+[Continuous Integration](/app/continuous-integration/overview). The error
 means that you did not pass a specific record key to:
 [cypress run --record](/app/references/command-line#cypress-run).
 
@@ -833,7 +833,7 @@ When Cypress is installed, it unzips to the designated cache location on your
 computer. This error means that Cypress detected that it has exceeded the
 maximum path length while unzipping Cypress.
 
-This is common on Windows, where the maximum path length used to be 260
+Exceeding the maximum path length is common on Windows, where the limit used to be 260
 characters.
 
 To fix this error, enable "long paths" on your Windows system:
@@ -849,7 +849,7 @@ New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
 
 3. Restart your computer.
 
-This should get rid of the error. If you are still receiving this error,
+These steps should get rid of the error. If you are still receiving this error,
 [search for an open issue](https://github.com/cypress-io/cypress/issues) or
 [open a new one](https://github.com/cypress-io/cypress/issues/new/choose).
 
@@ -863,7 +863,7 @@ The `--auto-cancel-after-failures` flag must be used with the `cypress run` comm
 
 ### <Icon name="exclamation-triangle" color="red" /> --auto-cancel-after-failures must be an integer or false
 
-You passed in an invalid value for the `--auto-cancel-after-failures` flag. It
+You passed in an invalid value for the `--auto-cancel-after-failures` flag. The flag's value
 must be an integer or false.
 
 ### <Icon name="exclamation-triangle" color="red" /> --auto-cancel-after-failures passed without a Business or Enterprise Cloud account
@@ -895,7 +895,7 @@ For a more thorough explanation of Cypress's Cross Origin Testing,
 This error means that your application navigated to a superdomain that Cypress
 was not bound to. Initially when you [`cy.visit()`](/api/commands/visit),
 Cypress changes the browser's URL to match the `url` passed to
-[`cy.visit()`](/api/commands/visit). This enables Cypress to communicate with
+[`cy.visit()`](/api/commands/visit). Matching the URL enables Cypress to communicate with
 your application to bypass all same-origin security policies among other things.
 
 When your application navigates to a superdomain outside of the current
@@ -978,7 +978,7 @@ Cypress is unable to set cookies for a synchronous XHR response if the request i
 This error can occur whenever Cypress detects that the launched browser has
 exited or crashed before the tests could finish running.
 
-This can happen for a number of reasons, including:
+A browser exit or crash can happen for a number of reasons, including:
 
 - The browser was exited manually, by clicking the "Quit" button or otherwise.
 - Your test suite or application under test is starving the browser of
@@ -1020,7 +1020,7 @@ modifies the DOM after server rendering but before React hydration occurs,
 causing a mismatch between what the server rendered and what React sees on the
 client.
 
-This results in errors like:
+The mismatch results in errors like:
 
 ```
 Hydration failed because the server rendered HTML didn't match the client.
@@ -1053,7 +1053,7 @@ application's `<head>`:
 
 When Cypress detects this marker:
 
-1. It injects its bootstrap code **into** the existing script element
+1. Cypress injects its bootstrap code **into** the existing script element
 2. The DOM structure remains unchanged (no new elements added)
 3. React's hydration succeeds because the DOM matches expectations
 
@@ -1090,7 +1090,7 @@ export default function RootLayout({
 :::info
 
 The marker script should be placed inside the `<head>` element in your root
-layout. This ensures it's present on every page of your application.
+layout. Placing the marker script there ensures the marker is present on every page of your application.
 
 :::
 
@@ -1245,7 +1245,7 @@ Cypress is not running:
 
 - The script element remains in the DOM but contains only a comment or empty
   content
-- It has no performance impact
+- The script element has no performance impact
 - React ignores it during normal hydration
 
 If you prefer to only include the marker during testing, you can conditionally
@@ -1283,7 +1283,7 @@ export default function RootLayout({
 ### <Icon name="exclamation-triangle" color="red" /> Whoops, we can't run your tests
 
 This error happens when Cypress detects that the browser automation is not
-connected, or that Cypress's internal proxy is being bypassed. This is caused by
+connected, or that Cypress's internal proxy is being bypassed. The error is caused by
 one of the following:
 
 **A policy setting blocks the Cypress proxy server or browser extension**

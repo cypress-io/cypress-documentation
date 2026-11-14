@@ -82,7 +82,7 @@ Whatever was passed to the function is what is yielded.
 <HeaderYields />
 
 - In most cases, `.and()` yields the same subject it was given.
-- It is _safe_ to chain further commands that rely on the subject after `.and()`. This is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
+- It is _safe_ to chain further commands that rely on the subject after `.and()`. This behavior is different from action commands such as [`.click()`](/api/commands/click), where chaining further commands is unsafe.
 - Queries chained after `.and()` do not retry from the start of the chain. If the DOM re-renders, they retry from the subject `.and()` yielded. See [Retry boundaries](#Retry-boundaries).
 
 ```javascript
@@ -146,7 +146,7 @@ cy.get('#header a')
 ### Function
 
 Passing a function to `.and()` enables you to assert on the yielded subject.
-This gives you the opportunity to _massage_ what you'd like to assert.
+The function gives you the opportunity to _massage_ what you'd like to assert.
 
 Be sure _not_ to include any code that has side effects in your callback
 function. Cypress retries the callback until no assertions within it throw.

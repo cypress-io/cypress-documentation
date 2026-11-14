@@ -38,9 +38,9 @@ Every URL visited in an end-to-end run passes through three steps, in order:
 2. **Your patterns**: The remaining URLs are matched against your [`views`](/ui-coverage/configuration/views) configuration patterns, in the order they're listed. The first matching pattern wins.
 3. **Automatic grouping**: Any URLs that didn't match one of your patterns are grouped by the automatic rules below.
 
-The automatic rules consolidate the dynamic URLs that represent the same page into a single view. They reduce noise so that your report reflects the structure of your application, not the number of records in your test data:
+The automatic rules consolidate the dynamic URLs that represent the same page into a single view, reducing noise so that your report reflects the structure of your application, not the number of records in your test data:
 
-- **Dynamic segments**: Any path segment that is a number or an ID is replaced with a wildcard (`*`). A segment counts as an ID when it is a UUID, a UUID-shaped hexadecimal value (even if not a strictly valid UUID), or a string of 20 or more hexadecimal characters. This applies even when only one URL matches the pattern, so `/orders/123` becomes `/orders/*` on its own.
+- **Dynamic segments**: Any path segment that is a number or an ID is replaced with a wildcard (`*`). A segment counts as an ID when it is a UUID, a UUID-shaped hexadecimal value (even if not a strictly valid UUID), or a string of 20 or more hexadecimal characters. The wildcard replacement applies even when only one URL matches the pattern, so `/orders/123` becomes `/orders/*` on its own.
 - **Query parameters**: Query strings are ignored when grouping, so URLs that differ only by query parameters become a single view, and view names do not include a query string.
 - **Hash routing**: If a URL's hash begins with `#/`, UI Coverage treats your application as using hash-based routing. Each hash route becomes its own view, and the dynamic segment rules also apply within the hash. Hashes that do not begin with `#/` (e.g., `#section-2`) are ignored.
 - **Trailing slashes**: URLs that differ only by a trailing slash are the same view.
