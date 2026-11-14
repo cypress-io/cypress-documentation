@@ -27,7 +27,7 @@ Configuration set using `Cypress.config` _is only in scope for the current spec
 file._
 
 Cypress runs each spec file in isolation: the browser is exited between specs.
-Configuration changed in one spec won't be visible in other specs.
+Configuration changed in one spec isn't visible in other specs.
 
 :::
 
@@ -113,7 +113,7 @@ Cypress.config('pageLoadTimeout') // => 60000
 
 <strong>Scope</strong>
 
-Remember, any changes that you make to configuration using this API will be in
+Remember, any changes that you make to configuration using this API are in
 effect for the remainder of the tests _in the same spec file._
 
 :::
@@ -164,7 +164,7 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 60000, ..
 
 Some configuration values are readonly and cannot be changed while running a
 test. Anything that's not directly under Cypress's control - like timeouts or
-environment variables - will be ignored at run-time. Be sure to review the list
+environment variables - is ignored at run-time. Be sure to review the list
 of
 [test configuration options](/app/references/configuration#Test-Configuration).
 
@@ -187,8 +187,8 @@ a [test configuration](/app/references/configuration#Test-Configuration)
 object to the test or suite function.
 
 While `Cypress.config()` changes configuration values through the entire spec
-file, using test configuration will only change configuration values during the
-suite or test where they are set. The values will then reset to the previous
+file, using test configuration only changes configuration values during the
+suite or test where they are set. The values then reset to the previous
 default values after the suite or test is complete.
 
 See the full guide on
@@ -196,7 +196,7 @@ See the full guide on
 
 ### `Cypress.config()` executes Synchronously
 
-`Cypress.config()` executes synchronously and will
+`Cypress.config()` executes synchronously and does
 not wait for the Cypress commands above it to execute. If you need to update
 your configuration mid-test, be sure to chain the
 [asynchronously Cypress command](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous).

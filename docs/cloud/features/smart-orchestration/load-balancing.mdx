@@ -18,7 +18,7 @@ slowest one.
 
 **Load balancing** is how Cypress Cloud solves this. Cypress automatically
 distributes your spec files across the available machines in your CI provider,
-using data from previous runs to predict how long each spec will take and
+using data from previous runs to predict how long each spec takes and
 assign work accordingly. The goal is simple: keep every machine busy until the
 last spec finishes, so your run completes as fast as the hardware you're paying
 for allows, with no manual configuration.
@@ -51,7 +51,7 @@ Cypress estimates the duration of each spec and distributes them so that the
 total run finishes as quickly as possible.
 
 As more and more tests are recorded to the Cloud, Cypress can better predict
-how long a given spec file will take to run. To prevent irrelevant data from
+how long a given spec file takes to run. To prevent irrelevant data from
 affecting the duration prediction, Cypress doesn't use old historical run data
 regarding the spec file, keeping estimates accurate as your application and
 tests evolve.
@@ -162,7 +162,7 @@ Open any run, select the **Specs** tab, and switch to the
 [Machines View](/cloud/features/smart-orchestration/parallelization#Machines-View).
 When load balancing is working well, every machine finishes at roughly the
 same time. If one machine finishes in 3 minutes while another runs for 12, the
-run is bottlenecked by a single long spec, and adding more machines won't help
+run is bottlenecked by a single long spec, and adding more machines doesn't help
 until that imbalance is resolved.
 
 <DocsImage

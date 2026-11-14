@@ -110,7 +110,7 @@ declarative subject validations such as:
 ### Parent Commands
 
 Parent commands always **begin** a new chain of commands. Even if you've chained
-it off of a previous command, parent commands will always start a new chain, and
+it off of a previous command, parent commands always start a new chain, and
 ignore previously yielded subjects.
 
 Examples of parent commands:
@@ -690,7 +690,7 @@ Log? Read more about [Command Logging](#Command-Logging).
 Child commands are always chained off of a **parent** command, or another
 **child** command.
 
-The previous subject will automatically be yielded to the callback function.
+Cypress automatically yields the previous subject to the callback function.
 
 Examples of child commands:
 
@@ -767,8 +767,8 @@ cy.get('button')
   })
 ```
 
-By setting the `{ prevSubject: true }`, our new `.console()` command will
-require a subject.
+By setting the `{ prevSubject: true }`, our new `.console()` command
+requires a subject.
 
 Invoking it like this would error:
 
@@ -788,8 +788,7 @@ immediately use more Cypress commands on that subject.
 
 A dual command can either start a chain of commands or be chained off of an
 existing one. A dual command is basically the hybrid between both a parent and a child
-command. You will likely rarely use this, and only a handful of our internal
-commands use this.
+command. You rarely need a dual command, and only a handful of our internal commands are dual commands.
 
 Nevertheless, it is useful if your command can work in multiple ways - either
 with an existing subject or without one.
@@ -865,7 +864,7 @@ the original.
 :::caution
 
 `Cypress.Commands.overwrite` can only overwrite commands, not queries. If you
-want to modify the behavior of a query, you'll need to use
+want to modify the behavior of a query, you need to use
 [`Cypress.Commands.overwriteQuery`](/api/cypress-api/custom-queries) instead.
 
 :::
@@ -1147,12 +1146,12 @@ one of:
 - `document`
 - `window`
 
-When doing so Cypress will automatically validate your subject to ensure it
+When doing so Cypress automatically validates your subject to ensure it
 conforms to one of those types.
 
 :::info
 
-Adding validations is optional. Passing `{ prevSubject: true }` will require a
+Adding validations is optional. Passing `{ prevSubject: true }` requires a
 subject, but not validate its type.
 
 :::
@@ -1379,7 +1378,7 @@ behaves in the Command Log.
 Take advantage of the [`Cypress.log()`](/api/cypress-api/cypress-log) API. When
 you're issuing many internal Cypress commands, consider passing `{ log: false }`
 to those commands, and programmatically controlling your custom command. This
-approach will cleanup the Command Log and be much more visually appealing and
+approach cleans up the Command Log and is much more visually appealing and
 understandable.
 
 ### `cy.hover()` and `cy.mount()`
@@ -1559,7 +1558,7 @@ IntelliSense to show helpful documentation.
 
 Cypress [12.17.4](/app/references/changelog#12-17-4) includes a Webpack upgrade (v4 to v5), which [tree shakes out](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#inner-module-tree-shaking) any side-effects or files that _only_ include side-effects.
 
-If you are using TypeScript and have Webpack's `sideEffects:false` set in your package.json, custom Cypress commands will not be registered by the common pattern of writing the commands in one file and having them be run as a side effect of importing the file. For example:
+If you are using TypeScript and have Webpack's `sideEffects:false` set in your package.json, custom Cypress commands are not registered by the common pattern of writing the commands in one file and having them be run as a side effect of importing the file. For example:
 
 <Tabs>
 <TabItem value="cypress/support/commands.js">
@@ -1590,7 +1589,7 @@ Cypress.Commands.add('login', (email, password) => { ... })
 import './commands'
 ```
 
-To support `sideEffects:false`, you can wrap the Cypress commands in a function that will be imported by the support file.
+To support `sideEffects:false`, you can wrap the Cypress commands in a function that the support file imports.
 
 <Tabs>
 <TabItem value="cypress/support/commands.js">

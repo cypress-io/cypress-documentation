@@ -48,7 +48,7 @@ An interactive element only counts toward your score if it was **visible in at l
 
 :::note
 
-A control that only ever sits inside a collapsed menu your tests never open is not counted at all. The control neither raises nor lowers your score. Leaving out unopened controls is why your total element count can be lower than the number of controls you know exist in your markup. UI Coverage will flag the _trigger_ element as untested, as an unopened door.
+A control that only ever sits inside a collapsed menu your tests never open is not counted at all. The control neither raises nor lowers your score. Leaving out unopened controls is why your total element count can be lower than the number of controls you know exist in your markup. UI Coverage flags the _trigger_ element as untested, as an unopened door.
 :::
 
 <DocsImage
@@ -223,7 +223,7 @@ These anchors are ordinary interactive elements that must be interacted with to 
 
 ### Exclude link destinations from your score
 
-To keep destinations you'll never test, such as external sites, your marketing pages, or a status page, from counting against your score, exclude them by URL:
+To keep destinations you never test, such as external sites, your marketing pages, or a status page, from counting against your score, exclude them by URL:
 
 ```json title="App Quality Config"
 {

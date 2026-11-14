@@ -35,7 +35,7 @@ it('mounts', () => {
 
 To test emitted events from a Svelte component, we need to pass in a callback
 for when we increment the stepper. The Stepper component
-will need to invoke this callback for us. We can also pass in a
+needs to invoke this callback for us. We can also pass in a
 Cypress spy so we can query the spy later for results. In the example below, we
 pass in the `onChange` callback handler and validate it was called as expected:
 

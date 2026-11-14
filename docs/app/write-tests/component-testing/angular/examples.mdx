@@ -191,7 +191,7 @@ With Cypress 14, signal support is directly included in the `cypress/angular` te
 
 :::
 
-For the below examples, we'll be working with a very simple component called `TestComponent`, which looks something like shown below:
+The below examples work with a very simple component called `TestComponent`, which looks something like shown below:
 
 ```typescript
 // app/components/test-component.component.ts
@@ -327,8 +327,8 @@ cy.then(() => {
 
 Cypress doesn't propagate changes via spy from `input()` signals.
 
-For writable signals, such as `model()`s or `signal()`s, Cypress **will** propagate changes if an output spy is created with the prop's name suffixed with `Change`. In the example below,
-`countChange` will spy on changes to the `count` signal.
+For writable signals, such as `model()`s or `signal()`s, Cypress **does** propagate changes if an output spy is created with the prop's name suffixed with `Change`. In the example below,
+`countChange` spies on changes to the `count` signal.
 
 ```typescript
 cy.mount(TestComponent, {

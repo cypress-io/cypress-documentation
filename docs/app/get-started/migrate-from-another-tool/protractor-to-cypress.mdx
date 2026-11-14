@@ -61,7 +61,7 @@ while there are often ideals of complete code coverage, the realities of
 business and deadlines often take precedence and the tests are left unwritten,
 or worse, ignored when errors are being reported because they aren't reliable.
 
-Not only does Cypress make sure that your tests will be reliable, but it
+Not only does Cypress make sure that your tests are reliable, but it
 provides developers with tools that make e2e testing an asset to development
 rather than a hindrance.
 
@@ -152,7 +152,7 @@ End-to-end tests can be complicated because modern web applications are also
 complex. You may find that some features of your web application are challenging
 to test or the tests sporadically fail. We call these tests "flaky." Cypress
 [retries failed tests](/app/guides/test-retries). Sometimes tests
-will fail in a CI environment when they otherwise would pass on a developer's
+fail in a CI environment when they otherwise pass on a developer's
 machine. Enabling test retries in the Cypress configuration can help you to get
 unblocked when unpredictable, flaky tests are occasionally failing.
 
@@ -172,8 +172,8 @@ to add Cypress to your Angular project:
 ng add @cypress/schematic
 ```
 
-This command will install Cypress, add scripts for running Cypress in `run` and `open`
-mode, scaffold base Cypress files and directories, and (optional) prompt you to
+This command installs Cypress, adds scripts for running Cypress in `run` and `open`
+mode, scaffolds base Cypress files and directories, and (optional) prompts you to
 remove Protractor and reconfigure the default `ng e2e` command to use Cypress.
 
 With our schematic installed and Protractor removed, you can run Cypress in
@@ -233,7 +233,7 @@ Cypress manually.
 
 Then, since Cypress can run in parallel with your application, let's install
 [concurrently](https://www.npmjs.com/package/concurrently) to simplify our npm
-script. Installing concurrently is optional; however, you will need another way to serve your
+script. Installing concurrently is optional; however, you need another way to serve your
 Angular app for Cypress to run tests against your application.
 
 <Tabs>
@@ -267,7 +267,7 @@ bun add --dev concurrently
   </TabItem>
 </Tabs>
 
-Then we will update our `package.json` with the following scripts:
+Then update your `package.json` with the following scripts:
 
 ```json title="package.json"
 {
@@ -313,7 +313,7 @@ bun run cy:open
   </TabItem>
 </Tabs>
 
-The `cy:open` script will start up Cypress and our Angular app at the same time.
+The `cy:open` script starts up Cypress and our Angular app at the same time.
 
 Again, we highly recommend using our
 [Angular Schematic](https://github.com/cypress-io/cypress/tree/develop/npm/cypress-schematic)
@@ -325,7 +325,7 @@ to install Cypress, and we plan on adding new capabilities to it over time.
 
 #### Getting a single element on the page
 
-When it comes to e2e tests, one of the most common things you'll need to do is
+When it comes to e2e tests, one of the most common things you need to do is
 get one or more HTML elements on a page. Rather than split element fetching into
 multiple methods that you need to memorize, everything can be accomplished with
 [`cy.get`](/api/commands/get) while using CSS selectors or the preferred
@@ -706,7 +706,7 @@ cy.get('#example-input')
 Cypress has one additional feature that can make a critical difference in the
 reliability of your tests' assertions:
 [retry-ability](/app/core-concepts/retry-ability).
-When your test fails an assertion or command, Cypress will mimic a real user
+When your test fails an assertion or command, Cypress mimics a real user
 with build-in wait times and multiple attempts at asserting your tests in order
 to minimize the amount of false negatives / positives.
 
@@ -732,8 +732,8 @@ describe('verify elements on a page', () => {
 
 In the example above, if the submit link does not appear on the page at the
 exact moment when Protractor runs the test (which can be due to any number of
-factors including API calls, slow browser rendering, etc.), your test will fail.
-However, Cypress factors these conditions into its assertions and will only fail
+factors including API calls, slow browser rendering, etc.), your test fails.
+However, Cypress factors these conditions into its assertions and only fails
 if the time goes beyond a reasonable amount.
 
 ## Negative assertions
@@ -789,7 +789,7 @@ it('should display a Load More button after fetching and displaying a list of us
 })
 ```
 
-Cypress will automatically wait for any request to `/users/**` to complete
+Cypress automatically waits for any request to `/users/**` to complete
 before continuing your test.
 
 ### Network Stubbing
@@ -893,13 +893,13 @@ API to wait for Angular to finish rendering before attempting to interact with
 an element.
 
 With Cypress, commands that query the DOM are
-[automatically retried](/app/core-concepts/retry-ability). Cypress will
-automatically wait and retry most commands until an element appears in the DOM.
+[automatically retried](/app/core-concepts/retry-ability). Cypress
+automatically waits and retries most commands until an element appears in the DOM.
 If an element is not
 [actionable](/app/core-concepts/interacting-with-elements#Actionability)
 within the
 [`defaultCommandTimeout`](/app/core-concepts/retry-ability#Timeouts) setting,
-the command will fail. This automatic retrying enables you to write tests without the need for
+the command fails. This automatic retrying enables you to write tests without the need for
 arbitrary timeouts, enabling you to write more predictable tests.
 
 <Badge type="danger">Before: Protractor</Badge>
@@ -1108,7 +1108,7 @@ may write tests that build up state that subsequent tests, although we
 [do not recommend relying on the state of previous tests](/app/core-concepts/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests).
 
 With Cypress, all you need to do is pass the `--parallel` and `--record` flag to
-`cypress run`, and it will take care of the rest for you:
+`cypress run`, and Cypress takes care of the rest for you:
 
 ```bash
 cypress run --record --parallel
@@ -1238,7 +1238,7 @@ Read our docs to learn more about speeding up test execution in CI via
 
 ### Code Coverage
 
-As you write more and more end-to-end tests, you will find yourself wondering -
+As you write more and more end-to-end tests, you find yourself wondering -
 do I need to write more tests? Are there parts of the application still
 untested? Are there parts of the application that perhaps are tested too much?
 This [code coverage guide](/app/tooling/code-coverage) is an excellent

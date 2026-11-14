@@ -27,7 +27,7 @@ When you run Cypress via `cypress run` and pass the `--record` flag, the followi
 - Videos
 - OS environment variables related to CI and git information
 
-When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additional data outlined below will be sent to Cypress Cloud. [See our guide on disabling Test Replay.](/cloud/features/test-replay#Opt-out-of-Test-Replay)
+When [Test Replay](/cloud/features/test-replay) capturing is enabled, Cypress sends the additional data outlined below to Cypress Cloud. [See our guide on disabling Test Replay.](/cloud/features/test-replay#Opt-out-of-Test-Replay)
 
 - The rendered DOM and CSS styles for the application under test
 - Cypress commands and events represented in the Command Log
@@ -36,9 +36,9 @@ When [Test Replay](/cloud/features/test-replay) capturing is enabled, the additi
 
 Cypress Cloud does not capture anything related to the code of your application under test or the code within any repositories that are associated with your project.
 
-When [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled, test content may be shared with session-bound AI model to enhance your test management experience. Your data is not used to train AI models and will not be shared between customers.
+When [Cloud AI](/cloud/faq#What-is-Cloud-AI) is enabled, test content may be shared with session-bound AI model to enhance your test management experience. Your data is not used to train AI models and is not shared between customers.
 
-You, the customer, own and are responsible for your test content. We trust that customers will make decisions about the appropriateness of data to use in testing and will avoid use of PII, PHI, or other types of protected information. Cypress makes commercially reasonable efforts to protect confidentiality of information that is provided to Cypress Cloud.
+You, the customer, own and are responsible for your test content. We trust that customers make decisions about the appropriateness of data to use in testing and avoid use of PII, PHI, or other types of protected information. Cypress makes commercially reasonable efforts to protect confidentiality of information that is provided to Cypress Cloud.
 
 ## Data Controls
 
@@ -50,7 +50,7 @@ If you'd like more granular control over what data is sent to Cypress Cloud, [co
 
 Cypress Cloud offers controls around the visibility of a project. You can set a project to be public or private. [See project access control settings.](/cloud/account-management/projects#Public-vs-Private)
 
-Setting a project to private means that only the users explicitly invited to the organization will have visibility into the project, its runs, and any data captured by Cypress.
+Setting a project to private means that only the users explicitly invited to the organization have visibility into the project, its runs, and any data captured by Cypress.
 
 ### Test Replay controls
 
@@ -143,7 +143,7 @@ Users without the Owner or Admin role see a locked setting and cannot change it.
 
 #### Disable Test Replay
 
-You can disable capturing data in Test Replay per project by following [this guide](/cloud/features/test-replay#Opt-out-of-Test-Replay). Disabling capture means Test Replay will not be available for viewing or debugging in the project. Disabling capture also prevents Cypress Cloud from capturing the following data:
+You can disable capturing data in Test Replay per project by following [this guide](/cloud/features/test-replay#Opt-out-of-Test-Replay). Disabling capture means Test Replay is not available for viewing or debugging in the project. Disabling capture also prevents Cypress Cloud from capturing the following data:
 
 - The rendered DOM and CSS styles for the application under test
 - Cypress commands and events represented in the Command Log
@@ -225,13 +225,13 @@ You can delete videos that are recorded when you are passing `video: true` by fo
 
 #### Turn off Cypress Command Log rendering
 
-You can disable showing the entirety of the Cypress Command Log as well as the Application under Test (AUT) controls in your tests to prevent all test content from being shown and recorded in any screenshot or video by passing `--no-runner-ui` via the CLI while running Cypress tests. See [Cypress Command Line options](/app/references/command-line#Options). Passing `--no-runner-ui` means that the AUT will be the only thing that is rendered while running tests, so the only thing that is captured in screenshots and videos.
+You can disable showing the entirety of the Cypress Command Log as well as the Application under Test (AUT) controls in your tests to prevent all test content from being shown and recorded in any screenshot or video by passing `--no-runner-ui` via the CLI while running Cypress tests. See [Cypress Command Line options](/app/references/command-line#Options). Passing `--no-runner-ui` means that the AUT is the only thing that is rendered while running tests, so the only thing that is captured in screenshots and videos.
 
-When `--no-runner-ui` is set, data from the Cypress Command Log will still be sent to Cypress Cloud to be generated and displayed in Test Replay if it is enabled. See [Disable Test Replay](/cloud/features/test-replay#Opt-out-of-Test-Replay) for more information.
+When `--no-runner-ui` is set, Cypress still sends data from the Cypress Command Log to Cypress Cloud to be generated and displayed in Test Replay if it is enabled. See [Disable Test Replay](/cloud/features/test-replay#Opt-out-of-Test-Replay) for more information.
 
 #### Mask data in the Cypress Command Log
 
-There are multiple ways to mask data in the Cypress Command Log. When these strategies are used, data within test definitions will still be sent to Cypress Cloud.
+There are multiple ways to mask data in the Cypress Command Log. When these strategies are used, Cypress still sends data within test definitions to Cypress Cloud.
 
 ##### `log: false` for Cypress commands
 

@@ -49,11 +49,11 @@ scripts can be used as a shortcut:
 When incorporating testing of multiple browsers within your QA process, you must
 implement a CI strategy that provides an optimal level of confidence while
 taking into consideration test duration and infrastructure costs. This optimal
-strategy will vary by the needs of a particular project. This guide we
+strategy varies by the needs of a particular project. This guide we
 present several strategies to consider when crafting the strategy for your
 project.
 
-CI strategies will be demonstrated using the
+This guide demonstrates CI strategies using the
 [Circle CI Cypress Orb](https://circleci.com/orbs/registry/orb/cypress-io/cypress)
 for its concise and readable configuration, but the same concepts apply for most
 CI providers.
@@ -72,7 +72,7 @@ Firefox.
 Generally, it is desired to run tests with each pushed commit, but it may not be
 necessary to do so for all browsers. For example, we can choose to run tests
 within Chrome for each commit, but only run Firefox on a periodic basis (i.e.
-nightly). The periodic frequency will depend on the scheduling of your project
+nightly). The periodic frequency depends on the scheduling of your project
 releases, so consider a test run frequency that is appropriate for the release
 schedule of your project.
 
@@ -158,7 +158,7 @@ parameter, against the Firefox browser, and reports the results to
 
 :::info
 
-**Note:** The `name` under each `cypress/run` job which will be shown in the
+**Note:** The `name` under each `cypress/run` job is shown in the
 Circle CI workflow UI to distinguish the jobs.
 
 :::

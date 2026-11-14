@@ -25,8 +25,8 @@ If your favorite library isn't featured, don't worry - we expose the same API we
 use internally for the Cypress community to define their own Framework
 Definitions.
 
-In this guide, you'll learn how to author a Framework Definition, which will
-enjoy the same polished onboarding experience as our officially supported
+In this guide, you learn how to author a Framework Definition, which
+enjoys the same polished onboarding experience as our officially supported
 frameworks.
 
 ## Concepts
@@ -63,9 +63,9 @@ Some examples of valid names include:
 - `@cypress/cypress-ct-react`
 - `@angular/cypress-ct-angular`
 
-When configuring a project to use Component Testing, Cypress will load any
+When configuring a project to use Component Testing, Cypress loads any
 dependencies following this naming convention from the project's `node_modules`
-and present them as framework options.
+and presents them as framework options.
 
 A simple example of a Framework Definition for the
 [Solid.js](https://www.solidjs.com/) library is shown below. We generally
@@ -187,7 +187,7 @@ installed them all, so Cypress is prompting us to do so:
 The second part of defining a Framework Definition is the Mount Adapter. The Mount Adapter is
 the function that renders the component in your tests using `cy.mount()`.
 
-By default, Cypress will look for the Mount Adapter as a `mount` function that is a **named
+By default, Cypress looks for the Mount Adapter as a `mount` function that is a **named
 export** from the package. The `mount` function should be written in a `index.mjs` file. This
 example is for a [Solid.js](https://www.solidjs.com/) mount adapter:
 

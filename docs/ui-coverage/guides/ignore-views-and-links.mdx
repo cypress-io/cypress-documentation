@@ -36,7 +36,7 @@ your team is responsible for testing:
 - **Third-party pages**: Sign-in flows on an external identity provider (Okta,
   Auth0), a payment processor's hosted checkout, or embedded content you don't
   control. Your tests pass through them, but their UI isn't yours to cover.
-- **Links to destinations you'll never test**: Your marketing site, a help
+- **Links to destinations you never test**: Your marketing site, a help
   center, a status page, or a social profile linked from your app. No test
   visits them, so no [view](/ui-coverage/core-concepts/views) exists. The link
   is the only thing UI Coverage sees, and it counts as an [untested
@@ -81,7 +81,7 @@ Open the **UI Coverage** tab of a recorded run and work through two sections:
 Expanding an untested link shows a **Referrers** tab (the views that link to the
 destination) and a **URLs** tab (the concrete destinations, grouped for dynamic
 routes). Use these to confirm a destination is genuinely out of scope before you
-exclude it, and to capture the exact URL or path you'll match on.
+exclude it, and to capture the exact URL or path to match on.
 
 ### With an AI agent
 

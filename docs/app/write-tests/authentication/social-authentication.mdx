@@ -20,7 +20,7 @@ primary means of authentication testing. This recommendation is due to the
 mentioned in our
 [Best Practices Guide](/app/core-concepts/best-practices).
 
-Relying on social authentication in CI will likely result in bot detection and
+Relying on social authentication in CI likely results in bot detection and
 in some cases, account suspension due to violating the provider's Terms of
 Service.
 
@@ -30,7 +30,7 @@ Service.
 
 For this guide, we're going to set up an application that uses Auth0 for Tenant
 that has social connections set up for Google, Facebook, and Microsoft which
-will authenticate users on our behalf to our application.
+authenticate users on our behalf to our application.
 
 ### Set up the Auth0 tenant
 
@@ -45,7 +45,7 @@ account and select the **I am a new Auth0 User** flow. The flow has 4 steps:
 - **Step 4:** You can either download the sample via the **Download Sample App**
   button or clone the
   [Auth0 React sample app](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01).
-  We'll need this application in the next step. Select
+  You need this application in the next step. Select
   **I am Ready to Use Auth0**. Your social connections on your Auth0 tenant
   should now be configured correctly.
 
@@ -56,8 +56,7 @@ Select the dropdown and go to **Applications**.
 
 - Select the **Default Application**.
 - Visit the **Settings** tab.
-  - Copy the `domain` and `client ID` fields inside **Basic Information**. These values
-    will be needed shortly.
+  - Copy the `domain` and `client ID` fields inside **Basic Information**. You need these values in a later step.
   - The **Application Properties** should have **Single Page Application** selected
     for **Application Type**,
   - Inside **Application URIs**, add `http://localhost:3000` to
@@ -68,7 +67,7 @@ Select the dropdown and go to **Applications**.
   [sample app](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01#create-an-api).
 - Once created, paste the `domain` and `client ID` into their respective fields
   inside `src/auth_config.json`. The `audience` key can be removed. The
-  login/callback URIs will default to `http://localhost:3000` which is the url
+  login/callback URIs default to `http://localhost:3000` which is the url
   of our test application.
 - [Install](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01#project-setup)
   the application dependencies and
@@ -127,8 +126,8 @@ as OS-level environment variables (e.g., in your `.env` file or CI secret manage
 
 ### Login with `cy.origin()`
 
-We'll write a custom command called `loginToAuth0ViaSocial` to perform a
-login to either Facebook, Google, or Microsoft. This command will use
+Write a custom command called `loginToAuth0ViaSocial` to perform a
+login to either Facebook, Google, or Microsoft. This command uses
 [`cy.origin()`](/api/commands/origin) to:
 
 1. Navigate to the Auth0 login
@@ -137,7 +136,7 @@ login to either Facebook, Google, or Microsoft. This command will use
    [sample app](https://github.com/auth0-samples/auth0-react-samples/tree/d5848ed710db85d6ef060731b296603c0eca744b/Sample-01)
 4. Cache the results with [`cy.session()`](/api/commands/session)
 
-For demonstration, we'll have a function for each provider.
+For demonstration, the example has a function for each provider.
 
 #### Facebook Login Function
 

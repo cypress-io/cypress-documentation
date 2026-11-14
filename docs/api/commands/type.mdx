@@ -43,7 +43,7 @@ cy.clock().type('www.cypress.io') // Errors, 'clock' does not yield DOM elements
 The text to be typed into the DOM element.
 
 Text passed to `.type()` may include any of the special character sequences
-below. These characters will pass along the correct `keyCode`, `key`, and
+below. These characters pass along the correct `keyCode`, `key`, and
 `which` codes to any events issued during `.type()`. Some of the special
 character sequences may perform actions during typing such as `{moveToEnd}`,
 `{moveToStart}`, or `{selectAll}`.
@@ -182,7 +182,7 @@ This format isn't exactly how a user would type into a date input, but is a work
 since date input support varies between browsers and the format varies based on
 locale. `yyyy-MM-dd` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#dates-and-times)
-and is what the input's `value` will be set to regardless of browser or locale.
+and is what the input's `value` is set to regardless of browser or locale.
 
 `{upArrow}` and `{downArrow}` can increase and decrease the day value,
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
@@ -201,7 +201,7 @@ This format isn't exactly how a user would type into a month input, but is a wor
 since month input support varies between browsers and the format varies based on
 locale. `yyyy-MM` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#months) and is what
-the input's `value` will be set to regardless of browser or locale.
+the input's `value` is set to regardless of browser or locale.
 
 `{upArrow}` and `{downArrow}` can increase and decrease the month value,
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
@@ -223,7 +223,7 @@ This format isn't exactly how a user would type into a week input, but is a work
 since week input support varies between browsers and the format varies based on
 locale. `yyyy-Www` is the format required by
 [the W3 spec](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-week-string)
-and is what the input's `value` will be set to regardless of browser or locale.
+and is what the input's `value` is set to regardless of browser or locale.
 
 Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
 
@@ -275,7 +275,7 @@ their options. See each doc for more information.
 cy.get('input').type('{shift+alt+b}hello')
 ```
 
-When a modifier is specified on its own, it will remain activated for the
+When a modifier is specified on its own, it remains activated for the
 duration of the `.type()` command, and is released when all subsequent
 characters are typed. However, [\{release: false\}](#Options) can be passed as an
 [option](#Key-Combinations).
@@ -358,7 +358,7 @@ it('does not have modifiers activated', () => {
 ```
 
 To manually release modifiers within a test after using `{release: false}`, use
-another `type` command and the modifier will be released after it.
+another `type` command and the modifier is released after it.
 
 ```javascript
 // 'altKey' will be true while typing 'foo'
@@ -425,7 +425,7 @@ it('navigates form using keyboard only', () => {
 
 Forcing typing overrides the
 [actionable checks](/app/core-concepts/interacting-with-elements#Forcing)
-Cypress applies and will automatically fire the events.
+Cypress applies and automatically fires the events.
 
 ```javascript
 cy.get('input[type=text]').type('Test all the things', { force: true })
@@ -487,14 +487,14 @@ may be necessary.
 #### When element is not in focus
 
 If the element is currently not in focus, before issuing any keystrokes Cypress
-will first issue a [`.click()`](/api/commands/click) to the element to bring it
+first issues a [`.click()`](/api/commands/click) to the element to bring it
 into focus.
 
 #### Events that fire
 
-Once the element is in focus, Cypress will begin firing keyboard events.
+Once the element is in focus, Cypress begins firing keyboard events.
 
-The following events will be fired based on what key was pressed identical to
+Cypress fires the following events based on what key was pressed identical to
 the event spec:
 
 - `keydown`
@@ -504,13 +504,13 @@ the event spec:
 - `input`
 - `keyup`
 
-Additionally `change` events will be fired either when the `{enter}` key is
+Additionally `change` events are fired either when the `{enter}` key is
 pressed (and the value has changed since the last focus event), or whenever the
 element loses focus. This timing matches browser behavior.
 
 Events that should not fire on non input types such as elements with `tabindex`
 do not fire their `textInput` or `input` events. Only typing into elements which
-cause the actual value or text to change will fire those events.
+cause the actual value or text to change fires those events.
 
 #### Event Firing
 
@@ -518,11 +518,11 @@ The following rules have been implemented that match real browser behavior (and
 the spec):
 
 1. Cypress respects not firing subsequent events if previous ones were cancelled.
-2. Cypress will fire `keypress` _only_ if that key is supposed to actually fire
+2. Cypress fires `keypress` _only_ if that key is supposed to actually fire
    `keypress`.
-3. Cypress will fire `textInput` _only_ if typing that key would have inserted
+3. Cypress fires `textInput` _only_ if typing that key would have inserted
    an actual character.
-4. Cypress will fire `input` _only_ if typing that key modifies or changes the
+4. Cypress fires `input` _only_ if typing that key modifies or changes the
    value of the element.
 
 #### Event Cancellation
@@ -544,8 +544,8 @@ cy.get('#username').should('have.value', '') // true
 
 #### Preventing `mousedown` does not prevent typing
 
-In a real browser, preventing `mousedown` on a form field will prevent it from
-receiving focus and thus prevent it from being able to be typed into. Currently,
+In a real browser, preventing `mousedown` on a form field prevents it from
+receiving focus and thus prevents it from being typed into. Currently,
 Cypress does not factor this in.
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) if you
 need this to be fixed.
@@ -554,16 +554,16 @@ need this to be fixed.
 
 Cypress prints out a table of key events that detail the keys that were pressed
 when clicking on type within the [Command Log](#Command-Log). Each character
-will contain the `which` character code and the events that happened as a result
+contains the `which` character code and the events that happened as a result
 of that key press.
 
 Events that were `defaultPrevented` may prevent other events from firing and
-those will show up as empty. For instance, cancelling `keydown` will not fire
-`keypress` or `textInput` or `input`, but will fire `keyup` (which matches the
+those events show up as empty. For instance, cancelling `keydown` does not fire
+`keypress` or `textInput` or `input`, but does fire `keyup` (which matches the
 spec).
 
 Additionally, events that cause a `change` event to fire (such as typing
-`{enter}`) will display with the `change` event column as `true`.
+`{enter}`) display with the `change` event column as `true`.
 
 Any modifiers activated for the event are also listed in a `modifiers` column.
 
@@ -610,11 +610,11 @@ cy.press(Cypress.Keyboard.Keys.ENTER)
 
 #### Modifier effects
 
-In a real browser, if a user holds `SHIFT` and types `a`, a capital `A` will be
+In a real browser, if a user holds `SHIFT` and types `a`, a capital `A` is
 typed into the input. Currently, Cypress does not simulate that behavior.
 
 Modifiers are simulated by setting their corresponding values to `true` for key
-and click events. So, for example, activating the `{shift}` modifier will set
+and click events. So, for example, activating the `{shift}` modifier sets
 `event.shiftKey` to true for any key events, such as `keydown`.
 
 ```javascript
@@ -627,17 +627,17 @@ document.querySelector('input:first').addEventListener('keydown', (e) => {
 cy.get('input:first').type('{shift}a')
 ```
 
-In the example above, a lowercase `a` will be typed, because that's the literal
+In the example above, a lowercase `a` is typed, because that's the literal
 character specified. To type a capital `A`, you can use `.type('{shift}A')` (or
 `.type('A')` if you don't care about the `shiftKey` property on any key events).
 
 This rule holds true for other special key combinations as well (that may be
 OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special
-character ``. Like with capitalization, `.type()` will not output ``, but the
+character ``. Like with capitalization, `.type()` does not output ``, but the
 letter `k`.
 
-Similarly, modifiers will not affect arrow keys or deletion keys. For example
-`{ctrl}{backspace}` will not delete an entire word.
+Similarly, modifiers do not affect arrow keys or deletion keys. For example
+`{ctrl}{backspace}` does not delete an entire word.
 [open an issue](https://github.com/cypress-io/cypress/issues/new) if you need
 modifier effects to be implemented.
 
@@ -651,7 +651,7 @@ Cypress automatically matches the spec and browser behavior for pressing the
 This behavior is defined here:
 [Form Implicit Submission](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#implicit-submission).
 
-For instance the following will submit the form.
+For instance the following submits the form.
 
 ```html
 <form action="/login">
@@ -682,7 +682,7 @@ Additionally Cypress handles these 4 other situations as defined in the spec:
 4. Submits form and fires a synthetic `click` event to the `submit` when it
    exists.
 
-If the form's `submit` event is `preventedDefault` the form will not actually be
+If the form's `submit` event is `preventedDefault` the form is not actually
 submitted.
 
 ## Rules
@@ -693,9 +693,9 @@ submitted.
 
 <HeaderAssertions />
 
-- `.type()` will automatically wait for the element to reach an
+- `.type()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.type()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.type()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -712,7 +712,7 @@ submitted.
 cy.get('input[name=firstName]').type('Jane Lane')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/type/type-in-input-shown-in-command-log.png"

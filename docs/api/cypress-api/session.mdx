@@ -45,7 +45,7 @@ The name of the session used to retrieve data storage and cookie data.
 
 ### Clearing the all session data
 
-By default, Cypress will clear the current session data **before** each test
+By default, Cypress clears the current session data **before** each test
 when `testIsolation` is enabled. You can also remove all cached session data
 with `Cypress.session.clearAllSavedSessions()`.
 
@@ -55,7 +55,7 @@ Cypress.session.clearAllSavedSessions()
 
 ### Clearing the current session data when testIsolation is disabled
 
-By default, Cypress will clear the current session data **before** each test
+By default, Cypress clears the current session data **before** each test
 when `testIsolation` is enabled. If you have disabled `testIsolation` for a
 suite, it can be helpful to clear the current session data in a `before()` block
 to ensure the suite started in a clean test slate.

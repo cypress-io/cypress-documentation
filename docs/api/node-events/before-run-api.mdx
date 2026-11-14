@@ -9,11 +9,11 @@ sidebar_label: 'before:run'
 # Before Run Event
 
 The `before:run` event fires before a run starts. When running cypress via
-`cypress open`, the event will fire when opening a project.
+`cypress open`, the event fires when opening a project.
 
-The event will fire each time `cypress run` executes. As a result, if running
+The event fires each time `cypress run` executes. As a result, if running
 your specs in [parallel](/cloud/features/smart-orchestration/parallelization), the
-event will fire once for each machine on which the tests are run.
+event fires once for each machine on which the tests are run.
 
 ## Syntax
 
@@ -44,10 +44,10 @@ version of Cypress. More details are included when running via `cypress run`.
 
 ## Usage
 
-You can return a promise from the `before:run` event handler and it will be
-awaited before Cypress proceeds running your specs.
+You can return a promise from the `before:run` event handler and Cypress
+awaits it before proceeding to run your specs.
 
-### Log the browser and the number of specs that will be run
+### Log the browser and the number of specs to run
 
 :::cypress-config-plugin-example
 

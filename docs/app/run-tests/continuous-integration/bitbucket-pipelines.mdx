@@ -63,11 +63,11 @@ pipelines:
 
 **How this `bitbucket-pipelines.yml` works:**
 
-- On _push_ to this repository, this job will provision and start Bitbucket
-  Pipelines using the Cypress Docker image. The job will run the pipelines defined in the
+- On _push_ to this repository, this job provisions and starts Bitbucket
+  Pipelines using the Cypress Docker image. The job runs the pipelines defined in the
   `pipelines` section of the configuration.
 - The code is checked out from the Bitbucket repository.
-- Finally, our scripts will:
+- Finally, our scripts run these steps:
   - Install npm dependencies
   - Start the project web server (`npm start`) in the background
   - Wait for the server to be available using `wait-on`
@@ -128,10 +128,10 @@ along with additional insights and [analytics](/cloud/features/analytics/overvie
 Cypress tests.
 
 Before diving into an example of a parallelization setup, it is important to
-understand the two different types of jobs that we will declare:
+understand the two different types of jobs that this example declares:
 
-- **Install Job**: A job that installs and caches dependencies that will be used
-  by subsequent jobs later in the Bitbucket Pipelines workflow.
+- **Install Job**: A job that installs and caches dependencies that subsequent
+  jobs use later in the Bitbucket Pipelines workflow.
 - **Worker Job**: A job that handles execution of Cypress tests and depends on
   the _install job_.
 
@@ -173,14 +173,13 @@ e2e: &e2e
 
 ### Worker Jobs
 
-Next, the worker jobs under `pipelines` that will run Cypress tests with Chrome
+Next, the worker jobs under `pipelines` that run Cypress tests with Chrome
 in parallel.
 
 We can use the `e2e`
 [YAML anchor](https://support.atlassian.com/bitbucket-cloud/docs/yaml-anchors/)
 in our definition of the pipeline to execute parallel jobs using the `parallel`
-attribute. The `parallel` attribute will allow us to run multiples instances of Cypress at same
-time.
+attribute. The `parallel` attribute runs multiple instances of Cypress at the same time.
 
 ```yaml title="bitbucket-pipelines.yml"
 ## job definition for running E2E tests in parallel

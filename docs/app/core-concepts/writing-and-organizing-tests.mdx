@@ -139,7 +139,7 @@ describe('modules', () => {
 
 The [default preprocessor](#The-default-preprocessor) bundles these imports for
 you, so this works with no extra setup. That bundle runs in the browser, which
-means a module that depends on Node.js APIs like `fs` won't load in a spec. Run
+means a module that depends on Node.js APIs like `fs` doesn't load in a spec. Run
 that code in [`cy.task()`](/api/commands/task) instead.
 
 ### How Cypress finds your specs
@@ -434,7 +434,7 @@ tasks that need access to the operating system. Read our
 
 When a run produces artifacts (files your app downloaded, screenshots, or
 videos), Cypress saves them to dedicated folders so you can inspect what
-happened after the fact. Because these are regenerated on every run, you'll
+happened after the fact. Because these are regenerated on every run, you
 usually want to keep them out of source control. For example, using the default
 folder locations:
 
@@ -447,8 +447,8 @@ cypress/videos/
 
 ### Downloads
 
-Any files downloaded while testing an application's file download feature will
-be stored in the [`downloadsFolder`](/app/references/configuration#Downloads)
+Cypress stores any files downloaded while testing an application's file download feature
+in the [`downloadsFolder`](/app/references/configuration#Downloads)
 which is set to `cypress/downloads` by default.
 
 ```text
@@ -581,7 +581,7 @@ and [Chai](/app/references/bundled-libraries#Chai), two libraries the
 JavaScript community has relied on for years. Building on them rather than
 inventing a new test language means the syntax is already familiar and
 battle-tested: Cypress supports both Chai's `BDD` and `TDD` assertion styles,
-and your tests will mostly follow those conventions.
+and your tests mostly follow those conventions.
 
 :::info
 
@@ -727,7 +727,7 @@ Cypress lets you focus on or skip specific tests so your feedback loop stays
 fast.
 
 To run a specified suite or test, append `.only` to the function. All nested
-suites will also be executed. `.only` gives you the ability to run one test at a
+suites also run. `.only` gives you the ability to run one test at a
 time and is the recommended way to write a test suite.
 
 ```javascript
@@ -751,7 +751,7 @@ describe('Account settings', () => {
 ```
 
 To skip a specified suite or test, append `.skip()` to the function. All nested
-suites will also be skipped.
+suites are also skipped.
 
 ```javascript
 it.skip('uploads a new avatar', () => {
@@ -830,7 +830,7 @@ specific browser, you can override the `browser` configuration within the suite
 configuration. The `browser` option accepts the same arguments as
 [Cypress.isBrowser()](/api/cypress-api/isbrowser).
 
-The following suite of tests will be skipped if running tests in Chrome
+Cypress skips the following suite of tests if running tests in Chrome
 browsers.
 
 ```js
@@ -850,8 +850,8 @@ describe('When NOT in Chrome', { browser: '!chrome' }, () => {
 })
 ```
 
-The following suite of tests will only execute when running in the Firefox
-browser. Additionally, it will overwrite the viewport resolution.
+The following suite of tests only executes when running in the Firefox
+browser. Additionally, the suite overwrites the viewport resolution.
 
 ```js
 describe(
@@ -916,7 +916,7 @@ describe('if your app uses jQuery', () => {
 })
 ```
 
-The code above will produce a suite with 4 tests:
+The code above produces a suite with 4 tests:
 
 ```text
 > if your app uses jQuery
@@ -1096,7 +1096,7 @@ preprocessor explicitly: it exposes options that control behavior such as _what_
 is watched and the delay before emitting an "update" event after a change.
 
 Cypress also ships other [file-watching preprocessors](/app/plugins/plugins-list) -
-you'll have to configure these explicitly if you want to use them.
+you have to configure these explicitly if you want to use them.
 
 - [`@cypress/webpack-preprocessor`](https://github.com/cypress-io/cypress/tree/develop/npm/webpack-preprocessor)
 

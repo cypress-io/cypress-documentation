@@ -184,7 +184,7 @@ yielded subject. The function also gives you the opportunity to _massage_ what y
 like to assert on.
 
 Be sure _not_ to include any code that has side effects in your callback
-function. The callback function will be retried over and over again until no
+function. Cypress retries the callback function over and over again until no
 assertions within it throw.
 
 You cannot invoke Cypress commands inside of a `.should()` callback function.
@@ -252,8 +252,8 @@ cy.get('p').should(($p) => {
 ```
 
 <Icon name="exclamation-triangle" color="red" /> **Warning** Any value returned
-from a `.should()` callback function will be ignored. The original subject will
-be yielded to the next command.
+from a `.should()` callback function is ignored. Cypress yields the original
+subject to the next command.
 
 ```js
 cy.get('p')
@@ -346,7 +346,7 @@ cy.get('.connectors-list > li').should(($lis) => {
 })
 ```
 
-These string messages will be shown in the Command Log giving each assertion
+The Command Log shows these string messages, giving each assertion
 more context.
 
 <DocsImage
@@ -433,10 +433,10 @@ cy.get('button')
 #### How do I know which assertions change the subject and which keep it the same?
 
 The chainers that come from [Chai](/app/references/bundled-libraries#Chai) or
-[Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery) will always
+[Chai-jQuery](/app/references/bundled-libraries#Chai-jQuery) always
 document what they return.
 
-#### Using a callback function will not change what is yielded
+#### Using a callback function does not change what is yielded
 
 Whatever is returned in the function is ignored. Cypress always forces the
 command to yield the value from the previous cy command's yield (which in the
@@ -498,7 +498,7 @@ cy.get('input', { timeout: 10000 }).should(($input) => {
 cy.get('.left-nav>.nav').children().should('have.length', 8)
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/should/should-command-shows-up-as-assert-for-each-assertion.png"

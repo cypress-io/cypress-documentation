@@ -35,7 +35,7 @@ Record a run to Cypress Cloud with [Test Replay](/cloud/features/test-replay) en
 
 ### <Icon name="angle-right" /> What do I need to use UI Coverage?
 
-Three things: a Cypress project recording to [Cypress Cloud](/cloud/get-started/introduction), [Test Replay](/cloud/features/test-replay) enabled for the run (reports are built entirely from Test Replay data), and Cypress v13 or later. UI Coverage isn't included in standard Cloud plans, so you'll also need it enabled for your organization, which you can do with a [free trial](/ui-coverage/get-started/setup#Step-1-Start-your-UI-Coverage-trial). No test changes, plugins, or code instrumentation are required.
+Three things: a Cypress project recording to [Cypress Cloud](/cloud/get-started/introduction), [Test Replay](/cloud/features/test-replay) enabled for the run (reports are built entirely from Test Replay data), and Cypress v13 or later. UI Coverage isn't included in standard Cloud plans, so you also need it enabled for your organization, which you can do with a [free trial](/ui-coverage/get-started/setup#Step-1-Start-your-UI-Coverage-trial). No test changes, plugins, or code instrumentation are required.
 
 ### <Icon name="angle-right" /> Is UI Coverage included in my Cypress Cloud plan?
 
@@ -77,7 +77,7 @@ Record a run to Cypress Cloud with [Test Replay](/cloud/features/test-replay) en
 
 ### <Icon name="angle-right" /> Where should I start if my UI Coverage score is low?
 
-In Cypress Cloud, start with your lowest-scoring [views](/ui-coverage/core-concepts/views), weighed against how critical each one is to your users, since a checkout or signup view at 40% is more urgent than a settings page at the same score. Before writing tests, rule out noise: third-party widgets counted as untested elements (exclude them with [`elementFilters`](/ui-coverage/configuration/elementfilters)) and links to pages you'll never test (exclude them with [`viewFilters`](/ui-coverage/configuration/viewfilters)) both lower a score without pointing to a real gap. See [Why is my UI Coverage score lower than I expect?](#Why-is-my-UI-Coverage-score-lower-than-I-expect) and [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps).
+In Cypress Cloud, start with your lowest-scoring [views](/ui-coverage/core-concepts/views), weighed against how critical each one is to your users, since a checkout or signup view at 40% is more urgent than a settings page at the same score. Before writing tests, rule out noise: third-party widgets counted as untested elements (exclude them with [`elementFilters`](/ui-coverage/configuration/elementfilters)) and links to pages you never test (exclude them with [`viewFilters`](/ui-coverage/configuration/viewfilters)) both lower a score without pointing to a real gap. See [Why is my UI Coverage score lower than I expect?](#Why-is-my-UI-Coverage-score-lower-than-I-expect) and [Identify coverage gaps](/ui-coverage/guides/identify-coverage-gaps).
 
 ### <Icon name="angle-right" /> In Cypress UI Coverage, what's the difference between an untested element, an untested link, and an untested view?
 
@@ -107,7 +107,7 @@ Add navigation to the page so it renders during a run. Pages your tests link to 
 
 ### <Icon name="angle-right" /> How do I cover an element that only appears after login or a click?
 
-Drive the interaction that puts the UI into that state before interacting with the element. A control inside a collapsed menu, a modal, or a section that only renders after signing in won't be exercised until your test reveals it, so click the toggle or run your `cy.login()` command first, then interact with the now-visible element. Each new state your tests reach adds its snapshot to the Cypress UI Coverage report, so previously hidden elements start appearing as tested.
+Drive the interaction that puts the UI into that state before interacting with the element. A control inside a collapsed menu, a modal, or a section that only renders after signing in isn't exercised until your test reveals it, so click the toggle or run your `cy.login()` command first, then interact with the now-visible element. Each new state your tests reach adds its snapshot to the Cypress UI Coverage report, so previously hidden elements start appearing as tested.
 
 ### <Icon name="angle-right" /> Which coverage gaps should I fix first in Cypress UI Coverage?
 
@@ -384,7 +384,7 @@ Often not. Cypress already ignores the most common unstable identifiers, includi
 
 ### <Icon name="angle-right" /> In UI Coverage, what's the difference between attributeFilters and significantAttributes?
 
-`attributeFilters` and `significantAttributes` pull in opposite directions. [`attributeFilters`](/ui-coverage/configuration/attributefilters) _removes_ attributes from consideration so Cypress won't identify elements by them, while [`significantAttributes`](/ui-coverage/configuration/significantattributes) _prioritizes_ attributes so Cypress prefers them when they're available. Use `attributeFilters` to hide noisy or dynamic attributes, and `significantAttributes` to promote a stable attribute such as `data-component-name`.
+`attributeFilters` and `significantAttributes` pull in opposite directions. [`attributeFilters`](/ui-coverage/configuration/attributefilters) _removes_ attributes from consideration so Cypress doesn't identify elements by them, while [`significantAttributes`](/ui-coverage/configuration/significantattributes) _prioritizes_ attributes so Cypress prefers them when they're available. Use `attributeFilters` to hide noisy or dynamic attributes, and `significantAttributes` to promote a stable attribute such as `data-component-name`.
 
 ### <Icon name="angle-right" /> Why isn't my UI Coverage attributeFilters rule working?
 

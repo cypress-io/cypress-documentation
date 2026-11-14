@@ -61,9 +61,9 @@ Cypress, or start from one of our [CI examples](#CI-Examples).
 
 ### Boot your server
 
-Typically you will need to boot a local server before running Cypress. A web
+Typically you need to boot a local server before running Cypress. A web
 server is a **long running process** that never exits, so you need to run it
-in the **background** or your CI provider will never move on to the next
+in the **background** or your CI provider never moves on to the next
 command. You also need to wait for the server to be ready before Cypress
 starts. A command like this has a race condition:
 
@@ -107,7 +107,7 @@ URL your server is hosted on, and your Cypress test command.
 }
 ```
 
-In the example above, the `cy:run` command will only be executed when the URL
+In the example above, the `cy:run` command only runs when the URL
 `http://localhost:3030` responds with an HTTP status code of 200. The server
 also shuts down when the tests complete.
 
@@ -158,7 +158,7 @@ npx cypress run
 Most CI providers automatically kill background processes, so you don't have
 to worry about cleaning up your server process once Cypress finishes.
 
-However, if you're running this script locally you'll have to do a bit more
+However, if you're running this script locally you have to do a bit more
 work to collect the backgrounded PID and then kill it after `cypress run`.
 
 :::
@@ -223,7 +223,7 @@ To record tests:
 Cypress can run tests in parallel across multiple machines, cutting your total
 run time roughly in proportion to the number of machines.
 
-You'll want to refer to your CI provider's documentation on how to set up
+Refer to your CI provider's documentation on how to set up
 multiple machines to run in your CI environment.
 
 Once multiple machines are available within your CI environment, you can pass
@@ -454,7 +454,7 @@ We recommend that you:
   [switching to `npm ci`](https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable)
   and caching the `~/.npm` directory for a faster and more reliable build.
 
-- If you are using `yarn`, caching `~/.cache` will include both the `yarn` and
+- If you are using `yarn`, caching `~/.cache` includes both the `yarn` and
   Cypress caches. Consider using `yarn install --frozen-lockfile` as an
   [`npm ci`](https://docs.npmjs.com/cli/ci) equivalent.
 
@@ -498,8 +498,8 @@ for more examples.
 
 **_Record Key_**
 
-If you are [recording your runs](#Record-tests) on a public project, you'll want
-to protect your Record Key.
+If you are [recording your runs](#Record-tests) on a public project, protect your
+Record Key.
 [Learn why.](/cloud/account-management/projects#Project-ID)
 
 Instead of hard coding it into your run command like this:
@@ -507,7 +507,7 @@ Instead of hard coding it into your run command like this:
 <CypressCommandTabs command="run --record --key abc-key-123" />
 
 You can set the record key as the environment variable `CYPRESS_RECORD_KEY`
-and we'll automatically use that value. You can now omit the `--key` flag when
+and Cypress automatically uses that value. You can now omit the `--key` flag when
 recording.
 
 <CypressCommandTabs command="run --record" />
@@ -576,7 +576,7 @@ environment variables to help pass that information along.
 - Pull Request URL: `CYPRESS_PULL_REQUEST_URL`
 - Build URL: `CYPRESS_CI_BUILD_URL`
 
-Setting these will allow links within the Cloud run to take you to the
+Setting these lets links within the Cloud run take you to the
 appropriate place.
 
 #### Custom Environment Variables
@@ -658,11 +658,11 @@ node scripts/run-cypress-tests.js
 
 When npm or yarn install the `cypress` package, a `postinstall` hook is executed
 that downloads the platform-specific Cypress binary. If the hook is skipped for
-any reason the Cypress binary will be missing (unless it was already cached).
+any reason the Cypress binary is missing (unless it was already cached).
 
 To better diagnose the error, add
 [commands to get information about the Cypress cache](/app/references/command-line#cypress-cache-command)
-to your CI setup. These commands will print where the binary is located and what versions
+to your CI setup. These commands print where the binary is located and what versions
 are already present.
 
 <CypressCommandTabs
@@ -726,7 +726,7 @@ Xvfb -screen 0 1024x768x24 :99 &
 
 Cypress internally passes these Xvfb arguments, but if you are spawning your own
 Xvfb, you would need to pass these arguments. The arguments are necessary to avoid using
-8-bit color depth with Xvfb, which will prevent Chrome or Electron from
+8-bit color depth with Xvfb, which prevents Chrome or Electron from
 crashing.
 
 :::

@@ -80,7 +80,7 @@ signIn({ username, password, { authFlowType: "USER_PASSWORD_AUTH" } })
 
 ## Amazon Cognito Setup
 
-If not already setup, you will need to
+If not already setup, you need to
 [create an account](https://docs.amplify.aws/start/getting-started/installation/q/integration/react#sign-up-for-an-aws-account)
 with [Amazon Web Services (AWS)](https://aws.amazon.com).
 
@@ -182,8 +182,8 @@ There are two ways you can authenticate to AWS Cognito:
 
 ### Login with [`cy.origin()`](/api/commands/origin)
 
-We'll write a custom command called `loginByCognito` to perform a login to
-[Amazon Cognito](https://aws.amazon.com/cognito). This command will use
+Write a custom command called `loginByCognito` to perform a login to
+[Amazon Cognito](https://aws.amazon.com/cognito). This command uses
 [`cy.origin()`](/api/commands/origin) to
 
 1. Navigate to the Cognito origin
@@ -409,9 +409,9 @@ Cypress.Commands.add(
 
 ### Programmatic Login
 
-Next, we'll write a command to perform a programmatic login into
+Next, write a command to perform a programmatic login into
 [Amazon Cognito](https://aws.amazon.com/cognito) and set items in `localStorage`
-with the authenticated users details, which we will use in our application code
+with the authenticated users details, which our application code uses
 to verify we are authenticated under test.
 
 In this `loginByCognitoApi` command, we call `Auth.signIn`, then use that

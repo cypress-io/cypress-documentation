@@ -89,21 +89,21 @@ Any and all. Ruby, Node, C#, PHP - none of that matters. Cypress tests anything
 that runs in the context of a browser. Cypress is back end, front end, language, and
 framework agnostic.
 
-You'll write your tests in JavaScript or TypeScript, but beyond that Cypress works everywhere.
+You write your tests in JavaScript or TypeScript, but beyond that Cypress works everywhere.
 
-### <Icon name="angle-right" /> Will Cypress work in my CI provider?
+### <Icon name="angle-right" /> Does Cypress work in my CI provider?
 
 Cypress works in any [CI provider](/app/continuous-integration/overview).
 
 ### <Icon name="angle-right" /> Does Cypress require me to change any of my existing code?
 
 No. But if you're wanting to test parts of your application that are not easily
-testable, you'll want to refactor those situations (as you would for any
+testable, refactor those situations (as you would for any
 testing).
 
-### <Icon name="angle-right" /> We use WebSockets; will Cypress work with that?
+### <Icon name="angle-right" /> We use WebSockets; does Cypress work with that?
 
-Yes. Your application's WebSocket traffic will work as expected during tests.
+Yes. Your application's WebSocket traffic works as expected during tests.
 
 However, **stubbing or mocking individual WebSocket frames/messages** is not
 natively supported. If your tests need to control the messages sent over a
@@ -122,7 +122,7 @@ Yes. Cypress works on anything rendered to a browser.
 ### <Icon name="angle-right" /> Can I use Cypress to script user-actions on an external site like `gmail.com`?
 
 Using Cypress to test against a
-3rd party application is not its intended use. Scripting a 3rd party site _may_ work but will defeat the
+3rd party application is not its intended use. Scripting a 3rd party site _may_ work but defeats the
 purpose Cypress was created for. You use Cypress _while_ you develop your
 application, it helps you write your tests.
 
@@ -482,7 +482,7 @@ Conditional Testing guide.
 <strong>Remember</strong>
 
 DOM [queries](/app/core-concepts/retry-ability#Commands-Queries-and-Assertions)
-will automatically [retry](/app/core-concepts/retry-ability) and wait for their
+automatically [retry](/app/core-concepts/retry-ability) and wait for their
 corresponding elements to exist before failing.
 
 :::
@@ -498,7 +498,7 @@ commands have
 Timeouts can be configured globally or on a per-command basis.
 
 In [some cases](/app/core-concepts/interacting-with-elements#Visibility),
-your DOM element will not be actionable. Cypress gives you a powerful
+your DOM element is not actionable. Cypress gives you a powerful
 [`{force:true}`](/app/core-concepts/interacting-with-elements#Forcing) option
 you can pass to most action commands.
 
@@ -516,14 +516,14 @@ question.
 
 **_How do I know if my page is done loading?_**
 
-When you load your application using `cy.visit()`, Cypress will wait for the
+When you load your application using `cy.visit()`, Cypress waits for the
 `load` event to fire. The [cy.visit()](/api/commands/visit#Usage) command loads
 a remote page and does not resolve until all of the external resources complete
 their loading phase. Because we expect your applications to observe differing
 load times, this command's default timeout is set to 60000ms. If you visit an
 invalid url or a
 [second unique domain](/app/guides/cross-origin-testing#Different-origins-per-test-require-cyorigin),
-Cypress will log a verbose yet friendly error message.
+Cypress logs a verbose yet friendly error message.
 
 **_In CI, how do I make sure my server has started?_**
 
@@ -585,7 +585,7 @@ Yes. Read more about the
 
 ### <Icon name="angle-right" /> Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
-Yes. By default Cypress will automatically fail tests whenever an uncaught exception
+Yes. By default Cypress automatically fails tests whenever an uncaught exception
 bubbles up out of your app.
 
 Cypress exposes an event for this (amongst many others) that you can listen for
@@ -598,7 +598,7 @@ The
 [Uncaught Exceptions examples](/api/cypress-api/catalog-of-events#Uncaught-Exceptions)
 on the Catalog of Events page document this in detail.
 
-### <Icon name="angle-right" /> Will Cypress fail the test when an application has unhandled rejected promise?
+### <Icon name="angle-right" /> Does Cypress fail the test when an application has an unhandled rejected promise?
 
 By default no, Cypress does not listen to the unhandled promise rejection event
 in your application, and thus does not fail the test. Register your own listener
@@ -667,7 +667,7 @@ Yes.
 - It is possible to fake the `userAgent` for a **single**
   [`cy.visit()`](/api/commands/visit) or
   [`cy.request()`](/api/commands/intercept) by setting the `user-agent` header
-  in the options, but this will not propagate the `userAgent` in the browser and
+  in the options, but this does not propagate the `userAgent` in the browser and
   can lead to application rendering unexpectedly.
 
 ### <Icon name="angle-right" /> Can I block traffic going to specific domains? I want to block Google Analytics or other providers.
@@ -873,7 +873,7 @@ because a `before`, `beforeEach`, or `afterEach` hook failed. See
 If a hook shared by a block of tests (such as a `beforeEach`) fails, Cypress
 marks the first test as **failed** and **skips** the remaining tests in that
 block. Because the same hook would fail identically for every test, re-running it
-would only produce the same failure. Fix the hook and the rest of the tests will
+would only produce the same failure. Fix the hook and the rest of the tests
 run. See
 [Skipped](/app/core-concepts/writing-and-organizing-tests#Skipped).
 
@@ -910,7 +910,7 @@ Nothing functional. `context` and `specify` are aliases provided by Mocha. `cont
 It is possible to upload files in your application but it's different based on
 how you've written your own upload code. The various options are detailed in the
 [`.selectFile()` command](/api/commands/selectfile), but in many cases the
-simplest option will work:
+simplest option works:
 
 ```javascript
 cy.get('[data-cy="file-input"]').selectFile('cypress/fixtures/data.json')
@@ -1062,7 +1062,7 @@ still be a convenient shorthand if you interact with many iframes.
   [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy),
   reading `contentDocument` on an iframe served from a different origin (a Stripe
   payment form, an embedded YouTube/Vimeo video, an Auth0 login, a Disqus comment
-  widget, etc.) returns `null`, so none of the patterns above will work. See
+  widget, etc.) returns `null`, so none of the patterns above work. See
   [Cross-origin iframes](/app/guides/cross-origin-testing#Cross-origin-iframes) in
   the Cross Origin Testing guide.
 - **[`cy.origin()`](/api/commands/origin) does not help here.** `cy.origin()`
@@ -1215,8 +1215,8 @@ cy.get('.element')
 ```
 
 However, most of the time you don't even have to worry about animations. Why
-not? Cypress will
-[automatically wait](/app/core-concepts/interacting-with-elements) for
+not? Cypress
+[automatically waits](/app/core-concepts/interacting-with-elements) for
 elements to stop animating prior to interacting with them via action commands
 like `.click()` or `.type()`.
 
@@ -1307,7 +1307,7 @@ you're running in Cypress by looking for `process.env.CYPRESS`.
 
 ### <Icon name="angle-right" /> Is there a way to test that a file got downloaded? I want to test that a button click triggers a download.
 
-There are a lot of ways to test this, so it depends. You'll need to be aware of
+There are a lot of ways to test this, so it depends. You need to be aware of
 what actually causes the download, then think of a way to test that mechanism.
 
 If your server sends specific disposition headers which cause a browser to
@@ -1644,7 +1644,7 @@ Chromium instead.
 
 ### <Icon name="angle-right" /> Can I test my Electron app?
 
-Testing your Electron app will not 'just work', as Cypress is designed to test
+Testing your Electron app does not 'just work', as Cypress is designed to test
 anything that runs in a browser and Electron is a browser + Node.
 
 That being said, we use Cypress to test our own Desktop app's front end - by
@@ -1898,7 +1898,7 @@ functionality and not how it fits into an entire page.
 
 ### <Icon name="angle-right" /> How does Cypress do component testing?
 
-Cypress will take a component and mount it into a blank canvas. When doing so,
+Cypress takes a component and mounts it into a blank canvas. When doing so,
 you have direct access to the component's API, making it easier to pass in props
 or data and put a component in a certain state. From there, you can use the same
 Cypress commands, selectors, and assertions to write your tests.
@@ -1982,7 +1982,7 @@ for the full list of rules and the value each provides.
 ### <Icon name="angle-right" /> Why isn't TypeScript recognizing the global Cypress objects or custom cypress commands (eg: `cy.mount`)?
 
 In some instances, TypeScript might not recognize the custom `cy.mount()`
-command in Cypress spec files not located in the **cypress** directory. You will
+command in Cypress spec files not located in the **cypress** directory. You
 get a compiler error specifying that the type is not found in this case.
 
 A quick way to fix this is to include the **cypress** directory in your
@@ -1995,7 +1995,7 @@ A quick way to fix this is to include the **cypress** directory in your
 ]
 ```
 
-TypeScript will monitor all files in the **cypress** folder and pick up the
+TypeScript monitors all files in the **cypress** folder and picks up the
 typings defined in the **cypress/support/component.ts** file.
 
 Alternatively, you can move your typings to an external file and include that
@@ -2025,7 +2025,7 @@ of your affected spec files:
 You can also group your Cypress and Jest tests inside separate folders (not
 co-located with components).
 
-You will need to add a `tsconfig.json` to the folder and specify the types the
+You need to add a `tsconfig.json` to the folder and specify the types the
 files inside that folder should use.
 
 Don't forget to update your
@@ -2038,7 +2038,7 @@ The `cy.prompt` command supports natural language testing directly within the Cy
 
 ### <Icon name="angle-right" /> What happens when AI is disabled for my organization and the `cy.prompt` is called in the app?
 
-Any **pre-existing** prompt commands and steps that are called in the app will attempt to run based on previously cached generated code. AI-dependent functionality will no longer work, including most self-healing behavior and
+Any **pre-existing** prompt commands and steps that are called in the app attempt to run based on previously cached generated code. AI-dependent functionality no longer works, including most self-healing behavior and
 the creation of new prompt commands.
 
 ### <Icon name="angle-right" /> How do I migrate from cy.prompt code to regular Cypress code?

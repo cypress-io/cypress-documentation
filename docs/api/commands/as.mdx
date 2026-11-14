@@ -64,9 +64,9 @@ for the strings Cypress reserves.
 
 Pass in an options object to change the default behavior of `.as()`.
 
-| Option | Default | Description                                                                                                                                                                                                                                                                                                                                                                                 |
-| ------ | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` | `query` | The type of alias to store, which impacts how the value is retrieved later in the test. Valid values are `query` and `static`. A `query` alias re-runs all queries leading up to the resulting value each time the alias is requested. A `static` alias is retrieved once when the alias is stored, and will never change. `type` has no effect when aliasing intercepts, spies, and stubs. |
+| Option | Default | Description                                                                                                                                                                                                                                                                                                                                                                             |
+| ------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type` | `query` | The type of alias to store, which impacts how the value is retrieved later in the test. Valid values are `query` and `static`. A `query` alias re-runs all queries leading up to the resulting value each time the alias is requested. A `static` alias is retrieved once when the alias is stored, and never changes. `type` has no effect when aliasing intercepts, spies, and stubs. |
 
 <HeaderYields />
 
@@ -129,7 +129,7 @@ it('the users fixture is bound to this.admins', function () {
 
 Note the use of the standard function syntax. Using
 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
-to access aliases via `this` won't work because of
+to access aliases via `this` doesn't work because of
 [the lexical binding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this)
 of `this`.
 
@@ -230,7 +230,7 @@ describe('A fixture', () => {
 <HeaderAssertions />
 
 - `.as()` is a utility command.
-- `.as()` will not run assertions. Assertions will pass through as if this
+- `.as()` does not run assertions. Assertions pass through as if this
   command did not exist.
 
 <HeaderTimeouts />

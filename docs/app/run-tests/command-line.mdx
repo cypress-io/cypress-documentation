@@ -12,7 +12,7 @@ slug: /app/references/command-line
 
 This guide assumes you've already read our
 [Installing Cypress](/app/get-started/install-cypress) guide and
-installed Cypress as an `npm` module. After installing you'll be able to execute
+installed Cypress as an `npm` module. After installing, you can execute
 all of the commands in this document from your **project root**.
 
 :::info
@@ -99,7 +99,7 @@ your `package.json` file and use the name
 }
 ```
 
-Running the script `e2e:chrome` as follows will run the command you defined:
+Running the script `e2e:chrome` as follows runs the command you defined:
 
 <Tabs groupId="package-manager"
   defaultValue="npm"
@@ -144,7 +144,7 @@ bun run e2e:chrome
 <strong>Best Practice</strong>
 
 Don't use `cypress` as the exact name of a script, especially if you use Yarn as package manager.
-When running commands on the Cypress binary (e.g. `yarn cypress verify`), Yarn will reference the
+When running commands on the Cypress binary (e.g. `yarn cypress verify`), Yarn references the
 script of the same name instead and Cypress CLI commands may not work as expected.
 
 :::
@@ -216,7 +216,7 @@ You need to add the prefix `npx`, `yarn` or `pnpm` to the command line, correspo
 
 ### `cypress run`
 
-Runs Cypress tests to completion. By default, `cypress run` will run all tests
+Runs Cypress tests to completion. By default, `cypress run` runs all tests
 headlessly.
 
 ```shell
@@ -228,7 +228,7 @@ cypress run [options]
 | Option                         | Description                                                                                                                                                                                   |
 | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--auto-cancel-after-failures` | [Overrides the Cloud project-level configuration to set the failed test threshold for auto cancellation or to disable auto cancellation when recording to the Cloud](#auto-cancel-after-runs) |
-| `--browser`, `-b`              | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt)    |
+| `--browser`, `-b`              | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress attempts to use the browser at that path.](#cypress-run-browser-lt-browser-name-or-path-gt)        |
 | `--ci-build-id`                | [Specify a unique identifier for a run to enable grouping or parallelization.](#cypress-run-ci-build-id-lt-id-gt)                                                                             |
 | `--component`                  | [Run component tests](/app/core-concepts/testing-types#What-is-Component-Testing)                                                                                                             |
 | `--config`, `-c`               | [Specify configuration](#cypress-run-config-lt-config-gt)                                                                                                                                     |
@@ -279,7 +279,7 @@ cypress run --browser chrome
 ```
 
 The "browser" argument can be set to `chrome`, `chromium`, `edge`, or `firefox`
-to launch a browser detected on your system. Cypress will attempt to
+to launch a browser detected on your system. Cypress attempts to
 automatically find the installed browser for you. `electron` is still accepted
 for the bundled Electron browser, but it is
 [deprecated](/app/references/launching-browsers#Electron-Browser) and will be
@@ -435,9 +435,9 @@ Specifying the `--ci-build-id` may also be necessary.
 
 #### `cypress run --headed` {#cypress-run-headed}
 
-By default, Cypress will run tests headlessly during `cypress run`.
+By default, Cypress runs tests headlessly during `cypress run`.
 
-Passing `--headed` will force the browser to be shown, which matches how you run
+Passing `--headed` forces the browser to be shown, which matches how you run
 any browser via `cypress open`.
 
 ```shell
@@ -528,7 +528,7 @@ To reduce the output from Cypress printed to `stdout`, use
 cypress run --quiet
 ```
 
-If passed, Cypress will only print output to `stdout` from the [built-in](/app/tooling/reporters#Built-in-reporters) default [Mocha spec reporter](https://mochajs.org/#spec), or from any other configured [Mocha reporter](/app/tooling/reporters).
+If passed, Cypress only prints output to `stdout` from the [built-in](/app/tooling/reporters#Built-in-reporters) default [Mocha spec reporter](https://mochajs.org/#spec), or from any other configured [Mocha reporter](/app/tooling/reporters).
 
 #### `cypress run --record --key <record-key>` {#cypress-run-record-key-lt-record-key-gt}
 
@@ -600,8 +600,8 @@ directory.
 :::caution
 
 `--spec` only runs specs that **also match the configured
-[`specPattern`](/app/references/configuration#e2e)**. Specs located
-outside the configured `specPattern` will not be found. See
+[`specPattern`](/app/references/configuration#e2e)**. Cypress does not
+find specs located outside the configured `specPattern`. See
 [Test files not found when using `spec` parameter](/app/references/configuration#Test-files-not-found-when-using-spec-parameter)
 for details.
 
@@ -661,7 +661,7 @@ Give a run multiple tags.
 cypress run --record --tag "production,nightly"
 ```
 
-Cypress Cloud will display any tags sent with the appropriate run.
+Cypress Cloud displays any tags sent with the appropriate run.
 
 <DocsImage
   src="/img/cloud/runs/dashboard-run-with-tags.png"
@@ -690,7 +690,7 @@ apart in Cypress Cloud.
 #### Exit code
 
 Cypress supports two different exit code behaviors. The default behavior is similar to that of Mocha, but is not POSIX compliant: reserved exit codes can be returned for certain conditions. As well, the default behavior
-can return a false negative when there are a number of tests that fail in multiples of 256: most terminals will apply modulo 256 to any exit code larger than 255.
+can return a false negative when there are a number of tests that fail in multiples of 256: most terminals apply modulo 256 to any exit code larger than 255.
 
 POSIX compliant exit codes are available via the `--posix-exit-codes` flag. When this flag is passed, additional conditions can be returned that are not possible with the default behavior, including when Cypress fails due to
 network errors when connections to Cypress Cloud are required, such as in `--record` or `--parallel` runs.
@@ -714,30 +714,30 @@ cypress open [options]
 
 #### Options:
 
-Options passed to `cypress open` will automatically be applied to the project
+Options passed to `cypress open` are automatically applied to the project
 you open. These options persist on all projects until you quit Cypress. These options
-will also override values in the Cypress configuration file.
+also override values in the Cypress configuration file.
 
 By passing `--browser` and `--e2e` or `--component` when launching a project,
 you can open Cypress and launch the browser at the same time. If passing the
-`--browser` flag alone, the browser will launch automatically after being
-guided through project and/or testing type selection. Otherwise, you will
-be guided through selecting a browser, project, and/or testing type.
+`--browser` flag alone, the browser launches automatically after being
+guided through project and/or testing type selection. Otherwise, Cypress
+guides you through selecting a browser, project, and/or testing type.
 
-| Option                | Description                                                                                                                                                                         |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--browser`, `-b`     | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress will attempt to use the browser at that path.](#cypress-open-browser-lt-browser-path-gt) |
-| `--component`         | [Open in component testing mode](/app/core-concepts/testing-types#What-is-Component-Testing)                                                                                        |
-| `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                                                                          |
-| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                                                                                    |
-| `--detached`, `-d`    | [Return once Cypress is ready and keep Cypress running in the background](#cypress-open-detached)                                                                                   |
-| `--e2e`               | Open in end to end testing mode (default)                                                                                                                                           |
-| `--env`, `-e`         | [Specify secret environment variables](#cypress-open-env-lt-env-gt)                                                                                                                 |
-| `--expose`, `-x`      | [Specify public configuration values](#cypress-open-expose-lt-expose-gt)                                                                                                            |
-| `--global`            | [Open in global mode](#cypress-open-global)                                                                                                                                         |
-| `--help`, `-h`        | Output usage information                                                                                                                                                            |
-| `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                                                                              |
-| `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                                                                              |
+| Option                | Description                                                                                                                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--browser`, `-b`     | [Run Cypress in the browser with the given name. If a filesystem path is supplied, Cypress attempts to use the browser at that path.](#cypress-open-browser-lt-browser-path-gt) |
+| `--component`         | [Open in component testing mode](/app/core-concepts/testing-types#What-is-Component-Testing)                                                                                    |
+| `--config`, `-c`      | [Specify configuration](#cypress-open-config-lt-config-gt)                                                                                                                      |
+| `--config-file`, `-C` | [Specify configuration file](#cypress-open-config-file-lt-configuration-file-gt)                                                                                                |
+| `--detached`, `-d`    | [Return once Cypress is ready and keep Cypress running in the background](#cypress-open-detached)                                                                               |
+| `--e2e`               | Open in end to end testing mode (default)                                                                                                                                       |
+| `--env`, `-e`         | [Specify secret environment variables](#cypress-open-env-lt-env-gt)                                                                                                             |
+| `--expose`, `-x`      | [Specify public configuration values](#cypress-open-expose-lt-expose-gt)                                                                                                        |
+| `--global`            | [Open in global mode](#cypress-open-global)                                                                                                                                     |
+| `--help`, `-h`        | Output usage information                                                                                                                                                        |
+| `--port`, `-p`        | [Override default port](#cypress-open-port-lt-port-gt)                                                                                                                          |
+| `--project`, `-P`     | [Path to a specific project](#cypress-open-project-lt-project-path-gt)                                                                                                          |
 
 #### `cypress open --browser <browser-path>` {#cypress-open-browser-lt-browser-path-gt}
 
@@ -750,7 +750,7 @@ The "browser" option specifies the path to a custom browser to use with Cypress:
 cypress open --browser /usr/bin/chromium
 ```
 
-If found, the specified browser will be added to the list of available browsers.
+If found, Cypress adds the specified browser to the list of available browsers.
 If Cypress cannot run the executable, it prints the reason and the output of
 running the executable with `--version`.
 
@@ -1057,7 +1057,7 @@ You can disable verification by setting the `CYPRESS_SKIP_VERIFY` environment va
 Prints the installed Cypress binary version, the Cypress package version, the
 version of Electron used to build Cypress, and the bundled Node version.
 
-In most cases the binary and the package versions will be the same, but they
+In most cases the binary and the package versions are the same, but they
 could be different if you have installed a different version of the package and
 for some reason failed to install the matching binary version.
 
@@ -1100,7 +1100,7 @@ cypress cache path
 
 #### `cypress cache list`
 
-Print all existing installed versions of Cypress. The output will be a table
+Print all existing installed versions of Cypress. The output is a table
 with cached versions and the last time the binary was used by the user,
 determined from the file's access time.
 
@@ -1134,7 +1134,7 @@ cypress cache list --size
 
 Clear the contents of the Cypress cache. Clearing the cache is useful when you want Cypress to
 clear out all installed versions of Cypress that may be cached on your machine.
-After running this command, you will need to run `cypress install` before
+After running this command, you need to run `cypress install` before
 running Cypress again.
 
 ```shell

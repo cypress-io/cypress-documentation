@@ -34,11 +34,11 @@ it('let me debug like a fiend', () => {
 The `debugger` statement may not work exactly as you are expecting. As you may remember from the
 [Introduction to Cypress](/app/core-concepts/introduction-to-cypress), `cy`
 commands enqueue an action to be taken later. Can you see what the test above
-will do given that perspective?
+does given that perspective?
 
 Both [`cy.visit()`](/api/commands/visit) and [`cy.get()`](/api/commands/get)
-will return immediately, having enqueued their work to be done later, and
-`debugger` will be executed before any of the commands have actually run. The
+return immediately, having enqueued their work to be done later, and
+`debugger` executes before any of the commands have actually run. The
 same behavior is expected in Component Tests when using
 [`cy.mount()`](/api/commands/mount).
 
@@ -210,7 +210,7 @@ it('reroutes on users page', () => {
 ```
 
 The center of the `<li>Users</li>` element is hidden from view in our
-application under test, so the test above will fail.
+application under test, so the test above fails.
 
 <AnatomyOfAnError />
 
@@ -273,7 +273,7 @@ Cypress emits multiple events you can listen to as shown below.
 
 ## Troubleshooting Cypress
 
-There are times when you'll encounter errors or unexpected behavior with
+There are times when you encounter errors or unexpected behavior with
 Cypress itself. In this situation, we recommend checking out our
 [Troubleshooting Guide](/app/references/troubleshooting).
 

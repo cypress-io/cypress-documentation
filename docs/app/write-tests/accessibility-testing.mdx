@@ -12,7 +12,7 @@ slug: /app/guides/accessibility-testing
 
 Accessibility testing helps to confirm that an application works correctly for people with disabilities.
 
-To set a good foundation for an accessible user experience, web sites and apps must conform to certain guidelines, known as the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/) (WCAG). Meeting or exceeding these guidelines will help ensure your disabled users can independently perceive the content of your application, navigate through your pages and sections, and complete the available actions.
+To set a good foundation for an accessible user experience, web sites and apps must conform to certain guidelines, known as the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/) (WCAG). Meeting or exceeding these guidelines helps ensure your disabled users can independently perceive the content of your application, navigate through your pages and sections, and complete the available actions.
 
 Cypress supports many kinds of accessibility testing, through standard test practices, a rich plugin ecosystem, as well as [Cypress Accessibility](/accessibility/get-started/introduction), a commercial, enterprise-ready solution in Cypress Cloud.
 
@@ -32,12 +32,12 @@ Here are the main ways to account for accessibility when testing with Cypress:
 - Accessibility-focused assertions and locators
 - Tests for specific functionality relevant to assistive technology
 
-We will discuss each of these below.
+The sections below discuss each of these.
 
 ## Accessibility Scans
 
 :::info
-Automated scans are effective because many accessibility issues are caused by incorrect HTML structure or missing data that would be required by assistive technologies like screen readers, voice control systems, Braille displays, and more. Browsers transform the current HTML on the page into a standardized format that other technologies can hook into. Automated scans in your tests will alert you if specific items needed for this process are missing.
+Automated scans are effective because many accessibility issues are caused by incorrect HTML structure or missing data that would be required by assistive technologies like screen readers, voice control systems, Braille displays, and more. Browsers transform the current HTML on the page into a standardized format that other technologies can hook into. Automated scans in your tests alert you if specific items needed for this process are missing.
 :::
 
 :::warning
@@ -50,7 +50,7 @@ The [`cypress-axe`](https://www.npmjs.com/package/cypress-axe) plugin is a commu
 
 After setting up the plugin, commands are added to your project to inject the library and use it to run an accessibility check. Running the included `checkA11y()` command performs a scan of the current state of the page or component that you are testing, and you can choose to fail the test in response to accessibility issues detected. Detailed configuration is available to scope this to the specific WCAG Success Criteria and related rules that you want to test.
 
-There are also some newer community plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker). All of these tools have their own dedicated documentation for installation, setup, and executing the checks, which we won't repeat here.
+There are also some newer community plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker). All of these tools have their own dedicated documentation for installation, setup, and executing the checks, which this guide doesn't repeat.
 
 The general "add a command to trigger a scan" approach helps detect and prevent all-too-common issues like poor color contrast, missing labels for icons and buttons, images without alt text, and other errors in the implementation of a user interface that can be detected with generic checks.
 
@@ -60,7 +60,7 @@ In-test automated accessibility checks are so valuable because they bundle a lar
 
 Generally this is not a problem if you have a small number of accessibility checks, but it can become a big contributor to your pipeline's overall execution time as you scale up your accessibility testing and want to run checks against hundreds or even thousands of unique states of complex applications and workflows. Since accessibility checks tend to be added gradually over time, the time taken is often not obvious, but it is definitely worth paying attention to.
 
-To avoid performance bloat, you will want to actively manage the tradeoff between test performance and how often tests are executed. This tradeoff is sometimes solved by testing only the initial pageload, or the state at the end of a test, but this approach misses many important states like modals, multistep workflows, error states in forms, open states of menus, and more. And since many tests may begin or end at the same page state as other tests, there can be a lot of redundant scans, so it pays to be more precise and intentional in what you test.
+To avoid performance bloat, actively manage the tradeoff between test performance and how often tests are executed. This tradeoff is sometimes solved by testing only the initial pageload, or the state at the end of a test, but this approach misses many important states like modals, multistep workflows, error states in forms, open states of menus, and more. And since many tests may begin or end at the same page state as other tests, there can be a lot of redundant scans, so it pays to be more precise and intentional in what you test.
 
 Performance can also be managed by targeting the accessibility checks to only certain rules or certain parts of the page, or confining them to component tests. Testers should be trained on how and when to run accessibility checks to get the best feedback possible while eliminating redundant checks that don't add value, and minimizing the disruption to the test pipeline.
 
@@ -129,7 +129,7 @@ And using [`cy.getByRole()`](/api/commands/getbyrole):
 cy.getByRole('button', { name: 'Submit' }).click()
 ```
 
-There are some important differences to consider between locating specific HTML elements themselves and locating those same elements only by their `role`. We'll discuss these in the next section.
+There are some important differences to consider between locating specific HTML elements themselves and locating those same elements only by their `role`. The next section discusses these.
 
 ### Test IDs, role-based locators, and accessibility
 
@@ -143,7 +143,7 @@ Role-based locators, such as [`cy.getByRole()`](/api/commands/getbyrole) and the
 Whether you primarily use role-based locators, test IDs, or a different approach, testing for accessibility requires making specific assertions about the **implementation and behavior** of your application.
 :::
 
-There is much more to this topic than we can cover here, but we will provide a small example, and a recommendation for what to do.
+There is much more to this topic than this guide can cover, but here is a small example, and a recommendation for what to do.
 
 ### Asserting about roles vs elements - button example
 
@@ -155,7 +155,7 @@ The native HTML `button` element has a complex accessibility contract implemente
 - The button is placed in the tab order of the document and can be focused with the keyboard
 - When focused, the button receives a focus outline style
 - The button can be activated with a mouse click, or the enter key, or the space bar
-- If placed inside a `form` element, activating the button by any of these methods will submit the form (because its default type is `submit`)
+- If placed inside a `form` element, activating the button by any of these methods submits the form (because its default type is `submit`)
 - The button receives specific styling, customizable by the user, in Windows High Contrast Mode (used by people with certain visual disabilities)
 
 On the other hand, a `div` with `role` of `button` does not get any default browser accessibility behavior, and is **not accessible** without custom JavaScript and CSS replacing the browser contract.

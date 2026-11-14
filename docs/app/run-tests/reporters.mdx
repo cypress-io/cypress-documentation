@@ -110,7 +110,7 @@ Reporter options differ depending on the reporter (and may not be supported at
 all). Refer to the documentation for the reporter you are using for details on
 which options are supported.
 
-The below configuration will output the JUnit report to `STDOUT` and save it
+The below configuration outputs the JUnit report to `STDOUT` and saves it
 into an XML file.
 
 ### Cypress configuration
@@ -149,7 +149,7 @@ Each spec file is processed completely separately during each `cypress run`
 execution. Thus each spec run _overwrites_ the previous report file. To preserve
 unique reports for each specfile, use the `[hash]` in the `mochaFile` filename.
 
-The following configuration will create separate XML files in the `results`
+The following configuration creates separate XML files in the `results`
 folder. You can then merge the reported output in a separate step using a 3rd
 party tool. For JUnit XML reports, you can use
 [junit-report-merger](https://www.npmjs.com/package/junit-report-merger), and
@@ -180,11 +180,11 @@ can use the
 
 Oftentimes we see users wanting the ability to use multiple reporters. When
 running in CI, you might want to generate a report for `junit` and perhaps a
-`json` report. Generating these reports is great, but by setting this reporter you won't receive any
+`json` report. Generating these reports is great, but by setting this reporter you don't receive any
 additional feedback while the tests are running!
 
-The solution here is to use multiple reporters. You will have the benefit of
-both worlds.
+The solution here is to use multiple reporters. You have the benefit of both
+worlds.
 
 We suggest using the npm module [cypress-multi-reporters](https://www.npmjs.com/package/cypress-multi-reporters).
 
@@ -244,7 +244,7 @@ reporter to save separate XML files.
 ```
 
 We recommend deleting all files from the `cypress/results` folder before running
-this command, since each run will output new XML files. For example, you can add
+this command, since each run outputs new XML files. For example, you can add
 the npm script commands below to your `package.json` then call `npm run report`.
 
 ```json title="package.json"
@@ -315,7 +315,7 @@ folder.
 
 <CypressCommandTabs command='run --reporter mochawesome --reporter-options reportDir="cypress/results",overwrite=false,html=false,json=true' />
 
-Our run will generate files
+The run generates files
 `cypress/results/mochawesome.json, cypress/results/mochawesome_001.json, ...`.
 Then we can combine them using the
 [mochawesome-merge](https://github.com/antontelesh/mochawesome-merge) utility.

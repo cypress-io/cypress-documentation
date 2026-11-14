@@ -116,7 +116,7 @@ Two values differ from a commercial Okta setup:
   Government app, not from a commercial Okta app.
 - **X.509 certificate:** download the signing certificate from your Okta for
   Government app and upload it to Cypress Cloud. Certificates do not transfer
-  between tenants, so an existing commercial Okta certificate will not work.
+  between tenants, so an existing commercial Okta certificate does not work.
 
 Everything else stays the same, including the Single sign on URL and Audience
 URI you copy from Cypress Cloud and the `User.Email`, `User.FirstName`, and
@@ -210,16 +210,16 @@ documentation below, refer to
 
 ## Save Configuration
 
-Return to Cypress Cloud and click **Save Configuration**. Cypress Cloud will
-attempt to authenticate.
+Return to Cypress Cloud and click **Save Configuration**. Cypress Cloud
+attempts to authenticate.
 
 🎉 Your integration is now complete! You can invite all of the users in your
 organization to sign in through your SSO provider.
 
 ## Notes
 
-- Once SSO is successfully set up, users will need to be invited via your SSO
-  provider, as the Cypress Cloud invitation option will be disabled.
+- Once SSO is successfully set up, users need to be invited via your SSO
+  provider, as the Cypress Cloud invitation option is disabled.
 - All SSO Users are initially added with the
   [User Role](/cloud/account-management/users#User-roles) of Member. If a
   User needs different User Role permissions, this can be changed via Cypress

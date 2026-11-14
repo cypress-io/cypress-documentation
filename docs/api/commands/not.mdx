@@ -101,10 +101,10 @@ cy.get('ul>li').not('.active').should('have.length', 4) // true
 
 <HeaderAssertions />
 
-- `.not()` will automatically [retry](/app/core-concepts/retry-ability) until
+- `.not()` automatically [retries](/app/core-concepts/retry-ability) until
   the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.not()` will automatically [retry](/app/core-concepts/retry-ability) until
+- `.not()` automatically [retries](/app/core-concepts/retry-ability) until
   all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -121,7 +121,7 @@ cy.get('ul>li').not('.active').should('have.length', 4) // true
 cy.get('form').find('button').not('[type="submit"]')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/not/filter-elements-with-not-and-optional-selector.png"

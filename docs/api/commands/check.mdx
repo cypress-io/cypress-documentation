@@ -218,9 +218,9 @@ state leaves that state when you check it, whether or not the click happens.
 
 <HeaderAssertions />
 
-- `.check()` will automatically wait for the element to reach an
+- `.check()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.check()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.check()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -237,7 +237,7 @@ state leaves that state when you check it, whether or not the click happens.
 cy.get('form').find('[name="emailUser"]').check()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/check/check-checkbox-in-cypress.png"

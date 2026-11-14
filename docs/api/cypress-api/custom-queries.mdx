@@ -20,8 +20,8 @@ important rules:
 1. Queries are _synchronous._ Queries do not return or await promises.
 2. Queries are _retriable._ Once you return the inner function, Cypress takes
    control, handling retries on your behalf.
-3. Queries are _idempotent._ Once you return the inner function, Cypress will
-   invoke it repeatedly. Invoking the inner function multiple times must not
+3. Queries are _idempotent._ Once you return the inner function, Cypress
+   invokes it repeatedly. Invoking the inner function multiple times must not
    change the state of your application.
 
 With these rules, queries are simple to write and extremely powerful. Queries are
@@ -35,7 +35,7 @@ If you want to chain together existing Cypress commands as a shortcut, you
 probably want to write a [custom command](/api/cypress-api/custom-commands)
 instead.
 
-You'll also want to write a command instead of a query if your method needs to
+Write a command instead of a query if your method needs to
 be asynchronous, or if it can be called only once.
 
 :::
@@ -264,7 +264,7 @@ if (options === null || !_.isPlainObject(options)) {
 ```
 
 Throwing is a general pattern: when something goes wrong, queries throw an
-error. Cypress will handle displaying the error in the Command Log.
+error. Cypress handles displaying the error in the Command Log.
 
 ```javascript
 const log =
@@ -280,8 +280,8 @@ information.
 
 This line is setup code, so it lives in the outer function - we only want it to
 run once, creating the log message when Cypress first begins executing this
-query. We hold onto a reference to `Log` instance. We'll update it later with
-additional details when the inner function executes.
+query. We hold onto a reference to `Log` instance. The inner function updates
+the log with additional details when it executes.
 
 ```javascript
 this.set('timeout', options.timeout)
@@ -290,7 +290,7 @@ this.set('timeout', options.timeout)
 When defining `focused2()`, we used `function`,
 rather than an arrow function. Using `function` gives us access to `this`, where we can set
 the `timeout`. If you don't call `this.set('timeout')`, or call it with `null`
-or `undefined`, your query will use the
+or `undefined`, your query uses the
 [default timeout](/app/core-concepts/introduction-to-cypress#Timeouts).
 
 ```
@@ -318,7 +318,7 @@ Cypress' builtin [`Cypress.ensure`](/api/cypress-api/ensure) functions, as
 or you can perform your own validation and throw an error:
 `if (!_.isString(subject)) { throw new Error('MyCustomCommand only accepts strings as a subject!') }`
 
-If the inner function throws an error, Cypress will retry it after a short delay
+If the inner function throws an error, Cypress retries it after a short delay
 until it either passes or the query times out. This retry loop is the core of Cypress'
 retry-ability, and the guarantees it provides that your tests interact with the
 page as a user would.
@@ -398,7 +398,7 @@ extend the functionality of builtin commands.
 :::caution
 
 `Cypress.Commands.overwriteQuery` can only overwrite queries, not other
-commands. If you want to modify the behavior of a non-query command, you'll need
+commands. If you want to modify the behavior of a non-query command, you need
 to use [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands) instead.
 
 :::

@@ -43,11 +43,11 @@ test:
 
 **How this configuration works:**
 
-- On _push_ to this repository, this job will provision and start GitLab-hosted
+- On _push_ to this repository, this job provisions and starts a GitLab-hosted
   Linux instance for running the outlined `stages` declared in `script` within
   the `test` job section of the configuration.
 - The code is checked out from the GitLab repository.
-- Finally, our scripts will:
+- Finally, our scripts do the following:
   - Install npm dependencies
   - Start the project web server (`npm start`)
   - Run the Cypress tests within the GitLab repository. To run in an installed
@@ -125,14 +125,14 @@ Cypress tests.
 
 The addition of the
 [`parallel` attribute](https://docs.gitlab.com/ee/ci/yaml/#parallel) to the
-configuration of a job will allow us to run multiples instances of Cypress at
-same time as we will see later in this section.
+configuration of a job runs multiple instances of Cypress at the same time, as
+shown later in this section.
 
 Before diving into an example of a parallelization setup, it is important to
-understand the two different types of jobs that we will declare:
+understand the two different types of jobs that the pipeline declares:
 
-- **Install Job**: A job that installs and caches dependencies that will be used
-  by subsequent jobs later in the GitLab CI workflow.
+- **Install Job**: A job that installs and caches dependencies that subsequent
+  jobs use later in the GitLab CI workflow.
 - **Worker Job**: A job that handles execution of Cypress tests and depends on
   the _install job_.
 
@@ -141,11 +141,11 @@ understand the two different types of jobs that we will declare:
 The separation of installation from test running is necessary when running
 parallel jobs. Separating installation allows for reuse of various build steps aided by caching.
 
-First, we will define the `build` stage along with `cache` and variables related
+First, define the `build` stage along with `cache` and variables related
 to the cache.
 
-Then we define the `install` step that will be used by the worker jobs and
-assign it to the `build` stage.
+Then define the `install` step that the worker jobs use and assign it to the
+`build` stage.
 
 ```yaml
 stages:
@@ -175,12 +175,11 @@ install:
 ### Worker Jobs
 
 Next, we add a `test` stage and define the worker job named `ui-chrome-tests`
-that will run Cypress tests with Chrome in parallel during the `test` stage.
+that runs Cypress tests with Chrome in parallel during the `test` stage.
 
 The addition of the
 [`parallel` attribute](https://docs.gitlab.com/ee/ci/yaml/#parallel) to the
-configuration of a job will allow us to run multiples instances of Cypress at
-same time.
+configuration of a job runs multiple instances of Cypress at the same time.
 
 :::info
 

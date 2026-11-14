@@ -28,7 +28,7 @@ This guide assumes UI Coverage is enabled and your tests are recording to Cypres
 A report can list hundreds of untested elements, and not all of them are worth a test. Two quick checks decide what to close first, so your effort lands where it matters:
 
 - **Is it worth testing now?** Prioritize by risk. The views behind your highest-value flows, such as checkout, login, and account settings, come before a rarely used admin screen, and a heavily used page with low coverage comes before a lightly used one. See [Start with your lowest-scoring views](/ui-coverage/guides/identify-coverage-gaps#Step-3-Start-with-your-lowest-scoring-views) for how to rank them.
-- **Is it a real gap?** Some untested entries aren't holes in your suite. Third-party widgets like chat launchers and cookie banners, one control that a dynamic attribute [split into many entries](/ui-coverage/troubleshooting#One-element-is-reported-as-many), and links to pages you'll never test all count against your score without pointing to missing coverage. Ruling these out with configuration is faster than writing a test, and it keeps the remaining gaps meaningful.
+- **Is it a real gap?** Some untested entries aren't holes in your suite. Third-party widgets like chat launchers and cookie banners, one control that a dynamic attribute [split into many entries](/ui-coverage/troubleshooting#One-element-is-reported-as-many), and links to pages you never test all count against your score without pointing to missing coverage. Ruling these out with configuration is faster than writing a test, and it keeps the remaining gaps meaningful.
 
 Which option to reach for depends on what you're ruling out:
 
@@ -134,7 +134,7 @@ Visiting a page is the starting point: it turns the untested link green and crea
 
 #### Reveal hidden and state-gated elements
 
-Some elements show up as untested only because your tests never render them. A control inside a collapsed menu, a modal, or a section that only appears after signing in won't be exercised until your test puts the UI into that state. Drive the interaction that reveals the element, then interact with it:
+Some elements show up as untested only because your tests never render them. A control inside a collapsed menu, a modal, or a section that only appears after signing in isn't exercised until your test puts the UI into that state. Drive the interaction that reveals the element, then interact with it:
 
 ```js title="cypress/e2e/product-filters.cy.js"
 // The filters panel is collapsed until its toggle is clicked

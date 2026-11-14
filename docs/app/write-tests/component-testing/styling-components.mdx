@@ -34,8 +34,8 @@ runners.
 The first time you mount _any_ new component, you may notice that the component
 doesn't look like it should. Unless your application is written _exclusively_
 using Component-scoped CSS (e.g. Styled Components or Vue's Scoped Styles) you
-will need to follow this guide to get your component looking **and
-behaving** like it will in production.
+need to follow this guide to get your component looking **and
+behaving** like it does in production.
 
 :::tip
 
@@ -46,7 +46,7 @@ Component HTML file or the Component Support File.
 
 ## Component Support File
 
-When you load a component or end-to-end spec file, it will first load something
+When you load a component or end-to-end spec file, it first loads something
 called a supportFile. By default, this is created for you during first-time
 setup of Cypress Component Testing and is located at
 `cypress/support/component.js`. This file gives you the opportunity to set up
@@ -108,7 +108,7 @@ Overlays + Modals are usually really good.
 5. Regular Stylesheets
 6. UI Libraries
 
-This guide will help you setup your test infrastructure to render your
+This guide helps you setup your test infrastructure to render your
 component's styles properly.
 
 Depending on how your application is built, the first time you mount a new
@@ -118,22 +118,22 @@ The unstyled result makes sense. Many applications have some amount of one-time 
 run outside of the component file.
 
 We build our applications within the context that they're supposed to run in,
-and we make assumptions that our components will always be rendered within a
+and we make assumptions that our components are always rendered within a
 root-level component (such as an `<App>`) or a top-level selector with style
 rules (such as `#app { /* styles in here */ }` )
 
 When we attempt to isolate our component to put it under test, we need to put
-that environment back together. We'll go into that in a moment. First, let's
+that environment back together. The sections below cover how. First, let's
 talk about stylesheets, testing, and one of Cypress's biggest differences in
 contrast to other component testing tools.
 
 ## Importing Stylesheets
 
-Each application or component library imports styles a little differently. We'll
-go over a few methods and describe how you can quickly restructure your
+Each application or component library imports styles a little differently. This guide
+goes over a few methods and describes how you can quickly restructure your
 components to become more testable.
 
-If you do not follow this guide, your components will mount, but they won't look
+If you do not follow this guide, your components mount, but they don't look
 correct and you may not be able to benefit from some of the most valuable parts
 of Cypress. Namely, implicit checks for width, height, and overflow to ensure
 that your components not only exist in the page's HTML but are also visible.
@@ -156,8 +156,8 @@ same logic follows for any styles loaded in your Application's `main.js` file.
 If you import a `./styles.css` at the top of your `main.js` file, make sure to
 `import` it in your `cypress/support/component.js` file.
 
-For this reason, it's strongly suggested to make a `src/setup.js` file that will
-be re-used in your `main.js` entrypoint as well as in your test setup. An
+For this reason, it's strongly suggested to make a `src/setup.js` file that
+is re-used in your `main.js` entrypoint as well as in your test setup. An
 example project structure would look like so:
 
 ```
@@ -224,7 +224,7 @@ these global styles into a top-level stylesheet. Both Vue and Svelte embed
 global application styles into the main entry point components. The rest of your
 application expects to be rendered _within_ those components, and so any
 assumptions you made when writing those components must be replicated in your
-test environment or else your components won't look right.
+test environment or else your components don't look right.
 
 ```html
 <style>

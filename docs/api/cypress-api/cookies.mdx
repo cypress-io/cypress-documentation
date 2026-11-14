@@ -38,7 +38,7 @@ Pass in an options object to control the behavior of `Cookies.debug()`.
 
 #### Log when cookie values are created, modified or deleted
 
-By turning on debugging, Cypress will automatically generate logs to the console
+By turning on debugging, Cypress automatically generates logs to the console
 when it _sets_ or _clears_ cookie values. This logging is useful to help you understand
 how Cypress clears cookies before each test, and is useful to visualize how to
 handle preserving cookies in between tests.
@@ -57,21 +57,21 @@ cy.setCookie('foo', 'bar')
 
 #### Turn off verbose debugging output
 
-By default Cypress will log the cookie object with all of its properties.
+By default Cypress logs the cookie object with all of its properties.
 However you may not need that level of detail and you can turn this off.
 
 ```javascript
 Cypress.Cookies.debug(true, { verbose: false })
 ```
 
-Now when Cypress logs cookies they will only include the `name` and `value`.
+Now when Cypress logs cookies the logs only include the `name` and `value`.
 
 <DocsImage
   src="/img/api/cookies/debugger-console-log-of-cookies.png"
   alt="Console log cookies with debug"
 />
 
-Debugging will be turned on until you explicitly turn it off.
+Debugging stays on until you explicitly turn it off.
 
 ```javascript
 Cypress.Cookies.debug(false) // now debugging is turned off

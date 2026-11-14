@@ -59,7 +59,7 @@ You get a few concrete wins:
   then verify over HTTP that the backend really persisted the change.
 
 Cypress runs API tests in the [end-to-end testing type](/app/core-concepts/testing-types).
-The command you will use most is [`cy.request()`](/api/commands/request), which
+The command you use most is [`cy.request()`](/api/commands/request), which
 makes a real HTTP request and yields the response.
 
 ## Write your first API test
@@ -114,7 +114,7 @@ navigation happens. `cy.request()` resolves the relative `/users` against
 
 ## Anatomy of the response
 
-`cy.request()` yields a response object. The following properties are the ones you will
+`cy.request()` yields a response object. The following properties are the ones you
 assert on most often:
 
 | Property              | Description                                                                                 |

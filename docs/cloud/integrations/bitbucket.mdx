@@ -37,10 +37,10 @@ If you still face issues after this,
 
 :::caution
 
-Bitbucket OAuth2 applications will allow Cypress Cloud to authenticate as the
-user that registered the application. Authenticating as that user means Cypress will have visibility to
+Bitbucket OAuth2 applications allow Cypress Cloud to authenticate as the
+user that registered the application. Authenticating as that user means Cypress has visibility to
 every Bitbucket repo you can access. If you want tighter control over the repos
-that Cypress will see, consider creating a service account with more limited
+that Cypress sees, consider creating a service account with more limited
 access in Bitbucket.
 
 :::
@@ -58,20 +58,20 @@ access in Bitbucket.
 
 ### Status checks
 
-By default, Cypress will post a **cypress/run** commit status containing the
-results of the Cypress run. The **cypress/run** status will prevent your team from merging any PRs
+By default, Cypress posts a **cypress/run** commit status containing the
+results of the Cypress run. The **cypress/run** status prevents your team from merging any PRs
 with failing Cypress tests.
 
 Additionally, Cypress can post a **cypress/flake** commit status indicating
-whether the Cypress run contained any flaky tests. The **cypress/flake** status will prevent your team
+whether the Cypress run contained any flaky tests. The **cypress/flake** status prevents your team
 from merging any PRs with flaky tests.
 
 You can manage this behavior on your project's **Project Settings** page.
 
 ### Pull Request comments
 
-By default, Cypress will post a PR comment summarizing the run when the run
-completes. The comment will include test results, run info, and a summary of tests that
+By default, Cypress posts a PR comment summarizing the run when the run
+completes. The comment includes test results, run info, and a summary of tests that
 failed or were flaky.
 
 You can manage this behavior on your project's **Project Settings** page.
@@ -81,5 +81,5 @@ You can manage this behavior on your project's **Project Settings** page.
 ## Uninstalling the Bitbucket integration
 
 You can remove this integration by visiting the **Integrations → Bitbucket**
-page of your organization. Removing the integration will stop all status checks and PR comments from
+page of your organization. Removing the integration stops all status checks and PR comments from
 Cypress.

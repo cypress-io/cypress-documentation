@@ -46,8 +46,8 @@ You have the option to
 [delete videos or screenshots](/app/guides/screenshots-and-videos#Control-which-videos-to-keep-and-upload-to-Cypress-Cloud)
 before being sent to the Cloud so those are not captured.
 
-When [Test Replay](#Test-Replay) capturing is enabled, the additional data outlined
-below will be sent to the Cloud. You can
+When [Test Replay](#Test-Replay) capturing is enabled, Cypress sends the additional data outlined
+below to the Cloud. You can
 [disable capturing](/cloud/features/test-replay#Opt-out-of-Test-Replay) this data.
 
 - The rendered DOM and CSS styles for the application under test
@@ -64,7 +64,7 @@ Cypress Cloud is **complementary** to your
 [CI provider](/app/continuous-integration/overview), and plays a
 completely different role.
 
-Cypress Cloud doesn't replace or change anything related to CI. You will still run Cypress
+Cypress Cloud doesn't replace or change anything related to CI. You still run Cypress
 tests in your CI provider.
 
 The difference between [Cypress Cloud](/cloud/get-started/introduction) and your CI
@@ -93,7 +93,7 @@ means your [test run data](/cloud/features/recorded-runs#Latest-Runs) is being
 "recorded" to Cypress Cloud.
 
 We consider each time the `it()` function is called to be a single test. So you
-will generally have several tests recorded within each spec file and likely
+generally have several tests recorded within each spec file and likely
 several spec files within a single run. Only the
 [passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Understanding-test-results)
 are counted. The pending and skipped tests are NOT counted.
@@ -123,19 +123,19 @@ See our [Pricing Page](https://www.cypress.io/pricing?utm_source=docs.cypress.io
 
 **A public project** means that anyone can see the recorded runs for it. Public visibility is
 similar to how public projects on GitHub, Travis, or CircleCI are handled.
-Anyone who knows your `projectId` will be able to see the recorded runs,
+Anyone who knows your `projectId` can see the recorded runs,
 screenshots, and videos for public projects.
 
 **A private project** means that only
 [users](/cloud/account-management/users) you explicitly invite to your
 [organization](/cloud/account-management/organizations) can see its
-recorded runs. Even if someone knows your `projectId`, they will not have access
+recorded runs. Even if someone knows your `projectId`, they do not have access
 to your runs unless you have invited them.
 
 ### <Icon name="angle-right" /> What happens once I reach the test results limit?
 
-Tests running with the `--record` flag will run as normal when the limit is
-reached, but parallelization will be disabled and new test results will be
+Tests running with the `--record` flag run as normal when the limit is
+reached, but parallelization is disabled and new test results are
 hidden from the dashboard until your plan is upgraded or a new usage cycle
 begins. The usage cycle resets at the start of each billing period, which is
 monthly on most plans, though some annual plans use an annual test results
@@ -153,10 +153,10 @@ by:
 
 ### <Icon name="angle-right" /> What happens if I downgrade my account?
 
-Downgrading your account will **not** result in loss of access to Cypress Cloud.
+Downgrading your account does **not** result in loss of access to Cypress Cloud.
 
-However, it will make your Cypress Cloud account subject to the limitations of
-your new plan. For example, downgrading to the _Starter_ plan will limit data
+However, downgrading makes your Cypress Cloud account subject to the limitations of
+your new plan. For example, downgrading to the _Starter_ plan limits data
 retention to 30 days, test results to 500 per billing period, and your
 organization to 10 [users](#What-counts-as-a-user).
 
@@ -203,13 +203,12 @@ fits your usage.
 
 ### <Icon name="angle-right" /> Can I choose not to use Cypress Cloud?
 
-Of course. Cypress Cloud is a separate service from the Cypress app and will
-always remain optional. We hope you'll find a tremendous amount of value in it,
+Of course. Cypress Cloud is a separate service from the Cypress app and is always optional. We hope you find a tremendous amount of value in it,
 but it is not coupled with being able to run your tests.
 
 You can always run your tests in CI using
 [cypress run](/app/references/command-line#cypress-run) without the `--record`
-flag which does not communicate with our external servers and will not record
+flag which does not communicate with our external servers and does not record
 any test results.
 
 ## Using Cypress Cloud
@@ -259,7 +258,7 @@ section of the [Cypress Cloud](/cloud/get-started/introduction) docs.
 1. First [set up the project to record](/cloud/get-started/setup#Setup).
 2. Then [record your runs](/cloud/features/recorded-runs#Latest-Runs).
 
-After recording your tests, you will see them in
+After recording your tests, you see them in
 [Cypress Cloud](https://on.cypress.io/cloud) and in the Cypress App [Runs](/app/core-concepts/open-mode#Runs) tab.
 
 ### <Icon name="angle-right" /> Can I delete a run from Cypress Cloud?
@@ -396,7 +395,7 @@ duration, so it surfaces failures earlier without shortening the run. To turn
 that earlier feedback into shorter runs and lower CI costs, pair it with
 [Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation): when
 the prioritized failures reappear at the start of a run, the run is cancelled
-right away, avoiding wasted compute on specs you already know will need another
+right away, avoiding wasted compute on specs you already know need another
 pass.
 
 ### <Icon name="angle-right" /> What plan do I need to use Spec Prioritization?
@@ -453,7 +452,7 @@ No. Specs that are already in progress when the threshold is reached finish
 running so you still get their complete results. Cypress only stops handing out
 _new_ specs. In a parallelized run, this means machines can keep running the
 specs they had already started at the moment of cancellation, but none of them
-will pick up a new spec once the run is cancelled.
+picks up a new spec once the run is cancelled.
 
 ### <Icon name="angle-right" /> How do I disable Auto Cancellation for a single run?
 
@@ -678,7 +677,7 @@ reach out to [support](mailto:support@cypress.io).
 You can delete your Cypress account from
 [your Cypress Cloud profile](https://cloud.cypress.io/profile). Deleting your
 account cannot be undone! By deleting your Cypress account, all associated data
-in your account will be permanently deleted.
+in your account is permanently deleted.
 
 ### <Icon name="angle-right" /> How do I invite a user to Cypress Cloud?
 
@@ -806,7 +805,7 @@ work automatically, with no changes to your test code.
 
 ### <Icon name="angle-right" /> What is Test Replay?
 
-[Test Replay](/cloud/features/test-replay) enables you and your team to troubleshoot and debug failed tests faster. After updating to Cypress `v13`, the new feature will automatically record all browser events and “replay” what your application under test looked like.
+[Test Replay](/cloud/features/test-replay) enables you and your team to troubleshoot and debug failed tests faster. From Cypress `v13`, Test Replay automatically records all browser events and “replays” what your application under test looked like.
 
 Wind back the clock to any point in an application's test execution and directly interact with tests as they happened in CI. Debug complex problems as if you were there when they first happened. You can:
 
@@ -824,7 +823,7 @@ Wind back the clock to any point in an application's test execution and directly
 
 There is an important distinction between _session_ replay services (LogRocket, FullStory, DataDog, etc) and Cypress Test Replay. In session replay, user actions are captured as the application is used and delivered back in a replay-able format, usually video or stitched DOM snapshots. Session replay services are valuable tools for gathering product insight such as user behavior, per session.
 
-Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests will error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and use [time travel debugging](/app/core-concepts/open-mode#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. Test Replay is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
+Cypress Test Replay captures every detail of your test runs as they happen in CI. Remember, these tests are running in a headless manner on a virtual machine with no UI being rendered. Sometimes tests error or fail indicating an issue in your application. Since Cypress Cloud is monitoring the health of your CI test suite, each Test Replay offers a chance to step back in time to analyze and use [time travel debugging](/app/core-concepts/open-mode#Time-traveling), network requests, console logs, JavaScript errors, and element rendering to address problems directly. Test Replay is incredibly valuable for developer and team productivity. No more hours wasted recreating CI issues on your local machine!
 
 ### <Icon name="angle-right" /> How much does Test Replay cost?
 
@@ -840,7 +839,7 @@ Test Replay would be disabled, with a message that it's only available on Chromi
 
 ### <Icon name="angle-right" /> Can I replay tests from historical Cypress Cloud runs?
 
-Test Replay is available for tests recorded using Cypress `v13` and up. Tests recorded prior to this will not have Test Replay enabled in Cypress Cloud. You will still have any artifacts collected during the pre `v13` test runs.
+Test Replay is available for tests recorded using Cypress `v13` and up. Tests recorded prior to `v13` do not have Test Replay enabled in Cypress Cloud. You still have any artifacts collected during the pre `v13` test runs.
 
 ### <Icon name="angle-right" /> Can I enable or disable Test Replay for specific, individual tests, or is it a global setting? Can I configure my settings so that Test Replay is only enabled for failing test retries?
 
@@ -850,7 +849,7 @@ At this time, users can only opt-out of Test Replay via [project-level settings]
 
 Yes! You can share Test Replays with any team members who have access to view your Cypress Cloud runs like QA, marketing, design, etc. Open the replay, copy the URL from the browser address bar and pass it along.
 
-### <Icon name="angle-right" /> Will Test Replay write any assets to the file system?
+### <Icon name="angle-right" /> Does Test Replay write any assets to the file system?
 
 Yes, but they are stored in a temporary directory and deleted after the run. There is nothing to `.gitignore`.
 
@@ -868,7 +867,7 @@ No, your Cypress tests and assertions are not affected.
 
 ### <Icon name="angle-right" /> Does network redaction change what I can debug in Cypress Test Replay?
 
-For most tests, no. You keep request timing, status codes, and the structure of each request. If you will need to inspect the redacted value itself in Cypress Cloud, turn redaction off for that project before recording.
+For most tests, no. You keep request timing, status codes, and the structure of each request. If you need to inspect the redacted value itself in Cypress Cloud, turn redaction off for that project before recording.
 
 ### <Icon name="angle-right" /> Is network redaction in Cypress Test Replay on by default?
 
@@ -1036,7 +1035,7 @@ page. For migrating from `cy.prompt` to regular Cypress code, see the
 ### <Icon name="angle-right" /> What is AI self-healing?
 
 [`cy.prompt`](/api/commands/prompt) self-heals a step when the element it needs
-has changed since the step last ran, so tests keep passing as the UI evolves. When possible, the step may self-heal from a cache of previously-successful selectors for the element referenced in that spec. If no good selector exists, `cy.prompt` will create a new one using AI to find the appropriate element. See
+has changed since the step last ran, so tests keep passing as the UI evolves. When possible, the step may self-heal from a cache of previously-successful selectors for the element referenced in that spec. If no good selector exists, `cy.prompt` creates a new one using AI to find the appropriate element. See
 [Self-healing](/app/guides/ai-test-generation#Self-healing) in the AI Test
 Generation guide.
 
@@ -1061,7 +1060,7 @@ Cloud:
   rejected or require splitting. To stay within these limits, keep one action or
   assertion per step and split long flows into multiple `cy.prompt` calls.
 
-### <Icon name="angle-right" /> My organization shows that it is over the limit during the `cy.prompt` grace period, will I be charged anything for this?
+### <Icon name="angle-right" /> My organization shows that it is over the limit during the `cy.prompt` grace period, am I charged anything for this?
 
 No. There are no charges or limiting behavior related to any usage prior to the
 August 1, 2026 cutoff.
@@ -1079,25 +1078,25 @@ the plan has 2,000 built-in cy.prompt executions for the year, you would have
 
 ### <Icon name="angle-right" /> What happens when I exceed my allowed limit of cy.prompt executions?
 
-You will see warnings in the Cypress Cloud UI as you approach your limit, and
+Cypress Cloud shows warnings in the UI as you approach your limit, and
 after you cross it.
 
 On a paid plan:
 
-- Your tests and `cy.prompt` will run normally. You will not be automatically charged for prompt executions over your plan's limit.
+- Your tests and `cy.prompt` run normally. You are not automatically charged for prompt executions over your plan's limit.
 - If you regularly go over your limit, we ask that you update your plan to
   match your usage.
 
 On a free plan:
 
-- AI self-healing and new prompt creation will be turned off for the rest of
+- AI self-healing and new prompt creation are turned off for the rest of
   your monthly billing cycle.
-- When your plan renews, these features will work again.
+- When your plan renews, these features work again.
 
 ### <Icon name="angle-right" /> What happens when AI is disabled for my organization?
 
-Existing prompt commands and steps will continue to execute, but operations that
-require AI to function will fail. The failing operations include most self-healing behavior and
+Existing prompt commands and steps continue to execute, but operations that
+require AI to function fail. The failing operations include most self-healing behavior and
 the creation of new prompt commands.
 
 Organization admins and owners can enable or disable AI capabilities from

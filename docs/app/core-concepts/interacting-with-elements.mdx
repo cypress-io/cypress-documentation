@@ -37,7 +37,7 @@ hidden when
 
 However elements where the CSS property (or ancestors) is `opacity: 0` are
 considered actionable and any commands used to interact with the hidden element
-will perform the action.
+perform the action.
 
 :::
 
@@ -274,7 +274,7 @@ thus causing your application's event bindings to fire.
 Prior to issuing any of the commands, we check the current state of the DOM and
 take some actions to ensure the DOM element is "ready" to receive the action.
 
-Cypress will watch the DOM - re-running the queries that yielded the current
+Cypress watches the DOM - re-running the queries that yielded the current
 subject - until an element passes all of these checks for the duration of the
 [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (described
 in depth in the
@@ -294,15 +294,15 @@ core concept guide).
 - [Fire the event at the desired coordinates.](#Coordinates)
 
 Whenever Cypress cannot interact with an element, it could fail at any of the
-above steps. You will usually get an error explaining why the element was not
+above steps. You usually get an error explaining why the element was not
 found to be actionable.
 
 ### Disability
 
 Cypress checks whether the `disabled` property is `true` on a
-[form control](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) element, such as `button` or `input`. Setting a `disabled` attribute on other elements will
-have no effect on a user's ability to interact with them,
-and won't impact Cypress actionability checks.
+[form control](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) element, such as `button` or `input`. Setting a `disabled` attribute on other elements
+has no effect on a user's ability to interact with them,
+and doesn't impact Cypress actionability checks.
 
 ### Detached
 
@@ -312,8 +312,8 @@ the `document` of the application under test.
 When many applications rerender the DOM, they actually remove the DOM element
 and insert a new DOM element in its place with the newly change attributes. This replacement
 is why it's important not to chain _action commands_ together - cypress can
-re-run queries to locate the fresh element, but it will
-[never re-run commands](/app/core-concepts/retry-ability).
+re-run queries to locate the fresh element, but it
+[never re-runs commands](/app/core-concepts/retry-ability).
 
 ### Readonly
 
@@ -322,7 +322,7 @@ Cypress checks whether an element's `readonly` property is set during
 
 ### Animations
 
-Cypress will automatically determine if an element is animating and wait until
+Cypress automatically determines if an element is animating and waits until
 it stops.
 
 To calculate whether an element is animating we take a sample of the last
@@ -357,8 +357,8 @@ coordinates.
 
 :::
 
-If a _child_ of the element is covering it - that's okay. In fact we'll
-automatically issue the events we fire to that child.
+If a _child_ of the element is covering it - that's okay. In fact Cypress
+automatically issues the events it fires to that child.
 
 Imagine you have a button:
 
@@ -376,7 +376,7 @@ We even note this for you in the
 
 ### Scrolling
 
-Before interacting with an element, we will _always_ scroll it into view
+Before interacting with an element, Cypress _always_ scrolls it into view
 (including any of its parent containers). Even if the element was visible
 without scrolling, we perform the scrolling algorithm to reproduce the
 same behavior every time the command is run.
@@ -397,7 +397,7 @@ the element into view, so a container that already shows the element
 horizontally is not scrolled sideways.
 
 After scrolling the element, if we determine that it is still being covered up,
-we will continue to scroll and "nudge" the page until it becomes visible. This nudging
+we continue to scroll and "nudge" the page until it becomes visible. This nudging
 most frequently happens when you have `position: fixed` or `position: sticky`
 navigation elements which are fixed to the top of the page.
 
@@ -474,7 +474,7 @@ the value you pass.
 
 ### Coordinates
 
-After we verify the element is actionable, Cypress will then fire all of the
+After we verify the element is actionable, Cypress then fires all of the
 appropriate events and corresponding default actions. Usually these events'
 coordinates are fired at the center of the element, but most commands enable you
 to change the position it's fired to.
@@ -483,12 +483,12 @@ to change the position it's fired to.
 cy.get('button').click({ position: 'topLeft' })
 ```
 
-The coordinates we fired the event at will generally be available when clicking
+The coordinates Cypress fired the event at are generally available when clicking
 the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).
 
 <DocsImage src="/img/app/core-concepts/coords.png" alt="Event coordinates" />
 
-Additionally we'll display a red "hitbox" - which is a dot indicating the
+Additionally Cypress displays a red "hitbox" - which is a dot indicating the
 coordinates of the event.
 
 <DocsImage
@@ -505,7 +505,7 @@ Although you _should_ see a nice error message, nothing beats visually
 inspecting and poking at the DOM yourself to understand the reason why.
 
 When you use the [Command Log](/app/core-concepts/open-mode#Command-Log) to
-hover over a command, you'll notice that we will always scroll the element the
+hover over a command, Cypress always scrolls the element the
 command was applied to into view. This scrolling is _NOT_ using the same
 algorithms that we described above.
 
@@ -532,8 +532,8 @@ Make sure your Developer Tools are open and you can get pretty close to "seeing"
 the calculations Cypress is performing.
 
 You can also [bind to Events](/api/cypress-api/catalog-of-events) that Cypress
-fires as it's working with your element. Using a debugger with these events will
-give you a much lower level view into how Cypress works.
+fires as it's working with your element. Using a debugger with these events
+gives you a much lower level view into how Cypress works.
 
 ```js
 // break on a debugger before the action command
@@ -569,12 +569,12 @@ cy.get('button').click({ force: true })
 
 <strong>What's the difference?</strong>
 
-When you force an event to happen we will:
+When you force an event to happen, Cypress:
 
-- Continue to perform all default actions
-- Forcibly fire the event at the element
+- Continues to perform all default actions
+- Forcibly fires the event at the element
 
-We will NOT perform these:
+Cypress does NOT:
 
 - Scroll the element into view
 - Ensure it is visible
@@ -587,14 +587,14 @@ We will NOT perform these:
 
 :::
 
-In summary, `{ force: true }` skips the checks, and it will always fire the
+In summary, `{ force: true }` skips the checks, and it always fires the
 event at the desired element.
 
 :::caution
 
 **force `.select()` disabled options**
 
-Passing `{ force: true }` to [.select()](/api/commands/select) will not override
+Passing `{ force: true }` to [.select()](/api/commands/select) does not override
 the actionability checks for selecting a disabled `<option>` or an option within
 a disabled `<optgroup>`. See
 [this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.

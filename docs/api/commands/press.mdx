@@ -12,9 +12,9 @@ componentSpecific: false
 
 Trigger native key events in your application to simulate keyboard interactions.
 
-A `keydown` and `keyup` event will be dispatched directly to the browser window.
+`cy.press()` dispatches a `keydown` and `keyup` event directly to the browser window.
 
-Unlike `cy.type()`, which is best for typing multiple character keys, `cy.press()` will dispatch real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
+Unlike `cy.type()`, which is best for typing multiple character keys, `cy.press()` dispatches real keyboard events rather than simulated ones. This command is especially useful when testing focus management and keyboard navigation patterns which are critical for [accessibility testing](/app/guides/accessibility-testing) and great keyboard UX.
 
 ## Syntax
 
@@ -178,7 +178,7 @@ cy.get('input').type('Hello, World') // Type 'Hello, World' into the 'input'
 
 ### Transient activation
 
-By dispatching native keyboard events to the browser, this command will cause the browser to enter [Transient activation](https://developer.mozilla.org/en-US/docs/Glossary/Transient_activation) state.
+By dispatching native keyboard events to the browser, this command causes the browser to enter [Transient activation](https://developer.mozilla.org/en-US/docs/Glossary/Transient_activation) state.
 
 If your application prevents the default behavior of the `beforeunload` event, this may cause issues when navigating away from the current page.
 

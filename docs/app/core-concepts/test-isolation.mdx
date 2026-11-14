@@ -27,7 +27,7 @@ be to **reliably pass** whether run in isolation or consecutively with other
 tests. Having tests that depend on the state of an earlier test can potentially
 cause nondeterministic test failures which make debugging challenging.
 
-Cypress will start each test with a clean test slate by restoring and clearing
+Cypress starts each test with a clean test slate by restoring and clearing
 all:
 
 - [aliases](/api/commands/as)
@@ -72,18 +72,18 @@ Because the test starts in a fresh browser context, you must re-visit your
 application and perform the series of interactions needed to build the dom and
 browser state for each test.
 
-Additionally, the [`cy.session()`](/api/commands/session) command will inherit
-this configuration and will clear the page and current browser context when
+Additionally, the [`cy.session()`](/api/commands/session) command inherits
+this configuration and clears the page and current browser context when
 establishing a browser session. Cypress clears this state so tests can reliably pass when run
 standalone or in a randomized order.
 
 ### Test Isolation Disabled
 
-When test isolation is disabled, Cypress will not alter the browser context
+When test isolation is disabled, Cypress does not alter the browser context
 before the test starts. The page does not clear between tests and cookies, local
-storage, and session storage will be available across tests in that suite.
-Additionally, the [`cy.session()`](/api/commands/session) command will only
-clear the current browser context when establishing the browser session - the
+storage, and session storage are available across tests in that suite.
+Additionally, the [`cy.session()`](/api/commands/session) command only
+clears the current browser context when establishing the browser session - the
 current page is not cleared.
 
 ### Quick Comparison

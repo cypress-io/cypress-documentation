@@ -10,7 +10,7 @@ slug: /app/tooling/code-coverage
 
 # Measure Code Coverage in Cypress
 
-As you write more and more end-to-end tests, you will find yourself wondering -
+As you write more and more end-to-end tests, you find yourself wondering -
 do I need to write more tests? Are there parts of the application still
 untested? Are there parts of the application that perhaps are tested too much?
 
@@ -61,7 +61,7 @@ also tested.
 Computing the source code lines that were executed during the test is done
 through **code coverage**. Code coverage requires inserting additional counters
 into your source code before running it using **instrumentation**.
-This document will be focused on code coverage and the instrumentation required to set it up.
+This document focuses on code coverage and the instrumentation required to set it up.
 
 ## UI Coverage
 
@@ -130,7 +130,7 @@ module.exports = { add }
 ```
 
 Imagine we load the above instrumented source file from our test spec file.
-Immediately some counters will be incremented!
+Immediately some counters increment!
 
 ```javascript title='add.cy.js'
 const { add } = require('./add')
@@ -280,7 +280,7 @@ original statements.
 #### Avoiding conflicts with Jest
 
 Adding `babel-plugin-istanbul` directly to the top-level `plugins` array in
-`.babelrc` will cause a **"Duplicate plugin/preset detected"** error when Jest
+`.babelrc` causes a **"Duplicate plugin/preset detected"** error when Jest
 runs. Jest automatically instruments code with Istanbul (via `babel-jest`) and
 sets `BABEL_ENV=test`, so loading the plugin a second time through `.babelrc`
 triggers the conflict.
@@ -312,8 +312,8 @@ in your npm script:
 }
 ```
 
-Because Jest never sets `BABEL_ENV=cypress`, the istanbul plugin will only be
-loaded during Cypress runs, and there will be no duplicate-plugin conflict.
+Because Jest never sets `BABEL_ENV=cypress`, Babel only loads the istanbul plugin
+during Cypress runs, and no duplicate-plugin conflict occurs.
 
 :::info
 
@@ -380,10 +380,10 @@ files. Setting `requireEnv: false` enables instrumentation unconditionally; set
 it to `true` and export `VITE_COVERAGE=true` if you only want coverage during
 CI runs.
 
-Once the plugin is in place, `window.__coverage__` will be populated when the
+Once the plugin is in place, `window.__coverage__` is populated when the
 app runs in the browser, and the
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
-will collect it automatically — no additional Babel configuration is required.
+collects it automatically — no additional Babel configuration is required.
 
 :::info
 
@@ -505,7 +505,7 @@ import '@cypress/code-coverage/support'
 
 :::caution
 
-Adding the import only to `cypress/support/e2e.js` will **not** collect
+Adding the import only to `cypress/support/e2e.js` does **not** collect
 coverage during component tests. The import must be present in the component
 support file.
 
@@ -589,9 +589,7 @@ because our test has marked 1 todo item as completed.
 The source lines not covered, marked in yellow (the switch cases the test missed)
 and red (regular statements) are a great guide for writing more end-to-end
 tests. We need tests that delete todo items, edit them, mark all of them as
-completed at once and clear completed items. When we cover every switch
-statement in `src/reducers/todos.js` we probably will achieve close to 100% code
-coverage. Even more importantly, we will cover the main features of the
+completed at once and clear completed items. Tests that cover every switch statement in `src/reducers/todos.js` would probably achieve close to 100% code coverage. Even more importantly, those tests would cover the main features of the
 application the user is expected to use.
 
 We can write more E2E tests.
@@ -744,7 +742,7 @@ coverage from the `cypress/e2e/selectors.cy.js` file after running the test.
 />
 
 Our unit test is hitting the line we could not reach from the end-to-end tests,
-and if we execute all spec files - we will get 100% code coverage.
+and running all spec files reaches 100% code coverage.
 
 <DocsImage
   src="/img/app/code-coverage/100percent.png"
@@ -847,8 +845,8 @@ application back end is running at port 3000 and we are using the default "GET
 
 :::
 
-From now on, the front end code coverage collected during end-to-end tests will
-be merged with the code coverage from the instrumented back end code and saved
+From now on, the front end code coverage collected during end-to-end tests is
+merged with the code coverage from the instrumented back end code and saved
 in a single report. Here is an example combined full stack coverage report:
 
 <DocsImage

@@ -725,7 +725,7 @@ cy.get('.sticky-header').invoke('css', 'visibility', '')
 
 <HeaderAssertions />
 
-- `cy.screenshot()` will only run assertions you have chained once, and will not
+- `cy.screenshot()` only runs assertions you have chained once, and does not
   [retry](/app/core-concepts/retry-ability).
 
 <HeaderTimeouts />
@@ -742,7 +742,7 @@ cy.get('.sticky-header').invoke('css', 'visibility', '')
 cy.screenshot('my-image')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/screenshot/command-log-shows-name-of-screenshot-taken.png"

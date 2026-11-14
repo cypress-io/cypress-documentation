@@ -223,8 +223,8 @@ browser.
 
 :::note
 
-\*\* The built file is the file that is created by the preprocessor that will
-eventually be served to the browser.
+\*\* The built file is the file that is created by the preprocessor that is
+eventually served to the browser.
 
 :::
 
@@ -240,7 +240,7 @@ If, for example, the source file is `spec.cljs`, the preprocessor should:
 
 :::caution
 
-This callback function can and _will_ be called multiple times with the same
+Cypress can, and _does_, call this callback function multiple times with the same
 `filePath`.
 
 The callback function is called any time a file is requested by the browser.
@@ -270,7 +270,7 @@ The `file` object passed to the callback function is an
 ### Receiving 'close' event
 
 When the running spec, the project, or the browser is closed while running
-tests, the `close` event will be emitted. The preprocessor should do any
+tests, the `close` event is emitted. The preprocessor should do any
 necessary cleanup in this function, like closing the watcher when watching.
 
 ```javascript

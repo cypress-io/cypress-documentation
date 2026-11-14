@@ -10,7 +10,7 @@ slug: /app/component-testing/get-started
 
 # Cypress Component Testing
 
-Cypress Component Testing mounts your components directly in a **real browser** — not a simulated DOM — so you test them exactly as they will behave for your users. Every component renders visually during the test run, and you can use browser DevTools to inspect, interact, and debug just as you would during development.
+Cypress Component Testing mounts your components directly in a **real browser** — not a simulated DOM — so you test them exactly as they behave for your users. Every component renders visually during the test run, and you can use browser DevTools to inspect, interact, and debug just as you would during development.
 
 ## Why Cypress for Component Testing?
 
@@ -29,7 +29,7 @@ Assuming you've successfully
 [installed Cypress](/app/get-started/install-cypress) and
 [opened Cypress](/app/get-started/open-the-app), now it's time to set up component testing.
 
-The Cypress App will guide you through configuring your project.
+The Cypress App guides you through configuring your project.
 
 <DocsVideo
   src="/img/snippets/getting-started-with-ct.mp4"
@@ -66,7 +66,7 @@ The following integrations are built and maintained by Cypress community members
 
 ### Select Testing Type
 
-Whenever you run Cypress for the first time, the app will prompt you to set up
+Whenever you run Cypress for the first time, the app prompts you to set up
 either E2E Testing or Component Testing. Click on "Component Testing" to start
 the configuration wizard.
 
@@ -83,7 +83,7 @@ For more information on how to choose a testing type, we recommend this [Testing
 
 ### Project Setup
 
-The Project Setup screen will automatically detect your framework and bundler. In this example we will use [React](https://react.dev/) and [Vite](https://vitejs.dev/).
+The Project Setup screen automatically detects your framework and bundler. This example uses [React](https://react.dev/) and [Vite](https://vitejs.dev/).
 Click "Next Step" to continue.
 
 <DocsImage
@@ -115,12 +115,12 @@ for how this works and how to customize it.
 
 <DocsImage
   src="/img/app/component-testing/scaffolded-files.jpg"
-  caption="The Cypress launchpad will scaffold all of these files for you"
+  caption="The Cypress launchpad scaffolds all of these files for you"
 />
 
 ### Choose A Browser
 
-After setting up component testing, you will be at the browser selection screen.
+After you set up component testing, the app shows the browser selection screen.
 
 Pick the browser of your choice and click the "Start Component Testing" button
 to open the Cypress App.
@@ -132,7 +132,7 @@ to open the Cypress App.
 
 ## Writing Your First Test
 
-At this point, your project is configured to use Cypress Component Testing. However, when the app appears, it won't find any specs because we haven't created
+At this point, your project is configured to use Cypress Component Testing. However, when the app appears, it doesn't find any specs because we haven't created
 any yet. Now we need write our first Component Test.
 
 <DocsImage
@@ -230,20 +230,20 @@ Let's break down the spec. First, we import the `Stepper` component. Then, we
 organize our tests using the functions `describe` and `it`, which allows us to
 group tests into sections by using method blocks. `describe` and `it` are global functions
 provided by Cypress, which means you don't have to import them directly to use
-them. The top-level `describe` block will be the container for all our tests in
+them. The top-level `describe` block is the container for all our tests in
 a file, and each `it` represents an individual test. The `describe` function
 takes two parameters, the first of which is the name of the test suite, and the
-second is a function that will execute the tests.
+second is a function that executes the tests.
 
 We defined a test using the `it` function inside `describe`. The first parameter
 to `it` is a brief description of the spec, and the second parameter is a
 function that contains the test code. In our example above, we only have one
-test, but soon we'll see how we can add multiple `it` blocks inside of a
+test, but a later section shows how to add multiple `it` blocks inside of a
 `describe` for a series of tests.
 
 :::info
 
-The [cy.mount()](/api/commands/mount) method will mount our component into the test
+The [cy.mount()](/api/commands/mount) method mounts our component into the test
 app so we can begin running tests against it.
 
 :::
@@ -262,8 +262,8 @@ Switch back to the browser you opened for testing, and you should now see the
 />
 
 Our first test verifies the component can mount in its default state without
-any errors. If there is a runtime error during test execution, the test will
-fail, and you will see a stack trace pointing to the source of the problem.
+any errors. If there is a runtime error during test execution, the test
+fails, and Cypress shows a stack trace pointing to the source of the problem.
 
 A basic test like the one above is an excellent way to start testing a
 component. Cypress renders your component in a real browser, and you can use all
@@ -280,14 +280,14 @@ the component is correct.
 ### Selectors & Assertions
 
 By default, the Stepper's counter is initialized to "0". We can override that
-value by specifying an initial count. Let's write a couple of tests that will
+value by specifying an initial count. Let's write a couple of tests that
 verify both these states.
 
-To do so, we will use a selector to access the `span` element that contains the
+To do so, use a selector to access the `span` element that contains the
 counter, and then assert that the text value of the element is what we expect it
 to be.
 
-There are various ways to select items from the DOM using Cypress. We will use
+There are various ways to select items from the DOM using Cypress. This example uses
 [cy.get()](/api/commands/get), which allows us to pass in a CSS-like selector.
 
 After we "get" the element, we use the [should](/api/commands/should) assertion
@@ -341,10 +341,10 @@ it('stepper should default to 0', () => {
 When you go back to the test runner, you should see the test pass.
 
 In the above test, we select the element by passing in "span" to `cy.get()`,
-which will select all `span` tags in our component. We only have one `span`
+which selects all `span` tags in our component. We only have one `span`
 currently, so this works. However, if our component evolves and we add another
-`span`, then this test could start to fail. We should use a selector that will
-be less brittle to future changes.
+`span`, then this test could start to fail. We should use a selector that is
+less brittle to future changes.
 
 In the `Stepper` component, the `span` tag has a `data-cy` attribute on it:
 
@@ -425,7 +425,7 @@ it('stepper should default to 0', () => {
 </TabItem>
 </Tabs>
 
-The test will still pass as expected, and our selector is now future-proof. For
+The test still passes as expected, and our selector is now future-proof. For
 more info on writing good selectors, see our guide
 [Selector Best Practices](/app/core-concepts/best-practices#Selecting-Elements).
 
@@ -488,7 +488,7 @@ We mounted and selected the element in the above tests but didn't interact with
 it. We should also test that the value of the counter changes when a user clicks
 the "increment" and "decrement" buttons.
 
-To do so, we will interact with the component by using the
+To do so, interact with the component by using the
 [click()](/api/commands/click) command, which clicks a DOM element just like a
 real user would.
 
@@ -565,7 +565,7 @@ it('when the decrement button is pressed, the counter is decremented', () => {
 </TabItem>
 </Tabs>
 
-When you view the results of each of the tests, you will see that the counter is
+When you view the results of each of the tests, the counter is
 now "1" in the **increment** test, and "-1" in the **decrement** test. Not only did our
 tests pass, but we can visually see the results in a browser!
 
