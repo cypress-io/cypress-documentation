@@ -506,8 +506,8 @@ cy.get('body').then(($body) => {
 cy.contains('h1', 'Welcome').should('be.visible')
 ```
 
-The check runs once, when the callback runs, and doesn't retry. A banner that
-appears a moment later is missed, and the test carries on without dismissing
+The check runs once, when the callback runs, and doesn't retry. The check misses
+a banner that appears a moment later, and the test carries on without dismissing
 it. When you can, control the banner from the test instead, for example with a
 cookie or a stubbed response. The
 [conditional testing guide](/app/guides/conditional-testing) covers the
@@ -564,7 +564,7 @@ cy.get('#signup input').each(($input) => {
 })
 ```
 
-Inputs of other types, such as checkboxes, are left as they are. An input with
+The test leaves inputs of other types, such as checkboxes, as they are. An input with
 an unknown `type` counts as `text`, the same way the browser treats it, so it
 gets `'Jane'`.
 

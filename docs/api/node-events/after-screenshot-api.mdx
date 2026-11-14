@@ -9,9 +9,9 @@ sidebar_label: 'after:screenshot'
 # After Screenshot Event
 
 After a screenshot is taken, you can get details about the screenshot via the
-`after:screenshot` node event. This event is called when a screenshot is taken
+`after:screenshot` node event. Cypress calls this event when it takes a screenshot
 with [`cy.screenshot()`](/api/commands/screenshot) or as a result of a test
-failure. The event is called after the screenshot image is written to disk.
+failure. Cypress calls the event after it writes the screenshot image to disk.
 
 Your handler records those details, manipulates the image as needed, and returns
 the updated details about the image.
@@ -57,9 +57,9 @@ Using [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) you can
 tap into the `after:screenshot` event.
 
 If you change the `path`, `size` or `dimensions` of the image, you need to
-update the new values so that the details are correctly reported in the test
-results. _Any other properties besides `path`, `size`, and `dimensions` are
-ignored._
+update the new values so that the test results report the details correctly.
+_Cypress ignores any other properties besides `path`, `size`, and
+`dimensions`._
 
 You can return an object or a promise that resolves to an object from the
 callback function. _Any type of returned value other than an object is

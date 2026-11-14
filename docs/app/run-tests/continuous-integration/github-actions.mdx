@@ -35,7 +35,7 @@ in the [GitHub Action Documentation](https://docs.github.com/en/actions).
   title="GitHub Actions + Cypress: Actions & Workflows"
 />
 
-Workflows can be packaged and shared as
+You can package and share workflows as
 [GitHub Actions](https://github.com/features/actions). GitHub maintains many,
 such as the [checkout](https://github.com/marketplace/actions/checkout) and
 [Upload/Download Artifact Actions](https://docs.github.com/en/actions/guides/storing-workflow-data-as-artifacts)
@@ -84,7 +84,7 @@ for more information.
 
 The example below is a basic CI setup and job using the
 [Cypress GitHub Action](https://github.com/marketplace/actions/cypress-io) to
-run Cypress tests. This GitHub Action configuration is placed within
+run Cypress tests. Place this GitHub Action configuration within
 `.github/workflows/main.yml`.
 
 ```yaml
@@ -113,7 +113,7 @@ jobs:
   GitHub-hosted Ubuntu Linux instance to run the outlined `steps` for the
   declared `cypress-run` job within the `jobs` section of the configuration.
 - The [GitHub checkout Action](https://github.com/marketplace/actions/checkout)
-  is used to check out our code from our GitHub repository.
+  checks out our code from our GitHub repository.
 - Finally, our Cypress GitHub Action does the following:
   - Install npm dependencies
   - Build the project (`npm run build`)
@@ -207,7 +207,7 @@ If you are testing with Firefox, you must specify the non-root user `1001` as ab
 
 ## Caching Dependencies and Build Artifacts
 
-When working with actions that have multiple jobs, it is recommended to have an
+When working with actions that have multiple jobs, we recommend having an
 initial "install" job that downloads any dependencies and builds your app,
 and then cache these assets for use later by subsequent jobs.
 
@@ -396,21 +396,21 @@ jobs:
 
 <strong>Ensure Correct Container</strong>
 
-If a Docker container was used in the install job, the same Docker container
-must also be used in the worker jobs.
+If the install job uses a Docker container, the worker jobs must also use the
+same Docker container.
 
 :::
 
 #### Setting up Parallelization
 
-To set up multiple containers to run in parallel, the matrix option of the
-strategy configuration can be set to containers: [1, 2, 3, 4, 5], where the
+To set up multiple containers to run in parallel, set the matrix option of the
+strategy configuration to containers: [1, 2, 3, 4, 5], where the
 number of items defined in the containers array is how many instances of the
 job start up.
 
 For instance, `containers: [1, 2, 3, 4, 5]` provisions five worker instances
-to run in parallel. For our purposes, the array's values are arbitrary and
-aren't used in the steps.
+to run in parallel. For our purposes, the array's values are arbitrary, and
+the steps don't use them.
 
 ### Specifying Browsers in Parallel Builds
 

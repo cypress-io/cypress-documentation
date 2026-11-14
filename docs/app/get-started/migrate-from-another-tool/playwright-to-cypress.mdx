@@ -231,7 +231,7 @@ section covers the most common translations.
 
 In Cypress, use `cy.env()` for sensitive values (credentials, tokens, secrets)
 or `Cypress.expose()` for non-sensitive configuration (feature flags, public
-URLs, API versions). These values are set via the top-level `env` and `expose` keys in
+URLs, API versions). You set these values via the top-level `env` and `expose` keys in
 your Cypress configuration file. Both APIs require Cypress 15.10.0 or newer.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -445,7 +445,7 @@ export default defineConfig({
 
 ## Test structure and syntax migration
 
-Playwright imports `test` from `@playwright/test`. Cypress uses Mocha's BDD interface, which provides `it()` and `describe()` globally. `test` is not available in Cypress and must be replaced.
+Playwright imports `test` from `@playwright/test`. Cypress uses Mocha's BDD interface, which provides `it()` and `describe()` globally. `test` is not available in Cypress, so replace it.
 
 | Playwright                              | Cypress                            |
 | --------------------------------------- | ---------------------------------- |
@@ -479,7 +479,7 @@ describe('checkout', () => {
 
 ## Execution model and retry-ability
 
-Playwright code typically awaits each action and may use explicit waits for specific conditions. Cypress commands are enqueued and automatically retry assertions until they pass or timeout.
+Playwright code typically awaits each action and may use explicit waits for specific conditions. Cypress enqueues its commands, which automatically retry assertions until they pass or timeout.
 
 **What this means for your tests:**
 
@@ -859,8 +859,8 @@ beforeEach(() => {
 ## Cross-origin
 
 Cypress enforces a same-origin policy by default. Use `cy.origin()` to
-run commands against a different origin within the same test. Any
-commands targeting a secondary origin must be scoped inside the
+run commands against a different origin within the same test. Scope any
+commands targeting a secondary origin inside the
 `cy.origin()` callback.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -1625,7 +1625,7 @@ Cypress parallelizes tests across machines through
 on historical run durations. Cloud parallelization requires a Cypress Cloud account.
 
 - Parallelization happens in CI through Cypress Cloud.
-- Specs are distributed dynamically based on historical run data.
+- Cypress Cloud distributes specs dynamically based on historical run data.
 - No manual sharding required.
 
 <Badge type="success">After: Cypress Cloud</Badge>
@@ -1726,7 +1726,7 @@ Beyond basic retries, Cypress Cloud provides:
 
 If you record test runs to Cypress Cloud, [Cypress Accessibility](/accessibility/get-started/introduction) provides automated accessibility scanning across your entire test suite with no changes to your test code.
 
-Rather than requiring `checkA11y()` calls in each test, Cypress Accessibility captures DOM snapshots during test execution server-side, using the same protocol as Test Replay. Every distinct state your tests interact with is scanned automatically. Scanning every state means pages and components that your tests visit but do not explicitly instrument are still checked.
+Rather than requiring `checkA11y()` calls in each test, Cypress Accessibility captures DOM snapshots during test execution server-side, using the same protocol as Test Replay. Cypress Accessibility automatically scans every distinct state your tests interact with. Scanning every state means Cypress Accessibility still checks pages and components that your tests visit but do not explicitly instrument.
 
 Learn more about [Accessibility testing](/accessibility/get-started/introduction).
 
@@ -1744,7 +1744,7 @@ up front so you can plan alternatives rather than discovering them mid-migration
 
 ## Cheat sheet
 
-The `await` required in Playwright is not included in the cheat sheet for readability.
+The cheat sheet leaves out the `await` that Playwright requires, for readability.
 
 | Playwright                                               | Cypress                                                         |
 | -------------------------------------------------------- | --------------------------------------------------------------- |

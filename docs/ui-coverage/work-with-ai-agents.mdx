@@ -48,7 +48,7 @@ An agent connected to Cloud MCP can call these UI Coverage tools, choosing them 
 | `cypress_get_ui_coverage_views`    | Paginated views for a run, sorted by most untested elements and links. Use it to browse past the top 5 in the report summary.                                |
 | `cypress_get_ui_coverage_elements` | Paginated interactive elements for a run. Filter by tested or untested, and optionally scope to a single view by name.                                       |
 
-These tools are read-only: they retrieve data and can't change your configuration, tests, or runs. Access is scoped to the projects your Cypress Cloud user can already see. For availability, limits, and security details, see the [Cloud MCP reference](/cloud/integrations/cloud-mcp).
+These tools are read-only: they retrieve data and can't change your configuration, tests, or runs. Cypress Cloud scopes access to the projects your Cypress Cloud user can already see. For availability, limits, and security details, see the [Cloud MCP reference](/cloud/integrations/cloud-mcp).
 
 ### How to prompt effectively
 
@@ -210,7 +210,7 @@ Agents produce better work from reports that already reflect what your team care
 A few high-value changes make the report sharper for both people and agents:
 
 - **Remove noise and stabilize identity** so the agent reads clean element names instead of third-party clutter or the same button counted many ways. Filter out widgets you don't own, [promote a stable attribute](/ui-coverage/configuration/significantattributes) your app already renders, and [group](/ui-coverage/configuration/elementgroups) repeated controls so they count once.
-- **Count the interactions that reflect real usage** so coverage isn't understated where your suite drives the UI through plugin or [custom commands](/ui-coverage/configuration/additionalinteractioncommands).
+- **Count the interactions that reflect real usage** so UI Coverage doesn't understate coverage where your suite drives the UI through plugin or [custom commands](/ui-coverage/configuration/additionalinteractioncommands).
 - **Scope the report to the runs your agent triages** with [`profiles`](/ui-coverage/configuration/profiles), so a smoke run and a full regression run each read the configuration that fits them.
 
 See the [configuration overview](/ui-coverage/configuration/overview) to get started. The goal is the same as for human review: a high-signal list of views and elements tied to ownership and critical flows, not an exhaustive list of every control on every page.
@@ -238,7 +238,7 @@ Ensure tests include assertions about the state of the application and the readi
 
 For areas where assertions on non-interactive elements are critical to track, your code can use the [`data-cy-ui-interactive`](/ui-coverage/core-concepts/interactivity#Overriding-interactive-elements-with-data-cy-ui-interactive) attribute to bring those elements into your coverage report.
 
-Combine the attribute with [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) configuration to allow assertions to count as coverage for those elements. Pairing the two adds an extra layer of guidance for your agent about what must be included in your tests.
+Combine the attribute with [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) configuration to allow assertions to count as coverage for those elements. Pairing the two adds an extra layer of guidance for your agent about what your tests must include.
 
 :::
 

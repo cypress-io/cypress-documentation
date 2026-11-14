@@ -30,8 +30,8 @@ you actually intend to test:
 
 ## When to ignore views and links
 
-Reach for `viewFilters` when a URL is counted against you but isn't something
-your team is responsible for testing:
+Reach for `viewFilters` when UI Coverage counts a URL against you but it isn't
+something your team is responsible for testing:
 
 - **Third-party pages**: Sign-in flows on an external identity provider (Okta,
   Auth0), a payment processor's hosted checkout, or embedded content you don't
@@ -57,8 +57,8 @@ full comparison.
 
 ## Step 1: Find the views and links worth ignoring
 
-Start by finding the URLs that are counted against you but sit outside your
-testing goals. You can do this in the Cloud UI or from your editor with an AI
+Start by finding the URLs that UI Coverage counts against you but that sit
+outside your testing goals. You can do this in the Cloud UI or from your editor with an AI
 agent.
 
 ### In the Cloud UI
@@ -123,7 +123,7 @@ optional `comment` explaining why the rule exists:
 One rule removes both the excluded pages and any links pointing to them. Every
 other URL stays included, because a few rules govern how filters are applied:
 
-- Each URL is matched against your rules **in order**, and the **first** rule
+- UI Coverage matches each URL against your rules **in order**, and the **first** rule
   whose `pattern` matches decides whether the URL is included or excluded. Place
   specific rules before broad ones.
 - URLs that match **no** rule are **included by default**.
@@ -185,7 +185,7 @@ them all:
 A `viewFilters` array at the **root** of your configuration applies to both UI
 Coverage and Cypress Accessibility. To exclude a URL from UI Coverage alone,
 nest `viewFilters` under a `uiCoverage` key. A nested list completely
-**replaces** the root-level one for UI Coverage (the two are not merged), so
+**replaces** the root-level one for UI Coverage (UI Coverage doesn't merge the two), so
 include every rule UI Coverage needs in the nested list:
 
 ```json title="App Quality Config"

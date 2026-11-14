@@ -19,7 +19,7 @@ Spy and stub network requests and responses.
 
 :::caution
 
-All intercepts are automatically cleared before every test.
+Cypress automatically clears all intercepts before every test.
 
 :::
 
@@ -129,7 +129,7 @@ Match the route to a specific
 
 :::note
 
-If no method is defined Cypress matches all requests by default.
+If you don't define a method, Cypress matches all requests by default.
 
 :::
 
@@ -145,9 +145,9 @@ argument (below).
 `routeMatcher` is an object used to match the incoming HTTP requests with this
 intercepted route.
 
-All properties are optional but all those that are set must match for the
-request to be intercepted. If a `string` is passed to any property, it is
-glob-matched against the request using
+All properties are optional, but every property you set must match for Cypress
+to intercept the request. If you pass a `string` to any property, Cypress
+glob-matches it against the request using
 [`Cypress.minimatch`](/api/utilities/minimatch) with the `{ matchBase: true }`
 minimatch option applied.
 
@@ -186,8 +186,8 @@ for an example.
 
 #### <Icon name="angle-right" /> routeHandler (`Function`)
 
-The `routeHandler` function is called whenever a request is matched, with the
-first argument being the request object. From inside the callback, you have
+Cypress calls the `routeHandler` function whenever a request matches, with the
+request object as the first argument. From inside the callback, you have
 access to the entire request-response where you can modify the outgoing request,
 send a response, access the real response, and more.
 
@@ -207,7 +207,7 @@ See ["Intercepted requests"][req] and
 
 :::info
 
-`cy.intercept` can be used solely for spying: to passively listen for matching
+You can use `cy.intercept` solely for spying: to passively listen for matching
 routes and apply [aliases](#Aliasing-an-intercepted-route) to them without manipulating the
 request or its response in any way. Spying alone is powerful, since those aliases
 support [waiting](#Waiting-on-a-request) on these requests, resulting in more
@@ -253,7 +253,7 @@ cy.intercept('GET', '/users')
 
 ### Matching with [RouteMatcher](#routeMatcher-RouteMatcher)
 
-Specifying a `method` and `url` to match can also be achieved by passing the
+You can also specify a `method` and `url` to match by passing the
 `routeMatcher` object into `cy.intercept` instead:
 
 ```js
@@ -355,7 +355,7 @@ cy.intercept({
 
 While `cy.intercept` doesn't yield anything, you can chain
 [`.as`](/api/commands/as) to it to create an
-[alias](/app/core-concepts/variables-and-aliases#Aliases) which can be used
+[alias](/app/core-concepts/variables-and-aliases#Aliases) that you can use
 to [wait on a request](#Waiting-on-a-request).
 
 ```js
@@ -374,7 +374,7 @@ multiple requests to the same route and you need to assert on all of them.
 
 ### Aliasing individual requests
 
-Aliases can be set on a per-request basis by setting the `alias` property of the
+You can set aliases on a per-request basis by setting the `alias` property of the
 intercepted request. Per-request aliases are especially useful when intercepting GraphQL
 requests:
 
@@ -632,7 +632,7 @@ cy.wait('@getUsers').its('response.statusCode').should('eq', 200)
 
 Because the route defined last matches first, a test can replace an intercept
 that a `beforeEach()` set up. Define the new route in the test and it wins for
-that test only, since all intercepts are cleared before the next one:
+that test only, since Cypress clears all intercepts before the next one:
 
 ```js
 beforeEach(() => {
@@ -727,7 +727,7 @@ cy.intercept('/req-headers', (req) => {
 })
 ```
 
-**Note:** the new header is NOT shown in the browser's Network tab, as the
+**Note:** the browser's Network tab does NOT show the new header, as the
 request has already left the browser. You can still confirm the header was added
 by waiting on the intercept as shown below:
 
@@ -791,7 +791,7 @@ its properties and methods.
 
 #### Returning a Promise
 
-If a Promise is returned from the route callback, it is awaited before
+If the route callback returns a Promise, Cypress awaits it before
 continuing with the request.
 
 ```js
@@ -806,8 +806,8 @@ cy.intercept('POST', '/login', (req) => {
 
 #### Passing a request to the next request handler
 
-If [`req.reply()`][req-reply] or [`req.continue()`][req-continue] is not
-explicitly called inside of a request handler, requests pass to the next
+If a request handler doesn't explicitly call [`req.reply()`][req-reply] or
+[`req.continue()`][req-continue], requests pass to the next
 request handler until none are left.
 
 ```js
@@ -905,7 +905,7 @@ cy.intercept('GET', '/api/users/1', (req) => {
 
 #### Returning a Promise
 
-If a Promise is returned from the route callback, it is awaited before
+If the route callback returns a Promise, Cypress awaits it before
 sending the response to the browser.
 
 ```js
@@ -950,7 +950,7 @@ outgoing request, stub a response, make assertions, etc.
 
 {/* TODO DX-188 emphasize the usage of StaticResponse as the routeHandler */}
 
-If a function is passed as the `routeHandler`, it is called with the
+If you pass a function as the `routeHandler`, Cypress calls it with the
 intercepted HTTP request:
 
 ```js
@@ -987,7 +987,7 @@ cy.intercept('POST', '/users', (req) => {
 
 #### Controlling the outgoing request
 
-The outgoing request, including its body, headers, etc., can be modified before
+You can modify the outgoing request, including its body, headers, etc., before
 it's sent.
 
 ```js
@@ -1028,7 +1028,7 @@ cy.wait('@createUser')
 :::info
 
 In Chrome, Chromium, and Edge the browser sends the modified request, so the
-modification is reflected in the browser's network traffic (for example, in Chrome
+browser's network traffic reflects the modification (for example, in Chrome
 DevTools). On the
 [legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path)
 the browser logs the request before Cypress modifies it, so the modification does
@@ -1039,7 +1039,7 @@ not appear there — verify it from the Cypress command log, or with an assertio
 
 :::caution
 
-`cy.intercept()` cannot be debugged using
+You can't debug `cy.intercept()` using
 [`cy.request()`](/api/commands/request)! Cypress only intercepts requests made
 by your front-end application.
 
@@ -1118,8 +1118,8 @@ See also
 
 Modifying the real response (`continue`):
 
-The `continue` method accepts a function which is passed an object representing
-the real response being intercepted on its way back to the client (your
+The `continue` method accepts a function that receives an object representing
+the real response that Cypress intercepts on its way back to the client (your
 front-end application).
 
 ```js
@@ -1182,7 +1182,7 @@ more examples of [events](#Request-events).
 
 #### Returning a Promise
 
-If a Promise is returned from the route callback, it is awaited before
+If the route callback returns a Promise, Cypress awaits it before
 continuing with the request.
 
 ```js
@@ -1219,9 +1219,9 @@ cy.intercept('POST', '/users', 'success')
 
 ## Intercepted requests
 
-If a function is passed as the handler for a `cy.intercept()`, it is called
-with the first argument being an object that represents the intercepted HTTP
-request:
+If you pass a function as the handler for a `cy.intercept()`, Cypress calls it
+with an object that represents the intercepted HTTP request as the first
+argument:
 
 ```js
 cy.intercept('/api', (req) => {
@@ -1233,10 +1233,10 @@ From here, you can do several things with the intercepted request:
 
 - you can modify and assert on the request's properties (body, headers, URL,
   method...)
-- the request can be sent to the real upstream server
+- you can send the request to the real upstream server
   - optionally, you can intercept the response from this
-- a response can be provided to stub out the request
-- listeners can be attached to various events on the request
+- you can provide a response to stub out the request
+- you can attach listeners to various events on the request
 
 ### Request object properties
 
@@ -1285,7 +1285,7 @@ The request object (`req`) has several properties from the HTTP request itself:
 
 :::note
 
-`req.httpVersion` is not reported in Chrome, Chromium, or Edge, where Cypress intercepts
+Cypress doesn't report `req.httpVersion` in Chrome, Chromium, or Edge, where it intercepts
 traffic inside the browser and the protocol your application negotiates with your server
 is not known at the point the request is intercepted. Firefox, WebKit, and Electron route
 traffic through the Cypress HTTP/1.1 proxy and still report it. See
@@ -1294,7 +1294,7 @@ properties this affects and how to write assertions that pass in every browser.
 
 :::
 
-`req` also has some optional properties which can be set to control
+`req` also has some optional properties you can set to control
 Cypress-specific behavior:
 
 ```ts
@@ -1319,14 +1319,14 @@ Cypress-specific behavior:
 }
 ```
 
-Any modifications to the properties of `req` are persisted to other request
-handlers, and finally merged into the actual outbound HTTP request.
+Cypress persists any modifications to the properties of `req` to other request
+handlers, and finally merges them into the actual outbound HTTP request.
 
 ### Controlling the outbound request with `req.continue()`
 
-Calling `req.continue()` without any argument causes the request to be sent
-outgoing, and the response is returned to the browser after any other
-listeners have been called. For example, the following code modifies a `POST`
+Calling `req.continue()` without any argument sends the request outgoing,
+and Cypress returns the response to the browser after calling any other
+listeners. For example, the following code modifies a `POST`
 request and then sends it to the upstream server:
 
 ```js
@@ -1338,9 +1338,9 @@ cy.intercept('POST', '/submitStory', (req) => {
 })
 ```
 
-If a function is passed to `req.continue()`, the request is sent to the
-real upstream server, and the callback is called with the response once the
-response is fully received from the server. See ["Intercepted responses"][res]
+If you pass a function to `req.continue()`, Cypress sends the request to the
+real upstream server and calls the callback with the response once Cypress
+fully receives the response from the server. See ["Intercepted responses"][res]
 
 Note: calling `req.continue()` stops the request from propagating to the
 next matching request handler in line. See ["Interception lifecycle"][lifecycle]
@@ -1348,10 +1348,10 @@ for more information.
 
 ### Providing a stub response with `req.reply()`
 
-The `req.reply()` function can be used to send a stub response for an
+Use the `req.reply()` function to send a stub response for an
 intercepted request. By passing a string, object, or
-[`StaticResponse`][staticresponse] to `req.reply()`, the request can be
-prevented from reaching the destination server.
+[`StaticResponse`][staticresponse] to `req.reply()`, you prevent the request
+from reaching the destination server.
 
 For example, the following code stubs out a JSON response from a request
 interceptor:
@@ -1474,7 +1474,7 @@ for more details on request ordering.
 
 ## Intercepted responses
 
-The response can be intercepted in two ways:
+You can intercept the response in two ways:
 
 - by passing a callback to [`req.continue()`][req-continue] within a request
   handler
@@ -1490,7 +1490,7 @@ Each one runs at a different point in the response:
 | `req.on('response')`        | After the `req.continue()` callback, before the browser gets the response | Yes                                |
 | `req.on('after:response')`  | After the browser has received the response                               | No                                 |
 
-The response object, `res`, is passed as the first argument to the handler
+Cypress passes the response object, `res`, as the first argument to the handler
 function:
 
 ```js
@@ -1546,7 +1546,7 @@ reported, and treat the phrase for a standard code as redundant with it.
 an `object`. And if the body contains binary content, the `body` is a buffer.
 
 Cypress relies on the `Content-Type: application/json` header to decide whether
-to parse the body as JSON. If that header is absent, the body is yielded as a
+to parse the body as JSON. If that header is absent, Cypress yields the body as a
 `string` even when it contains JSON. A `string` body commonly comes from responses that
 omit a `Content-Type` header. For example, a `304 Not Modified` response, which
 [per RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232#section-4.1) is not
@@ -1568,7 +1568,7 @@ cy.wait('@getResource').then(({ response }) => {
 })
 ```
 
-`res` also has some optional properties which can be set to control
+`res` also has some optional properties you can set to control
 Cypress-specific behavior:
 
 | Property     | Description                                                                 |
@@ -1576,8 +1576,8 @@ Cypress-specific behavior:
 | throttleKbps | Maximum data transfer rate of the response (kilobytes/second)               |
 | delay        | Minimum network latency or delay to add to the response time (milliseconds) |
 
-Any modifications to the properties of `res` are persisted to other response
-handlers, and finally merged into the actual incoming HTTP response.
+Cypress persists any modifications to the properties of `res` to other response
+handlers, and finally merges them into the actual incoming HTTP response.
 
 ### Ending the response with `res.send()`
 
@@ -1585,9 +1585,9 @@ To end the response phase of the request, call `res.send()`. Optionally, you can
 pass a [`StaticResponse`][staticresponse] to `res.send()`, to be merged with the
 actual response.
 
-When `res.send()` is called, the response phase ends immediately and no
-other response handlers are called for the current request. Here is an
-example of how `res.send()` could be used:
+When you call `res.send()`, the response phase ends immediately and Cypress
+calls no other response handlers for the current request. Here is an
+example of how to use `res.send()`:
 
 ```js
 cy.intercept('/notification', (req) => {
@@ -1715,7 +1715,7 @@ for a complete example.
 
 ### Request phase
 
-The following steps are used to handle the request phase.
+Cypress uses the following steps to handle the request phase.
 
 1. Start with the first matching route, in the order described above
    (middleware first, then all other routes starting with the last defined).
@@ -1743,8 +1743,8 @@ The following steps are used to handle the request phase.
 
 ### Response phase
 
-Once the HTTP response is received from the upstream server, the following steps
-are applied:
+Once Cypress receives the HTTP response from the upstream server, it applies the
+following steps:
 
 1. Get a list of registered `before:response` event listeners.
 2. For each `before:response` listener (if any), call it with the [`res`][res]
@@ -2007,8 +2007,8 @@ When a route doesn't match, check these:
 ## `cy.intercept()` and request caching
 
 `cy.intercept()` intercepts requests at the network layer. Intercepting at that layer can cause
-confusion when trying to intercept a request that has already been cached by the
-browser. If a request is served from the browser cache, it never hits the
+confusion when trying to intercept a request that the browser has already cached. If
+the browser serves a request from its cache, the request never hits the
 network layer, and `cy.intercept()` never fires.
 
 To see if this is affecting your app, open the **Network** tab in Chrome
@@ -2106,7 +2106,7 @@ it('cy.intercept command log', () => {
   alt="The Routes panel in the Command Log listing three routes with their method, route matcher, whether each is stubbed, alias, and match count"
 />
 
-When HTTP requests are made, Cypress logs them in the Command Log. A request
+When your app makes HTTP requests, Cypress logs them in the Command Log. A request
 that matched a `cy.intercept()` shows a badge on the right-hand side with the
 route's alias, or "no alias" when the route has none:
 

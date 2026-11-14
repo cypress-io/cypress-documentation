@@ -73,7 +73,7 @@ When a single rule misfires on an element you otherwise want reported, keep the 
 Two things make this safe to do early:
 
 - **Ignoring is visible, not silent.** Ignored elements stay in the report under the **Ignored** [element status](/accessibility/reports/run-level-reports#Elements) instead of disappearing, so you can always audit what your configuration hides. Ignored elements stop counting as failures and stop affecting your [accessibility score](/accessibility/core-concepts/accessibility-score).
-- **You don't have to re-run your tests to see the effect.** Save the configuration, then regenerate a past run from its **Properties** tab in Cypress Cloud. The report is reprocessed with your current configuration in place, so you can iterate on scope in minutes.
+- **You don't have to re-run your tests to see the effect.** Save the configuration, then regenerate a past run from its **Properties** tab in Cypress Cloud. Cypress Cloud reprocesses the report with your current configuration in place, so you can iterate on scope in minutes.
 
 <DocsImage
   src="/img/accessibility/configuration/cypress-cloud-properties-tab-application-quality-config.png"
@@ -139,7 +139,7 @@ If `button-name` isn't in your report, choose another rule with the same propert
 
 The [accessibility score](/accessibility/core-concepts/accessibility-score) is a useful trend line, but it's a poor progress bar for a single rule. Two behaviors surprise teams that watch it during remediation.
 
-**A rule counts once per snapshot, however many elements fail it.** Each snapshot's score is a weighted ratio of passing to failing rules, and severity sets the weight. So if `button-name` fails on 10 buttons in one snapshot and you fix nine of them, that snapshot's score doesn't move at all. The score moves when the last failing element is fixed and the rule flips to passing.
+**A rule counts once per snapshot, however many elements fail it.** Each snapshot's score is a weighted ratio of passing to failing rules, and severity sets the weight. So if `button-name` fails on 10 buttons in one snapshot and you fix nine of them, that snapshot's score doesn't move at all. The score moves when you fix the last failing element and the rule flips to passing.
 
 **The run score averages every snapshot in the run.** A rule that fails on one page in a suite that captures hundreds of snapshots barely registers, even though the barrier on that page might be severe.
 
@@ -151,7 +151,7 @@ Track the counts that respond to your work instead, and treat the score as the l
 
 ## Prove the fix landed in Branch Review
 
-The most expensive outcome in accessibility work is fixing one issue and introducing another without noticing, because the new issue is found later, by someone else, at a point where the change is no longer fresh. [Branch Review](/cloud/features/branch-review#Get-started) compares the accessibility report for your branch against a base run, so you can see the effect of a change while you still have the context to act on it.
+The most expensive outcome in accessibility work is fixing one issue and introducing another without noticing, because someone else finds the new issue later, at a point where the change is no longer fresh. [Branch Review](/cloud/features/branch-review#Get-started) compares the accessibility report for your branch against a base run, so you can see the effect of a change while you still have the context to act on it.
 
 When you review your remediation branch, check both directions:
 

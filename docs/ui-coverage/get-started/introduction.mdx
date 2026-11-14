@@ -11,7 +11,7 @@ sidebar_position: 10
 
 UI Coverage shows you which interactive parts of your application your tests actually exercise, and which they miss. Part of Cypress Cloud, it turns every run you already record into a visual map of the buttons, inputs, links, and controls your users touch, scores how much of that surface your suite covers, and lets you track the score over time.
 
-UI Coverage answers a question code coverage can't: not _which code ran_, but _whether the things a user can actually do are tested_, with **no code changes, no plugin, and no instrumentation**. Reports are generated in Cypress Cloud from the [Test Replay](/cloud/features/test-replay) data your runs already capture.
+UI Coverage answers a question code coverage can't: not _which code ran_, but _whether the things a user can actually do are tested_, with **no code changes, no plugin, and no instrumentation**. Cypress Cloud generates reports from the [Test Replay](/cloud/features/test-replay) data your runs already capture.
 
 <Btn
   label="Request trial ➜"
@@ -47,7 +47,7 @@ Code coverage doesn't catch these gaps either. Code coverage reports which lines
 With UI Coverage you can:
 
 - **See your untested surface at a glance.** A single coverage score, and a per-[view](/ui-coverage/core-concepts/views) score for every page and state your tests reach, so you can rank pages by risk instead of guessing.
-- **Find the exact gaps.** Every untested button, input, and link is listed with a full-page, inspectable DOM snapshot showing precisely where it is.
+- **Find the exact gaps.** The report lists every untested button, input, and link with a full-page, inspectable DOM snapshot showing precisely where each one is.
 - **Discover flows you never test.** [Untested links](/ui-coverage/core-concepts/interactivity#Untested-Links) surface pages your app links to but no test ever visits, revealing whole flows your suite is missing.
 - **Close gaps fast.** Generate a Cypress test for an untested element with [Test Generation](/ui-coverage/faq#What-is-Test-Generation-in-Cypress-UI-Coverage), or pull scores and gaps into your editor with the [Cypress Cloud MCP](/cloud/integrations/cloud-mcp).
 - **Catch regressions before they merge.** Compare any two runs in [Branch Review](/cloud/features/branch-review), and [fail CI or block a pull request](/ui-coverage/guides/block-pull-requests) when coverage drops, using [Run Checks](/cloud/features/checks) or the [Results API](/ui-coverage/results-api).
@@ -55,14 +55,14 @@ With UI Coverage you can:
 
 ## How it works
 
-UI Coverage is built entirely on [Test Replay](/cloud/features/test-replay), the same capture protocol Cypress already uses to record your runs. Because the data is captured during a run you're already recording, there's nothing extra to install and no impact on how your tests execute.
+UI Coverage is built entirely on [Test Replay](/cloud/features/test-replay), the same capture protocol Cypress already uses to record your runs. Because Cypress captures the data during a run you're already recording, there's nothing extra to install and no impact on how your tests execute.
 
 1. **You record a run** to Cypress Cloud with Test Replay enabled, exactly as you do today.
 2. **Cypress Cloud analyzes the DOM snapshots** Test Replay captured for every unique state your tests reached, in both end-to-end and component testing.
 3. **Cypress Cloud finds every interactive element** in those snapshots and checks whether a [recognized Cypress command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) interacted with it.
 4. **Cypress Cloud produces a report** on the run's **UI Coverage** tab, with a coverage score, per-view breakdowns, and the specific untested elements and links.
 
-Because the report is generated after the run finishes recording, nothing in your Cypress pipeline waits on or fails because of UI Coverage.
+Because Cypress Cloud generates the report after the run finishes recording, nothing in your Cypress pipeline waits on or fails because of UI Coverage.
 
 ## What a report shows you
 
@@ -149,7 +149,7 @@ UI Coverage works instantly. If you already record runs to Cypress Cloud with Te
 
 ## See also
 
-- [Interactivity](/ui-coverage/core-concepts/interactivity) covers which elements are counted and which commands mark them tested.
+- [Interactivity](/ui-coverage/core-concepts/interactivity) covers which elements UI Coverage counts and which commands mark them tested.
 - [Views](/ui-coverage/core-concepts/views) explains how the URLs your tests visit become views.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every App Quality configuration option and what each one does.
 - [Run Checks](/cloud/features/checks) encode coverage thresholds in App Quality configuration.

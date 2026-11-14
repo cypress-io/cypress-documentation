@@ -129,7 +129,7 @@ You can then edit any portion of the test code directly in the Studio code panel
 
 ## Record interactions
 
-Once Studio is open, interact with your app normally. Studio translates each action into a Cypress command in real time and adds it to your spec file. You can see the commands as they are being written in the Studio code panel.
+Once Studio is open, interact with your app normally. Studio translates each action into a Cypress command in real time and adds it to your spec file. You can see the commands as Studio writes them in the Studio code panel.
 
 **Supported actions:**
 
@@ -182,8 +182,8 @@ As you record, Studio AI observes changes in the DOM between interactions and su
 For each recorded interaction:
 
 1. A **thinking indicator** appears in the Studio panel while Studio AI generates a recommendation.
-2. If a recommendation is available, Studio AI displays an **AI-generated comment** explaining what the assertion validates. The actual test code is generated and collapsed by default - expand it to review.
-3. If no meaningful DOM changes were detected or another issue is preventing a recommendation from being generated, Studio AI displays an icon indicating this and the reason (for example, no state difference was found).
+2. If a recommendation is available, Studio AI displays an **AI-generated comment** explaining what the assertion validates. Studio AI generates the actual test code and collapses it by default - expand it to review.
+3. If Studio AI detects no meaningful DOM changes or another issue prevents it from generating a recommendation, Studio AI displays an icon indicating this and the reason (for example, no state difference was found).
 
 <DocsVideo
   src="/img/app/cypress-studio/cypress-studio-ai-multiple-recommendations-flow.mp4"
@@ -192,7 +192,7 @@ For each recorded interaction:
 />
 
 :::note
-Recommendations are added to your test code immediately when generated, so you can **save or run the test with AI recommendations included** before deciding to keep them. Adding them immediately is intentional: it lets you verify whether a recommended assertion actually passes against your app before committing it.
+Studio AI adds recommendations to your test code as soon as it generates them, so you can **save or run the test with AI recommendations included** before deciding to keep them. Adding them immediately is intentional: it lets you verify whether a recommended assertion actually passes against your app before committing it.
 :::
 
 ### Accept, reject, or edit
@@ -209,8 +209,8 @@ Each recommendation includes **Accept** and **Reject (x)** buttons that remain v
 
 Hover over any recommendation to see:
 
-- The exact state of the DOM at the time the assertion was generated. Studio shows a _before_ and _after_ snapshot of the DOM for each recommendation that represents the state of the DOM before and after the interaction that triggered the recommendation.
-- The specific element being asserted on is highlighted in the DOM.
+- The exact state of the DOM at the time Studio AI generated the assertion. Studio shows a _before_ and _after_ snapshot of the DOM for each recommendation that represents the state of the DOM before and after the interaction that triggered the recommendation.
+- Studio highlights the specific element the assertion targets in the DOM.
 - You can save the code to verify the assertion passes before accepting or rejecting it.
 
 The hover details give you enough context to decide whether the assertion reflects something meaningful to your team and not just something that changed.
@@ -230,7 +230,7 @@ If a test is failing, AI recommendations and recording are both disabled. Disabl
 1. Edit the failing code directly in the Studio panel or in your IDE.
 2. Click **Save** to write the changes to your spec file.
 
-When a line causes a test failure, that line is highlighted in the Studio code panel so you can locate it immediately for easier debugging.
+When a line causes a test failure, Studio highlights that line in the code panel so you can locate it immediately for easier debugging.
 
 <DocsVideo
   src="/img/app/cypress-studio/cypress-studio-ai-failing-test-inline-editing.mp4"
@@ -254,13 +254,13 @@ Studio AI does not have access to your application code, business logic, or back
 
 ## Sensitive data handling
 
-When Studio AI reads your app's DOM to generate recommendations, values from certain field types are automatically excluded before anything is sent to the AI model:
+When Studio AI reads your app's DOM to generate recommendations, Studio AI automatically excludes values from certain field types before sending anything to the AI model:
 
 - Password fields (`input[type=password]`)
 - Credit card fields using standard autocomplete attributes (card name, card number, expiry date, security code, card type)
 - Hidden inputs (`input[type=hidden]`)
 
-The structure and context of these fields are still used to generate assertions. Only the values are excluded.
+Studio AI still uses the structure and context of these fields to generate assertions and excludes only the values.
 
 For full details on how Cypress handles data and AI model security, see the [Security & Compliance page](https://www.cypress.io/security?utm_source=docs.cypress.io&utm_medium=cypress-studio).
 
@@ -314,7 +314,7 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 - Studio AI requires Cypress version 15.11.0 or later.
 - Animations and transitional UI states may produce intermediate DOM diffs, which can affect AI recommendation quality.
-- Large pages may exceed AI context window limits resulting in no recommendations being generated.
+- Large pages may exceed AI context window limits so Studio AI generates no recommendations.
 - No automatic application crawling. Studio AI only observes what you interact with.
 
 See [open issues labeled `topic: studio`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22topic%3A+studio%22) for the full list.

@@ -18,7 +18,7 @@ Run Checks represent your team's opinion about what counts as "acceptable" or "n
 - **Cross-product gates**: One check can combine assertions about a run's test results, its [Cypress Accessibility](/accessibility/get-started/introduction) report, and its [UI Coverage](/ui-coverage/get-started/introduction) report.
 - **Customized for your tags and branches**: Apply a check only to runs on certain branches or with certain [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt), so a release gate on `main` doesn't fail every feature-branch run. Include and exclude specs or pages to fine tune the results for your specific needs.
 
-Run Checks don't change how your tests run or how reports are generated. Run Checks only define how Cypress Cloud evaluates a run's results once they're available. Here's an example of how Run Checks are presented:
+Run Checks don't change how your tests run or how Cypress Cloud generates reports. Run Checks only define how Cypress Cloud evaluates a run's results once they're available. Here's an example of how Cypress Cloud presents Run Checks:
 
 <DocsImage
   src="/img/cloud/features/checks/runs-list-check-results.png"
@@ -29,7 +29,7 @@ Run Checks don't change how your tests run or how reports are generated. Run Che
 
 ### Early Access notes
 
-Run Checks have launched as **Early Access** with a **gradual rollout** starting November 5, 2026. There are no limitations on usage and no breaking changes are expected, but Checks do not yet flow into all the usual places your Cypress test results are populated, as outlined below. If a feature is not active yet that you are interested in, please reach out to your usual Cypress point of contact. Feedback and requests are appreciated.
+Run Checks have launched as **Early Access** with a **gradual rollout** starting November 5, 2026. There are no limitations on usage and we expect no breaking changes, but Checks do not yet flow into all the usual places your Cypress test results appear, as outlined below. If a feature is not active yet that you are interested in, please reach out to your usual Cypress point of contact. We appreciate feedback and requests.
 
 Check results appear on the run's page, in its **Properties** tab, in the
 project's runs list, and through the [Results API](#Using-check-results-in-CI)
@@ -135,14 +135,14 @@ Add a `checks` array to the root of the configuration:
 
 ### Assertion options
 
-| Option      | Required | Description                                                                                                                                                                                                  |
-| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `type`      | Required | The metric and the direction of its threshold. See [Assertion types](#Assertion-types).                                                                                                                      |
-| `value`     | Required | The threshold. Scores accept a number from `0` to `100`. Counts accept a non-negative integer.                                                                                                               |
-| `viewMatch` | Optional | For `accessibility.*` and `uiCoverage.*` assertions. A regular expression matched against view names; each matching view is held to the threshold on its own. See [Narrowing to views](#Narrowing-to-views). |
-| `include`   | Optional | For `run.*` assertions. One spec rule, or an array of spec rules, selecting which specs' results are counted. See [Narrowing to specs](#Narrowing-to-specs).                                                 |
-| `exclude`   | Optional | For `run.*` assertions. One spec rule, or an array of spec rules, removing specs from the count.                                                                                                             |
-| `comment`   | Optional | A note about the assertion. Comments have no effect on behavior.                                                                                                                                             |
+| Option      | Required | Description                                                                                                                                                                                                              |
+| ----------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `type`      | Required | The metric and the direction of its threshold. See [Assertion types](#Assertion-types).                                                                                                                                  |
+| `value`     | Required | The threshold. Scores accept a number from `0` to `100`. Counts accept a non-negative integer.                                                                                                                           |
+| `viewMatch` | Optional | For `accessibility.*` and `uiCoverage.*` assertions. A regular expression matched against view names; Cypress Cloud holds each matching view to the threshold on its own. See [Narrowing to views](#Narrowing-to-views). |
+| `include`   | Optional | For `run.*` assertions. One spec rule, or an array of spec rules, selecting which specs' results count. See [Narrowing to specs](#Narrowing-to-specs).                                                                   |
+| `exclude`   | Optional | For `run.*` assertions. One spec rule, or an array of spec rules, removing specs from the count.                                                                                                                         |
+| `comment`   | Optional | A note about the assertion. Comments have no effect on behavior.                                                                                                                                                         |
 
 ## Assertion types
 
@@ -182,7 +182,7 @@ With `viewMatch`, the assertion selects the views whose name matches the pattern
 
 `run.*` assertions count tests across every spec in the run by default. Use `include` and `exclude` on the assertion to count only some specs. Each rule is an object with a non-empty `specs` array of regular expressions, matched anywhere in the spec's file path.
 
-The counts from every matched spec are added together, and the total is held to the threshold once. A spec that ran on more than one machine, such as in multiple [run groups](/cloud/features/smart-orchestration/parallelization), contributes the results from each.
+Cypress Cloud adds together the counts from every matched spec and holds the total to the threshold once. A spec that ran on more than one machine, such as in multiple [run groups](/cloud/features/smart-orchestration/parallelization), contributes the results from each.
 
 ```json title="App Quality Config"
 {
@@ -217,7 +217,7 @@ Rules match as follows:
 - **Within a property, any pattern can match.** `{ "branches": ["main", "release/.*"] }` matches a run on `main` or on any `release/` branch.
 - **Within a rule, every property must match.** `{ "branches": ["main"], "tags": ["nightly"] }` matches only runs on `main` that also carry the `nightly` tag.
 - **Across an array of rules, any rule can match.**
-- **`exclude` wins over `include`.** A run that matches both is excluded.
+- **`exclude` wins over `include`.** Cypress Cloud excludes a run that matches both.
 - **A run with no branch never matches a `branches` pattern.** A check that includes only certain branches doesn't apply to it, and an `exclude` rule on branches doesn't remove it.
 
 Branch and tag patterns match the **whole** value, so `main` matches the branch `main` but not `feature/main`. To match part of a value, start the pattern with `^` or end it with `$` to anchor it yourself, or use `.*`. Patterns are regular expressions, not globs: write `release/.*` rather than `release/*`. Matching is case-sensitive.
@@ -252,7 +252,7 @@ Product labels such as Accessibility or Test Results, metric labels such as
 Score or Failed tests, status icons, and measured values such as `95.5%` are
 produced by Cypress Cloud from the assertion type and the run.
 
-A run's checks use the App Quality configuration saved at the time the run is recorded. When you [regenerate](/accessibility/configuration/overview#Setting-Configuration) a run, its checks are evaluated again against the configuration saved at that time, so you can adjust a check and see its effect on an existing run without recording again.
+A run's checks use the App Quality configuration saved at the time the run is recorded. When you [regenerate](/accessibility/configuration/overview#Setting-Configuration) a run, Cypress Cloud evaluates its checks again against the configuration saved at that time, so you can adjust a check and see its effect on an existing run without recording again.
 
 ### Check statuses
 
@@ -261,7 +261,7 @@ A run's checks use the App Quality configuration saved at the time the run is re
 | `passed`         | Every assertion passed.                                                                                    |
 | `failed`         | At least one assertion failed.                                                                             |
 | `errored`        | No assertion failed, but at least one is `errored` or `unavailable`, so the check couldn't confirm a pass. |
-| `not-applicable` | The check's `include` and `exclude` rules don't select this run, so it wasn't evaluated.                   |
+| `not-applicable` | The check's `include` and `exclude` rules don't select this run, so Cypress Cloud didn't evaluate it.      |
 
 While a run is still processing, a check can also be `pending` (waiting on data) or `failing` (at least one assertion has already failed while others are still pending). A failed assertion never recovers, so a `failing` check always ends as `failed`.
 
@@ -271,7 +271,7 @@ While a run is still processing, a check can also be `pending` (waiting on data)
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `passed`      | The measured value met the threshold.                                                                                                                                                                                               |
 | `failed`      | The measured value missed the threshold.                                                                                                                                                                                            |
-| `errored`     | The data the assertion needs couldn't be read, for example because a report failed to load or a run-level score wasn't produced for the run.                                                                                        |
+| `errored`     | Cypress Cloud couldn't read the data the assertion needs, for example because a report failed to load or a run-level score wasn't produced for the run.                                                                             |
 | `unavailable` | The run has no data for the assertion by design: the product it reads isn't enabled or processed for the run, or the project doesn't have access to the assertion type (such as `run.flakyTests.max` without flaky test detection). |
 | `pending`     | The assertion is still waiting for its run results or report to finish processing. Appears while evaluation is in progress; `getCheckResults()` waits until assertions leave this status.                                           |
 
@@ -318,7 +318,7 @@ const results = await getCheckResults({
 // }
 ```
 
-`getCheckResults()` throws if it can't find the run, if evaluation errors, or if evaluation doesn't finish in time. More status values may be added, so handle values you don't recognize.
+`getCheckResults()` throws if it can't find the run, if evaluation errors, or if evaluation doesn't finish in time. Cypress may add more status values, so handle values you don't recognize.
 
 To post each applicable check as a GitHub commit status and make it a required status check on the pull request, see [Report Run Checks as GitHub pull request statuses](/cloud/guides/report-run-checks-github).
 

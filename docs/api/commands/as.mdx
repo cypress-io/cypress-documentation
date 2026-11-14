@@ -50,7 +50,7 @@ cy.get('.main-nav').as('@firstNav') // Errors, an alias name cannot start with '
 
 <Icon name="angle-right" /> **aliasName _(String)_**
 
-The name of the alias to be referenced later within a
+The name you use to reference the alias later within a
 [`cy.get()`](/api/commands/get), [`cy.wait()`](/api/commands/wait), or
 [`.selectFile()`](/api/commands/selectfile) command using an `@` prefix. An
 alias is also available as `this.aliasName` inside a test written with the
@@ -64,9 +64,9 @@ for the strings Cypress reserves.
 
 Pass in an options object to change the default behavior of `.as()`.
 
-| Option | Default | Description                                                                                                                                                                                                                                                                                                                                                                             |
-| ------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` | `query` | The type of alias to store, which impacts how the value is retrieved later in the test. Valid values are `query` and `static`. A `query` alias re-runs all queries leading up to the resulting value each time the alias is requested. A `static` alias is retrieved once when the alias is stored, and never changes. `type` has no effect when aliasing intercepts, spies, and stubs. |
+| Option | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type` | `query` | The type of alias to store, which impacts how Cypress retrieves the value later in the test. Valid values are `query` and `static`. A `query` alias re-runs all queries leading up to the resulting value each time you request the alias. Cypress retrieves a `static` alias once, when the alias is stored, and the value never changes. `type` has no effect when aliasing intercepts, spies, and stubs. |
 
 <HeaderYields />
 
@@ -107,8 +107,8 @@ cy.get('form').submit()
 cy.wait('@editUser').its('request.url').should('contain', 'users')
 ```
 
-More examples of aliasing routes can be found in
-[Aliasing an intercepted route](/api/commands/intercept#Aliasing-an-intercepted-route).
+[Aliasing an intercepted route](/api/commands/intercept#Aliasing-an-intercepted-route)
+has more examples of aliasing routes.
 
 ### Fixture
 
@@ -155,7 +155,8 @@ The Command Log marks these aliases `@startingTotal (static)` so you can tell
 them apart from query aliases.
 
 Reading an alias as `this.aliasName` returns the value captured when `.as()` ran
-whatever the `type`, since the Mocha context is assigned once. The
+whatever the `type`, since Cypress sets the
+value on the Mocha context once. The
 [Sharing Context](/app/core-concepts/variables-and-aliases#Sharing-Context)
 section of the aliases guide covers the tradeoff between the two.
 
@@ -165,7 +166,7 @@ section of the aliases guide covers the tradeoff between the two.
 
 :::caution
 
-All aliases are reset before each test. See the
+Cypress resets all aliases before each test. See the
 [aliases guide](/app/core-concepts/variables-and-aliases) for details.
 
 :::
@@ -177,8 +178,8 @@ you reference an alias, so `.as('@firstNav')` fails and points you at
 `firstNav`. The symbol is fine anywhere else in the name, as are dots:
 `.as('my@Alias')` and `.as('body.foo')` both work.
 
-These six strings are reserved words in Cypress and cannot be used as alias
-names: `test`, `runnable`, `timeout`, `slow`, `skip`, and `inspect`.
+These six strings are reserved words in Cypress, so you can't use them as
+alias names: `test`, `runnable`, `timeout`, `slow`, `skip`, and `inspect`.
 
 ### `.as()` is asynchronous
 

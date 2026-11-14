@@ -11,17 +11,17 @@ sidebar_position: 60
 
 Cypress Accessibility configuration excludes [elements](/accessibility/configuration/elementfilters) or whole [pages](/accessibility/configuration/viewfilters) from the accessibility report, but sometimes there are situations where you may want to keep an element in your accessibility report, but ignore some accessibility rules for that element.
 
-Ignoring rules for an element can be accomplished in your application code using the `data-a11y-ignore` attribute, like this:
+To ignore rules for an element, add the `data-a11y-ignore` attribute in your application code, like this:
 
 ```html
 <button data-a11y-ignore="color-contrast">Log In</button>
 ```
 
-This `data-a11y-ignore` value would mean that if a color contrast violation was detected on this button, it would be tracked and flagged as an ignored violation in your accessibility report, instead of being listed as a failure. Any other violations detected would be flagged as normal failures.
+With this `data-a11y-ignore` value, if Cypress Accessibility detects a color contrast violation on this button, Cypress Accessibility tracks the violation and flags it as ignored in your accessibility report instead of listing it as a failure. Cypress Accessibility flags any other violations it detects as normal failures.
 
 ## Ignore multiple rules
 
-Multiple rules can be ignored by using commas to separate a list of rule IDs:
+To ignore multiple rules, separate a list of rule IDs with commas:
 
 ```html
 <button data-a11y-ignore="color-contrast,button-name">Log In</button>
@@ -29,7 +29,7 @@ Multiple rules can be ignored by using commas to separate a list of rule IDs:
 
 ## Where to find rule IDs
 
-The "Learn more" link in your accessibility reports displays the ID for each rule. Rule IDs can also be looked up in the [Axe-Core® rule documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) directly.
+The "Learn more" link in your accessibility reports displays the ID for each rule. You can also look up rule IDs in the [Axe-Core® rule documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md) directly.
 
 ## When to use this
 
@@ -37,8 +37,8 @@ The "Learn more" link in your accessibility reports displays the ID for each rul
 
 The `data-a11y-ignore` attribute is most useful when there is a known false positive failure for a specific rule and you want to remove it from your report without losing all other insights about an element.
 
-The `data-a11y-ignore` attribute pattern is used in some libraries like Adobe's React Spectrum, so those UI elements automatically have the defined rules ignored correctly in Cypress Accessibility.
+Some libraries, like Adobe's React Spectrum, use the `data-a11y-ignore` attribute pattern, so those UI elements automatically have the defined rules ignored correctly in Cypress Accessibility.
 
 ### Avoid blocking a code change
 
-A secondary use case is to avoid certain known issues becoming blocking for a pull request. `data-a11y-ignore` allows for a minimal scope of what to ignore, and creates a paper trail through version control which means these changes are obvious at code review, and comments can be added nearby to explain the reason for ignoring the rule.
+A secondary use case is to avoid certain known issues becoming blocking for a pull request. `data-a11y-ignore` allows for a minimal scope of what to ignore, and creates a paper trail through version control which means these changes are obvious at code review, and you can add comments nearby to explain the reason for ignoring the rule.

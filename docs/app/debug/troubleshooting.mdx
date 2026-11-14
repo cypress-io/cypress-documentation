@@ -270,8 +270,8 @@ DEBUG=cypress:server*,-cypress:server:browsers* npx cypress run
 
 #### Debug log depth
 
-Sometimes the logged object has deeply nested properties and is shown as
-`[Object]` instead of the full serialization.
+Sometimes the logged object has deeply nested properties, and the debug log shows
+it as `[Object]` instead of the full serialization.
 
 ```shell
 DEBUG=cypress:server:socket-base npx cypress run
@@ -311,7 +311,7 @@ DEBUG=cypress:net-stubbing:server:intercept-request \
 
 #### Debug logs in the browser
 
-If the problem is seen during `cypress open` you can print debug logs in the
+If you see the problem during `cypress open`, you can print debug logs in the
 browser too. Open the browser's Developer Tools and set a `localStorage`
 property:
 
@@ -341,14 +341,14 @@ DEBUG=cypress:server:util:process_profiler npx cypress run
 (See [Print DEBUG Logs](#Print-DEBUG-logs) above for hints on setting
 the `DEBUG` environment variable in a non-POSIX Windows terminal.)
 
-In the resulting output, processes are grouped by their name.
+In the resulting output, Cypress groups processes by their name.
 
 <DocsImage
   src="/img/app/troubleshooting/troubleshooting-cypress-process-profiler-cli.jpg"
   alt="Process printout of Cypress in CLI"
 />
 
-By default, process information is collected, summarized and is printed once
+By default, Cypress collects, summarizes, and prints process information once
 every 10 seconds. You can override this interval by setting the
 `CYPRESS_PROCESS_PROFILER_INTERVAL` environment variable to the desired interval
 in milliseconds.
@@ -412,7 +412,7 @@ You can see the full list of found browsers and their properties within the
 [resolved configuration](/app/references/configuration#Resolved-Configuration)
 in the **Settings** tab of Cypress.
 
-Another way to log what is found by Cypress is to run Cypress with the
+Another way to log what Cypress finds is to run Cypress with the
 [DEBUG environment variable](#Print-DEBUG-logs) set to `cypress:launcher:*`. The launcher logs
 print information about the found browsers and their properties to the
 terminal.
@@ -445,7 +445,7 @@ For the current list, see
 [packages/launcher](https://github.com/cypress-io/cypress/blob/develop/packages/launcher/lib/darwin/index.ts)
 files.
 
-**Note:** `chrome-for-testing` and `chromium` typically require the downloaded application file to be manually moved to the `/Applications` folder to be auto-detected.
+**Note:** `chrome-for-testing` and `chromium` typically require you to manually move the downloaded application file to the `/Applications` folder for Cypress to auto-detect them.
 
 #### Linux
 
@@ -478,7 +478,7 @@ For example, to create a symlink for the `chrome-for-testing` browser:
 sudo ln -s /path/to/binary/chrome /usr/local/bin/chrome
 ```
 
-**Note:** `chrome-for-testing` and `chromium` typically require the binary to be manually added to the `PATH` or a symlink created to be auto-detected.
+**Note:** `chrome-for-testing` and `chromium` typically require you to manually add the binary to the `PATH` or create a symlink for Cypress to auto-detect them.
 
 #### Windows
 
@@ -513,7 +513,7 @@ For example, to create a symlink for the `chrome-for-testing` browser:
 mklink /d "C:\Program Files\Google\Chrome for Testing" "C:\path\to\chrome\executable\folder"
 ```
 
-**Note:** `chrome-for-testing` and `chromium` typically require the downloaded folder to either be moved and renamed to the location mentioned above or a symlink created as described above to be auto-detected.
+**Note:** `chrome-for-testing` and `chromium` typically require you to either move and rename the downloaded folder to the location mentioned above or create a symlink as described above for Cypress to auto-detect them.
 
 Occasionally Cypress has issues detecting the type of browser in Windows
 environments. To manually detect the browser type, append the browser type to
@@ -637,7 +637,7 @@ re-run Cypress.
 
 #### 3. Make sure you're on a current Cypress version
 
-Some historical `ECONNRESET` reports were caused bugs in older versions of Cypress. If you're on an older release,
+Bugs in older versions of Cypress caused some historical `ECONNRESET` reports. If you're on an older release,
 upgrade to the latest Cypress:
 
 <PackageManagerTabs install="cypress@latest" dev />
@@ -689,8 +689,8 @@ server (if necessary), and then opens Cypress.
 Some common situations on why you would want to run Cypress by itself are to:
 
 - debug Cypress not starting or hanging
-- debug problems related to the way CLI arguments are parsed by the npm CLI
-  module
+- debug problems related to the way the npm CLI module parses CLI
+  arguments
 
 Here is how you can launch Cypress directly without the npm CLI module. First,
 find where Cypress binary versions are installed using the
@@ -733,7 +733,7 @@ referring to [Linux Prerequisites](/app/get-started/install-cypress#Linux-Prereq
 Follow the instructions to ensure all required dependencies are installed.
 
 To troubleshoot missing shared library dependencies on Linux, use the `ldd` command on the Cypress binary.
-A missing dependency should be identified with "not found" in the output.
+The output marks a missing dependency with "not found".
 
 ```text
 ldd ~/.cache/Cypress/13.15.0/Cypress/Cypress
@@ -768,7 +768,7 @@ You can see the Electron verbose log messages by setting an
 [environment variable ELECTRON_ENABLE_LOGGING](https://www.electronjs.org/docs/api/command-line-switches).
 
 **Note:** Verbose Electron logging might show warnings that still allow Cypress
-to work normally. For example, the following Bluetooth related warning can be ignored:
+to work normally. For example, you can ignore the following Bluetooth related warning:
 
 > WARNING:bluez_dbus_manager.cc
 

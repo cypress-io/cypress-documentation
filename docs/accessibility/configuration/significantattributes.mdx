@@ -9,15 +9,15 @@ sidebar_position: 70
 
 # Prioritize identifying attributes - `significantAttributes`
 
-The `significantAttributes` configuration adds your own HTML attributes to the priority list Cypress Accessibility uses to identify elements. Attributes you list are checked before the default test attributes, in the order you list them.
+The `significantAttributes` configuration adds your own HTML attributes to the priority list Cypress Accessibility uses to identify elements. Cypress Accessibility checks the attributes you list before the default test attributes, in the order you list them.
 
-Cypress Accessibility [identifies each element](/accessibility/core-concepts/element-identification) with a stable selector, replacing the default Axe-Core® target, so that results for the same element can be deduplicated across the many snapshots captured in a run. That selector is built from a prioritized list of attributes: test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as a `data-component` attribute from your design system or a `data-automation-id` your team maintains. Listing them in `significantAttributes` makes Cypress Accessibility prefer them, so violation targets read in your team's vocabulary when [reviewing violation details](/accessibility/reports/element-detail-view), creating Jira issues, or handing selectors to AI tools, and deduplication is driven by values that stay stable across snapshots.
+Cypress Accessibility [identifies each element](/accessibility/core-concepts/element-identification) with a stable selector, replacing the default Axe-Core® target, so that Cypress Accessibility can deduplicate results for the same element across the many snapshots captured in a run. Cypress Accessibility builds that selector from a prioritized list of attributes: test attributes like `data-cy` and `data-testid` first, then fallbacks like `id` and `name`. Your application may already have attributes that describe elements better than anything in that list, such as a `data-component` attribute from your design system or a `data-automation-id` your team maintains. Listing them in `significantAttributes` makes Cypress Accessibility prefer them, so violation targets read in your team's vocabulary when [reviewing violation details](/accessibility/reports/element-detail-view), creating Jira issues, or handing selectors to AI tools, and deduplication is driven by values that stay stable across snapshots.
 
 ## Why use significantAttributes?
 
 - **Use attributes your application already has**: If your components render an attribute like `data-component`, Cypress Accessibility can identify elements by it. No new markup required.
 - **Make violation targets easier to locate and fix**: A selector like `[data-component="SearchInput"]` tells whoever picks up the issue exactly which component to open, where a generated selector doesn't.
-- **Promote one of the default attributes**: The defaults are checked in a fixed order (`data-cy` before `data-qa`, for example). If your application standardizes on `data-qa`, listing it moves it to the front of the line.
+- **Promote one of the default attributes**: Cypress Accessibility checks the defaults in a fixed order (`data-cy` before `data-qa`, for example). If your application standardizes on `data-qa`, listing it moves it to the front of the line.
 - **Improve deduplication**: When the highest-priority attribute an element has is dynamic, the same element can be counted more than once across snapshots. A stable attribute of yours, placed above the rest, keeps it one element.
 
 `significantAttributes` changes which attributes are preferred. To stop a dynamic attribute from being used at all, use [`attributeFilters`](/accessibility/configuration/attributefilters). To require component-identifying attributes in every selector, in addition to the identifying attribute, see [`components`](/accessibility/configuration/components).
@@ -67,13 +67,13 @@ For each element with accessibility results, Cypress Accessibility builds a sele
 2. The default significant attributes, in order: `data-cy`, `data-test`, `data-testid`, `data-test-id`, `data-qa`, and `row-id`
 3. Fallbacks, in order: `id`, `name`, `class`, the element's tag name, other attributes, and finally its position in the DOM
 
-The first attribute that uniquely identifies the element, with a value that isn't excluded by your [`attributeFilters`](/accessibility/configuration/attributefilters), becomes the element's selector. That selector is displayed as the violation target throughout your reports and drives how results are deduplicated across snapshots.
+The first attribute that uniquely identifies the element, with a value that isn't excluded by your [`attributeFilters`](/accessibility/configuration/attributefilters), becomes the element's selector. Your reports display that selector as the violation target, and the selector drives how Cypress Accessibility deduplicates results across snapshots.
 
 Keep these behaviors in mind when building your list:
 
-- **Your list is added to the defaults, not a replacement for them.** An element that has none of your attributes is still identified by `data-testid`, `id`, or whatever else it has, exactly as it would be without configuration. To stop an attribute from being used entirely, use [`attributeFilters`](/accessibility/configuration/attributefilters); listing other attributes in `significantAttributes` doesn't disable it.
+- **Your list is added to the defaults, not a replacement for them.** Cypress Accessibility still identifies an element that has none of your attributes by `data-testid`, `id`, or whatever else it has, exactly as it would without configuration. To stop an attribute from being used entirely, use [`attributeFilters`](/accessibility/configuration/attributefilters); listing other attributes in `significantAttributes` doesn't disable it.
 - **To reorder the defaults, list them.** Your entries outrank every default, so `"significantAttributes": ["data-qa"]` is all it takes to check `data-qa` before `data-cy`.
-- **The attribute must identify the element uniquely.** When several elements share the same attribute value, that attribute alone can't distinguish them, so the selector is built from the next candidates in the list.
+- **The attribute must identify the element uniquely.** When several elements share the same attribute value, that attribute alone can't distinguish them, so Cypress Accessibility builds the selector from the next candidates in the list.
 - **Filtered values are skipped, not final.** When an [`attributeFilters`](/accessibility/configuration/attributefilters) rule excludes the value of a higher-priority attribute, Cypress Accessibility moves on to the next attribute in the list. The two properties work together: `significantAttributes` sets the preference order, and `attributeFilters` removes unusable values from consideration.
 
 ### Validation rules
@@ -84,7 +84,7 @@ Keep these behaviors in mind when building your list:
 
 ### Identify violation targets by a component attribute
 
-Your configured attribute outranks the defaults, so the image with a missing `alt` attribute is reported under `data-component` even though `data-testid` is also present, and the issue reads as "the ProductImage component" instead of a test ID.
+Your configured attribute outranks the defaults, so the report lists the image with a missing `alt` attribute under `data-component` even though `data-testid` is also present, and the issue reads as "the ProductImage component" instead of a test ID.
 
 #### Config
 
@@ -114,7 +114,7 @@ The violation target selector displayed in the report:
 
 ### List several attributes in priority order
 
-`significantAttributes` is a list, so you can prioritize more than one attribute. The attributes are checked in the order you write them, and each element is identified by the first attribute it has. A priority list helps when different parts of your application use different conventions.
+`significantAttributes` is a list, so you can prioritize more than one attribute. Cypress Accessibility checks the attributes in the order you write them and identifies each element by the first attribute it has. A priority list helps when different parts of your application use different conventions.
 
 #### Config
 
@@ -169,7 +169,7 @@ Identifying elements by `aria-label` adds a manual check on top of the automated
 
 #### Result
 
-Both labels satisfy the automated name-presence check, and the elements are shown in the report by their label text, where the vague second label is easy to catch:
+Both labels satisfy the automated name-presence check, and the report shows the elements by their label text, where the vague second label is easy to catch:
 
 ```
 [aria-label="Close dialog"]
@@ -212,7 +212,7 @@ The violation target selector displayed in the report:
 
 ### Deduplicate an element with a dynamic ID
 
-This button's `id` is regenerated on every page load, and it has no test attribute, so by default each snapshot produces a different selector and the same violation is counted against what looks like a new element. The `data-automation-id` your team maintains is stable, and listing it makes every snapshot resolve to one element.
+This button's `id` is regenerated on every page load, and it has no test attribute, so by default each snapshot produces a different selector and Cypress Accessibility counts the same violation against what looks like a new element. The `data-automation-id` your team maintains is stable, and listing it makes every snapshot resolve to one element.
 
 #### Config
 
@@ -234,7 +234,7 @@ This button's `id` is regenerated on every page load, and it has no test attribu
 
 #### Result
 
-Without the configuration, the report can show the same empty button twice, as `#btn-829142` and `#btn-107563`. With it, one element is reported:
+Without the configuration, the report can show the same empty button twice, as `#btn-829142` and `#btn-107563`. With it, the report shows one element:
 
 ```
 [data-automation-id="checkout-submit"]

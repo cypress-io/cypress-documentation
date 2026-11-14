@@ -510,8 +510,8 @@ across. Functions and DOM elements
 so pass data rather than behavior: an element's text instead of the element, or
 a page object's selectors instead of the instance.
 
-Pass every value the callback needs through `args`. A variable that isn't passed
-in throws a `ReferenceError` that names the variable and points you to `args`,
+Pass every value the callback needs through `args`. A variable you don't pass in
+throws a `ReferenceError` that names the variable and points you to `args`,
 as in [Usage](#Usage).
 
 ### Using dependencies and shared code in cy.origin()

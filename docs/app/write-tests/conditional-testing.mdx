@@ -42,7 +42,7 @@ Let's investigate why and how you can overcome these problems.
 Web applications are often highly dynamic and mutable. Web applications'
 state and the DOM are continuously changing over a period of time.
 
-The problem with conditional testing is that it can only be used when the
+The problem with conditional testing is that you can only use it when the
 state has stabilized. Knowing when state is stable in a web application
 is oftentimes difficult.
 
@@ -180,7 +180,7 @@ cy.visit('https://example.cypress.io?campaign=C')
 ```
 
 Now there is not even a need to do conditional testing since you're able to
-know ahead of time what campaign was sent. Yes, this may require server side
+know ahead of time what campaign the server sent. Yes, this may require server side
 updates, but you have to make an untestable app testable if you want to test it!
 
 #### Use the server:
@@ -474,14 +474,14 @@ it('stops once it finds the Dashboard link', () => {
 
 :::caution
 
-Returning out of a `.then()` callback only prevents commands inside that callback
-from being queued. Returning does **not** cancel commands that were already enqueued at
-the top level of the test. Structure the test so the steps you may want to skip
-are only added from within the conditional.
+Returning out of a `.then()` callback only prevents Cypress from queuing commands
+inside that callback. Returning does **not** cancel commands already enqueued at
+the top level of the test. Structure the test so you add the steps you may want
+to skip only from within the conditional.
 
 :::
 
-If you instead want the early exit to be treated as a **failure** (a true abort),
+If you instead want Cypress to treat the early exit as a **failure** (a true abort),
 throw an error. The steps already in the Command Log remain visible, and Cypress
 skips the remaining commands, just like any other failed test:
 

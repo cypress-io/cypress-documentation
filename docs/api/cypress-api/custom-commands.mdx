@@ -34,9 +34,9 @@ return a DOM element for further commands to act on, consider writing a
 :::info
 
 We recommend defining queries is in your `cypress/support/commands.js` file,
-since it is loaded before any test files are evaluated via an import statement
-in the
-[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
+since Cypress loads it via an import statement in the
+[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file)
+before evaluating any test files.
 
 :::
 
@@ -945,8 +945,8 @@ For more complex use cases feel free to overwrite existing commands.
 
 #### Overwrite `type` command
 
-If you are typing into a password field, the password input is masked
-automatically within your application. But [.type()](/api/commands/type)
+If you are typing into a password field, your application automatically masks
+the password input. But [.type()](/api/commands/type)
 automatically logs any typed content into the Cypress Command Log.
 
 ```js
@@ -1028,8 +1028,8 @@ cy.get('#username').type('username@email.com')
 cy.get('#password').type('superSecret123', { sensitive: true })
 ```
 
-Now our sensitive password is not printed to the Cypress Command Log when
-`sensitive: true` is passed as an option to [.type()](/api/commands/type).
+Now Cypress doesn't print the sensitive password to the Command Log when you
+pass `sensitive: true` as an option to [.type()](/api/commands/type).
 
 <DocsImage
   src="/img/api/custom-commands/custom-command-type-masked-password.png"
@@ -1395,7 +1395,7 @@ Custom commands work well when you're needing to describe behavior that's
 desirable across **all of your tests**. Examples would be a `cy.setup()` or
 `cy.login()` or extending your application's behavior like
 `cy.get('.dropdown').dropdown('Apples')`. These commands are specific to your application
-and can be used everywhere.
+and you can use them everywhere.
 
 However, this pattern can be used and abused. Let's not forget - writing Cypress
 tests is **JavaScript**, and it's often more efficient to write a function for
