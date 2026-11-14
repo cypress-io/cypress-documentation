@@ -41,7 +41,7 @@ Shows when the spec file last changed on your machine, based on git or filesyste
 
 ### Latest runs
 
-Shows the last time the spec ran and the last four statuses. Results are scoped to your current git branch when available, then the default branch, then all branches. Data comes from Cypress Cloud.
+Shows the last time the spec ran and the last four statuses. Cypress scopes results to your current git branch when available, then the default branch, then all branches. Data comes from Cypress Cloud.
 
 ### Average duration
 
@@ -53,7 +53,7 @@ Shows the average time to run the spec, calculated from the last four runs. Usef
 
 <strong>What is a flaky test?</strong>
 
-A test is considered to be [flaky](/cloud/features/flaky-test-management) when it
+Cypress considers a test [flaky](/cloud/features/flaky-test-management) when it
 can pass and fail across multiple retry attempts without any code changes.
 
 :::
@@ -230,7 +230,7 @@ The Command Log also records application events. These entries appear in gray wi
 
 When you do not need to inspect network calls, you can hide HTTP requests in the Command Log to reduce noise. Deselect the "Show HTTP Requests" toggle in the Options menu in the Command Log header to collapse entries for XHR and fetch requests. Hiding requests makes it easier to focus on the commands that interact with the page.
 
-Hiding HTTP requests does not change how your tests run. The toggle only affects what is displayed in the Command Log. Requests still execute and remain available to assertions and tooling like [`cy.intercept()`](/api/commands/intercept).
+Hiding HTTP requests does not change how your tests run. The toggle only affects what the Command Log displays. Requests still execute and remain available to assertions and tooling like [`cy.intercept()`](/api/commands/intercept).
 
 <DocsVideo
   src="/img/app/core-concepts/open-mode/hide-http-fetch-requests-cypress.mp4"
@@ -278,15 +278,15 @@ cy.intercept('GET', '/comments/1').as('getComment')
 
 ## Preview pane
 
-The right-hand side of the App is where the Application or Component
-Under Test is rendered.
+The right-hand side of the App is where Cypress renders the Application or
+Component Under Test.
 
 ### Application Under Test <E2EOnlyBadge />
 
 In
 [E2E Testing](/app/core-concepts/testing-types#What-is-E2E-Testing),
-the right-hand side of the App is used to display the Application Under
-Test (AUT): the application that was navigated to using a
+the right-hand side of the App displays the Application Under
+Test (AUT): the application your test navigated to using a
 [`cy.visit()`](/api/commands/visit) or any subsequent routing calls made from
 the visited application.
 
@@ -298,7 +298,7 @@ cy.title().should('include', 'Kitchen Sink')
 ```
 
 In the corresponding application preview below, you can see
-`https://example.cypress.io` is being displayed in the right-hand side. Not only
+`https://example.cypress.io` displayed in the right-hand side. Not only
 is the application visible, but it is fully interactive. You can open your
 developer tools to inspect elements as you would in your normal application. The
 DOM is completely available for debugging.
@@ -312,8 +312,8 @@ DOM is completely available for debugging.
 
 The application preview honors the size and orientation defined in your tests. Control the viewport with [`cy.viewport()`](/api/commands/viewport) or set defaults in your [Cypress configuration](/app/references/configuration#Viewport). If the preview does not fit in the browser window, Cypress scales it to fit.
 
-The current size and scale of the AUT is displayed in the top right corner of
-the window.
+The top right corner of the window displays the current size and scale of the
+AUT.
 
 The image below shows an application at `1000px` by `660px`, scaled to `90%`.
 
@@ -360,7 +360,7 @@ it('should have password input of type password', () => {
 </TabItem>
 </Tabs>
 
-In the preview below, the `LoginForm` component is rendered on the right. The component is fully interactive. Open developer tools to inspect elements as you would in your application. The DOM is available for debugging.
+In the preview below, Cypress renders the `LoginForm` component on the right. The component is fully interactive. Open developer tools to inspect elements as you would in your application. The DOM is available for debugging.
 
 <DocsImage
   src="/img/app/core-concepts/component-under-test.png"
@@ -385,7 +385,7 @@ Cypress also surfaces syntax errors in component specs in the preview so you can
 
 ## Cypress Studio
 
-[Cypress Studio](/app/guides/cypress-studio) is part of open mode. Use Studio to record interactions and generate Cypress commands, then edit tests inline without leaving the app. Changes are saved to your spec file so your tests stay in code.
+[Cypress Studio](/app/guides/cypress-studio) is part of open mode. Use Studio to record interactions and generate Cypress commands, then edit tests inline without leaving the app. Studio saves changes to your spec file so your tests stay in code.
 
 To learn how to start Studio, record actions, add assertions, and edit tests, see the [Cypress Studio guide](/app/guides/cypress-studio).
 

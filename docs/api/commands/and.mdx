@@ -9,7 +9,7 @@ slug: /api/commands/and
 
 # and
 
-Create an assertion. Assertions are automatically retried as part of the
+Create an assertion. Cypress automatically retries assertions as part of the
 previous command until they pass or time out.
 
 :::info
@@ -77,7 +77,7 @@ A method to be called on the chainer.
 <Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that can have any number of explicit assertions within it.
-Whatever was passed to the function is what is yielded.
+Whatever was passed to the function is what `.and()` yields.
 
 <HeaderYields />
 

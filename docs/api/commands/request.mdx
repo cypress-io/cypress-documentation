@@ -48,7 +48,7 @@ page you visited, in that order. See
 A request `body` to be sent in the request. When `body` is a JavaScript object
 or boolean, Cypress automatically JSON-serializes it and sets the
 `Content-Type: application/json` request header, unless you set a `Content-Type`
-in `headers`. When `body` is a string, it is sent as-is with no automatic
+in `headers`. When `body` is a string, Cypress sends it as-is with no automatic
 content-type. When `body` is a `FormData` instance, Cypress sends it as
 `multipart/form-data`, which is how you
 [upload a file](#Upload-a-file-with-multipartform-data).
@@ -439,7 +439,7 @@ cy.env(['apiToken']).then(({ apiToken }) => {
 ```
 
 The third argument to `formData.append()` sets the filename the server
-receives. Without it, the part is sent with the filename `blob`. Plain string
+receives. Without it, Cypress sends the part with the filename `blob`. Plain string
 fields go in the same object, such as `formData.append('description', 'Avatar')`.
 
 The response to a `FormData` request arrives as raw bytes, even when it is JSON.
@@ -614,8 +614,8 @@ Before it sends a request, Cypress attaches the cookies the browser would have
 sent to that URL. When the response has `Set-Cookie` headers, Cypress sets those
 cookies in the browser, so later requests and page visits use them.
 
-Cookies are pulled from the cookie jar by domain match. A cookie set without
-`hostOnly: true` is a domain cookie, so it can be attached to a `cy.request()`
+Cypress pulls cookies from the cookie jar by domain match. A cookie set without
+`hostOnly: true` is a domain cookie, so Cypress can attach it to a `cy.request()`
 aimed at a _different_ host that domain-matches it (for example a sibling
 subdomain on the same registrable domain). If a cookie shows up on a request
 unexpectedly, see
@@ -629,8 +629,8 @@ your `headers` again. Keep these behaviors in mind:
 
 - Cookies carry across. Cypress saves any `Set-Cookie` headers into the browser,
   then attaches the cookies that match the next URL.
-- `Authorization` is dropped when the redirect changes the hostname.
-- A redirected `POST`, `PUT`, or `DELETE` is followed as a `GET`, without its
+- Cypress drops `Authorization` when the redirect changes the hostname.
+- Cypress follows a redirected `POST`, `PUT`, or `DELETE` as a `GET`, without its
   body or `Content-Type`. Only a `307` keeps the method and body.
 
 ### How `cy.request()` handles request and response bodies
@@ -664,7 +664,7 @@ URL-encoded form path, and the request fails with a network-level error.
 
 #### Response body parsing
 
-`response.body` is parsed into an object when either:
+Cypress parses `response.body` into an object when either:
 
 - The response's `Content-Type` ends in `json`, such as `application/json`.
 - The request `body` is an object or boolean (without `form: true`), and the

@@ -49,10 +49,10 @@ The name of the `method` on the `object` to be wrapped.
 <HeaderYields />
 
 - `cy.spy()` is _synchronous_ and returns a value (the spy) instead of a
-  Promise-like chain-able object. The spy can be aliased.
+  Promise-like chain-able object. You can alias the spy.
 - `cy.spy()` returns a
-  [Sinon.js spy](https://sinonjs.org/releases/v8/spies/). All methods found
-  on Sinon.JS spies are supported.
+  [Sinon.js spy](https://sinonjs.org/releases/v8/spies/). `cy.spy()` supports
+  all methods found on Sinon.JS spies.
 
 ## Examples
 
@@ -69,8 +69,8 @@ expect(util.addListeners).to.be.called
 
 #### Disable logging to Command Log
 
-You can chain a `.log(bool)` method to disable `cy.spy()` calls from being
-shown in the Command Log. Disabling the log may be useful when your stubs are called an
+You can chain a `.log(bool)` method to stop the Command Log from showing
+`cy.spy()` calls. Disabling the log may be useful when your code calls your stubs an
 excessive number of times.
 
 ```javascript
@@ -131,18 +131,18 @@ reset/restore them.
 
 The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is
 that `cy.spy()` does not replace the method, it only wraps it. So, while
-invocations are recorded, the original method is still called. Wrapping can be very
-useful when testing methods on native browser objects. You can verify a method
-is being called by your test and still have the original method action invoked.
+the spy records invocations, the original method still runs. Wrapping can be very
+useful when testing methods on native browser objects. You can verify that your
+test calls a method and still have the original method action run.
 
 ### Assertions
 
 #### Assertion Support
 
 Cypress has also built-in
-[Sinon-Chai](/app/references/bundled-libraries#Sinon-Chai) support, so any
+[Sinon-Chai](/app/references/bundled-libraries#Sinon-Chai) support, so you can use any
 [assertions supported by `Sinon-Chai`](/app/references/assertions#Sinon-Chai)
-can be used without any configuration.
+without any configuration.
 
 ## Command Log
 

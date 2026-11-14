@@ -145,19 +145,19 @@ browser for you and retries commands and assertions automatically.
 
 ## Confirm your target language
 
-Selenium is a multi-language framework; Cypress tests are written in
-**JavaScript or TypeScript** and run in Node. The language choice is the most important
+Selenium is a multi-language framework; you write Cypress tests in
+**JavaScript or TypeScript**, and they run in Node. The language choice is the most important
 planning decision in a Selenium migration:
 
 - **From JavaScript/TypeScript Selenium (WebDriverJS):** the language stays
   the same. You are translating one API to another.
-- **From Java, Python, C#, or Ruby:** the tests must be **rewritten**, not
-  transpiled. Any helper code, data builders, or business logic that lives
-  in your test framework (not your application) has to be reimplemented in
-  JavaScript/TypeScript. Identify this shared code early; it is often the
+- **From Java, Python, C#, or Ruby:** you must **rewrite** the tests, not
+  transpile them. You also have to reimplement any helper code, data builders,
+  or business logic that lives in your test framework (not your application)
+  in JavaScript/TypeScript. Identify this shared code early; it is often the
   most time-consuming part of the migration, not the tests themselves.
 
-TypeScript is recommended for teams coming from a statically typed language
+We recommend TypeScript for teams coming from a statically typed language
 like Java or C#, since it preserves type safety. See
 [TypeScript support](/app/tooling/typescript-support).
 
@@ -481,7 +481,7 @@ which provides `describe()` and `it()` globally, so there is nothing to import.
 A Selenium test class maps naturally to a `describe` block, and each `@Test`
 method becomes an `it`. Where Selenium relies on `@BeforeEach` to create a
 fresh `driver`, Cypress starts each test with clean browser state
-automatically, so `beforeEach` is used for app-level setup (visiting a page,
+automatically, so you use `beforeEach` for app-level setup (visiting a page,
 seeding data, logging in) rather than browser setup.
 
 <Tabs groupId="cypress-lang">
@@ -1477,15 +1477,15 @@ that the step bodies now use `cy` instead of a `driver`.
 Selenium Grid distributes tests across machines by running a hub and nodes
 that you provision, configure, and maintain. Cypress replaces this with
 [Cypress Cloud](/cloud/get-started/introduction) parallelization: your CI runs
-Cypress on several machines in parallel and Cypress Cloud coordinates how specs
-are split across them, so there is no hub to operate. Like Selenium Grid, this
+Cypress on several machines in parallel and Cypress Cloud coordinates how to split
+specs across them, so there is no hub to operate. Like Selenium Grid, this
 runs in CI, not on your local machine.
 
 <PackageManagerTabs run="cypress run --record --parallel" />
 
 Cypress Cloud assigns each spec file to an available machine using a
 [balance strategy](/cloud/features/smart-orchestration/load-balancing#Balance-strategy)
-based on historical run durations, so run time is minimized automatically and
+based on historical run durations, so Cypress Cloud minimizes run time automatically and
 you never configure shards by hand.
 
 ### Smart Orchestration

@@ -8,8 +8,8 @@ sidebar_label: clock
 
 # clock
 
-`cy.clock()` overrides native global functions related to time allowing them to
-be controlled synchronously via [`cy.tick()`](/api/commands/tick) or the yielded
+`cy.clock()` overrides native global functions related to time so you can
+control them synchronously via [`cy.tick()`](/api/commands/tick) or the yielded
 `clock` object. By default, this includes controlling:
 
 - `setTimeout` and `clearTimeout`
@@ -75,18 +75,18 @@ ignores any arguments passed to it.
 
 - **`clock.tick(milliseconds)`**
 
-  Move the clock the specified number of `milliseconds`. Any timers within the
-  affected range of time are called.
+  Move the clock the specified number of `milliseconds`. Cypress calls any timers
+  within the affected range of time.
 
 - **`clock.restore()`**
 
   Restore all overridden native functions. Cypress automatically calls
-  `clock.restore()` between tests, so it should not generally be needed.
+  `clock.restore()` between tests, so you generally don't need to call it.
 
   `clock.restore()` returns native timer APIs (`setTimeout`, `setInterval`, etc.)
   to the `window`. New timers created _after_ `restore()` run in real time.
-  Timers registered while the fake clock was active are discarded and don't
-  resume automatically.
+  `clock.restore()` discards timers registered while the fake clock was active,
+  and those timers don't resume automatically.
 
 - **`clock.setSystemTime(now)`**
 
@@ -203,7 +203,7 @@ it('ticks the clock', function () {
 #### Access the clock object to restore native functions
 
 In general, it should not be necessary to manually restore the native functions
-that `cy.clock()` overrides since this is done automatically between tests. But
+that `cy.clock()` overrides since Cypress does this automatically between tests. But
 if you need to, the `clock` object yield has a `.restore()` method.
 
 ```javascript
@@ -315,11 +315,11 @@ restores the clock between tests.
 
 `clock.restore()` returns native timer APIs (`setTimeout`, `setInterval`, etc.)
 to the `window`. New timers created _after_ `restore()` run in real time.
-Timers registered while the fake clock was active are discarded and don't
-resume automatically. If your application code needs to keep running after
-`restore()`, it must re-register those timers itself. Timers your application
-registered before `cy.clock()` was called were never faked, so they keep running
-in real time.
+`clock.restore()` discards timers registered while the fake clock was active,
+and those timers don't resume automatically. If your application code needs to keep running after
+`restore()`, it must re-register those timers itself. Cypress never fakes
+timers your application registered before you called `cy.clock()`, so those
+timers keep running in real time.
 
 :::
 
@@ -399,10 +399,10 @@ test the component against any changes you've made to the yielded clock object.
 
 If you call `cy.clock()` before visiting a page with
 [`cy.visit()`](/api/commands/visit), Cypress overrides the page's native global
-functions on window load, before any of your app code runs. So even if
-`setTimeout`, for example, is called on page load, it can still be controlled
-via [`cy.tick()`](/api/commands/tick). This control also applies if, during the course
-of a test, the page under test is reloaded or changed.
+functions on window load, before any of your app code runs. So even if your app
+calls `setTimeout`, for example, on page load, you can still control it via
+[`cy.tick()`](/api/commands/tick). This control also applies if, during the course
+of a test, the page under test reloads or changes.
 
 Each new page gets a fresh fake clock that starts again at the original `now`
 value (or the unix epoch). Time you advanced with `cy.tick()` on the previous
