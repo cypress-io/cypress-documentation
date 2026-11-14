@@ -38,7 +38,7 @@ own service.
   who can view the project can _view_ webhooks, but only those roles can create,
   edit, enable, disable, delete, test, or redeliver them.
 - **A publicly-reachable endpoint** that accepts `POST` requests. **HTTPS is
-  recommended.** Cypress Cloud will not deliver to private, loopback, or internal
+  recommended.** Cypress Cloud does not deliver to private, loopback, or internal
   network addresses (see [Security](#Security)). HTTP URLs are accepted, but
   be aware HTTP payloads travel unencrypted.
 
@@ -110,7 +110,7 @@ was not altered. Prefer signature verification when the destination supports it.
 
 In the **Add webhook** dialog, configure the following:
 
-- **Payload URL** _(required)_: The URL Cypress Cloud will send a `POST` request
+- **Payload URL** _(required)_: The URL Cypress Cloud sends a `POST` request
   to, for example `https://example.com/receive-webhook`.
 - **Secret** _(optional, recommended)_: A signing secret used to verify that a
   request genuinely came from Cypress Cloud. Provide your own value (at least 16
@@ -133,7 +133,7 @@ In the **Add webhook** dialog, configure the following:
   width={600}
 />
 
-Click **Add webhook** to save. Cypress Cloud will begin delivering the selected
+Click **Add webhook** to save. Cypress Cloud begins delivering the selected
 events to your endpoint.
 
 ## Send a test event
@@ -843,7 +843,7 @@ Delivery statuses:
 - **Delivered**: The endpoint returned a success response.
 - **Pending**: The delivery is queued or in progress.
 - **Retrying**: An attempt failed and another is scheduled.
-- **Failed. No more retries.**: The delivery failed and will not be retried.
+- **Failed. No more retries.**: The delivery failed, and Cypress Cloud makes no further retries.
   Automatic retries are exhausted, the failure is not retryable (for example a
   `3xx` or a `4xx` other than `408` or `429`), or the delivery was a
   [test send](#Send-a-test-event).

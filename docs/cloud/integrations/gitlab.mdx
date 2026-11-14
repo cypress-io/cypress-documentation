@@ -60,10 +60,10 @@ infrastructure to allow communication with our servers.
 
 :::caution
 
-GitLab OAuth2 applications will allow Cypress Cloud to authenticate as the user
-that registered the application. Authenticating as that user means Cypress will have visibility into
+GitLab OAuth2 applications allow Cypress Cloud to authenticate as the user
+that registered the application. Authenticating as that user means Cypress has visibility into
 every GitLab repo the registered user can access. If you want tighter control of
-the repos that Cypress will see, consider creating a service account in GitLab
+the repos that Cypress sees, consider creating a service account in GitLab
 with more limited access permissions.
 
 :::
@@ -111,12 +111,12 @@ If you are running the tests from within a restrictive VPN, see
 
 ### Status checks
 
-By default, Cypress will post a **cypress/run** commit status containing the
-results of the Cypress run. The **cypress/run** status will prevent your team from merging any MRs
+By default, Cypress posts a **cypress/run** commit status containing the
+results of the Cypress run. The **cypress/run** status prevents your team from merging any MRs
 with failing Cypress tests.
 
 Additionally, Cypress can post a **cypress/flake** commit status indicating
-whether the Cypress run contained any flaky tests. The **cypress/flake** status will prevent your team
+whether the Cypress run contained any flaky tests. The **cypress/flake** status prevents your team
 from merging any MRs with flaky tests.
 
 You can manage this behavior on your project's **Project Settings** page.
@@ -138,8 +138,8 @@ Reporting on flaky status checks is included in our
 
 ### Merge Request comments
 
-By default, Cypress will post an MR comment summarizing the run when the run
-completes. The comment will include test results, run info, and a summary of tests that
+By default, Cypress posts an MR comment summarizing the run when the run
+completes. The comment includes test results, run info, and a summary of tests that
 failed or were flaky.
 
 You can manage this behavior on your project's **Project Settings** page.
@@ -155,5 +155,5 @@ You can manage this behavior on your project's **Project Settings** page.
 ## Uninstalling the GitLab integration
 
 You can remove this integration by visiting the **Integrations → GitLab** or
-**GitLab for Enterprise Integration** page of your organization. Removing the integration will stop
+**GitLab for Enterprise Integration** page of your organization. Removing the integration stops
 all commit checks and MR comments from Cypress.

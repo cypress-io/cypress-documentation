@@ -38,14 +38,14 @@ The Cypress integration for Slack:
 
 1. In Cypress Cloud, visit the **Integrations** page for the organization you wish to integrate with Slack.
 2. Click the **Enable** button in the **Slack** section.
-3. A popup window will be displayed requesting permission for Cypress to access your
+3. Slack displays a popup window requesting permission for Cypress to access your
    workspace.
 4. After you approve the app permissions, choose your Slack **workspace** and **channel** to
    associate with the installation.
 
 <!-- add image showing the Slack OAuth authorization popup with the workspace and channel selection -->
 
-Cypress Cloud will now post run results for all projects in your organization to the specified Slack channel.
+Cypress Cloud now posts run results for all projects in your organization to the specified Slack channel.
 
 ## Slack configuration
 
@@ -84,10 +84,10 @@ channel:
 
 1. Navigate to the **Slack** configuration page.
 2. Click **Add Slack Channel**.
-3. You'll see a popup window for choosing the channel or individual to associate with the organization.
+3. A popup window opens for choosing the channel or individual to associate with the organization.
 4. Search for and select the channel messages should post to.
 
-Cypress Cloud will begin to post run results to the channel.
+Cypress Cloud begins to post run results to the channel.
 
 ### Direct messages
 
@@ -95,15 +95,15 @@ You can have Cypress Cloud post run results as a direct message to a single user
 
 1. Navigate to the **Slack** configuration page.
 2. Click **Add Slack Channel**.
-3. You'll see a popup window for choosing the channel or individual to associate
+3. A popup window opens for choosing the channel or individual to associate
    with the organization.
 4. Search for and select the user that messages should be sent to.
 
-Cypress Cloud will begin to send run results to this user.
+Cypress Cloud begins to send run results to this user.
 
 ## Notification preferences
 
-By default, Cypress Cloud will post a Slack message to each configured channel
+By default, Cypress Cloud posts a Slack message to each configured channel
 only for failing runs. You can select any combination of the following preferences:
 
 - **Failed runs**: notifies on runs with a _failed_ or _errored_ status.
@@ -143,21 +143,21 @@ like those to a staging or release environment, or only for runs on your main br
 
 1. Navigate to the **Slack** configuration page.
 2. Under **Tags**, select the **Tag** dropdown for the desired integration and
-   select which tag(s) to filter. If more than one tag is selected, the Slack message will be sent
+   select which tag(s) to filter. If more than one tag is selected, Cypress Cloud sends the Slack message
    if any of the tags were associated with the run.
 3. Under **Run Groups**, select the **Run Group** dropdown for the desired integration and
-   select which run group(s) to filter. If more than one run group is selected, the Slack message will be
-   sent if any of the run groups were associated with the run.
+   select which run group(s) to filter. If more than one run group is selected, Cypress Cloud sends the Slack message
+   if any of the run groups were associated with the run.
 4. Select the **Branch** dropdown for the desired integration and
    select which branch(es) to filter. The dropdown lists branches that runs in this project were
-   recorded on. If more than one branch is selected, the Slack message will be sent if the run was
+   recorded on. If more than one branch is selected, Cypress Cloud sends the Slack message if the run was
    recorded on any of the selected branches. Select **Unknown branch** to include runs recorded
    without branch information.
 
 Branch names must match exactly. If no branch is selected, notifications are sent for runs on every branch.
 
-If more than one type of filter is selected, only a run that matches every selected filter will
-trigger a message to be sent to Slack. For example, if you select a tag and a branch, the run must
+If more than one type of filter is selected, only a run that matches every selected filter
+triggers a message to be sent to Slack. For example, if you select a tag and a branch, the run must
 have one of the selected tags and be recorded on one of the selected branches.
 
 <DocsImage
@@ -245,7 +245,7 @@ Create separate project-level channels for each environment and use tag filters 
 
 ### Dedicated flaky test triage
 
-Add a channel like `#flaky-triage` with only the **Flaky tests** preference enabled and no run status preferences selected. This channel will only receive a notification when a run contains flaky tests — regardless of whether the run passed or failed — so your team can triage new flake without the noise of every run result.
+Add a channel like `#flaky-triage` with only the **Flaky tests** preference enabled and no run status preferences selected. This channel only receives a notification when a run contains flaky tests — regardless of whether the run passed or failed — so your team can triage new flake without the noise of every run result.
 
 ### Slim CI bridge for high-volume projects
 
@@ -277,7 +277,7 @@ If you have an organization-level Slack channel, you can mute it for specific pr
 
 :::caution
 
-Toggling the mute on an organization-level install will clear all project-level mute overrides for that channel. If you're using per-project muting, be aware that changing the global mute state resets those overrides.
+Toggling the mute on an organization-level install clears all project-level mute overrides for that channel. If you're using per-project muting, be aware that changing the global mute state resets those overrides.
 
 :::
 
@@ -294,9 +294,9 @@ altogether in favor of per-project notifications.
 ## Remove the integration
 
 You can completely remove the Cypress integration for Slack from your workspace.
-Removing the integration will remove the `@cypress` bot from your workspace and will delete all of the
+Removing the integration removes the `@cypress` bot from your workspace and deletes all of the
 Slack configurations you've set in Cypress Cloud. **You cannot undo this**, but you
-will be able to install the Cypress integration for Slack again in the future.
+can install the Cypress integration for Slack again later.
 
 1. Navigate to the **Integrations** page for the organization with the installed
    integration.

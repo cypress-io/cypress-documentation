@@ -169,7 +169,7 @@ so you can see where in the page the link lives.
 />
 
 Untested links count against your coverage score, which is deliberate: a page
-you link to but never test is a real gap. But links to destinations you'll
+you link to but never test is a real gap. But links to destinations you
 never own, such as external sites, a marketing page, or a status page,
 shouldn't drag your score down. The next step addresses these links.
 
@@ -180,7 +180,7 @@ _real_ gaps. Two kinds of noise commonly lower a score without pointing to
 anything worth testing:
 
 - **Third-party widgets**, such as chat launchers, cookie banners, and ad embeds, are interactive elements you don't own, each counted as untested.
-- **Untested links to pages you'll never test**, such as external sites, marketing pages, and a status page, count against your score even though testing them isn't your job.
+- **Untested links to pages you never test**, such as external sites, marketing pages, and a status page, count against your score even though testing them isn't your job.
 
 UI Coverage is configured from the **App Quality** tab of your project settings
 in Cypress Cloud. Configuration is opt-in: add a rule only to remove noise or
@@ -202,7 +202,7 @@ Exclude a third-party widget so it stops counting as an untested element with
 }
 ```
 
-Exclude a destination you'll never test so its untested links stop counting
+Exclude a destination you never test so its untested links stop counting
 against your score with [`viewFilters`](/ui-coverage/configuration/viewfilters):
 
 ```json title="App Quality Config"

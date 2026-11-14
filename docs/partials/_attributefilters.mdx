@@ -108,7 +108,7 @@ React's `useId` hook (used by libraries like MUI and Radix) produces `id` values
 
 ### Filtering an ID and the attributes that reference it
 
-When you filter a dynamic `id`, also filter the attributes that point at it, or elements will still be identified by those related dynamic values. Here Angular Material generates `mat-*` IDs and wires them through `for` and `aria-describedby`. Common relationships to filter alongside an `id` include:
+When you filter a dynamic `id`, also filter the attributes that point at it, or UI Coverage still identifies elements by those related dynamic values. Here Angular Material generates `mat-*` IDs and wires them through `for` and `aria-describedby`. Common relationships to filter alongside an `id` include:
 
 - Form associations (`for` on labels)
 - ARIA relationships (`aria-labelledby`, `aria-describedby`, `aria-controls`, `aria-owns`, `aria-details`)

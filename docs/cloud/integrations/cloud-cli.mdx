@@ -701,7 +701,7 @@ Launch Test Replay in a browser and inspect your application throughout the test
 
 :::note
 
-Your system must have a Chromium-family browser installed to use `replay view`. The CLI will attempt to locate one automatically; you can target a specific instance by defining a `CYCLOUD_CHROMIUM_PATH` environment variable.
+Your system must have a Chromium-family browser installed to use `replay view`. The CLI attempts to locate one automatically; you can target a specific instance by defining a `CYCLOUD_CHROMIUM_PATH` environment variable.
 
 :::
 
@@ -715,7 +715,7 @@ cy-cloud replay view screenshot
 
 :::note
 
-You can have multiple replay viewers open at the same time. Identify which to target using the `--testId` or `--testResultUrl` flag. If you don't provide a `testId` commands will be directed to the most-recently-opened viewer. Only one instance of a given `testId` can be open at once - that viewer will be shared by any commands targeting that test.
+You can have multiple replay viewers open at the same time. Identify which to target using the `--testId` or `--testResultUrl` flag. If you don't provide a `testId` the CLI directs commands to the most-recently-opened viewer. Only one instance of a given `testId` can be open at once - any commands targeting that test share that viewer.
 
 :::
 
@@ -731,7 +731,7 @@ All subcommands provide flags to identify the test result you're interested in.
 
 :::note
 
-If no test target is specified all control and query subcommands default to the most-recently-opened replay viewer. If a test target _is_ provided and a viewer is not already open for that test one will automatically be opened.
+If no test target is specified all control and query subcommands default to the most-recently-opened replay viewer. If a test target _is_ provided and a viewer is not already open for that test the CLI opens one automatically.
 
 :::
 
@@ -751,7 +751,7 @@ Once you're done with a viewer you can `close` it to release any resources it's 
 
 :::tip
 
-Replay viewers take time to launch. It is much faster to open a test once and perform multiple queries than it is to open and close one repeatedly. Conversely, viewers consume memory while they remain open, so it is advisable to close one as soon as you're done with it. A viewer will automatically close after 5 minutes of inactivity, or when the browser tab or process is closed.
+Replay viewers take time to launch. It is much faster to open a test once and perform multiple queries than it is to open and close one repeatedly. Conversely, viewers consume memory while they remain open, so it is advisable to close one as soon as you're done with it. A viewer automatically closes after 5 minutes of inactivity, or when the browser tab or process is closed.
 
 :::
 
@@ -797,10 +797,10 @@ Once you are at the moment of interest, you can query the replay for information
 | `inspect`  | Print detailed information about an element, including its bounding box, computed styles, attributes, and ARIA role, name, and states. |
 | `aria`     | Print a representation of the accessibility (ARIA) tree for an identified element.                                                     |
 
-Subcommands that target an element require a `--selector` flag with a valid CSS Selector value. The selector will be evaluated against your app and will return one of three responses:
+Subcommands that target an element require a `--selector` flag with a valid CSS Selector value. The CLI evaluates the selector against your app and returns one of three responses:
 
 - A "no items found" response if no matches exist.
-- An "ambiguous" response if multiple matches are found. The ambiguous response will include generated unique selectors for the first 10 matches to assist identifying the specific instance you're interested in.
+- An "ambiguous" response if multiple matches are found. The ambiguous response includes generated unique selectors for the first 10 matches to assist identifying the specific instance you're interested in.
 - A "match" response if a single match is found, with the requested data.
 
 You can also request a visual record
@@ -820,8 +820,8 @@ When providing a `path` value it can be defined multiple ways:
 - Can be a relative or absolute path
 - Can identify an existing directory or a filepath
 - When identifying a filepath it cannot match an existing file
-- When identifying a directory the generated file will be named using the active timestamp of the viewer
-- Images will be generated in PNG format and should be named accordingly
+- When identifying a directory the CLI names the generated file using the active timestamp of the viewer
+- The CLI generates images in PNG format, so name the file accordingly
 
 :::
 

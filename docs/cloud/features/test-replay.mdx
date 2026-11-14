@@ -80,7 +80,7 @@ Hover on a [test for review](/cloud/features/recorded-runs#Tests-for-Review) und
   alt="Run overview row"
 />
 
-Or navigate to the [test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel. The header option will replay the first failing test while the option above each attempt will replay the affiliated test.
+Or navigate to the [test detail sidebar](/cloud/features/recorded-runs#Test-detail-sidebar) header or above each attempt in the errors panel. The header option replays the first failing test while the option above each attempt replays the affiliated test.
 
 <DocsImage
   src="/img/cloud/features/test-replay/replay_sidebar_magnified.jpg"
@@ -90,7 +90,7 @@ Or navigate to the [test detail sidebar](/cloud/features/recorded-runs#Test-deta
 
 ### 3. Debug With Test Replay
 
-Both options above display the Test Replay interface, which we'll unpack from top to bottom in more detail below.
+Both options above display the Test Replay interface, which the following sections unpack from top to bottom in more detail.
 
 #### Run header
 
@@ -360,7 +360,7 @@ The exact error message can be seen by viewing the spec's output.
   - Check if a firewall or proxy is blocking the connection. If a proxy is blocking connections, configure the proxy so that it does not block uploads to Cypress URLs.
   - Check [cypress status](https://www.cypressstatus.com/) for any ongoing issues.
 - **Invalid or missing Test Replay upload URL**: Specs that take longer than the
-  [run timeout](/cloud/account-management/projects#Run-Timeout) will not successfully upload. To fix:
+  [run timeout](/cloud/account-management/projects#Run-Timeout) do not successfully upload. To fix:
   - Reduce the run time of the spec.
   - Or increase the run timeout in the project settings.
 

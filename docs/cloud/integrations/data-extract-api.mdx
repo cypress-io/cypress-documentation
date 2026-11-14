@@ -41,15 +41,15 @@ the ability to access your test data via API is already enabled.
 <br />A couple of things to note:
 
 - Data shown in Enterprise Reporting is not real-time. For aggregated data it is available as of midnight UTC of the current day.
-  I.e. - data will be populated through "end of day yesterday". However, individual result data is near real-time and is available
+  I.e. - data is populated through "end of day yesterday". However, individual result data is near real-time and is available
   30 minutes after the run has completed. Endpoints that return near real-time data are specified below.
 - Historical data is available as specified by your data retention limit in Cypress Cloud.
 
 ## API endpoint details
 
-The following API endpoint will be used. Substitute your assigned API key
+Use the following API endpoint. Substitute your assigned API key
 where indicated by the `YOUR-API-KEY` placeholder text. The `report_id` specifies
-the type of data that will be retrieved.
+the type of data to retrieve.
 
 https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_id=REPORT-TYPE&export_format=csv
 
@@ -61,7 +61,7 @@ The following query parameters are available for use:
   start date of 12:30p UTC on that day, use: `?start_date=2025-01-01T12%3A30%3A00`
 
 - end_date. Optional and should be passed in either yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss format. If no end date is
-  specified the query will default to today.
+  specified the query defaults to today.
 
   For example, to request an end date of start of day March 1, 2025, use: `?end_date=2025-03-01`. To request an
   end date of 12:30p UTC on that day, use: `?end_date=2025-03-01T12%3A30%3A00`
@@ -76,7 +76,7 @@ The following query parameters are available for use:
 
   For example, to request that the data be filtered for branches _develop_ and _commitBranch1_, use: `&branch=develop&branch=commitBranch1`
 
-- export_format. Specify the type of data format that will be returned in the response file. Valid options include: `csv`, `json`, `xlsx`.
+- export_format. Specify the type of data format returned in the response file. Valid options include: `csv`, `json`, `xlsx`.
 
   For example, to request that the data be returned in JSON format, use: `&export_format=json`
 
@@ -427,8 +427,8 @@ All data for these APIs is available near real-time, 30 minutes after the run ha
 ### Individual spec results
 
 This data covers all spec results regardless of spec result status. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 Data is available near real-time, 30 minutes after the run has completed.
 
@@ -462,8 +462,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Individual failed test results
 
 This report extracts all test result details for failed tests. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 Data is available near real-time, 30 minutes after the run has completed.
 
@@ -493,8 +493,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Individual test results
 
 This report extracts all test result details regardless of test result status. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 Data is available near real-time, 30 minutes after the run has completed.
 
@@ -548,7 +548,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 This report returns the average, median, min, and max durations of specs. This data is reported over time. The maximum
 number of records returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your
-volume of records will exceed 500k for a single request.
+volume of records exceeds 500k for a single request.
 
 The report_id is: `average-passing-spec-duration`
 
@@ -629,8 +629,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### Flaky test details
 
 This report extracts all test result details of flaky tests. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 Data is available near real-time, 30 minutes after the run has completed.
 
@@ -754,8 +754,8 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 ### UI Coverage details
 
 This report extracts the UI Coverage % for each run along with other attributes of the run. The maximum number of records
-returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records will
-exceed 500k for a single request.
+returned is 500,000. Make multiple requests with different start_date and end_date parameter values if your volume of records
+exceeds 500k for a single request.
 
 The report_id is: `ui-coverage-details`
 
@@ -815,7 +815,7 @@ https://cloud.cypress.io/enterprise-reporting/report?token=YOUR-API-KEY&report_i
 
 This report extracts Cypress Accessibility scores for each run along with other attributes of the run. The
 maximum number of records returned is 500,000. Make multiple requests with different start_date and end_date parameter
-values if your volume of records will exceed 500k for a single request.
+values if your volume of records exceeds 500k for a single request.
 
 The report_id is: `accessibility-details`
 
