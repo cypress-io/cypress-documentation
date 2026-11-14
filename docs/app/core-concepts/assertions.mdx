@@ -92,7 +92,7 @@ anything, but they enable you to write clear, English sentences.
 
 These chainers are available when asserting about a DOM object.
 
-You will commonly use these chainers after using DOM commands like:
+You commonly use these chainers after using DOM commands like:
 [`cy.get()`](/api/commands/get), [`cy.contains()`](/api/commands/contains), etc.
 
 {/* textlint-disable */}
@@ -159,7 +159,7 @@ These chainers are used on assertions with [`cy.stub()`](/api/commands/stub) and
 ## Adding New Assertions
 
 Because we are using `chai`, that means you can extend it however you'd like.
-Cypress will "just work" with new assertions added to `chai`. You can:
+Cypress works with new assertions added to `chai`. You can:
 
 - Write your own `chai` assertions as
   [documented here](https://chaijs.com/guide/helpers/).
@@ -372,8 +372,8 @@ cy.get('[data-testid="todos"]').should('not.have.length', 2)
 ## Should callback
 
 If built-in assertions are not enough, you can write your own assertion function
-and pass it as a callback to the `.should()` command. Cypress will automatically
-[retry](/app/core-concepts/retry-ability) the callback function until it
+and pass it as a callback to the `.should()` command. Cypress automatically
+[retries](/app/core-concepts/retry-ability) the callback function until it
 passes or the command times out. See the
 [`.should()`](/api/commands/should#Function) documentation.
 
@@ -414,9 +414,9 @@ cy.get('[data-testid="assertions-link"]')
   .and('include', 'cypress.io')
 ```
 
-All chained assertions will use the same reference to the original
+All chained assertions use the same reference to the original
 subject. For example, if you wanted to test a loading element that first appears
-and then disappears, the following WILL NOT WORK because the same element cannot
+and then disappears, the following DOES NOT WORK because the same element cannot
 be visible and invisible at the same time:
 
 ```js

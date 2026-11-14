@@ -20,7 +20,7 @@ import TOCInline from '@theme/TOCInline'
 ### <Icon name="exclamation-triangle" color="red" /> No tests found
 
 This message means that Cypress was unable to find tests in the specified file.
-You'll likely get this message if you have an empty test file and have not yet
+You likely get this message if you have an empty test file and have not yet
 written any tests.
 
 <DocsImage src="/img/app/references/no-tests-found.png" alt="No tests found" />
@@ -31,13 +31,13 @@ This message means that Cypress encountered an error when compiling and/or
 bundling your test file. Cypress automatically compiles and bundles your test
 code so you can use ES2015, modules, etc.
 
-#### You'll typically receive this message due to:
+#### You typically receive this message due to:
 
 - The file not existing
 - A syntax error in the file or one of its dependencies
 - A missing dependency
 
-When the error is fixed in your test file, your tests will automatically re-run.
+When the error is fixed in your test file, your tests automatically re-run.
 
 ## Support File Errors
 
@@ -87,7 +87,7 @@ configuration option within each testing type's configuration object.
 
 :::danger
 
-⚠️ For a given testing type, multiple matching `supportFile` files will result
+⚠️ For a given testing type, multiple matching `supportFile` files result
 in an error when Cypress loads.
 
 :::
@@ -132,7 +132,7 @@ describe('Some Tests', () => {
 })
 ```
 
-Move those Cypress commands into an `it(...)` block and everything will work
+Move those Cypress commands into an `it(...)` block and everything works
 correctly.
 
 If you are purposefully writing commands outside of a test, there is probably a
@@ -295,7 +295,7 @@ real user to interact with the element. The check also prevents some edge cases 
 actions, such as [`.type()`](/api/commands/type) or
 [`.click()`](/api/commands/click), happened too fast during a transition.
 
-Cypress will continuously attempt to interact with the element until it
+Cypress continuously attempts to interact with the element until it
 eventually times out. If you'd like to force Cypress to interact with the
 element there are a few options:
 
@@ -329,7 +329,7 @@ modifying the [Cypress configuration](/app/references/configuration).
 ### <Icon name="exclamation-triangle" color="red" /> The test has finished but Cypress still has commands in its queue
 
 Let's examine several different ways you may get this error message. In every
-situation, you'll need to change something in your test code to prevent the
+situation, you need to change something in your test code to prevent the
 error.
 
 <DocsImage
@@ -342,14 +342,14 @@ error.
 <strong>Flaky tests below!</strong>
 
 Several of these tests are dependent on race conditions. You may have to run
-these tests multiple times before they will actually fail. You can also try
+these tests multiple times before they actually fail. You can also try
 tweaking some of the delays.
 
 :::
 
 #### Short Example
 
-This first test below will pass and shows you that Cypress tries to prevent
+This first test below passes and shows you that Cypress tries to prevent
 leaving commands behind in the queue in every test.
 
 Even though we return a string in our test, Cypress automatically figures out
@@ -365,7 +365,7 @@ it('Cypress is smart and this does not fail', () => {
 })
 ```
 
-The example below will fail because you've forcibly terminated the test early
+The example below fails because you've forcibly terminated the test early
 with mocha's `done`.
 
 ```javascript
@@ -383,9 +383,9 @@ it('but you can forcibly end the test early which does fail', (done) => {
 #### Complex Async Example
 
 What's happening in this example is that because we have _NOT_ told Mocha this
-is an asynchronous test, this test will pass _immediately_ then move onto the
-next test. Then, when the `setTimeout` callback function runs, new commands will
-get queued on the wrong test. Cypress will detect this and fail the _next_ test.
+is an asynchronous test, this test passes _immediately_ then moves onto the
+next test. Then, when the `setTimeout` callback function runs, new commands
+get queued on the wrong test. Cypress detects this and fails the _next_ test.
 
 ```javascript
 describe('a complex example with async code', function () {
@@ -423,8 +423,8 @@ it('does not cause commands to bleed into the next test', (done) => {
 
 In the example below, we forget to return the `Promise` in our test, so
 the test passes synchronously but our `Promise` resolves in the next test. The missing return
-also causes the commands to be queued on the wrong test. We will get the error
-in the next test that Cypress detected it had commands in its command queue.
+also causes the commands to be queued on the wrong test. The next test gets the error
+that Cypress detected it had commands in its command queue.
 
 ```javascript
 describe('another complex example using a forgotten "return"', () => {
@@ -493,7 +493,7 @@ for more information and workarounds.
 ### <Icon name="exclamation-triangle" color="red" /> `cy.visit()` succeeded, but commands are timing out
 
 As of Cypress [v12.0.0](/app/references/changelog#12-0-0), users can
-navigate to multiple domains in a single test. The following test will succeed
+navigate to multiple domains in a single test. The following test succeeds
 as-is:
 
 ```javascript
@@ -515,7 +515,7 @@ it('navigates to docs.cypress.io and runs additional commands', () => {
 })
 ```
 
-And will result in the following error:
+And results in the following error:
 
 <DocsImage
   src="/img/app/references/cy-visit-subsequent-commands-timed-out.png"
@@ -556,7 +556,7 @@ Because `cy` commands are asynchronous and are queued to be run later, it
 doesn't make sense to return anything else.
 
 For convenience, you can also omit any return value or return `undefined` and
-Cypress will not error.
+Cypress does not error.
 
 In versions before [0.20.0](/app/references/changelog) of Cypress we
 automatically detected this and forced the `cy` commands to be returned. To make
@@ -568,7 +568,7 @@ Because cy commands are asynchronous and are queued to be run later, it doesn't
 make sense to return anything else.
 
 For convenience, you can also omit any return value or return `undefined` and
-Cypress will not error.
+Cypress does not error.
 
 In versions before [0.20.0](/app/references/changelog) of Cypress we
 automatically detected this and forced the `cy` commands to be returned. To make
@@ -579,7 +579,7 @@ things less magical and clearer, we are now throwing an error.
 Because Cypress commands are already promise-like, you don't need to wrap them
 or return your own promise.
 
-Cypress will resolve your command with whatever the final Cypress command
+Cypress resolves your command with whatever the final Cypress command
 yields.
 
 The reason this is an error instead of a warning is because Cypress internally
@@ -598,7 +598,7 @@ use of the separate Promise.
 
 If you get this error in a case where the element is definitely visible in the
 DOM, your document might contain malformed HTML. In such cases,
-`document.querySelector()` will not find any elements that appear after the
+`document.querySelector()` does not find any elements that appear after the
 point where the HTML is malformed. Even if you feel certain your HTML is not
 malformed anywhere, check it anyway (line by line in the dev tools). Especially
 if you've exhausted all other possibilities.
@@ -621,7 +621,7 @@ the name `CYPRESS_RECORD_KEY`. In this case, that was also not found.
 You can get your project's record key by locating it in your settings tab in the
 Cypress app or in [Cypress Cloud](https://on.cypress.io/cloud).
 
-You will want to then
+You then want to
 [add the key to your config file or as an environment variable](/app/continuous-integration/overview#Record-tests).
 
 <RecordKeyEnvVar />
@@ -655,7 +655,7 @@ You can now run and omit the `--key` flag:
 cypress run --record
 ```
 
-We will automatically apply the record key environment variable.
+Cypress automatically applies the record key environment variable.
 
 ### <Icon name="exclamation-triangle" color="red" /> A Cached Cypress Binary Could not be found
 
@@ -810,7 +810,7 @@ documentation to learn more.
 
 ### <Icon name="exclamation-triangle" color="red" /> Run is not accepting any new groups
 
-The run you are attempting access to is already complete and will not accept new
+The run you are attempting access to is already complete and does not accept new
 groups.
 
 When a run finishes all of its groups, it waits for a configurable amount of time, [a run completion delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay),
@@ -919,7 +919,7 @@ origin-policy, Cypress is unable to communicate with it, and thus fails.
 If you find yourself stuck and can't work around these issues you can set
 `chromeWebSecurity` to `false` in your
 [Cypress configuration](/app/references/configuration) when running in Chrome
-family browsers (this setting will not work in other browsers). Before doing so
+family browsers (this setting does not work in other browsers). Before doing so
 you should really understand and
 [read about the reasoning here](/app/guides/cross-origin-testing).
 
@@ -956,8 +956,8 @@ When using synchronous XHR requests, you may see the following warnings:
 > **Warning: Synchronous XHR request was not intercepted: http://example.com.**
 
 Cypress is unable to intercept a synchronous XHR request if the [`cy.intercept()`](/api/commands/intercept) is using a [`routeHandler`](/api/commands/intercept#routeHandler-Function).
-Thus, the [`routeHandler`](/api/commands/intercept#routeHandler-Function) won't be executed and the request will be sent to the origin server without any modifications.
-An intercept with a [`StaticResponse`](/api/commands/intercept#staticResponse-StaticResponse) does not have this limitation and will still be executed.
+Thus, the [`routeHandler`](/api/commands/intercept#routeHandler-Function) isn't executed and Cypress sends the request to the origin server without any modifications.
+An intercept with a [`StaticResponse`](/api/commands/intercept#staticResponse-StaticResponse) does not have this limitation and still executes.
 
 > **Warning: Cookies may not have been applied to synchronous XHR request: http://example.com.**
 
@@ -996,8 +996,8 @@ haven't set it to `false`.
 If you are running in `open` mode, you can also try lowering
 [numTestsKeptInMemory](/app/references/configuration#Global).
 
-If the browser running Cypress tests crashes, Cypress will abort any remaining
-tests and print out this error.
+If the browser running Cypress tests crashes, Cypress aborts any remaining
+tests and prints out this error.
 
 ## React Hydration Errors
 
@@ -1037,7 +1037,7 @@ Suspense boundary, the entire root will switch to client rendering.
 
 Cypress provides a way to control where its bootstrap scripts are injected using
 a marker script tag with the `data-cy-bootstrap` attribute. Instead of Cypress
-creating a new script element in the `<head>`, it will inject its code into your
+creating a new script element in the `<head>`, it injects its code into your
 pre-existing marker script, preserving the DOM structure that React expects.
 
 #### Basic Usage
@@ -1058,8 +1058,8 @@ When Cypress detects this marker:
 3. React's hydration succeeds because the DOM matches expectations
 
 The `suppressHydrationWarning` attribute is a React prop that prevents warnings
-about this specific element, which is helpful since the script content will
-differ between server and client.
+about this specific element, which is helpful since the script content
+differs between server and client.
 
 ### Framework-Specific Setup
 
@@ -1159,7 +1159,7 @@ continue to work as before.
 
 If your application uses Content Security Policy (CSP) with nonces, Cypress
 automatically handles this. When a `data-cy-bootstrap` marker is detected,
-Cypress will apply the correct nonce to ensure the script executes properly.
+Cypress applies the correct nonce to ensure the script executes properly.
 
 ### Troubleshooting
 
@@ -1349,7 +1349,7 @@ Here are some potential workarounds:
 
 ### <Icon name="exclamation-triangle" color="red" /> Uncaught exceptions from your application
 
-When Cypress detects an uncaught exception in your application, it will fail the
+When Cypress detects an uncaught exception in your application, it fails the
 currently running test.
 
 You can turn off this behavior globally or conditionally with the
@@ -1360,4 +1360,4 @@ examples.
 On a technical note, Cypress considers uncaught exceptions to be any error that
 is uncaught by your application, whether they are "standard" errors or unhandled
 promise rejections. If the error triggers the window's global `error` handler or
-its `unhandledrejection` handler, Cypress will detect it and fail the test.
+its `unhandledrejection` handler, Cypress detects it and fails the test.

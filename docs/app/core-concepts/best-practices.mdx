@@ -50,7 +50,7 @@ for the right purpose: `cy.env()` for sensitive values in tests and
 
 :::
 
-When writing Cypress tests, you'll often need to work with sensitive data like API keys, passwords, tokens, or database credentials. Cypress provides three different APIs for handling configuration values, each with different security characteristics and use cases.
+When writing Cypress tests, you often need to work with sensitive data like API keys, passwords, tokens, or database credentials. Cypress provides three different APIs for handling configuration values, each with different security characteristics and use cases.
 
 ### Understanding the Security Model
 
@@ -246,7 +246,7 @@ changes.
 
 :::
 
-Every test you write will include selectors for elements. To save yourself a lot
+Every test you write includes selectors for elements. To save yourself a lot
 of headaches, you should write selectors that are resilient to changes.
 
 Oftentimes we see users run into problems targeting their elements because:
@@ -300,7 +300,7 @@ element.
 Instead, adding the `data-cy` attribute to the element gives us a targeted
 selector that's only used for testing.
 
-The `data-cy` attribute will not change from CSS style or JS behavioral changes,
+The `data-cy` attribute does not change from CSS style or JS behavioral changes,
 meaning it's not coupled to the **behavior** or **styling** of an element.
 
 Additionally, it makes it clear to everyone that this element is used directly
@@ -372,7 +372,7 @@ text changed from `Submit` to `Save` - would you want the test to fail?
 
 If the answer is **yes** because the word `Submit` is critical and should not be
 changed - then use [`cy.contains()`](/api/commands/contains) to target the
-element. This way, if it is changed, the test will fail.
+element. This way, if it is changed, the test fails.
 
 If the answer is **no** because the text could be changed - then use
 [`cy.get()`](/api/commands/get) with data attributes. Changing the text to
@@ -399,7 +399,7 @@ recommend you approach testing your components, look to: [Cypress Component Test
 ### Accessibility Testing
 
 Selecting elements with data attributes, text content, or Testing Library locators can each have some different implications for accessibility,
-but none of these approaches is a "complete" accessibility test, and you will always need additional, accessibility-specific testing (including automated and manual tests) to confirm
+but none of these approaches is a "complete" accessibility test, and you always need additional, accessibility-specific testing (including automated and manual tests) to confirm
 your application is working as expected for people with disabilities and the technology they use. See [our accessibility testing guide](/app/guides/accessibility-testing) for more details and comparisons of approaches.
 
 ## <Icon name="angle-right" /> Assigning Return Values
@@ -447,7 +447,7 @@ cy.get('@links').first().click()
 <strong>Did you know?</strong>
 
 You rarely have to ever use `const`, `let`, or `var` in Cypress. If you're using
-them, you will want to do some refactoring.
+them, you want to do some refactoring.
 
 :::
 
@@ -497,7 +497,7 @@ You may want to access 3rd party services in several situations:
 
 If you choose, these situations can be tested with
 [`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
-However, you will only want to use these commands for resources in your
+However, you only want to use these commands for resources in your
 control, either by controlling the domain or hosted instance. These use cases
 are common for:
 
@@ -535,11 +535,11 @@ that their login screen is dynamically changing. A changing login screen makes a
 difficult.
 
 Many OAuth providers also throttle the number of web requests you can make to
-them. For instance, if you try to test Google, Google will **automatically**
-detect that you are not a human and instead of giving you an OAuth login screen,
-they will make you fill out a captcha.
+them. For instance, if you try to test Google, Google **automatically**
+detects that you are not a human and instead of giving you an OAuth login screen,
+Google makes you fill out a captcha.
 
-Additionally, testing through an OAuth provider is mutable - you will first need
+Additionally, testing through an OAuth provider is mutable - you first need
 a real user on their service and then modifying anything on that user might
 affect other tests downstream.
 
@@ -547,7 +547,7 @@ affect other tests downstream.
 
 1. Use another platform that you control to log in with username and password
    via [`cy.origin()`](/api/commands/origin). Using a platform you control likely guarantees that you
-   will not run into the problems listed above, while still being able to
+   do not run into the problems listed above, while still being able to
    automate your login flow. You can reduce the amount of authentication
    requests by using [`cy.session()`](/api/commands/session).
 2. [Stub](/api/commands/stub) out the OAuth provider and bypass it using their
@@ -619,7 +619,7 @@ email's functionality and visual style:
    been queued or delivered. That endpoint would give you a programmatic way to know
    without involving the UI. Your server would have to expose this endpoint.
 4. You could also use `cy.request()` to a 3rd party email recipient server that
-   exposes an API to read off emails. You will then need the proper
+   exposes an API to read off emails. You then need the proper
    authentication credentials, which your server could provide via [`cy.task()`](/api/commands/task). Some email services already provide
    <a href="/app/plugins/plugins-list#email">Cypress plugins</a> to access
    emails.
@@ -716,7 +716,7 @@ describe('my form', () => {
 
 :::
 
-Now we can put an `.only` on this test and it will run successfully irrespective
+Now you can put an `.only` on this test and the test runs successfully irrespective
 of any other test. The ideal Cypress workflow is writing and iterating on a
 single test at a time.
 
@@ -812,7 +812,7 @@ Why you do this pattern in component and unit tests:
 Why you shouldn't do this in end-to-end tests:
 
 - Writing integration tests is not the same as unit tests
-- You will always know (and can visually see) which assertion failed in a large
+- You always know (and can visually see) which assertion failed in a large
   test
 - Cypress runs a series of async lifecycle events that reset state between tests
 - Resetting tests is much slower than adding more assertions
@@ -918,7 +918,7 @@ We have built Cypress to support this use case. In fact, Cypress **does not**
 clean up its own internal state when the test ends. We **want** you to have
 dangling state at the end of the test! Things like [stubs](/api/commands/stub),
 [spies](/api/commands/spy), even [intercepts](/api/commands/intercept) are
-**not** removed at the end of the test. Keeping them in place means your application will behave
+**not** removed at the end of the test. Keeping them in place means your application behaves
 identically while it is running Cypress commands or when you manually work with
 it after a test ends.
 
@@ -952,18 +952,18 @@ afterEach(() => {
 })
 ```
 
-Here is the problem: **there is no guarantee that this code will run.**
+Here is the problem: **there is no guarantee that this code runs.**
 
 If, hypothetically, you have written this command because it **has** to run
 before the next test does, then the absolute **worst place** to put it is in an
 `after` or `afterEach` hook.
 
-Why? Because if you refresh Cypress in the middle of the test - you will have
+Why? Because if you refresh Cypress in the middle of the test - you have
 built up partial state in the database, and your custom `cy.resetDb()` function
-**will never get called**.
+**never gets called**.
 
-If this state cleanup is **truly** required, then the next test will instantly
-fail. Why? Because resetting the state never happened when you refreshed
+If this state cleanup is **truly** required, then the next test instantly
+fails. Why? Because resetting the state never happened when you refreshed
 Cypress.
 
 ### State reset should go before each test
@@ -971,7 +971,7 @@ Cypress.
 The simplest solution here is to move your reset code to **before** the test
 runs.
 
-Code put in a `before` or `beforeEach` hook will **always** run prior to the
+Code put in a `before` or `beforeEach` hook **always** runs prior to the
 test - even if you refreshed Cypress in the middle of an existing one!
 
 Putting reset code in a `before` or `beforeEach` hook is also a great opportunity to use
@@ -979,7 +979,7 @@ Putting reset code in a `before` or `beforeEach` hook is also a great opportunit
 
 <SupportFileConfiguration />
 
-**Hooks you add to the root will always run on all suites!**
+**Hooks you add to the root always run on all suites!**
 
 ```js
 // cypress/support/e2e.js or cypress/support/component.js
@@ -1000,7 +1000,7 @@ by clearing state before each test. Make sure you are not trying to clean up
 state that is already cleaned up by Cypress automatically.
 
 If the state you are trying to clean lives on the server - by all means, clean
-that state. You will need to run these types of routines! But if the state is
+that state. You need to run these types of routines! But if the state is
 related to your application currently under test - you likely do not even need
 to clear it.
 
@@ -1094,7 +1094,7 @@ Let's imagine the following examples:
 ### Unnecessary wait for `cy.request()`
 
 Waiting here is unnecessary since the [`cy.request()`](/api/commands/request)
-command will not resolve until it receives a response from your server. Adding
+command does not resolve until it receives a response from your server. Adding
 the wait here only adds 5 seconds after the
 [`cy.request()`](/api/commands/request) has already resolved.
 
@@ -1120,7 +1120,7 @@ Waiting for the [`cy.get()`](/api/commands/get) below is unnecessary because
 [`cy.get()`](/api/commands/get) automatically retries until the table's `tr` has
 a length of 2.
 
-Whenever commands have an assertion they will not resolve until their associated
+Whenever commands have an assertion they do not resolve until their associated
 assertions pass. Waiting on assertions enables you to describe the state of your application
 without having to worry about when it gets there.
 
@@ -1183,7 +1183,7 @@ We do NOT recommend trying to start your back end web server from within
 Cypress.
 
 Any command run by [cy.task()](/api/commands/task) has to exit eventually.
-Otherwise, Cypress will not continue running any other commands.
+Otherwise, Cypress does not continue running any other commands.
 
 Trying to start a web server from [cy.task()](/api/commands/task) causes all
 kinds of problems because:
@@ -1197,10 +1197,10 @@ kinds of problems because:
 
 **Why can't I shut down the process in an `after` hook?**
 
-Because there is no guarantee that code running in an `after` will always run.
+Because there is no guarantee that code running in an `after` always runs.
 
 While working in the Cypress Test Runner you can always restart / refresh while
-in the middle of a test. When that happens, code in an `after` won't execute.
+in the middle of a test. When that happens, code in an `after` doesn't execute.
 
 **What should I do then?**
 
@@ -1228,7 +1228,7 @@ your [Cypress configuration](/app/references/configuration).
 :::
 
 By adding a [baseUrl](/app/references/configuration#Global) in your
-configuration Cypress will attempt to prefix the `baseUrl` any URL provided to
+configuration Cypress attempts to prefix the `baseUrl` any URL provided to
 commands like [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) that are not fully qualified domain name
 (FQDN) URLs.
@@ -1266,8 +1266,8 @@ As soon as it encounters a [cy.visit()](/api/commands/visit), Cypress then
 switches to the url of the main window to the url specified in your visit. This switch
 can result in a 'flash' or 'reload' when your tests first start.
 
-By setting the `baseUrl`, you can avoid this reload altogether. Cypress will
-load the main window in the `baseUrl` you specified as soon as your tests start.
+By setting the `baseUrl`, you can avoid this reload altogether. Cypress
+loads the main window in the `baseUrl` you specified as soon as your tests start.
 
 ### Cypress configuration file
 

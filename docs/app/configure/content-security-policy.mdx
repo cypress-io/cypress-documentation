@@ -49,7 +49,7 @@ directions:
 - **You actually want the policy enforced.** If your goal is to _verify your own
   CSP_ (for example asserting that a violation is reported, or that a forbidden
   resource is blocked), the default behavior works against you, because the
-  policy you are trying to test has been removed. You will see your CSP not
+  policy you are trying to test has been removed. You see your CSP not
   taking effect during the test.
 
 If either of these describes you, you need to opt in to Cypress sending the CSP
@@ -205,12 +205,12 @@ through the allow list:
 
 Stripping these directives is a hard limitation: because they are stripped unconditionally
 and cannot be re-enabled, **you can never test the behavior of these five
-directives using Cypress**. If verifying them is a requirement, you will need to
+directives using Cypress**. If verifying them is a requirement, you need to
 do so outside of Cypress.
 
 :::
 
-If your application relies on any of these directives, be aware they will not be
+If your application relies on any of these directives, be aware they are not
 present in the policy delivered to the browser during a Cypress test run. See
 [Strip Minimum CSP Directives](/app/references/experiments#Experimental-CSP-Allow-List)
 for the full breakdown.
@@ -236,7 +236,7 @@ injects, so the browser permits them to run.
 Because of this, the CSP that reaches the browser is **not** byte-identical to
 your application's original policy. If you are verifying your application's CSP
 implementation, be aware that these three directives are modified by Cypress and
-the delivered header will differ from the one your server originally sent.
+the delivered header differs from the one your server originally sent.
 
 Nonce injection applies only to CSP delivered via HTTP headers; it is never
 applied to a `<meta>` tag policy.
@@ -249,7 +249,7 @@ Cypress options that rewrite your application's HTML or JavaScript can conflict
 with CSP directives that pin scripts by hash (for example a `script-src` value
 containing a `'sha256-...'` source). Because the hash is computed against the
 original code, any rewrite changes the bytes the browser hashes and the policy
-will reject the modified script.
+rejects the modified script.
 
 Hash-pinned scripts conflict with the following options when combined with `experimentalCspAllowList`:
 

@@ -12,10 +12,10 @@ e2eSpecific: true
 # Trade-offs
 
 Cypress automates the browser with its own unique architecture. While this
-unlocks the power to do things you will not find anywhere else, there are
+unlocks the power to do things you do not find anywhere else, there are
 specific trade-offs that are made.
 
-In this guide we'll lay out what some of the trade-offs are - and specifically
+This guide lays out what some of the trade-offs are - and specifically
 how you can work around them.
 
 While at first it may seem like these are strict limitations in Cypress - we
@@ -80,7 +80,7 @@ language. The **only** language we'll ever support is the language of the web:
 JavaScript.
 
 This trade-off means it makes it a little bit more challenging to communicate with the
-back end - like your server or database. You will not be able to connect or
+back end - like your server or database. You cannot connect or
 `import` those server-side libraries or modules directly. Although you can require
 `node_modules` which can be used in the browser. Additionally, you have the
 ability to use Node to import or talk directly to your back end scripts using
@@ -89,7 +89,7 @@ ability to use Node to import or talk directly to your back end scripts using
 
 To talk to your database or server you need to use the
 [`cy.task()`](/api/commands/task) or [`cy.request()`](/api/commands/request)
-commands. Using these commands means you will need to
+commands. Using these commands means you need to
 expose a way to seed and setup your database. This setup might take a bit more elbow grease
 than other testing tools written in your back end language.
 
@@ -131,7 +131,7 @@ the entire environment to test collaboration with 100% coverage**.
 Doing it this way can be faster, more accurate, and more scalable.
 
 While outside the scope of this article, you could test a chat application using
-the following principles. Each one will incrementally introduce more
+the following principles. Each one incrementally introduces more
 collaboration:
 
 #### 1. Use only the browser:
