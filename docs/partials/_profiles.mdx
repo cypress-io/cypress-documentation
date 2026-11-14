@@ -18,7 +18,7 @@ Cypress Cloud resolves profiles when it processes a run, not when your tests exe
 
 ### How a profile changes your configuration
 
-When a profile applies, Cypress Cloud lays its `config` over your base configuration one setting at a time. Only the settings you include in the profile change; everything else stays exactly as it is in your base configuration. A few things are worth knowing so the result matches what you expect:
+When a profile applies, Cypress Cloud lays the profile's `config` over your base configuration one setting at a time. Only the settings you include in the profile change; everything else stays exactly as it is in your base configuration. A few things are worth knowing so the result matches what you expect:
 
 - **A setting in a profile fully replaces the base version of that setting.** Cypress Cloud does not combine lists. If your base configuration has three `elementFilters` rules and a profile defines its own `elementFilters`, Cypress Cloud uses the profile's rules on their own, so copy over any base rules you still want to apply.
 - **Anything you leave out of a profile stays the same.** You only need to list what's different for that kind of run; the profile inherits the rest from your base configuration.

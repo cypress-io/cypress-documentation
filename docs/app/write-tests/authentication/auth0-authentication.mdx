@@ -615,8 +615,7 @@ authenticated with [Auth0](https://auth0.com). The component is identical to the
 the Sign Up and Sign In routes and wraps the component with the
 `withAuthenticationRequired` higher order function (HOC).
 
-We add a `useEffect` hook to get the access token for the authenticated user
-and send an `AUTH0` event with the `user` and `token` objects to work with the
+A `useEffect` hook gets the access token for the authenticated user and sends an `AUTH0` event with the `user` and `token` objects to work with the
 existing authentication layer (`authMachine.ts`).
 
 ```jsx title='containers/AppAuth0.tsx'

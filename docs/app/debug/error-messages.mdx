@@ -789,7 +789,7 @@ documentation to learn more.
 
 Cypress throws this error when you attempt to pass the
 [--parallel](/app/references/command-line#cypress-run-parallel) flag to a run
-that Cypress detected completed over 24 hours ago.
+that Cypress detected as completed over 24 hours ago.
 
 To uniquely identify each run during `cypress run`, Cypress attempts to
 read a unique identifier from your CI provider as described in our
@@ -859,7 +859,7 @@ regedit or gpedit.
 
 ### <Icon name="exclamation-triangle" color="red" /> error: unknown option: --auto-cancel-after-failures
 
-You must use the `--auto-cancel-after-failures` flag with the `cypress run` command.
+The `--auto-cancel-after-failures` flag works only with the `cypress run` command.
 
 ### <Icon name="exclamation-triangle" color="red" /> --auto-cancel-after-failures must be an integer or false
 
@@ -935,8 +935,7 @@ you should really understand and
 
 ### <Icon name="exclamation-triangle" color="red" /> Cypress detected that an uncaught error was thrown from a cross-origin script.
 
-Check your Developer Tools Console for the actual error - the console should
-show it there.
+Check your Developer Tools Console for the actual error.
 
 It's possible to enable debugging these scripts by adding the `crossorigin`
 attribute and setting a `CORS` header.

@@ -420,8 +420,7 @@ cy.get('#user-name-welcome').should('equal', 'Welcome, User1!')
 ```
 
 If for any reason you can't use `cy.origin`, programmatic authentication
-is still an option. In this situation you may `POST` to a different server and
-the server redirects you elsewhere (typically with the session token in the URL). If
+is still an option. In this situation you may `POST` to a different server that redirects you elsewhere (typically with the session token in the URL). If
 that's the case, you can still test this behavior with
 [`cy.request()`](/api/commands/request).
 

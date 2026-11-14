@@ -94,9 +94,8 @@ means your [test run data](/cloud/features/recorded-runs#Latest-Runs) is being
 
 We consider each call to the `it()` function to be a single test. So you
 generally have several tests recorded within each spec file and likely
-several spec files within a single run. We count only
-the [passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Understanding-test-results).
-We do NOT count pending and skipped tests.
+several spec files within a single run. Cypress Cloud counts only the [passed and failed tests](/app/core-concepts/writing-and-organizing-tests#Understanding-test-results).
+Cypress Cloud does NOT count pending and skipped tests.
 
 You can always see how many tests you've recorded from your organization's
 [Billing & Usage](/cloud/account-management/billing-and-usage) page
@@ -351,8 +350,7 @@ retries reduce flake within a run, and Re-run optimization speeds up the reruns 
 
 ### <Icon name="angle-right" /> Does Re-run optimization carry forward my passing test results?
 
-No, not currently. A rerun-optimized run shows only the specs and tests that were re-executed. Cypress skips
-work that passed in the anchor run, and that work does not appear in the rerun's results.
+No, not currently. A rerun-optimized run shows only the specs and tests that were re-executed. Cypress Cloud skips work that passed in the anchor run, and that work does not appear in the rerun's results.
 
 ### <Icon name="angle-right" /> Why does my CI report show fewer tests after a rerun?
 
@@ -835,7 +833,7 @@ Nothing. Test Replay is free and included in all Cypress Cloud plans.
 
 Test Replay uses [Chrome DevTools Protocol(CDP)](https://chromedevtools.github.io/devtools-protocol/), so currently supports Chromium-based browsers (Chrome, Edge, and the deprecated Electron browser) only.
 
-For tests run in Firefox or WebKit (Safari), Cypress Cloud disables Test Replay and shows a message that it's only available on Chromium. You can still record and capture test [artifacts](/cloud/features/recorded-runs#Artifacts) (screenshots, videos, and CI logs) via other browsers in separate [run groups](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs).
+Test Replay isn't available for tests run in Firefox or WebKit (Safari), and Cypress Cloud shows a message that Test Replay is only available on Chromium. You can still record and capture test [artifacts](/cloud/features/recorded-runs#Artifacts) (screenshots, videos, and CI logs) via other browsers in separate [run groups](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs).
 
 ### <Icon name="angle-right" /> Can I replay tests from historical Cypress Cloud runs?
 

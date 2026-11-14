@@ -560,7 +560,7 @@ doesn't track runs that aren't recorded, and you can't complete them through thi
 Calling from inside `after:run` is fine **when you pass a known
 `expectedGroupCount`** with every call. Because the API defers until that many
 groups have finished (and absorbs any still joining), it doesn't matter which machine
-finishes first or how often the run calls the API.
+finishes first or how often machines in the run call the API.
 The run only completes once all expected groups
 are in. Use this pattern when your group count is fixed and available to the
 handler (for example, when CI injects it as an environment variable).

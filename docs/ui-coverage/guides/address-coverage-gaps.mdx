@@ -134,7 +134,7 @@ Visiting a page is the starting point: it turns the untested link green and crea
 
 #### Reveal hidden and state-gated elements
 
-Some elements show up as untested only because your tests never render them. A control inside a collapsed menu, a modal, or a section that only appears after signing in stays unexercised until your test puts the UI into that state. Drive the interaction that reveals the element, then interact with it:
+Some elements show up as untested only because your tests never render them. A control inside a collapsed menu, a modal, or a section that only appears after signing in stays untested until your tests put the UI into that state. Drive the interaction that reveals the element, then interact with it:
 
 ```js title="cypress/e2e/product-filters.cy.js"
 // The filters panel is collapsed until its toggle is clicked

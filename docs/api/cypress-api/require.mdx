@@ -162,8 +162,7 @@ Using `Cypress.require` in the test code instead of `require` or `import` keeps
 the dependencies required within the callback from being bundled with the rest
 of the test code. We cannot bring them along with the callback to where it is
 run, so it would waste execution time and memory to bundle its dependencies in
-the original preprocessing. We bundle the dependencies with the code that needs
-them only when we preprocess the callback itself.
+the original preprocessing. Cypress bundles the dependencies with the code that needs them only when it preprocesses the callback itself.
 
 Additionally, we tried a solution previously that allowed use of `require` and
 `import`, but found that it hurt performance not only for spec files using them

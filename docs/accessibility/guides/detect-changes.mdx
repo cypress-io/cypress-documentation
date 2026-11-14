@@ -75,7 +75,7 @@ A comparison is only as good as the two runs behind it. Four things matter, in r
 
 Treat a diff built on a partial report as a hint rather than a verdict. The missing specs make elements look resolved when they were only never visited, which is most misleading in the re-run case: a re-run of two failing specs compared against a full base run reports almost the entire application as resolved. Compare the anchor run instead.
 
-**Views need to be stable.** A URL that carries a value generated per run can show up as a new view in one run and a removed view in the next, which buries the real changes. Cypress groups numeric IDs and UUIDs for you, so `/products/123` and `/products/456` already report as one `/products/*` view. Other dynamic values, such as slugs, usernames, and order references, are not, so add [`views`](/accessibility/configuration/views) rules for the ones your application uses:
+**Views need to be stable.** A URL that carries a value generated per run can show up as a new view in one run and a removed view in the next, which buries the real changes. Cypress groups numeric IDs and UUIDs for you, so `/products/123` and `/products/456` already report as one `/products/*` view. Cypress doesn't group other dynamic values, such as slugs, usernames, and order references, so add [`views`](/accessibility/configuration/views) rules for the ones your application uses:
 
 ```json title="App Quality Config"
 {

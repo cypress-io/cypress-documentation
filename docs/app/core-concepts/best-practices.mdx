@@ -502,8 +502,7 @@ control, either by controlling the domain or hosted instance. These use cases
 are common for:
 
 - Authentication as a service platforms, such as Auth0, Okta, Microsoft, AWS
-  Cognito, and others via username/password authentication. You or your
-  organization usually own and control these domains and service instances.
+  Cognito, and others via username/password authentication. These domains usually belong to you or your organization and service instances.
 - CMS instances, such as a Contentful or Wordpress instance.
 - Other types of services under a domain in which you control.
 
@@ -1146,7 +1145,7 @@ cy.get('table tr').should('have.length', 2)
 
 As your test suite grows and takes longer to run, you may find yourself hitting
 performance bottlenecks on your CI system. We recommend integrating your source
-control system with your test suite so that it blocks merges until all your
+control system with your test suite so that merges wait until all your
 Cypress tests have passed. The downside of this is that longer test execution
 times slow the velocity at which you can merge branches and ship features.
 Dependent chains of branches waiting to be merged compound this issue further.

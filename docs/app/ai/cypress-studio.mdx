@@ -254,7 +254,7 @@ Studio AI does not have access to your application code, business logic, or back
 
 ## Sensitive data handling
 
-When Studio AI reads your app's DOM to generate recommendations, Studio AI automatically excludes values from certain field types before sending anything to the AI model:
+When Studio AI reads your app's DOM to generate recommendations, it automatically excludes values from certain field types before sending anything to the AI model:
 
 - Password fields (`input[type=password]`)
 - Credit card fields using standard autocomplete attributes (card name, card number, expiry date, security code, card type)
@@ -314,7 +314,7 @@ If you need to increase your limits, contact support at support@cypress.io.
 
 - Studio AI requires Cypress version 15.11.0 or later.
 - Animations and transitional UI states may produce intermediate DOM diffs, which can affect AI recommendation quality.
-- Large pages may exceed AI context window limits so Studio AI generates no recommendations.
+- Large pages may exceed AI context window limits, so Studio AI generates no recommendations.
 - No automatic application crawling. Studio AI only observes what you interact with.
 
 See [open issues labeled `topic: studio`](https://github.com/cypress-io/cypress/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22topic%3A+studio%22) for the full list.

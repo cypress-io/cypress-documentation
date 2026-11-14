@@ -66,7 +66,7 @@ You install Cypress using one of the following supported package managers:
 
 Cypress uses a `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
 As a security hardening measure, package managers increasingly block dependency lifecycle scripts such as `postinstall` by default.
-When the package manager blocks the script, the Cypress binary doesn't download and Cypress doesn't run.
+When the package manager blocks the script, Cypress can't download its binary and doesn't run.
 
 The sections below describe how to allow Cypress to run its `postinstall` script, or how to install the Cypress binary explicitly, for each supported package manager.
 

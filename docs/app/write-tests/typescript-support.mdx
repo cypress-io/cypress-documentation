@@ -252,8 +252,7 @@ appear as unknown.
 
 :::info
 
-Any users of your custom command really appreciate a nice detailed JSDoc
-comment above the method type.
+Users of your custom command appreciate a detailed JSDoc comment above the method type.
 
 :::
 
@@ -626,7 +625,7 @@ _tsconfig.json_ files in your project for TypeScript to pick up the new types:
 **TypeScript must be able to find the declaration file**
 
 If you rename or move a declaration file, verify that the `include` globs in
-every `tsconfig.json` that needs to see it cover its path. A common mistake
+every `tsconfig.json` that needs the declaration file cover its new path. A common mistake
 is placing a `global.d.ts` inside `cypress/support/` while the
 `cypress/tsconfig.json` only includes `**/*.ts` — `.d.ts` files are matched by
 `**/*.ts` only if the glob is `**/*.{ts,d.ts}` or `**/*`. Safest

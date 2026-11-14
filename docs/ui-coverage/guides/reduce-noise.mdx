@@ -40,7 +40,7 @@ and [Ignore views and links](/ui-coverage/guides/ignore-views-and-links). This g
 Open the **UI Coverage** tab for a recent run and look for these patterns:
 
 - **One element appears many times.** A control with the same purpose shows up
-  as several separate untested entries, often because your app generates its `id` or
+  as several separate untested entries, often because your app generates the control's `id` or
   another attribute fresh on each render.
 - **A group of similar elements each listed separately.** A navigation bar,
   list, or set of form fields where every item is its own entry, inflating the
@@ -226,7 +226,7 @@ Then reopen the UI Coverage report and confirm that:
 
 - The elements you grouped now appear as a single entry.
 - The element you stabilized no longer splits across snapshots.
-- UI Coverage reports the views you consolidated together.
+- UI Coverage reports the views you consolidated as a single view.
 - The overall element and view counts have dropped to reflect real coverage
   rather than duplication.
 

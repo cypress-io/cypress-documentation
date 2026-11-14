@@ -419,8 +419,7 @@ interface ResolvedDevServerConfig {
 
 :::
 
-Cypress forwards any requests triggered during a test using the
-`devServerPublicPathRoute` as defined in the `cypressConfig` to your server.
+Cypress forwards to your server any request triggered during a test that uses the `devServerPublicPathRoute` defined in `cypressConfig`.
 Cypress triggers a request for `[devServerPublicPathRoute]/index.html` when a
 test starts. Your server needs to reply with the html-file referenced in
 `cypressConfig.indexHtmlFile` and inject a script to load the support files and

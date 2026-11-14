@@ -15,7 +15,7 @@ By default, Cypress Accessibility reports on every element that Axe Core® check
 
 ## Why use elementFilters?
 
-- **Ignore third-party components**: Ignore chat widgets, cookie banners, embedded media players, and other elements that libraries or services you don't control render, since your team can't fix their violations.
+- **Ignore third-party components**: Chat widgets, cookie banners, embedded media players, and other elements from libraries or services you don't control, since your team can't fix their violations.
 - **Ignore out-of-scope elements**: Remove test-only controls or areas of the application that are outside the scope of your accessibility work.
 - **Keep the score meaningful**: A score that only reflects elements you can fix makes progress and regressions easier to see and act on.
 
@@ -75,7 +75,7 @@ To apply rules to Cypress Accessibility only, nest the property under the `acces
 | `selector`      | Required |         | A CSS selector that matches the elements to ignore. Supports standard CSS selector syntax, including IDs, classes, attributes, combinators, and functional pseudo-classes like `:has()`. The selector must match the element with the accessibility result itself, not just a container around it.                    |
 | `include`       | Required |         | Whether elements matched by this rule appear as normal results in the report. Use `false` to ignore the matched elements. In Cypress Accessibility, `true` has no additional effect, because every element is included unless an exclude rule matches it. See [When to use include: true](#When-to-use-include-true). |
 | `documentScope` | Optional |         | An ordered array of CSS selectors that match document hosts (iframes or shadow DOM hosts) in the element's ancestor chain, from outermost to innermost. Use this to limit a rule to elements inside a specific iframe or shadow DOM. Hosts that aren't listed may appear between the ones that are.                   |
-| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. Comments have no effect on filtering and reports don't display them.                                                                                                                                    |
+| `comment`       | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. Comments have no effect on filtering, and reports don't display them.                                                                                                                                   |
 
 ### How are elementFilters rules applied?
 

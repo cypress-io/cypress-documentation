@@ -131,7 +131,7 @@ Local runs land in the same project as your CI runs, and their reports are just 
 
 <CypressCommandTabs command='run --record --tag "local" --spec "cypress/e2e/checkout.cy.js"' />
 
-Cypress Cloud shows tags on the run and filters runs by tag, so a shared `local` tag lets anyone skip past them when scanning the run list.
+Cypress Cloud shows tags on the run, and you can filter the run list by tag, so a shared `local` tag lets anyone skip past them when scanning the run list.
 
 Every recorded run also consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan, whether it came from CI or your laptop. The test result cost is an argument for narrow `--spec` runs, which you want anyway.
 

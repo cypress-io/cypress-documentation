@@ -376,7 +376,7 @@ A later section of this guide covers [assertions](#Assertions) in more detail.
 ### Subject Management
 
 A new Cypress chain always starts with `cy.[command]`, where what the `command`
-yields establishes what other commands you can call next (chain).
+yields establishes which commands you can chain next.
 
 #### All commands yield a value.
 
@@ -796,8 +796,7 @@ The test runs and correctly finishes.
 
 ### Commands Run Serially
 
-After a test function is finished running, Cypress goes to work executing the
-commands that the `cy.*` command chains enqueued.
+After a test function is finished running, Cypress goes to work executing the commands enqueued by the `cy.*` chains.
 
 #### Let's take another look at an example
 

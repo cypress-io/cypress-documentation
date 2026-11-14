@@ -635,8 +635,7 @@ describe('checkout', () => {
 ```
 
 **The setup skipped the UI.** Logging in and filling a cart are not what this
-test is checking, so they run over HTTP in milliseconds. The test spends its
-clicking only on the behavior under test. Cutting UI setup out of tests that are not
+test is checking, so they run over HTTP in milliseconds. The test clicks through only the behavior under test. Cutting UI setup out of tests that are not
 about that setup is usually the single largest speed win available in an
 end-to-end suite.
 

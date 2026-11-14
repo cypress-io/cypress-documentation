@@ -37,7 +37,7 @@ The sections below discuss each of these.
 ## Accessibility Scans
 
 :::info
-Automated scans are effective because many accessibility issues come from incorrect HTML structure or from missing data that assistive technologies like screen readers, voice control systems, Braille displays, and more need. Browsers transform the current HTML on the page into a standardized format that other technologies can hook into. Automated scans in your tests alert you if specific items needed for this process are missing.
+Automated scans are effective because many accessibility issues come from incorrect HTML structure or from missing data that assistive technologies need, such as screen readers, voice control systems, and Braille displays. Browsers transform the current HTML on the page into a standardized format that other technologies can hook into. Automated scans in your tests alert you if specific items needed for this process are missing.
 :::
 
 :::warning
@@ -187,7 +187,7 @@ Native role matching applies to any role that HTML has an element for, such as `
 
 So what should you do in your test automation to help confirm the UI is accessible? First of all, for known critical areas like forms or checkout flows, ensure that you test the accessibility behavior explicitly in at least one place. The means verifying that form fields and buttons have the correct labels and use the expected HTML elements, and other aspects of the DOM that communicate necessary information.
 
-Component tests are a fantastic place to do this centralized accessibility spec work, whether using [Cypress Component testing](/app/component-testing/get-started) or something else. Developers write component tests as they build the UI and run them locally during development, and component tests can specify the specific HTML that is intended to be rendered, without being a distraction in an end-to-end test of a specific user flow.
+Component tests are a fantastic place to do this centralized accessibility spec work, whether using [Cypress Component testing](/app/component-testing/get-started) or something else. Developers write component tests as they build the UI and run them locally during development. A component test can specify the exact HTML that should render, without distracting from an end-to-end test of a specific user flow.
 
 Test accessibility at least once for a given component, area of the application, or workflow. Once that is achieved, there is no additional accessibility benefit to repeatedly asserting subsets of the same things in other tests, unless those tests introduce new combinations of components that have not been tested for accessibility anywhere else.
 

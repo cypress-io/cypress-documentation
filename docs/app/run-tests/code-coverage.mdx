@@ -171,8 +171,7 @@ This single test has achieved 100% code coverage - the test has executed every
 function and every statement at least once. But, in real world applications,
 achieving 100% code coverage requires multiple tests.
 
-Once the tests finish, you can serialize the coverage object and save it to disk
-to generate a human-friendly report. You can also send the collected coverage
+Once the tests finish, you can serialize the coverage object and save it to disk, so you can generate a human-friendly report from it. You can also send the collected coverage
 information to external services, where it can help during pull request
 reviews.
 
@@ -648,7 +647,7 @@ function from the Cypress spec file. In essence we are using Cypress as a unit
 testing tool (find more
 [unit testing recipes](https://github.com/cypress-io/cypress-example-recipes#unit-testing)).
 
-Here is our test to confirm that the application throws the error.
+Here is our test to confirm that `getVisibleTodos` throws the error.
 
 ```javascript
 // cypress/e2e/selectors.cy.js

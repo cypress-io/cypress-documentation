@@ -220,10 +220,7 @@ cy.getByRole('button', { name: 'Save' }).should('not.exist')
 cy.getByRole('button', { name: 'save changes' }).should('not.exist')
 ```
 
-`cy.getByRole()` leaves content hidden with `aria-hidden="true"` out of the name,
-along with CSS `::before` and `::after` content, so that an icon-font glyph, which lives in a
-pseudo-element, doesn't become part of a button's name. Browsers include this
-content in the accessible name, so an element named only by `::before` or
+`cy.getByRole()` leaves content hidden with `aria-hidden="true"` out of the name. `cy.getByRole()` also leaves out CSS `::before` and `::after` content, so that an icon-font glyph, which lives in a pseudo-element, doesn't become part of a button's name. Browsers include pseudo-element content in the accessible name, so an element named only by `::before` or
 `::after` content has a name in the browser but not in `cy.getByRole()`. Match
 it with an `aria-label` or by another role and name instead.
 
@@ -344,7 +341,7 @@ authoring practices, because HTML has a different element for the role:
   `<select>` or an `<input>` with a `list` attribute.
 - An icon `<svg role="img">`. The native image is an `<img>`.
 
-When `cy.getByRole()` skipped an element only because it has the role through a `role`
+When `cy.getByRole()` skips an element only because it has the role through a `role`
 attribute, the error says so and suggests passing `{ native: false }`.
 
 #### Change the `native` default for your project

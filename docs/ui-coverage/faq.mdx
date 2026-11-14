@@ -376,7 +376,7 @@ In Cypress UI Coverage, an [`elements`](/ui-coverage/configuration/elements) rul
 
 ### <Icon name="angle-right" /> How do I stop dynamic IDs or class names from splitting one UI Coverage element into many?
 
-Add an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule with `include: false` that matches the unstable attribute and value, for example an `id` like `:r11:` or a hashed `class`. Once Cypress ignores the volatile attribute, Cypress identifies the element by a stable attribute instead, so Cypress recognizes the same control across [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) and counts it once. When you filter a dynamic `id`, also filter the attributes that reference it (`for`, `aria-labelledby`, `aria-describedby`, and similar), or Cypress can still identify the element by those related values.
+Add an [`attributeFilters`](/ui-coverage/configuration/attributefilters) rule with `include: false` that matches the unstable attribute and value, for example an `id` like `:r11:` or a hashed `class`. Once UI Coverage ignores the volatile attribute, it identifies the element by a stable attribute instead, so it recognizes the same control across [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) and counts it once. When you filter a dynamic `id`, also filter the attributes that reference it (`for`, `aria-labelledby`, `aria-describedby`, and similar), or UI Coverage can still identify the element by those related values.
 
 ### <Icon name="angle-right" /> Do I need to configure UI Coverage attributeFilters for auto-generated IDs?
 

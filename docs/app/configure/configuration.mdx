@@ -883,8 +883,7 @@ prevent clickjacking and framebusting. These patterns are a relic of the past an
 longer necessary in modern browsers. However many sites and applications still
 implement them.
 
-These techniques prevent Cypress from working, and you can safely remove them
-without altering any of your application's behavior.
+These techniques prevent Cypress from working, and Cypress can safely remove them without altering any of your application's behavior.
 
 Cypress modifies these scripts at the network level, and therefore there is a
 tiny performance cost to search the response streams for these patterns.

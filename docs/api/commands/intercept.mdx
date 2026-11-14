@@ -1324,9 +1324,7 @@ handlers, and finally merges them into the actual outbound HTTP request.
 
 ### Controlling the outbound request with `req.continue()`
 
-Calling `req.continue()` without any argument sends the request outgoing,
-and Cypress returns the response to the browser after calling any other
-listeners. For example, the following code modifies a `POST`
+Calling `req.continue()` without any argument sends the request on to its destination, and Cypress returns the response to the browser after any other listeners run. For example, the following code modifies a `POST`
 request and then sends it to the upstream server:
 
 ```js
