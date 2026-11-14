@@ -12,7 +12,7 @@ Wrap a method in a spy to record calls to and arguments of the
 function.
 
 `cy.spy()` is a utility function, and is not a Cypress command, query or
-assertion. It is not retryable, chainable, or timeout-able.
+assertion. `cy.spy()` is not retryable, chainable, or timeout-able.
 
 :::info
 
@@ -49,7 +49,7 @@ The name of the `method` on the `object` to be wrapped.
 <HeaderYields />
 
 - `cy.spy()` is _synchronous_ and returns a value (the spy) instead of a
-  Promise-like chain-able object. It can be aliased.
+  Promise-like chain-able object. The spy can be aliased.
 - `cy.spy()` returns a
   [Sinon.js spy](https://sinonjs.org/releases/v8/spies/). All methods found
   on Sinon.JS spies are supported.
@@ -70,7 +70,7 @@ expect(util.addListeners).to.be.called
 #### Disable logging to Command Log
 
 You can chain a `.log(bool)` method to disable `cy.spy()` calls from being
-shown in the Command Log. This may be useful when your stubs are called an
+shown in the Command Log. Disabling the log may be useful when your stubs are called an
 excessive number of times.
 
 ```javascript
@@ -90,7 +90,7 @@ const spy = cy.spy(obj, 'foo').log(false)
 
 ### Aliases
 
-You can alias spies, similar to how [`.as()`](/api/commands/as) works. This can
+You can alias spies, similar to how [`.as()`](/api/commands/as) works. Aliasing can
 make your spies easier to identify in error messages and Cypress's command log,
 and retrieve them later for assertions using `cy.get()`.
 
@@ -131,7 +131,7 @@ reset/restore them.
 
 The main difference between `cy.spy()` and [`cy.stub()`](/api/commands/stub) is
 that `cy.spy()` does not replace the method, it only wraps it. So, while
-invocations are recorded, the original method is still called. This can be very
+invocations are recorded, the original method is still called. Wrapping can be very
 useful when testing methods on native browser objects. You can verify a method
 is being called by your test and still have the original method action invoked.
 

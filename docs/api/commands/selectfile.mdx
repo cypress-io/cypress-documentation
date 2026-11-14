@@ -75,12 +75,12 @@ Either a single file, or an array of files. A file can be:
 
 If an object is provided, it can have the following properties.
 
-| Option         | Description                                                                                                                                                                                                                                                                     |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `contents`     | The contents of the file. This can be a string shorthand as described above, a `TypedArray` instance containing binary data (such as a `Cypress.Buffer` instance) or a non-TypedArray object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded. |
-| `fileName`     | The name of the file. If `contents` is a path on disk or an alias from `cy.readFile()` or `cy.fixture()`, this defaults to the actual filename. In any other case, this defaults to an empty string.                                                                            |
-| `mimeType`     | The [mimeType](https://developer.mozilla.org/en-US/docs/Web/API/File/type) of the file. If omitted, it will be [inferred](https://github.com/jshttp/mime-types#mimelookuppath) from the file extension. If one cannot be inferred, it will default to an empty string.          |
-| `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`.                              |
+| Option         | Description                                                                                                                                                                                                                                                                             |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `contents`     | The contents of the file. The contents can be a string shorthand as described above, a `TypedArray` instance containing binary data (such as a `Cypress.Buffer` instance) or a non-TypedArray object, which will be converted into a string with `JSON.stringify()` and `utf8` encoded. |
+| `fileName`     | The name of the file. If `contents` is a path on disk or an alias from `cy.readFile()` or `cy.fixture()`, `fileName` defaults to the actual filename. In any other case, `fileName` defaults to an empty string.                                                                        |
+| `mimeType`     | The [mimeType](https://developer.mozilla.org/en-US/docs/Web/API/File/type) of the file. If omitted, it will be [inferred](https://github.com/jshttp/mime-types#mimelookuppath) from the file extension. If one cannot be inferred, it will default to an empty string.                  |
+| `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). This defaults to `Date.now()`.                                      |
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -133,7 +133,7 @@ cy.get('input[type=file]').selectFile('path/to/file.png')
 ```
 
 If given a path, `.selectFile()` will search for the file relative to the
-project root and attach the file exactly as it exists on disk. This is the
+project root and attach the file exactly as it exists on disk. Passing a path is the
 preferred way to work with files on disk, avoiding many encoding-related
 pitfalls.
 
@@ -194,7 +194,7 @@ cy.get('input[type=file]').selectFile([
 
 :::caution
 
-This will fail unless the file input has the `multiple` property.
+Selecting multiple files will fail unless the file input has the `multiple` property.
 
 :::
 
@@ -254,7 +254,7 @@ cy.get('body').selectFile('file.json', { action: 'drag-drop' })
 #### Default file existence assertion
 
 Whenever resolving a file path, `.selectFile()` asserts that the file exists and
-will fail if it does not exist. It will retry reading the file if it does not
+will fail if it does not exist. The command will retry reading the file if it does not
 initially exist until the file exists or the command times out.
 
 ```javascript
@@ -340,7 +340,7 @@ following:
 ### Community Recognition
 
 The `.selectFile()` command draws heavy inspiration from the now-deprecated
-Cypress File Upload plugin. It was made possible by
+Cypress File Upload plugin. `.selectFile()` was made possible by
 [@abramenal](https://github.com/abramenal) and contributors to the
 [cypress-file-upload](https://github.com/abramenal/cypress-file-upload#contributors)
 repository.

@@ -45,7 +45,7 @@ cy.clock().trigger('mouseleave') // Errors, 'clock' does not yield DOM elements
 
 <Icon name="angle-right" /> **eventName _(String)_**
 
-The name of the `event` to be triggered on the DOM element. It must be a
+The name of the `event` to be triggered on the DOM element. The name must be a
 non-empty string, so `.trigger('')` fails.
 
 <Icon name="angle-right" /> **position _(String)_**
@@ -72,17 +72,17 @@ The distance in pixels from element's top to trigger the event.
 
 Pass in an options object to change the default behavior of `.trigger()`.
 
-| Option                       | Default                                                                     | Description                                                                                                                                                                                                                                                   |
-| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                                                |
-| `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                                                                                                                                     |
-| `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                                                                                                                               |
-| `eventConstructor`           | `'Event'`                                                                   | The name of the constructor, as a string, that creates the event object (e.g. `'MouseEvent'`, `'KeyboardEvent'`). It must exist on the application's `window`. See [choosing an event constructor](#How-eventConstructor-changes-the-properties-you-can-set). |
-| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                                                          |
-| `log`                        | `true`                                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                           |
-| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`.                               |
-| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                       |
-| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                                                     |
+| Option                       | Default                                                                     | Description                                                                                                                                                                                                                                                                |
+| ---------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `animationDistanceThreshold` | [`animationDistanceThreshold`](/app/references/configuration#Actionability) | The distance in pixels an element must exceed over time to be [considered animating](/app/core-concepts/interacting-with-elements#Animations).                                                                                                                             |
+| `bubbles`                    | `true`                                                                      | Whether the event bubbles                                                                                                                                                                                                                                                  |
+| `cancelable`                 | `true`                                                                      | Whether the event is cancelable                                                                                                                                                                                                                                            |
+| `eventConstructor`           | `'Event'`                                                                   | The name of the constructor, as a string, that creates the event object (e.g. `'MouseEvent'`, `'KeyboardEvent'`). The constructor must exist on the application's `window`. See [choosing an event constructor](#How-eventConstructor-changes-the-properties-you-can-set). |
+| `force`                      | `false`                                                                     | Forces the action, disables [waiting for actionability](#Assertions)                                                                                                                                                                                                       |
+| `log`                        | `true`                                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log)                                                                                                                                                                                        |
+| `scrollBehavior`             | [`scrollBehavior`](/app/references/configuration#Actionability)             | Viewport position to where an element [should be scrolled](/app/core-concepts/interacting-with-elements#Scrolling) before executing the command. Accepts a single alignment, a per-axis `{ block, inline }` object, or `false`.                                            |
+| `timeout`                    | [`defaultCommandTimeout`](/app/references/configuration#Timeouts)           | Time to wait for `.trigger()` to resolve before [timing out](#Timeouts)                                                                                                                                                                                                    |
+| `waitForAnimations`          | [`waitForAnimations`](/app/references/configuration#Actionability)          | Whether to wait for elements to [finish animating](/app/core-concepts/interacting-with-elements#Animations) before executing the command.                                                                                                                                  |
 
 You can also include arbitrary event properties (e.g. `clientX`, `shiftKey`).
 With the default `Event` constructor, they're attached to the event as is. With
@@ -297,7 +297,7 @@ Pass the properties the handler reads, such as `key`, `code`, or `keyCode`, alon
 with `ctrlKey`, `metaKey`, `shiftKey`, or `altKey`.
 
 To press a single key the way a user does, such as Escape to close a dialog, use
-[`cy.press()`](/api/commands/press) instead. It dispatches native key events,
+[`cy.press()`](/api/commands/press) instead. `cy.press()` dispatches native key events,
 while events from `.trigger()` have `isTrusted` set to `false`, so a handler
 that checks `isTrusted` ignores them. `cy.press()` takes one key without
 modifiers. To type text, use [`.type()`](/api/commands/type).
@@ -515,7 +515,7 @@ cy.get('[data-cy=cart-count]').should('have.text', '3')
 
 #### Trigger an event on the window or document
 
-`.trigger()` also accepts the window or document as its subject. It dispatches
+`.trigger()` also accepts the window or document as its subject. For those subjects, `.trigger()` dispatches
 the event right away, without waiting for actionability, and doesn't add any
 coordinate properties to the event.
 
@@ -534,12 +534,12 @@ cy.window().trigger('online')
 cy.get('[data-cy=offline-banner]').should('not.be.visible')
 ```
 
-This runs the app's `offline` and `online` listeners, but `navigator.onLine`
-doesn't change. It works when the app reacts to the events rather than reading
+This example runs the app's `offline` and `online` listeners, but `navigator.onLine`
+doesn't change. Triggering the events works when the app reacts to the events rather than reading
 `navigator.onLine`.
 
 For `scroll` and `resize`, use [`.scrollTo()`](/api/commands/scrollto) and
-[`cy.viewport()`](/api/commands/viewport) instead. They change the scroll
+[`cy.viewport()`](/api/commands/viewport) instead. Those commands change the scroll
 position or window size and fire the real event, so the handler reads values
 that match it.
 
@@ -659,13 +659,13 @@ command fires.
 <HeaderRequirements />
 
 - `.trigger()` requires being chained off a command that yields a single DOM
-  element, the window, or the document. It errors when the subject contains
+  element, the window, or the document. `.trigger()` errors when the subject contains
   more than one element.
 
 <HeaderAssertions />
 
 - `.trigger()` automatically waits for the element to reach an
-  [actionable state](/app/core-concepts/interacting-with-elements). It skips
+  [actionable state](/app/core-concepts/interacting-with-elements). `.trigger()` skips
   this wait when the subject is the window or the document.
 - `.trigger()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.

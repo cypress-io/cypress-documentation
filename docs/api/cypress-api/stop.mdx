@@ -8,7 +8,7 @@ sidebar_label: stop
 
 # Cypress.stop
 
-Stop the Cypress App on the current machine while tests are running. This can be useful for stopping test execution upon failures or other predefined conditions.
+Stop the Cypress App on the current machine while tests are running. `Cypress.stop` can be useful for stopping test execution upon failures or other predefined conditions.
 
 :::tip
 
@@ -74,7 +74,7 @@ Calling `Cypress.stop()` during `cypress open` will stop execution of the Cypres
 
 ### Why choose Auto Cancellation?
 
-[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is available with Cypress Cloud's Business+ plan. It offers several advantages over `Cypress.stop` for stopping tests on **failure**:
+[Auto Cancellation](/cloud/features/smart-orchestration/run-cancellation) is available with Cypress Cloud's Business+ plan. Auto Cancellation offers several advantages over `Cypress.stop` for stopping tests on **failure**:
 
 1. **Scope of Cancellation:** `Cypress.stop` halts only the current spec file, skipping remaining tests within it. Auto Cancellation, however, stops all tests across all machines and marks the entire run as **cancelled** in Cypress Cloud for better visibility.
 2. **Configurable Thresholds:** Auto Cancellation triggers on failure thresholds you define. `Cypress.stop` executes immediately when the specified condition is met.

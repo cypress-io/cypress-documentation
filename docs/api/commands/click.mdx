@@ -265,7 +265,7 @@ holding key combinations while clicking, such as `ALT + click`.
 
 :::info
 
-You can also use key combinations during [.type()](/api/commands/type). This
+You can also use key combinations during [.type()](/api/commands/type). This approach
 offers options to hold down keys across multiple commands. See
 [Key Combinations](/api/commands/type#Key-Combinations) for more information.
 
@@ -334,7 +334,7 @@ If the `pointerdown` or `mousedown` event has its default action prevented
 (`e.preventDefault()`), Cypress does not give the element focus.
 
 When `pointerdown` is cancelled, Cypress also skips the `mousedown` and
-`mouseup` events, following the Pointer Events spec. It still sends `pointerup`
+`mouseup` events, following the Pointer Events spec. Cypress still sends `pointerup`
 and `click`.
 
 ## Rules
@@ -350,7 +350,7 @@ and `click`.
 
 - `.click()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.click()` itself is not retried. It fires once when the element is
+- `.click()` itself is not retried. `.click()` fires once when the element is
   actionable. Assertions chained after `.click()` are retried until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).

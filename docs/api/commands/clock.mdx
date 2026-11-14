@@ -80,8 +80,8 @@ ignores any arguments passed to it.
 
 - **`clock.restore()`**
 
-  Restore all overridden native functions. This is automatically called between
-  tests, so should not generally be needed.
+  Restore all overridden native functions. Cypress automatically calls
+  `clock.restore()` between tests, so it should not generally be needed.
 
   `clock.restore()` returns native timer APIs (`setTimeout`, `setInterval`, etc.)
   to the `window`. New timers created _after_ `restore()` run in real time.
@@ -91,7 +91,7 @@ ignores any arguments passed to it.
 - **`clock.setSystemTime(now)`**
 
   Change the system time to the new `now`. Now can be a timestamp, date object,
-  or not passed in which defaults to 0. It doesn't call any timers or change the
+  or not passed in which defaults to 0. `clock.setSystemTime()` doesn't call any timers or change the
   time left before they trigger.
 
 You can also access the `clock` object via `this.clock` in a
@@ -174,7 +174,7 @@ cy.clock().then((clock) => {
 ```
 
 You can call `cy.clock()` again for this purpose later in a chain if necessary.
-It yields the clock that already exists and ignores any arguments, so it can't
+The repeated call yields the clock that already exists and ignores any arguments, so it can't
 change `now` or `functionNames`. Use `clock.setSystemTime()` to change the
 current time.
 
@@ -308,8 +308,8 @@ cy.clock(Date.UTC(2026, 0, 1), ['Date', 'setTimeout', 'clearTimeout'])
 ### Restore clock
 
 You can restore the clock and allow your application to resume normally without
-manipulating native global functions related to time. This is automatically
-called between tests.
+manipulating native global functions related to time. Cypress automatically
+restores the clock between tests.
 
 :::caution
 
@@ -377,7 +377,7 @@ cy.clock().invoke('setSystemTime', 60 * 60 * 1000)
 
 #### iframes not supported
 
-`cy.clock()` only applies to the `top` window on a web page. It doesn't override
+`cy.clock()` only applies to the `top` window on a web page. `cy.clock()` doesn't override
 the time functions of any `iframe` embedded on the page.
 
 ### Behavior
@@ -392,7 +392,7 @@ and [`cy.tick()`](/api/commands/tick) doesn't move them forward.
 
 Using the [`cy.mount()`](/api/commands/mount) command in a Cypress Component
 Test renders your component but doesn't affect the behavior of the page or
-window object. This means you can `mount` directly after calling `cy.clock()` to
+window object. As a result, you can `mount` directly after calling `cy.clock()` to
 test the component against any changes you've made to the yielded clock object.
 
 #### clock behavior before `cy.visit()`
@@ -401,7 +401,7 @@ If you call `cy.clock()` before visiting a page with
 [`cy.visit()`](/api/commands/visit), Cypress overrides the page's native global
 functions on window load, before any of your app code runs. So even if
 `setTimeout`, for example, is called on page load, it can still be controlled
-via [`cy.tick()`](/api/commands/tick). This also applies if, during the course
+via [`cy.tick()`](/api/commands/tick). This control also applies if, during the course
 of a test, the page under test is reloaded or changed.
 
 Each new page gets a fresh fake clock that starts again at the original `now`

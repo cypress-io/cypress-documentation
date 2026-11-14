@@ -94,7 +94,7 @@ This matters for [`cy.request()`](/api/commands/request#How-cyrequest-sends-and-
 matching cookies from the cookie jar by domain match before sending a request.
 Because the default cookie is a domain cookie, it can be attached to a
 `cy.request()` aimed at a _different_ host that domain-matches it, for example
-a sibling host on the same registrable domain. This is working as designed, but
+a sibling host on the same registrable domain. This matching is working as designed, but
 can be surprising when you set a convenience cookie for your app and see it
 appear on an unrelated request.
 
@@ -151,7 +151,7 @@ full browser context (cookies, localStorage, and sessionStorage) across tests.
 <HeaderTimeouts />
 
 - `cy.setCookie()` can time out waiting for the browser to set the cookie.
-  It waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
+  The command waits up to the [`responseTimeout`](/app/references/configuration#Timeouts)
   (or the `timeout` option, when passed) before failing.
 - If the application under test is on a different origin, `cy.setCookie()`
   retries for up to the

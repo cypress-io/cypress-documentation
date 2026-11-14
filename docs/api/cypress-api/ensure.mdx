@@ -12,7 +12,7 @@ sidebar_position: 110
 `Cypress.ensure` is a set of helper functions that validate a
 [subject](/app/core-concepts/introduction-to-cypress#Subject-Management) inside
 your own [custom queries](/api/cypress-api/custom-queries) and
-[custom commands](/api/cypress-api/custom-commands). They are the same checks
+[custom commands](/api/cypress-api/custom-commands). These functions run the same checks
 Cypress's built-in commands run: [`.contains()`](/api/commands/contains) uses
 `Cypress.ensure.isType()` to accept only an element, document, or window, and
 [`.select()`](/api/commands/select) uses `Cypress.ensure.isNotDisabled()` to
@@ -23,8 +23,8 @@ fails it. Because the errors come from Cypress itself, a failure in your command
 reads like a failure in a built-in one:
 
 - The message names your command, so the reader knows which step failed.
-- It describes the subject Cypress received and the command that ran before it.
-- It links to the relevant Cypress docs page, such as
+- The message describes the subject Cypress received and the command that ran before it.
+- The message links to the relevant Cypress docs page, such as
   [Interacting with Elements](/app/core-concepts/interacting-with-elements).
 - Inside a custom query, Cypress retries a failed check until it passes or the
   query times out, the same as its own queries.
@@ -208,17 +208,18 @@ Cypress.ensure.isNotHiddenByAncestors(subject, commandName)
 
 Throws when an ancestor clips the subject out of view, such as an
 `overflow: hidden` container the element has scrolled outside of, or a
-zero-height container with `overflow: hidden`. It also fails a `fixed` or
+zero-height container with `overflow: hidden`. `isNotHiddenByAncestors()` also fails a `fixed` or
 `sticky` element that another element covers.
 
-It doesn't check the ancestors' `display` or `visibility`, so an element inside
+`isNotHiddenByAncestors()` doesn't check the ancestors' `display` or `visibility`, so an element inside
 a `display: none` parent passes. Call [`isVisible()`](#isVisible) for that.
 Cypress runs this check after `isVisible()` when the
 [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy)
 is `'legacy'`.
 
-- It treats `opacity: 0` as visible.
-- When the subject is a collection, it fails when any element is clipped.
+- `isNotHiddenByAncestors()` treats `opacity: 0` as visible.
+- When the subject is a collection, `isNotHiddenByAncestors()` fails when any
+  element is clipped.
 
 When the check fails, it throws this error, followed by the reason:
 
@@ -275,7 +276,7 @@ Used in:
 Cypress.ensure.isType(subject, types, commandName, cy)
 ```
 
-Throws when the subject matches none of the `types`. This is the check behind a
+Throws when the subject matches none of the `types`. `isType()` is the check behind a
 custom command's [`prevSubject`](/api/cypress-api/custom-commands#Validations)
 option.
 
@@ -309,10 +310,11 @@ Throws when the subject is not visible, following the
 [visibility rules](/app/core-concepts/interacting-with-elements#Visibility) of
 your [`visibilityStrategy`](/app/core-concepts/interacting-with-elements#Visibility-Strategy).
 
-- It treats `opacity: 0` as visible, matching the checks Cypress runs before it
+- `isVisible()` treats `opacity: 0` as visible, matching the checks Cypress runs before it
   interacts with an element. Assert with `.should('be.visible')` when opacity
   matters.
-- When the subject is a collection, it fails when any element is hidden.
+- When the subject is a collection, `isVisible()` fails when any element is
+  hidden.
 
 When the check fails, it throws this error, followed by the reason:
 
@@ -440,7 +442,7 @@ cy.get('#email').editable()
 
 ### Accept only certain subject types in a custom query
 
-The `.dataCy()` query below finds elements by their `data-cy` attribute. It can
+The `.dataCy()` query below finds elements by their `data-cy` attribute. The query can
 start a chain, where it searches the whole page, or continue one, where it
 searches inside the previous element or document. `isType()` rejects every other
 subject, such as a string yielded by [`.invoke()`](/api/commands/invoke).

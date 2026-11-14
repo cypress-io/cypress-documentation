@@ -21,7 +21,7 @@ them again, and then notifies Cypress to re-run the tests.
 
 ## Examples
 
-We've created some example preprocessors as reference for you to look at. These are
+We've created some example preprocessors as reference for you to look at. These examples are
 fully functioning preprocessors.
 
 The code contains comments that explain how it uses the preprocessor API.
@@ -244,7 +244,7 @@ This callback function can and _will_ be called multiple times with the same
 `filePath`.
 
 The callback function is called any time a file is requested by the browser.
-This happens on each run of the tests.
+The call happens on each run of the tests.
 
 Make sure not to start a new watcher each time it is called. Instead, cache the
 watcher and, on subsequent calls, return a promise that resolves when the latest
@@ -256,11 +256,11 @@ version of the file has been processed.
 
 The `file` object passed to the callback function has the following properties:
 
-| Property      | Description                                                                                                                                                                                                                       |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `filePath`    | The full path to the source file.                                                                                                                                                                                                 |
-| `outputPath`  | The suggested path for saving the preprocessed file to disk. This is unique to the source file. A preprocessor can choose to write the file elsewhere, but Cypress automatically provides you this value as a convenient default. |
-| `shouldWatch` | A boolean indicating whether the preprocessor should watch for file changes or not.                                                                                                                                               |
+| Property      | Description                                                                                                                                                                                                                           |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `filePath`    | The full path to the source file.                                                                                                                                                                                                     |
+| `outputPath`  | The suggested path for saving the preprocessed file to disk. The path is unique to the source file. A preprocessor can choose to write the file elsewhere, but Cypress automatically provides you this value as a convenient default. |
+| `shouldWatch` | A boolean indicating whether the preprocessor should watch for file changes or not.                                                                                                                                                   |
 
 ## File events
 

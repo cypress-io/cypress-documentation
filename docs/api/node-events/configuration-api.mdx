@@ -66,7 +66,7 @@ Resolved values will show up in the "Settings" tab.
 
 ### Promises
 
-Additionally, Cypress will respect and await promises you return. This enables
+Additionally, Cypress will respect and await promises you return. Awaiting promises enables
 you to perform asynchronous tasks and eventually resolve with the modified
 configuration object. See the
 [example on switching between multiple configuration files](#Switch-between-multiple-configuration-files)
@@ -89,7 +89,7 @@ for more information on how this works.
 
 ### Switch between multiple configuration files
 
-This means you can do things like store multiple configuration files and switch
+Returning a modified configuration means you can do things like store multiple configuration files and switch
 between them like:
 
 - `cypress.qa.json`
@@ -155,7 +155,7 @@ cypress/config/staging.json
 cypress/config/production.json
 ```
 
-This would enable you to do things like this:
+This setup would enable you to do things like this:
 
 ```json
 // cypress/config/development.json
@@ -201,7 +201,7 @@ This would enable you to do things like this:
 }
 ```
 
-This is a less complicated example. Remember - you have the full power of Node
+This example is a less complicated one. Remember - you have the full power of Node
 at your disposal.
 
 How you choose to edit the configuration is up to you. You don't have to read

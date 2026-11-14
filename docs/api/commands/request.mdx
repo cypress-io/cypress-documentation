@@ -129,7 +129,7 @@ beforeEach(() => {
 #### Check a page's HTML without visiting it
 
 Unlike [`cy.visit()`](/api/commands/visit), which loads the page and all of its
-resources, requesting a page returns only its HTML. That makes it a quick way to
+resources, requesting a page returns only its HTML. Returning only the HTML makes `cy.request()` a quick way to
 check what the server renders.
 
 ```javascript
@@ -371,7 +371,7 @@ cy.request({
 #### Download a PDF file
 
 With `encoding: 'binary'`, `response.body` holds the file's binary content, which
-you can save with [`cy.writeFile()`](/api/commands/writefile). This works for
+you can save with [`cy.writeFile()`](/api/commands/writefile). Binary encoding works for
 other file types too, such as `.zip` or `.doc` files.
 
 ```javascript
@@ -410,7 +410,7 @@ unchanged, and sets the `Content-Type: multipart/form-data` header with the
 boundary the server needs to parse the parts. Leave `form` unset, since it
 applies to URL-encoded forms only.
 
-This is the `cy.request()` equivalent of `curl -F file=@image.png`:
+This example is the `cy.request()` equivalent of `curl -F file=@image.png`:
 
 ```javascript
 cy.env(['apiToken']).then(({ apiToken }) => {
@@ -551,15 +551,15 @@ saves any `Set-Cookie` headers it gets back into the browser.
 
 Because the request doesn't go through the browser:
 
-- It doesn't appear in the browser's DevTools Network tab.
+- The request doesn't appear in the browser's DevTools Network tab.
 - CORS doesn't apply, so you can request any server, whatever its CORS headers.
-- [`cy.intercept()`](/api/commands/intercept) routes don't match it. It always
+- [`cy.intercept()`](/api/commands/intercept) routes don't match it. The request always
   reaches your real server, which is what you want when you test an endpoint
   without starting your front end.
 - Cypress doesn't verify the server's TLS certificate, so a self-signed or
-  expired certificate doesn't fail the request. It also means `cy.request()`
+  expired certificate doesn't fail the request. Skipping verification also means `cy.request()`
   doesn't catch a certificate problem.
-- It sends the browser's `User-Agent` unless you set one in `headers`. To change
+- `cy.request()` sends the browser's `User-Agent` unless you set one in `headers`. To change
   the browser's own user agent, see
   [how to override the browser's default user agent](/app/faq#Can-I-override-or-change-the-default-user-agent-the-browser-uses).
 
@@ -579,7 +579,7 @@ resolves the host for `cy.request()` in this order:
    origin you passed to `cy.origin()`.
 2. If the `baseUrl` property is set in your
    [configuration file](/app/references/configuration), Cypress prefixes the URL
-   with it. This applies whether or not you have visited a page, so `baseUrl`
+   with it. This prefixing applies whether or not you have visited a page, so `baseUrl`
    wins over the origin of a page you visited.
 
 :::cypress-config-example

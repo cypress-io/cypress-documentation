@@ -134,7 +134,7 @@ cy.get('ul').children('.active')
 
 `.children()` stops at a shadow boundary. Called on a shadow host, it yields
 the children written inside that host in the page's markup, not the elements
-inside its shadow root. This holds whether or not
+inside its shadow root. This behavior holds whether or not
 [`includeShadowDom`](/app/references/configuration#Global) is enabled, since
 that option applies to [`cy.get()`](/api/commands/get#Arguments),
 [`.find()`](/api/commands/find#Arguments), and

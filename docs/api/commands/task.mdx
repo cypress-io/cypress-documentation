@@ -10,7 +10,7 @@ sidebar_label: task
 
 `cy.task()` runs code in [Node.js](https://nodejs.org) from your test, through
 the `task` event you register in
-[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin). It handles the
+[setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin). `cy.task()` handles the
 work a browser can't do on its own:
 
 - Seed or query a database.
@@ -70,7 +70,7 @@ on('task', {
 
 The `task` plugin event handler can return a value or a promise. The command
 fails if the handler returns `undefined` or the promise resolves with
-`undefined`. This catches typos and events that no handler covers.
+`undefined`. This check catches typos and events that no handler covers.
 
 If you don't need to return a value, return `null` to signal that the event was
 handled.
@@ -104,7 +104,7 @@ An event name to be handled via the `task` event in the
 
 <Icon name="angle-right" /> **arg _(Object)_**
 
-An argument to send along with the event. This can be any value that can be
+An argument to send along with the event. The argument can be any value that can be
 serialized by
 [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify),
 and the handler receives it the way `JSON.stringify()` would serialize it:

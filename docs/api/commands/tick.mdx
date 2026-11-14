@@ -58,8 +58,8 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 
 - **`clock.restore()`**
 
-  Restore all overridden native functions. This is automatically called between
-  tests, so should not generally be needed.
+  Restore all overridden native functions. Cypress automatically calls
+  `clock.restore()` between tests, so it should not generally be needed.
 
 You can also access the `clock` object via `this.clock` in a
 [`.then()`](/api/commands/then) callback.
@@ -98,8 +98,8 @@ cy.get('#header').should('have.text', 'Hello, World')
 ### Restore clock
 
 You can restore the clock and allow your application to resume normally without
-manipulating native global functions related to time. This is automatically
-called between tests.
+manipulating native global functions related to time. Cypress automatically
+restores the clock between tests.
 
 ```javascript
 cy.clock()

@@ -70,7 +70,7 @@ cy.get('button#checkout').scrollIntoView()
 [Visibility](/app/core-concepts/interacting-with-elements#Visibility) doesn't
 account for the viewport, so `.should('be.visible')` passes for an element that
 is scrolled out of view. To confirm the scroll worked, check the element's
-position instead. This checks that its top edge is inside the viewport.
+position instead. This example checks that the element's top edge is inside the viewport.
 
 ```javascript
 cy.get('button#checkout').scrollIntoView()
@@ -148,7 +148,7 @@ scrolls the element within it.
 
 `.scrollIntoView()` doesn't run the
 [actionability](/app/core-concepts/interacting-with-elements) checks that
-commands like [`.click()`](/api/commands/click) do. It scrolls an element even
+commands like [`.click()`](/api/commands/click) do. `.scrollIntoView()` scrolls an element even
 when the element is hidden, disabled, or covered by another element.
 
 ### Skip .scrollIntoView() before action commands
@@ -179,7 +179,7 @@ the commands with [`.pause()`](/api/commands/pause) or
 <HeaderRequirements />
 
 - `.scrollIntoView()` requires being chained off a command that yields a single
-  DOM element. It throws an error when the subject contains more than one
+  DOM element. `.scrollIntoView()` throws an error when the subject contains more than one
   element.
 
 <HeaderAssertions />

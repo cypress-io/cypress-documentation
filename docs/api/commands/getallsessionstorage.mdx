@@ -60,7 +60,7 @@ For example, if `key1` is set to `value1` on `https://example.cypress.io` and
 ```
 
 `cy.getAllSessionStorage()` is a query, and it is _safe_ to chain further
-commands. It will automatically [retry](/app/core-concepts/retry-ability) until
+commands. The query will automatically [retry](/app/core-concepts/retry-ability) until
 all chained assertions have passed, or until it times out, re-reading
 `sessionStorage` from all origins on each retry so the yielded object stays up to
 date.

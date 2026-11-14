@@ -178,7 +178,7 @@ valid date in the format:
 
 - `yyyy-MM-dd` (e.g. `1999-12-31`)
 
-This isn't exactly how a user would type into a date input, but is a workaround
+This format isn't exactly how a user would type into a date input, but is a workaround
 since date input support varies between browsers and the format varies based on
 locale. `yyyy-MM-dd` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#dates-and-times)
@@ -197,7 +197,7 @@ valid month in the format:
 
 - `yyyy-MM` (e.g. `1999-12`)
 
-This isn't exactly how a user would type into a month input, but is a workaround
+This format isn't exactly how a user would type into a month input, but is a workaround
 since month input support varies between browsers and the format varies based on
 locale. `yyyy-MM` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#months) and is what
@@ -219,7 +219,7 @@ valid week in the format:
 Where `W` is the literal character 'W' and `ww` is the number of the week
 (01-53).
 
-This isn't exactly how a user would type into a week input, but is a workaround
+This format isn't exactly how a user would type into a week input, but is a workaround
 since week input support varies between browsers and the format varies based on
 locale. `yyyy-Www` is the format required by
 [the W3 spec](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-week-string)
@@ -506,7 +506,7 @@ the event spec:
 
 Additionally `change` events will be fired either when the `{enter}` key is
 pressed (and the value has changed since the last focus event), or whenever the
-element loses focus. This matches browser behavior.
+element loses focus. This timing matches browser behavior.
 
 Events that should not fire on non input types such as elements with `tabindex`
 do not fire their `textInput` or `input` events. Only typing into elements which
@@ -631,7 +631,7 @@ In the example above, a lowercase `a` will be typed, because that's the literal
 character specified. To type a capital `A`, you can use `.type('{shift}A')` (or
 `.type('A')` if you don't care about the `shiftKey` property on any key events).
 
-This holds true for other special key combinations as well (that may be
+This rule holds true for other special key combinations as well (that may be
 OS-specific). For example, on OSX, typing `ALT + SHIFT + K` creates the special
 character ``. Like with capitalization, `.type()` will not output ``, but the
 letter `k`.

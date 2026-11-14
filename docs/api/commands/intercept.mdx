@@ -209,7 +209,7 @@ See ["Intercepted requests"][req] and
 
 `cy.intercept` can be used solely for spying: to passively listen for matching
 routes and apply [aliases](#Aliasing-an-intercepted-route) to them without manipulating the
-request or its response in any way. This alone is powerful, since those aliases
+request or its response in any way. Spying alone is powerful, since those aliases
 support [waiting](#Waiting-on-a-request) on these requests, resulting in more
 reliable tests.
 
@@ -367,7 +367,7 @@ cy.intercept('POST', '/users').as('createUser')
 
 When an intercepted route is aliased, you can retrieve **all** matching
 intercepted requests using the `.all` suffix with
-[`cy.get()`](/api/commands/get). This is useful when your application makes
+[`cy.get()`](/api/commands/get). The `.all` suffix is useful when your application makes
 multiple requests to the same route and you need to assert on all of them.
 
 <InterceptAliasIndex />
@@ -375,7 +375,7 @@ multiple requests to the same route and you need to assert on all of them.
 ### Aliasing individual requests
 
 Aliases can be set on a per-request basis by setting the `alias` property of the
-intercepted request. This is especially useful when intercepting GraphQL
+intercepted request. Per-request aliases are especially useful when intercepting GraphQL
 requests:
 
 ```js
@@ -1547,7 +1547,7 @@ an `object`. And if the body contains binary content, this will be a buffer.
 
 Cypress relies on the `Content-Type: application/json` header to decide whether
 to parse the body as JSON. If that header is absent, the body is yielded as a
-`string` even when it contains JSON. This commonly happens with responses that
+`string` even when it contains JSON. A missing header commonly happens with responses that
 omit a `Content-Type` header. For example, a `304 Not Modified` response, which
 [per RFC 7232](https://datatracker.ietf.org/doc/html/rfc7232#section-4.1) is not
 expected to include representation metadata such as `Content-Type`, or a `301`
@@ -1685,7 +1685,7 @@ From there, each interception has two phases: request and response.
 1. Routes defined with `{ middleware: true }`, in the order you define them.
 2. All other routes, starting with the one you defined last.
 
-It stops at the first route that has a static response or calls `req.reply()`
+`cy.intercept()` stops at the first route that has a static response or calls `req.reply()`
 or `req.continue()`. Routes after it never see the request.
 
 In practice, this means a route you define later overrides an earlier one, and
@@ -1820,7 +1820,7 @@ cy.intercept('/users\\?_limit=*')
 
 Under the hood, `cy.intercept` uses the [minimatch](/api/utilities/minimatch)
 library with the `{ matchBase: true }` option applied for glob matching and
-provides access to it via the `Cypress` global. This enables you to test your
+provides access to it via the `Cypress` global, so you can test your
 pattern in your spec or in the Cypress browser console.
 
 You can invoke the `Cypress.minimatch` with just two arguments - the URL
@@ -2006,14 +2006,14 @@ When a route doesn't match, check these:
 
 ## `cy.intercept()` and request caching
 
-`cy.intercept()` intercepts requests at the network layer. This can cause
+`cy.intercept()` intercepts requests at the network layer. Intercepting at that layer can cause
 confusion when trying to intercept a request that has already been cached by the
 browser. If a request is served from the browser cache, it will never hit the
 network layer, and `cy.intercept()` will never fire.
 
 To see if this is affecting your app, open the **Network** tab in Chrome
 DevTools and check the **Size** column. A request served from the cache shows
-`(memory cache)` or `(disk cache)` there. It never reaches the
+`(memory cache)` or `(disk cache)` there. A cached request never reaches the
 network, so `cy.intercept()` can't intercept it. In this example, only `users`
 and the page itself went over the network:
 
@@ -2083,7 +2083,7 @@ cy.intercept('/company', { companyId: 1 }).as('companyGet')
 cy.intercept('/teams*', [{ teamId: 2 }]).as('teamsGet')
 ```
 
-It will list the routing table in the
+The _Routes_ Instrument will list the routing table in the
 Instrument Panel, including the `method`, `RouteMatcher`, if the route is
 stubbed, any alias, and number of matched requests:
 
@@ -2116,7 +2116,7 @@ route's alias, or "no alias" when the route has none:
 />
 
 The circular indicator is filled if the request went to the destination server,
-and outlined if the request was stubbed with a response. It's green for a `2xx`
+and outlined if the request was stubbed with a response. The indicator is green for a `2xx`
 or `3xx` status and red for any other status.
 
 Hover over a badge to see which `cy.intercept()` routes the request matched, and

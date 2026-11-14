@@ -314,7 +314,7 @@ cy.get('[data-cy=title]').type('{selectall}')
 
 - `.dblclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.dblclick()` itself is not retried. It fires once when the element is
+- `.dblclick()` itself is not retried. `.dblclick()` fires once when the element is
   actionable. Assertions chained after `.dblclick()` are retried until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).

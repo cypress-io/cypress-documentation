@@ -93,7 +93,7 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 ## Known Issue
 
 When working with `cy.click()`, it sometimes won't click the right element in
-Chrome. It's happening because of
+Chrome. The misclick happens because of
 [the ambiguity in spec](https://bugs.chromium.org/p/chromium/issues/detail?id=1188919&q=shadowRoot%20elementFromPoint&can=2).
 
 In this case, pass `'top'` to `cy.click()` like below:

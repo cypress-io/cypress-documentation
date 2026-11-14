@@ -672,7 +672,7 @@ Cypress.Commands.add('getIframeBody', (selector) => {
 cy.getIframeBody('#my-iframe').find('[data-testid="submit"]').click()
 ```
 
-This works for same-origin iframes only. For the cross-origin restrictions, see
+The `getIframeBody` command works for same-origin iframes only. For the cross-origin restrictions, see
 [How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
 in the FAQ.
 
@@ -787,7 +787,7 @@ immediately use more Cypress commands on that subject.
 ### Dual Commands
 
 A dual command can either start a chain of commands or be chained off of an
-existing one. It is basically the hybrid between both a parent and a child
+existing one. A dual command is basically the hybrid between both a parent and a child
 command. You will likely rarely use this, and only a handful of our internal
 commands use this.
 
@@ -858,7 +858,7 @@ cy.get('#dialog').dismiss() // with subject
 
 ### Overwrite Existing Commands
 
-You can also modify the behavior of existing Cypress commands. This is useful to
+You can also modify the behavior of existing Cypress commands. Overwriting a command is useful to
 always set some defaults to avoid creating another command that ends up using
 the original.
 
@@ -934,7 +934,7 @@ We see many of our users creating their own `visitApp` command. We commonly see
 that all you're doing is swapping out base urls for `development` vs
 `production` environments.
 
-This is usually unnecessary because Cypress is already configured to swap out a
+A `visitApp` command is usually unnecessary because Cypress is already configured to swap out a
 `baseUrl` that both [cy.visit()](/api/commands/visit) and
 [cy.request()](/api/commands/request) use. Set the `baseUrl` configuration
 property in your [Cypress configuration](/app/references/configuration) and
@@ -1379,7 +1379,7 @@ behaves in the Command Log.
 Take advantage of the [`Cypress.log()`](/api/cypress-api/cypress-log) API. When
 you're issuing many internal Cypress commands, consider passing `{ log: false }`
 to those commands, and programmatically controlling your custom command. This
-will cleanup the Command Log and be much more visually appealing and
+approach will cleanup the Command Log and be much more visually appealing and
 understandable.
 
 ### `cy.hover()` and `cy.mount()`
@@ -1395,7 +1395,7 @@ how to craft your own [`cy.hover()`](/api/commands/hover) and
 Custom commands work well when you're needing to describe behavior that's
 desirable across **all of your tests**. Examples would be a `cy.setup()` or
 `cy.login()` or extending your application's behavior like
-`cy.get('.dropdown').dropdown('Apples')`. These are specific to your application
+`cy.get('.dropdown').dropdown('Apples')`. These commands are specific to your application
 and can be used everywhere.
 
 However, this pattern can be used and abused. Let's not forget - writing Cypress
@@ -1500,7 +1500,7 @@ it('paginates many search results', () => {
 #### 2. Don't overcomplicate things
 
 Custom commands you write are generally an abstraction over a series of internal
-commands. That means you and your team members exert much more mental effort to
+commands. That abstraction means you and your team members exert much more mental effort to
 understand what your custom command does.
 
 There's no reason to add this level of complexity when you're only wrapping a
@@ -1513,7 +1513,7 @@ Don't do things like:
 
 This first custom command is wrapping `cy.get(selector).click()`. Going down
 this route would lead to creating dozens or even hundreds of custom commands to
-cover every possible combination of element interactions. It's completely
+cover every possible combination of element interactions. Creating that many commands is completely
 unnecessary.
 
 The `.shouldBeVisible()` custom command isn't worth the trouble or abstraction
@@ -1535,8 +1535,8 @@ too much into them makes them inflexible and requires more and more options
 passing to control their behavior.
 
 Try to add either zero or as few assertions as possible in your custom command.
-Those tend to shape your command into a much more rigid structure. Sometimes
-this is unavoidable, but a best practice is to let the calling code choose when
+Those assertions tend to shape your command into a much more rigid structure.
+Sometimes assertions are unavoidable, but a best practice is to let the calling code choose when
 and how to use assertions.
 
 #### 4. Skip your UI as much as possible
