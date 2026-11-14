@@ -211,7 +211,7 @@ The new retry behavior applies only to assertions chained directly onto the
 command. A [`.then()`](/api/commands/then) callback still runs only once, after
 the command settles, and is **not** retried. The cookie (or array of cookies) it
 receives is a single snapshot read at that moment, so an assertion made inside
-`.then()` will not wait for the cookie to be set. To benefit from retries, chain
+`.then()` does not wait for the cookie to be set. To benefit from retries, chain
 [`.should()`](/api/commands/should) assertions directly instead:
 
 <Badge type="danger">Before</Badge>
@@ -300,7 +300,7 @@ the error is reported with the standard `Timed out retrying after ...` prefix.
 The new retry behavior applies only to assertions chained directly onto the
 command. A [`.then()`](/api/commands/then) callback still runs only once, after
 the command settles, and is **not** retried. The object it receives is a single
-snapshot read at that moment, so an assertion made inside `.then()` will not wait
+snapshot read at that moment, so an assertion made inside `.then()` does not wait
 for storage to be populated. To benefit from retries, chain
 [`.should()`](/api/commands/should) assertions directly instead:
 
@@ -436,7 +436,7 @@ Setting `blockHosts` in your Cypress configuration, or with `Cypress.config()` o
 
 The `experimentalSourceRewriting` configuration option has been removed. The default regex-based rewriter handles every case the AST-based rewriter did and more, without the performance issues the AST-based approach could introduce.
 
-If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress will print a warning telling you to remove it. You can safely delete the option from your config.
+If your `cypress.config` still sets `experimentalSourceRewriting`, Cypress prints a warning telling you to remove it. You can safely delete the option from your config.
 
 You only need a replacement option if your application pins resources with Subresource Integrity (SRI) `integrity` attributes on `<script>` or `<link>` elements. Because Cypress rewrites those resources, the pinned hash no longer matches and the browser blocks them, reporting an error such as `Failed to find a valid digest in the 'integrity' attribute for resource '…'`. If you were relying on `experimentalSourceRewriting` to avoid this, enable the [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes) configuration option instead, which strips the `integrity` attribute so the rewritten resources load. If your application does not use SRI, no replacement is required.
 
@@ -622,7 +622,7 @@ it(
 
 ### `allowCypressEnv` config option removed
 
-The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress will print a warning telling you to remove it. There is no behavior change, so remove the key.
+The `allowCypressEnv` configuration option has been removed. If your `cypress.config` still includes it, Cypress prints a warning telling you to remove it. There is no behavior change, so remove the key.
 
 :::cypress-config-example
 
@@ -1144,7 +1144,7 @@ describe('API tests', () => {
 
 ### Migrate plugins that use Cypress.env()
 
-If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. Starting in Cypress 15.10.0, plugins using `Cypress.env()` would throw errors when `allowCypressEnv: false` was set. In Cypress 16.0, `allowCypressEnv` has been removed and `Cypress.env()` is no longer available, so plugins that still call it will always throw errors.
+If you're using Cypress plugins that reference `Cypress.env()`, you should check for updated versions that support the new API. Starting in Cypress 15.10.0, plugins using `Cypress.env()` would throw errors when `allowCypressEnv: false` was set. In Cypress 16.0, `allowCypressEnv` has been removed and `Cypress.env()` is no longer available, so plugins that still call it always throw errors.
 
 #### Check for plugin updates
 
@@ -1225,7 +1225,7 @@ On Cypress ^15.10.0, once you've migrated all `Cypress.env()` invocations to eit
 
 When `allowCypressEnv` is set to `false` on Cypress ^15.10.0:
 
-1. `Cypress.env()` calls will throw an error
+1. `Cypress.env()` calls throw an error
 2. `env` test configuration overrides are disabled
 
 #### Migration Checklist
@@ -1303,7 +1303,7 @@ browser is specified, will fail with an error.
    provider-specific setup details.
 1. **Update your Docker image, if you use one.** If you use the `cypress/base`
    [Docker image](/app/continuous-integration/overview#Cypress-Docker-variants)
-   and don't explicitly install a browser, you'll need to switch to
+   and don't explicitly install a browser, you need to switch to
    `cypress/browsers` or install a browser yourself.
 1. **Remove any explicit Electron usage**: `--browser electron`,
    `defaultBrowser: 'electron'`, or `{ browser: 'electron' }` test/suite
@@ -1373,7 +1373,7 @@ cy.stub(user, 'getName').callsFake(() => 'Jane')
 Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.31`.
 This support is in line with Node.js's support for Linux in 20+.
 
-If you're using a Linux distribution based on glibc `<2.31`, you'll need to
+If you're using a Linux distribution based on glibc `<2.31`, you need to
 update your system to a newer version to install Cypress 15+.
 To display which version of glibc your Linux system is running, execute `ldd --version`.
 
@@ -1385,7 +1385,7 @@ Support for the [Chrome DevTools Protocol](https://chromedevtools.github.io/devt
 Cypress 15 drops that fallback, so WebDriver BiDi is the only way Cypress automates Firefox.
 
 Because WebDriver BiDi is only available in newer Firefox releases, this sets a minimum Firefox version.
-Cypress cannot launch a version below the minimum and will fail with an error naming the version to install.
+Cypress cannot launch a version below the minimum and fails with an error naming the version to install.
 
 - Cypress `15.0.0` through `15.18.1` require Firefox `135` or newer.
 - [Cypress 15.19.0](/app/references/changelog#15-19-0) and newer require Firefox `140` or newer, the oldest release line Mozilla still ships.
@@ -1397,7 +1397,7 @@ Chrome, Edge, Electron, and experimental WebKit are unaffected, and no test code
 
 Cypress is no longer supporting Webpack `4` as it is no longer maintained by the core Webpack team and Webpack `5` has been available since Q4 2020. The change includes dropping Webpack `4` support for:
 
-- `@cypress/webpack-dev-server` for component testing. The dev server use case is most common and will require an update to Webpack `5`.
+- `@cypress/webpack-dev-server` for component testing. The dev server use case is most common and requires an update to Webpack `5`.
   - `@cypress/webpack-dev-server` also no longer supports [Webpack Dev Server v4](https://github.com/webpack/webpack-dev-server/tree/v4.15.2). We shipped [Webpack Dev Server v5](https://github.com/webpack/webpack-dev-server/tree/v5.2.1) as the default in Cypress 14 with `webpack-dev-server@4` being an option.
 - `@cypress/webpack-preprocessor` for end-to-end testing. Cypress, by default, uses the [Webpack Batteries Included Preprocessor](https://github.com/cypress-io/cypress/blob/@cypress/webpack-batteries-included-preprocessor-v3.0.7/npm/webpack-batteries-included-preprocessor/README.md) to process your files for end-to-end testing, which has used Webpack 5 since Cypress 13. Unless you are already using `@cypress/webpack-preprocessor` as a standalone package, this change likely does not apply.
 
@@ -1578,7 +1578,7 @@ However, installing the `cypress` npm package uses the Node.js version installed
 on your system.
 
 [See Node's release schedule](https://github.com/nodejs/Release). Node.js
-version 16 and 21 will no longer be supported when installing Cypress. The minimum Node.js
+version 16 and 21 are no longer supported when installing Cypress. The minimum Node.js
 version supported to install Cypress is Node.js 18+.
 
 ### Unsupported Linux Distributions
@@ -1586,7 +1586,7 @@ version supported to install Cypress is Node.js 18+.
 Prebuilt binaries for Linux are no longer compatible with Linux distributions based on glibc `<2.28`.
 This support is in line with Node.js's support for Linux in 18+.
 
-If you're using a Linux distribution based on glibc `<2.28`, for example, Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2, you'll need to
+If you're using a Linux distribution based on glibc `<2.28`, for example, Ubuntu 14-18, RHEL 7, CentOS 7, Amazon Linux 2, you need to
 update your system to a newer version to install Cypress 14+.
 
 ### Minimum macOS 11 (Big Sur)
@@ -1598,7 +1598,7 @@ If you're using a lower version of macOS make sure that you update.
 
 ### Updated Browser Support
 
-Starting in Cypress 14, Cypress will officially support [the latest 3 major versions of Chrome, Firefox, and Edge](/app/references/launching-browsers#Browser-versions-supported).
+Starting in Cypress 14, Cypress officially supports [the latest 3 major versions of Chrome, Firefox, and Edge](/app/references/launching-browsers#Browser-versions-supported).
 
 Older browser versions may still work with Cypress, but we recommend keeping your browsers up to date to ensure compatibility with Cypress.
 
@@ -1608,7 +1608,7 @@ To account for Chrome's [impending deprecation](https://developer.chrome.com/blo
 Cypress no longer injects `document.domain` into `text/html` content by default.
 
 Because Cypress no longer injects `document.domain`, tests that visit more than one origin (defined as a composite of the URL _scheme_, _hostname_, and _port_) must now use `cy.origin()`.
-Without `cy.origin()`, interacting with a second origin in the same test will cause the test to fail, even if the two origins
+Without `cy.origin()`, interacting with a second origin in the same test causes the test to fail, even if the two origins
 are in the same superdomain. As a result, you must now use `cy.origin()` in more situations than before.
 
 {/* prettier-ignore-start */}
@@ -1634,10 +1634,10 @@ cy.origin('https://docs.cypress.io', () => {
 :::info
 
 To ease this transition, Cypress v14.0 introduced the ["injectDocumentDomain" configuration option](/app/references/configuration#injectDocumentDomain). When this option
-is set to true, `cy.origin()` will not be required to navigate between origins, as long as the superdomain matches.
+is set to true, `cy.origin()` is not required to navigate between origins, as long as the superdomain matches.
 
 <Icon name="exclamation-triangle" /> If `injectDocumentDomain` is set to `true`,
-Cypress will warn that this option is deprecated.
+Cypress warns that this option is deprecated.
 
 <Icon name="exclamation-triangle" /> `injectDocumentDomain` will be removed in a
 future version of Cypress.
@@ -1651,10 +1651,10 @@ notes](/app/references/configuration#injectDocumentDomain) before use.
 
 <Icon name="exclamation-triangle" /> Chrome may remove support for
 `document.domain` at any time; if this configuration option is enabled, Cypress
-may cease to work in Chrome at any time. If this occurs, Chrome will raise an
-issue in its developer tools indicating that the deprecated `document.domain` is
-in use. To resolve this issue, set the `injectDocumentDomain` option to `false`
-and issue any newly necessary `cy.origin()` commands.
+may cease to work in Chrome at any time. If this occurs, Chrome raises an issue
+in its developer tools indicating that the deprecated `document.domain` is in
+use. To resolve this issue, set the `injectDocumentDomain` option to `false` and
+issue any newly necessary `cy.origin()` commands.
 
 :::
 
@@ -1695,7 +1695,7 @@ to enable Just in Time (JIT) compilation for Component Testing with `vite` and `
 - JIT compilation is the default behavior for component tests as a [`justInTimeCompile`](/app/references/configuration#component) component configuration option.
 - JIT compilation no longer applies with `vite`, since there is no benefit to enabling this with `vite`.
 
-This option will only compile resources directly related to your spec, compiling them 'just-in-time' before spec execution. Just-in-time compiling should result in improved memory management and performance for component tests in `cypress open` and `cypress run` modes, especially for large test suites.
+This option only compiles resources directly related to your spec, compiling them 'just-in-time' before spec execution. Just-in-time compiling should result in improved memory management and performance for component tests in `cypress open` and `cypress run` modes, especially for large test suites.
 
 #### Disable JIT Compilation
 
@@ -1815,7 +1815,7 @@ import { mount } from '@cypress/angular'
 
 If you haven't been able to migrate away from Vue 2 and still need that test harness, it can be installed independently via the [@cypress/vue2](https://www.npmjs.com/package/@cypress/vue2) package.
 
-This test harness is deprecated and no longer supported by Cypress. This package is intended to serve as a temporary workaround to migrate your project to Vue 3. The Cypress launchpad will warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
+This test harness is deprecated and no longer supported by Cypress. This package is intended to serve as a temporary workaround to migrate your project to Vue 3. The Cypress launchpad warns against Component testing mismatched dependencies, but this does not stop you from running your component tests.
 
 <PackageManagerTabs install="@cypress/vue2" dev />
 
@@ -1845,7 +1845,7 @@ If you haven't been able to migrate away from Nuxt 2, the underlying Vue 2 harne
 
 ### Create React App CT no longer supported
 
-[create-react-app](https://create-react-app.dev/) is no longer actively maintained or supported (see [CRA issue #13393](https://github.com/facebook/create-react-app/issues/13393)). Your component tests will now need a bundler to run. If still using [create-react-app](https://create-react-app.dev/), you'll either need to:
+[create-react-app](https://create-react-app.dev/) is no longer actively maintained or supported (see [CRA issue #13393](https://github.com/facebook/create-react-app/issues/13393)). Your component tests now need a bundler to run. If still using [create-react-app](https://create-react-app.dev/), you either need to:
 
 - [Eject](https://create-react-app.dev/docs/available-scripts/#npm-run-eject) the configuration to bundle with webpack.
 - Use [vite](https://vite.dev/guide/) to bundle your component tests (quick setup with [create-vite](https://github.com/vitejs/vite/tree/main/packages/create-vite)).
@@ -1870,7 +1870,7 @@ module.exports = defineConfig({
 
 ### `@vue/cli-service` CT no longer supported
 
-`@vue/cli-service` is in [maintenance mode](https://cli.vuejs.org/guide/cli-service.html) and is no longer maintained by the Vue core team. Your component tests will now need a bundler to run. If still using [Vue CLI](https://cli.vuejs.org/), you will either need to:
+`@vue/cli-service` is in [maintenance mode](https://cli.vuejs.org/guide/cli-service.html) and is no longer maintained by the Vue core team. Your component tests now need a bundler to run. If still using [Vue CLI](https://cli.vuejs.org/), you either need to:
 
 - Migrate to webpack ([see example](https://github.com/cypress-io/cypress-component-testing-apps/tree/main/vue3-webpack-ts)).
 - Use [vite](https://vite.dev/guide/). The Vue team recommends migrating to using `create-vue` to scaffold a [Vite](https://vite.dev/)-based project.
@@ -1919,7 +1919,7 @@ However, if you have not been able to upgrade Svelte and still need the Cypress 
 
 <PackageManagerTabs install="@cypress/svelte@2" dev />
 
-This version of the test harness is deprecated and no longer actively supported by Cypress and is intended to serve as a temporary work around until you are able to migrate your project to Svelte 5+. The Cypress launchpad will also warn against Component testing mismatched dependencies, but this will not stop you from running your component tests.
+This version of the test harness is deprecated and no longer actively supported by Cypress and is intended to serve as a temporary work around until you are able to migrate your project to Svelte 5+. The Cypress launchpad also warns against Component testing mismatched dependencies, but this does not stop you from running your component tests.
 
 To update, inside your support file (ex: `./cypress/support/component.(js|ts)`) or wherever your mount function is imported, change
 
@@ -1969,7 +1969,7 @@ Additionally, the minimum supported TypeScript version is `4.x`.
 
 You may need to allowlist `capture.cypress.io` if you work with a strict VPN. See our FAQ section about [VPN subdomain allowlisting](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
-With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. Hiding the Runner UI has two side effects: recorded video will not show the Runner, and a screenshot taken with `capture: 'runner'` is captured as if `capture: 'viewport'` were passed. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/references/command-line#cypress-run) command.
+With Test Replay enabled, the Cypress Runner UI is hidden by default when recording a run to the Cloud. Hiding the Runner UI has two side effects: recorded video does not show the Runner, and a screenshot taken with `capture: 'runner'` is captured as if `capture: 'viewport'` were passed. If the Runner UI is needed during the run, you can enable it by passing [`--runner-ui`](/app/references/command-line#cypress-run-runner-ui) to the [`cypress run`](/app/references/command-line#cypress-run) command.
 
 You can [opt-out](/cloud/features/test-replay#Opt-out-of-Test-Replay) of this feature in Cloud project-level settings.
 
@@ -1999,7 +1999,7 @@ If you want to prevent a passing test from uploading to the Cloud, we recommend 
 
 Cypress has the capability to compress recorded videos after a run to reduce the video file size. By default, compression is now turned off. Skipping compression results in a reduced run time by removing the time to compress the video, a larger video file size, and better video quality.
 
-You can enable this with the `videoCompression` [configuration](/app/references/configuration#Videos) option if you'd like to reduce the video file size for any reason. Compression will also reduce the video quality and take slightly longer to process and complete the run.
+You can enable this with the `videoCompression` [configuration](/app/references/configuration#Videos) option if you'd like to reduce the video file size for any reason. Compression also reduces the video quality and takes slightly longer to process and complete the run.
 
 :::cypress-config-example
 
@@ -2022,14 +2022,14 @@ In Cypress `v13`, the [`.readFile()`](/api/commands/readfile) command is now a q
 Tests written using it should continue to operate exactly as before; no changes
 are necessary.
 
-`readFile()` will re-read the file from disk if any upcoming command in the same
+`readFile()` re-reads the file from disk if any upcoming command in the same
 chain fails. Assertions no longer have to be directly attached.
 
 ```js
 cy.readFile(`users.json`).its('users.123.fullName').should('eq', 'John Doe')
 ```
 
-Beginning with Cypress `v13`, the above test will re-read the file until the file
+Beginning with Cypress `v13`, the above test re-reads the file until the file
 exists, it has the requested property, and it passes the assertion.
 
 In previous versions of Cypress, the above command would retry until the file
@@ -2039,7 +2039,7 @@ requested property or the contents didn't match.
 #### `.readFile()` can no longer be overwritten with `Cypress.Commands.overwrite()`
 
 Queries must be overwritten using `Cypress.Commands.overwriteQuery()`. If you
-were previously overwriting `cy.readFile()`, you will need to update your code
+were previously overwriting `cy.readFile()`, you need to update your code
 to use `Cypress.Commands.overwriteQuery('readFile', function() { ... })` rather
 than `Cypress.Commands.overwrite('readFile', () => { ... })`. For more details
 on overwriting queries, see the
@@ -2178,8 +2178,8 @@ it('securely edits content', () => {
 
 The just-released `cy.session()` command can be used to setup and cache cookies,
 local storage, and session storage between tests to re-establish the
-previous (or common) browser contexts needed in a suite. This command will run
-setup on its initial execution and will restore the saved browser state on each
+previous (or common) browser contexts needed in a suite. This command runs
+setup on its initial execution and restores the saved browser state on each
 sequential command execution. This command reduces the need for repeated
 application logins, while users also benefit from the test isolation guardrails
 to write independent, reliable, and deterministic tests from the start.
@@ -2230,7 +2230,7 @@ describe('workflow', { testIsolation: false }, () => {
 
 In the above example, each test is relying on the previous test to be
 _successful_ to correctly execute. If at any point, the first or second test
-fails, the sequential test(s) will automatically fail and provide unreliable
+fails, the sequential test(s) automatically fail and provide unreliable
 debugging errors since the errors are representative of the previous test.
 
 The best way to ensure your tests are independent is to add a `.only()` to your
@@ -2303,7 +2303,7 @@ alias to be the first button rather than the unexpanded button.
 cy.findByTestId('popover').findAllByRole('button').first().as('button')
 ```
 
-If you want to alias a static value, such that it is never re-queried, you will
+If you want to alias a static value, such that it is never re-queried, you
 need Cypress [12.3.0](/app/references/changelog#12-3-0) or later, which
 introduced the `type` option for [`.as()`](/api/commands/as) to opt into the old
 behavior.
@@ -2418,7 +2418,7 @@ cy.wrap(myAPI)
    .then(res => { ...handle response... })
 ```
 
-If `.invoke()` is followed by additional commands or assertions, it will call
+If `.invoke()` is followed by additional commands or assertions, it calls
 the named function multiple times. Calling the function again has the benefit that the chained
 assertions can more reliably use the function's return value.
 
@@ -2784,12 +2784,12 @@ There is one breaking change for Angular users in regards to providers. In
 Cypress 10, we took any providers passed as part of the Mounting Options and
 overrode the component providers via the `TestBed.overrideComponent` API.
 
-In Cypress 11, providers passed as part of the Mounting Options will be assigned
+In Cypress 11, providers passed as part of the Mounting Options are assigned
 at the module level using the `TestBed.configureTestingModule` API.
 
 This change means that module-level providers (resolved from imports or
 `@Injectable({ providedIn: 'root' })` can be overridden, but providers specified
-in `@Component({ providers: [...] })` will not be overridden when using
+in `@Component({ providers: [...] })` are not overridden when using
 `cy.mount(MyComponent, { providers: [...] })`.
 
 To override component-level providers, use the `TestBed.overrideComponent` API.
@@ -2883,7 +2883,7 @@ version 10.0.
 - The experimental "Cypress Studio" has been removed and will be
   rethought/revisited in a later release.
 - Unsupported browser versions can no longer be run via `cypress run` or
-  `cypress open`. Instead, an error will display.
+  `cypress open`. Instead, an error displays.
 - In 9.x and earlier versions, `cypress open` would bring you directly to the
   project specs list. In 10.0.0, you must pass `--browser` and `--e2e` or
   `--component` as well to launch Cypress directly to the specs list.
@@ -2891,7 +2891,7 @@ version 10.0.
 ### Configuration File Changes
 
 Cypress now supports JavaScript and TypeScript configuration files. By default,
-Cypress will automatically load a `cypress.config.js` or `cypress.config.ts`
+Cypress automatically loads a `cypress.config.js` or `cypress.config.ts`
 file in the project root if one exists. The
 [Configuration guide](/app/references/configuration) has been updated to
 reflect these changes, and explains them in greater detail.
@@ -2901,7 +2901,7 @@ Because of this, support for `cypress.json` has been removed since Cypress `v10`
 Related notes:
 
 - If no config file exists when you open Cypress, the automatic set up process
-  will begin and either a JavaScript or TypeScript config file will be created
+  begins and creates either a JavaScript or TypeScript config file
   depending on what your project uses.
 - You may use the `--config-file` command line flag or the `configFile`
   [module API](/app/references/module-api) option to specify a `.js` or `.ts`
@@ -2909,12 +2909,12 @@ Related notes:
 - Cypress now requires a config file, so specifying `--config-file false` on the
   command line or a `configFile` value of `false` in the module API is no longer
   valid.
-- You can't have both `cypress.config.js` _and_ `cypress.config.ts` files. Having both files will result in an error when Cypress loads.
+- You can't have both `cypress.config.js` _and_ `cypress.config.ts` files. Having both files results in an error when Cypress loads.
 - A
   [`defineConfig()`](/app/references/configuration#Intelligent-Code-Completion)
   helper function is now exported by Cypress, which provides automatic code
   completion for configuration in many popular code editors. For TypeScript
-  users, the `defineConfig` function will ensure the configuration object passed
+  users, the `defineConfig` function ensures the configuration object passed
   into it satisfies the type definition of the configuration file.
 - Many pages and examples throughout the documentation have been updated to show
   configuration using `cypress.config.js` and `cypress.config.ts` vs the older
@@ -2982,7 +2982,7 @@ configuration, and may only be defined inside the
 :::caution
 
 Attempting to set the `baseUrl` config option at the top level of the
-configuration will result in an error when Cypress loads.
+configuration results in an error when Cypress loads.
 
 :::
 
@@ -2994,7 +2994,7 @@ by the `specPattern`
 
 :::caution
 
-Attempting to set the `componentFolder` config option will result in an error
+Attempting to set the `componentFolder` config option results in an error
 when Cypress loads.
 
 :::
@@ -3181,7 +3181,7 @@ removed and will be rethought/revisited in a later release.
 
 :::caution
 
-Attempting to set the `experimentalStudio` config option will result in an error
+Attempting to set the `experimentalStudio` config option results in an error
 when Cypress loads.
 
 :::
@@ -3225,11 +3225,11 @@ Default values
 
 :::caution
 
-Attempting to set the `ignoreTestFiles` config option will result in an error
+Attempting to set the `ignoreTestFiles` config option results in an error
 when Cypress loads.
 
 Also, attempting to set the `excludeSpecPattern` config option at the top level
-of the configuration will result in an error when Cypress loads.
+of the configuration results in an error when Cypress loads.
 
 :::
 
@@ -3240,7 +3240,7 @@ This option is no longer used, as it has been replaced by the `specPattern`
 
 :::caution
 
-Attempting to set the `integrationFolder` config option will result in an error
+Attempting to set the `integrationFolder` config option results in an error
 when Cypress loads.
 
 :::
@@ -3255,7 +3255,7 @@ for more details.
 
 :::caution
 
-Attempting to set the `pluginsFile` config option will result in an error when
+Attempting to set the `pluginsFile` config option results in an error when
 Cypress loads.
 
 :::
@@ -3309,7 +3309,7 @@ module.exports = (on, config) => {
 
 :::
 
-Alternately, you can continue to use an external plugins file, but you will need
+Alternately, you can continue to use an external plugins file, but you need
 to load that file explicitly, and also update it to move any component testing
 dev server code into the [`devServer`](#devServer) config option.
 
@@ -3347,7 +3347,7 @@ The default values are unchanged (`10000` for `e2e` and `250` for
 :::caution
 
 Attempting to set the `slowTestThreshold` config option at the top level of the
-configuration will result in an error when Cypress loads.
+configuration results in an error when Cypress loads.
 
 :::
 
@@ -3383,9 +3383,9 @@ More information can be found in the
 :::caution
 
 Attempting to set the `supportFile` config option at the top level of the
-configuration will result in an error when Cypress loads.
+configuration results in an error when Cypress loads.
 
-Also, for a given testing type, multiple matching `supportFile` files will
+Also, for a given testing type, multiple matching `supportFile` files
 result in an error when Cypress loads.
 
 :::
@@ -3405,18 +3405,17 @@ Default values:
 
 Important note about matching:
 
-- E2E tests will be found using the `e2e.specPattern` value.
-- Component tests will be found using the `component.specPattern` value but any
-  tests found matching the `e2e.specPattern` value will be automatically
-  excluded.
+- Cypress finds E2E tests using the `e2e.specPattern` value.
+- Cypress finds component tests using the `component.specPattern` value but
+  automatically excludes any tests matching the `e2e.specPattern` value.
 
 :::caution
 
-Attempting to set the `testFiles` config option will result in an error when
+Attempting to set the `testFiles` config option results in an error when
 Cypress loads.
 
 Also, attempting to set the `specPattern` config option at the top level of the
-configuration will result in an error when Cypress loads.
+configuration results in an error when Cypress loads.
 
 :::
 
@@ -3456,26 +3455,26 @@ example:
 :::caution
 
 Attempting to set `componentFolder`, `integrationFolder`, or `testFiles` in the
-config will result in an error when Cypress loads.
+config results in an error when Cypress loads.
 
 :::
 
 :::danger
 
 For Cypress Cloud users, changing your `specPattern` and files names or
-extensions of your spec files will result in a loss of data in Cypress Cloud.
+extensions of your spec files results in a loss of data in Cypress Cloud.
 Because of this, if we detect your project is using Cypress Cloud during
-automatic migration, we won't suggest changing your spec files. We also don't
+automatic migration, we don't suggest changing your spec files. We also don't
 recommend doing it manually if you are a Cypress Cloud user.
 
 :::
 
 ### Generated Files
 
-Generated screenshots and videos will still be created inside their respective
+Cypress still creates generated screenshots and videos inside their respective
 [folders](/app/references/configuration#Folders--Files) (`screenshotsFolder`,
-`videosFolder`). However, the paths of generated files inside those folders will
-be stripped of any common ancestor paths shared between all spec files found by
+`videosFolder`). However, Cypress strips the paths of generated files inside those folders
+of any common ancestor paths shared between all spec files found by
 the `specPattern` option (or via the `--spec` command line option or `spec`
 module API option, if specified).
 
@@ -3512,8 +3511,8 @@ Here are a few examples, assuming the value of `videosFolder` is
 
 #### `cy.mount()`
 
-If you set up your app using the automatic configuration wizard, a basic
-[`cy.mount()`](/api/commands/mount) command will be imported for you in your
+If you set up your app using the automatic configuration wizard, the wizard imports a basic
+[`cy.mount()`](/api/commands/mount) command for you in your
 support file from one our supported frameworks.
 
 #### `Cypress.Commands.add()`
@@ -3548,7 +3547,7 @@ should be uninstalled in Cypress 10.
 
 You may want to consider configuring your app with a separate `tsconfig.json` to solve
 [clashing types with jest](/app/tooling/typescript-support#Clashing-types-with-Jest).
-You will need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
+You need to exclude `cypress.config.ts`, `cypress`, `node_modules` in your
 root `tsconfig.json` file.
 
 ```json
@@ -3560,8 +3559,8 @@ root `tsconfig.json` file.
 ### Code Coverage Plugin
 
 The [Cypress Code Coverage](https://github.com/cypress-io/code-coverage#readme)
-plugin will need to be updated to version >= 3.10 to work with Cypress 10. Using
-a previous version will result in an error when tests are ran with code coverage
+plugin needs to be updated to version >= 3.10 to work with Cypress 10. Using
+a previous version results in an error when tests are ran with code coverage
 enabled.
 
 --

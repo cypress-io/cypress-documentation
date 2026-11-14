@@ -49,12 +49,12 @@ An object describing the browser being launched, with the following properties:
 Options that can be modified to control how the browser is launched, with the
 following properties:
 
-| Property      | Type       | Description                                                                                                                                                                                                |
-| ------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Change browser preferences](#Change-browser-preferences) for details.                                                             |
-| `args`        | `string[]` | An array of strings that will be passed as command-line args when the browser is launched. Has no effect on Electron. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details. |
-| `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions to be loaded before the browser starts. See [Add browser extensions](#Add-browser-extensions) for details.                                  |
-| `env`         | `object`   | An object of system environment variables to pass to the launched browser. See [Configure browser environment](#Configure-browser-environment) for details.                                                |
+| Property      | Type       | Description                                                                                                                                                                                            |
+| ------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `preferences` | `object`   | An object describing browser preferences. Differs between browsers. See [Change browser preferences](#Change-browser-preferences) for details.                                                         |
+| `args`        | `string[]` | An array of strings that are passed as command-line args when the browser is launched. Has no effect on Electron. See [Modify browser launch arguments](#Modify-browser-launch-arguments) for details. |
+| `extensions`  | `string[]` | An array of paths to folders containing unpacked WebExtensions to be loaded before the browser starts. See [Add browser extensions](#Add-browser-extensions) for details.                              |
+| `env`         | `object`   | An object of system environment variables to pass to the launched browser. See [Configure browser environment](#Configure-browser-environment) for details.                                            |
 
 ## Usage
 
@@ -63,11 +63,11 @@ function you can tap into the `before:browser:launch` event and modify how
 Cypress launches the browser (e.g. modify arguments, user preferences, and
 extensions).
 
-This event will yield you the `browser` object, which gives you information
+This event yields you the `browser` object, which gives you information
 about the browser, and the `launchOptions` object, which controls how the
 browser is launched.
 
-The returned `launchOptions` object will become the new launch options for the
+The returned `launchOptions` object becomes the new launch options for the
 browser.
 
 ### Modify browser launch arguments
@@ -240,8 +240,8 @@ opening a new tab and typing `chrome://version` url.
 ### Set screen size when running headless
 
 When a browser runs headless, there is no physical display. You can override the
-default screen size of 1280x720 when running headless as shown below. The screen size will
-affect the size of screenshots and videos taken during the run.
+default screen size of 1280x720 when running headless as shown below. The screen size
+affects the size of screenshots and videos taken during the run.
 
 :::caution
 

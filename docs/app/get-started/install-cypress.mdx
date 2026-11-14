@@ -50,7 +50,7 @@ Attempting to use it as a non-root user may result in permissions errors.
 
 :::
 
-If you're using a [Cypress Docker image](/app/continuous-integration/overview#Cypress-Docker-variants), you'll find a fixed version of Node.js is pre-installed in the image. You select the Node.js version using the Docker image tag.
+If you're using a [Cypress Docker image](/app/continuous-integration/overview#Cypress-Docker-variants), a fixed version of Node.js is pre-installed in the image. You select the Node.js version using the Docker image tag.
 
 ### Package Manager
 
@@ -66,7 +66,7 @@ Cypress is installed using one of the following supported package managers:
 
 Cypress uses a `postinstall` script to download the Cypress binary into the [binary cache](/app/references/advanced-installation#Binary-cache).
 As a security hardening measure, package managers increasingly block dependency lifecycle scripts such as `postinstall` by default.
-When the script is blocked, the Cypress binary is not downloaded and Cypress will not run.
+When the script is blocked, the Cypress binary is not downloaded and Cypress does not run.
 
 The sections below describe how to allow Cypress to run its `postinstall` script, or how to install the Cypress binary explicitly, for each supported package manager.
 

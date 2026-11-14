@@ -36,11 +36,11 @@ return config
 
 :::
 
-Whenever you return an object from your `setupNodeEvents` function, Cypress will
-take this and "diff" it against the original configuration and automatically set
+Whenever you return an object from your `setupNodeEvents` function, Cypress
+takes the object and "diffs" it against the original configuration and automatically set
 the resolved values to point to what you returned.
 
-If you don't return an object, then configuration will not be modified.
+If you don't return an object, then configuration is not modified.
 
 :::caution
 
@@ -57,7 +57,7 @@ modified from the `setupNodeEvents` function in the Cypress configuration.**
 
 :::
 
-Resolved values will show up in the "Settings" tab.
+Resolved values show up in the "Settings" tab.
 
 <DocsImage
   src="/img/app/configuration/plugin-configuration.png"
@@ -66,7 +66,7 @@ Resolved values will show up in the "Settings" tab.
 
 ### Promises
 
-Additionally, Cypress will respect and await promises you return. Awaiting promises enables
+Additionally, Cypress respects and awaits promises you return. Awaiting promises enables
 you to perform asynchronous tasks and eventually resolve with the modified
 configuration object. See the
 [example on switching between multiple configuration files](#Switch-between-multiple-configuration-files)

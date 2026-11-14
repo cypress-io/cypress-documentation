@@ -149,7 +149,7 @@ for the download of the Cypress binary.
 You can also use the npm properties
 `npm_config_proxy` and `npm_config_https_proxy`.
 The npm properties have lower priority, so
-they will only be used if the system properties are being resolved to not use a proxy.
+Cypress only uses them if the system properties are being resolved to not use a proxy.
 
 ## Install binary
 
@@ -196,7 +196,7 @@ download entirely.
 CYPRESS_INSTALL_BINARY=0 npm install
 ```
 
-Now Cypress will skip its install phase once the npm module is installed.
+Now Cypress skips its install phase once the npm module is installed.
 
 ### Troubleshoot installation
 
@@ -294,7 +294,7 @@ DEBUG=cypress:cli* bunx cypress install
 
 ### Install pre-release version
 
-Occasionally you'll want to verify a fix or try a feature before it ships in an
+Occasionally you want to verify a fix or try a feature before it ships in an
 official release. The Cypress team may also ask you to install a pre-release to
 confirm that an issue you reported is resolved before it's released. Cypress
 publishes a pre-release binary for individual commits on `develop`, which you can
@@ -360,7 +360,7 @@ AI agent sandboxes often block these hosts by default. See
 [Network hosts to allow in an agent sandbox](/app/tooling/cypress-agent-sandboxes#Network-hosts-to-allow-in-an-agent-sandbox)
 for the full list a sandbox needs.
 
-If you also run tests against Cypress Cloud, you'll need to allow additional
+If you also run tests against Cypress Cloud, you need to allow additional
 URLs. See the full list of
 [subdomains to allow on a restrictive VPN](/cloud/faq#Im-working-with-a-restrictive-VPN-Which-subdomains-do-I-have-to-allow-on-my-VPN-for-Cypress-Cloud-to-work-properly).
 
@@ -412,7 +412,7 @@ For example:
 CYPRESS_DOWNLOAD_MIRROR="https://www.example.com" cypress install
 ```
 
-Cypress will then attempt to download a binary with this format:
+Cypress then attempts to download a binary with this format:
 `https://www.example.com/desktop/:version?platform=p&arch=a`
 
 Your mirror server must handle requests to `/desktop/:version` with `platform`
@@ -430,7 +430,7 @@ and `arch` query parameters, and serve the appropriate Cypress binary as a
 | `win32`    | `x64`   | Windows; also used for ARM64 Windows (no native ARM64 binary) |
 
 On Windows ARM64 machines, Cypress automatically substitutes `arm64` with `x64`
-when building the download URL, so your mirror will only ever receive `win32`
+when building the download URL, so your mirror only ever receives `win32`
 requests with `arch=x64`.
 
 On macOS, Cypress detects the machine's real architecture rather than relying on
@@ -545,7 +545,7 @@ CYPRESS_DOWNLOAD_PATH_TEMPLATE=\${endpoint}/\${platform}-\${arch}/cypress.zip
 ### Using a custom certificate authority (CA)
 
 Networks that intercept TLS (or serve downloads from an internal host with a
-private certificate) will cause the download to fail certificate validation.
+private certificate) cause the download to fail certificate validation.
 Pointing Cypress at your organization's CA lets the download succeed without
 disabling TLS verification.
 
@@ -653,7 +653,7 @@ $env:CYPRESS_CACHE_FOLDER = "~/.cache/Cypress"
 </TabItem>
 </Tabs>
 
-Cypress will automatically replace the `~` with the user's home directory. So
+Cypress automatically replaces the `~` with the user's home directory. So
 you can pass `CYPRESS_CACHE_FOLDER` as a string from CI configuration files, for
 example:
 
@@ -670,7 +670,7 @@ section in the documentation.
 
 :::caution
 
-`CYPRESS_CACHE_FOLDER` will need to exist every time cypress is launched. To
+`CYPRESS_CACHE_FOLDER` needs to exist every time cypress is launched. To
 ensure this, consider exporting this environment variable. For example, in a
 `.bash_profile` (MacOS, Linux), or using `RegEdit` (Windows).
 
@@ -700,7 +700,7 @@ a binary to a known location and want to run it directly.
 
 `CYPRESS_RUN_BINARY` should be a path to an already unzipped Cypress binary executable.
 The Cypress commands [open](/app/references/command-line#cypress-open), [run](/app/references/command-line#cypress-run), and [verify](command-line#cypress-verify)
-will then launch the provided binary.
+then launch the provided binary.
 
 The following example [cypress run](/app/references/command-line#cypress-run) commands assume that you have first
 downloaded the Cypress binary to the default `Downloads` directory of your operating system.
@@ -909,7 +909,7 @@ Add the feature to your `devcontainer.json` and forward the necessary ports:
 }
 ```
 
-After rebuilding the container, open `http://localhost:6080` in your browser and log in with the default password `vscode`. Running `cypress open` in the terminal will display the Cypress UI in that browser-based desktop.
+After rebuilding the container, open `http://localhost:6080` in your browser and log in with the default password `vscode`. Running `cypress open` in the terminal displays the Cypress UI in that browser-based desktop.
 
 Replace `cypress/included` with the specific [Cypress Docker image tag](https://github.com/cypress-io/cypress-docker-images) that matches your required Cypress and Node.js versions (for example, `cypress/included:14.0.0`).
 

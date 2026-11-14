@@ -36,8 +36,8 @@ cy.tick(500)
 
 <Icon name="angle-right" /> **milliseconds _(Number)_**
 
-The number of `milliseconds` to move the clock. Any timers within the affected
-range of time will be called.
+The number of `milliseconds` to move the clock. Cypress calls any timers within
+the affected range of time.
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -53,8 +53,8 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 
 - **`clock.tick(milliseconds)`**
 
-  Move the clock a number of milliseconds. Any timers within the affected range
-  of time will be called.
+  Move the clock a number of milliseconds. Cypress calls any timers within the
+  affected range of time.
 
 - **`clock.restore()`**
 
@@ -132,7 +132,7 @@ cy.clock().invoke('restore')
 <HeaderAssertions />
 
 - `cy.tick()` is a utility command.
-- `cy.tick()` will not run assertions. Assertions will pass through as if this
+- `cy.tick()` does not run assertions. Assertions pass through as if this
   command did not exist.
 
 <HeaderTimeouts />
@@ -148,7 +148,7 @@ cy.clock()
 cy.tick(1000)
 ```
 
-The command above will display in the Command Log as:
+The command above displays in the Command Log as:
 
 <DocsImage
   src="/img/api/tick/tick-machine-clock-1-second-in-time.png"

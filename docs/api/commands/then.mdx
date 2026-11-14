@@ -57,22 +57,23 @@ Pass a function that takes the previously yielded subject as its first argument.
 
 <HeaderYields />
 
-Whatever is returned from the callback function becomes the new subject and will
-flow into the next command (with the exception of `undefined` or `null`).
+Whatever is returned from the callback function becomes the new subject and flows
+into the next command (with the exception of `undefined` or `null`).
 
 - If the return value is a chain of Cypress commands (eg
-  `return cy.get('button')`), Cypress will wait for them to resolve and use
+  `return cy.get('button')`), Cypress waits for them to resolve and uses
   their return value as the new subject.
-- If the return value is a Promise, Cypress will wait for it to resolve, and use
+- If the return value is a Promise, Cypress waits for it to resolve, and uses
   the resolved value as the new subject to continue the chain of commands.
 - If the callback returns `undefined` or `null` (or there is no return value),
-  the result of the last Cypress command in the callback function will be
-  yielded as the new subject instead, and flow into the next command.
+  Cypress yields the result of the last Cypress command in the callback
+  function as the new subject instead, and that result flows into the next
+  command.
 - If the callback returns `undefined` or `null` (or there is no return value)
-  and the callback does not call any Cypress commands, the subject will not be
-  modified, and the previous subject will carry over to the next command.
+  and the callback does not call any Cypress commands, the subject is not
+  modified, and the previous subject carries over to the next command.
 - If the callback calls Cypress commands **and** returns a non-`undefined`,
-  non-`null` synchronous value, Cypress will throw an error: _"cy.then() failed
+  non-`null` synchronous value, Cypress throws an error: _"cy.then() failed
   because you are mixing up async and sync code."_ To return a new synchronous
   value while also using Cypress commands, wrap the return value in a nested
   `.then()` that contains no Cypress commands (see example below).
@@ -156,7 +157,7 @@ cy.wrap(1)
   .should('equal', 2) // true
 ```
 
-#### Returning `undefined` will not modify the yielded subject
+#### Returning `undefined` does not modify the yielded subject
 
 ```javascript
 cy.get('form')
@@ -301,7 +302,7 @@ explanation of how Cypress retries queries before each action.
 
 <HeaderAssertions />
 
-- `.then()` will only run assertions you have chained once, and will not
+- `.then()` only runs assertions you have chained once, and does not
   [retry](/app/core-concepts/retry-ability).
 
 <HeaderTimeouts />

@@ -75,12 +75,12 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 
 <HeaderAssertions />
 
-- `.shadow()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.shadow()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.shadow()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.shadow()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s) host(s) a shadow root.
-- `.shadow()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.shadow()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -92,7 +92,7 @@ cy.get('.shadow-host').shadow().find('.my-button').click()
 
 ## Known Issue
 
-When working with `cy.click()`, it sometimes won't click the right element in
+When working with `cy.click()`, it sometimes doesn't click the right element in
 Chrome. The misclick happens because of
 [the ambiguity in spec](https://bugs.chromium.org/p/chromium/issues/detail?id=1188919&q=shadowRoot%20elementFromPoint&can=2).
 
@@ -110,7 +110,7 @@ cy.get('#element').shadow().find('[data-test-id="my-button"]').click('top')
 cy.get('.shadow-host').shadow()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/shadow/shadow-command-log.png"

@@ -196,9 +196,9 @@ this supported.
 
 ### Restores
 
-#### Cypress will restore the viewport in the snapshot
+#### Cypress restores the viewport in the snapshot
 
-When hovering over each command, Cypress will automatically display the snapshot
+When hovering over each command, Cypress automatically displays the snapshot
 in the viewport dimensions that existed when that command ran.
 
 ### Defaults
@@ -231,15 +231,15 @@ between each test.
 #### Auto Scaling
 
 By default, if your screen is not large enough to display all of the current
-dimension's pixels, Cypress will scale and center your application within the
+dimension's pixels, Cypress scales and centers your application within the
 preview pane to accommodate.
 
 Scaling the app should not affect any calculations or behavior of your
-application (in fact it won't even know it's being scaled).
+application (in fact the application doesn't even know it's being scaled).
 
 The upsides to this are that tests should consistently pass or fail regardless
-of a developers' screen size. Tests will also consistently run in `CI` because
-all of the viewports will be the same no matter what machine Cypress runs on.
+of a developers' screen size. Tests also consistently run in `CI` because
+all of the viewports are the same no matter what machine Cypress runs on.
 
 ### `Cypress.config()` cannot change the viewport during a test
 
@@ -259,7 +259,7 @@ You can configure the size of the viewport height and width within a suite or
 test by passing the new configuration value within the
 [test configuration](/app/references/configuration#Test-Configuration).
 
-The test configuration will set the height and width throughout the duration of the tests, then
+The test configuration sets the height and width throughout the duration of the tests, then
 return it to the default `viewportHeight` and `viewportWidth` when complete.
 
 ```js
@@ -311,7 +311,7 @@ cy.get('.navbar-toggle').click()
 cy.get('.nav').find('a').should('be.visible')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/viewport/viewport-size-width-and-height-changes-and-is-shown-in-the-commands.png"

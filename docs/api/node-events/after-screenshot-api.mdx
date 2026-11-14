@@ -56,13 +56,13 @@ properties:
 Using [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) you can
 tap into the `after:screenshot` event.
 
-If you change the `path`, `size` or `dimensions` of the image, you'll want to
+If you change the `path`, `size` or `dimensions` of the image, you want to
 update the new values so that the details are correctly reported in the test
-results. _Any other properties besides `path`, `size`, and `dimensions` will be
+results. _Any other properties besides `path`, `size`, and `dimensions` are
 ignored._
 
 You can return an object or a promise that resolves to an object from the
-callback function. _Any type of returned value other than an object will be
+callback function. _Any type of returned value other than an object is
 ignored._ The object can contain the following properties:
 
 - **path**: The absolute path to the current location of the image
@@ -70,14 +70,14 @@ ignored._ The object can contain the following properties:
 - **dimensions**: The width and height of the current image in pixels (as an
   object with the shape `{ width: 100, height: 50 }`)
 
-The properties will be merged into the screenshot details and passed to the
+Cypress merges the properties into the screenshot details and passes them to the
 `onAfterScreenshot` callback (if defined with
 [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api) and/or
 [cy.screenshot()](/api/commands/screenshot)).
 
 #### Modify screenshot path
 
-If you move the location of the screenshot image, you'll want to specify the new
+If you move the location of the screenshot image, you want to specify the new
 `path` of the image.
 
 :::cypress-config-plugin-example

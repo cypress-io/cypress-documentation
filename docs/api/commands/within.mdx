@@ -233,7 +233,7 @@ cy.get('.ag-header-cell')
 
 <HeaderAssertions />
 
-- `.within()` will only run assertions you have chained once, and will not
+- `.within()` only runs assertions you have chained once, and does not
   [retry](/app/core-concepts/retry-ability).
 
 <HeaderTimeouts />
@@ -250,7 +250,7 @@ cy.get('.query-form').within((el) => {
 })
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/within/go-within-other-dom-elements.png"

@@ -151,9 +151,9 @@ state leaves that state when you uncheck it, whether or not the click happens.
 
 <HeaderAssertions />
 
-- `.uncheck()` will automatically wait for the element to reach an
+- `.uncheck()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.uncheck()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.uncheck()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -174,7 +174,7 @@ cy.get('[data-js="choose-all"]')
   .uncheck()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/uncheck/test-unchecking-a-checkbox.png"

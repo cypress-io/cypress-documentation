@@ -88,7 +88,7 @@ Once installed, open the Cypress app to complete initial configuration:
 
 <CypressOpenCommands />
 
-The Cypress App will walk you through choosing a testing type (end-to-end or component) and generating a starter configuration file. After setup, Cypress creates a `cypress.config.js` (or `.ts`) file and a `cypress/` directory in your project root.
+The Cypress App walks you through choosing a testing type (end-to-end or component) and generating a starter configuration file. After setup, Cypress creates a `cypress.config.js` (or `.ts`) file and a `cypress/` directory in your project root.
 
 If your Playwright tests are written in TypeScript, add a `tsconfig.json` inside
 the `cypress/` folder so Cypress globals (`cy`, `Cypress`) type-check:
@@ -274,7 +274,7 @@ See [cy.env()](/api/commands/env) and
 ## Browser installation
 
 Playwright and Cypress take different approaches to browser management.
-Understanding the difference will help you set up CI correctly.
+Understanding the difference helps you set up CI correctly.
 
 ### How each framework handles browsers
 
@@ -284,8 +284,8 @@ Chromium, Firefox, and WebKit that are separate from any browsers installed
 on your system.
 
 Cypress uses browsers already installed on the machine. There are no
-browser binaries to download. If Chrome is installed locally, Cypress will
-find and use it. Using installed browsers means browser setup is a CI concern rather than a
+browser binaries to download. If Chrome is installed locally, Cypress
+finds and uses it. Using installed browsers means browser setup is a CI concern rather than a
 per-project dependency.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -721,7 +721,7 @@ See Cypress assertions at [Assertions](/app/references/assertions).
 
 ## Waiting, retries, and timeouts
 
-Playwright often uses explicit waits. Cypress will retry most DOM queries and assertions until they pass or time out.
+Playwright often uses explicit waits. Cypress retries most DOM queries and assertions until they pass or time out.
 
 <Badge type="danger">Before: Playwright</Badge>
 
