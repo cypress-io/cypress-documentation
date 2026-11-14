@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Commit reminder for the docs-style-review skill (.claude/skills/docs-style-review).
+// Commit reminder for AGENTS_REFERENCE.md#reviewing-a-new-or-rewritten-page.
 //
 //   node .claude/hooks/page-review.mjs list
 //       Print every docs page that is new or mostly rewritten since HEAD.
@@ -107,10 +107,10 @@ if (mode === 'list') {
 
 ${describe(unmentioned)}
 
-Before committing, run the docs-style-review skill (.claude/skills/docs-style-review/SKILL.md) on each
-page and report the results in the thread: each change it made and the rule behind it. If you judge
-that a page doesn't need a review (for example, it moved or was reformatted rather than rewritten),
-say so and why in your report.
+Before committing, review each page following AGENTS_REFERENCE.md#reviewing-a-new-or-rewritten-page
+and report the results in the thread: each change you made and the rule behind it. If you judge that
+a page doesn't need a review (for example, it moved or was reformatted rather than rewritten), say so
+and why in your report.
 
 This reminder shows once for each changed page. When you've handled them, run the same commit again.
 `

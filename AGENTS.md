@@ -229,9 +229,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   service) gets reported as not run, with the reason. Being short is not a
   reason.
 - In Claude Code, the first `git commit` after examples change stops once with
-  a reminder listing them. Run them and report (or say in your report why one
-  doesn't need a run), then commit again. The judgment is yours. A new or
-  mostly rewritten page stops it the same way, for the `docs-style-review` skill.
+  a reminder listing them. Run them and report (or say why one doesn't need a
+  run), then commit again. The judgment is yours. A new or mostly rewritten page
+  stops it the same way for a [style review](./AGENTS_REFERENCE.md#reviewing-a-new-or-rewritten-page).
 
 **API reference** — [details](./AGENTS_REFERENCE.md#api-source-of-truth)
 
