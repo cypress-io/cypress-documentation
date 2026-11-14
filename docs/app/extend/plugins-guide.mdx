@@ -115,7 +115,7 @@ return config
 
 ### Register in the support file
 
-Browser-side plugins are imported (or registered with a function call) in your
+You import browser-side plugins (or register them with a function call) in your
 support file, which loads before every spec:
 
 ```ts title="cypress/support/e2e.js"
@@ -186,7 +186,7 @@ these checks:
 ## Plugin issue or Cypress issue?
 
 When something breaks in a project that uses plugins, isolate which side owns
-the problem before reporting it, so your issue lands where it can be fixed:
+the problem before reporting it, so your issue lands where the right maintainers can fix it:
 
 1. **Read the error and stack trace.** A stack trace that points into the
    plugin's package in `node_modules` is a strong signal the plugin is
@@ -195,8 +195,8 @@ the problem before reporting it, so your issue lands where it can be fixed:
    `setupNodeEvents` and your support file, then re-run the failing command or
    test.
 3. **Report it where it reproduces:**
-   - If the problem still occurs with the plugin disabled, it isn't caused by
-     the plugin. Work through the
+   - If the problem still occurs with the plugin disabled, the plugin isn't
+     causing it. Work through the
      [troubleshooting guide](/app/references/troubleshooting), search
      [existing Cypress issues](https://github.com/cypress-io/cypress/issues),
      and if it's new,

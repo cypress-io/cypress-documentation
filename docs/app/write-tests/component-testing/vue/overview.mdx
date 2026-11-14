@@ -149,8 +149,8 @@ same way you test any Vue 3 + Vite project, by setting the `vue` framework and t
 
 :::
 
-Because Cypress does not execute `nuxt.config`, the bundler behavior Nuxt
-normally provides is not applied for you. Account for the following in the config
+Because Cypress does not execute `nuxt.config`, Cypress does not apply the
+bundler behavior Nuxt normally provides for you. Account for the following in the config
 you pass to Cypress:
 
 - **Path aliases** — Nuxt's `~` and `@` aliases are not visible to Cypress.

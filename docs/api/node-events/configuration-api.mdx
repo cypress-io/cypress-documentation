@@ -39,13 +39,13 @@ return config
 Whenever you return an object from your `setupNodeEvents` function, Cypress
 takes the object and "diffs" it against the original configuration and automatically sets the resolved values to point to what you returned.
 
-If you don't return an object, then configuration is not modified.
+If you don't return an object, then Cypress doesn't modify the configuration.
 
 :::caution
 
 The `config` object also includes the following extra values that are not part
-of the standard configuration. **These values are read only and cannot be
-modified from the `setupNodeEvents` function in the Cypress configuration.**
+of the standard configuration. **These values are read only and you cannot
+modify them from the `setupNodeEvents` function in the Cypress configuration.**
 
 - `configFile`: The absolute path to the Cypress configuration file. See the
   [--config-file](/app/references/command-line#cypress-open) and
@@ -210,10 +210,10 @@ off of the file system - you could store them all in memory inside of
 ### Test Type-Specific Plugins
 
 You can access the type of tests running via the `config.testingType` property.
-The testing type is either `e2e` or `component` depending on if the
+The testing type is either `e2e` or `component` depending on if you selected the
 [E2E Testing](/app/core-concepts/testing-types#What-is-E2E-Testing) or
 [Component Testing](/app/core-concepts/testing-types#What-is-Component-Testing)
-type was selected in the Cypress Launchpad. Use this property to configure test
+type in the Cypress Launchpad. Use this property to configure test
 type-specific plugins.
 
 ## History

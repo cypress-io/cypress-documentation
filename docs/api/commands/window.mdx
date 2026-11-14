@@ -69,7 +69,7 @@ window.tags = {
 }
 ```
 
-Our test can confirm the property was properly set.
+Your test can confirm that the application set the property properly.
 
 ```javascript
 cy.window().its('tags.foo').should('equal', 'bar')
@@ -210,7 +210,7 @@ other words, the `KeyboardEvent` used in the code above and the
 `KeyboardEvent` class from which the `event` variable is constructed are
 different `KeyboardEvent`s.
 
-This mismatch is why the test should be written like this.
+This mismatch is why you should write the test like this.
 
 ```js
 it('should trigger KeyboardEvent with .type inside Cypress event listener', (done) => {

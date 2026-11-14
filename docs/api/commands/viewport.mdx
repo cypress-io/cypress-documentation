@@ -235,7 +235,7 @@ dimension's pixels, Cypress scales and centers your application within the
 preview pane to accommodate.
 
 Scaling the app should not affect any calculations or behavior of your
-application (in fact the application doesn't even know it's being scaled).
+application (in fact the application doesn't even know Cypress is scaling it).
 
 The upsides to this are that tests should consistently pass or fail regardless
 of a developers' screen size. Tests also consistently run in `CI` because
@@ -243,8 +243,8 @@ all of the viewports are the same no matter what machine Cypress runs on.
 
 ### `Cypress.config()` cannot change the viewport during a test
 
-Starting in Cypress [16.0.0](/app/references/changelog#16-0-0),
-`viewportHeight` and `viewportWidth` cannot be set with
+Starting in Cypress [16.0.0](/app/references/changelog#16-0-0), you cannot set
+`viewportHeight` and `viewportWidth` with
 [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Setting
 them this way applied to the _next_ test rather than the current one, so Cypress
 now throws instead.
@@ -327,15 +327,15 @@ following:
 
 ## History
 
-| Version                                    | Changes                                                                                                  |
-| ------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| [16.0.0](/app/references/changelog#16-0-0) | `viewportHeight` and `viewportWidth` can no longer be set with `Cypress.config()` during test execution. |
-| [5.5.0](/app/references/changelog#5-5-0)   | Added support for `macbook-16` preset.                                                                   |
-| [5.4.0](/app/references/changelog#5-4-0)   | Added support for presets `iphone-7`, `iphone-8`, and `iphone-se2`.                                      |
-| [3.8.0](/app/references/changelog#3-8-0)   | Removed max viewport size and lowered min viewport size to `0`.                                          |
-| [3.5.0](/app/references/changelog#3-5-0)   | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`                    |
-| [3.5.0](/app/references/changelog#3-5-0)   | Increased max viewport size to `4000`                                                                    |
-| [0.9.0](/app/references/changelog#0-9-0)   | `cy.viewport()` command added                                                                            |
+| Version                                    | Changes                                                                                          |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| [16.0.0](/app/references/changelog#16-0-0) | `Cypress.config()` can no longer set `viewportHeight` and `viewportWidth` during test execution. |
+| [5.5.0](/app/references/changelog#5-5-0)   | Added support for `macbook-16` preset.                                                           |
+| [5.4.0](/app/references/changelog#5-4-0)   | Added support for presets `iphone-7`, `iphone-8`, and `iphone-se2`.                              |
+| [3.8.0](/app/references/changelog#3-8-0)   | Removed max viewport size and lowered min viewport size to `0`.                                  |
+| [3.5.0](/app/references/changelog#3-5-0)   | Added support for presets `iphone-xr`, `iphone-x`, `samsung-s10`, and `samsung-note9`            |
+| [3.5.0](/app/references/changelog#3-5-0)   | Increased max viewport size to `4000`                                                            |
+| [0.9.0](/app/references/changelog#0-9-0)   | `cy.viewport()` command added                                                                    |
 
 ## See also
 

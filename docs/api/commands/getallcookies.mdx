@@ -63,7 +63,7 @@ Because `cy.getAllCookies()` is a query, it re-reads the cookies on every retry,
 and assertions you chain with [`.should()`](/api/commands/should) drive those
 retries until they pass or the command times out. A
 [`.then()`](/api/commands/then) callback, by contrast, runs only once after the
-command settles and is not retried — so prefer chaining
+command settles, and Cypress doesn't retry it — so prefer chaining
 [`.should()`](/api/commands/should) assertions over asserting inside `.then()`
 when you need Cypress to wait for the cookies to be set.
 

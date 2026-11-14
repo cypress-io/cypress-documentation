@@ -44,7 +44,7 @@ The CLI authenticates you against Cypress Cloud, then calls the Cypress Cloud AP
 2. **Query** your Cloud data with commands like `run list`, `test get`, and `replay timeline`.
 3. **Receive JSON** on standard output, ready to read, pipe, or parse.
 
-Replay data is downloaded once and [cached locally](#Test-Replay-Caching), so repeated queries against the same test are fast and do not re-download data.
+The CLI downloads replay data once and [caches it locally](#Test-Replay-Caching), so repeated queries against the same test are fast and do not re-download data.
 
 :::note
 
@@ -99,11 +99,11 @@ Always run the latest version. Check your version any time with [`cy-cloud versi
 
 ### Authenticate
 
-You can authenticate in three ways. OAuth is recommended for local use; a token in an environment variable is best for CI.
+You can authenticate in three ways. We recommend OAuth for local use; a token in an environment variable is best for CI.
 
 #### OAuth (recommended)
 
-Running `login` with no arguments starts a browser-based sign-in. The sign-in opens Cypress Cloud in your browser, you approve the request, and your session is stored securely on your machine. OAuth sessions refresh automatically, so you do not manage token expiry yourself.
+Running `login` with no arguments starts a browser-based sign-in. The sign-in opens Cypress Cloud in your browser, you approve the request, and the CLI stores your session securely on your machine. OAuth sessions refresh automatically, so you do not manage token expiry yourself.
 
 ```bash
 cy-cloud login
@@ -126,7 +126,7 @@ cy-cloud login --timeout 180
 
 A personal access token (PAT) authenticates you without a browser, which makes it the right choice for CI, remote shells, and any environment where the OAuth browser flow is not available. Access is scoped to your role and permissions in each organization.
 
-Generate a token from your [Cypress Cloud profile](https://cloud.cypress.io/profile): in the **Cloud CLI access** section, under **Personal access token**, select **Generate token**, choose an expiration, and copy the token (it is shown only once).
+Generate a token from your [Cypress Cloud profile](https://cloud.cypress.io/profile): in the **Cloud CLI access** section, under **Personal access token**, select **Generate token**, choose an expiration, and copy the token (Cypress Cloud shows it only once).
 
 <DocsImage
   src="/img/cloud/integrations/cloud-cli/cloud-cli-access-pat.png"
@@ -216,11 +216,11 @@ These commands require `cy-cloud` version `0.6.0` or later, and an **active** ad
 - [`accessibility report get`](#cy-cloud-accessibility-report-get) and [`accessibility element list`](#cy-cloud-accessibility-element-list) require Cypress Accessibility.
 - [`app-quality config get`](#cy-cloud-app-quality-config-get) requires Cypress Accessibility or UI Coverage.
 
-Access ends when the add-on is removed or the trial expires, even for runs recorded while it was active. Without an active add-on or trial, the command fails with an error such as `Cypress Accessibility is not enabled for the <organization> organization`.
+Access ends when your organization removes the add-on or the trial expires, even for runs recorded while it was active. Without an active add-on or trial, the command fails with an error such as `Cypress Accessibility is not enabled for the <organization> organization`.
 
 :::
 
-Identify the run with `--projectId` and `--runNumber`, or paste a Cypress Cloud run URL with `--runUrl`. Only the project and run number are read from the URL, so you can paste the URL of any page in the run, including a view in its Accessibility report:
+Identify the run with `--projectId` and `--runNumber`, or paste a Cypress Cloud run URL with `--runUrl`. The CLI reads only the project and run number from the URL, so you can paste the URL of any page in the run, including a view in its Accessibility report:
 
 ```bash
 cy-cloud accessibility report get --runUrl https://cloud.cypress.io/projects/abc123/runs/4021/accessibility
@@ -449,7 +449,7 @@ cy-cloud spec get --specId <specId>
 
 ### cy-cloud test list
 
-List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`. Tests are returned in the order they ran within the run.
+List tests for a run, or look them up by spec or test ID. As with specs, provide a project ID together with a run number, or narrow with `--specId` or `--testId`. The command returns tests in the order they ran within the run.
 
 List the failing tests in a run:
 
@@ -602,7 +602,7 @@ Later queries for the same test read from the [cache](#Test-Replay-Caching) and 
 
 :::note
 
-Because replay data is cached locally after the first download, repeated `replay info`, `replay timeline`, and `replay view` queries for the same test run entirely against the local cache and do not count against your [usage limit](#Usage-limits). The first query for a test makes a request that counts. Requests for assets in `replay view` are batched and cached so only the first use makes a request that counts.
+Because the CLI caches replay data locally after the first download, repeated `replay info`, `replay timeline`, and `replay view` queries for the same test run entirely against the local cache and do not count against your [usage limit](#Usage-limits). The first query for a test makes a request that counts. Requests for assets in `replay view` are batched and cached so only the first use makes a request that counts.
 
 :::
 
@@ -731,7 +731,7 @@ All subcommands provide flags to identify the test result you're interested in.
 
 :::note
 
-If no test target is specified all control and query subcommands default to the most-recently-opened replay viewer. If a test target _is_ provided and a viewer is not already open for that test the CLI opens one automatically.
+If you don't specify a test target, all control and query subcommands default to the most-recently-opened replay viewer. If you _do_ provide a test target and a viewer is not already open for that test the CLI opens one automatically.
 
 :::
 
@@ -800,8 +800,8 @@ Once you are at the moment of interest, you can query the replay for information
 Subcommands that target an element require a `--selector` flag with a valid CSS Selector value. The CLI evaluates the selector against your app and returns one of three responses:
 
 - A "no items found" response if no matches exist.
-- An "ambiguous" response if multiple matches are found. The ambiguous response includes generated unique selectors for the first 10 matches to assist identifying the specific instance you're interested in.
-- A "match" response if a single match is found, with the requested data.
+- An "ambiguous" response if the query finds multiple matches. The ambiguous response includes generated unique selectors for the first 10 matches to assist identifying the specific instance you're interested in.
+- A "match" response if the query finds a single match, with the requested data.
 
 You can also request a visual record
 
@@ -815,7 +815,7 @@ You can also request a visual record
 
 :::note
 
-When providing a `path` value it can be defined multiple ways:
+You can define a `path` value in multiple ways:
 
 - Can be a relative or absolute path
 - Can identify an existing directory or a filepath
@@ -868,7 +868,7 @@ cy-cloud accessibility report get --projectId <projectId> --runNumber <runNumber
 - `elementCountsByStatus` counts distinct elements across all rules and views. An element that fails several rules counts once, so the sum of `failedElementCount` can be higher than `elementCountsByStatus.fail`.
 - `score` is the run's [accessibility score](/accessibility/core-concepts/accessibility-score), from 0 to 100.
 
-While the report is still processing, `reportStatus` is `processing` and the report fields are omitted. Run the command again shortly. If processing failed, `reportStatus` is `errored`. If Accessibility was not enabled for the run, the command fails with `Run <runNumber> has no Accessibility report`.
+While the report is still processing, `reportStatus` is `processing` and the command omits the report fields. Run the command again shortly. If processing failed, `reportStatus` is `errored`. If Accessibility was not enabled for the run, the command fails with `Run <runNumber> has no Accessibility report`.
 
 ### cy-cloud accessibility element list
 
@@ -1149,7 +1149,7 @@ If your agent runs shell commands (for example, Claude Code, Codex CLI, or Copil
 
 </CopyPrompt>
 
-For a conversational, in-editor alternative that speaks the Model Context Protocol, see [Cloud MCP](/cloud/integrations/cloud-mcp). Many teams use both: give a terminal-based agent the CLI, and connect an MCP client to Cloud MCP. The two are compared in the [Cloud MCP FAQ](/cloud/integrations/cloud-mcp#Cloud-MCP-vs-the-Cloud-CLI).
+For a conversational, in-editor alternative that speaks the Model Context Protocol, see [Cloud MCP](/cloud/integrations/cloud-mcp). Many teams use both: give a terminal-based agent the CLI, and connect an MCP client to Cloud MCP. The [Cloud MCP FAQ](/cloud/integrations/cloud-mcp#Cloud-MCP-vs-the-Cloud-CLI) compares the two.
 
 ## Workflow: triage a failing run
 
@@ -1415,8 +1415,8 @@ The same approach works in CI. Install the CLI in your job and authenticate with
 Test Replay data can cover an entire spec, so the CLI downloads the replay once and caches it locally. The `replay` commands query Test Replay from the cache instead of downloading again.
 
 - The cache lives at `~/.cache/cy-cloud` by default. Override it with the `CYCLOUD_CACHE_DIR` environment variable.
-- Generally, entries expire after **30 days**. The cache is capped at **1 GB** by default and when the cap is exceeded, the oldest entries are removed first.
-- Maintenance runs automatically once per day. The CLI performs cache maintenance when a command is run and prunes expired or oversized entries.
+- Generally, entries expire after **30 days**. The cache is capped at **1 GB** by default and when the cache exceeds the cap, the CLI removes the oldest entries first.
+- Maintenance runs automatically once per day. The CLI performs cache maintenance when you run a command and prunes expired or oversized entries.
 - You can manually run cache maintenance more frequently using the [`cache cleanup`](#cy-cloud-cache-cleanup) command.
 
 Inspect or clear the cache at any time with the [`cache info`](#cy-cloud-cache-info) and [`cache clear`](#cy-cloud-cache-clear) commands. To turn off automatic maintenance, set `CYCLOUD_DISABLE_CACHE_MGMT=true`.
@@ -1427,7 +1427,7 @@ Some AI agents automatically run inside sandbox environments, which causes them 
 
 ## Configuration
 
-The CLI stores configuration and credentials under `~/.config/cy-cloud`. If the `XDG_CONFIG_HOME` environment variable is set, it uses `$XDG_CONFIG_HOME/cy-cloud` instead. Credentials are written with owner-only permissions.
+The CLI stores configuration and credentials under `~/.config/cy-cloud`. If the `XDG_CONFIG_HOME` environment variable is set, it uses `$XDG_CONFIG_HOME/cy-cloud` instead. The CLI writes credentials with owner-only permissions.
 
 The following environment variables adjust its behavior:
 
@@ -1445,7 +1445,7 @@ The following environment variables adjust its behavior:
 
 ### Usage limits
 
-The Cloud CLI is available on all Cypress Cloud plans, and the same rate limit applies across every plan. Requests are limited **per user** to a default of **100 requests per hour**.
+The Cloud CLI is available on all Cypress Cloud plans, and the same rate limit applies across every plan. Cypress Cloud limits requests **per user** to a default of **100 requests per hour**.
 
 If you exceed the limit, requests return an error until the hour resets. Contact [support@cypress.io](mailto:support@cypress.io) if you need a higher limit.
 
@@ -1455,7 +1455,7 @@ Usage limits are separate from data availability. What data you can retrieve fol
 
 - **Read-only.** The CLI only retrieves data. The CLI cannot modify your test code, delete runs, or change any Cloud settings, including your App Quality configuration.
 - **Scoped to your access.** Every request runs as your Cypress Cloud user, so you only ever see the organizations, teams, and projects you can already access in the Cloud UI.
-- **Local credentials.** Credentials from `cy-cloud login` are stored on your machine under `~/.config/cy-cloud`, in files readable only by your user. The `CYPRESS_CLOUD_TOKEN` environment variable is never written to disk.
+- **Local credentials.** `cy-cloud login` stores credentials on your machine under `~/.config/cy-cloud`, in files readable only by your user. The CLI never writes the `CYPRESS_CLOUD_TOKEN` environment variable to disk.
 
 ### Restrictive VPNs and allowlists
 

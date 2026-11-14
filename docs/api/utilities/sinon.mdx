@@ -41,8 +41,8 @@ cy.sinon.match.string // Errors, cannot be chained off 'cy'
 
 This example comes from the recipe
 [Root style](https://github.com/cypress-io/cypress-example-recipes#testing-the-dom).
-Imagine an application code where the method `setProperty` is called to change a
-CSS variable:
+Imagine application code that calls the method `setProperty` to change a CSS
+variable:
 
 ```js
 document.querySelector('input[type=color]').addEventListener('change', (e) => {

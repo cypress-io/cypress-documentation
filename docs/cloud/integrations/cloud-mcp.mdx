@@ -63,7 +63,7 @@ When you configure your AI client with the Cloud MCP server URL (`https://mcp.cy
 2. Opens a browser window and redirects you to the Cypress Cloud sign-in page.
 3. After you sign in, the client stores the session securely and reconnects automatically for 30 days.
 
-OAuth sessions are scoped to your Cypress Cloud user account and respect your existing role and permissions in each MCP-enabled organization. No token expiry management is required on your part.
+OAuth sessions are scoped to your Cypress Cloud user account and respect your existing role and permissions in each MCP-enabled organization. You don't need to manage token expiry.
 
 Your active OAuth sessions are visible on your **[Manage Profile](https://cloud.cypress.io/profile)** page. You can revoke any session from there at any time.
 
@@ -78,7 +78,7 @@ A personal access token (PAT) can used to securely connect with Cypress Cloud th
 3. Select **[Manage Profile](https://cloud.cypress.io/profile)**.
 4. Under **MCP personal access token**, click **Generate token**.
 5. Select an expiration for the token and click **Continue**.
-6. Your token is generated. Copy it immediately — it is only shown once.
+6. Cypress Cloud generates your token. Copy it immediately — Cypress Cloud shows it only once.
 
 The token access is scoped to your role and permissions in each MCP-enabled organization. Use your PAT in place of OAuth when your AI client does not support browser-based authentication flows.
 
@@ -103,7 +103,7 @@ Cypress publishes Cloud MCP to the marketplaces built into popular AI clients. I
 
 Cypress has two Claude listings. Both connect Claude to the same Cloud MCP server, so they return the same Cypress Cloud data. The two listings differ in what else they install and where you use them:
 
-- **The connector** adds Cloud MCP to your Claude account. Use it to ask Claude about your runs, failures, and flaky tests in Claude chat. There is nothing to install or update locally: the server is hosted by Cypress, and new tools appear the next time Claude connects.
+- **The connector** adds Cloud MCP to your Claude account. Use it to ask Claude about your runs, failures, and flaky tests in Claude chat. There is nothing to install or update locally: Cypress hosts the server, and new tools appear the next time Claude connects.
 - **The plugin** adds Cloud MCP and the Cypress AI Skills to Claude Code or Claude Cowork. The skills teach Claude how to write, explain, and debug Cypress tests, so use the plugin when Claude works in your test code as well as reading your Cloud data.
 
 Install one or the other for a given Claude app, not both, so Claude sees one Cypress Cloud server instead of two.
@@ -346,7 +346,7 @@ You can install the Cloud MCP server in your user profile or a specific workspac
      }
    }
    ```
-2. VS Code handles authentication via a browser-based Cypress Cloud sign-in when the server is first used.
+2. VS Code handles authentication via a browser-based Cypress Cloud sign-in when you first use the server.
 
 **Personal Access Token (Alternative)**
 
@@ -407,7 +407,7 @@ See [GitHub Copilot's documentation](https://docs.github.com/en/copilot/how-tos/
 
 <AccordionBlock title="OpenAI Codex CLI" icon={<Icon name="openai" />}>
 
-Codex stores MCP configuration in `~/.codex/config.toml`, which is shared between the CLI and Codex IDE extension.
+Codex stores MCP configuration in `~/.codex/config.toml`, which the CLI and Codex IDE extension share.
 
 **OAuth (Recommended)**
 
@@ -455,7 +455,7 @@ If you use an AI client not listed here, refer to its documentation for configur
 
 Once connected, your AI agent can autonomously use the following tools. You don't call these manually; the agent selects them based on your prompt.
 
-Each time the Cloud MCP connection is established, any new tools become immediately available.
+Each time your AI client establishes the Cloud MCP connection, any new tools become immediately available.
 
 Some tools are relevant for all Cypress Cloud plans (including free), but some others are for **plan-specific data** like flaky test reporting, or **product-specific data** like Cypress Accessibility violation details. These plan- and product-specific tools are only available if your organization has subscriptions for the plans and products that would provide the underlying data.
 
@@ -609,7 +609,7 @@ Both are available on every Cypress Cloud plan at no additional cost. See the [C
 
 - Verify the organization has the Cloud MCP integration enabled in Cypress Cloud.
 - Ensure your Git branch name in CI matches the branch name you're telling the agent.
-- A failed CI job doesn't mean no run was recorded. A red CI conclusion only reflects the job's exit code. As long as Cypress recorded the run, it's in Cypress Cloud and the agent can query it, so point the agent at the run by branch, commit, run number, or Run URL instead of assuming a failed job left nothing to find.
+- A failed CI job doesn't mean Cypress recorded no run. A red CI conclusion only reflects the job's exit code. As long as Cypress recorded the run, it's in Cypress Cloud and the agent can query it, so point the agent at the run by branch, commit, run number, or Run URL instead of assuming a failed job left nothing to find.
 - If you pair Cloud MCP with a CI or GitHub MCP that reads job logs, the recorded Run URL prints near the _end_ of the Cypress CLI output. Have the agent read the tail of the log so it doesn't miss the link.
 
 **Connection errors:**
@@ -648,7 +648,7 @@ Cloud MCP is an API for AI agents. When your AI assistant needs information abou
 **What Cypress can and cannot see:**
 
 - **Cypress cannot see your AI conversation:** Cypress has no access to your AI assistant's context window, chat history, or anything it generates. The only thing Cypress receives are the inputs to a tool call — for example, `getRuns(projectId: 100, runNumber: 45, limit: 10)`.
-- **Cypress does not train on your data:** Test results, stack traces, and replay links returned through Cloud MCP are used only to fulfill the request. Your data is never used to train or improve any LLM.
+- **Cypress does not train on your data:** Cypress uses test results, stack traces, and replay links returned through Cloud MCP only to fulfill the request. Cypress never uses your data to train or improve any LLM.
 - **You control the connection:** Cloud MCP is opt-in. Enabling it means your AI assistant can request Cypress data and enabling the integration does not give Cypress any visibility into your AI's context, conversation, or outputs.
 
 **How access is controlled:**

@@ -46,7 +46,7 @@ To call an endpoint _from your test_ and assert on what it returns, see
 
 ## Use Server Responses
 
-Requests that are not stubbed actually reach your server. By _not_ stubbing your
+Requests that you don't stub actually reach your server. By _not_ stubbing your
 responses, you are writing true _end-to-end_ tests. Not stubbing means you are driving
 your application the same way a real user would.
 
@@ -60,7 +60,7 @@ include user login, signup, and billing.
 
 **_There are downsides to not stubbing responses you should be aware of:_**
 
-- Since no responses are stubbed, that means **your server has to actually send
+- Since you stub no responses, that means **your server has to actually send
   real responses**. Sending real responses can be problematic because you may have to _seed a
   database_ before every test to generate state. For instance, if you were
   testing _pagination_, you'd have to seed the database with every object that
@@ -112,13 +112,13 @@ than 20ms.
 
 :::note
 
-Stubbing responses is a great way to control the data that is returned to your
-client.
+Stubbing responses is a great way to control the data that your
+client receives.
 
 :::
 
 You don't have to do any work on the server. Your application has no idea
-its requests are being stubbed, so there are _no code changes_ needed.
+that Cypress is stubbing its requests, so there are _no code changes_ needed.
 
 :::tip
 
@@ -177,7 +177,7 @@ to see Cypress network handling in action.
 Cypress enables you to stub a response and control the `body`, `status`,
 `headers`, or even delay.
 
-[`cy.intercept()`](/api/commands/intercept) is used to control the behavior of
+[`cy.intercept()`](/api/commands/intercept) controls the behavior of
 HTTP requests. You can statically define the body, HTTP status code, headers,
 and other response characteristics.
 
@@ -214,10 +214,10 @@ documentation for [`cy.intercept()`](/api/commands/intercept).
 
 ## Fixtures
 
-A fixture is a fixed set of data located in a file that is used in your tests.
+A fixture is a fixed set of data located in a file that your tests use.
 The purpose of a test fixture is to ensure that there is a well known and fixed
-environment in which tests are run so that results are repeatable. Fixtures are
-accessed within tests by calling the [`cy.fixture()`](/api/commands/fixture)
+environment in which tests run so that results are repeatable. You access
+fixtures within tests by calling the [`cy.fixture()`](/api/commands/fixture)
 command.
 
 With Cypress, you can stub network requests and have it respond instantly with
@@ -625,7 +625,7 @@ context('Tests', () => {
 
 ### Expectations for Query or Mutation Results
 
-Expectations can be made against the response of an intercepted GraphQL query or
+You can make expectations against the response of an intercepted GraphQL query or
 mutation using [cy.wait()](/api/commands/wait).
 
 ```js
@@ -653,7 +653,7 @@ context('Tests', () => {
 
 ### Modifying a Query or Mutation Response
 
-In the test below, the response is modified to test the UI for a single page of
+The test below modifies the response to test the UI for a single page of
 results.
 
 ```js
@@ -723,7 +723,7 @@ like:
 
 :::info
 
-**Note:** Logging can be disabled by passing `{ log: false }` with the static
+**Note:** You can disable logging by passing `{ log: false }` with the static
 response.
 
 ```js
@@ -738,8 +738,8 @@ api page.
 
 The circular indicator on the left side indicates if the request went to the
 destination server or not. If the circle is solid, the request went to the
-destination server; if it is outlined, the response was stubbed by
-`cy.intercept()` and not sent outbound.
+destination server; if it is outlined, `cy.intercept()` stubbed the
+response and Cypress did not send the request outbound.
 
 If we re-run our previous test to make the same requests, but this time, add a
 `cy.intercept()` to stub the response to `/users`, we can see that the indicator
@@ -765,10 +765,10 @@ The Command Log looks like this:
   alt="Screenshot of stubbed fetch and unstubbed XHR requests"
 />
 
-The `fetch` request now has an open circle, to indicate that it has been
-stubbed. The alias for the `cy.intercept()` is also now displayed on
+The `fetch` request now has an open circle, to indicate that `cy.intercept()`
+has stubbed it. The alias for the `cy.intercept()` also now displays on
 the right-hand side of the Command Log. If you mouse over the alias, you can see
-more information about how the request was handled:
+more information about how Cypress handled the request:
 
 <DocsImage
   src="/img/app/network-requests/command-log-stubbed-tooltip.png"
@@ -785,8 +785,8 @@ cy.intercept('/users*', (req) => {
 }).as('addAuthHeader')
 ```
 
-The request log for `/users` reflects that the `req` object was modified,
-but the request was still fulfilled from the destination (filled indicator):
+The request log for `/users` reflects that the test modified the `req` object,
+but the destination still fulfilled the request (filled indicator):
 
 <!-- Code to reproduce screenshot:
     cy.intercept('/users*', (req) => {
@@ -803,12 +803,12 @@ but the request was still fulfilled from the destination (filled indicator):
   alt="Screenshot of request that has had the req modified"
 />
 
-As you can see, "req modified" is displayed in the badge, to indicate the
-request object was modified. "res modified" and "req + res modified" can also be
-displayed, depending on if `res` was modified inside of a `req.continue()`
-callback.
+As you can see, the badge displays "req modified" to indicate that the test
+modified the request object. The badge can also display "res modified" and
+"req + res modified", depending on if the test modified `res` inside of a
+`req.continue()` callback.
 
-As with all command logs, logs for network requests can be clicked to display
+As with all command logs, you can click logs for network requests to display
 additional information in the Console. For example, after clicking the previous
 request for `/users?limit=100` and opening Developer Tools, we can see the
 following:

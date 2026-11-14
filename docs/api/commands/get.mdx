@@ -198,7 +198,7 @@ cy.get(`#${CSS.escape(userId)}`).should('have.text', 'Jane')
 
 ### `cy.get()` in the [`.within()`](/api/commands/within) command
 
-Since `cy.get()` is chained off of `cy`, it always looks for the selector within
+Since you chain `cy.get()` off of `cy`, it always looks for the selector within
 the entire `document`. The only exception is when used inside a
 [.within()](/api/commands/within) command.
 
@@ -289,7 +289,7 @@ instead.
 
 #### Hide a query from the Command Log with `log`
 
-The `get` row is hidden, but the assertion still appears in the Command Log.
+Cypress hides the `get` row, but the assertion still appears in the Command Log.
 
 ```javascript
 cy.get('[data-cy=toast]', { log: false }).should('be.visible')
@@ -358,7 +358,7 @@ cy.get('@liveTotal').should('eq', '$5.00') // re-runs the queries
 cy.get('@startTotal').should('eq', '$0.00') // value captured earlier
 ```
 
-In the Command Log, the static alias is labeled `(static)` where it's created:
+The Command Log labels the static alias `(static)` where you create it:
 
 <DocsImage
   src="/img/api/get/command-log-query-and-static-aliases.png"

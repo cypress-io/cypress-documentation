@@ -44,9 +44,9 @@ An array of steps to execute.
 
 Pass in an options object to `cy.prompt()`.
 
-| Option         | Default | Description                                                                                                                                                       |
-| -------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `placeholders` | `{}`    | Dynamic or sensitive values that enable caching and are excluded from AI calls. See [placeholders](/app/guides/ai-test-generation#Placeholders) for more details. |
+| Option         | Default | Description                                                                                                                                                                |
+| -------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `placeholders` | `{}`    | Dynamic or sensitive values that enable caching and that Cypress excludes from AI calls. See [placeholders](/app/guides/ai-test-generation#Placeholders) for more details. |
 
 <HeaderYields />
 
@@ -399,8 +399,8 @@ cy.prompt([
 ```
 
 :::info
-When `cy.prompt` resolves the credit card fields in this flow, field values are
-automatically excluded before any data is sent to the AI model. See
+When `cy.prompt` resolves the credit card fields in this flow, Cypress
+automatically excludes field values before sending any data to the AI model. See
 [Sensitive data handling](/app/guides/ai-test-generation#Sensitive-data-handling).
 :::
 
@@ -429,7 +429,7 @@ cy.prompt([
 
 ### Dynamic testing with loops
 
-If you need to test a loop of steps, you can use the `placeholders` option to pass in the dynamic values. Passing `placeholders` optimizes caching so that the prompt does not need to be called out to AI for each iteration of the loop.
+If you need to test a loop of steps, you can use the `placeholders` option to pass in the dynamic values. Passing `placeholders` optimizes caching so that Cypress does not need to send the prompt to AI for each iteration of the loop.
 
 ```javascript
 const matchingSearchTerms = ['cypress', 'testing', 'automation']

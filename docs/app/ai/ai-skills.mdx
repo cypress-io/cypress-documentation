@@ -67,8 +67,8 @@ tests. Use it when you're writing new tests or fixing broken or flaky ones.
 
 Before writing a single line, the skill reads your project: your Cypress
 config, `package.json`, support files, existing specs, custom commands, and
-fixtures. Everything it produces is shaped by what is already there, not by
-what a generic Cypress project might look like.
+fixtures. The skill shapes everything it produces to what is already there, not
+to what a generic Cypress project might look like.
 
 In practice, that means:
 
@@ -80,7 +80,7 @@ In practice, that means:
   stable selector exists.
 - **Tests built for stability.** The skill never adds arbitrary waits like
   `cy.wait(5000)`, relying instead on `cy.intercept()` with aliases and
-  assertions that retry automatically. Tests are written to run independently,
+  assertions that retry automatically. The skill writes tests to run independently,
   with application state prepared programmatically rather than through slow UI
   flows.
 - **Code that fits your project.** The skill matches your language (TypeScript or
@@ -108,8 +108,8 @@ Beyond what a generic AI agent knows, this skill:
 - **Flags what will bite you.** Brittle selectors, timing assumptions,
   unnecessary waits, UI coupling, and missing assertions are all called out
   explicitly.
-- **Catches bad metadata.** Misleading or incorrect test titles and comments
-  are flagged and corrected, not silently accepted.
+- **Catches bad metadata.** The skill flags and corrects misleading or incorrect
+  test titles and comments rather than silently accepting them.
 - **Uses accurate Cypress terminology.** Command chains, subjects, assertions,
   network stubbing. The skill speaks Cypress, not generic testing jargon.
 - **Keeps explanations concise and practical.** Focused on how things are
@@ -211,11 +211,11 @@ Beyond what a generic AI agent knows, this skill:
 - **Uses LLM-optimized documentation.** The skill discovers structured
   Markdown content through the `/llms.txt` index on docs.cypress.io, giving
   cleaner and more reliable results than scraping HTML.
-- **Grounds answers in docs, not training data.** If a claim can't be verified
-  in official documentation, it says so rather than inventing an API or
+- **Grounds answers in docs, not training data.** If the skill can't verify a
+  claim in official documentation, it says so rather than inventing an API or
   behavior, reducing the chance of a confident but incorrect answer.
-- **Stays version-aware.** When a Cypress version is detected in your project,
-  it scopes answers to what is available in that version and calls out
+- **Stays version-aware.** When the skill detects a Cypress version in your
+  project, it scopes answers to what is available in that version and calls out
   differences explicitly.
 
 ## Install Cypress AI Skills
@@ -426,7 +426,7 @@ reference.
 
 ### Triage a recorded Cloud failure
 
-When a test fails in CI and was recorded to Cypress Cloud, `cypress-cloud-cli`
+When a test fails in a CI run recorded to Cypress Cloud, `cypress-cloud-cli`
 can pull the run, the failing test, and its Test Replay data from the terminal,
 then work out the most likely cause. See the
 [Cloud CLI documentation](/cloud/integrations/cloud-cli) for the full command

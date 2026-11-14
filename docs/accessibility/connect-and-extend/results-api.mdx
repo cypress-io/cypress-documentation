@@ -9,7 +9,7 @@ sidebar_position: 30
 
 # Results API
 
-The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. The `getAccessibilityResults` utility determines the Cypress run created for the given CI workflow and returns the Accessibility results associated with that run. The utility returns the results once the Cypress run has finished and the Accessibility report has been processed.
+The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. The `getAccessibilityResults` utility determines the Cypress run created for the given CI workflow and returns the Accessibility results associated with that run. The utility returns the results once the Cypress run has finished and Cypress Cloud has processed the Accessibility report.
 
 The Results API brings the results into CI, where you review them and determine if they are acceptable or need to be addressed before code changes can merge. The Results API provides overall accessibility scores and violation details for the runs, as well as page- or component-level feedback. These results support a wide variety of needs related to alerting about failures in specific focus areas of the application or creating fine-grained regression monitoring according to the current standards being met by each page.
 
@@ -19,7 +19,7 @@ The Results API brings the results into CI, where you review them and determine 
   Examples and use cases
 </CalloutLabel>
 
-This page focuses on how the Results API works and what kinds of information can be accessed. For examples of how this can be used, see our higher-level guides:
+This page focuses on how the Results API works and what kinds of information you can access. For examples of how to use the Results API, see our higher-level guides:
 
 - The [pull requests and policies guide](/accessibility/guides/block-pull-requests) shows what it looks like to use the Results API to set a policy and fail a pull request.
 - [Run Checks](/cloud/features/checks) encode score and failed-element thresholds in App Quality configuration; [report them as GitHub statuses](/accessibility/guides/report-run-checks-github) with `getCheckResults()`.
@@ -228,7 +228,7 @@ getAccessibilityResults({
 
 #### Result Types
 
-The Accessibility results for the run are returned as an object containing the following data:
+`getAccessibilityResults` returns the Accessibility results for the run as an object containing the following data:
 
 ```javascript
 {
@@ -332,7 +332,7 @@ In your CI workflow that runs your Cypress tests,
 
 If you record multiple runs in a single CI build, you must record these runs using the `--tag` parameter and then call `getAccessibilityResults` with the `runTags` argument for each run.
 
-Tagging each run is necessary to identify each unique run and return a corresponding set of results. The tags are how each run is uniquely identified. Tags can also be used to activate [Profiles](/accessibility/configuration/profiles) that apply different configuration settings to your runs.
+Tagging each run is necessary to identify each unique run and return a corresponding set of results. Cypress Cloud uses the tags to uniquely identify each run. You can also use tags to activate [Profiles](/accessibility/configuration/profiles) that apply different configuration settings to your runs.
 
 **Example**
 

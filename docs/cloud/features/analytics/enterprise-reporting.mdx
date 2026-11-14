@@ -12,7 +12,7 @@ sidebar_position: 30
 Enterprise Reporting is available within Cypress Cloud so that you can spot trends and anomalies,
 track usage, and govern your overall test program across all projects in your organization. Included
 is the ability to interact with visual cards that highlight usage, test metrics, test types, flake,
-build versions, and more. The raw data from all graphs presented in Cloud can be downloaded in a variety
+build versions, and more. You can download the raw data from all graphs presented in Cloud in a variety
 of formats. And if you prefer to programmatically retrieve test data for use within your own analytics
 platform, take a look at our [data extract API](/cloud/integrations/data-extract-api).
 
@@ -29,18 +29,18 @@ platform, take a look at our [data extract API](/cloud/integrations/data-extract
 If available in your Cypress plan, Enterprise Reporting is accessible by clicking on the **Enterprise
 Reporting** link in the left menu.
 
-Your insights are grouped into tabs named **Overall Usage**, **Test Results**, **Test
-Setup**, **Test Execution**, **Flaky Tests**, and **Raw Data**. When the page first loads, data is displayed for all projects in your
-organization for the current month and the preceding two months. However, the ability to customize your date range and projects is
-supported through the filters available on the page.
+Enterprise Reporting groups your insights into tabs named **Overall Usage**, **Test Results**, **Test
+Setup**, **Test Execution**, **Flaky Tests**, and **Raw Data**. When the page first loads, it displays data for all projects in your
+organization for the current month and the preceding two months. However, you can customize your date range and projects
+through the filters available on the page.
 
 **A couple of things to note:**
 
 - Data shown in Enterprise Reporting is not real-time. The data is available as of midnight UTC of the current day.
-  I.e. - data is populated through "end of day yesterday".
+  I.e. - Cypress Cloud populates data through "end of day yesterday".
 - Historical data is available as specified by your data retention limit in Cypress Cloud.
 
-The type of information and insights available on the various tabs are described in the sections that follow.
+The sections that follow describe the type of information and insights available on the various tabs.
 
 ### Overall Usage
 
@@ -49,8 +49,8 @@ The type of information and insights available on the various tabs are described
 - How has test usage changed over time?
 
 The cards shown on the **Overall Usage** tab of Enterprise
-Reporting answer these questions and more. Use the `Start Date` and `End Date` filters if you need to drill into a specific time period. The `Projects`
-filter can be used to filter the data by one or multiple projects. The `Branch` filter can be used to select one or more
+Reporting answer these questions and more. Use the `Start Date` and `End Date` filters if you need to drill into a specific time period. Use the `Projects`
+filter to filter the data by one or multiple projects. Use the `Branch` filter to select one or more
 branches that exist in your projects. The data on this tab correlates to what Cypress Cloud
 [counts as a test result](/cloud/faq#What-counts-as-a-test-result).
 
@@ -114,7 +114,7 @@ The data presented on this tab answers these questions and more.
 ### Flaky Tests
 
 The **Flaky Tests** tab on Enterprise Reporting shows flaky test occurrences and rates for your entire organization or
-specific projects. The data can be a single snapshot based on the start and end date filters, or can be viewed over time. Flake
+specific projects. The data can be a single snapshot based on the start and end date filters, or you can view it over time. Flake
 _rate_ can be helpful because it reports what % of runs in a project are flaky. The flake rate allows easy comparison of flaky
 tests between projects regardless of the volume of runs occurring in the projects.
 

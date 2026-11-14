@@ -37,7 +37,7 @@ To test emitted events from a Svelte component, we need to pass in a callback
 for when we increment the stepper. The Stepper component
 needs to invoke this callback for us. We can also pass in a
 Cypress spy so we can query the spy later for results. In the example below, we
-pass in the `onChange` callback handler and validate it was called as expected:
+pass in the `onChange` callback handler and validate that the component called it as expected:
 
 ```js
 it('clicking + fires a change event with the incremented value', () => {
@@ -52,7 +52,7 @@ it('clicking + fires a change event with the incremented value', () => {
 
 There might be times when you might want to access the component instance
 directly in your tests. To do so, use `.then()`, which enables us to work with
-the subject that was yielded from the `cy.mount()` command.
+the subject that the `cy.mount()` command yielded.
 
 ```js
 cy.mount(Stepper).then(({ component }) => {
@@ -86,7 +86,7 @@ The recommended way to render fallback UI in Svelte 5 is
 [`<svelte:boundary>`](https://svelte.dev/docs/svelte/svelte-boundary) with a
 `failed` snippet. Rather than nesting components through `cy.mount()`, the
 cleanest approach is a dedicated fixture component that imports the failing
-component directly, then mount that fixture and assert the fallback is shown:
+component directly, then mount that fixture and assert the component shows the fallback:
 
 ```js
 // ErrorBoundary.cy.js

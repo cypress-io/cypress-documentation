@@ -65,7 +65,7 @@ Pass in an options object to control the behavior of `cy.visit()`.
 | -------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `url`                      | `null`                                                      | The URL to visit. Cypress appends it to the `baseUrl` if one is configured. Behaves the same as the `url` argument.                                                                        |
 | `method`                   | `GET`                                                       | The HTTP method to use in the visit. Can be `GET` or `POST`.                                                                                                                               |
-| `body`                     | `null`                                                      | An optional body to send with a `POST` request. A string is sent unmodified. An object is URL encoded and sent with a `Content-Type: application/x-www-form-urlencoded` header.            |
+| `body`                     | `null`                                                      | An optional body to send with a `POST` request. Cypress sends a string unmodified, and URL encodes an object and sends it with a `Content-Type: application/x-www-form-urlencoded` header. |
 | `headers`                  | `{}`                                                        | An object that maps HTTP header names to values to send with the request. Cypress sends `headers` only with the initial `cy.visit()` request, not with any later requests.                 |
 | `qs`                       | `null`                                                      | Query parameters to append to the `url` of the request. Must be an object.                                                                                                                 |
 | `log`                      | `true`                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).                                                                                                       |
@@ -165,7 +165,7 @@ cy.visit('https://wile:coyote@example.cypress.io', { log: false })
 Cypress attaches the `Authorization` header for you on requests to the origin
 you visited. Other origins do not receive it. On the
 [legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path)
-the header is attached outside of the browser, so it does **not** appear in
+Cypress attaches the header outside of the browser, so it does **not** appear in
 DevTools.
 
 :::
@@ -428,8 +428,9 @@ cy.visit('www.example.com') // Visits http://www.example.com/
 
 When the URL you visit matches the current page except for the hash, the browser
 doesn't make a new request. `cy.visit()` resolves on the `hashchange` event
-instead of the `load` event, and `onBeforeLoad` is not called. If the hash is
-also the same as the current one, neither `onBeforeLoad` nor `onLoad` is called.
+instead of the `load` event, and Cypress doesn't call `onBeforeLoad`. If the hash
+is also the same as the current one, Cypress calls neither `onBeforeLoad` nor
+`onLoad`.
 
 ```javascript
 cy.visit('/#/users')
@@ -458,7 +459,7 @@ process the [`cy.intercept()`](/api/commands/intercept) command until _after_
 that.
 
 By then, many apps have already begun routing, initializing, and sending
-requests, so the route is registered too late to catch them.
+requests, so Cypress registers the route too late to catch them.
 
 Reverse the order of the commands:
 

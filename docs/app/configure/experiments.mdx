@@ -33,7 +33,7 @@ configuration to Cypress.
 
 | Option                                        | Default | Description                                                                                                                                                                                                                                                                                                                                                                                             |
 | --------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `experimentalCspAllowList`                    | `false` | Indicates the Content-Security-Policy directives to be permitted during a test run. See [Content-Security-Policy](/app/references/content-security-policy) for more information.                                                                                                                                                                                                                        |
+| `experimentalCspAllowList`                    | `false` | Indicates the Content-Security-Policy directives to permit during a test run. See [Content-Security-Policy](/app/references/content-security-policy) for more information.                                                                                                                                                                                                                              |
 | `experimentalInteractiveRunEvents`            | `false` | Allows listening to the [`before:run`](/api/node-events/before-run-api), [`after:run`](/api/node-events/after-run-api), [`before:spec`](/api/node-events/before-spec-api), and [`after:spec`](/api/node-events/after-spec-api) events in the [setupNodeEvents](/app/plugins/plugins-guide#Using-a-plugin) function during interactive mode.                                                             |
 | `experimentalModifyObstructiveThirdPartyCode` | `false` | Whether Cypress searches for and replaces obstructive code in third party `.js` or `.html` files. NOTE: Setting this flag removes [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) from third-party resources. To also remove SRI from first-party resources, use [`removeSRIAttributes`](/app/references/configuration#removeSRIAttributes). |
 | `experimentalRunAllSpecs`                     | `false` | Enables the "Run All Specs" UI feature, allowing the execution of multiple specs sequentially.                                                                                                                                                                                                                                                                                                          |
@@ -44,9 +44,9 @@ configuration to Cypress.
 ### Experimental CSP Allow List
 
 Cypress by default strips all CSP headers (`Content-Security-Policy` and
-`Content-Security-Policy-Report-Only`) from the response before it is sent to
+`Content-Security-Policy-Report-Only`) from the response before sending it to
 the browser. The `experimentalCspAllowList` option allows for more granular
-control over which CSP directives are stripped from the CSP response headers,
+control over which CSP directives Cypress strips from the CSP response headers,
 so your application runs under test with CSP enabled. Valid values for this
 option are `false` (the default), `true`, or an array of CSP directive names.
 
@@ -59,13 +59,13 @@ option are `false` (the default), `true`, or an array of CSP directive names.
 #### Strip All CSP Headers
 
 The value `experimentalCspAllowList=false` (default) removes all CSP headers
-from the response before it is sent to the browser. This option should be used
-if you do not depend on CSP for any tests in your application.
+from the response before Cypress sends it to the browser. Use this option if
+you do not depend on CSP for any tests in your application.
 
 #### Strip Minimum CSP Directives
 
 If you need to test your application with CSP enabled, setting the
-`experimentalCspAllowList` option allows all CSP headers to be sent to the
+`experimentalCspAllowList` option makes Cypress send all CSP headers to the
 browser _*except*_ those that could prevent Cypress from functioning normally.
 
 Cypress always strips the following CSP directives:
@@ -76,11 +76,11 @@ Cypress always strips the following CSP directives:
 | `navigate-to`               | No        | Affects Cypress' ability to navigate to different URLs.          |
 | `require-trusted-types-for` | No        | Might prevent Cypress from rewriting the DOM.                    |
 | `sandbox`                   | No        | Can restrict access to script and iframe functionality.          |
-| `trusted-types`             | No        | Could cause Cypress injections to be marked as untrusted.        |
+| `trusted-types`             | No        | Could cause the browser to mark Cypress injections as untrusted. |
 
-When `experimentalCspAllowList=true` the following directives are also stripped
-in addition to the ones listed above, but can be configured to be allowed to be
-sent to the browser:
+When `experimentalCspAllowList=true`, Cypress also strips the following
+directives in addition to the ones listed above, but you can configure Cypress to
+send them to the browser:
 
 | Stripped Directive | Allowable | Reason                                                                        |
 | ------------------ | --------- | ----------------------------------------------------------------------------- |
@@ -94,11 +94,11 @@ sent to the browser:
 #### Allow Specific CSP Directives
 
 Set the `experimentalCspAllowList` option to an array of directive names marked
-as "Allowable" from the list above. The option then allows the specified CSP directives
-to be sent to the browser.
+as "Allowable" from the list above. Cypress then sends the specified CSP directives to
+the browser.
 
-The following configuration would allow the `default-src`, `script-src`, and
-`script-src-elem` directives to be sent to the browser:
+The following configuration sends the `default-src`, `script-src`, and
+`script-src-elem` directives to the browser:
 
 :::cypress-config-example
 
@@ -136,11 +136,11 @@ There are two strategies for retries:
 - `detect-flake-and-pass-on-threshold`
 - `detect-flake-but-always-fail`
 
-The `detect-flake-and-pass-on-threshold` strategy is most like the current implementation of retries, where failing tests have a "chance" to still pass, but still detect flake. But this new experimental strategy also enables you to now set a threshold of passing attempts to achieve a passing final result. And if you want to ensure flaky tests are treated with the same urgency as failing tests, then use the `detect-flake-but-always-fail` strategy, which assures that every flaky test is still marked as failing.
+The `detect-flake-and-pass-on-threshold` strategy is most like the current implementation of retries, where failing tests have a "chance" to still pass, but still detect flake. But this new experimental strategy also enables you to now set a threshold of passing attempts to achieve a passing final result. And if you want to ensure flaky tests are treated with the same urgency as failing tests, then use the `detect-flake-but-always-fail` strategy, which assures that Cypress still marks every flaky test as failing.
 
 #### `experimentalStrategy: 'detect-flake-and-pass-on-threshold'`
 
-Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries lets you set how many passing attempts are required for the test result to be passing. There are two `experimentalOptions` that must be set with this strategy:
+Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries lets you set how many passing attempts are required for the test result to be passing. You must set two `experimentalOptions` with this strategy:
 
 - `maxRetries` sets the maximum number of retries that can occur after the first attempt failed.
 - `passesRequired` sets the required number of passing attempts for the final test result to be passing. Cannot be greater than `maxRetries`.
@@ -190,15 +190,15 @@ Retries stop at attempt 3 again, and the test is **passing** <Icon name="check-c
 - Attempt 1: <Icon name="times" color="red" /> Fail
 - Attempt 2: <Icon name="times" color="red" /> Fail
 
-Retries stop on attempt 2, and the test is **failing** <Icon name="times" color="red" />, because the requisite two passing attempts for a passing result can no longer be achieved once the 1st retry failed. The test is also **not flaky**, since there were no passing attempts.
+Retries stop on attempt 2, and the test is **failing** <Icon name="times" color="red" />, because the test can no longer achieve the requisite two passing attempts for a passing result once the 1st retry failed. The test is also **not flaky**, since there were no passing attempts.
 
 #### `experimentalStrategy: 'detect-flake-but-always-fail'`
 
-Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries ensures any test with any failed attempt always ends with a failing final result. There are two `experimentalOptions` that must be set in this strategy:
+Setting `experimentalStrategy: 'detect-flake-but-always-fail'` within retries ensures any test with any failed attempt always ends with a failing final result. You must set two `experimentalOptions` in this strategy:
 
 - `maxRetries` sets the maximum number of retries that can occur after the first attempt failed.
 - `stopIfAnyPassed` stops the retries before `maxRetries` is reached when there is any passing attempt.
-  - `stopIfAnyPassed` causes retries to exit as soon as any flake is detected (a test that is retrying after a failure only needs to pass once to exhibit flaky behavior). However it may help to see more retry attempts, such as when the failure mode is also non-deterministic and more of these different errors are revealed on more retries, in which case `stopIfAnyPassed: false` may be desirable.
+  - `stopIfAnyPassed` causes retries to exit as soon as Cypress detects any flake (a test that is retrying after a failure only needs to pass once to exhibit flaky behavior). However it may help to see more retry attempts, such as when the failure mode is also non-deterministic and more retries reveal more of these different errors, in which case `stopIfAnyPassed: false` may be desirable.
 
 :::cypress-config-example
 
@@ -240,7 +240,7 @@ Retries stop on the first retry, due to the passing attempt. The test is **faili
 
 :::caution
 
-**Note:** Experimental retries can only be configured at the global level and **not** per individual test, whereas non-experimental `retries` [can be configured per test](/app/guides/test-retries#Individual-Tests). If you configure retries on a per-test basis while using experimental retries globally, that particular test's `retries` configuration overrides the experimental retries and ignores it.
+**Note:** You can configure experimental retries only at the global level and **not** per individual test, whereas you [can configure non-experimental `retries` per test](/app/guides/test-retries#Individual-Tests). If you configure retries on a per-test basis while using experimental retries globally, that particular test's `retries` configuration overrides the experimental retries and ignores it.
 
 Also, while using experimental retries, you cannot set numeric values for `openMode` or `runMode` [at the global level](/app/guides/test-retries#Global-Configuration). You can instead set `true` or `false` for each.
 
@@ -253,8 +253,7 @@ creating `e2e` and `component` objects inside your Cypress configuration.
 
 ### End-to-End Testing
 
-These experiments are available to be specified inside the `e2e` configuration
-object:
+You can specify these experiments inside the `e2e` configuration object:
 
 | Option                           | Default | Description                                               |
 | -------------------------------- | ------- | --------------------------------------------------------- |
@@ -262,8 +261,8 @@ object:
 
 ### Component Testing
 
-These experiments are available to be specified inside the `component`
-configuration object:
+You can specify these experiments inside the `component` configuration
+object:
 
 | Option                         | Default | Description                                                                                                                                                                                          |
 | ------------------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

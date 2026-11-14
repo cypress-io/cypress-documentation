@@ -8,7 +8,7 @@ sidebar_label: log
 
 # Cypress.log
 
-`Cypress.log` is the internal API for controlling what gets printed to the Command Log.
+`Cypress.log` is the internal API for controlling what Cypress prints to the Command Log.
 
 Useful when writing your own
 [custom commands](/api/cypress-api/custom-commands).
@@ -30,8 +30,8 @@ wrong rather than several steps downstream. When a custom `login` command fails,
 a well-structured log entry tells you immediately whether the failure was in the
 network request, the DOM interaction, or the redirect — without any guesswork.
 Finding the root cause earlier in the development cycle means fixing it while
-the context is fresh, before the bug is compounded by subsequent changes or
-discovered by users in production.
+the context is fresh, before subsequent changes compound the bug or users
+discover it in production.
 
 ### Reduce debugging time and CI costs
 
@@ -59,7 +59,7 @@ command. This shared legibility reduces the risk of misdiagnosed failures, where
 a test bug is mistaken for an application bug (or vice versa), and lowers the
 cost of onboarding new team members to an existing test suite. A command log
 that looks and behaves like Cypress's own built-in commands signals that the
-tests are maintained to the same standard as the application code they protect.
+team maintains the tests to the same standard as the application code they protect.
 
 ## Syntax
 
@@ -73,16 +73,16 @@ Cypress.log(options)
 
 Pass in an options object to `Cypress.log()`.
 
-| Option         | Default               | Description                                                                                                             |
-| -------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `$el`          | `undefined`           | The jQuery element the command is acting on. Highlights the element in the app preview when the log is clicked.         |
-| `name`         | `name of the command` | The name of the command shown in the Command Log.                                                                       |
-| `displayName`  | `name of the command` | Overrides `name` only for display purposes in the Command Log.                                                          |
-| `message`      | `command args`        | The message shown next to the command name in the Command Log.                                                          |
-| `consoleProps` | `function() {}`       | A function that returns an object. The object's properties are printed in the DevTools console when the log is clicked. |
-| `autoEnd`      | `true`                | Set to `false` to manually control when the log ends. Required for commands that finish asynchronously.                 |
-| `type`         | `'parent'`            | The nesting type of the log entry: `'parent'` or `'child'`. Child logs appear indented beneath parent logs.             |
-| `end`          | `false`               | Set to `true` to immediately mark the log as finished when it is created.                                               |
+| Option         | Default               | Description                                                                                                               |
+| -------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `$el`          | `undefined`           | The jQuery element the command is acting on. Highlights the element in the app preview when you click the log.            |
+| `name`         | `name of the command` | The name of the command shown in the Command Log.                                                                         |
+| `displayName`  | `name of the command` | Overrides `name` only for display purposes in the Command Log.                                                            |
+| `message`      | `command args`        | The message shown next to the command name in the Command Log.                                                            |
+| `consoleProps` | `function() {}`       | A function that returns an object. Cypress prints the object's properties in the DevTools console when you click the log. |
+| `autoEnd`      | `true`                | Set to `false` to manually control when the log ends. Required for commands that finish asynchronously.                   |
+| `type`         | `'parent'`            | The nesting type of the log entry: `'parent'` or `'child'`. Child logs appear indented beneath parent logs.               |
+| `end`          | `false`               | Set to `true` to immediately mark the log as finished when it is created.                                                 |
 
 ### Return Value
 
@@ -100,7 +100,7 @@ control the log lifecycle.
 | `log.set(key, value)`         | Updates a single log attribute by name. Returns the `Log` object.                                                                                                                               |
 | `log.set(options)`            | Updates multiple log attributes at once by passing an object. Useful for updating `consoleProps` with data available only after an async operation. Returns the `Log` object.                   |
 | `log.snapshot()`              | Captures the current state of the DOM and associates it with this log entry for time-travel debugging.                                                                                          |
-| `log.snapshot(name)`          | Captures a named snapshot (e.g. `'before'` or `'after'`). Named snapshots appear as labeled tabs in the Command Log when the entry is pinned, showing DOM state before and after an action.     |
+| `log.snapshot(name)`          | Captures a named snapshot (e.g. `'before'` or `'after'`). Named snapshots appear as labeled tabs in the Command Log when you pin the entry, showing DOM state before and after an action.       |
 | `log.snapshot(name, options)` | Captures a named snapshot with additional options. `options.at` specifies the index at which to insert the snapshot; `options.next` sets the name for the next snapshot to be taken.            |
 
 ## Examples

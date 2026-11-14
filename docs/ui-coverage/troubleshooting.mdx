@@ -15,7 +15,7 @@ This page maps each symptom to its cause and the configuration that resolves it.
 
 :::tip Start here: regenerate the run after changing configuration
 
-Every run is processed with the configuration that was saved **at that moment**, so edits you make afterward don't change an existing report until you reprocess it. This timing is the single most common reason a rule "doesn't work."
+Cypress Cloud processes every run with the configuration saved **at that moment**, so edits you make afterward don't change an existing report until you reprocess it. This timing is the single most common reason a rule "doesn't work."
 
 After saving configuration in the **App Quality** tab of your project settings, open a run's **Properties** tab and use its "regenerate" button, or the "configuration updated" message shown on a report processed with older configuration. Every fix on this page assumes you regenerate the run after changing configuration. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration).
 
@@ -25,13 +25,13 @@ After saving configuration in the **App Quality** tab of your project settings, 
 
 A single control appears as several separate untested elements, inflating your element count and lowering your score.
 
-**Cause.** UI Coverage recognizes the same element across [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) by building an [identity](/ui-coverage/core-concepts/element-identification) from its attributes and position in the DOM. When an identifying attribute changes on every render, such as a framework-generated `id`, a hashed class, or a per-request token, each snapshot looks like a new element and the one control is split apart.
+**Cause.** UI Coverage recognizes the same element across [snapshots](/ui-coverage/core-concepts/element-identification#Snapshots) by building an [identity](/ui-coverage/core-concepts/element-identification) from its attributes and position in the DOM. When an identifying attribute changes on every render, such as a framework-generated `id`, a hashed class, or a per-request token, each snapshot looks like a new element and UI Coverage splits the one control apart.
 
 UI Coverage already ignores the most common unstable values, including UUIDs and long hexadecimal hashes on any attribute, digit-only `id`, `name`, `for`, and `aria-*` values, and generated class names like `jss*` and `ng-tns-*`. Add configuration only when your application produces unstable identifiers these built-in filters don't cover.
 
 **Fixes.**
 
-- **Ignore the dynamic attribute** with [`attributeFilters`](/ui-coverage/configuration/attributefilters) so UI Coverage falls back to a stable attribute. When you filter a dynamic `id`, also filter the attributes that reference it, such as `for`, `aria-labelledby`, and `aria-describedby`, or the element can still be identified by those related values.
+- **Ignore the dynamic attribute** with [`attributeFilters`](/ui-coverage/configuration/attributefilters) so UI Coverage falls back to a stable attribute. When you filter a dynamic `id`, also filter the attributes that reference it, such as `for`, `aria-labelledby`, and `aria-describedby`, or UI Coverage can still identify the element by those related values.
 
   ```json title="App Quality Config"
   {
@@ -61,18 +61,18 @@ UI Coverage already ignores the most common unstable values, including UUIDs and
   }
   ```
 
-Patterns in `attributeFilters` match the whole value (they're anchored as `^(...)$`, unless your pattern already starts with `^` or ends with `$`), and JSON requires backslashes to be doubled, so a token like `\d` must be written `\\d`. `attribute` is matched **case-insensitively** while `value` is matched **case-sensitively**. See [How rules are applied](/ui-coverage/configuration/attributefilters#How-rules-are-applied).
+Patterns in `attributeFilters` match the whole value (they're anchored as `^(...)$`, unless your pattern already starts with `^` or ends with `$`), and JSON requires doubled backslashes, so you must write a token like `\d` as `\\d`. UI Coverage matches `attribute` **case-insensitively** and `value` **case-sensitively**. See [How rules are applied](/ui-coverage/configuration/attributefilters#How-rules-are-applied).
 
 ## Distinct elements are reported as one
 
-Two or more controls that should each be tracked appear as a single element, so testing one marks all of them tested and real gaps are hidden.
+Two or more controls that should each be tracked appear as a single element, so testing one marks all of them tested and hides real gaps.
 
 **Cause.** The elements resolve to the same identity because their identifying attribute shares a generic value, such as several buttons that all carry `data-test="button"`, or because the attribute that would distinguish them isn't one UI Coverage uses by default.
 
 **Fixes.**
 
 - **Add distinct identifiers** in your application, giving each control its own `data-cy` or `data-test` value. Distinct identifiers are the most durable fix.
-- **Prefer a distinguishing attribute** your markup already has with [`significantAttributes`](/ui-coverage/configuration/significantattributes). Attributes you list are checked before the defaults, so an attribute whose value differs between the elements gives each a distinct identity. Icon-only controls, for example, are often distinguishable by their `aria-label`.
+- **Prefer a distinguishing attribute** your markup already has with [`significantAttributes`](/ui-coverage/configuration/significantattributes). UI Coverage checks the attributes you list before the defaults, so an attribute whose value differs between the elements gives each a distinct identity. Icon-only controls, for example, are often distinguishable by their `aria-label`.
 
   ```json title="App Quality Config"
   {
@@ -124,7 +124,7 @@ Repeated components, such as a row action rendered for every record, appear as m
 
 ## Unrelated elements are grouped together
 
-Controls that do different things are combined into one group, so an interaction with one wrongly marks the others tested.
+UI Coverage combines controls that do different things into one group, so an interaction with one wrongly marks the others tested.
 
 **Cause.** The elements share an overly generic selector or attribute value, so UI Coverage's automatic grouping or a shared identifying attribute treats them as instances of the same component.
 
@@ -186,7 +186,7 @@ Your test interacts with an element on every run, but the report still lists it 
   }
   ```
 
-Two details often explain a command that still doesn't count. First, a custom command only produces coverage if it logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that references the element it acts on, so register it with [`prevSubject`](/api/cypress-api/custom-commands#Arguments) and log the subject as `$el` (see [Requirements for a custom command](/ui-coverage/configuration/additionalinteractioncommands#Requirements-for-a-custom-command)). Second, command names you add are matched **case-sensitively**, exactly as you registered them.
+Two details often explain a command that still doesn't count. First, a custom command only produces coverage if it logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that references the element it acts on, so register it with [`prevSubject`](/api/cypress-api/custom-commands#Arguments) and log the subject as `$el` (see [Requirements for a custom command](/ui-coverage/configuration/additionalinteractioncommands#Requirements-for-a-custom-command)). Second, UI Coverage matches the command names you add **case-sensitively**, exactly as you registered them.
 
 ## An element stops counting after you add an allowedInteractionCommands rule
 
@@ -202,10 +202,10 @@ You saved a rule, but the report looks the same.
 
 Work through these causes in order:
 
-- **The run predates the change.** Reports use the configuration saved when they were processed. [Regenerate](/ui-coverage/configuration/overview#Setting-configuration) the run to apply your current configuration. A stale run is by far the most common cause.
+- **The run predates the change.** Each report uses the configuration saved when Cypress Cloud processed it. [Regenerate](/ui-coverage/configuration/overview#Setting-configuration) the run to apply your current configuration. A stale run is by far the most common cause.
 - **An earlier rule matched first.** For [`elementFilters`](/ui-coverage/configuration/elementfilters), [`viewFilters`](/ui-coverage/configuration/viewfilters), [`elementGroups`](/ui-coverage/configuration/elementgroups), and [`attributeFilters`](/ui-coverage/configuration/attributefilters), the **first** matching rule wins, so a broad rule above your specific one prevents it from applying. List specific rules first, and place `include: true` exceptions before the `include: false` rule they should override. ([`elements`](/ui-coverage/configuration/elements) is the exception: when several rules match one element, the **last** one wins.).
 - **A nested list replaced a root one.** Nesting a shared property such as `elementFilters` or `attributeFilters` under a `uiCoverage` or `accessibility` key **completely replaces** the root-level list for that product; the two are never merged. Repeat any root rules you still want in the nested list. See [Configuration scope](/ui-coverage/configuration/overview#Configuration-scope).
-- **The property is in the wrong place.** `elementGroups`, `elements`, `additionalInteractionCommands`, and `allowedInteractionCommands` are UI Coverage–only and must live under the `uiCoverage` key, while `views` is set at the root. A misplaced property is rejected by the schema.
+- **The property is in the wrong place.** `elementGroups`, `elements`, `additionalInteractionCommands`, and `allowedInteractionCommands` are UI Coverage–only and must live under the `uiCoverage` key, while `views` is set at the root. The schema rejects a misplaced property.
 - **The pattern or selector doesn't match.** `attributeFilters` patterns are anchored to the whole value, so `value: "user"` matches only the exact string `user`; use `value: "user-.*"` for a prefix. Selectors in `elementFilters`, `elements`, and `elementGroups` must match the interactive element itself, not a wrapper around it, so `footer` matches only the `<footer>`, while `footer *` matches the controls inside it.
 - **The configuration didn't save.** Cypress Cloud validates against a strict schema and rejects any property it doesn't recognize, including a misspelled name, a value of the wrong type, or a freeform note on a field that doesn't accept one. Keep notes in a [`comment`](/ui-coverage/configuration/overview#Comments), and correct the flagged property so the configuration can save.
 

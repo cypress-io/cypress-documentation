@@ -31,7 +31,7 @@ efficiently in CI, see the
 
 ## Supported browsers
 
-When Cypress is launched, you can choose to test your application using a number
+When you launch Cypress, you can choose to test your application using a number
 of browsers, including:
 
 - [Chrome for Testing](https://github.com/GoogleChromeLabs/chrome-for-testing/)
@@ -119,7 +119,7 @@ or another installed browser to avoid a breaking change when you upgrade. Set a
 `'chrome'`) and/or pass [`--browser`](/app/references/command-line#cypress-run)
 so your runs don't rely on the bundled Electron default.
 
-After Electron is removed, runs that target it (`--browser electron`, or an
+After Cypress removes Electron, runs that target it (`--browser electron`, or an
 implicit fallback to Electron) will fail. See
 [Migrating away from the Electron browser](/app/references/migration-guide#Migrating-away-from-the-Electron-browser).
 
@@ -127,7 +127,7 @@ implicit fallback to Electron) will fail. See
 
 ### Chrome Browsers
 
-All Chrome\* flavored browsers are detected and supported by Cypress.
+Cypress detects and supports all Chrome\* flavored browsers.
 
 You can launch Chrome like this:
 
@@ -168,8 +168,8 @@ has a few advantages over a standard, day-to-day Chrome install:
   which can change browser behavior between runs and cause tests that passed
   yesterday to fail today. Chrome for Testing is pinned to a specific version and
   never updates on its own, so your environment stays deterministic.
-- **Versioned, reproducible binaries.** A matching build is published for every
-  Chrome version and every major OS, so you can install the exact same browser
+- **Versioned, reproducible binaries.** Google publishes a matching build for
+  every Chrome version and every major OS, so you can install the exact same browser
   locally and in CI. See
   [Download specific Chrome version](#Download-specific-Chrome-version).
 - **Built for automation, not browsing.** Because it is intended only for
@@ -189,7 +189,7 @@ If Chrome policy is set, ensure that
 [RemoteDebuggingAllowed](https://chromeenterprise.google/policies/#RemoteDebuggingAllowed)
 is either undefined or set to `true`.
 If this is not the case, then Cypress times out, returning an `ECONNREFUSED` error, attempting to connect to the browser.
-Chrome policy is generally applied to a Chrome-branded browser only, not to Chromium or Chrome for Testing browsers.
+Chrome policy generally applies to a Chrome-branded browser only, not to Chromium or Chrome for Testing browsers.
 Check by browsing to **chrome://policy**. See
 [Cypress failed to make a connection to the Chrome DevTools Protocol](/app/references/troubleshooting#Cypress-failed-to-make-a-connection-to-the-Chrome-DevTools-Protocol)
 for more.
@@ -218,7 +218,7 @@ which tells Cypress to skip reading and writing Chrome preferences entirely:
 
 ### Edge Browsers
 
-Microsoft Edge-family (Chromium-based) browsers are supported by Cypress.
+Cypress supports Microsoft Edge-family (Chromium-based) browsers.
 
 You can launch Microsoft Edge like this:
 
@@ -248,7 +248,7 @@ for more.
 
 ### Firefox Browsers
 
-Firefox-family browsers are supported by Cypress.
+Cypress supports Firefox-family browsers.
 
 You can launch Firefox like this:
 
@@ -338,8 +338,8 @@ dependencies, run this:
 - `cy.origin()` is not yet supported.
 - [Test Replay](/cloud/features/test-replay) is not supported.
 - `cy.intercept()`'s `forceNetworkError` option is disabled.
-- When using `experimentalSingleTabRunMode` with video recording in WebKit, only
-  the video for the first spec is recorded.
+- When using `experimentalSingleTabRunMode` with video recording in WebKit, Cypress
+  records only the video for the first spec.
 - Some differences in `cy.type()` behavior:
   - `textInput` events are missing the `data` property
   - `beforeinput` events are missing the `inputType` property
@@ -451,7 +451,7 @@ return findBrowser().then((browser) => {
 
 :::
 
-Once selected, the Brave browser is detected using the same approach as any
+Once you select it, Cypress detects the Brave browser using the same approach as any
 other browser of the `chromium` family.
 
 <DocsImage
@@ -484,7 +484,7 @@ tests in Cypress.
 Because Cypress runs in its own profile, your usual extensions don't carry over
 automatically. If you rely on developer extensions, install them once in the
 Cypress-launched browser. Cypress reuses the same testing profile on every
-subsequent launch, so your extensions and other configuration are preserved.
+subsequent launch, so the profile preserves your extensions and other configuration.
 
 :::
 
@@ -552,7 +552,7 @@ Integration, where there is no display to render to and headless runs are faster
 and lighter. When running [cypress open](/app/references/command-line#cypress-open),
 the browser is **always headed** so you can watch and debug interactively.
 
-How each browser is launched headlessly differs slightly:
+How Cypress launches each browser headlessly differs slightly:
 
 | Browser                  | Default during `cypress run` | How it runs headless             |
 | ------------------------ | ---------------------------- | -------------------------------- |

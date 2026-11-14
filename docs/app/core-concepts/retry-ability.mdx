@@ -204,8 +204,8 @@ cy.get('.list')
   .should('contain', 'child') // retry only reruns from .children(), not .get()
 ```
 
-If the page re-renders between the two assertions, the `li` matched by
-`.should('contain', 'Header')` may be replaced in the DOM. When Cypress retries
+If the page re-renders between the two assertions, the application may replace
+the `li` matched by `.should('contain', 'Header')` in the DOM. When Cypress retries
 from `.children('.child')`, it uses the original—now-detached—`li` as the
 subject and fails.
 
@@ -239,8 +239,8 @@ cy.get('.list')
 
 ## Implicit Assertions
 
-Often a Cypress command has built-in assertions that cause the command to
-be retried until they pass. For example, Cypress retries the [`.eq()`](/api/commands/eq) query
+Often a Cypress command has built-in assertions that make Cypress retry the
+command until they pass. For example, Cypress retries the [`.eq()`](/api/commands/eq) query
 even without any attached assertions until it finds an element
 with the given index.
 
@@ -255,7 +255,7 @@ cy.get('.todo-list li') // query
   alt="Retrying built-in assertion"
 />
 
-Only queries can be retried, but most other commands still have built-in
+Cypress retries only queries, but most other commands still have built-in
 _waiting_ and assertions. For example, as described in the "Assertions" section
 of [.click()](/api/commands/click), the `click()` action command waits to click
 until the element becomes
@@ -328,7 +328,7 @@ queries _leading up to_ a command, and retries any assertions _after_ a command,
 but commands themselves only execute once. After they've executed, nothing
 leading up to them retries.
 
-Most commands are not retried because they could potentially change the state of
+Cypress does not retry most commands because they could potentially change the state of
 the application under test. For example, Cypress does not retry the
 [.click()](/api/commands/click) action command, because it could change
 something in the application. After the click occurs, Cypress also does not
@@ -391,8 +391,8 @@ cy.get('#payment-input').focus().clear().type('new value').blur()
 
 **Option 2: Separate `cy.get()` calls.** If your application re-renders between
 actions and might replace the DOM node, use a separate query for each action.
-Cypress re-runs all queries leading up to each action, so a fresh element
-reference is used every time:
+Cypress re-runs all queries leading up to each action, so each action uses a
+fresh element reference:
 
 ```javascript
 // ✅ Recommended when the element may re-render between actions
@@ -419,8 +419,8 @@ cy.get('#payment-input').then(($el) => {
 :::caution
 
 Very rarely you may want to retry a command like `.click()`. We describe one
-case like that where the event listeners are attached to a modal popup only
-after a delay, thus causing default events fired during `.click()` to not
+case like that where the application attaches the event listeners to a modal
+popup only after a delay, thus causing default events fired during `.click()` to not
 register. In this special case you may want to "keep clicking" until the event
 registers, and the dialog disappears. Read about it in the
 [When Can the Test Click?](https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/?utm_source=docs.cypress.io&utm_medium=retry-ability)
@@ -511,7 +511,7 @@ If you are using commands, but need to retry the entire chain, consider
 rewriting the commands into a
 [.should(callbackFn)](/api/commands/should#Function).
 
-Below is an example where the number value is set after a delay:
+Below is an example where the application sets the number value after a delay:
 
 ```html
 <div class="random-number-example">
@@ -565,7 +565,7 @@ cy.get('[data-testid="random-number"]').should(($div) => {
 ```
 
 The above test retries getting the element and invoking the text of the element
-to get the number. When the number is finally set in the application, then the
+to get the number. When the application finally sets the number, then the
 `gte` and `lte` assertions pass and the test passes.
 
 <DocsImage

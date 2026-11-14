@@ -82,7 +82,7 @@ Pass in an options object to change the default behavior of `.screenshot()`.
 | `clip`                       | `null`                                                      | Position and size, in pixels, to crop the final image to, in the shape `{ x: 0, y: 0, width: 100, height: 100 }`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `disableTimersAndAnimations` | `true`                                                      | When `true`, Cypress pauses JavaScript timers (such as `setTimeout` and `setInterval`) and CSS animations while it takes the screenshot.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `log`                        | `true`                                                      | Displays the command in the [Command Log](/app/core-concepts/open-mode#Command-Log).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| `onAfterScreenshot`          | `null`                                                      | A callback Cypress calls right after it takes the screenshot. The callback's first argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise. The callback's second argument holds the screenshot's properties, such as the `path` it was saved to and its `dimensions`.                                                                                                                                                                                                                                                                                                                                                                         |
+| `onAfterScreenshot`          | `null`                                                      | A callback Cypress calls right after it takes the screenshot. The callback's first argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise. The callback's second argument holds the screenshot's properties, such as the `path` Cypress saved it to and its `dimensions`.                                                                                                                                                                                                                                                                                                                                                                     |
 | `onBeforeScreenshot`         | `null`                                                      | A callback Cypress calls right before it takes the screenshot. The callback's argument is a jQuery-wrapped element: the captured element for an element screenshot, or the document's root `<html>` element otherwise.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `overwrite`                  | `false`                                                     | Whether to replace an existing screenshot with the same file name instead of saving a numbered copy.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | `padding`                    | `null`                                                      | Padding to add around an element screenshot: a number, or an array of up to four numbers in [CSS shorthand notation](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties). Cypress ignores it for other screenshots.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -321,8 +321,8 @@ cy.get('button').first().screenshot().click()
 
 `onBeforeScreenshot` runs right before the capture and `onAfterScreenshot`
 right after it, so a change made in the first and undone in the second never
-affects the rest of the test. Here a cookie banner is hidden for the screenshot
-and shown again afterward:
+affects the rest of the test. Here the callbacks hide a cookie banner for the
+screenshot and show it again afterward:
 
 ```javascript
 cy.screenshot('home', {
@@ -591,7 +591,7 @@ in your Cypress configuration or with
 A failure screenshot uses `capture: 'runner'`, so it shows the Command Log next
 to the application under test, unless the Runner UI is hidden (see below). Here,
 [`cy.get()`](/api/commands/get) timed out looking for an element that never
-appeared, and its row is highlighted in red:
+appeared, and the Command Log highlights its row in red:
 
 ```javascript
 cy.get('[data-cy=new-post]').click()
@@ -759,10 +759,10 @@ following:
 
 ## History
 
-| Version                                    | Changes                                                                                       |
-| ------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| [16.2.1](/app/references/changelog#16-2-1) | Duplicate file names are numbered across `cypress run` processes that share a project folder. |
-| [3.5.0](/app/references/changelog#3-5-0)   | Added support for option `padding`.                                                           |
+| Version                                    | Changes                                                                                          |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| [16.2.1](/app/references/changelog#16-2-1) | Cypress numbers duplicate file names across `cypress run` processes that share a project folder. |
+| [3.5.0](/app/references/changelog#3-5-0)   | Added support for option `padding`.                                                              |
 
 ## See also
 

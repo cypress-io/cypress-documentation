@@ -9,7 +9,7 @@ sidebar_position: 20
 
 # Get started with UI Coverage
 
-UI Coverage turns every run you already record to Cypress Cloud into a visual map of which interactive elements your tests exercise and which they miss, plus a coverage score you can track over time. There's nothing to install and no code to instrument: reports are generated in Cypress Cloud from the [Test Replay](/cloud/features/test-replay) data your runs already capture. If you record to Cypress Cloud with Test Replay, you can be reading your first report in minutes.
+UI Coverage turns every run you already record to Cypress Cloud into a visual map of which interactive elements your tests exercise and which they miss, plus a coverage score you can track over time. There's nothing to install and no code to instrument: Cypress Cloud generates reports from the [Test Replay](/cloud/features/test-replay) data your runs already capture. If you record to Cypress Cloud with Test Replay, you can be reading your first report in minutes.
 
 <UICovPremiumNote />
 
@@ -24,7 +24,7 @@ UI Coverage turns every run you already record to Cypress Cloud into a visual ma
 Before you start, make sure you have:
 
 - **A Cypress project recording to [Cypress Cloud](/cloud/get-started/introduction)** with a run or two already recorded.
-- **[Test Replay](/cloud/features/test-replay) enabled** on the project. UI Coverage reports are built entirely from Test Replay data, so a run recorded with Test Replay off produces no report.
+- **[Test Replay](/cloud/features/test-replay) enabled** on the project. Cypress Cloud builds UI Coverage reports entirely from Test Replay data, so a run recorded with Test Replay off produces no report.
 - **Cypress v13 or later**, the minimum version that captures Test Replay data.
 - **UI Coverage enabled for your organization.** UI Coverage isn't included in standard Cloud plans. [Start a trial](#Step-1-Start-your-UI-Coverage-trial) to enable it for your projects.
 
@@ -36,7 +36,7 @@ You don't need to change your tests, add a plugin, or write any configuration to
 
 ## Step 1: Start your UI Coverage trial
 
-UI Coverage is enabled through a free trial. The trial includes a personalized walkthrough that uses your **existing** recorded runs, so you can see exactly where your testing gaps are across your real projects before writing a single new test.
+You enable UI Coverage through a free trial. The trial includes a personalized walkthrough that uses your **existing** recorded runs, so you can see exactly where your testing gaps are across your real projects before writing a single new test.
 
 <Btn
   label="Request trial ➜"
@@ -57,7 +57,7 @@ New to recording? Follow [Record a run to Cypress Cloud](/cloud/get-started/setu
 
 ## Step 3: Explore your UI Coverage report
 
-After a run finishes recording, open it in Cypress Cloud and select the **UI Coverage** tab. A report is generated automatically for every recorded run, covering every unique state your tests reached, in both end-to-end and component testing.
+After a run finishes recording, open it in Cypress Cloud and select the **UI Coverage** tab. Cypress Cloud generates a report automatically for every recorded run, covering every unique state your tests reached, in both end-to-end and component testing.
 
 Your report answers four questions:
 
@@ -211,7 +211,7 @@ Once you trust your reports, you can hold the line on coverage automatically. De
 ## See also
 
 - [What is UI Coverage?](/ui-coverage/get-started/introduction) explains the product and how it works at a glance.
-- [Interactivity](/ui-coverage/core-concepts/interactivity) covers which elements are counted and which commands mark them tested.
+- [Interactivity](/ui-coverage/core-concepts/interactivity) covers which elements UI Coverage counts and which commands mark them tested.
 - [Views](/ui-coverage/core-concepts/views) explains how the URLs your tests visit become views.
 - [Configuration overview](/ui-coverage/configuration/overview) lists every App Quality configuration option and what each one does.
 - [Run Checks](/cloud/features/checks) encode coverage thresholds in App Quality configuration.

@@ -184,7 +184,7 @@ the commands with [`.pause()`](/api/commands/pause) or
 
 <HeaderAssertions />
 
-- `.scrollIntoView()` runs once and is not retried. Assertions chained after
+- `.scrollIntoView()` runs once, and Cypress doesn't retry it. Assertions chained after
   `.scrollIntoView()` retry until they pass or time out.
   See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).

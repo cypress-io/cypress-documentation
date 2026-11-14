@@ -77,13 +77,13 @@ bunx cypress run --record --spec "cypress/e2e/my-spec.cy.js"
 
 **PowerShell**
 
-When `cypress run` [options](#Options) or `cypress open` [options](#Options-1) are specified with multiple values separated by commas, such as for `--config` or `--env` options, and you are using PowerShell on Windows, you may need to surround the key/value pairs with quotes, for example: `--env "host=api.dev.local,port=4222"`.
+When you specify `cypress run` [options](#Options) or `cypress open` [options](#Options-1) with multiple values separated by commas, such as for `--config` or `--env` options, and you are using PowerShell on Windows, you may need to surround the key/value pairs with quotes, for example: `--env "host=api.dev.local,port=4222"`.
 
 :::
 
 ## Using scripts
 
-Cypress command strings can be saved as scripts for reuse.
+You can save Cypress command strings as scripts for reuse.
 
 Let's say you often need to run Cypress E2E tests in headless mode using the Chrome browser.
 You can add the corresponding command
@@ -209,7 +209,7 @@ Refer to each package manager's documentation for full details of command and sc
 
 :::info
 
-The prefix required to run `cypress` is not shown in the list of commands below.
+The list of commands below does not show the prefix required to run `cypress`.
 You need to add the prefix `npx`, `yarn` or `pnpm` to the command line, corresponding to the package manager you are using. See [How to run commands](#How-to-run-commands).
 
 :::
@@ -259,7 +259,7 @@ cypress run [options]
 #### `cypress run --auto-cancel-after-failures <autoCancelAfterFailures>` {#auto-cancel-after-runs}
 
 The "autoCancelAfterFailures" argument is the number of times tests can fail
-before the run is cancelled
+before Cypress cancels the run
 
 ```bash
 cypress run --record --key <<your_record_key>> --auto-cancel-after-failures 1
@@ -278,7 +278,7 @@ cypress run --record --key <<your_record_key>> --auto-cancel-after-failures fals
 cypress run --browser chrome
 ```
 
-The "browser" argument can be set to `chrome`, `chromium`, `edge`, or `firefox`
+You can set the "browser" argument to `chrome`, `chromium`, `edge`, or `firefox`
 to launch a browser detected on your system. Cypress attempts to
 automatically find the installed browser for you. `electron` is still accepted
 for the bundled Electron browser, but it is
@@ -301,7 +301,7 @@ cypress run --browser /usr/bin/chromium
 This value should be automatically detected for most CI providers and is
 unnecessary to define unless Cypress is unable to determine it.
 
-Typically, this is defined as a system environment variable within your CI provider,
+Typically, your CI provider defines this as a system environment variable,
 defining a unique "build" or "run".
 
 ```shell
@@ -437,7 +437,7 @@ Specifying the `--ci-build-id` may also be necessary.
 
 By default, Cypress runs tests headlessly during `cypress run`.
 
-Passing `--headed` forces the browser to be shown, which matches how you run
+Passing `--headed` forces Cypress to show the browser, which matches how you run
 any browser via `cypress open`.
 
 ```shell
@@ -487,7 +487,7 @@ documentation to learn more.
 
 #### `cypress run --pass-with-no-tests` {#cypress-run-pass-with-no-tests}
 
-Exits with a success code when no spec files are found. Useful in CI pipelines where specs may be conditionally generated or filtered out at runtime.
+Exits with a success code when Cypress finds no spec files. Useful in CI pipelines where specs may be conditionally generated or filtered out at runtime.
 
 ```shell
 cypress run --pass-with-no-tests
@@ -648,8 +648,8 @@ cypress run --project tests/e2e --spec ./tests/e2e/cypress/e2e/spec.cy.js
 
 #### `cypress run --tag <tag>` {#cypress-run-tag-lt-tag-gt}
 
-Add a tag or tags to the recorded run. Tags can be used to help identify
-separate runs when displayed in Cypress Cloud.
+Add a tag or tags to the recorded run. You can use tags to help identify
+separate runs when Cypress Cloud displays them.
 
 ```shell
 cypress run  --record --tag "staging"
@@ -670,7 +670,7 @@ Cypress Cloud displays any tags sent with the appropriate run.
 
 Tags are also useful for surfacing environment details that Cypress Cloud
 does not record on its own, such as the Node.js version a run used. By tagging
-runs with these values you can differentiate runs that were executed
+runs with these values you can differentiate runs that executed
 against different versions in the same matrix. For example, when testing across
 multiple Node.js versions in CI you can include the version in the tags:
 
@@ -684,18 +684,18 @@ apart in Cypress Cloud.
 
 :::info
 
-**App Quality Profiles**: If you use Cypress Cloud's [accessibility](/accessibility/get-started/introduction) and [UI Coverage reporting](/accessibility/get-started/introduction), a run tag can be mapped to [App Quality Profiles](/accessibility/configuration/profiles) to automatically apply different configuration settings for different types of runs.
+**App Quality Profiles**: If you use Cypress Cloud's [accessibility](/accessibility/get-started/introduction) and [UI Coverage reporting](/accessibility/get-started/introduction), you can map a run tag to [App Quality Profiles](/accessibility/configuration/profiles) to automatically apply different configuration settings for different types of runs.
 :::
 
 #### Exit code
 
-Cypress supports two different exit code behaviors. The default behavior is similar to that of Mocha, but is not POSIX compliant: reserved exit codes can be returned for certain conditions. As well, the default behavior
+Cypress supports two different exit code behaviors. The default behavior is similar to that of Mocha, but is not POSIX compliant: Cypress can return reserved exit codes for certain conditions. As well, the default behavior
 can return a false negative when there are a number of tests that fail in multiples of 256: most terminals apply modulo 256 to any exit code larger than 255.
 
-POSIX compliant exit codes are available via the `--posix-exit-codes` flag. When this flag is passed, additional conditions can be returned that are not possible with the default behavior, including when Cypress fails due to
+POSIX compliant exit codes are available via the `--posix-exit-codes` flag. When you pass this flag, Cypress can return additional conditions that are not possible with the default behavior, including when Cypress fails due to
 network errors when connections to Cypress Cloud are required, such as in `--record` or `--parallel` runs.
 
-When using POSIX compliant exit codes, the number of failed tests can be determined from the [Module API](/app/references/module-api) or [structured reporter data](/app/tooling/reporters).
+When using POSIX compliant exit codes, you can determine the number of failed tests from the [Module API](/app/references/module-api) or [structured reporter data](/app/tooling/reporters).
 
 | Exit Condition                                                                              | POSIX Exit Code (with `--posix-exit-codes`) | Default Exit Code (without `--posix-exit-codes`) |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------------------ |
@@ -714,7 +714,7 @@ cypress open [options]
 
 #### Options:
 
-Options passed to `cypress open` are automatically applied to the project
+Cypress automatically applies options passed to `cypress open` to the project
 you open. These options persist on all projects until you quit Cypress. These options
 also override values in the Cypress configuration file.
 
@@ -926,8 +926,8 @@ Prints information about Cypress and the current environment such as:
   variables like
   [record key](/cloud/account-management/projects#Record-key) masked for
   security).
-- The location where run-time data is stored.
-- The location where the Cypress binary is cached.
+- The location where Cypress stores run-time data.
+- The location where Cypress caches the binary.
 - Operating system information.
 - System memory including free space.
 
@@ -984,8 +984,8 @@ package into the [global cache](/app/references/advanced-installation#Binary-cac
 
 This command normally runs automatically as a `postinstall` step when you add
 `cypress` with your package manager, so you rarely need to run it yourself.
-Running it explicitly is useful when the binary was not downloaded during
-`npm install`, including these scenarios:
+Running it explicitly is useful when your package manager did not download the
+binary during `npm install`, including these scenarios:
 
 - Your package manager blocks lifecycle scripts (for example with
   `--ignore-scripts`, or because a security policy disallows `postinstall`), so
@@ -994,7 +994,7 @@ Running it explicitly is useful when the binary was not downloaded during
 - You want to download and cache the binary on one machine (such as a CI
   "install" stage), then skip the download on every subsequent machine that
   reuses that [cache](/app/references/advanced-installation#Binary-cache).
-- The automatic install was skipped on purpose by setting
+- You skipped the automatic install on purpose by setting
   `CYPRESS_INSTALL_BINARY=0`.
 - You want to
   [troubleshoot the installation](/app/references/advanced-installation#Troubleshoot-installation)
@@ -1008,8 +1008,8 @@ install on its own with debug logging enabled:
 
 <CypressCommandTabs command="install" env="DEBUG=cypress:cli*" />
 
-The binary that gets installed, the cache location, and the download source can
-be customized through environment variables. See
+You can customize the binary that gets installed, the cache location, and the
+download source through environment variables. See
 [Advanced Installation](/app/references/advanced-installation) for details.
 
 #### Options
@@ -1045,10 +1045,9 @@ export CYPRESS_VERIFY_TIMEOUT=60000 # wait for 60 seconds
 cypress verify
 ```
 
-The `cypress verify` command is executed as part of the `cypress open`
-and `cypress run` commands. The `CYPRESS_VERIFY_TIMEOUT` environment variable
-should be provided for those commands if you wish to modify the timeout
-duration.
+The `cypress open` and `cypress run` commands run `cypress verify` as part
+of their execution. Provide the `CYPRESS_VERIFY_TIMEOUT` environment variable
+for those commands if you wish to modify the timeout duration.
 
 You can disable verification by setting the `CYPRESS_SKIP_VERIFY` environment variable to `true`.
 
@@ -1101,7 +1100,7 @@ cypress cache path
 #### `cypress cache list`
 
 Print all existing installed versions of Cypress. The output is a table
-with cached versions and the last time the binary was used by the user,
+with cached versions and the last time the user used the binary,
 determined from the file's access time.
 
 ```css

@@ -18,9 +18,9 @@ Skipping passed work speeds up your CI process and removes redundant testing, an
 
 You choose the granularity in project or organization settings:
 
-- **Run only failed tests** re-executes only the tests that did not pass. Specs
-  that were fully green are still skipped, and passing tests inside a failing
-  spec are skipped too. **This option requires Cypress 15.21.0 or later.** Use this option if you are confident that each `it` block is fully independent. If a test would work using `.only`, the test should work here.
+- **Run only failed tests** re-executes only the tests that did not pass. Cypress
+  still skips specs that were fully green, and skips passing tests inside a
+  failing spec too. **This option requires Cypress 15.21.0 or later.** Use this option if you are confident that each `it` block is fully independent. If a test would work using `.only`, the test should work here.
 - **Run only failed specs** re-executes every spec that contained a failure,
   including tests in those specs that already passed. Re-running whole specs reduces redundant re-runs but allows for cases where tests may rely on existing state from other tests. **Run only failed specs** is the default for new Cypress Cloud organizations.
 
@@ -36,11 +36,11 @@ With **Run only failed tests**, the re-run executes only the specific failing te
 Enabling Re-run optimization gives you:
 
 - **A faster path to green**: reruns finish in a fraction of the time because
-  passing work is skipped entirely.
+  Cypress skips passing work entirely.
 - **Lower CI compute cost**: skipped specs and tests never spin up machines or
   consume CI minutes.
 - **Fewer billed test results**: you aren't charged for re-validating work that
-  already passed, since skipped specs and tests are never executed.
+  already passed, since skipped specs and tests never run.
 
 :::caution
 
@@ -69,14 +69,14 @@ may change CI behavior your team is already used to.
 1. **Cypress Cloud picks the latest completed run in that group as the anchor run.**
    The anchor run is the reference point that determines what still
    needs to execute in the new re-run.
-1. **Only the work that failed in the anchor run is re-executed.**
+1. **Cypress re-executes only the work that failed in the anchor run.**
    - **Run only failed specs:** Cypress skips every spec that already passed, and
      re-runs each spec that contained a failure (including tests in that spec that
      passed).
    - **Run only failed tests:** Cypress skips every spec that already passed, then
      inside remaining specs it re-runs tests that failed or were skipped in the
-     anchor run, plus tests that are new or modified since that run. Tests that
-     passed, including tests that failed an attempt and then passed, are omitted.
+     anchor run, plus tests that are new or modified since that run. Cypress omits
+     tests that passed, including tests that failed an attempt and then passed.
 
 When this happens, the Cypress App prints a notice near the start of the run's CLI
 output. For **Run only failed specs**:
@@ -95,7 +95,7 @@ Re-running only the tests that did not pass in the run 1234. It will not include
 The anchor is always the **latest completed run** for the rerun group, regardless
 of which specific run you clicked "rerun" on in your CI provider's UI.
 
-In Cypress Cloud, a run that was rerun is labeled with a **Re-run** tag, so you can
+Cypress Cloud labels a run that was rerun with a **Re-run** tag, so you can
 identify reruns at a glance and confirm that Re-run optimization was applied.
 
 <DocsImage
@@ -124,7 +124,7 @@ save you.
 
 ## Enable Re-run optimization
 
-Re-run optimization is configured in the **Smart Orchestration** section of your
+You configure Re-run optimization in the **Smart Orchestration** section of your
 organization and project settings. Only **Owners** and **Admins** can change the
 setting. **Members** and **Viewers** have read-only access. For new Cloud organizations,
 spec-based re-runs are on by default. For organizations and projects created before Re-run
@@ -235,8 +235,8 @@ modify the `CYPRESS_RERUN_GROUP_ID`.
 
 ## What a rerun executes
 
-Every rerun is compared against your **most recent completed run** in the rerun
-group. **Run only failed specs** re-executes the specs that were still failing
+Cypress Cloud compares every rerun against your **most recent completed run** in
+the rerun group. **Run only failed specs** re-executes the specs that were still failing
 there. **Run only failed tests** re-executes the tests that did not pass there.
 Comparing against the most recent completed run means you can trust a rerun to always work from your latest results: within
 the [depth limit](#Behavior-and-limitations) it does not re-run work that already
@@ -262,15 +262,15 @@ These tradeoffs are why the feature is experimental and opt-in. For most reruns
 the speed and cost savings far outweigh them, but it's worth understanding them
 before enabling Re-run optimization on critical pipelines:
 
-- **Passing results are not carried forward.** A rerun-optimized run shows only the specs and tests that were re-executed. Work that passed in the anchor run does not appear in the rerun's results.
-- **Passing work is skipped for up to 5 chained reruns.** Re-run optimization
+- **Cypress doesn't carry passing results forward.** A rerun-optimized run shows only the specs and tests that were re-executed. Work that passed in the anchor run does not appear in the rerun's results.
+- **Cypress skips passing work for up to 5 chained reruns.** Re-run optimization
   filters out specs and tests that passed in earlier runs in the group, looking back up to
   5 runs. A 6th rerun re-executes the passing work from the original run.
 - **Reporter output reflects only the re-executed work.** CI guardrails based on
   test counts (JUnit/XML reporters, custom reporters, threshold checks) see
   fewer specs and tests than a full run. You may need to adjust these on your end.
 - **CLI messaging is limited.** The CLI prints a notice for the specs or tests being
-  re-run, but the skipped work is not listed in the output.
+  re-run, but doesn't list the skipped work in the output.
 - **Analytics may be incomplete.** Analytics features such as App Quality aren't fully accurate for rerun-optimized runs, because those runs contain only a subset of specs and tests.
 - **[Cypress Accessibility](/accessibility/get-started/introduction) and [UI Coverage](/ui-coverage/get-started/introduction) reports may be incomplete.** Rerun-optimized runs reflect only the specs and tests that were re-executed, not the full suite from the anchor run.
 

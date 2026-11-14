@@ -15,7 +15,7 @@ e2eSpecific: true
 
 `cy.prompt` is built for two jobs:
 
-- **Generate tests fast.** Describe a flow in natural language, run it, and review the Cypress code that was generated. Export that code to commit predictable, version-controlled tests, or keep iterating in natural language.
+- **Generate tests fast.** Describe a flow in natural language, run it, and review the code that Cypress generates. Export that code to commit predictable, version-controlled tests, or keep iterating in natural language.
 - **Cut maintenance with self-healing.** Leave `cy.prompt` in your tests and it adapts automatically when your UI changes, so a renamed class or a restructured DOM doesn't break the run.
 
 You always have full visibility into what the AI generated. Click the **Code** button in the Command Log to see the exact Cypress commands behind every step, then choose the workflow that fits your project.
@@ -98,13 +98,13 @@ When the test runs, `cy.prompt` interprets each step, generates the Cypress comm
 
 When you call `cy.prompt`, Cypress performs a multi-step process:
 
-1. **Interpret prompt:** Each string in your `steps[]` array is parsed using an AI model. Cypress maps the intent (e.g. 'click the login button') to Cypress commands (`cy.get(...).click()`) and target elements.
+1. **Interpret prompt:** Cypress parses each string in your `steps[]` array using an AI model. Cypress maps the intent (e.g. 'click the login button') to Cypress commands (`cy.get(...).click()`) and target elements.
 
 2. **Generate selectors:** Cypress evaluates your app's DOM and picks a selector based on priority rules (unique identifiers that are likely to be stable).
 
-3. **Generate Cypress code:** Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran. You can view the complete generated code at any time using the **Code** button in the Command Log.
+3. **Generate Cypress code:** Cypress generates and executes commands in sequence. The Command Log shows both your natural language step and the commands Cypress ran. You can view the complete generated code at any time using the **Code** button in the Command Log.
 
-4. **Cache for speed:** Generated code is cached and shared across machines and environments, including CI. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code. Once a prompt is cached, the cached code benefits all team members and CI runs without an additional performance hit.
+4. **Cache for speed:** Cypress caches generated code and shares it across machines and environments, including CI. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code. Once a prompt is cached, the cached code benefits all team members and CI runs without an additional performance hit.
 
 5. **Self-heal if needed:** If cached selectors fail (an element was renamed, attributes changed, and so on), Cypress regenerates code for that step automatically on the next run. See [Self-healing](#Self-healing).
 
@@ -176,7 +176,7 @@ Because your app may change between runs, `cy.prompt` regenerates broken selecto
 
 :::note
 
-**Language Support:** `cy.prompt` is optimized for English prompts and provides the most reliable results when prompts are written in English. We cannot guarantee accuracy or provide support for non-English prompts.
+**Language Support:** `cy.prompt` is optimized for English prompts and provides the most reliable results when you write prompts in English. We cannot guarantee accuracy or provide support for non-English prompts.
 
 :::
 
@@ -187,7 +187,7 @@ Prompt clarity determines reliability. Follow these rules:
 - **One action per step**: Avoid chaining multiple actions in one string.
 - **Avoid ambiguity**: Specify the action or element explicitly.
 - **Include positional context**: `click the login button in the header` is better than `click login button`.
-- **Specify Cypress options**: Some Cypress command options can be specified directly in your prompts using natural language. Force and timeout are the only options that are currently supported. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`.
+- **Specify Cypress options**: You can specify some Cypress command options directly in your prompts using natural language. Force and timeout are the only options that are currently supported. For example: `'go to "/users" with a timeout of 10 seconds'` or `'force click the submit button'`.
 
 ### Targeting elements by text content
 
@@ -279,12 +279,12 @@ You can see that a step self-healed in several places.
 In the Command Log:
 
 - **Test** - The test entry shows when at least one `cy.prompt` step self-healed during the run.
-- **Prompt** - The `cy.prompt` command is marked when one or more of its steps self-healed.
+- **Prompt** - The Command Log marks the `cy.prompt` command when one or more of its steps self-healed.
 - **Step** - Individual prompt steps show a **Self-healed** tag when the element they resolved to has changed since the last time that step ran.
 
 In [Cypress Cloud](https://cloud.cypress.io):
 
-- **Runs list** - A run that includes self-healed tests is flagged in the runs list.
+- **Runs list** - Cypress Cloud flags a run that includes self-healed tests in the runs list.
 - **Run overview** - Filter the tests in a run by those that self-healed.
 - **Run properties** - See how many prompt definitions ran and how many self-healed in the run.
 - **Test Replay** - Review the self-heal directly in the [Test Replay](/cloud/features/test-replay) of the test.
@@ -323,7 +323,7 @@ Placeholders let you feed dynamic and sensitive values into a prompt without inv
 
 ### The caching problem
 
-`cy.prompt` caches the code it generates for your steps so it doesn't call the AI on every run. That cache is shared across machines and environments, including CI, so once a prompt is cached the whole team and every CI run reuse it for free.
+`cy.prompt` caches the code it generates for your steps so it doesn't call the AI on every run. Cypress shares that cache across machines and environments, including CI, so once a prompt is cached the whole team and every CI run reuse it for free.
 
 The catch: **any change to your step strings invalidates the cache** and forces a new AI call. Cache invalidation is a problem when a step contains a **dynamic value** that changes each run, such as a timestamp, user ID, or randomly generated data. Hardcoded directly in the step, those values would bust the cache every time.
 
@@ -332,8 +332,8 @@ The catch: **any change to your step strings invalidates the cache** and forces 
 Reference values with the `{{placeholder}}` syntax and pass them through the `placeholders` option instead of inlining them. Placeholders keep the step string constant, so:
 
 - **Cache stays valid**: changing a placeholder's value doesn't invalidate the cache.
-- **Values are substituted at runtime**: `{{placeholder}}` is replaced with the real value when the step executes.
-- **Sensitive data stays private**: placeholder values are never sent to the AI.
+- **Values are substituted at runtime**: Cypress replaces `{{placeholder}}` with the real value when the step executes.
+- **Sensitive data stays private**: Cypress never sends placeholder values to the AI.
 
 ### Example usage
 
@@ -386,8 +386,8 @@ describe('Campaign Management', () => {
 
 #### Sensitive data in the DOM
 
-When `cy.prompt` reads your application's DOM to resolve element context, values from
-certain field types are automatically excluded before any data is sent to the AI model.
+When `cy.prompt` reads your application's DOM to resolve element context, Cypress automatically
+excludes values from certain field types before sending any data to the AI model.
 The exclusion applies to:
 
 - **Password fields** (`input[type=password]`)
@@ -395,8 +395,8 @@ The exclusion applies to:
   card number, expiry date, security code, and card type
 - **Hidden inputs** (`input[type=hidden]`)
 
-The structure and surrounding DOM context of these fields are still used to identify
-and interact with them. Only the field values are excluded.
+`cy.prompt` still uses the structure and surrounding DOM context of these fields to identify
+and interact with them. Cypress excludes only the field values.
 
 #### Sensitive data from the prompt
 
@@ -406,7 +406,7 @@ If you write:
 'type "hunter2" in the password field'
 ```
 
-The string `"hunter2"` is part of your test code and is not affected by this feature.
+The string `"hunter2"` is part of your test code, so this feature does not affect it.
 To keep sensitive values out of your step strings entirely, use placeholders:
 
 ```javascript
@@ -478,7 +478,7 @@ The **Code** button exports one test at a time. To capture **every** `cy.prompt`
 2. Scroll to the **cy.prompt** section. The section summarizes the run's `cy.prompt` usage, including the number of prompts in the run and the number of self-healed tests.
 3. Click **Download report** and choose a format: **JSON**, **YAML**, or **Markdown**.
 
-The report lists each prompt grouped by spec and test, along with the natural language steps and the Cypress code that was generated from them. For example, a downloaded Markdown report looks like this:
+The report lists each prompt grouped by spec and test, along with the natural language steps and the Cypress code that `cy.prompt` generated from them. For example, a downloaded Markdown report looks like this:
 
 ````markdown
 # cy.prompt export: build 10595
@@ -518,8 +518,8 @@ usage limits, the grace period, billing, and usage notifications.
 
 :::note
 
-Through August 1, 2026, accumulated usage before that date is ignored for
-billing purposes. There are no charges or limiting behavior related to usage
+Through August 1, 2026, Cypress Cloud ignores accumulated usage before that date
+for billing purposes. There are no charges or limiting behavior related to usage
 prior to the cutoff. See
 [What happens at the end of the grace period?](/cloud/faq#What-happens-at-the-end-of-the-cyprompt-grace-period)
 in the Cloud FAQ.

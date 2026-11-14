@@ -1,4 +1,4 @@
-One Cypress Cloud project usually records many kinds of runs (pull request checks, nightly regression suites, per-team smoke tests), and each kind is best served by a different App Quality configuration. The `profiles` property lets you keep a single base configuration and layer targeted overrides on top of it. The right override is selected automatically from the [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt) you already pass to `cypress run`, so a pull request run and a full regression run can each get exactly the configuration that makes their report actionable, with no changes to your test code and no second project to maintain.
+One Cypress Cloud project usually records many kinds of runs (pull request checks, nightly regression suites, per-team smoke tests), and a different App Quality configuration best serves each kind. The `profiles` property lets you keep a single base configuration and layer targeted overrides on top of it. Cypress Cloud automatically selects the right override from the [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt) you already pass to `cypress run`, so a pull request run and a full regression run can each get exactly the configuration that makes their report actionable, with no changes to your test code and no second project to maintain.
 
 Before reaching for profiles, consider whether separate Cypress Cloud projects would be simpler. Distinct projects for different applications or teams usually keep reporting and tracking clearer, and are the recommended first choice. Reach for profiles when the runs belong in one project but need different configuration.
 
@@ -12,17 +12,17 @@ Before reaching for profiles, consider whether separate Cypress Cloud projects w
 
 ### Selecting a profile
 
-Profiles are selected by matching run tags to profile names. When you record a run with the [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) flag, Cypress Cloud walks the `profiles` array in order and applies the **first profile whose `name` exactly matches one of the run's tags**. Matching is an exact, case-sensitive string comparison: `aq-config-regression` matches only the tag `aq-config-regression`, not `AQ-Config-Regression` or `aq-config-regression-nightly`. When several tags match different profiles, the first match in the array wins (so list more specific profiles before broader ones), and the order the tags appear on the run makes no difference. If no tag matches, your base configuration is used unchanged.
+Cypress Cloud selects profiles by matching run tags to profile names. When you record a run with the [`--tag`](/app/references/command-line#cypress-run-tag-lt-tag-gt) flag, Cypress Cloud walks the `profiles` array in order and applies the **first profile whose `name` exactly matches one of the run's tags**. Matching is an exact, case-sensitive string comparison: `aq-config-regression` matches only the tag `aq-config-regression`, not `AQ-Config-Regression` or `aq-config-regression-nightly`. When several tags match different profiles, the first match in the array wins (so list more specific profiles before broader ones), and the order the tags appear on the run makes no difference. If no tag matches, Cypress Cloud uses your base configuration unchanged.
 
-Profiles are resolved when a run is processed, not when your tests execute. Reprocessing a past run re-applies the profiles and configuration you have saved now, so you can adjust a profile and see its effect on an existing run without recording again.
+Cypress Cloud resolves profiles when it processes a run, not when your tests execute. Reprocessing a past run re-applies the profiles and configuration you have saved now, so you can adjust a profile and see its effect on an existing run without recording again.
 
 ### How a profile changes your configuration
 
-When a profile applies, its `config` is laid over your base configuration one setting at a time. Only the settings you include in the profile change; everything else stays exactly as it is in your base configuration. A few things are worth knowing so the result matches what you expect:
+When a profile applies, Cypress Cloud lays its `config` over your base configuration one setting at a time. Only the settings you include in the profile change; everything else stays exactly as it is in your base configuration. A few things are worth knowing so the result matches what you expect:
 
-- **A setting in a profile fully replaces the base version of that setting.** Lists are not combined. If your base configuration has three `elementFilters` rules and a profile defines its own `elementFilters`, the profile's rules are used on their own, so copy over any base rules you still want to apply.
-- **Anything you leave out of a profile stays the same.** You only need to list what's different for that kind of run; the rest is inherited from your base configuration.
-- **The `accessibility` and `uiCoverage` objects are merged one level deep.** Overriding a single setting inside one of them, such as `accessibility.significantAttributes`, leaves the sibling settings in that object (like `accessibility.elementFilters`) untouched, so you can adjust one product-specific setting without restating the rest.
+- **A setting in a profile fully replaces the base version of that setting.** Cypress Cloud does not combine lists. If your base configuration has three `elementFilters` rules and a profile defines its own `elementFilters`, Cypress Cloud uses the profile's rules on their own, so copy over any base rules you still want to apply.
+- **Anything you leave out of a profile stays the same.** You only need to list what's different for that kind of run; the profile inherits the rest from your base configuration.
+- **Cypress Cloud merges the `accessibility` and `uiCoverage` objects one level deep.** Overriding a single setting inside one of them, such as `accessibility.significantAttributes`, leaves the sibling settings in that object (like `accessibility.elementFilters`) untouched, so you can adjust one product-specific setting without restating the rest.
 
 ### What a profile can and can't change
 
@@ -36,7 +36,7 @@ A profile's `config` accepts any App Quality configuration setting your base con
 
 Use a naming convention like `aq-config-*` (for example, `aq-config-regression`, `aq-config-pr`) so it's obvious that a tag exists for configuration lookup rather than for filtering or grouping runs in Cypress Cloud.
 
-Being explicit this way helps avoid accidentally changing or removing a tag that a profile depends on. Because names are matched exactly against run tags, keep them stable: renaming a profile or changing a tag silently falls back to the base configuration for those runs.
+Being explicit this way helps avoid accidentally changing or removing a tag that a profile depends on. Because Cypress Cloud matches names exactly against run tags, keep them stable: renaming a profile or changing a tag silently falls back to the base configuration for those runs.
 
 ## Syntax
 

@@ -25,9 +25,9 @@ Cypress.session.getCurrentSessionData()
 Cypress.session.getSession(id)
 ```
 
-Clearing all session and automatically re-running the spec
-`Cypress.session.clearAllSavedSessions()` can also be done by clicking the
-"Clear All Sessions" button in the
+You can also clear all sessions and automatically re-run the spec
+(`Cypress.session.clearAllSavedSessions()`) by clicking the "Clear All Sessions"
+button in the
 [Sessions Instrument Panel](/api/commands/session#The-Instrument-Panel).
 
 <DocsImage
@@ -95,7 +95,7 @@ it('debug session', () => {
 
 ### Debugging Cached Session Data
 
-If your session seems to be recreated more than expected, or doesn't seem to be
+If `cy.session()` seems to recreate your session more than expected, or doesn't seem to be
 applying the cookies, `localStorage` or `sessionStorage` data that you'd expect,
 you can use `Cypress.session.getSession(id)` to view what session data has been
 cached by `cy.session()`. If you are missing any data, your setup and/or

@@ -48,12 +48,12 @@ feature.
 
 :::
 
-Once test retries are enabled, tests can be configured to have X number of retry
-attempts. For example, if test retries have been configured with `2` retry
-attempts, Cypress retries tests up to 2 additional times (for a total of 3
-attempts) before potentially being marked as a failed test.
+Once test retries are enabled, you can configure tests to have X number of retry
+attempts. For example, if you configure test retries with `2` retry attempts,
+Cypress retries tests up to 2 additional times (for a total of 3 attempts)
+before potentially marking a test as failed.
 
-When each test is run again, the following
+When Cypress runs each test again, the following
 [hooks](/app/core-concepts/writing-and-organizing-tests#Hooks) re-run
 also:
 
@@ -252,7 +252,7 @@ describe('User Login', () => {
 ## Videos
 
 You can use Cypress's [`after:spec`](/api/node-events/after-spec-api) event listener
-that fires after each spec file is run to delete the recorded video for specs
+that fires after each spec file runs to delete the recorded video for specs
 that had no retry attempts or failures. Deleting passing and non-retried videos
 after the run can save resource space on the machine as well as skip the time
 used to process, compress, and upload the video to
@@ -291,13 +291,13 @@ on('after:spec', (spec, results) => {
 
 ## Cypress Cloud
 
-If you are using [Cypress Cloud](/cloud/get-started/introduction), information
-related to test retries is displayed on the Test Results tab for a run.
+If you are using [Cypress Cloud](/cloud/get-started/introduction), the Test
+Results tab for a run displays information related to test retries.
 Selecting the Flaky filter shows tests that retried and then passed during
 the run.
 
-These tests are also indicated with a "Flaky" badge on the Latest Runs page and
-Test Results tab on the Run Details page.
+A "Flaky" badge also marks these tests on the Latest Runs page and Test Results
+tab on the Run Details page.
 
 <DocsVideo
   src="/img/app/test-retries/flaky-test-filter.mp4"
@@ -329,8 +329,8 @@ highlighted in the Test Flake Management Guide.
 
 ### Are retried tests counted as more than one test result in my billing?
 
-No. Tests recorded during `cypress run` with the `--record` flag are counted
-the same with or without test retries.
+No. Cypress Cloud counts tests recorded during `cypress run` with the `--record`
+flag the same with or without test retries.
 
 We consider each time the `it()` function is called to be a single test for
 billing purposes. The test retrying does not count as extra test results in your

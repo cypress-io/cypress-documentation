@@ -148,7 +148,7 @@ cy.getCookie('session_id').should('not.exist')
 
 [`.its()`](/api/commands/its) yields a single property of the cookie. Because
 `.its()` is also a query, the assertion still retries `cy.getCookie()`, so the
-test waits for a cookie that hasn't been set yet.
+test waits for a cookie that the application hasn't set yet.
 
 ```javascript
 cy.getCookie('csrf_token').its('value').should('have.length', 32)
@@ -264,7 +264,7 @@ causes:
 
 - The name or domain doesn't match. See
   [which cookies `cy.getCookie()` matches](#Which-cookies-cygetCookie-matches-by-domain).
-- The cookie was set in an earlier test. With
+- An earlier test set the cookie. With
   [test isolation](/app/core-concepts/test-isolation) on, Cypress clears cookies
   before each test. Use [`cy.session()`](/api/commands/session) to keep a login
   across tests.
@@ -314,7 +314,7 @@ The commands above display in the Command Log as:
 
 When you click `getCookie` in the Command Log, the console outputs the
 following. When no cookie matches, the console shows `null` as the yielded
-value, with a note that no cookie with that name was found.
+value, with a note that Cypress found no cookie with that name.
 
 <DocsImage
   src="/img/api/getcookie/inspect-cookie-object-properties-in-console.png"
