@@ -34,7 +34,7 @@ Mocha can be used with Cypress. Here is a list of built in Mocha reporters.
 
 By default, Cypress uses the `spec` reporter to output information to `STDOUT`.
 
-We've also added the two most common 3rd party reporters for Mocha. These are
+We've also added the two most common 3rd party reporters for Mocha. These reporters are
 built into Cypress and you can use them without installing anything.
 
 - [`teamcity`](https://github.com/travisjeffery/mocha-teamcity-reporter)
@@ -49,7 +49,7 @@ party reporter.
 
 You can load
 [custom Mocha reporters](https://mochajs.org/api/tutorial-custom-reporter.html)
-through a relative or absolute path. These can be specified in your Cypress
+through a relative or absolute path. Custom reporters can be specified in your Cypress
 configuration file or via the [command line](/app/references/command-line).
 
 For example, if you have the following directory structure:
@@ -102,7 +102,7 @@ When using custom reporters via npm, specify the package name.
 
 ## Reporter Options
 
-Some reporters accept options that customize their behavior. These can be
+Some reporters accept options that customize their behavior. Reporter options can be
 specified in your Cypress configuration or via
 [command line](/app/references/command-line) options.
 
@@ -180,7 +180,7 @@ can use the
 
 Oftentimes we see users wanting the ability to use multiple reporters. When
 running in CI, you might want to generate a report for `junit` and perhaps a
-`json` report. This is great, but by setting this reporter you won't receive any
+`json` report. Generating these reports is great, but by setting this reporter you won't receive any
 additional feedback while the tests are running!
 
 The solution here is to use multiple reporters. You will have the benefit of
@@ -328,7 +328,7 @@ using the
 
 <PackageManagerTabs run="marge mochawesome.json" />
 
-It generates the beautiful standalone HTML report file
+The `marge` command generates the beautiful standalone HTML report file
 `mochawesome-report/mochawesome.html` shown below. As you can see all test
 results, timing information, and even test bodies are included.
 

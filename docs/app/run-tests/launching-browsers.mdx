@@ -17,7 +17,7 @@ instance so it can guarantee two things that make automated testing trustworthy:
 1. **A clean, pristine testing environment.** Every run starts from a known,
    isolated state, with no leftover cookies, history, cached logins, or
    third-party extensions from your day-to-day browsing leaking into your tests.
-   This is what keeps runs reproducible and prevents "works on my machine"
+   A clean environment is what keeps runs reproducible and prevents "works on my machine"
    flakiness.
 2. **Access to privileged browser automation APIs.** Driving the browser
    directly is how Cypress reads and controls your application reliably, takes
@@ -160,7 +160,7 @@ Or Chrome for Testing:
 <strong>Prefer Chrome for Testing for reliable, reproducible runs</strong>
 
 Where possible, we recommend running your tests in
-[Chrome for Testing](https://developer.chrome.com/blog/chrome-for-testing). It is
+[Chrome for Testing](https://developer.chrome.com/blog/chrome-for-testing). Chrome for Testing is
 a dedicated Chrome flavor that Google builds specifically for automation, and it
 has a few advantages over a standard, day-to-day Chrome install:
 
@@ -199,7 +199,7 @@ for more.
 To set up a consistent testing environment, Cypress reads and writes Chrome
 preference files inside its [isolated profile](#Cypress-Profile) in the browser's
 user-data directory (the `Preferences`, `Secure Preferences`, and `Local State`
-files). This is how Cypress applies preference-based settings, for example,
+files). Writing these files is how Cypress applies preference-based settings, for example,
 disabling password saving and autofill, configuring the
 [downloads behavior](#Downloading-files), and any preferences you set through the
 [`before:browser:launch`](/api/node-events/browser-launch-api#Change-browser-preferences)
@@ -367,7 +367,7 @@ you.
 ### Customize available browsers
 
 Sometimes you might want to modify the list of browsers found before running
-tests. This is useful when your application only targets certain browsers, or
+tests. Customizing the list is useful when your application only targets certain browsers, or
 when you want to test in a Chromium-based browser that Cypress doesn't detect on
 its own.
 
@@ -473,7 +473,7 @@ reproducible_, and _easier to debug_.
 ### Cypress Profile
 
 Cypress generates its own isolated profile apart from your normal browser
-profile. This means things like `history` entries, `cookies`, and
+profile, so things like `history` entries, `cookies`, and
 `3rd party extensions` from your regular browsing session will not affect your
 tests in Cypress.
 
@@ -491,7 +491,7 @@ subsequent launch, so your extensions and other configuration are preserved.
 ### Disabled Barriers
 
 Cypress automatically disables certain functionality in the Cypress launched
-browser that tend to get in the way of automated testing. This includes various
+browser that tend to get in the way of automated testing. The disabled functionality includes various
 features and prompts that are commonly disabled in automation, for example,
 ignoring certificate errors, allowing blocked pop-ups, and disabling things like
 password saving, autofill, session restoring, background throttling, and device
@@ -508,11 +508,11 @@ Any extra tabs (i.e. tabs other than the one opened by Cypress) will be closed b
 ### Customize the browser launch
 
 When Cypress goes to launch your browser, it gives you an opportunity to modify
-the arguments, preferences, environment, and extensions used to launch it. This
+the arguments, preferences, environment, and extensions used to launch it. The launch hook
 is the main extension point for tailoring the browser to your application's
 needs.
 
-This enables you to do things like:
+Customizing the launch enables you to do things like:
 
 - Load your own extension
 - Enable or disable experimental features
@@ -547,7 +547,7 @@ the chrome of the browser, so you'll always be able to visually distinguish them
 
 When running [cypress run](/app/references/command-line#cypress-run) from the
 CLI, Cypress launches browsers **headlessly** by default. The browser runs
-without a visible UI. This is what makes Cypress well suited to Continuous
+without a visible UI. Headless mode is what makes Cypress well suited to Continuous
 Integration, where there is no display to render to and headless runs are faster
 and lighter. When running [cypress open](/app/references/command-line#cypress-open),
 the browser is **always headed** so you can watch and debug interactively.
@@ -602,7 +602,7 @@ recorded screenshots and videos, usually surfaces the difference.
 When your application downloads a file, Cypress automatically saves it to the
 [`downloadsFolder`](/app/references/configuration#Downloads) (by default
 `cypress/downloads`) without showing the browser's native "Save As" prompt or
-download shelf. This is what makes downloads testable end-to-end: a native
+download shelf. Saving to a known folder is what makes downloads testable end-to-end: a native
 file-picker dialog would block an unattended run, so Cypress routes downloads to a
 known folder where you can assert on them directly from disk.
 

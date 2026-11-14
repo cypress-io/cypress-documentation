@@ -124,7 +124,7 @@ Open the **UI Coverage** tab on any run. In the **Tested elements** section, sor
 
 ### Parallel machine balance
 
-If you're running tests in parallel and your total run time isn't improving as expected when you add machines, open the **Machines** view in Cypress Cloud on any recorded run. It charts spec files by the machine that executed them, showing which specs each machine ran and how long each took. An unbalanced distribution (one machine idle while another is still running long specs) is the most common reason parallelization underperforms. See [Parallelization](#Parallelization) for how to act on what you find.
+If you're running tests in parallel and your total run time isn't improving as expected when you add machines, open the **Machines** view in Cypress Cloud on any recorded run. The **Machines** view charts spec files by the machine that executed them, showing which specs each machine ran and how long each took. An unbalanced distribution (one machine idle while another is still running long specs) is the most common reason parallelization underperforms. See [Parallelization](#Parallelization) for how to act on what you find.
 
 <DocsImage
   src="/img/app/parallelization/machines-view.png"
@@ -274,7 +274,7 @@ If you currently have an end-to-end test with fully stubbed network requests tes
 
 #### End-to-end tests
 
-E2E tests run the full stack: real browser, real server, real routing, real network. They're the slowest category (typically 3-15 seconds per test) and the most expensive to maintain. Reserve them for scenarios where the value of testing the full integration outweighs the cost.
+E2E tests run the full stack: real browser, real server, real routing, real network. E2E tests are the slowest category (typically 3-15 seconds per test) and the most expensive to maintain. Reserve them for scenarios where the value of testing the full integration outweighs the cost.
 
 ```
 End-to-end tests are the right choice when:
@@ -300,7 +300,7 @@ The exact ratios depend on your application, but the principle holds: every test
 
 ### Set a global `baseUrl`
 
-Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy.visit()` is first called. This causes a visible delay and wastes several hundred milliseconds at the start of every test file.
+Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy.visit()` is first called. The reload causes a visible delay and wastes several hundred milliseconds at the start of every test file.
 
 :::cypress-config-example
 
@@ -316,7 +316,7 @@ Without a `baseUrl`, Cypress loads a blank page on startup then reloads when `cy
 
 With `baseUrl` set, Cypress opens directly to your application. See [Setting a Global baseUrl](/app/core-concepts/best-practices#Setting-a-Global-baseUrl) for details.
 
-There is a second, more significant benefit: Cypress verifies that `baseUrl` is reachable before running any tests. If the URL is not available, Cypress exits immediately with a clear error rather than starting the suite. This surfaces a broken server or bad environment variable in the first second of a run rather than 10 minutes in, behind a cascade of confusing failures.
+There is a second, more significant benefit: Cypress verifies that `baseUrl` is reachable before running any tests. If the URL is not available, Cypress exits immediately with a clear error rather than starting the suite. The early check surfaces a broken server or bad environment variable in the first second of a run rather than 10 minutes in, behind a cascade of confusing failures.
 
 ### Cache authentication
 
@@ -685,7 +685,7 @@ cy.get('[data-cy="report-ready"]', { timeout: 30000 }).should('be.visible')
 
 Every time Cypress asserts or checks that an element is visible, it runs a visibility detection algorithm. In applications with complex, deeply nested DOM structures, this check can be expensive: the legacy visibility check walks up the ancestor tree and reads CSS properties at each level, repeatedly triggering layout recalculation.
 
-As of Cypress 16, the [modern visibility algorithm](/app/core-concepts/interacting-with-elements#Visibility-Strategy) is the default. It delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API, which is faster than the legacy DOM-walking approach and aligns Cypress's notion of "visible" with the browser's own definition.
+As of Cypress 16, the [modern visibility algorithm](/app/core-concepts/interacting-with-elements#Visibility-Strategy) is the default. The modern algorithm delegates to the browser's native [`Element.checkVisibility()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/checkVisibility) API, which is faster than the legacy DOM-walking approach and aligns Cypress's notion of "visible" with the browser's own definition.
 
 If you were previously enabling [`experimentalFastVisibility`](/app/references/migration-guide#experimentalFastVisibility-replaced-by-visibilityStrategy) on Cypress 15, remove it — the modern algorithm is now always on by default.
 
@@ -869,7 +869,7 @@ From the [Kitchen Sink example](/cloud/features/smart-orchestration/parallelizat
 
 For large suites, 4-8 machines typically brings runs under 10 minutes. Diminishing returns set in when per-spec overhead (browser launch, video encoding) dominates over actual test time.
 
-To evaluate whether your machines are being used efficiently, use the [Machines view](#Parallel-machine-balance) in Cypress Cloud. It shows which specs each machine ran, how long each took, and how balanced the workload was across the run. If one machine finishes in 3 minutes while another is still running at 12, the distribution is uneven and adding more machines won't help until the imbalance is resolved.
+To evaluate whether your machines are being used efficiently, use the [Machines view](#Parallel-machine-balance) in Cypress Cloud. The Machines view shows which specs each machine ran, how long each took, and how balanced the workload was across the run. If one machine finishes in 3 minutes while another is still running at 12, the distribution is uneven and adding more machines won't help until the imbalance is resolved.
 
 <DocsImage
   src="/img/app/parallelization/machines-view.png"
@@ -939,7 +939,7 @@ Disable video in your Cypress configuration:
 
 #### Use Test Replay for CI debugging instead
 
-The reason teams enable video is to have something to look at when a CI test fails. [Test Replay](/cloud/features/test-replay) is a better answer to that problem. It's available on all Cypress Cloud plans at no additional cost and requires no configuration changes: it's automatically available for any run recorded to Cypress Cloud.
+The reason teams enable video is to have something to look at when a CI test fails. [Test Replay](/cloud/features/test-replay) is a better answer to that problem. Test Replay is available on all Cypress Cloud plans at no additional cost and requires no configuration changes: it's automatically available for any run recorded to Cypress Cloud.
 
 Where a video gives you a passive playback of the screen, Test Replay gives you an interactive, time-travel debugger: you can inspect the DOM at any point during the test, examine network requests and their responses, read console logs, and see JavaScript errors, exactly as they occurred in CI.
 

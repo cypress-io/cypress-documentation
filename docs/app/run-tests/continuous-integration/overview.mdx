@@ -251,7 +251,7 @@ Images are Linux-based and support the following platforms:
 
 Cypress Docker images provide a consistent environment tailored for use with
 Cypress. By choosing an appropriate Cypress Docker image, you determine the
-exact environment that your Cypress tests run in. This shields your workflows
+exact environment that your Cypress tests run in. The image shields your workflows
 from version updates made by your CI provider, for instance if they update
 Node.js or browser versions.
 
@@ -263,7 +263,7 @@ Cypress Docker images are available from:
 ### Cypress Docker variants
 
 - [cypress/base](https://github.com/cypress-io/cypress-docker-images/tree/master/base) is the entry-level Cypress Docker image. To test in an installed browser such as Chrome or Firefox, use the `cypress/browsers` image described below.
-  It contains a complete Linux (Debian) operating system, together with the
+  The `cypress/base` image contains a complete Linux (Debian) operating system, together with the
   [prerequisite operating system packages](/app/get-started/install-cypress#UbuntuDebian) for Cypress,
   Node.js, npm, and Yarn v1 Classic.
   An image `<tag>` gives you the choice of Node.js version.
@@ -280,13 +280,13 @@ Cypress Docker images are available from:
 
 - [cypress/included](https://github.com/cypress-io/cypress-docker-images/tree/master/included) builds on the
   [cypress/browsers](https://github.com/cypress-io/cypress-docker-images/tree/master/browsers) image.
-  It adds a fixed version of **Cypress**, globally installed by npm.
+  The `cypress/included` image adds a fixed version of **Cypress**, globally installed by npm.
   A short-form image `<tag>` selects the version of Cypress.
   A corresponding long-form `<tag>` selects the version of Cypress and documents the combined Node.js and browser versions.
 
 - [cypress/factory](https://github.com/cypress-io/cypress-docker-images/tree/master/factory)
   provides the base operating system image and allows individual selection of other components
-  by version. It is used to generate customized Docker images.
+  by version. The `cypress/factory` image is used to generate customized Docker images.
 
 ### CI Docker examples
 
@@ -477,7 +477,7 @@ You can set various environment variables to modify how Cypress runs.
 #### Configuration Values
 
 You can set any [configuration value](/app/references/configuration) as an
-environment variable by prefixing it with `CYPRESS_`. This overrides values in
+environment variable by prefixing it with `CYPRESS_`. The environment variable overrides values in
 the Cypress configuration.
 
 **_Typical use cases would be modifying things like:_**
@@ -662,7 +662,7 @@ any reason the Cypress binary will be missing (unless it was already cached).
 
 To better diagnose the error, add
 [commands to get information about the Cypress cache](/app/references/command-line#cypress-cache-command)
-to your CI setup. This will print where the binary is located and what versions
+to your CI setup. These commands will print where the binary is located and what versions
 are already present.
 
 <CypressCommandTabs
@@ -725,7 +725,7 @@ Xvfb -screen 0 1024x768x24 :99 &
 ```
 
 Cypress internally passes these Xvfb arguments, but if you are spawning your own
-Xvfb, you would need to pass these arguments. This is necessary to avoid using
+Xvfb, you would need to pass these arguments. The arguments are necessary to avoid using
 8-bit color depth with Xvfb, which will prevent Chrome or Electron from
 crashing.
 

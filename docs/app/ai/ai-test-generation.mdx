@@ -13,7 +13,7 @@ e2eSpecific: true
 
 `cy.prompt` turns natural language test steps into real, executable Cypress commands using AI. Describe what you want to test the way you'd explain it to a teammate (for example, `'click the login button'` or `'verify the dashboard loads'`), and `cy.prompt` figures out the selectors and commands for you.
 
-It's built for two jobs:
+`cy.prompt` is built for two jobs:
 
 - **Generate tests fast.** Describe a flow in natural language, run it, and review the Cypress code that was generated. Export that code to commit predictable, version-controlled tests, or keep iterating in natural language.
 - **Cut maintenance with self-healing.** Leave `cy.prompt` in your tests and it adapts automatically when your UI changes, so a renamed class or a restructured DOM doesn't break the run.
@@ -104,7 +104,7 @@ When you call `cy.prompt`, Cypress performs a multi-step process:
 
 3. **Generate Cypress code:** Commands are generated and executed in sequence. The Command Log shows both your natural language step and the commands Cypress ran. You can view the complete generated code at any time using the **Code** button in the Command Log.
 
-4. **Cache for speed:** Generated code is cached and shared across machines and environments, including CI. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code. This means that once a prompt is cached, it benefits all team members and CI runs without an additional performance hit.
+4. **Cache for speed:** Generated code is cached and shared across machines and environments, including CI. Re-running the same test does not re-call the AI model unless the prompt or DOM changes in a way that invalidates the cached code. Once a prompt is cached, the cached code benefits all team members and CI runs without an additional performance hit.
 
 5. **Self-heal if needed:** If cached selectors fail (an element was renamed, attributes changed, and so on), Cypress regenerates code for that step automatically on the next run. See [Self-healing](#Self-healing).
 
@@ -260,7 +260,7 @@ If Cypress cannot interpret a step, you'll see a dialog prompting you to refine 
 best when it catches occasional, unexpected changes, **not when it fires on every run**.
 
 If you use `cy.prompt` to target an element whose selector changes frequently (like
-dynamically generated selectors), `cy.prompt` will attempt to self-heal on every run. This increases AI calls, slows test execution, and reduces the cache benefit that makes `cy.prompt` fast in CI. This is not what you want.
+dynamically generated selectors), `cy.prompt` will attempt to self-heal on every run. Self-healing on every run increases AI calls, slows test execution, and reduces the cache benefit that makes `cy.prompt` fast in CI, which is not what you want.
 
 ### Keep self-healing from firing every run
 
@@ -325,11 +325,11 @@ Placeholders let you feed dynamic and sensitive values into a prompt without inv
 
 `cy.prompt` caches the code it generates for your steps so it doesn't call the AI on every run. That cache is shared across machines and environments, including CI, so once a prompt is cached the whole team and every CI run reuse it for free.
 
-The catch: **any change to your step strings invalidates the cache** and forces a new AI call. That's a problem when a step contains a **dynamic value** that changes each run, such as a timestamp, user ID, or randomly generated data. Hardcoded directly in the step, those values would bust the cache every time.
+The catch: **any change to your step strings invalidates the cache** and forces a new AI call. Cache invalidation is a problem when a step contains a **dynamic value** that changes each run, such as a timestamp, user ID, or randomly generated data. Hardcoded directly in the step, those values would bust the cache every time.
 
 ### The placeholder solution
 
-Reference values with the `{{placeholder}}` syntax and pass them through the `placeholders` option instead of inlining them. This keeps the step string constant, so:
+Reference values with the `{{placeholder}}` syntax and pass them through the `placeholders` option instead of inlining them. Placeholders keep the step string constant, so:
 
 - **Cache stays valid**: changing a placeholder's value doesn't invalidate the cache.
 - **Values are substituted at runtime**: `{{placeholder}}` is replaced with the real value when the step executes.
@@ -388,7 +388,7 @@ describe('Campaign Management', () => {
 
 When `cy.prompt` reads your application's DOM to resolve element context, values from
 certain field types are automatically excluded before any data is sent to the AI model.
-This applies to:
+The exclusion applies to:
 
 - **Password fields** (`input[type=password]`)
 - **Credit card fields** using standard autocomplete attributes, including card name,
@@ -447,11 +447,11 @@ Once you have the generated code, you can:
 - **Save code to your test file** - Replace the `cy.prompt` call with the generated Cypress commands for predictable, version-controlled tests.
 - **Copy code to your clipboard** - Use the code in other files or share it with your team.
 
-This helps you review and modify the generated code as needed or just use it as a reference to understand what `cy.prompt` is doing behind the scenes.
+Saving or copying the generated code helps you review and modify it as needed or just use it as a reference to understand what `cy.prompt` is doing behind the scenes.
 
 ### Customizing selectors in generated code
 
-You can customize which selectors `cy.prompt` uses by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). This lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when querying for selectors, ensuring the generated code matches your project's selector strategy.
+You can customize which selectors `cy.prompt` uses by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). The ElementSelector API lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when querying for selectors, ensuring the generated code matches your project's selector strategy.
 
 Configure the selector priority in your support file or test file:
 
@@ -472,10 +472,10 @@ For more examples and details, see the [ElementSelector API documentation](/api/
 
 ### Download a prompt report for a run
 
-The **Code** button exports one test at a time. To capture **every** `cy.prompt` from a recorded run at once, download a report from Cypress Cloud. This is useful for auditing AI-generated code across a CI build, sharing it with your team, or feeding it into other tools.
+The **Code** button exports one test at a time. To capture **every** `cy.prompt` from a recorded run at once, download a report from Cypress Cloud. The report is useful for auditing AI-generated code across a CI build, sharing it with your team, or feeding it into other tools.
 
 1. Open the run in [Cypress Cloud](https://cloud.cypress.io) and select its **Properties** tab.
-2. Scroll to the **cy.prompt** section. It summarizes the run's `cy.prompt` usage, including the number of prompts in the run and the number of self-healed tests.
+2. Scroll to the **cy.prompt** section. The section summarizes the run's `cy.prompt` usage, including the number of prompts in the run and the number of self-healed tests.
 3. Click **Download report** and choose a format: **JSON**, **YAML**, or **Markdown**.
 
 The report lists each prompt grouped by spec and test, along with the natural language steps and the Cypress code that was generated from them. For example, a downloaded Markdown report looks like this:

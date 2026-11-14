@@ -15,20 +15,20 @@ sidebar_custom_props: { 'ai_icon': true, 'new_label': true }
 
 An AI agent can run a Cypress spec and get back pass or fail. What it can't get is everything that makes a failure fixable: the Command Log, the error and code frame, the DOM as it was when the command ran. That detail lives in the Cypress app, where the agent can't reach it.
 
-`cypress tap` is an extension of the cypress CLI that lets you or an agent interact with an open-mode Cypress session and read its context from the terminal. With it, an agent can run a spec and poll its status, then read the failing test's Command Log and error as the Cypress app shows them. It can also inspect the DOM of the application under test at the moment a command ran.
+`cypress tap` is an extension of the cypress CLI that lets you or an agent interact with an open-mode Cypress session and read its context from the terminal. With it, an agent can run a spec and poll its status, then read the failing test's Command Log and error as the Cypress app shows them. The agent can also inspect the DOM of the application under test at the moment a command ran.
 
-This allows an agent to verify its own work as it codes, catching and fixing failures in the same loop that created them.
+`cypress tap` allows an agent to verify its own work as it codes, catching and fixing failures in the same loop that created them.
 
-Any agent that can run shell commands can use it, including Cursor, Claude
+Any agent that can run shell commands can use `cypress tap`, including Cursor, Claude
 Code, GitHub Copilot, Windsurf, and Codex CLI.
 
-`cypress tap` is completely free. It ships with the Cypress App you already have, so there is no Cypress Cloud account to create, no plan to buy, and nothing extra to install.
+`cypress tap` is completely free. `cypress tap` ships with the Cypress App you already have, so there is no Cypress Cloud account to create, no plan to buy, and nothing extra to install.
 
 :::tip
 
 To get the most out of `cypress tap` with an agent, pair it with the
 [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) from the
-[Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit). It tells your
+[Cypress AI Toolkit](https://github.com/cypress-io/ai-toolkit). The skill tells your
 agent how to drive these commands correctly, such as polling for a real verdict
 before trusting a pass or fail, so you don't have to write those instructions
 yourself.
@@ -37,7 +37,7 @@ yourself.
 
 :::warning
 
-`cypress tap` is in [beta](/app/references/release-stages#Beta). It is enabled by
+`cypress tap` is in [beta](/app/references/release-stages#Beta). `cypress tap` is enabled by
 default and no longer expected to change in major ways, but its commands and
 output can still change in any release while we gather feedback.
 
@@ -68,7 +68,7 @@ result when passed `--json`. Agents and scripts should prefer `--json`.
 No Cypress Cloud account and no paid subscription are required. `cypress tap`
 ships with the Cypress App you already have and drives the open mode
 session on the same machine or sandbox as the CLI, so there is nothing to sign up for and no usage
-limits to track. That holds whether or not you record runs to Cypress Cloud.
+limits to track. The same is true whether or not you record runs to Cypress Cloud.
 
 ## Available commands
 
@@ -135,7 +135,7 @@ SESSIONS (2)
 
 ### cypress tap status {#cypress-tap-status}
 
-Reports where a running Cypress session is in its lifecycle. It is built for
+Reports where a running Cypress session is in its lifecycle. `cypress tap status` is built for
 polling, see [Poll `cypress tap status` for a verdict](#Poll-cypress-tap-status-for-a-verdict).
 
 | Stage                  | Meaning                                                                                                                   |
@@ -675,7 +675,7 @@ STYLES (2)
   color    rgb(0, 0, 0)
 ```
 
-The snapshot confirms it: at the moment the assertion ran, `.cart-total` read `$50.00`, the pre-discount price. The click was logged as passed and the element is present and visible, so nothing swallowed the interaction, the discount never applied to the total. That points squarely at the discount logic in the app, not the test.
+The snapshot confirms it: at the moment the assertion ran, `.cart-total` read `$50.00`, the pre-discount price. The click was logged as passed and the element is present and visible, so nothing swallowed the interaction, the discount never applied to the total. The stale total points squarely at the discount logic in the app, not the test.
 
 `dom` returns HTML (whole page or per selector, capped at 30,000 characters by
 default), and `aria` returns the compact role/name/state tree that browser
@@ -718,7 +718,7 @@ npx cypress tap --help
 npx cypress tap pin --help
 ```
 
-Help is always available. It does not need a browser open, and with no Cypress
+Help is always available. Help does not need a browser open, and with no Cypress
 session running at all the CLI falls back to the command schema it ships with,
 so an agent can read the surface before asking you to start anything. When a
 session is attached, help is generated from that session's own schema and
@@ -754,11 +754,11 @@ building.
 
 To make your agent use `cypress tap`, the simplest option is to install the
 [`cypress-tap` skill](/app/tooling/ai-skills#cypress-tap) from the Cypress AI
-Toolkit. It packages the workflow below, including polling for a real verdict,
+Toolkit. The skill packages the workflow below, including polling for a real verdict,
 reading results, pinning and inspecting the app, and clearing pins, so your
 agent applies it without you writing the instructions by hand.
 
-Install it with the [`skills`](https://skills.sh/) CLI:
+Install the skill with the [`skills`](https://skills.sh/) CLI:
 
 <PackageManagerTabs exec="skills add https://github.com/cypress-io/ai-toolkit --skill cypress-tap" />
 
@@ -770,7 +770,7 @@ gh skill install cypress-io/ai-toolkit cypress-tap
 
 Alternatively, add instructions to the file your agent reads:
 `AGENTS.md` for Cursor, Codex CLI, and most others, `CLAUDE.md` for Claude
-Code, or `.github/copilot-instructions.md` for GitHub Copilot. This allows
+Code, or `.github/copilot-instructions.md` for GitHub Copilot. An instructions file allows
 you to write your own instructions and workflows for your agent.
 
 ```md title="AGENTS.md"

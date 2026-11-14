@@ -380,7 +380,7 @@ config first, and check them with \`npx cypress run --component --spec <spec>\`.
   configuration file fails to load, or `setupNodeEvents` throws, Cypress stops
   watching the configuration, so restart Cypress to pick up your fix.
 
-- **`status` stays at `browser not selected`.** This can happen for two
+- **`status` stays at `browser not selected`.** A stalled status can happen for two
   reasons. First, check that you passed `--project`, `--browser` (or set
   `defaultBrowser`), and a testing type to `cypress open`; if you already
   did, set `CYPRESS_AGENT_MODE=1`, since Cypress didn't recognize the agent.
