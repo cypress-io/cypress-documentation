@@ -132,6 +132,26 @@ repo rather than accepting them:
   "Cypress cloud", `localStorage`, "end-to-end", "retry-ability", American
   spellings, no "blacklist"/"whitelist"). Nothing runs textlint today, so these
   are unenforced: flag clear violations in added prose only.
+- **Product names in frontmatter.** The product-name and terminology rules
+  above apply to frontmatter `title` and `description` values too. Flag a
+  lowercase "cypress" or "Cypress app" there (`title: 'Run cypress in…'`).
+- **Heading case and form.** An added H2 or H3 in Title Case
+  (`## Running Cypress Tests Interactively`), or one that opens with a gerund
+  (`## Running…`, `## Configuring…`). Headings are sentence case and name a task
+  with an imperative verb. Exempt the fixed API page skeleton, function-name
+  headings on namespace API pages, and `## See also`. Don't judge whether a
+  heading stands on its own; that's a human call.
+- **Release numbers in body text.** An added Cypress version in prose or an
+  admonition ("in Cypress 16.3.0 and later", a `:::info` naming the release that
+  added a feature). Exempt `## History` tables, changelogs, and migration,
+  deprecation, or removal notes.
+- **Agent instructions in a code block.** A reusable agent instruction (an
+  `AGENTS.md` recipe, a rule, or a skill body meant to be copied) added as a
+  fenced block (` ```md title="AGENTS.md" `) → `<CopyPrompt>`. This is the
+  agent-instruction case of the `<CopyPrompt>` rule in section 2, so raise it
+  once. Example-specific prompts and commands stay in code blocks.
+- **Custom admonition titles.** `:::tip Do this` or `:::note Requirements`. Site
+  CSS hides every admonition heading; use a bold lead line in the body instead.
 
 ### 5. Code changes: `plugins/`, `scripts/`, `src/`, `cypress/`
 
