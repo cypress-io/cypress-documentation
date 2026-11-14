@@ -261,6 +261,12 @@ same change. `## See also` always stays as it is.
   the assertion until it passes"), and so is "this" or "that" followed by its
   noun ("This command…").
 
+  `npm run lint:pronouns -- <file>` lists the sentences that open with one of
+  these pronouns. The script is a heuristic and always exits 0. The script
+  skips the common no-referent "it" ("It is possible to…") and a "this" that
+  leads its noun, but it can't tell what a pronoun points at, so read each
+  sentence it lists.
+
 - **Keep body text current.** The docs describe the product as it works today,
   so a reader on the current release never has to work out whether a sentence
   still applies. Leave out the Cypress release that added or changed a feature.
@@ -405,17 +411,26 @@ page keeps its fixed skeleton ([`docs/api/AGENTS.md`](./docs/api/AGENTS.md)).
    describe the burden instead of the step.
 5. **Does it say what something does, not what it lets or allows?** [Person and
    tense](#person-and-tense), which also covers "you", present tense, active
-   voice, a named subject in every sentence, and keeping body text current.
-6. **Are minimizing words and hedges gone?** [Word choice](#word-choice). "May",
+   voice, and keeping body text current.
+6. **Does every sentence name its subject?** [Person and
+   tense](#person-and-tense). The commit reminder lists the new and rewritten
+   sentences that open with "it", "this", "that", "they", and their forms; run
+   `npm run lint:pronouns -- <page>` to list them yourself. Fix each one that
+   points back to an earlier sentence, list item, or heading. Leave a "this" or
+   "that" that leads its noun ("This command…"), a pronoun for a noun in the
+   same sentence, an "it" with no referent ("It is possible to…"), and quoted
+   UI strings and prompts. The list is a heuristic, so also read for the
+   sentences it can't see, such as one after "e.g." or inside a `<CopyPrompt>`.
+7. **Are minimizing words and hedges gone?** [Word choice](#word-choice). "May",
    "can", and "it is recommended" often hedge a fact the page could state.
-7. **Does a reusable agent recipe sit in a code block or prose?**
+8. **Does a reusable agent recipe sit in a code block or prose?**
    [`<CopyPrompt>` vs a code block](#ai-prompts-copyprompt-vs-a-code-block).
-8. **Is there prose or a list inside a `<TabItem>`?** [Keep prose out of
+9. **Is there prose or a list inside a `<TabItem>`?** [Keep prose out of
    tabs](#keep-prose-out-of-tabs).
-9. **Is `## See also` warranted, and not padded?** The `See also` rule in
-   [`AGENTS.md`](./AGENTS.md#rules).
+10. **Is `## See also` warranted, and not padded?** The `See also` rule in
+    [`AGENTS.md`](./AGENTS.md#rules).
 
-The nine are the minimum. Read the rest of the `AGENTS.md` **Writing style** and
+The ten are the minimum. Read the rest of the `AGENTS.md` **Writing style** and
 **Authoring** rules against the page once more.
 
 ### Step 4: edit the page

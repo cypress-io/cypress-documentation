@@ -56,6 +56,7 @@ npm run typecheck     # tsc
 npm test              # cypress e2e (needs `npm run serve`, not the dev server)
 npm run test:plugins  # vitest unit tests for plugins/
 npm run api:source -- blur   # locate the Cypress source a /api page documents
+npm run lint:pronouns -- docs/app/ai/cypress-tap.mdx   # list sentences that open with a bare pronoun
 ```
 
 Install before you lint. With no `node_modules` present, `npm run lint:fix`
@@ -271,7 +272,8 @@ Each rule is a hard convention. See the linked section for the how and why.
 - **Name the subject in every sentence.** Repeat the noun instead of pointing
   back to an earlier sentence with "it", "this", or "they" ("The agent runs
   your specs", not "It runs your specs"), so each sentence stands on its own.
-  A pronoun for a noun in the same sentence is fine.
+  A pronoun for a noun in the same sentence is fine. To list the candidates,
+  run `npm run lint:pronouns -- <file>`.
 - Plain words over formal ones: not `leverage`, `utilize`, or `in order to`.
 - Cut filler. `please`, `note that`, and hedges that carry no information.
 - Don't use minimizing words like "simply", "just", "easy", or "obviously" in
