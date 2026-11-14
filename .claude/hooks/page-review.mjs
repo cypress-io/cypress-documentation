@@ -6,20 +6,19 @@
 //       rewritten is stopped once with a reminder to review it. Trying again
 //       goes through.
 //
-// It works like example-check.mjs: "changed" means changed from HEAD, staged or
-// not, and the reminder fires once per page per base version. The review's own
-// edits don't bring it back; a later commit that rewrites the page again does.
+// The reminder is keyed on each page's HEAD version rather than its content,
+// so the review's own edits don't bring it back, while a later commit that
+// rewrites the page again does.
 
 import { basename } from 'node:path'
 import { changedDocs, codeBlocks, hash, isCommit, read, reminded, show } from './lib.mjs'
 
-// Share of a page's prose lines that must be added or rewritten to count.
-const SHARE = 0.4
+const REWRITTEN_SHARE = 0.4
 // A rewrite this small is an edit, whatever its share of a short page.
 const MIN_LINES = 10
 
-// A page's non-blank lines outside fenced code, trimmed. Code examples have
-// their own reminder, and the review is about prose.
+// Fenced code is left out: code examples have their own reminder, and the
+// review is about prose.
 function proseLines(source) {
   const lines = source.split('\n')
   for (const block of codeBlocks(source)) lines.fill('', block.line - 1, block.end)
@@ -50,7 +49,7 @@ function changedPages() {
     // it with the deleted pages and keep the closest match.
     const bases = base ? [base] : gone.map((p) => show(`HEAD:${p}`))
     const count = Math.min(after.length, ...bases.map((b) => rewritten(proseLines(b), after)))
-    if (count < MIN_LINES || count <= after.length * SHARE) continue
+    if (count < MIN_LINES || count <= after.length * REWRITTEN_SHARE) continue
     pages.push({
       path,
       key: hash(path, base),

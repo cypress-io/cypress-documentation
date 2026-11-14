@@ -1,7 +1,3 @@
-// Shared by the commit reminders in this directory (example-check.mjs and
-// page-review.mjs): the repository's paths, git helpers, the set of changed
-// docs files, and the once-per-change memory each reminder keeps in .git/.
-
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
@@ -61,12 +57,10 @@ export function codeBlocks(source) {
   return blocks
 }
 
-// Docs files added or changed from HEAD: in the index, in the working tree, or
-// new and untracked. Untracked files count because an agent can create a page
-// and commit it in one command (`git add page.mdx && git commit`), and the hook
-// runs before the `git add`. `files` maps each path to its path at HEAD (they
-// differ for a rename git can see); `gone` lists docs files deleted or renamed
-// away, so a caller can recognize content that moved with a plain `mv`.
+// Untracked files count because an agent can create a page and commit it in one
+// command (`git add page.mdx && git commit`), and the hook runs before the
+// `git add`. `gone` lets a caller recognize content that moved with a plain
+// `mv`, which git can't yet see as a rename.
 export function changedDocs() {
   const docs = ['--', 'docs/**/*.md', 'docs/**/*.mdx']
   const files = new Map()
@@ -101,7 +95,7 @@ export function changedDocs() {
 const commits =
   /(?:^|[;&|(\n]|\bthen\b|\bdo\b)\s*(?:\w+=\S*\s+)*git(?:\s+(?:-[cC]\s+\S+|-\S+))*\s+commit(?![\w-])/
 
-// True when the PreToolUse input on stdin is a Bash call that runs `git commit`.
+// Reads the hook input from stdin, so it can be called only once.
 export function isCommit() {
   try {
     const input = JSON.parse(readFileSync(0, 'utf8') || '{}')
@@ -111,8 +105,8 @@ export function isCommit() {
   }
 }
 
-// The keys a reminder has already mentioned. `save` keeps only the keys still
-// pending, so the file doesn't grow forever.
+// `save` replaces the file, so a caller passes only the keys still pending and
+// the file doesn't grow forever.
 export function reminded(name) {
   const path = join(gitDir, name)
   const keys = new Set(existsSync(path) ? readFileSync(path, 'utf8').split('\n') : [])
