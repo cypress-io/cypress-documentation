@@ -194,7 +194,7 @@ cookie to be written before asserting on it.
 
 #### Timeouts now follow `defaultCommandTimeout`
 
-Becoming queries changes which timeout governs the cookie read commands:
+The move to query commands changes which timeout governs each cookie command:
 
 - **Query commands** (`cy.getCookie()`, `cy.getCookies()`, and
   `cy.getAllCookies()`) are now governed by
@@ -1607,7 +1607,7 @@ Older browser versions may still work with Cypress, but we recommend keeping you
 To account for Chrome's [impending deprecation](https://developer.chrome.com/blog/document-domain-setter-deprecation) of setting `document.domain`, and to support sites that use [origin-keyed agent clusters](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster),
 Cypress no longer injects `document.domain` into `text/html` content by default.
 
-Because of this, tests that visit more than one origin (defined as a composite of the URL _scheme_, _hostname_, and _port_) must now use `cy.origin()`.
+Because Cypress no longer injects `document.domain`, tests that visit more than one origin (defined as a composite of the URL _scheme_, _hostname_, and _port_) must now use `cy.origin()`.
 Without `cy.origin()`, interacting with a second origin in the same test will cause the test to fail, even if the two origins
 are in the same superdomain. As a result, you must now use `cy.origin()` in more situations than before.
 
