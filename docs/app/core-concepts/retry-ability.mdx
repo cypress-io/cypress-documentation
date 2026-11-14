@@ -92,7 +92,7 @@ of found elements (in our case, that it has a length of 1).
 - ✅ If the assertion passes, then `.should()` finishes successfully.
 - 🚨 If the assertion fails, then Cypress requeries the application's DOM
   again - starting from the top of the chain of linked queries. Cypress looks for
-  elements that match `.get().find()` again, and re-run the assertion. If the
+  elements that match `.get().find()` again, and re-runs the assertion. If the
   assertion still fails, Cypress continues retrying until the timeout is
   reached.
 
@@ -324,7 +324,7 @@ cy.get('[data-testid="ssr-error"]', { timeout: 0 }).should('not.exist')
 
 Any command that isn't a query, such as `.click()`, does not "chain together" to
 form the subject for later commands the way queries do. Cypress retries any
-queries _leading up to_ a command, and retry any assertions _after_ a command,
+queries _leading up to_ a command, and retries any assertions _after_ a command,
 but commands themselves only execute once. After they've executed, nothing
 leading up to them retries.
 

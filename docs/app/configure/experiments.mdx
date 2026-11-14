@@ -140,7 +140,7 @@ The `detect-flake-and-pass-on-threshold` strategy is most like the current imple
 
 #### `experimentalStrategy: 'detect-flake-and-pass-on-threshold'`
 
-Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries sets how many passing attempts are required for the test result to be passing. There are two `experimentalOptions` that must be set with this strategy:
+Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries lets you set how many passing attempts are required for the test result to be passing. There are two `experimentalOptions` that must be set with this strategy:
 
 - `maxRetries` sets the maximum number of retries that can occur after the first attempt failed.
 - `passesRequired` sets the required number of passing attempts for the final test result to be passing. Cannot be greater than `maxRetries`.

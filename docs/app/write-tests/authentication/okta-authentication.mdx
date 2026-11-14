@@ -631,7 +631,7 @@ is needed to conditionally use the `oktaCypress` localStorage item.
 In the code below, we conditionally apply a `useEffect` block based on being
 under test with Cypress (using `window.Cypress`).
 
-In addition, update the export to be wrapped with the `withOktaAuth`
+In addition, the example wraps the export with the `withOktaAuth`
 higher order component only if we are not under test in Cypress. The wrapper allows our
 application to work with the [Okta](https://okta.com) redirect login flow in
 development/production but not when under test in Cypress.

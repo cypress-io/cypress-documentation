@@ -705,7 +705,7 @@ is needed to conditionally use the `auth0Cypress` `localStorage` item.
 In the code below, we conditionally apply a `useEffect` block based on being
 under test with Cypress (using `window.Cypress`).
 
-In addition, update the export to be wrapped with
+In addition, the example wraps the export with
 `withAuthenticationRequired` if we are not under test in Cypress. The wrapper allows
 our application to work with the [Auth0](https://auth0.com) redirect login flow
 in development/production but not when under test in Cypress.

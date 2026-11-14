@@ -3144,7 +3144,7 @@ _Released Dec 12, 2022_
   [#24874](https://github.com/cypress-io/cypress/issues/24874).
 - The
   [Run All Specs experiment](/app/references/experiments#End-to-End-Testing)
-  now opens in a new tab rather than close and reopen the browser. Opening a new tab makes the run faster and helps mitigate
+  now opens in a new tab rather than closing and reopening the browser. Opening a new tab makes the run faster and helps mitigate
   [#21743](https://github.com/cypress-io/cypress/issues/21743). Fixes
   [#24919](https://github.com/cypress-io/cypress/issues/24919).
 
@@ -4385,7 +4385,7 @@ _Released Jun 03, 2022_
   [#22032](https://github.com/cypress-io/cypress/issues/22032).
 - Newly scaffolded spec files are no longer generated with as a failing
   test. Fixed [#21921](https://github.com/cypress-io/cypress/issues/21921).
-- Cypress does not crash if it fails to access the machine-id on windows. Fixed
+- Cypress no longer crashes if it fails to access the machine-id on windows. Fixed
   [#22110](https://github.com/cypress-io/cypress/issues/22110).
 
 ## 10.0.2
@@ -4409,7 +4409,7 @@ _Released Jun 02, 2022_
   - Fixed [#22034](https://github.com/cypress-io/cypress/issues/22034),
     [#22108](https://github.com/cypress-io/cypress/issues/22018), and
     [#21997](https://github.com/cypress-io/cypress/issues/21997)
-- Vite dev-server for component testing does not crash if user has vite plugins
+- Vite dev-server for component testing no longer crashes if user has vite plugins
   that rely on non-empty plugins list. Fixed
   [#22021](https://github.com/cypress-io/cypress/issues/22021).
 - Post processing ffmpeg is now run at a lower priority. Fixed
@@ -4694,8 +4694,7 @@ more detail.**
 
 - The `cypress open` experience has been updated to take you through our
   **Launchpad** with many features detailed below:
-  - When you launch Cypress via `cypress open` Cypress asks whether you want
-    to do end-to-end or component testing and taken through the configuration
+  - When you launch Cypress via `cypress open`, Cypress asks whether you want to do end-to-end or component testing and takes you through the configuration
     necessary to set up your project. Addressed in
     [#18924](https://github.com/cypress-io/cypress/pull/18924).
   - Having files scaffolded on new projects during end-to-end testing is now opt
@@ -7281,7 +7280,7 @@ _Released Oct 26, 2020_
   [#8623](https://github.com/cypress-io/cypress/issues/8623).
 - When [experimentalNetworkStubbing](/app/references/experiments) is enabled,
   using [cy.visit()](/api/commands/visit) to URLs that redirect and set
-  Transfer-Encoding: chunked no longer fail in Cypress with a "Parse
+  Transfer-Encoding: chunked no longer fails in Cypress with a "Parse
   Error". Fixes [#8497](https://github.com/cypress-io/cypress/issues/8497).
 - `cypress.run()` through the [Module API](/app/references/module-api) now has a
   `status` property in the results matching the correct CLI types (`"failed"` or
@@ -8006,8 +8005,7 @@ _Released Jul 07, 2020_
   `parent` variable no longer throws Illegal Invocation errors. Fixes
   [#6412](https://github.com/cypress-io/cypress/issues/6412).
 - When `experimentalShadowDomSupport`
-  is enabled, using [.type()](/api/commands/type) on an input in the Shadow DOM
-  does not result in an error. Fixes
+  is enabled, using [.type()](/api/commands/type) on an input in the Shadow DOM no longer results in an error. Fixes
   [#7741](https://github.com/cypress-io/cypress/issues/7741).
 - When `experimentalShadowDomSupport`
   is enabled, checking for visibility on a shadow dom host element no
@@ -8260,10 +8258,7 @@ _Released May 20, 2020_
 
 - [Errors](/app/guides/debugging#Errors) in the Test Runner now display a
   code frame to preview where the failure occurred with the relevant file, line
-  number, and column number highlighted. Clicking on the file link opens the
-  file in your
-  [preferred file opener](/app/tooling/IDE-integration#File-Opener-Preference)
-  and highlight the line and column in editors that support it. Addresses
+  number, and column number highlighted. Clicking on the file link opens the file in your [preferred file opener](/app/tooling/IDE-integration#File-Opener-Preference) and highlights the line and column in editors that support it. Addresses
   [#3762](https://github.com/cypress-io/cypress/issues/3762).
 - Cypress now uses [source maps](/app/guides/debugging#Source-maps) to
   enhance the error experience. Stack traces are translated so that your source
@@ -11736,7 +11731,7 @@ _Released May 29, 2018_
   taking the screenshot. Fixes
   [#1424](https://github.com/cypress-io/cypress/issues/1424).
 - [`cy.screenshot()`](/api/commands/screenshot) can now be chained off of
-  commands that yield a DOM element and only takes a screenshot of that
+  commands that yield a DOM element, and it only takes a screenshot of that
   element.
 - During install of cypress, the Cypress binary is now downloaded to a global cache. The global cache prevents multiple projects from downloading the same Cypress
   version. Fixes [#1300](https://github.com/cypress-io/cypress/issues/1300).
@@ -13149,8 +13144,7 @@ _Released Apr 16, 2017_
 **Misc:**
 
 - Error handling for invalid arguments passed to
-  [`cy.wait()`](/api/commands/wait) have been improved and now suggest
-  valid arguments that are acceptable.
+  [`cy.wait()`](/api/commands/wait) have been improved and now suggests valid arguments that are acceptable.
 - Browsers in the browser dropdown now have colored icons, which help visually
   distinguish the variants of Chrome.
 - Increased timeout for browser to make a connection when running during
@@ -13671,8 +13665,7 @@ _Released Nov 16, 2016_
   completes. Additionally, it tracks the `config` settings used during the build
   and tracks each individual test failure.
 - If you do _not_ want these assets to be tracked by Cypress, you need to switch
-  to using [cypress run](/app/references/command-line#cypress-run). We
-  happily remove any build assets that are accidentally uploaded to us during
+  to using [cypress run](/app/references/command-line#cypress-run). We can remove any build assets that are accidentally uploaded to us during
   the update transition.
 
 **Features:**
@@ -16689,8 +16682,7 @@ _Released May 23, 2015_
 
 - [`.submit()`](/api/commands/submit) actually submits the form for real
   now, instead of just firing the submit event. Now it's been upgraded to be
-  able to be cancelled or have its returnValue set to false and not submit
-  the form. Don't ask how I missed this one. I as once a young naive programmer
+  able to be cancelled or have its returnValue set to false, in which case it does not submit the form. Don't ask how I missed this one. I as once a young naive programmer
   who trusted the DOM not to be the abomination it actually is.
 
 **Misc:**
@@ -17276,8 +17268,7 @@ _Released Mar 27, 2015_
   into the correct `path` position (not after query params or hashes).
 - [`cy.visit()`](/api/commands/visit) no longer logs 2 failed commands on
   error.
-- Hovering on commands which delay resolving their $el now properly
-  highlight again.
+- Commands which delay resolving their $el now properly highlight again when hovered.
 
 **Misc:**
 
