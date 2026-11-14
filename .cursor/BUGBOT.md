@@ -120,9 +120,10 @@ repo rather than accepting them:
   `docs/app/references/configuration.mdx` and
   `docs/app/references/command-line.mdx`. A new option documented in a guide but
   missing from the reference table (or vice versa) is a real defect.
-- **Version claims.** "Added in" and "deprecated in" claims in a `## History`
-  table, a changelog, or a migration note should match the changelog entry in
-  the same PR or an existing one. A version in body text is a section 4 issue.
+- **Version claims.** Versions in a `## History` table, a changelog, or a
+  migration, deprecation, or removal note should match the changelog entry in
+  the same PR or an existing one. A version anywhere else in body text is a
+  section 4 issue.
 - **Contradictions with the rest of the site.** If a PR changes how a behavior
   is described, look for other pages still describing the old behavior and name
   them.
