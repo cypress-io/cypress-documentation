@@ -40,7 +40,8 @@ another machine, so the agent and Cypress have to share one sandbox.
 - A Node.js version that Cypress supports (see
   [System requirements](/app/get-started/install-cypress#System-requirements))
 - On Linux, the `xvfb` package
-- Network access to the hosts in the table below
+- Network access to the hosts in
+  [Network hosts to allow](#Network-hosts-to-allow-in-an-agent-sandbox)
 - A Chromium-based browser (see
   [Choose a browser](#Choose-a-browser-for-cypress-tap-in-a-sandbox))
 
@@ -83,14 +84,6 @@ command line that starts Cypress. Some agents start a new shell for each
 command, so a variable exported in one command isn't set in the next. See
 [Environment variables](#Environment-variables).
 
-## Keep the file changes an agent makes in a sandbox
-
-An agent can create, edit, and delete files as part of its task, and those
-changes stay inside the sandbox. Copy them back to your machine or commit them
-to a branch before the sandbox goes away. How you find and keep those changes
-depends on your agent and how you configured the sandbox, so check your agent's
-documentation.
-
 ## Run Cypress tests non-interactively in a sandbox
 
 [`cypress run`](/app/references/command-line#cypress-run) runs your specs and
@@ -111,14 +104,21 @@ starts it with `--e2e`. For component testing (`--component`), create the
 configuration before you launch Cypress in a sandbox, so Cypress doesn't have to
 guess your framework and bundler.
 
+Cypress writes a scaffolded configuration inside the sandbox, so commit it
+along with the agent's other changes. Otherwise the next session starts without
+the configuration.
+
 ### Start Cypress in the background
 
-Run `cypress open` with a browser and a testing type, and leave it running. Use
-`nohup` so Cypress keeps running after the command that starts it returns:
+Run `cypress open` with a browser and a testing type, and leave it running:
 
 ```shell title="Command"
 nohup npx cypress open --e2e --browser chromium --project . > cypress-open.log 2>&1 &
 ```
+
+The trailing `&` runs Cypress in the background, so the command returns right
+away. `nohup`, a standard Unix command, keeps Cypress running after the shell
+that started it exits.
 
 This command writes Cypress's output to `cypress-open.log`, including errors,
 configuration problems, and the location of any files Cypress creates for you.
@@ -140,7 +140,7 @@ npx cypress open --e2e --browser chromium --project . --detached
 
 ### Wait for the browser
 
-The browser can take a while to start the first time. Poll `cypress tap status`
+Sometimes the browser takes a while to start, especially the first time. Poll `cypress tap status`
 until it reports `browserAttached: true`. If the loop exits with an error or
 times out, read `cypress-open.log` for the reason.
 
@@ -186,12 +186,12 @@ executable:
 npx cypress open --e2e --browser /usr/bin/chromium --project .
 ```
 
-Cypress checks the browser's `--version` output against the versions it knows,
-such as `Chromium 123.0.6312.4`. A name is checked only against that browser's
-pattern, while a path is checked against every pattern Cypress knows, so if a
-name isn't recognized, try the full path. If neither works, Cypress doesn't
-recognize that build. Cypress writes the reason and the raw `--version` output to
-`cypress-open.log`, and `cypress tap status` stays at `browser not selected`.
+Cypress identifies a browser from its `--version` output, such as
+`Chromium 123.0.6312.4`. If Cypress doesn't recognize a browser you pass by
+name, pass its full path instead, since Cypress checks a path against every
+browser it knows. If Cypress still can't use the browser, the reason and the
+`--version` output go to `cypress-open.log`, and `cypress tap status` stays at
+`browser not selected`.
 
 Many sandboxes come with a Chromium build that a browser-automation tool
 installed. Run it with `--version` to check that it reports itself as Chromium,
