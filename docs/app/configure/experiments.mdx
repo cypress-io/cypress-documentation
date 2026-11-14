@@ -94,7 +94,7 @@ sent to the browser:
 #### Allow Specific CSP Directives
 
 Set the `experimentalCspAllowList` option to an array of directive names marked
-as "Allowable" from the list above. This will allow the specified CSP directives
+as "Allowable" from the list above. The option then allows the specified CSP directives
 to be sent to the browser.
 
 The following configuration would allow the `default-src`, `script-src`, and
@@ -190,7 +190,7 @@ Retries stop at attempt 3 again, and the test is **passing** <Icon name="check-c
 - Attempt 1: <Icon name="times" color="red" /> Fail
 - Attempt 2: <Icon name="times" color="red" /> Fail
 
-Retries stop on attempt 2, and the test is **failing** <Icon name="times" color="red" />, because the requisite two passing attempts for a passing result can no longer be achieved once the 1st retry failed. It's also **not flaky**, since there were no passing attempts.
+Retries stop on attempt 2, and the test is **failing** <Icon name="times" color="red" />, because the requisite two passing attempts for a passing result can no longer be achieved once the 1st retry failed. The test is also **not flaky**, since there were no passing attempts.
 
 #### `experimentalStrategy: 'detect-flake-but-always-fail'`
 
@@ -265,9 +265,9 @@ object:
 These experiments are available to be specified inside the `component`
 configuration object:
 
-| Option                         | Default | Description                                                                                                                                                                       |
-| ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `experimentalSingleTabRunMode` | `false` | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. |
+| Option                         | Default | Description                                                                                                                                                                                          |
+| ------------------------------ | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `experimentalSingleTabRunMode` | `false` | Run all specs in a single tab, instead of creating a new tab per spec. Running in a single tab can improve run mode performance, but can impact spec isolation and reliability on large test suites. |
 
 ## History
 

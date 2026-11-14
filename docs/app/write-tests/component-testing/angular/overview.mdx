@@ -149,7 +149,7 @@ testing like:
 @use 'mixins'
 ```
 
-This happens when a custom `projectConfig` omits those include paths. Add the
+This error happens when a custom `projectConfig` omits those include paths. Add the
 same `stylePreprocessorOptions` to your `buildOptions` so the Sass compiler can
 resolve the imports:
 
@@ -186,7 +186,7 @@ resolve the imports:
 With Tailwind CSS v4, you may find that your own styles load correctly but
 Tailwind utility classes such as `bg-red-500` have no effect. The class is
 present on the element in the DevTools inspector, but no rule is generated for
-it. This is because Tailwind v4 generates utilities through its own build
+it. The rule is missing because Tailwind v4 generates utilities through its own build
 plugin, which is not part of the Angular build pipeline Cypress uses to compile
 your `styles`.
 

@@ -184,30 +184,30 @@ you should understand well. The default values listed here are meaningful.
 
 ### Screenshots
 
-| Option                   | Default               | Description                                                                                                                                                                                                                                   |
-| ------------------------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `screenshotOnRunFailure` | `true`                | Whether Cypress will take a screenshot when a test fails during `cypress run`.                                                                                                                                                                |
-| `screenshotsFolder`      | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`.                                                                                         |
-| `trashAssetsBeforeRuns`  | `true`                | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. This clears the **entire contents** of those folders, including all files and nested subfolders. |
+| Option                   | Default               | Description                                                                                                                                                                                                                                       |
+| ------------------------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `screenshotOnRunFailure` | `true`                | Whether Cypress will take a screenshot when a test fails during `cypress run`.                                                                                                                                                                    |
+| `screenshotsFolder`      | `cypress/screenshots` | Path to folder where screenshots will be saved from [`cy.screenshot()`](/api/commands/screenshot) command or after a test fails during `cypress run`.                                                                                             |
+| `trashAssetsBeforeRuns`  | `true`                | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. Trashing clears the **entire contents** of those folders, including all files and nested subfolders. |
 
 For more options regarding screenshots, view the
 [Cypress.Screenshot API](/api/cypress-api/screenshot-api).
 
 ### Videos
 
-| Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                              |
-| ----------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. This clears the **entire contents** of those folders, including all files and nested subfolders—not only screenshots and videos. [Read the notes for more details.](#trashAssetsBeforeRuns) |
-| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`.            |
-| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                                       |
-| `video`                 | `false`          | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                                |
+| Option                  | Default          | Description                                                                                                                                                                                                                                                                                                                                  |
+| ----------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `trashAssetsBeforeRuns` | `true`           | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. Trashing clears the **entire contents** of those folders, including all files and nested subfolders—not only screenshots and videos. [Read the notes for more details.](#trashAssetsBeforeRuns) |
+| `videoCompression`      | `false`          | The quality setting for the video compression, in Constant Rate Factor (CRF). The value can be `false` or `0` to disable compression or a CRF between `1` and `51`, where a lower value results in better quality (at the expense of a higher file size). Setting this option to `true` will result in a default CRF of `32`.                |
+| `videosFolder`          | `cypress/videos` | Where Cypress will automatically save the video of the test run when tests run with `cypress run`.                                                                                                                                                                                                                                           |
+| `video`                 | `false`          | Whether Cypress will capture a video of the tests run with `cypress run`.                                                                                                                                                                                                                                                                    |
 
 ### Downloads
 
-| Option                  | Default             | Description                                                                                                                                                                                                                                                                                                                              |
-| ----------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `downloadsFolder`       | `cypress/downloads` | Path to folder where files downloaded during a test are saved.                                                                                                                                                                                                                                                                           |
-| `trashAssetsBeforeRuns` | `true`              | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. This clears the **entire contents** of those folders, including all files and nested subfolders—not only screenshots and videos. [Read the notes for more details.](#trashAssetsBeforeRuns) |
+| Option                  | Default             | Description                                                                                                                                                                                                                                                                                                                                  |
+| ----------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `downloadsFolder`       | `cypress/downloads` | Path to folder where files downloaded during a test are saved.                                                                                                                                                                                                                                                                               |
+| `trashAssetsBeforeRuns` | `true`              | Whether Cypress will trash assets within the `downloadsFolder`, `screenshotsFolder`, and `videosFolder` before tests run with `cypress run`. Trashing clears the **entire contents** of those folders, including all files and nested subfolders—not only screenshots and videos. [Read the notes for more details.](#trashAssetsBeforeRuns) |
 
 ### Browser
 
@@ -274,7 +274,7 @@ If you relied on the pre-16 default of `10`, set `keystrokeDelay: 10` here or vi
 
 ### System
 
-These values are set by Cypress at startup and are read-only — they cannot be changed in your Cypress configuration file. They can be accessed via [`Cypress.config()`](/api/cypress-api/config). The `browsers` property is an exception: it can also be modified in [`setupNodeEvents`](#setupNodeEvents) to filter or add custom browsers.
+These values are set by Cypress at startup and are read-only — they cannot be changed in your Cypress configuration file. The values can be accessed via [`Cypress.config()`](/api/cypress-api/config). The `browsers` property is an exception: it can also be modified in [`setupNodeEvents`](#setupNodeEvents) to filter or add custom browsers.
 
 | Option                | Default         | Description                                                                                                                                     |
 | --------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -337,7 +337,7 @@ object:
 | `supportFile`                  | `cypress/support/component.{js,jsx,ts,tsx}` | Path to file to load before spec files load. This file is compiled and bundled. (Pass `false` to disable)                                                                                                                                                                                           |
 | `specPattern`                  | <code>\*\*/\*.cy.\{js,jsx,ts,tsx\}</code>   | A glob pattern String or Array of glob pattern Strings of the spec files to load. <br /><br />Any files found matching the `e2e.specPattern` value will be automatically **excluded.**                                                                                                              |
 | `excludeSpecPattern`           | `['/snapshots/*', '/image_snapshots/*']`    | A String or Array of glob patterns used to ignore spec files that would otherwise be shown in your list of specs. [Read the notes on using this.](#excludeSpecPattern)                                                                                                                              |
-| `experimentalSingleTabRunMode` | `false`                                     | Run all specs in a single tab, instead of creating a new tab per spec. This can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing.                                                      |
+| `experimentalSingleTabRunMode` | `false`                                     | Run all specs in a single tab, instead of creating a new tab per spec. Running in a single tab can improve run mode performance, but can impact spec isolation and reliability on large test suites. This experiment currently only applies to Component Testing.                                   |
 | `slowTestThreshold`            | `250`                                       | Time, in milliseconds, to consider a test "slow" during `cypress run`. A slow test will display in orange text in the default reporter.                                                                                                                                                             |
 | `devServerPublicPathRoute`     | `/__cypress/src`                            | The public path of the dev server in use. Use caution overriding the default value as it can have unintended consequences. See [Framework Configuration](/app/component-testing/component-framework-configuration) or dev server specific documentation (in particular `@cypress/vite-dev-server`). |
 
@@ -355,7 +355,7 @@ object:
 
 ## Overriding Options
 
-Cypress gives you the option to dynamically alter configuration options. This is
+Cypress gives you the option to dynamically alter configuration options. Overriding options is
 helpful when running Cypress in multiple environments and on multiple developer
 machines.
 
@@ -416,10 +416,10 @@ For example:
 
 ### Environment Variables
 
-Configuration options can be overridden with environment variables. This is
+Configuration options can be overridden with environment variables. Environment variable overrides are
 especially useful in
 [Continuous Integration](/app/continuous-integration/overview) or when
-working locally. This gives you the ability to change configuration options
+working locally. Environment variable overrides give you the ability to change configuration options
 without modifying any code or build scripts.
 
 For example, these environment variables in the command line will override any
@@ -565,7 +565,7 @@ it('Show warning outside Chrome', { browser: '!chrome' }, () => {
 ## Resolved Configuration
 
 When you open a Cypress project, expanding the Project Settings panel under
-**Settings** will display the resolved configuration to you. This helps you to
+**Settings** will display the resolved configuration to you. The resolved configuration helps you to
 understand and see where different values came from. Each set value is
 highlighted to show where the value has been set via the following ways:
 
@@ -613,7 +613,7 @@ https://www.google-analytics.com/ga.js
 http://localhost:1234/some/user.json
 ```
 
-This would match the following blocked hosts:
+These URLs would match the following blocked hosts:
 
 ```text
 www.google-analytics.com
@@ -653,7 +653,7 @@ matched.
 ### hosts
 
 By passing an object with hostname patterns as keys and IP addresses as values,
-you can resolve custom hostnames to specific IP addresses within Cypress. This
+you can resolve custom hostnames to specific IP addresses within Cypress. Setting `hosts`
 is the equivalent of adding entries to your machine's `/etc/hosts` file, but
 scoped to Cypress — no changes to your OS are required.
 
@@ -684,7 +684,7 @@ pattern matches yourself.
 
 :::
 
-This is useful when testing against hostnames that have no public DNS entries,
+Setting `hosts` is useful when testing against hostnames that have no public DNS entries,
 or when you need multiple domain names to resolve to local test servers without
 editing your system hosts file.
 
@@ -791,7 +791,7 @@ This option is <Badge type="caution">deprecated</Badge>, and will be removed in 
 Set this configuration option to `true` to instruct Cypress to
 [inject document.domain](/app/guides/cross-origin-testing#What-Cypress-does-under-the-hood)
 into your test application.
-This can reduce the need for [`cy.origin()`](/api/commands/origin)
+Injecting `document.domain` can reduce the need for [`cy.origin()`](/api/commands/origin)
 when [navigating between subdomains](/app/guides/cross-origin-testing),
 but comes with compatibility caveats for some sites.
 
@@ -808,7 +808,7 @@ WebKit support, as [`cy.origin()`](/api/commands/origin) is not yet supported in
 #### Known Incompatibilities
 
 Setting this configuration value to `true` can cause the application you are testing
-to behave in unexpected ways. This is especially true if a site your tests visit
+to behave in unexpected ways. The risk is especially high if a site your tests visit
 sets the [`Origin-Agent-Cluster`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster)
 header.
 
@@ -856,7 +856,7 @@ As of Cypress 16, [`manageBrowserMemory`](/app/references/configuration#Global) 
 
 :::info
 
-`manageBrowserMemory` only applies to Chromium-based browsers (Chrome, Edge). It has no effect in Firefox or WebKit.
+`manageBrowserMemory` only applies to Chromium-based browsers (Chrome, Edge) and has no effect in Firefox or WebKit.
 
 :::
 
@@ -879,7 +879,7 @@ coming from your server on `.html` and `.js` files and replace code that matches
 patterns commonly found in framebusting.
 
 These script patterns are antiquated and deprecated security techniques to
-prevent clickjacking and framebusting. They are a relic of the past and are no
+prevent clickjacking and framebusting. These patterns are a relic of the past and are no
 longer necessary in modern browsers. However many sites and applications still
 implement them.
 
@@ -922,7 +922,7 @@ The resource has been blocked.
 ```
 
 Enabling `removeSRIAttributes` strips the `integrity` attribute so these
-resources load normally under test. It applies to **first-party** resources, and
+resources load normally under test. `removeSRIAttributes` applies to **first-party** resources, and
 covers `integrity` defined in any of the following ways:
 
 - a static HTML attribute (for example,
@@ -974,7 +974,7 @@ See the [plugins guide](/app/plugins/plugins-guide) for more information.
 
 When `trashAssetsBeforeRuns` is `true` (the default), Cypress clears out old
 assets before each `cypress run` so that the results you collect only come from
-the current run. This **only** happens during `cypress run`. Assets are never
+the current run. Trashing **only** happens during `cypress run`. Assets are never
 trashed when using `cypress open`.
 
 Cypress trashes the following three folders:
@@ -1008,7 +1008,7 @@ Declaring certificates in `trustedCertificates` adds their SubjectPublicKeyInfo 
 
 :::info
 
-`trustedCertificates` applies only to Chrome, Chromium, and Edge on the native browser network path. It has no effect on Firefox, WebKit, Electron, or runs where [`forceHttp1`](#forceHttp1) is set to `true` (which continue using the legacy network path).
+`trustedCertificates` applies only to Chrome, Chromium, and Edge on the native browser network path, and has no effect on Firefox, WebKit, Electron, or runs where [`forceHttp1`](#forceHttp1) is set to `true` (which continue using the legacy network path).
 
 To provide client certificates for mutual TLS (mTLS) authentication where Cypress presents certificates to an endpoint, use [`clientCertificates`](/app/references/client-certificates) instead.
 

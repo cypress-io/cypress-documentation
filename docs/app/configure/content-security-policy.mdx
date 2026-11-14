@@ -13,10 +13,10 @@ e2eSpecific: true
 
 [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 is a browser security feature that restricts the resources (scripts, styles,
-frames, and more) that are allowed to load into a page. It is one of the most
+frames, and more) that are allowed to load into a page. CSP is one of the most
 effective defenses against cross-site scripting (XSS), but it works by blocking
-anything the page author did not explicitly permit. That is exactly what makes
-it interesting for Cypress.
+anything the page author did not explicitly permit. That blocking is exactly what makes
+CSP interesting for Cypress.
 
 ## Why Cypress needs to manage CSP
 
@@ -41,7 +41,7 @@ Because Cypress strips CSP by default, two different symptoms point in opposite
 directions:
 
 - **Your app or its scripts are blocked even though Cypress strips headers.**
-  This usually means the policy is delivered with a
+  This symptom usually means the policy is delivered with a
   [`<meta>` tag](#how-csp-is-delivered) rather than an HTTP header, or that a
   directive Cypress does not strip is interfering. Look for
   `Refused to load…` / `Refused to execute…` CSP violation messages in the
@@ -58,7 +58,7 @@ header through to the browser.
 ## What configuring CSP handling gives you
 
 Opting in lets you **run your tests against a real, enforced policy** instead of
-no policy at all. This is valuable when:
+no policy at all. Opting in is valuable when:
 
 - You are testing the CSP implementation itself (reporting, blocking, allowed
   sources).
@@ -80,9 +80,9 @@ There are two ways to deliver a CSP, and Cypress treats them very differently:
   supported automatically, but **not** configurable.
 
 Cypress functions with the `<meta>` tag implementation without any configuration
-required. This works because Cypress loads its `<script>` tags into your
+required. This compatibility works because Cypress loads its `<script>` tags into your
 application before any `<meta>` tag is parsed, so the CSP directives are never
-applied to the script loaded by Cypress. This relies on that ordering rather than
+applied to the script loaded by Cypress. The compatibility relies on that ordering rather than
 on any modification of the policy itself.
 
 :::caution
@@ -91,7 +91,7 @@ Cypress' configurable CSP handling applies **only** to policies delivered via
 HTTP headers, not those delivered via a `<meta>` tag:
 
 - [`experimentalCspAllowList`](#experimentalcspallowlist)
-  operates exclusively on HTTP headers. It does nothing for a meta-tag CSP, so
+  operates exclusively on HTTP headers. The option does nothing for a meta-tag CSP, so
   you cannot use the allow list to test a meta-delivered policy.
 - The [`nonce` injection](#nonce-injection) described below likewise applies only
   to headers, never to `<meta>` tags. The "scripts are loaded before the
@@ -105,7 +105,7 @@ HTTP headers, not those delivered via a `<meta>` tag:
 By default Cypress strips the CSP header entirely. To keep it, so the browser
 enforces your policy during the test, configure the
 [`experimentalCspAllowList`](/app/references/experiments#Experimental-CSP-Allow-List)
-option. It accepts three kinds of value:
+option. The option accepts three kinds of value:
 
 | Value      | Behavior                                                                                                           |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -190,7 +190,7 @@ your test asserts on the exact header value, account for this modification.
 
 Regardless of your `experimentalCspAllowList` configuration, Cypress always
 removes the following five directives from allowed CSP headers, because leaving
-them in place would prevent Cypress from functioning. They cannot be allowed
+them in place would prevent Cypress from functioning. These directives cannot be allowed
 through the allow list:
 
 | Stripped directive          | Reason                                                           |
@@ -203,7 +203,7 @@ through the allow list:
 
 :::caution
 
-This is a hard limitation: because these directives are stripped unconditionally
+Stripping these directives is a hard limitation: because they are stripped unconditionally
 and cannot be re-enabled, **you can never test the behavior of these five
 directives using Cypress**. If verifying them is a requirement, you will need to
 do so outside of Cypress.
@@ -251,7 +251,7 @@ containing a `'sha256-...'` source). Because the hash is computed against the
 original code, any rewrite changes the bytes the browser hashes and the policy
 will reject the modified script.
 
-This affects the following options when combined with `experimentalCspAllowList`:
+Hash-pinned scripts conflict with the following options when combined with `experimentalCspAllowList`:
 
 - [`modifyObstructiveCode`](/app/references/configuration#modifyObstructiveCode)
 - [`experimentalModifyObstructiveThirdPartyCode`](/app/references/experiments)

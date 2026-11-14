@@ -16,7 +16,7 @@ and yields the response, so you can assert on status codes, response bodies,
 headers, and timing in the same specs, the same config, and the same CI job that
 already run your UI tests.
 
-That makes Cypress a practical place to test authentication flows, CRUD
+Sharing that setup makes Cypress a practical place to test authentication flows, CRUD
 workflows, validation errors, and pagination, and to seed application state over
 HTTP instead of clicking through a form to reach it. This guide covers writing
 your first API test, what `cy.request()` does under the hood, and the patterns
@@ -50,7 +50,7 @@ You get a few concrete wins:
   hard to trigger from a form but trivial to trigger with a request.
 - **Real inspection, locally and in CI.** Every request shows up in the Command
   Log with its method, status, and URL, and clicking it prints the full request
-  and response to your browser console. That works in
+  and response to your browser console. The inspection works in
   [open mode](/app/core-concepts/open-mode) and, through
   [Test Replay](/cloud/features/test-replay), on a run that already finished in
   CI.
@@ -108,13 +108,13 @@ describe('GET /users', () => {
 
 <CypressCommandTabs command="run --spec 'cypress/e2e/api/users.cy.js'" />
 
-That is a complete API test. No page has to be visited first, and no browser
+That spec is a complete API test. No page has to be visited first, and no browser
 navigation happens. `cy.request()` resolves the relative `/users` against
 `baseUrl` and yields the response.
 
 ## Anatomy of the response
 
-`cy.request()` yields a response object. These are the properties you will
+`cy.request()` yields a response object. The following properties are the ones you will
 assert on most often:
 
 | Property              | Description                                                                                 |
@@ -603,7 +603,7 @@ cy.request('/users?role=admin').then((response) => {
 
 ### Combine API calls with UI tests
 
-This is the pattern that a separate API testing tool cannot give you, because
+Combining API calls with UI tests is the pattern that a separate API testing tool cannot give you, because
 it depends on the request and the browser sharing one session. Seed state over
 HTTP, drive the application through its interface, then confirm over HTTP that
 the change persisted.
@@ -720,7 +720,7 @@ test, so the way to keep an API suite fast is to amortize it rather than
 multiply it.
 
 **Put many tests in one spec.** A spec with 200 API tests pays the startup cost
-once. Two hundred specs with one test each pay it 200 times. This is the
+once. Two hundred specs with one test each pay it 200 times. Putting many tests in one spec is the
 opposite of the instinct that serves UI suites well, where small specs
 parallelize nicely, and it is the single biggest factor in how fast an API suite
 runs.
@@ -757,7 +757,7 @@ describe('/users', { testIsolation: false }, () => {
 
 Cookies now persist across the tests in that block, which is usually what you
 want: authenticate once in a `before` hook and every test in the spec inherits
-the session. It also means one test can leave state behind for the next, so keep
+the session. Persisting cookies also means one test can leave state behind for the next, so keep
 each test's own setup explicit.
 
 **Skip `cy.visit()` entirely.** An API test needs no page. As soon as a spec
@@ -802,7 +802,7 @@ the detail appears.
   alt="A request command selected in Test Replay, with the browser console below it printing the request URL, headers, and body, the response status, headers, and body, and the status, duration, body, and headers the command returned"
 />
 
-This closes the loop that usually makes API failures in CI painful. Rather than
+Request detail in Test Replay closes the loop that usually makes API failures in CI painful. Rather than
 re-running the suite locally with extra logging added to guess at what the
 server returned, you read the actual request and response from the run that
 failed.

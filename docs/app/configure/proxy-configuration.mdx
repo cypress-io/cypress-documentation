@@ -133,7 +133,7 @@ registry value is used, the single configured proxy is applied to both
 The registry fallback only applies when running your tests. When downloading
 Cypress for the first time, the `cypress` command line tool _does not_ read proxy
 settings from the Windows registry. If you need a proxy for the installation to
-work, you must set the environment variables shown above. This is also the only
+work, you must set the environment variables shown above. Environment variables are also the only
 way to define a proxy for `cypress install`.
 
 :::
@@ -174,7 +174,7 @@ and uses that proxy for all HTTP and HTTPS traffic. If an `HTTPS_PROXY`
 environment variable is set, HTTPS traffic will use that proxy instead.
 
 Setting `HTTP_PROXY` to a falsy value (`false`, `0`, or an empty string)
-disables the proxy entirely. This is useful to turn off a proxy that is
+disables the proxy entirely. A falsy value is useful to turn off a proxy that is
 otherwise configured through your npm config or the Windows registry.
 
 If the `HTTP_PROXY` and `HTTPS_PROXY` environment variables are not set, Cypress
@@ -202,7 +202,7 @@ To bypass the proxy for certain domains, set the `NO_PROXY` environment variable
 to a comma-separated list of domain names that should not be proxied.
 
 Cypress always appends `127.0.0.1`, `::1`, and `localhost` to `NO_PROXY` so that
-loopback traffic is never proxied. This happens even when you set your own
+loopback traffic is never proxied. Cypress appends these entries even when you set your own
 `NO_PROXY` entries; your list is added to, not replaced. The only way to send
 loopback traffic through the proxy is to include the special `<-loopback>` value
 in `NO_PROXY`, which removes the automatic loopback entries.
@@ -250,7 +250,7 @@ environment variable and uses the corresponding certificate(s) as an
 The behavior above applies when Cypress runs your tests. The **install-time
 binary download** (`cypress install`) only reads npm's `cafile` and `ca` config
 values (via the `npm_config_cafile` and `npm_config_ca` environment variables).
-It does **not** read `NODE_EXTRA_CA_CERTS`.
+The binary download does **not** read `NODE_EXTRA_CA_CERTS`.
 
 If your binary download is being TLS-intercepted by a proxy that uses a custom
 CA, set `cafile` (or `ca`) in your `.npmrc` so that the download can complete.

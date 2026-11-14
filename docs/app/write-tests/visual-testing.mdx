@@ -42,7 +42,7 @@ cy.get('.completed').should('have.css', 'text-decoration', 'line-through')
 cy.get('.completed').should('have.css', 'color', 'rgb(217,217,217)')
 ```
 
-These assertions are brittle and incomplete. They break when design tokens
+These assertions are brittle and incomplete. The assertions break when design tokens
 change, they only check the exact properties you thought to assert, and they
 can't verify things like an SVG rendering correctly, shapes drawn to a canvas,
 element overlap, or the overall layout of a page. Covering appearance
@@ -132,7 +132,7 @@ Whichever you choose, the practices in
 
 Open source plugins run the image comparison locally (or in your CI), typically
 adding a custom command that captures a screenshot and diffs it pixel-by-pixel
-against a baseline image stored alongside your code. They are free, keep your
+against a baseline image stored alongside your code. Open source plugins are free, keep your
 images in your own infrastructure, and are a great way to get started.
 
 The tradeoff is that you manage the workflow yourself: storing and updating
@@ -179,7 +179,7 @@ Commercial visual testing services handle capture, storage, comparison, and
 review for you. Instead of (or in addition to) diffing raw pixels locally, most
 of these services upload a snapshot of the page from your test run and render
 it in their own consistent cloud infrastructure, often across multiple
-browsers and viewport widths at once. They provide a web-based review workflow
+browsers and viewport widths at once. These services provide a web-based review workflow
 where your team approves or rejects visual changes, and they integrate with
 pull requests so visual review becomes part of your code review process.
 
@@ -228,7 +228,7 @@ environment, or waiting for them to finish, so a snapshot never lands
 mid-animation. Cypress's
 [`waitForAnimations` and `animationDistanceThreshold`](/app/references/configuration#Actionability)
 configuration options only apply to action commands like
-[`.click()`](/api/commands/click). They ensure an element has stopped moving
+[`.click()`](/api/commands/click). The options ensure an element has stopped moving
 before Cypress interacts with it, but they don't prevent a snapshot from
 capturing an animation still in progress elsewhere on the page.
 
@@ -339,7 +339,7 @@ The following commercial services provide official Cypress integrations:
 ### Applitools
 
 Applitools Eyes uses AI-assisted comparison ("Visual AI") rather than strict
-pixel diffing. It supports end-to-end and component tests, cross-browser
+pixel diffing. Applitools Eyes supports end-to-end and component tests, cross-browser
 rendering, and root cause analysis of visual changes.
 
 See [Applitools' Cypress documentation](https://applitools.com/tutorials/sdks/cypress/quickstart/getting-started).

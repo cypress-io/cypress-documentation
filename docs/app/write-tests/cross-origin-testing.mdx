@@ -13,7 +13,7 @@ e2eSpecific: true
 
 Browsers adhere to a strict
 [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
-This means that browsers restrict access between `<iframes>` when their origin
+The policy means that browsers restrict access between `<iframes>` when their origin
 policies don't match.
 
 Because Cypress works from within the browser, Cypress must be able to directly
@@ -88,7 +88,7 @@ entirety of a single test.
 If you attempt to visit two different origins, the `cy.origin` command must
 be used to wrap Cypress commands of the second visited domain. Otherwise,
 Cypress commands will timeout after the navigation and will eventually error.
-This is because the commands that were expected to run on the second domain are
+The error happens because the commands that were expected to run on the second domain are
 actually being run on the first domain.
 
 Without `cy.origin()`, you can visit different origins in _different_ tests,
@@ -265,7 +265,7 @@ However, the truth is, Cypress is exposing a _security vulnerability_ in your
 application, and you _want_ it to fail in Cypress.
 
 `cookies` that don't have their `secure` flag set to `true` will be sent as
-clear text to the insecure URL. This leaves your application vulnerable to
+clear text to the insecure URL. Sending cookies in clear text leaves your application vulnerable to
 session hijacking.
 
 This security vulnerability exists **even if** your web server forces a
@@ -285,7 +285,7 @@ work around this, you can bypass this restriction in Cypress by
 ### Same port per test
 
 Cypress requires that the URLs navigated to have the same port (if specified)
-for the entirety of a single test. This matches the behavior of the browser's
+for the entirety of a single test. The port requirement matches the behavior of the browser's
 normal
 [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
@@ -332,7 +332,7 @@ cy.origin('https://example.cypress.io', () => {
 ```
 
 If you're not in control of this origin, we recommend you test that the `href`
-property is correct instead of performing the navigation. This will help lead to
+property is correct instead of performing the navigation. Testing the `href` will help lead to
 more deterministic tests.
 
 ```javascript

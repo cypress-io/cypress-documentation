@@ -47,7 +47,7 @@ To call an endpoint _from your test_ and assert on what it returns, see
 ## Use Server Responses
 
 Requests that are not stubbed actually reach your server. By _not_ stubbing your
-responses, you are writing true _end-to-end_ tests. This means you are driving
+responses, you are writing true _end-to-end_ tests. Not stubbing means you are driving
 your application the same way a real user would.
 
 > When requests are not stubbed, this guarantees that the _contract_ between
@@ -55,13 +55,13 @@ your application the same way a real user would.
 
 In other words, you can have confidence your server is sending the correct data
 in the correct structure to your client to consume. It is a good idea to have
-_end-to-end_ tests around your application's _critical paths_. These typically
+_end-to-end_ tests around your application's _critical paths_. Critical paths typically
 include user login, signup, or other critical paths such as billing.
 
 **_There are downsides to not stubbing responses you should be aware of:_**
 
 - Since no responses are stubbed, that means **your server has to actually send
-  real responses**. This can be problematic because you may have to _seed a
+  real responses**. Sending real responses can be problematic because you may have to _seed a
   database_ before every test to generate state. For instance, if you were
   testing _pagination_, you'd have to seed the database with every object that
   it takes to replicate this feature in your application.
@@ -338,7 +338,7 @@ Let's investigate each benefit.
 One advantage of declaratively waiting for responses is that it decreases test
 flake. You can think of [`cy.wait()`](/api/commands/wait) as a guard that
 indicates to Cypress when you expect a request to be made that matches a
-specific routing alias. This prevents the next commands from running until
+specific routing alias. Waiting on the alias prevents the next commands from running until
 responses come back and it guards against situations where your requests are
 initially delayed.
 
@@ -414,7 +414,7 @@ results.
 In this example, there are many possible sources of failure. In most testing
 tools, if our request failed to go out, we would normally only ever get an error
 once we attempt to find the results in the DOM and see that there is no matching
-element. This is problematic because it's unknown _why_ the results failed to be
+element. This late error is problematic because it's unknown _why_ the results failed to be
 displayed. Was there a problem with our rendering code? Did we modify or change
 an attribute such as an `id` or `class` on an element? Perhaps our server sent
 us different Book items.
@@ -436,14 +436,14 @@ it('test', () => {
   alt="Wait Failure"
 />
 
-Now we know exactly why our test failed. It had nothing to do with the DOM.
+Now we know exactly why our test failed. The failure had nothing to do with the DOM.
 Instead we can see that either our request never went out or a request went out
 to the wrong URL.
 
 ### Assertions
 
 Another benefit of using [`cy.wait()`](/api/commands/wait) on requests is that
-it yields the actual request object. This is useful when you want to make
+it yields the actual request object. The request object is useful when you want to make
 assertions about this object.
 
 In our example above we can assert about the request object to verify that it

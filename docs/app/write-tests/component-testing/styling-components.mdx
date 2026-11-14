@@ -26,7 +26,7 @@ styles and components, and Cypress's Driver takes advantage of the real
 box-model and style rendering engine. Cypress's commands like
 `cy.click` and assertions like `should('be.visible')` have business logic that
 makes sure the UI you're trying to assert on and interact with is visible and
-interactible for your end users. This is a benefit unique to browser-based test
+interactible for your end users. This visibility logic is a benefit unique to browser-based test
 runners.
 
 ## Rendering Components Correctly
@@ -114,7 +114,7 @@ component's styles properly.
 Depending on how your application is built, the first time you mount a new
 component, it may be completely or somewhat unstyled.
 
-This makes sense. Many applications have some amount of one-time setup that is
+The missing styles make sense. Many applications have some amount of one-time setup that is
 run outside of the component file.
 
 We build our applications within the context that they're supposed to run in,
@@ -215,7 +215,7 @@ Your global application styles are usually in one of the following places:
 
 1. A `styles.css` file you import within the `head` of your application.
 
-This should be loaded within your Cypress Index HTML file.
+The `styles.css` file should be loaded within your Cypress Index HTML file.
 
 2. Within a root-level component like `App.jsx`, `App.vue`, `App.svelte`, etc.
 

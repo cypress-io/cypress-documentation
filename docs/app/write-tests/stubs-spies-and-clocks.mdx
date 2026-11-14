@@ -158,7 +158,7 @@ timers from your code can be invoked.
 ##### Restore the clock
 
 You can restore the clock and allow your application to resume normally without
-manipulating native global functions related to time. This is automatically
+manipulating native global functions related to time. Restoring the clock is automatically
 called between tests.
 
 ```javascript
@@ -261,7 +261,7 @@ We visually indicate when:
 - A `clock` is ticked
 
 When you use aliasing with the [`.as()`](/api/commands/as) command, we also
-correlate those aliases with the calls. This works identically to aliasing
+correlate those aliases with the calls. Aliasing works identically to aliasing
 [`cy.intercept()`](/api/commands/intercept).
 
 When stubs are created by calling the method `.withArgs(...)` we also visually
