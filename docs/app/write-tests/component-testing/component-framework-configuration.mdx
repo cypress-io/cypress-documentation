@@ -10,8 +10,8 @@ slug: /app/component-testing/component-framework-configuration
 
 # Component Testing Configuration
 
-When you launch Cypress for the first time in a project, the app will
-automatically guide you through setup and configuration. The Launchpad detects
+When you launch Cypress for the first time in a project, the app
+automatically guides you through setup and configuration. The Launchpad detects
 your UI framework and bundler, lists the required dependencies needed for you to install, and scaffolds
 a `cypress.config` file with a `component.devServer` block.
 
@@ -54,7 +54,7 @@ When you open or run component tests, Cypress:
 
 ### Recommended configuration
 
-The recommended way to configure component testing is to use the `component.devServer` object. Specify your UI framework and bundler and Cypress will wire up the correct dev server implementation for you:
+The recommended way to configure component testing is to use the `component.devServer` object. Specify your UI framework and bundler and Cypress wires up the correct dev server implementation for you:
 
 :::cypress-config-example
 
@@ -420,8 +420,8 @@ interface ResolvedDevServerConfig {
 :::
 
 Any requests triggered during a test using the `devServerPublicPathRoute` as
-defined in the `cypressConfig` will be forwarded to your server. Cypress will
-trigger a request for `[devServerPublicPathRoute]/index.html` when a test is
+defined in the `cypressConfig` are forwarded to your server. Cypress
+triggers a request for `[devServerPublicPathRoute]/index.html` when a test is
 started. Your server needs to reply with the html-file referenced in
 `cypressConfig.indexHtmlFile` and inject a script to load the support files and
 the actual test.

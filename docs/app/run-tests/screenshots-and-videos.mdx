@@ -20,7 +20,7 @@ Cypress comes with the ability to take screenshots, whether you are running via
 To take a manual screenshot you can use the
 [`cy.screenshot()`](/api/commands/screenshot) command.
 
-Additionally, Cypress will automatically capture screenshots when a failure
+Additionally, Cypress automatically captures screenshots when a failure
 happens during `cypress run`. Screenshots on failure are _not_ automatically
 taken during `cypress open`.
 
@@ -71,7 +71,7 @@ compressed, and uploaded to [Cypress Cloud](/cloud/get-started/introduction) aft
 every spec file runs, successful or not. To change this behavior to only process
 videos in the case that tests fail, see how to
 [delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
-Deleting the video will cause the video to not be uploaded to Cypress Cloud.
+Deleting the video prevents the video from being uploaded to Cypress Cloud.
 
 Before `cypress run`, Cypress clears the **entire contents** of the
 `videosFolder`—every file and nested subfolder, not just videos. If you do not
@@ -86,11 +86,11 @@ for more details.
 After a video is recorded, Cypress encodes the video to a commonly digestable
 format. Part of this encoding process includes video compression.
 
-Compression is disabled by default, meaning this step will be skipped
-completely, so the file size of the video will be larger, but the encoding
+Compression is disabled by default, meaning Cypress skips this step
+completely, so the file size of the video is larger, but the encoding
 process is faster. Setting
-[`videoCompression`](/app/references/configuration#Videos) to `true` will
-coerce the video compression value to 32 Constant Rate Factor (CRF), which takes
+[`videoCompression`](/app/references/configuration#Videos) to `true`
+coerces the video compression value to 32 Constant Rate Factor (CRF), which takes
 longer to process, but results in a smaller video.
 
 **Enabling compression**
@@ -131,7 +131,7 @@ value used to compress the video. Here are some common scenarios:
 
 - If your videos are extremely low quality, try decreasing the CRF value.
 
-A lower `videoCompression` value will spend less time compressing and result in
+A lower `videoCompression` value spends less time compressing and results in
 a bigger video file size and higher quality video.
 
 :::info
@@ -203,7 +203,7 @@ to [Cypress Cloud](/cloud/get-started/introduction).
 
 To only process videos in the case that a test fails, you can
 [delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests),
-which will not upload the video of passed runs to Cypress Cloud.
+which does not upload the video of passed runs to Cypress Cloud.
 
 For more fine grained control, you can use Cypress's
 [`after:spec`](/api/node-events/after-spec-api) event listener that fires after each

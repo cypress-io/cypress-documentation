@@ -109,12 +109,12 @@ jobs:
 
 **How this action works:**
 
-- On _push_ to this repository, this job will provision and start a
+- On _push_ to this repository, this job provisions and starts a
   GitHub-hosted Ubuntu Linux instance to run the outlined `steps` for the
   declared `cypress-run` job within the `jobs` section of the configuration.
 - The [GitHub checkout Action](https://github.com/marketplace/actions/checkout)
   is used to check out our code from our GitHub repository.
-- Finally, our Cypress GitHub Action will:
+- Finally, our Cypress GitHub Action does the following:
   - Install npm dependencies
   - Build the project (`npm run build`)
   - Start the project web server (`npm start`)
@@ -208,13 +208,13 @@ If you are testing with Firefox, you must specify the non-root user `1001` as ab
 ## Caching Dependencies and Build Artifacts
 
 When working with actions that have multiple jobs, it is recommended to have an
-initial "install" job that will download any dependencies and build your app,
+initial "install" job that downloads any dependencies and build your app,
 and then cache these assets for use later by subsequent jobs.
 
-The Cypress GitHub Action will automatically cache and restore your Node
+The Cypress GitHub Action automatically caches and restore your Node
 dependencies for you.
 
-For build assets, you will need to cache and restore them manually.
+For build assets, you need to cache and restore them manually.
 
 The `install` job below uses the
 [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)
@@ -295,14 +295,14 @@ GitHub Actions offers a
 [matrix strategy](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix)
 for declaring different job configurations for a single job definition. Jobs
 declared within a matrix strategy can run in parallel, which enables us to run
-multiples instances of Cypress at the same time, as we will see later in this
+multiples instances of Cypress at the same time, as shown later in this
 section.
 
 Before diving into an example of a parallelization setup, it is important to
-understand the two different types of GitHub Action jobs that we will declare:
+understand the two different types of GitHub Action jobs that the workflow declares:
 
-- **Install Job**: A job that installs and caches dependencies that will be used
-  by subsequent jobs later in the GitHub Action workflow.
+- **Install Job**: A job that installs and caches dependencies that subsequent
+  jobs use later in the GitHub Action workflow.
 - **Worker Job**: A job that handles the execution of Cypress tests and depends
   on the _install job_.
 
@@ -311,8 +311,8 @@ understand the two different types of GitHub Action jobs that we will declare:
 The separation of installation from test running is necessary when running
 parallel jobs. Separating installation allows for the reuse of various build steps aided by caching.
 
-First, we'll define the `install` step that will be used by the worker jobs
-defined in the matrix strategy.
+First, define the `install` step that the worker jobs defined in the matrix
+strategy use.
 
 For the `steps`, notice that we pass `runTests: false` to the Cypress GitHub
 Action to instruct it only to install and cache Cypress and npm dependencies
@@ -320,7 +320,7 @@ _without running the tests_.
 
 The
 [upload-artifact](https://github.com/marketplace/actions/upload-a-build-artifact)
-action will save the state of the `build` directory for the worker jobs.
+action saves the state of the `build` directory for the worker jobs.
 
 ```yaml
 name: Cypress Tests
@@ -351,10 +351,10 @@ jobs:
 
 ### Worker Jobs
 
-Next, we define the worker job named "cypress-run" that will run Cypress tests
+Next, we define the worker job named "cypress-run" that runs Cypress tests
 as part of a parallelized matrix strategy.
 
-The `download-artifact` action will retrieve the **dist** directory saved in the
+The `download-artifact` action retrieves the **dist** directory saved in the
 install job.
 
 ```yaml
@@ -406,10 +406,10 @@ must also be used in the worker jobs.
 
 To set up multiple containers to run in parallel, the matrix option of the
 strategy configuration can be set to containers: [1, 2, 3, 4, 5], where the
-number of items defined in the containers array will be how many instances of
-the job will start up.
+number of items defined in the containers array is how many instances of the
+job start up.
 
-For instance, `containers: [1, 2, 3, 4, 5]` will provision five worker instances
+For instance, `containers: [1, 2, 3, 4, 5]` provisions five worker instances
 to run in parallel. For our purposes, the array's values are arbitrary and
 aren't used in the steps.
 
@@ -491,7 +491,7 @@ To see additional how-to examples, you can also refer to our
 ### Re-run jobs passing with empty tests
 
 We recommend passing the `GITHUB_TOKEN` secret (created by the GH Action
-automatically) as a system environment variable in CI/CD. The token will allow the accurate
+automatically) as a system environment variable in CI/CD. The token allows the accurate
 identification of each build to avoid confusion when re-running a build.
 
 ```yml

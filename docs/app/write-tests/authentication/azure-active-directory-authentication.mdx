@@ -29,7 +29,7 @@ against an Azure Active Directory web app. Clone the
 [Microsoft Identity JavaScript Tutorial](https://github.com/Azure-Samples/ms-identity-javascript-tutorial/tree/c1956b658efa331bb5df11a0038ad32d12dad3ce/1-Authentication/1-sign-in)
 and follow the steps to set up your application.
 
-Once set up, you'll need to modify a few things in the `App/index.html` file:
+Once set up, you need to modify a few things in the `App/index.html` file:
 
 - Remove any
   [`integrity`](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
@@ -45,12 +45,12 @@ Once set up, you'll need to modify a few things in the `App/index.html` file:
   application is under test.
 - Uncomment the `authRedirect.js` `<script>` tag and comment out the
   `authPopup.js` `<script>` tag. Authentication
-  [Pop ups](/app/references/trade-offs#Permanent-trade-offs) will not work
+  [Pop ups](/app/references/trade-offs#Permanent-trade-offs) do not work
   inside of Cypress.
 
-Inside `server.js`, you'll see a reference to `express-rate-limit`, which
+Inside `server.js`, there is a reference to `express-rate-limit`, which
 limits each window to 100 requests per 15 minutes. Under test, your application
-will likely exceed this as you will be reloading your application and making
+likely exceeds this limit as you reload your application and make
 requests to broker/verify authentication. For this demo, you can either
 
 - Remove the rate limiting code (recommended for demo purposes only).
@@ -67,10 +67,10 @@ Cypress to use the
 user credentials for a given user in your tenant. These user credentials should
 be set as OS-level environment variables (e.g., in your `.env` file or CI secret management).
 
-Also, to authenticate with Azure Active Directory, you'll need to enable the
+Also, to authenticate with Azure Active Directory, you need to enable the
 [`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)
 configuration option in the e2e configuration. If not enabled, your
-authentication workflow will enter an infinite redirect loop.
+authentication workflow enters an infinite redirect loop.
 
 :::cypress-config-example
 
@@ -90,9 +90,9 @@ authentication workflow will enter an infinite redirect loop.
 
 ## Login with [`cy.origin()`](/api/commands/origin)
 
-Next, we'll write a custom command called `loginToAAD` to perform a login to
+Next, write a custom command called `loginToAAD` to perform a login to
 [Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis).
-This command will use [`cy.origin()`](/api/commands/origin) to
+This command uses [`cy.origin()`](/api/commands/origin) to
 
 1. Navigate to the Azure Active Directory login page on
    `login.microsoftonline.com`

@@ -332,10 +332,10 @@ The `@vue` alias means that you are able to get to the resulting `wrapper` retur
 DOM events that were fired, as well as custom events that were emitted by your
 component under test.
 
-Because `wrapper.emitted()` is only data, and NOT spy-based you will have to
+Because `wrapper.emitted()` is only data, and NOT spy-based you have to
 unpack its results to write assertions.
 
-Your test failure messages will not be as helpful because you're not able to use
+Your test failure messages are not as helpful because you're not able to use
 the Sinon-Chai library that Cypress ships, which comes with methods such as
 `to.have.been.called` and `to.have.been.calledWith`.
 
@@ -377,7 +377,7 @@ cy.get('@onChangeSpy').should('have.been.calledWith', '101')
 
 Regardless of our recommendation to use spies instead of the internal Vue Test
 Utils API, you may decide to continue using `emitted` as it _automatically_
-records every single event emitted from the component, and so you won't have to
+records every single event emitted from the component, and so you don't have to
 create a spy for every event emitted.
 
 This auto-spying behavior could be useful for components that emit _many_ custom
@@ -429,11 +429,11 @@ customize `cy.mount()` to fit your needs. For instance, if you are using plugins
 or other global app-level setups in your Vue app, you can configure them here.
 
 Below are a few examples that demonstrate using a custom mount command. These
-examples can be adjusted for most other providers that you will need to support.
+examples can be adjusted for most other providers that you need to support.
 
 ### Replicating Plugins
 
-Most applications will have state management or routing. Both of these are Vue
+Most applications have state management or routing. Both of these are Vue
 plugins.
 
 <Tabs>
@@ -588,7 +588,7 @@ component**!
 Custom `cy.mount` commands to the rescue! You may find the JSX syntax to be more
 straightforward.
 
-You'll also need to replicate the plugin setup steps from the Vuetify docs for
+You also need to replicate the plugin setup steps from the Vuetify docs for
 everything to compile.
 
 <Tabs>
@@ -945,7 +945,7 @@ it.only('User profile should display user name', () => {
 ### Global Components
 
 If you have components that are registered globally in the main application
-file, set them up in your mount command so your component will render them
+file, set them up in your mount command so your component renders them
 properly:
 
 <Tabs>
