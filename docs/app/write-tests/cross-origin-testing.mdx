@@ -32,10 +32,10 @@ able to do this.
 - Changes the hosted URL to match that of the application under test.
 - Uses the browser's internal APIs for network level traffic.
 
-When Cypress first loads, the internal Cypress web application is hosted on a
+When Cypress first loads, Cypress hosts its internal web application on a
 random port: something like `http://localhost:64874/__/`.
 
-After the first [`cy.visit()`](/api/commands/visit) command is issued in a test,
+After your test issues the first [`cy.visit()`](/api/commands/visit) command,
 Cypress changes its URL to match the origin of your remote application, thereby
 solving the first major hurdle of same-origin policy. Your application's code
 executes the same as it does outside of Cypress, and everything works as
@@ -45,8 +45,8 @@ expected.
 
 <strong>How is HTTPS supported?</strong>
 
-Your application's certificate is used and validated as usual. Because the
-Cypress app itself is served over `http` on `localhost`, the browser reports
+Your application's certificate is used and validated as usual. Because Cypress
+serves the Cypress app itself over `http` on `localhost`, the browser reports
 that page as not secure — that indicator describes the Cypress app, not the
 application under test loading inside it.
 
@@ -85,11 +85,11 @@ exception of `cy.origin`, Cypress requires that the URLs navigated to have the
 same [origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin) for the
 entirety of a single test.
 
-If you attempt to visit two different origins, the `cy.origin` command must
-be used to wrap Cypress commands of the second visited domain. Otherwise,
+If you attempt to visit two different origins, you must use the `cy.origin` command
+to wrap Cypress commands of the second visited domain. Otherwise,
 Cypress commands time out after the navigation and eventually error.
-The error happens because the commands that were expected to run on the second domain are
-actually being run on the first domain.
+The error happens because the commands that you expected to run on the second domain
+actually run on the first domain.
 
 Without `cy.origin()`, you can visit different origins in _different_ tests,
 but not in the _same_ test.
@@ -218,8 +218,8 @@ If you want Cypress to automate cross-origin iframes, follow the
 To access them in Chrome-based browsers,
 [disable web security](/app/guides/cross-origin-testing#Disabling-Web-Security).
 
-**Same-origin** iframes are not affected by this restriction and can be
-queried natively. See
+This restriction doesn't affect **same-origin** iframes, and Cypress can
+query them natively. See
 [How do I test elements inside an iframe?](/app/faq#How-do-I-test-elements-inside-an-iframe)
 in the FAQ.
 
@@ -264,13 +264,13 @@ work with my application outside of Cypress it works just fine._
 However, the truth is, Cypress is exposing a _security vulnerability_ in your
 application, and you _want_ it to fail in Cypress.
 
-`cookies` that don't have their `secure` flag set to `true` are sent as
+The browser sends `cookies` that don't have their `secure` flag set to `true` as
 clear text to the insecure URL. Sending cookies in clear text leaves your application vulnerable to
 session hijacking.
 
 This security vulnerability exists **even if** your web server forces a
-`301 redirect` back to the HTTPS site. The original HTTP request was still made
-once, exposing insecure session information.
+`301 redirect` back to the HTTPS site. The browser still made the original HTTP
+request once, exposing insecure session information.
 
 #### The solution
 
@@ -341,7 +341,7 @@ cy.visit('http://localhost:8080')
 cy.get('a').should('have.attr', 'href', 'https://example.cypress.io') // no page load!
 ```
 
-If for any reason the two above methods cannot be used,
+If for any reason you can't use the two above methods,
 [`cy.request()`](/api/commands/request) may be an option to verify content as
 `cy.request()` is _NOT bound to CORS or same-origin policy_.
 
@@ -421,7 +421,7 @@ cy.get('#user-name-welcome').should('equal', 'Welcome, User1!')
 
 If for any reason you can't use `cy.origin`, programmatic authentication
 is still an option. In this situation you may `POST` to a different server and
-are redirected elsewhere (typically with the session token in the URL). If
+the server redirects you elsewhere (typically with the session token in the URL). If
 that's the case, you can still test this behavior with
 [`cy.request()`](/api/commands/request).
 
@@ -482,7 +482,7 @@ Sometimes, when using `cy.origin` and especially with websites that are not
 under your immediate test control, cross-origin errors may still tend to creep
 up. We don't recommend visiting or interacting with sites you
 [do not control](/app/core-concepts/best-practices#Visiting-External-Sites).
-However, if this is necessary, most of these issues can usually be remedied by
+However, if this is necessary, you can usually remedy most of these issues by
 applying` the
 [modify obstructive third-party code](/app/references/experiments#Configuration)
 experimental flag or by
@@ -554,8 +554,8 @@ flag, but additionally applies it to third-party `.js` and `.html` that is being
 either loaded or navigated to inside your application. In addition to this, this
 flag also does the following:
 
-- Adjusts the User Agent in Electron to appear more chrome-like. This option can
-  be overridden with the [userAgent](/app/references/configuration#Browser)
+- Adjusts the User Agent in Electron to appear more chrome-like. You can
+  override this option with the [userAgent](/app/references/configuration#Browser)
   config option.
 - Removes
   [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
@@ -591,7 +591,7 @@ As a best practice, you should not visit or interact with any website not under
 your control.
 
 If your organization uses Single Sign On (SSO) or OAuth then you might choose to
-test a 3rd party service other than your origin, which can be tested with
+test a 3rd party service other than your origin, which you can test with
 [`cy.origin()`](/api/commands/origin).
 
 We've written several other guides specifically about handling this situation.

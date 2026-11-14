@@ -44,8 +44,8 @@ Pass in an options object to change the default behavior of
 `cy.getAllLocalStorage()` yields an object where the keys are origins and the
 values are key-value pairs of `localStorage` data.
 
-For example, if `key1` is set to `value1` on `https://example.cypress.io` and
-`key2` is set to `value2` on `https://www.cypress-dx.com`,
+For example, if your app sets `key1` to `value1` on `https://example.cypress.io`
+and `key2` to `value2` on `https://www.cypress-dx.com`,
 `cy.getAllLocalStorage()` yields:
 
 ```js
@@ -70,9 +70,9 @@ Because `cy.getAllLocalStorage()` is a query, it re-reads `localStorage` on ever
 retry, and assertions you chain with [`.should()`](/api/commands/should) drive
 those retries until they pass or the command times out. A
 [`.then()`](/api/commands/then) callback, by contrast, runs only once after the
-command settles and is not retried — so prefer chaining
+command settles and Cypress does not retry it — so prefer chaining
 [`.should()`](/api/commands/should) assertions over asserting inside `.then()`
-when you need Cypress to wait for storage to be populated.
+when you need Cypress to wait for your app to populate storage.
 
 :::
 

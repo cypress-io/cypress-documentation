@@ -9,7 +9,7 @@ sidebar_position: 30
 
 # Exclude views - `viewFilters`
 
-The `viewFilters` configuration excludes URLs from UI Coverage. By default, every URL your tests visit is included. A `viewFilters` rule with `include: false` removes matching URLs before any analysis happens: their snapshots don't appear in your report, and no view is created for them. Links are filtered too: any link whose destination URL matches an excluded pattern is removed from the report and the coverage score, and excluded URLs never appear as [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links). The result is a report and score that reflect the parts of your application you own and intend to test.
+The `viewFilters` configuration excludes URLs from UI Coverage. By default, UI Coverage includes every URL your tests visit. A `viewFilters` rule with `include: false` removes matching URLs before any analysis happens: their snapshots don't appear in your report, and UI Coverage creates no view for them. The filter applies to links too: UI Coverage removes any link whose destination URL matches an excluded pattern from the report and the coverage score, and excluded URLs never appear as [untested links](/ui-coverage/core-concepts/interactivity#Untested-Links). The result is a report and score that reflect the parts of your application you own and intend to test.
 
 ## Why use viewFilters?
 
@@ -25,7 +25,7 @@ If your goal is different, such as organizing URLs into views rather than removi
 
 :::info
 
-A root-level `viewFilters` property applies to both UI Coverage and Cypress Accessibility. To configure UI Coverage separately, nest `viewFilters` under a `uiCoverage` key. A nested `viewFilters` completely replaces the root-level one for UI Coverage; the two lists are not merged.
+A root-level `viewFilters` property applies to both UI Coverage and Cypress Accessibility. To configure UI Coverage separately, nest `viewFilters` under a `uiCoverage` key. A nested `viewFilters` completely replaces the root-level one for UI Coverage; UI Coverage does not merge the two lists.
 
 :::
 
@@ -37,7 +37,7 @@ To add or edit `viewFilters`, open the **App Quality** tab in your project setti
 
 ### How are viewFilters rules applied?
 
-- Every URL visited during a run, and every link destination found, is compared against your rules in order. The **first** rule whose `pattern` matches decides whether that URL is included or excluded, so place specific rules before broad ones.
+- UI Coverage compares every URL visited during a run, and every link destination found, against your rules in order. The **first** rule whose `pattern` matches decides whether that URL is included or excluded, so place specific rules before broad ones.
 - URLs that match no rule are **included** by default. To include only specific URLs, list `include: true` rules for them followed by a catch-all `{ "pattern": "*", "include": false }` rule.
 
 <ViewFiltersMatchingAndValidation />
@@ -58,7 +58,7 @@ Tests that sign in through an external identity provider capture snapshots of it
 
 ### Exclude URLs from UI Coverage only
 
-Nesting `viewFilters` under `uiCoverage` applies the rules to UI Coverage alone. Here, an embedded documentation site is excluded from coverage scores while Cypress Accessibility continues to scan it.
+Nesting `viewFilters` under `uiCoverage` applies the rules to UI Coverage alone. Here, the rules exclude an embedded documentation site from coverage scores while Cypress Accessibility continues to scan it.
 
 #### Config
 
@@ -83,9 +83,9 @@ A nested `viewFilters` replaces any root-level `viewFilters` for UI Coverage, so
 ### A URL you excluded still appears in the report
 
 - Rules apply in order, and the first match wins. Check whether an earlier rule with `include: true` matches the URL.
-- A pattern that starts with a hostname, like `my-app.com/admin`, is interpreted as a path rather than a hostname and never matches the URLs you intend. Include the protocol, as in `https://my-app.com/admin/*`, or use the path-only form `/admin/*`.
+- UI Coverage interprets a pattern that starts with a hostname, like `my-app.com/admin`, as a path rather than a hostname, so the pattern never matches the URLs you intend. Include the protocol, as in `https://my-app.com/admin/*`, or use the path-only form `/admin/*`.
 - Hostnames must match exactly. `https://my-app.com/*` doesn't match URLs on `www.my-app.com`; add a wildcard such as `https://*.my-app.com/*` to span subdomains.
-- Reports use the configuration saved at the time they were processed. Regenerate the run to apply your current configuration. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration).
+- Reports use the configuration saved at the time Cypress Cloud processed them. Regenerate the run to apply your current configuration. See [Setting configuration](/ui-coverage/configuration/overview#Setting-configuration).
 
 <ViewFiltersTroubleshootingValidationErrors />
 

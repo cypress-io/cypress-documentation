@@ -16,15 +16,15 @@ keeping your quality hub secure and removing daily login friction.
 Connecting Cypress Cloud to your identity provider pays off across the developer
 lifecycle:
 
-- **Faster onboarding:** new engineers are provisioned through your IdP and
+- **Faster onboarding:** your IdP provisions new engineers, who
   can immediately run and review tests without waiting for manual Cypress Cloud
   invitations, keeping quality checks part of the workflow from day one.
 - **Automatic offboarding:** revoking a user in your IdP immediately removes
   their access to test results, run history, and project configuration, closing
   the gap that standalone credentials leave open when team members depart.
 - **Enforce your security baseline:** MFA, conditional access, and session
-  policies defined in your IdP apply automatically to Cypress Cloud, so your
-  quality data is protected by the same controls as the rest of your toolchain
+  policies defined in your IdP apply automatically to Cypress Cloud, so the same
+  controls that protect the rest of your toolchain protect your quality data
   without any extra configuration.
 - **Less credential sprawl:** developers sign in with their existing corporate
   identity, eliminating a separate username and password to manage, rotate, and
@@ -177,8 +177,8 @@ addition to the documentation below, refer to the Microsoft Guides for
 1. Under **API Permissions** in Azure AD, ensure the application has access to
    **User.Read** permissions
 1. Enter the domain used for your Active Directory, as well as the list of SSO
-   domains you wish to allow user to authenticate with, in Cypress Cloud. The
-   domain list is used for SSO discovery from the login screen.
+   domains you wish to allow user to authenticate with, in Cypress Cloud. Cypress
+   Cloud uses the domain list for SSO discovery from the login screen.
 1. [Save Configuration](#Save-Configuration).
 
 ### **OneLogin**
@@ -196,8 +196,8 @@ documentation below, refer to
    - **ACS (Consumer) URL:** The Single sign-on URL provided in Cypress Cloud
    - **ACS (Consumer) URL Validator:** A regex that matches the ACS URL, for
      example `^https://cloud\.cypress\.io.*`
-1. Open the **Parameters** tab and add the following attribute mappings. Each
-   mapping must be marked **Include in SAML assertion**:
+1. Open the **Parameters** tab and add the following attribute mappings. Mark each
+   mapping **Include in SAML assertion**:
    - `User.Email` → **Email**
    - `User.FirstName` → **First Name**
    - `User.LastName` → **Last Name**
@@ -218,12 +218,13 @@ organization to sign in through your SSO provider.
 
 ## Notes
 
-- Once SSO is successfully set up, users need to be invited via your SSO
+- Once SSO is successfully set up, you need to invite users via your SSO
   provider, as the Cypress Cloud invitation option is disabled.
-- All SSO Users are initially added with the
+- Cypress Cloud initially adds all SSO Users with the
   [User Role](/cloud/account-management/users#User-roles) of Member. If a
-  User needs different User Role permissions, this can be changed via Cypress
-  Cloud by a current member with the role of Owner or Admin.
+  User needs different User Role permissions, a current member with the role of
+  Owner or Admin can change them via Cypress Cloud.
 - SSO users are separate accounts from Google/GitHub or email/password users. If
-  there are duplicate users, duplicates can be removed by any
-  [Owner or Admin](/cloud/account-management/users#User-roles).
+  there are duplicate users, any
+  [Owner or Admin](/cloud/account-management/users#User-roles) can remove the
+  duplicates.

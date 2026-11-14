@@ -75,7 +75,7 @@ Cypress.ensure.isNotDisabled(subject[0], 'editable')
 
 ### Arguments
 
-These arguments are shared by every function. `isType()` also takes a
+Every function takes these arguments. `isType()` also takes a
 [`types`](#isType) array.
 
 <Icon name="angle-right" /> **subject** **_(any)_**
@@ -706,8 +706,8 @@ cy.window().storageKeys().should('include', 'authToken')
 ### Check an element before acting on it in a custom command
 
 A custom command added with
-[`Cypress.Commands.add()`](/api/cypress-api/custom-commands) runs once and is
-not retried, so a failed check fails the test right away. The `.scrollToBottom()`
+[`Cypress.Commands.add()`](/api/cypress-api/custom-commands) runs once without
+retrying, so a failed check fails the test right away. The `.scrollToBottom()`
 command below checks that its subject can be scrolled before it changes the
 element's `scrollTop`, then yields the element so the chain can continue.
 

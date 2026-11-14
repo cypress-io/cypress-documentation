@@ -121,8 +121,8 @@ cy.location('pathname', { timeout: 10000 }).should('eq', '/dashboard')
 
 #### Match a pathname that contains a generated ID
 
-When your application creates a record and navigates to it, the ID in the URL
-isn't known ahead of time. Match the pathname against a regular expression
+When your application creates a record and navigates to it, you don't know the
+ID in the URL ahead of time. Match the pathname against a regular expression
 instead.
 
 ```javascript

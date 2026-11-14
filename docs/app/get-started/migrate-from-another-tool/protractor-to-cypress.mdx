@@ -80,7 +80,7 @@ from your test suite and their assertions. When you
 in the command log, a DOM snapshot displays so you can see what the application
 under test looked like at the time of the test's execution. The DOM snapshot shows the
 **real rendered UI** and the behavior of the app under **real user
-interactions.** Since the app is loaded within a real browser, you can also
+interactions.** Since Cypress loads the app within a real browser, you can also
 manually explore its behavior while it is under the state of a desired test
 scenario.
 
@@ -212,11 +212,12 @@ or [record test results](#Recording-test-results-to-Cypress-Cloud) to
 
 :::tip
 
-The
+The original work of the [Briebug](https://briebug.com/) team and the
+contributors of
+[@briebug/cypress-schematic](https://www.npmjs.com/package/@briebug/cypress-schematic)
+made the
 [Cypress Angular Schematic](https://www.npmjs.com/package/@cypress/schematic)
-package was made possible by the original work of the
-[Briebug](https://briebug.com/) team and the contributors of
-[@briebug/cypress-schematic](https://www.npmjs.com/package/@briebug/cypress-schematic).
+package possible.
 
 **@briebug/cypress-schematic** served as the starting point for improvements and
 new functionality the Cypress team will continue to develop along with the
@@ -327,7 +328,7 @@ to install Cypress, and we plan on adding new capabilities to it over time.
 
 When it comes to e2e tests, one of the most common things you need to do is
 get one or more HTML elements on a page. Rather than split element fetching into
-multiple methods that you need to memorize, everything can be accomplished with
+multiple methods that you need to memorize, you can do everything with
 [`cy.get`](/api/commands/get) while using CSS selectors or the preferred
 [**data attribute**](/app/core-concepts/best-practices#Selecting-Elements).
 
@@ -375,7 +376,7 @@ cy.get('.my-class').contains('text')
 cy.contains('text')
 ```
 
-You can also get elements by their text value. Getting elements by text can be accomplished using
+You can also get elements by their text value. Get elements by text with
 [`cy.contains`](/api/commands/contains) while using CSS selectors to account for
 all use cases.
 
@@ -926,17 +927,17 @@ cy.get('.list-item').contains('my text')
 
 Cypress commands are similar to Protractor code at first glance. Cypress
 commands are
-[not invoked immediately](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous)
-and are enqueued to run serially at a later time. Cypress commands might look
+[not invoked immediately](/app/core-concepts/introduction-to-cypress#Commands-Are-Asynchronous),
+and Cypress enqueues them to run serially at a later time. Cypress commands might look
 like promises, but the
 [Cypress API is not an exact implementation of Promises](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue).
 The modern web is asynchronous, therefore you need to interact with modern web
 apps in an asynchronous fashion. The asynchronous web is why the Cypress API is asynchronous.
-The asynchronous API keeps your tests deterministic since all of your commands are executed
+The asynchronous API keeps your tests deterministic since Cypress executes all of your commands
 serially, enabling your tests to run predictably each time.
 
-In comparison, Protractor's WebDriverJS API is based on promises, which is
-managed by a control flow. This
+In comparison, Protractor's WebDriverJS API is based on promises, which a
+control flow manages. This
 [Control Flow](https://www.protractortest.org/#/control-flow) enables you to
 write asynchronous Protractor tests in a synchronous style.
 
@@ -949,7 +950,7 @@ element(by.css('button')).click()
 element(by.css('input')).sendKeys('my text')
 ```
 
-Protractor's Control Flow can be disabled, so test cases are written as
+You can disable Protractor's Control Flow, so that you write test cases as
 asynchronous functions.
 
 ```js
@@ -1297,4 +1298,4 @@ named `cypress`.
 
 In fact, as you work through migrating to Cypress, we believe that progressively
 enhancing your e2e tests with Cypress is the best path forward to ensure that
-feature development is not impacted.
+the migration does not impact feature development.

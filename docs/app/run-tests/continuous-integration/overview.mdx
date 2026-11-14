@@ -24,8 +24,8 @@ major CI provider.
 ## What is Continuous Integration?
 
 Continuous integration is the practice of merging code changes into a shared
-repository frequently, where each change is verified by an automated build and
-test run. When Cypress is part of that pipeline, every commit runs your
+repository frequently, where an automated build and test run verifies each
+change. When Cypress is part of that pipeline, every commit runs your
 end-to-end and component tests against your application, so a change that
 breaks a user flow fails the build instead of shipping.
 
@@ -286,7 +286,7 @@ Cypress Docker images are available from:
 
 - [cypress/factory](https://github.com/cypress-io/cypress-docker-images/tree/master/factory)
   provides the base operating system image and allows individual selection of other components
-  by version. The `cypress/factory` image is used to generate customized Docker images.
+  by version. You use the `cypress/factory` image to generate customized Docker images.
 
 ### CI Docker examples
 
@@ -488,9 +488,9 @@ the Cypress configuration.
 - `CYPRESS_VIEWPORT_WIDTH` and `CYPRESS_VIEWPORT_HEIGHT` - vary the screen
   size per CI job
 
-The install-time variable
+CI setups also commonly set the install-time variable
 [`CYPRESS_INSTALL_BINARY`](/app/references/advanced-installation#Download-URLs)
-is also commonly set in CI, to skip or redirect the binary download.
+to skip or redirect the binary download.
 
 Refer to the
 [Environment Variables recipe](/app/references/configuration#Environment-Variables)
@@ -656,7 +656,7 @@ node scripts/run-cypress-tests.js
 
 ### Missing binary
 
-When npm or yarn install the `cypress` package, a `postinstall` hook is executed
+When npm or yarn install the `cypress` package, they execute a `postinstall` hook
 that downloads the platform-specific Cypress binary. If the hook is skipped for
 any reason the Cypress binary is missing (unless it was already cached).
 
@@ -670,7 +670,7 @@ are already present.
 cache list`}
 />
 
-If the required binary version is not found in the cache, you can try the
+If the cache does not contain the required binary version, you can try the
 following:
 
 1. Clean your CI's cache using your CI's settings to force a clean `npm install`
@@ -733,8 +733,8 @@ crashing.
 
 ### Colors
 
-If you want colors to be disabled, you can pass the `NO_COLOR` environment
-variable to disable colors. You may want to do this if ASCII characters or
+If you want to disable colors, you can pass the `NO_COLOR` environment
+variable. You may want to do this if ASCII characters or
 colors are not properly formatted in your CI.
 
 ```shell

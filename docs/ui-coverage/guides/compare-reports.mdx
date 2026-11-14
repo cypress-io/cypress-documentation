@@ -64,8 +64,8 @@ You can get there by clicking the branch name associated with a run, or in
 chosen from a dropdown labeled **Base** and **Changed**.
 
 Branch Review compares any two runs recorded to Cypress Cloud, so no source
-control integration is required: the Git branch and commit for each run are
-captured automatically when it records, and you can select the two runs to
+control integration is required: Cypress automatically captures the Git branch
+and commit for each run when the run records, and you can select the two runs to
 compare manually.
 
 :::tip
@@ -170,7 +170,7 @@ unopened doors in your application: pages a user can reach through your UI that
 no test visits. Like elements, they're split into:
 
 - **New untested links**: a page that is reachable but untested in the changed run and wasn't an untested link in the base run.
-- **Resolved untested links**: pages that were untested links in the base run and are now visited by a test.
+- **Resolved untested links**: pages that were untested links in the base run and that a test now visits.
 - **Existing untested links**: a link to the untested links present in both runs.
 
 A new untested link is often the first sign that a change added a whole flow your
@@ -207,8 +207,8 @@ way to compare two builds of your application independent of the coverage score.
 
 Clicking any new or resolved item opens a detail view of that item, where you see
 every example of that element or link on a full-page, inspectable DOM snapshot,
-with tested elements highlighted green and untested elements red. Items with the
-same status on both runs are removed here, so you focus only on what changed.
+with tested elements highlighted green and untested elements red. The detail view
+leaves out items with the same status on both runs, so you focus only on what changed.
 
 The detail view shows the changed run's snapshots, consistent with the changed
 run being the focal point of the comparison. Because the snapshot is a real DOM,
@@ -221,7 +221,7 @@ do.
 
 On most projects, comparing reports works well out of the box. But dynamic values
 in URLs or element attributes can make unchanged parts of your app _look_ like
-they changed, adding noise to the diff. Because UI Coverage is configured from
+they changed, adding noise to the diff. Because you configure UI Coverage from
 the **App Quality** tab of your project settings in Cypress Cloud, you can fix
 this without touching your tests, then regenerate a past run from its
 **Properties** tab to see the effect immediately.
@@ -233,8 +233,8 @@ this without touching your tests, then regenerate a past run from its
 
 **Stabilize views** so a page matches across runs. UI Coverage groups URLs that
 differ only by numeric IDs or UUIDs automatically (`/orders/123` and `/orders/456`
-become `/orders/*`), but other dynamic segments, such as slugs, are not grouped by
-default and can show up as "new" views between runs. Group them with a
+become `/orders/*`), but UI Coverage doesn't group other dynamic segments, such as
+slugs, by default, and they can show up as "new" views between runs. Group them with a
 [`views`](/ui-coverage/configuration/views) pattern:
 
 ```json title="App Quality Config"
@@ -250,8 +250,8 @@ default and can show up as "new" views between runs. Group them with a
 This groups `/products/blue-widget` and `/products/red-widget` into a single
 `/products/:slug` view that's recognized the same way in both runs.
 
-**Stabilize elements** so the same control isn't matched as two different
-elements between builds. If an element's identifier carries a per-build hash, the
+**Stabilize elements** so UI Coverage doesn't match the same control as two
+different elements between builds. If an element's identifier carries a per-build hash, the
 same element can appear as _resolved_ in the base run and _new untested_ in the
 changed run even though nothing really changed. UI Coverage already ignores the
 most common unstable identifiers, such as hashed CSS classes; for anything it

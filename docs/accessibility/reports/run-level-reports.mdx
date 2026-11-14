@@ -30,7 +30,7 @@ The Run Summary provides top-line metrics for a quick overview of accessibility 
 - **Rule Severity Chart**: A mini chart showing the Axe Core® severity levels (critical, serious, moderate, minor) for failed rules.
 - **Total Failed Rules**: The cumulative count of failed rules.
 
-Each term is defined further below for clarity.
+The sections below define each term.
 
 ## Views
 
@@ -43,7 +43,7 @@ A View represents a collection of snapshots from the tested application, grouped
 
 ### Snapshots
 
-The number of snapshots captured for a View. A Snapshot represents the live HTML and CSS state of the application at a specific moment during a recorded test. Multiple snapshots are captured as tests interact with elements, modify state, or load dynamic content.
+The number of snapshots captured for a View. A Snapshot represents the live HTML and CSS state of the application at a specific moment during a recorded test. Cypress captures multiple snapshots as tests interact with elements, modify state, or load dynamic content.
 
 ### Score
 
@@ -54,18 +54,18 @@ The overall score for a View is a weighted ratio of passed versus failed checks 
 The count of elements in a View categorized as:
 
 - **Failed:** Elements violating at least one rule. Failed elements affect your accessibility score.
-- **Inconclusive:** Elements had at least one check marked "incomplete" by Axe Core® during the run. Inconclusive elements represent checks that couldn't be completed for technical reasons, or items that need manual review to confirm if there is an accessibility issue. Inconclusive elements do not affect your accessibility score.
-- **Ignored:** Elements with failed or incomplete checks that were excluded via CSS selectors in your [configuration](/accessibility/configuration/elementfilters), or through the `data-a11y-ignore` attribute. These elements are still processed to support your understanding of what is ignored. Ignored elements do not affect your accessibility score.
+- **Inconclusive:** Axe Core® marked at least one check on these elements "incomplete" during the run. Inconclusive elements represent checks that couldn't be completed for technical reasons, or items that need manual review to confirm if there is an accessibility issue. Inconclusive elements do not affect your accessibility score.
+- **Ignored:** Elements with failed or incomplete checks that you excluded via CSS selectors in your [configuration](/accessibility/configuration/elementfilters), or through the `data-a11y-ignore` attribute. Cypress Accessibility still processes these elements to support your understanding of what is ignored. Ignored elements do not affect your accessibility score.
 
-Each of these numbers can be clicked to navigate to a report filtered to just that set of findings.
+Click any of these numbers to navigate to a report filtered to just that set of findings.
 
 ### Failed rules
 
-Failed rules are displayed with severity charts (critical, serious, moderate, minor) and total counts, enabling quick identification of areas with the most significant issues.
+The report displays failed rules with severity charts (critical, serious, moderate, minor) and total counts, enabling quick identification of areas with the most significant issues.
 
 ### Severity
 
-Severity levels correspond to Axe Core® impact levels for each rule, providing context on the criticality of detected issues. These levels were created by Deque Systems, the creators of Axe Core, and not a part of the Web Content Accessibility Guidelines themselves. Learn more in the [Axe Core® documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/issue_impact.md).
+Severity levels correspond to Axe Core® impact levels for each rule, providing context on the criticality of detected issues. Deque Systems, the creators of Axe Core, created these levels, which are not a part of the Web Content Accessibility Guidelines themselves. Learn more in the [Axe Core® documentation](https://github.com/dequelabs/axe-core/blob/develop/doc/issue_impact.md).
 
 ## Rules
 
@@ -81,9 +81,9 @@ Attributes for each rule include:
 - **Status Icon**: An icon representing the overall status for the rule, which can be any one of these:
   - **Passed**: All elements passed checks or were ignored.
   - **Failed**: At least one element failed.
-  - **Inconclusive**: At least one element was labelled "incomplete" by Axe Core® and requires manual review, but no elements were failed.
+  - **Inconclusive**: Axe Core® labelled at least one element "incomplete" and that element requires manual review, but no elements failed.
   - **Inapplicable**: No applicable elements detected for this rule.
-  - **Ignored by config**: The rule was excluded at the project level.
+  - **Ignored by config**: Your project-level configuration excludes the rule.
 - **Description**: A summary of the rule.
 - **Severity**: The Axe Core® impact level for the rule, or equivalent level for [Cypress rules](/accessibility/core-concepts/cypress-rules).
 - **Counts**: The counts of failed, inconclusive, and ignored elements for the rule.

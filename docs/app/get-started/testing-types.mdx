@@ -40,9 +40,9 @@ a real browser, visiting URLs, viewing content, clicking on links and buttons,
 etc. Testing this way helps ensure your tests and the user's experience are the
 same.
 
-Writing end-to-end tests in Cypress can be done by developers building the
-application, specialized testing engineers, or a quality assurance team
-responsible for verifying an app is ready for release. Tests are written in code
+Developers building the application, specialized testing engineers, or a
+quality assurance team responsible for verifying an app is ready for release can
+all write end-to-end tests in Cypress. You write tests in code
 with an API that simulates the steps that a real user would take.
 
 End-to-end tests are great at verifying your app runs as intended, from the
@@ -100,10 +100,10 @@ to pull up an entire app, a component can be "mounted" and tested on its own.
 Mounting narrows the test to the component's functionality, leaving out the other
 nuances of testing a component as part of the larger application.
 
-Typically, a component test is written by the developers working on the
-component. The code for the test lives alongside the component code, and it is
-common for tests to be coded simultaneously with the component, helping
-developers verify the required functionality while building it.
+Typically, the developers working on a component write its component tests.
+The code for the test lives alongside the component code, and developers
+commonly code the tests simultaneously with the component, helping them
+verify the required functionality while building it.
 
 One thing to consider, though, is even if all your component tests pass, it does
 not mean your app is functioning properly. Component tests do nothing to ensure
@@ -231,8 +231,8 @@ Cypress supports it in three ways. Community plugins such as
 [`cypress-axe`](https://www.npmjs.com/package/cypress-axe) run an Axe Core®
 scan inside a test with a single command.
 [Cypress Accessibility](/accessibility/get-started/introduction) moves those
-checks out of the test entirely and runs them in Cypress Cloud as your tests are
-recorded, so no test code changes and no scan time is added to your runs. And
+checks out of the test entirely and runs them in Cypress Cloud as you record your
+tests, so no test code changes and no scan time is added to your runs. And
 ordinary Cypress assertions cover what a generic scan cannot know about, such as
 whether a particular button carries the accessible name your users expect.
 

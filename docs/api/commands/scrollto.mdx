@@ -278,8 +278,8 @@ or
 
 - `.scrollTo()` automatically waits for the element to be scrollable, unless you
   pass `ensureScrollable: false`.
-- `.scrollTo()` itself is not retried. `.scrollTo()` scrolls once. Assertions chained after
-  `.scrollTo()` are retried until they pass or time out. See
+- Cypress doesn't retry `.scrollTo()` itself. `.scrollTo()` scrolls once. Cypress retries assertions chained after
+  `.scrollTo()` until they pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 
 <HeaderTimeouts />

@@ -38,7 +38,7 @@ cy.mount(StepperComponent, {
 ## Testing Event Handlers
 
 Pass a Cypress [spy](/app/guides/stubs-spies-and-clocks#Spies) to an event
-prop and validate it was called:
+prop and validate that the component called it:
 
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
@@ -79,7 +79,7 @@ repeat this boilerplate for each test.
 
 Not only are [Standalone Components](https://angular.io/guide/standalone-components) supported, they are the simplest components to write tests for.
 Standalone Components provide the Angular compiler with everything it needs to compile through its [`@Component()`](https://angular.io/api/core/Component) decorator.
-This self-sufficiency means that in most cases a Standalone Component can be mounted without ever providing any `imports`, `decorators`, or `providers`. Mounting then becomes as simple as:
+This self-sufficiency means that in most cases you can mount a Standalone Component without ever providing any `imports`, `decorators`, or `providers`. Mounting then becomes as simple as:
 
 ```ts
 cy.mount(MyStandaloneComponent)
@@ -117,7 +117,7 @@ cy.get('@onClickSpy').should('have.been.called');
 
 There might be times when you might want to access the component instance
 directly in your tests. To do so, use `.then()`, which enables us to work with
-the subject that was yielded from the `cy.mount()` command. In this case, mount
+the subject that the `cy.mount()` command yielded. In this case, mount
 yields an object that contains the rendered component and the fixture.
 
 In the below example, we use the component to spy directly on the `change` event
@@ -164,8 +164,8 @@ cy.mount(StepperComponent, { componentProperties: { count: 100 } })
 ## Using createOutputSpy()
 
 To make spying on event emitters easier, there is a utility function called
-`createOutputSpy()` which can be used to automatically create an `EventEmitter`
-and setup the spy on it's `.emit()` method. `createOutputSpy()` can be used like the following:
+`createOutputSpy()` which automatically creates an `EventEmitter`
+and sets up the spy on it's `.emit()` method. You can use `createOutputSpy()` like the following:
 
 ```ts
 import { createOutputSpy } from 'cypress/angular'
@@ -327,7 +327,7 @@ cy.then(() => {
 
 Cypress doesn't propagate changes via spy from `input()` signals.
 
-For writable signals, such as `model()`s or `signal()`s, Cypress **does** propagate changes if an output spy is created with the prop's name suffixed with `Change`. In the example below,
+For writable signals, such as `model()`s or `signal()`s, Cypress **does** propagate changes if you create an output spy with the prop's name suffixed with `Change`. In the example below,
 `countChange` spies on changes to the `count` signal.
 
 ```typescript
@@ -416,8 +416,8 @@ in your individual tests, we recommend doing them all within a custom
 helps keep your spec code clean.
 
 Below is a sample that registers several default component declarations while
-still allowing additional ones to be passed in via the config param. The same
-pattern can also be applied to providers and module imports.
+still letting you pass in additional ones via the config param. You can also
+apply the same pattern to providers and module imports.
 
 <Tabs>
 <TabItem value="cypress/support/component.js">

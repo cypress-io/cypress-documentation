@@ -59,7 +59,7 @@ Less time on test maintenance is more time shipping features.
 [Cypress Cloud](/cloud/get-started/introduction) replaces guesswork with evidence:
 
 - **[Test Replay](/cloud/features/test-replay)** replays the test exactly as it executed during the run for zero-configuration debugging.
-- **[Flaky test management](/cloud/features/flaky-test-management)** surfaces flake patterns so they get fixed instead of quietly suppressed.
+- **[Flaky test management](/cloud/features/flaky-test-management)** surfaces flake patterns so your team fixes them instead of quietly suppressing them.
 - **[Branch Review](/cloud/features/branch-review)** gives every pull request a pre-merge picture of the test signal, so "are we good to merge?" has a real answer before code lands on main.
 - **[Smart Orchestration](/cloud/features/smart-orchestration/parallelization)** keeps CI fast as your suite grows by parallelizing specs, prioritizing the ones most likely to fail, and cancelling builds that are clearly broken.
 
@@ -75,7 +75,7 @@ The stakes grow with the questions. Accessibility issues caught in development c
 
 Two premium products meet this stage:
 
-- **[Cypress Accessibility](/accessibility/get-started/introduction)** surfaces accessibility issues continuously during your normal test runs, with no setup, code changes, or performance penalty. Issues get caught in development rather than after launch.
+- **[Cypress Accessibility](/accessibility/get-started/introduction)** surfaces accessibility issues continuously during your normal test runs, with no setup, code changes, or performance penalty. You catch issues in development rather than after launch.
 - **[UI Coverage](/ui-coverage/get-started/introduction)** gives engineers, product, and QA a single shared view of which parts of your app your tests reach and which they don't.
 
 ## Features
@@ -243,8 +243,8 @@ it('uses custom text for the button label', () => {
 ### Accessibility Testing
 
 You can write Cypress tests to check the accessibility of your application, and use plugins to run broad accessibility scans.
-When combined with [Cypress Accessibility](/accessibility/get-started/introduction) in Cypress Cloud, insights can be surfaced when specific
-accessibility standards are not met through your testing, with no configuration required. See our [Accessibility Testing guide](/app/guides/accessibility-testing) for more details.
+Combined with [Cypress Accessibility](/accessibility/get-started/introduction) in Cypress Cloud, your tests surface insights when your application
+does not meet specific accessibility standards, with no configuration required. See our [Accessibility Testing guide](/app/guides/accessibility-testing) for more details.
 
 ```js
 it('adds todos', () => {
@@ -317,7 +317,7 @@ that makes everyone happy.
 
 Most testing tools (like Selenium) operate by running outside of the browser and
 executing remote commands across the network. _Cypress is the exact opposite._
-Cypress is executed in the same run loop as your application.
+Cypress executes in the same run loop as your application.
 
 Behind Cypress is a Node server process. Cypress and the Node process constantly
 communicate, synchronize, and perform tasks on behalf of each other. Having
@@ -377,7 +377,7 @@ For instance you can:
 
 ### Shortcuts
 
-Cypress allows for browser context to be cached with
+Cypress caches browser context with
 [`cy.session()`](/api/commands/session). Caching the browser context means as a user, you only need to
 perform authentication once for the entirety of your test suite, and restore the
 saved session between each test. Restoring the session means you do not have to visit a login

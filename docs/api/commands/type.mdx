@@ -40,7 +40,7 @@ cy.clock().type('www.cypress.io') // Errors, 'clock' does not yield DOM elements
 
 <Icon name="angle-right" /> **text _(String)_**
 
-The text to be typed into the DOM element.
+The text to type into the DOM element.
 
 Text passed to `.type()` may include any of the special character sequences
 below. These characters pass along the correct `keyCode`, `key`, and
@@ -182,13 +182,13 @@ This format isn't exactly how a user would type into a date input, but is a work
 since date input support varies between browsers and the format varies based on
 locale. `yyyy-MM-dd` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#dates-and-times)
-and is what the input's `value` is set to regardless of browser or locale.
+and is what Cypress sets the input's `value` to regardless of browser or locale.
 
 `{upArrow}` and `{downArrow}` can increase and decrease the day value,
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
 mimics behavior of `stepUp` and `stepDown` input methods.
 
-Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
+You can't use special characters (`{leftArrow}`, `{selectAll}`, etc.).
 
 ### Month Inputs
 
@@ -201,13 +201,13 @@ This format isn't exactly how a user would type into a month input, but is a wor
 since month input support varies between browsers and the format varies based on
 locale. `yyyy-MM` is the format required by
 [the W3 spec](https://www.w3.org/TR/html/infrastructure.html#months) and is what
-the input's `value` is set to regardless of browser or locale.
+Cypress sets the input's `value` to regardless of browser or locale.
 
 `{upArrow}` and `{downArrow}` can increase and decrease the month value,
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
 mimics behavior of `stepUp` and `stepDown` input methods.
 
-Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
+You can't use special characters (`{leftArrow}`, `{selectAll}`, etc.).
 
 ### Week Inputs
 
@@ -223,9 +223,9 @@ This format isn't exactly how a user would type into a week input, but is a work
 since week input support varies between browsers and the format varies based on
 locale. `yyyy-Www` is the format required by
 [the W3 spec](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-week-string)
-and is what the input's `value` is set to regardless of browser or locale.
+and is what Cypress sets the input's `value` to regardless of browser or locale.
 
-Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
+You can't use special characters (`{leftArrow}`, `{selectAll}`, etc.).
 
 `{upArrow}` and `{downArrow}` can increase and decrease the week value,
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
@@ -246,16 +246,16 @@ Where `HH` is 00-23, `mm` is 00-59, `ss` is 00-59, and `SSS` is 000-999.
 depending on "step" parameter provided. Using `.type()` with `{upArrow}` and `{downArrow}`
 mimics behavior of `stepUp` and `stepDown` input methods.
 
-Special characters (`{leftArrow}`, `{selectAll}`, etc.) are not permitted.
+You can't use special characters (`{leftArrow}`, `{selectAll}`, etc.).
 
 ### Key Combinations
 
 When using special character sequences, it's possible to activate modifier keys
-and type key combinations, such as `CTRL+R` or `SHIFT+ALT+b`. Single key
-combinations can be specified with `{modifier+key}` syntax.
+and type key combinations, such as `CTRL+R` or `SHIFT+ALT+b`. You can
+specify single key combinations with `{modifier+key}` syntax.
 
-A `keydown` event is fired when a modifier is activated and a `keyup` event is
-fired when it is released.
+Cypress fires a `keydown` event when it activates a modifier and a `keyup` event
+when it releases the modifier.
 
 :::info
 
@@ -275,10 +275,10 @@ their options. See each doc for more information.
 cy.get('input').type('{shift+alt+b}hello')
 ```
 
-When a modifier is specified on its own, it remains activated for the
-duration of the `.type()` command, and is released when all subsequent
-characters are typed. However, [\{release: false\}](#Options) can be passed as an
-[option](#Key-Combinations).
+When you specify a modifier on its own, the modifier remains activated for the
+duration of the `.type()` command, and Cypress releases the modifier after
+typing all subsequent characters. However, you can pass
+[\{release: false\}](#Options) as an [option](#Key-Combinations).
 
 ```javascript
 // This is the same as a user holding down SHIFT and ALT, then typing 'hello'
@@ -324,7 +324,7 @@ cy.get('input').type('{ctrl}test')
 
 #### Release behavior
 
-By default, modifiers are released after each type command.
+By default, Cypress releases modifiers after each type command.
 
 ```javascript
 // 'ctrlKey' will be true for each event while 'test' is typed
@@ -342,7 +342,7 @@ cy.get('input').type('{alt}foo', { release: false })
 cy.get('button').click()
 ```
 
-Modifiers are automatically released between tests, even with
+Cypress automatically releases modifiers between tests, even with
 `{release: false}`.
 
 ```javascript
@@ -358,7 +358,7 @@ it('does not have modifiers activated', () => {
 ```
 
 To manually release modifiers within a test after using `{release: false}`, use
-another `type` command and the modifier is released after it.
+another `type` command, and Cypress releases the modifier after that command.
 
 ```javascript
 // 'altKey' will be true while typing 'foo'
@@ -381,8 +381,8 @@ or textarea:
 - Keyboard shortcuts where the listener is on the `document` or `body`.
 - Holding modifier keys and clicking an arbitrary element.
 
-To support this, the `body` can be used as the DOM element to type into (even
-though it's _not_ a focusable element).
+To support these cases, you can use the `body` as the DOM element to type into
+(even though it's _not_ a focusable element).
 
 #### Use keyboard shortcuts in body
 
@@ -494,8 +494,8 @@ into focus.
 
 Once the element is in focus, Cypress begins firing keyboard events.
 
-Cypress fires the following events based on what key was pressed identical to
-the event spec:
+Cypress fires the following events based on which key it presses, identical
+to the event spec:
 
 - `keydown`
 - `keypress`
@@ -504,8 +504,8 @@ the event spec:
 - `input`
 - `keyup`
 
-Additionally `change` events are fired either when the `{enter}` key is
-pressed (and the value has changed since the last focus event), or whenever the
+Additionally Cypress fires `change` events either when it presses the `{enter}`
+key (and the value has changed since the last focus event), or whenever the
 element loses focus. This timing matches browser behavior.
 
 Events that should not fire on non input types such as elements with `tabindex`
@@ -514,7 +514,7 @@ cause the actual value or text to change fires those events.
 
 #### Event Firing
 
-The following rules have been implemented that match real browser behavior (and
+Cypress implements the following rules, which match real browser behavior (and
 the spec):
 
 1. Cypress respects not firing subsequent events if previous ones were cancelled.
@@ -548,11 +548,11 @@ In a real browser, preventing `mousedown` on a form field prevents it from
 receiving focus and thus prevents it from being typed into. Currently,
 Cypress does not factor this in.
 [open an issue](https://github.com/cypress-io/cypress/issues/new/choose) if you
-need this to be fixed.
+need Cypress to fix this.
 
 #### Key Events Table
 
-Cypress prints out a table of key events that detail the keys that were pressed
+Cypress prints out a table of key events that detail the keys Cypress pressed
 when clicking on type within the [Command Log](#Command-Log). Each character
 contains the `which` character code and the events that happened as a result
 of that key press.
@@ -565,7 +565,7 @@ spec).
 Additionally, events that cause a `change` event to fire (such as typing
 `{enter}`) display with the `change` event column as `true`.
 
-Any modifiers activated for the event are also listed in a `modifiers` column.
+A `modifiers` column also lists any modifiers activated for the event.
 
 <DocsImage
   src="/img/api/type/key-events-table-shown-in-console-for-testing-typing.png"
@@ -613,7 +613,7 @@ cy.press(Cypress.Keyboard.Keys.ENTER)
 In a real browser, if a user holds `SHIFT` and types `a`, a capital `A` is
 typed into the input. Currently, Cypress does not simulate that behavior.
 
-Modifiers are simulated by setting their corresponding values to `true` for key
+Cypress simulates modifiers by setting their corresponding values to `true` for key
 and click events. So, for example, activating the `{shift}` modifier sets
 `event.shiftKey` to true for any key events, such as `keydown`.
 
@@ -627,7 +627,7 @@ document.querySelector('input:first').addEventListener('keydown', (e) => {
 cy.get('input:first').type('{shift}a')
 ```
 
-In the example above, a lowercase `a` is typed, because that's the literal
+In the example above, Cypress types a lowercase `a`, because that's the literal
 character specified. To type a capital `A`, you can use `.type('{shift}A')` (or
 `.type('A')` if you don't care about the `shiftKey` property on any key events).
 
@@ -639,7 +639,7 @@ letter `k`.
 Similarly, modifiers do not affect arrow keys or deletion keys. For example
 `{ctrl}{backspace}` does not delete an entire word.
 [open an issue](https://github.com/cypress-io/cypress/issues/new) if you need
-modifier effects to be implemented.
+Cypress to implement modifier effects.
 
 ### Form Submission
 
@@ -648,7 +648,7 @@ modifier effects to be implemented.
 Cypress automatically matches the spec and browser behavior for pressing the
 `{enter}` key when the input belongs to a `<form>`.
 
-This behavior is defined here:
+The HTML spec defines this behavior in
 [Form Implicit Submission](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#implicit-submission).
 
 For instance the following submits the form.

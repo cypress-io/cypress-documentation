@@ -40,8 +40,8 @@ and [Ignore views and links](/ui-coverage/guides/ignore-views-and-links). This g
 Open the **UI Coverage** tab for a recent run and look for these patterns:
 
 - **One element appears many times.** A control with the same purpose shows up
-  as several separate untested entries, often because its `id` or another
-  attribute is generated fresh on each render.
+  as several separate untested entries, often because your app generates its `id` or
+  another attribute fresh on each render.
 - **A group of similar elements each listed separately.** A navigation bar,
   list, or set of form fields where every item is its own entry, inflating the
   count without adding insight.
@@ -65,8 +65,8 @@ value, group them into a single entry with `elementGroups`. Grouping is the righ
 choice for a control that repeats, such as an action button on every row of a
 list.
 
-Given a list of rows that each repeat the same action, where the button's `id`
-is generated from the row's record ID:
+Given a list of rows that each repeat the same action, where the app generates the
+button's `id` from the row's record ID:
 
 ```html
 <ul class="cart">
@@ -140,7 +140,7 @@ with `elementGroups` (above) or filter the attribute (below) instead. See the
 
 ### Noisy or meaningless attributes → tune identification
 
-If elements are being identified by the wrong attributes, steer Cypress toward
+If Cypress identifies elements by the wrong attributes, steer Cypress toward
 the attributes you care about and away from the ones you don't.
 
 Prioritize your own stable attributes with `significantAttributes`:
@@ -213,7 +213,7 @@ See the [Views](/ui-coverage/configuration/views) reference for pattern syntax.
 
 ## Step 3: Validate the result
 
-Configuration changes are applied when a report is generated, so you don't need
+UI Coverage applies configuration changes when it generates a report, so you don't need
 to rerun your tests to see their effect. After saving your configuration,
 regenerate a recent run from its **Properties** tab.
 
@@ -226,7 +226,7 @@ Then reopen the UI Coverage report and confirm that:
 
 - The elements you grouped now appear as a single entry.
 - The element you stabilized no longer splits across snapshots.
-- The views you consolidated are reported together.
+- UI Coverage reports the views you consolidated together.
 - The overall element and view counts have dropped to reflect real coverage
   rather than duplication.
 

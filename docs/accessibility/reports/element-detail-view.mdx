@@ -39,11 +39,11 @@ Every route into this view starts from a [run-level report](/accessibility/repor
   alt="The violation detail view opened from Branch Review, with a base run and a changed run selected at the top. The rules list is headed 'New Cypress Accessibility Failures' and shows a critical rule, 'Form elements must have labels', expanded to two failing form field selectors that each carry an Added tag. The second selector is pinned and expanded to a Failed result status, a Share issue action, and a Solutions list. The snapshot on the right shows a contact form with the failing name field outlined."
 />
 
-Everything you select is written to the URL. Copying the address bar is the most direct way to send a teammate the exact thing you're looking at.
+Cypress Cloud writes everything you select to the URL. Copying the address bar is the most direct way to send a teammate the exact thing you're looking at.
 
 ## Read the rules list
 
-Rules are grouped by [severity](/accessibility/reports/run-level-reports#Severity) under headings such as **Critical rules** and **Serious rules**, so the most serious findings sit at the top of the list. Each rule row names the rule in plain language and counts the elements it matched under your current filters:
+The rules list groups rules by [severity](/accessibility/reports/run-level-reports#Severity) under headings such as **Critical rules** and **Serious rules**, so the most serious findings sit at the top of the list. Each rule row names the rule in plain language and counts the elements it matched under your current filters:
 
 ```
 Buttons must have discernible text    2 elements
@@ -68,7 +68,7 @@ Element rows carry two visual signals worth knowing:
 
 ## Pin an element to inspect it
 
-Selecting an element pins it. The row gets a pin icon, the element is highlighted in the snapshot, and the row expands to show the detail for that element.
+Selecting an element pins it. The row gets a pin icon, the snapshot highlights the element, and the row expands to show the detail for that element.
 
 <DocsImage
   src="/img/accessibility/reports/element-detail-solutions.png"
@@ -131,7 +131,7 @@ The filter button in the header of the left panel narrows both the rules list an
   alt="The filter menu for the violation detail view, with four groups. Include elements holds a single toggle, Only on this snapshot, switched off. Rule severity lists Critical, Serious, Moderate, and Minor, all on. Rules lists WCAG 2.1 A, WCAG 2.1 AA, and Best practices, all on. Element status lists Failed and Inconclusive switched on and Ignored switched off. Each option shows a count beside it."
 />
 
-- **Include elements** holds one toggle, **Only on this snapshot**, which limits the list to the snapshot currently displayed. The toggle is off by default, so elements from every snapshot in the view are shown.
+- **Include elements** holds one toggle, **Only on this snapshot**, which limits the list to the snapshot currently displayed. The toggle is off by default, so the list shows elements from every snapshot in the view.
 - **Rule severity** filters to critical, serious, moderate, or minor rules.
 - **Rules** filters by ruleset: WCAG 2.1 A, WCAG 2.1 AA, or Best practices.
 - **Element status** filters to failed, inconclusive, or ignored elements. Failed and inconclusive are on by default; ignored is off, so elements you have excluded through [`elementFilters`](/accessibility/configuration/elementfilters) or [`data-a11y-ignore`](/accessibility/configuration/ignoring-rules-per-element) stay out of your way until you go looking for them.
@@ -159,7 +159,7 @@ The snippet contains:
 
 - **Issue:** the rule in plain language, for example "Links must have discernible text".
 - **Severity:** the rule's severity, such as Serious.
-- **Selected view:** the view the element was found in. This line is omitted when you are looking at All Views.
+- **Selected view:** the view the element was found in. The snippet omits this line when you are looking at All Views.
 - **Selected element:** the violation target selector.
 - **References:** a **How to fix this** link to the rule's documentation, and a **View in Cypress Cloud** link back to this exact element and snapshot.
 
@@ -185,7 +185,7 @@ When your organization has the [Cypress Cloud Jira integration](/cloud/integrati
 
 1. Select the failing element to expand its detail.
 2. Choose **Create Jira issue**.
-3. Pick the Jira project. **Summary** is prefilled with the rule name and **Description** with the Markdown snippet described above, including the link back to the violation in Cypress Cloud. Both are editable, so this is the moment to add the context a triager wants, such as who owns the component or which release the fix should land in.
+3. Pick the Jira project. Cypress Cloud prefills **Summary** with the rule name and **Description** with the Markdown snippet described above, including the link back to the violation in Cypress Cloud. Both are editable, so this is the moment to add the context a triager wants, such as who owns the component or which release the fix should land in.
 4. Choose an issue type, complete any fields your Jira project requires, and submit.
 
 <DocsImage
@@ -208,7 +208,7 @@ Your [App Quality Config](/accessibility/configuration/overview) controls the se
 - [`components`](/accessibility/configuration/components) keeps the existing identifier and _adds_ context around it, so a selector reads `[data-cy="signup"][data-component="IconButton"]` and names both the element and the component responsible for it. Attributes like `data-team` route findings to an owner.
 - [`attributeFilters`](/accessibility/configuration/attributefilters) removes values that change from render to render, so the same control keeps the same identity across snapshots. Cypress already filters the most common ones, including auto-generated IDs and hashed CSS class names, so many projects need no rules here at all.
 
-You don't have to rerun your tests to see the effect. Save the configuration, then regenerate a past run from its **Properties** tab, and the report is reprocessed with the selectors your current configuration produces.
+You don't have to rerun your tests to see the effect. Save the configuration, then regenerate a past run from its **Properties** tab, and Cypress Cloud reprocesses the report with the selectors your current configuration produces.
 
 ## Triage several violations with an AI agent
 
