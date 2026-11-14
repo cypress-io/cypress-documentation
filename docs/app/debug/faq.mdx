@@ -2114,6 +2114,14 @@ see [Cypress AI Skills](/app/tooling/ai-skills). The two work well together:
 the skills cover how to write Cypress tests, and `cypress tap` reports what
 happened when those tests ran.
 
+### <Icon name="angle-right" /> Can I use `cypress tap` in a cloud agent such as Claude Code on the web?
+
+Yes. `cypress tap` talks to a Cypress App on the same machine, so the agent's
+sandbox runs Cypress too. The sandbox needs the `xvfb` package on Linux, a
+Chromium-based browser, and network access to the Cypress download hosts. See
+[Run Cypress in an AI agent sandbox](/app/tooling/cypress-agent-sandboxes) for
+the setup for Claude Code on the web, Cursor Cloud, and other sandboxes.
+
 ### <Icon name="angle-right" /> Can an AI agent fix my failing Cypress tests automatically?
 
 It can get much closer than it could without a way to run them. With
