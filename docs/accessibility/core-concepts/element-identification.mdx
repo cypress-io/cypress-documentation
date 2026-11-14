@@ -26,11 +26,11 @@ Cypress Accessibility checks a prioritized list of attributes on each element to
 - `data-qa`
 - `row-id`
 
-When an element has none of these, `id`, `name`, and other DOM signals are used as fallbacks. If you already have Test IDs or similar attributes in your application, Cypress Accessibility will pick these up and use them to recognize the same element in a new place for improved deduplication. This behavior itself is configurable as well, so that highly-dynamic Test IDs can be avoided, for example.
+When an element has none of these, `id`, `name`, and other DOM signals are used as fallbacks. If you already have Test IDs or similar attributes in your application, Cypress Accessibility picks these up and uses them to recognize the same element in a new place for improved deduplication. This behavior itself is configurable as well, so that highly-dynamic Test IDs can be avoided, for example.
 
 ## Configuring element identification
 
-Using these configuration properties helps you adjust the amount of deduplication Cypress will do to match what makes sense in your application. For example, a component-based Test ID might make a great identifier if the component renders static content, but the same exact test ID would be a poor identifier if the component renders different things everywhere - you might rather treat those instances as unique for accessibility purposes.
+Using these configuration properties helps you adjust the amount of deduplication Cypress does to match what makes sense in your application. For example, a component-based Test ID might make a great identifier if the component renders static content, but the same exact test ID would be a poor identifier if the component renders different things everywhere - you might rather treat those instances as unique for accessibility purposes.
 
 ### Attribute filters
 
@@ -48,7 +48,7 @@ Exclude irrelevant or dynamically generated attributes to reduce noise in Cypres
 }
 ```
 
-Elements with these IDs will still be included in your accessibility report, but they will be identified in a different way.
+Elements with these IDs are still included in your accessibility report, but they are identified in a different way.
 
 Learn more about attribute filtering in the [Attribute Filters guide](/accessibility/configuration/attributefilters).
 

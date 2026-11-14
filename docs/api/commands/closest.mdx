@@ -211,10 +211,10 @@ cy.get('payment-panel')
 
 <HeaderAssertions />
 
-- `.closest()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.closest()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.closest()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.closest()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -231,7 +231,7 @@ cy.get('payment-panel')
 cy.get('li.active').closest('.nav')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/closest/find-closest-nav-element-in-test.png"

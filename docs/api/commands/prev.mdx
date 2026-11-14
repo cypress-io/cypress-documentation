@@ -111,10 +111,10 @@ cy.get('li').prev('.active')
 
 <HeaderAssertions />
 
-- `.prev()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.prev()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.prev()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.prev()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -131,7 +131,7 @@ cy.get('li').prev('.active')
 cy.get('.left-nav').find('li.active').prev()
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/prev/find-prev-element-in-list-of-els.png"

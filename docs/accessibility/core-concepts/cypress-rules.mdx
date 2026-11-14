@@ -11,7 +11,7 @@ sidebar_position: 40
 
 In addition to running the default ruleset of the Axe-Core® library, Cypress develops custom rules that take advantage of the additional layer of information available in a test automation context. These rules are identified by a "Cypress Rule" badge, to distinguish them from the main Axe-Core® rule set.
 
-The first custom rule that we have implemented is called "Interactive elements should be semantically correct." At launch, it is a non-blocking **manual-review** rule that will either pass if no issues are found, or return an inconclusive state.
+The first custom rule that we have implemented is called "Interactive elements should be semantically correct." At launch, it is a non-blocking **manual-review** rule that either passes if no issues are found, or returns an inconclusive state.
 
 ## Why do we need custom accessibility rules?
 
@@ -41,7 +41,7 @@ This rule requires that runs be recorded using Cypress version 13.14.0 or above.
 
 This custom rule is intended to surface potential usability problems with the kinds of elements that Axe-Core® traditionally does not evaluate as interactive, such as div, span, SVG, and image elements.
 
-The rule works based on the interactions that take place during testing. Often an inaccessible custom component will have Cypress tests that perform interactions the way a user does, and that allows us to detect a mismatch between the underlying purpose of the element in code, and the usage of the element in the context of a test.
+The rule works based on the interactions that take place during testing. Often an inaccessible custom component has Cypress tests that perform interactions the way a user does, and that allows us to detect a mismatch between the underlying purpose of the element in code, and the usage of the element in the context of a test.
 
 ### How to pass this rule
 
@@ -55,7 +55,7 @@ For example:
 
 In each case, the solution is to choose the element that provides the best information to the user, so they can independently understand what the action does, and activate it.
 
-After you have updated to a suitable HTML solution, elements will then be able to be correctly parsed and analyzed by the standard Axe-Core® checks.
+After you have updated to a suitable HTML solution, elements can then be correctly parsed and analyzed by the standard Axe-Core® checks.
 
 :::info
 **Tip**: Follow the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#firstrule) and implement interactive controls with standard semantic HTML where possible, relying on ARIA `role` attributes only when no suitable HTML element is available.
@@ -86,7 +86,7 @@ This rule is available in all Cypress Accessibility projects, though it is not e
 
 ### Possible outcomes
 
-For each run, this rule can be in one of four states. Most importantly, it will never fail, which means it will not affect your accessibility score.
+For each run, this rule can be in one of four states. Most importantly, it never fails, which means it does not affect your accessibility score.
 
 | Outcome                      | Description                                                                                                                           |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
@@ -97,7 +97,7 @@ For each run, this rule can be in one of four states. Most importantly, it will 
 
 ### False positives
 
-Use the "Submit Feedback" button in the product to let us know if you see something that you think is a false positive. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives, so we will make adjustments for specific situations that are not already known as we learn about them.
+Use the "Submit Feedback" button in the product to let us know if you see something that you think is a false positive. Our goal with any new rules is to follow the general Axe-Core® philosophy that minimizes false positives, so we make adjustments for specific situations that are not already known as we learn about them.
 
 #### Shadow DOM false positives
 

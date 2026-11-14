@@ -46,7 +46,7 @@ values are key-value pairs of `localStorage` data.
 
 For example, if `key1` is set to `value1` on `https://example.cypress.io` and
 `key2` is set to `value2` on `https://www.cypress-dx.com`,
-`cy.getAllLocalStorage()` will yield:
+`cy.getAllLocalStorage()` yields:
 
 ```js
 {
@@ -60,7 +60,7 @@ For example, if `key1` is set to `value1` on `https://example.cypress.io` and
 ```
 
 `cy.getAllLocalStorage()` is a query, and it is _safe_ to chain further commands.
-The query will automatically [retry](/app/core-concepts/retry-ability) until all chained
+The query automatically [retries](/app/core-concepts/retry-ability) until all chained
 assertions have passed, or until it times out, re-reading `localStorage` from all
 origins on each retry so the yielded object stays up to date.
 
@@ -113,8 +113,8 @@ cy.getAllLocalStorage().then((result) => {
 
 <HeaderAssertions />
 
-- `cy.getAllLocalStorage()` will automatically
-  [retry](/app/core-concepts/retry-ability) until all chained assertions have
+- `cy.getAllLocalStorage()` automatically
+  [retries](/app/core-concepts/retry-ability) until all chained assertions have
   passed.
 
 <HeaderTimeouts />

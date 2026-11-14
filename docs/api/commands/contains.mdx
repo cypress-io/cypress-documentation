@@ -241,7 +241,7 @@ cy.get('form') // yields <form>...</form>
 ```
 
 Without the explicit selector the subject would change to be the `<button>`.
-Using the explicit selector ensures that chained commands will have the `<form>`
+Using the explicit selector ensures that chained commands have the `<form>`
 as the subject.
 
 #### Act on the table row containing some text
@@ -440,7 +440,7 @@ cy.contains('Delete User').click().contains('Yes, Delete!').click()
 ```
 
 Because the second `.contains()` is chained off of a command that yielded the
-`<button>`, Cypress will look inside of the `<button>` for the new content.
+`<button>`, Cypress looks inside of the `<button>` for the new content.
 
 In other words, Cypress looks inside of the `<button>` containing "Delete User"
 for the content "Yes, Delete!", which is not what you intended.
@@ -508,7 +508,7 @@ in
 
 ### Single Element
 
-#### Only the _first_ matched element will be returned
+#### Only the _first_ matched element is returned
 
 ```html
 <ul id="header">
@@ -523,7 +523,7 @@ in
 </div>
 ```
 
-The below example will return the `<li>` in the `#header` since that is the
+The below example returns the `<li>` in the `#header` since that is the
 _first_ element that contains the text "Jane Lane".
 
 ```javascript
@@ -646,10 +646,10 @@ cy.contains('Age').find('input').type('29')
 
 <HeaderAssertions />
 
-- `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.contains()` automatically [retries](/app/core-concepts/retry-ability)
   until the element(s)
   [exist in the DOM](/app/core-concepts/introduction-to-cypress#Implicit-Assertions).
-- `.contains()` will automatically [retry](/app/core-concepts/retry-ability)
+- `.contains()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />
@@ -666,7 +666,7 @@ cy.contains('Age').find('input').type('29')
 cy.get('h1').contains('New User')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/contains/find-el-that-contains-text.png"

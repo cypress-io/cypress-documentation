@@ -15,7 +15,7 @@ Cypress does not have a **cy.hover()** command. See
 
 :::
 
-If `cy.hover()` is used, an error will display and redirect you to this page.
+If `cy.hover()` is used, an error displays and redirects you to this page.
 
 ## Workarounds
 
@@ -43,7 +43,7 @@ trigger the event to achieve that behavior.
 
 :::danger
 
-Using `.trigger()` will only affect events in JavaScript and will not trigger
+Using `.trigger()` only affects events in JavaScript and does not trigger
 any effects in CSS.
 
 :::
@@ -118,7 +118,7 @@ Cypress.Commands.add('hover', (...args) => {})
 While `Cypress.Commands.add()` is the recommended way to define a
 custom `cy.hover()` command,
 [`Cypress.Commands.overwrite()`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands)
-will still work.
+still works.
 
 <Tabs>
 <TabItem value="cypress/support/commands.js">

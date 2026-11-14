@@ -53,7 +53,7 @@ following properties:
 - `value`: _(String)_
 
 `cy.getCookies()` is a query, and it is _safe_ to chain further commands. The query
-will automatically [retry](/app/core-concepts/retry-ability) until all chained
+automatically [retries](/app/core-concepts/retry-ability) until all chained
 assertions have passed, or until it times out, re-querying the list of cookies
 on each retry so the yielded array stays up to date.
 
@@ -101,7 +101,7 @@ cy.getCookies()
 [`cy.request()`](/api/commands/request) already sends the browser's cookies for
 the request URL automatically, so you don't need to build a `Cookie` header to
 call your own logged-in API. Reach for this pattern only when you need to
-forward the current session somewhere Cypress won't attach cookies on its own,
+forward the current session somewhere Cypress doesn't attach cookies on its own,
 such as:
 
 - a **different domain** (`cy.request()` only sends cookies that match the
@@ -138,7 +138,7 @@ cy.getCookies().then((cookies) => {
 
 <HeaderAssertions />
 
-- `cy.getCookies()` will automatically [retry](/app/core-concepts/retry-ability)
+- `cy.getCookies()` automatically [retries](/app/core-concepts/retry-ability)
   until all chained assertions have passed.
 
 <HeaderTimeouts />

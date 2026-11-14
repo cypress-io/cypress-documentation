@@ -9,7 +9,7 @@ sidebar_position: 120
 
 # Block pull requests and set policies
 
-Cypress Accessibility reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. Server-side generation ensures there is no performance impact on your Cypress test runs, but also means that nothing in your Cypress pipeline will fail due to accessibility issues that are detected. Failing a build is a fully opt-in step based on your handling of the results in your CI process.
+Cypress Accessibility reports are generated server-side in Cypress Cloud, based on test artifacts uploaded during execution. Server-side generation ensures there is no performance impact on your Cypress test runs, but also means that nothing in your Cypress pipeline fails due to accessibility issues that are detected. Failing a build is a fully opt-in step based on your handling of the results in your CI process.
 
 :::tip
 
@@ -356,7 +356,7 @@ function generateBaseline(results) {
 
 #### New failing rules
 
-A **new failing rule** is a rule that has violations on a View in the current run that were not present in the baseline. New failing rules represent regressions that need to be addressed. The script will fail the build if any new failing rules are detected.
+A **new failing rule** is a rule that has violations on a View in the current run that were not present in the baseline. New failing rules represent regressions that need to be addressed. The script fails the build if any new failing rules are detected.
 
 #### Resolved rules
 
@@ -377,9 +377,9 @@ Violations are tracked per view (URL pattern or component), pinpointing exactly 
 Update your baseline when:
 
 - You've fixed accessibility violations and want to prevent regressions
-- You've accepted certain violations as known issues that won't block deployments
+- You've accepted certain violations as known issues that don't block deployments
 
-We recommend storing the baseline in version control so it's versioned alongside your code and accessible in CI environments, but some users prefer updating the baseline automatically based on the newest results from a full passing test run on the main branch of the project. Updating the baseline automatically means any PRs will be compared against the reference run that makes sense at the time the results are analyzed, and avoids needing to manually own the standard.
+We recommend storing the baseline in version control so it's versioned alongside your code and accessible in CI environments, but some users prefer updating the baseline automatically based on the newest results from a full passing test run on the main branch of the project. Updating the baseline automatically means any PRs are compared against the reference run that makes sense at the time the results are analyzed, and avoids needing to manually own the standard.
 
 #### Handling partial reports
 

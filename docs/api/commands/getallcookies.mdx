@@ -53,7 +53,7 @@ the following properties:
 - `value`: _(String)_
 
 `cy.getAllCookies()` is a query, and it is _safe_ to chain further commands. The
-query will automatically [retry](/app/core-concepts/retry-ability) until all chained
+query automatically [retries](/app/core-concepts/retry-ability) until all chained
 assertions have passed, or until it times out, re-reading the cookies from all
 domains on each retry so the yielded array stays up to date.
 
@@ -109,8 +109,8 @@ cy.getAllCookies()
 
 <HeaderAssertions />
 
-- `cy.getAllCookies()` will automatically
-  [retry](/app/core-concepts/retry-ability) until all chained assertions have
+- `cy.getAllCookies()` automatically
+  [retries](/app/core-concepts/retry-ability) until all chained assertions have
   passed.
 
 <HeaderTimeouts />

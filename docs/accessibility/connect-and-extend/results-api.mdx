@@ -9,7 +9,7 @@ sidebar_position: 30
 
 # Results API
 
-The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. The `getAccessibilityResults` utility determines the Cypress run created for the given CI workflow and will return the Accessibility results associated with that run. The results will be returned once the Cypress run has finished and the Accessibility report has been processed.
+The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. The `getAccessibilityResults` utility determines the Cypress run created for the given CI workflow and returns the Accessibility results associated with that run. The utility returns the results once the Cypress run has finished and the Accessibility report has been processed.
 
 The Results API brings the results into CI, where you review them and determine if they are acceptable or need to be addressed before code changes can merge. The Results API provides overall accessibility scores and violation details for the runs, as well as page- or component-level feedback. These results support a wide variety of needs related to alerting about failures in specific focus areas of the application or creating fine-grained regression monitoring according to the current standards being met by each page.
 
@@ -55,7 +55,7 @@ npm install --force https://cdn.cypress.io/extract-cloud-results/v1/extract-clou
 
 Do not check this module in as a dependency. You should install it separately outside of your normal module installation. Use `--force` to get the latest version.
 
-If you check this in as a dependency, your installation will fail when we update the package.
+If you check this in as a dependency, your installation fails when we update the package.
 
 :::
 
@@ -63,7 +63,7 @@ If you check this in as a dependency, your installation will fail when we update
 
 ### **1. Get the Results**
 
-Write a script using the `getAccessibilityResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. This script will be executed in CI.
+Write a script using the `getAccessibilityResults` utility to retrieve the results and perform one or more assertions to verify if the changes are acceptable. CI runs this script.
 
 #### Basic example
 

@@ -85,11 +85,11 @@ cy.go(1) // equivalent to clicking forward button
 
 ### Refreshing and loading the page
 
-If going forward or back causes a full page refresh, Cypress will wait for the
+If going forward or back causes a full page refresh, Cypress waits for the
 new page to load before moving on to new commands.
 
 Cypress additionally handles situations where a page load was not caused (such
-as hash routing) and will resolve immediately.
+as hash routing) and resolves immediately.
 
 ## Rules
 
@@ -102,7 +102,7 @@ as hash routing) and will resolve immediately.
 
 <HeaderAssertions />
 
-- `cy.go()` will automatically wait for assertions you have chained to pass.
+- `cy.go()` automatically waits for assertions you have chained to pass.
 
 <HeaderTimeouts />
 
@@ -117,7 +117,7 @@ as hash routing) and will resolve immediately.
 cy.visit('http://localhost:8000/folders').go('back')
 ```
 
-The commands above will display in the Command Log as:
+The commands above display in the Command Log as:
 
 <DocsImage
   src="/img/api/go/test-showing-go-back-browser-button.png"
