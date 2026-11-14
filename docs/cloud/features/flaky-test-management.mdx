@@ -390,7 +390,7 @@ fail the first two attempts and pass on the third, a final status of passing.
 Because of this, a test can show a **zero final failure rate while still
 exhibiting flake**.
 
-A passing final status is exactly why flake is so easy to
+A final status that hides earlier failures is exactly why flake is so easy to
 miss without dedicated tracking: the build goes green, but the underlying
 instability, and its cost, is still there.
 

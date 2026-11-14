@@ -315,7 +315,7 @@ MCP with UI Coverage.
 
 A view has **new untested elements** when its combined untested count
 (`untestedElementsCount` plus `untestedLinksCount`) is higher than the baseline,
-or when a view absent from the baseline appears with untested elements. A higher count is a
+or when a view absent from the baseline appears with untested elements. New untested elements are a
 coverage regression: the change added interactive elements or link destinations no
 test reaches. The script fails the build so the pull request can't merge until
 you cover them or exclude them.

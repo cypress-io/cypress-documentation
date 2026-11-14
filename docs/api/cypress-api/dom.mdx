@@ -295,7 +295,7 @@ your
 `isHidden()` is the opposite of [`isVisible()`](#isVisible); see that entry for the
 behavior both share.
 
-When the value isn't a DOM element or a jQuery object, it throws:
+When the value isn't a DOM element or a jQuery object, `isHidden()` throws:
 
 ```text
 `Cypress.dom.isHidden()` failed because it requires a DOM element. The subject received was: `#email`
@@ -376,7 +376,7 @@ your
   counts as visible only when every element in it is visible.
 - `isVisible()` checks the element's state at the moment you call it and doesn't retry.
 
-When the value isn't a DOM element or a jQuery object, it throws:
+When the value isn't a DOM element or a jQuery object, `isVisible()` throws:
 
 ```text
 `Cypress.dom.isVisible()` failed because it requires a DOM element. The subject received was: `#email`

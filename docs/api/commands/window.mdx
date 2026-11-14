@@ -210,7 +210,7 @@ other words, the `KeyboardEvent` used in the code above and the
 `KeyboardEvent` class from which the `event` variable is constructed are
 different `KeyboardEvent`s.
 
-The separate `KeyboardEvent`s are why the test should be written like this.
+This mismatch is why the test should be written like this.
 
 ```js
 it('should trigger KeyboardEvent with .type inside Cypress event listener', (done) => {

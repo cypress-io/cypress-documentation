@@ -2,7 +2,7 @@ Pattern matching follows [URL Pattern API](https://developer.mozilla.org/en-US/d
 
 - A pattern that omits the query string and hash matches URLs with any query string or hash. For example, `https://www.my-app.com/admin` matches `https://www.my-app.com/admin?tab=users`.
 - Trailing slashes are optional by default: `https://www.my-app.com/admin` matches both `/admin` and `/admin/`. If your pattern ends with a `/`, only URLs with a trailing slash match it.
-- A pattern without a protocol and hostname, such as `/admin/*`, matches that path on any protocol, hostname, and port. A pattern without a protocol and hostname is useful when tests run against multiple environments.
+- A pattern without a protocol and hostname, such as `/admin/*`, matches that path on any protocol, hostname, and port, which is useful when tests run against multiple environments.
 - A hostname must match exactly unless it contains a wildcard: `https://my-app.com/*` does not match `https://www.my-app.com/home`, but `https://*.my-app.com/*` does.
 - The pattern `*` on its own matches every URL.
 

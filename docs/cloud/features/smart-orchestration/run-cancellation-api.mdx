@@ -67,7 +67,7 @@ distinguish a cancellation from a real test failure.
 
 **Note:** If you call this API from a step that runs separately from the test job
 itself, the **cancelled run's own CI job** will report as failed rather than cancelled.
-This failed status may happen, for example, in deployment-pipeline and orchestrator use cases.
+Calling the API from a separate step is common in, for example, deployment-pipeline and orchestrator use cases.
 You should account for that in the job that ran the cancelled specs, so a run you intentionally
 cancelled doesn't get treated as a broken build.
 

@@ -95,7 +95,7 @@ A goal with a finish line is worth more than a broad one, because reaching it te
 
 Rule-focused goals tend to be the better first choice. The fix is the same shape every time, so the second element takes a fraction of the time the first one did, and whoever picks up the work only has to learn one accessibility concept to finish it.
 
-In a component-driven codebase the leverage is larger than the element count suggests. One shared button, form field, or dialog can be responsible for a rule's failures across dozens of views, so a single file can clear the rule everywhere at once. This leverage cuts both ways when you're sizing the work: check whether the failing elements trace back to one component before you estimate, because 200 failing elements and 200 places to edit are rarely the same number. Adding [`components`](/accessibility/configuration/components) attributes to your violation selectors makes that grouping visible in the report itself.
+In a component-driven codebase the payoff is larger than the element count suggests. One shared button, form field, or dialog can be responsible for a rule's failures across dozens of views, so a single file can clear the rule everywhere at once. Shared components cut both ways when you're sizing the work: check whether the failing elements trace back to one component before you estimate, because 200 failing elements and 200 places to edit are rarely the same number. Adding [`components`](/accessibility/configuration/components) attributes to your violation selectors makes that grouping visible in the report itself.
 
 <DocsImage
   src="/img/accessibility/guides/a11y-standards.png"
@@ -167,7 +167,7 @@ Comparisons are cleanest when both runs execute a similar test suite against sim
 
 ## Work through repeated violations with an AI agent
 
-Once you've fixed the first few elements of a rule by hand, the remaining ones follow the same pattern, which is the point where handing the work to an agent pays off.
+Once you've fixed the first few elements of a rule by hand, the remaining ones follow the same pattern, and that repetition is the point where handing the work to an agent pays off.
 
 With [Cypress Cloud MCP](/cloud/integrations/cloud-mcp) configured, an agent reads your accessibility results directly from Cypress Cloud through three tools: `cypress_get_accessibility_report` for a run's failing rules and worst views, `cypress_get_accessibility_views` to page through every view, and `cypress_get_accessibility_rule_failures` for the failing elements of one rule, optionally scoped to a single view.
 

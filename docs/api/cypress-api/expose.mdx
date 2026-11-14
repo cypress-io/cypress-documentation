@@ -138,7 +138,7 @@ Cypress.expose() // => {pluginConfig: 'updated-value', featureFlag: true}
 
 ### Declare expose values with test configuration
 
-You can pass an `expose` object as part of suite- or test-level [test configuration](/app/references/configuration#Test-Configuration). Test-level `expose` values are useful when a plugin or preprocessor needs different public configuration values per suite or test.
+You can pass an `expose` object as part of suite- or test-level [test configuration](/app/references/configuration#Test-Configuration). Passing `expose` in test configuration is useful when a plugin or preprocessor needs different public configuration values per suite or test.
 
 Override keys are applied at test start and restored after each test completes. Suite- and test-level overrides are merged, with test-level keys taking precedence. Values set at runtime with `Cypress.expose()` outside of test configuration overrides are not automatically restored between tests.
 

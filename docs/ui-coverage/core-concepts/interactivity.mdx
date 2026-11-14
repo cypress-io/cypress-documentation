@@ -92,7 +92,7 @@ Only the closest `data-cy-ui-interactive` ancestor applies.
 
 Excluding an element removes it from UI Coverage entirely: it no longer counts as an interactive element, and if it's a link, it also stops appearing as an untested link, so neither affects your score.
 
-In most cases we recommend **not** using `include`, and instead updating the HTML to be something the browser already treats as interactive, such as a real `<button>` in place of a clickable `<div>`. Real interactive HTML produces better overall behavior, including for accessibility, since the same semantics that let assistive technology operate a control are what UI Coverage reads. `data-cy-ui-interactive` is a fallback for situations where that isn't possible.
+In most cases we recommend **not** using `include`, and instead updating the HTML to be something the browser already treats as interactive, such as a real `<button>` in place of a clickable `<div>`. Using real interactive HTML produces better overall behavior, including for accessibility, since the same semantics that let assistive technology operate a control are what UI Coverage reads. `data-cy-ui-interactive` is a fallback for situations where that isn't possible.
 
 To exclude elements without editing your application's markup, [`elementFilters`](/ui-coverage/configuration/elementfilters) does the same job from Cypress Cloud configuration. Prefer it when the team that manages configuration isn't the team that owns the markup:
 
