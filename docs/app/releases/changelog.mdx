@@ -1244,7 +1244,7 @@ _Released Apr 08, 2025_
 
 - Allows for `babel-loader` version 10 to be a peer dependency of `@cypress/webpack-preprocessor`. Fixed in [#31218](https://github.com/cypress-io/cypress/pull/31218).
 - Fixed an issue where Firefox BiDi was prematurely removing prerequests on pending requests. Fixes [#31376](https://github.com/cypress-io/cypress/issues/31376).
-- Fixed an [issue](https://github.com/electron/electron/issues/45398) with Electron causing slow animations and increased test times by starting a CDP screencast with a noop configuration. Fixes [#30980](https://github.com/cypress-io/cypress/issues/30980).
+- Fixed an [Electron issue](https://github.com/electron/electron/issues/45398) causing slow animations and increased test times by starting a CDP screencast with a noop configuration. Fixes [#30980](https://github.com/cypress-io/cypress/issues/30980).
 
 **Misc:**
 
@@ -2652,7 +2652,7 @@ _Released Mar 14, 2023_
   [#7362](https://github.com/cypress-io/cypress/issues/7362).
   - The `log` option can be used to override Cypress's default behavior of logging all XHRs
     and fetches, see the
-    [example](/api/commands/intercept#Disabling-logs-for-a-request).
+    [disabling logs for a request example](/api/commands/intercept#Disabling-logs-for-a-request).
 - It is now possible to control the number of connection attempts to the browser
   using the `CYPRESS_CONNECT_RETRY_THRESHOLD` Environment Variable. Learn
   more about
@@ -3472,7 +3472,7 @@ Angular, and Vue!
 Component tests render and exercise your application's components in a real
 browser as you work. You can use your favorite Cypress commands and
 features to develop your components without running your whole app. Learn more
-in our [blog](https://on.cypress.io/cypress-11-release?utm_source=docs.cypress.io&utm_medium=app-changelog) post.
+in the [Cypress 11 release blog post](https://on.cypress.io/cypress-11-release?utm_source=docs.cypress.io&utm_medium=app-changelog).
 
 We have also massively improved our startup performance by shipping a snapshot
 of our binary instead of the source files. The performance boost applies to the
@@ -5733,7 +5733,7 @@ _Released Aug 04, 2021_
   can be enabled by setting the
   [`experimentalSessionSupport`](/app/references/experiments) flag to `true`
   in your Cypress config. See
-  [our blog](https://cypress.io/blog/2021/08/03/authenticate-faster-in-tests-cy-session-command/)
+  [the `cy.session()` authentication blog post](https://cypress.io/blog/2021/08/03/authenticate-faster-in-tests-cy-session-command/)
   and the [`cy.session()`](/api/commands/session) doc for more detail.
 - The logging experience around HTTP requests has been updated.
   - `fetch` requests are always displayed in the Command Log, regardless of if
@@ -6380,7 +6380,7 @@ detail and how to change your code to migrate to Cypress 7.0.**
   [#15493](https://github.com/cypress-io/cypress/pull/15493).
 - `Cypress.moment()` has been removed. Migrate to a different datetime
   formatter. See
-  [our recipe](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__dayjs)
+  [our Day.js recipe](https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/blogs__dayjs)
   for example replacements. Addresses
   [#8714](https://github.com/cypress-io/cypress/issues/8714).
 - The bundled Node.js version was upgraded from `12.18.3` to `14.16.0`. The upgrade could change the behavior of code within the `pluginsFile` when using the
@@ -8777,7 +8777,7 @@ _Released Feb 28, 2020_
 - We're collecting more environment variables when running Cypress with GitLab
   CI. Addresses [#6231](https://github.com/cypress-io/cypress/issues/6231).
 - The typing of `cy.$$` has been updated to distinguish differences between it
-  and `Cypress.$`. [More info here](/api/utilities/$#Cypress-vs-cy) Addresses
+  and `Cypress.$`. [More info on `Cypress.$` vs `cy.$$`](/api/utilities/$#Cypress-vs-cy). Addresses
   [#2027](https://github.com/cypress-io/cypress/issues/2027).
 - We're continuing to make progress in converting our codebase from CoffeeScript
   to JavaScript. Addresses
@@ -9824,7 +9824,7 @@ _Released Jul 29, 2019_
   [Cypress Dashboard](https://on.cypress.io/dashboard). You can now get timely
   and useful test run information within pull-requests via status checks and
   pull-request comments. Learn all about it on
-  [our blog](https://www.cypress.io/blog/2019/07/29/github-integration-for-the-cypress-dashboard/?utm_source=docs.cypress.io&utm_medium=app-changelog).
+  [the GitHub integration blog post](https://www.cypress.io/blog/2019/07/29/github-integration-for-the-cypress-dashboard/?utm_source=docs.cypress.io&utm_medium=app-changelog).
   Addresses [#981](https://github.com/cypress-io/cypress/issues/981).
 
 **Bugfixes:**
@@ -9990,7 +9990,7 @@ _Released Jul 09, 2019_
   [develop branch](https://github.com/cypress-io/cypress/commits/develop) of the
   [cypress](https://github.com/cypress-io/cypress) repository so that
   pre-released versions can be installed. See
-  [this commit](https://github.com/cypress-io/cypress/commit/52ca8ed8399c5ef467efbee7a2d00fe0863e7f36#commitcomment-34237047)
+  [commit 52ca8ed](https://github.com/cypress-io/cypress/commit/52ca8ed8399c5ef467efbee7a2d00fe0863e7f36#commitcomment-34237047)
   for an example. Addresses
   [#4525](https://github.com/cypress-io/cypress/issues/4525).
 - There are now a series of checks that are run during download of Cypress to
@@ -10708,7 +10708,7 @@ _Released Mar 15, 2019_
   [#1419](https://github.com/cypress-io/cypress-documentation/issues/1419).
 - Document how to accept or reject project transfers
   [#1474](https://github.com/cypress-io/cypress-documentation/issues/1474).
-- Updated [docs](/app/references/launching-browsers) on explain how to run Chrome
+- Updated the [Launching Browsers docs](/app/references/launching-browsers) to explain how to run Chrome
   and Chromium browsers
   [#1339](https://github.com/cypress-io/cypress-documentation/issues/1339).
 - Added `{home}` and `{end}` character sequences to
@@ -13569,7 +13569,7 @@ _Released Nov 27, 2016_
   load other files. You can also use this support to import your own application
   specific JavaScript modules and write unit tests for them. More of these
   details are yet to come.
-  [See this issue](https://github.com/cypress-io/cypress/issues/318).
+  See [issue #318](https://github.com/cypress-io/cypress/issues/318).
 - You can now use your regularly installed `node_modules` in your project to do
   things like using [`lodash`](https://lodash.com/) for utility functions or
   extending [`chai`](http://www.chaijs.com/) with assertion plugins.
@@ -14911,7 +14911,7 @@ _Released Jan 28, 2016_
 
 **Misc:**
 
-- Update links to match new [documentation](https://docs.cypress.io).
+- Update links to match the new [Cypress documentation site](https://docs.cypress.io).
 - [`.debug()`](/api/commands/debug) has been zipped up - it no longer logs
   confusing debugging information and now logs information about the previously
   run command.
@@ -15350,7 +15350,7 @@ _Released Nov 19, 2015_
 - There is a new [`Cypress.Cookies`](/api/cypress-api/cookies) interface which
   enables you to `get`, `set`, and even `preserve` cookies throughout your test.
   Useful to preserve cookie-based sessions between your tests.
-  [Documentation is written here](/api/cypress-api/cookies).
+  See the [`Cypress.Cookies` documentation](/api/cypress-api/cookies).
 
 **Bugfixes:**
 

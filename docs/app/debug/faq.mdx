@@ -215,7 +215,7 @@ follow through these links:
 
 - [GitHub (Releases & changelog)](https://github.com/cypress-io/cypress/releases)
 - [npm (Releases)](https://www.npmjs.com/package/cypress)
-- [Changelog](/app/references/changelog)
+- [Cypress App changelog](/app/references/changelog)
 
 ### <Icon name="angle-right" /> How often are Cypress versions released?
 
@@ -564,7 +564,7 @@ No. The Command API is not designed in a way that makes this possible currently.
 ### <Icon name="angle-right" /> How do I select or query for elements if my application uses dynamic classes or dynamic IDs?
 
 Read more about the
-[best practices for selecting elements here](/app/core-concepts/best-practices#Selecting-Elements).
+[best practices for selecting elements](/app/core-concepts/best-practices#Selecting-Elements).
 
 ### <Icon name="angle-right" /> I want to run tests only within one specific folder. How do I do this?
 
@@ -580,7 +580,7 @@ This feature is only available when using
 ### <Icon name="angle-right" /> Is there a suggested way or best practice for how I should target elements or write element selectors?
 
 Yes. Read more about the
-[best practices for selecting elements here](/app/core-concepts/best-practices#Selecting-Elements).
+[best practices for selecting elements](/app/core-concepts/best-practices#Selecting-Elements).
 
 ### <Icon name="angle-right" /> Can I prevent Cypress from failing my test when my application throws an uncaught exception error?
 
@@ -686,7 +686,8 @@ Check out our
 
 ### <Icon name="angle-right" /> I'm trying to test a chat application. Can I run more than one browser at a time with Cypress?
 
-[We've answered this question in detail here.](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time)
+The Trade-offs page answers this question in detail under
+[Multiple browsers open at the same time](/app/references/trade-offs#Multiple-browsers-open-at-the-same-time).
 
 ### <Icon name="angle-right" /> How can I modify or pass arguments used to launch the browser?
 
@@ -1235,7 +1236,7 @@ more examples.
 
 ### <Icon name="angle-right" /> Can I dynamically test multiple viewports?
 
-Yes, you can. We provide an [example here](/api/commands/viewport#Width-Height).
+Yes, you can. See the [`cy.viewport()` width and height example](/api/commands/viewport#Width-Height).
 
 ### <Icon name="angle-right" /> Can I run the same tests on multiple subdomains? <E2EOnlyBadge />
 
@@ -1335,8 +1336,8 @@ No. You cannot add a `.catch` error handler to a failed command.
 There is an [open issue](https://github.com/cypress-io/cypress/issues/587) for
 more easily configuring this.
 
-You can modify the screenshot and video size when running headlessly with
-[this workaround](/api/node-events/browser-launch-api#Set-screen-size-when-running-headless).
+You can modify the screenshot and video size when running headlessly with the workaround in
+[Set screen size when running headless](/api/node-events/browser-launch-api#Set-screen-size-when-running-headless).
 
 ### <Icon name="angle-right" /> Does Cypress support ES7?
 
@@ -1349,11 +1350,11 @@ Typically you'd reuse your existing Babel and webpack configurations.
 
 There are a few ways.
 
-- The easiest way is probably to check our
-  [changelog](/app/references/changelog).
+- The easiest way is probably to check the
+  [Cypress App changelog](/app/references/changelog).
 - You can also check the
   [latest released version](https://download.cypress.io/desktop.json).
-- The version is also always in our [repo](https://github.com/cypress-io/cypress).
+- The version is also always in the [Cypress GitHub repository](https://github.com/cypress-io/cypress).
 
 ### <Icon name="angle-right" /> When I visit my site directly, the certificate is verified, however the browser launched through Cypress is showing it as "Not Secure". Why?
 
@@ -1473,13 +1474,13 @@ it('test', () => {
 ```
 
 `cy.$$.escapeSelector()` doesn't work. `cy.$$` doesn't refer to
-`jQuery`. `cy.$$` only queries DOM. [Learn more about why](/api/utilities/$#Notes)
+`jQuery`. `cy.$$` only queries DOM. Learn more about why in the [`Cypress.$` notes](/api/utilities/$#Notes).
 
 ### <Icon name="angle-right" /> Why doesn't the `instanceof Event` work?
 
 The failure might be because of the 2 different windows in the Cypress App. For
-more information, check
-[the note here](/api/commands/window#Cypress-uses-2-different-windows).
+more information, check the
+[`cy.window()` note on Cypress using 2 different windows](/api/commands/window#Cypress-uses-2-different-windows).
 
 ### <Icon name="angle-right" /> Why isn't my application's Content Security Policy (CSP) being enforced during tests? <E2EOnlyBadge />
 
