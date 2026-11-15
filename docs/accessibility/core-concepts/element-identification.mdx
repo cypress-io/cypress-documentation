@@ -11,7 +11,7 @@ sidebar_position: 20
 
 Cypress Accessibility identifies elements across views and snapshots using a combination of HTML attributes, location, and other signals in the DOM. Stable and unique identifiers are crucial for accurately tracking and de-duplicating elements throughout the various snapshots captured in your tests.
 
-If your HTML uses attributes about things like component structure, design system versioning, or team ownership of certain DOM areas, Cypress Accessibility can be configured to include those as well. Configuration can also be used to avoid noisy locators that artificially inflate the count of issues, or to declare preferred identifiers that should be used.
+If your HTML uses attributes about things like component structure, design system versioning, or team ownership of certain DOM areas, you can configure Cypress Accessibility to include those as well. You can also use configuration to avoid noisy locators that artificially inflate the count of issues, or to declare preferred identifiers that Cypress Accessibility should use.
 
 Good element identification makes element selectors more readable and meaningful when [reviewing violation details](/accessibility/reports/element-detail-view), and when [creating tickets](/accessibility/reports/element-detail-view#Create-Jira-issue), or having the selectors interpreted by AI tools (see the we [Work with AI agents](/accessibility/work-with-ai-agents))
 
@@ -26,7 +26,7 @@ Cypress Accessibility checks a prioritized list of attributes on each element to
 - `data-qa`
 - `row-id`
 
-When an element has none of these, `id`, `name`, and other DOM signals are used as fallbacks. If you already have Test IDs or similar attributes in your application, Cypress Accessibility picks these up and uses them to recognize the same element in a new place for improved deduplication. This behavior itself is configurable as well, so that highly-dynamic Test IDs can be avoided, for example.
+When an element has none of these, Cypress Accessibility falls back to `id`, `name`, and other DOM signals. If you already have Test IDs or similar attributes in your application, Cypress Accessibility picks these up and uses them to recognize the same element in a new place for improved deduplication. This behavior itself is configurable as well, so that you can avoid highly-dynamic Test IDs, for example.
 
 ## Configuring element identification
 
@@ -34,7 +34,7 @@ Using these configuration properties helps you adjust the amount of deduplicatio
 
 ### Attribute filters
 
-Exclude irrelevant or dynamically generated attributes to reduce noise in Cypress Accessibility reports. For example, this would avoid certain IDs that are commonly generated in React applications from being used as element references in Cypress Accessibility.
+Exclude irrelevant or dynamically generated attributes to reduce noise in Cypress Accessibility reports. For example, this would avoid certain IDs that React applications commonly generate from being used as element references in Cypress Accessibility.
 
 ```json title="App Quality Config"
 {
@@ -48,7 +48,7 @@ Exclude irrelevant or dynamically generated attributes to reduce noise in Cypres
 }
 ```
 
-Elements with these IDs are still included in your accessibility report, but they are identified in a different way.
+Your accessibility report still includes elements with these IDs, but Cypress Accessibility identifies them in a different way.
 
 Learn more about attribute filtering in the [Attribute Filters guide](/accessibility/configuration/attributefilters).
 
@@ -88,4 +88,4 @@ The Cypress Cloud process replaces the underlying Axe-Core® library's default m
 
 Axe-Core® captures a unique identifier for a given element in a specific DOM context, focused on one single state. This default behavior does not account for merging thousands of Axe-Core® scans into a single report or for comparing scans of the application as the application changes.
 
-Taking control over how elements are tracked in your reports helps you get the right level of de-duplication across elements when they are truly the same, and track similar elements individually when they are different.
+Taking control over how Cypress Accessibility tracks elements in your reports helps you get the right level of de-duplication across elements when they are truly the same, and track similar elements individually when they are different.

@@ -152,8 +152,8 @@ from the end of the set.
 
 `.first()` takes no selector. `cy.get('li').first('.active')` yields the first
 `<li>` whether or not it has the class `active`. The Command Log still shows
-`.active` as the command's message, which can make it look as though the
-selector was applied. TypeScript flags the call as an error. To get the first
+`.active` as the command's message, which can make it look as though `.first()`
+applied the selector. TypeScript flags the call as an error. To get the first
 element that matches a selector, narrow the set with
 [`.filter()`](/api/commands/filter) before calling `.first()`.
 

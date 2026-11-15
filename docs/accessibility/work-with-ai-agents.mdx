@@ -118,7 +118,7 @@ Ask the agent to keep the **Element URL** and **View URL** values in its output.
 
 ## File issues in your issue tracker
 
-Triage usually ends in tickets, and typing them out one at a time is the slowest part of the job. An agent connected to both Cypress Cloud and your issue tracker can read the accessibility report for the latest run, check what has already been filed, and open only the tickets that are missing. Nothing new has to run in your pipeline, because the data comes from runs Cypress Cloud has already recorded.
+Triage usually ends in tickets, and typing them out one at a time is the slowest part of the job. An agent connected to both Cypress Cloud and your issue tracker can read the accessibility report for the latest run, check what your team has already filed, and open only the tickets that are missing. Nothing new has to run in your pipeline, because the data comes from runs Cypress Cloud has already recorded.
 
 Cypress supplies the read side of this workflow through Cloud MCP or the [Cloud CLI](#Cypress-Cloud-CLI). Both are read-only, so the write side comes from your tracker's own MCP server or CLI, which Jira, GitHub, and Linear all publish. Connect both to the same agent before you start.
 
@@ -144,7 +144,7 @@ Run this in two passes. The first proposes tickets and checks them against your 
 
 - `<branch>` is the branch you track, such as `main`.
 - `<projectId>` is your Cypress project ID, the `projectId` in your Cypress configuration file.
-- `<tracker project key>` identifies the project in your issue tracker that the tickets are filed into, such as the Jira project key `WEB` or the repository `acme/storefront` in GitHub.
+- `<tracker project key>` identifies the project in your issue tracker that the agent files tickets into, such as the Jira project key `WEB` or the repository `acme/storefront` in GitHub.
 
 <CopyPrompt
   title="Plan tickets from the latest report"
@@ -188,11 +188,11 @@ In general, it's a good idea to look carefully at the pages and elements include
 
 You can learn how exclude pages or elements, mute known issues for certain elements, and reduce duplication in the [Cypress Accessibility configuration overview](/accessibility/configuration/overview).
 
-There is also configuration for how elements are identified when failures are presented, which can flow directly into the MCP tools in a predictable way to speed up element identification in your codebase.
+There is also configuration for how Cypress Accessibility identifies elements when it presents failures, which can flow directly into the MCP tools in a predictable way to speed up element identification in your codebase.
 
 ### Component identification techniques
 
-Clear component boundaries make both human triage and agent-assisted fixes easier: violations are grouped predictably, and prompts can refer to the same names you see in Cypress Accessibility.
+Clear component boundaries make both human triage and agent-assisted fixes easier: Cypress Accessibility groups violations predictably, and prompts can refer to the same names you see in Cypress Accessibility.
 
 For LLM use-cases, a few lightweight signals from the page where an element locator can turn into a huge efficiency boost, avoiding the context and tokens needed to parse a full page of HTML or crawl large amounts of code. Instead, you can quickly and accurately identify where in your pages component tree a given element is, and what code rendered it.
 

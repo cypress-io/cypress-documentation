@@ -37,32 +37,32 @@ The sections below discuss each of these.
 ## Accessibility Scans
 
 :::info
-Automated scans are effective because many accessibility issues are caused by incorrect HTML structure or missing data that would be required by assistive technologies like screen readers, voice control systems, Braille displays, and more. Browsers transform the current HTML on the page into a standardized format that other technologies can hook into. Automated scans in your tests alert you if specific items needed for this process are missing.
+Automated scans are effective because many accessibility issues come from incorrect HTML structure or from missing data that assistive technologies need, such as screen readers, voice control systems, and Braille displays. Browsers transform the current HTML on the page into a standardized format that other technologies can hook into. Automated scans in your tests alert you if specific items needed for this process are missing.
 :::
 
 :::warning
-While automated scans do a good job at detecting violations of a known list of rules, no automated scan can prove that the interface is **fully** accessible and works well for users with disabilities. It is always necessary to understand the limitations and expected coverage provided by the library you choose, and then make a plan to cover the gaps with manual testing and/or traditional Cypress assertions about additional expected behavior, based on your knowledge of what is needed by your users.
+While automated scans do a good job at detecting violations of a known list of rules, no automated scan can prove that the interface is **fully** accessible and works well for users with disabilities. It is always necessary to understand the limitations and expected coverage provided by the library you choose, and then make a plan to cover the gaps with manual testing and/or traditional Cypress assertions about additional expected behavior, based on your knowledge of what your users need.
 :::
 
 ### In-test plugins
 
 The [`cypress-axe`](https://www.npmjs.com/package/cypress-axe) plugin is a community plugin that integrates the popular [Axe Core® library by Deque Systems](https://github.com/dequelabs/axe-core/) into your Cypress tests.
 
-After setting up the plugin, commands are added to your project to inject the library and use it to run an accessibility check. Running the included `checkA11y()` command performs a scan of the current state of the page or component that you are testing, and you can choose to fail the test in response to accessibility issues detected. Detailed configuration is available to scope this to the specific WCAG Success Criteria and related rules that you want to test.
+Setting up the plugin adds commands to your project that inject the library and use it to run an accessibility check. Running the included `checkA11y()` command performs a scan of the current state of the page or component that you are testing, and you can choose to fail the test in response to accessibility issues detected. Detailed configuration is available to scope this to the specific WCAG Success Criteria and related rules that you want to test.
 
 There are also some newer community plugins that are themselves built on top of `cypress-axe` and extend it in various ways, such as [`wick-a11y`](https://www.npmjs.com/package/wick-a11y) and [`cypress-a11y-report`](https://www.npmjs.com/package/cypress-a11y-report), as well as other accessibility testing libraries like the [IBM Equal Access Checker](https://www.npmjs.com/package/cypress-accessibility-checker). All of these tools have their own dedicated documentation for installation, setup, and executing the checks, which this guide doesn't repeat.
 
-The general "add a command to trigger a scan" approach helps detect and prevent all-too-common issues like poor color contrast, missing labels for icons and buttons, images without alt text, and other errors in the implementation of a user interface that can be detected with generic checks.
+The general "add a command to trigger a scan" approach helps detect and prevent all-too-common issues like poor color contrast, missing labels for icons and buttons, images without alt text, and other errors in the implementation of a user interface that generic checks can detect.
 
 #### Managing test performance
 
-In-test automated accessibility checks are so valuable because they bundle a large amount of assertions about all kinds of rules and criteria into one simple command. But this also means they come with some overhead: for example, each call to `cy.checkA11y()` evaluates DOM elements to see which accessibility rules apply to each element in the page, and then runs specific DOM checks for those elements for each of the rules, and computes the results, all of which takes time to complete. If other assets like screenshots are generated at the same time, the performance of this should also be considered, and assets should be generated only when needed.
+In-test automated accessibility checks are so valuable because they bundle a large amount of assertions about all kinds of rules and criteria into one simple command. But this also means they come with some overhead: for example, each call to `cy.checkA11y()` evaluates DOM elements to see which accessibility rules apply to each element in the page, and then runs specific DOM checks for those elements for each of the rules, and computes the results, all of which takes time to complete. If your tests generate other assets like screenshots at the same time, consider the performance of this too, and generate assets only when needed.
 
-Generally this is not a problem if you have a small number of accessibility checks, but it can become a big contributor to your pipeline's overall execution time as you scale up your accessibility testing and want to run checks against hundreds or even thousands of unique states of complex applications and workflows. Since accessibility checks tend to be added gradually over time, the time taken is often not obvious, but it is definitely worth paying attention to.
+Generally this is not a problem if you have a small number of accessibility checks, but it can become a big contributor to your pipeline's overall execution time as you scale up your accessibility testing and want to run checks against hundreds or even thousands of unique states of complex applications and workflows. Since teams tend to add accessibility checks gradually over time, the time taken is often not obvious, but it is definitely worth paying attention to.
 
-To avoid performance bloat, actively manage the tradeoff between test performance and how often tests are executed. This tradeoff is sometimes solved by testing only the initial pageload, or the state at the end of a test, but this approach misses many important states like modals, multistep workflows, error states in forms, open states of menus, and more. And since many tests may begin or end at the same page state as other tests, there can be a lot of redundant scans, so it pays to be more precise and intentional in what you test.
+To avoid performance bloat, actively manage the tradeoff between test performance and how often tests run. Teams sometimes solve this tradeoff by testing only the initial pageload, or the state at the end of a test, but this approach misses many important states like modals, multistep workflows, error states in forms, open states of menus, and more. And since many tests may begin or end at the same page state as other tests, there can be a lot of redundant scans, so it pays to be more precise and intentional in what you test.
 
-Performance can also be managed by targeting the accessibility checks to only certain rules or certain parts of the page, or confining them to component tests. Testers should be trained on how and when to run accessibility checks to get the best feedback possible while eliminating redundant checks that don't add value, and minimizing the disruption to the test pipeline.
+You can also manage performance by targeting the accessibility checks to only certain rules or certain parts of the page, or confining them to component tests. Train testers on how and when to run accessibility checks to get the best feedback possible while eliminating redundant checks that don't add value, and minimizing the disruption to the test pipeline.
 
 It is best to proactively manage performance, because unnecessary flake, failures, or timeouts related to accessibility checks can cause frustration and lead to resistance in adopting this form of testing, which in turn makes it harder to gain momentum towards meeting your accessibility goals.
 
@@ -85,11 +85,11 @@ While automation like Axe Core® can detect missing attributes and other aspects
 
 ### Keyboard navigation
 
-To test in-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events. `cy.press()` can also be used to test custom behavior like autocomplete.
+To test in-page navigation with the keyboard, you can use the [`cy.press()`](/api/commands/press) to dispatch native tab events. You can also use `cy.press()` to test custom behavior like autocomplete.
 
 ### Asserting alt text of images
 
-To assert that the correct alternative text is present on your logo image, an explicit test can be written:
+To assert that the correct alternative text is present on your logo image, you can write an explicit test:
 
 ```js
 it('adds todos', () => {
@@ -115,7 +115,7 @@ cy.getByRole('img', { name: 'Cypress Logo' }).should('be.visible')
 
 ### Asserting the accessible name of a button
 
-A similar accessibility-minded locator technique can be used with interactive elements like buttons:
+You can use a similar accessibility-minded locator technique with interactive elements like buttons:
 
 ```js
 // click the "Submit" button located by `cy.contains()`
@@ -133,7 +133,7 @@ There are some important differences to consider between locating specific HTML 
 
 ### Test IDs, role-based locators, and accessibility
 
-The use of `data-cy`-style test ID attributes to help with test stability has been a longstanding [best practice recommendation](/app/core-concepts/best-practices#Selecting-Elements) by Cypress. Test IDs are resilient to non-functional UI changes because they don't specify anything about the nature of the code or content itself, only that some element with that data attribute is present. When code changes, as long as the `data-cy` attributes are preserved in the right places, all the tests using them should continue to pass.
+The use of `data-cy`-style test ID attributes to help with test stability has been a longstanding [best practice recommendation](/app/core-concepts/best-practices#Selecting-Elements) by Cypress. Test IDs are resilient to non-functional UI changes because they don't specify anything about the nature of the code or content itself, only that some element with that data attribute is present. When code changes, as long as developers preserve the `data-cy` attributes in the right places, all the tests using them should continue to pass.
 
 This approach explicitly avoids testing accessibility - which is all about the nature and structure of the content being tested, and how well the implementation in code matches that content, to provide a functional experience in a range of assistive technologies and browser setups.
 
@@ -147,26 +147,26 @@ There is much more to this topic than this guide can cover, but here is a small 
 
 ### Asserting about roles vs elements - button example
 
-The native HTML `button` element has a complex accessibility contract implemented by the browser for keyboard and screen reader users. Here is a partial list of ways a button element is automatically managed by the browser:
+The native HTML `button` element has a complex accessibility contract implemented by the browser for keyboard and screen reader users. Here is a partial list of ways the browser automatically manages a button element:
 
 - The button has the implicit `role` of `button` so that users know what it is - a screen reader, for example, would announce it as a button
 - The button has a default browser button style to visually distinguish it from surrounding content
 - The button has default browser styles for hover and "pressed" states
-- The button is placed in the tab order of the document and can be focused with the keyboard
+- The browser places the button in the tab order of the document, and users can focus it with the keyboard
 - When focused, the button receives a focus outline style
-- The button can be activated with a mouse click, or the enter key, or the space bar
+- Users can activate the button with a mouse click, or the enter key, or the space bar
 - If placed inside a `form` element, activating the button by any of these methods submits the form (because its default type is `submit`)
 - The button receives specific styling, customizable by the user, in Windows High Contrast Mode (used by people with certain visual disabilities)
 
 On the other hand, a `div` with `role` of `button` does not get any default browser accessibility behavior, and is **not accessible** without custom JavaScript and CSS replacing the browser contract.
 
-The missing browser contract means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though a role-based locator such as Testing Library's `findByRole()` treats each as the same. Role-based locators treat both alike because, much like test IDs, the role-based approach is intended to _avoid_ testing the implementation directly, to keep tests resilient when code is refactored.
+The missing browser contract means that, without some assertions about either the `button` element itself, or a full test of the accessibility "contract" of that element, it is not safe for a developer to refactor from a `button` to a `<div role="button">`, even though a role-based locator such as Testing Library's `findByRole()` treats each as the same. Role-based locators treat both alike because, much like test IDs, the role-based approach is intended to _avoid_ testing the implementation directly, to keep tests resilient when developers refactor code.
 
-Developers who are unfamiliar with accessibility may assume that if a role-based locator can be made to pass before and after a code change, there has been no functional or accessibility-related change in the underlying element. As we've seen, this is not actually the case, because of the extra behavior browsers only implement for native HTML elements. For more about this difference and why semantic HTML elements are preferred, see the [first rule of Accessible Rich Internet Applications (ARIA)](https://www.w3.org/TR/using-aria/#rule1).
+Developers who are unfamiliar with accessibility may assume that if they can make a role-based locator pass before and after a code change, there has been no functional or accessibility-related change in the underlying element. As we've seen, this is not actually the case, because of the extra behavior browsers only implement for native HTML elements. For more about this difference and why semantic HTML elements are preferred, see the [first rule of Accessible Rich Internet Applications (ARIA)](https://www.w3.org/TR/using-aria/#rule1).
 
 ### `cy.getByRole()` requires native elements by default
 
-[`cy.getByRole()`](/api/commands/getbyrole) catches that refactor without any extra options. For a role that HTML has an element for, it matches only elements whose HTML tag gives them the role, so the test fails if a `<button>` is replaced with a `<div role="button">`:
+[`cy.getByRole()`](/api/commands/getbyrole) catches that refactor without any extra options. For a role that HTML has an element for, it matches only elements whose HTML tag gives them the role, so the test fails if a developer replaces a `<button>` with a `<div role="button">`:
 
 ```html title="index.html"
 <button>Submit</button>
@@ -181,23 +181,23 @@ cy.getByRole('button', { name: 'Submit' }).click()
 cy.getByRole('button', { name: 'Cancel' }).should('not.exist')
 ```
 
-Native role matching applies to any role that HTML has an element for, such as `button`, `link`, `heading`, `checkbox`, or `navigation`. Widget roles that HTML has no element for, such as `tab` or `menuitem`, are matched by their `role` attribute, since that's the only way to give an element those roles. When a component library renders a role on a generic element, such as a `<div role="dialog">`, pass `native: false` to match it, and test its keyboard and focus behavior explicitly.
+Native role matching applies to any role that HTML has an element for, such as `button`, `link`, `heading`, `checkbox`, or `navigation`. `cy.getByRole()` matches widget roles that HTML has no element for, such as `tab` or `menuitem`, by their `role` attribute, since that's the only way to give an element those roles. When a component library renders a role on a generic element, such as a `<div role="dialog">`, pass `native: false` to match it, and test its keyboard and focus behavior explicitly.
 
 ## Where to test accessibility
 
-So what should you do in your test automation to help confirm the UI is accessible? First of all, for known critical areas like forms or checkout flows, ensure that the accessibility behavior is tested explicitly in at least one place. The means verifying that form fields and buttons have the correct labels and use the expected HTML elements, and other aspects of the DOM that communicate necessary information.
+So what should you do in your test automation to help confirm the UI is accessible? First of all, for known critical areas like forms or checkout flows, ensure that you test the accessibility behavior explicitly in at least one place. The means verifying that form fields and buttons have the correct labels and use the expected HTML elements, and other aspects of the DOM that communicate necessary information.
 
-Component tests are a fantastic place to do this centralized accessibility spec work, whether using [Cypress Component testing](/app/component-testing/get-started) or something else. Component tests are run locally during development, written by developers as they build the UI, and can specify the specific HTML that is intended to be rendered, without being a distraction in an end-to-end test of a specific user flow.
+Component tests are a fantastic place to do this centralized accessibility spec work, whether using [Cypress Component testing](/app/component-testing/get-started) or something else. Developers write component tests as they build the UI and run them locally during development. A component test can specify the exact HTML that should render, without distracting from an end-to-end test of a specific user flow.
 
-Accessibility should be tested at least once for a given component, area of the application, or workflow. Once that is achieved, there is no additional accessibility benefit to repeatedly asserting subsets of the same things in other tests, unless those tests introduce new combinations of components that have not been tested for accessibility anywhere else.
+Test accessibility at least once for a given component, area of the application, or workflow. Once that is achieved, there is no additional accessibility benefit to repeatedly asserting subsets of the same things in other tests, unless those tests introduce new combinations of components that have not been tested for accessibility anywhere else.
 
 ### Choosing a locator approach
 
-Test IDs are the most resilient locator option and are a good choice for maximizing the stability of your pipeline, especially if end-to-end tests are written by people who are not familiar with accessibility, and don't already know the correct roles, elements, and behavior that should be expected. You do not lose any accessibility "coverage", as long as accessibility is explicitly tested with assertions, and a library like Axe Core® is in place to catch mistakes.
+Test IDs are the most resilient locator option and are a good choice for maximizing the stability of your pipeline, especially if the people writing your end-to-end tests are not familiar with accessibility, and don't already know the correct roles, elements, and behavior that should be expected. You do not lose any accessibility "coverage", as long as you test accessibility explicitly with assertions, and a library like Axe Core® is in place to catch mistakes.
 
 Testing Library locators are convenient and familiar to many React developers (due to its origins as "React Testing Library"), and they don't require any code changes, but may cause _many_ tests to fail when a label is missing, instead of just your explicit accessibility assertions, because they are a step closer to the implementation details.
 
-Additionally, Testing Library locators can provide a false sense of confidence that something is accessible simply because it can be located by its role. Still, when understood correctly, teams can write effective tests using this approach, and some locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly useful.
+Additionally, Testing Library locators can provide a false sense of confidence that something is accessible simply because a locator can find it by its role. Still, when understood correctly, teams can write effective tests using this approach, and some locators like [`findByLabelText`](https://testing-library.com/docs/queries/bylabeltext) stand out as being particularly useful.
 
 What is most important in all accessibility automation discussions is this: how can your testing strategy best support your users with disabilities to independently understand and use your application? Cypress enables you to place the user at the center of your testing process. With a mix of automated scans and some specific intentional assertions, you can reach high levels of confidence that your application is free of known accessibility errors and let your test pipeline warn you if things are going off track.
 

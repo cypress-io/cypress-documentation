@@ -120,7 +120,7 @@ Pass in an options object to change the default behavior of `cy.wait()`.
 
 :::info
 
-`response.body` is only parsed into an `object` when the response includes a
+Cypress parses `response.body` into an `object` only when the response includes a
 `Content-Type: application/json` header. Responses that omit this header, such
 as a `304 Not Modified` or `301` redirect, yield `response.body` as a `string`.
 See
@@ -321,14 +321,13 @@ cy.wait('@getAccount')
 When used with an alias, `cy.wait()` goes through two separate "waiting"
 periods.
 
-The first period waits for a matching request to leave the browser. This
-duration is configured by the
-[`requestTimeout`](/app/references/configuration#Timeouts) option - which has
-a default of `5000` ms.
+The first period waits for a matching request to leave the browser. The
+[`requestTimeout`](/app/references/configuration#Timeouts) option configures
+this duration and has a default of `5000` ms.
 
 This default means that when you begin waiting for an aliased request, Cypress waits
-up to 5 seconds for a matching request to be created. If no matching request is
-found, you get an error message that looks like this:
+up to 5 seconds for your application to make a matching request. If Cypress finds
+no matching request, you get an error message that looks like this:
 
 <DocsImage
   src="/img/api/wait/error-for-no-matching-route-when-waiting-in-test.png"
@@ -336,12 +335,12 @@ found, you get an error message that looks like this:
 />
 
 Once Cypress detects that a matching request has begun its request, it then
-switches over to the 2nd waiting period. This duration is configured by the
-[`responseTimeout`](/app/references/configuration#Timeouts) option - which
-has a default of `30000` ms.
+switches over to the 2nd waiting period. The
+[`responseTimeout`](/app/references/configuration#Timeouts) option configures
+this duration and has a default of `30000` ms.
 
 This default means Cypress now waits up to 30 seconds for the external server to
-respond to this request. If no response is detected, you get an error
+respond to this request. If Cypress detects no response, you get an error
 message that looks like this:
 
 <DocsImage

@@ -13,10 +13,10 @@ slug: /app/guides/authentication-testing/azure-active-directory-authentication
 This guide is designed for testing against a Single Page Application (SPA) that
 uses
 [Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
-(AAD) to authenticate users. For this guide, the Microsoft Authentication
-Library
+(AAD) to authenticate users. For this guide, the web app uses the Microsoft
+Authentication Library
 [`@azure/msal-browser`](https://www.npmjs.com/package/@azure/msal-browser)
-package is used by the web app to broker this authentication.
+package to broker this authentication.
 
 This guide can also serve as a foundation for testing other web apps with
 Cypress that use Azure Active Directory services with other frameworks, such as
@@ -41,7 +41,7 @@ Once set up, you need to modify a few things in the `App/index.html` file:
   configuration option, which strips these attributes automatically without
   editing the application's source. If you'd rather not change your Cypress
   configuration, you can instead remove the `integrity` attributes from the
-  `<script>` tags manually. Either approach is recommended only when an
+  `<script>` tags manually. We recommend either approach only when an
   application is under test.
 - Uncomment the `authRedirect.js` `<script>` tag and comment out the
   `authPopup.js` `<script>` tag. Authentication
@@ -64,8 +64,8 @@ properly configured to run with Azure Active Directory and Cypress.
 To have access to test user credentials within our tests, we need to configure
 Cypress to use the
 [Azure Active Directory](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
-user credentials for a given user in your tenant. These user credentials should
-be set as OS-level environment variables (e.g., in your `.env` file or CI secret management).
+user credentials for a given user in your tenant. Set these user credentials as
+OS-level environment variables (e.g., in your `.env` file or CI secret management).
 
 Also, to authenticate with Azure Active Directory, you need to enable the
 [`experimentalModifyObstructiveThirdPartyCode`](/app/guides/cross-origin-testing#Modifying-Obstructive-Third-Party-Code)

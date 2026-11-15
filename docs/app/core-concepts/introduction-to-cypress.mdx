@@ -246,7 +246,7 @@ applications and doesn't fail immediately the first time an element is not
 found. Instead, Cypress gives your app a window of time to finish whatever it
 may be doing!
 
-This window of time is known as a `timeout`, and most commands can be customized with specific
+This window of time is known as a `timeout`, and you can customize most commands with specific
 timeout periods
 ([the default timeout is 4 seconds](/app/references/configuration#Timeouts)).
 These Commands list a `timeout` option in their API documentation,
@@ -267,7 +267,7 @@ You can also set the timeout globally via the
 
 To match the behavior of web applications, Cypress is asynchronous and relies on
 timeouts to know when to stop waiting on an app to get into the expected state.
-Timeouts can be configured globally, or on a per-command basis.
+You can configure timeouts globally, or on a per-command basis.
 
 :::
 
@@ -375,8 +375,8 @@ A later section of this guide covers [assertions](#Assertions) in more detail.
 
 ### Subject Management
 
-A new Cypress chain always starts with `cy.[command]`, where what is yielded by
-the `command` establishes what other commands can be called next (chained).
+A new Cypress chain always starts with `cy.[command]`, where what the `command`
+yields establishes which commands you can chain next.
 
 #### All commands yield a value.
 
@@ -385,8 +385,8 @@ Each command specifies what value it yields. For example,
 - [`cy.clearCookies()`](/api/commands/clearcookies) yields `null`. You can chain
   off commands that yield `null`, as long as the next command doesn't expect to
   receive a subject.
-- [`cy.contains()`](/api/commands/contains) yields a DOM element, allowing
-  further commands to be chained (assuming they expect a DOM subject) like
+- [`cy.contains()`](/api/commands/contains) yields a DOM element, so you can
+  chain further commands (assuming they expect a DOM subject) like
   [`.click()`](/api/commands/click) or even
   [`cy.contains()`](/api/commands/contains) again.
 - [`.click()`](/api/commands/click) yields the same subject it was originally
@@ -402,7 +402,7 @@ Each command specifies what value it yields. For example,
   yielded `null`, it looks at the entire document. But if the subject is a
   DOM element, it only looks inside that container.
 - [`cy.clearCookies()`](/api/commands/clearcookies) does not require a previous
-  subject - it can be chained off of anything.
+  subject - you can chain it off of anything.
 
 #### Examples:
 
@@ -422,8 +422,8 @@ cy.get('.main-container') // Yields an array of matching DOM elements
 <strong>Core Concept</strong>
 
 Cypress commands do not **return** their subjects, they **yield** them.
-Remember: Cypress commands are asynchronous and get queued for execution at a
-later time. During execution, subjects are yielded from one command to the next,
+Remember: Cypress commands are asynchronous, and Cypress queues them for execution at a
+later time. During execution, each command yields its subject to the next,
 and a lot of helpful Cypress code runs between each command to ensure everything
 is in order.
 
@@ -520,7 +520,7 @@ when dealing with front end frameworks that do a lot of re-rendering!
 ### Commands Are Asynchronous
 
 It is very important to understand that Cypress commands don't do anything at
-the moment they are invoked, but rather enqueue themselves to be run later. This deferred execution
+the moment you invoke them, but rather enqueue themselves to be run later. This deferred execution
 is what we mean when we say Cypress commands are asynchronous.
 
 #### Take this short test, for example:
@@ -590,7 +590,7 @@ it('does not work as we expect', () => {
 
 <Icon name="check-circle" color="green" /> **Correct usage**
 
-Below is one way the code above could be rewritten to ensure the
+Below is one way you could rewrite the code above to ensure the
 commands run as expected.
 
 ```js
@@ -619,8 +619,8 @@ it('does not work as we expect', () => {
 
 <Icon name="exclamation-triangle" color="red" /> **Incorrect usage**
 
-In the example below, the check on the `username` value gets evaluated
-immediately, before the `cy.visit()` has executed, so it always evaluates to
+In the example below, JavaScript evaluates the check on the `username` value
+immediately, before the `cy.visit()` has executed, so the check always evaluates to
 `undefined`.
 
 ```js
@@ -655,7 +655,7 @@ it('test', () => {
 
 <Icon name="check-circle" color="green" /> **Correct usage**
 
-Below is one way the code above could be rewritten to ensure the
+Below is one way you could rewrite the code above to ensure the
 commands run as expected.
 
 ```js
@@ -692,7 +692,7 @@ Each Cypress command (and chain of commands) returns immediately, having only
 been appended to a queue to be executed at a later time.
 
 You purposefully **cannot** do anything useful with the return value from a
-command. Commands are enqueued and managed entirely behind the scenes.
+command. Cypress enqueues and manages commands entirely behind the scenes.
 
 We've designed our API this way because the DOM is a highly mutable object that
 constantly goes stale. For Cypress to prevent flake, and know when to proceed,
@@ -796,8 +796,7 @@ The test runs and correctly finishes.
 
 ### Commands Run Serially
 
-After a test function is finished running, Cypress goes to work executing the
-commands that were enqueued using the `cy.*` command chains.
+After a test function is finished running, Cypress goes to work executing the commands enqueued by the `cy.*` chains.
 
 #### Let's take another look at an example
 
@@ -865,7 +864,7 @@ that expect particular things to take much longer like
 [`cy.visit()`](/api/commands/visit) naturally wait longer before timing
 out.
 
-These commands have their own particular timeout values which are documented in
+These commands have their own particular timeout values, documented in
 the [Cypress configuration](/app/references/configuration).
 
 :::tip
@@ -917,7 +916,7 @@ Let's take a look at each trade-off in depth:
 #### You cannot race or run multiple commands at the same time
 
 Cypress guarantees that it executes all of its commands and queries
-_deterministically_ and identically every time they are run.
+_deterministically_ and identically every time they run.
 
 A lot of Cypress commands _mutate_ the state of the browser in some way.
 
@@ -929,7 +928,7 @@ A lot of Cypress commands _mutate_ the state of the browser in some way.
   events.
 
 None of the above commands are _idempotent_; they all cause side effects. Racing
-commands is not possible because commands must be run in a controlled, serial
+commands is not possible because Cypress must run commands in a controlled, serial
 manner to create consistency. Because integration and e2e tests
 primarily mimic the actions of a real user, Cypress models its command execution
 model after a real user working step by step.
@@ -937,7 +936,7 @@ model after a real user working step by step.
 #### You cannot add a `.catch` error handler to a failed command
 
 In Cypress there is no built in error recovery from a failed command. A command
-_eventually_ passes, or if it fails, all remaining commands are not executed,
+_eventually_ passes, or if it fails, Cypress skips all remaining commands,
 and the test as a whole fails.
 
 You might be wondering:
@@ -988,7 +987,7 @@ cy.get('button').click()
 cy.get('button').should('have.class', 'active')
 ```
 
-This above test passes even if the `.active` class is applied to the button
+This above test passes even if your app applies the `.active` class to the button
 asynchronously, after an indeterminate period of time or even if the button is
 removed from the DOM entirely for a while (replaced with a waiting spinner, for
 example).
@@ -1228,7 +1227,7 @@ cy.get('#header a')
 ```
 
 Because [`.should('have.class')`](/api/commands/should) does not change the
-subject, [`.and('have.attr')`](/api/commands/and) is executed against the same
+subject, [`.and('have.attr')`](/api/commands/and) runs against the same
 element. Chaining `.and()` is handy when you need to assert multiple things against a single
 subject quickly.
 
@@ -1305,7 +1304,7 @@ cy.get('p').should(($p) => {
 **Make sure `.should()` is safe**
 
 When using a callback function with [`.should()`](/api/commands/should), be sure
-that the entire function can be executed multiple times without side effects.
+that Cypress can execute the entire function multiple times without side effects.
 Cypress applies its [retry logic](/app/core-concepts/retry-ability) to these
 functions: if there's a failure, it repeatedly reruns the assertions until
 the timeout is reached. This retrying means your code should be retry-safe. The technical
@@ -1317,15 +1316,15 @@ term for this means your code must be **idempotent**.
 
 Almost all commands can time out in some way.
 
-All assertions, whether they're the default ones or whether they've been added
-by you all share the same timeout values.
+All assertions, whether they're the default ones or ones you've added, share
+the same timeout values.
 
 ### Applying Timeouts
 
 You can modify a commands's timeout. This timeout affects both its default
 assertions (if any) and any specific assertions you've added.
 
-Remember because assertions are used to describe a condition of the previous
+Remember because assertions describe a condition of the previous
 commands - the `timeout` modification goes on the previous commands _not the
 assertions_.
 
@@ -1361,7 +1360,7 @@ The _total_ amount of time Cypress waits for _all_ of the assertions to pass
 is for the duration of the [cy.get()](/api/commands/get) `timeout` (which is 4
 seconds).
 
-Timeouts can be modified per command and the modified timeout affects all implicit
+You can modify timeouts per command, and the modified timeout affects all implicit
 assertions and any assertions chained after that command.
 
 #### Example #3: Modifying Timeouts
@@ -1412,10 +1411,10 @@ For instance:
 
 - [`cy.visit()`](/api/commands/visit) loads a remote page and does not resolve
   _until all of the external resources complete their loading phase_. Loading those resources may
-  take awhile, so its default timeout is set to `60000ms`.
+  take awhile, so its default timeout is `60000ms`.
 - [`cy.task()`](/api/commands/task) runs code in Node such as _seeding a
   database_. We expect this to potentially take a long time, and its default
-  timeout is set to `60000ms`.
+  timeout is `60000ms`.
 - [`cy.wait()`](/api/commands/wait) actually uses 2 different timeouts. When
   waiting for a
   [routing alias](/app/core-concepts/variables-and-aliases#Intercepts), we wait

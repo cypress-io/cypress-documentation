@@ -36,14 +36,14 @@ CI strategies when using parallelization.
 ## Splitting up your test suite
 
 Cypress' parallelization strategy is file-based, so to use
-parallelization, your tests need to be split across separate files.
+parallelization, you need to split your tests across separate files.
 
 Cypress assigns each spec file to an available machine based on our
 [balance strategy](/cloud/features/smart-orchestration/load-balancing#Balance-strategy).
 Due to this balance strategy, the run order of the spec files is not guaranteed
 when parallelized.
 
-Because whole spec files are what get distributed, specs of roughly similar
+Because Cypress distributes whole spec files, specs of roughly similar
 duration parallelize best. For guidance on where to draw those boundaries, see
 [How much to put in one spec file](/app/core-concepts/writing-and-organizing-tests#How-much-to-put-in-one-spec-file).
 
@@ -63,8 +63,8 @@ cypress run --record --key=abc123 --parallel
 
 :::info
 
-Running tests in parallel requires the
-[`--record` flag](/app/references/command-line#cypress-run) be passed. The flag
+Running tests in parallel requires you to pass the
+[`--record` flag](/app/references/command-line#cypress-run). The flag
 ensures Cypress can properly collect the data needed to parallelize future runs.
 The flag also gives you the full benefit of seeing the results of your parallelized
 tests in [Cypress Cloud](/cloud/get-started/introduction). If you have not set up
@@ -89,8 +89,8 @@ across available CI machines by the following process:
    ([load-balances](/cloud/features/smart-orchestration/load-balancing)) spec
    files one-by-one to each available machine in a way that minimizes overall
    test run time.
-5. As each CI machine finishes running its assigned spec file, more spec files
-   are distributed to it. This process repeats until all spec files are
+5. As each CI machine finishes running its assigned spec file, Cypress
+   distributes more spec files to it. This process repeats until all spec files are
    complete.
 6. Upon completion of all spec files, Cypress
    [waits for a configurable amount of time](#Run-Completion-Delay) before
@@ -230,11 +230,11 @@ within the associated test run.
 
 :::info
 
-For multiple runs to be grouped into a single run, it is required for CI
-machines to share a common CI build ID environment variable. Typically these CI
-machines run in parallel or within the same build workflow or pipeline, but
-**it is not required to use Cypress parallelization to group runs**. Grouping of
-runs can be used independently of Cypress parallelization.
+To group multiple runs into a single run, CI machines must share a common CI
+build ID environment variable. Typically these CI machines run in parallel or
+within the same build workflow or pipeline, but **you don't need Cypress
+parallelization to group runs**. You can group runs independently of Cypress
+parallelization.
 
 :::
 
@@ -343,13 +343,13 @@ cypress run --record --group package/guest --spec 'cypress/e2e/packages/guest/**
 
 <DocsImage src="/img/app/parallelization/monorepo.png" alt="monorepo" />
 
-This pattern is especially useful for projects in a monorepo. Each segment of
-the monorepo can be assigned its own group, and larger segments can be
-parallelized to speed up their testing.
+This pattern is especially useful for projects in a monorepo. You can assign
+each segment of the monorepo its own group and parallelize larger segments to
+speed up their testing.
 
 ## Linking CI machines for parallelization or grouping
 
-A CI build ID is used to associate multiple CI machines to one test run. The
+Cypress uses a CI build ID to associate multiple CI machines to one test run. The
 identifier is based on environment variables that are unique to each CI build,
 and vary based on CI provider. Cypress has out-of-the-box support for most of
 the commonly-used CI providers, so you would typically not need to directly set
@@ -416,7 +416,7 @@ This **delay is 60 seconds by default**, but is
 
 :::caution
 
-This API is **experimental**. Breaking changes are unlikely, but may be made if necessary.
+This API is **experimental**. Breaking changes are unlikely, but Cypress may make them if necessary.
 
 :::
 
@@ -468,13 +468,13 @@ Call this API when the groups have finished and a rerun may start right away. Cy
 POST https://api.cypress.io/runs/complete
 ```
 
-Requests are authenticated with your **project ID** and **record key**, the same
+Cypress Cloud authenticates requests with your **project ID** and **record key**, the same
 credentials used to [record the run](/cloud/get-started/setup#Setup).
 
 ### Request body
 
-The request body is JSON. `projectId` and `recordKey` are always required, and the
-run is identified by **exactly one** of `runUrl` or `runNumber`.
+The request body is JSON. `projectId` and `recordKey` are always required, and
+**exactly one** of `runUrl` or `runNumber` identifies the run.
 
 | Property             | Type     | Required    | Description                                                                                                                                                        |
 | -------------------- | -------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -517,7 +517,7 @@ curl -X POST https://api.cypress.io/runs/complete \
 
 ### Finding the run URL or run number
 
-Both identifiers come from the results Cypress produces when a run is recorded.
+Both identifiers come from the results Cypress produces when it records a run.
 You don't need to construct them yourself.
 
 - **From the [Module API](/app/references/module-api#Results):** the object that
@@ -544,8 +544,8 @@ segment of the run URL: `.../runs/42` corresponds to `runNumber: 42`.
 
 :::info
 
-`runUrl` is only present when the run was recorded (`--record`). Runs that aren't
-recorded aren't tracked by Cypress Cloud and can't be completed through this API.
+`runUrl` is only present when the run was recorded (`--record`). Cypress Cloud
+doesn't track runs that aren't recorded, and you can't complete them through this API.
 
 :::
 
@@ -560,10 +560,10 @@ recorded aren't tracked by Cypress Cloud and can't be completed through this API
 Calling from inside `after:run` is fine **when you pass a known
 `expectedGroupCount`** with every call. Because the API defers until that many
 groups have finished (and absorbs any still joining), it doesn't matter which machine
-finishes first or how often the API is called from the run.
+finishes first or how often machines in the run call the API.
 The run only completes once all expected groups
 are in. Use this pattern when your group count is fixed and available to the
-handler (for example, injected as an environment variable by CI).
+handler (for example, when CI injects it as an environment variable).
 
 Firing a bare "complete now" request from all of them is different: whichever machine finishes
 its own specs first would ask to complete a run whose other groups may not have joined yet.
@@ -580,7 +580,7 @@ To try this API without changing your CI pipeline, you can hard-code `expectedGr
 :::
 
 The example below completes the run from inside `after:run`. The example is safe to fire
-from every machine **only because** `expectedGroupCount` is supplied from an
+from every machine **only because** the handler reads `expectedGroupCount` from an
 environment variable that CI sets to the run's fixed number of groups.
 
 :::cypress-config-plugin-example
@@ -622,14 +622,14 @@ The endpoint always responds with a JSON body containing an `outcome` field. The
 HTTP status reflects whether the run reached a terminal state as a result of the
 request.
 
-| Status | `outcome`          | Meaning                                                                                                                                |
-| ------ | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `200`  | `completed`        | The run was ready and has been completed immediately, skipping the completion delay.                                                   |
-| `200`  | `already-complete` | The run had already completed. The request is idempotent: no change was made.                                                          |
-| `202`  | `deferred`         | The run is not ready yet (groups are still in progress). The request was recorded; the run completes with no delay once it stabilizes. |
-| `202`  | `run-not-active`   | There is no live recording session for the run. The run finalizes on its own.                                                          |
+| Status | `outcome`          | Meaning                                                                                                                                          |
+| ------ | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `200`  | `completed`        | The run was ready and Cypress Cloud completed it immediately, skipping the completion delay.                                                     |
+| `200`  | `already-complete` | The run had already completed. The request is idempotent: Cypress Cloud made no change.                                                          |
+| `202`  | `deferred`         | The run is not ready yet (groups are still in progress). Cypress Cloud recorded the request; the run completes with no delay once it stabilizes. |
+| `202`  | `run-not-active`   | There is no live recording session for the run. The run finalizes on its own.                                                                    |
 
-When a `deferred` response is returned for a request that included an
+When Cypress Cloud returns a `deferred` response for a request that included an
 `expectedGroupCount`, the body also echoes the progress toward that target:
 
 ```json
@@ -646,8 +646,8 @@ Here, `completedGroupCount` is the number of groups that have actually _finished
 ## Visualizing parallelization and groups in Cypress Cloud
 
 You can see the result of each spec file that ran within
-[Cypress Cloud](/cloud/get-started/introduction) in the run's **Specs** tab. Specs
-are visualized within a **Timeline**, **Bar Chart**, and **Machines** view.
+[Cypress Cloud](/cloud/get-started/introduction) in the run's **Specs** tab. Cypress
+Cloud visualizes specs within a **Timeline**, **Bar Chart**, and **Machines** view.
 
 ### Timeline View
 

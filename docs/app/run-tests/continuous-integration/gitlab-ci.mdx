@@ -22,7 +22,7 @@ Detailed documentation is available in the
 
 The example below is basic CI setup and job using
 [GitLab CI/CD](https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/)
-to run Cypress tests. This GitLab CI configuration is placed within
+to run Cypress tests. Place this GitLab CI configuration in
 `.gitlab-ci.yml`.
 
 ```yaml
@@ -46,7 +46,7 @@ test:
 - On _push_ to this repository, this job provisions and starts a GitLab-hosted
   Linux instance for running the outlined `stages` declared in `script` within
   the `test` job section of the configuration.
-- The code is checked out from the GitLab repository.
+- The job checks out the code from the GitLab repository.
 - Finally, our scripts do the following:
   - Install npm dependencies
   - Start the project web server (`npm start`)
@@ -81,11 +81,11 @@ test:
 
 ## Caching Dependencies and Build Artifacts
 
-Caching of dependencies and build artifacts can be accomplished with the `cache`
+You can cache dependencies and build artifacts with the `cache`
 configuration. The
 [caching documentation](https://docs.gitlab.com/ee/ci/caching/) contains all
 options for caching dependencies and build artifacts across many different
-workflows. Artifacts from a job can be defined by providing paths and an
+workflows. You can define artifacts from a job by providing paths and an
 optional expiry time.
 
 ```yaml

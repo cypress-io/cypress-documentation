@@ -17,8 +17,8 @@ The scope of this guide is to demonstrate authentication solely against the
 
 If not already setup, you need to
 [create an Okta application](https://okta.com) within the Okta Developer
-Console. Once the Okta application is created, the Okta Developer Console
-provides a **Client ID**, which is used alongside your **Okta domain** to
+Console. Once you create the Okta application, the Okta Developer Console
+provides a **Client ID**, which you use alongside your **Okta domain** to
 [configure Okta SDKs](https://developer.okta.com/docs/app/sign-into-spa/react/configure-the-sdk/)
 as shown in the subsequent sections of this guide.
 
@@ -258,7 +258,7 @@ The `loginByOktaApi` command executes the following steps:
 2. Use an instance of `OktaAuth` client from the
    [Okta Auth SDK](https://github.com/okta/okta-auth-js) to gain the `id_token`
    once a session token is obtained.
-3. Finally the `oktaCypress` localStorage item is set with the `access token`
+3. Finally, set the `oktaCypress` localStorage item with the `access token`
    and user profile.
 
 <Tabs>
@@ -413,7 +413,7 @@ appropriately built or adapted to use Okta.
 
 Unlike programmatic login, authenticating with
 [`cy.origin()`](/api/commands/origin) doesn't require adapting the application
-to work. This step is only needed if implementing programmatic login.
+to work. You only need this step if you implement programmatic login.
 
 The following sections provides guidance on building or adapting an app to use
 Okta authentication.
@@ -526,7 +526,7 @@ component.
 In routes with a `SecureRoute` and `LoginCallback` and wraps the component with
 the `withOktaAuth` higher order component (HOC).
 
-A `useEffect` hook is added to get the access token for the authenticated user
+`AppOkta.tsx` also adds a `useEffect` hook to get the access token for the authenticated user
 and send an `OKTA` event with the `user` and `token` objects to work with the
 existing authentication layer (`authMachine.ts`). `authService` is the
 [XState](https://xstate.js.org/) interpreted service instance of `authMachine`,
@@ -592,7 +592,7 @@ Next, we update our entry point (`index.tsx`) to wrap our application with the
 `<Security>` component from the
 [Okta React SDK](https://github.com/okta/okta-react) providing `issuer`,
 `clientId` from our Okta application, along with a `redirectUri` as props using
-the `REACT_APP_OKTA` variables are defined in our `.env`.
+the `REACT_APP_OKTA` variables defined in our `.env`.
 
 ```jsx title="src/index.tsx"
 // initial imports ...
@@ -624,9 +624,9 @@ ReactDOM.render(
 )
 ```
 
-An update to our
+Our
 [AppOkta.tsx component](https://github.com/cypress-io/cypress-realworld-app/blob/develop/src/containers/AppOkta.tsx)
-is needed to conditionally use the `oktaCypress` localStorage item.
+needs an update to conditionally use the `oktaCypress` localStorage item.
 
 In the code below, we conditionally apply a `useEffect` block based on being
 under test with Cypress (using `window.Cypress`).

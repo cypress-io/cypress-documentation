@@ -16,7 +16,7 @@ untested? Are there parts of the application that perhaps are tested too much?
 
 Cypress offers a couple of solutions to help answer these questions:
 
-- **[Code coverage](#Code-Coverage)** - find out which lines of the application's source code were executed
+- **[Code coverage](#Code-Coverage)** - find out which lines of the application's source code your tests executed
 - **[UI coverage](#UI-Coverage)** - find out which parts of the UI were tested
 
 ## Why code coverage matters
@@ -28,7 +28,7 @@ it. The difference matters, because untested logic that reaches production is a
 primary source of expensive, hard-to-diagnose bugs.
 
 Code coverage makes the gap visible. Code coverage tells you precisely which lines,
-branches, and functions were executed during your test run. The coverage data turns "do we have
+branches, and functions your test run executed. The coverage data turns "do we have
 enough tests?" from a matter of opinion into a measurable, trackable signal —
 one you can enforce as a quality gate on every pull request and trend over time.
 
@@ -37,13 +37,13 @@ one you can enforce as a quality gate on every pull request and trend over time.
 Different quality tools answer different questions. Understanding the tradeoffs
 helps you choose the right combination for your project:
 
-| Approach                                                 | What it tells you                                                 | Key limitation                                                                                |
-| -------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **Code coverage**                                        | Which lines, branches, and functions were executed by tests       | Requires instrumentation; a line being executed doesn't guarantee the assertion is meaningful |
-| **[UI Coverage](/ui-coverage/get-started/introduction)** | Which interactive elements across your UI were exercised by tests | No instrumentation needed; shows UI-level gaps rather than code-level logic gaps              |
-| **Static analysis / linters**                            | Type errors, style violations, and common code smells             | Cannot find runtime logic gaps or missing test scenarios                                      |
-| **Manual QA**                                            | Visible UX defects and end-user workflows                         | Doesn't scale; expensive per release; misses regressions and edge cases                       |
-| **Mutation testing**                                     | Whether your tests actually detect code changes                   | Slow to run; typically too expensive for CI on every commit                                   |
+| Approach                                                 | What it tells you                                             | Key limitation                                                                                |
+| -------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Code coverage**                                        | Which lines, branches, and functions the tests executed       | Requires instrumentation; a line being executed doesn't guarantee the assertion is meaningful |
+| **[UI Coverage](/ui-coverage/get-started/introduction)** | Which interactive elements across your UI the tests exercised | No instrumentation needed; shows UI-level gaps rather than code-level logic gaps              |
+| **Static analysis / linters**                            | Type errors, style violations, and common code smells         | Cannot find runtime logic gaps or missing test scenarios                                      |
+| **Manual QA**                                            | Visible UX defects and end-user workflows                     | Doesn't scale; expensive per release; misses regressions and edge cases                       |
+| **Mutation testing**                                     | Whether your tests actually detect code changes               | Slow to run; typically too expensive for CI on every commit                                   |
 
 Code coverage and UI Coverage are complementary rather than competing. Code
 coverage answers "which source code lines did the tests execute?", while UI
@@ -53,13 +53,12 @@ together gives you a more complete picture of test quality.
 ## Code Coverage
 
 Code coverage is a metric that helps you understand how much of your application
-code is covered by your tests. If there are important
-sections of the application's logic that **were not** executed from the tests,
-then a new test can be added to ensure that the application logic for these sections is
+code your tests cover. If there are important
+sections of the application's logic that the tests **did not** execute,
+then you can add a new test to ensure that the application logic for these sections is
 also tested.
 
-Computing the source code lines that were executed during the test is done
-through **code coverage**. Code coverage requires inserting additional counters
+**Code coverage** computes the source code lines that the test executed. Code coverage requires inserting additional counters
 into your source code before running it using **instrumentation**.
 This document focuses on code coverage and the instrumentation required to set it up.
 
@@ -154,7 +153,7 @@ it('adds numbers', () => {
 ```
 
 When the test calls `add(2, 3)`, the counter increments inside the "add"
-function are executed, and the coverage object becomes:
+function run, and the coverage object becomes:
 
 ```javascript
 {
@@ -168,13 +167,12 @@ function are executed, and the coverage object becomes:
 }
 ```
 
-This single test has achieved 100% code coverage - every function and every
-statement has been executed at least once. But, in real world applications,
+This single test has achieved 100% code coverage - the test has executed every
+function and every statement at least once. But, in real world applications,
 achieving 100% code coverage requires multiple tests.
 
-Once the tests finish, the coverage object can be serialized and saved to disk
-so that a human-friendly report can be generated. The collected coverage
-information can also be sent to external services and can help during pull request
+Once the tests finish, you can serialize the coverage object and save it to disk, so you can generate a human-friendly report from it. You can also send the collected coverage
+information to external services, where it can help during pull request
 reviews.
 
 :::info
@@ -221,7 +219,7 @@ render(
 ```
 
 ...and wraps each statement with additional counters that keep track of how many
-times each source line has been executed by the JavaScript runtime.
+times the JavaScript runtime has executed each source line.
 
 ```javascript
 const store = (cov_18hmhptych.s[0]++, createStore(reducer))
@@ -235,8 +233,8 @@ render(
 ```
 
 Notice the calls to `cov_18hmhptych.s[0]++` and `cov_18hmhptych.s[1]++` that
-increment the statement counters. All counters and additional book-keeping
-information are stored in a single object attached to the browser's `window`
+increment the statement counters. The instrumented code stores all counters and additional book-keeping
+information in a single object attached to the browser's `window`
 object. We can see the counters if we serve the `instrumented` folder instead of
 `src` and open the application.
 
@@ -273,8 +271,8 @@ to instrument the code as part of its transpilation. Add this plugin to the
 ```
 
 We can now serve the application and get instrumented code without an
-intermediate folder, but the result is the same instrumented code loaded by the
-browser, with the same `window.__coverage__` object keeping track of the
+intermediate folder, but the result is the same instrumented code that the
+browser loads, with the same `window.__coverage__` object keeping track of the
 original statements.
 
 #### Avoiding conflicts with Jest
@@ -330,7 +328,7 @@ for full example projects showing different code coverage setups.
 
 A really nice feature of both [nyc](https://github.com/istanbuljs/nyc) and
 [`babel-plugin-istanbul`](https://github.com/istanbuljs/babel-plugin-istanbul)
-is that the source maps are generated automatically, allowing us to collect code
+is that they generate the source maps automatically, allowing us to collect code
 coverage information, but also interact with the original, non-instrumented code
 in the Developer Tools. In the screenshot above, the bundle (green arrow) has
 coverage counters, but the source mapped files in the green rectangle show the
@@ -380,8 +378,8 @@ files. Setting `requireEnv: false` enables instrumentation unconditionally; set
 it to `true` and export `VITE_COVERAGE=true` if you only want coverage during
 CI runs.
 
-Once the plugin is in place, `window.__coverage__` is populated when the
-app runs in the browser, and the
+Once the plugin is in place, the instrumented app populates `window.__coverage__`
+when it runs in the browser, and the
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
 collects it automatically — no additional Babel configuration is required.
 
@@ -447,8 +445,8 @@ tests finish. We have highlighted these commands using a green rectangle below.
   alt="coverage plugin commands"
 />
 
-After the tests complete, the final code coverage is saved to a `.nyc_output`
-folder. The folder holds a JSON file from which we can generate a report in a variety of
+After the tests complete, the code coverage plugin saves the final code coverage
+to a `.nyc_output` folder. The folder holds a JSON file from which we can generate a report in a variety of
 formats. The
 [`@cypress/code-coverage`](https://github.com/cypress-io/code-coverage) plugin
 generates the HTML report automatically - you can open the `coverage/index.html`
@@ -530,15 +528,15 @@ return config
 
 ### Instrumentation for component tests
 
-**Vite**: The [`vite-plugin-istanbul`](#using-vite) plugin configured in your
-`vite.config.ts` is automatically used by the Cypress component testing dev
-server. No additional configuration is needed beyond
+**Vite**: The Cypress component testing dev server automatically uses the
+[`vite-plugin-istanbul`](#using-vite) plugin configured in your
+`vite.config.ts`. No additional configuration is needed beyond
 [the standard Vite setup described above](#using-vite).
 
 **Webpack**: Add
 [`babel-plugin-istanbul`](#using-code-transpilation-pipeline) to the Babel
 configuration or Webpack rules used by the component testing dev server so
-that source files are instrumented before the browser loads them.
+that the plugin instruments source files before the browser loads them.
 
 ## Code coverage as a guide
 
@@ -582,8 +580,8 @@ we missed. In our example application, the main state logic is in the
   alt="Main application logic coverage"
 />
 
-Notice how the **ADD_TODO** action was executed 3 times - because our test has
-added 3 todo items, and the **COMPLETE_TODO** action was executed just once -
+Notice how the **ADD_TODO** action ran 3 times - because our test has
+added 3 todo items, and the **COMPLETE_TODO** action ran just once -
 because our test has marked 1 todo item as completed.
 
 The source lines not covered, marked in yellow (the switch cases the test missed)
@@ -606,7 +604,7 @@ The produced HTML report shows 99% code coverage
   alt="99 percent code coverage"
 />
 
-Every source file but one is covered at 100%. We can have great confidence in our
+The tests cover every source file but one at 100%. We can have great confidence in our
 application, and safely refactor the code knowing that we have a robust set of
 end-to-end tests.
 
@@ -649,7 +647,7 @@ function from the Cypress spec file. In essence we are using Cypress as a unit
 testing tool (find more
 [unit testing recipes](https://github.com/cypress-io/cypress-example-recipes#unit-testing)).
 
-Here is our test to confirm that the error is thrown.
+Here is our test to confirm that `getVisibleTodos` throws the error.
 
 ```javascript
 // cypress/e2e/selectors.cy.js
@@ -709,9 +707,9 @@ return config
 
 :::
 
-For reference, the `.babelrc` file is shared between the example application and
-the spec files, thus Cypress tests are transpiled the same way the application
-code is transpiled.
+For reference, the example application and the spec files share the `.babelrc`
+file, thus Babel transpiles Cypress tests the same way it transpiles the
+application code.
 
 ```json
 {
@@ -753,8 +751,8 @@ and running all spec files reaches 100% code coverage.
 
 A complex application might have a Node back end with its own complex logic.
 From the front end web application, the calls to the API go through layers of
-code. It would be nice to track what back end code has been exercised during
-Cypress end-to-end tests.
+code. It would be nice to track what back end code Cypress end-to-end tests
+have exercised.
 
 Are our end-to-end tests that are so effective at covering the web application
 code also covering the back end server code?
@@ -765,7 +763,7 @@ coverage, creating a single full stack report.
 
 :::info
 
-The full source code for this section can be found in the
+You can find the full source code for this section in the
 [RealWorld App](https://github.com/cypress-io/cypress-realworld-app)
 repository.
 

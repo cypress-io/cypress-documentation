@@ -1,6 +1,6 @@
-Cypress uses source maps to enhance the error experience. Stack traces are
-translated so that your source files are shown instead of the generated file
-that is loaded by the browser. Source maps also enable displaying code frames. Without
+Cypress uses source maps to enhance the error experience. Cypress translates
+stack traces so that they show your source files instead of the generated file
+that the browser loads. Source maps also enable displaying code frames. Without
 inline source maps, you do not see code frames.
 
 By default, Cypress includes an inline source map in your spec file, so you
@@ -18,7 +18,7 @@ source maps are enabled to get the same experience. Some examples of this includ
   [creating the bundler](https://github.com/bahmutov/cypress-esbuild-preprocessor#esbuild-options).
 - With cucumber and the
   [cucumber preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor/tree/master)
-  third party bundlers are used to bundle the code.
+  a third-party bundler processes the code.
   - For esbuild and the
     [esbuild preprocessor](https://github.com/bahmutov/cypress-esbuild-preprocessor/tree/main),
     set [the `sourcemap` option](https://esbuild.github.io/api/#sourcemap) to `inline` when

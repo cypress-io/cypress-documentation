@@ -66,7 +66,7 @@ pipelines:
 - On _push_ to this repository, this job provisions and starts Bitbucket
   Pipelines using the Cypress Docker image. The job runs the pipelines defined in the
   `pipelines` section of the configuration.
-- The code is checked out from the Bitbucket repository.
+- The job checks out the code from the Bitbucket repository.
 - Finally, our scripts run these steps:
   - Install npm dependencies
   - Start the project web server (`npm start`) in the background
@@ -80,10 +80,10 @@ Per the
 Bitbucket offers options for caching dependencies and
 build artifacts across many different workflows.
 
-To cache `node_modules`, the npm cache across builds, the `cache` attribute and
-configuration has been added below.
+To cache `node_modules`, the npm cache across builds, the configuration below adds
+the `cache` attribute and configuration.
 
-Artifacts from a job can be defined by providing paths to the `artifacts`
+You can define artifacts from a job by providing paths to the `artifacts`
 attribute.
 
 ```yaml title="bitbucket-pipelines.yml"

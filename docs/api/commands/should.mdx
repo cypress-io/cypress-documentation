@@ -9,8 +9,8 @@ slug: /api/commands/should
 
 # should
 
-Create an assertion. Assertions are automatically retried until they pass or
-time out.
+Create an assertion. Cypress automatically retries assertions until they pass
+or time out.
 
 :::info
 
@@ -68,12 +68,12 @@ Value to assert against chainer.
 
 <Icon name="angle-right" /> **method _(String)_**
 
-A method to be called on the chainer.
+A method to call on the chainer.
 
 <Icon name="angle-right" /> **callbackFn _(Function)_**
 
 Pass a function that can have any number of explicit assertions within it.
-Whatever was passed to the function is what is yielded.
+`.should()` yields whatever was passed to the function.
 
 <HeaderYields />
 
@@ -251,8 +251,8 @@ cy.get('p').should(($p) => {
 })
 ```
 
-<Icon name="exclamation-triangle" color="red" /> **Warning** Any value returned
-from a `.should()` callback function is ignored. Cypress yields the original
+<Icon name="exclamation-triangle" color="red" /> **Warning** Cypress ignores any
+value returned from a `.should()` callback function. Cypress yields the original
 subject to the next command.
 
 ```js
@@ -438,7 +438,7 @@ document what they return.
 
 #### Using a callback function does not change what is yielded
 
-Whatever is returned in the function is ignored. Cypress always forces the
+Cypress ignores whatever the function returns. Cypress always forces the
 command to yield the value from the previous cy command's yield (which in the
 example below is `<button>`)
 

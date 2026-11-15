@@ -47,8 +47,8 @@ Component HTML file or the Component Support File.
 ## Component Support File
 
 When you load a component or end-to-end spec file, it first loads something
-called a supportFile. By default, this is created for you during first-time
-setup of Cypress Component Testing and is located at
+called a supportFile. By default, Cypress creates this file for you during
+first-time setup of Cypress Component Testing, and the file is located at
 `cypress/support/component.js`. This file gives you the opportunity to set up
 your spec's environment.
 
@@ -215,15 +215,15 @@ Your global application styles are usually in one of the following places:
 
 1. A `styles.css` file you import within the `head` of your application.
 
-The `styles.css` file should be loaded within your Cypress Index HTML file.
+Load the `styles.css` file within your Cypress Index HTML file.
 
 2. Within a root-level component like `App.jsx`, `App.vue`, `App.svelte`, etc.
 
 Decouple your Root CSS from your App or Entrypoint component by pulling out
 these global styles into a top-level stylesheet. Both Vue and Svelte embed
 global application styles into the main entry point components. The rest of your
-application expects to be rendered _within_ those components, and so any
-assumptions you made when writing those components must be replicated in your
+application expects to be rendered _within_ those components, and so you
+must replicate any assumptions you made when writing those components in your
 test environment or else your components don't look right.
 
 ```html
@@ -251,8 +251,8 @@ and
 3. Within the `main.js` file of your application (which subsequently mounts your
    root-level component).
 
-Re-using stylesheets that are imported in the beginning of your application was
-covered in the last section.
+The last section covered re-using stylesheets that you import in the beginning
+of your application.
 
 ```js
 import './main.css'
@@ -347,8 +347,8 @@ Or via an `@import` statement
 }
 ```
 
-When fonts are loaded from local files like this, the files must be served by
-your component testing dev server so the browser can fetch them. Where you place
+When you load fonts from local files like this, your component testing dev
+server must serve the files so the browser can fetch them. Where you place
 the files and how you reference them depends on your bundler:
 
 - **Vite**: Put the font files in your project's

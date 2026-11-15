@@ -52,7 +52,7 @@ cy.window().rightclick() // Errors, 'window' does not yield DOM element
 
 <Icon name="angle-right" /> **position _(String)_**
 
-The position where the right click should be issued. The `center` position is
+The position where `.rightclick()` issues the right click. The `center` position is
 the default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
@@ -167,7 +167,7 @@ cy.get('[data-cy=file-row]').first().rightclick('topRight')
 
 #### Specify explicit coordinates relative to the top left corner
 
-The right click below is issued inside of the element (15px from the left and
+Cypress issues the right click below inside of the element (15px from the left and
 40px from the top).
 
 ```javascript
@@ -355,8 +355,8 @@ Both commands wait for the element to reach an
 
 - `.rightclick()` automatically waits for the element to reach an
   [actionable state](/app/core-concepts/interacting-with-elements).
-- `.rightclick()` itself is not retried. `.rightclick()` fires once when the element is
-  actionable. Assertions chained after `.rightclick()` are retried until they
+- Cypress doesn't retry `.rightclick()` itself. `.rightclick()` fires once when the element is
+  actionable. Cypress retries assertions chained after `.rightclick()` until they
   pass or time out. See
   [Only queries are retried](/app/core-concepts/retry-ability#Only-queries-are-retried).
 

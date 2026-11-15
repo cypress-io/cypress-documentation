@@ -12,12 +12,12 @@ slug: /app/guides/authentication-testing/google-authentication
 
 The technique for testing is to use the
 [Google OAuth 2.0 Playground](https://developers.google.com/oauthplayground) to
-create a refresh token that can be exchanged for an access token and id token
+create a refresh token that your tests exchange for an access token and id token
 during the testing phase.
 
 ## Google Project and Application Setup
 
-First, a [Google](https://google.com) project is required. If you don't already
+First, you need a [Google](https://google.com) project. If you don't already
 have a project, you can create one using the
 [Google Cloud Console](https://console.cloud.google.com). More information is
 available in the
@@ -55,7 +55,7 @@ for instructions.
 :::info
 
 The refresh token from this process is unique to the authenticated Google user.
-This process must be repeated for each user intended for testing.
+You must repeat this process for each user intended for testing.
 
 :::
 
@@ -81,7 +81,7 @@ under **Step 2 (Exchange authorization code for tokens)**. Click the
 **Exchange authorization code for token** button.
 
 The playground takes you to **Step 3 (Configure request to API)**. Note the returned
-refresh token to be used with testing.
+refresh token to use with testing.
 
 ## Setting Google app credentials in Cypress
 
@@ -128,7 +128,7 @@ The `loginByGoogleApi` command executes the following steps:
    to perform the programmatic login, exchanging the refresh token for an
    `access_token`.
 2. Use the `access_token` returned to get the Google User profile.
-3. Finally the `googleCypress` localStorage item is set with the `access token`
+3. Finally, set the `googleCypress` localStorage item with the `access token`
    and user profile.
 
 <Tabs>
@@ -325,7 +325,7 @@ as the `Bearer` token.
 export const checkJwt = jwt(googleJwtConfig).unless({ path: ['/testData/*'] })
 ```
 
-Once this helper is defined, we can use globally to apply to all routes:
+Once you define this helper, you can use it globally to apply to all routes:
 
 ```jsx title='backend/app.ts'
 // initial imports ...
@@ -350,7 +350,7 @@ authenticated with Google. The component is identical to
 the `App.tsx` component, but has the addition of a `GoogleLogin` component in
 place of the original Sign Up and Sign In components.
 
-A `useGoogleLogin` hook is added to send a `GOOGLE` event with the `user` and
+Next, a `useGoogleLogin` hook sends a `GOOGLE` event with the `user` and
 `token` objects to work with the existing authentication layer
 (`authMachine.ts`).
 

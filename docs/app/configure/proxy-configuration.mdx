@@ -123,10 +123,10 @@ setx HTTP_PROXY http://my-company-proxy.com
 
 **Windows registry**
 
-On Windows, the proxy configured in the Windows registry is used as a
+On Windows, Cypress uses the proxy configured in the Windows registry as a
 _fallback_: Cypress only consults it when no proxy has been set through the
-`HTTP_PROXY`/`HTTPS_PROXY` environment variables or your npm config. When the
-registry value is used, the single configured proxy is applied to both
+`HTTP_PROXY`/`HTTPS_PROXY` environment variables or your npm config. When Cypress
+uses the registry value, it applies the single configured proxy to both
 `HTTP_PROXY` and `HTTPS_PROXY`.
 [Learn how to set your proxy settings system-wide in Windows.](https://www.howtogeek.com/tips/how-to-set-your-proxy-settings-in-windows-8.1/)
 
@@ -153,7 +153,7 @@ Two practical takeaways:
 
 - **Environment variables always win.** Setting `HTTP_PROXY` / `HTTPS_PROXY`
   explicitly overrides every other source.
-- **The Windows registry and `NODE_EXTRA_CA_CERTS` are only used when running
+- **Cypress only uses the Windows registry and `NODE_EXTRA_CA_CERTS` when running
   tests**, never during installation. If your binary download is blocked or
   TLS-intercepted, you must rely on environment variables and npm's
   `cafile` / `ca`.
@@ -190,10 +190,10 @@ environment variables, and Cypress applies them as follows:
 | `npm_config_https_proxy` | `HTTPS_PROXY` | if `HTTPS_PROXY` unset |
 
 A proxy set through the `HTTP_PROXY` or `HTTPS_PROXY` environment variable always
-takes precedence over the corresponding npm configuration. Only npm's `proxy`
-and `https-proxy` values are used as a fallback. npm's
+takes precedence over the corresponding npm configuration. Cypress uses only npm's `proxy`
+and `https-proxy` values as a fallback. Cypress does **not** apply npm's
 [`noproxy`](https://docs.npmjs.com/cli/v9/using-npm/config#noproxy) configuration
-is **not** applied to `NO_PROXY`, so set `NO_PROXY` directly if you need to
+to `NO_PROXY`, so set `NO_PROXY` directly if you need to
 bypass the proxy for specific domains.
 
 ### Bypassing the proxy with `NO_PROXY`
@@ -203,14 +203,14 @@ to a comma-separated list of domain names that should not be proxied.
 
 Cypress always appends `127.0.0.1`, `::1`, and `localhost` to `NO_PROXY` so that
 loopback traffic is never proxied. Cypress appends these entries even when you set your own
-`NO_PROXY` entries; your list is added to, not replaced. The only way to send
+`NO_PROXY` entries; Cypress adds to your list rather than replacing it. The only way to send
 loopback traffic through the proxy is to include the special `<-loopback>` value
 in `NO_PROXY`, which removes the automatic loopback entries.
 
 ### Casing
 
 If an uppercase and a lowercase version of a proxy setting are both supplied (for
-example, `HTTP_PROXY` and `http_proxy`), the lowercase variable is preferred.
+example, `HTTP_PROXY` and `http_proxy`), Cypress prefers the lowercase variable.
 
 ## Using a custom certificate authority (CA)
 

@@ -73,14 +73,14 @@ Either a single file, or an array of files. A file can be:
 - An object with a non-null `contents` property, specifying details about the
   file. Eg: `{contents: '@alias', fileName: 'file.json'}`.
 
-If an object is provided, it can have the following properties.
+If you provide an object, it can have the following properties.
 
-| Option         | Description                                                                                                                                                                                                                                                                        |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `contents`     | The contents of the file. The contents can be a string shorthand as described above, a `TypedArray` instance containing binary data (such as a `Cypress.Buffer` instance) or a non-TypedArray object, which is converted into a string with `JSON.stringify()` and `utf8` encoded. |
-| `fileName`     | The name of the file. If `contents` is a path on disk or an alias from `cy.readFile()` or `cy.fixture()`, `fileName` defaults to the actual filename. In any other case, `fileName` defaults to an empty string.                                                                   |
-| `mimeType`     | The [mimeType](https://developer.mozilla.org/en-US/docs/Web/API/File/type) of the file. If omitted, it is [inferred](https://github.com/jshttp/mime-types#mimelookuppath) from the file extension. If one cannot be inferred, it defaults to an empty string.                      |
-| `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). `lastModified` defaults to `Date.now()`.                       |
+| Option         | Description                                                                                                                                                                                                                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `contents`     | The contents of the file. The contents can be a string shorthand as described above, a `TypedArray` instance containing binary data (such as a `Cypress.Buffer` instance) or a non-TypedArray object, which Cypress converts into a string with `JSON.stringify()` and encodes as `utf8`. |
+| `fileName`     | The name of the file. If `contents` is a path on disk or an alias from `cy.readFile()` or `cy.fixture()`, `fileName` defaults to the actual filename. In any other case, `fileName` defaults to an empty string.                                                                          |
+| `mimeType`     | The [mimeType](https://developer.mozilla.org/en-US/docs/Web/API/File/type) of the file. If omitted, Cypress [infers](https://github.com/jshttp/mime-types#mimelookuppath) it from the file extension. If Cypress cannot infer one, it defaults to an empty string.                        |
+| `lastModified` | The file's last modified timestamp, in milliseconds elapsed since the UNIX epoch (eg. [`Date.prototype.getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime)). `lastModified` defaults to `Date.now()`.                              |
 
 <Icon name="angle-right" /> **options _(Object)_**
 
@@ -143,7 +143,7 @@ cy.get('input[type=file]').selectFile('file.json', { force: true })
 ```
 
 In many cases in modern applications, the underlying file input is hidden from
-view, and activated by a user clicking on a button. In these cases, you
+view, and a user activates it by clicking on a button. In these cases, you
 need to tell Cypress to ignore its actionability checks and select the file even
 though a user would not be able to directly activate the file input.
 
@@ -339,10 +339,10 @@ following:
 ### Community Recognition
 
 The `.selectFile()` command draws heavy inspiration from the now-deprecated
-Cypress File Upload plugin. `.selectFile()` was made possible by
-[@abramenal](https://github.com/abramenal) and contributors to the
+Cypress File Upload plugin. [@abramenal](https://github.com/abramenal) and
+contributors to the
 [cypress-file-upload](https://github.com/abramenal/cypress-file-upload#contributors)
-repository.
+repository made `.selectFile()` possible.
 
 ## See also
 

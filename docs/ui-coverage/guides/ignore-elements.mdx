@@ -93,8 +93,8 @@ entries are genuinely out of scope versus a real gap before excluding them.
 Open the **App Quality** tab in your project settings in Cypress Cloud and add an
 [`elementFilters`](/ui-coverage/configuration/elementfilters) rule. Each rule
 pairs a CSS selector with `include: false` to exclude the elements it matches.
-Here, a support chat widget rendered by a third party is removed so it stops
-counting as an untested element:
+Here, the rule removes a support chat widget rendered by a third party so it
+stops counting as an untested element:
 
 ```json title="App Quality Config"
 {
@@ -120,8 +120,8 @@ Two things decide whether a rule matches:
   only that one `<div>`, not the buttons inside it. To exclude everything within
   a container, include its descendants with a descendant selector such as
   `#intercom-container *`, as above.
-- **The first matching rule wins.** Rules are evaluated top to bottom, and each
-  element is decided by the first rule whose selector matches it. List specific
+- **The first matching rule wins.** UI Coverage evaluates rules top to bottom, and
+  the first rule whose selector matches an element decides that element. List specific
   rules before general ones.
 
 ### Exclude everything inside an iframe or shadow DOM
@@ -173,8 +173,8 @@ navigation links inside a vendor toolbar:
 }
 ```
 
-On its own, an `include: true` rule changes nothing, since everything is included
-by default. An `include: true` rule only matters as an exception ordered ahead of an exclude rule. For
+On its own, an `include: true` rule changes nothing, since UI Coverage includes
+everything by default. An `include: true` rule only matters as an exception ordered ahead of an exclude rule. For
 the full evaluation model, see
 [How are elementFilters rules applied?](/ui-coverage/configuration/elementfilters#How-are-elementFilters-rules-applied).
 

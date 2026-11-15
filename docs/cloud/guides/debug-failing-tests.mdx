@@ -49,7 +49,7 @@ and often impossible.
 The fastest path from red CI build to root cause is:
 
 1. **[Record your CI runs](#Step-1-Record-your-CI-runs-to-Cypress-Cloud)** so
-   every failure is captured as it happens.
+   Cypress Cloud captures every failure as it happens.
 2. **[Find the failing test](#Step-2-Go-straight-to-the-failing-test)** in
    Cypress Cloud, without scrolling through CI logs.
 3. **[Read the AI Error Summary](#Step-3-Read-the-AI-Error-Summary)** to
@@ -67,7 +67,7 @@ The rest of this guide covers each step in detail.
 ## Step 1: Record your CI runs to Cypress Cloud
 
 Cypress Cloud can only show you a failure it captured, so debugging CI starts
-with recording. Recording changes nothing about how your tests are written or
+with recording. Recording changes nothing about how you write your tests or
 how CI runs them. You add a flag to the `cypress run` command your pipeline
 already executes, and Cypress uploads the results, artifacts, and
 [Test Replay](/cloud/features/test-replay) data as the run happens.
@@ -133,7 +133,7 @@ where the flag and the secret go for that provider.
 Push a commit and let CI run. As the run executes, it appears in
 [Cypress Cloud](https://on.cypress.io/cloud) under your project's
 [Latest Runs](/cloud/features/recorded-runs#Latest-Runs), and in the **Runs** tab
-of the Cypress app. Passing runs are recorded too, which is what gives Cypress
+of the Cypress app. Cypress records passing runs too, which is what gives Cypress
 Cloud the history it needs to tell a new failure apart from a long-standing one.
 
 <DocsImage
@@ -375,7 +375,7 @@ are the highest-value things to add:
   Send run and flake notifications to Slack or Microsoft Teams so a red build
   reaches you without anyone watching the pipeline.
 - **[Run your specs in parallel](/cloud/features/smart-orchestration/parallelization).**
-  Now that runs are recorded, Cypress Cloud can load-balance specs across CI
+  Now that you record runs, Cypress Cloud can load-balance specs across CI
   machines and cut your total run time.
 - **[Connect Cloud MCP](/cloud/integrations/cloud-mcp) or the
   [Cloud CLI](/cloud/integrations/cloud-cli).** Both are available on every plan

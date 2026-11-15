@@ -13,8 +13,8 @@ Move time after overriding a native time function with
 
 :::caution
 
-[`cy.clock()`](/api/commands/clock) must be called before `cy.tick()` in order
-to override native time functions first.
+Call [`cy.clock()`](/api/commands/clock) before `cy.tick()` so that
+`cy.clock()` overrides native time functions first.
 
 :::
 
@@ -59,7 +59,7 @@ Pass in an options object to change the default behavior of `cy.tick()`.
 - **`clock.restore()`**
 
   Restore all overridden native functions. Cypress automatically calls
-  `clock.restore()` between tests, so it should not generally be needed.
+  `clock.restore()` between tests, so you generally don't need to call it.
 
 You can also access the `clock` object via `this.clock` in a
 [`.then()`](/api/commands/then) callback.

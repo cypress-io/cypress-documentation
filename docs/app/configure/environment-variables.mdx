@@ -77,7 +77,7 @@ See the [`Cypress.expose()`](/api/cypress-api/expose) API documentation for comp
 
 ## Set environment variables
 
-Environment variables for `cy.env()` can be set using several methods:
+You can set environment variables for `cy.env()` using several methods:
 
 1. **Cypress configuration file** - Set in the `env` key of your Cypress configuration
 1. **`cypress.env.json` file** - Create a `cypress.env.json` file in your project root
@@ -132,26 +132,26 @@ Cypress automatically removes the leading `CYPRESS_` or `cypress_` prefix and no
 
 :::danger
 
-The environment variable `CYPRESS_INTERNAL_ENV` is reserved and should not be set.
+The environment variable `CYPRESS_INTERNAL_ENV` is reserved, so don't set it.
 
 :::
 
 :::note
 
-Some `CYPRESS_`-prefixed variables are consumed by the Cypress CLI and Cypress
-Cloud rather than being treated as test environment variables. Most notably,
-[`CYPRESS_RECORD_KEY`](/app/references/command-line#cypress-run-record-key-lt-record-key-gt)
-and [`CYPRESS_PROJECT_ID`](/cloud/account-management/projects#Project-ID) are
-read directly from your operating system environment when recording to Cypress
-Cloud. Both variables must be set as OS-level environment variables (as shown above) and
-**cannot** be supplied through `cypress.env.json` or the `env` block of your
+The Cypress CLI and Cypress Cloud consume some `CYPRESS_`-prefixed variables
+rather than treating them as test environment variables. Most notably, Cypress
+reads [`CYPRESS_RECORD_KEY`](/app/references/command-line#cypress-run-record-key-lt-record-key-gt)
+and [`CYPRESS_PROJECT_ID`](/cloud/account-management/projects#Project-ID)
+directly from your operating system environment when recording to Cypress
+Cloud. You must set both variables as OS-level environment variables (as shown above) and
+**cannot** supply them through `cypress.env.json` or the `env` block of your
 Cypress configuration.
 
 :::
 
 ### 4. `--env` CLI flag
 
-Pass environment variables via the command line. Multiple values must be separated by a comma, not a space. In some shells, like Windows PowerShell, you may need to surround the key/value pair with quotes.
+Pass environment variables via the command line. Separate multiple values with a comma, not a space. In some shells, like Windows PowerShell, you may need to surround the key/value pair with quotes.
 
 ```shell
 cypress run --env host=kevin.dev.local,api_server=http://localhost:8888/api/v1
@@ -190,7 +190,7 @@ export default defineConfig({
 
 ## Set exposed configuration
 
-Exposed configuration for `Cypress.expose()` can be set via:
+You can set exposed configuration for `Cypress.expose()` via:
 
 1. **Cypress configuration file** - Set in the `expose` key of your Cypress configuration
 1. **`--expose` CLI flag** - Pass exposed configuration via command line

@@ -75,7 +75,7 @@ to keep the two runners' global types from conflicting.
 ### <Icon name="angle-right" /> Can I use a different assertion library with Cypress?
 
 Cypress assertions are built on
-[Chai](/app/references/bundled-libraries#Chai), and Chai can't be swapped for
+[Chai](/app/references/bundled-libraries#Chai), and you can't swap Chai for
 another assertion library. Chai is extensible, though: you can install any Chai
 plugin and register it with `chai.use()` in your
 [support file](/app/core-concepts/writing-and-organizing-tests#Support-file) to
@@ -147,7 +147,7 @@ to transpile your tests to JavaScript that Cypress can run.
 
 ### <Icon name="angle-right" /> What's the difference between a Spec, Test, and a Test Suite?
 
-The terms _spec_, _test_, and _test suite_ have specific meanings. Here's how they are differentiated in Cypress:
+The terms _spec_, _test_, and _test suite_ have specific meanings. Here's how Cypress differentiates them:
 
 **<u>Spec</u>** A single test file that contains a set of test cases or individual tests. Each spec file typically focuses on testing a specific feature, functionality, or aspect of the application under test. Specs define the test scenarios, interactions with the application, and assertions to verify expected behavior. Spec files are written in JavaScript or TypeScript and have a `.js` or `.ts` extension.
 
@@ -174,8 +174,8 @@ your choice.
 In addition to the above differences, below are a few rules of thumb to decide
 when to write a unit test and when to write an end-to-end test.
 
-- If the code you are trying to test is called from other code, use a unit test.
-- If the code is going be called from the external system, like a browser, use
+- If other code calls the code you are trying to test, use a unit test.
+- If an external system, like a browser, is going to call the code, use
   an end-to-end test.
 - If a unit test requires a lot of mocking and you have to bring tools like
   `jsdom`, `enzyme`, or `sinon.js` to simulate a real world environment, you may
@@ -225,23 +225,22 @@ If there is a significant bug outside of our release schedule then we release a
 patch as soon as possible.
 
 Patches for security vulnerabilities primarily focus on the latest major version.
-High and Critical CVSS security fixes in code authored and maintained by Cypress
-are backported to the previous major version for up to 12 months after the current
-major version is released. The decision to backport is made based on severity
+Cypress backports High and Critical CVSS security fixes in code authored and
+maintained by Cypress to the previous major version for up to 12 months after Cypress releases the current major version. Cypress decides whether to backport based on severity
 assessment and the feasibility of implementing the patch in those versions.
-Updates for vulnerabilities in third-party dependencies, such as Electron,
-Chromium, Node.js, or npm packages, are not backported.
+Cypress does not backport updates for vulnerabilities in third-party dependencies,
+such as Electron, Chromium, Node.js, or npm packages.
 
 ### <Icon name="angle-right" /> What information is captured or transmitted when using the Cypress App?
 
-The Cypress App runs locally so no data is sent to Cypress aside from exception data,
+The Cypress App runs locally so it sends no data to Cypress aside from exception data,
 which you can disable by following
 [Opt out of sending exception data to Cypress](/app/references/advanced-installation#Opt-out-of-sending-exception-data-to-Cypress).
 
 ### <Icon name="angle-right" /> Can I write API tests using Cypress?
 
 Yes. Use [`cy.request()`](/api/commands/request) to call an endpoint directly
-and assert on the response. No page needs to be visited first.
+and assert on the response. You don't need to visit a page first.
 
 ```js
 it('adds a todo', () => {
@@ -495,7 +494,7 @@ Other ways to wait for an element's presence in the DOM is through `timeouts`.
 Cypress commands have a default timeout of 4 seconds, however, most Cypress
 commands have
 [customizable timeout options](/app/references/configuration#Timeouts).
-Timeouts can be configured globally or on a per-command basis.
+You can configure timeouts globally or on a per-command basis.
 
 In [some cases](/app/core-concepts/interacting-with-elements#Visibility),
 your DOM element is not actionable. Cypress gives you a powerful
@@ -680,7 +679,7 @@ Also, check out our
 
 ### <Icon name="angle-right" /> How can I verify that calls to analytics like Google Analytics are being made correct?
 
-You can stub their functions and then ensure they're being called.
+You can stub their functions and then ensure your application calls them.
 
 Check out our
 [Stubbing Google Analytics Recipe](/app/references/recipes#Stubbing-and-spying).
@@ -735,7 +734,7 @@ Replace `*.example.com` with the domain(s) you want the browser to authenticate
 against.
 
 The machine running Cypress must already have a valid Kerberos ticket
-(for example, the user is logged into the domain, or a ticket has been obtained
+(for example, the user is logged into the domain, or the user has obtained a ticket
 via `kinit`). The browser flags only authorize Chrome to _use_ that ticket for
 the listed origins. The flags do not obtain one for you.
 
@@ -753,8 +752,9 @@ for a version with a bounded number of attempts.
 
 [`cy.intercept()`](/api/commands/intercept) matches traffic your application
 makes from the browser, which flows through the Cypress proxy.
-[`cy.request()`](/api/commands/request) is issued from the Cypress Node process
-instead, so it never enters that proxy and cannot be spied on or stubbed.
+The Cypress Node process issues [`cy.request()`](/api/commands/request)
+instead, so the request never enters that proxy and `cy.intercept()` cannot spy
+on or stub it.
 
 The two commands answer different questions. Use `cy.request()` to call an
 endpoint and assert on its response. Use `cy.intercept()` to assert on, wait
@@ -772,8 +772,7 @@ To inspect one, click the `cy.request()` entry in the
 full request and response to the browser console.
 
 Inspecting `cy.request()` also works after the fact on a CI run. Open the run in
-[Test Replay](/cloud/features/test-replay), click the `cy.request()` command,
-and the same detail is printed to your console. Open DevTools before clicking,
+[Test Replay](/cloud/features/test-replay), click the `cy.request()` command, and Test Replay prints the same detail to your browser console. Open DevTools before clicking,
 since that is where the output goes.
 
 ### <Icon name="angle-right" /> How do I send an authentication token with cy.request() in Cypress?
@@ -796,15 +795,15 @@ cy.env(['apiToken']).then(({ apiToken }) => {
 ```
 
 When you need to log in to obtain the token first, wrap the login request in
-[`cy.session()`](/api/commands/session) so it is cached and restored instead of
-re-run for every test. See
+[`cy.session()`](/api/commands/session) so Cypress caches and restores it instead of
+re-running it for every test. See
 [authenticate once and reuse the session](/app/guides/api-testing#Authenticate-once-and-reuse-the-session).
 
 ### <Icon name="angle-right" /> How do I test an API endpoint that returns a 4xx or 5xx status code in Cypress?
 
 By default [`cy.request()`](/api/commands/request) fails the test on any
 response outside `2xx` and `3xx`. When the error response is what you are
-testing, set `failOnStatusCode: false` so the response is yielded instead.
+testing, set `failOnStatusCode: false` so `cy.request()` yields the response instead.
 
 ```js
 cy.request({
@@ -845,8 +844,8 @@ You can run a single test file or group of tests by passing the `--spec` flag to
 Cypress discovers spec files using the
 [`specPattern`](/app/references/configuration#e2e) configuration option, which
 defaults to `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}` for end-to-end testing and
-`**/*.cy.{js,jsx,ts,tsx}` for component testing. Any file anywhere in your
-project that matches `specPattern` is picked up, so you're free to organize
+`**/*.cy.{js,jsx,ts,tsx}` for component testing. Cypress picks up any file
+anywhere in your project that matches `specPattern`, so you're free to organize
 specs into whatever folder structure suits your team. See
 [How Cypress finds your specs](/app/core-concepts/writing-and-organizing-tests#How-Cypress-finds-your-specs)
 for details.
@@ -893,8 +892,7 @@ Cypress watches your spec files and re-runs them on save. To turn this off, set
 
 :::
 
-Nothing is watched during
-[cypress run](/app/references/command-line#cypress-run), so this option only
+Cypress doesn't watch spec files during [cypress run](/app/references/command-line#cypress-run), so this option only
 affects `cypress open`. See
 [Disable file watching](/app/core-concepts/writing-and-organizing-tests#Disable-file-watching).
 
@@ -908,8 +906,8 @@ Nothing functional. `context` and `specify` are aliases provided by Mocha. `cont
 ### <Icon name="angle-right" /> How do I test uploading a file?
 
 It is possible to upload files in your application but it's different based on
-how you've written your own upload code. The various options are detailed in the
-[`.selectFile()` command](/api/commands/selectfile), but in many cases the
+how you've written your own upload code. The
+[`.selectFile()` command](/api/commands/selectfile) details the various options, but in many cases the
 simplest option works:
 
 ```javascript
@@ -1096,7 +1094,7 @@ beforeEach(() => {
 
 **Option 2: Use `cy.session()` to cache and restore server-set cookies**
 
-If your cookie is generated by the server after login (e.g. a session or auth
+If the server generates your cookie after login (e.g. a session or auth
 token cookie), use [`cy.session()`](/api/commands/session) to capture and replay
 the full browser context (cookies, localStorage, and sessionStorage) for every
 subsequent test without repeating the login flow:
@@ -1160,8 +1158,8 @@ to libraries that use IndexedDB under the hood, such as offline caches and
 client-side databases.
 
 [`cy.session()`](/api/commands/session) behaves the same way: a session caches
-and restores cookies, `localStorage`, and `sessionStorage` only, so IndexedDB
-data is neither saved with a session nor cleared when one is restored.
+and restores cookies, `localStorage`, and `sessionStorage` only, so a session
+neither saves IndexedDB data nor clears it when Cypress restores the session.
 
 If a test depends on IndexedDB being empty, delete the databases yourself in a
 `beforeEach` hook, after visiting the page so a `window` is available:
@@ -1264,7 +1262,7 @@ describe('Logo', () => {
 
 ### <Icon name="angle-right" /> How do I require or import node modules in Cypress?
 
-The code you write in Cypress is executed in the browser, so you can import or
+The browser executes the code you write in Cypress, so you can import or
 require JS modules, _but_ only those that work in a browser.
 
 You can `require` or `import` them as you're accustomed to. We preprocess your
@@ -1280,7 +1278,7 @@ example spec that imports an npm package and a local module.
 ### <Icon name="angle-right" /> Is there a way to give a proper SSL certificate so the page doesn't show up as "not secure"?
 
 No, and it isn't about your site's certificate. The browser's security indicator
-describes the Cypress app's page, which is served over `http` on `localhost`.
+describes the Cypress app's page, which Cypress serves over `http` on `localhost`.
 Your application under test loads inside that page, and its own HTTPS connection
 is unaffected.
 
@@ -1311,7 +1309,7 @@ There are a lot of ways to test this, so it depends. You need to be aware of
 what actually causes the download, then think of a way to test that mechanism.
 
 If your server sends specific disposition headers which cause a browser to
-prompt for download, you can figure out what URL this request is made to, and
+prompt for download, you can figure out what URL the browser makes this request to, and
 use [cy.request()](/api/commands/request) to hit that directly. Then you can
 test that the server send the right response headers.
 
@@ -1342,7 +1340,7 @@ You can modify the screenshot and video size when running headlessly with
 
 ### <Icon name="angle-right" /> Does Cypress support ES7?
 
-Yes. You can customize how specs are processed by using one of our [preprocessor plugins](/app/plugins/plugins-list)
+Yes. You can customize how Cypress processes specs by using one of our [preprocessor plugins](/app/plugins/plugins-list)
 or by [writing your own custom preprocessor](/api/node-events/preprocessors-api).
 
 Typically you'd reuse your existing Babel and webpack configurations.
@@ -1361,7 +1359,7 @@ There are a few ways.
 
 When using Cypress to test an HTTPS site, you might see a browser warning next
 to the browser URL. The warning is normal. The indicator describes the Cypress app's
-page, which is served over `http` on `localhost` — not your application, which
+page, which Cypress serves over `http` on `localhost` — not your application, which
 loads inside it with its certificate validated as usual. On the
 [legacy network path](/app/guides/native-network-interception#Using-the-legacy-network-path),
 Cypress modifies the traffic between your server and the browser and presents a
@@ -1380,12 +1378,12 @@ To start the server, run the tests and then shutdown the server we recommend
 ### <Icon name="angle-right" /> I found a bug! What do I do?
 
 - Search existing [open issues](https://github.com/cypress-io/cypress/issues),
-  it may already be reported!
+  someone may have already reported it!
 - Update Cypress. Your issue may have
   [already been fixed](/app/references/changelog).
 - [Open an issue](https://github.com/cypress-io/cypress/issues/new/choose). Your
   best chance of getting a bug looked at quickly is to provide a repository with
-  a reproducible bug that can be cloned and run.
+  a reproducible bug that the Cypress team can clone and run.
 
 ### <Icon name="angle-right" /> What is the right balance between custom commands and utility functions?
 
@@ -1448,7 +1446,7 @@ Also, check out our
 Special characters like `/`, `.` are valid characters for ids
 [according to the CSS spec](https://www.w3.org/TR/html50/dom.html#the-id-attribute).
 
-To test elements with those characters in ids, they need to be escaped with
+To test elements with those characters in ids, escape them with
 [`CSS.escape`](https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape) or
 [`Cypress.$.escapeSelector`](https://api.jquery.com/jQuery.escapeSelector/).
 
@@ -1526,7 +1524,7 @@ details, including the directives Cypress modifies or always removes.
 
 ### <Icon name="angle-right" /> My scripts are still blocked by CSP even though Cypress strips the header. Why? <E2EOnlyBadge />
 
-The most common cause is that the policy is delivered with a
+The most common cause is that the page delivers the policy with a
 [`<meta>` tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#http-equiv)
 rather than an HTTP header. `experimentalCspAllowList` only operates on headers,
 so it cannot allow or strip a meta-tag policy. Look for `Refused to load…` /
@@ -1539,10 +1537,10 @@ for how Cypress handles each delivery method.
 No. Cypress always removes `frame-ancestors`, `navigate-to`,
 `require-trusted-types-for`, `sandbox`, and `trusted-types` from allowed CSP
 headers, even with `experimentalCspAllowList` enabled, because leaving them in
-place would prevent Cypress from functioning. The behavior of these five
-directives cannot be tested through Cypress and must be verified outside of it.
+place would prevent Cypress from functioning. You cannot test the behavior of
+these five directives through Cypress and must verify it outside of Cypress.
 See [Always-stripped directives](/app/references/content-security-policy#always-stripped-directives)
-for the full list and the reason each is removed.
+for the full list and the reason Cypress removes each.
 
 ## Continuous Integration (CI/CD)
 
@@ -1876,8 +1874,8 @@ every Cypress spec file, blocking CI pipelines and adding noise to code reviews.
 **2. Best-practice lint rules:** catches Cypress anti-patterns in your editor
 _before_ tests ever run, which reduces flaky tests and avoids wasted CI time.
 See the [full rules list](https://github.com/cypress-io/eslint-plugin-cypress#rules)
-in the official repo for what's available and which rules are enabled by the
-`recommended` config.
+in the official repo for what's available and which rules the
+`recommended` config enables.
 
 Catching these issues at lint time (in-editor or pre-commit) is far cheaper than
 debugging a failing CI run, especially for flaky-test patterns like hard-coded
@@ -1889,7 +1887,7 @@ waits that fail intermittently under load.
 
 Many modern front-end UI libraries encourage writing applications using small,
 reusable building blocks known as components. Components start small (think
-buttons, images, inputs, etc.) and can be composed into larger components (order
+buttons, images, inputs, etc.) and you can compose them into larger components (order
 forms, date pickers, menus, etc.) and even entire pages.
 
 Component testing is about testing an individual component in isolation from the
@@ -1923,7 +1921,7 @@ complement your component tests.
 
 ### <Icon name="angle-right" /> What is the Mount Function?
 
-We ship a `mount` function for each UI library that is imported from the
+We ship a `mount` function for each UI library that you import from the
 `cypress` package. The `mount` function is responsible for rendering components within Cypress's
 sandboxed iframe and handling any framework-specific cleanup.
 
@@ -1952,13 +1950,13 @@ Cypress.Commands.add('mount', mount)
 ```
 
 The support file registers `cy.mount()` for any component test without having to `import`
-the framework-specific mount command, and it can be customized to fit your
+the framework-specific mount command, and you can customize it to fit your
 needs. See the examples guide for each framework for info on creating a
 custom `cy.mount()` command.
 
 ### <Icon name="angle-right" /> Why isn't my component rendering as it should?
 
-Any global styles and fonts must be imported and made available to your
+You must import any global styles and fonts and make them available to your
 component, just like in the application. See our guide on
 [Styling Components](/app/component-testing/styling-components) for more
 information on doing so.
@@ -2047,7 +2045,7 @@ If you plan to do this as you write tests, use the **Code** button in the
 Cypress App's command log. The **Code** button gives you the code for any prompt and saves it.
 Using the **Code** button represents an author-only use of `cy.prompt`.
 
-If you plan to do this after tests have been recorded, download a full report of
+If you plan to do this after you have recorded tests, download a full report of
 all the test code and related `cy.prompt` steps, and where they are located in
 your test suite. The report is available in the **Properties** tab in the cy.prompt
 area for a specific run. See

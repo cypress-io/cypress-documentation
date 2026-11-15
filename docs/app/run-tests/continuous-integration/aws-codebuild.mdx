@@ -12,7 +12,7 @@ slug: /app/continuous-integration/aws-codebuild
 
 The example below is a basic CI setup and job using the
 [AWS CodeBuild](https://aws.amazon.com/codebuild/) to run Cypress tests. This
-AWS CodeBuild configuration is placed within `buildspec.yml`.
+AWS CodeBuild configuration goes in `buildspec.yml`.
 
 Detailed documentation is available in the
 [AWS CodeBuild Documentation](https://docs.aws.amazon.com/codebuild/).
@@ -86,7 +86,7 @@ Per the
 AWS CodeBuild creates a separate build for each possible configuration
 combination for a
 [batch build-list strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-list).
-Therefore, AWS CodeBuild projects must be created or updated to run batch
+Therefore, you must create or update AWS CodeBuild projects to run batch
 configuration.
 
 Follow these steps to enable batch configuration for existing AWS CodeBuild
@@ -112,8 +112,8 @@ offers a way to specify an image hosted on
 [Docker Hub](https://hub.docker.com/) or the
 [Amazon Elastic Container Registry (ECR)](https://aws.amazon.com/ecr/).
 
-[Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
-Cypress locally and in CI are published to the
+Cypress publishes [Docker Images](https://github.com/cypress-io/cypress-docker-images)
+for running Cypress locally and in CI to the
 [Amazon ECR Public Gallery](https://gallery.ecr.aws).:
 
 - [Cypress 'base' Amazon ECR Public Gallery](https://gallery.ecr.aws/cypress-io/cypress/base)
@@ -223,7 +223,7 @@ To setup multiple containers to run in parallel, the `build-matrix`
 configuration uses a set of variables (`CY_GROUP_SPEC` and `WORKERS`) with a
 list of items specific to each group for the build.
 
-The fields are delimited by a pipe (`|`) character as follows:
+A pipe (`|`) character delimits the fields as follows:
 
 ```yaml
 ## Group Name | Browser | Specs | Cypress Configuration options (optional)
@@ -306,14 +306,14 @@ batch:
 
 <strong>Note</strong>
 
-The `WORKERS` array is filled with filler (or _dummy_) items to provision the
+The configuration fills the `WORKERS` array with filler (or _dummy_) items to provision the
 desired number of CI machine instances within the
 [batch build-matrix strategy](https://docs.aws.amazon.com/codebuild/latest/userguide/batch-build-buildspec.html#build-spec.batch.build-matrix)
-and provides 5 workers to each group defined in the `CY_GROUP_SPEC`.
+and provide 5 workers to each group defined in the `CY_GROUP_SPEC`.
 
 :::
 
-Finally, the script variables are passed to the call to `cypress run`.
+Finally, the configuration passes the script variables to the call to `cypress run`.
 
 ```yaml title="buildspec.yml"
 phases:

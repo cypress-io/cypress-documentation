@@ -14,7 +14,7 @@ the next step is keeping new gaps from creeping back in. This guide turns your U
 Coverage report into a **merge gate**, so a pull request that adds an untested
 button, form, or page can't merge without a deliberate decision.
 
-UI Coverage reports are generated server-side in Cypress Cloud from
+Cypress Cloud generates UI Coverage reports server-side from
 [Test Replay](/cloud/features/test-replay) data, so they add no overhead to your
 test runs, and nothing in your Cypress pipeline fails on its own when coverage
 drops. Enforcement is entirely opt-in: you choose a policy and apply it in your
@@ -173,7 +173,7 @@ base branch, then capture its per-view untested counts one of two ways.
 CI. Run it once with no committed baseline and it writes the current run's numbers
 to `ui-coverage-baseline.next.json` without failing the build. Review that file,
 then commit it as `ui-coverage-baseline.json` so every later run compares against
-it. A CI runner is discarded after the job, so to capture that first candidate
+it. Your CI provider discards a CI runner after the job, so to capture that first candidate
 either run the script locally by replaying a recent run's CI context (see
 [Required CI environment variables](/ui-coverage/results-api#Required-CI-environment-variables)),
 or upload `ui-coverage-baseline.next.json` as a build artifact from the CI run.
@@ -328,10 +328,10 @@ these but doesn't fail the build, so progress is visible without blocking anyone
 
 #### View-level comparison
 
-Untested elements are compared per [view](/ui-coverage/core-concepts/views) (a URL
+The script compares untested elements per [view](/ui-coverage/core-concepts/views) (a URL
 pattern for end-to-end tests, or a spec file for component tests), so the failure
 message points at the exact page or component where the new gap appeared, rather
-than a single project-wide number. Views are matched by `displayName`, so renaming
+than a single project-wide number. The script matches views by `displayName`, so renaming
 a route or changing how views are grouped changes the key: an unchanged page can
 then look like a new view and trip the gate. Re-promote the baseline after changes
 like that.

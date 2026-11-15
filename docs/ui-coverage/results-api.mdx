@@ -9,7 +9,7 @@ sidebar_position: 100
 
 # Results API
 
-UI Coverage reports are generated in Cypress Cloud after your run finishes, so
+Cypress Cloud generates UI Coverage reports after your run finishes, so
 nothing in your Cypress pipeline fails on its own when coverage drops. The
 **Results API** closes that loop: it lets you pull a run's UI Coverage results
 into your CI job and decide, in code, whether the coverage is good enough to
@@ -30,11 +30,11 @@ With the `getUICoverageResults` helper from the
   using the tested and untested link counts.
 - **Track regressions over time** by comparing a run against a stored baseline,
   or by trending results in a dashboard.
-- **Read and assert the configuration** that was in place when this UI Coverage report was processed.
+- **Read and assert the configuration** that was in place when Cypress Cloud processed this UI Coverage report.
 
 See [Examples](#Examples) for a worked script behind each of these.
 
-Because reports are processed server-side from
+Because Cypress Cloud processes reports server-side from
 [Test Replay](/cloud/features/test-replay) data, using the Results API adds no
 overhead to your Cypress runs. The enforcement step is entirely opt-in and
 lives in your CI workflow.
@@ -44,14 +44,14 @@ lives in your CI workflow.
 When you call `getUICoverageResults` inside a CI job, the helper:
 
 1. **Identifies the Cypress run** for the current CI build by cross-referencing
-   the CI environment variables present when the run was recorded. See
+   the CI environment variables present when you recorded the run. See
    [Required CI environment variables](#Required-CI-environment-variables) for
    details.
 2. **Waits for the UI Coverage report to finish processing.** If the report is
    still processing, the helper polls Cypress Cloud (up to 30 attempts at
    30-second intervals, roughly 15 minutes) before returning.
 3. **Returns the results** as a structured object you can assert against, or
-   **throws a descriptive error** if no matching run or report can be found.
+   **throws a descriptive error** if it can't find a matching run or report.
 
 Because the helper matches the run from the current CI context, call it **after
 `cypress run --record` completes within the same CI build**, so the run it should
@@ -67,7 +67,7 @@ Cypress found a UI Coverage report for run #68086 that is still processing. 8 of
 Cypress found a UI Coverage report for run #68086 (https://cloud.cypress.io/projects/ypt4pf/runs/68086/ui-coverage).
 ```
 
-A run must also meet a few conditions before a report can be found, including
+A run must also meet a few conditions before the helper can find a report, including
 Test Replay being enabled and a supported Cypress version. See the
 [Results API FAQ](/ui-coverage/faq#Results-API-and-CI) for the full list.
 
@@ -267,7 +267,7 @@ An example of a returned result:
 
 #### Reading the applied configuration
 
-The `config` property returns the **App Quality Config** saved for your project when this report was processed, including the full `profiles` array.
+The `config` property returns the **App Quality Config** saved for your project when Cypress Cloud processed this report, including the full `profiles` array.
 
 :::caution
 
@@ -300,8 +300,8 @@ or use the in-product feedback buttons if you need more than the current functio
 #### Handling errors
 
 `getUICoverageResults` returns a promise that rejects with a descriptive
-`Error` when it can't return results. For example, this happens when no
-matching run is found for the CI context, when the run was recorded with Test
+`Error` when it can't return results. For example, this happens when the helper
+finds no matching run for the CI context, when you recorded the run with Test
 Replay disabled,
 or when the report is still processing after the poll window elapses. Decide
 whether that should fail your build (let the rejection surface, as in the
@@ -568,8 +568,8 @@ steps:
 
 If you record multiple runs in a single CI build, you must record each run with
 the `--tag` parameter and then call `getUICoverageResults` with the matching
-`runTags` argument for each run. The tag is how each run is uniquely identified so
-the correct results are returned. Tags can also activate
+`runTags` argument for each run. The helper uses the tag to uniquely identify each run so
+it returns the correct results. Tags can also activate
 [Profiles](/ui-coverage/configuration/profiles) that apply different
 configuration to different runs.
 
@@ -757,7 +757,7 @@ getUICoverageResults().then((results) => {
 
 ### Assert the configuration
 
-The `config` property returns the App Quality Config that was used to process this run. You can assert that required rules are present so a configuration change doesn't
+The `config` property returns the App Quality Config that Cypress Cloud used to process this run. You can assert that required rules are present so a configuration change doesn't
 silently alter what's measured.
 
 If you use config [profiles](/ui-coverage/configuration/profiles) to produce a different config based on run tags, resolve the effective config first: match the run's tags against profile names, then layer the matching profile's `config` over the base configuration, since a profile replaces only the properties it defines.
@@ -834,7 +834,7 @@ getUICoverageResults().then(({ summary }) => {
 ### Compare against a baseline
 
 Comparing untested-element counts against a stored baseline fails a build only
-when **new** gaps are introduced, letting you pay down existing gaps over time
+when your changes introduce **new** gaps, letting you pay down existing gaps over time
 instead of blocking on them all at once. For complete code, the baseline
 structure, and best practices, see the
 [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline)

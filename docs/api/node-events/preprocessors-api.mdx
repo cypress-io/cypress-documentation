@@ -117,9 +117,9 @@ on('file:preprocessor', webpackPreprocessor(options))
 
 :::info
 
-This page covers aliases in **end-to-end** spec and support files, which are
-bundled by the preprocessor. For **component testing**, aliases are resolved by
-the dev server's Vite or Webpack config instead. See
+This page covers aliases in **end-to-end** spec and support files, which the
+preprocessor bundles. For **component testing**, the dev server's Vite or
+Webpack config resolves aliases instead. See
 [Resolving import path aliases](/app/component-testing/component-framework-configuration#Resolving-import-path-aliases).
 
 :::
@@ -134,8 +134,8 @@ change → rebuilds → the tool generates new files → Cypress detects another
 change → …
 
 To break this cycle, pass a `watchOptions.ignored` glob pattern (or array of
-patterns) to the webpack preprocessor. The value is forwarded directly to
-webpack's file watcher, which uses
+patterns) to the webpack preprocessor. The preprocessor forwards the value directly
+to webpack's file watcher, which uses
 [`anymatch`](https://github.com/micromatch/anymatch) internally and therefore
 accepts glob strings, regular expressions, or functions.
 
@@ -223,8 +223,8 @@ browser.
 
 :::note
 
-\*\* The built file is the file that is created by the preprocessor that is
-eventually served to the browser.
+\*\* The built file is the file that the preprocessor creates, which Cypress
+eventually serves to the browser.
 
 :::
 
@@ -243,10 +243,10 @@ If, for example, the source file is `spec.cljs`, the preprocessor should:
 Cypress can, and _does_, call this callback function multiple times with the same
 `filePath`.
 
-The callback function is called any time a file is requested by the browser.
+Cypress calls the callback function any time the browser requests a file.
 The call happens on each run of the tests.
 
-Make sure not to start a new watcher each time it is called. Instead, cache the
+Make sure not to start a new watcher each time Cypress calls the function. Instead, cache the
 watcher and, on subsequent calls, return a promise that resolves when the latest
 version of the file has been processed.
 
@@ -270,7 +270,7 @@ The `file` object passed to the callback function is an
 ### Receiving 'close' event
 
 When the running spec, the project, or the browser is closed while running
-tests, the `close` event is emitted. The preprocessor should do any
+tests, Cypress emits the `close` event. The preprocessor should do any
 necessary cleanup in this function, like closing the watcher when watching.
 
 ```javascript

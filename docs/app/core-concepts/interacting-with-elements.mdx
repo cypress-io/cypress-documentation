@@ -31,7 +31,7 @@ As of Cypress 16, the default visibility algorithm delegates to the browser's na
 
 <strong>Opacity</strong>
 
-Elements where the CSS property (or ancestors) is `opacity: 0` are considered
+Cypress considers elements where the CSS property (or ancestors) is `opacity: 0`
 hidden when
 [asserting on the element's visibility directly](/app/references/assertions#Visibility).
 
@@ -64,7 +64,7 @@ The modern algorithm intentionally does **not** detect these cases. If your test
 
 :::
 
-`visibilityStrategy` can also be set per-suite or per-test:
+You can also set `visibilityStrategy` per-suite or per-test:
 
 ```js
 describe('My Test Suite', { visibilityStrategy: 'legacy' }, () => {
@@ -206,7 +206,7 @@ cy.get('#scroll-container')
 
 ##### Children inside a collapsed container that hides via `overflow: hidden` + `max-height: 0`
 
-Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but children with their own non-zero dimensions inside that wrapper are not detected as hidden, because `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper, so assert on that instead:
+Many UI libraries hide collapsible content by setting `max-height: 0` and `overflow: hidden` on a wrapper. The wrapper itself reports as hidden under the modern algorithm (its bounding rect collapses to zero), but the modern algorithm doesn't detect children with their own non-zero dimensions inside that wrapper as hidden, because `checkVisibility()` doesn't account for ancestor clipping. Most libraries also set `aria-hidden="true"` on the closed wrapper, so assert on that instead:
 
 ```javascript title="cypress/e2e/spec.cy.js"
 // Before
@@ -379,7 +379,7 @@ We even note this for you in the
 Before interacting with an element, Cypress _always_ scrolls it into view
 (including any of its parent containers). Even if the element was visible
 without scrolling, we perform the scrolling algorithm to reproduce the
-same behavior every time the command is run.
+same behavior every time the command runs.
 
 :::info
 
@@ -391,10 +391,10 @@ elements** into view when using DOM commands such as
 :::
 
 By default, the scrolling algorithm works by scrolling the top of the element we
-issued the command on to the top of its scrollable container. The horizontal
-position is left to the browser, which scrolls only as far as it needs to bring
+issued the command on to the top of its scrollable container. Cypress leaves the
+horizontal position to the browser, which scrolls only as far as it needs to bring
 the element into view, so a container that already shows the element
-horizontally is not scrolled sideways.
+horizontally doesn't scroll sideways.
 
 After scrolling the element, if we determine that it is still being covered up,
 we continue to scroll and "nudge" the page until it becomes visible. This nudging
@@ -453,7 +453,7 @@ and `inline` is the horizontal axis, and each takes the same values as the nativ
 positions an axis can take, so they are not valid inside the object. Use
 `'start'` in place of `'top'` and `'end'` in place of `'bottom'`.
 
-An axis you leave out is omitted from the `scrollIntoView()` call, so the
+Cypress omits an axis you leave out from the `scrollIntoView()` call, so the
 browser's own default applies: `'start'` for `block` and `'nearest'` for
 `inline`.
 
@@ -475,9 +475,9 @@ the value you pass.
 ### Coordinates
 
 After we verify the element is actionable, Cypress then fires all of the
-appropriate events and corresponding default actions. Usually these events'
-coordinates are fired at the center of the element, but most commands enable you
-to change the position it's fired to.
+appropriate events and corresponding default actions. Usually Cypress fires
+these events at the center of the element, but most commands enable you to
+change that position.
 
 ```js
 cy.get('button').click({ position: 'topLeft' })
@@ -498,8 +498,8 @@ coordinates of the event.
 
 ## Debugging
 
-It can be difficult to debug problems when elements are not considered
-actionable by Cypress.
+It can be difficult to debug problems when Cypress doesn't consider elements
+actionable.
 
 Although you _should_ see a nice error message, nothing beats visually
 inspecting and poking at the DOM yourself to understand the reason why.
@@ -515,7 +515,7 @@ regular DOM queries like [`cy.get()`](/api/commands/get) or
 [`.find()`](/api/commands/find).
 
 The reason we scroll an element into view when hovering over a snapshot is to
-help you to see which element(s) were found by that corresponding command. Scrolling on hover is
+help you to see which element(s) that corresponding command found. Scrolling on hover is
 a purely visual feature and does not necessarily reflect what your page looked
 like when the command ran.
 

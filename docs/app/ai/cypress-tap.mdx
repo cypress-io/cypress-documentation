@@ -318,8 +318,8 @@ CONSOLE PROPS
 1 section collapsed — open all of it with --depth all
 ```
 
-A value long enough to bury the rest of the payload, such as a response body,
-is shown as a note of its length instead of being printed to the terminal. You can pass `--json` to get
+`cypress tap` shows a value long enough to bury the rest of the payload, such as a response body,
+as a note of its length instead of printing it to the terminal. You can pass `--json` to get
 every console property if needed.
 
 ### cypress tap pin {#cypress-tap-pin}
@@ -348,7 +348,7 @@ BEFORE EACH · h2
    1  task  db:seed
 ```
 
-Pins can't be created while a spec is running, and snapshots are kept
+You can't create pins while a spec is running, and Cypress keeps snapshots
 only for the most recent tests (see
 [`numTestsKeptInMemory`](/app/references/configuration#Global)). A rerun
 releases the pin, since the snapshot it named belongs to the previous run.
@@ -417,7 +417,7 @@ cypress tap dom --selector li --at 2
 ### cypress tap aria {#cypress-tap-aria}
 
 Reads the accessibility (ARIA) tree of the app-under-test frame, or the
-subtree rooted at a CSS selector. Structural and text-only roles are dropped,
+subtree rooted at a CSS selector. The command drops structural and text-only roles,
 leaving the compact role/name/state tree browser developer tools show.
 
 | Option            | Description                                                                                                           | Default |
@@ -506,7 +506,7 @@ SPECS (2)
   cypress/e2e/login.cy.ts
 ```
 
-Pick a spec to run. The command returns as soon as the run is requested, and does not
+Pick a spec to run. The command returns as soon as it requests the run, and does not
 wait for the result:
 
 ```shell title="Command"
@@ -596,7 +596,7 @@ TEST BODY · r5
 ```
 
 The error and code frame often answer the question on their own. Here the
-discount code was entered and applied, but the cart total never changed, so
+test entered and applied the discount code, but the cart total never changed, so
 the bug is in the application rather than the test.
 
 When the error and code frame aren't enough on their own, drill into a single Command Log entry. The `command` command shows one row's hook section, its pinnable DOM snapshots, and its console properties:
@@ -637,7 +637,7 @@ TEST BODY · r5
 
 Pinning from the terminal does the same thing to the Cypress window as
 clicking that command in the app would: the app-under-test frame switches to
-the historical snapshot, and stays there until the pin is released.
+the historical snapshot, and stays there until you release the pin.
 
 :::caution
 
@@ -699,9 +699,9 @@ reports `passed`.
 `cypress tap` is built to be driven by AI agents:
 
 - **`--json` is the contract.** Every command's JSON output is stable and
-  parseable, and the formatted terminal output is built from it.
-- **Output is bounded.** DOM, accessibility, and console-property payloads are
-  capped by default so a heavy page never floods an agent's context, with
+  parseable, and `cypress tap` builds the formatted terminal output from that JSON.
+- **Output is bounded.** `cypress tap` caps DOM, accessibility, and
+  console-property payloads by default so a heavy page never floods an agent's context, with
   explicit options to raise the caps when needed.
 - **The CLI describes itself.** `--help` lists the commands the attached
   Cypress session advertises, so an agent can discover the surface at runtime
@@ -721,7 +721,7 @@ npx cypress tap pin --help
 Help is always available. The `--help` output does not need a browser open, and with no Cypress
 session running at all the CLI falls back to the command schema it ships with,
 so an agent can read the surface before asking you to start anything. When a
-session is attached, help is generated from that session's own schema and
+session is attached, the CLI generates help from that session's own schema, and the help
 leads with the session it resolved, so what your agent reads matches the
 Cypress it is about to drive.
 
@@ -1088,8 +1088,8 @@ Together these tools provide the availability for you or an AI agent to fully en
 
 ### Troubleshooting
 
-- **`status` reports `not connected`.** No Cypress session was found for this
-  directory. Start one with `cypress open`, and remember that headless
+- **`status` reports `not connected`.** `cypress tap` found no Cypress session for
+  this directory. Start one with `cypress open`, and remember that headless
   `cypress run` sessions are never discoverable. In an agent sandbox, also see
   [Troubleshoot Cypress in an agent sandbox](/app/tooling/cypress-agent-sandboxes#Troubleshoot-Cypress-in-an-agent-sandbox).
 
@@ -1128,8 +1128,8 @@ Cypress does capture telemetry specifically around the usage of the CLI to infor
 ### Limitations of the cypress tap CLI
 
 - You must be on Cypress v15.21.0+ or higher to use the CLI. You cannot use `cypress tap` to interact with older versions.
-- `cypress tap` reads the most recent run of the open session. Command details
-  and DOM snapshots are kept only for the most recent tests (see
+- `cypress tap` reads the most recent run of the open session. Cypress keeps
+  command details and DOM snapshots only for the most recent tests (see
   [`numTestsKeptInMemory`](/app/references/configuration#Global)), so older
   tests may report that their details are no longer available.
 - `dom`, `aria`, `inspect`, and `pin` work only on a completed run. While a

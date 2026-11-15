@@ -27,8 +27,8 @@ This document covers how to use [built in](#Built-in-reporters) and [custom](#Cu
 
 ## Built in reporters
 
-Because Cypress is built on top of Mocha, that means any reporter built for
-Mocha can be used with Cypress. Here is a list of built in Mocha reporters.
+Because Cypress is built on top of Mocha, that means you can use any reporter
+built for Mocha with Cypress. Here is a list of built in Mocha reporters.
 
 - [Mocha's built-in reporters](https://mochajs.org/#reporters)
 
@@ -49,7 +49,7 @@ party reporter.
 
 You can load
 [custom Mocha reporters](https://mochajs.org/api/tutorial-custom-reporter.html)
-through a relative or absolute path. Custom reporters can be specified in your Cypress
+through a relative or absolute path. You can specify custom reporters in your Cypress
 configuration file or via the [command line](/app/references/command-line).
 
 For example, if you have the following directory structure:
@@ -145,8 +145,8 @@ token to write one file per spec, then merge them. See
 
 ## Merging reports across spec files
 
-Each spec file is processed completely separately during each `cypress run`
-execution. Thus each spec run _overwrites_ the previous report file. To preserve
+Cypress processes each spec file completely separately during each
+`cypress run` execution. Thus each spec run _overwrites_ the previous report file. To preserve
 unique reports for each specfile, use the `[hash]` in the `mochaFile` filename.
 
 The following configuration creates separate XML files in the `results`
@@ -257,10 +257,10 @@ the npm script commands below to your `package.json` then call `npm run report`.
 }
 ```
 
-In case you want to combine generated XML files into a single one,
-[junit-report-merger](https://www.npmjs.com/package/junit-report-merger) can be
-added. For example, to combine all files into
-`cypress/results/combined-report.xml` the `combine:reports` script can be added.
+In case you want to combine generated XML files into a single one, you can add
+[junit-report-merger](https://www.npmjs.com/package/junit-report-merger). For
+example, to combine all files into `cypress/results/combined-report.xml`, add the
+`combine:reports` script.
 
 ```json title="package.json"
 {
@@ -276,9 +276,9 @@ added. For example, to combine all files into
 
 #### Spec to `STDOUT`, produce a combined Mochawesome JSON file
 
-This example is shown in the branch `spec-and-single-mochawesome-json` in
-[https://github.com/cypress-io/cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb).
-We want to output a "spec" report to `STDOUT`, save an individual Mochawesome
+The branch `spec-and-single-mochawesome-json` in
+[https://github.com/cypress-io/cypress-example-circleci-orb](https://github.com/cypress-io/cypress-example-circleci-orb)
+shows this example. We want to output a "spec" report to `STDOUT`, save an individual Mochawesome
 JSON file per test file, and then combine all JSON reports into a single report.
 
 We need to install some additional dependencies.
@@ -329,8 +329,8 @@ using the
 <PackageManagerTabs run="marge mochawesome.json" />
 
 The `marge` command generates the beautiful standalone HTML report file
-`mochawesome-report/mochawesome.html` shown below. As you can see all test
-results, timing information, and even test bodies are included.
+`mochawesome-report/mochawesome.html` shown below. As you can see, the report
+includes all test results, timing information, and even test bodies.
 
 <DocsImage
   src="/img/app/reporters/mochawesome-report.png"

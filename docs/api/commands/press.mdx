@@ -84,7 +84,7 @@ The key to press. Values for non single character keys are available on [`Cypres
 
 :::info
 
-F1-F12 keys are not supported. These keys are used for browser shortcuts, and can prevent the test suite from executing properly after they are pressed.
+F1-F12 keys are not supported. Browsers use these keys for shortcuts, and pressing them can prevent the test suite from executing properly.
 
 :::
 
@@ -135,7 +135,7 @@ cy.press('a')
 
 ### Type a multi-codepoint UTF-8 character
 
-Multi-codepoint UTF-8 characters are also supported and do not need to be entered as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; type the entire character as a string.
+Multi-codepoint UTF-8 characters are also supported, and you don't need to enter them as individual codepoints. For example, `é` can be either one single codepoint or two separate codepoints when the accent is pressed as a subsequent modifier key. You do not need to press each codepoint separately; type the entire character as a string.
 
 ```javascript
 // works

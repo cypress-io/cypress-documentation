@@ -41,7 +41,7 @@ To stay in your editor for the whole loop rather than switching to the browser a
 
 ## When the report is ready
 
-Each spec's data starts processing as soon as that spec finishes uploading, but the run-level report is assembled only once Cypress Cloud marks the run **complete**.
+Each spec's data starts processing as soon as that spec finishes uploading, but Cypress Cloud assembles the run-level report only once it marks the run **complete**.
 
 For grouped and parallelized runs, completion waits out the project's [Run Completion Delay](/cloud/features/smart-orchestration/parallelization#Run-Completion-Delay), a grace period (60 seconds by default) that lets late machines join the run before it closes. Report finalization waits with it, so on a CI run the accessibility report can trail the last machine by that much.
 
@@ -49,7 +49,7 @@ A single local run without `--group` or `--parallel` skips the delay entirely. C
 
 ## Compare two local runs to prove a fix landed
 
-Seeing zero violations for the rule you fixed is weaker evidence than seeing that rule move from failing to resolved. [Branch Review](/accessibility/guides/compare-reports) gives you that, and it works just as well with two runs recorded from your own machine. Cypress reads your branch and commit from your local `.git` directory on every recorded run, whether or not it detects a CI provider, so local runs land on the correct branch and can be compared like any other run.
+Seeing zero violations for the rule you fixed is weaker evidence than seeing that rule move from failing to resolved. [Branch Review](/accessibility/guides/compare-reports) gives you that, and it works just as well with two runs recorded from your own machine. Cypress reads your branch and commit from your local `.git` directory on every recorded run, whether or not it detects a CI provider, so local runs land on the correct branch and you can compare them like any other run.
 
 1. Record the specs from your base branch first, before you start work, or by stashing your changes:
 
@@ -66,7 +66,7 @@ Seeing zero violations for the rule you fixed is weaker evidence than seeing tha
 
 The **Resolved elements** section should list the rule you worked on in every view where it was failing, which is how you confirm the fix reached more than the one element you tested by hand. The **New failed elements** section is the more valuable half: it's where the `aria-label` that duplicates visible text shows up.
 
-Recording the **same specs** in both runs is what makes the comparison trustworthy. Branch Review compares what each run actually saw, so a base run covering the whole suite and a changed run covering one spec produces a long list of "resolved" elements that only means those pages weren't visited.
+Recording the **same specs** in both runs is what makes the comparison trustworthy. Branch Review compares what each run actually saw, so a base run covering the whole suite and a changed run covering one spec produces a long list of "resolved" elements that only means the changed run didn't visit those pages.
 
 :::caution
 
@@ -131,13 +131,13 @@ Local runs land in the same project as your CI runs, and their reports are just 
 
 <CypressCommandTabs command='run --record --tag "local" --spec "cypress/e2e/checkout.cy.js"' />
 
-Tags are shown on the run and are filterable in Cypress Cloud, so a shared `local` tag lets anyone skip past them when scanning the run list.
+Cypress Cloud shows tags on the run, and you can filter the run list by tag, so a shared `local` tag lets anyone skip past them when scanning the run list.
 
 Every recorded run also consumes [test results](/cloud/account-management/billing-and-usage#Cloud-test-results) from your plan, whether it came from CI or your laptop. The test result cost is an argument for narrow `--spec` runs, which you want anyway.
 
 ## What a local run can't do
 
-The [Results API](/accessibility/connect-and-extend/results-api) is a CI tool and doesn't have a local equivalent. `getAccessibilityResults()` identifies the run to report on from the CI environment variables present when the run was recorded, so calling it from your machine fails with "It appears you are not running in CI." Keep policy enforcement in your pipeline and use Cypress Cloud, Branch Review, or Cloud MCP for local feedback.
+The [Results API](/accessibility/connect-and-extend/results-api) is a CI tool and doesn't have a local equivalent. `getAccessibilityResults()` identifies the run to report on from the CI environment variables present when you recorded the run, so calling it from your machine fails with "It appears you are not running in CI." Keep policy enforcement in your pipeline and use Cypress Cloud, Branch Review, or Cloud MCP for local feedback.
 
 ## See also
 

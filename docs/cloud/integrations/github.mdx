@@ -33,7 +33,7 @@ GitHub admin to enable repository access.
 GitHub Integration depends on your CI environment reliably providing a commit
 SHA (typically via an environment variable). Providing a commit SHA is not a problem for most
 users, but if you are facing GitHub integration issues with your CI setup,
-make sure the git information is being sent properly by following
+make sure your CI sends the git information properly by following
 [these guidelines](/app/continuous-integration/overview#Git-information).
 If you still face issues after this,
 [contact us](mailto:hello@cypress.io).
@@ -348,8 +348,8 @@ organization's Integrations page:
   alt="Associate GitHub repo with Cypress project"
 />
 
-Once a GitHub repository is associated with a Cypress project, the GitHub
-integration is immediately enabled:
+Once you associate a GitHub repository with a Cypress project, Cypress Cloud
+immediately enables the GitHub integration:
 
 <DocsImage
   src="/img/cloud/integrations/github/project-settings-selected-repo.jpg"
@@ -408,8 +408,8 @@ statuses, see
 
 ### Disable status checks
 
-GitHub status checks are optional and can be disabled within a project's GitHub
-integration settings:
+GitHub status checks are optional, and you can disable them within a project's
+GitHub integration settings:
 
 <DocsImage
   src="/img/cloud/integrations/github/status-check-settings.jpg"
@@ -443,7 +443,7 @@ requests via comments that include:
   - A summary of the tests that failed or are flaky
   - A link back to the associated failed or flaky test within Cypress Cloud
 
-An example of a Cypress pull-request comment can be seen below:
+Below is an example of a Cypress pull-request comment:
 
 <DocsImage
   src="/img/cloud/integrations/github/pr-comment-fail.jpg"
@@ -453,8 +453,8 @@ An example of a Cypress pull-request comment can be seen below:
 
 ### Disable PR comments
 
-PR comments are optional and can be disabled if not needed within a project's
-GitHub Integration settings:
+PR comments are optional, and you can disable them within a project's GitHub
+Integration settings if you don't need them:
 
 <DocsImage
   src="/img/cloud/integrations/github/pr-comments-settings.jpg"

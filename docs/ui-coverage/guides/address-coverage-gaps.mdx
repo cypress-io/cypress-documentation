@@ -88,7 +88,7 @@ describe('Cart', () => {
 })
 ```
 
-An element is marked tested once a [recognized interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) targets it, so a single flow naturally covers every element it exercises on the way through.
+UI Coverage marks an element tested once a [recognized interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) targets it, so a single flow naturally covers every element it exercises on the way through.
 
 The same approach applies to component tests. There a view is a spec file rather than a URL, so instead of navigating with `cy.visit()` you mount the component and interact with the untested element inside the spec:
 
@@ -134,7 +134,7 @@ Visiting a page is the starting point: it turns the untested link green and crea
 
 #### Reveal hidden and state-gated elements
 
-Some elements show up as untested only because your tests never render them. A control inside a collapsed menu, a modal, or a section that only appears after signing in isn't exercised until your test puts the UI into that state. Drive the interaction that reveals the element, then interact with it:
+Some elements show up as untested only because your tests never render them. A control inside a collapsed menu, a modal, or a section that only appears after signing in stays untested until your tests put the UI into that state. Drive the interaction that reveals the element, then interact with it:
 
 ```js title="cypress/e2e/product-filters.cy.js"
 // The filters panel is collapsed until its toggle is clicked

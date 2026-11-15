@@ -33,11 +33,11 @@ Each channel below answers a different question, and most teams end up using mor
 An accessibility comparison in Branch Review contains:
 
 - **The score, with its change.** The [accessibility score](/accessibility/core-concepts/accessibility-score) for the Changed run, and how many percentage points it moved against the Base run.
-- **New failed elements.** Elements failing a rule in the Changed run that either did not exist in the Base run, or existed there and were passing. New failed elements are grouped by rule and then by [view](/accessibility/configuration/views), so you can open one rule and see every page it broke on.
+- **New failed elements.** Elements failing a rule in the Changed run that either did not exist in the Base run, or existed there and were passing. Branch Review groups new failed elements by rule and then by [view](/accessibility/configuration/views), so you can open one rule and see every page it broke on.
 - **Resolved elements.** Elements that failed in the Base run and are either gone or passing in the Changed run. The resolved list is the half that proves a fix landed everywhere, not just on the one element you tested by hand.
-- **Existing failed elements.** A link out to the full report for the Changed run, for the violations that were already there. Existing failed elements are deliberately kept out of the diff so old and new findings never blend together.
+- **Existing failed elements.** A link out to the full report for the Changed run, for the violations that were already there. Branch Review deliberately keeps existing failed elements out of the diff so old and new findings never blend together.
 
-Cypress matches elements across runs by the identifier described in [element identification](/accessibility/core-concepts/element-identification), evaluated per rule and per view, and matches views by their URL pattern. Views that appear in only one of the two runs are marked as added or removed rather than being counted as accessibility changes.
+Cypress matches elements across runs by the identifier described in [element identification](/accessibility/core-concepts/element-identification), evaluated per rule and per view, and matches views by their URL pattern. Cypress marks views that appear in only one of the two runs as added or removed rather than counting them as accessibility changes.
 
 ### Review a pull request before you approve it
 
@@ -65,7 +65,7 @@ A comparison is only as good as the two runs behind it. Four things matter, in r
 
 **Both runs need to cover the same ground.** Branch Review compares what each run actually saw. If the Base run covered the whole suite and the Changed run covered one spec, most of the report becomes "resolved" elements that only mean those pages were never visited. Compare full suite against full suite, or the same `--spec` selection against itself.
 
-**Both runs need complete reports.** While either run is still processing, Branch Review reports that the changes are not ready yet. When a run does not produce a full report, its results are marked partial and Branch Review names the run and the reason:
+**Both runs need complete reports.** While either run is still processing, Branch Review reports that the changes are not ready yet. When a run does not produce a full report, Branch Review marks its results partial and names the run and the reason:
 
 - The run was a partial re-run. [Re-run optimization](/cloud/features/smart-orchestration/rerun-optimization) executes only the specs or tests that failed, so its report covers that subset rather than the full suite that the run it re-ran covered. Branch Review names the anchor run the re-run came from.
 - The run was cancelled, either manually or by [auto cancellation](/cloud/features/smart-orchestration/run-cancellation), and some specs never ran.
@@ -75,7 +75,7 @@ A comparison is only as good as the two runs behind it. Four things matter, in r
 
 Treat a diff built on a partial report as a hint rather than a verdict. The missing specs make elements look resolved when they were only never visited, which is most misleading in the re-run case: a re-run of two failing specs compared against a full base run reports almost the entire application as resolved. Compare the anchor run instead.
 
-**Views need to be stable.** A URL that carries a value generated per run can show up as a new view in one run and a removed view in the next, which buries the real changes. Numeric IDs and UUIDs are grouped for you, so `/products/123` and `/products/456` already report as one `/products/*` view. Other dynamic values, such as slugs, usernames, and order references, are not, so add [`views`](/accessibility/configuration/views) rules for the ones your application uses:
+**Views need to be stable.** A URL that carries a value generated per run can show up as a new view in one run and a removed view in the next, which buries the real changes. Cypress groups numeric IDs and UUIDs for you, so `/products/123` and `/products/456` already report as one `/products/*` view. Cypress doesn't group other dynamic values, such as slugs, usernames, and order references, so add [`views`](/accessibility/configuration/views) rules for the ones your application uses:
 
 ```json title="App Quality Config"
 {
@@ -92,7 +92,7 @@ Treat a diff built on a partial report as a hint rather than a verdict. The miss
 }
 ```
 
-**Elements need to be stable.** Elements are matched between runs by their identifier, so an attribute that changes on every build splits one element into two: a resolved failure in the Base run and a new failure in the Changed run, with nothing having changed for your users. CSS-in-JS class names are the most common cause. Exclude those values from identification with [`attributeFilters`](/accessibility/configuration/attributefilters):
+**Elements need to be stable.** Cypress matches elements between runs by their identifier, so an attribute that changes on every build splits one element into two: a resolved failure in the Base run and a new failure in the Changed run, with nothing having changed for your users. CSS-in-JS class names are the most common cause. Exclude those values from identification with [`attributeFilters`](/accessibility/configuration/attributefilters):
 
 ```json title="App Quality Config"
 {
@@ -113,7 +113,7 @@ Configuration changes apply to past runs too. After you save one, regenerate the
 
 ## Enforce a standard in CI with the Results API {#enforce-a-standard-in-ci}
 
-Cypress Accessibility reports are built in Cypress Cloud after your tests upload, so nothing in a Cypress run fails because of an accessibility violation. Blocking a build is an explicit step you add, and the [Results API](/accessibility/connect-and-extend/results-api) is what makes that step possible: `getAccessibilityResults()` identifies the run your CI build recorded, waits for its report, and hands you the results as data.
+Cypress Cloud builds Cypress Accessibility reports after your tests upload, so nothing in a Cypress run fails because of an accessibility violation. Blocking a build is an explicit step you add, and the [Results API](/accessibility/connect-and-extend/results-api) is what makes that step possible: `getAccessibilityResults()` identifies the run your CI build recorded, waits for its report, and hands you the results as data.
 
 The full field list lives in the [Results API reference](/accessibility/connect-and-extend/results-api#Result-Types). The fields below are the ones policies are usually built on:
 
@@ -176,7 +176,7 @@ The partial report guard matters more than it looks. A cancelled or partially re
 
 ### Route new failures to the team that owns them
 
-Failures are also listed per view, and a view maps to a URL pattern or a component test, which in most applications maps to an owning team. The view-to-team mapping makes it possible to notify the team that can act instead of a shared channel everyone mutes.
+The report also lists failures per view, and a view maps to a URL pattern or a component test, which in most applications maps to an owning team. The view-to-team mapping makes it possible to notify the team that can act instead of a shared channel everyone mutes.
 
 ```javascript title="scripts/notifyViewOwners.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
@@ -336,7 +336,7 @@ These channels are most useful together, because each one answers the next quest
 
 The same path works from the other direction: a Slack notification showing an unexpected score, or a chart with a step change in it, leads into Branch Review the same way.
 
-As you work through this, use the **Submit Feedback** button in Cypress Cloud whenever something could be clearer. Feedback is read by the team that builds these reports.
+As you work through this, use the **Submit Feedback** button in Cypress Cloud whenever something could be clearer. The team that builds these reports reads the feedback.
 
 ## See also
 
@@ -347,7 +347,7 @@ As you work through this, use the **Submit Feedback** button in Cypress Cloud wh
 - [Accessibility feedback during local development](/accessibility/guides/local-development) is the same comparison workflow, run from your own machine.
 - [Production monitoring](/accessibility/guides/production-monitoring) covers scheduled runs against live environments.
 - [Fix accessibility violations](/accessibility/guides/improve-accessibility) is the workflow for the backlog these tools protect.
-- [Element identification](/accessibility/core-concepts/element-identification) explains how elements are matched between runs.
+- [Element identification](/accessibility/core-concepts/element-identification) explains how Cypress matches elements between runs.
 - [Accessibility score](/accessibility/core-concepts/accessibility-score) explains what moves the number your thresholds are set against.
 - [Configuration overview](/accessibility/configuration/overview) is where views, filters, identification, and profiles are documented.
 - [Work with AI agents](/accessibility/work-with-ai-agents) has more Cypress Cloud MCP prompt patterns.

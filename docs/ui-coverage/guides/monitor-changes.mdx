@@ -10,8 +10,8 @@ sidebar_position: 80
 # Monitor changes
 
 A single UI Coverage score tells you where you are today. Monitoring tells you
-which direction you're moving, so a drop in coverage is caught and reviewed
-before it merges, rather than discovered months later. This guide walks through
+which direction you're moving, so you catch and review a drop in coverage
+before it merges, rather than discovering it months later. This guide walks through
 a repeatable monitoring workflow, from establishing a cadence of runs to
 reviewing individual changes and tracking long-term trends.
 
@@ -30,19 +30,19 @@ patterns give you that:
 
 - **On every pull request**: record a run for each PR so you can compare it
   against your base branch. The PR comparison is what surfaces coverage regressions while
-  they can still be fixed cheaply.
+  you can still fix them cheaply.
 - **On a schedule**: add a recurring job to your CI (for example, a nightly
   cron workflow) that records a run against a stable environment. Scheduled
-  runs give you a consistent point of comparison that isn't affected by which
+  runs give you a consistent point of comparison that doesn't depend on which
   files a particular PR happened to touch.
 
-When a run is split across parallel machines or multiple `cypress run` calls,
+When you split a run across parallel machines or multiple `cypress run` calls,
 combine those specs into a single [Cypress run](/cloud/features/recorded-runs)
 with the [`--group` flag](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs)
 so each report reflects your entire suite rather than a slice of it.
 
 Once runs are recording, connect [Slack](/cloud/integrations/slack) or
-[Microsoft Teams](/cloud/integrations/microsoft-teams) so your team is alerted
+[Microsoft Teams](/cloud/integrations/microsoft-teams) so Cypress Cloud alerts your team
 whenever a run finishes, with UI Coverage results surfaced directly in the
 notification. For
 scheduled runs especially, this is what turns a nightly regression into an alert

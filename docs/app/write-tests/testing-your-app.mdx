@@ -37,7 +37,7 @@ production?
 While you certainly _can_ test an application that's already deployed, that's
 not really the **sweet spot** of Cypress.
 
-Cypress is built, and optimized around being a tool for your daily local
+We built and optimized Cypress to be a tool for your daily local
 development. In fact, after you start using Cypress for awhile, we believe that
 you may find it useful to even do **all of your development** in it.
 
@@ -88,7 +88,7 @@ Now let's create our own spec file called `home_page.cy.js`.
 touch cypress/e2e/home_page.cy.js
 ```
 
-Once that file is created, you should see it in the list of spec files.
+Once you create that file, you should see it in the list of spec files.
 
 <DocsImage
   src="/img/app/get-started/e2e/testing-your-app-home-page-spec.png"
@@ -198,8 +198,8 @@ here are some quick tips on common situations you're likely to run into.
 
 ### Seeding data
 
-Depending on how your application is built - it's likely that your web
-application is going to be affected and controlled by the server.
+Depending on how your application is built - it's likely that the server
+affects and controls your web application.
 
 Typically these days servers communicate with front end apps via JSON, but you
 could also be running a traditional server-side rendered HTML web application.
@@ -214,7 +214,7 @@ Perhaps you need to generate a user, and seed them with associations and
 records. You may be familiar with using things such as fixtures or factories.
 
 To test various page states - like an empty view, or a pagination view, you'd
-need to seed the server so that this state can be tested.
+need to seed the server so that you can test this state.
 
 **While there is a lot more to this strategy, you generally have two ways to
 facilitate this with Cypress:**
@@ -436,7 +436,7 @@ Custom commands let you add your own functionality to your test suite and then u
 the same
 [chainable and asynchronous API](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 as the built-in Cypress commands. Lets make the above login example a custom
-command and add it to `cypress/support/commands.js` so it can be reused in
+command and add it to `cypress/support/commands.js` so you can reuse it in
 any spec file:
 
 <Tabs>

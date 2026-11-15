@@ -45,12 +45,12 @@ cy.clock().trigger('mouseleave') // Errors, 'clock' does not yield DOM elements
 
 <Icon name="angle-right" /> **eventName _(String)_**
 
-The name of the `event` to be triggered on the DOM element. The name must be a
+The name of the `event` to trigger on the DOM element. The name must be a
 non-empty string, so `.trigger('')` fails.
 
 <Icon name="angle-right" /> **position _(String)_**
 
-The position where the event should be triggered. The `center` position is the
+The position where Cypress triggers the event. The `center` position is the
 default position. Valid positions are `topLeft`, `top`, `topRight`, `left`,
 `center`, `right`, `bottomLeft`, `bottom`, and `bottomRight`.
 
@@ -641,14 +641,14 @@ action commands then reproduce the full sequence of events a user's input
 produces, along with what the browser does in response. `.trigger()` dispatches
 only the event you name.
 
-| You call                            | Events fired                                                                                                                                                          | What happens in the browser                                                                                                                                                           |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.trigger('click')`                 | `click`                                                                                                                                                               | Focus doesn't move. With the default `Event`, nothing else happens. With `eventConstructor: 'MouseEvent'`, a checkbox toggles and fires `input` and `change`, and a link is followed. |
-| `.click()`                          | `pointerover`, `pointerenter`, `mouseover`, `mouseenter`, `pointermove`, `mousemove`, `pointerdown`, `mousedown`, `focus`, `focusin`, `pointerup`, `mouseup`, `click` | Focus moves to the element, a checkbox toggles, and a link is followed.                                                                                                               |
-| `.trigger('keydown', { key: 'a' })` | `keydown`                                                                                                                                                             | Focus doesn't move, and no text is inserted, even with `eventConstructor: 'KeyboardEvent'`.                                                                                           |
-| `.type('a')`                        | The `.click()` sequence when the element isn't focused yet, then `keydown`, `keypress`, `beforeinput`, `textInput`, `input`, `keyup`                                  | Focus moves to the element, and `a` is inserted.                                                                                                                                      |
-| `.trigger('focus')`                 | `focus`                                                                                                                                                               | Focus doesn't move.                                                                                                                                                                   |
-| `.focus()`                          | `focus`, `focusin`                                                                                                                                                    | Focus moves to the element.                                                                                                                                                           |
+| You call                            | Events fired                                                                                                                                                          | What happens in the browser                                                                                                                                                                   |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.trigger('click')`                 | `click`                                                                                                                                                               | Focus doesn't move. With the default `Event`, nothing else happens. With `eventConstructor: 'MouseEvent'`, a checkbox toggles and fires `input` and `change`, and the browser follows a link. |
+| `.click()`                          | `pointerover`, `pointerenter`, `mouseover`, `mouseenter`, `pointermove`, `mousemove`, `pointerdown`, `mousedown`, `focus`, `focusin`, `pointerup`, `mouseup`, `click` | Focus moves to the element, a checkbox toggles, and the browser follows a link.                                                                                                               |
+| `.trigger('keydown', { key: 'a' })` | `keydown`                                                                                                                                                             | Focus doesn't move, and Cypress inserts no text, even with `eventConstructor: 'KeyboardEvent'`.                                                                                               |
+| `.type('a')`                        | The `.click()` sequence when the element isn't focused yet, then `keydown`, `keypress`, `beforeinput`, `textInput`, `input`, `keyup`                                  | Focus moves to the element, and Cypress inserts `a`.                                                                                                                                          |
+| `.trigger('focus')`                 | `focus`                                                                                                                                                               | Focus doesn't move.                                                                                                                                                                           |
+| `.focus()`                          | `focus`, `focusin`                                                                                                                                                    | Focus moves to the element.                                                                                                                                                                   |
 
 Your listeners run either way. Use the action command when you're testing what a
 user does, and `.trigger()` when a handler listens for an event no action

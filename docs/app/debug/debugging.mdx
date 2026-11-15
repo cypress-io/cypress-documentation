@@ -38,8 +38,8 @@ does given that perspective?
 
 Both [`cy.visit()`](/api/commands/visit) and [`cy.get()`](/api/commands/get)
 return immediately, having enqueued their work to be done later, and
-`debugger` executes before any of the commands have actually run. The
-same behavior is expected in Component Tests when using
+`debugger` executes before any of the commands have actually run. You can
+expect the same behavior in Component Tests when using
 [`cy.mount()`](/api/commands/mount).
 
 Let's use [`.then()`](/api/commands/then) to tap into the Cypress command during
@@ -63,17 +63,17 @@ it('let me debug when the after the command executes', () => {
 
 Now we're in business! When you're visiting a page or mounting a component for
 the first time, (shown above with the [`cy.get()`](/api/commands/get)chain and
-its [`.then()`](/api/commands/then) attached) the commands are enqueued for
-Cypress to execute. The `it` block exits, and Cypress starts its work:
+its [`.then()`](/api/commands/then) attached) Cypress enqueues the commands
+to execute. The `it` block exits, and Cypress starts its work:
 
-1. In an end-to-end test, the page is visited and Cypress waits for it to load.
-   Alternatively, the component is mounted and rendered in a Component Test.
-2. The element is queried, and Cypress automatically waits and retries for a few
-   moments if it isn't found immediately.
-3. The function passed to [`.then()`](/api/commands/then) is executed, with the
-   found element yielded to it.
+1. In an end-to-end test, Cypress visits the page and waits for it to load.
+   Alternatively, Cypress mounts and renders the component in a Component Test.
+2. Cypress queries the element, and automatically waits and retries for a few
+   moments if it doesn't find the element immediately.
+3. Cypress executes the function passed to [`.then()`](/api/commands/then),
+   yielding the found element to it.
 4. Within the context of the [`.then()`](/api/commands/then) function, the
-   `debugger` is called, halting the browser and calling focus to the Developer
+   `debugger` statement runs, halting the browser and calling focus to the Developer
    Tools.
 5. You're in! Inspect the state of your application like you normally would if
    you'd dropped the `debugger` into your application code.
@@ -96,8 +96,8 @@ it('let me debug like a fiend', () => {
 
 :::
 
-The current subject that is yielded by the [`cy.get()`](/api/commands/get) is
-exposed as the variable `subject` within your Developer Tools so that you can
+Cypress exposes the current subject that [`cy.get()`](/api/commands/get)
+yields as the variable `subject` within your Developer Tools so that you can
 interact with it in the console.
 
 <DocsImage
@@ -149,7 +149,7 @@ them correctly, without you writing the steps by hand. For the full workflow, or
 a snippet you can drop into your agent's instructions file yourself, see
 [driving Cypress from the terminal with an AI agent](/app/tooling/cypress-tap).
 
-When the failure happened in CI rather than locally, and the run was recorded to
+When the failure happened in CI rather than locally, and you recorded the run to
 Cypress Cloud, your agent can triage it from the terminal too. The
 [`cypress-cloud-cli` skill](/app/tooling/ai-skills#cypress-cloud-cli) drives the
 [Cloud CLI](/cloud/integrations/cloud-cli) to read the failing run, its tests,
@@ -199,7 +199,7 @@ help make that process as easy as possible.
 
 ### Anatomy of an error
 
-Let's take a look at the anatomy of an error and how it is displayed in Cypress,
+Let's take a look at the anatomy of an error and how Cypress displays it,
 by way of a failing test.
 
 ```js

@@ -12,7 +12,7 @@ sidebar_custom_props: { 'new_label': true }
 
 Get and set public configuration in your tests.
 
-`Cypress.expose()` provides synchronous access to configuration that is safe to expose in the browser context. `Cypress.expose()` may be used for feature flags, plugin configuration, and other public values that need to be available outside of Cypress command chains.
+`Cypress.expose()` provides synchronous access to configuration that is safe to expose in the browser context. You can use `Cypress.expose()` for feature flags, plugin configuration, and other public values that need to be available outside of Cypress command chains.
 
 :::caution
 
@@ -45,7 +45,7 @@ The value of the exposed configuration variable to set. Can be any serializable 
 
 <Icon name="angle-right" /> **object _(Object)_**
 
-Set multiple exposed configuration variables with an object literal. Values are merged with existing values.
+Set multiple exposed configuration variables with an object literal. Cypress merges the values with existing values.
 
 ## Examples
 
@@ -140,7 +140,7 @@ Cypress.expose() // => {pluginConfig: 'updated-value', featureFlag: true}
 
 You can pass an `expose` object as part of suite- or test-level [test configuration](/app/references/configuration#Test-Configuration). Passing `expose` in test configuration is useful when a plugin or preprocessor needs different public configuration values per suite or test.
 
-Override keys are applied at test start and restored after each test completes. Suite- and test-level overrides are merged, with test-level keys taking precedence. Values set at runtime with `Cypress.expose()` outside of test configuration overrides are not automatically restored between tests.
+Cypress applies override keys at test start and restores them after each test completes. Cypress merges suite- and test-level overrides, with test-level keys taking precedence. Values set at runtime with `Cypress.expose()` outside of test configuration overrides are not automatically restored between tests.
 
 ```javascript
 describe('checkout', { expose: { flow: 'guest' } }, () => {
@@ -169,7 +169,7 @@ describe('orders', { expose: { status: 'pending' } }, () => {
 })
 ```
 
-Expose overrides persist through hooks for the current test. Only keys declared in test configuration overrides are restored after each test:
+Expose overrides persist through hooks for the current test. Cypress restores only the keys declared in test configuration overrides after each test:
 
 ```javascript
 describe('hook lifecycle', { expose: { source: 'suite' } }, () => {
@@ -206,7 +206,7 @@ Read the [Environment Variables & Secrets](/app/guides/environment-variables) gu
 
 ### Cypress configuration file
 
-Exposed configuration variables can be set in your [Cypress configuration](/app/references/configuration) file:
+You can set exposed configuration variables in your [Cypress configuration](/app/references/configuration) file:
 
 :::cypress-config-example
 

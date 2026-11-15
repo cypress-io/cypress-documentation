@@ -199,7 +199,7 @@ Technically the `<ul>` and first `<li>` in the example below both contain
 Normally Cypress would return the first `<li>` since that is the _deepest_
 element that contains "apples".
 
-To override the element that is yielded, pass `'ul'` as the selector.
+To override the element `.contains()` yields, pass `'ul'` as the selector.
 
 ```html
 <html>
@@ -476,7 +476,7 @@ Rendered result:
 
 To reflect this behavior, Cypress collapses each run of whitespace in an
 element's text to a single space before matching, except in a `<pre>` element,
-where it matches the text as written. The content you pass is not collapsed.
+where it matches the text as written. Cypress doesn't collapse the content you pass.
 
 ```js
 // test result for above code
@@ -541,8 +541,8 @@ cy.get('#main').contains('Jane Lane')
 
 ### Default `<input type="submit">` labels
 
-When the `value` attribute is omitted from an `<input type="submit">`, the
-default label is used and can be locale-dependent. See
+When you omit the `value` attribute from an `<input type="submit">`, the
+browser uses a default label, which can be locale-dependent. See
 [omitting the value attribute on MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit#omitting_the_value_attribute).
 
 `cy.contains()` matches an `<input type="submit">` by its `value` attribute.

@@ -197,9 +197,8 @@ cy.get('form').within(($form) => {
 The subject yielded by `.within()` is _always_ the original parent element. Any
 command you run, value you return, or [`cy.wrap()`](/api/commands/wrap) you call
 **inside** the callback has no effect on what `.within()` yields. This rule is true
-even when `.within()` is used inside a
-[custom command](/api/cypress-api/custom-commands) or when `.within()` blocks are
-nested.
+even when you use `.within()` inside a
+[custom command](/api/cypress-api/custom-commands) or nest `.within()` blocks.
 
 If you need to yield an element found inside the scope, query it _after_ the
 `.within()` block instead. For example, scope to the parent with

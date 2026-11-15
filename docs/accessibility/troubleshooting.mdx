@@ -15,9 +15,9 @@ This page maps each symptom to its cause and the configuration that resolves it.
 
 :::tip Start here: regenerate the run after changing configuration
 
-Every run is processed with the configuration that was saved **at that moment**, so edits you make afterward don't change an existing report until you reprocess it. This timing is the single most common reason a rule "doesn't work."
+Cypress Cloud processes every run with the configuration saved **at that moment**, so edits you make afterward don't change an existing report until you reprocess it. This timing is the single most common reason a rule "doesn't work."
 
-After saving configuration in the **App Quality** tab of your project settings, open a run's **Properties** tab and use its "regenerate" button. The configuration that was used for that run is displayed there, so you can confirm what was applied. Every configuration fix on this page assumes you regenerate the run afterward. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
+After saving configuration in the **App Quality** tab of your project settings, open a run's **Properties** tab and use its "regenerate" button. The **Properties** tab displays the configuration used for that run, so you can confirm what Cypress Cloud applied. Every configuration fix on this page assumes you regenerate the run afterward. See [Setting configuration](/accessibility/configuration/overview#Setting-Configuration).
 
 :::
 
@@ -25,7 +25,7 @@ After saving configuration in the **App Quality** tab of your project settings, 
 
 The run recorded to Cypress Cloud, but its **Accessibility** tab is empty or absent.
 
-**Cause.** Reports are built in Cypress Cloud from the run's [Test Replay](/cloud/features/test-replay) data. When that data wasn't captured or wasn't uploaded, there is nothing to scan, so no report is produced. A missing report is a different problem from a report that looks wrong, and none of the configuration fixes on this page apply to it.
+**Cause.** Cypress Cloud builds reports from the run's [Test Replay](/cloud/features/test-replay) data. When Cypress didn't capture or upload that data, there is nothing to scan, so Cypress Cloud produces no report. A missing report is a different problem from a report that looks wrong, and none of the configuration fixes on this page apply to it.
 
 **Fixes.** A recorded run produces an accessibility report when all of the following are true:
 
@@ -41,11 +41,11 @@ When a report exists but is missing specific specs, check the terminal output fr
 
 You added an [`elementFilters`](/accessibility/configuration/elementfilters) rule to remove an element, but it's still shown with violations in the report.
 
-**Cause.** The rule was saved after the run was processed, the selector doesn't match the element, or an earlier rule already decided the element's fate. `elementFilters` selectors must match the element that Axe Core® reports, not a wrapper around it, and the **first** matching rule wins.
+**Cause.** You saved the rule after Cypress Cloud processed the run, the selector doesn't match the element, or an earlier rule already decided the element's fate. `elementFilters` selectors must match the element that Axe Core® reports, not a wrapper around it, and the **first** matching rule wins.
 
 **Fixes.**
 
-- **Regenerate the run** so the new rule is applied. A run processed before the rule was saved is by far the most common cause.
+- **Regenerate the run** so Cypress Cloud applies the new rule. A run that Cypress Cloud processed before you saved the rule is by far the most common cause.
 - **Check the selector** against the exact node in the violation's HTML snapshot. A rule like `footer` matches only the `<footer>` element itself, while `footer *` matches the controls inside it.
 - **Order rules from specific to broad**, and place any `include: true` exception before the `include: false` rule it should override, because the first matching rule wins.
 
@@ -90,7 +90,7 @@ A known issue, a false positive, or a third-party defect is failing a rule, and 
 
 Chat launchers, cookie banners, analytics overlays, or entire pages you don't own are contributing violations that aren't yours to fix.
 
-**Cause.** Cypress Accessibility checks whatever renders in the states your tests reach, including third-party widgets and any URL your tests visit. Each is reported until you exclude it.
+**Cause.** Cypress Accessibility checks whatever renders in the states your tests reach, including third-party widgets and any URL your tests visit. Cypress Accessibility reports each one until you exclude it.
 
 **Fixes.**
 
@@ -113,11 +113,11 @@ Chat launchers, cookie banners, analytics overlays, or entire pages you don't ow
 
 The selectors shown for a violation point at framework-generated `id`s or hashed classes, or the same real element appears under different selectors across snapshots, making issues hard to find and deduplicate.
 
-**Cause.** Cypress Accessibility builds an element's identity from its attributes and position in the DOM (see [Element identification](/accessibility/core-concepts/element-identification)). When an identifying attribute changes on every render, the same element can be reported inconsistently. Cypress already ignores the most common unstable values, so add configuration only when your application produces unstable identifiers the built-in filters don't cover.
+**Cause.** Cypress Accessibility builds an element's identity from its attributes and position in the DOM (see [Element identification](/accessibility/core-concepts/element-identification)). When an identifying attribute changes on every render, Cypress Accessibility can report the same element inconsistently. Cypress already ignores the most common unstable values, so add configuration only when your application produces unstable identifiers the built-in filters don't cover.
 
 **Fixes.**
 
-- **Prefer your own stable attribute** in violation selectors with [`significantAttributes`](/accessibility/configuration/significantattributes). Attributes you list are checked before the defaults, so a stable `data-cy` or `data-test` produces clearer, more consistent selectors. Listing `aria-label` also turns the report into an inventory of your label text.
+- **Prefer your own stable attribute** in violation selectors with [`significantAttributes`](/accessibility/configuration/significantattributes). Cypress Accessibility checks the attributes you list before the defaults, so a stable `data-cy` or `data-test` produces clearer, more consistent selectors. Listing `aria-label` also turns the report into an inventory of your label text.
 
   ```json title="App Quality Config"
   {
@@ -125,7 +125,7 @@ The selectors shown for a violation point at framework-generated `id`s or hashed
   }
   ```
 
-- **Ignore the dynamic attribute** with [`attributeFilters`](/accessibility/configuration/attributefilters) so identification falls back to a stable attribute. When you filter a dynamic `id`, also filter the attributes that reference it, such as `for`, `aria-labelledby`, and `aria-describedby`. Patterns match the whole value (they're anchored as `^(...)$`), and JSON requires backslashes to be doubled, so a token like `\d` must be written `\\d`.
+- **Ignore the dynamic attribute** with [`attributeFilters`](/accessibility/configuration/attributefilters) so identification falls back to a stable attribute. When you filter a dynamic `id`, also filter the attributes that reference it, such as `for`, `aria-labelledby`, and `aria-describedby`. Patterns match the whole value (they're anchored as `^(...)$`), and JSON requires doubled backslashes, so you must write a token like `\d` as `\\d`.
 
 ## A configuration rule has no effect
 
@@ -133,7 +133,7 @@ You saved a rule, but the report looks the same.
 
 Work through these causes in order:
 
-- **The run predates the change.** Reports use the configuration saved when they were processed. [Regenerate](/accessibility/configuration/overview#Setting-Configuration) the run to apply your current configuration. A run that predates the change is by far the most common cause.
+- **The run predates the change.** Each report uses the configuration saved when Cypress Cloud processed it. [Regenerate](/accessibility/configuration/overview#Setting-Configuration) the run to apply your current configuration. A run that predates the change is by far the most common cause.
 - **An earlier rule matched first.** For [`elementFilters`](/accessibility/configuration/elementfilters) and [`viewFilters`](/accessibility/configuration/viewfilters), the **first** matching rule wins, so a broad rule above your specific one prevents it from applying. List specific rules first, and place `include: true` exceptions before the `include: false` rule they should override.
 - **A nested list replaced a root one.** Nesting a shared property such as `elementFilters` or `attributeFilters` under an `accessibility` or `uiCoverage` key **completely replaces** the root-level list for that product; the two are never merged. Repeat any root rules you still want in the nested list.
 - **The pattern or selector doesn't match.** `attributeFilters` patterns are anchored to the whole value, so `value: "user"` matches only the exact string `user`; use `value: "user-.*"` for a prefix. Selectors must match the element Axe Core® reports, not a wrapper around it.
@@ -143,7 +143,7 @@ Work through these causes in order:
 
 You tagged a run to pick up a [profile](/accessibility/configuration/profiles), but the run used your base configuration instead.
 
-**Cause.** Profiles are selected by matching a run's tags, and a profile applies only when the run carries a tag its rules match. A profile also **overrides** the base configuration for the matched run rather than merging with it, so a partial profile can look like "nothing changed" if you expected your base rules to still apply.
+**Cause.** Cypress Cloud selects profiles by matching a run's tags, and a profile applies only when the run carries a tag its rules match. A profile also **overrides** the base configuration for the matched run rather than merging with it, so a partial profile can look like "nothing changed" if you expected your base rules to still apply.
 
 **Fixes.**
 

@@ -9,7 +9,7 @@ sidebar_position: 40
 
 # Cypress rules
 
-In addition to running the default ruleset of the Axe-Core® library, Cypress develops custom rules that take advantage of the additional layer of information available in a test automation context. These rules are identified by a "Cypress Rule" badge, to distinguish them from the main Axe-Core® rule set.
+In addition to running the default ruleset of the Axe-Core® library, Cypress develops custom rules that take advantage of the additional layer of information available in a test automation context. A "Cypress Rule" badge marks these rules and distinguishes them from the main Axe-Core® rule set.
 
 The first custom rule that we have implemented is called "Interactive elements should be semantically correct." At launch, it is a non-blocking **manual-review** rule that either passes if no issues are found, or returns an inconclusive state.
 
@@ -30,7 +30,7 @@ Rules based on test activity help provide early detection of issues that might l
 - **Severity**: `serious`
 
 :::caution
-This rule requires that runs be recorded using Cypress version 13.14.0 or above.
+This rule requires that you record runs using Cypress version 13.14.0 or above.
 :::
 
 <DocsImage
@@ -55,7 +55,7 @@ For example:
 
 In each case, the solution is to choose the element that provides the best information to the user, so they can independently understand what the action does, and activate it.
 
-After you have updated to a suitable HTML solution, elements can then be correctly parsed and analyzed by the standard Axe-Core® checks.
+After you have updated to a suitable HTML solution, the standard Axe-Core® checks can correctly parse and analyze the elements.
 
 :::info
 **Tip**: Follow the [first rule of ARIA use](https://www.w3.org/TR/using-aria/#firstrule) and implement interactive controls with standard semantic HTML where possible, relying on ARIA `role` attributes only when no suitable HTML element is available.
@@ -63,7 +63,7 @@ After you have updated to a suitable HTML solution, elements can then be correct
 
 ### Why this matters
 
-In the Web Content Accessibility Guidelines (WCAG), interactive elements are required to meet a wide range of Success Criteria (SCs) to follow the POUR principles, which stands for Perceivable, Operable, Understandable, and Robust.
+The Web Content Accessibility Guidelines (WCAG) require interactive elements to meet a wide range of Success Criteria (SCs) to follow the POUR principles, which stands for Perceivable, Operable, Understandable, and Robust.
 
 Interactive elements that are not semantically correct often don't appear in automated scans, but do appear in manual testing, because they are usually not operable with a keyboard or correctly understandable when described by a screen reader.
 
@@ -88,12 +88,12 @@ This rule is available in all Cypress Accessibility projects, though it is not e
 
 For each run, this rule can be in one of four states. Most importantly, it never fails, which means it does not affect your accessibility score.
 
-| Outcome                      | Description                                                                                                                           |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **Pass**                     | No interactive elements with semantic issues were detected during the test run.                                                       |
-| **Inconclusive**             | Interactive elements with potential semantic issues were detected. You should review each element and determine the correct solution. |
-| **Not Applicable**           | The test run did not interact with any elements, or the version of Cypress was below 13.14.0, so interaction data was not gathered.   |
-| **Ignored by configuration** | The rule was not executed during this test run because it was intentionally turned off.                                               |
+| Outcome                      | Description                                                                                                                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Pass**                     | Cypress Accessibility detected no interactive elements with semantic issues during the test run.                                                       |
+| **Inconclusive**             | Cypress Accessibility detected interactive elements with potential semantic issues. You should review each element and determine the correct solution. |
+| **Not Applicable**           | The test run did not interact with any elements, or the version of Cypress was below 13.14.0, so Cypress did not gather interaction data.              |
+| **Ignored by configuration** | Cypress Accessibility did not run the rule during this test run because it was intentionally turned off.                                               |
 
 ### False positives
 
@@ -101,4 +101,4 @@ Use the "Submit Feedback" button in the product to let us know if you see someth
 
 #### Shadow DOM false positives
 
-There is a known issue related to interactions that take place within some shadow DOM nodes and how they are reported in this rule. If this issue affects your reports, reach out to your Cypress point-of-contact.
+There is a known issue related to interactions that take place within some shadow DOM nodes and how this rule reports them. If this issue affects your reports, reach out to your Cypress point-of-contact.

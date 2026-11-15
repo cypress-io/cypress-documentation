@@ -49,8 +49,8 @@ element overlap, or the overall layout of a page. Covering appearance
 property-by-property quickly becomes cumbersome to write and maintain.
 
 Visual testing solves this by comparing an image of your application against a
-known-good baseline, so any unexpected visible change is caught, whether or
-not you thought to assert about it.
+known-good baseline, so the comparison catches any unexpected visible change,
+whether or not you thought to assert about it.
 
 ## How visual testing works
 
@@ -60,8 +60,8 @@ Visual testing tools for Cypress follow the same general workflow:
    page or a specific element. Because the capture happens inside your test,
    you can drive the application into any state first (logged in, mid-workflow,
    with a modal open) using the Cypress commands you already know.
-2. **Compare:** The captured image is compared against a previously approved
-   **baseline** image. If the difference exceeds a configured threshold, the
+2. **Compare:** Your visual testing tool compares the captured image against a
+   previously approved **baseline** image. If the difference exceeds a configured threshold, the
    comparison fails.
 3. **Review:** You review the reported differences. If the change is
    unintended, you've caught a visual regression. If the change is intentional,
@@ -186,8 +186,8 @@ pull requests so visual review becomes part of your code review process.
 These services handle baseline management, cross-browser rendering, rendering
 environment consistency, and team review in exchange for a subscription.
 
-The services with official Cypress integrations are described in
-[Visual testing services](#Visual-testing-services) below.
+[Visual testing services](#Visual-testing-services) below describes the services
+with official Cypress integrations.
 
 ## Writing reliable visual tests
 
@@ -327,8 +327,8 @@ clear owner.
 
 [Cypress Component Testing](/app/component-testing/get-started) is a natural
 fit for visual testing: component tests render a single component in a
-controlled environment, the surface area is small, the data is fully controlled
-by the test, and a diff points directly at the component that changed. Several
+controlled environment, the surface area is small, the test fully controls
+the data, and a diff points directly at the component that changed. Several
 of the tools on this page support Cypress component tests as well as
 end-to-end tests.
 

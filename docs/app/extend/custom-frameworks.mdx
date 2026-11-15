@@ -39,7 +39,7 @@ There are a few requirements for authoring a Framework Definition.
 - A [`package.json`](#packagejson) with the correct conventions
 
 The Definition is required when users configure Component Testing for the first
-time. The Mount adapter is used to render components when writing tests.
+time. Component tests use the Mount adapter to render components.
 
 To simplify this process, we recommend starting development using
 [our official template](https://github.com/cypress-io/cypress-ct-definition-template).
@@ -50,8 +50,8 @@ Below is a minimal Framework Definition. `defineFrameworkDefinition`
 is purely for type safety, similar to `defineConfig` in `cypress.config`.
 
 There is one important convention; the `type` key in `defineFrameworkDefinition`
-should match the name of your package on npm, and should be named using one of
-the following conventions:
+should match the name of your package on npm, and should use one of the
+following naming conventions:
 
 - `cypress-ct-*`
 - `@organization/cypress-ct-*`
@@ -67,8 +67,8 @@ When configuring a project to use Component Testing, Cypress loads any
 dependencies following this naming convention from the project's `node_modules`
 and presents them as framework options.
 
-A simple example of a Framework Definition for the
-[Solid.js](https://www.solidjs.com/) library is shown below. We generally
+The example below shows a simple Framework Definition for the
+[Solid.js](https://www.solidjs.com/) library. We generally
 recommend naming this `definition.cjs`. In our
 [official template](https://github.com/cypress-io/cypress-ct-definition-template),
 this file is at the root level of the package.
@@ -174,7 +174,7 @@ indicating it's a third party definition.
   alt="custom framework definition"
 />
 
-We defined the `dependencies`, which are also correctly handled - we haven't
+We defined the `dependencies`, and Cypress handles them correctly too - we haven't
 installed them all, so Cypress is prompting us to do so:
 
 <DocsImage
@@ -188,7 +188,7 @@ The second part of defining a Framework Definition is the Mount Adapter. The Mou
 the function that renders the component in your tests using `cy.mount()`.
 
 By default, Cypress looks for the Mount Adapter as a `mount` function that is a **named
-export** from the package. The `mount` function should be written in a `index.mjs` file. This
+export** from the package. Write the `mount` function in an `index.mjs` file. This
 example is for a [Solid.js](https://www.solidjs.com/) mount adapter:
 
 ```js
@@ -264,8 +264,8 @@ Cypress.Commands.add('mount', mount)
 
 ## package.json
 
-The final thing you need is a correctly configured `package.json`. This example
-was created using
+The final thing you need is a correctly configured `package.json`. We created this
+example using
 [our official template](https://github.com/cypress-io/cypress-ct-definition-template).
 
 There are two fields of note:
@@ -313,9 +313,9 @@ expected. If you do run into unexpected behavior,
 [file an issue](https://github.com/cypress-io/cypress/issues).
 
 Mount Adapters can be more complex to test. In general, we recommend testing
-them in the same way users consume them - using Cypress Component Testing. A
-minimal test suite for a Solid.js Mount Adapter can be found in the
-[Solid.js example project](https://github.com/lmiller1990/cypress-ct-solid-js/tree/main/example-project).
+them in the same way users consume them - using Cypress Component Testing. The
+[Solid.js example project](https://github.com/lmiller1990/cypress-ct-solid-js/tree/main/example-project)
+has a minimal test suite for a Solid.js Mount Adapter.
 Alternatively, take a look at our official
 [React](https://github.com/cypress-io/cypress/tree/develop/npm/react) and
 [Angular](https://github.com/cypress-io/cypress/tree/develop/npm/angular) Mount

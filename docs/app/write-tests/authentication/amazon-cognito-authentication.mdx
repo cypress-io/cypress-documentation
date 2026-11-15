@@ -101,9 +101,9 @@ The
 optional [Amazon Cognito](https://aws.amazon.com/cognito) instance via the [AWS
 Amplify Framework Authentication
 Library](https://docs.amplify.aws/javascript/build-a-backend/auth/). The [AWS
-Amazon Amplify CLI](https://docs.amplify.aws/cli) is used to provision the
-[Amazon Web Services (AWS)](https://aws.amazon.com) infrastructure needed to
-configure your environment and cloud resources.
+Amazon Amplify CLI](https://docs.amplify.aws/cli) provisions the [Amazon Web
+Services (AWS)](https://aws.amazon.com) infrastructure needed to configure your
+environment and cloud resources.
 
 First, run the
 [amplify init](https://docs.amplify.aws/cli/start/workflows#initialize-new-project)
@@ -587,12 +587,12 @@ describe('Cognito, programmatic login', function () {
 
 <strong>AWS Backend Services Need No Adaptation</strong>
 
-Often times, AWS Cognito is used when other AWS services provide the backend,
-such as AWS AppSync for GraphQL APIs or AWS API Gateway for REST APIs. These
-backend services can be configured to verify cognito JWTs without additional
+Teams often use AWS Cognito when other AWS services provide the backend,
+such as AWS AppSync for GraphQL APIs or AWS API Gateway for REST APIs. You can
+configure these backend services to verify cognito JWTs without additional
 code. However, if you are hosting a webserver backend, like the [cypress
 real-world app](https://github.com/cypress-io/cypress-realworld-app) does with
-the Express npm library, it must be adapted, as the real-world app is, to verify
+the Express npm library, you must adapt that backend, as the real-world app does, to verify
 the Cognito JWTs to authorize the frontend's requests.
 
 :::
@@ -669,7 +669,7 @@ export const checkCognitoJwt = jwt(awsCognitoJwtConfig).unless({
 
 </Tabs>
 
-Once this helper is defined, we can use globally to apply to all routes:
+Once you define this helper, you can use it globally to apply to all routes:
 
 ```jsx title="backend/app.ts"
 // initial imports ...

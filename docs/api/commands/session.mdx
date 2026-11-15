@@ -701,7 +701,7 @@ const login = (name) => {
 }
 ```
 
-`cy.session()` can't be called inside the `cy.origin()` callback, so keep the
+You can't call `cy.session()` inside the `cy.origin()` callback, so keep the
 `cy.origin()` call inside `setup`. For provider-specific walkthroughs, see the
 guides for [Auth0](/app/guides/authentication-testing/auth0-authentication),
 [Okta](/app/guides/authentication-testing/okta-authentication), and
@@ -930,7 +930,7 @@ it('recreates the session after logging out', () => {
 })
 ```
 
-Whenever `cy.session()` is called, the Command Log shows one of the following
+Whenever you call `cy.session()`, the Command Log shows one of the following
 lines, with the session `id` and the status of the call:
 
 - No saved session exists, so Cypress creates and saves a new session:

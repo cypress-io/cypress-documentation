@@ -4,7 +4,7 @@ The `attributeFilters` configuration property tells Cypress which attributes and
 
 ## Why use attributeFilters?
 
-- **Stop duplicate elements**: When an element's `id`, `class`, or other attribute is regenerated on each render, the same control is counted many times. Filtering the volatile attribute lets Cypress identify it consistently.
+- **Stop duplicate elements**: When your application regenerates an element's `id`, `class`, or other attribute on each render, Cypress counts the same control many times. Filtering the volatile attribute lets Cypress identify it consistently.
 - **Improve grouping accuracy**: Removing attributes that differ between otherwise-identical elements (for example a per-row `data-cy="user-123"`) lets Cypress group them as one repeated component.
 - **Ignore library-specific attributes**: Attributes injected by frameworks (Angular's `ng-*`, Emotion/JSS hashed classes, and similar) rarely describe an element's purpose and often add noise.
 
@@ -20,7 +20,7 @@ Your configured rules run **before** these built-in filters, so a rule with `inc
 
 :::info
 
-**Note:** setting `attributeFilters` at the root of your configuration impacts both UI Coverage and Cypress Accessibility reports. To configure the products separately, nest the property under a `uiCoverage` or `accessibility` key. A nested `attributeFilters` completely replaces a root-level one for that product; the two lists are not merged.
+**Note:** setting `attributeFilters` at the root of your configuration impacts both UI Coverage and Cypress Accessibility reports. To configure the products separately, nest the property under a `uiCoverage` or `accessibility` key. A nested `attributeFilters` completely replaces a root-level one for that product; Cypress doesn't merge the two lists.
 
 :::
 
@@ -47,25 +47,25 @@ To scope rules to a single product, nest the property under a `uiCoverage` or `a
 
 ### Options
 
-| Option      | Required | Default | Description                                                                                                                                                                               |
-| ----------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `attribute` | Required |         | A regular expression matched against attribute names. Must be a valid HTML attribute name.                                                                                                |
-| `value`     | Optional | `.*`    | A regular expression matched against the attribute's value.                                                                                                                               |
-| `include`   | Optional | `true`  | Whether the matched attribute may be used for identification (`true`) or is ignored (`false`).                                                                                            |
-| `comment`   | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. Comments have no effect on identification and are not displayed in reports. |
+| Option      | Required | Default | Description                                                                                                                                                                              |
+| ----------- | -------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `attribute` | Required |         | A regular expression matched against attribute names. Must be a valid HTML attribute name.                                                                                               |
+| `value`     | Optional | `.*`    | A regular expression matched against the attribute's value.                                                                                                                              |
+| `include`   | Optional | `true`  | Whether Cypress uses the matched attribute for identification (`true`) or ignores it (`false`).                                                                                          |
+| `comment`   | Optional |         | A note about why this rule exists, for your team's benefit. Comments appear only in the configuration itself. Comments have no effect on identification, and reports don't display them. |
 
 Each rule accepts only these four properties. Cypress Cloud validates your configuration and rejects any unrecognized property, as well as two rules that are exactly identical.
 
 ## How rules are applied
 
-Whether Cypress may use an attribute to identify an element is decided by the **first** rule whose `attribute` and `value` both match. Because the first match wins, order your rules from most specific to least specific: put `include: true` exceptions first, then broader `include: false` catch-all rules. For example, you can exclude every `aria-label` from identification with a catch-all rule, while keeping a few known-stable values by listing `include: true` rules for them first.
+The **first** rule whose `attribute` and `value` both match decides whether Cypress may use an attribute to identify an element. Because the first match wins, order your rules from most specific to least specific: put `include: true` exceptions first, then broader `include: false` catch-all rules. For example, you can exclude every `aria-label` from identification with a catch-all rule, while keeping a few known-stable values by listing `include: true` rules for them first.
 
-An attribute that matches no rule is available for use, so `include: true` is only needed to define exceptions.
+An attribute that matches no rule is available for use, so you only need `include: true` to define exceptions.
 
 Keep these matching details in mind when writing patterns:
 
-- **Patterns match the whole string.** Each `attribute` and `value` pattern is anchored automatically, as if wrapped in `^(...)$`, so it must match the entire name or value. Use wildcards for partial matches: `value: "user-.*"` matches `user-123`, whereas `value: "user"` matches only the exact string `user`. If your pattern already starts with `^` or ends with `$`, it is used as written.
-- **Escape backslashes for JSON.** Because JSON uses the backslash as its own escape character, a regex token like `\d` must be written `\\d` in the configuration. A single backslash is dropped, turning `\d` into a literal `d` that matches nothing you intended.
+- **Patterns match the whole string.** Cypress anchors each `attribute` and `value` pattern automatically, as if wrapped in `^(...)$`, so each pattern must match the entire name or value. Use wildcards for partial matches: `value: "user-.*"` matches `user-123`, whereas `value: "user"` matches only the exact string `user`. If your pattern already starts with `^` or ends with `$`, Cypress uses the pattern as written.
+- **Escape backslashes for JSON.** Because JSON uses the backslash as its own escape character, you must write a regex token like `\d` as `\\d` in the configuration. A single backslash drops out, turning `\d` into a literal `d` that matches nothing you intended.
 - **Attribute names are matched case-insensitively; values are matched case-sensitively.**
 - **Only attributes and individual `class` tokens can be filtered.** Rules never apply to an element's tag name or its position among siblings (`nth-child`), which Cypress may still fall back to when no attributes are usable.
 
@@ -215,6 +215,6 @@ Filtering a per-instance value lets Cypress group otherwise-identical elements i
 
 ## Confirming a filter worked
 
-You don't need to rerun your tests to check a rule. Regenerate a historical run from its **Properties** tab and the report is reprocessed with your current configuration. Confirm the change by checking that an element that previously appeared multiple times now appears once, or that a set of repeated elements collapsed into a single entry.
+You don't need to rerun your tests to check a rule. Regenerate a historical run from its **Properties** tab and Cypress Cloud reprocesses the report with your current configuration. Confirm the change by checking that an element that previously appeared multiple times now appears once, or that a set of repeated elements collapsed into a single entry.
 
 If nothing changed, revisit [How rules are applied](#How-rules-are-applied). The most common causes are a pattern that doesn't fully match the value, an earlier rule taking precedence, or a report that was processed before the configuration was saved.

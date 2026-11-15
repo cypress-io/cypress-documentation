@@ -25,8 +25,8 @@ problems a software organization faces:
   red build might just be "the flaky one," they start ignoring failures, and
   real regressions slip through to production.
 - **Flake drains engineering time.** Teams burn hours re-running pipelines,
-  investigating failures that aren't real, and manually triaging which tests can
-  be trusted. That time is velocity spent on noise instead of shipping.
+  investigating failures that aren't real, and manually triaging which tests they
+  can trust. That time is velocity spent on noise instead of shipping.
 - **Flake slows down delivery.** Flake blocks merges, delays releases, and forces
   developers to context-switch away from feature work to babysit CI.
 - **Flake hides the real picture.** Without data, "the tests are flaky" is just a
@@ -74,8 +74,8 @@ developers to remember and report intermittent failures.
 ### Enable test retries
 
 Test retries are the _fundamental mechanism_ that enables Cypress Cloud to
-detect flaky tests. Enabling
-test retries in your Cypress configuration is required
+detect flaky tests. You must enable
+test retries in your Cypress configuration
 to take advantage of any Flaky Test Management feature. Read more about [test retries](/app/guides/test-retries) in the Cypress App guide.
 
 :::cypress-config-example
@@ -99,15 +99,15 @@ test retries, you may want to use
 
 ### Flagging flaky tests
 
-Test runs containing flaky tests are flagged with a flaky-test count on the
-Cypress Cloud **Latest Runs** page.
+Cypress Cloud flags test runs containing flaky tests with a flaky-test count on
+the **Latest Runs** page.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flaky-runs-view.png"
   alt="Flagging flaky tests runs in Cypress Cloud"
 />
 
-Runs containing flaky tests can be filtered in or out with the
+You can filter runs containing flaky tests in or out with the
 **Flaky** filter. The filter gives teams an at-a-glance view of how much flake is
 reaching their pipeline on any given day.
 
@@ -127,11 +127,11 @@ reaching their pipeline on any given day.
 
 Detection only pays off if the right people know about flake when it matters.
 Flake Alerting pushes flake notifications directly into the tools your team
-already works in, so flake is caught in the review process instead of
+already works in, so your team catches flake in the review process instead of
 compounding silently over time. Each integration below links to its full setup
 instructions.
 
-Source control integrations surface flake right where code is reviewed, and can
+Source control integrations surface flake right where you review code, and can
 even **block merges** while flaky tests are present:
 
 ### GitHub
@@ -191,7 +191,7 @@ full setup instructions.
 ### Slack
 
 Enable the **Flaky tests** notification preference in your Slack integration
-settings to be alerted whenever a run contains flaky tests, independent of
+settings to get an alert whenever a run contains flaky tests, independent of
 whether the run passed or failed.
 
 See
@@ -329,8 +329,8 @@ with data. The page includes:
 
 ### Flake severity
 
-Flake **severity** is determined by how often a test flakes, its **flake
-rate**. Severity lets teams prioritize objectively: fix the handful of
+How often a test flakes, its **flake rate**, determines flake
+**severity**. Severity lets teams prioritize objectively: fix the handful of
 high-severity tests disrupting the most builds before chasing rare,
 low-impact flake.
 
@@ -373,8 +373,8 @@ to "here's why," reducing the investigation cost of every fix.
 ### Failure rate vs. flake rate
 
 When test retries are enabled, it's important to distinguish **failure rate**
-from **flake rate**. Both are tracked over time for each flaky test on the
-analytics page as shown below.
+from **flake rate**. Cypress Cloud tracks both over time for each flaky test
+on the analytics page as shown below.
 
 <DocsImage
   src="/img/cloud/features/flaky-test-management/flake-vs-failed-rate.png"
@@ -413,7 +413,7 @@ organization or a selected set of projects, as a point-in-time snapshot or
 trended over time. Because it reports flake **rate** (the percentage of runs
 that flake), you can compare projects fairly regardless of how often each one
 runs, so a high-volume project doesn't look worse simply because it executes
-more tests. The raw data behind every chart can also be downloaded for use in
+more tests. You can also download the raw data behind every chart for use in
 your own tools.
 
 <DocsImage
@@ -427,7 +427,7 @@ The in-app analytics answer "how healthy is this project?" The
 [Data Extract API](/cloud/integrations/data-extract-api) answers the same
 question across your _entire organization_, in a format you own. The Data Extract API lets you
 pull flake metrics into your own dashboards and reports, so test reliability
-sits alongside the other metrics your team tracks and trends can be followed
+sits alongside the other metrics your team tracks and you can follow trends
 release over release without anyone logging into Cypress Cloud.
 
 :::tip
@@ -439,8 +439,8 @@ release over release without anyone logging into Cypress Cloud.
 
 ### Available flake reports
 
-The API exposes five flake-focused reports. Each is requested with its
-`report_id` and returns CSV, JSON, or XLSX for a date range you specify.
+The API exposes five flake-focused reports. You request each report by
+its `report_id`, and each returns CSV, JSON, or XLSX for a date range you specify.
 
 | Report                           | `report_id`                        | Answers                                                                                                                           |
 | -------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -452,7 +452,7 @@ The API exposes five flake-focused reports. Each is requested with its
 
 :::info
 
-**Flaky rate** is reported as a whole number. For example, 1 flaky test over 4
+The API reports **flaky rate** as a whole number. For example, 1 flaky test over 4
 runs has a flaky rate of `25`. The flaky rate mirrors the
 [flake rate](#Flaky-test-analytics) used in the in-app analytics.
 

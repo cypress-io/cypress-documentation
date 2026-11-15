@@ -14,7 +14,7 @@ Cypress.
 
 Normally, as a user, all of your test code, your application, and Cypress
 commands are executed in the browser. But Cypress is also a Node process that
-can be used to change the behavior of Cypress or to expose [plugins](/app/plugins/plugins-list) for others to consume.
+you can use to change the behavior of Cypress or to expose [plugins](/app/plugins/plugins-list) for others to consume.
 
 > `setupNodeEvents` enables you to tap into the Node process running outside of the
 > browser.
@@ -80,18 +80,18 @@ Each event documents its own argument signature.
 `config` is the resolved
 [Cypress configuration](/app/references/configuration) of the opened project.
 
-This configuration contains all of the values that get passed into the browser
+This configuration contains all of the values that Cypress passes into the browser
 for your project.
 
 Some plugins may use or require these values, so they can take certain
-actions based on the configuration. If these values are programmatically
-modified, Cypress uses the new values.
+actions based on the configuration. If you modify these values
+programmatically, Cypress uses the new values.
 
 :::caution
 
 The `config` object also includes the following extra values that are not part
-of the standard configuration. **These values are read only and cannot be
-modified from the plugins file.**
+of the standard configuration. **These values are read only, and you can't
+modify them from the plugins file.**
 
 - `configFile`: The absolute path to the
   [Cypress configuration file](/app/references/configuration). See the
@@ -100,7 +100,7 @@ modified from the plugins file.**
   value.
 - `projectRoot`: The absolute path to the root of the project (e.g.
   `/Users/me/dev/my-project`).
-- `version`: The version number of Cypress. The version can be used to handle breaking
+- `version`: The version number of Cypress. You can use the version to handle breaking
   changes.
 
 :::
@@ -131,8 +131,8 @@ describe how to use this event.
 
 ### Preprocessors
 
-The event `file:preprocessor` is used to customize how your test code is
-transpiled and sent to the browser. By default, Cypress handles ES2015+ and
+Use the `file:preprocessor` event to customize how Cypress transpiles your test
+code and sends it to the browser. By default, Cypress handles ES2015+ and
 TypeScript, using webpack to package it for the browser.
 
 You can use the `file:preprocessor` event to do things like:
@@ -165,8 +165,8 @@ You can use [`after:run`](/api/node-events/after-run-api) to do things like:
 ### Spec Lifecycle
 
 The events [`before:spec`](/api/node-events/before-spec-api) and
-[`after:spec`](/api/node-events/after-spec-api) run before and after a single spec
-is run, respectively.
+[`after:spec`](/api/node-events/after-spec-api) run before and after Cypress runs a single
+spec, respectively.
 
 You can use [`before:spec`](/api/node-events/before-spec-api) to do things like:
 
@@ -180,7 +180,7 @@ You can use [`after:spec`](/api/node-events/after-spec-api) to do things like:
 - Delete the video recorded for the spec. Deleting the video prevents it from taking time and
   computing resources for compressing and uploading the video. You can do this
   conditionally based on the results of the spec, such as if it passes (so
-  videos for failing tests are preserved for debugging purposes).
+  you keep videos for failing tests for debugging purposes).
 
 Check out the [Before Spec API doc](/api/node-events/before-spec-api) and
 [After Spec API doc](/api/node-events/after-spec-api) which describe how to use
@@ -188,7 +188,7 @@ these events.
 
 ### Browser Launching
 
-The event `before:browser:launch` can be used to modify the launch arguments for
+Use the `before:browser:launch` event to modify the launch arguments for
 each particular browser.
 
 You can use the `before:browser:launch` event to do things like:
@@ -217,8 +217,8 @@ describe how to use this event.
 
 ### Screenshot handling
 
-The event `after:screenshot` is called after a screenshot is taken and saved to
-disk.
+Cypress calls the `after:screenshot` event after it takes a screenshot and saves
+it to disk.
 
 You can use the `after:screenshot` event to do things like:
 
@@ -231,7 +231,7 @@ which describe how to use this event.
 
 ### cy.task
 
-The event `task` is used in conjunction with the
+The `task` event works in conjunction with the
 [`cy.task()`](/api/commands/task) command. The `task` event runs arbitrary code in Node to
 accomplish tasks that aren't possible in the browser.
 
@@ -247,15 +247,15 @@ You can use the `task` event to do things like:
 
 ## Execution context
 
-The [`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
-function is invoked
-when Cypress opens a project.
+Cypress invokes the
+[`setupNodeEvents`](/app/references/configuration#setupNodeEvents) function
+when it opens a project.
 
 Cypress does this by spawning an independent `child_process` which then
 `requires` the [Cypress configuration file](/app/references/configuration).
 This child process is similar to the way Visual Studio Code or Atom works.
 
-This code is executed using the Node version that launched Cypress.
+Cypress runs the configuration code using the Node version that launched Cypress.
 
 ### npm modules
 
@@ -298,9 +298,9 @@ console.log(process.cwd()) // /Users/janelane/Dev/my-project
 
 ## Error handling
 
-The [Cypress configuration file](/app/references/configuration) is loaded in
-its own child process so it is isolated away from the context that Cypress
-itself runs in. That isolation means you cannot accidentally modify or change Cypress's
+Cypress loads the [Cypress configuration file](/app/references/configuration)
+in its own child process, isolated from the context that Cypress itself runs
+in. That isolation means you cannot accidentally modify or change Cypress's
 own execution in any way.
 
 If your [`setupNodeEvents`](/app/references/configuration#setupNodeEvents)

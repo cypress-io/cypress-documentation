@@ -118,9 +118,9 @@ cy.get('[type="checkbox"]').uncheck(['ga', 'ca'])
 #### A value argument filters the subject
 
 `.uncheck()` compares each argument against the element's `value` and acts only
-on the elements that match, yielding that narrowed set. Elements that don't
-match are left untouched, and a value that matches nothing is dropped without an
-error.
+on the elements that match, yielding that narrowed set. `.uncheck()` leaves
+elements that don't match untouched and drops a value that matches nothing
+without an error.
 
 ```javascript
 // If no checkbox has the value 'tx', this unchecks and yields only 'ga'

@@ -9,9 +9,9 @@ sidebar_position: 90
 
 # Track custom commands - `additionalInteractionCommands`
 
-The `additionalInteractionCommands` configuration tells UI Coverage that your own Cypress commands, or commands from a third-party plugin, count as interactions. Commands you list are added to the built-in set, so the elements they touch are marked as tested and contribute to your coverage score.
+The `additionalInteractionCommands` configuration tells UI Coverage that your own Cypress commands, or commands from a third-party plugin, count as interactions. UI Coverage adds the commands you list to the built-in set and marks the elements those commands touch as tested, so those elements contribute to your coverage score.
 
-UI Coverage marks an [interactive element](/ui-coverage/core-concepts/interactivity) as tested when a recognized [interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) targets it. Out of the box it recognizes a fixed set of built-in Cypress commands such as `click`, `type`, and `check`. A command it doesn't recognize doesn't count, so an element that your tests only ever exercise through a custom command like `selectDate()`, or a third-party command like [`cypress-real-events`](#Track-cypress-real-events-commands)' `realClick()`, is reported as untested even though your suite interacts with it on every run. Listing those command names in `additionalInteractionCommands` closes that gap, so your coverage score reflects what your tests actually do.
+UI Coverage marks an [interactive element](/ui-coverage/core-concepts/interactivity) as tested when a recognized [interaction command](/ui-coverage/core-concepts/interactivity#Interaction-Commands) targets it. Out of the box it recognizes a fixed set of built-in Cypress commands such as `click`, `type`, and `check`. A command it doesn't recognize doesn't count, so UI Coverage reports an element that your tests only ever exercise through a custom command like `selectDate()`, or a third-party command like [`cypress-real-events`](#Track-cypress-real-events-commands)' `realClick()`, as untested even though your suite interacts with it on every run. Listing those command names in `additionalInteractionCommands` closes that gap, so your coverage score reflects what your tests actually do.
 
 ## Why use additionalInteractionCommands?
 
@@ -23,7 +23,7 @@ UI Coverage marks an [interactive element](/ui-coverage/core-concepts/interactiv
 
 :::info
 
-**Note:** `additionalInteractionCommands` applies to UI Coverage only and must be nested under the `uiCoverage` key. Unlike properties such as `significantAttributes`, it has no root-level or Cypress Accessibility equivalent, so it never affects Accessibility reports.
+**Note:** `additionalInteractionCommands` applies to UI Coverage only, and you must nest it under the `uiCoverage` key. Unlike properties such as `significantAttributes`, it has no root-level or Cypress Accessibility equivalent, so it never affects Accessibility reports.
 
 :::
 
@@ -54,13 +54,13 @@ Cypress Cloud rejects a configuration when the same command name appears twice i
 
 ## How additional interaction commands are applied
 
-A command you list here counts as an interaction only when it logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that highlights the element it acts on. UI Coverage reads that snapshot to know which element the interaction belongs to, so a command with no subject-referencing snapshot is ignored even when its name is listed. Built-in commands log this snapshot automatically; a custom command must do it explicitly (see [Requirements for a custom command](#Requirements-for-a-custom-command)).
+A command you list here counts as an interaction only when it logs a [snapshot](/ui-coverage/core-concepts/element-identification#Snapshots) that highlights the element it acts on. UI Coverage reads that snapshot to know which element the interaction belongs to, so UI Coverage ignores a command with no subject-referencing snapshot even when you list its name. Built-in commands log this snapshot automatically; a custom command must do it explicitly (see [Requirements for a custom command](#Requirements-for-a-custom-command)).
 
 Keep these behaviors in mind:
 
-- **Your list is added to the defaults, not a replacement for them.** The built-in commands keep counting; you're extending the set, not overriding it. To _limit_ which commands count for specific elements, use [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands).
+- **UI Coverage adds your list to the defaults rather than replacing them.** The built-in commands keep counting; you're extending the set, not overriding it. To _limit_ which commands count for specific elements, use [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands).
 - **Listing a built-in command has no effect.** The [built-in interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands) already count on their own. `additionalInteractionCommands` is only for names UI Coverage doesn't already recognize.
-- **Overwriting a built-in command keeps its name.** UI Coverage matches on the name a command logs under, so a built-in interaction command customized with [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands) stays recognized automatically under its original name, without being listed here, as long as your version still logs a snapshot referencing the subject. Only a brand-new command name added with `Cypress.Commands.add` needs to be listed.
+- **Overwriting a built-in command keeps its name.** UI Coverage matches on the name a command logs under, so a built-in interaction command customized with [`Cypress.Commands.overwrite`](/api/cypress-api/custom-commands#Overwrite-Existing-Commands) stays recognized automatically under its original name, without being listed here, as long as your version still logs a snapshot referencing the subject. You only need to list a brand-new command name added with `Cypress.Commands.add`.
 - **Custom command names are matched case-sensitively.** `"realClick"` matches `realClick` but not `realclick`. Copy the name exactly as you registered it with `Cypress.Commands.add`.
 
 ### Requirements for a custom command
@@ -120,7 +120,7 @@ Beyond letting UI Coverage credit the interaction, logging a snapshot that refer
 
 ### Relationship to allowedInteractionCommands
 
-Any command name you list in [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) is automatically recognized as an interaction command as well. You don't need to declare the same custom command in both places: use `additionalInteractionCommands` to count a command everywhere it's used, and `allowedInteractionCommands` when a command should count only for elements matching a specific selector.
+UI Coverage automatically recognizes any command name you list in [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) as an interaction command as well. You don't need to declare the same custom command in both places: use `additionalInteractionCommands` to count a command everywhere it's used, and `allowedInteractionCommands` when a command should count only for elements matching a specific selector.
 
 ## Examples
 

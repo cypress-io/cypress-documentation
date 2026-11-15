@@ -8,7 +8,7 @@ sidebar_label: 'after:spec'
 
 # After Spec Event
 
-The `after:spec` event fires after a spec file is run. When running cypress via
+The `after:spec` event fires after Cypress runs a spec file. When running cypress via
 `cypress open`, the event fires when the browser closes.
 
 ## Syntax
@@ -48,7 +48,7 @@ Details of the spec file, including the following properties:
 Details of the spec file's results, including numbers of passes/failures/etc and
 details on the tests themselves.
 
-Results are only provided when running via `cypress run`. When running via
+Cypress only provides results when running via `cypress run`. When running via
 `cypress open`, the results are undefined.
 
 ## Usage

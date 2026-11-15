@@ -42,7 +42,7 @@ Each row represents a single failed element for a single rule on a single view. 
 | Element URL       | A deep link into the Cloud report, filtered to this element.                                  |
 | Status            | The element's status: `fail`, `incomplete`, or `ignore` (only `fail` is currently supported). |
 | Failure Summaries | The specific reasons the element failed, as reported during the run.                          |
-| View              | The name of the page or component where the element was found.                                |
+| View              | The name of the page or component where Cypress Accessibility found the element.              |
 | View URL          | A deep link into the Cloud report for this view.                                              |
 
 The **Element URL** and **View URL** columns link back to the live report in Cypress Cloud, so you (or an agent) can always jump from a row to the full DOM snapshot and context.
@@ -55,4 +55,4 @@ If you configure [component identification](/accessibility/configuration/compone
 
 ## Work with the downloaded file
 
-A downloaded report is designed to be handed straight to an AI agent to interpret, chart, or compare against another run. For concrete prompts and workflows, see [Work with a downloaded report](/accessibility/work-with-ai-agents#Work-with-a-downloaded-report).
+You can hand a downloaded report straight to an AI agent to interpret, chart, or compare against another run. For concrete prompts and workflows, see [Work with a downloaded report](/accessibility/work-with-ai-agents#Work-with-a-downloaded-report).

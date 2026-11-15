@@ -17,14 +17,14 @@ That extra context tells whoever picks up the issue, whether a developer, a Jira
 
 - **Place every finding in context**: A selector like `[data-cy="row-action"][data-component="DataGridDeleteButton"]` says exactly which component is responsible, where a bare identifier could be any button in your application.
 - **Route issues to the right owner**: Append an attribute like `data-team` and you can assign accessibility findings, or group them in a report, by the team that owns the DOM.
-- **Speed up handoffs to people and AI**: Selectors that carry component and page context can be dropped into a Jira ticket or handed to an LLM for triage without the surrounding page HTML.
+- **Speed up handoffs to people and AI**: You can drop selectors that carry component and page context into a Jira ticket or hand them to an LLM for triage without the surrounding page HTML.
 - **Cross-reference your design system**: Attributes such as `data-design-system-version` in the selector let you correlate accessibility issues with the component library version that produced them.
 
 ## How component attributes appear in selectors
 
-Cypress Accessibility identifies each element with a stable selector, replacing the default Axe-Core® target so results for the same element can be deduplicated across the many snapshots in a run. That identifier is chosen from a prioritized list of attributes ([`significantAttributes`](/accessibility/configuration/significantattributes) followed by defaults like `data-cy` and `id`) and is usually the shortest thing that uniquely identifies the element.
+Cypress Accessibility identifies each element with a stable selector, replacing the default Axe-Core® target so Cypress can deduplicate results for the same element across the many snapshots in a run. Cypress chooses that identifier from a prioritized list of attributes ([`significantAttributes`](/accessibility/configuration/significantattributes) followed by defaults like `data-cy` and `id`), and the identifier is usually the shortest thing that uniquely identifies the element.
 
-Every attribute you list in `componentAttributes` is treated as **required**: wherever it appears on the element or one of its ancestors, Cypress keeps it in the selector. Take this button, which fails an accessibility check because its label text is hidden:
+Cypress treats every attribute you list in `componentAttributes` as **required**: wherever it appears on the element or one of its ancestors, Cypress keeps it in the selector. Take this button, which fails an accessibility check because its label text is hidden:
 
 ```xml
 <button data-cy="signup" data-component="IconButton">
@@ -52,7 +52,7 @@ Viewed on its own, that could be any button. List `data-component` as a componen
 }
 ```
 
-Now the component name is appended, even though the selector was already unique:
+Now Cypress appends the component name, even though the selector was already unique:
 
 ```
 [data-cy="signup"][data-component="IconButton"]
@@ -80,7 +80,7 @@ components adds context on top of whatever already identifies an element. To cha
 
 ## Scope
 
-The components object is only valid under an `accessibility` key in your App Quality configuration. Unlike [`significantAttributes`](/accessibility/configuration/significantattributes) or [`attributeFilters`](/accessibility/configuration/attributefilters), it has no root-level or UI Coverage form. The components object can also be set inside a [`profiles`](/accessibility/configuration/profiles) entry to apply to tagged runs.
+The components object is only valid under an `accessibility` key in your App Quality configuration. Unlike [`significantAttributes`](/accessibility/configuration/significantattributes) or [`attributeFilters`](/accessibility/configuration/attributefilters), it has no root-level or UI Coverage form. You can also set the components object inside a [`profiles`](/accessibility/configuration/profiles) entry to apply to tagged runs.
 
 ## Setting components
 
@@ -120,26 +120,26 @@ To add or edit components, open the **App Quality** tab in your project settings
 
 ### `componentAttributes`
 
-Each entry names an attribute to append to the selector when it's present on the element with the violation. Attribute names are stored in lowercase and **must be unique** in the list.
+Each entry names an attribute to append to the selector when it's present on the element with the violation. Cypress stores attribute names in lowercase, and each name **must be unique** in the list.
 
 | Option              | Required | Default | Description                                                                                      |
 | ------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------ |
 | `attributeName`     | Yes      |         | The HTML attribute name to append, for example `data-component-name`. `class` is also supported. |
-| `includeInSelector` | No       | `true`  | When `true`, the attribute is appended to the selector wherever the element has it.              |
+| `includeInSelector` | No       | `true`  | When `true`, Cypress appends the attribute to the selector wherever the element has it.          |
 | `comment`           | No       |         | A note for your team explaining why the entry exists. Comments never appear in reports.          |
 
 When `includeInSelector` is `false`, the entry is kept for documentation or future use but doesn't change selector generation, the same as leaving it out.
 
 ### `componentAttributeFilters`
 
-These filters fine-tune **which attribute values** are appended. The filters apply only to the attributes in `componentAttributes`, using the same regular-expression style as [`attributeFilters`](/accessibility/configuration/attributefilters): `attribute` and `value` are regex patterns. For a given attribute value, **the first rule whose `attribute` and `value` both match** decides whether it's appended. A filter with no matching `componentAttributes` entry does nothing.
+These filters fine-tune **which attribute values** Cypress appends. The filters apply only to the attributes in `componentAttributes`, using the same regular-expression style as [`attributeFilters`](/accessibility/configuration/attributefilters): `attribute` and `value` are regex patterns. For a given attribute value, **the first rule whose `attribute` and `value` both match** decides whether it's appended. A filter with no matching `componentAttributes` entry does nothing.
 
-| Option      | Required | Default | Description                                                     |
-| ----------- | -------- | ------- | --------------------------------------------------------------- |
-| `attribute` | Yes      |         | Regex matched against the component attribute's name.           |
-| `value`     | No       | `.*`    | Regex matched against the attribute's value.                    |
-| `include`   | No       | `true`  | When `false`, matching values are not appended to the selector. |
-| `comment`   | No       |         | A note for your team. Comments never appear in reports.         |
+| Option      | Required | Default | Description                                                           |
+| ----------- | -------- | ------- | --------------------------------------------------------------------- |
+| `attribute` | Yes      |         | Regex matched against the component attribute's name.                 |
+| `value`     | No       | `.*`    | Regex matched against the attribute's value.                          |
+| `include`   | No       | `true`  | When `false`, Cypress doesn't append matching values to the selector. |
+| `comment`   | No       |         | A note for your team. Comments never appear in reports.               |
 
 Use `include: false` to keep a noisy or generic value out of your selectors, such as a layout primitive whose name adds no context, while still appending the meaningful ones.
 
@@ -149,10 +149,10 @@ You can also add a `comment` to the components object itself to document the who
 
 Keep these behaviors in mind when building your configuration:
 
-- **Listed attributes are kept wherever they appear.** A component attribute on the element is appended to its selector; the same attribute on an ancestor is added in front as descendant-combinator context. An element whose ancestor chain has none of the listed attributes is unaffected.
-- **Component attributes are added on top of the identifier, not instead of it.** The element is still identified by `significantAttributes` and the defaults; component attributes add context. Component attributes are added even when the selector is already unique.
+- **Listed attributes are kept wherever they appear.** Cypress appends a component attribute on the element to its selector and adds the same attribute on an ancestor in front as descendant-combinator context. An element whose ancestor chain has none of the listed attributes is unaffected.
+- **Component attributes are added on top of the identifier, not instead of it.** Cypress still identifies the element by `significantAttributes` and the defaults; component attributes add context. Cypress adds component attributes even when the selector is already unique.
 - **Component attributes help with uniqueness and deduplication.** Because a required attribute is part of the selector, one that distinguishes the element can make the selector shorter and more stable than the positional fallback Cypress would use otherwise, which keeps the same element from splitting into several across snapshots.
-- **On one element, appended attributes follow your list order.** Multiple attributes appended to the same element appear in the order you list them in `componentAttributes`. An attribute that already identifies the element isn't added a second time.
+- **On one element, appended attributes follow your list order.** Multiple attributes appended to the same element appear in the order you list them in `componentAttributes`. Cypress doesn't add an attribute a second time when that attribute already identifies the element.
 - **Default attribute filters don't apply here.** The [default filters](/accessibility/configuration/attributefilters) that keep dynamic, UUID-like values out of _identifying_ selectors don't touch component attributes. `componentAttributeFilters` are the only way to exclude component-attribute values, so list a rule if an attribute's value is sometimes noisy.
 - **`class` is supported.** Listing `class` as a component attribute appends the element's class value; `componentAttributeFilters` apply to it the same way.
 
@@ -160,10 +160,10 @@ Keep these behaviors in mind when building your configuration:
 
 Cypress Cloud validates the whole configuration before saving it and rejects a components block that breaks any of these:
 
-- Each `attributeName` must be a valid HTML attribute name. Names are compared in lowercase and must be unique across `componentAttributes`.
+- Each `attributeName` must be a valid HTML attribute name. Cypress compares names in lowercase, and names must be unique across `componentAttributes`.
 - Each `componentAttributeFilters` `attribute` and `value` must be a valid regular expression.
 - No two `componentAttributeFilters` rules may be identical across `attribute`, `value`, and `include`.
-- Only the properties documented above are allowed. An unrecognized key is rejected rather than ignored.
+- Only the properties documented above are allowed. Cypress Cloud rejects an unrecognized key rather than ignoring it.
 
 ## Examples
 
@@ -203,7 +203,7 @@ The violation target selector displayed in the report:
 
 ### Add component and team context together
 
-`componentAttributes` is a list, so you can append more than one attribute. Here the design-system component name and the owning team are both added, so findings can be read, filtered, or assigned by either.
+`componentAttributes` is a list, so you can append more than one attribute. Here Cypress adds both the design-system component name and the owning team, so you can read, filter, or assign findings by either.
 
 #### Config
 
@@ -269,7 +269,7 @@ Component attributes don't have to be on the element itself. When a listed attri
 
 #### Result
 
-The button is identified by its own `data-cy`, with the region prepended as ancestor context:
+Cypress identifies the button by its own `data-cy` and prepends the region as ancestor context:
 
 ```
 [data-page-area="global-header"] [data-cy="menu-toggle"]
@@ -310,7 +310,7 @@ Some component names add no context. A layout primitive like `Box` wraps element
 
 #### Result
 
-The meaningful component name is appended; the layout primitive is filtered out, leaving that element on its identifier alone:
+Cypress appends the meaningful component name and filters out the layout primitive, leaving that element on its identifier alone:
 
 ```
 [data-cy="row-delete"][data-component="DataGridDeleteButton"]
@@ -328,14 +328,14 @@ After saving configuration changes, regenerate a recent run to preview the effec
 Three configuration properties all work with attributes, but they do different jobs:
 
 - [`significantAttributes`](/accessibility/configuration/significantattributes) chooses the single attribute that **identifies** the element and becomes its selector.
-- [`attributeFilters`](/accessibility/configuration/attributefilters) **removes** dynamic or generated attribute values from identification, so they can't be used as selectors.
+- [`attributeFilters`](/accessibility/configuration/attributefilters) **removes** dynamic or generated attribute values from identification, so Cypress can't use them as selectors.
 - components **adds context** to the selector, from the element or its ancestors, on top of whatever identifies the element, without changing which attribute identifies it.
 
 For background on how Cypress picks identifiers, see [Element identification](/accessibility/core-concepts/element-identification).
 
 ## See also
 
-- [Element identification](/accessibility/core-concepts/element-identification): how elements are identified across snapshots.
+- [Element identification](/accessibility/core-concepts/element-identification): how Cypress identifies elements across snapshots.
 - [`significantAttributes`](/accessibility/configuration/significantattributes): choose which attribute identifies an element.
 - [`attributeFilters`](/accessibility/configuration/attributefilters): stop dynamic or generated attribute values from identifying elements.
 - [Inspecting violation details](/accessibility/reports/element-detail-view): where violation target selectors appear in reports.

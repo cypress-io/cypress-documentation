@@ -29,7 +29,7 @@ spec. Accept the default name for now.
   alt="The new spec path dialog"
 />
 
-The newly-generated spec is displayed in a confirmation dialog. Close it with
+The App displays the newly-generated spec in a confirmation dialog. Close it with
 the ✕ button.
 
 <DocsImage
@@ -199,7 +199,7 @@ a few things:
 
 1. The [Command Log](/app/core-concepts/open-mode#Command-Log) now shows
    the new `VISIT` action.
-2. The Kitchen Sink application has been loaded into the
+2. Cypress has loaded the Kitchen Sink application into the
    [App](/app/core-concepts/open-mode).
 3. The test is green, even though we made no assertions.
 4. The `VISIT` displays a **blue pending state** until the page finishes
@@ -245,7 +245,7 @@ To verify this, replace `type` with something not on the page, like `hype`.
 The test goes red, but only after about 4 seconds!
 
 Can you see what Cypress is doing under the hood? Cypress is automatically waiting and
-retrying because it expects the content to **eventually** be found in the DOM.
+retrying because it expects to **eventually** find the content in the DOM.
 Cypress doesn't immediately fail!
 
 <!--
@@ -347,7 +347,7 @@ chain to interact with and verify the behavior of elements on this new page.
 We can use [cy.get()](/api/commands/get) to select an element based on its
 class. Then we can use the [.type()](/api/commands/type) command to enter text
 into the selected input. Finally, we can verify that the value of the input
-reflects the text that was typed with another [.should()](/api/commands/should).
+reflects the text that `.type()` entered with another [.should()](/api/commands/should).
 
 In general, the structure of your test should flow query -> query -> command or
 assertion(s). It's best practice not to chain anything after an action command;
@@ -442,8 +442,9 @@ for the single `PAGE LOAD` event.
 In other words, based on the commands and the events happening, Cypress
 automatically alters its expected timeouts to match web application behavior.
 
-These various timeouts are defined in the
-[Configuration](/app/references/configuration#Timeouts) document.
+The
+[Configuration](/app/references/configuration#Timeouts) document defines these
+various timeouts.
 
 :::
 

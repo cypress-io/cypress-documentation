@@ -21,19 +21,19 @@ To take a manual screenshot you can use the
 [`cy.screenshot()`](/api/commands/screenshot) command.
 
 Additionally, Cypress automatically captures screenshots when a failure
-happens during `cypress run`. Screenshots on failure are _not_ automatically
-taken during `cypress open`.
+happens during `cypress run`. Cypress does _not_ automatically take screenshots
+on failure during `cypress open`.
 
-Capturing of screenshots when a test fails can be turned off entirely by setting
+You can turn off screenshots on test failure entirely by setting
 [`screenshotOnRunFailure`](/app/references/configuration#Screenshots) to
 `false` from within the
 [Cypress configuration](/app/references/configuration) or by setting
 `screenshotOnRunFailure` to `false` in the
 [Cypress.Screenshot.defaults()](/api/cypress-api/screenshot-api).
 
-Screenshots are stored in the
-[`screenshotsFolder`](/app/references/configuration#Screenshots) which is set
-to `cypress/screenshots` by default.
+Cypress stores screenshots in the
+[`screenshotsFolder`](/app/references/configuration#Screenshots), which
+defaults to `cypress/screenshots`.
 
 Before `cypress run`, Cypress clears the **entire contents** of the
 `screenshotsFolder`—every file and nested subfolder, not just images. If you do
@@ -45,12 +45,12 @@ for more details.
 
 ## Videos
 
-Video recording is disabled by default, but can be turned on by setting
+Video recording is disabled by default, but you can turn it on by setting
 [`video`](/app/references/configuration#Videos) to `true` from within your
 configuration.
 
 If enabled, Cypress records a video for each spec file when running tests during
-`cypress run`. Videos are _not_ recorded during `cypress open`.
+`cypress run`. Cypress does _not_ record videos during `cypress open`.
 
 :::cypress-config-example
 
@@ -62,16 +62,16 @@ If enabled, Cypress records a video for each spec file when running tests during
 
 :::
 
-Videos are stored in the
-[`videosFolder`](/app/references/configuration#Videos) which is set to
-`cypress/videos` by default.
+Cypress stores videos in the
+[`videosFolder`](/app/references/configuration#Videos), which defaults to
+`cypress/videos`.
 
-When using the `--record` flag while running your tests, videos are processed,
-compressed, and uploaded to [Cypress Cloud](/cloud/get-started/introduction) after
+When using the `--record` flag while running your tests, Cypress processes,
+compresses, and uploads videos to [Cypress Cloud](/cloud/get-started/introduction) after
 every spec file runs, successful or not. To change this behavior to only process
 videos in the case that tests fail, see how to
 [delete videos for specs without failing or retried tests](/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests).
-Deleting the video prevents the video from being uploaded to Cypress Cloud.
+Deleting the video prevents Cypress from uploading the video to Cypress Cloud.
 
 Before `cypress run`, Cypress clears the **entire contents** of the
 `videosFolder`—every file and nested subfolder, not just videos. If you do not
@@ -83,7 +83,7 @@ for more details.
 
 ### Video encoding
 
-After a video is recorded, Cypress encodes the video to a commonly digestable
+After Cypress records a video, Cypress encodes the video to a commonly digestable
 format. Part of this encoding process includes video compression.
 
 Compression is disabled by default, meaning Cypress skips this step
@@ -157,7 +157,7 @@ nested in. When a test runs more than once because of
 
 :::caution
 
-Chapters are only written during video compression, and
+Cypress writes chapters only during video compression, and
 [`videoCompression`](/app/references/configuration#Videos) is disabled by
 default. To get chapters, enable both `video` and `videoCompression`.
 
@@ -180,7 +180,7 @@ chapters.
 
 Chapters only help when you open the video file yourself. Record your runs to
 [Cypress Cloud](/cloud/get-started/introduction) and you get this for free:
-every test in the run is listed alongside its video, and selecting one takes you
+Cypress Cloud lists every test in the run alongside its video, and selecting one takes you
 straight to that moment, with no chapters to configure and no scrubbing.
 
 :::note
@@ -206,8 +206,8 @@ To only process videos in the case that a test fails, you can
 which does not upload the video of passed runs to Cypress Cloud.
 
 For more fine grained control, you can use Cypress's
-[`after:spec`](/api/node-events/after-spec-api) event listener that fires after each
-spec file is run and delete the video when certain conditions are met.
+[`after:spec`](/api/node-events/after-spec-api) event listener that fires after Cypress
+runs each spec file and delete the video when certain conditions are met.
 
 ### Delete videos for specs without failing or retried tests
 

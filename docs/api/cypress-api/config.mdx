@@ -26,7 +26,7 @@ sidebar_position: 60
 Configuration set using `Cypress.config` _is only in scope for the current spec
 file._
 
-Cypress runs each spec file in isolation: the browser is exited between specs.
+Cypress runs each spec file in isolation: Cypress closes the browser between specs.
 Configuration changed in one spec isn't visible in other specs.
 
 :::
@@ -35,7 +35,7 @@ Configuration changed in one spec isn't visible in other specs.
 
 <strong>Note</strong>
 
-Not all configuration values can be changed during runtime. See [Notes](#Notes)
+You can change only some configuration values during runtime. See [Notes](#Notes)
 below for details.
 
 :::
@@ -162,13 +162,13 @@ Cypress.config() // => {defaultCommandTimeout: 10000, pageLoadTimeout: 60000, ..
 
 ### Not all config values can be changed at all times
 
-Some configuration values are readonly and cannot be changed while running a
-test. Anything that's not directly under Cypress's control - like timeouts or
+Some configuration values are readonly, and you cannot change them while running
+a test. Anything that's not directly under Cypress's control - like timeouts or
 environment variables - is ignored at run-time. Be sure to review the list
 of
 [test configuration options](/app/references/configuration#Test-Configuration).
 
-A few options can be set in a suite or test configuration override, but not with
+You can set a few options in a suite or test configuration override, but not with
 `Cypress.config()` while a test is executing, because doing so would affect the
 _next_ test rather than the current one. Starting in Cypress
 [16.0.0](/app/references/changelog#16-0-0), `Cypress.config()` throws for these
@@ -188,7 +188,7 @@ object to the test or suite function.
 
 While `Cypress.config()` changes configuration values through the entire spec
 file, using test configuration only changes configuration values during the
-suite or test where they are set. The values then reset to the previous
+suite or test where you set them. The values then reset to the previous
 default values after the suite or test is complete.
 
 See the full guide on

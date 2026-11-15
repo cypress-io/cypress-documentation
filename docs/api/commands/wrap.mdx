@@ -153,12 +153,12 @@ For example, given the following example:
 - You have two async functions `async function foo() {...}` and
   `async function bar() {...}`.
 - You need to make sure `foo()` has resolved first before invoking `bar()`.
-- `bar()` is also dependent on some data that is created while after calling
-  other Cypress commands.
+- `bar()` also depends on some data that your test creates by calling other
+  Cypress commands.
 
 <Icon name="exclamation-triangle" color="red" /> If you wrap the asynchronous
-functions in `cy.wrap()`, then `bar()` may be called prematurely before the
-required data is available:
+functions in `cy.wrap()`, then your test may call `bar()` prematurely, before
+the required data is available:
 
 ```javascript
 cy.wrap(foo())

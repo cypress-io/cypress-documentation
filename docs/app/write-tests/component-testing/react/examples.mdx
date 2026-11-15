@@ -43,7 +43,7 @@ it('mounts', () => {
 ## Testing Event Handlers
 
 Pass a Cypress [spy](/app/guides/stubs-spies-and-clocks#Spies) to an event
-prop and validate it was called:
+prop and validate that the component called it:
 
 ```ts
 it('clicking + fires a change event with the incremented value', () => {
@@ -155,8 +155,8 @@ customize `cy.mount()` to fit your needs. For instance, if you are using
 providers or other global app-level setups in your React app, you can configure
 them here.
 
-Below are a few examples that demonstrate using a custom mount command. These
-examples can be adjusted for most other providers that you need to support.
+Below are a few examples that demonstrate using a custom mount command. You can
+adjust these examples for most other providers that you need to support.
 
 ### React Router
 
@@ -216,7 +216,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 </TabItem>
 </Tabs>
 
-To set up certain scenarios, pass in props that get passed to
+To set up certain scenarios, pass in props that the mount command passes to
 `MemoryRouter` in the options. Below is an example test that ensures an active
 link has the correct class applied to it by initializing the router with
 `initialEntries` pointed to a particular route:
@@ -328,8 +328,8 @@ it('User profile should display user name', () => {
 
 :::info
 
-The `getStore` method is a factory method that initializes a new Redux store. It
-is important that the store be initialized with each new test to ensure changes
-to the store don't affect other tests.
+The `getStore` method is a factory method that initializes a new Redux store. Initialize
+the store with each new test to ensure changes to the store don't affect other
+tests.
 
 :::

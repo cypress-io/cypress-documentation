@@ -75,7 +75,7 @@ If setting `forceHttp1` to `true` allows your suite to pass, and the difference 
 
 The default delay between keystrokes in [`cy.type()`](/api/commands/type) has been changed from `10` to `0` milliseconds to improve performance of typing-heavy test runs.
 
-If your tests relied on the implicit 10ms delay between keystrokes, you can restore the previous behavior using any of these approaches. The resolved `keystrokeDelay` is read from your Cypress [configuration](/app/references/configuration#Keyboard) first, then [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), and falls back to the built-in default of `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
+If your tests relied on the implicit 10ms delay between keystrokes, you can restore the previous behavior using any of these approaches. Cypress reads the resolved `keystrokeDelay` from your Cypress [configuration](/app/references/configuration#Keyboard) first, then [`Cypress.Keyboard.defaults()`](/api/cypress-api/keyboard-api), and falls back to the built-in default of `0` if neither is set. A per-command `delay` passed to [`.type()`](/api/commands/type) is independent of this and overrides the resolved value for that single call.
 
 #### Set `keystrokeDelay` in your Cypress configuration
 
@@ -232,7 +232,7 @@ cy.getCookie('session_id').should('have.property', 'value', '189jd09su')
 
 If you specifically want a one-shot check that does **not** retry, for example
 to assert that a cookie does **not** yet exist, perform the assertion inside a
-[`.then()`](/api/commands/then) callback, which runs once and is not retried:
+[`.then()`](/api/commands/then) callback, which runs once without retrying:
 
 ```javascript
 cy.getCookie('session_id').then((cookie) => {
@@ -277,7 +277,7 @@ retry-able [query commands](/app/core-concepts/retry-ability), just like
 [`cy.getCookies()`](/api/commands/getcookies).
 
 Previously they read storage once and ran any chained assertions a single time,
-so they could fail on the first read when storage was populated asynchronously.
+so they could fail on the first read when your app populated storage asynchronously.
 As of Cypress 16 they re-read `localStorage` and `sessionStorage` from all
 origins and retry their chained assertions until they pass or time out.
 
@@ -295,7 +295,7 @@ Both commands are now [`Timeoutable`](/api/commands/getalllocalstorage#Arguments
 and accept a `timeout` option. Both commands are governed by
 [`defaultCommandTimeout`](/app/references/configuration#Timeouts) (default
 `4000` ms), the same timeout used by every other query. When a read times out,
-the error is reported with the standard `Timed out retrying after ...` prefix.
+Cypress reports the error with the standard `Timed out retrying after ...` prefix.
 
 The new retry behavior applies only to assertions chained directly onto the
 command. A [`.then()`](/api/commands/then) callback still runs only once, after
@@ -322,7 +322,7 @@ cy.getAllLocalStorage().should('have.property', 'https://example.cypress.io')
 
 If you specifically want a one-shot check that does **not** retry, for example
 to assert that no storage has been written yet, perform the assertion inside a
-[`.then()`](/api/commands/then) callback, which runs once and is not retried:
+[`.then()`](/api/commands/then) callback, which runs once without retrying:
 
 ```javascript
 cy.getAllLocalStorage().then((result) => {
@@ -406,7 +406,7 @@ Setting `viewportWidth` and `viewportHeight` in your Cypress configuration, or w
 
 [`blockHosts`](/app/references/configuration#blockHosts) can no longer be set with [`Cypress.config()`](/api/cypress-api/config) while a test is executing. Doing so applied to the _next_ test rather than the current one, and the value leaked into every test that followed, so Cypress now throws instead.
 
-Set `blockHosts` in the [test configuration](/app/references/configuration#Test-specific-Configuration) of a `describe`, `context`, or `it` block instead, which takes effect for the suite or test where it is set and is restored afterwards.
+Set `blockHosts` in the [test configuration](/app/references/configuration#Test-specific-Configuration) of a `describe`, `context`, or `it` block instead, which takes effect for the suite or test where you set it, and Cypress restores it afterwards.
 
 <Badge type="danger">Before</Badge>
 
@@ -454,7 +454,7 @@ You only need a replacement option if your application pins resources with Subre
 ### `cy.end()` removed
 
 `cy.end()` has been removed. `cy.end()` ended a chain of commands by yielding `null`,
-which was never necessary, because a Cypress chain is already terminated when
+which was never necessary, because a Cypress chain already ends when
 the next `cy.<command>()` starts a new chain.
 
 There is no replacement. Delete the `.end()` calls.
@@ -1279,8 +1279,8 @@ browser is specified, will fail with an error.
    [Docker images](/app/continuous-integration/overview#Cypress-Docker-Images),
    the [GitHub Action](https://github.com/cypress-io/github-action), and the
    [CircleCI Orb](https://github.com/cypress-io/circleci-orb).
-1. **Set a `defaultBrowser`** so Cypress no longer falls back to Electron when no
-   browser is specified:
+1. **Set a `defaultBrowser`** so Cypress no longer falls back to Electron when you
+   don't specify a browser:
 
    ```js
    import { defineConfig } from 'cypress'
@@ -2023,7 +2023,7 @@ Tests written using it should continue to operate exactly as before; no changes
 are necessary.
 
 `readFile()` re-reads the file from disk if any upcoming command in the same
-chain fails. Assertions no longer have to be directly attached.
+chain fails. You no longer have to attach assertions directly.
 
 ```js
 cy.readFile(`users.json`).its('users.123.fullName').should('eq', 'John Doe')
@@ -2107,14 +2107,14 @@ isolation means Cypress resets the browser context _before_ each test by:
   [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
   in all domains
 
-Test suites that relied on the application to persist between tests may have to
-be updated to revisit their application and rebuild the browser state for each
+Test suites that relied on the application to persist between tests may need
+updates so they revisit their application and rebuild the browser state for each
 test that needs it.
 
 Before this change, it was possible to write tests such that you could rely on
 the application (i.e. DOM state) to persist between tests. For example you could
 log in to a CMS in the first test, change some content in the second test,
-verify the new version is displayed on a different URL in the third, and log out
+verify a different URL displays the new version in the third, and log out
 in the fourth.
 
 Here's a simplified example of such a test strategy.
@@ -2144,10 +2144,10 @@ it('validates the change', () => {
 })
 ```
 
-After migrating, when `testIsolation=true` by default, this flow would need to
-be contained within a single test. While the above practice has always been
+After migrating, when `testIsolation=true` by default, you would need to
+contain this flow within a single test. While we have always
 [discouraged](/app/core-concepts/best-practices#Having-Tests-Rely-On-The-State-Of-Previous-Tests)
-we know some users have historically written tests this way, often to get around
+the above practice, we know some users have historically written tests this way, often to get around
 the `same-origin` restrictions. But with [`cy.origin()`](/api/commands/origin)
 you no longer need these kind of brittle hacks, as your multi-origin logic can
 all reside in a single test, like the following.
@@ -2162,7 +2162,7 @@ it('securely edits content', () => {
     cy.get('button#submit').click()
   })
 
-  cy.origin('cypress-dx.com', () => {
+  cy.origin('https://app.cypress.io', () => {
     cy.url().should('contain', 'cms')
     cy.get('#current-user').contains('logged in')
     cy.get('button#edit-1').click()
@@ -2176,7 +2176,7 @@ it('securely edits content', () => {
 })
 ```
 
-The just-released `cy.session()` command can be used to setup and cache cookies,
+You can use the just-released `cy.session()` command to setup and cache cookies,
 local storage, and session storage between tests to re-establish the
 previous (or common) browser contexts needed in a suite. This command runs
 setup on its initial execution and restores the saved browser state on each
@@ -2197,7 +2197,7 @@ describe('workflow', { testIsolation: false }, () => {
 While disabling test isolation may improve the
 overall performance of end-to-end tests, it can cause state to "leak" between tests. Leaked state can make later tests dependent on the results of earlier tests, and
 potentially cause misleading test failures. It is important to be extremely
-mindful of how tests are written when using this mode, and ensure that tests
+mindful of how you write tests when using this mode, and ensure that tests
 continue to run independently of one another.
 
 <Badge type="danger">For example</Badge> the following tests are not independent
@@ -2239,13 +2239,12 @@ test and verify it can run successfully without the test before it.
 #### Simulating Pre-Test Isolation Behavior
 
 Test isolation did not truly exist pre-12. Pre-Cypress 12, the behavior was a
-hybrid of both `testIsolation` enabled and disabled. All local storage and
-cookies on the current domain were cleared, but Cypress did not clear session
-storage and the page always persisted.
+hybrid of both `testIsolation` enabled and disabled. Cypress cleared all local
+storage and cookies on the current domain, but did not clear session storage and the page always persisted.
 
-In Cypress 12+ when `testIsolation` is enabled, local storage, session storage,
-and cookies in **all** domains are cleared and the page is cleared. When
-`testIsolation` is disabled, nothing is cleared before the next test so all
+In Cypress 12+ when `testIsolation` is enabled, Cypress clears local storage, session
+storage, and cookies in **all** domains and clears the page. When
+`testIsolation` is disabled, Cypress clears nothing before the next test so all
 local storage, session storage, and cookies & the page persists.
 
 If you wanted to match pre-Cypress 12 behavior, you need to disable
@@ -2264,14 +2263,14 @@ describe('match pre-12 behavior', { testIsolation: false }, () => {
 
 Many of the issues test isolation solved were around cookie management with
 tests trying to save and persist cookies because the page was still available,
-but the cookies on the domain were unexpectedly cleared which broke interactions
+but Cypress unexpectedly cleared the cookies on the domain, which broke interactions
 with the application. It wasn’t obvious Cypress was doing a partial browser
 clean up. Explicitly setting test isolation to enabled or disabled puts that
 behavior under your control.
 
 ### Behavior Changes in Alias Resolution
 
-Cypress always re-queries aliases when they are referenced. Re-querying can result in
+Cypress always re-queries aliases when you reference them. Re-querying can result in
 certain tests that used to pass could start to fail. For example,
 
 ```js
@@ -2325,10 +2324,10 @@ cookies (and local and session storage) between tests.
 #### Cookie commands now use `hostname` instead of `superdomain`
 
 The cookie commands now use the `hostname` as the domain by default instead of
-the `superdomain`. This change aligns Cypress' cookie rules with the browser cookie rules. The new default may affect what cookies are returned by
-[`cy.getCookie()`](/api/commands/getcookie), what cookies are set with
-[`cy.setCookie()`](/api/commands/setcookie), and the cookies cleared with
-[`cy.clearCookies()`](/api/commands/clearcookies). If your tests depend on
+the `superdomain`. This change aligns Cypress' cookie rules with the browser cookie rules. The new default may affect what cookies
+[`cy.getCookie()`](/api/commands/getcookie) returns, what cookies
+[`cy.setCookie()`](/api/commands/setcookie) sets, and the cookies
+[`cy.clearCookies()`](/api/commands/clearcookies) clears. If your tests depend on
 cookies being shared across subdomains, pass an explicit `domain` option to
 these commands.
 
@@ -2422,7 +2421,7 @@ If `.invoke()` is followed by additional commands or assertions, it calls
 the named function multiple times. Calling the function again has the benefit that the chained
 assertions can more reliably use the function's return value.
 
-If this behavior is undesirable because you expect the function to be invoked
+If this behavior is undesirable because you expect Cypress to invoke the function
 only once, break the command chain and move the chained commands and/or
 assertions to their own chain. For example, rewrite
 
@@ -2784,7 +2783,7 @@ There is one breaking change for Angular users in regards to providers. In
 Cypress 10, we took any providers passed as part of the Mounting Options and
 overrode the component providers via the `TestBed.overrideComponent` API.
 
-In Cypress 11, providers passed as part of the Mounting Options are assigned
+In Cypress 11, Cypress assigns providers passed as part of the Mounting Options
 at the module level using the `TestBed.configureTestingModule` API.
 
 This change means that module-level providers (resolved from imports or

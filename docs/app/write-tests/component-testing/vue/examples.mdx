@@ -89,7 +89,7 @@ it('surfaces a render error', () => {
 The recommended way to render fallback UI in Vue is a wrapper component that uses
 the [`onErrorCaptured`](https://vuejs.org/api/composition-api-lifecycle#onerrorcaptured)
 lifecycle hook to catch errors from its descendants. You can mount a component
-inside such a wrapper and assert that the fallback UI is displayed:
+inside such a wrapper and assert that the wrapper displays the fallback UI:
 
 ```js
 // ErrorBoundary.cy.js
@@ -329,8 +329,8 @@ cy.mount(Stepper).doStuff().get('@vue') // The subject is now the Vue Wrapper
 
 The `@vue` alias means that you are able to get to the resulting `wrapper` returned from the
 `mount` command and use `wrapper.emitted()` to gain access to Native
-DOM events that were fired, as well as custom events that were emitted by your
-component under test.
+DOM events that fired, as well as custom events that your component under test
+emitted.
 
 Because `wrapper.emitted()` is only data, and NOT spy-based you have to
 unpack its results to write assertions.
@@ -389,7 +389,7 @@ events.
 
 While you can use the [mount()](/app/component-testing/vue/api#mount)
 function in your tests, we recommend using [`cy.mount()`](/api/commands/mount),
-which is a [custom command](/api/cypress-api/custom-commands) that is defined in
+which is a [custom command](/api/cypress-api/custom-commands) that you define in
 the **cypress/support/component.js** file:
 
 <Tabs>
@@ -428,8 +428,8 @@ By default, `cy.mount()` is a simple passthrough to `mount()`, however, you can
 customize `cy.mount()` to fit your needs. For instance, if you are using plugins
 or other global app-level setups in your Vue app, you can configure them here.
 
-Below are a few examples that demonstrate using a custom mount command. These
-examples can be adjusted for most other providers that you need to support.
+Below are a few examples that demonstrate using a custom mount command. You can
+adjust these examples for most other providers that you need to support.
 
 ### Replicating Plugins
 
@@ -861,7 +861,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 :::info
 
 The `getStore` method is a factory method that initializes Vuex and creates a
-new store. It is important that the store be initialized with each new test to
+new store. It is important to initialize the store with each new test to
 ensure changes to the store don't affect other tests.
 
 :::
@@ -944,7 +944,7 @@ it.only('User profile should display user name', () => {
 
 ### Global Components
 
-If you have components that are registered globally in the main application
+If you register components globally in the main application
 file, set them up in your mount command so your component renders them
 properly:
 

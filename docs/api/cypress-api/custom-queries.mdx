@@ -43,8 +43,9 @@ be asynchronous, or if it can be called only once.
 :::info
 
 We recommend defining queries in your `cypress/support/commands.js` file, since
-it is loaded before any test files are evaluated via an import statement in the
-[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file).
+an import statement in the
+[supportFile](/app/core-concepts/writing-and-organizing-tests#Support-file)
+loads it before Cypress evaluates any test files.
 
 :::
 
@@ -106,9 +107,9 @@ The name of the query you're adding.
 
 Pass a function that receives the arguments passed to the query.
 
-This outer function is invoked once. The outer function should return a function that takes a
-subject and returns a new subject; this inner function might be called multiple
-times.
+Cypress invokes this outer function once. The outer function should return a function that takes a
+subject and returns a new subject; Cypress might call this inner function
+multiple times.
 
 :::info
 
@@ -121,9 +122,9 @@ should always use `function () {}` and not be an arrow function (`() => {}`).
 
 ### `.focused()`
 
-The callback function can be thought of as two separate parts. The _outer
-function_, which is invoked once, where you perform setup and state management,
-and the _query function_, which might be called repeatedly.
+You can think of the callback function as two separate parts. The _outer
+function_, which Cypress invokes once, where you perform setup and state
+management, and the _query function_, which Cypress might call repeatedly.
 
 Let's look at an example. The example below is actual Cypress code — how `.focused()` is
 implemented internally, with some small adjustments to make it work from a
@@ -231,7 +232,7 @@ Cypress.Commands.addQuery(
 
 #### The outer function
 
-The outer function is called once each time test uses the query. The outer function performs
+Cypress calls the outer function once each time a test uses the query. The outer function performs
 setup and state management:
 
 ```javascript
@@ -250,8 +251,8 @@ Let's look at this piece by piece.
 function focused2(options = {}) { ... }
 ```
 
-Cypress passes the outer function whatever arguments the user calls it with; no
-processing or validation is done on the user's arguments. In our case,
+Cypress passes the outer function whatever arguments the user calls it with, and
+does no processing or validation on the user's arguments. In our case,
 `.focused2()` accepts one optional argument, `options`.
 
 If you wanted to validate the incoming arguments, you might add something like:
@@ -301,11 +302,11 @@ or `undefined`, your query uses the
 
 The outer function's return value is the inner function.
 
-The inner function is called any number of times. The inner function is first invoked repeatedly
-until it passes or the query times out; it can then be invoked again later to
+Cypress calls the inner function any number of times. Cypress first invokes the inner function repeatedly
+until it passes or the query times out; Cypress can then invoke it again later to
 determine the subject of future commands, or when the user retrieves an alias.
 
-The inner function is called with one argument: the previous subject. Cypress
+Cypress calls the inner function with one argument: the previous subject. Cypress
 performs no validation on this - it could be any type, including `null` or
 `undefined`.
 
@@ -466,7 +467,7 @@ of control over how the query executes.
 
 #### Adding alias support to `.contains()`
 
-In this example, `cy.contains()` is extended to support querying for aliased
+In this example, you extend `cy.contains()` to support querying for aliased
 subjects, like `cy.contains('@foo')`.
 
 <Tabs>
@@ -560,7 +561,7 @@ retries them the same way.
 
 Custom queries work well when you're needing to describe behavior that's
 desirable across **all of your tests**. Examples would be `cy.findBreadcrumbs()`
-or `cy.getLoginForm()`. These queries are specific to your application and can be used
+or `cy.getLoginForm()`. These queries are specific to your application and you can use them
 everywhere.
 
 However, this pattern can be used and abused. Let's not forget - writing Cypress

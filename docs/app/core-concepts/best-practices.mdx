@@ -303,8 +303,8 @@ selector that's only used for testing.
 The `data-cy` attribute does not change from CSS style or JS behavioral changes,
 meaning it's not coupled to the **behavior** or **styling** of an element.
 
-Additionally, it makes it clear to everyone that this element is used directly
-by test code.
+Additionally, it makes it clear to everyone that test code uses this element
+directly.
 
 #### <Icon name="graduation-cap" /> Real World Example
 
@@ -372,9 +372,9 @@ text changed from `Submit` to `Save` - would you want the test to fail?
 
 If the answer is **yes** because the word `Submit` is critical and should not be
 changed - then use [`cy.contains()`](/api/commands/contains) to target the
-element. This way, if it is changed, the test fails.
+element. This way, if someone changes it, the test fails.
 
-If the answer is **no** because the text could be changed - then use
+If the answer is **no** because the text could change - then use
 [`cy.get()`](/api/commands/get) with data attributes. Changing the text to
 `Save` would then not cause a test failure.
 
@@ -495,16 +495,14 @@ You may want to access 3rd party services in several situations:
 2. Verifying your server updates a 3rd party server.
 3. Checking your email to see if your server sent a "forgot password" email.
 
-If you choose, these situations can be tested with
+If you choose, you can test these situations with
 [`cy.visit()`](/api/commands/visit) and [`cy.origin()`](/api/commands/origin).
 However, you only want to use these commands for resources in your
 control, either by controlling the domain or hosted instance. These use cases
 are common for:
 
 - Authentication as a service platforms, such as Auth0, Okta, Microsoft, AWS
-  Cognito, and others via username/password authentication. These domains and
-  service instances are usually owned and controlled by you or your
-  organization.
+  Cognito, and others via username/password authentication. These domains usually belong to you or your organization and service instances.
 - CMS instances, such as a Contentful or Wordpress instance.
 - Other types of services under a domain in which you control.
 
@@ -636,7 +634,7 @@ multiple tests together.
 :::tip
 
 <Icon name="check-circle" color="green" /> **Best Practice:** Tests should
-always be able to be run independently from one another **and still pass**.
+always be able to run independently from one another **and still pass**.
 
 :::
 
@@ -752,7 +750,7 @@ test and ensuring nothing in previous tests leaks into subsequent ones.
 
 We're also paving the way to make it less complicated to write multiple tests
 against the "default" state of the form. That way each test stays lean but each
-can be run independently and pass.
+can run independently and pass.
 
 ## <Icon name="angle-right" /> Creating "Tiny" Tests With A Single Assertion <E2EOnlyBadge />
 
@@ -932,7 +930,7 @@ commenting out your custom `cy.logout()` command.
 
 For the moment, let's assume that for some reason your application desperately
 **needs** that last bit of `after` or `afterEach` code to run. Let's assume that
-if that code is not run - all is lost.
+if that code does not run - all is lost.
 
 That requirement is fine - but even if this is the case, it should not go in an `after` or
 `afterEach` hook. Why? So far we have been talking about logging out, but let's
@@ -997,7 +995,7 @@ One final question you should ask yourself is - is resetting the state even
 necessary? Remember, Cypress already automatically enforces
 [test isolation](/app/core-concepts/writing-and-organizing-tests#Test-Isolation)
 by clearing state before each test. Make sure you are not trying to clean up
-state that is already cleaned up by Cypress automatically.
+state that Cypress already cleans up automatically.
 
 If the state you are trying to clean lives on the server - by all means, clean
 that state. You need to run these types of routines! But if the state is
@@ -1058,8 +1056,8 @@ _<Icon name="github" /> Source:
 
 :::
 
-The same practice above can be used for any type of database (PostgreSQL,
-MongoDB, etc.). In this example, a request is sent to a back end API, but you
+You can use the same practice above for any type of database (PostgreSQL,
+MongoDB, etc.). In this example, the task sends a request to a back end API, but you
 could also interact directly with your database with direct queries, custom
 libraries, etc. If you already have non-JavaScript methods of handling or
 interacting with your database, you can use [`cy.task`](/api/commands/task) to
@@ -1147,11 +1145,10 @@ cy.get('table tr').should('have.length', 2)
 
 As your test suite grows and takes longer to run, you may find yourself hitting
 performance bottlenecks on your CI system. We recommend integrating your source
-control system with your test suite such that merges are blocked until all your
+control system with your test suite so that merges wait until all your
 Cypress tests have passed. The downside of this is that longer test execution
-times slow the velocity at which branches may be merged and features may be
-shipped. This issue is compounded further if you have dependent chains of
-branches waiting to be merged.
+times slow the velocity at which you can merge branches and ship features.
+Dependent chains of branches waiting to be merged compound this issue further.
 
 One solution to this problem is **Smart Orchestration** with Cypress Cloud.
 Using a combination of
