@@ -263,7 +263,8 @@ same change. `## See also` always stays as it is.
   - Leave the phrasing where it isn't about the reader: test titles and other
     text in code blocks, quoted UI labels (the **Enable Teams** button), and
     "allows for" with a non-reader subject ("Separating installation allows
-    for reuse of the cache").
+    for reuse of various build steps"). A plainer verb such as "supports" or
+    "provides" often still reads better there.
 - **Name the subject in every sentence.** Readers skim, search results quote a
   single sentence, and answer engines lift one out of the page, so a sentence
   that opens with a pronoun for something named earlier loses its meaning out
