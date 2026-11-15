@@ -65,7 +65,7 @@ loaded a page from, including origins visited inside
 ```javascript
 cy.visit('https://example.cypress.io')
 cy.window().then((win) => win.localStorage.setItem('theme', 'dark'))
-cy.origin('https://www.cypress-dx.com', () => {
+cy.origin('https://docs.cypress.io', () => {
   cy.visit('/')
   cy.window().then((win) => win.localStorage.setItem('theme', 'light'))
 })
@@ -118,7 +118,7 @@ origin and test the signed-out experience.
 
 ```javascript
 cy.visit('/')
-cy.origin('https://www.cypress-dx.com', () => {
+cy.origin('https://auth.cypress.io', () => {
   cy.visit('/login')
   cy.get('[data-cy="email"]').type('user@example.com')
   cy.get('[data-cy="remember-me"]').check()
@@ -127,7 +127,7 @@ cy.origin('https://www.cypress-dx.com', () => {
 
 cy.clearAllLocalStorage()
 
-cy.origin('https://www.cypress-dx.com', () => {
+cy.origin('https://auth.cypress.io', () => {
   cy.visit('/login')
   cy.get('[data-cy="email"]').should('have.value', '')
 })

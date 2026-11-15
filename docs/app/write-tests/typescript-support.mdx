@@ -625,11 +625,12 @@ _tsconfig.json_ files in your project for TypeScript to pick up the new types:
 **TypeScript must be able to find the declaration file**
 
 If you rename or move a declaration file, verify that the `include` globs in
-every `tsconfig.json` that needs the declaration file cover its new path. A common mistake
-is placing a `global.d.ts` inside `cypress/support/` while the
-`cypress/tsconfig.json` only includes `**/*.ts` — `.d.ts` files are matched by
-`**/*.ts` only if the glob is `**/*.{ts,d.ts}` or `**/*`. Safest
-practice: list the file explicitly or use `"include": ["**/*.ts", "**/*.d.ts"]`.
+every `tsconfig.json` that needs the declaration file cover its new path. A `**/*.ts`
+glob matches `.d.ts` files too, but only inside the directory of the
+`tsconfig.json` that declares it. A common mistake is moving a `cypress.d.ts`
+to the project root while `cypress/tsconfig.json` includes only `**/*.ts`, so
+TypeScript never sees the file from inside `cypress/`. Safest practice: list
+the file explicitly, as the `"../cypress.d.ts"` entry above does.
 
 :::
 

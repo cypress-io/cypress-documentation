@@ -29,7 +29,7 @@ cy.getCookie('auth_key') // Get cookie with name 'auth_key'
 
 ```javascript
 cy.getCookie() // Errors, a cookie name is required
-cy.getCookie({ domain: 'example.com' }) // Errors, name must be a string
+cy.getCookie({ domain: 'cypress.io' }) // Errors, name must be a string
 ```
 
 ### Arguments
@@ -192,11 +192,11 @@ A cookie set without an expiry date has no `expiry` property, so
 
 By default, `cy.getCookie()` reads cookies for the hostname of the application
 under test. Pass `domain` to read a cookie set for a different domain, such as
-an API on a sibling domain: `api.example.com` when your app runs on
-`app.example.com`.
+an API on a sibling domain: `api.cypress.io` when your app runs on
+`app.cypress.io`.
 
 ```javascript
-cy.getCookie('refresh_token', { domain: 'api.example.com' }).should('exist')
+cy.getCookie('refresh_token', { domain: 'api.cypress.io' }).should('exist')
 ```
 
 ### Validate a `cy.session()` login with `cy.getCookie()`
@@ -240,14 +240,14 @@ To confirm that your server still accepts a restored session, see
 option if you pass one, otherwise the hostname of the application under test.
 `cy.getCookie()` matches the same domain and any parent domain the cookie was set on, but not
 a subdomain or a sibling domain. When the application under test is on
-`app.example.com`, or you pass `domain: 'app.example.com'`:
+`app.cypress.io`, or you pass `domain: 'app.cypress.io'`:
 
-| Cookie set on                      | Yielded by `cy.getCookie()` |
-| ---------------------------------- | --------------------------- |
-| `app.example.com` (same domain)    | Yes                         |
-| `example.com` (parent domain)      | Yes                         |
-| `api.app.example.com` (subdomain)  | No                          |
-| `api.example.com` (sibling domain) | No                          |
+| Cookie set on                     | Yielded by `cy.getCookie()` |
+| --------------------------------- | --------------------------- |
+| `app.cypress.io` (same domain)    | Yes                         |
+| `cypress.io` (parent domain)      | Yes                         |
+| `api.app.cypress.io` (subdomain)  | No                          |
+| `api.cypress.io` (sibling domain) | No                          |
 
 ### Reading HttpOnly cookies with `cy.getCookie()`
 

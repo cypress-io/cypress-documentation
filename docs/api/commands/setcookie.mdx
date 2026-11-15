@@ -86,7 +86,7 @@ cy.getCookie('session_id').should(
 When you call `cy.setCookie()` without `hostOnly`, the `domain` defaults to the
 hostname of the current URL, but Cypress stores the cookie as a **domain cookie**,
 not a host-only cookie. Internally Cypress rewrites the domain to its
-leading-dot form (e.g. `.app.example.com`), mirroring how real browsers store a
+leading-dot form (e.g. `.app.cypress.io`), mirroring how real browsers store a
 cookie that omits the `Domain` attribute's host-only flag. As a result the
 cookie matches that host **and all of its subdomains**.
 
@@ -99,9 +99,9 @@ can be surprising when you set a convenience cookie for your app and see it
 appear on an unrelated request.
 
 ```javascript
-cy.visit('https://app.example.com')
+cy.visit('https://app.cypress.io')
 
-// Default: domain cookie, matches app.example.com AND its subdomains
+// Default: domain cookie, matches app.cypress.io AND its subdomains
 cy.setCookie('cookieconsent_status', 'dismiss')
 
 // Host-only: matches ONLY the exact host it was set on

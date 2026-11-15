@@ -430,18 +430,17 @@ doesn't reach it.
 describe('Href visit', () => {
   it('captures href', () => {
     cy.visit('https://example.cypress.io')
-    cy.get('a')
+    cy.get('a[href="https://docs.cypress.io"]')
       .invoke('attr', 'href')
       .then((href) => {
-        // href is not same-origin as current url
-        // like https://www.cypress-dx.com
+        // href is not same-origin as the current url
         cy.task('setHref', href)
       })
   })
 
   it('visit href', () => {
     cy.task('getHref').then((href) => {
-      // visit non same-origin url https://www.cypress-dx.com
+      // visit the non same-origin url https://docs.cypress.io
       cy.visit(href)
     })
   })

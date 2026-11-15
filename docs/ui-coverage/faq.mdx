@@ -233,7 +233,7 @@ Add a [`viewFilters`](/ui-coverage/configuration/viewfilters) rule with `include
 
 ### <Icon name="angle-right" /> Can I exclude a URL from UI Coverage without affecting Cypress Accessibility?
 
-Yes. A [`viewFilters`](/ui-coverage/configuration/viewfilters) list at the root of your configuration applies to both products, but nesting it under a `uiCoverage` key applies it to UI Coverage only, so Cypress Accessibility keeps scanning the URL. A nested list completely replaces the root-level one for UI Coverage; UI Coverage does not merge the two, so include every rule UI Coverage needs. See [Scope](/ui-coverage/configuration/viewfilters#Scope).
+Yes. A [`viewFilters`](/ui-coverage/configuration/viewfilters) list at the root of your configuration applies to both products, but nesting it under a `uiCoverage` key applies it to UI Coverage only, so Cypress Accessibility keeps scanning the URL. A nested list completely replaces the root-level one for UI Coverage; Cypress Cloud does not merge the two, so include every rule UI Coverage needs. See [Scope](/ui-coverage/configuration/viewfilters#Scope).
 
 ### <Icon name="angle-right" /> Why is a URL still in my UI Coverage report after I excluded it with viewFilters?
 

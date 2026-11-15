@@ -2162,7 +2162,7 @@ it('securely edits content', () => {
     cy.get('button#submit').click()
   })
 
-  cy.origin('cypress-dx.com', () => {
+  cy.origin('https://app.cypress.io', () => {
     cy.url().should('contain', 'cms')
     cy.get('#current-user').contains('logged in')
     cy.get('button#edit-1').click()

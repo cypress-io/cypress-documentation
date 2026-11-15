@@ -136,7 +136,6 @@ But the following have different origins compared to `https://www.cypress.io`:
 
 - `http://www.cypress.io` (different `scheme`)
 - `https://docs.cypress.io` (different `hostname` due to the subdomain)
-- `https://www.auth0.com` (different `hostname`)
 - `https://www.cypress.io:81` (different `port`)
 
 :::danger
@@ -196,7 +195,7 @@ it('navigates', () => {
 
 // split visiting different origin in another test
 it('navigates to new origin', () => {
-  cy.visit('https://cypress-dx.com')
+  cy.visit('https://docs.cypress.io')
   cy.get('selector') // yup all good
 })
 ```
@@ -482,7 +481,7 @@ under your immediate test control, cross-origin errors may still tend to creep
 up. We don't recommend visiting or interacting with sites you
 [do not control](/app/core-concepts/best-practices#Visiting-External-Sites).
 However, if this is necessary, you can usually remedy most of these issues by
-applying` the
+applying the
 [modify obstructive third-party code](/app/references/experiments#Configuration)
 experimental flag or by
 [disabling web security](/app/guides/cross-origin-testing#Disabling-Web-Security).

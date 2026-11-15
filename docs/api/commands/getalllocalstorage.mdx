@@ -45,7 +45,7 @@ Pass in an options object to change the default behavior of
 values are key-value pairs of `localStorage` data.
 
 For example, if your app sets `key1` to `value1` on `https://example.cypress.io`
-and `key2` to `value2` on `https://www.cypress-dx.com`,
+and `key2` to `value2` on `https://auth.cypress.io`,
 `cy.getAllLocalStorage()` yields:
 
 ```js
@@ -53,7 +53,7 @@ and `key2` to `value2` on `https://www.cypress-dx.com`,
   'https://example.cypress.io': {
     key1: 'value1',
   },
-  'https://www.cypress-dx.com': {
+  'https://auth.cypress.io': {
     key2: 'value2',
   },
 }

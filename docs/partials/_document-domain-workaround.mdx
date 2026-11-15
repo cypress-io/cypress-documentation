@@ -17,7 +17,7 @@ A superdomain is comprised of the trailing two elements of the hostname, delimit
 a `.` (period). Given `https://www.cypress.io`, the superdomain is
 `cypress.io`. When this option is enabled, `cy.origin()` is not necessary when navigating
 between `https://www.cypress.io` and `https://docs.cypress.io`, but is necessary
-when navigating between `https://www.cypress.io` and `https://www.auth0.com`.
+when navigating between `https://www.cypress.io` and `http://localhost:3000`.
 
 - Injecting `document.domain` causes issues with certain sites, especially those that use
   [origin-keyed agent cluster](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin-Agent-Cluster)s.
