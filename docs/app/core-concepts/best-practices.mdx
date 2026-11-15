@@ -908,7 +908,7 @@ other testing tools - when your tests end - you are left with your working
 application at the exact point where your test finished.
 
 Leaving the application in that state is an **excellent** opportunity for you to **use** your application in the
-state the tests finished! Using the application in that state enables you to write **partial tests** that drive
+state the tests finished! In that state, you can write **partial tests** that drive
 your application step by step, writing your test and application code at the
 same time.
 
@@ -1119,7 +1119,7 @@ Waiting for the [`cy.get()`](/api/commands/get) below is unnecessary because
 a length of 2.
 
 Whenever commands have an assertion they do not resolve until their associated
-assertions pass. Waiting on assertions enables you to describe the state of your application
+assertions pass. Because commands wait on assertions, your test describes the state of your application
 without having to worry about when it gets there.
 
 ```javascript

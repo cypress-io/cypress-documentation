@@ -1,6 +1,6 @@
 ---
 title: 'Overview of Node Events in Cypress'
-description: 'Node event hooks enable you to tap into, modify, or extend the internal behavior of Cypress.'
+description: 'Use Node event hooks to tap into, modify, or extend the internal behavior of Cypress.'
 sidebar_label: Overview
 sidebar_position: 10
 ---
@@ -9,15 +9,14 @@ sidebar_position: 10
 
 # Node Events Overview
 
-Node event hooks enable you to tap into, modify, or extend the internal behavior of
+Use Node event hooks to tap into, modify, or extend the internal behavior of
 Cypress.
 
 Normally, as a user, all of your test code, your application, and Cypress
 commands are executed in the browser. But Cypress is also a Node process that
 you can use to change the behavior of Cypress or to expose [plugins](/app/plugins/plugins-list) for others to consume.
 
-> `setupNodeEvents` enables you to tap into the Node process running outside of the
-> browser.
+> `setupNodeEvents` runs in the Node process outside of the browser.
 
 Node event hooks are a "seam" for you to write your own custom code that executes during
 particular stages of the Cypress lifecycle.
@@ -28,12 +27,11 @@ The [`setupNodeEvents`](/app/references/configuration#setupNodeEvents)
 function receives 2
 arguments: [`on`](#on) and [`config`](#config). The function can return a synchronous
 value or can also return a Promise, which Cypress awaits until it resolves.
-Awaiting a Promise enables you to perform asynchronous actions such as reading files in from
-the filesystem.
+Because Cypress awaits the Promise, `setupNodeEvents` can perform asynchronous
+actions such as reading files in from the filesystem.
 
 If you return or resolve with an object, Cypress then merges this object
-into the `config` which enables you to overwrite configuration or environment
-variables.
+into the `config`, overwriting configuration or environment variables.
 
 :::cypress-config-plugin-example
 
@@ -118,7 +116,7 @@ environment variables that come from the
 the [command line](/app/references/command-line), or system environment
 variables.
 
-Altering the configuration enables you to do things like:
+Alter the configuration to:
 
 - Use multiple environments with their own configurations
 - Swap out environment variables based on an environment
@@ -321,7 +319,7 @@ Cypress automatically watches your
 made take effect immediately. Cypress reads the file in and executes the
 exported function again.
 
-Watching the file enables you to iterate on plugin code even with Cypress already running.
+Because Cypress watches the file, you can iterate on plugin code while Cypress is already running.
 
 ## <Icon name="graduation-cap" /> Real World Example
 

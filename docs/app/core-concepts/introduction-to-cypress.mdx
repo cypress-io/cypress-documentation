@@ -352,9 +352,9 @@ Cypress provides a simple but powerful algorithm when
 
 ### Asserting About Elements
 
-Assertions let you do things like ensuring an element is visible or has a
-particular attribute, CSS class, or state. Assertions are commands that enable
-you to describe the _desired_ state of your application. Cypress
+Assertions check things like whether an element is visible or has a
+particular attribute, CSS class, or state. Assertions are commands that
+describe the _desired_ state of your application. Cypress
 automatically waits until your elements reach this state, or fails the test if the
 assertions don't pass. Here's a quick look at assertions in action:
 
@@ -1255,7 +1255,7 @@ Mocha assertions are great when you want to:
 - Perform custom logic prior to making the assertion.
 - Make multiple assertions against the same subject.
 
-The [`.should()`](/api/commands/should) assertion allows us to pass a callback
+The [`.should()`](/api/commands/should) assertion accepts a callback
 function that takes the yielded subject as its first argument. The callback works like
 [`.then()`](/api/commands/then), except Cypress automatically **waits and
 retries** for everything inside of the callback function to pass.
@@ -1269,7 +1269,7 @@ Using a [`.should()`](/api/commands/should) callback function is a great way to
 query from a **parent** into multiple children elements and assert something
 about their state.
 
-Doing so enables you to **block** and **guard** Cypress by ensuring the state of
+A `.should()` callback **blocks** and **guards** Cypress by ensuring the state of
 descendants matches what you expect without needing to query them individually
 with regular Cypress DOM commands.
 

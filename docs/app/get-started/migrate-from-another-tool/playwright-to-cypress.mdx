@@ -364,7 +364,7 @@ documentation.
 
 Playwright's `launchOptions` in `playwright.config.ts` maps to the
 `before:browser:launch` event in Cypress, which you configure inside
-`setupNodeEvents` of your Cypress configuration file. Both let you modify how the browser starts. See the [Browser Launch Event](/api/node-events/browser-launch-api) for the full reference.
+`setupNodeEvents` of your Cypress configuration file. Both options control how the browser starts. See the [Browser Launch Event](/api/node-events/browser-launch-api) for the full reference.
 
 #### Launch arguments, extensions, and preferences
 
@@ -943,7 +943,7 @@ See [`cy.readFile()`](/api/commands/readfile).
 
 ## Clock and time control
 
-Both Playwright and Cypress let you replace native browser time functions with a fake clock that you control. A fake clock allows tests to set a specific date, skip waiting for timers, and test time-sensitive UI behavior without real delays. The two tools take different approaches to time control.
+Both Playwright and Cypress replace native browser time functions with a fake clock that you control. With a fake clock, tests set a specific date, skip waiting for timers, and test time-sensitive UI behavior without real delays. The two tools take different approaches to time control.
 
 <Badge type="danger">Before: Playwright</Badge>
 
@@ -1306,7 +1306,7 @@ cy.get('button').contains('Delete account').click()
 ```
 
 For tests that need to verify the stub was called, use `cy.stub()` instead of
-`cy.on()`. `cy.stub()` lets you use Sinon assertions to confirm the dialog was
+`cy.on()`. `cy.stub()` supports Sinon assertions that confirm the dialog was
 triggered the expected number of times.
 
 ```ts
@@ -1321,7 +1321,7 @@ cy.get('@confirmDialog').should('have.been.calledOnce')
 
 In Cypress, you must stub `window.prompt` before
 the page loads using the `onBeforeLoad` callback in `cy.visit()`. Stubbing before the page loads gives
-you full control over the return value and lets you assert that the prompt
+you full control over the return value, and you can assert that the prompt
 was called.
 
 <Badge type="danger">Before: Playwright</Badge>
@@ -1441,8 +1441,8 @@ See [`cy.request()`](/api/commands/request).
 
 ## Test generation
 
-[Cypress Studio](/app/guides/cypress-studio) lets you generate test code
-by interacting with your application in the Cypress app. Cypress Studio records
+[Cypress Studio](/app/guides/cypress-studio) generates test code
+as you interact with your application in the Cypress app. Cypress Studio records
 actions like clicks and form inputs and writes the corresponding Cypress
 commands. Cypress Studio is a replacement for Playwright's `playwright codegen`. With a [Cypress Cloud](/cloud/get-started/introduction) account, you also get **Studio AI**, AI-powered assertion recommendations as you record.
 

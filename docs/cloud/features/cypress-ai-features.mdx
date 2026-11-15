@@ -125,7 +125,7 @@ This workflow is a good fit when:
 **Best for:** teams who want to write assertions faster without guessing what to assert after every interaction.
 :::
 
-[Cypress Studio](/app/guides/cypress-studio) lets you build and extend E2E tests by recording real interactions in your app. Studio AI adds assertion recommendations on top: as you record, it watches what changes in the UI and suggests assertions automatically. You review the suggestions, keep what fits, and save.
+[Cypress Studio](/app/guides/cypress-studio) builds and extends E2E tests by recording real interactions in your app. Studio AI adds assertion recommendations on top: as you record, it watches what changes in the UI and suggests assertions automatically. You review the suggestions, keep what fits, and save.
 
 Studio AI observes DOM changes between interactions and generates assertions based on what actually changed — visibility, text content, form values, element attributes, URL changes, and more. Studio AI does not have access to your application's source code or business logic.
 
@@ -182,7 +182,7 @@ Error Summaries are available on all Cypress Cloud plans at no additional cost.
 **Best for:** teams using UI Coverage who want to close coverage gaps without writing tests from scratch.
 :::
 
-UI Coverage Test Generation lets you generate targeted Cypress tests directly from coverage gaps identified during code reviews. Instead of manually identifying what to test, you can generate a test scaffold from the gap and refine from there.
+UI Coverage Test Generation generates targeted Cypress tests directly from coverage gaps identified during code reviews. Instead of manually identifying what to test, you can generate a test scaffold from the gap and refine from there.
 
 This capability is included with UI Coverage and is not available on standard Cloud plans.
 
@@ -251,8 +251,8 @@ Read the [Cloud CLI documentation →](/cloud/integrations/cloud-cli)
 **Best for:** AI coding agents that need live app context, DOM, command logs, to check their work against a running Cypress session.
 :::
 
-`cypress tap` is an extension of the `cypress` CLI that enables you or an agent to interact with an open-mode Cypress
-session and read its context from the terminal. An agent can run a spec and poll its status, then
+`cypress tap` is an extension of the `cypress` CLI that connects you or an agent to an open-mode Cypress
+session from the terminal, to interact with the session and read its context. An agent can run a spec and poll its status, then
 read the failing test's Command Log and error as the reporter shows them.
 The agent can also inspect the DOM of the application-under-test at the moment a command ran.
 

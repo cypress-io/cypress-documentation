@@ -80,7 +80,7 @@ schedule of your project.
 
 <strong>Cron Scheduling</strong>
 
-Typically CI providers allow for the scheduling of CI jobs via
+Typically CI providers support scheduling CI jobs via
 [cron expressions](https://en.wikipedia.org/wiki/Cron). For example, the
 expression `0 0 * * *` translates to "everyday at midnight" or nightly. Helpful
 [online utilities](https://crontab.guru/) are available to assist with creation
@@ -187,9 +187,8 @@ workflows:
 
 You can parallelize execution of test files on a per
 [group](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs)
-basis, where you group test files by the browser under test. This
-versatility enables the ability to allocate the desired amount of CI resources
-towards a browser to either improve test duration or to minimize CI costs.
+basis, where you group test files by the browser under test. With per-browser
+groups, you can allocate the desired amount of CI resources towards a browser to either improve test duration or to minimize CI costs.
 
 **You do not have to run all browsers at the same parallelization level.** In
 the example below, the Chrome dedicated `cypress/run` job runs _all_ tests in

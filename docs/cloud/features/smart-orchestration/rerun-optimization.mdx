@@ -243,7 +243,7 @@ the [depth limit](#Behavior-and-limitations) it does not re-run work that alread
 passed, and it does not revert to an older, larger set of failures. That
 most-recent completed run is called the **anchor run**.
 
-Knowing this lets you predict exactly what a rerun does:
+The anchor run determines exactly what a rerun does:
 
 - **You rerun a completed run** → it retries that run's failing specs or tests.
   The common case, and where you see the biggest time and cost savings.

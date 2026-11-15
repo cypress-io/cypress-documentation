@@ -476,8 +476,8 @@ the value you pass.
 
 After we verify the element is actionable, Cypress then fires all of the
 appropriate events and corresponding default actions. Usually Cypress fires
-these events at the center of the element, but most commands enable you to
-change that position.
+these events at the center of the element, but most commands accept a `position`
+option to change that.
 
 ```js
 cy.get('button').click({ position: 'topLeft' })

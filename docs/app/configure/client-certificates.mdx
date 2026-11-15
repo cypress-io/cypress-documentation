@@ -20,7 +20,7 @@ Without mTLS support, you face an unpleasant choice: disable certificate
 requirements in your test environment (meaning your tests run against a system
 that doesn't match production), or rely on slow and inconsistent manual testing.
 
-The `clientCertificates` configuration lets you supply the certificates Cypress
+The `clientCertificates` configuration supplies the certificates Cypress
 needs to authenticate against mTLS-protected endpoints, so your automated E2E
 tests exercise the real security boundary. Your tests catch misconfigurations,
 expired certificates, or changed server requirements in CI — not in

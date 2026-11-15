@@ -413,7 +413,7 @@ Two conditions must both hold. First, the command name must be listed in [`addit
 
 ### <Icon name="angle-right" /> In UI Coverage, what's the difference between additionalInteractionCommands and allowedInteractionCommands?
 
-In Cypress UI Coverage, [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) _extends_ the set of commands recognized as interactions everywhere, so a custom or plugin command counts as coverage on any element. [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works _per element_: for elements matching a selector, only the commands you list count, which lets you both restrict coverage to a meaningful interaction and accept commands that are otherwise ignored. Use `additionalInteractionCommands` to recognize a command globally, and `allowedInteractionCommands` to control which commands matter for specific elements.
+In Cypress UI Coverage, [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) _extends_ the set of commands recognized as interactions everywhere, so a custom or plugin command counts as coverage on any element. [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works _per element_: for elements matching a selector, only the commands you list count, so it can both restrict coverage to a meaningful interaction and accept commands that are otherwise ignored. Use `additionalInteractionCommands` to recognize a command globally, and `allowedInteractionCommands` to control which commands matter for specific elements.
 
 ### <Icon name="angle-right" /> How do I require a specific interaction in UI Coverage, like a hover, to mark an element tested?
 
@@ -451,7 +451,7 @@ Cypress Cloud validates your configuration against a strict schema and rejects a
 
 ### <Icon name="angle-right" /> Do I need to rerun my tests after changing UI Coverage configuration?
 
-No. You can regenerate any historical run from its **Properties** tab, and Cypress Cloud reprocesses the report with the current configuration. Regenerating a run lets you iterate on configuration and see the effects immediately without running your Cypress tests again.
+No. You can regenerate any historical run from its **Properties** tab, and Cypress Cloud reprocesses the report with the current configuration. Regenerate a run to iterate on configuration and see the effects immediately without running your Cypress tests again.
 
 ### <Icon name="angle-right" /> Does my configuration apply to Cypress Accessibility too?
 
@@ -544,7 +544,7 @@ Use [Run Checks](/cloud/features/checks) for declarative thresholds Cypress Clou
 
 ### <Icon name="angle-right" /> How do I block a pull request only when new untested elements are introduced?
 
-Compare each run against a stored **baseline** instead of a fixed threshold. Record a known-good run, save each [view's](/ui-coverage/core-concepts/views) `untestedElementsCount` to a small JSON file committed to your repository, then in CI use the [Cypress UI Coverage Results API](/ui-coverage/results-api) to fail the build only when a view's untested-element count rises above its baseline (or a new view arrives carrying untested elements). A baseline comparison lets you pay down existing gaps on your own schedule while preventing new ones from merging. The [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline) guide has the complete script.
+Compare each run against a stored **baseline** instead of a fixed threshold. Record a known-good run, save each [view's](/ui-coverage/core-concepts/views) `untestedElementsCount` to a small JSON file committed to your repository, then in CI use the [Cypress UI Coverage Results API](/ui-coverage/results-api) to fail the build only when a view's untested-element count rises above its baseline (or a new view arrives carrying untested elements). A baseline comparison prevents new gaps from merging while you pay down existing ones on your own schedule. The [Block pull requests and set policies](/ui-coverage/guides/block-pull-requests#comparing-against-a-baseline) guide has the complete script.
 
 ### <Icon name="angle-right" /> Why compare untested-element counts instead of the UI Coverage score when gating pull requests?
 

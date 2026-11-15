@@ -9,7 +9,7 @@ sidebar_position: 10
 
 # Configuration overview
 
-Cypress Accessibility works out of the box with no setup, but a few lines of configuration make your reports match your application. Configuration lets you get an [accessibility score](/accessibility/core-concepts/accessibility-score) you can trust and act on by:
+Cypress Accessibility works out of the box with no setup, but a few lines of configuration make your reports match your application. Configuration produces an [accessibility score](/accessibility/core-concepts/accessibility-score) you can trust and act on by:
 
 - **Reporting on the application you own**: ignore third-party widgets, embedded content, and pages outside your control so violations you can't fix stop counting against your score.
 - **Organizing reports around your product**: group related URLs into [views](/accessibility/configuration/views) that map to real pages and flows, so your team triages a violation on a shared template once instead of once per URL.
@@ -37,7 +37,7 @@ After you save configuration changes, you can reprocess any historical run to ap
   alt="The Properties tab of a run in Cypress Cloud, showing the Application Quality configuration that was applied and the regenerate button used to reprocess the run"
 />
 
-Regenerating reports in this way lets you iterate on configuration and see the effects immediately, without running your Cypress tests again.
+Regenerating reports in this way shows the effect of each configuration change immediately, without running your Cypress tests again.
 
 <AppQualityConfigWhoCanEdit />
 

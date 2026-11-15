@@ -53,7 +53,7 @@ Comparing this morning's run against yesterday's is how you catch accessibility 
 
 ### Find the run where a regression started
 
-When you learn about a regression late, the dropdowns on each side of the comparison let you move either endpoint. Hold the Changed run steady and walk the Base run backwards through history until the violation stops appearing in the diff. The first run where it appears is the run that introduced it, which gives you a commit, an author, and a date.
+When you learn about a regression late, the dropdowns on each side of the comparison move either endpoint. Hold the Changed run steady and walk the Base run backwards through history until the violation stops appearing in the diff. The first run where it appears is the run that introduced it, which gives you a commit, an author, and a date.
 
 ### Confirm a fix before you push
 
@@ -176,7 +176,7 @@ The partial report guard matters more than it looks. A cancelled or partially re
 
 ### Route new failures to the team that owns them
 
-The report also lists failures per view, and a view maps to a URL pattern or a component test, which in most applications maps to an owning team. The view-to-team mapping makes it possible to notify the team that can act instead of a shared channel everyone mutes.
+The report also lists failures per view, and a view maps to a URL pattern or a component test, which in most applications maps to an owning team. With the view-to-team mapping, you can notify the team that can act instead of a shared channel everyone mutes.
 
 ```javascript title="scripts/notifyViewOwners.js"
 const { getAccessibilityResults } = require('@cypress/extract-cloud-results')
@@ -231,7 +231,7 @@ To create customized messages and workflows, or send the report to other destina
 
 Branch Review and the Results API each answer a question about one change in one project. Analytics answers the questions no single run can: is this application getting better, how fast, and how does it compare with every other project in the organization?
 
-Accessibility analytics live under the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) in Cypress Cloud, alongside your other organization-wide metrics. Filters for date range, team, projects, and branch let you move from an organization-wide view to a single branch. Enterprise Reporting is available on the [Enterprise Cypress Cloud plan](https://cypress.io/pricing).
+Accessibility analytics live under the [Cypress Accessibility](/cloud/features/analytics/enterprise-reporting#Cypress-Accessibility) tab of [Enterprise Reporting](/cloud/features/analytics/enterprise-reporting) in Cypress Cloud, alongside your other organization-wide metrics. Filters for date range, team, projects, and branch narrow the view from the whole organization down to a single branch. Enterprise Reporting is available on the [Enterprise Cypress Cloud plan](https://cypress.io/pricing).
 
 ### What the charts show
 

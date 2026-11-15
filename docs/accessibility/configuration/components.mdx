@@ -9,7 +9,7 @@ sidebar_position: 90
 
 # Add component context - `components`
 
-The components configuration adds context to the selectors in your accessibility reports. When an element has a violation, Cypress Accessibility shows a **violation target selector** that points to it. components lets you add your own component-identifying attributes, such as `data-component-name`, `data-team`, or `data-page-area`, to that selector, so a finding reads as `[data-cy="signup"][data-component="IconButton"]` instead of a bare `[data-cy="signup"]`.
+The components configuration adds context to the selectors in your accessibility reports. When an element has a violation, Cypress Accessibility shows a **violation target selector** that points to it. The components configuration appends your own component-identifying attributes, such as `data-component-name`, `data-team`, or `data-page-area`, to that selector, so a finding reads as `[data-cy="signup"][data-component="IconButton"]` instead of a bare `[data-cy="signup"]`.
 
 That extra context tells whoever picks up the issue, whether a developer, a Jira ticket, or an [AI agent triaging through Cypress Cloud MCP](/accessibility/work-with-ai-agents), which component, team, or region the element belongs to, without having to open the page HTML or search the codebase to place it. Many teams already render attributes like these for testing or design-system tracing; when they exist, components puts them into your selectors in a predictable, consistent way.
 
@@ -18,7 +18,7 @@ That extra context tells whoever picks up the issue, whether a developer, a Jira
 - **Place every finding in context**: A selector like `[data-cy="row-action"][data-component="DataGridDeleteButton"]` says exactly which component is responsible, where a bare identifier could be any button in your application.
 - **Route issues to the right owner**: Append an attribute like `data-team` and you can assign accessibility findings, or group them in a report, by the team that owns the DOM.
 - **Speed up handoffs to people and AI**: You can drop selectors that carry component and page context into a Jira ticket or hand them to an LLM for triage without the surrounding page HTML.
-- **Cross-reference your design system**: Attributes such as `data-design-system-version` in the selector let you correlate accessibility issues with the component library version that produced them.
+- **Cross-reference your design system**: Attributes such as `data-design-system-version` in the selector tie each accessibility issue to the component library version that produced it.
 
 ## How component attributes appear in selectors
 

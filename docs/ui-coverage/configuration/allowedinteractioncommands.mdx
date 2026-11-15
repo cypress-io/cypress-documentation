@@ -11,7 +11,7 @@ sidebar_position: 100
 
 By default, UI Coverage marks an element as tested when one of a [default set of Cypress interaction commands](/ui-coverage/core-concepts/interactivity#Interaction-Commands), such as `click`, `type`, and `select`, targets it. That default is right for most elements, but not all: a hover really tests a chart, not the plain `click` that happens to count, and a status banner you only ever assert against is never "interacted with" at all, so it never counts.
 
-The `allowedInteractionCommands` configuration lets you decide, per element, exactly which commands count as coverage. You provide a CSS selector and the list of commands that should count for the elements it matches. For those elements, **only the commands you list count**, and UI Coverage ignores every other command, even commands that normally count. This per-element control lets you both **narrow** coverage to a meaningful interaction (a data-visualization widget that a test must hover, not only click) and **expand** it to commands UI Coverage ignores by default (crediting an `assert` on a read-only element).
+The `allowedInteractionCommands` configuration sets, per element, exactly which commands count as coverage. You provide a CSS selector and the list of commands that should count for the elements it matches. For those elements, **only the commands you list count**, and UI Coverage ignores every other command, even commands that normally count. This per-element control both **narrows** coverage to a meaningful interaction (a data-visualization widget that a test must hover, not only click) and **expands** it to commands UI Coverage ignores by default (crediting an `assert` on a read-only element).
 
 ## Why use allowedInteractionCommands?
 

@@ -165,7 +165,7 @@ The numbered callouts above correspond to:
 
 ### Review Test Comparison
 
-Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, along with artifacts so you can compare before vs. after your PR. Pairing the failure on your branch with the passing result on the base branch, along with [Test Replay](/cloud/features/test-replay), screenshots, and videos for each attempt, lets you pinpoint exactly what your change broke without re-running anything locally. The side-by-side comparison narrows the focus to changes introduced or resolved on either branch and helps surface the source of flake across different attempts. Review the test definition panel for diff snapshots to quickly determine changes in test code.
+Navigating into the test detail view reveals a side-by-side comparison of the test results on both branches, along with artifacts so you can compare before vs. after your PR. Pair the failure on your branch with the passing result on the base branch, along with [Test Replay](/cloud/features/test-replay), screenshots, and videos for each attempt, to pinpoint exactly what your change broke without re-running anything locally. The side-by-side comparison narrows the focus to changes introduced or resolved on either branch and helps surface the source of flake across different attempts. Review the test definition panel for diff snapshots to quickly determine changes in test code.
 
 <DocsImage
   src="/img/cloud/features/branch-review/test-comparison.png"
@@ -203,7 +203,7 @@ If the required runs for comparison are not available, you can use the manual se
 
 ### Grouping Test Runs
 
-Cypress Cloud allows for [grouping recorded tests](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs) together under a single run. Grouping means you can label multiple `cypress run` calls and associate them to a single run in Cypress Cloud.
+Cypress Cloud supports [grouping recorded tests](/cloud/features/smart-orchestration/parallelization#Grouping-test-runs) together under a single run. Grouping means you can label multiple `cypress run` calls and associate them to a single run in Cypress Cloud.
 
 Recording multiple test runs per commit without grouping causes issues, as Branch Review relies on the _latest_ run. Therefore, recording one run per commit and using grouping is essential to improving effectiveness and ensure an accurate comparison between branches.
 
