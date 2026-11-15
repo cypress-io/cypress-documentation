@@ -33,6 +33,8 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
         badgeContent = plan === 'team' ? 'Team Plan' : plan === 'business' ? 'Business Plan' : 'Enterprise Plan'
     }
 
+    const linkLabel = product === 'cloud' ? 'Cypress Cloud pricing' : productName
+
     const href = `https://www.cypress.io/${linkPath}?utm_source=docs&utm_medium=product-heading-${product}&utm_content=${badgeContent}`
 
     return (
@@ -44,15 +46,17 @@ const DocProductHeading: React.FC<ProductHeadingProps> = ({
         <span className={s.productHeadingText}>
           {productName}
         </span>
-        <a 
-          href={href}
-          {...conversionLinkAttributes(href, SURFACES.content)}
-          target="_blank"
-          title="Learn more"
-          className={s.productHeadingLink}
-          >
-            { product !== 'app' &&  <Badge type="success">{badgeContent}</Badge>}
-        </a>
+        {product !== 'app' && (
+          <a
+            href={href}
+            {...conversionLinkAttributes(href, SURFACES.content)}
+            target="_blank"
+            aria-label={`${badgeContent}: ${linkLabel} on cypress.io (opens in a new tab)`}
+            className={s.productHeadingLink}
+            >
+              <Badge type="success">{badgeContent}</Badge>
+          </a>
+        )}
         <span className={s.productHeadingBadge}>{badge}</span>
     </div>
     )
