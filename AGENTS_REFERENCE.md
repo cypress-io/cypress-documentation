@@ -245,6 +245,25 @@ same change. `## See also` always stays as it is.
   almost always hides a simpler sentence.
   - Yes: "`cy.session()` caches and restores session state between tests."
   - No: "`cy.session()` allows you to cache and restore session state."
+  - The same pattern hides behind other phrasings: "lets you", "enables you
+    to", "allows users (or teams, developers) to", "gives you the ability
+    to", "offers the ability to", "comes with the ability to", "provides you
+    with", and "makes it possible to". Rewrite each the same way.
+    - Yes: "The ElementSelector API defines how Cypress selects elements."
+    - No: "The ElementSelector API lets you define how Cypress selects
+      elements."
+    - Yes: "A team sets project access once, at the team level."
+    - No: "Teams let you control project access once at the team level."
+  - When the sentence is an instruction, use the imperative: "Use Node event
+    hooks to tap into the internal behavior of Cypress", not "Node event hooks
+    enable you to tap into…".
+  - When the reader really is the one acting, "you can" is fine: "Cypress
+    captures a snapshot for every command, so you can time travel to previous
+    states while you debug."
+  - Leave the phrasing where it isn't about the reader: test titles and other
+    text in code blocks, quoted UI labels (the **Enable Teams** button), and
+    "allows for" with a non-reader subject ("Separating installation allows
+    for reuse of the cache").
 - **Name the subject in every sentence.** Readers skim, search results quote a
   single sentence, and answer engines lift one out of the page, so a sentence
   that opens with a pronoun for something named earlier loses its meaning out
