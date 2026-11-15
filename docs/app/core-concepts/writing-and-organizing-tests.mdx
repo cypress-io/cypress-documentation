@@ -108,8 +108,8 @@ Additionally, if you are storing sensitive variables in your
 Spec files are where your tests live. For end-to-end testing they're located in
 `cypress/e2e` by default, while component testing specs typically live next to
 the components they test anywhere in your project. Either way, you can
-[configure](/app/references/configuration#e2e) a different location. To make
-adoption easy, Cypress lets you write specs in whichever flavor of JavaScript
+[configure](/app/references/configuration#e2e) a different location. Cypress
+accepts specs in whichever flavor of JavaScript
 your team already uses:
 
 - `.js`
@@ -151,7 +151,7 @@ which by default requires the `.cy.` infix in the filename:
 - **E2E:** `cypress/e2e/**/*.cy.{js,jsx,ts,tsx}`
 - **Component:** `**/*.cy.{js,jsx,ts,tsx}`
 
-This convention lets you keep helper files and specs side by side without
+With this convention, helper files and specs sit side by side without
 Cypress trying to run your helpers as tests. The trade-off is that a file named
 `cypress/e2e/login.js` is **not** discovered, while `cypress/e2e/login.cy.js`
 is. If a test you've written isn't showing up, the filename almost always
@@ -324,7 +324,7 @@ beforeEach(() => {
 Fixtures are external pieces of static data your tests can load on demand.
 Think of them as the canned data your tests run against. Keeping this data in
 its own file (rather than inline in the test) makes specs easier to read and
-lets you reuse the same data across many tests. Fixture files live in
+the same data reusable across many tests. Fixture files live in
 `cypress/fixtures` by default, but can be
 [configured](/app/references/configuration#Folders--Files) to another
 directory.
@@ -415,7 +415,7 @@ cy.task('countCsvRows', 'cypress/fixtures/large.csv').should('eq', 50000)
 
 Your tests run in the browser, but some things, like touching the file system,
 talking to a database, or controlling how specs are bundled, can only happen in
-Node.js. Cypress lets you run that Node.js-side code through the
+Node.js. Cypress runs that Node.js-side code through the
 [`setupNodeEvents`](/app/references/configuration#setupNodeEvents) function in
 your [Cypress configuration](/app/references/configuration), defined per testing
 type under the `e2e` or `component` options. The `setupNodeEvents` function runs in the background Node.js
@@ -658,7 +658,7 @@ cy.get('[data-testid="profile-name"]').should('have.value', 'Jane Lane')
 ### Hooks
 
 Hooks (also borrowed from
-[Mocha](/app/references/bundled-libraries#Mocha)) let you run setup and teardown
+[Mocha](/app/references/bundled-libraries#Mocha)) run setup and teardown
 code around your tests instead of repeating it inside each one. Use them to
 establish the conditions a group of tests needs before they run, or to tidy up
 afterward.
@@ -719,11 +719,11 @@ describe('Hooks', () => {
 ### Focusing and skipping tests
 
 While developing, you rarely want to run the entire suite on every save.
-Cypress lets you focus on or skip specific tests so your feedback loop stays
+Focus on or skip specific tests to keep your feedback loop
 fast.
 
 To run a specified suite or test, append `.only` to the function. All nested
-suites also run. `.only` gives you the ability to run one test at a
+suites also run. `.only` runs one test at a
 time and is the recommended way to write a test suite.
 
 ```javascript

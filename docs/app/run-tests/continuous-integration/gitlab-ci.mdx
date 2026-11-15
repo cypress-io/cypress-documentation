@@ -60,8 +60,8 @@ test:
 The Cypress team maintains the official
 [Docker Images](https://github.com/cypress-io/cypress-docker-images) for running
 Cypress tests locally and in CI, which are built with Google Chrome, Mozilla Firefox, and Microsoft Edge.
-For example, this allows us to run the tests in Firefox by passing the
-`--browser firefox` attribute to `cypress run`.
+For example, passing the `--browser firefox` attribute to `cypress run` runs
+the tests in Firefox.
 
 ```yaml
 stages:
@@ -118,9 +118,9 @@ test:
 
 ## Parallelization
 
-[Cypress Cloud](/cloud/get-started/introduction) offers the ability to
-[parallelize and group test runs](/cloud/features/smart-orchestration/parallelization)
-along with additional insights and [analytics](/cloud/features/analytics/overview) for
+[Cypress Cloud](/cloud/get-started/introduction) parallelizes and groups
+[test runs](/cloud/features/smart-orchestration/parallelization)
+and provides additional insights and [analytics](/cloud/features/analytics/overview) for
 Cypress tests.
 
 The addition of the

@@ -1432,7 +1432,7 @@ people.forEach(({ name, expected }) => {
 If you drive Selenium through Cucumber (`.feature` files with step
 definitions), the
 [`@badeball/cypress-cucumber-preprocessor`](https://github.com/badeball/cypress-cucumber-preprocessor)
-community plugin lets you keep your Gherkin and reuse most scenarios. Your `.feature` files
+community plugin runs your existing Gherkin, so you can reuse most scenarios. Your `.feature` files
 stay largely as-is; only the step definitions change, with the WebDriver calls
 in each step becoming Cypress commands.
 

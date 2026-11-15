@@ -10,10 +10,10 @@ slug: /app/guides/stubs-spies-and-clocks
 
 # Stubs, Spies, and Clocks
 
-Cypress comes built in with the ability to stub and spy with
-[`cy.stub()`](/api/commands/stub), [`cy.spy()`](/api/commands/spy) or modify
-your application's time with [`cy.clock()`](/api/commands/clock) - which lets
-you manipulate `Date`, `setTimeout`, `clearTimeout`, `setInterval`, or
+Cypress has built-in stubs and spies with
+[`cy.stub()`](/api/commands/stub) and [`cy.spy()`](/api/commands/spy), and
+[`cy.clock()`](/api/commands/clock) modifies your application's time by
+controlling `Date`, `setTimeout`, `clearTimeout`, `setInterval`, or
 `clearInterval`.
 
 These commands are useful when writing both **unit tests** and **integration
@@ -98,8 +98,7 @@ control.
 
 ### Spies
 
-A spy gives you the ability to "spy" on a function, by letting you capture and
-then assert that the function was called with the right arguments, or that the
+A spy "spies" on a function, capturing its calls so you can then assert that the function was called with the right arguments, or that the
 function was called a certain number of times, or even what the return value was
 or what context the function was called with.
 

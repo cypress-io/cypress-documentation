@@ -39,11 +39,11 @@ In maintenance mode, Cypress Accessibility provides two critical functions:
 
 Accessibility debt tends to accumulate silently over time, leading to large, problematic backlogs that are difficult to work through, and land on your desk all at once after an audit. As you learned by going through the remediation process to get to a clean report in the first place: it's not always easy to fix an already-inaccessible experience. Sometimes you have to start a whole feature or component over, because you've built multiple structures on top of an inaccessible foundation.
 
-Early feedback about accessibility on feature branches lets developers review small, precise reports, and get all the context they need to either fix issues immediately, or raise problematic patterns for wider discussion. If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, you can ask your AI agent to check the branch report before opening a PR, catching regressions while your recent changes are still fresh:
+Early feedback about accessibility on feature branches gives developers small, precise reports, with all the context they need to either fix issues immediately, or raise problematic patterns for wider discussion. If you have [Cloud MCP](/cloud/integrations/cloud-mcp) configured, you can ask your AI agent to check the branch report before opening a PR, catching regressions while your recent changes are still fresh:
 
 > "Check Cypress Cloud for the accessibility report for this branch. Are there any violations? If so, list the affected elements."
 
-Detecting problems before code merges allows the training, awareness-building, discussion, and remediation to all happen in the same cycle as regular code review, when everybody has all the context they need, not weeks or months later when it is difficult to inject a ticket into the backlog to untangle what might have become a "load-bearing" accessibility problem.
+Detecting problems before code merges brings the training, awareness-building, discussion, and remediation into the same cycle as regular code review, when everybody has all the context they need, not weeks or months later when it is difficult to inject a ticket into the backlog to untangle what might have become a "load-bearing" accessibility problem.
 
 ### How to measure success in maintenance mode
 
@@ -52,7 +52,7 @@ The issues surfaced in Cypress Accessibility should follow certain patterns, whi
 - **Trend Analysis**: Track violations on both the main branch and feature branches. A stable or downward trend indicates improved team awareness and fewer recurring issues.
 - **Shifting Left**: Developers begin considering accessibility earlier, during ticket creation or design handoffs, reducing errors before they occur. At that point, the team avoids mistakes instead of correcting them.
 
-While perfection isn't the goal, mature teams notice fewer violations in reports over time, enabling them to focus on delivering value without compromising quality.
+While perfection isn't the goal, mature teams notice fewer violations in reports over time and can focus on delivering value without compromising quality.
 
 Using Cypress Accessibility, you can treat accessibility failures as quality issues. Just like functional bugs and UI problems, they are important and your team needs to address them. The need to address accessibility failures is why optimizing and minimizing the effort related to accessibility is so valuable in a literal sense - your team is going to spend time on accessibility anyway, every cycle saved on dealing with accessibility is freed up for feature work, quality improvements, and other important activities.
 

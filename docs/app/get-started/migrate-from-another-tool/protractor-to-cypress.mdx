@@ -117,7 +117,7 @@ confident.
 Cypress gives you time travel capabilities to see exactly how your app was
 behaving at any point during test execution. Cypress takes DOM snapshots of your
 application under test as the commands and assertions in your tests are
-executed. These snapshots enable you to view the **real UI** of your application at any
+executed. These snapshots show the **real UI** of your application at any
 point during your tests' execution. By clicking from one command to another in
 the [command log](/app/core-concepts/open-mode#Command-Log), you can see
 which elements Cypress acted upon and how your application responded to the
@@ -900,8 +900,8 @@ If an element is not
 [actionable](/app/core-concepts/interacting-with-elements#Actionability)
 within the
 [`defaultCommandTimeout`](/app/core-concepts/retry-ability#Timeouts) setting,
-the command fails. This automatic retrying enables you to write tests without the need for
-arbitrary timeouts, enabling you to write more predictable tests.
+the command fails. This automatic retrying removes the need for arbitrary timeouts in your
+tests, which makes your tests more predictable.
 
 <Badge type="danger">Before: Protractor</Badge>
 
@@ -937,8 +937,8 @@ The asynchronous API keeps your tests deterministic since Cypress executes all o
 serially, enabling your tests to run predictably each time.
 
 In comparison, Protractor's WebDriverJS API is based on promises, which a
-control flow manages. This
-[Control Flow](https://www.protractortest.org/#/control-flow) enables you to
+control flow manages. With this
+[Control Flow](https://www.protractortest.org/#/control-flow), you
 write asynchronous Protractor tests in a synchronous style.
 
 ```js
@@ -1034,7 +1034,7 @@ it('should display the username of a logged in user', () => {
 ```
 
 Cypress also provides a [Custom Command](/api/cypress-api/custom-commands) API
-to enable you to add methods to the `cy` global directly:
+that adds methods to the `cy` global directly:
 
 <Tabs>
 <TabItem value="cypress/support/commands.js">

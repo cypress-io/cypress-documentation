@@ -168,7 +168,7 @@ application specific, but generally you could insert records into the database
 or do whatever it takes for your server to act as if a message of one client
 needs to be sent back to the browser.
 
-Typically this pattern enables you to avoid making a secondary WebSocket
+Typically this pattern avoids a secondary WebSocket
 connection and yet still fulfills the bidirectional browser and server contract.
 This pattern means you could also test edge cases (disconnections, etc) without actually
 handling real connections.
@@ -192,7 +192,7 @@ the underlying WebSocket connection that you can then communicate with and
 control.
 
 You can do this in many ways and here is an example of using an HTTP server to
-act as the client and exposing a REST interface that enables us to control it.
+act as the client and exposing a REST interface for controlling it.
 
 ```js
 // Cypress tests

@@ -268,7 +268,9 @@ Each rule is a hard convention. See the linked section for the how and why.
   migration notes are the exception, since the reader needs the version to
   upgrade.
 - **Say what something does**, not what it lets the reader do. "`cy.session()`
-  caches and restores session state", not "allows you to cache…".
+  caches and restores session state", not "allows you to cache…". The same
+  goes for "lets you", "enables you to", "allows users to", "gives you the
+  ability to", "provides you with", and "makes it possible to".
 - **Name the subject in every sentence.** Repeat the noun instead of pointing
   back to an earlier sentence with "it", "this", or "they" ("The agent runs
   your specs", not "It runs your specs"), so each sentence stands on its own.

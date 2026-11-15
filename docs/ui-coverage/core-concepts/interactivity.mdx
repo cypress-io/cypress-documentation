@@ -59,7 +59,7 @@ UI Coverage does not count a control that only ever sits inside a collapsed menu
 
 ### Overriding interactive elements with `data-cy-ui-interactive`
 
-When the automatic rules don't match your app, the `data-cy-ui-interactive` attribute lets you override them directly in your markup. The attribute accepts four values, matched case-insensitively:
+When the automatic rules don't match your app, the `data-cy-ui-interactive` attribute overrides them directly in your markup. The attribute accepts four values, matched case-insensitively:
 
 | Value         | Effect                                                                           |
 | ------------- | -------------------------------------------------------------------------------- |
@@ -153,10 +153,10 @@ A command only counts when it logs a [snapshot](/ui-coverage/core-concepts/eleme
 
 ### Customizing interaction commands
 
-Two configuration options let you change which commands count:
+Two configuration options change which commands count:
 
 - [`additionalInteractionCommands`](/ui-coverage/configuration/additionalinteractioncommands) extends the built-in set everywhere, so custom commands or ones from third-party libraries (such as [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events)' `realClick`) count as coverage on any element.
-- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works per element: for elements matching a selector, only the commands you list count. This per-element control lets you both require a meaningful interaction (a chart that must be hovered, not just clicked) and credit commands the defaults ignore (an `assert` on a read-only badge).
+- [`allowedInteractionCommands`](/ui-coverage/configuration/allowedinteractioncommands) works per element: for elements matching a selector, only the commands you list count. This per-element control can both require a meaningful interaction (a chart that must be hovered, not just clicked) and credit commands the defaults ignore (an `assert` on a read-only badge).
 
 For example, to require a hover rather than a plain click on a chart before it counts as tested:
 

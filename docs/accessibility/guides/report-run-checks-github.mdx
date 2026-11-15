@@ -10,7 +10,7 @@ sidebar_custom_props: { 'new_label': true }
 
 # Report Run Checks as GitHub pull request statuses
 
-[Run Checks](/cloud/features/checks) let you encode accessibility thresholds in your App Quality configuration, such as a minimum [accessibility score](/accessibility/core-concepts/accessibility-score) or a maximum number of failing elements, and have Cypress Cloud evaluate them on every recorded run. To surface those results on a pull request, fetch them in CI with `getCheckResults()` and post one commit status per applicable check.
+[Run Checks](/cloud/features/checks) encode accessibility thresholds in your App Quality configuration, such as a minimum [accessibility score](/accessibility/core-concepts/accessibility-score) or a maximum number of failing elements, and Cypress Cloud evaluates them on every recorded run. To surface those results on a pull request, fetch them in CI with `getCheckResults()` and post one commit status per applicable check.
 
 This guide covers the GitHub workflow for posting Run Check statuses. Similar techniques apply to other version control contexts. For custom policy logic the built-in assertion types don't cover, such as allowlisting known failing rules or comparing against a baseline, use the [Results API](/accessibility/connect-and-extend/results-api) approach in [Block pull requests and set policies](/accessibility/guides/block-pull-requests).
 

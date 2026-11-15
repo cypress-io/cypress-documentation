@@ -96,8 +96,8 @@ commands.
 
 Using `.then()` functions is an excellent opportunity to use
 [`debugger`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger).
-A `debugger` statement can help you understand the order in which commands run. The statement also
-enables you to inspect the objects that Cypress yields you in each command.
+A `debugger` statement can help you understand the order in which commands run. You can also use the statement
+to inspect the objects that Cypress yields you in each command.
 
 ```js
 cy.get('button').then(($btn) => {
@@ -504,7 +504,7 @@ always. We recommend that you **alias elements before running commands**.
 ### Intercepts
 
 You can also use aliases with [cy.intercept()](/api/commands/intercept).
-Aliasing your intercepted routes enables you to:
+Alias your intercepted routes to:
 
 - ensure your application makes the intended requests
 - wait for your server to send the response
@@ -562,7 +562,7 @@ Without `.all` there is no clean way to assert count. You can only assert
 whether a request happened, not how many times.
 
 **Sequential requests with different data.** When your app paginates or retries,
-requests share a route but carry different parameters. The numeric index lets you
+requests share a route but carry different parameters. Use the numeric index to
 validate each one independently:
 
 ```js

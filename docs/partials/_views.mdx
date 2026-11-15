@@ -3,7 +3,7 @@ The `views` configuration groups the URLs your tests visit into views using URL 
 ## Why use views?
 
 - **Group dynamic URLs**: Combine URLs with dynamic values that the automatic rules don't recognize, such as usernames or slugs, into a single view.
-- **Split views by query parameters**: By default, Cypress ignores query strings when creating views, so `/home?status=done` and `/home?status=new` group into a single `/home` view. A pattern that captures a query parameter lets you report on them separately.
+- **Split views by query parameters**: By default, Cypress ignores query strings when creating views, so `/home?status=done` and `/home?status=new` group into a single `/home` view. A pattern that captures a query parameter splits those URLs into separate views.
 - **Create distinct view groups**: Use `groupBy` to create a separate view for each value of a meaningful URL parameter, while still grouping the parts that are dynamic.
 - **Consolidate environments**: Patterns can span subdomains, or omit the protocol and hostname entirely, so the same page visited on different environments rolls up into one view.
 

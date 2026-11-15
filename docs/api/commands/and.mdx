@@ -145,8 +145,8 @@ cy.get('#header a')
 
 ### Function
 
-Passing a function to `.and()` enables you to assert on the yielded subject.
-The function gives you the opportunity to _massage_ what you'd like to assert.
+A function passed to `.and()` receives the yielded subject to assert on.
+Inside the function, you can _massage_ what you'd like to assert.
 
 Be sure _not_ to include any code that has side effects in your callback
 function. Cypress retries the callback until no assertions within it throw.

@@ -15,7 +15,7 @@ whenever a selected event occurs, for example when a test run finishes, or when 
 
 ## Why Cypress Cloud Webhooks
 
-A webhook lets you build **custom automations**: update a dashboard, open a
+A webhook triggers **custom automations**: update a dashboard, open a
 ticket, gate a deployment, or forward results into any internal system. For
 example, you can use a `run.completed` event to:
 
@@ -52,8 +52,8 @@ service you write, but it can just as easily be a URL provided by a tool you
 already use. If you would rather not run a server, point the **Payload URL** at a
 no-code or low-code platform, or at a SaaS tool's native inbound-webhook trigger.
 
-- **No-code and low-code platforms** accept an incoming webhook, let you map the
-  payload fields visually, and connect the result to hundreds of downstream apps:
+- **No-code and low-code platforms** accept an incoming webhook, provide a visual editor for
+  mapping the payload fields, and connect the result to hundreds of downstream apps:
   [Zapier](https://zapier.com), [Make](https://www.make.com),
   [IFTTT](https://ifttt.com), and [n8n](https://n8n.io) are common choices.
 - **Native inbound-webhook triggers** in the tool you want to reach can receive
@@ -79,7 +79,7 @@ signatures, reduce the risk another way:
 - **Keep the Payload URL secret.** Treat it like a credential. Anyone who has it
   can send requests to it, so do not share it or commit it to a repository.
 - **Rely on the destination's own authentication.** Many tools include a hard-to-guess
-  token in the generated URL, or let you require an auth header or shared token
+  token in the generated URL, or can require an auth header or shared token
   on the inbound request. Use those controls when they are available.
 
 A secret Payload URL is weaker than a verified signature, because it proves only

@@ -45,7 +45,7 @@ configuration to Cypress.
 
 Cypress by default strips all CSP headers (`Content-Security-Policy` and
 `Content-Security-Policy-Report-Only`) from the response before sending it to
-the browser. The `experimentalCspAllowList` option allows for more granular
+the browser. The `experimentalCspAllowList` option provides more granular
 control over which CSP directives Cypress strips from the CSP response headers,
 so your application runs under test with CSP enabled. Valid values for this
 option are `false` (the default), `true`, or an array of CSP directive names.
@@ -127,7 +127,7 @@ original hashed directive value, and the modified HTML or JS value.
 
 ### Experimental Test Retries
 
-[Test retries](/app/guides/test-retries) is a Cypress [Flake Detection](/cloud/features/flaky-test-management#Flake-Detection) feature that enables you to re-attempt any tests that initially fail. The failure may not be a "true" failure, i.e. flaky. The only way to determine this is to retry the test.
+[Test retries](/app/guides/test-retries) is a Cypress [Flake Detection](/cloud/features/flaky-test-management#Flake-Detection) feature that re-attempts any test that initially fails. The failure may not be a "true" failure, i.e. flaky. The only way to determine this is to retry the test.
 
 Normally, test retries stop on the first passing attempt. And the final test result of any flaky test is always "passing", regardless of how many prior attempts failed. The following experimental settings for retries give you more control over the retries process.
 
@@ -136,11 +136,11 @@ There are two strategies for retries:
 - `detect-flake-and-pass-on-threshold`
 - `detect-flake-but-always-fail`
 
-The `detect-flake-and-pass-on-threshold` strategy is most like the current implementation of retries, where failing tests have a "chance" to still pass, but still detect flake. But this new experimental strategy also enables you to now set a threshold of passing attempts to achieve a passing final result. And if you want to ensure flaky tests are treated with the same urgency as failing tests, then use the `detect-flake-but-always-fail` strategy, which assures that Cypress still marks every flaky test as failing.
+The `detect-flake-and-pass-on-threshold` strategy is most like the current implementation of retries, where failing tests have a "chance" to still pass, but still detect flake. But this new experimental strategy also adds a threshold of passing attempts that the test must reach for a passing final result. And if you want to ensure flaky tests are treated with the same urgency as failing tests, then use the `detect-flake-but-always-fail` strategy, which assures that Cypress still marks every flaky test as failing.
 
 #### `experimentalStrategy: 'detect-flake-and-pass-on-threshold'`
 
-Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries lets you set how many passing attempts are required for the test result to be passing. You must set two `experimentalOptions` with this strategy:
+Setting `experimentalStrategy: 'detect-flake-and-pass-on-threshold'` within retries makes the test result pass only after a set number of passing attempts. You must set two `experimentalOptions` with this strategy:
 
 - `maxRetries` sets the maximum number of retries that can occur after the first attempt failed.
 - `passesRequired` sets the required number of passing attempts for the final test result to be passing. Cannot be greater than `maxRetries`.

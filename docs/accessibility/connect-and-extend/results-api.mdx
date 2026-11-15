@@ -9,7 +9,7 @@ sidebar_position: 30
 
 # Results API
 
-The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility which enables you to programmatically fetch your run's Accessibility results in a CI environment. The `getAccessibilityResults` utility determines the Cypress run created for the given CI workflow and returns the Accessibility results associated with that run. The utility returns the results once the Cypress run has finished and Cypress Cloud has processed the Accessibility report.
+The `@cypress/extract-cloud-results` module provides the `getAccessibilityResults` utility, which programmatically fetches your run's Accessibility results in a CI environment. The `getAccessibilityResults` utility determines the Cypress run created for the given CI workflow and returns the Accessibility results associated with that run. The utility returns the results once the Cypress run has finished and Cypress Cloud has processed the Accessibility report.
 
 The Results API brings the results into CI, where you review them and determine if they are acceptable or need to be addressed before code changes can merge. The Results API provides overall accessibility scores and violation details for the runs, as well as page- or component-level feedback. These results support a wide variety of needs related to alerting about failures in specific focus areas of the application or creating fine-grained regression monitoring according to the current standards being met by each page.
 

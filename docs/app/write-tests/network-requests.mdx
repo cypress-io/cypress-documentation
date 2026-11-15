@@ -11,8 +11,8 @@ slug: /app/guides/network-requests
 # Intercepting network requests in Cypress
 
 Cypress helps you test the entire lifecycle of HTTP requests within your
-application. Cypress provides you access to the objects with information about
-the request, enabling you to make assertions about its properties. Additionally
+application. Cypress exposes objects with information about
+the request, so you can make assertions about its properties. Additionally
 you can even stub and mock a request's response.
 
 **_Common testing scenarios:_**
@@ -26,7 +26,7 @@ you can even stub and mock a request's response.
 - Delaying a response
 - Waiting for a response to happen
 
-Within Cypress, you have the ability to choose whether to stub responses or
+Within Cypress, you choose whether to stub responses or
 allow them to actually hit your server. You can also mix and match within the
 same test by choosing to stub certain requests, while allowing others to hit
 your server.
@@ -105,7 +105,7 @@ modern applications that serve JSON can take advantage of stubbing.
 
 ## Stub Responses
 
-Stubbing responses enables you to control every aspect of the response,
+When you stub a response, you control every aspect of the response,
 including the response `body`, the `status`, `headers`, and even network
 `delay`. Stubbing is extremely fast, most responses return in less
 than 20ms.
@@ -174,8 +174,8 @@ to see Cypress network handling in action.
 
 ## Stubbing
 
-Cypress enables you to stub a response and control the `body`, `status`,
-`headers`, or even delay.
+Cypress stubs a response with the `body`, `status`, `headers`, or even delay
+you specify.
 
 [`cy.intercept()`](/api/commands/intercept) controls the behavior of
 HTTP requests. You can statically define the body, HTTP status code, headers,
@@ -259,8 +259,8 @@ cy.fixture('images/dogs.png') // yields dogs.png as Base64
 
 ## Waiting
 
-Whether or not you choose to stub responses, Cypress enables you to
-declaratively [`cy.wait()`](/api/commands/wait) for requests and their
+Whether or not you choose to stub responses,
+[`cy.wait()`](/api/commands/wait) declaratively waits for requests and their
 responses.
 
 :::tip

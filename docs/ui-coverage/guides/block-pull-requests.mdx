@@ -53,7 +53,7 @@ the policy. Two models cover most teams, and you can combine them.
 A fixed threshold is simple but blunt: if your app sits at 62% coverage, a
 threshold of 80% blocks _every_ pull request until you've paid down all the
 existing debt. A **baseline** compares each run against a known-good state and
-fails only on _newly_ introduced gaps, which lets you hold the line today and
+fails only on _newly_ introduced gaps, so you can hold the line today and
 improve incrementally. Most teams with an established suite start here.
 
 ## Before you begin
@@ -120,8 +120,8 @@ on untested navigation links, and ratcheting the floor up as coverage improves.
 ## Block only on new gaps with a baseline {#comparing-against-a-baseline}
 
 A threshold treats all untested elements the same, whether they've been untested
-for a year or arrived in the pull request under review. Comparing a run against a
-stored **baseline** lets you ignore existing gaps and fail only when a change
+for a year or arrived in the pull request under review. A check that compares a run against a
+stored **baseline** ignores existing gaps and fails only when a change
 introduces _new_ untested elements. Baseline comparison is what makes UI Coverage enforceable on
 a real codebase: you stop the debt from growing today, and pay it down on your own
 schedule without blocking every merge.
@@ -384,7 +384,7 @@ for the equivalent step in GitLab, Jenkins, Azure, CircleCI, and other providers
 ## Use Profiles for PR-specific configuration
 
 A pull request check should be fast and focused, while your nightly regression
-run tracks everything. [Profiles](/ui-coverage/configuration/profiles) let you
+run tracks everything. [Profiles](/ui-coverage/configuration/profiles)
 apply different app quality configuration
 to different runs based on their [run tags](/app/references/command-line#cypress-run-tag-lt-tag-gt),
 so both can share one Cypress Cloud project.

@@ -974,7 +974,7 @@ and the time spent uploading the Test Replay data by inspecting the standard out
 
 Not every CI event warrants a full test suite run. A push to a feature branch needs fast feedback. A merge to `main` warrants the full suite. Running everything on every event may waste CI time and slows developer feedback loops.
 
-[`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) is the official Cypress plugin for filtering tests by title or tag. Used with a tagging strategy, it lets you define tiered CI pipelines: a fast smoke suite that runs on every PR and a comprehensive suite that runs before merging.
+[`@cypress/grep`](https://github.com/cypress-io/cypress/tree/develop/npm/grep) is the official Cypress plugin for filtering tests by title or tag. Pair `@cypress/grep` with a tagging strategy to define tiered CI pipelines: a fast smoke suite that runs on every PR and a comprehensive suite that runs before merging.
 
 #### Installation and setup
 

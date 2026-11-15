@@ -81,7 +81,7 @@ typically solves, so you can find the right tool for your situation:
   for your mirror while keeping the same URL layout, so many machines can install
   without each pinning a one-off URL.
 - **`CYPRESS_DOWNLOAD_PATH_TEMPLATE`**: Use this when your internal artifact
-  store doesn't match the `download.cypress.io` URL layout. The template lets you describe
+  store doesn't match the `download.cypress.io` URL layout. The template describes
   exactly how your server lays out files so Cypress can build the correct URL per
   platform and version.
 - **`CYPRESS_CACHE_FOLDER`**: Use this to control where the downloaded binary is
@@ -446,7 +446,7 @@ See [Download path template](#Download-path-template) for examples.
 ### Download path template
 
 A plain mirror assumes your server mimics the `download.cypress.io` layout.
-`CYPRESS_DOWNLOAD_PATH_TEMPLATE` removes that assumption: it lets you describe
+`CYPRESS_DOWNLOAD_PATH_TEMPLATE` removes that assumption: the template describes
 exactly how your artifact store lays out files, so Cypress can build the right
 URL for the platform and version being installed.
 
@@ -679,8 +679,8 @@ ensure this, consider exporting this environment variable. For example, in a
 
 Over time the cache accumulates a binary per Cypress version you've used, which
 can quietly consume disk space on CI agents and developer machines. The
-[`cypress cache`](/app/references/command-line#cypress-cache-command) command lets you inspect and
-prune it. Run these with the appropriate package manager prefix described in
+[`cypress cache`](/app/references/command-line#cypress-cache-command) command inspects and
+prunes the cache. Run these with the appropriate package manager prefix described in
 [How to run commands](/app/references/command-line#How-to-run-commands).
 
 | Command                                                                   | Description                                                                         |

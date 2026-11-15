@@ -144,7 +144,7 @@ cy.prompt(
 )
 ```
 
-After the test runs, click the **Code** button in the Command Log to view the generated Cypress code, then [save it to your test file](#View-and-export-generated-code). This workflow lets you use AI to quickly generate test code, then commit the exact generated code to your repository for predictable, version-controlled tests.
+After the test runs, click the **Code** button in the Command Log to view the generated Cypress code, then [save it to your test file](#View-and-export-generated-code). In this workflow, AI generates the test code, and you commit the exact generated code to your repository for predictable, version-controlled tests.
 
 ### Workflow 2: Continuous self-healing
 
@@ -319,7 +319,7 @@ This level of detail makes it easy to tell whether a self-heal reflects an inten
 
 ## Placeholders
 
-Placeholders let you feed dynamic and sensitive values into a prompt without invalidating the cache or sending those values to the AI.
+Placeholders feed dynamic and sensitive values into a prompt without invalidating the cache or sending those values to the AI.
 
 ### The caching problem
 
@@ -451,7 +451,7 @@ Saving or copying the generated code helps you review and modify it as needed or
 
 ### Customizing selectors in generated code
 
-You can customize which selectors `cy.prompt` uses by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). The ElementSelector API lets you control which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when querying for selectors, ensuring the generated code matches your project's selector strategy.
+You can customize which selectors `cy.prompt` uses by configuring the [ElementSelector API](/api/cypress-api/element-selector-api). The ElementSelector API controls which attributes Cypress prioritizes (like `data-*`, `id`, `aria-label`, etc.) when querying for selectors, ensuring the generated code matches your project's selector strategy.
 
 Configure the selector priority in your support file or test file:
 

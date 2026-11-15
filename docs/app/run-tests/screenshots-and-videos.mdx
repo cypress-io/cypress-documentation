@@ -14,7 +14,7 @@ slug: /app/guides/screenshots-and-videos
 
 ## Screenshots
 
-Cypress comes with the ability to take screenshots, whether you are running via
+Cypress takes screenshots whether you are running via
 `cypress open` or `cypress run`, even in CI.
 
 To take a manual screenshot you can use the
@@ -149,7 +149,7 @@ DEBUG=cypress:server:video
 
 While encoding a video, Cypress embeds chapter markers into the resulting `.mp4`
 file, one for each test attempt in the spec. Video players that support
-chapters, such as VLC, QuickTime, and IINA, use these markers to let you jump to
+chapters, such as VLC, QuickTime, and IINA, use these markers to skip to
 a specific test instead of scrubbing through the whole recording. Each chapter is
 titled with the full title of the test, including the titles of the suites it is
 nested in. When a test runs more than once because of
@@ -252,8 +252,8 @@ what?
 
 Something you can take advantage of today is
 [Cypress Cloud](/cloud/get-started/introduction): our companion enterprise service
-that stores your artifacts for you and lets you view them from any web browser,
-as well as share them with your team.
+that stores your artifacts and makes them viewable from any web browser and
+shareable with your team.
 
 ### Visual Regression Test / Screenshot Diffing
 

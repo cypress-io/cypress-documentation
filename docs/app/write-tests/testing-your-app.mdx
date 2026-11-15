@@ -44,8 +44,8 @@ you may find it useful to even do **all of your development** in it.
 Ultimately you can not only **test and develop** at the same time, but also build your application **faster** while getting tests
 "for free".
 
-What's more - since Cypress enables you to do things like **stub network
-requests** you can build out your web application without even needing a server
+What's more, because Cypress can do things like **stub network
+requests**, you can build out your web application without even needing a server
 to provide valid JSON responses.
 
 Last but not least - trying to shoehorn tests to an already built application is
@@ -320,7 +320,7 @@ In this way, we not only prevent needing to synchronize the state between the
 server and browser, but we also prevent mutating state from our tests. Avoiding mutation
 means tests don't build up state that may affect other tests.
 
-Another upside is that this enables you to **build out your application**
+Another upside is that you can **build out your application**
 without needing the _contract_ of the server to exist. You can build it the way
 you want the data to be structured, and even test all of the edge cases, without
 needing a server.
@@ -432,7 +432,7 @@ maintainable, and they're certainly not very elegant. A much better solution is
 to write a custom `cy.login()` [command](/api/cypress-api/custom-commands).
 
 Custom commands encapsulate and reuse Cypress test logic.
-Custom commands let you add your own functionality to your test suite and then use it with
+Custom commands add your own functionality to your test suite, using
 the same
 [chainable and asynchronous API](/app/core-concepts/introduction-to-cypress#The-Cypress-Command-Queue)
 as the built-in Cypress commands. Lets make the above login example a custom
@@ -515,8 +515,8 @@ pages, but if you have more than a handful of tests, logging in before every
 test is going to increase the overall run time of your suite.
 
 Luckily, Cypress provides the [`cy.session()`](/api/commands/session) command, a
-powerful performance tool that lets you cache the browser context associated
-with your user and reuse it for multiple tests without going through multiple
+powerful performance tool that caches the browser context associated
+with your user and reuses it for multiple tests without going through multiple
 login flows! Let's modify the custom `cy.login()` command from our previous
 example to use `cy.session()`:
 

@@ -19,10 +19,10 @@ sidebar_position: 220
   width="80%"
 />
 
-[Cypress Cloud](https://on.cypress.io/cloud) gives you access to tests you've
+[Cypress Cloud](https://on.cypress.io/cloud) displays the tests you've
 recorded - typically when running Cypress tests from your
-[CI provider](/app/continuous-integration/overview) - and provides you
-insight into what happened during your tests run.
+[CI provider](/app/continuous-integration/overview) - and shows
+what happened during your test runs.
 
 You can read more in the
 [introduction to Cypress Cloud](/cloud/get-started/introduction).
@@ -72,7 +72,7 @@ provider is that your CI provider has no idea what is going on inside of the
 Cypress process. Your CI provider is programmed to know whether or not a process failed - based
 on whether it had an exit code greater than `0`.
 
-[Cypress Cloud](/cloud/get-started/introduction) provides you with the low level
+[Cypress Cloud](/cloud/get-started/introduction) shows the low level
 details of _what_ happened during your run. Using both your CI provider +
 Cypress together gives the insight required to debug your test runs.
 
@@ -334,8 +334,8 @@ Yes, depending on where you are running tests:
   recorded build. Choose **Run only failed specs** to re-execute each spec that
   contained a failure, or **Run only failed tests** (Cypress 15.21.0 or later) to
   re-execute only the tests that did not pass.
-- **In the Cypress app**, the [Debug page](/app/core-concepts/open-mode#Debug) lets
-  you rerun only the failed tests from a recorded CI run on your current branch.
+- **In the Cypress app**, the [Debug page](/app/core-concepts/open-mode#Debug)
+  reruns only the failed tests from a recorded CI run on your current branch.
 - **During a single run**, [test retries](/app/guides/test-retries) automatically
   re-attempt failed individual tests before the run finishes.
 
@@ -419,7 +419,7 @@ When Spec Prioritization fires, the run's detail tab displays a **"Prioritized
 failed specs from run #X"** label, where **#X** links back to the source run
 whose failures Cypress Cloud moved to the front. The label only appears when Cypress Cloud
 actually reordered specs, so its presence confirms prioritization took effect and
-lets you trace which previous failures drove the order. If you don't see it,
+points to the previous failures that drove the order. If you don't see it,
 confirm the feature is toggled on and that the previous run recorded failures to
 prioritize.
 
@@ -504,8 +504,8 @@ flake rate.
 ### <Icon name="angle-right" /> What causes flaky tests?
 
 Flake usually comes from timing issues, race conditions, or differences between
-your local and CI environments. [Test Replay](/cloud/features/test-replay) lets
-you compare a passing and failing attempt on the same code to find the cause.
+your local and CI environments. Use [Test Replay](/cloud/features/test-replay)
+to compare a passing and failing attempt on the same code and find the cause.
 
 ### <Icon name="angle-right" /> How do I fix a flaky test?
 
@@ -525,7 +525,7 @@ flake rate maps to severity levels.
 ### <Icon name="angle-right" /> Do I need test retries enabled to detect flaky tests?
 
 Yes. [Test retries](/app/guides/test-retries#Configure-Test-Retries) are the
-fundamental mechanism that lets Cypress Cloud detect flaky tests, so enabling
+fundamental mechanism Cypress Cloud uses to detect flaky tests, so enabling
 them is required for any Flaky Test Management feature.
 
 ### <Icon name="angle-right" /> Which Cypress Cloud plan is required for Flaky Test Management?
@@ -617,8 +617,8 @@ A Cypress Cloud organization is the top-level container that groups your
 [projects](/cloud/account-management/projects),
 [users](/cloud/account-management/users),
 [teams](/cloud/account-management/teams), billing and usage, and
-[integrations](/cloud/account-management/organizations#Integrations). The organization lets you manage access
-control and application quality across every project from one place instead of configuring each
+[integrations](/cloud/account-management/organizations#Integrations). The organization brings access
+control and application quality for every project into one place, so you don't configure each
 project individually.
 
 ### <Icon name="angle-right" /> How do I create an organization in Cypress Cloud?
@@ -711,8 +711,8 @@ users 'owner' access. See
 
 Yes. If a teammate already has access to Cypress and your project's source code,
 they can request to join your organization directly from the Cypress App, and an
-Owner or Admin can accept or deny the request. User requests let you onboard teammates
-without inviting everyone up front. User requests are not available if
+Owner or Admin can accept or deny the request. With user requests, teammates join
+without you inviting everyone up front. User requests are not available if
 your organization is configured for SSO. See
 [User requests](/cloud/account-management/users#User-requests).
 
@@ -740,7 +740,7 @@ Government details replaces the existing configuration. See
 ### <Icon name="angle-right" /> What is a team in Cypress Cloud?
 
 A [team](/cloud/account-management/teams) is a reusable group of users that is granted
-access to a specific set of projects. Teams let you control project access once at the
+access to a specific set of projects. A team sets project access once, at the
 team level, instead of project by project, user by user, so each person sees only the
 projects relevant to their work.
 
@@ -749,7 +749,7 @@ projects relevant to their work.
 Organization [owner or admin](/cloud/account-management/users#User-roles) roles can create
 teams. Once a team exists, owners, admins, and the dedicated
 [team admin](/cloud/account-management/teams#Manage-teams) role can configure it by assigning
-projects and members. The team admin role lets day-to-day team members manage their own
+projects and members. The team admin role puts day-to-day team members in charge of their own
 projects without routing every request through organization-level admins.
 
 ### <Icon name="angle-right" /> Do teams affect access to public projects?
@@ -781,7 +781,7 @@ workflow.
 ### <Icon name="angle-right" /> Can I debug a CI failure without reproducing it locally?
 
 Yes. [Test Replay](/cloud/features/test-replay) captures the complete state of
-each test as it ran in CI and lets you replay it with full debugging capability.
+each test as it ran in CI and replays it with full debugging capability.
 Test Replay is the primary reason teams use Cypress Cloud for debugging: it removes the
 need to recreate a CI environment locally.
 
@@ -803,7 +803,7 @@ work automatically, with no changes to your test code.
 
 ### <Icon name="angle-right" /> What is Test Replay?
 
-[Test Replay](/cloud/features/test-replay) enables you and your team to troubleshoot and debug failed tests faster. From Cypress `v13`, Test Replay automatically records all browser events and “replays” what your application under test looked like.
+[Test Replay](/cloud/features/test-replay) replays failed tests so you and your team can troubleshoot and debug them. From Cypress `v13`, Test Replay automatically records all browser events and “replays” what your application under test looked like.
 
 Wind back the clock to any point in an application's test execution and directly interact with tests as they happened in CI. Debug complex problems as if you were there when they first happened. You can:
 
@@ -887,8 +887,8 @@ Turn off Test Replay for that project in Cypress Cloud. Turning off Test Replay 
 
 ### <Icon name="angle-right" /> What is the Cypress Cloud CLI?
 
-The [Cypress Cloud CLI](/cloud/integrations/cloud-cli) (`cy-cloud`) lets you
-query your Cypress Cloud data from the command line. You can check the status of
+The [Cypress Cloud CLI](/cloud/integrations/cloud-cli) (`cy-cloud`)
+queries your Cypress Cloud data from the command line. You can check the status of
 a run, read the error and stack trace for a failed test, save a failure
 screenshot, and pull the [Test Replay](/cloud/features/test-replay) timeline of
 commands, network requests, and console logs, all without opening a browser.
