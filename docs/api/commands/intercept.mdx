@@ -2040,9 +2040,28 @@ are some workarounds:
     )
   })
   ```
-- Chromium-family browsers only: Use `remote:debugger:protocol` to disable cache
-  entirely. For more information, see
-  [this comment on issue #14459](https://github.com/cypress-io/cypress/issues/14459#issuecomment-768616195).
+- Chromium-family browsers only: Send the Chrome DevTools Protocol commands
+  `Network.enable` and `Network.setCacheDisabled` through
+  `remote:debugger:protocol` to turn off the browser cache entirely. For
+  example:
+  ```ts
+  beforeEach(() => {
+    if (Cypress.browser.family === 'chromium') {
+      cy.wrap(
+        Cypress.automation('remote:debugger:protocol', {
+          command: 'Network.enable',
+          params: {},
+        })
+      )
+      cy.wrap(
+        Cypress.automation('remote:debugger:protocol', {
+          command: 'Network.setCacheDisabled',
+          params: { cacheDisabled: true },
+        })
+      )
+    }
+  })
+  ```
 
 ## `cy.intercept()` and CORS preflight requests
 

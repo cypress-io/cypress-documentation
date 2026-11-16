@@ -596,7 +596,8 @@ event at the desired element.
 
 Passing `{ force: true }` to [.select()](/api/commands/select) does not override
 the actionability checks for selecting a disabled `<option>` or an option within
-a disabled `<optgroup>`. See
-[this issue](https://github.com/cypress-io/cypress/issues/107) for more detail.
+a disabled `<optgroup>`. Cypress keeps those checks because jQuery's `.val()`
+skips disabled options, so an assertion on the value of a forced disabled option
+would fail.
 
 :::
