@@ -863,19 +863,23 @@ agent runs your tests while you keep working in other apps). The browser
 Cypress launches runs headless too, so neither it nor the Cypress window takes
 focus or appears on screen.
 
-`--headless` requires `--e2e` or `--component`, `--browser`, and a project,
-since there's no window to choose them in:
+`--headless` requires `--e2e` or `--component` and a project, since there's no
+window to choose them in, and can't be combined with
+[`--global`](#cypress-open-global):
 
 ```shell
 cypress open --headless --e2e --browser chrome --project .
 ```
 
-Pass a Chromium-based browser with `--browser` (Chrome, Chromium, Edge, or
-Electron), since those are the only browsers
-[`cypress tap`](/app/tooling/cypress-tap) can drive. If the session can't
-start, such as from a browser it cannot drive or component testing that isn't
-set up yet, Cypress prints the reason and
-[`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status) reports it.
+It also needs a browser, from `--browser` or from
+[`defaultBrowser`](/app/references/configuration#Browser) in the project's
+Cypress config, since there's no window to pick one in either. Either way,
+pass a Chromium-based browser (Chrome, Chromium, Edge, or Electron), since
+those are the only browsers [`cypress tap`](/app/tooling/cypress-tap) can
+drive. If the session can't start, such as from a missing or undrivable
+browser or component testing that isn't set up yet, Cypress prints the reason
+and [`cypress tap status`](/app/tooling/cypress-tap#cypress-tap-status)
+reports it.
 
 There's no window to close, so stop the Cypress process to end the session.
 
