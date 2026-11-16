@@ -211,8 +211,8 @@ Passing `{ force: true }` to `.select()` overrides the actionability checks
 for selecting a disabled `<select>`. However, it does not override the
 actionability checks for selecting a disabled `<option>` or an option within a
 disabled `<optgroup>`. Cypress keeps those checks because jQuery's `.val()`,
-which `.invoke('val')` calls, skips disabled options, so an assertion on the
-value of a forced disabled option would fail.
+which `.invoke('val')` calls, skips disabled options, so `.invoke('val')` would
+yield `null` after forcing one.
 
 ```html
 <select disabled>
@@ -259,8 +259,8 @@ cy.get('select#name option:selected').should('have.text', 'Peter')
 However, passing `{ force: true }` to `.select()` does not override the
 actionability checks for selecting a disabled `<option>` or an option within a
 disabled `<optgroup>`. Cypress keeps those checks because jQuery's `.val()`,
-which `.invoke('val')` calls, skips disabled options, so an assertion on the
-value of a forced disabled option would fail.
+which `.invoke('val')` calls, skips disabled options, so `.invoke('val')` would
+yield `null` after forcing one.
 
 ## Rules
 

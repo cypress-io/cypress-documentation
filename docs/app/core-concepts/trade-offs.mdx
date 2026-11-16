@@ -42,8 +42,9 @@ We want to highlight some _temporary_ restrictions that Cypress hopes to
 eventually address.
 
 - [Workarounds for the lack of a `cy.hover()` command.](/api/commands/hover)
-- Cypress simulates events in JavaScript instead of firing native browser
-  events, and there is no native mobile events support. Follow the
+- Most action commands simulate events in JavaScript instead of firing native
+  browser events. [`cy.press()`](/api/commands/press) is the exception, for
+  single key presses. Follow the
   [native browser events issue](https://github.com/cypress-io/cypress/issues/311).
 - iframe support is somewhat limited, but does work. Cypress can query same-origin
   iframes natively (see
